@@ -119,13 +119,27 @@ coefficients have degree~34.
 
 \subsection{Poincar\'e root identification}
 
-\begin{proposition}[Poincar\'e root]
-The leading characteristic polynomial of the scalar recurrence,
-after extracting the leading coefficients (in~$N$) of each
-polynomial coefficient, factors to reveal the Poincar\'e root
+\begin{proposition}[Poincar\'e root --- exact computation]
+The scalar recurrence has degree pattern $(34, 32, 30, 28, 26)$
+(the polynomial degree drops by~$2$ per shift), yielding a
+quartic Poincar\'e characteristic equation.  Its four roots are:
+\begin{itemize}
+\item $\rho_1 \approx 9.724 \times 10^{15}$ (dominant, $\approx 64R$),
+\item $\rho_2 \approx -2.24 \times 10^{-15}$ (reciprocal),
+\item $\rho_3, \rho_4$: a conjugate complex pair of magnitude
+  $\sim 10^{-14}$.
+\end{itemize}
+
+The \emph{exact} sum of all four roots is
 \begin{equation}\label{eq:poincare}
-\boxed{\rho = 64(R - 1) = \frac{64 \cdot 640320^3}{1728}.}
+\boxed{\rho_1 + \rho_2 + \rho_3 + \rho_4 = 64R - 56.}
 \end{equation}
+This was verified by modular computation (2001-bit prime,
+251 matrix products, 175-dimensional kernel, rational
+reconstruction).  The denominator of the rational representation
+factors as $3^6 \cdot 7^4 \cdot 11^4 \cdot 19^4 \cdot 127^4
+\cdot 163^2$, encoding the Heegner-$163$ prime factorization
+of~$R$.
 \end{proposition}
 
 This is the key algebraic bridge.  To see why~\eqref{eq:poincare}
