@@ -154,3 +154,23 @@ The companion ODE from the D-finite structure may still have
 regular singular point at t=0 (same issue recycled).
 
 Xiang's verdict: pending.
+
+## POISSON ODE STILL SINGULAR (computed 2026-07-13)
+
+The first-order core ODE for U = θ³B is:
+  4tU' + (t-2)U = t
+
+At t=0: simple pole (4t coefficient). Indicial root ρ=1/2.
+Analytic solution U=t/2+... selected by U(0)=0.
+Polynomial clock dt/ds=4t → t=0 is STILL a fixed point.
+
+Every deflation (V=U/t, W=V-1/2, X=W/t, ...) shifts the pole
+but never removes it. The regular singular point is persistent.
+
+CONCLUSION: Poisson化 reduces order-3 singular → order-1 singular,
+but does NOT remove the singularity. The PIVP startup problem persists.
+The generating function (ordinary or exponential) ALWAYS has a
+regular singular point at the origin when the recurrence does.
+
+This is consistent with the impossibility theorem:
+the singularity is a topological invariant (monodromy).
