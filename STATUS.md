@@ -26,9 +26,12 @@ Lean only as garnish after CAS proofs.
 - **2.8 (√10005/π)**: **IDENTIFIED = Chudnovsky formula in CMF disguise!**
   R = 1-j(τ₁₆₃)/1728. Cubic = Chudnovsky fingerprint. Proof: reduce to CM theory.
 
-### Bounded Budget / Dropped
-- **3.1 (knot π²)**: One-shot literature search only.
-- **3.2 (Apéry measure)**: DROPPED — genuinely open, zero EV in 19 days.
+### Hard but Attacking (狭路相逢勇者胜)
+- **2.3 (π+e)**: LCLM fails. ChatGPT "proof" via Lambert+derangement is FABRICATED
+  (Lambert CF A_m/B_m → I₀(2)/I₁(2) ≈ 0.698, NOT π; initial values don't match).
+  Need genuine approach. Ore_algebra on uisai2 running.
+- **3.1 (knot π²)**: Attacking. Knot theory / A-polynomial / Mahler measure / Khoi (2008).
+- **3.2 (Apéry measure)**: Attacking. p-adic supercongruences / computational verification.
 
 ## Attack Order (Fable-recommended)
 1. ~~2.2~~ ✅ DONE
