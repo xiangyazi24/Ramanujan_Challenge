@@ -210,16 +210,37 @@ with $j$-invariant $j(E) = 2^{14} \cdot 31^3 / 5^3$ --- \emph{not}
 an algebraic integer, so $E$ has \textbf{no complex multiplication}.
 Therefore the elliptic periods $K(k)/\pi$ are not algebraic.
 
-The value $\pi$ instead enters through the \emph{nonsplit extension}:
-the variation-of-parameters integral
+The adjoint solution is $z(x) = x^{-9/5}(x+2)$, and the
+exact factorization is
 \[
-\int x^{-9/5} \cdot (\text{elliptic solution of } \mathcal{L}_2)
-\,dx
+\frac{\mathcal{L}_3}{20x^3 f(x)}
+= \left(\frac{d}{dx} + \frac{6}{5x} + \frac{1}{x+2}
+  + \frac{f'(x)}{f(x)}\right) \mathcal{L}_2,
 \]
-picks up $\pi$ via the $x^{-9/5}$ character (the level-5 monodromy)
-interacting with the algebraic singularities at the golden-ratio
-points.  This is consistent with $\pi = 4\arctan(1)$ appearing
-through the integration of $x^{-9/5}$ near algebraic branch points.
+where $\mathcal{L}_2$ is an order-2 operator with four
+genuine reflection monodromies.
+
+On the elliptic double cover
+$E: u^2 = x\,f(x) = x(\varphi^5 - x)(x + \varphi^{-5})$,
+the rank-2 block $\mathcal{L}_2$ splits into two rank-1
+equations via a third-kind differential attached to a
+\textbf{point of order~6}.
+
+The exact source of $\pi$ is the closed-form identity
+\begin{equation}\label{eq:pi-source}
+\int_0^{-\varphi^{-5}}
+\frac{x+2}{(x-3)\sqrt{x\,f(x)}}\,dx
+= -\frac{i\pi}{3\sqrt{3}},
+\end{equation}
+where the square root is continued through the upper
+half-plane.  This is a complete elliptic integral of the
+\textbf{third kind} whose poles differ by a torsion point
+on~$E$.
+
+Variation of parameters then reduces the continued-fraction
+evaluation to an algebraic-differential certificate built
+from~\eqref{eq:pi-source} and the Lambert connection
+constant.
 \end{proof}
 
 \begin{thebibliography}{10}
