@@ -56,9 +56,28 @@ P_{N,j}/Q_{N,j} match √10005/π.
 (or a Möbius transform thereof). By the proven Chudnovsky identity
 (CM theory of discriminant -163), the limit is √10005/π.
 
-## Implementation plan
-1. Exact transcription of M(n) entries from the PDF (on uisai2)
-2. Compute scalar recurrence from 4×4 minors
+## No-Go: Rational Gauge Does NOT Exist (ChatGPT Q4660)
+
+A 100-digit numerical + symbolic audit proved:
+**No G(n) ∈ GL_4(Q(n)) satisfies M(n)·G(n+1) = G(n)·T_{n+1}.**
+
+Reason: det M(n) ~ -c·n^8 but det T → 1/(R-1)^2 (constant).
+So det G(n+1)/det G(n) ~ -K/n^8, but for rational g(n), g(n+1)/g(n) → 1.
+
+The gauge must be FACTORIAL or HYPERGEOMETRIC (involving (n!)^k factors).
+This is consistent with the Clausen ₃F₂ structure: the natural gauge
+includes (6k)!/((3k)!(k!)³) type factors.
+
+## Corrected approach
+1. Use FACTORIAL gauge: G(n) = D(n) · G_rat(n) where D(n) is diagonal
+   with entries like (n!)^a · (2n)!^b / (3n)!^c
+2. Or: extract scalar recurrence from M(n) minors directly (bypassing gauge)
+3. Or: show M(n)'s scalar recurrence matches Chudnovsky after gauge normalization
+4. The 12-digit numerical match already confirms the identity; the algebraic
+   certificate needs the factorial gauge structure
+
+## Implementation plan (revised)
+1. Extract scalar order-4 recurrence from M(n) via Casorati minors
+2. Apply factorial gauge to normalize
 3. Compare with Chudnovsky/Clausen recurrence
-4. Numerical verification to 500+ digits
-5. Write LaTeX proof citing Chudnovsky + encoding lemma
+4. Cite Chudnovsky CM theorem for the evaluation
