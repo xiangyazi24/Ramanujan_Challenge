@@ -17,5 +17,18 @@ polynomial projection recovers F(t).
 **Why ratio works:** Riccati R = B/A has R' = W/A², absorbing the 1/q_d pole.
 This is algebraic desingularization at the projective bundle level.
 
-**Constructive resolution:** Two-stage PIVP (series accumulation + regular-point
-integration) is optimal. Proves: periods of Fuchsian ODEs ∈ R_RTCRN.
+**Ratio method is NOT general** (Fable, confirmed by Xiang's challenge):
+- Ratio G/F → L requires L = c_k'/c_k (dominant Frobenius coefficient ratio)
+- F(c) = Σaₙcⁿ is GLOBAL, ratio gives LOCAL monodromy — generally unrelated
+- Apéry's b_n is DESIGNED so b_n/a_n → ζ(3) — the construction IS the proof
+
+**Precise classification:**
+
+| Class | Method | Examples |
+|-------|--------|----------|
+| A: Periods | Ratio works (by design) | ζ(3), ζ(2), π, log(2) |
+| B: G-function values | Two-stage PIVP only | e, J₀(1), Li₂(1/2) |
+
+**Correct theorem:** G-function values at algebraic points ∈ R_RTCRN
+(two-stage: series accumulation + regular-point ODE integration).
+Two-stage is strictly more general than ratio.
