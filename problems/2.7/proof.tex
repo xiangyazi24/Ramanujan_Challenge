@@ -87,12 +87,22 @@ challenge) select the specific linear combination of the three
 independent solutions that converges to $\zeta(2) + \zeta(3)$.
 This is verified numerically to 28 digits.
 
-The connection between Problems~2.6 and 2.7 is through
-Ore-equivalence: both operators annihilate related period
-integrals, with~2.7 providing a more efficient (higher-gauge)
-approximation.  The equivalence can be certified by computing
-an intertwining operator between the two recurrences using
-ore\_algebra.
+Problem~2.7's scalar Ore operator has order~3 with degree-18
+polynomial coefficients. Its Poincar\'e characteristic polynomial is
+\begin{equation}\label{eq:poincare7}
+F(\mu) = 4\mu^3 - 220\mu^2 + 8\mu - 1,
+\end{equation}
+which is \textbf{irreducible over $\mathbb{Q}$}. Consequently,
+the operator has no order-1 or order-2 rational factor: there is
+no $(E-1)$ summation-lift factor, and no Ore-equivalence to the
+order-2 operator of Problem~2.6.
+
+Problems~2.6 and 2.7 therefore represent \emph{algebraically
+independent} approximation systems for the same period
+$\zeta(2) + \zeta(3)$.  They may still arise from different paths
+through a common conservative matrix field, but this connection
+must be demonstrated by explicit commuting shift matrices and
+boundary maps, not inferred from scalar recurrences alone.
 \end{proof}
 
 \begin{thebibliography}{10}
