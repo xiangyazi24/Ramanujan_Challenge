@@ -96,9 +96,18 @@ The factor $(t-1)$ is the summation mode (neutral), and
 $t^2 - 34t + 1$ is the rank-2 Ap\'ery-like block.
 The coefficient $34$ is the \emph{same} as in Ap\'ery's
 $\zeta(3)$ recurrence $(n+1)^3 u_{n+1} - (34n^3 + \ldots)u_n
-+ n^3 u_{n-1} = 0$, suggesting a deep connection between the
-Catalan CMF and the Ap\'ery $\zeta(3)$ family through the
-silver ratio $1 + \sqrt{2}$.
++ n^3 u_{n-1} = 0$, suggesting a connection to the Ap\'ery $\zeta(3)$ family.
+
+The rank-2 block is identified with a Clausen square of the
+Gauss function $\,_2F_1(1/2, 1; 3/2; z) = \arctan(\sqrt{-z})/\sqrt{-z}$,
+giving the Catalan integral
+\[
+G = \int_0^1 {}_2F_1\!\left(\frac{1}{2}, 1; \frac{3}{2}; -x^2\right) dx
+= \int_0^1 \frac{\arctan x}{x}\,dx.
+\]
+The silver-ratio Legendre parameter $m = 3 - 2\sqrt{2} = \varepsilon^{-2}$
+has $j$-invariant $j(m) = 8000$, placing the evaluation at a
+specific CM point of the $\,_2F_1$ family.
 
 \subsection{Summation-lift factorization}
 
