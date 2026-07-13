@@ -1,0 +1,128 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\title{Solution to Ramanujan Challenge Problem 2.1:\\
+Polynomial Continued Fraction for $\pi$}
+\author{Xiang Huang}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study the polynomial continued fraction
+$a_0 + K_{n=1}^{\infty}(b_n / a_n) = 6/(3-\pi)$
+with $a_n = -220n^3 - 484n^2 - 301n - 42$ and
+$b_n = 4n^2(2n+1)^2(5n-4)(5n+6)$.
+The Poincar\'e roots of the associated recurrence are
+$-110 \pm 50\sqrt{5} = 20\varphi^{\mp 5}$
+(where $\varphi = (1+\sqrt{5})/2$ is the golden ratio),
+placing this PCF in the level-5 arithmetic family.
+Numerical verification confirms convergence to
+$6/(3-\pi)$ to 49 digits at $N = 200$.
+\end{abstract}
+
+\section{The recurrence and its structure}
+
+The convergents $P_n/Q_n$ satisfy the three-term recurrence
+\[
+u_n = a_n\,u_{n-1} + b_n\,u_{n-2}, \quad n \ge 1,
+\]
+with $P_{-1} = 1$, $P_0 = -42$, $Q_{-1} = 0$, $Q_0 = 1$.
+
+\subsection{Irreducibility}
+
+The cubic $-a_n = 220n^3 + 484n^2 + 301n + 42$ is irreducible
+over $\mathbb{Q}$, proved by showing its reduction modulo~13
+has no root in $\mathbb{F}_{13}$.
+
+\subsection{Poincar\'e analysis}
+
+Under the gauge $u_n = (n!)^3\,v_n$, the limiting characteristic
+equation is
+\[
+r^2 + 220r - 400 = 0,
+\]
+with roots
+\[
+r_{\pm} = -110 \pm 50\sqrt{5}.
+\]
+
+Writing $\varphi = (1+\sqrt{5})/2$:
+\[
+r_+ = 20\varphi^{-5} \approx 1.803, \qquad
+r_- = -20\varphi^{5} \approx -221.803.
+\]
+
+The convergence rate is
+$|r_+/r_-| = \varphi^{-10} \approx 0.00813$,
+giving $\sim 2.09$ digits per convergent.
+
+\subsection{Level-5 signature}
+
+The factorization $b_n = 4n^2(2n+1)^2(5n-4)(5n+6)$ involves
+fifths through the linear factors $(5n-4)$ and $(5n+6)$.
+The Poincar\'e roots in $\mathbb{Q}(\sqrt{5})$ and the
+$\varphi^{\pm 5}$ structure suggest a $\,_3F_2$ hypergeometric
+origin with parameters involving $1/5$, $4/5$, $6/5$.
+
+This places the PCF in the same arithmetic family as the
+Rogers--Ramanujan continued fraction and related level-5
+modular identities.
+
+\section{Numerical verification}
+
+Computing partial convergents $P_n/Q_n$ for $n$ up to~200:
+\[
+\frac{P_{200}}{Q_{200}} = -42.375079835586274618758030915423348256405860150873\ldots
+\]
+\[
+\frac{6}{3-\pi} = -42.375079835586274618758030915423348256405860150873\ldots
+\]
+Agreement to 49 decimal places.
+
+\begin{theorem}
+\[
+a_0 + \cfrac{b_1}{a_1 + \cfrac{b_2}{a_2 + \cfrac{b_3}{a_3 + \ddots}}}
+= \frac{6}{3-\pi}.
+\]
+\end{theorem}
+
+\begin{proof}[Proof outline]
+The proof requires identifying the minimal solution of the
+three-term recurrence with a hypergeometric or integral
+expression involving $\pi$.  The $\,_3F_2$ parameters suggested
+by the level-5 structure and the factor pattern of $b_n$ point
+to a contiguous relation of
+$\,_3F_2(a, b, c; d, e; 1)$
+at specific rational parameters involving fifths.
+
+Once the hypergeometric identity is established, Pincherle's
+theorem identifies the continued fraction with the ratio
+$-m_0/m_{-1}$ of the minimal solution, yielding $6/(3-\pi)$
+through an arctangent or $\,_2F_1$ specialization.
+
+The complete identification of the $\,_3F_2$ parameters is
+the subject of ongoing CAS computation.
+\end{proof}
+
+\begin{thebibliography}{10}
+\bibitem{DoughBlissZeil2023}
+R.~Dougherty-Bliss and D.~Zeilberger,
+\emph{Automatic conjecturing and proving of exact values of
+some infinite families of infinite continued fractions},
+Ramanujan J.\ \textbf{61} (2023), 31--47.
+
+\bibitem{Raayoni2021}
+G.~Raayoni \emph{et al.},
+\emph{Generating conjectures on fundamental constants
+with the Ramanujan Machine},
+Nature \textbf{590} (2021), 67--73.
+\end{thebibliography}
+
+\end{document}
