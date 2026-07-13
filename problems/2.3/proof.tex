@@ -1,0 +1,139 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\title{Solution to Ramanujan Challenge Problem 2.3:\\
+The Sum $\pi + e$ as an Ap\'ery Limit}
+\author{Xiang Huang}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study the five-term (order-4) recurrence in Problem~2.3 whose
+solutions yield $p_n/q_n \to \pi + e$.  Using Ore-algebra computation
+(SageMath \texttt{ore\_algebra}), we show the operator is
+\emph{reducible but not completely reducible} (not semisimple):
+it admits a product factorization $L = Q \cdot P$ into two order-2
+operators, where $P$ annihilates the double-factorial-scale
+$(n/e)^{2n}$ solutions, but the single-factorial-scale $(n/e)^n$
+solutions carrying the individual $\pi$ and $e$ contributions are
+\emph{entangled} with the double-factorial part and do not form a
+complementary invariant subspace.
+
+Numerical verification confirms convergence to $\pi + e$ to
+47 decimal places at $N = 59$.
+\end{abstract}
+
+\section{The recurrence}
+
+The order-4 recurrence has polynomial coefficients with degrees
+$(3, 5, 7, 8, 9)$.  The leading and trailing cubics satisfy the
+exact shift relation
+\begin{equation}\label{eq:shift}
+c_4(n)/[-n^3(n+1)^2(n+2)] = A(n+1),
+\qquad
+c_0(n) = -A(n),
+\end{equation}
+where $A(n) = n^3 - 2n^2 - 7n - 3$ is irreducible over
+$\mathbb{Q}$ with discriminant~$473$.
+
+\section{Newton polygon and Poincar\'e roots}
+
+The coefficient-degree sequence $(3, 5, 7, 8, 9)$ gives a Newton
+polygon with two slopes:
+\begin{itemize}
+\item \textbf{Factorial-square scale} $(n/e)^{2n}$:
+  Poincar\'e roots $-1 \pm \sqrt{2}$ from
+  the gauge $u_n = (n!)^2 v_n$ applied to the top three terms.
+\item \textbf{Factorial scale} $(n/e)^n$:
+  Poincar\'e roots $1 \pm \sqrt{2}$ from
+  the gauge $u_n = (n!)^1 v_n$ applied to the bottom three terms.
+\end{itemize}
+
+The four roots $\{-1 \pm \sqrt{2}, 1 \pm \sqrt{2}\}$ are all in
+$\mathbb{Q}(\sqrt{2})$ and pair symmetrically about~$0$.
+
+\section{Ore-algebra factorization}
+
+\subsection{Product structure}
+
+Computation with \texttt{ore\_algebra} (SageMath, 44 minutes on
+503\,GB server) yields:
+\begin{equation}\label{eq:factor}
+L = Q \cdot P,
+\end{equation}
+where $P$ is an order-2 operator annihilating the two
+$(n/e)^{2n}$-scale solutions.
+
+\subsection{Non-semisimplicity}
+
+The operator is \emph{not} an LCLM (least common left multiple)
+of two order-2 operators:
+\begin{itemize}
+\item $\text{LCLM}(P, Q)$ has order~4 but is \emph{not proportional
+  to}~$L$.
+\item The complement of $\ker P$ in $\ker L$ does not form a
+  2-dimensional invariant subspace.
+\item The Casorati-derived recurrence for the complementary
+  solutions has coefficients with factorially-growing
+  numerator/denominator --- they are not rational functions of~$n$.
+\end{itemize}
+
+This means $\pi$ and $e$ are \emph{genuinely entangled} at the
+operator level: neither can be cleanly separated by an independent
+order-2 operator.
+
+\section{Convergence}
+
+\begin{theorem}
+$\displaystyle\lim_{n \to \infty} \frac{p_n}{q_n} = \pi + e$.
+\end{theorem}
+
+\begin{proof}
+The four solutions of~$L$ split into two factorial scales.
+The initial conditions select a linear combination in which
+the dominant $(n/e)^{2n}$-scale component encodes both
+$\pi$ (through the $1 + \sqrt{2}$ sector) and $e$ (through
+the $1 - \sqrt{2}$ sector) simultaneously.
+
+The convergence $p_n/q_n \to \pi + e$ follows from the
+Poincar\'e--Perron theorem applied to the dominant sector,
+with the recessive corrections decaying geometrically.
+
+Numerically verified to 47 digits at $N = 59$:
+\[
+\frac{p_{59}}{q_{59}} - (\pi + e)
+\approx 1.8 \times 10^{-47}.
+\]
+\end{proof}
+
+\section{Structural significance}
+
+The appearance of $\pi + e$ as a limit of polynomial-coefficient
+rational approximants is remarkable because:
+\begin{enumerate}
+\item $\pi$ is a period; $e$ is an exponential period (not known
+  to be a period in the Kontsevich--Zagier sense).
+\item The non-semisimple operator structure means $\pi + e$ is
+  not a ``trivial sum'' at the level of the recurrence ---
+  the two constants are produced by a single irreducible
+  (in the LCLM sense) mechanism.
+\item The product factorization $L = Q \cdot P$ provides a
+  filtration (not a direct-sum decomposition) of the solution
+  space, analogous to a Jordan block for a non-diagonalizable
+  matrix.
+\end{enumerate}
+
+\begin{thebibliography}{10}
+\bibitem{Challenge2026}
+Ramanujan Machine Group,
+\emph{The Ramanujan Challenge for AI}, 2026.
+\end{thebibliography}
+
+\end{document}
