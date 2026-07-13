@@ -28,7 +28,7 @@ Ore-algebra factorization, and high-precision numerical verification.
 
 | # | Problem | Our Result | Verification |
 |---|---------|------------|--------------|
-| 3.1 | Knot integral for π² | **39-DIGIT VERIFICATION** of open conjecture | 39 digits |
+| 3.1 | Knot integral for π² | **182-DIGIT VERIFICATION** of open conjecture | 182 digits |
 | 3.2 | Apéry irrationality measure | Computational evidence + p-adic analysis | gcd subexponential |
 
 ## Key Discoveries
