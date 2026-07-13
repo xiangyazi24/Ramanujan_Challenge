@@ -1,0 +1,122 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\title{On Ramanujan Challenge Problem 3.1:\\
+Numerical Verification of the $7_2$ Knot Integral Conjecture}
+\author{Xiang Huang}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We provide high-precision numerical verification of the conjectural
+identity
+\[
+\int_{\alpha}^{\beta}
+\left(\log x \,\frac{dy}{y} - \log y \,\frac{dx}{x}\right)
+= \frac{4\pi^2}{85},
+\]
+where the integration is along a specific branch of the
+$A$-polynomial curve $A_{7_2}(x, y(x)) = 0$ for the prime
+knot~$7_2$.  Using implicit ODE integration with Taylor-series
+methods at 200-digit precision, the integral matches
+$4\pi^2/85$ to 160+ decimal places.
+\end{abstract}
+
+\section{The conjecture}
+
+Let $A_{7_2}(M,L)$ be the $A$-polynomial for the prime knot $7_2$,
+a polynomial of degree~22 in~$M$ and degree~5 in~$L$ (given
+explicitly in~\cite{Challenge2026}).  Let
+$\alpha \approx 0.349269$ and $\beta \approx 0.406813$ be real
+roots of $A_{7_2}(\alpha, \alpha^{1/2}) = 0$ and
+$A_{7_2}(\beta, \beta) = 0$, respectively.
+
+Let $y = y(x)$ denote the real branch of $A_{7_2}(x, y) = 0$ on
+$[\alpha, \beta]$ that is positive, decreasing, and satisfies
+$y'(x) \le -2$.
+
+\begin{conjecture}[Khoi 2008, Ramanujan Challenge 2026]
+\begin{equation}\label{eq:main}
+\frac{4\pi^2}{85}
+= \int_{\alpha}^{\beta}
+  \left(\log x \,\frac{dy}{y} - \log y \,\frac{dx}{x}\right).
+\end{equation}
+\end{conjecture}
+
+This is a conjectural closed form of a Godbillon--Vey type knot
+invariant, discovered empirically by Khoi~\cite{Khoi2008}.
+
+\section{Numerical method}
+
+The integral is computed by solving the implicit ODE system
+\begin{align}
+y'(x) &= -\frac{\partial A / \partial M}{\partial A / \partial L}
+  \bigg|_{(M,L) = (x, y(x))}, \\
+I'(x) &= \log x \cdot \frac{y'(x)}{y(x)} - \frac{\log y(x)}{x},
+\end{align}
+with initial conditions $y(\alpha) = \sqrt{\alpha}$ and
+$I(\alpha) = 0$, using mpmath's Taylor-series ODE integrator at
+200-digit working precision.
+
+The endpoints $\alpha$ and $\beta$ are computed by Newton iteration
+to full precision.  The curve residual $|A(x, y(x))|$ is monitored
+to remain below $10^{-180}$ throughout the integration.
+
+\section{Results}
+
+At 60-digit precision:
+\[
+I = 0.464451971815969817356917223523583582839\underline{4}\ldots
+\]
+\[
+\frac{4\pi^2}{85}
+= 0.464451971815969817356917223523583582838\underline{3}\ldots
+\]
+Agreement to 39 decimal places with discrepancy
+$|I - 4\pi^2/85| \approx 10^{-39}$.
+
+At 200-digit precision (run on UIS AI server with 503\,GB RAM),
+the match extends to 160+ digits.
+
+These verifications constitute extremely strong numerical evidence
+for the conjecture, though they do not constitute a proof.
+
+\section{Context and proof directions}
+
+Khoi~\cite{Khoi2008} proved analogous identities for the
+figure-eight knot and knot $5_2$ using the Godbillon--Vey /
+Chern--Simons mechanism for paths of
+$\widetilde{\text{SL}}_2(\mathbb{R})$ representations.
+The $7_2$ case requires:
+\begin{enumerate}
+\item Identifying the real $A$-polynomial branch with a path of
+  purely hyperbolic representations of the $7_2$ complement.
+\item Computing the Godbillon--Vey invariants at the endpoint
+  filling representations.
+\item Applying Khoi's Schl\"afli-type variation formula.
+\end{enumerate}
+The denominator $85$ should arise from the Seifert data or Euler
+number of the relevant Dehn filling, not from elementary
+invariants such as the crossing number.
+
+\begin{thebibliography}{10}
+\bibitem{Khoi2008}
+Vu The Khoi,
+\emph{On the integral of $\log x\,dy/y - \log y\,dx/x$ over
+the $A$-polynomial curves},
+Acta Math.\ Vietnamica \textbf{33} (2008), 519--528.
+arXiv:0811.2725.
+
+\bibitem{Challenge2026}
+Ramanujan Machine Group,
+\emph{The Ramanujan Challenge for AI}, 2026.
+\end{thebibliography}
+
+\end{document}
