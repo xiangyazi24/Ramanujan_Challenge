@@ -15,14 +15,14 @@ Ore-algebra factorization, and high-precision numerical verification.
 
 | # | Problem | Our Result | Verification |
 |---|---------|------------|--------------|
-| 2.1 | PCF for π | Structural analysis: level-5 (φ^{-10}), ₃F₂ connection | 49 digits |
+| 2.1 | PCF for π | **NEAR-COMPLETE**: L₃ reducible, π from 3rd-kind elliptic integral on 6-torsion | 49 digits |
 | 2.2 | γ as Apéry limit | **COMPLETE PROOF**: Aptekarev recurrence (index shift m=n+3) | 52 digits |
-| 2.3 | π+e as Apéry limit | Deep structure: non-semisimple L=Q·P, entangled π+e | 47 digits |
+| 2.3 | π+e as Apéry limit | **COMPLETE PROOF**: q_n=A·D, p_n=4B·D+A·(n+3)!, Lambert+derangement | 47 digits |
 | 2.4 | Harmonic + polylog + ζ | Proof outline: weight-4 HPL at 1/2, creative telescoping | Slow convergence |
 | 2.5 | Catalan's G (CMF) | Proof outline: det(M) factored, summation lift | 51 digits |
 | 2.6 | Series for ζ(2)+ζ(3) | Proof: Beukers-Hadjicostas integral, Poincaré asymptotics | Polynomial conv. |
 | 2.7 | 4-term ζ(2)+ζ(3) | Proof: shifted endpoint structure, Ore equivalence to 2.6 | 28 digits |
-| 2.8 | √10005/π (CMF) | **COMPLETE PROOF**: Chudnovsky formula (R=1-j(τ₁₆₃)/1728) | 12+ digits |
+| 2.8 | √10005/π (CMF) | **COMPLETE PROOF**: Chudnovsky CMF, Poincaré root 64R exact | 12+ digits |
 
 ### Section 3: Conjectures
 
