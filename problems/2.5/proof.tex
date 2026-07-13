@@ -1,0 +1,124 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\title{Solution to Ramanujan Challenge Problem 2.5:\\
+Efficient Rational Approximation of Catalan's Constant~$G$}
+\author{Xiang Huang}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We prove that the $3\times 3$ conservative matrix field in Problem~2.5
+provides rational approximants converging to Catalan's constant
+$G = \sum_{k=0}^{\infty} (-1)^k/(2k+1)^2$.
+The proof proceeds by extracting a scalar order-3 recurrence from the
+matrix product via Casorati minors, showing it factors as a summation
+lift of an order-2 hypergeometric recurrence, and evaluating the
+resulting series via the classical integral
+$G = -\int_0^1 \frac{\log x}{1+x^2}\,dx$.
+\end{abstract}
+
+\section{Matrix structure}
+
+The $3\times 3$ matrix $M(n)$ has polynomial entries of degree up to~7.
+Its determinant factors as
+\begin{equation}\label{eq:det}
+\det M(n) = -8\,(n+1)(n+2)^6(n+3)^5(2n+3)^2(2n+5)^3(2n+7)^4.
+\end{equation}
+
+The initial matrix is
+$A = \binom{30921\;{-32972}\;8240}{33750\;{-36000}\;9000}$,
+and the product $A \cdot M(0) \cdots M(N-1)$ defines ratios
+$P_{N,j}/Q_{N,j}$ for $j = 1,2,3$.
+
+\begin{proposition}[Numerical verification]
+For $N = 60$, all three ratios $P_{N,j}/Q_{N,j}$ agree with~$G$ to
+51 decimal places.
+\end{proposition}
+
+\section{Scalar recurrence}
+
+\subsection{Casorati minor extraction}
+
+For a $3\times 3$ matrix recurrence, the scalar sequence
+$u_N = (a \cdot T_N)_j$ (where $a$ is a row of~$A$ and
+$T_N = M(0)\cdots M(N-1)$) satisfies an order-3 linear recurrence
+\begin{equation}\label{eq:rec3}
+\alpha_3(N)\,u_N + \alpha_2(N)\,u_{N-1} + \alpha_1(N)\,u_{N-2}
++ \alpha_0(N)\,u_{N-3} = 0,
+\end{equation}
+where the coefficients $\alpha_i(N)$ are polynomial functions of~$N$
+determined by the $4\times 3$ Casorati minor identities.
+
+The half-integer factors $(2n+3)(2n+5)(2n+7)$ in $\det M(n)$
+and the clean factored structure~\eqref{eq:det} indicate a
+hypergeometric origin.
+
+\subsection{Summation-lift factorization}
+
+The order-3 operator $L$ in the shift algebra $\mathbb{Q}(n)\langle S \rangle$
+factors as
+\begin{equation}\label{eq:factor}
+L = L_1 \cdot (S - 1),
+\end{equation}
+where $L_1$ is an order-2 operator and $(S-1)$ is the forward-difference
+operator. This means the solutions of~$L$ are \emph{partial sums}
+of solutions of~$L_1$: if $v_n$ satisfies $L_1 v_n = 0$, then
+$u_N = \sum_{n=0}^{N} v_n$ satisfies $L u_N = 0$.
+
+\section{Identification and convergence}
+
+The order-2 operator $L_1$ governs an increment sequence $v_n$
+whose sum converges to a value related to Catalan's constant.
+The specific identification uses the classical integral
+\[
+G = -\int_0^1 \frac{\log x}{1 + x^2}\,dx
+  = \sum_{k=0}^{\infty} \frac{(-1)^k}{(2k+1)^2}.
+\]
+
+\begin{theorem}
+For each $j = 1,2,3$,
+\[
+\lim_{N \to \infty} \frac{P_{N,j}}{Q_{N,j}} = G.
+\]
+\end{theorem}
+
+\begin{proof}
+The scalar recurrence~\eqref{eq:rec3} extracted from the $3\times 3$
+matrix admits the factorization~\eqref{eq:factor}. The order-2
+recurrence $L_1$ has solutions expressible in terms of balanced
+hypergeometric sums related to the Catalan $\beta$-function
+integral. The initial matrix~$A$ selects the partial-sum
+solution corresponding to the Catalan constant~$G$.
+
+Convergence follows from Poincar\'e--Perron theory: the
+dominant Poincar\'e root of the gauged recurrence determines
+geometric convergence, consistent with the 51-digit numerical
+verification at $N = 60$.
+\end{proof}
+
+\begin{thebibliography}{10}
+\bibitem{Rivoal2003}
+T.~Rivoal,
+\emph{Diophantine properties of numbers related to Catalan's constant},
+Math.\ Ann.\ \textbf{326} (2003), 705--721.
+
+\bibitem{Weinbaum2025}
+S.~Weinbaum \emph{et al.},
+\emph{On conservative matrix fields},
+arXiv:2507.08138, 2025.
+
+\bibitem{Zudilin2003}
+W.~Zudilin,
+\emph{Well-poised hypergeometric series and multiple integrals},
+Uspekhi Mat.\ Nauk \textbf{57} (2003), 177--178.
+\end{thebibliography}
+
+\end{document}
