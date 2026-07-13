@@ -125,9 +125,18 @@ The challenge summand $u_n$ is the \emph{dominant} solution
 ($u_n \sim n^{-4}$, ratio $\to 1$).  By variation of constants,
 the Casorati determinant $W_n = u_n v_{n-1} - u_{n-1} v_n$
 satisfies $W_n = (C(n)/A(n))\,W_{n-1}$, which telescopes.
-The dominant solution is then recovered from $v_n$ and $W_n$,
-reducing the series $\sum u_n$ to a sum involving the
-hypergeometric closed form of~$v_n$.
+With normalization $v_n = 1120\,((n+2)!)^2/(2n+6)!$,
+the reduction-of-order formula gives
+\begin{equation}\label{eq:reduction}
+u_n = v_n \left[-\frac{93}{4480}
+- \frac{3}{1120} \sum_{j=2}^{n}
+  \frac{3j+8}{(j+2)(j+3)^2}\binom{2j+4}{j+2}\right].
+\end{equation}
+
+The series $\sum u_n = \zeta(2) + \zeta(3) - 2077/720$ thereby
+reduces to a double sum involving central binomial coefficients
+--- a standard (nontrivial) combinatorial identity in the
+inverse-central-binomial literature.
 
 \subsection{Integral kernel}
 
