@@ -104,16 +104,19 @@ $O(N^{-3})$ tail estimate from the $n^{-4}$ decay rate).
 A complete algebraic proof proceeds as follows.  The factored
 leading coefficient $A(n) = 2(n+3)^3(2n+5)(3n+5)$ has roots
 at $n = -3$ (triple), $n = -5/2$, and $n = -5/3$.  These
-shifts point to a beta-integral kernel with \emph{thirds}
-and \emph{halves}:
+shifts point to a \emph{mixed-slope} Beukers kernel.  The standard uniform-slope
+ansatz $x^n y^n (1-x)^n (1-y)^n / (1-xy)^n$ cannot work:
+its exponential base is bounded by $\max_{[0,1]^2} t(x,y) \le
+\varphi^{-5}$, which does not match either Poincar\'e root
+($1$ or $1/4$).
+
+The correct kernel has slopes $(1,1,2,1;2)$:
 \[
 K_n(x,y) = \frac{x^{n+\alpha}(1-x)^{n+\beta}\,
-  y^{n+\gamma}(1-y)^{n+\delta}}{(1-xy)^{n+\eta}},
+  y^{2n+\gamma}(1-y)^{n+\delta}}{(1-xy)^{2n+\eta}},
 \]
-where the parameters $\alpha, \beta, \gamma, \delta, \eta$
-are determined by matching the recurrence~\eqref{eq:rec}
-via creative telescoping.  The Sigma package~\cite{Schneider2007}
-or HolonomicFunctions can compute this certificate explicitly.
+where the doubled exponents in $y$ and $(1-xy)$ match the
+recessive Poincar\'e root $1/4 = (1/2)^2$.
 
 The key structural insight: the Poincar\'e roots $1$ and $1/4$
 indicate that the generating function $U(x) = \sum u_n x^n$
