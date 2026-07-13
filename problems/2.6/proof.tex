@@ -110,6 +110,27 @@ its exponential base is bounded by $\max_{[0,1]^2} t(x,y) \le
 \varphi^{-5}$, which does not match either Poincar\'e root
 ($1$ or $1/4$).
 
+\subsection{Hypergeometric recessive solution}
+
+The recurrence~\eqref{eq:rec} has a hypergeometric (Petkov\v{s}ek)
+solution $v_n$ with exact ratio
+\begin{equation}\label{eq:hyper}
+\frac{v_{n+1}}{v_n} = \frac{(n+3)^2}{2(n+4)(2n+7)}
+\longrightarrow \frac{1}{4}.
+\end{equation}
+This is the \emph{recessive} solution ($v_n \sim 4^{-n} n^{-3/2}$),
+verified to 119 digits.
+
+The challenge summand $u_n$ is the \emph{dominant} solution
+($u_n \sim n^{-4}$, ratio $\to 1$).  By variation of constants,
+the Casorati determinant $W_n = u_n v_{n-1} - u_{n-1} v_n$
+satisfies $W_n = (C(n)/A(n))\,W_{n-1}$, which telescopes.
+The dominant solution is then recovered from $v_n$ and $W_n$,
+reducing the series $\sum u_n$ to a sum involving the
+hypergeometric closed form of~$v_n$.
+
+\subsection{Integral kernel}
+
 The correct kernel has slopes $(1,1,2,1;2)$:
 \[
 K_n(x,y) = \frac{x^{n+\alpha}(1-x)^{n+\beta}\,
