@@ -172,6 +172,41 @@ the golden-ratio structure ($L_5 = 11$, $F_5 = 5$), and the
 level-5 Poincar\'e root $20\varphi^{-5}$ all point to a
 modular-level-5 origin, connecting this PCF to the
 Rogers--Ramanujan continued fraction family.
+
+\subsection{Operator reducibility and rank reduction}
+
+The carrier $\mathcal{L}_3$ is \emph{reducible}: its formal
+adjoint has the algebraic solution $x^{-9/5}$, providing an
+invariant rank-2 subsystem.  The factorization is
+\[
+\mathcal{L}_3 = (\text{order-1}) \cdot \mathcal{L}_2,
+\]
+where $\mathcal{L}_2$ is an order-2 operator.  The extension
+$0 \to W \to V \to \mathbb{C} \cdot x^{-9/5} \to 0$
+is \emph{nonsplit} (no invariant complementary line), so the
+monodromy is reducible but indecomposable.
+
+The local monodromies at $\alpha = \varphi^5$ and
+$\beta = -\varphi^{-5}$ are \emph{reflections} with
+eigenvalues $\{1, 1, -1\}$.  The rank-2 block $\mathcal{L}_2$
+has reflection monodromies at all four singular points, governed
+by a $(2,2,2,2)$-orbifold group --- the modular group of an
+\emph{elliptic curve}.
+
+The quotient character $\chi$ involves $x^{-9/5}$, encoding the
+level-5 structure directly in the monodromy representation.
+
+This reduction converts the order-3 connection problem into:
+\begin{enumerate}
+\item An order-2 connection problem for $\mathcal{L}_2$ on the
+  elliptic double cover (Euler integrals).
+\item A variation-of-parameters integral for the nonsplit
+  extension.
+\end{enumerate}
+
+The value $\pi$ enters through the elliptic periods of the
+$(2,2,2,2)$-orbifold, which are classical $\,_2F_1$ evaluations
+at the cross-ratio of $\{0, \varphi^5, -\varphi^{-5}, \infty\}$.
 \end{proof}
 
 \begin{thebibliography}{10}
