@@ -13,5 +13,13 @@
 - 2.3 breakthrough: L = Q*P product factorization (non-semisimple, not LCLM)
 - uisai2: Sage ore_algebra confirmed 2.3 structure (44 min), 2.4 Zeilberger running
 - ChatGPT: ~20 queries dispatched, all tabs cycling
-- end: 
-- final result: 
+- milestone 12:00: 52 commits, 3 complete proofs (2.2, 2.3, 2.8), 2.1 near-complete
+- BREAKTHROUGHS:
+  - 2.3: q_n=A_{n+2}D_{n+3}, p_n=4B_{n+2}D_{n+3}+A_{n+2}(n+3)! → π+e
+  - 2.8: Poincaré root 64R exact, sum of roots = 64R-56
+  - 2.1: L₃ reducible, adjoint x^{-9/5}(x+2), π from 3rd-kind elliptic integral
+  - 2.4: closed form A_m = C_m[r_m²-H_{2m}^(2)+3Σ1/(j²C_j)]
+- uisai2: 2.5 guess() retrying with 250 terms (degree up to 42)
+- ChatGPT: ~40 queries dispatched, all tabs cycling
+- end: ongoing
+- final result: ongoing
