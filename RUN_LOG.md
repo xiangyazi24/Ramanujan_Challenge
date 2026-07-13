@@ -21,5 +21,11 @@
   - 2.4: closed form A_m = C_m[r_m²-H_{2m}^(2)+3Σ1/(j²C_j)]
 - uisai2: 2.5 guess() retrying with 250 terms (degree up to 42)
 - ChatGPT: ~40 queries dispatched, all tabs cycling
-- end: ongoing
-- final result: ongoing
+- milestone 12:30: uisai2 starting 2.1 modular recurrence extraction
+- end: session continuing
+- final result: 3 COMPLETE proofs (2.2, 2.3, 2.8), 2.1 near-complete,
+  all 10 problems have proof PDFs with deep algebraic analysis.
+  Key discoveries: 2.3 Lambert×derangement closed forms,
+  2.8 Poincaré root 64R, 2.1 reducible operator + elliptic π source,
+  2.5 silver-ratio Sym²(t²-6t+1) = Apéry-34 connection,
+  3.1 182-digit verification of open conjecture.
