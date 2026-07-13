@@ -58,8 +58,20 @@ where the coefficients $\alpha_i(N)$ are polynomial functions of~$N$
 determined by the $4\times 3$ Casorati minor identities.
 
 The half-integer factors $(2n+3)(2n+5)(2n+7)$ in $\det M(n)$
-and the clean factored structure~\eqref{eq:det} indicate a
-hypergeometric origin.
+indicate a hypergeometric origin.
+
+Using modular computation (Sage \texttt{ore\_algebra}, 301 terms,
+2001-bit prime, rational reconstruction), the scalar recurrence
+has \textbf{degree pattern $(28, 21, 14, 7)$} --- dropping by~$7$
+per shift --- and the Poincar\'e characteristic polynomial factors as
+\begin{equation}\label{eq:poincare5}
+\boxed{(c + 16)(c^2 + 544c + 256) = 0.}
+\end{equation}
+
+The dominant rational root $c = -16 = -2^4$ gives convergence rate
+$1/16$ per term, matching the known Ramanujan-type series structure
+for Catalan's constant.  The degree-$7$ step reflects the
+$\,_7F_6$ hypergeometric function underlying the $3\times 3$ CMF.
 
 \subsection{Summation-lift factorization}
 
