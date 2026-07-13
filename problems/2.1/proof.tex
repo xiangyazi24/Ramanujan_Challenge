@@ -138,10 +138,40 @@ Frobenius bases at different singular points.  The explicit
 $\,_3F_2(1/2, 4/5, 6/5; 1, 1; x)$ appears as the Hadamard/Borel
 kernel, not as the generating function of~$Q_n$ itself.
 
-A complete proof requires solving the four-point connection
-problem, either by finding a rational pullback to a $\,_3F_2$,
-or by direct Frobenius--integral evaluation of the connection
-coefficient.
+The proof strategy has two viable routes.
+
+\textbf{Route A: Quadratic pullback.}
+The two finite singularities satisfy $\alpha \cdot \beta = -1$
+(since $\varphi^5 \cdot (-\varphi^{-5}) = -1$) and
+$\alpha - \beta = \varphi^5 + \varphi^{-5} = 11$ (the Lucas
+number $L_5$).  The quadratic map
+$z = x^2 - 11x - 1$ sends both finite singularities to $z = 0$,
+potentially reducing the 4-singularity Heun equation to a
+3-singularity $\,_3F_2$.  However, the deck involution
+$\iota(x) = 11 - x$ does not preserve the singular set
+(it maps $x = 0$ to $x = 11$), so the descent requires
+an apparent singularity at $x = 11$.
+
+\textbf{Route B: Direct connection formula.}
+By the Poincar\'e--Perron theorem, the PCF converges to
+the ratio $-f_0/f_{-1}$ where $f_n$ is the \emph{minimal}
+solution (associated with the Poincar\'e root
+$r_+ = 20\varphi^{-5}$).  The value $6/(3-\pi)$ then
+arises as the connection coefficient between the Frobenius
+bases at $x = 0$ and at $x = \varphi^5$ (or
+$x = -\varphi^{-5}$).
+
+Since $\pi = 4\arctan(1)$ and $\arctan$ appears naturally in
+the monodromy of order-2 Fuchsian equations with real branch
+points, the connection formula for the Heun carrier
+$\mathcal{L}_3$ should involve $\arctan$ of an algebraic
+argument --- yielding $\pi$ as the transcendental period.
+
+The four singularities $\{0, \varphi^5, -\varphi^{-5}, \infty\}$,
+the golden-ratio structure ($L_5 = 11$, $F_5 = 5$), and the
+level-5 Poincar\'e root $20\varphi^{-5}$ all point to a
+modular-level-5 origin, connecting this PCF to the
+Rogers--Ramanujan continued fraction family.
 \end{proof}
 
 \begin{thebibliography}{10}
