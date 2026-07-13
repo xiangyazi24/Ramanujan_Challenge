@@ -134,3 +134,23 @@ A single fixed PIVP must have its trajectory converge to ζ(3) EXACTLY.
 Current status: generating function direct encoding at a regular singular
 point REMAINS OPEN in the exact RTCRN sense. The ratio and integral routes
 work because they avoid the singular point entirely.
+
+## POISSON TRANSFORM ROUTE (ChatGPT Q4725) — potential resolution
+
+Z*(t) = e^{-t} · Σₙ Sₙ · tⁿ/n!  where Sₙ = partial sums of aₖ
+
+Properties:
+- No truncation, no ε, contains the FULL infinite sequence
+- Z*(t) → ζ(3) as t→∞, error ≤ C·e^{-(1-q)t} (EXACT limit)
+- Z* is D-finite → differentially algebraic → has GPAC/PIVP representation
+- All Taylor coefficients at t=0 are RATIONAL (= Sₙ/n!)
+- With t=r², the ODE for Z* becomes polynomial
+
+Open question: can we write the EXPLICIT small-dimensional polynomial
+system, and is it non-singular at t=0?
+
+Shannon-Pour-El gives existence but not a printed vector field.
+The companion ODE from the D-finite structure may still have
+regular singular point at t=0 (same issue recycled).
+
+Xiang's verdict: pending.
