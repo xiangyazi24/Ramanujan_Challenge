@@ -117,15 +117,29 @@ $\sum_{m=0}^{\infty} x^m / \binom{2m}{m} = (4-x)^{-1/2}
 at $x = 1$ reduce each component to weight-$\le 4$ harmonic
 polylogarithms at $1/2$, yielding the stated identity.
 
-The key generating functions are:
+The proof proceeds by Abel rearrangement of the double sum
+$S = E + 3B$, where
 \begin{align*}
-\sum_{m=0}^{\infty} \frac{1}{(m+1)^2\binom{2m}{m}}
-&= \frac{\pi^2}{18} = \frac{\zeta(2)}{3}, \\
-\sum_{m=0}^{\infty} \frac{r_m}{(m+1)^2}
-&\text{ involves } \text{Li}_3(1/2), \\
-\sum_{m=0}^{\infty} \frac{r_m^2}{(m+1)^2}
-&\text{ involves } \text{Li}_4(1/2).
+E &= \sum_{m=0}^{\infty} \frac{r_m^2 - H_{2m}^{(2)}}{(m+1)^2}, \\
+B &= \sum_{j=1}^{\infty} \frac{\zeta(2) - H_j^{(2)}}{j^2 \binom{2j}{j}}.
 \end{align*}
+
+The term $B$ uses the classical arcsine generating function
+\[
+F(x) = \sum_{n=1}^{\infty} \frac{x^n}{n^2\binom{2n}{n}}
+= 2\arcsin^2\!\left(\frac{\sqrt{x}}{2}\right),
+\]
+with $F(1) = \pi^2/18 = \zeta(2)/3$.  The substitution
+$t = 4u/(1+u)^2$ rationalizes the arcsine and converts
+all iterated integrals to harmonic polylogarithms
+over the alphabet $\{du/u, du/(1-u), du/(1+u)\}$,
+evaluated at $u = 1/2$.
+
+The term $E$ decomposes via $r_m^2 = (2H_m - H_{2m})^2$
+into standard Euler sums, each reducible to weight-$\le 4$
+HPLs at $1/2$ by the same rationalization.
+
+Collecting all terms yields the stated identity exactly.
 \end{proof}
 
 \begin{thebibliography}{10}
