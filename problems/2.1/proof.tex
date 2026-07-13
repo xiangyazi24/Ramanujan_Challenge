@@ -7,7 +7,7 @@
 \newtheorem{proposition}[theorem]{Proposition}
 
 \title{Solution to Ramanujan Challenge Problem 2.1:\\
-Polynomial Continued Fraction for $\pi$}
+Polynomial Continued Fraction for $\pi$ --- Near-Complete Proof}
 \author{Xiang Huang}
 \date{July 2026}
 
@@ -15,246 +15,97 @@ Polynomial Continued Fraction for $\pi$}
 \maketitle
 
 \begin{abstract}
-We study the polynomial continued fraction
-$a_0 + K_{n=1}^{\infty}(b_n / a_n) = 6/(3-\pi)$
-with $a_n = -220n^3 - 484n^2 - 301n - 42$ and
-$b_n = 4n^2(2n+1)^2(5n-4)(5n+6)$.
-The Poincar\'e roots of the associated recurrence are
-$-110 \pm 50\sqrt{5} = 20\varphi^{\mp 5}$
-(where $\varphi = (1+\sqrt{5})/2$ is the golden ratio),
-placing this PCF in the level-5 arithmetic family.
-Numerical verification confirms convergence to
-$6/(3-\pi)$ to 49 digits at $N = 200$.
+We give a near-complete proof that the polynomial continued
+fraction in Problem~2.1 equals $6/(3-\pi)$.  The proof reduces
+the order-3 carrier to a forced order-2 equation via the adjoint
+solution $z(x) = x^{-9/5}(x+2)$, linearizes the order-2 factor
+on the elliptic curve $E: u^2 = x(1+11x-x^2)$ using a third-kind
+differential with $3$-torsion residues, and evaluates the endpoint
+coordinate as $T = -i\pi/(3\sqrt{3})$ via the logarithmic jump
+$\log(-1) = i\pi$.  The remaining step is the algebraic de~Rham
+reduction of the variation-of-parameters differentials.
 \end{abstract}
 
-\section{The recurrence and its structure}
+\section{Setup and factorization}
 
-The convergents $P_n/Q_n$ satisfy the three-term recurrence
-\[
-u_n = a_n\,u_{n-1} + b_n\,u_{n-2}, \quad n \ge 1,
-\]
-with $P_{-1} = 1$, $P_0 = -42$, $Q_{-1} = 0$, $Q_0 = 1$.
-
-\subsection{Irreducibility}
-
-The cubic $-a_n = 220n^3 + 484n^2 + 301n + 42$ is irreducible
-over $\mathbb{Q}$, proved by showing its reduction modulo~13
-has no root in $\mathbb{F}_{13}$.
-
-\subsection{Poincar\'e analysis}
-
-Under the gauge $u_n = (n!)^3\,v_n$, the limiting characteristic
-equation is
-\[
-r^2 + 220r - 400 = 0,
-\]
-with roots
-\[
-r_{\pm} = -110 \pm 50\sqrt{5}.
-\]
-
-Writing $\varphi = (1+\sqrt{5})/2$:
-\[
-r_+ = 20\varphi^{-5} \approx 1.803, \qquad
-r_- = -20\varphi^{5} \approx -221.803.
-\]
-
-The convergence rate is
-$|r_+/r_-| = \varphi^{-10} \approx 0.00813$,
-giving $\sim 2.09$ digits per convergent.
-
-\subsection{Level-5 signature}
-
-The factorization $b_n = 4n^2(2n+1)^2(5n-4)(5n+6)$ involves
-fifths through the linear factors $(5n-4)$ and $(5n+6)$.
-The Poincar\'e roots in $\mathbb{Q}(\sqrt{5})$ and the
-$\varphi^{\pm 5}$ structure suggest a $\,_3F_2$ hypergeometric
-origin with parameters involving $1/5$, $4/5$, $6/5$.
-
-This places the PCF in the same arithmetic family as the
-Rogers--Ramanujan continued fraction and related level-5
-modular identities.
-
-\section{Numerical verification}
-
-Computing partial convergents $P_n/Q_n$ for $n$ up to~200:
-\[
-\frac{P_{200}}{Q_{200}} = -42.375079835586274618758030915423348256405860150873\ldots
-\]
-\[
-\frac{6}{3-\pi} = -42.375079835586274618758030915423348256405860150873\ldots
-\]
-Agreement to 49 decimal places.
-
-\begin{theorem}
-\[
-a_0 + \cfrac{b_1}{a_1 + \cfrac{b_2}{a_2 + \cfrac{b_3}{a_3 + \ddots}}}
-= \frac{6}{3-\pi}.
-\]
-\end{theorem}
-
-\begin{proof}[Proof outline]
-The proof requires identifying the minimal solution of the
-three-term recurrence with a hypergeometric or integral
-expression involving $\pi$.  The $\,_3F_2$ parameters suggested
-by the level-5 structure and the factor pattern of $b_n$ point
-to a contiguous relation of
-$\,_3F_2(a, b, c; d, e; 1)$
-at specific rational parameters involving fifths.
-
-Once the hypergeometric identity is established, Pincherle's
-theorem identifies the continued fraction with the ratio
-$-m_0/m_{-1}$ of the minimal solution, yielding $6/(3-\pi)$
-through an arctangent or $\,_2F_1$ specialization.
-
-The natural cubic gamma gauge
-$g_n = \Gamma(n+1)\Gamma(n+1/2)\Gamma(n+6/5)/\Gamma(n+16/5)$
-(up to normalization) reduces the recurrence to an order-3
-differential equation $\mathcal{L}_3$ with \emph{four} regular
-singular points:
-\[
-x = 0, \quad x = \varphi^5, \quad x = -\varphi^{-5}, \quad x = \infty.
-\]
-
-The Riemann scheme is
-\[
-\begin{pmatrix}
-0 & \varphi^5 & -\varphi^{-5} & \infty \\
-\hline
-0 & 0 & 0 & -4/5 \\
-0 & 0 & 0 & 1/2 \\
-0 & -1/2 & -1/2 & 6/5
-\end{pmatrix}
-\]
-
-This is a \emph{generalized Heun equation} (4 singular points),
-not a standard $\,_3F_2$ Picard--Fuchs operator (3 singular points).
-The monodromy eigenvalues at $x = 0$ rule out a symmetric-square
-(Clausen) structure.
-
-The value $6/(3-\pi)$ therefore arises as a \emph{connection constant}
-of this Fuchsian equation --- the ratio of coefficients in the
-Frobenius bases at different singular points.  The explicit
-$\,_3F_2(1/2, 4/5, 6/5; 1, 1; x)$ appears as the Hadamard/Borel
-kernel, not as the generating function of~$Q_n$ itself.
-
-The proof strategy has two viable routes.
-
-\textbf{Route A: Quadratic pullback.}
-The two finite singularities satisfy $\alpha \cdot \beta = -1$
-(since $\varphi^5 \cdot (-\varphi^{-5}) = -1$) and
-$\alpha - \beta = \varphi^5 + \varphi^{-5} = 11$ (the Lucas
-number $L_5$).  The quadratic map
-$z = x^2 - 11x - 1$ sends both finite singularities to $z = 0$,
-potentially reducing the 4-singularity Heun equation to a
-3-singularity $\,_3F_2$.  However, the deck involution
-$\iota(x) = 11 - x$ does not preserve the singular set
-(it maps $x = 0$ to $x = 11$), so the descent requires
-an apparent singularity at $x = 11$.
-
-\textbf{Route B: Direct connection formula.}
-By the Poincar\'e--Perron theorem, the PCF converges to
-the ratio $-f_0/f_{-1}$ where $f_n$ is the \emph{minimal}
-solution (associated with the Poincar\'e root
-$r_+ = 20\varphi^{-5}$).  The value $6/(3-\pi)$ then
-arises as the connection coefficient between the Frobenius
-bases at $x = 0$ and at $x = \varphi^5$ (or
-$x = -\varphi^{-5}$).
-
-Since $\pi = 4\arctan(1)$ and $\arctan$ appears naturally in
-the monodromy of order-2 Fuchsian equations with real branch
-points, the connection formula for the Heun carrier
-$\mathcal{L}_3$ should involve $\arctan$ of an algebraic
-argument --- yielding $\pi$ as the transcendental period.
-
-The four singularities $\{0, \varphi^5, -\varphi^{-5}, \infty\}$,
-the golden-ratio structure ($L_5 = 11$, $F_5 = 5$), and the
-level-5 Poincar\'e root $20\varphi^{-5}$ all point to a
-modular-level-5 origin, connecting this PCF to the
-Rogers--Ramanujan continued fraction family.
-
-\subsection{Operator reducibility and rank reduction}
-
-The carrier $\mathcal{L}_3$ is \emph{reducible}: its formal
-adjoint has the algebraic solution $x^{-9/5}$, providing an
-invariant rank-2 subsystem.  The factorization is
-\[
-\mathcal{L}_3 = (\text{order-1}) \cdot \mathcal{L}_2,
-\]
-where $\mathcal{L}_2$ is an order-2 operator.  The extension
-$0 \to W \to V \to \mathbb{C} \cdot x^{-9/5} \to 0$
-is \emph{nonsplit} (no invariant complementary line), so the
-monodromy is reducible but indecomposable.
-
-The local monodromies at $\alpha = \varphi^5$ and
-$\beta = -\varphi^{-5}$ are \emph{reflections} with
-eigenvalues $\{1, 1, -1\}$.  The rank-2 block $\mathcal{L}_2$
-has reflection monodromies at all four singular points, governed
-by a $(2,2,2,2)$-orbifold group --- the modular group of an
-\emph{elliptic curve}.
-
-The quotient character $\chi$ involves $x^{-9/5}$, encoding the
-level-5 structure directly in the monodromy representation.
-
-This reduction converts the order-3 connection problem into:
-\begin{enumerate}
-\item An order-2 connection problem for $\mathcal{L}_2$ on the
-  elliptic double cover (Euler integrals).
-\item A variation-of-parameters integral for the nonsplit
-  extension.
-\end{enumerate}
-
-The elliptic double cover is
-$E: y^2 = x(x - \varphi^5)(x + \varphi^{-5}) = x^3 - 11x^2 - x$,
-with $j$-invariant $j(E) = 2^{14} \cdot 31^3 / 5^3$ --- \emph{not}
-an algebraic integer, so $E$ has \textbf{no complex multiplication}.
-Therefore the elliptic periods $K(k)/\pi$ are not algebraic.
-
-The adjoint solution is $z(x) = x^{-9/5}(x+2)$, and the
-exact factorization is
+With $\varphi = (1+\sqrt{5})/2$,
+$\alpha = \varphi^5$, $\delta = \varphi^{-5}$, $\beta = -\delta$,
+and $f(x) = 1 + 11x - x^2 = (\alpha - x)(x + \delta)$, the
+order-3 carrier is
 \[
 \frac{\mathcal{L}_3}{20x^3 f(x)}
-= \left(\frac{d}{dx} + \frac{6}{5x} + \frac{1}{x+2}
-  + \frac{f'(x)}{f(x)}\right) \mathcal{L}_2,
+= \left(D + \frac{6}{5x} + \frac{1}{x+2} + \frac{f'}{f}\right)
+  \mathcal{L}_2,
 \]
-where $\mathcal{L}_2$ is an order-2 operator with four
-genuine reflection monodromies.
+where $\mathcal{L}_2$ is an explicit order-2 operator.
+The inhomogeneous equation is $\mathcal{L}_3 F_Q = 6x$.
 
-On the elliptic double cover
-$E: u^2 = x\,f(x) = x(\varphi^5 - x)(x + \varphi^{-5})$,
-the rank-2 block $\mathcal{L}_2$ splits into two rank-1
-equations via a third-kind differential attached to a
-\textbf{point of order~6}.
+\section{Adjoint quadrature (algebraic step)}
 
-The exact source of $\pi$ is the closed-form identity
-\begin{equation}\label{eq:pi-source}
-\int_0^{-\varphi^{-5}}
-\frac{x+2}{(x-3)\sqrt{x\,f(x)}}\,dx
-= -\frac{i\pi}{3\sqrt{3}},
-\end{equation}
-where the square root is continued through the upper
-half-plane.  This is a complete elliptic integral of the
-\textbf{third kind} whose poles differ by a torsion point
-on~$E$.
+The adjoint solution $z(x) = x^{-9/5}(x+2)$ performs the first
+reduction exactly:
+\[
+\mathcal{L}_2 F_Q = \frac{x + 12}{4x(x+2)f(x)}.
+\]
+This is \textbf{algebraic} --- no $\pi$ yet.
 
-Variation of parameters then reduces the continued-fraction
-evaluation to an algebraic-differential certificate built
-from~\eqref{eq:pi-source} and the Lambert connection
-constant.
-\end{proof}
+\section{Elliptic linearization}
+
+On $E: u^2 = xf(x)$, the third-kind differential
+\[
+\omega = \frac{x+2}{(x-3)u}\,dx
+\]
+has poles at $P_{\pm} = (3, \pm 5\sqrt{3})$ with residues
+$\pm 1/\sqrt{3}$.  Zero residue at the branch points.
+
+The torsion relation: $P_+ - P_-$ has \textbf{order~3} in
+$\text{Pic}^0(E)$, certified by the rational function
+\[
+\mathcal{R}(x,u) = \frac{(\sqrt{3}\,u - 4x - 3)(3u - 5\sqrt{3}\,x)}%
+{(\sqrt{3}\,u + 4x + 3)(3u + 5\sqrt{3}\,x)},
+\quad
+d\log\mathcal{R} = 3\sqrt{3}\,\omega.
+\]
+
+\section{The $\pi$-producing integral}
+
+Define $t(x) = \int_0^x \omega$.  Along the path from $(0,0)$ to
+$(\beta, 0)$ through the upper half-plane:
+\[
+\boxed{T := t(\beta) = -\frac{i\pi}{3\sqrt{3}},}
+\]
+because $\mathcal{R}(\beta,0) = 1$, $\mathcal{R}(0,0) = -1$, and
+$3\sqrt{3}\,T = \log(1) - \log(-1) = -i\pi$.
+
+With $a = \sqrt{3}/2$: $aT = -i\pi/6$, so
+$e^{\pm aT} = e^{\mp i\pi/6}$ are \textbf{sixth roots of unity}.
+
+\section{Connection to the continued fraction}
+
+The linearization $F = h(x)\,\psi(t(x))$ with
+$h = \sqrt{(x-3)/u}$ reduces $\mathcal{L}_2$ to
+$\psi'' - \frac{3}{4}\psi = 0$ (constant-coefficient!).
+
+The CF value satisfies
+\[
+\frac{6}{3-\pi} = -42 + 396 \cdot \frac{\psi_S(T)}{\psi_Q(T)},
+\]
+where $\psi_Q, \psi_S$ are the forced solutions corresponding to
+$Q_n$ and $S_n = (P_n + 42Q_n)/396$.
+
+\section{Remaining step}
+
+The proof is complete modulo one finite algebraic computation:
+the de~Rham reduction of the four variation-of-parameters
+differentials (two for $\psi_Q$, two for $\psi_S$) along the
+path from $0$ to~$\beta$.  After this reduction, the only
+surviving transcendental is the torsion logarithm $T$, and the
+arithmetic simplifies to $6/(3-\pi)$.
 
 \begin{thebibliography}{10}
-\bibitem{DoughBlissZeil2023}
-R.~Dougherty-Bliss and D.~Zeilberger,
-\emph{Automatic conjecturing and proving of exact values of
-some infinite families of infinite continued fractions},
-Ramanujan J.\ \textbf{61} (2023), 31--47.
-
-\bibitem{Raayoni2021}
-G.~Raayoni \emph{et al.},
-\emph{Generating conjectures on fundamental constants
-with the Ramanujan Machine},
-Nature \textbf{590} (2021), 67--73.
+\bibitem{Challenge2026}
+Ramanujan Machine Group,
+\emph{The Ramanujan Challenge for AI}, 2026.
 \end{thebibliography}
 
 \end{document}
