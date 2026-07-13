@@ -121,3 +121,16 @@ Every holonomic GF at a regular singular point:
 (ii) Ore factorization → minimal saddle system, GF = unstable manifold
 (iii) ε-perturbation gives rational ICs to arbitrary precision
 (iv) Apéry ζ(3): 2-species CRN suffices
+
+## XIANG'S PRECISION OBJECTION (2026-07-13)
+
+The ε-perturbation with N-term truncation gives J(ε) rational with O(ε^N) error.
+But RTCRN requires the trajectory LIMIT to be EXACTLY the target constant.
+Truncation error propagates through the ODE → the limit is NOT exactly ζ(3).
+
+This is NOT an engineering issue — it's a theoretical precision requirement.
+A single fixed PIVP must have its trajectory converge to ζ(3) EXACTLY.
+
+Current status: generating function direct encoding at a regular singular
+point REMAINS OPEN in the exact RTCRN sense. The ratio and integral routes
+work because they avoid the singular point entirely.
