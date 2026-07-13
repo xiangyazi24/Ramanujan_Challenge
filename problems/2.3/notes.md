@@ -19,10 +19,32 @@ Prove: lim p_n/q_n = π + e
 
 ## Numerical verification: ✅ (matches to 50 digits at N=80)
 
-## Approach Ideas
-- π + e appearing together is very unusual — no known closed-form integral for this
-- The recurrence is order 4 — significantly harder
-- This is likely the hardest problem in Section 2
-- Check: does the recurrence factor into two order-2 recurrences (one for π, one for e)?
-- Differential Galois theory perspective
-- Possible connection to periods of mixed motives
+## Key Findings
+
+### Poincaré roots: {-1±√2, 1±√2} at two factorial scales
+- (n/e)^{2n} modes: roots -1±√2 (double-factorial)
+- (n/e)^n modes: roots 1±√2 (single-factorial)
+
+### Ore algebra analysis (uisai2 Sage, 44 min computation)
+- **REDUCIBLE but NOT COMPLETELY REDUCIBLE** (not semisimple)
+- One 2D invariant subspace: Sol(P) annihilates (n/e)^{2n} pair
+- L = Q·P as product factorization (left factor Q, right factor P)
+- But NO complementary 2D invariant subspace — the (n/e)^n solutions
+  are ENTANGLED with the double-factorial part
+- Complement has non-rational (factorially-growing) coefficients
+
+### LCLM test results
+- LCLM of two order-2 operators in Q[n]<S>: FAILS (ChatGPT Q4639)
+- Product factorization L = Q·P: EXISTS (uisai2 ore_algebra)
+- But P and Q don't cleanly separate π from e
+
+### ChatGPT "proof" via Lambert+derangement: DEBUNKED
+- Lambert CF A_m/B_m → I₀(2)/I₁(2) ≈ 0.698, NOT π
+- Initial values don't match
+
+## Approach Ideas (updated)
+- The non-semisimple structure suggests a Jordan-block phenomenon
+- π+e is genuinely entangled at the operator level
+- Need: CMF embedding or non-obvious integral representation
+- Possible: the proof uses the PRODUCT structure L=Q·P differently
+  from a simple decomposition
