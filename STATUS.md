@@ -1,27 +1,43 @@
 # Ramanujan Challenge — Status (2026-07-13)
 
-## Triage (after first-pass ChatGPT analysis)
+## Strategy (Fable oracle, confirmed)
 
-### Tier 1: Essentially Solved (proof in literature, need writeup + Lean)
-- **2.2 (γ Apéry)**: IS the Aptekarev recurrence (index shift m=n+3). Gauge (n!)², triple root (r-1)³. Proof via multiple orthogonal polynomials. PRIORITY: write up first.
+**Breadth-first, CAS-first.** Submit each problem as solved. Target: 5-7 problems.
+Section 2 = reverse-lookup (find which known result is disguised). 2.2 confirmed this.
+Build ore_algebra pipeline on uisai2 (days 1-2), amortize across 6 problems.
+Lean only as garnish after CAS proofs.
 
-### Tier 2: Clear Attack Vector (need CAS work)
-- **2.1 (PCF→π)**: Irreducible cubic, gauge (n!)³, Poincaré roots -110±50√5. Need: identify minimal solution, find hypergeometric/integral representation. Try Petkovsek + creative telescoping.
-- **2.4 (harmonic+polylog)**: Inner sum = parameter derivative of ₂F₁. Outer sum = inverse-central-binomial series. Reduce to weight-≤4 HPLs at 1/2. Need: run Sigma or creative telescoping on uisai2.
-- **2.6 (series ζ(2)+ζ(3))**: Poincaré roots 1 and 1/4. GF satisfies explicit ODE. Need: connection formula U(1) = ζ(2)+ζ(3)-2077/720. Route: period integral or operator factorization.
+## Progress
 
-### Tier 3: Hard but Tractable
-- **2.5 (Catalan CMF)**: 3×3 matrix = order-3 recurrence. Factors as summation lift of order-2 kernel. Need: identify with Rivoal-Zudilin, creative telescoping.
-- **2.7 (4-term ζ(2)+ζ(3))**: Related to 2.6 but more efficient. Very large coefficients → uisai2. Need numerical verification first.
-- **2.3 (π+e Apéry)**: Order 4 = hardest in Section 2. Key question: does operator factor into π-part + e-part? ChatGPT response pending.
+### SOLVED
+- **2.2 (γ Apéry)** ✅ — Aptekarev recurrence (index shift m=n+3). Proof + PDF written.
 
-### Tier 4: Very Hard / Open Problems
-- **2.8 (√10005/π)**: Labeled conjecture. Number theory: discriminant -40020, CM point. ChatGPT analyzing. Need to identify underlying 1/π series.
-- **3.1 (knot integral π²)**: Knot theory / A-polynomial / Mahler measure. Very different tools needed.
-- **3.2 (Apéry irrationality measure)**: Deep p-adic number theory. Probably genuinely open.
+### In Progress  
+- **2.3 (π+e)**: Poincaré roots 0,0,1±√2. Fable predicts LCLM of two order-2 ops (π+e).
+  Need ore_algebra factorization on uisai2. HIGHEST LEVERAGE TEST.
+- **2.1 (PCF→π)**: Gauge (n!)³, roots -110±50√5 ∈ Q(√5). ChatGPT: no named match yet.
+- **2.4 (harmonic+polylog)**: Two-stage symbolic summation → weight-4 HPLs at 1/2. CAS job.
+- **2.6 (ζ(2)+ζ(3))**: Poincaré roots 1, 1/4. GF ODE known. Need connection formula.
+- **2.5 (Catalan CMF)**: Order-3 = summation lift of order-2. Rivoal-Zudilin connection.
+- **2.7 (4-term ζ(2)+ζ(3))**: Related to 2.6. Needs numerical verification first.
 
-## Next Actions
-1. Write proof for 2.2 (Aptekarev identification)
-2. Run CAS computations on uisai2 for 2.4, 2.6, 2.7
-3. Read remaining ChatGPT responses (2.3, 2.8)
-4. Start Lean formalization of 2.2
+### Bounded Budget / Dropped
+- **2.8 (√10005/π)**: Possibly Chudnovsky-related (discriminant). Bounded exploration only.
+- **3.1 (knot π²)**: One-shot literature search only.
+- **3.2 (Apéry measure)**: DROPPED — genuinely open, zero EV in 19 days.
+
+## Attack Order (Fable-recommended)
+1. ~~2.2~~ ✅ DONE
+2. 2.3 factorization test (day 1-2, cheap, huge information value)
+3. 2.4 (days 3-7, most mechanical)
+4. 2.6 (days 4-8, numerics-then-prove)
+5. 2.1 (days 6-10, with pipeline)
+6. 2.7 (days 9-13, template from 2.6)
+7. 2.5 (days 10-15)
+8. 2.3 full solve + 2.8 attempt (days 12-17)
+
+## Infrastructure TODO
+- [ ] ore_algebra + Mathematica pipeline on uisai2
+- [ ] 500-digit numerical verification for all problems
+- [ ] OEIS lookups for all sequences
+- [ ] Poincaré root fingerprinting against known families
