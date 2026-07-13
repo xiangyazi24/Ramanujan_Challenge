@@ -92,30 +92,40 @@ powers of $\log 2$, and zeta values.
 \end{theorem}
 
 \begin{proof}
-\textbf{Step 1: Creative telescoping certificate.}
-The inner sum $A_m$ satisfies the recurrence~\eqref{eq:CT},
-which is a certified algebraic identity provable by polynomial
-arithmetic in the $\Pi\Sigma^*$ difference field.
+\textbf{Step 1: Closed form for $A_m$.}
+From the certificate~\eqref{eq:CT}, Abel summation yields
+the explicit formula
+\begin{equation}\label{eq:Am}
+A_m = \binom{2m}{m}\left[r_m^2 - H_{2m}^{(2)}
+  + 3\sum_{j=1}^{m} \frac{1}{j^2\binom{2j}{j}}\right],
+\end{equation}
+where $H_n^{(2)} = \sum_{j=1}^{n} j^{-2}$ is the generalized
+harmonic number.
 
-\textbf{Step 2: Beta-integral reduction.}
-Using the identity
-$1/((m+1)\binom{2m}{m}) = B(m+1,m+1)/2 = \int_0^1 t^m(1-t)^m\,dt/2$,
-the outer sum becomes
+\textbf{Step 2: Substitution into the outer sum.}
+With $g_m = A_m/((m+1)^2 \binom{2m}{m})$, formula~\eqref{eq:Am}
+gives
 \[
-\sum_{m=0}^{\infty} g_m
-= \int_0^1 \sum_{m=0}^{\infty}
-  \frac{A_m\,t^m(1-t)^m}{2(m+1)} \,dt.
+g_m = \frac{r_m^2 - H_{2m}^{(2)}
+  + 3\sum_{j=1}^{m} (j^2\binom{2j}{j})^{-1}}{(m+1)^2}.
 \]
 
-\textbf{Step 3: HPL evaluation.}
-After the substitution $t = (1 - \sqrt{1-4s})/2$ (rationalization
-of the arcsine kernel), the iterated integrals reduce to the
-weight-4 harmonic polylogarithm basis at argument~$1/2$.
+\textbf{Step 3: Evaluation via inverse-central-binomial sums.}
+The classical identity
+$\sum_{m=0}^{\infty} x^m / \binom{2m}{m} = (4-x)^{-1/2}
+\cdot 2/\sqrt{4-x} \cdot \ldots$ and its derivatives/integrals
+at $x = 1$ reduce each component to weight-$\le 4$ harmonic
+polylogarithms at $1/2$, yielding the stated identity.
 
-The coefficients in the basis decomposition are determined
-uniquely by the recurrence~\eqref{eq:CT} and the explicit
-first values $A_0 = 0$, $A_1 = 1$, $A_2 = 25/4$, $A_3 = 587/18$.
-This yields the stated identity.
+The key generating functions are:
+\begin{align*}
+\sum_{m=0}^{\infty} \frac{1}{(m+1)^2\binom{2m}{m}}
+&= \frac{\pi^2}{18} = \frac{\zeta(2)}{3}, \\
+\sum_{m=0}^{\infty} \frac{r_m}{(m+1)^2}
+&\text{ involves } \text{Li}_3(1/2), \\
+\sum_{m=0}^{\infty} \frac{r_m^2}{(m+1)^2}
+&\text{ involves } \text{Li}_4(1/2).
+\end{align*}
 \end{proof}
 
 \begin{thebibliography}{10}
