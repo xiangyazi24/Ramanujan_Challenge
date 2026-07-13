@@ -204,9 +204,22 @@ This reduction converts the order-3 connection problem into:
   extension.
 \end{enumerate}
 
-The value $\pi$ enters through the elliptic periods of the
-$(2,2,2,2)$-orbifold, which are classical $\,_2F_1$ evaluations
-at the cross-ratio of $\{0, \varphi^5, -\varphi^{-5}, \infty\}$.
+The elliptic double cover is
+$E: y^2 = x(x - \varphi^5)(x + \varphi^{-5}) = x^3 - 11x^2 - x$,
+with $j$-invariant $j(E) = 2^{14} \cdot 31^3 / 5^3$ --- \emph{not}
+an algebraic integer, so $E$ has \textbf{no complex multiplication}.
+Therefore the elliptic periods $K(k)/\pi$ are not algebraic.
+
+The value $\pi$ instead enters through the \emph{nonsplit extension}:
+the variation-of-parameters integral
+\[
+\int x^{-9/5} \cdot (\text{elliptic solution of } \mathcal{L}_2)
+\,dx
+\]
+picks up $\pi$ via the $x^{-9/5}$ character (the level-5 monodromy)
+interacting with the algebraic singularities at the golden-ratio
+points.  This is consistent with $\pi = 4\arctan(1)$ appearing
+through the integration of $x^{-9/5}$ near algebraic branch points.
 \end{proof}
 
 \begin{thebibliography}{10}
