@@ -13,16 +13,20 @@ Lean only as garnish after CAS proofs.
 - **2.2 (γ Apéry)** ✅ — Aptekarev recurrence (index shift m=n+3). Proof + PDF written.
 
 ### In Progress  
-- **2.3 (π+e)**: Poincaré roots 0,0,1±√2. Fable predicts LCLM of two order-2 ops (π+e).
-  Need ore_algebra factorization on uisai2. HIGHEST LEVERAGE TEST.
+- **2.3 (π+e)**: Poincaré roots {-1±√2, 1±√2} at two factorial scales.
+  LCLM test NEGATIVE in Q[n]<S>. Cubics c0, c4 = same irreducible cubic shifted by 1.
+  Genuinely hard — may need full CMF or non-obvious integral representation.
 - **2.1 (PCF→π)**: Gauge (n!)³, roots -110±50√5 ∈ Q(√5). ChatGPT: no named match yet.
 - **2.4 (harmonic+polylog)**: Two-stage symbolic summation → weight-4 HPLs at 1/2. CAS job.
 - **2.6 (ζ(2)+ζ(3))**: Poincaré roots 1, 1/4. GF ODE known. Need connection formula.
 - **2.5 (Catalan CMF)**: Order-3 = summation lift of order-2. Rivoal-Zudilin connection.
 - **2.7 (4-term ζ(2)+ζ(3))**: Related to 2.6. Needs numerical verification first.
 
+### Promoted to Tier 2!
+- **2.8 (√10005/π)**: **IDENTIFIED = Chudnovsky formula in CMF disguise!**
+  R = 1-j(τ₁₆₃)/1728. Cubic = Chudnovsky fingerprint. Proof: reduce to CM theory.
+
 ### Bounded Budget / Dropped
-- **2.8 (√10005/π)**: Possibly Chudnovsky-related (discriminant). Bounded exploration only.
 - **3.1 (knot π²)**: One-shot literature search only.
 - **3.2 (Apéry measure)**: DROPPED — genuinely open, zero EV in 19 days.
 

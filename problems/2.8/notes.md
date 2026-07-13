@@ -1,26 +1,40 @@
 # Problem 2.8: Very Fast Rational Approximation of √10005/π
 
-## Statement
+## BREAKTHROUGH: THIS IS THE CHUDNOVSKY FORMULA IN CMF DISGUISE
 
-4×4 matrix recurrence with a specific large parameter R = 151931373056001.
-Matrix M(n) has entries that are polynomials in u = 2n+3 and w = u(3u-2)(3u+2).
-Product M_N = M(0)·...·M(N-1), initial 2×4 matrix A with very large integer entries.
+### Key identifications (ChatGPT Q4637):
 
-Prove (conjecture): lim P_{N,j}/Q_{N,j} = √10005/π for j=1,2,3,4.
+1. **√10005/π = Chudnovsky constant:**
+   √10005/π = (1/426880) Σ_{k=0}^∞ (-1)^k (6k)! / ((3k)!(k!)³ 640320^{3k}) × (545140134k + 13591409)
 
-## Numerical verification: TODO (very large integers, needs uisai2)
+2. **640320 = 64 × 10005, so √640320 = 8√10005**
 
-## Key Observation
-√10005 = √(10005) — note 10005 = 3·5·23·29. Also 10005 = 58²·...
-Actually √10005/π is related to modular functions:
-- Ramanujan's formula: 1/π = (√8)/(99²) Σ (4n)!/(n!)⁴ · (1103+26390n)/(99⁴)^n
-- The number 10005 may connect to class number theory and singular moduli
-- R = 151931373056001 — check if this has number-theoretic significance
+3. **R = 151931373056001 = 3³ · 7² · 11² · 19² · 127² · 163**
+   - R - 1 = 640320³/1728 = 53360³
+   - R = 1 - j(τ₁₆₃)/1728 where j is the modular j-function
+   - τ₁₆₃ = (1+√-163)/2, the CM point for the Heegner number 163
 
-## Approach Ideas
-- This is labeled a CONJECTURE (Section 2 but conjectural convergence)
-- The connection to √d/π suggests Ramanujan-type series via CM elliptic curves
-- Check: is 10005 a Heegner-like number? Class field theory?
-- The Chudnovsky brothers' formula uses 163 (Heegner number)
-- Connection to our Chudnovsky project in Ripple!
-- The 4×4 matrix likely encodes a degree-4 recurrence from a CMF
+4. **The cubic w = u(3u-2)(3u+2) with u=2n+3:**
+   Setting k = n+1: w = (2k+1)(6k+1)(6k+5) = exactly the Chudnovsky hypergeometric ratio
+
+5. **4×4 = rank-3 Chudnovsky/Clausen module + summation coordinate**
+
+## Proof Strategy
+
+The Chudnovsky formula is a PROVEN result. The proof uses:
+- CM theory of Q(√-163) (complex multiplication)
+- Singular moduli and the j-invariant
+- Originally: Chudnovsky brothers (1988), Borwein-Borwein (1987)
+
+To prove Problem 2.8:
+1. Show the 4×4 CMF matrix encodes the Chudnovsky partial sums
+2. The limit = √10005/π follows from the proven Chudnovsky formula
+3. The CMF structure adds efficiency but doesn't change the constant
+
+### Verification
+√10005/π ≈ 31.8389453710638695...
+Each Chudnovsky term gives ~14.18 digits (log₁₀(R-1) ≈ 14.18)
+
+## Status: TRACTABLE — reduce to known Chudnovsky result
+
+## Numerical verification: TODO (need exact matrix transcription from PDF)
