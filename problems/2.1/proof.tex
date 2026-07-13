@@ -93,14 +93,24 @@ The CF value satisfies
 where $\psi_Q, \psi_S$ are the forced solutions corresponding to
 $Q_n$ and $S_n = (P_n + 42Q_n)/396$.
 
-\section{Remaining step}
+\section{Remaining step: one period identity}
 
-The proof is complete modulo one finite algebraic computation:
-the de~Rham reduction of the four variation-of-parameters
-differentials (two for $\psi_Q$, two for $\psi_S$) along the
-path from $0$ to~$\beta$.  After this reduction, the only
-surviving transcendental is the torsion logarithm $T$, and the
-arithmetic simplifies to $6/(3-\pi)$.
+Integration by parts in the VoP formula gives
+\[
+\psi_Q(T) = \frac{3 + \mathcal{I}_0}{4}, \quad
+\psi_S(T) = \frac{3 + \mathcal{I}_0 + \mathcal{I}_1}{132},
+\]
+where $\mathcal{I}_0, \mathcal{I}_1$ are explicit Abelian
+integrals on a degree-6 unramified cover of~$E$.
+The CF identity $6/(3-\pi)$ is equivalent to the single
+period identity
+\[
+\boxed{2(3-\pi)\,\mathcal{I}_1 + (5\pi - 16)(3 + \mathcal{I}_0) = 0.}
+\]
+
+This is the genuine remaining certificate: one
+elliptic-period relation, reducible to a Hermite-reduction
+computation on the degree-6 cover.
 
 \begin{thebibliography}{10}
 \bibitem{Challenge2026}
