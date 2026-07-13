@@ -44,11 +44,27 @@ F(x₀) at any rational x₀ ∈ (0,1) is an infinite series sum — NOT rationa
 So it can't be an exact PIVP initial condition. The partial-sum approximation
 F_N(x₀) IS rational but introduces error.
 
-## Open Question
-Does the error from F_N(x₀) ≈ F(x₀) propagate boundedly through the
-ODE integration from x₀ to x=1? Xiang's apery-pivp.tex claims yes
-(amplification factor ~1) but says the overall approach "走不通" — 
-need to understand exactly why.
+## Concrete Computation (2026-07-13): dx/dt=1 DOES NOT WORK
+
+With x=t (linear clock), the Apéry system has:
+- F(0)=0, G₁(0)=F'(0)=1/2, G₂(0)=F''(0)=-1/12
+- dG₂/dt = [1-(2+t)G₁-t(10+3t)G₂] / [t²(4+t)]
+- Numerator at t=0: 1-2·(1/2)-0 = 0 (one-fold zero)
+- Denominator at t=0: 4t² (two-fold zero)
+- So dG₂/dt ~ 1/(8t) → DIVERGES
+
+Frobenius deflation U=t·G₂: U starts moving (dU/dt|₀=1/24≠0),
+but recovering G₂=U/t reintroduces 1/t in dG₁/dt = G₂ = U/t.
+
+ROOT CAUSE: F'(0) = 1/2 ≠ 0 (forced by the inhomogeneous term "1").
+If all ICs were zero, deflation could work recursively. But the
+non-zero Frobenius coefficient at the non-zero indicial root makes
+the singularity irreducible by polynomial state-variable substitution.
+
+## Open Question (refined)
+Is the regular singular point with F'(0)≠0 an ABSOLUTE barrier for
+first-order polynomial PIVP? Or is there a non-obvious variable
+substitution (beyond simple Frobenius deflation) that resolves it?
 
 ## Connection to Ramanujan Challenge
 This session's 2.6 result provides a worked example: the variation-of-constants
