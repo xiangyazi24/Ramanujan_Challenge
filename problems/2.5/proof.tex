@@ -68,10 +68,20 @@ per shift --- and the Poincar\'e characteristic polynomial factors as
 \boxed{(c + 16)(c^2 + 544c + 256) = 0.}
 \end{equation}
 
-The dominant rational root $c = -16 = -2^4$ gives convergence rate
-$1/16$ per term, matching the known Ramanujan-type series structure
-for Catalan's constant.  The degree-$7$ step reflects the
+The three roots factor as
+\[
+c_1 = -16, \quad
+c_2 = -16(17 - 12\sqrt{2}), \quad
+c_3 = -16(17 + 12\sqrt{2}),
+\]
+equivalently $-16$, $-16(1+\sqrt{2})^{-4}$, $-16(1+\sqrt{2})^4$.
+This is a \textbf{silver-ratio} ($1+\sqrt{2}$) structure ---
+distinct from Zudilin's golden-ratio ($\varphi$) Catalan recurrence.
+
+The dominant rational root $c_1 = -16 = -2^4$ gives convergence rate
+$1/16$ per term, and the degree-$7$ step reflects the
 $\,_7F_6$ hypergeometric function underlying the $3\times 3$ CMF.
+The product $c_1 c_2 c_3 = -4096 = -2^{12}$.
 
 \subsection{Summation-lift factorization}
 
