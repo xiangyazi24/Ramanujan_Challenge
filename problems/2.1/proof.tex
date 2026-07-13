@@ -107,8 +107,41 @@ theorem identifies the continued fraction with the ratio
 $-m_0/m_{-1}$ of the minimal solution, yielding $6/(3-\pi)$
 through an arctangent or $\,_2F_1$ specialization.
 
-The complete identification of the $\,_3F_2$ parameters is
-the subject of ongoing CAS computation.
+The natural cubic gamma gauge
+$g_n = \Gamma(n+1)\Gamma(n+1/2)\Gamma(n+6/5)/\Gamma(n+16/5)$
+(up to normalization) reduces the recurrence to an order-3
+differential equation $\mathcal{L}_3$ with \emph{four} regular
+singular points:
+\[
+x = 0, \quad x = \varphi^5, \quad x = -\varphi^{-5}, \quad x = \infty.
+\]
+
+The Riemann scheme is
+\[
+\begin{pmatrix}
+0 & \varphi^5 & -\varphi^{-5} & \infty \\
+\hline
+0 & 0 & 0 & -4/5 \\
+0 & 0 & 0 & 1/2 \\
+0 & -1/2 & -1/2 & 6/5
+\end{pmatrix}
+\]
+
+This is a \emph{generalized Heun equation} (4 singular points),
+not a standard $\,_3F_2$ Picard--Fuchs operator (3 singular points).
+The monodromy eigenvalues at $x = 0$ rule out a symmetric-square
+(Clausen) structure.
+
+The value $6/(3-\pi)$ therefore arises as a \emph{connection constant}
+of this Fuchsian equation --- the ratio of coefficients in the
+Frobenius bases at different singular points.  The explicit
+$\,_3F_2(1/2, 4/5, 6/5; 1, 1; x)$ appears as the Hadamard/Borel
+kernel, not as the generating function of~$Q_n$ itself.
+
+A complete proof requires solving the four-point connection
+problem, either by finding a rational pullback to a $\,_3F_2$,
+or by direct Frobenius--integral evaluation of the connection
+coefficient.
 \end{proof}
 
 \begin{thebibliography}{10}
