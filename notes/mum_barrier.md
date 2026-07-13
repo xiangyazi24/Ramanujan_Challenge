@@ -70,3 +70,21 @@ substitution (beyond simple Frobenius deflation) that resolves it?
 This session's 2.6 result provides a worked example: the variation-of-constants
 sum is computing a period of a Fuchsian ODE, and the central-binomial
 identities are the discrete encoding of that period integral.
+
+## BREAKTHROUGH (ChatGPT Q4724): Apéry ODE is COMPLETELY REDUCIBLE
+
+The double root at ρ=0 is NOT an irreducible MUM block — it's just θ² = (constant)·(log).
+The homogeneous operator factors into THREE first-order factors:
+  L_hom = (D + p₃/q₃)·(D + 1/x)·D
+
+This means:
+- Differentiating once (Y=F') removes the double root: exponents become {-1, -1/2}
+- The analytic inhomogeneous branch has a first-order hypergeometric recurrence
+- aₙ = (-1)^{n-1}/(n³·C(2n,n)) with ratio < 1/4 (geometric convergence)
+
+**Constructive PIVP route:** compile the rational partial-sum recurrence directly.
+No need to fight the singular point at all.
+
+**The general lesson:** "double indicial root" ≠ "irreducible". Check Ore factorizability
+BEFORE declaring MUM. For ζ(3), the operator is completely reducible.
+The TRUE MUM barrier arises only for irreducible blocks (e.g., some Calabi-Yau operators).
