@@ -105,9 +105,26 @@ number theorem, and the gcd cannot exceed $\min(|d_n a_n|, |d_n b_n|)$,
 the supercongruences provide the mechanism preventing exponential
 gcd growth.
 
-A full proof would require showing that no \emph{combination} of
-primes can conspire to produce exponential growth --- i.e., that
-the supercongruences hold \emph{uniformly} across all primes.
+A full proof requires two ingredients:
+\begin{enumerate}
+\item \textbf{Tower rigidity} (from supercongruences):
+For each prime $p$, the $p$-adic valuation along the $p$-power
+tower $n = mp^r$ is controlled by $v_p(A_{mp^r} - A_{mp^{r-1}})
+\ge 3r$.  This bounds the $p$-adic contribution per prime.
+
+\item \textbf{Prime-counting estimate} (the missing ingredient):
+Show that only $o(n/\log n)$ primes can divide both $d_n a_n$ and
+$d_n b_n$ at index~$n$.  Equivalently, for all but a sparse set
+of primes~$p$, at least one of $d_n a_n$ or $d_n b_n$ is a
+$p$-adic unit.  This is the step that prevents exponential
+conspiracy.
+\end{enumerate}
+
+The prime-counting estimate may follow from the
+connection between Ap\'ery numbers and the Fourier
+coefficients of a weight-4 modular form
+(Stienstra--Beukers), via the associated $\ell$-adic
+Galois representation and its Chebotarev-type equidistribution.
 
 \begin{thebibliography}{10}
 \bibitem{Apery1979}
