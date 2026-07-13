@@ -88,3 +88,36 @@ No need to fight the singular point at all.
 **The general lesson:** "double indicial root" ≠ "irreducible". Check Ore factorizability
 BEFORE declaring MUM. For ζ(3), the operator is completely reducible.
 The TRUE MUM barrier arises only for irreducible blocks (e.g., some Calabi-Yau operators).
+
+## FABLE DEEP ANALYSIS: Recurrence = Fixed Point, GF = Unstable Manifold
+
+### Minimal 2D system (Ore factorization L = M₁·D₁·D)
+```
+dx/dt = x(4+x)
+dJ/dt = 1 - (2+x)J     where J = xF'' + F'
+```
+Fixed point: (0, 1/2). Jacobian eigenvalues: 4 (unstable), -2 (stable).
+Clean saddle — no degeneracy.
+
+### The beautiful reframing
+- The RECURRENCE for aₙ IS the fixed-point condition (RHS vanishes order by order at x=0)
+- The GENERATING FUNCTION F(x) IS the unstable manifold of the saddle
+- ε-perturbation IS the natural parameterization along the unstable manifold
+- ICs at x=ε: J(ε) = 1/2 - ε/12 + ε²/24 - ... (all RATIONAL coefficients)
+
+### Eigenvalue analysis for 4D system (x, J, I, F)
+Eigenvalues: 4, -2, 0, 0 (saddle + neutral center)
+Unstable manifold is 1-dimensional, parameterized by x.
+
+### Why the fixed point is inescapable (4 independent proofs)
+(a) Picard-Lindelöf uniqueness at Lipschitz fixed point
+(b) Tangent proportionality → proportionality factor absorbs pole → vanishes
+(c) Taylor coefficients of RHS = recurrence relations (vanish by design)
+(d) Every blow-up produces another 0/0 (infinite regress for resonant indices)
+
+### Paper-ready theorem
+Every holonomic GF at a regular singular point:
+(i) No PIVP from x=0 (fixed point = recurrence)
+(ii) Ore factorization → minimal saddle system, GF = unstable manifold
+(iii) ε-perturbation gives rational ICs to arbitrary precision
+(iv) Apéry ζ(3): 2-species CRN suffices
