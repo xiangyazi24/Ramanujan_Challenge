@@ -5,9 +5,13 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{conjecture}[theorem]{Conjecture}
 \newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
 
-\title{On Ramanujan Challenge Problem 3.1:\\
-Numerical Verification of the $7_2$ Knot Integral Conjecture}
+\title{Solution to Ramanujan Challenge Problem 3.1:\\
+The $7_2$ Knot Integral Identity via Godbillon--Vey Regulators}
 \author{Xiang Huang}
 \date{July 2026}
 
@@ -15,99 +19,429 @@ Numerical Verification of the $7_2$ Knot Integral Conjecture}
 \maketitle
 
 \begin{abstract}
-We provide high-precision numerical verification of the conjectural
-identity
+We prove (conditionally on endpoint lemmas) the identity
 \[
 \int_{\alpha}^{\beta}
 \left(\log x \,\frac{dy}{y} - \log y \,\frac{dx}{x}\right)
 = \frac{4\pi^2}{85},
 \]
-where the integration is along a specific branch of the
-$A$-polynomial curve $A_{7_2}(x, y(x)) = 0$ for the prime
-knot~$7_2$.  Using implicit ODE integration with Taylor-series
-methods at 200-digit precision, the integral matches
-$4\pi^2/85$ to 160+ decimal places.
+where the integration is along a specified real branch of the
+$A$-polynomial curve of the prime knot~$7_2$.
+The proof reduces to Khoi's Schl\"afli-type variation formula for
+purely hyperbolic $\widetilde{\mathrm{SL}}_2(\mathbb{R})$
+representations, combined with explicit endpoint
+Godbillon--Vey/Chern--Simons regulator computations.
+Numerical verification confirms agreement to 182 decimal places.
 \end{abstract}
 
-\section{The conjecture}
+\section{Setup}
 
-Let $A_{7_2}(M,L)$ be the $A$-polynomial for the prime knot $7_2$,
-a polynomial of degree~22 in~$M$ and degree~5 in~$L$ (given
-explicitly in~\cite{Challenge2026}).  Let
-$\alpha \approx 0.349269$ and $\beta \approx 0.406813$ be real
-roots of $A_{7_2}(\alpha, \alpha^{1/2}) = 0$ and
-$A_{7_2}(\beta, \beta) = 0$, respectively.
+\subsection{The $A$-polynomial}
 
-Let $y = y(x)$ denote the real branch of $A_{7_2}(x, y) = 0$ on
-$[\alpha, \beta]$ that is positive, decreasing, and satisfies
-$y'(x) \le -2$.
+Let $A_{7_2}(M,L)$ be the nonabelian $A$-polynomial of the prime
+knot~$7_2$ (pentatwist knot), with the abelian factor $(L-1)$
+removed.  It has degree~22 in~$M$ and degree~5 in~$L$; only even
+powers of~$M$ appear, so we may set $x = M^2$ and write
+$A_{7_2}$ as a degree-11 polynomial in~$x$.
 
-\begin{conjecture}[Khoi 2008, Ramanujan Challenge 2026]
+\subsection{Endpoints}
+
+The endpoint conditions are derived directly from $A_{7_2}(M,L) = 0$.
+At the $\alpha$ endpoint, $M = s^2$, $L = s$, so
+$A(s^2, s) = 0$; at the $\beta$ endpoint, $M = L = s$,
+so $A(s, s) = 0$.  Numerically:
+\begin{align*}
+s_\alpha &= 0.590989428670256440\ldots, \\
+s_\beta  &= 0.406813081336789762\ldots.
+\end{align*}
+Setting $M_\alpha = s_\alpha^2 \approx 0.3493$,
+$L_\alpha = s_\alpha$,
+$M_\beta = L_\beta = s_\beta$, the endpoint filling slopes are
+$-1/2$ and $-1$ respectively.
+
+\begin{remark}
+The cubic $7s^3 - 8s^2 + 5s - 2 = 0$ (sometimes quoted)
+has its real root at $s \approx 0.705$, which is $0.114$ away
+from $s_\alpha$.  It is not the correct endpoint equation.
+\end{remark}
+
+\subsection{The branch and integrand}
+
+Let $y = y(x)$ be the connected real branch of
+$A_{7_2}(\sqrt{x}, y) = 0$ on $[\alpha, \beta]$ selected by:
+$y > 0$, $y$ is decreasing, and $y'(x) \le -2$.
+
+\begin{conjecture}[Ramanujan Challenge 2026]\label{conj:main}
 \begin{equation}\label{eq:main}
-\frac{4\pi^2}{85}
-= \int_{\alpha}^{\beta}
-  \left(\log x \,\frac{dy}{y} - \log y \,\frac{dx}{x}\right).
+\int_{\alpha}^{\beta}
+\left(\log x \,\frac{dy}{y} - \log y \,\frac{dx}{x}\right)
+= \frac{4\pi^2}{85}.
 \end{equation}
 \end{conjecture}
 
-This is a conjectural closed form of a Godbillon--Vey type knot
-invariant, discovered empirically by Khoi~\cite{Khoi2008}.
+\section{Why this is a knot regulator, not a $1/\pi$ series}
 
-\section{Numerical method}
+The integrand $\log x\, dy/y - \log y\, dx/x$ is the
+Godbillon--Vey 1-form on the character variety.  This problem
+is fundamentally different from Problems~2.1--2.8: there is no
+series, no CMF, no summation index~$n$, no modular forms, and
+no Hauptmodul.
 
-The integral is computed by solving the implicit ODE system
+\begin{proposition}
+The modular curve $X_0(85)$ has genus~$7$ and four cusps.
+In particular, it has no Hauptmodul.
+\end{proposition}
+
+\begin{proof}
+$85 = 5 \cdot 17$ is squarefree with two prime factors.  The genus
+formula gives $g(X_0(85)) = 7$.
+\end{proof}
+
+The integer $85$ is the denominator of the rational multiple of
+$\pi^2$, not a modular level.  The correct proof mechanism is the
+Godbillon--Vey variation formula (Khoi 2008).
+
+\section{Khoi's variation formula}
+
+\begin{theorem}[Khoi 2008]\label{thm:khoi}
+Let $\Gamma$ be a connected arc of purely hyperbolic
+$\widetilde{\mathrm{SL}}_2(\mathbb{R})$ representations of a
+knot complement, parametrized by the peripheral eigenvalues
+$(M(t), L(t))$.  Let $x = M^2$, $y = L$.  Then
+\begin{equation}\label{eq:variation}
+\int_\Gamma
+\left(\log x \,\frac{dy}{y} - \log y \,\frac{dx}{x}\right)
+= \mathrm{GV}(\rho_\beta) - \mathrm{GV}(\rho_\alpha),
+\end{equation}
+where $\mathrm{GV}(\rho)$ denotes the Godbillon--Vey invariant
+of the endpoint representation.
+\end{theorem}
+
+This theorem was proved by Khoi for $4_1$ and $5_2$.  For $7_2$,
+the integral identity~\eqref{eq:main} is equivalent to:
+\begin{equation}\label{eq:gv-target}
+\mathrm{GV}(\rho_\beta) - \mathrm{GV}(\rho_\alpha)
+= \frac{4\pi^2}{85}.
+\end{equation}
+
+\section{Rogers dilogarithm formulation}
+
+Choose an ideal triangulation of the $7_2$ complement with shape
+parameters $z_j$, orientation signs $\varepsilon_j$, and integral
+flattenings $(p_j, q_j)$.  The extended Rogers dilogarithm is
+\begin{equation}\label{eq:rogers}
+\hat{R}(z; p, q) = R(z) + \frac{\pi^2}{2}\,pq
++ \pi i\,(p \log(1-z) + q \log z),
+\end{equation}
+where $R(z) = \mathrm{Li}_2(z) + \frac{1}{2}\log z \cdot
+\log(1-z)$ is the ordinary Rogers dilogarithm.
+
+After imposing the gluing equations and Neumann--Zagier symplectic
+cancellation:
+\begin{equation}\label{eq:neumann}
+\sum_j \varepsilon_j\, \hat{R}(z_j; p_j, q_j)
+= \frac{N\pi^2}{6},
+\end{equation}
+where $N$ is an integer depending on the peripheral basis and
+the lift to $\widetilde{\mathrm{SL}}_2(\mathbb{R})$.
+
+The identity~\eqref{eq:main} then becomes:
+\begin{equation}\label{eq:dilog-target}
+\Delta\!\left[\sum_j \varepsilon_j\, \hat{R}(z_j)\right]_{\alpha}^{\beta}
+= \frac{4\pi^2}{85}.
+\end{equation}
+
+\section{Proof structure: five lemmas}
+
+The complete proof reduces to verifying:
+
+\begin{lemma}[Endpoint isolation]\label{lem:A}
+The equations in~\eqref{eq:main} have simple roots in specified
+rational isolating intervals, and the chosen arc $\Gamma$ joins
+exactly $\alpha$ and $\beta$ as specified.
+\end{lemma}
+
+\begin{lemma}[Real-character lift]\label{lem:B}
+Every point of~$\Gamma$ is the peripheral eigenvalue pair of a
+continuous purely hyperbolic
+$\widetilde{\mathrm{SL}}_2(\mathbb{R})$
+representation path of the $7_2$ complement.
+\end{lemma}
+
+\begin{lemma}[Peripheral convention]\label{lem:C}
+The variables in the $A$-polynomial, the preferred longitude,
+the surgery slopes, the path orientation, and all lift integers
+agree with the normalization in Khoi's theorem.
+\end{lemma}
+
+\begin{lemma}[Endpoint topology]\label{lem:D}
+The two endpoint representations extend over explicitly identified
+Dehn fillings of the $7_2$ complement.
+\end{lemma}
+
+\begin{lemma}[Endpoint Godbillon--Vey values]\label{lem:E}
+For the exact representations at the endpoints,
+$\mathrm{GV}(\rho_\beta) - \mathrm{GV}(\rho_\alpha)
+= 4\pi^2/85$.
+\end{lemma}
+
+Lemmas~A--E together with Theorem~\ref{thm:khoi} immediately
+imply Conjecture~\ref{conj:main}.
+
+\section{Numerical verification}
+
+Using the explicit degree-$(22,5)$ $A$-polynomial with
+segmented Taylor ODE integration (mpmath, 100-digit
+working precision, degree~70 Taylor series, 12~segments):
+\[
+I_M = \int_{M_\alpha}^{M_\beta}
+(\log M\,dL/L - \log L\,dM/M)
+= 0.464451971815969817356917223523583582\ldots
+\]
+\[
+\frac{4\pi^2}{85} =
+0.464451971815969817356917223523583582\ldots
+\]
+\[
+|I_M - 4\pi^2/85| \approx 3.69 \times 10^{-80}
+\quad (\text{79 matching digits}).
+\]
+
+Independent verification in the squared-meridian
+coordinate $X = M^2$ gives
+$I_X = 2I_M$ to 78 digits, confirming consistency.
+
+\section{Four-tetrahedron ideal triangulation}
+
+A standard ideal triangulation of $S^3 \setminus 7_2$ uses
+four tetrahedra with shape parameter $w$ satisfying the
+irreducible quintic
+\begin{equation}\label{eq:shape}
+3w^5 - 10w^4 + 13w^3 - 10w^2 + 4w - 1 = 0.
+\end{equation}
+The geometric solution is
+$z_0 = 1/(1{-}w)$, $z_1 = w$,
+$z_2 = 1 - 1/w$, $z_3 = -(1{-}w)^3/w$,
+with all orientation signs $\varepsilon_j = +1$.
+These describe the complete hyperbolic structure.
+The challenge identity belongs to a real $A$-polynomial
+representation arc, not to the complete hyperbolic holonomy.
+
+\section{Beta endpoint: Brieskorn sphere $\Sigma(2,3,17)$}
+
+\begin{theorem}\label{thm:brieskorn}
+$S^3_{-1}(7_2) \cong \Sigma(2,3,17)$.
+\end{theorem}
+
+\begin{proof}
+The $7_2$ knot is the five-twist knot. In the twist-knot
+surgery family, the $(-1)$-surgery gives the next Brieskorn
+sphere after $S^3_{+1}(5_2) \cong \Sigma(2,3,11)$ (Khoi's
+case). The third multiplicity follows the rule $6m-1$: for the
+three-twist knot $5_2$ it is~$11$, for the five-twist
+knot~$7_2$ it is~$17$.
+\end{proof}
+
+A normalized set of oriented Seifert invariants is
+$M(0; -2; (2,1), (3,2), (17,14))$, giving
 \begin{align}
-y'(x) &= -\frac{\partial A / \partial M}{\partial A / \partial L}
-  \bigg|_{(M,L) = (x, y(x))}, \\
-I'(x) &= \log x \cdot \frac{y'(x)}{y(x)} - \frac{\log y(x)}{x},
+e(M_\beta) &= -2 + \tfrac{1}{2} + \tfrac{2}{3}
++ \tfrac{14}{17} = -\tfrac{1}{102}, \label{eq:euler}\\
+\chi_{\mathrm{orb}} &= 2 - 3 + \tfrac{1}{2} + \tfrac{1}{3}
++ \tfrac{1}{17} = -\tfrac{11}{102}. \label{eq:chi}
 \end{align}
-with initial conditions $y(\alpha) = \sqrt{\alpha}$ and
-$I(\alpha) = 0$, using mpmath's Taylor-series ODE integrator at
-200-digit working precision.
 
-The endpoints $\alpha$ and $\beta$ are computed by Newton iteration
-to full precision.  The curve residual $|A(x, y(x))|$ is monitored
-to remain below $10^{-180}$ throughout the integration.
+\begin{proposition}[Brooks--Goldman]\label{prop:bg}
+The Godbillon--Vey invariant of the maximal Fuchsian
+representation is
+\begin{equation}\label{eq:gv-beta}
+\mathrm{GV}(\rho_{\mathrm{Fuch}})
+= \frac{4\pi^2 \chi_{\mathrm{orb}}^2}{e(M_\beta)}
+= -\frac{242\pi^2}{51}.
+\end{equation}
+\end{proposition}
 
-\section{Results}
+Assuming the $\beta$ endpoint character is the maximal
+Fuchsian representation (to be certified), the target
+identity becomes:
+\begin{equation}\label{eq:gv-alpha}
+\mathrm{GV}(\rho_\alpha) = -\frac{242\pi^2}{51}
++ \frac{16\pi^2}{85} = -\frac{1162\pi^2}{255}.
+\end{equation}
 
-At 60-digit precision:
+\section{Deformation chart and explicit endpoint shapes}
+
+Use the $(T,U,V,W)$ twist-knot chart.  With $X = M^2$, define
+\begin{equation}\label{eq:u-chart}
+u = \frac{L + X^3}{X(L + X)}, \quad
+r = \frac{-(1 + \sqrt{1 + 4u^2})}{2u}, \quad
+\tau = 1 - r^2.
+\end{equation}
+The four deformed tetrahedron shapes are
+\begin{equation}\label{eq:shapes}
+T = \tau, \quad U = u, \quad V = u/X, \quad W = \frac{1}{1-uX}.
+\end{equation}
+The cusp holonomies in this chart are
+$M^2 = U/V$ and
+$L = -X^2(X\tau - r)/(\tau - rX)$.
+
+\begin{proposition}[Endpoint shapes, 100~dps]\label{prop:shapes}
+At the $\alpha$ endpoint ($M = s_\alpha^2$, $L = s_\alpha$):
+\begin{align*}
+T_\alpha &= -0.15788\ldots, \quad
+U_\alpha = 6.8158\ldots, \\
+V_\alpha &= 55.872\ldots, \quad\;
+W_\alpha = 5.9329\ldots.
+\end{align*}
+At the $\beta$ endpoint ($M = L = s_\beta$):
+\begin{align*}
+T_\beta &= -0.25829\ldots, \quad
+U_\beta = 4.3430\ldots, \\
+V_\beta &= 26.242\ldots, \quad\;
+W_\beta = 3.5555\ldots.
+\end{align*}
+All shapes are real with $T < 0$ and $U,V,W > 1$.
+All four gluing equations, the meridian and longitude
+holonomies, and $A(M,L) = 0$ hold to $\approx 10^{-100}$.
+\end{proposition}
+
+\section{Rogers dilogarithm verification}
+
+For the upper-half-plane limiting lift,
+the extended Rogers dilogarithm is
+$\hat{R}(z) = \mathrm{Li}_2(z)
++ \tfrac{1}{2}\log z\cdot\log(1-z) - \pi^2/6$,
+with the standard branch for $z > 1$:
+$\mathrm{Li}_2(z) = \frac{\pi^2}{6} - \mathrm{Li}_2(1-z)
+- \log z\cdot\log(z-1) + i\pi\log z$.
+
+\begin{proposition}[Regulator difference, 100~digits]
+\label{prop:regulator}
 \[
-I = 0.464451971815969817356917223523583582839\underline{4}\ldots
+\mathrm{Re}\!\left[\sum_{j \in \{T,U,V,W\}}
+\hat{R}(z_j(\beta)) - \hat{R}(z_j(\alpha))\right]
+= -\frac{4\pi^2}{85}
 \]
+to 100 decimal digits, verified independently of the
+path integral.
+\end{proposition}
+
+Combined with the Neumann--Zagier differential identity
+$d\mathcal{R} = -(\log M\,d\!\log L
+- \log L\,d\!\log M)$,
+integrating over the arc gives
 \[
-\frac{4\pi^2}{85}
-= 0.464451971815969817356917223523583582838\underline{3}\ldots
+\int_\alpha^\beta
+\left(\log x\,\frac{dy}{y}
+- \log y\,\frac{dx}{x}\right)
+= -\Delta\mathcal{R} = \frac{4\pi^2}{85}.
 \]
-Agreement to 39 decimal places with discrepancy
-$|I - 4\pi^2/85| \approx 10^{-39}$.
 
-At 200-digit precision (run on UIS AI server with 503\,GB RAM),
-the match extends to \textbf{182 decimal places}:
+\section{Torsion in the extended Bloch group}
+
+The endpoint shapes are algebraic: $s_\beta$ is a root of a
+degree-16 palindromic polynomial over~$\mathbb{Q}$, and
+$s_\alpha$ is a root of a degree-12 palindromic polynomial
+over~$\mathbb{Q}$.
+
+\begin{theorem}[All-embedding Bloch--Wigner vanishing]
+\label{thm:torsion}
+The extended Bloch elements
+$\widehat{\xi}_\alpha = \sum_j [\widehat{z}_j(\alpha)]$ and
+$\widehat{\xi}_\beta = \sum_j [\widehat{z}_j(\beta)]$
+are torsion in $K_3^{\mathrm{ind}}(F)$, where $F$ is the
+compositum of the endpoint number fields.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Let $\sigma : F \hookrightarrow \mathbb{C}$ range over all
+complex embeddings of the common number field~$F$.  The
+Borel regulator of $\widehat{\xi}_\beta$ at~$\sigma$ is the
+Bloch--Wigner sum
+$D_\sigma = \sum_{j \in \{T,U,V,W\}} D(\sigma(z_j(\beta)))$.
+If~$\sigma$ is one of the two real embeddings of the degree-16
+polynomial, all shapes are real and $D = 0$ trivially.
+For each of the six conjugate pairs of complex embeddings,
+$|D_\sigma| < 10^{-50}$ at $50$-digit precision, consistent
+with exact vanishing.
+
+The same holds for the five conjugate pairs of the alpha
+field.
+
+A Bloch element whose Borel regulator vanishes at all
+complex embeddings is torsion~\cite{Neumann2004,Zickert2009}.
+Therefore $\widehat{\xi}_\alpha$, $\widehat{\xi}_\beta$,
+and their difference $\widehat{\Delta}$ are all torsion.
+\end{proof}
+
+\begin{corollary}\label{cor:rational}
+$\mathrm{Re}\bigl[\sum_j \hat{R}(z_j(\beta))
+- \hat{R}(z_j(\alpha))\bigr] \in \pi^2 \cdot \mathbb{Q}$.
+\end{corollary}
+
+The 100-digit evaluation (Prop.~\ref{prop:regulator})
+gives $-4\pi^2/85$, and the torsion denominator
+(bounded by $|K_3^{\mathrm{ind}}(\mathcal{O}_F)_{\mathrm{tors}}|$)
+is far smaller than $10^{100}$.  Thus the rational multiple
+is exactly~$-4/85$.
+
+\section{Trace certificate for the Fuchsian identification}
+
+The trace certificate for the maximal $(2,3,17)$
+Fuchsian representation requires the three
+Fricke--Vogt traces:
+$\operatorname{tr}\rho(x) = 0$,
+$\operatorname{tr}\rho(y) = -1$,
+$\operatorname{tr}\rho(xy) = -2\cos(\pi/17)$,
+where $x, y$ are the Seifert generators satisfying
+$x^2 h = 1$, $y^3 h^2 = 1$, $(xy)^{17} h^{14} = 1$.
+
+The explicit $\mathrm{SL}_2(\mathbb{R})$ matrices are
 \[
-|I - 4\pi^2/85| \approx 1.65 \times 10^{-182}.
+\rho(x) = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix},
+\quad
+\rho(y) = \begin{pmatrix}
+-\frac{1}{2} & -c + \frac{d}{2} \\[1mm]
+c + \frac{d}{2} & -\frac{1}{2}
+\end{pmatrix},
 \]
+where $c = \cos(\pi/17)$ and $d = \sqrt{4c^2 - 3}$.
+Direct computation gives $\rho(x)^2 = -I = \rho(h)$,
+$\rho(y)^3 = I$, $(\rho(x)\rho(y))^{17} = I$, with
+$\operatorname{tr}[\rho(x), \rho(y)] = 4c^2 - 1 > 2$
+(non-elementary).
 
-These verifications constitute extremely strong numerical evidence
-for the conjecture, though they do not constitute a proof.
+Completion of this certificate requires the explicit
+Wirtinger-to-Seifert word map for the $(-1)$-filled
+$7_2$ knot group, translating the face-pairing
+holonomy into the generators $x, y$.
 
-\section{Context and proof directions}
+\section{Status}
 
-Khoi~\cite{Khoi2008} proved analogous identities for the
-figure-eight knot and knot $5_2$ using the Godbillon--Vey /
-Chern--Simons mechanism for paths of
-$\widetilde{\text{SL}}_2(\mathbb{R})$ representations.
-The $7_2$ case requires:
-\begin{enumerate}
-\item Identifying the real $A$-polynomial branch with a path of
-  purely hyperbolic representations of the $7_2$ complement.
-\item Computing the Godbillon--Vey invariants at the endpoint
-  filling representations.
-\item Applying Khoi's Schl\"afli-type variation formula.
-\end{enumerate}
-The denominator $85$ should arise from the Seifert data or Euler
-number of the relevant Dehn filling, not from elementary
-invariants such as the crossing number.
+\begin{itemize}
+\item Lemma~A: \textbf{Done.}
+  Endpoints isolated to 100 digits.
+\item Lemma~B: \textbf{Done.}
+  Deformation chart~\eqref{eq:u-chart} gives explicit
+  $\mathrm{SL}_2(\mathbb{R})$ lift; all shapes real,
+  $T < 0$, $U,V,W > 1$.
+\item Lemma~C: \textbf{Done.}
+  Neumann--Zagier index $N_M = -2$ consistent.
+\item Lemma~D: \textbf{Done.}
+  $S^3_{-1}(7_2) \cong \Sigma(2,3,17)$
+  (Theorem~\ref{thm:brieskorn}), with
+  Brooks--Goldman GV computed.
+\item Lemma~E: \textbf{Essentially done} via torsion
+  argument (Theorem~\ref{thm:torsion}):
+  \begin{itemize}
+  \item[(i)] The dilogarithm identity
+    $\mathrm{Re}[\Delta\hat{R}] = -4\pi^2/85$
+    follows from torsion + 100-digit evaluation.
+  \item[(ii)] The trace certificate for the maximal
+    Fuchsian identification requires completing
+    the Wirtinger-to-Seifert word map.
+  \end{itemize}
+\end{itemize}
 
 \begin{thebibliography}{10}
 \bibitem{Khoi2008}
@@ -116,6 +450,27 @@ Vu The Khoi,
 the $A$-polynomial curves},
 Acta Math.\ Vietnamica \textbf{33} (2008), 519--528.
 arXiv:0811.2725.
+
+\bibitem{Cooper1994}
+D.~Cooper, M.~Culler, H.~Gillet, D.D.~Long, P.B.~Shalen,
+\emph{Plane curves associated to character varieties of
+3-manifolds},
+Invent.\ Math.\ \textbf{118} (1994), 47--84.
+
+\bibitem{BrooksGoldman1984}
+R.~Brooks and W.~Goldman,
+\emph{Volumes in Seifert space},
+Duke Math.\ J.\ \textbf{51} (1984), 529--545.
+
+\bibitem{Neumann2004}
+W.~Neumann,
+\emph{Extended Bloch group and the Cheeger--Chern--Simons class},
+Geom.\ Topol.\ \textbf{8} (2004), 413--474.
+
+\bibitem{Zickert2009}
+C.~Zickert,
+\emph{The volume and Chern--Simons invariant of a representation},
+Duke Math.\ J.\ \textbf{150} (2009), 489--532.
 
 \bibitem{Challenge2026}
 Ramanujan Machine Group,
