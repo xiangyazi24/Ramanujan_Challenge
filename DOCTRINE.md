@@ -1,9 +1,9 @@
-# DOCTRINE — Ramanujan Challenge Automode (Session 4)
+# DOCTRINE — Ramanujan Challenge Automode (Session 5)
 
 ## Goal
-All 10 Ramanujan Challenge problems addressed (9 unconditional + P3.2 conditional).
+All 10 Ramanujan Challenge problems addressed (9 unconditional + P3.2 two-tier).
 Deadline: Aug 1 2026. Current: **10/10 addressed**.
-Focus: strengthen P3.2 (make unconditional if possible), polish all proofs.
+Focus: strengthen P3.2 further, polish all proofs.
 
 ## Current state
 - **2.1** ✅ SOLVED (Q(√5) gauge, Poincaré roots)
@@ -15,31 +15,38 @@ Focus: strengthen P3.2 (make unconditional if possible), polish all proofs.
 - **2.7** ✅ SOLVED (adjoint certificate)
 - **2.8** ✅ SOLVED (Chudnovsky CMF)
 - **3.1** ✅ SOLVED (A-polynomial / Mahler measure)
-- **3.2** ✅ ADDRESSED (conditional on Hypothesis Z; equivalence proved)
+- **3.2** ✅ ADDRESSED (density-1 unconditional; all-n conditional on Hypothesis Z)
 
-## P3.2 — the remaining gap
+## P3.2 — upgraded from purely conditional
 
-The proof is **structurally complete**: unconditional reduction to Hypothesis Z
-(Z(p) = o(p) on average), plus unconditional O(√n) bound for small primes.
+Session 5 breakthrough: **Z(p) = o(p) is unconditionally provable** from the recurrence.
 
-Hypothesis Z evidence is strong (p ≤ 10^4): mean Z(p) = 0.96, max = 8,
-Poisson model matches. But Z(p) = O(1) is genuinely open — it contains
-the non-ordinary prime density problem (Jin-Ma-Ono 2016) as a special case.
+Key argument (gap polynomial):
+1. No consecutive zeros of b_j mod p (backward induction → b_0=1 contradiction)
+2. Gap-h pairs constrained by polynomial C_h(m) of degree 3(h-1)
+3. Leading coeff = U_{h-1}(17) (Chebyshev), nonzero for p > 34^{h-1}
+4. Partition + optimize → Z(p) ≤ (log 34 + o(1)) p/log p
 
-### Avenues to strengthen
+This gives unconditional density-1: G_n = e^{o(n)} for density-1 of n.
+The all-n result still requires Hypothesis Z (average Z(p) = O(1)).
 
-(a) **Extend Z(p) to p ≤ 10^5 on uisai2** — more data, tighter power-law fit
-(b) **Density-1 result** — prove gcd = e^{o(n)} for density-1 of n without Hypothesis Z
-    (needs avg-Z over n, not over p — weaker and likely provable from Mertens)
-(c) **Hasse-Weil / character sum bound** — if b_j mod p can be expressed as a
-    character sum of bounded complexity, Weil gives Z(p) = O(√p), done
-(d) **Direct finite-field hypergeometric** — Kilbourn (2006), Greene (1987)
+### Remaining avenues to strengthen
 
-Terminal: P3.2 is a Section 3 open problem. The conditional proof + computational
-evidence + equivalence result is a strong submission even without (c)/(d).
+(a) **Prove Z(p) = O(p^{1/2-ε})** — would give stronger density statements
+    The gap polynomial gives O(p^{2/3}); beating this requires non-trivial
+    algebraic geometry (character sum structure of b_j mod p)
+(b) **Greene 4F3 route** — b_j mod p = character sum; potentially exploitable
+    for refined p-adic zero counts (but Weil doesn't help directly)
+(c) **Content conjecture** — content(C_h) bounded for all h?
+    Verified for h ≤ 64 (content ≤ 32). Would give O(p^{2/3}) unconditionally.
+(d) **Extend computation** — Z(p) to 10^6 on uisai2 for tighter statistics
+
+Terminal: P3.2 now has an unconditional density-1 result. The conditional result
+for all n remains the strongest possible without resolving the non-ordinary
+prime density problem (Jin-Ma-Ono 2016).
 
 ## Resources
 - mini: Python/mpmath, LaTeX, ChatGPT bridge (dm1-dm4)
 - uisai2: available for heavy computation
-- ChatGPT Pro: 4 functional tabs (dm1-dm4), SOL model
-- Fable agents: dispatched for Z(p) bound literature
+- ChatGPT Pro: dm1-dm4, SOL model (1hr+ per query)
+- Fable agents: completed Z(p) Weil bound analysis

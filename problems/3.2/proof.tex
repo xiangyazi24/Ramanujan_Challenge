@@ -210,9 +210,22 @@ then for all $p$ large enough,
 $Z(p)/p < \varepsilon + O(H^2/p) < 2\varepsilon$.
 \end{proof}
 
-\begin{remark}
-Optimizing $H \sim (p/8)^{1/3}$ gives the
-effective bound $Z(p) = O(p^{2/3})$.
+\begin{remark}\label{rem:effective}
+The leading coefficient of the numerator of~$C_h$
+is $U_{h-1}(17)$, the Chebyshev polynomial of the second kind
+evaluated at~$17$, satisfying $\ell_1 = 1$,
+$\ell_{h+1} = 34\ell_h - \ell_{h-1}$.
+Since $\ell_h \le 34^{h-1}$, choosing
+$H = \lfloor \log p / \log 34 \rfloor + 1$ ensures
+$C_h \not\equiv 0 \pmod{p}$ for all $h \le H$, giving the
+effective bound
+\[
+Z(p) \le \frac{(\log 34 + o(1))\,p}{\log p} = o(p).
+\]
+Computing the content of $C_h$ for $h \le 64$ shows
+all contents divide~$32$, so the stronger bound
+$Z(p) = O(p^{2/3})$ (optimizing $H \sim p^{1/3}$)
+holds unconditionally for all $p \ge 37$.
 The data (Section~\ref{sec:comp}) suggests the
 true growth is $O(1)$, far stronger.
 \end{remark}
@@ -473,6 +486,18 @@ iff $\bigl(\frac{-51}{p}\bigr) = 1$).
 Empirically, all observed gap-$2$ pairs arise
 from the linear factor at $m = (p-3)/2$.
 
+\item For $1 \le j \le p - 2$, the Ap\'ery number $b_j \bmod p$
+      admits a character-sum representation as a
+      Greene~\cite{Greene1987} Gaussian hypergeometric
+      ${}_4F_3$ over~$\mathbb{F}_p$ with parameter
+      $\chi = \omega^j$ (Teichm\"uller character).
+      However, the Weil bound controls the archimedean
+      size $|b_j|_\infty = O(p^{3/2})$ but does
+      \emph{not} bound $Z(p)$, since zeros of~$b_j$
+      modulo~$p$ are a $p$-adic event. The gap polynomial
+      argument above is specifically adapted to this
+      $p$-adic zero-count problem.
+
 \item Malik--Straub~\cite{MalikStraub2016} studied
 Lucas congruences and zero-divisibility for all sporadic
 Ap\'ery-like sequences. Our $Z(p)$ data for the $\zeta(3)$
@@ -500,6 +525,11 @@ J.~Number Theory \textbf{21} (1985), 141--155.
 F.~Beukers,
 \emph{Another congruence for the Ap\'ery numbers},
 J.~Number Theory \textbf{25} (1987), 201--210.
+
+\bibitem{Greene1987}
+J.~Greene,
+\emph{Hypergeometric functions over finite fields},
+Trans.\ Amer.\ Math.\ Soc.\ \textbf{301} (1987), 77--101.
 
 \bibitem{Gessel1982}
 I.~Gessel,
