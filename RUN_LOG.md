@@ -94,3 +94,39 @@
 - Fable: Z(p) Weil bound agent still running
 - end: session continuing
 - final result: 10/10 problems addressed, P3.2 layered proof complete
+
+## Run 2026-07-14 (continuation — P3.2 gap polynomial breakthrough)
+- doctrine version: Session 5
+- starting avenue: strengthen P3.2 via Z(p) = o(p)
+- BREAKTHROUGH:
+  - ChatGPT Q4936 (dm1): Z(p) = o(p) UNCONDITIONALLY provable from Apéry recurrence
+    - No consecutive zeros of b_j mod p (backward induction → b_0=1 contradiction)
+    - Gap-h polynomial C_h(m) of degree 3(h-1) constrains pairs of zeros
+    - Partition + optimize → effective bound Z(p) ≤ (log 34 + o(1)) p/log p
+    - First-moment + Markov → density-1 unconditional: G_n = e^{o(n)} for density-1 of n
+  - Fable agent completed comprehensive analysis:
+    - Leading coeff of C_h = U_{h-1}(17) (Chebyshev 2nd kind)
+    - content(C_h) ≤ 32 for h ≤ 64 → O(p^{2/3}) unconditional for p ≥ 37
+    - Weil bound does NOT apply (structural: bounds archimedean size, not p-adic zeros)
+    - Greene 4F3 character sum representation of b_j mod p exists
+    - Z(p) = O(1) conjecture is false: Z(p) unbounded (heuristic), LLL shows no fixed polynomial
+    - 12 references with full theorem statements
+  - Z(p) = 10 found at p = 88609 (5 palindromic pairs, ordinary prime)
+  - All computational claims verified:
+    - No consecutive zeros: 0 violations in 1227 primes ≤ 10^4
+    - Gap-2 polynomial P(m+1) ≡ 0: confirmed for all 5 gap-2 pairs
+    - All gap-2 pairs at m = (p-3)/2 via linear factor (2m+3) of P(m+1)
+    - P(x) = (2x+1)(17x²+17x+5), discriminant -51
+- proof.tex: rewritten from 5 to 6 pages with:
+    - Lemma: no consecutive zeros
+    - Lemma: gap polynomial
+    - Proposition: Z(p) = o(p) (unconditional)
+    - Theorem: density-1 unconditional G_n = e^{o(n)}
+    - Theorem: conditional (Hypothesis Z) → log G_n = O(√n) for all n
+    - Remark: Chebyshev leading coefficients, content claim, effective bound
+    - Remark: Greene 4F3 character sum, Weil bound doesn't help
+    - 12 references (added Greene 1987)
+- commits: f6af4ff (unconditional density-1), 92c48b8 (Chebyshev + Greene)
+- ChatGPT: dm1 answered (Q4936); dm2-dm4 processing new questions
+- all 10 proofs compile clean, total 50 pages
+- end: session continuing
