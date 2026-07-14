@@ -282,21 +282,51 @@ while the range $p < h < 2p$ is excluded similarly
 via $r = h - p + 1$.
 \end{remark}
 
-\begin{remark}[Resultant coprimality]\label{rem:resultant}
-The gap polynomials are pairwise coprime over $\mathbb{Q}[m]$.
-The resultants are extremely small:
+\begin{remark}[Adjacent resultant formula]\label{rem:adj-res}
+The adjacent resultants satisfy the exact formula
+\begin{equation}\label{eq:adj-res}
+\bigl|\operatorname{Res}(N_h, N_{h+1})\bigr|
+= \prod_{j=1}^{h-1} \bigl(j!^3\,b_j\bigr)^6.
+\end{equation}
+This follows from the recursion
+$\operatorname{Res}(N_h, N_{h+1}) = N_h(-h)^6\,
+\operatorname{Res}(N_{h-1}, N_h)$ (since
+$N_{h+1} \equiv -(m{+}h)^6 N_{h-1} \pmod{N_h}$),
+combined with $N_h(-h) = (-1)^{h-1}N_h(-1)
+= (-1)^{h-1}((h{-}1)!)^3 b_{h-1}$
+(the reflection identity and the first evaluation
+from Lemma~\ref{lem:nonvanish}).
+Verified for $h = 2, 3, 4, 5$; the cases
+$h = 2, 3, 4$ give
 $\operatorname{Res}(N_2, N_3) = -5^6$, \;
 $\operatorname{Res}(N_3, N_4) = -2^{18}\cdot 5^6\cdot 73^6$, \;
 $\operatorname{Res}(N_4, N_5) = 2^{36}\cdot 3^{18}\cdot 5^{12}\cdot 17^{12}\cdot 73^6$.
-Consequently, for all primes $p \ge 7$, the root sets
-$\{m : N_h(m) \equiv 0\}$ and $\{m : N_k(m) \equiv 0\}$ are
-disjoint in $\mathbb{F}_p$ for all but finitely many~$p$
-(depending on $h, k$).
-For $N_2$ and~$N_3$, disjointness holds for \emph{every}
-$p \ge 7$.
-This structural independence supports
-the Poisson model of~Section~\ref{sec:comp}, and may
-be relevant for multi-gap improvements beyond $O(p^{2/3})$.
+
+A key consequence: $p \mid \operatorname{Res}(N_h, N_{h+1})$
+if and only if $p \mid b_j$ for some $1 \le j \le h-1$
+(when $p > h$, so factorials are coprime to~$p$).
+In particular, $N_2$ and $N_3$ have disjoint root sets
+modulo~$p$ for all $p \ge 7$ (since $5^6 \ne 0$).
+\end{remark}
+
+\begin{remark}[Sharpness of the bound]\label{rem:sharp}
+The exponent $2/3$ in Proposition~\ref{prop:zp-bound}
+is optimal for any argument using only the degree bounds
+$\deg N_h = 3(h-1)$.
+The exact extremal problem
+$\max\bigl\{\sum r_h : r_h \le 3(h{-}1),\;
+\sum h\,r_h \le p\bigr\}$
+has value $\frac{3}{2}\,p^{2/3} + O(p^{1/3})$, with
+leading constant $3/2$ achieved by filling gap sizes
+$h = 2, 3, \ldots, H$ to capacity and using the
+remaining space at $h = H+1$, where $H \sim p^{1/3}$.
+Moreover, degree bounds alone (even using all pairs
+of zeros, not just consecutive pairs) cannot yield
+$O(p^{1/2})$: an abstract polynomial model on
+$\sim p^{2/3}$ points can satisfy
+$\deg F_h \le 3(h-1)$ for all relevant~$h$.
+Improving the exponent requires genuinely arithmetic
+input about the family $(N_h)$.
 \end{remark}
 
 \subsection{Computational evidence}
