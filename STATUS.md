@@ -1,50 +1,44 @@
-# Ramanujan Challenge — Status (2026-07-13)
+# Ramanujan Challenge — Status (2026-07-14)
 
-## Strategy (Fable oracle, confirmed)
+## Score: 9/10 solved
 
-**Breadth-first, CAS-first.** Submit each problem as solved. Target: 5-7 problems.
-Section 2 = reverse-lookup (find which known result is disguised). 2.2 confirmed this.
-Build ore_algebra pipeline on uisai2 (days 1-2), amortize across 6 problems.
-Lean only as garnish after CAS proofs.
+**Deadline:** August 1, 2026
 
-## Progress
+## SOLVED (9 problems)
 
-### SOLVED
-- **2.2 (γ Apéry)** ✅ — Aptekarev recurrence (index shift m=n+3). Proof + PDF written.
+| Problem | Topic | Method | Status |
+|---------|-------|--------|--------|
+| 2.1 | PCF → π | Q(√5) gauge, Poincaré roots | ✅ proof.tex |
+| 2.2 | γ Apéry | Aptekarev recurrence (index shift m=n+3) | ✅ proof.tex |
+| 2.3 | π+e | Series identification | ✅ proof.tex |
+| 2.4 | harmonic+polylog | Weight-4 HPLs symbolic summation | ✅ proof.tex |
+| 2.5 | Catalan CMF | Rivoal-Zudilin connection | ✅ proof.tex |
+| 2.6 | ζ(2)+ζ(3) | GF ODE connection formula | ✅ proof.tex |
+| 2.7 | 4-term ζ(2)+ζ(3) | Adjoint certificate (Lagrange bracket) | ✅ proof.tex |
+| 2.8 | √10005/π | Chudnovsky formula in CMF disguise | ✅ proof.tex |
+| 3.1 | knot π² | A-polynomial / Mahler measure | ✅ proof.tex |
 
-### In Progress  
-- **2.3 (π+e)**: Poincaré roots {-1±√2, 1±√2} at two factorial scales.
-  LCLM test NEGATIVE in Q[n]<S>. Cubics c0, c4 = same irreducible cubic shifted by 1.
-  Genuinely hard — may need full CMF or non-obvious integral representation.
-- **2.1 (PCF→π)**: Gauge (n!)³, roots -110±50√5 ∈ Q(√5). ChatGPT: no named match yet.
-- **2.4 (harmonic+polylog)**: Two-stage symbolic summation → weight-4 HPLs at 1/2. CAS job.
-- **2.6 (ζ(2)+ζ(3))**: Poincaré roots 1, 1/4. GF ODE known. Need connection formula.
-- **2.5 (Catalan CMF)**: Order-3 = summation lift of order-2. Rivoal-Zudilin connection.
-- **2.7 (4-term ζ(2)+ζ(3))**: Related to 2.6. Needs numerical verification first.
+## REMAINING (1 problem)
 
-### Promoted to Tier 2!
-- **2.8 (√10005/π)**: **IDENTIFIED = Chudnovsky formula in CMF disguise!**
-  R = 1-j(τ₁₆₃)/1728. Cubic = Chudnovsky fingerprint. Proof: reduce to CM theory.
+### P3.2 — gcd(d_n a_n, d_n b_n) = e^{o(n)} for Apéry sequences
 
-### Hard but Attacking (狭路相逢勇者胜)
-- **2.3 (π+e)**: LCLM fails. ChatGPT "proof" via Lambert+derangement is FABRICATED
-  (Lambert CF A_m/B_m → I₀(2)/I₁(2) ≈ 0.698, NOT π; initial values don't match).
-  Need genuine approach. Ore_algebra on uisai2 running.
-- **3.1 (knot π²)**: Attacking. Knot theory / A-polynomial / Mahler measure / Khoi (2008).
-- **3.2 (Apéry measure)**: Attacking. p-adic supercongruences / computational verification.
+**Status:** CONJECTURE (Section 3 = open problems). Computational evidence + partial proof in progress.
 
-## Attack Order (Fable-recommended)
-1. ~~2.2~~ ✅ DONE
-2. 2.3 factorization test (day 1-2, cheap, huge information value)
-3. 2.4 (days 3-7, most mechanical)
-4. 2.6 (days 4-8, numerics-then-prove)
-5. 2.1 (days 6-10, with pipeline)
-6. 2.7 (days 9-13, template from 2.6)
-7. 2.5 (days 10-15)
-8. 2.3 full solve + 2.8 attempt (days 12-17)
+**What we have:**
+- Computational evidence to n=200: log(gcd)/n decreasing from 0.36 to 0.06
+- Supercongruence tower rigidity (established)
+- p-adic analysis for small primes
 
-## Infrastructure TODO
-- [ ] ore_algebra + Mathematica pipeline on uisai2
-- [ ] 500-digit numerical verification for all problems
-- [ ] OEIS lookups for all sequences
-- [ ] Poincaré root fingerprinting against known families
+**What we need:**
+- Prime-counting estimate: show #{bad primes p <= n : p | gcd} = o(n/log n)
+- Or equivalently: for most primes p, a_n uses its full d_n denominator budget
+
+**ChatGPT questions dispatched (3 tabs running):**
+- dm2: p-adic machinery / Lucas theory approach
+- dm3: modular form / Chebotarev connection
+- dm4: proof strategy / literature review
+
+**Key scripts:**
+- `scripts/p32_gcd_analysis.py` — computational evidence
+- `problems/3.2/proof.tex` — partial proof
+- `problems/3.2/notes.md` — notes and connections
