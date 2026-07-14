@@ -223,11 +223,16 @@ effective bound
 Z(p) \le \frac{(\log 34 + o(1))\,p}{\log p} = o(p).
 \]
 Computing the content of $C_h$ for $h \le 64$ shows
-all contents divide~$32$, so the stronger bound
-$Z(p) = O(p^{2/3})$ (optimizing $H \sim p^{1/3}$)
-holds unconditionally for all $p \ge 37$.
-The data (Section~\ref{sec:comp}) suggests the
-true growth is $O(1)$, far stronger.
+all contents divide~$32$ (with prime factors among
+$\{2,3,5,7,17\}$), so $Z(p) = O(p^{2/3})$
+(optimizing $H \sim p^{1/3}$)
+holds unconditionally for all $p \ge 19$.
+For $h \le 200$, the largest content is $68 = 2^2 \cdot 17$
+(at $h = 135$), with prime factors in
+$\{2,3,5,7,11,13,17,19,29\}$;
+this gives $Z(p) = O(p^{2/3})$ for all $p \ge 31$.
+The computational data (Section~\ref{sec:comp}) suggests
+$Z(p) = O(1)$, far stronger.
 \end{remark}
 
 \subsection{Computational evidence}
@@ -236,15 +241,26 @@ true growth is $O(1)$, far stronger.
 For all $9{,}590$ primes $5 \le p \le 10^5$:
 \begin{enumerate}
 \item $Z(p) \in \{0, 2, 4, 6, 8, 10\}$ for all but two primes;
-      the two exceptions have $Z(p) = 1$ (non-ordinary primes).
-      $\max Z(p) = 10$.
-\item The mean $Z(p) \approx 0.99$, stable across all ranges.
-\item $Z(p) = 0$ for $\approx 61\%$ of primes, matching the
-Poisson prediction $e^{-1/2} \approx 60.7\%$.
-\item The symmetry $b_j \equiv b_{p-1-j} \pmod{p}$ holds
-      for all tested primes: zeros come in palindromic pairs
-      $\{j, p{-}1{-}j\}$, with the midpoint $j = (p{-}1)/2$
-      as the unique possible self-paired zero.
+      the two exceptions ($p = 11$ and $p = 3137$) have $Z(p) = 1$
+      (non-ordinary primes, where $p \mid a_p(f)$).
+      $\max Z(p) = 10$ at $p = 88{,}609$.
+\item The exact histogram is:
+\begin{center}
+\begin{tabular}{c|cccccccc}
+$Z(p)$ & 0 & 1 & 2 & 4 & 6 & 8 & 10 \\
+\hline
+count & 5820 & 2 & 2926 & 722 & 106 & 13 & 1 \\
+fraction & .607 & .0002 & .305 & .075 & .011 & .001 & .0001 \\
+Poi$(\tfrac{1}{2})$ & .607 & --- & .303 & .076 & .013 & .002 & .0002
+\end{tabular}
+\end{center}
+The mean $Z(p) = 0.990$, stable across all ranges.
+\item The symmetry $b_j \equiv b_{p-1-j} \pmod{p}$ holds for
+      all tested primes: zeros come in palindromic pairs
+      $\{j, p{-}1{-}j\}$, so $Z(p)$ is even (except at non-ordinary primes).
+      The pair count $Z(p)/2$ fits $\mathrm{Poisson}(1/2)$ to within
+      sampling noise (table above): the $j$-th pair appears
+      independently with probability $\approx 1/(2p)$.
 \end{enumerate}
 \end{proposition}
 
