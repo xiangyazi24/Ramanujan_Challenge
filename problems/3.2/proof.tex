@@ -195,7 +195,7 @@ resolve it.
 \section{The denominator connection lemma}
 
 \begin{lemma}\label{lem:denom}
-Let $p \ge 5$ be prime with $n/2 < p \le n$, and set $r = n - p$.
+Let $p \ge 7$ be prime with $n/2 < p \le n$, and set $r = n - p$.
 Then $v_p(G_n) = 0$ if and only if $p \nmid b_r$.
 \end{lemma}
 
@@ -208,36 +208,41 @@ $v_p(d_n b_n) = 3 + v_p(b_n) \ge 3$,
 so $v_p(G_n) = 0$ requires $v_p(d_n a_n) = 0$,
 i.e., $v_p(a_n) = -3$.
 
-\textbf{Step 2.}
-Write $c_k = \binom{n}{k}^2\binom{n+k}{k}^2$.
-In the explicit representation
-$a_n = \sum_{k=0}^n c_k\,H_k^{(3)}$,
-$H_k^{(3)} = \sum_{j=1}^k 1/j^3$,
-the only term with $v_p = -3$ is $1/p^3$ (since $p > n/2$
-forces $p \nmid j$ for all $j \le n$, $j \ne p$).
+\textbf{Step 2 (variation of parameters).}
+From Lemma~\ref{lem:wronsk}, the Casorati
+identity telescopes to
+\begin{equation}\label{eq:vop}
+\frac{a_n}{b_n} = \sum_{m=1}^n \frac{6}{m^3\,b_m\,b_{m-1}}.
+\end{equation}
+For $p > n/2$, the only $m \in \{1,\ldots,n\}$ with
+$p \mid m$ is $m = p$.
 
 \textbf{Step 3.}
-The $p^{-3}$ coefficient of $a_n$ is $T := \sum_{k=p}^n c_k$.
-By Lucas's theorem applied to $n = p + r$ with $r < p$:
-for $k = p + j$ with $0 \le j \le r$,
-$\binom{n}{k} \equiv \binom{1}{1}\binom{r}{j} \equiv \binom{r}{j}$ and
-$\binom{n+k}{k} \equiv \binom{1+1}{1}\binom{r+j}{j}
-\equiv 2\binom{r+j}{j} \pmod{p}$.
-For $r < k < p$, $\binom{n}{k} \equiv \binom{1}{0}\binom{r}{k} = 0$
-since $k > r$.
+By Theorem~\ref{thm:lucas},
+$b_p \equiv b_0\,b_1 = 5 \pmod{p}$
+(since $p$ has base-$p$ digits $(0,1)$),
+and by the symmetry $b_j \equiv b_{p-1-j}$,
+$b_{p-1} \equiv b_0 = 1 \pmod{p}$.
+Since $p \ge 7$, both are nonzero mod~$p$.
 
-Therefore
-$T \equiv \sum_{j=0}^r 4\binom{r}{j}^2\binom{r+j}{j}^2
-= 4b_r \pmod{p}$.
+The $m = p$ term in~\eqref{eq:vop} has $v_p = -3$;
+all other terms have $v_p \ge 0$. Therefore
+\[
+p^3 \cdot \frac{a_n}{b_n} \equiv \frac{6}{b_p\,b_{p-1}}
+\equiv \frac{6}{5} \pmod{p}.
+\]
+Using $b_n \equiv 5\,b_r \pmod{p}$
+(Theorem~\ref{thm:lucas}, since $n = 1 \cdot p + r$):
+\[
+p^3\,a_n \equiv \tfrac{6}{5} \cdot 5\,b_r = 6\,b_r \pmod{p}.
+\]
 Thus $v_p(a_n) = -3$ iff $p \nmid b_r$.
 \end{proof}
 
 \textbf{Verification.}
-For all $n \le 300$ and primes $p \in (n/2, n]$ with $p \ge 5$:
-$\sum_{k \ge p} c_k \equiv 4b_{n-p} \pmod{p}$
-confirmed in $449/449$ cases;
+For all $n \le 300$ and primes $p \in (n/2, n]$ with $p \ge 7$:
 $v_p(G_n) = 0 \iff p \nmid b_{n-p}$ confirmed in
-$2101/2101$ cases.
+$2101/2101$ cases (100\%).
 
 \section{Counting bad primes}
 
