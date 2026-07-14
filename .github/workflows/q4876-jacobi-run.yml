@@ -1,0 +1,26 @@
+name: Q4876 Jacobi numerical comparison
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/q4876-jacobi-run.yml'
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependency
+        run: python -m pip install --upgrade pip mpmath
+      - name: Fetch the exact test script
+        run: |
+          curl --fail --location \
+            https://raw.githubusercontent.com/xiangyazi24/Shen_work/q4876-jacobi-test/scripts/q4876_jacobi_test.py \
+            --output q4876_jacobi_test.py
+      - name: Run 120-digit comparison
+        run: python q4876_jacobi_test.py
