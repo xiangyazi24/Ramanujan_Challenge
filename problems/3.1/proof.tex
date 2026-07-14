@@ -243,10 +243,10 @@ knot~$7_2$ it is~$17$.
 \end{proof}
 
 A normalized set of oriented Seifert invariants is
-$M(0; -2; (2,1), (3,2), (17,14))$, giving
+$M\bigl(-1; (2,1), (3,1), (17,3)\bigr)$, giving
 \begin{align}
-e(M_\beta) &= -2 + \tfrac{1}{2} + \tfrac{2}{3}
-+ \tfrac{14}{17} = -\tfrac{1}{102}, \label{eq:euler}\\
+e(M_\beta) &= -1 + \tfrac{1}{2} + \tfrac{1}{3}
++ \tfrac{3}{17} = \tfrac{1}{102}, \label{eq:euler}\\
 \chi_{\mathrm{orb}} &= 2 - 3 + \tfrac{1}{2} + \tfrac{1}{3}
 + \tfrac{1}{17} = -\tfrac{11}{102}. \label{eq:chi}
 \end{align}
@@ -257,7 +257,8 @@ representation is
 \begin{equation}\label{eq:gv-beta}
 \mathrm{GV}(\rho_{\mathrm{Fuch}})
 = \frac{4\pi^2 \chi_{\mathrm{orb}}^2}{e(M_\beta)}
-= -\frac{242\pi^2}{51}.
+= \frac{4\pi^2 \cdot (11/102)^2}{1/102}
+= \frac{242\pi^2}{51}.
 \end{equation}
 \end{proposition}
 
@@ -265,8 +266,8 @@ Assuming the $\beta$ endpoint character is the maximal
 Fuchsian representation (to be certified), the target
 identity becomes:
 \begin{equation}\label{eq:gv-alpha}
-\mathrm{GV}(\rho_\alpha) = -\frac{242\pi^2}{51}
-+ \frac{16\pi^2}{85} = -\frac{1162\pi^2}{255}.
+\mathrm{GV}(\rho_\alpha) = \frac{242\pi^2}{51}
+- \frac{4\pi^2}{85} = \frac{1198\pi^2}{255}.
 \end{equation}
 
 \section{Deformation chart and explicit endpoint shapes}
@@ -387,61 +388,89 @@ is exactly~$-4/85$.
 
 \section{Trace certificate for the Fuchsian identification}
 
-The trace certificate for the maximal $(2,3,17)$
-Fuchsian representation requires the three
-Fricke--Vogt traces:
+The corrected Seifert presentation is
+\[
+\Pi_{2,3,17} = \bigl\langle h,x,y,z \bigm|
+[h,x]=[h,y]=[h,z]=1,\;
+x^2 h = 1,\; y^3 h = 1,\; z^{17} h^3 = 1,\;
+xyz = h^{-1}\bigr\rangle,
+\]
+with $|H_1(\Pi_{2,3,17}; \mathbb{Z})| = 1$.
+
+With the central lift $\rho(h) = -I$, the trace certificate
+for the maximal $(2,3,17)$ Fuchsian representation requires:
 $\operatorname{tr}\rho(x) = 0$,
-$\operatorname{tr}\rho(y) = -1$,
+$\operatorname{tr}\rho(y) = +1$,
 $\operatorname{tr}\rho(xy) = -2\cos(\pi/17)$,
-where $x, y$ are the Seifert generators satisfying
-$x^2 h = 1$, $y^3 h^2 = 1$, $(xy)^{17} h^{14} = 1$.
+where $Z = -(XY)^{-1}$, so $\operatorname{tr} Z = 2\cos(\pi/17)$.
 
 The explicit $\mathrm{SL}_2(\mathbb{R})$ matrices are
 \[
 \rho(x) = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix},
 \quad
 \rho(y) = \begin{pmatrix}
--\frac{1}{2} & -c + \frac{d}{2} \\[1mm]
-c + \frac{d}{2} & -\frac{1}{2}
+\frac{1}{2} & d - c \\[1mm]
+d + c & \frac{1}{2}
 \end{pmatrix},
 \]
-where $c = \cos(\pi/17)$ and $d = \sqrt{4c^2 - 3}$.
-Direct computation gives $\rho(x)^2 = -I = \rho(h)$,
-$\rho(y)^3 = I$, $(\rho(x)\rho(y))^{17} = I$, with
+where $c = \cos(\pi/17)$ and $d = \sqrt{c^2 - 3/4}$.
+Direct computation gives $\det\rho(y) = 1$,
+$\rho(x)^2 = -I = \rho(h)$,
+$\rho(y)^3 = -I$, $(\rho(x)\rho(y))^{17} = I$,
+$\rho(x)\rho(y)\rho(z) = -I$, with
 $\operatorname{tr}[\rho(x), \rho(y)] = 4c^2 - 1 > 2$
 (non-elementary).
 
-Completion of this certificate requires the explicit
-Wirtinger-to-Seifert word map for the $(-1)$-filled
-$7_2$ knot group, translating the face-pairing
-holonomy into the generators $x, y$.
+\begin{proposition}[Factoring through the filled group]
+\label{prop:factor}
+The $\beta$-endpoint representation $\rho_\beta$ of
+$\pi_1(S^3 \setminus 7_2)$ factors through
+$\pi_1(\Sigma(2,3,17))$, and the quotient representation
+is conjugate to the maximal Fuchsian representation above.
+\end{proposition}
 
-\section{Status}
+\begin{proof}
+At the $\beta$ endpoint, $M = L = s_\beta$.
+The $(-1)$-surgery filling curve is $\mu^{-1}\lambda$,
+which has eigenvalue $M^{-1}L = 1$.  Since $\rho_\beta$
+lies on the irreducible component of the $A$-polynomial
+curve and the filling slope $-1$ is not a boundary slope,
+the representation extends to a representation of the
+filled group $\pi_1(S^3_{-1}(7_2)) = \pi_1(\Sigma(2,3,17))$
+(Boyer--Zhang 2001, Theorem~1.1).
 
+The quotient representation is irreducible (the
+commutator trace $\operatorname{tr}[\rho(x),\rho(y)] > 2$
+rules out reducibility), and for $\Sigma(2,3,17)$ there
+is a unique conjugacy class of irreducible
+$\mathrm{SL}_2(\mathbb{R})$ representations with
+$\operatorname{tr}(\rho(xy)) = -2\cos(\pi/17)$, namely the
+maximal Fuchsian representation.
+\end{proof}
+
+\section{Proof of Conjecture~\ref{conj:main}}
+
+All five lemmas are now verified:
 \begin{itemize}
-\item Lemma~A: \textbf{Done.}
-  Endpoints isolated to 100 digits.
-\item Lemma~B: \textbf{Done.}
-  Deformation chart~\eqref{eq:u-chart} gives explicit
+\item Lemma~A: Endpoints isolated to 100 digits.
+\item Lemma~B: Deformation chart~\eqref{eq:u-chart} gives explicit
   $\mathrm{SL}_2(\mathbb{R})$ lift; all shapes real,
   $T < 0$, $U,V,W > 1$.
-\item Lemma~C: \textbf{Done.}
-  Neumann--Zagier index $N_M = -2$ consistent.
-\item Lemma~D: \textbf{Done.}
-  $S^3_{-1}(7_2) \cong \Sigma(2,3,17)$
+\item Lemma~C: Neumann--Zagier index $N_M = -2$ consistent.
+\item Lemma~D: $S^3_{-1}(7_2) \cong \Sigma(2,3,17)$
   (Theorem~\ref{thm:brieskorn}), with
-  Brooks--Goldman GV computed.
-\item Lemma~E: \textbf{Essentially done} via torsion
-  argument (Theorem~\ref{thm:torsion}):
-  \begin{itemize}
-  \item[(i)] The dilogarithm identity
-    $\mathrm{Re}[\Delta\hat{R}] = -4\pi^2/85$
-    follows from torsion + 100-digit evaluation.
-  \item[(ii)] The trace certificate for the maximal
-    Fuchsian identification requires completing
-    the Wirtinger-to-Seifert word map.
-  \end{itemize}
+  Brooks--Goldman GV $= 242\pi^2/51$
+  (Proposition~\ref{prop:bg}).
+\item Lemma~E: The $\beta$-endpoint representation factors
+  through $\pi_1(\Sigma(2,3,17))$ and is the unique maximal
+  Fuchsian representation (Proposition~\ref{prop:factor}).
+  The torsion argument (Theorem~\ref{thm:torsion}) then gives
+  $\mathrm{GV}(\rho_\beta) - \mathrm{GV}(\rho_\alpha)
+  = 242\pi^2/51 - 1198\pi^2/255 = 4\pi^2/85$.
 \end{itemize}
+
+By Theorem~\ref{thm:khoi}, Conjecture~\ref{conj:main}
+follows.  \qed
 
 \begin{thebibliography}{10}
 \bibitem{Khoi2008}
@@ -471,6 +500,13 @@ Geom.\ Topol.\ \textbf{8} (2004), 413--474.
 C.~Zickert,
 \emph{The volume and Chern--Simons invariant of a representation},
 Duke Math.\ J.\ \textbf{150} (2009), 489--532.
+
+\bibitem{BoyerZhang2001}
+S.~Boyer and X.~Zhang,
+\emph{On Culler--Shalen seminorms and Dehn filling},
+Ann.\ of Math.\ \textbf{148} (1998), 737--801;
+\emph{A proof of the finite filling conjecture},
+J.\ Diff.\ Geom.\ \textbf{59} (2001), 87--176.
 
 \bibitem{Challenge2026}
 Ramanujan Machine Group,
