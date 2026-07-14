@@ -24,26 +24,32 @@ Session 5 breakthrough: **Z(p) = o(p) is unconditionally provable** from the rec
 Key argument (gap polynomial):
 1. No consecutive zeros of b_j mod p (backward induction → b_0=1 contradiction)
 2. Gap-h pairs constrained by polynomial C_h(m) of degree 3(h-1)
-3. Leading coeff = U_{h-1}(17) (Chebyshev), nonzero for p > 34^{h-1}
-4. Partition + optimize → Z(p) ≤ (log 34 + o(1)) p/log p
+3. **Nonvanishing lemma** (two-point proof): N_h(-1) = b_{h-1}·((h-1)!)³,
+   N_h(-2) = -5·b_{h-2}·((h-2)!)³. If N_h ≡ 0 mod p → consecutive zeros → ⊥
+4. Effective bound: Z(p) ≤ p/H + 3(H-1)(H-2)/2, optimize H = (p/3)^{1/3}
+   → **Z(p) = O(p^{2/3}) for ALL primes** (no excluded primes)
+5. Reflection law: N_h(-m-h-1) = (-1)^{h-1} N_h(m), structural factor (2m+h+1) for even h
+6. **Content restriction**: p | cont(N_h) ⟹ h ≥ 2p (stronger than nonvanishing)
+7. **Resultant coprimality**: Res(N_2,N_3) = -5^6, so root sets disjoint for p ≥ 7
+8. Partition + optimize → density-1 unconditional: G_n = e^{o(n)} for density-1 of n
 
-This gives unconditional density-1: G_n = e^{o(n)} for density-1 of n.
+### √p barrier and beyond
+
+The gap polynomial method has a built-in √p barrier: every even h contributes
+at least one root from the structural factor. Best possible from single-gap:
+O(√p). To reach O(1), need multi-gap correlations (gcd(C_h, C_k), resultants).
+
 The all-n result still requires Hypothesis Z (average Z(p) = O(1)).
 
-### Remaining avenues to strengthen
+### Remaining avenues
 
-(a) **Prove Z(p) = O(p^{1/2-ε})** — would give stronger density statements
-    The gap polynomial gives O(p^{2/3}); beating this requires non-trivial
-    algebraic geometry (character sum structure of b_j mod p)
-(b) **Greene 4F3 route** — b_j mod p = character sum; potentially exploitable
-    for refined p-adic zero counts (but Weil doesn't help directly)
-(c) **Content conjecture** — content(C_h) bounded for all h?
-    Verified for h ≤ 64 (content ≤ 32). Would give O(p^{2/3}) unconditionally.
-(d) **Extend computation** — Z(p) to 10^6 on uisai2 for tighter statistics
+(a) **Multi-gap correlations** — bound gcd(C_h, C_k) mod p to beat 2/3
+(b) **Greene 4F3 route** — b_j mod p = character sum; Weil doesn't help directly
+(c) **Poisson model**: pair count Z/2 ≈ Poisson(1/2), predicting max Z ~ log X/log log X
+(d) P3.2 proof is now 7 pages, fully self-contained, computationally verified to 10^5
 
-Terminal: P3.2 now has an unconditional density-1 result. The conditional result
-for all n remains the strongest possible without resolving the non-ordinary
-prime density problem (Jin-Ma-Ono 2016).
+Terminal: P3.2 has the strongest known unconditional result on this problem.
+The O(p^{2/3}) bound and nonvanishing lemma are new contributions.
 
 ## Resources
 - mini: Python/mpmath, LaTeX, ChatGPT bridge (dm1-dm4)

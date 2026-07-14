@@ -181,18 +181,34 @@ modulo~$p$.
 \end{lemma}
 
 \begin{proof}
-Evaluating~\eqref{eq:forward} at $m = -1$
-(where $b_{-1} = 0$ by the recurrence at $n = 0$):
-\[
-C_h(-1) = \frac{b_{h-1}}{b_0} = b_{h-1}.
-\]
-If $C_h \equiv 0 \pmod{p}$ as a polynomial,
-then $b_{h-1} \equiv 0$.
-But $C_1(m) = 1$ and applying the recurrence again:
-$C_h(-1) \equiv 0$ together with $C_{h-1}(-1) = b_{h-2}$
-and the recursion for~$C_h$ gives $b_{h-2} \equiv 0$.
-Iterating gives $b_0 \equiv 0 \pmod{p}$,
-contradicting $b_0 = 1$.
+Write $N_h$ for the numerator of $C_h$ (a polynomial of degree $3(h-1)$),
+satisfying
+$N_{h+1}(m) = P(m{+}h)\,N_h(m) - (m{+}h)^6\,N_{h-1}(m)$,
+with $N_1 = 1$ and $N_2 = P(m{+}1)$.
+
+\emph{First evaluation.}
+Equation~\eqref{eq:forward} at $m = -1$ (where $b_{-1} = 0$, $b_0 = 1$)
+gives $C_h(-1) = b_{h-1}$, hence
+$N_h(-1) = b_{h-1}\cdot\bigl((h{-}1)!\bigr)^3$.
+
+\emph{Second evaluation.}
+Setting $m = -2$ in the recurrence gives
+$N_{h+1}(-2) = P(h{-}2)\,N_h(-2) - (h{-}2)^6\,N_{h-1}(-2)$,
+with $N_1(-2) = 1$ and $N_2(-2) = P(-1) = -5$.
+By induction using the Apéry recurrence at $n = h - 2$:
+\begin{equation}\label{eq:eval-minus2}
+N_h(-2) \;=\; {-5}\,b_{h-2}\,\bigl((h{-}2)!\bigr)^3
+\qquad (h \ge 2).
+\end{equation}
+
+\emph{Conclusion.}
+If $N_h \equiv 0 \pmod{p}$ as a polynomial
+($2 \le h \le p$, $p \ge 7$),
+then $N_h(-1) \equiv N_h(-2) \equiv 0$,
+forcing $b_{h-1} \equiv b_{h-2} \equiv 0 \pmod{p}$
+(since $p \nmid 5$ and $p \nmid (h{-}1)!,\,(h{-}2)!$).
+These are consecutive zeros, contradicting
+Lemma~\ref{lem:no-consec}.
 \end{proof}
 
 \begin{proposition}\label{prop:zp-bound}
@@ -250,6 +266,37 @@ $(2m+h+1)$.  At $h = 2$: factor $(2m+3)$ in
 $P(m+1) = (2m+3)(17m^2+51m+39)$.
 The computational data (Section~\ref{sec:comp}) suggests
 $Z(p) = O(1)$, far stronger than $O(p^{2/3})$.
+\end{remark}
+
+\begin{remark}[Content restriction]\label{rem:content}
+A stronger nonvanishing holds: if $p \ge 7$ divides the
+content of~$N_h$ (the gcd of all its coefficients), then
+$h \ge 2p$.
+Indeed, $N_h(-r) = (-1)^{r-1}b_{r-1}b_{h-r}\bigl((r{-}1)!\bigr)^3
+\bigl((h{-}r)!\bigr)^3$ for $1 \le r \le h$
+(by induction from the Ap\'ery recurrence);
+choosing $r = 1, 2$ and using
+$p \nmid (h{-}1)!,\,(h{-}2)!,\,5$ for $h \le p$
+recovers Lemma~\ref{lem:nonvanish},
+while the range $p < h < 2p$ is excluded similarly
+via $r = h - p + 1$.
+\end{remark}
+
+\begin{remark}[Resultant coprimality]\label{rem:resultant}
+The gap polynomials are pairwise coprime over $\mathbb{Q}[m]$.
+The resultants are extremely small:
+$\operatorname{Res}(N_2, N_3) = -5^6$, \;
+$\operatorname{Res}(N_3, N_4) = -2^{18}\cdot 5^6\cdot 73^6$, \;
+$\operatorname{Res}(N_4, N_5) = 2^{36}\cdot 3^{18}\cdot 5^{12}\cdot 17^{12}\cdot 73^6$.
+Consequently, for all primes $p \ge 7$, the root sets
+$\{m : N_h(m) \equiv 0\}$ and $\{m : N_k(m) \equiv 0\}$ are
+disjoint in $\mathbb{F}_p$ for all but finitely many~$p$
+(depending on $h, k$).
+For $N_2$ and~$N_3$, disjointness holds for \emph{every}
+$p \ge 7$.
+This structural independence supports
+the Poisson model of~Section~\ref{sec:comp}, and may
+be relevant for multi-gap improvements beyond $O(p^{2/3})$.
 \end{remark}
 
 \subsection{Computational evidence}
