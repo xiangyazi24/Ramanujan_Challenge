@@ -29,3 +29,68 @@
   2.8 Poincaré root 64R, 2.1 reducible operator + elliptic π source,
   2.5 silver-ratio Sym²(t²-6t+1) = Apéry-34 connection,
   3.1 182-digit verification of open conjecture.
+
+## Run 2026-07-14 00:00 (continuation from compacted session)
+- doctrine version: Session 3 (updated DOCTRINE.md)
+- starting avenue: parallel push on 2.5 and 3.1
+- ChatGPT tabs: dm1-dm4 all cycling, all dispatched
+- BREAKTHROUGHS:
+  - P2.5: Exact Pochhammer normalization δ(n) = -2(n+2)²(n+3)²(2n+5)(2n+7)² (Q4843)
+  - P2.5: Normalized Poincaré polynomial = Sym²(Delannoy): ξ³-35ξ²+35ξ-1 (Q4843)
+  - P2.5: Formal index obstruction (0,-3,0) ≠ (-1,-1,-1): NOT Ore equiv (Q4843)
+  - P2.5: Birkhoff adjoint dominant functional: L = p₀·w₊(0)/q₀·w₊(0) = G to 150 digits (Q4841)
+  - P2.5: Catalan assertion reduced to ONE scalar identity (p₀-G·q₀)·w₊(0) = 0 (Q4841)
+  - P2.5: Padé/Stieltjes route identified as alternative to full AZ (Q4845)
+  - P3.1: Corrected Seifert presentation M(-1;(2,1),(3,1),(17,3)) verified (Q4833/Q4844)
+  - P3.1: Trace certificate fully verified: X²=-I, Y³=-I, Z¹⁷=-I, (XY)¹⁷=I, XYZ=-I
+  - P3.1: GV(Fuchsian) = 242π²/51, GV(α) = 1198π²/255 (from corrected e=1/102)
+  - P3.1: Explicit Wirtinger matrices at β endpoint (Q4844, eq 0.7-0.8)
+- scripts added:
+  - p25_adjoint_verify.py: adjoint dominant functional verification (L=G to 150 digits)
+  - p31_seifert_trace_check.py: corrected Seifert trace certificate verification
+- proof.tex updates:
+  - P2.5: added scalar recurrence theorem, Pochhammer normalization, formal index obstruction,
+    Birkhoff convergence framework, adjoint dominant functional theorem
+  - P3.1: corrected Seifert invariants M(-1;(2,1),(3,1),(17,3)), fixed GV formula,
+    corrected trace certificate signs (tr(Y)=+1), added explicit presentation
+- ChatGPT: Q4832(2.7), Q4833(3.1), Q4834(3.1), Q4838(2.5), Q4839(2.5),
+  Q4840, Q4841(2.5 Birkhoff), Q4842, Q4843(2.5 Pochhammer), Q4844(3.1 Wirtinger),
+  Q4845(2.5 Padé) processed
+- current dispatches: dm1(2.5 extension class), dm2(3.1 word map),
+  dm3(2.5 AZ Sage code), dm4(2.5 Padé identification)
+- end: session continuing
+- remaining gaps:
+  - P2.5: one scalar identity (p₀-G·q₀)·w₊(0) = 0
+  - P3.1: Wirtinger-to-Seifert word map
+  - P2.7: no known kernel matches challenge denominators
+
+## Run 2026-07-14 (continuation — P3.2 deep dive)
+- doctrine version: Session 4 (updated after 10/10)
+- starting avenue: P3.2 proof rewrite + extended verification
+- RESULTS:
+  - P3.2 proof.tex REWRITTEN (5 pages, clean compile):
+    - Layered: unconditional reduction + conditional conclusion
+    - Explicit "Hypothesis Z" (Z(p) = o(p) on average)
+    - Unconditional: small primes O(√n) via Wronskian
+    - Unconditional: denominator connection lemma for (n/2, n]
+    - Conditional: bad prime count O(1) under Hypothesis Z
+    - Proved equivalence: conjecture ⟺ average Hypothesis Z
+    - CM vs non-CM contrast (ζ(2) vs ζ(3)) explaining why H-Z should hold
+    - Non-ordinary prime connection (Beukers 1987, Ahlgren-Ono 2000)
+    - 11 references (up from 6)
+  - Z(p) extended to p ≤ 10^4 (1227 primes, 8.8s):
+    - Z(p) ∈ {0,1,2,4,6,8}, mean=0.957, max=8
+    - P(Z=0)=61.6% ≈ Poisson e^{-1/2}=60.7%
+    - Power law: Z(p) ~ 2.0 p^{0.02} ≈ O(1)
+    - Symmetry b_j ≡ b_{p-1-j} (mod p): 100% for all tested
+    - 2 non-ordinary primes found (Z(p)=1)
+  - Fable agent findings:
+    - Gessel 1982 is THE citation for Lucas congruence
+    - Z(p) = O(1) is genuinely open (contains non-ordinary density)
+    - No O(√p) bound known; Weil/Sato-Tate don't apply directly
+    - Correct modular form: 8.4.a.a (non-CM), level 8 weight 4
+- commits: 4754054 (proof rewrite + Z(p) extended)
+- ChatGPT: dm1-dm4 processing (SOL Pro, 1hr+)
+- Fable: Z(p) Weil bound agent still running
+- end: session continuing
+- final result: 10/10 problems addressed, P3.2 layered proof complete
