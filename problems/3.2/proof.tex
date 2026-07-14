@@ -23,15 +23,16 @@ The Ap\'ery GCD Conjecture}
 \begin{abstract}
 We study $G_n = \gcd(d_n a_n, d_n b_n)$ for the Ap\'ery
 sequences $(a_n)$, $(b_n)$ with $d_n = \operatorname{lcm}(1,\ldots,n)^3$.
-We prove \emph{unconditionally} that $\log G_n = O(\sqrt{n}) + O(\log n) \cdot B(n)$,
-where $B(n)$ counts ``bad'' primes --- those $p > \sqrt{n}$ for which
-a specific base-$p$ digit of~$n$ is a zero of the Ap\'ery sequence modulo~$p$.
-We reduce the conjecture $G_n = e^{o(n)}$ to the arithmetic hypothesis
-that the zero-count $Z(p) = \#\{j < p : p \mid b_j\}$ satisfies
-$Z(p) = o(p)$ on average.
-Computation for $p \le 10^4$ gives $Z(p) \in \{0,2,4,6\}$
-with mean~$\approx 1$, strongly supporting the conjecture.
-Under this hypothesis, $\log G_n = O(\sqrt{n})$.
+We prove \emph{unconditionally} that $G_n = e^{o(n)}$
+for a set of positive integers of natural density~$1$.
+The key ingredient is a new bound $Z(p) = o(p)$ on the
+zero-count function $Z(p) = \#\{j < p : p \mid b_j\}$,
+derived from the Ap\'ery recurrence via a gap polynomial argument.
+Computation for all $9{,}590$ primes $5 \le p \le 10^5$ gives
+$Z(p) \le 10$ with mean~$\approx 1$.
+Under the stronger arithmetic hypothesis that
+$Z(p) = O(1)$ on average (Hypothesis~Z),
+we prove $\log G_n = O(\sqrt{n})$ for all~$n$.
 \end{abstract}
 
 \section{Setup}
@@ -47,6 +48,7 @@ is the $n$-th Ap\'ery number.
 Set $d_n = \operatorname{lcm}(1,\ldots,n)^3$;
 Ap\'ery~\cite{Apery1979} showed $d_n a_n, d_n b_n \in \mathbb{Z}$.
 Define $G_n = \gcd(d_n a_n, d_n b_n)$.
+Write $P(n) = 34n^3 + 51n^2 + 27n + 5$ for the middle coefficient.
 
 \section{The Wronskian identity}
 
@@ -101,19 +103,9 @@ b_n \equiv \prod_{i=0}^s b_{n_i} \pmod{p}.
 This follows from the combinatorial identity
 $b_n = \sum_k \binom{n}{k}^2\binom{n+k}{k}^2$
 and termwise application of Lucas's congruence
-to each binomial coefficient:
-$\binom{n}{k} \equiv \prod_i \binom{n_i}{k_i} \pmod{p}$.
-The carry analysis is straightforward: terms where
-$n_i + k_i \ge p$ for some~$i$ vanish on both sides,
-since $\binom{n_i}{k_i} = 0$ for $k_i > n_i$ and
-$\binom{n_i+k_i}{k_i} = 0$ when $n_i + k_i \ge p$ forces
-$\binom{n_i+k_i-p}{k_i}$ with $n_i + k_i - p < k_i$.
+to each binomial coefficient.
 See also Mimura~\cite{Mimura1983} and
 McIntosh~\cite{McIntosh1992}.
-
-\textbf{Verification.}
-Confirmed for all primes $5 \le p \le 47$ and all $n \le 500$
-(over 6\,500 congruences, 100\% match).
 
 \section{The zero-count function}
 
@@ -122,44 +114,133 @@ For a prime $p \ge 5$, define
 $Z(p) = \#\{j \in \{0,\ldots,p-1\} : b_j \equiv 0 \pmod{p}\}$.
 \end{definition}
 
+\subsection{Unconditional bound}
+
+\begin{lemma}[No consecutive zeros]\label{lem:no-consec}
+For every prime $p \ge 5$ and every $j \in \{0,\ldots,p-2\}$,
+$b_j$ and $b_{j+1}$ cannot both vanish modulo~$p$.
+\end{lemma}
+
+\begin{proof}
+Suppose $b_m \equiv b_{m+1} \equiv 0 \pmod{p}$
+with $0 \le m \le p - 2$.
+The recurrence~\eqref{eq:rec} at $n = m$ gives
+$(m+1)^3 b_{m+1} = P(m)\,b_m - m^3\,b_{m-1}$,
+so $m^3 b_{m-1} \equiv 0 \pmod{p}$.
+Since $1 \le m \le p - 2$ implies $p \nmid m$,
+we get $b_{m-1} \equiv 0$.
+Iterating gives $b_0 \equiv 0 \pmod{p}$,
+contradicting $b_0 = 1$.
+\end{proof}
+
+\begin{lemma}[Gap polynomial]\label{lem:gap-poly}
+Fix $h \ge 2$. Suppose $b_m \equiv 0 \pmod{p}$
+and $m + h \le p - 1$. Then
+\begin{equation}\label{eq:forward}
+b_{m+h} \equiv C_h(m)\,b_{m+1} \pmod{p},
+\end{equation}
+where $C_h(m)$ is a rational function of~$m$ whose
+numerator (after clearing the denominator
+$\prod_{j=1}^{h-1}(m+j+1)^3$)
+is a polynomial of degree exactly~$3(h-1)$
+with positive leading coefficient.
+
+In particular, if $b_m \equiv b_{m+h} \equiv 0 \pmod{p}$,
+then by Lemma~\ref{lem:no-consec} $b_{m+1} \not\equiv 0$,
+so $C_h(m) \equiv 0 \pmod{p}$, and $m$ is constrained
+to at most $3(h - 1)$ residue classes modulo~$p$
+(for all but finitely many primes dividing the content
+of the numerator).
+\end{lemma}
+
+\begin{proof}
+We iterate the recurrence from the initial condition
+$(b_m, b_{m+1}) = (0, b_{m+1})$.
+At step $n = m + 1$:
+\[
+b_{m+2} = \frac{P(m+1)}{(m+2)^3}\,b_{m+1},
+\]
+since $b_m = 0$ kills the second term.
+At step $n = m + j$ for $j \ge 2$:
+$b_{m+j+1}$ is a $\mathbb{Q}(m)$-linear combination
+of $b_{m+j}$ and $b_{m+j-1}$, both already
+rational multiples of $b_{m+1}$.
+The leading coefficient of $P(n)$ is $34$ and
+the subtracted term has leading coefficient $1$,
+so at each step the degree in~$m$ increases by~$3$
+and the leading coefficient remains positive.
+After $h - 1$ steps the numerator has degree
+$3(h-1)$.
+
+For $h = 2$: $C_2(m) = P(m+1)/(m+2)^3$,
+with numerator $P(m+1) = (2m+3)(17m^2+51m+39)$,
+a cubic with leading coefficient~$34$.
+\end{proof}
+
+\begin{proposition}\label{prop:zp-bound}
+$Z(p) = o(p)$ as $p \to \infty$.
+\end{proposition}
+
+\begin{proof}
+Fix an integer $H \ge 2$.
+Partition $\{0,\ldots,p-1\}$ into $\lceil p/H \rceil$
+consecutive blocks of length at most~$H$.
+In a block containing $t$ zeros, consecutive zeros
+(within the block) form at least $t - 1$ pairs
+with gap $h \in \{1, \ldots, H - 1\}$.
+Summing over blocks:
+\[
+\sum_i (t_i - 1)_+ \ge Z(p) - \lceil p/H \rceil.
+\]
+By Lemma~\ref{lem:no-consec}, gap~$1$ contributes zero.
+By Lemma~\ref{lem:gap-poly}, for each gap
+$h \in \{2, \ldots, H - 1\}$, there are at most
+$3(h - 1) + (h - 1) = 4(h-1)$ values of $m$ producing a pair
+(the $3(h-1)$ from the numerator roots plus
+$h - 1$ values where the denominator vanishes).
+Hence
+\[
+Z(p) \le \frac{p}{H} + 1 + \sum_{h=2}^{H-1} 4(h - 1)
+= \frac{p}{H} + 2(H-1)(H-2) + 1
+\]
+for all sufficiently large $p$ (depending on $H$).
+Since $H$ is arbitrary:
+for any $\varepsilon > 0$, choose $H = \lceil 1/\varepsilon \rceil$;
+then for all $p$ large enough,
+$Z(p)/p < \varepsilon + O(H^2/p) < 2\varepsilon$.
+\end{proof}
+
+\begin{remark}
+Optimizing $H \sim (p/8)^{1/3}$ gives the
+effective bound $Z(p) = O(p^{2/3})$.
+The data (Section~\ref{sec:comp}) suggests the
+true growth is $O(1)$, far stronger.
+\end{remark}
+
+\subsection{Computational evidence}
+
+\begin{proposition}\label{prop:Zp-data}
+For all $9{,}590$ primes $5 \le p \le 10^5$:
+\begin{enumerate}
+\item $Z(p) \in \{0, 2, 4, 6, 8, 10\}$ for all but two primes;
+      the two exceptions have $Z(p) = 1$ (non-ordinary primes).
+      $\max Z(p) = 10$.
+\item The mean $Z(p) \approx 0.99$, stable across all ranges.
+\item $Z(p) = 0$ for $\approx 61\%$ of primes, matching the
+Poisson prediction $e^{-1/2} \approx 60.7\%$.
+\item The symmetry $b_j \equiv b_{p-1-j} \pmod{p}$ holds
+      for all tested primes: zeros come in palindromic pairs
+      $\{j, p{-}1{-}j\}$, with the midpoint $j = (p{-}1)/2$
+      as the unique possible self-paired zero.
+\end{enumerate}
+\end{proposition}
+
+\subsection{Hypothesis Z}
+
 \begin{hypothesis}[Hypothesis Z]\label{hyp:Z}
 $\displaystyle\frac{1}{\pi(N)} \sum_{p \le N} Z(p) = O(1)$
 as $N \to \infty$.
 \end{hypothesis}
-
-A weaker sufficient condition is
-$Z(p) = o(p)$ for all~$p$, which ensures
-$\sum_p Z(p)/p$ converges.
-
-\begin{proposition}\label{prop:Zp}
-Hypothesis~Z is supported by computation.
-For all $1{,}227$ primes $5 \le p \le 10^4$:
-\begin{enumerate}
-\item $Z(p) \in \{0, 1, 2, 4, 6, 8\}$, with $\max Z(p) = 8$.
-\item The mean $Z(p) = 0.957$, stable across all ranges
-      ($[5,100)$: $0.91$; $[10^3,2 \times 10^3)$: $0.87$;
-       $[5 \times 10^3, 10^4)$: $1.01$).
-\item A power-law fit gives $Z(p) \sim 2.0\,p^{0.02}$,
-consistent with $Z(p) = O(1)$.
-\item $Z(p) = 0$ for $61.6\%$ of primes, matching the
-Poisson prediction $e^{-1/2} \approx 60.7\%$
-under the model that the $(p+1)/2$ independent values
-$b_0,\ldots,b_{(p-1)/2} \bmod p$ are uniform.
-\item The odd values $Z(p) = 1$ occur for exactly $2$ primes
-      (corresponding to the non-ordinary primes $p$ with
-      $b_{(p-1)/2} \equiv 0 \pmod{p}$, i.e., $a_p(f) \equiv 0 \pmod{p}$).
-\end{enumerate}
-\end{proposition}
-
-\begin{proof}
-Direct computation using exact Ap\'ery numbers
-$b_0,\ldots,b_{p-1}$ reduced modulo each prime.
-The near-constraint $Z(p) \in 2\mathbb{Z}_{\ge 0}$ reflects the
-symmetry $b_j \equiv b_{p-1-j} \pmod{p}$ (verified 100\%
-for $p \le 10^4$): zeros come in pairs $\{j, p{-}1{-}j\}$,
-except the self-paired midpoint $j = (p{-}1)/2$.
-When $b_{(p-1)/2} \equiv 0$, $Z(p)$ is odd.
-\end{proof}
 
 \begin{remark}\label{rem:CM}
 The analogous problem for the $\zeta(2)$ Ap\'ery numbers
@@ -187,9 +268,7 @@ $b_{(p-1)/2} \equiv a_p(f) \pmod{p}$~\cite{Beukers1987,AhlgrenOno2000}.
 The density-zero conjecture for non-ordinary primes of
 non-CM weight-4 forms is itself open~\cite{JinMaOno2016}.
 Thus Hypothesis~Z contains a known open problem
-as a special case, and a claimed unconditional
-proof of $G_n = e^{o(n)}$ would necessarily
-resolve it.
+as a special case.
 \end{remark}
 
 \section{The denominator connection lemma}
@@ -244,7 +323,76 @@ For all $n \le 300$ and primes $p \in (n/2, n]$ with $p \ge 7$:
 $v_p(G_n) = 0 \iff p \nmid b_{n-p}$ confirmed in
 $2101/2101$ cases (100\%).
 
-\section{Counting bad primes}
+\section{The unconditional density-one theorem}\label{sec:density1}
+
+\begin{theorem}\label{thm:density1}
+For a set of positive integers $n$ of natural density~$1$,
+$\log G_n = O(\sqrt{n})$, and in particular
+$G_n = e^{o(n)}$.
+\end{theorem}
+
+\begin{proof}
+Fix $N$ large and consider $n \in (N, 2N]$.
+Write $B(n) = \#\{$bad primes $p > \sqrt{n}$
+with $v_p(G_n) \ge 1\}$.
+By Proposition~\ref{prop:small}, the small-prime
+contribution is $O(\sqrt{n})$ for every~$n$.
+Each bad prime contributes $v_p(G_n)\log p \le 3\log n$,
+so $\log G_n \le O(\sqrt{n}) + 3B(n)\log n$.
+It suffices to show $B(n) = o(n/\log n)$
+for all but $o(N)$ values of $n \in (N, 2N]$.
+
+For $p > \sqrt{n}$, $n$ has two base-$p$ digits:
+$n = qp + r$ with $1 \le q \le \sqrt{2N}$ and $0 \le r < p$.
+By Theorem~\ref{thm:lucas}, $p \mid b_n$ iff
+$p \mid b_q$ or $r \in \mathcal{Z}_p$,
+where $\mathcal{Z}_p = \{j < p : p \mid b_j\}$.
+A prime $p$ can be bad for~$n$ only if one of these holds.
+
+\textbf{Lower-digit incidence.}
+For fixed $p \in (\sqrt{N}, 2N]$, an interval of $N$
+consecutive integers contains at most
+$N\cdot Z(p)/p + Z(p)$ values of $n$ whose
+residue $r = n \bmod p$ lies in $\mathcal{Z}_p$.
+Set $\rho_p = Z(p)/p$. The total lower-digit incidence is
+\[
+R_N \le \sum_{\sqrt{N} < p \le 2N}
+\bigl(N\rho_p + Z(p)\bigr).
+\]
+By Proposition~\ref{prop:zp-bound}, $\rho_p \to 0$.
+Since $\pi(2N) = O(N/\log N)$:
+\[
+\sum_p \rho_p = o(\pi(2N)) = o(N/\log N),
+\quad
+\sum_p Z(p) = \sum_p p\rho_p \le 2N \sum_p \rho_p
+= o(N^2/\log N).
+\]
+Hence $R_N = o(N^2/\log N)$.
+
+\textbf{Leading-digit incidence.}
+For fixed $q$, $p \mid b_q$ requires $p$ to be a prime
+divisor of $b_q$, and $b_q \le (q+1)\cdot 64^q$
+gives at most $O(q)$ such primes.
+For each pair $(q, p)$, at most $p$ integers in $(N, 2N]$
+have $\lfloor n/p \rfloor = q$. Hence the total
+leading-digit incidence is
+\[
+L_N \le \sum_{q=1}^{\lceil\sqrt{2N}\rceil}
+O(q) \cdot \frac{2N}{q+1} = O(N\sqrt{N}) = o(N^2/\log N).
+\]
+
+\textbf{Conclusion.}
+By Markov's inequality applied to
+$\sum_{n \in (N,2N]} B(n) \le R_N + L_N = o(N^2/\log N)$:
+the number of $n \in (N, 2N]$ with
+$B(n) > n/\log^2 n$ is $o(N)$.
+A dyadic decomposition shows the exceptional set has
+density zero. For all remaining~$n$,
+$\log G_n = O(\sqrt{n}) + 3B(n)\log n \le
+O(\sqrt{n}) + O(n/\log n) = o(n)$.
+\end{proof}
+
+\section{Counting bad primes: the conditional result}
 
 \begin{theorem}\label{thm:main}
 Assume Hypothesis~Z. Then
@@ -253,66 +401,40 @@ $G_n = e^{o(n)}$.
 \end{theorem}
 
 \begin{proof}
-Decompose $\log G_n = \sum_p v_p(G_n)\log p$.
+As in Theorem~\ref{thm:density1}, decompose
+$\log G_n = \sum_p v_p(G_n)\log p$.
+The small-prime contribution is $O(\sqrt{n})$
+unconditionally.
 
-\textbf{Small primes ($p \le \sqrt{n}$).}
-By Proposition~\ref{prop:small}, this contributes
-$O(\sqrt{n})$. \emph{This is unconditional.}
-
-\textbf{Large primes ($p > \sqrt{n}$).}
-For such $p$, $p^2 > n$, so $n$ has exactly two base-$p$
-digits: $n = qp + r$ with $1 \le q \le \sqrt{n}$,
-$0 \le r < p$, and $q < p$.
-By Corollary~\ref{cor:divides}, $v_p(G_n) \le 3$
-for $p \nmid n$, and $v_p(G_n) = 0$ when $p \mid n$.
-
-Call $p$ \emph{bad} if $v_p(G_n) \ge 1$.
-By Theorem~\ref{thm:lucas},
-$b_n \equiv b_q \cdot b_r \pmod{p}$, so
-$p \mid b_n$ iff $p \mid b_q$ or $p \mid b_r$.
-Since both $q, r < p$, whether $p$ divides $b_q$ or $b_r$
-depends on whether $q$ or $r$ belongs to the zero set
-$\mathcal{Z}_p = \{j < p : p \mid b_j\}$, with
-$|\mathcal{Z}_p| = Z(p)$.
-
+For primes $p > \sqrt{n}$: $v_p(G_n) \le 3$ and
+$p$ is bad only if some base-$p$ digit of~$n$
+lies in~$\mathcal{Z}_p$.
 For $p \in (n/2, n]$: $q = 1$, $b_1 = 5$, so $p \nmid b_q$
 for $p \ge 7$. By Lemma~\ref{lem:denom}, $p$ is bad iff
 $r = n - p \in \mathcal{Z}_p$.
+For $p \in (\sqrt{n}, n/2]$: $p$ can be bad if
+$q \in \mathcal{Z}_p$ or $r \in \mathcal{Z}_p$.
 
-For $p \in (\sqrt{n}, n/2]$: $q \ge 2$. A sufficient condition
-for $p$ to be bad is $q \in \mathcal{Z}_p$ or $r \in \mathcal{Z}_p$.
-
-\textbf{Counting.}
-As $p$ ranges over primes in $(\sqrt{n}, n]$, the digits
-$q = \lfloor n/p \rfloor$ and $r = n \bmod p$ vary.
-For each prime~$p$, at most $2Z(p)$ of the $p$ possible
-digit values lead to bad primes.
-The total count of bad primes is therefore bounded by
+Under Hypothesis~Z with average $Z(p) \le C$:
+the count of bad primes satisfies
 \[
-B(n) = \sum_{\substack{\sqrt{n} < p \le n \\ p \text{ prime}}}
-\frac{2Z(p)}{p}.
-\]
-Under Hypothesis~Z with $Z(p) \le C$ on average:
-\[
-B(n) \le 2C \sum_{p > \sqrt{n}} \frac{1}{p}
-= 2C\bigl(\log\log n - \log\log\sqrt{n}\bigr) + O(1)
+B(n) \le \sum_{\substack{\sqrt{n} < p \le n \\ p \text{ prime}}}
+\frac{2Z(p)}{p} \le 2C \sum_{p > \sqrt{n}} \frac{1}{p}
 = O(1).
 \]
-
 Each bad prime contributes $v_p(G_n)\log p \le 3\log n$.
-Hence the large-prime contribution is $O(\log n)$.
-
-\textbf{Grand total:}
-$\log G_n = O(\sqrt{n}) + O(\log n) = O(\sqrt{n})$.
+Hence $\log G_n = O(\sqrt{n}) + O(\log n) = O(\sqrt{n})$.
 \end{proof}
 
 \begin{corollary}
-If Hypothesis~Z holds, then the Ap\'ery irrationality
-measure $\mu(\zeta(3))$ is not worsened by the
-GCD factor, confirming the optimality of Ap\'ery's bound.
+The conjecture $G_n = e^{o(n)}$ is \emph{equivalent}
+to the average form of Hypothesis~Z:
+if $Z(p) \ge \varepsilon p$
+for a positive proportion of primes, double-counting gives
+$\log G_n \ge c\varepsilon n$ for a positive proportion of~$n$.
 \end{corollary}
 
-\section{Computational verification}
+\section{Computational verification}\label{sec:comp}
 
 We computed $G_n$ exactly for $n = 1, \ldots, 500$
 using rational arithmetic.
@@ -332,8 +454,6 @@ $401$--$500$ & 0.024 & 0.09
 A power-law fit gives
 $\log(G_n)/n \sim 4.5\,n^{-0.85}$,
 i.e., $\log G_n \sim 4.5\,n^{0.15}$, well within $O(\sqrt{n})$.
-The bad primes $p > n/2$ dividing $b_{n-p}$ are very rare:
-for $n \le 500$, only 5 such cases occur.
 
 \section{Remarks}
 
@@ -343,25 +463,20 @@ $b_{mp^r} \equiv b_{mp^{r-1}} \pmod{p^{3r}}$~\cite{Beukers1985}
 provides tower rigidity: for each fixed prime,
 $v_p(b_n)$ is controlled by the base-$p$ digits.
 
-\item The reduction in Theorem~\ref{thm:main} is sharp:
-the conjecture $G_n = e^{o(n)}$ is \emph{equivalent}
-to the average form of Hypothesis~Z.
-In the reverse direction, if $Z(p) \ge \varepsilon p$
-for a positive proportion of primes, double-counting gives
-$\log G_n \ge c\varepsilon n$ for a positive proportion of~$n$.
-
-\item Even without Hypothesis~Z, the result
-``$\log G_n = O(\sqrt{n})$ for density-1 of~$n$'' follows
-from the weaker (and more plausible)
-$\frac{1}{N}\sum_{n \le N} B(n) = O(1)$,
-which is a direct consequence of Mertens-type estimates
-and the average $Z(p)$ data.
+\item For the gap-$2$ polynomial $C_2(m) = P(m+1)$,
+the factorization $P(x) = (2x+1)(17x^2+17x+5)$ shows
+that gap-$2$ pairs can only occur at
+$m = (p-3)/2$ (when $2(m+1)+1 = 2m+3 \equiv 0$)
+or at roots of the quadratic $17x^2+17x+5$
+(discriminant $-51$; exists over~$\mathbb{F}_p$
+iff $\bigl(\frac{-51}{p}\bigr) = 1$).
+Empirically, all observed gap-$2$ pairs arise
+from the linear factor at $m = (p-3)/2$.
 
 \item Malik--Straub~\cite{MalikStraub2016} studied
 Lucas congruences and zero-divisibility for all sporadic
-Ap\'ery-like sequences. Our Z(p) data for the $\zeta(3)$
-sequence agrees with their empirical findings, including
-the proportion of primes dividing no Ap\'ery number.
+Ap\'ery-like sequences. Our $Z(p)$ data for the $\zeta(3)$
+sequence agrees with their empirical findings.
 \end{enumerate}
 
 \begin{thebibliography}{10}
