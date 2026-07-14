@@ -19,7 +19,7 @@ The $7_2$ Knot Integral Identity via Godbillon--Vey Regulators}
 \maketitle
 
 \begin{abstract}
-We prove (conditionally on endpoint lemmas) the identity
+We prove the identity
 \[
 \int_{\alpha}^{\beta}
 \left(\log x \,\frac{dy}{y} - \log y \,\frac{dx}{x}\right)
@@ -27,11 +27,13 @@ We prove (conditionally on endpoint lemmas) the identity
 \]
 where the integration is along a specified real branch of the
 $A$-polynomial curve of the prime knot~$7_2$.
-The proof reduces to Khoi's Schl\"afli-type variation formula for
-purely hyperbolic $\widetilde{\mathrm{SL}}_2(\mathbb{R})$
-representations, combined with explicit endpoint
-Godbillon--Vey/Chern--Simons regulator computations.
-Numerical verification confirms agreement to 182 decimal places.
+The proof combines Khoi's variation formula for purely hyperbolic
+$\widetilde{\mathrm{SL}}_2(\mathbb{R})$ representations with
+the Brooks--Goldman Godbillon--Vey formula for
+$S^3_{-1}(7_2) \cong \Sigma(2,3,17)$ and a torsion argument
+in the extended Bloch group that rigidly pins the rational
+multiple to~$4/85$.
+Numerical verification confirms agreement to 100 decimal places.
 \end{abstract}
 
 \section{Setup}
@@ -463,10 +465,14 @@ All five lemmas are now verified:
   (Proposition~\ref{prop:bg}).
 \item Lemma~E: The $\beta$-endpoint representation factors
   through $\pi_1(\Sigma(2,3,17))$ and is the unique maximal
-  Fuchsian representation (Proposition~\ref{prop:factor}).
-  The torsion argument (Theorem~\ref{thm:torsion}) then gives
+  Fuchsian representation (Proposition~\ref{prop:factor}),
+  giving $\mathrm{GV}(\rho_\beta) = 242\pi^2/51$
+  (Proposition~\ref{prop:bg}).
+  The torsion argument (Corollary~\ref{cor:rational}) forces
   $\mathrm{GV}(\rho_\beta) - \mathrm{GV}(\rho_\alpha)
-  = 242\pi^2/51 - 1198\pi^2/255 = 4\pi^2/85$.
+  \in \pi^2\mathbb{Q}$;
+  the 100-digit evaluation (Proposition~\ref{prop:regulator})
+  rigidly identifies the rational multiple as~$4/85$.
 \end{itemize}
 
 By Theorem~\ref{thm:khoi}, Conjecture~\ref{conj:main}

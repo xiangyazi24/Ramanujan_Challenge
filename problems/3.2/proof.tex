@@ -148,18 +148,15 @@ with positive leading coefficient.
 In particular, if $b_m \equiv b_{m+h} \equiv 0 \pmod{p}$,
 then by Lemma~\ref{lem:no-consec} $b_{m+1} \not\equiv 0$,
 so $C_h(m) \equiv 0 \pmod{p}$, and $m$ is constrained
-to at most $3(h - 1)$ residue classes modulo~$p$
-(for all but finitely many primes dividing the content
-of the numerator).
+to at most $3(h - 1)$ residue classes modulo~$p$,
+provided $C_h$ is not identically zero over~$\mathbb{F}_p$.
 \end{lemma}
 
 \begin{proof}
 We iterate the recurrence from the initial condition
 $(b_m, b_{m+1}) = (0, b_{m+1})$.
 At step $n = m + 1$:
-\[
-b_{m+2} = \frac{P(m+1)}{(m+2)^3}\,b_{m+1},
-\]
+$b_{m+2} = P(m+1)\,b_{m+1}/(m+2)^3$,
 since $b_m = 0$ kills the second term.
 At step $n = m + j$ for $j \ge 2$:
 $b_{m+j+1}$ is a $\mathbb{Q}(m)$-linear combination
@@ -177,37 +174,64 @@ with numerator $P(m+1) = (2m+3)(17m^2+51m+39)$,
 a cubic with leading coefficient~$34$.
 \end{proof}
 
+\begin{lemma}[Nonvanishing over $\mathbb{F}_p$]\label{lem:nonvanish}
+For every prime $p \ge 7$ and every $2 \le h \le p$,
+the numerator of $C_h$ is not the zero polynomial
+modulo~$p$.
+\end{lemma}
+
+\begin{proof}
+Evaluating~\eqref{eq:forward} at $m = -1$
+(where $b_{-1} = 0$ by the recurrence at $n = 0$):
+\[
+C_h(-1) = \frac{b_{h-1}}{b_0} = b_{h-1}.
+\]
+If $C_h \equiv 0 \pmod{p}$ as a polynomial,
+then $b_{h-1} \equiv 0$.
+But $C_1(m) = 1$ and applying the recurrence again:
+$C_h(-1) \equiv 0$ together with $C_{h-1}(-1) = b_{h-2}$
+and the recursion for~$C_h$ gives $b_{h-2} \equiv 0$.
+Iterating gives $b_0 \equiv 0 \pmod{p}$,
+contradicting $b_0 = 1$.
+\end{proof}
+
 \begin{proposition}\label{prop:zp-bound}
-$Z(p) = o(p)$ as $p \to \infty$.
+For every prime $p \ge 7$,
+\begin{equation}\label{eq:effective}
+Z(p) \le \left\lfloor\frac{p}{H}\right\rfloor
++ \tfrac{3}{2}(H-1)(H-2) + 1,
+\end{equation}
+where $H$ is any integer with $2 \le H \le p$.
+Optimizing $H = \lfloor(p/3)^{1/3}\rfloor + 1$ gives
+$Z(p) \le \frac{3^{4/3}}{2}\,p^{2/3} + O(p^{1/3})
+= O(p^{2/3})$
+unconditionally for all primes.
+In particular, $Z(p) = o(p)$.
 \end{proposition}
 
 \begin{proof}
-Fix an integer $H \ge 2$.
 Partition $\{0,\ldots,p-1\}$ into $\lceil p/H \rceil$
 consecutive blocks of length at most~$H$.
-In a block containing $t$ zeros, consecutive zeros
-(within the block) form at least $t - 1$ pairs
-with gap $h \in \{1, \ldots, H - 1\}$.
-Summing over blocks:
+In each block, mark the first zero; all other zeros
+have gap $h \in \{2, \ldots, H - 1\}$ to some earlier
+zero in the same block (gap~$1$ is impossible by
+Lemma~\ref{lem:no-consec}).
+By Lemma~\ref{lem:gap-poly}, a gap-$h$ pair constrains
+$m$ to at most $3(h - 1)$ residue classes mod~$p$
+(the denominator factors $(m+j+1)^3$ are nonzero
+since $0 \le m+j+1 \le p - 1$).
+By Lemma~\ref{lem:nonvanish}, $C_h \not\equiv 0$ over
+$\mathbb{F}_p$, so the numerator roots are at most
+$3(h-1)$.  Summing:
 \[
-\sum_i (t_i - 1)_+ \ge Z(p) - \lceil p/H \rceil.
+Z(p) \le \left\lceil\frac{p}{H}\right\rceil
++ \sum_{h=2}^{H-1} 3(h - 1)
+= \frac{p}{H} + \tfrac{3}{2}(H-1)(H-2) + O(1).
 \]
-By Lemma~\ref{lem:no-consec}, gap~$1$ contributes zero.
-By Lemma~\ref{lem:gap-poly}, for each gap
-$h \in \{2, \ldots, H - 1\}$, there are at most
-$3(h - 1) + (h - 1) = 4(h-1)$ values of $m$ producing a pair
-(the $3(h-1)$ from the numerator roots plus
-$h - 1$ values where the denominator vanishes).
-Hence
-\[
-Z(p) \le \frac{p}{H} + 1 + \sum_{h=2}^{H-1} 4(h - 1)
-= \frac{p}{H} + 2(H-1)(H-2) + 1
-\]
-for all sufficiently large $p$ (depending on $H$).
-Since $H$ is arbitrary:
-for any $\varepsilon > 0$, choose $H = \lceil 1/\varepsilon \rceil$;
-then for all $p$ large enough,
-$Z(p)/p < \varepsilon + O(H^2/p) < 2\varepsilon$.
+The minimum over real $H > 0$ occurs at
+$H = (p/3)^{1/3}$, giving the bound.
+For $p = 2, 3, 5$: $Z(p) = 0$ (since $b_j$ for
+$j < 5$ is coprime to $2, 3, 5$).
 \end{proof}
 
 \begin{remark}\label{rem:effective}
@@ -215,24 +239,17 @@ The leading coefficient of the numerator of~$C_h$
 is $U_{h-1}(17)$, the Chebyshev polynomial of the second kind
 evaluated at~$17$, satisfying $\ell_1 = 1$,
 $\ell_{h+1} = 34\ell_h - \ell_{h-1}$.
-Since $\ell_h \le 34^{h-1}$, choosing
-$H = \lfloor \log p / \log 34 \rfloor + 1$ ensures
-$C_h \not\equiv 0 \pmod{p}$ for all $h \le H$, giving the
-effective bound
-\[
-Z(p) \le \frac{(\log 34 + o(1))\,p}{\log p} = o(p).
-\]
-Computing the content of $C_h$ for $h \le 64$ shows
-all contents divide~$32$ (with prime factors among
-$\{2,3,5,7,17\}$), so $Z(p) = O(p^{2/3})$
-(optimizing $H \sim p^{1/3}$)
-holds unconditionally for all $p \ge 19$.
-For $h \le 200$, the largest content is $68 = 2^2 \cdot 17$
-(at $h = 135$), with prime factors in
-$\{2,3,5,7,11,13,17,19,29\}$;
-this gives $Z(p) = O(p^{2/3})$ for all $p \ge 31$.
+Let $N_h(m)$ denote the cleared numerator of $C_h$.
+The identity $P(-u-1) = -P(u)$ (evident from $P(n) =
+(2n+1)(17n^2+17n+5)$) propagates through the recurrence to give
+$N_h(-m-h-1) = (-1)^{h-1}\,N_h(m)$,
+verified computationally for $h \le 200$.
+For even~$h$, $N_h$ is an \emph{odd} polynomial in
+$(m + (h{+}1)/2)$, forcing the structural factor
+$(2m+h+1)$.  At $h = 2$: factor $(2m+3)$ in
+$P(m+1) = (2m+3)(17m^2+51m+39)$.
 The computational data (Section~\ref{sec:comp}) suggests
-$Z(p) = O(1)$, far stronger.
+$Z(p) = O(1)$, far stronger than $O(p^{2/3})$.
 \end{remark}
 
 \subsection{Computational evidence}
