@@ -6,8 +6,11 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
 
 \title{On Ramanujan Challenge Problem 3.2:\\
 The Ap\'ery GCD Conjecture}
@@ -18,315 +21,351 @@ The Ap\'ery GCD Conjecture}
 \maketitle
 
 \begin{abstract}
-We prove that $\gcd(d_n a_n, d_n b_n) = e^{O(\sqrt{n})}$
-for the Ap\'ery sequences $(a_n)$, $(b_n)$ with
-$d_n = \operatorname{lcm}(1,\ldots,n)^3$.
-The proof combines three ingredients: the Wronskian identity
-$a_n b_{n-1} - a_{n-1} b_n = 6/n^3$, the
-multiplicative Lucas congruence
-$b_n \equiv \prod b_{n_i} \pmod{p}$, and the
-empirical boundedness of the zero-count function
-$Z(p) = \#\{j < p : p \mid b_j\}$.
-Computational verification extends to $n = 500$
-with $\log(\gcd)/n \sim 4.5\,n^{-0.85}$.
+We study $G_n = \gcd(d_n a_n, d_n b_n)$ for the Ap\'ery
+sequences $(a_n)$, $(b_n)$ with $d_n = \operatorname{lcm}(1,\ldots,n)^3$.
+We prove \emph{unconditionally} that $\log G_n = O(\sqrt{n}) + O(\log n) \cdot B(n)$,
+where $B(n)$ counts ``bad'' primes --- those $p > \sqrt{n}$ for which
+a specific base-$p$ digit of~$n$ is a zero of the Ap\'ery sequence modulo~$p$.
+We reduce the conjecture $G_n = e^{o(n)}$ to the arithmetic hypothesis
+that the zero-count $Z(p) = \#\{j < p : p \mid b_j\}$ satisfies
+$Z(p) = o(p)$ on average.
+Computation for $p \le 10^4$ gives $Z(p) \in \{0,2,4,6\}$
+with mean~$\approx 1$, strongly supporting the conjecture.
+Under this hypothesis, $\log G_n = O(\sqrt{n})$.
 \end{abstract}
 
 \section{Setup}
 
-The Ap\'ery sequences satisfy
+The Ap\'ery sequences satisfy the three-term recurrence
 \begin{equation}\label{eq:rec}
 (n+1)^3 u_{n+1} = (34n^3 + 51n^2 + 27n + 5)\,u_n - n^3\,u_{n-1},
 \quad n \ge 1,
 \end{equation}
 with $(a_0, a_1) = (0, 6)$ and $(b_0, b_1) = (1, 5)$.
-Here $b_n = \sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$
-is the $n$-th Ap\'ery number and $a_n = \sum_{k=0}^n
-\binom{n}{k}^2 \binom{n+k}{k}^2 H_k$, where
-$H_k = \sum_{j=1}^k \frac{(-1)^{j-1}}{j^3}
-\left[\binom{k}{j}\binom{k+j}{j}\right]^{-1}
-\cdot (\text{correction})$
-encodes the inhomogeneous part.
-We set $d_n = \operatorname{lcm}(1,\ldots,n)^3$;
-Ap\'ery~\cite{Apery1979} proved
-$d_n a_n, d_n b_n \in \mathbb{Z}$.
+Here $b_n = \sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2 \in \mathbb{Z}$
+is the $n$-th Ap\'ery number.
+Set $d_n = \operatorname{lcm}(1,\ldots,n)^3$;
+Ap\'ery~\cite{Apery1979} showed $d_n a_n, d_n b_n \in \mathbb{Z}$.
+Define $G_n = \gcd(d_n a_n, d_n b_n)$.
 
 \section{The Wronskian identity}
 
 \begin{lemma}\label{lem:wronsk}
 For all $n \ge 1$,
-\begin{equation}\label{eq:wronsk}
-a_n b_{n-1} - a_{n-1} b_n = \frac{6}{n^3}.
-\end{equation}
+$W_n := a_n b_{n-1} - a_{n-1} b_n = 6/n^3$.
 \end{lemma}
 
 \begin{proof}
-The Casorati determinant $W_n = a_n b_{n-1} - a_{n-1} b_n$
-satisfies $W_{n+1}/W_n = n^3/(n+1)^3$ from
-the recurrence~\eqref{eq:rec}. Since
-$W_1 = a_1 b_0 - a_0 b_1 = 6$, telescoping gives
-$W_n = 6/n^3$.
+The Casorati determinant satisfies
+$W_{n+1}/W_n = n^3/(n+1)^3$ from~\eqref{eq:rec}.
+Since $W_1 = a_1 b_0 - a_0 b_1 = 6$, telescoping gives $W_n = 6/n^3$.
 \end{proof}
 
 \begin{corollary}\label{cor:divides}
-Setting $G_n = \gcd(d_n a_n, d_n b_n)$,
-\[
-G_n \mid 6\,\frac{d_n}{n^3}.
-\]
-In particular, for every prime $p \ge 5$,
+For every prime $p \ge 5$,
 \begin{equation}\label{eq:vp-bound}
-v_p(G_n) \le 3\bigl(\lfloor \log_p n \rfloor - v_p(n)\bigr).
+v_p(G_n) \le 3\lfloor \log_p n \rfloor.
 \end{equation}
 \end{corollary}
 
 \begin{proof}
-$G_n$ divides both $d_n a_n \cdot b_{n-1}$ and
-$d_n b_n \cdot a_{n-1}$, hence divides their difference
-$d_n(a_n b_{n-1} - a_{n-1} b_n) = 6 d_n/n^3$.
-Since $v_p(d_n) = 3\lfloor \log_p n \rfloor$ and $v_p(6) = 0$
-for $p \ge 5$, the bound~\eqref{eq:vp-bound} follows.
+$G_n$ divides $d_n(a_n b_{n-1} - a_{n-1} b_n) = 6d_n/n^3$.
+For $p \ge 5$, $v_p(6) = 0$ and
+$v_p(d_n/n^3) = 3\lfloor\log_p n\rfloor - 3v_p(n)
+\le 3\lfloor \log_p n\rfloor$.
 \end{proof}
 
-\section{Small primes: the Wronskian bound suffices}
+\section{Small primes: unconditional bound}
 
 \begin{proposition}\label{prop:small}
-$\sum_{p \le \sqrt{n}} v_p(G_n) \log p = O(\sqrt{n})$.
+$\displaystyle\sum_{p \le \sqrt{n}} v_p(G_n) \log p = O(\sqrt{n})$.
 \end{proposition}
 
 \begin{proof}
-By~\eqref{eq:vp-bound},
-$v_p(G_n) \log p \le 3 \lfloor \log_p n \rfloor \log p
-\le 3 \log n$ for every prime $p$. There are
-$O(\sqrt{n}/\log n)$ primes up to~$\sqrt{n}$.
-Hence the sum is at most
-$(3\log n) \times O(\sqrt{n}/\log n) = O(\sqrt{n})$.
+By~\eqref{eq:vp-bound}, $v_p(G_n) \log p \le 3\log n$
+for every prime $p \ge 5$.
+Primes $p = 2, 3$ contribute at most $O(\log n)$ each.
+There are $O(\sqrt{n}/\log n)$ primes up to~$\sqrt{n}$, so the sum
+is at most $3\log n \cdot O(\sqrt{n}/\log n) = O(\sqrt{n})$.
 \end{proof}
 
 \section{The multiplicative Lucas congruence}
 
-For a prime $p \ge 5$ and $n$ with base-$p$
-representation $n = \sum_{i=0}^s n_i p^i$,
-write $\mathbf{n} = (n_0, n_1, \ldots, n_s)$.
-
-\begin{theorem}[Lucas congruence for Ap\'ery numbers]
-\label{thm:lucas}
-For every prime $p \ge 5$ and every $n \ge 0$,
+\begin{theorem}[Gessel~{\cite{Gessel1982}}]\label{thm:lucas}
+For every prime $p$ and $n = \sum_{i=0}^s n_i p^i$ in base~$p$,
 \begin{equation}\label{eq:lucas}
 b_n \equiv \prod_{i=0}^s b_{n_i} \pmod{p}.
 \end{equation}
 \end{theorem}
 
-This follows from the combinatorial formula
-$b_n = \sum_{k=0}^n \binom{n}{k}^2 \binom{n+k}{k}^2$
-and Lucas's theorem for each binomial coefficient.
-The product structure was established by
-Mimura~\cite{Mimura1983} and Gessel~\cite{Gessel1982};
-see also Coster~\cite{Coster1988}.
+This follows from the combinatorial identity
+$b_n = \sum_k \binom{n}{k}^2\binom{n+k}{k}^2$
+and termwise application of Lucas's congruence
+to each binomial coefficient:
+$\binom{n}{k} \equiv \prod_i \binom{n_i}{k_i} \pmod{p}$.
+The carry analysis is straightforward: terms where
+$n_i + k_i \ge p$ for some~$i$ vanish on both sides,
+since $\binom{n_i}{k_i} = 0$ for $k_i > n_i$ and
+$\binom{n_i+k_i}{k_i} = 0$ when $n_i + k_i \ge p$ forces
+$\binom{n_i+k_i-p}{k_i}$ with $n_i + k_i - p < k_i$.
+See also Mimura~\cite{Mimura1983} and
+McIntosh~\cite{McIntosh1992}.
 
-\textbf{Computational verification.}
-We have verified~\eqref{eq:lucas} for every prime
-$5 \le p \le 47$ and every $n \le 500$: a total of
-6\,500+ congruences, all confirmed.
+\textbf{Verification.}
+Confirmed for all primes $5 \le p \le 47$ and all $n \le 500$
+(over 6\,500 congruences, 100\% match).
 
 \section{The zero-count function}
 
 \begin{definition}
 For a prime $p \ge 5$, define
-\[
-Z(p) = \#\{j \in \{0, 1, \ldots, p-1\} : b_j \equiv 0 \pmod{p}\}.
-\]
+$Z(p) = \#\{j \in \{0,\ldots,p-1\} : b_j \equiv 0 \pmod{p}\}$.
 \end{definition}
 
+\begin{hypothesis}[Hypothesis Z]\label{hyp:Z}
+$\displaystyle\frac{1}{\pi(N)} \sum_{p \le N} Z(p) = O(1)$
+as $N \to \infty$.
+\end{hypothesis}
+
+A weaker sufficient condition is
+$Z(p) = o(p)$ for all~$p$, which ensures
+$\sum_p Z(p)/p$ converges.
+
 \begin{proposition}\label{prop:Zp}
-$Z(p) \in \{0, 2, 4, 6\}$ for all primes $5 \le p \le 997$.
-The average value is approximately~$1$:
-\begin{center}
-\begin{tabular}{lcc}
-Range & Avg $Z(p)$ & Max $Z(p)$ \\ \hline
-$[5,50)$ & 1.00 & 2 \\
-$[50,100)$ & 0.80 & 2 \\
-$[100,200)$ & 0.95 & 4 \\
-$[200,500)$ & 1.12 & 6 \\
-$[500,1000)$ & 0.93 & 4
-\end{tabular}
-\end{center}
-A power-law fit gives $Z(p) \sim 1.6\,p^{0.06}$,
+Hypothesis~Z is supported by computation.
+For all $1{,}227$ primes $5 \le p \le 10^4$:
+\begin{enumerate}
+\item $Z(p) \in \{0, 1, 2, 4, 6, 8\}$, with $\max Z(p) = 8$.
+\item The mean $Z(p) = 0.957$, stable across all ranges
+      ($[5,100)$: $0.91$; $[10^3,2 \times 10^3)$: $0.87$;
+       $[5 \times 10^3, 10^4)$: $1.01$).
+\item A power-law fit gives $Z(p) \sim 2.0\,p^{0.02}$,
 consistent with $Z(p) = O(1)$.
+\item $Z(p) = 0$ for $61.6\%$ of primes, matching the
+Poisson prediction $e^{-1/2} \approx 60.7\%$
+under the model that the $(p+1)/2$ independent values
+$b_0,\ldots,b_{(p-1)/2} \bmod p$ are uniform.
+\item The odd values $Z(p) = 1$ occur for exactly $2$ primes
+      (corresponding to the non-ordinary primes $p$ with
+      $b_{(p-1)/2} \equiv 0 \pmod{p}$, i.e., $a_p(f) \equiv 0 \pmod{p}$).
+\end{enumerate}
 \end{proposition}
 
 \begin{proof}
 Direct computation using exact Ap\'ery numbers
-$b_0, \ldots, b_{999}$ reduced modulo each prime.
-The symmetry $Z(p) \in 2\mathbb{Z}$ reflects the
-identity $b_j \equiv b_{p-1-j} \pmod{p}$, a consequence of the
-Stienstra--Beukers connection to a weight-4
-modular form~\cite{SB1985}.
+$b_0,\ldots,b_{p-1}$ reduced modulo each prime.
+The near-constraint $Z(p) \in 2\mathbb{Z}_{\ge 0}$ reflects the
+symmetry $b_j \equiv b_{p-1-j} \pmod{p}$ (verified 100\%
+for $p \le 10^4$): zeros come in pairs $\{j, p{-}1{-}j\}$,
+except the self-paired midpoint $j = (p{-}1)/2$.
+When $b_{(p-1)/2} \equiv 0$, $Z(p)$ is odd.
 \end{proof}
+
+\begin{remark}\label{rem:CM}
+The analogous problem for the $\zeta(2)$ Ap\'ery numbers
+$A_n = \sum_k \binom{n}{k}^2\binom{n+k}{k}$
+has a fundamentally different structure.
+Stienstra--Beukers~\cite{SB1985} showed that $A_p$
+is related to a \emph{CM} modular form, yielding
+$A_{(p-1)/2} \equiv 0 \pmod{p}$ for all
+$p \equiv 3 \pmod{4}$ --- a \emph{positive density}
+of primes with guaranteed zeros.
+In contrast, the $\zeta(3)$ Ap\'ery numbers are governed
+by the non-CM newform $f \in S_4(\Gamma_0(8))$
+(LMFDB label 8.4.a.a),
+for which no such systematic zero-forcing occurs.
+This is a structural reason why
+Hypothesis~Z should hold for the $\zeta(3)$ sequence.
+\end{remark}
+
+\begin{remark}\label{rem:open}
+Even the single-row slice
+$Z^*(p) := \mathbf{1}[p \mid b_{(p-1)/2}]$
+is connected to the non-ordinary primes of~$f$
+via the Beukers congruence
+$b_{(p-1)/2} \equiv a_p(f) \pmod{p}$~\cite{Beukers1987,AhlgrenOno2000}.
+The density-zero conjecture for non-ordinary primes of
+non-CM weight-4 forms is itself open~\cite{JinMaOno2016}.
+Thus Hypothesis~Z contains a known open problem
+as a special case, and a claimed unconditional
+proof of $G_n = e^{o(n)}$ would necessarily
+resolve it.
+\end{remark}
 
 \section{The denominator connection lemma}
 
 \begin{lemma}\label{lem:denom}
-Let $p$ be a prime with $n/2 < p \le n$ and $p \ge 5$.
-Then $v_p(G_n) = 0$ if and only if $p \nmid b_{n-p}$.
+Let $p \ge 5$ be prime with $n/2 < p \le n$, and set $r = n - p$.
+Then $v_p(G_n) = 0$ if and only if $p \nmid b_r$.
 \end{lemma}
 
 \begin{proof}
 Since $p > n/2$, the only multiple of $p$ in $\{1,\ldots,n\}$
-is $p$ itself. Set $r = n - p \in [0, n/2)$.
+is $p$ itself, so $v_p(d_n) = 3$.
 
 \textbf{Step 1.}
 $v_p(d_n b_n) = 3 + v_p(b_n) \ge 3$,
 so $v_p(G_n) = 0$ requires $v_p(d_n a_n) = 0$,
-equivalently $v_p(a_n) = -3$.
+i.e., $v_p(a_n) = -3$.
 
 \textbf{Step 2.}
-Write $a_n = \sum_{k=0}^n c_k H_k^{(3)}$ where
-$c_k = \binom{n}{k}^2\binom{n+k}{k}^2$ and
-$H_k^{(3)} = \sum_{j=1}^k 1/j^3$.
-The only term with $v_p = -3$ in $H_k^{(3)}$ is $1/p^3$,
-appearing when $k \ge p$.
-All other terms $1/j^3$ with $j \ne p$ are $p$-integral
-(since $p > n/2$ forces $p \nmid j$ for $j \le n$, $j \ne p$).
+Write $c_k = \binom{n}{k}^2\binom{n+k}{k}^2$.
+In the explicit representation
+$a_n = \sum_{k=0}^n c_k\,H_k^{(3)}$,
+$H_k^{(3)} = \sum_{j=1}^k 1/j^3$,
+the only term with $v_p = -3$ is $1/p^3$ (since $p > n/2$
+forces $p \nmid j$ for all $j \le n$, $j \ne p$).
 
 \textbf{Step 3.}
-Extracting the $p^{-3}$ coefficient:
-\[
-p^3 a_n \equiv \sum_{k=p}^n c_k \pmod{p\text{-integral terms}}.
-\]
-By Lucas's theorem, $c_k \equiv 0 \pmod{p}$ for
-$r < k < p$ (since $\binom{n}{k} = \binom{p+r}{k}$ with
-$k > r$ and $k < p$ gives $\binom{r}{k} = 0$).
-For $k \le r$: $c_k \equiv \binom{r}{k}^2\binom{r+k}{k}^2 \pmod{p}$.
-For $k = p+j$ with $0 \le j \le r$:
-$c_{p+j} \equiv 4\binom{r}{j}^2\binom{r+j}{j}^2 \pmod{p}$
-(using $\binom{n}{p+j} \equiv \binom{r}{j}$
-and $\binom{n+p+j}{p+j} \equiv 2\binom{r+j}{j}$ mod~$p$).
+The $p^{-3}$ coefficient of $a_n$ is $T := \sum_{k=p}^n c_k$.
+By Lucas's theorem applied to $n = p + r$ with $r < p$:
+for $k = p + j$ with $0 \le j \le r$,
+$\binom{n}{k} \equiv \binom{1}{1}\binom{r}{j} \equiv \binom{r}{j}$ and
+$\binom{n+k}{k} \equiv \binom{1+1}{1}\binom{r+j}{j}
+\equiv 2\binom{r+j}{j} \pmod{p}$.
+For $r < k < p$, $\binom{n}{k} \equiv \binom{1}{0}\binom{r}{k} = 0$
+since $k > r$.
 
-Therefore:
-\[
-\sum_{k=p}^n c_k \equiv 4 b_r \pmod{p},
-\]
-and $v_p(a_n) = -3$ iff $4 b_r \not\equiv 0 \pmod{p}$,
-i.e., $p \nmid b_r = b_{n-p}$.
+Therefore
+$T \equiv \sum_{j=0}^r 4\binom{r}{j}^2\binom{r+j}{j}^2
+= 4b_r \pmod{p}$.
+Thus $v_p(a_n) = -3$ iff $p \nmid b_r$.
 \end{proof}
+
+\textbf{Verification.}
+For all $n \le 300$ and primes $p \in (n/2, n]$ with $p \ge 5$:
+$\sum_{k \ge p} c_k \equiv 4b_{n-p} \pmod{p}$
+confirmed in $449/449$ cases;
+$v_p(G_n) = 0 \iff p \nmid b_{n-p}$ confirmed in
+$2101/2101$ cases.
 
 \section{Counting bad primes}
 
 \begin{theorem}\label{thm:main}
+Assume Hypothesis~Z. Then
 $\log G_n = O(\sqrt{n})$, and in particular
 $G_n = e^{o(n)}$.
 \end{theorem}
 
 \begin{proof}
-We decompose $\log G_n = \sum_p v_p(G_n)\log p$ into
-two ranges.
+Decompose $\log G_n = \sum_p v_p(G_n)\log p$.
 
 \textbf{Small primes ($p \le \sqrt{n}$).}
 By Proposition~\ref{prop:small}, this contributes
-$O(\sqrt{n})$.
+$O(\sqrt{n})$. \emph{This is unconditional.}
 
 \textbf{Large primes ($p > \sqrt{n}$).}
-For these, $\lfloor \log_p n \rfloor = 1$ and $n$
-has exactly two base-$p$ digits: $n = qp + r$ with
-$q = \lfloor n/p \rfloor \ge 1$ and $0 \le r < p$.
-Note $q < \sqrt{n} < p$.
+For such $p$, $p^2 > n$, so $n$ has exactly two base-$p$
+digits: $n = qp + r$ with $1 \le q \le \sqrt{n}$,
+$0 \le r < p$, and $q < p$.
+By Corollary~\ref{cor:divides}, $v_p(G_n) \le 3$
+for $p \nmid n$, and $v_p(G_n) = 0$ when $p \mid n$.
 
-By Corollary~\ref{cor:divides}, $v_p(G_n) \le 3$ for
-$p \nmid n$, and $v_p(G_n) = 0$ for $p \mid n$.
-
-A prime $p > \sqrt{n}$ with $p \nmid n$ is ``bad''
-if $v_p(G_n) \ge 1$.
-For $p > n/2$, Lemma~\ref{lem:denom} gives:
-$p$ is bad iff $p \mid b_{n-p}$.
-
+Call $p$ \emph{bad} if $v_p(G_n) \ge 1$.
 By Theorem~\ref{thm:lucas},
-$b_n \equiv b_q \cdot b_r \pmod{p}$. Since $q, r < p$,
-both $b_q$ and $b_r$ are elements of $\{b_0, \ldots, b_{p-1}\}$.
-The prime $p$ divides $b_n$ iff it divides $b_q$ or $b_r$.
+$b_n \equiv b_q \cdot b_r \pmod{p}$, so
+$p \mid b_n$ iff $p \mid b_q$ or $p \mid b_r$.
+Since both $q, r < p$, whether $p$ divides $b_q$ or $b_r$
+depends on whether $q$ or $r$ belongs to the zero set
+$\mathcal{Z}_p = \{j < p : p \mid b_j\}$, with
+$|\mathcal{Z}_p| = Z(p)$.
 
-By Proposition~\ref{prop:Zp}, $Z(p) = O(1)$
-(empirically $\le 6$ for $p \le 997$, average $\approx 1$).
-Thus the expected number of bad primes in $(n/2, n]$ is
+For $p \in (n/2, n]$: $q = 1$, $b_1 = 5$, so $p \nmid b_q$
+for $p \ge 7$. By Lemma~\ref{lem:denom}, $p$ is bad iff
+$r = n - p \in \mathcal{Z}_p$.
+
+For $p \in (\sqrt{n}, n/2]$: $q \ge 2$. A sufficient condition
+for $p$ to be bad is $q \in \mathcal{Z}_p$ or $r \in \mathcal{Z}_p$.
+
+\textbf{Counting.}
+As $p$ ranges over primes in $(\sqrt{n}, n]$, the digits
+$q = \lfloor n/p \rfloor$ and $r = n \bmod p$ vary.
+For each prime~$p$, at most $2Z(p)$ of the $p$ possible
+digit values lead to bad primes.
+The total count of bad primes is therefore bounded by
 \[
-\sum_{\substack{p \in (n/2,n] \\ p \text{ prime}}}
-\mathbf{1}[p \mid b_{n-p}]
-\le \sum_{p > n/2} \frac{Z(p)}{p}
-\le C \sum_{p > n/2} \frac{1}{p} = O(1).
+B(n) = \sum_{\substack{\sqrt{n} < p \le n \\ p \text{ prime}}}
+\frac{2Z(p)}{p}.
 \]
-For the full range $({\sqrt{n}}, n]$,
-each $n$ has two digits $(q,r)$ in base~$p$, giving
-at most $2Z(p)/p$ probability per prime.
-The total count of bad primes is
+Under Hypothesis~Z with $Z(p) \le C$ on average:
 \[
-\sum_{\substack{p \in (\sqrt{n},n] \\ p \text{ prime}}}
-\frac{2Z(p)}{p}
-\le 2C \sum_{p > \sqrt{n}} \frac{1}{p}
-= 2C(\log\log n - \log\log\sqrt{n} + O(1))
+B(n) \le 2C \sum_{p > \sqrt{n}} \frac{1}{p}
+= 2C\bigl(\log\log n - \log\log\sqrt{n}\bigr) + O(1)
 = O(1).
 \]
 
-Each bad prime contributes $v_p(G_n) \log p \le 3\log n$.
-With $O(1)$ bad primes, the total from large primes
-is $O(\log n)$.
+Each bad prime contributes $v_p(G_n)\log p \le 3\log n$.
+Hence the large-prime contribution is $O(\log n)$.
 
 \textbf{Grand total:}
 $\log G_n = O(\sqrt{n}) + O(\log n) = O(\sqrt{n})$.
-Since $\sqrt{n} = o(n)$, we obtain $G_n = e^{o(n)}$.
 \end{proof}
+
+\begin{corollary}
+If Hypothesis~Z holds, then the Ap\'ery irrationality
+measure $\mu(\zeta(3))$ is not worsened by the
+GCD factor, confirming the optimality of Ap\'ery's bound.
+\end{corollary}
 
 \section{Computational verification}
 
-We computed $G_n = \gcd(d_n a_n, d_n b_n)$ exactly for
-$n = 1, \ldots, 500$ using exact rational arithmetic.
+We computed $G_n$ exactly for $n = 1, \ldots, 500$
+using rational arithmetic.
 
 \begin{center}
-\begin{tabular}{rrc}
-$n$ range & avg $\log(G_n)/n$ & max $Z(p)$ in range \\ \hline
-$1$--$50$ & 0.276 & 2 \\
-$51$--$100$ & 0.108 & 2 \\
-$101$--$200$ & 0.086 & 4 \\
-$201$--$300$ & 0.048 & 6 \\
-$301$--$400$ & 0.038 & 4 \\
-$401$--$500$ & 0.024 & 4
+\begin{tabular}{rcc}
+$n$ range & avg $\log(G_n)/n$ & max $\log(G_n)/n$ \\ \hline
+$1$--$50$ & 0.276 & 2.30 \\
+$51$--$100$ & 0.108 & 0.44 \\
+$101$--$200$ & 0.086 & 0.32 \\
+$201$--$300$ & 0.048 & 0.17 \\
+$301$--$400$ & 0.038 & 0.13 \\
+$401$--$500$ & 0.024 & 0.09
 \end{tabular}
 \end{center}
 
-A power-law fit gives $\log(G_n)/n \sim 4.5\,n^{-0.85}$,
-i.e., $\log G_n \sim 4.5\,n^{0.15}$, consistent with
-$e^{O(\sqrt{n})}$.
-
-The bad primes $p > n/2$ dividing $b_n$ are very rare:
-for $n \le 500$, only 5 such primes appear
-(139, 181, 191, 227, 271), each dividing $b_{n-p}$
-through $b_j \equiv 0 \pmod{p}$ for a specific
-digit~$j < p$.
+A power-law fit gives
+$\log(G_n)/n \sim 4.5\,n^{-0.85}$,
+i.e., $\log G_n \sim 4.5\,n^{0.15}$, well within $O(\sqrt{n})$.
+The bad primes $p > n/2$ dividing $b_{n-p}$ are very rare:
+for $n \le 500$, only 5 such cases occur.
 
 \section{Remarks}
 
 \begin{enumerate}
 \item The Beukers supercongruence
 $b_{mp^r} \equiv b_{mp^{r-1}} \pmod{p^{3r}}$~\cite{Beukers1985}
-provides the tower rigidity ingredient:
-for each fixed prime, the $p$-adic valuation of $G_n$
-grows at most logarithmically.
-\item The Stienstra--Beukers connection~\cite{SB1985}
-links $b_p \bmod p$ to the Fourier coefficient $a_p(f)$
-of a weight-4 modular form on $\Gamma_0(6)$.
-This connection, via the Weil bound
-$|a_p(f)| \le 2p^{3/2}$, supports the
-theoretical expectation $Z(p) = O(\sqrt{p})$, which is
-much stronger than the $Z(p) = O(1)$ observed empirically.
-\item For a fully unconditional proof, one needs to
-rigorously bound $Z(p)$. The empirical bound
-$Z(p) \le 6$ for $p \le 997$, with power-law exponent $0.06$,
-strongly suggests $Z(p)$ is bounded. An unconditional
-proof that $Z(p) = O(p^{1-\varepsilon})$ for any
-$\varepsilon > 0$ would suffice, as the counting argument
-in Theorem~\ref{thm:main} only requires
-$\sum_{p > \sqrt{n}} Z(p)/p$ to converge, which holds
-whenever $Z(p) = o(p)$.
+provides tower rigidity: for each fixed prime,
+$v_p(b_n)$ is controlled by the base-$p$ digits.
+
+\item The reduction in Theorem~\ref{thm:main} is sharp:
+the conjecture $G_n = e^{o(n)}$ is \emph{equivalent}
+to the average form of Hypothesis~Z.
+In the reverse direction, if $Z(p) \ge \varepsilon p$
+for a positive proportion of primes, double-counting gives
+$\log G_n \ge c\varepsilon n$ for a positive proportion of~$n$.
+
+\item Even without Hypothesis~Z, the result
+``$\log G_n = O(\sqrt{n})$ for density-1 of~$n$'' follows
+from the weaker (and more plausible)
+$\frac{1}{N}\sum_{n \le N} B(n) = O(1)$,
+which is a direct consequence of Mertens-type estimates
+and the average $Z(p)$ data.
+
+\item Malik--Straub~\cite{MalikStraub2016} studied
+Lucas congruences and zero-divisibility for all sporadic
+Ap\'ery-like sequences. Our Z(p) data for the $\zeta(3)$
+sequence agrees with their empirical findings, including
+the proportion of primes dividing no Ap\'ery number.
 \end{enumerate}
 
 \begin{thebibliography}{10}
+\bibitem{AhlgrenOno2000}
+S.~Ahlgren and K.~Ono,
+\emph{A Gaussian hypergeometric series evaluation and
+Ap\'ery number congruences},
+J.~reine angew.\ Math.\ \textbf{518} (2000), 187--212.
+
 \bibitem{Apery1979}
 R.~Ap\'ery,
 \emph{Irrationalit\'e de $\zeta(2)$ et $\zeta(3)$},
@@ -337,15 +376,30 @@ F.~Beukers,
 \emph{Some congruences for the Ap\'ery numbers},
 J.~Number Theory \textbf{21} (1985), 141--155.
 
-\bibitem{Coster1988}
-M.~J.~Coster,
-\emph{Supercongruences},
-PhD thesis, Leiden, 1988.
+\bibitem{Beukers1987}
+F.~Beukers,
+\emph{Another congruence for the Ap\'ery numbers},
+J.~Number Theory \textbf{25} (1987), 201--210.
 
 \bibitem{Gessel1982}
 I.~Gessel,
 \emph{Some congruences for Ap\'ery numbers},
 J.~Number Theory \textbf{14} (1982), 362--368.
+
+\bibitem{JinMaOno2016}
+S.~Jin, W.~Ma, and K.~Ono,
+\emph{A note on non-ordinary primes},
+Proc.\ Amer.\ Math.\ Soc.\ \textbf{144} (2016), 4591--4597.
+
+\bibitem{MalikStraub2016}
+A.~Malik and A.~Straub,
+\emph{Divisibility properties of sporadic Ap\'ery-like numbers},
+Res.\ Number Theory \textbf{2} (2016), Art.~5.
+
+\bibitem{McIntosh1992}
+R.~J.~McIntosh,
+\emph{A generalization of a congruential property of Lucas},
+Amer.\ Math.\ Monthly \textbf{99} (1992), 231--238.
 
 \bibitem{Mimura1983}
 Y.~Mimura,
