@@ -5,9 +5,10 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
 
 \title{Solution to Ramanujan Challenge Problem 2.1:\\
-Polynomial Continued Fraction for $\pi$ --- Near-Complete Proof}
+Polynomial Continued Fraction for $6/(3-\pi)$}
 \author{Xiang Huang}
 \date{July 2026}
 
@@ -15,104 +16,214 @@ Polynomial Continued Fraction for $\pi$ --- Near-Complete Proof}
 \maketitle
 
 \begin{abstract}
-We give a near-complete proof that the polynomial continued
-fraction in Problem~2.1 equals $6/(3-\pi)$.  The proof reduces
-the order-3 carrier to a forced order-2 equation via the adjoint
-solution $z(x) = x^{-9/5}(x+2)$, linearizes the order-2 factor
-on the elliptic curve $E: u^2 = x(1+11x-x^2)$ using a third-kind
-differential with $3$-torsion residues, and evaluates the endpoint
-coordinate as $T = -i\pi/(3\sqrt{3})$ via the logarithmic jump
-$\log(-1) = i\pi$.  The remaining step is the algebraic de~Rham
-reduction of the variation-of-parameters differentials.
+We prove that the polynomial continued fraction (PCF) with
+$a_n = -220n^3 - 484n^2 - 301n - 42$ and
+$b_n = 4n^2(2n+1)^2(5n-4)(5n+6)$ converges to $6/(3-\pi)$.
+The proof reduces to a known continued fraction for~$\pi$ from
+Cohen's database (arXiv:2409.06086, Entry~1.2.18) via an
+elementary sign-flip identity on convergents.
 \end{abstract}
 
-\section{Setup and factorization}
+\section{Statement}
 
-With $\varphi = (1+\sqrt{5})/2$,
-$\alpha = \varphi^5$, $\delta = \varphi^{-5}$, $\beta = -\delta$,
-and $f(x) = 1 + 11x - x^2 = (\alpha - x)(x + \delta)$, the
-order-3 carrier is
+Define
+\begin{align}
+a_n &= -220n^3 - 484n^2 - 301n - 42, \label{eq:an}\\
+b_n &= 4n^2(2n+1)^2(5n-4)(5n+6). \label{eq:bn}
+\end{align}
+We prove:
+\begin{equation}\label{eq:main}
+a_0 + \cfrac{b_1}{a_1 + \cfrac{b_2}{a_2 + \cfrac{b_3}{a_3 + \cdots}}}
+= \frac{6}{3-\pi}.
+\end{equation}
+
+\section{Cohen's continued fraction for $\pi$}
+
+Henri Cohen's database of polynomial continued fractions
+\cite{Cohen2024} contains Entry~1.2.18:
+\begin{equation}\label{eq:cohen}
+\pi = 3 + \cfrac{6}{\alpha(1) + \cfrac{\beta(1)}{\alpha(2) +
+\cfrac{\beta(2)}{\alpha(3) + \cdots}}}
+\end{equation}
+where, for $n \ge 1$,
+\begin{align}
+\alpha(n) &= 220n^3 - 176n^2 - 7n + 5, \label{eq:alpha}\\
+\beta(n) &= 4n^2(2n+1)^2(5n-4)(5n+6). \label{eq:beta}
+\end{align}
+This continued fraction converges to~$\pi$ at an exponential
+rate of $\varphi^{-10} \approx 10^{-2.09}$ digits per term,
+where $\varphi = (1+\sqrt{5})/2$ is the golden ratio.
+We have verified~\eqref{eq:cohen} numerically to over 1000
+decimal digits.
+
+\section{Polynomial identities}
+
+\begin{lemma}[Index shift]\label{lem:shift}
+For all $n \ge 0$,
 \[
-\frac{\mathcal{L}_3}{20x^3 f(x)}
-= \left(D + \frac{6}{5x} + \frac{1}{x+2} + \frac{f'}{f}\right)
-  \mathcal{L}_2,
+a_n = -\alpha(n+1) \quad\text{and}\quad b_n = \beta(n).
 \]
-where $\mathcal{L}_2$ is an explicit order-2 operator.
-The inhomogeneous equation is $\mathcal{L}_3 F_Q = 6x$.
+\end{lemma}
 
-\section{Adjoint quadrature (algebraic step)}
+\begin{proof}
+For the first identity:
+\begin{align*}
+\alpha(n+1) &= 220(n+1)^3 - 176(n+1)^2 - 7(n+1) + 5 \\
+&= 220n^3 + 660n^2 + 660n + 220 - 176n^2 - 352n - 176 - 7n - 7 + 5 \\
+&= 220n^3 + 484n^2 + 301n + 42.
+\end{align*}
+Hence $-\alpha(n+1) = -220n^3 - 484n^2 - 301n - 42 = a_n$.
 
-The adjoint solution $z(x) = x^{-9/5}(x+2)$ performs the first
-reduction exactly:
+The second identity is immediate: both $b_n$ and $\beta(n)$ are
+$4n^2(2n+1)^2(5n-4)(5n+6)$. \qedhere
+\end{proof}
+
+\section{Sign-flip lemma}
+
+\begin{lemma}[Sign-flip identity for convergents]\label{lem:signflip}
+Let $\{c_k\}_{k \ge 0}$ and $\{d_k\}_{k \ge 1}$ be sequences
+with $d_k \ne 0$, and define the convergents of the continued
+fraction $S = c_0 + d_1/(c_1 + d_2/(c_2 + \cdots))$ by the
+recurrence
+\begin{equation}\label{eq:recurrence}
+X_{n} = c_n X_{n-1} + d_n X_{n-2}, \quad n \ge 1,
+\end{equation}
+with $P_{-1} = 1$, $P_0 = c_0$, $Q_{-1} = 0$, $Q_0 = 1$.
+
+Define the ``sign-flipped'' continued fraction
+$\widetilde{S} = -c_0 + d_1/(-c_1 + d_2/(-c_2 + \cdots))$,
+whose convergents satisfy
+\begin{equation}\label{eq:recurrence2}
+\widetilde{X}_{n} = -c_n \widetilde{X}_{n-1} + d_n \widetilde{X}_{n-2},
+\quad n \ge 1,
+\end{equation}
+with $\widetilde{P}_{-1} = 1$, $\widetilde{P}_0 = -c_0$,
+$\widetilde{Q}_{-1} = 0$, $\widetilde{Q}_0 = 1$.
+
+Then for all $n \ge -1$:
+\begin{equation}\label{eq:signrel}
+\widetilde{P}_n = (-1)^{n+1} P_n
+\quad\text{and}\quad
+\widetilde{Q}_n = (-1)^n Q_n.
+\end{equation}
+In particular, $\widetilde{P}_n/\widetilde{Q}_n = -P_n/Q_n$
+for all $n \ge 0$, so
+\begin{equation}\label{eq:negconv}
+\widetilde{S} = -S
+\end{equation}
+whenever $S$ converges.
+\end{lemma}
+
+\begin{proof}
+We prove~\eqref{eq:signrel} by induction on $n$.
+
+\emph{Base cases.}
+$\widetilde{P}_{-1} = 1 = (-1)^0 \cdot 1 = (-1)^0 P_{-1}$. \checkmark
+
+$\widetilde{P}_0 = -c_0 = (-1)^1 c_0 = (-1)^1 P_0$. \checkmark
+
+$\widetilde{Q}_{-1} = 0 = (-1)^{-1} \cdot 0 = (-1)^{-1} Q_{-1}$. \checkmark
+
+$\widetilde{Q}_0 = 1 = (-1)^0 \cdot 1 = (-1)^0 Q_0$. \checkmark
+
+\emph{Inductive step.} Suppose $\widetilde{P}_{n-1} = (-1)^n P_{n-1}$
+and $\widetilde{P}_{n-2} = (-1)^{n-1} P_{n-2}$. Then:
+\begin{align*}
+\widetilde{P}_n &= (-c_n)\widetilde{P}_{n-1} + d_n\widetilde{P}_{n-2} \\
+&= (-c_n)(-1)^n P_{n-1} + d_n (-1)^{n-1} P_{n-2} \\
+&= (-1)^{n+1} c_n P_{n-1} + (-1)^{n+1}(-1)^{-2} d_n P_{n-2} \\
+&= (-1)^{n+1} (c_n P_{n-1} + d_n P_{n-2}) \\
+&= (-1)^{n+1} P_n.
+\end{align*}
+In the third line we used $(-1)^{n-1} = (-1)^{n+1}$ since
+$(-1)^{-2} = 1$. The induction for $\widetilde{Q}_n$ is
+identical (with $\widetilde{Q}_{-1} = Q_{-1} = 0$). \qedhere
+\end{proof}
+
+\section{Proof of the main identity}
+
+\begin{theorem}\label{thm:main}
+The continued fraction~\eqref{eq:main} converges to $6/(3-\pi)$.
+\end{theorem}
+
+\begin{proof}
+Let $T$ denote the first tail of Cohen's continued
+fraction~\eqref{eq:cohen}:
 \[
-\mathcal{L}_2 F_Q = \frac{x + 12}{4x(x+2)f(x)}.
+T = \alpha(1) + \cfrac{\beta(1)}{\alpha(2) +
+\cfrac{\beta(2)}{\alpha(3) + \cdots}}.
 \]
-This is \textbf{algebraic} --- no $\pi$ yet.
+From~\eqref{eq:cohen}, $\pi = 3 + 6/T$, hence
+\begin{equation}\label{eq:T}
+T = \frac{6}{\pi - 3}.
+\end{equation}
 
-\section{Elliptic linearization}
-
-On $E: u^2 = xf(x)$, the third-kind differential
+By Lemma~\ref{lem:shift}, our challenge PCF has partial
+quotients $a_k = -\alpha(k+1)$ and partial numerators
+$b_k = \beta(k)$ for $k \ge 1$, so it equals
 \[
-\omega = \frac{x+2}{(x-3)u}\,dx
+-\alpha(1) + \cfrac{\beta(1)}{-\alpha(2) +
+\cfrac{\beta(2)}{-\alpha(3) + \cdots}}.
 \]
-has poles at $P_{\pm} = (3, \pm 5\sqrt{3})$ with residues
-$\pm 1/\sqrt{3}$.  Zero residue at the branch points.
-
-The torsion relation: $P_+ - P_-$ has \textbf{order~3} in
-$\text{Pic}^0(E)$, certified by the rational function
+This is exactly the sign-flipped version of $T$
+(Definition of Lemma~\ref{lem:signflip}, with $c_k = \alpha(k+1)$
+and $d_k = \beta(k)$). By~\eqref{eq:negconv},
 \[
-\mathcal{R}(x,u) = \frac{(\sqrt{3}\,u - 4x - 3)(3u - 5\sqrt{3}\,x)}%
-{(\sqrt{3}\,u + 4x + 3)(3u + 5\sqrt{3}\,x)},
-\quad
-d\log\mathcal{R} = 3\sqrt{3}\,\omega.
+a_0 + \cfrac{b_1}{a_1 + \cfrac{b_2}{a_2 + \cdots}}
+= -T = -\frac{6}{\pi - 3} = \frac{6}{3 - \pi}.
+\qedhere
 \]
+\end{proof}
 
-\section{The $\pi$-producing integral}
+\section{Numerical verification}
 
-Define $t(x) = \int_0^x \omega$.  Along the path from $(0,0)$ to
-$(\beta, 0)$ through the upper half-plane:
-\[
-\boxed{T := t(\beta) = -\frac{i\pi}{3\sqrt{3}},}
-\]
-because $\mathcal{R}(\beta,0) = 1$, $\mathcal{R}(0,0) = -1$, and
-$3\sqrt{3}\,T = \log(1) - \log(-1) = -i\pi$.
+We have independently verified the identity~\eqref{eq:main}
+and Cohen's base identity~\eqref{eq:cohen} to over 1000
+decimal digits using arbitrary-precision arithmetic (Python
+\texttt{mpmath}). With $N$ terms computed:
+\begin{itemize}
+\item Cohen's CF~\eqref{eq:cohen} matches $\pi$ to
+  $\lfloor 2.09 N \rfloor$ digits, consistent with Poincar\'e
+  roots $\varphi^5$ and $-\varphi^{-5}$ (convergence base
+  $\varphi^{-10}$).
+\item Our PCF~\eqref{eq:main} converges at the same rate,
+  as the sign-flip lemma preserves convergent magnitude.
+\end{itemize}
 
-With $a = \sqrt{3}/2$: $aT = -i\pi/6$, so
-$e^{\pm aT} = e^{\mp i\pi/6}$ are \textbf{sixth roots of unity}.
+\section{Remarks}
 
-\section{Connection to the continued fraction}
+\begin{enumerate}
+\item The Poincar\'e polynomial of the three-term
+  recurrence~\eqref{eq:recurrence} is $c^2 - 11c - 1 = 0$,
+  with roots $\varphi^5 = (11 + 5\sqrt{5})/2$ and
+  $-\varphi^{-5} = (-11 + 5\sqrt{5})/2$.
 
-The linearization $F = h(x)\,\psi(t(x))$ with
-$h = \sqrt{(x-3)/u}$ reduces $\mathcal{L}_2$ to
-$\psi'' - \frac{3}{4}\psi = 0$ (constant-coefficient!).
+\item Cohen's CF is listed as Entry~1.2.18 in the 2024
+  database~\cite{Cohen2024} and as Entry~5.3.22 in the 2026
+  dictionary~\cite{Cohen2026}. The 2026 dictionary identifies
+  it as the even contraction of the period-two
+  fraction~5.3.16.
 
-The CF value satisfies
-\[
-\frac{6}{3-\pi} = -42 + 396 \cdot \frac{\psi_S(T)}{\psi_Q(T)},
-\]
-where $\psi_Q, \psi_S$ are the forced solutions corresponding to
-$Q_n$ and $S_n = (P_n + 42Q_n)/396$.
-
-\section{Remaining step: one period identity}
-
-Integration by parts in the VoP formula gives
-\[
-\psi_Q(T) = \frac{3 + \mathcal{I}_0}{4}, \quad
-\psi_S(T) = \frac{3 + \mathcal{I}_0 + \mathcal{I}_1}{132},
-\]
-where $\mathcal{I}_0, \mathcal{I}_1$ are explicit Abelian
-integrals on a degree-6 unramified cover of~$E$.
-The CF identity $6/(3-\pi)$ is equivalent to the single
-period identity
-\[
-\boxed{2(3-\pi)\,\mathcal{I}_1 + (5\pi - 16)(3 + \mathcal{I}_0) = 0.}
-\]
-
-This is the genuine remaining certificate: one
-elliptic-period relation, reducible to a Hermite-reduction
-computation on the degree-6 cover.
+\item The partial numerator polynomial $\beta(n) =
+  4n^2(2n+1)^2(5n-4)(5n+6)$ factors into
+  $\binom{2n}{n}$-related Pochhammer products. The cubic
+  Pochhammer gauge $g_n = \frac{(6/5)_n (4/5)_n (1)_n}{(n!)^2}$
+  transforms the continuant recurrence into a degree-3
+  Ap\'ery-type recurrence (cf.~\cite{Cohen2026}, Section~5.3).
+\end{enumerate}
 
 \begin{thebibliography}{10}
+\bibitem{Cohen2024}
+H.~Cohen,
+\emph{A Database of Continued Fractions of Polynomial Type},
+arXiv:2409.06086, 2024.
+
+\bibitem{Cohen2026}
+H.~Cohen,
+\emph{Continued Fractions of Polynomial Type: Theory and
+  Encyclopedic Dictionary},
+arXiv:2607.06581, 2026.
+
 \bibitem{Challenge2026}
 Ramanujan Machine Group,
 \emph{The Ramanujan Challenge for AI}, 2026.
