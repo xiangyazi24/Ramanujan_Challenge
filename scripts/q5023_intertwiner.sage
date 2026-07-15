@@ -3,6 +3,7 @@
 
 R.<n> = PolynomialRing(QQ)
 K = R.fraction_field()
+RT.<T> = PolynomialRing(QQ)
 SNAME = 'Sn'
 
 
@@ -57,17 +58,14 @@ def ore_sub(P, Q):
     return trim(out)
 
 
-def op_string(op, factor_coeffs=True):
+def op_string(op):
     terms = []
     for i, c in enumerate(op):
         if c == 0:
             continue
-        if factor_coeffs:
-            num = factor(c.numerator())
-            den = factor(c.denominator())
-            cs = str(num) if den == 1 else '(' + str(num) + ')/(' + str(den) + ')'
-        else:
-            cs = str(c)
+        num = factor(c.numerator())
+        den = factor(c.denominator())
+        cs = str(num) if c.denominator() == 1 else '(' + str(num) + ')/(' + str(den) + ')'
         if i == 0:
             terms.append('(' + cs + ')')
         elif i == 1:
@@ -106,20 +104,29 @@ def zp0(x):
     return -(946*x^2+1161*x+368)*x*(x-1)^3
 
 LZ = [K(zp0(n+2)), K(zp1(n+2)), K(zp2(n+2)), K(zp3(n+2))]
+# If z_n satisfies LZ, then y_n=64^{-n}z_n satisfies sum 64^k a_k(n)y_{n+k}=0.
 LZ64 = [K((64^i) * LZ[i]) for i in range(4)]
 
 
 def characteristic_at_infinity(L):
     deg = max(c.numerator().degree() - c.denominator().degree() for c in L)
-    # Here all coefficients are polynomials of the same degree.
     coeffs = []
     for c in L:
         num, den = c.numerator(), c.denominator()
         if den.degree() != 0:
             raise ValueError('unexpected rational coefficient in input operator')
         coeffs.append(num[deg] / den[0] if num.degree() == deg else QQ(0))
-    T = polygen(QQ, 'T')
     return sum(coeffs[i]*T^i for i in range(len(coeffs)))
+
+
+def limit_at_infinity(f):
+    f = K(f)
+    dn = f.numerator().degree(); dd = f.denominator().degree()
+    if dn < dd:
+        return QQ(0)
+    if dn > dd:
+        return Infinity if f.numerator().leading_coefficient()/f.denominator().leading_coefficient() > 0 else -Infinity
+    return f.numerator().leading_coefficient()/f.denominator().leading_coefficient()
 
 
 print('=== Exact input diagnostics ===')
@@ -131,18 +138,19 @@ print('chiZ(T)   =', factor(chiZ))
 print('chiZ64(T) =', factor(chiZ64))
 print('gcd(chi27,chiZ)   =', gcd(chi27, chiZ))
 print('gcd(chi27,chiZ64) =', gcd(chi27, chiZ64))
-print('chi27 / chiZ(64*T) relation:', bool(chi27 == 946*chiZ(64*polygen(QQ,'T'))))
+print('chi27 == chiZ(64*T):', bool(chi27 == chiZ(64*T)))
 
-# Determinant ratio for the companion systems; a rational gauge U would require
-# ratio = det(U(n+1))/det(U(n)), whose limit at infinity is 1.
+# Determinant ratio for companion systems. A rational matrix gauge U would
+# require ratio = det(U(n+1))/det(U(n)), whose limit at infinity is 1.
 det27 = -L27[0]/L27[3]
 detZ = -LZ[0]/LZ[3]
 detZ64 = -LZ64[0]/LZ64[3]
-ratio_raw = (det27/detZ).factor()
-ratio_scaled = (det27/detZ64).factor()
-print('det27/detZ =', ratio_raw)
-print('limit det27/detZ at infinity =', ratio_raw.leading_coefficient() if False else limit(ratio_raw, n=oo))
-print('limit det27/detZ64 at infinity =', limit(ratio_scaled, n=oo))
+ratio_raw = K(det27/detZ)
+ratio_scaled = K(det27/detZ64)
+print('det27/detZ =', factor(ratio_raw))
+print('limit det27/detZ at infinity =', limit_at_infinity(ratio_raw))
+print('det27/detZ64 =', factor(ratio_scaled))
+print('limit det27/detZ64 at infinity =', limit_at_infinity(ratio_scaled))
 print()
 
 
@@ -171,7 +179,8 @@ def exact_remainder_matrix(rems):
             den = lcm(den, rems[b][k].denominator())
         denominator_degrees.append(den.degree())
         polys = [R(rems[b][k] * den) for b in range(cols)]
-        maxdeg = max([-1] + [p.degree() for p in polys if p != 0])
+        nonzero = [p for p in polys if p != 0]
+        maxdeg = max(p.degree() for p in nonzero) if nonzero else -1
         for e in range(maxdeg+1):
             row = [p[e] for p in polys]
             if any(c != 0 for c in row):
@@ -211,13 +220,9 @@ def search(source, label, dmax=3, Dmax=20):
         ker = M.right_kernel().basis()
         for idx, v in enumerate(ker):
             Rop = vector_to_operator(v, labels, d)
-            if len(Rop)-1 < d and d > 0:
-                # Lower orders have already been tested, but still verify and report if needed.
-                pass
             ok, Qop, rem, diff = verify_intertwiner(source, Rop)
             print('  kernel vector', idx, 'symbolic verification:', ok)
             if ok and Rop != [0]:
-                # Normalize by the first nonzero scalar coefficient content.
                 print('FOUND R of order', len(Rop)-1)
                 print('R =', op_string(Rop))
                 print('Q =', op_string(Qop))
