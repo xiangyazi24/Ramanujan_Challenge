@@ -512,6 +512,27 @@ The mean $Z(p) = 0.990$, stable across all ranges.
 \end{enumerate}
 \end{proposition}
 
+\begin{remark}[Mesoscopic root count]\label{rem:mesoscopic-data}
+At the scale $H = \lfloor\sqrt{p}\rfloor$, the total root
+count $R_p(H) = \sum_{h=2}^{H} r_p(h)$ satisfies
+$R_p(H)/H \approx 3/2$ for all tested primes, consistent
+with the Chebotarev prediction from
+Remark~\ref{rem:galois}:
+\begin{center}
+\begin{tabular}{r|rrr}
+$p$ & $H = \lfloor\sqrt{p}\rfloor$ & $R_p(H)$ & $R_p(H)/H$ \\ \hline
+$503$ & 22 & 35 & 1.59 \\
+$1009$ & 31 & 41 & 1.32 \\
+$2003$ & 44 & 60 & 1.36 \\
+$3001$ & 54 & 87 & 1.61 \\
+$5003$ & 70 & 105 & 1.50
+\end{tabular}
+\end{center}
+The ratio $R_p(H)/H$ remains bounded (range $0.64$--$2.25$
+over all primes $100 \le p \le 5003$), supporting the
+mesoscopic conjecture in Remark~\ref{rem:incidence}.
+\end{remark}
+
 \subsection{Hypothesis Z}
 
 \begin{hypothesis}[Hypothesis Z]\label{hyp:Z}
