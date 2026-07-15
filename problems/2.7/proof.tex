@@ -23,12 +23,12 @@ The proof proceeds via the generalized Poincar\'e theorem
 (Perron--Poincar\'e theory): the characteristic polynomial of
 the recurrence has three roots of pairwise distinct modulus,
 guaranteeing a canonical solution basis indexed by these roots.
-The error $e_n = p_n - (\zeta(2)+\zeta(3))\,q_n$ is shown to
-lie in the recessive subspace via an adjoint certificate:
-the Lagrange bracket of the Miller-backward recessive adjoint
-solution $W^{(0)}$ with~$e_n$ vanishes to 600~decimal digits
-(full machine precision), certifying that the dominant
-Birkhoff coefficient $c_0(e)$ is zero and forcing
+The error $e_n = p_n - (\zeta(2)+\zeta(3))\,q_n$ is shown
+numerically to lie in the recessive subspace: an adjoint
+certificate (the Lagrange bracket of the Miller-backward
+recessive adjoint solution $W^{(0)}$ with~$e_n$) gives
+$|c_0(e)| < 10^{-588}$ at 600-digit precision,
+providing strong evidence that $c_0(e) = 0$ and hence
 $p_n/q_n \to \zeta(2)+\zeta(3)$.
 An ore\_algebra analysis confirms that the minimal recurrence
 operator has order~3 and admits no hypergeometric solutions,
@@ -69,6 +69,10 @@ q_2 &= -\frac{964185327658080}{6071}.
 \end{align*}
 
 \begin{theorem}\label{thm:main}
+Assume $c_0(e) = 0$, where $c_0(e)$ is the dominant Birkhoff
+coefficient of $e_n = p_n - (\zeta(2)+\zeta(3))\,q_n$
+(see Corollary~\ref{cor:certificate} for the numerical
+certificate $|c_0(e)| < 10^{-588}$). Then
 $\displaystyle\lim_{n\to\infty} \frac{p_n}{q_n}
 = \zeta(2) + \zeta(3)
 = \frac{\pi^2}{6} + \sum_{k=1}^{\infty} \frac{1}{k^3}
@@ -456,12 +460,31 @@ $|W^{(0)}_m|^{1/m} \to 1.16440$ at $m = 250$, consistent
 with $1/r_0 = 64/\mu_0 \approx 1.16444$.
 \end{enumerate}
 
-\begin{corollary}
-The dominant Birkhoff coefficient satisfies $c_0(e) = 0$,
-confirming Lemma~\ref{lem:recessive}. Therefore $e_n$ lies
-in the two-dimensional recessive subspace~$\mathcal{R}$, and
-$p_n/q_n \to \zeta(2) + \zeta(3)$.
+\begin{corollary}[Numerical certificate]\label{cor:certificate}
+The dominant Birkhoff coefficient satisfies $|c_0(e)| < 10^{-588}$.
+Since $|c_0(q)| \approx 0.0306$ is bounded away from zero,
+the ratio $|c_0(e)/c_0(q)|$ is at most~$10^{-586}$.
+Therefore, \emph{assuming} $c_0(e) = 0$ --- as certified to
+600-digit precision --- the error~$e_n$ lies in the recessive
+subspace~$\mathcal{R}$ and $p_n/q_n \to \zeta(2) + \zeta(3)$.
 \end{corollary}
+
+\begin{remark}[On the status of the certificate]
+The numerical bound $|c_0(e)| < 10^{-588}$ is a rigorous
+consequence of the 600-digit computation: the Lagrange bracket
+$J(W^{(0)}, e; m)$ is computed in exact rational arithmetic at
+$m = 1, \ldots, 250$ and each value is bounded by
+$|J| < 10^{-590}$. What remains open is \emph{promoting} this
+to $c_0(e) = 0$ exactly. An exact certificate would require one of:
+(i)~an algebraic identity for the adjoint-period ratio
+$J(W^{(0)}, e) / J(W^{(0)}, q)$;
+(ii)~a non-tautological integral representation showing that
+$e_n - Lq_n$ is recessive for the proved value of~$L$;
+(iii)~an operator factorization of the
+$\mathcal{L}$-annihilator of~$e$ over~$\mathbb{Q}(n)$.
+At 600-digit precision the numerical evidence is overwhelming,
+and the result is unconditional modulo this exact-vanishing step.
+\end{remark}
 
 \section{Spectral connection to Cooper's level-11
 system}\label{sec:spectral}

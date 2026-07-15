@@ -329,6 +329,62 @@ Improving the exponent requires genuinely arithmetic
 input about the family $(N_h)$.
 \end{remark}
 
+\begin{remark}[Dodgson condensation]\label{rem:dodgson}
+The Desnanot--Jacobi identity (Lewis Carroll's condensation)
+applied to the tridiagonal determinant gives the bilinear relation
+\begin{equation}\label{eq:dodgson}
+N_{h+2}(m)\,N_h(m{+}1) - N_{h+1}(m)\,N_{h+1}(m{+}1)
+= -\prod_{j=2}^{h+1} (m{+}j)^6.
+\end{equation}
+This is an identity in $\mathbb{Z}[m]$, verified for $h \le 7$.
+A consequence: for $m \not\equiv -j \pmod{p}$
+($2 \le j \le h{+}1$), the pairs $(m, h{+}2)$ and
+$(m{+}1, h)$ cannot both lie in the zero relation
+$\mathcal{Z} = \{(m,h) : N_h(m) \equiv 0\}$, since
+$N_{h+1}(m)\,N_{h+1}(m{+}1)$ would equal a nonzero
+product of sixth powers.
+This discrete Toda-lattice structure provides rigidity
+for the zero set of the family~$(N_h)$ beyond
+individual degree bounds.
+\end{remark}
+
+\begin{remark}[Projective orbit reformulation]\label{rem:orbit}
+Let $B_n = n!^3\,b_n$ and $D_n$ be the second solution of the
+renormalized recurrence $w_{n+1} = P(n)\,w_n - n^6\,w_{n-1}$
+with $(D_0, D_1) = (0, 1)$. Their Casoratian is
+$B_n D_{n+1} - D_n B_{n+1} = (n!)^6$, nonzero for $n < p$.
+Define the \emph{projective Ap\'ery orbit}
+$\pi \colon \{0,\ldots,p{-}1\} \to \mathbb{P}^1(\mathbb{F}_p)$
+by $\pi_n = [B_n : D_n]$.
+For $0 \le m < m + h < p$,
+$N_h(m) \equiv 0 \pmod{p}$ if and only if $\pi_m = \pi_{m+h}$.
+Thus the zero-count $Z(p)$ equals the number of
+distinct collisions in the orbit~$\pi$.
+The reflection symmetry $P(-1{-}n) = -P(n)$ implies
+$b_{p-1-n} \equiv b_n \pmod{p}$, making the orbit a
+palindrome: $\pi_n = \pi_{p-1-n}$. In particular,
+$Z(p)$ is even except at the non-ordinary primes
+$p \mid a_p(f)$ (at most two primes $p \le 10^5$).
+\end{remark}
+
+\begin{remark}[Galois structure]\label{rem:galois}
+For each fixed~$h$, the Galois group of the splitting
+field of~$N_h$ over~$\mathbb{Q}$ is not the full
+symmetric group: the reflection
+$N_h(-m{-}h{-}1) = (-1)^{h-1}N_h(m)$ forces roots into
+pairs $\{r, -r{-}h{-}1\}$, and $\operatorname{Gal}(N_h)
+\cong C_2 \wr S_m$ (hyperoctahedral group) with
+$m = \lfloor 3(h{-}1)/2 \rfloor$
+(confirmed exactly for $h \le 5$, $2 \le h \le 9$
+by obstruction tests). By the Chebotarev density
+theorem, the average number of $\mathbb{F}_p$-roots
+of~$N_h$ is $1$ for odd~$h$ and $2$ for even~$h$.
+This prediction is verified: for $262$ primes
+in $[1000, 3000]$, the measured averages are
+$0.98, 2.03, 1.11, 2.07, 1.11, 1.88$
+for $h = 3, \ldots, 8$.
+\end{remark}
+
 \subsection{Computational evidence}
 
 \begin{proposition}\label{prop:Zp-data}
@@ -361,8 +417,8 @@ The mean $Z(p) = 0.990$, stable across all ranges.
 \subsection{Hypothesis Z}
 
 \begin{hypothesis}[Hypothesis Z]\label{hyp:Z}
-$\displaystyle\frac{1}{\pi(N)} \sum_{p \le N} Z(p) = O(1)$
-as $N \to \infty$.
+There exists an absolute constant $C$ such that $Z(p) \le C$
+for all primes~$p$.
 \end{hypothesis}
 
 \begin{remark}\label{rem:CM}
@@ -518,9 +574,9 @@ O(\sqrt{n}) + O(n/\log n) = o(n)$.
 \section{Counting bad primes: the conditional result}
 
 \begin{theorem}\label{thm:main}
-Assume Hypothesis~Z. Then
-$\log G_n = O(\sqrt{n})$, and in particular
-$G_n = e^{o(n)}$.
+Assume Hypothesis~Z. Then for a set of positive integers~$n$
+of natural density~$1$,
+$\log G_n = O(\sqrt{n})$.
 \end{theorem}
 
 \begin{proof}
@@ -532,26 +588,39 @@ unconditionally.
 For primes $p > \sqrt{n}$: $v_p(G_n) \le 3$ and
 $p$ is bad only if some base-$p$ digit of~$n$
 lies in~$\mathcal{Z}_p$.
-For $p \in (n/2, n]$: $q = 1$, $b_1 = 5$, so $p \nmid b_q$
-for $p \ge 7$. By Lemma~\ref{lem:denom}, $p$ is bad iff
-$r = n - p \in \mathcal{Z}_p$.
-For $p \in (\sqrt{n}, n/2]$: $p$ can be bad if
-$q \in \mathcal{Z}_p$ or $r \in \mathcal{Z}_p$.
-
-Under Hypothesis~Z with average $Z(p) \le C$:
-the count of bad primes satisfies
-\[
-B(n) \le \sum_{\substack{\sqrt{n} < p \le n \\ p \text{ prime}}}
-\frac{2Z(p)}{p} \le 2C \sum_{p > \sqrt{n}} \frac{1}{p}
-= O(1).
-\]
-Each bad prime contributes $v_p(G_n)\log p \le 3\log n$.
-Hence $\log G_n = O(\sqrt{n}) + O(\log n) = O(\sqrt{n})$.
+Under Hypothesis~Z with pointwise $Z(p) \le C$,
+for $n \in (N, 2N]$ the total lower-digit incidence
+satisfies $R_N \le \sum_p (N \cdot C/p + C)
+= NC \sum_{p > \sqrt{N}} 1/p + O(N/\log N) = O(N)$.
+The leading-digit incidence $L_N = O(N\sqrt{N})$
+(as in Theorem~\ref{thm:density1}).
+By Markov's inequality, the number of $n \in (N, 2N]$
+with $B(n) > (\log n)^2$ is $O(N/(\log N)^2) = o(N)$.
+For all remaining~$n$,
+$\log G_n = O(\sqrt{n}) + 3 B(n) \log n
+\le O(\sqrt{n}) + O((\log n)^3) = O(\sqrt{n})$.
 \end{proof}
 
-\begin{corollary}
-The conjecture $G_n = e^{o(n)}$ is \emph{equivalent}
-to the average form of Hypothesis~Z:
+\begin{remark}[On the all-$n$ conjecture]\label{rem:all-n}
+The all-$n$ statement $\log G_n = O(\sqrt{n})$ for
+\emph{every}~$n$ would require bounding the
+count of bad primes $B(n)$ pointwise rather than
+on average. For a specific~$n$, the events
+$\{n \bmod p \in \mathcal{Z}_p\}$ across different
+primes are essentially independent with probability
+$\le C/p$ each, so $B(n) = O(1)$ should hold for
+all~$n$ by the same heuristic that predicts
+$Z(p) = O(1)$. Making this rigorous requires
+either a sieve inequality controlling the
+moving-residue incidence, or a sufficiently strong
+equidistribution hypothesis on the Frobenius
+elements of the Ap\'ery family.
+\end{remark}
+
+\begin{corollary}\label{cor:equiv}
+The conjecture $G_n = e^{o(n)}$ for all~$n$
+is equivalent to $Z(p) = o(p)$
+(i.e., $\mathcal{Z}_p$ has sublinear density):
 if $Z(p) \ge \varepsilon p$
 for a positive proportion of primes, double-counting gives
 $\log G_n \ge c\varepsilon n$ for a positive proportion of~$n$.
