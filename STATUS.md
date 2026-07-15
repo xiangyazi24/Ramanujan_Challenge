@@ -3,7 +3,7 @@
 ## Score: 10/10 addressed (9 unconditional + 1 partial: density-1 unconditional, all-n conditional)
 
 **Deadline:** August 1, 2026
-**Total pages:** 53 (all compile clean)
+**Total pages:** 55 (all compile clean)
 
 ## SOLVED (9 problems, unconditional proofs)
 
@@ -15,13 +15,13 @@
 | 2.4 | harmonic+polylog | Weight-4 HPL symbolic summation | 3 | ✅ |
 | 2.5 | Catalan CMF | Delannoy decomposition + k-recurrence | 10 | ✅ |
 | 2.6 | ζ(2)+ζ(3) | GF ODE connection formula | 3 | ✅ |
-| 2.7 | 4-term ζ(2)+ζ(3) | Adjoint certificate + structural analysis | 8 | ✅ |
+| 2.7 | 4-term ζ(2)+ζ(3) | Adjoint certificate + coboundary + Whipple structure | 9 | ✅ |
 | 2.8 | √10005/π | Chudnovsky formula in CMF disguise | 4 | ✅ |
 | 3.1 | knot π² | A-polynomial / Mahler measure | 7 | ✅ |
 
 ## P3.2 — gcd(d_n a_n, d_n b_n) = e^{o(n)} for Apéry sequences
 
-**Status:** ADDRESSED (9 pages). Two-tier proof + structural theory.
+**Status:** ADDRESSED (10 pages). Two-tier proof + structural theory.
 
 ### Unconditional results
 1. **Z(p) = O(p^{2/3}) for ALL primes** — effective bound, no excluded primes
@@ -51,4 +51,4 @@
 
 ### Key scripts
 - `scripts/p32_zp_extended.py` — Z(p) for p ≤ 10^5
-- `problems/3.2/proof.tex` — 9-page proof (compiles clean)
+- `problems/3.2/proof.tex` — 10-page proof (compiles clean)
