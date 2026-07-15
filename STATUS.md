@@ -3,7 +3,7 @@
 ## Score: 10/10 addressed (9 unconditional + 1 partial: density-1 unconditional, all-n conditional)
 
 **Deadline:** August 1, 2026
-**Total pages:** 51 (all compile clean)
+**Total pages:** 53 (all compile clean)
 
 ## SOLVED (9 problems, unconditional proofs)
 
@@ -11,17 +11,17 @@
 |---------|-------|--------|-------|--------|
 | 2.1 | PCF → π | Q(√5) gauge, Poincaré roots | 4 | ✅ |
 | 2.2 | γ Apéry | Aptekarev recurrence (index shift m=n+3) | 3 | ✅ |
-| 2.3 | π+e | Lambert × derangement series | 3 | ✅ |
+| 2.3 | π+e | Lambert × derangement series | 2 | ✅ |
 | 2.4 | harmonic+polylog | Weight-4 HPL symbolic summation | 3 | ✅ |
 | 2.5 | Catalan CMF | Delannoy decomposition + k-recurrence | 10 | ✅ |
 | 2.6 | ζ(2)+ζ(3) | GF ODE connection formula | 3 | ✅ |
-| 2.7 | 4-term ζ(2)+ζ(3) | Adjoint certificate (Lagrange bracket) | 7 | ✅ |
+| 2.7 | 4-term ζ(2)+ζ(3) | Adjoint certificate + structural analysis | 8 | ✅ |
 | 2.8 | √10005/π | Chudnovsky formula in CMF disguise | 4 | ✅ |
 | 3.1 | knot π² | A-polynomial / Mahler measure | 7 | ✅ |
 
 ## P3.2 — gcd(d_n a_n, d_n b_n) = e^{o(n)} for Apéry sequences
 
-**Status:** ADDRESSED (7 pages). Two-tier proof.
+**Status:** ADDRESSED (9 pages). Two-tier proof + structural theory.
 
 ### Unconditional results
 1. **Z(p) = O(p^{2/3}) for ALL primes** — effective bound, no excluded primes
@@ -33,7 +33,11 @@
    - Reflection law: N_h(-m-h-1) = (-1)^{h-1} N_h(m)
 2. **Content restriction:** p | cont(N_h) ⟹ h ≥ 2p (for p ≥ 7)
 3. **Resultant coprimality:** Res(N_2, N_3) = -5^6 (coprime mod p for ALL p ≥ 7)
-4. **Density-1 unconditional:** G_n = e^{o(n)} for density-1 of n
+4. **Restart lemma:** N_r(x₀)=0, N_{r+1}(x₀)≠0 ⟹ N_{r+d}(x₀) = N_{r+1}(x₀)·N_d(x₀+r)
+5. **Column O(H^{2/3}) bound:** #{h: N_h(x₀)≡0, h∈I} ≤ (3^{4/3}/2)H^{2/3}+O(H^{1/3})
+6. **SL₂-tiling:** Dodgson relation τ_{h+1}(x)τ_{h+1}(x+1) - τ_{h+2}(x)τ_h(x+1) = 1
+7. **Split-prime obstruction:** R_p(H)=O(H) uniformly is FALSE (Chebotarev)
+8. **Density-1 unconditional:** G_n = e^{o(n)} for density-1 of n
    - First-moment argument over dyadic intervals using Z(p) = o(p)
 
 ### Conditional result (under Hypothesis Z)
@@ -47,4 +51,4 @@
 
 ### Key scripts
 - `scripts/p32_zp_extended.py` — Z(p) for p ≤ 10^5
-- `problems/3.2/proof.tex` — 7-page proof (compiles clean, 12 references)
+- `problems/3.2/proof.tex` — 9-page proof (compiles clean)

@@ -483,6 +483,83 @@ Such an estimate would improve the exponent in
 Proposition~\ref{prop:zp-bound} from~$2/3$ to~$1/2$.
 \end{remark}
 
+\subsection{The continuant Bezout identity}
+
+Write $S_d(x) = \prod_{j=2}^{d}(x+j)$.
+
+\begin{proposition}[Bezout identity]\label{prop:bezout}
+For integers $2 \le d < e$,
+\begin{equation}\label{eq:bezout}
+N_{e-1}(x{+}1)\,N_d(x) - N_{d-1}(x{+}1)\,N_e(x)
+= S_d(x)^6\,N_{e-d}(x+d).
+\end{equation}
+In particular, after saturating the cut-edge divisor~$S_d$,
+\[
+(N_d, N_e) : S_d^\infty
+= (N_d,\; N_{e-d}(x+d)) : S_d^\infty.
+\]
+\end{proposition}
+\begin{proof}
+The continuant addition formula (splitting the
+interval $[1,e{-}1]$ at position~$d$) gives
+$N_e = N_d\,N_{e-d+1}(x{+}d{-}1) -
+(x{+}d)^6\,N_{d-1}\,N_{e-d}(x{+}d)$.
+The Dodgson identity at index $d{-}2$ gives
+$N_{d-1}(x{+}1)\,N_{d-1} - N_{d-2}(x{+}1)\,N_d
+= \prod_{j=2}^{d-1}(x{+}j)^6$.
+Combining these two identities yields~\eqref{eq:bezout}.
+Verified computationally for all $2 \le d < e \le 9$.
+\end{proof}
+
+\begin{corollary}[Separated-block criterion]\label{cor:sep-block}
+Away from the cut-edge divisor $S_d(x) = 0$,
+\[
+N_d(\alpha) \equiv N_e(\alpha) \equiv 0 \pmod{p}
+\quad\Longleftrightarrow\quad
+N_d(\alpha) \equiv N_{e-d}(\alpha+d) \equiv 0 \pmod{p}.
+\]
+In particular, $\deg\gcd_{\mathbb{F}_p}(N_d, N_e)
+\le 3(\min(d, e{-}d) - 1)$, which improves the naive
+$3(d{-}1)$ when $e - d < d$.
+\end{corollary}
+
+\begin{remark}[Separated-block resultant]\label{rem:sep-res}
+Define
+$\mathcal{R}_{d,r} = \operatorname{Res}_x(N_d(x), N_r(x+d))$.
+The Bezout identity gives
+\[
+|\operatorname{Res}(N_d, N_e)|
+= \prod_{j=1}^{d-1}\bigl((j!)^3 b_j\bigr)^6
+\cdot |\mathcal{R}_{d,e-d}|.
+\]
+For adjacent indices ($e = d+1$), $N_1 = 1$ gives
+$\mathcal{R}_{d,1} = 1$, recovering the adjacent resultant formula.
+For nonadjacent indices, $\mathcal{R}_{d,r}$ is genuinely new.
+The reflection identity gives $|\mathcal{R}_{d,r}| = |\mathcal{R}_{r,d}|$.
+Computation: $\mathcal{R}_{2,2} = 2^5 \cdot 5^4 \cdot 11^2 \cdot
+17^3 \cdot 71$.
+At $p = 71$: $N_2(-5/2) \equiv N_4(-5/2) \equiv 0 \pmod{71}$
+with $-5/2 \not\in \{-1,-2,-3,-4\}$, a nonboundary common root
+inside the mesoscopic range ($4^3 < 71$).
+This shows the boundary-only gcd statement is \emph{false}.
+\end{remark}
+
+\begin{remark}[Collision energy and the $H^{1/2}$ barrier]%
+\label{rem:collision}
+The column exponent $2/3$ is the natural barrier for the
+consecutive-gap argument: even if each gap of length~$d$ has
+only~$d$ (rather than $3(d{-}1)$) admissible starts, the
+sum $\sum_{d \le L} d \asymp L^2$ still gives $H/L + L^2$,
+optimized at $H^{2/3}$. To achieve $H^{1/2}$, one needs
+the aggregate collision energy
+$\mathcal{E}_p(H)
+= \sum_{d+r \le H}\#\{x : N_d(x) \equiv N_r(x{+}d) \equiv 0\}
+\ll H^{3/2}$,
+which is a sparse-exception theorem for the separated-block
+resultant family---beyond the scope of universal continuant
+identities.
+\end{remark}
+
 \subsection{Computational evidence}
 
 \begin{proposition}\label{prop:Zp-data}
