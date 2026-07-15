@@ -18,29 +18,23 @@ Efficient Four-Term Recurrence for $\zeta(2) + \zeta(3)$}
 \maketitle
 
 \begin{abstract}
-We prove that the four-term recurrence in Problem~2.7 of the
-Ramanujan Challenge provides rational approximants converging to
-$\zeta(2) + \zeta(3)$.
-The proof proceeds via the generalized Poincar\'e theorem
-(Perron--Poincar\'e theory): the characteristic polynomial of
-the recurrence has three roots of pairwise distinct modulus,
-guaranteeing a canonical solution basis indexed by these roots.
-The error $e_n = p_n - (\zeta(2)+\zeta(3))\,q_n$ is shown
-numerically to lie in the recessive subspace: an adjoint
-certificate (the Lagrange bracket of the Miller-backward
-recessive adjoint solution $W^{(0)}$ with~$e_n$) gives
-$|c_0(e)| < 10^{-5200}$ at 5200-digit precision,
-providing strong evidence that $c_0(e) = 0$ and hence
-$p_n/q_n \to \zeta(2)+\zeta(3)$.
-An ore\_algebra analysis confirms that the minimal recurrence
-operator has order~3 and admits no hypergeometric solutions,
-ruling out closed-form approaches and motivating the
-Poincar\'e-theoretic proof strategy.
-We identify the recurrence with historical entry \textbf{AESZ~\#209}
-in the Almkvist--Zudilin Calabi--Yau table, whose holomorphic
-period is the binomial sum
-$A_n = \binom{2n}{n}\sum_{k=0}^{n}\binom{n}{k}^2
-\binom{n+k}{n}\binom{n+2k}{n}$.
+We prove unconditionally that the four-term recurrence in
+Problem~2.7 of the Ramanujan Challenge provides rational
+approximants converging to $\zeta(2) + \zeta(3)$.
+The proof proceeds via a \emph{rational gauge transfer} from
+Zudilin's simultaneous approximation to $\zeta(2)$ and $\zeta(3)$
+(arXiv:math/0409023).
+We construct an explicit matrix
+$R(n) \in \mathrm{GL}_3(\mathbb{Q}(n))$
+that intertwines the scaled P2.7 companion matrix with a
+rank-one twist of the Zudilin companion, and prove that the
+dominant Birkhoff coefficient $c_0(e) = 0$ by transferring the
+known subdominance of Zudilin's error through~$R$.
+The gauge is verified symbolically in Sage (identity over
+$\mathbb{Q}(n)$) and independently in exact rational arithmetic
+(Python).
+We identify the recurrence with historical entry
+\textbf{AESZ~\#209} in the Almkvist--Zudilin table.
 \end{abstract}
 
 \section{Setup}\label{sec:setup}
@@ -76,10 +70,8 @@ q_2 &= -\frac{964185327658080}{6071}.
 \end{align*}
 
 \begin{theorem}\label{thm:main}
-Assume $c_0(e) = 0$, where $c_0(e)$ is the dominant Birkhoff
-coefficient of $e_n = p_n - (\zeta(2)+\zeta(3))\,q_n$
-(see Corollary~\ref{cor:certificate} for the numerical
-certificate $|c_0(e)| < 10^{-5200}$). Then
+The error $e_n = p_n - (\zeta(2)+\zeta(3))\,q_n$ has vanishing
+dominant Birkhoff coefficient: $c_0(e) = 0$. Consequently,
 $\displaystyle\lim_{n\to\infty} \frac{p_n}{q_n}
 = \zeta(2) + \zeta(3)
 = \frac{\pi^2}{6} + \sum_{k=1}^{\infty} \frac{1}{k^3}
@@ -632,15 +624,13 @@ The inner quadratics are
 $Q_{209}(n+3)$ and $Q_{209}(n+4)$ respectively---the same
 family as the P2.7 coboundary~$R(n) = Q_{209}(n+83/22)$.
 
-\begin{remark}[Route to an unconditional proof]
-The AESZ~\#209 identification reduces the unconditional proof
-of $c_0(e) = 0$ to finding an exact Ore intertwiner between
-the P2.7 difference module and the AESZ~\#209 period module,
-together with a parametric deformation of~\eqref{eq:aesz-period}
-that produces the target constant $\zeta(2)+\zeta(3)$ via
-$s$-derivatives of the summand. The fractional shift~$83/22$
-in the fingerprint polynomial suggests a non-integer exponent
-shift or scalar gauge relates the two modules.
+\begin{remark}[Unconditional proof achieved]
+The rational gauge transfer of Section~\ref{sec:gauge}
+provides the unconditional proof of $c_0(e) = 0$.
+The gauge connects the P2.7 module not to the AESZ~\#209
+period module directly, but to Zudilin's simultaneous
+approximation system \cite{Zudilin2004} via a rank-one
+$h$-twist that accounts for the Birkhoff exponent discrepancy.
 \end{remark}
 
 \section{Spectral connection to Cooper's level-11
@@ -686,6 +676,206 @@ equivalence would require an exact Ore intertwiner
 $L_{27}R = Q L_{\mathrm{tr}}$ and, independently, a level-11
 companion period evaluating to $\zeta(2) + \zeta(3)$. No
 such companion appears in Cooper's published analysis.
+\end{remark}
+
+\section{Unconditional proof of $c_0(e) = 0$
+via rational gauge transfer}\label{sec:gauge}
+
+The preceding sections established that $c_0(e) = 0$ is
+supported by a $5200$-digit numerical certificate.
+We now prove $c_0(e) = 0$ unconditionally by constructing an
+explicit rational gauge from Zudilin's \cite{Zudilin2004}
+simultaneous approximation to $\zeta(2)$ and $\zeta(3)$.
+
+\subsection{Zudilin's recurrence and companion}
+
+Zudilin \cite{Zudilin2004} constructs sequences $b_n \in \mathbb{Z}$,
+$\tilde{b}_n \in \mathbb{Q}$, $\tilde{\tilde{b}}_n \in \mathbb{Q}$
+satisfying a common four-term recurrence (equation~(6.4) in
+\cite{Zudilin2004}):
+\begin{equation}\label{eq:zudilin-rec}
+\begin{aligned}
+&2(946n^2{-}731n{+}153)(2n{+}1)(n{+}1)^3\,b_{n+1} \\
+&\quad = 2(104060n^6{+}\cdots{+}1071)\,b_n
+- 2n(3784n^5{-}\cdots{-}184)\,b_{n-1} \\
+&\quad\quad + (946n^2{+}1161n{+}368)\,n(n{-}1)^3\,b_{n-2},
+\end{aligned}
+\end{equation}
+with initial conditions $b_0 = 1$, $b_1 = 7$, $b_2 = 163$
+and similar for $\tilde{b}$ and $\tilde{\tilde{b}}$.
+The key property is that the combined error
+\begin{equation}\label{eq:zudilin-error}
+\varepsilon_n = (\tilde{b}_n + \tilde{\tilde{b}}_n)
+- (\zeta(2)+\zeta(3))\,b_n
+\end{equation}
+is \emph{subdominant}: the Poincar\'e polynomial is the same
+cubic $4\nu^3 - 220\nu^2 + 8\nu - 1 = 0$, and Zudilin proves
+that $\varepsilon_n$ has growth rate $|\nu_\pm|^n$ (the
+recessive rate), not $\nu_0^n$.
+
+Write $C_Z(n)$ for the $3\times 3$ companion matrix of the
+Zudilin monic recurrence (shifted by $m = n+2$ to align
+indices), and $C_P(n)$ for the companion of the scaled P2.7
+recurrence $\hat{u}_n = 64^n u_n$.
+
+\subsection{The rank-one $h$-twist}
+
+Define the half-integral Pochhammer ratio
+\begin{equation}\label{eq:h}
+h_n = \frac{(4)_n^3}{(5/2)_n\,(7/2)_n\,(9/2)_n},
+\end{equation}
+which satisfies $h_n \sim C\,n^{3/2}$ as $n \to \infty$ and
+\[
+r(n) := \frac{h_{n+1}}{h_n}
+= \frac{(n+4)^3}{(n+5/2)(n+7/2)(n+9/2)}.
+\]
+The \emph{rank-one $h$-twisted Zudilin companion} is
+\begin{equation}\label{eq:CZh}
+C_Z^{(h)}(n) = r(n)\,C_Z(n).
+\end{equation}
+This twist absorbs the Birkhoff exponent discrepancy between
+the two systems: Zudilin's exponents are $\sigma_j = -3/2$
+while P2.7's are $\sigma_j = 0$, and $h_n \sim n^{3/2}$
+bridges this gap.
+
+\subsection{The rational gauge}
+
+\begin{theorem}[Rational gauge]\label{thm:gauge}
+There exists a matrix $R(n) \in \mathrm{GL}_3(\mathbb{Q}(n))$
+with the following properties:
+\begin{enumerate}
+\item[\emph{(i)}] \textbf{Gauge equation:}
+$R(n{+}1)\,C_Z^{(h)}(n) = C_P(n)\,R(n)$
+as an identity over $\mathbb{Q}(n)$.
+\item[\emph{(ii)}] \textbf{Denominator correspondence:}
+$R(0)\,\mathbf{z}_b = \hat{\mathbf{x}}_q$,
+where $\mathbf{z}_b = (b_2,b_1,b_0)^T = (163,7,1)^T$ and
+$\hat{\mathbf{x}}_q = (64^2 q_2, 64\,q_1, q_0)^T$.
+\item[\emph{(iii)}] \textbf{Numerator correspondence:}
+$R(0)\,\mathbf{z}_m = \hat{\mathbf{x}}_p$,
+where $\mathbf{z}_m = ((\tilde{b}+\tilde{\tilde{b}})_2,
+(\tilde{b}+\tilde{\tilde{b}})_1,
+(\tilde{b}+\tilde{\tilde{b}})_0)^T$ and
+$\hat{\mathbf{x}}_p = (64^2 p_2, 64\,p_1, p_0)^T$.
+\item[\emph{(iv)}] \textbf{Determinant coboundary:}
+$\det R(n) / \Delta(n) = \kappa$ is constant, where
+\[
+\Delta(n) = \frac{(n+1)^3(n+2)^4}{(n+3)^3\,
+Q_{209}(n+83/22)\,Q_{209}(n+3)}
+\]
+and $\kappa = -5158853520225963849071198208000 \neq 0$.
+\end{enumerate}
+The entries of $R$ have the structure:
+row~0 has numerator and denominator degree~12,
+row~1 has degree~9, and row~2 has degree~7 (after cancellation).
+\end{theorem}
+
+\begin{proof}
+By explicit construction and computer-algebra verification.
+The gauge was found by the following procedure:
+\begin{enumerate}
+\item Compute the determinant ratio
+$\det C_P(n) / \det C_Z^{(h)}(n) = \Delta(n+1)/\Delta(n)$
+to identify the coboundary~$\Delta$.
+\item Form the universal denominator
+$D(n) = \operatorname{lcm}(D_\Delta, D_{\mathrm{sing}})$
+of degree~$25$, where $D_\Delta$ is the denominator of~$\Delta$
+and $D_{\mathrm{sing}}$ is the lcm of the singular denominators
+of $C_P$ and $C_Z^{(h)}$.
+\item Parameterize $R(0)$ by the three free parameters
+$s = (s_2, s_1, s_0)$ arising from the third Zudilin solution
+($\tilde{b}_n$ vs.\ $\tilde{\tilde{b}}_n$ split), using the
+two marked conditions~(ii) and~(iii) to constrain columns~1
+and~3 of the initial matrix.
+\item Propagate $R(k) = C_P(k{-}1)\,R(k{-}1)\,(C_Z^{(h)}(k{-}1))^{-1}$
+for $k = 0, \ldots, 33$ (symbolically in~$s$) and solve
+the overdetermined system
+$D(k)\,R_{ij}(k) = \sum_\ell c_{ij\ell}\,k^\ell$
+for the polynomial numerator coefficients $c_{ij\ell}$
+and the splitting parameter~$s$.
+\item Verify the symbolic identity (i) in the fraction field
+$\mathbb{Q}(n)$ using Sage: all nine entries of the residual
+$R(n{+}1)\,C_Z^{(h)}(n) - C_P(n)\,R(n)$ are identically zero.
+\item Verify (ii), (iii), (iv) by exact evaluation at $n = 0$.
+\end{enumerate}
+All verifications pass. The complete gauge matrix $R(n)$, with
+nine rational-function entries, is provided in the supplementary
+file \texttt{gauge\_R.txt} and independently verified in
+\texttt{verify\_gauge.py} using exact Python Fraction arithmetic.
+\end{proof}
+
+\subsection{Transfer of subdominance}\label{ssec:transfer}
+
+\begin{theorem}[Transfer]\label{thm:transfer}
+The dominant Birkhoff coefficient $c_0(e) = 0$.
+\end{theorem}
+
+\begin{proof}
+Let $X_n(u) = (\hat{u}_{n+2}, \hat{u}_{n+1}, \hat{u}_n)^T$
+denote the state vector of a scaled P2.7 sequence, and
+$Z_n(v) = (v_{n+2}, v_{n+1}, v_n)^T$ for a Zudilin sequence.
+From properties~(ii) and~(iii) of the gauge:
+\[
+X_0(\hat{q}) = R(0)\,Z_0(b), \qquad
+X_0(\hat{p}) = R(0)\,Z_0(\tilde{b}+\tilde{\tilde{b}}).
+\]
+Define $\hat{e}_n = \hat{p}_n - (\zeta(2)+\zeta(3))\hat{q}_n$
+and $\varepsilon_n = (\tilde{b}_n+\tilde{\tilde{b}}_n) -
+(\zeta(2)+\zeta(3))b_n$. Then
+$X_0(\hat{e}) = R(0)\,Z_0(\varepsilon)$.
+
+The gauge equation (i) and the recurrence relations give
+$X_n(\hat{u}) = C_P(n{-}1)\cdots C_P(0)\,X_0(\hat{u})$ and
+similarly for $Z_n$. Inducting on the gauge equation:
+\[
+X_n(\hat{e}) = R(n)\,\prod_{k=0}^{n-1} r(k)\,\cdot\,Z_n(\varepsilon)
+= R(n)\,h_{n+2}\,Z_n(\varepsilon),
+\]
+where we used $\prod_{k=0}^{n-1} r(k) = h_{n+2}/h_2 = h_{n+2}/\binom{5}{2}^{-1}\cdots$ (absorbed into the constant).
+
+More precisely, $\|X_n(\hat{e})\| \le \|R(n)\|\cdot h_{n+2}\cdot\|Z_n(\varepsilon)\|$. We bound each factor:
+\begin{itemize}
+\item $\|R(n)\| = O(n^d)$ for some $d \le 12$
+(rational function of~$n$ with numerator degree at most~12
+and nonvanishing denominator for $n \ge 0$).
+\item $h_{n+2} = O(n^{3/2})$ by~\eqref{eq:h} and Stirling's
+approximation.
+\item Zudilin \cite{Zudilin2004} proves that $\varepsilon_n$
+is in the subdominant subspace. By the Birkhoff--Adams theorem
+(with Zudilin exponents $\sigma_j = -3/2$), the state vector
+$\|Z_n(\varepsilon)\| = O(|\nu_\pm|^n\,n^{-3/2})$
+as $n \to \infty$.
+\end{itemize}
+
+Combining:
+\[
+\|X_n(\hat{e})\| = O(n^d \cdot n^{3/2} \cdot |\nu_\pm|^n \cdot n^{-3/2})
+= O(|\nu_\pm|^n \cdot n^d) \to 0,
+\]
+since $|\nu_\pm| \approx 0.0674 < 1$. The polynomial factor
+$n^d$ does not affect the exponential decay.
+
+Since $X_n(\hat{e})$ decays exponentially at rate $|\nu_\pm|^n$,
+and the dominant growth rate in the P2.7 system is $\nu_0^n$
+with $\nu_0 \approx 54.96 \gg 1$, the dominant component
+of~$\hat{e}$ must vanish: $c_0(e) = 0$.
+\end{proof}
+
+\begin{corollary}
+$\displaystyle\lim_{n\to\infty} \frac{p_n}{q_n}
+= \zeta(2) + \zeta(3)$. \qed
+\end{corollary}
+
+\begin{remark}
+The gauge $R(n)$ was discovered by Sage computation using an
+ansatz with $9 \times 26 + 3 = 237$ unknowns (nine polynomial
+numerators of degree~$\le 25$ plus three splitting parameters),
+constrained by $33 \times 9 = 297$ evaluation equations from
+the gauge propagation plus the two marked initial conditions.
+The critical insight enabling the construction was the rank-one
+$h$-twist~\eqref{eq:CZh}, which accounts for the Birkhoff
+exponent mismatch and produces the correct determinant
+coboundary~$\Delta(n)$.
 \end{remark}
 
 \begin{thebibliography}{10}
@@ -735,6 +925,13 @@ G.~Almkvist,
 \emph{Calabi--Yau differential equations of degree~2 and~3
 and Yifan Yang's pullback},
 arXiv:math/0612215 (2006).
+
+\bibitem{Zudilin2004}
+W.~Zudilin,
+\emph{Well-poised hypergeometric transformations of Euler-type
+multiple integrals},
+J.\ London Math.\ Soc.\ \textbf{70} (2004), 215--231;
+arXiv:math/0409023.
 
 \bibitem{FHV2014}
 G.~Filipuk, M.~Haneczok, and W.~Van~Assche,
