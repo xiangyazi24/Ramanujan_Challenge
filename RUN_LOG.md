@@ -130,3 +130,36 @@
 - ChatGPT: dm1 answered (Q4936); dm2-dm4 processing new questions
 - all 10 proofs compile clean, total 50 pages
 - end: session continuing
+
+## Run 2026-07-15 (P2.7 unconditional proof — gauge transfer breakthrough)
+- doctrine version: Session continuation (P2.7 exclusive focus)
+- starting avenue: prove c₀(e)=0 unconditionally
+- DEAD ENDS EXPLORED (accumulated over multiple sessions):
+  - Polynomial Ore intertwiner (deg ≤8): inconsistent
+  - ALL rational Ore intertwiners: impossible (Q5179 determinant obstruction)
+  - ALL scalar gauge intertwiners: impossible (Q5185, Q5188)
+  - Gauge-transfer via Birkhoff-Adams: CIRCULAR (Q5200)
+  - Diagonal h-twist D_h: exponential growth (wrong twist convention)
+  - Adjoint minimal solution w⁰ PSLQ: no closed form
+  - Least-squares for s: 683-digit denominators (wrong approach)
+- BREAKTHROUGH:
+  - Q5202 (ChatGPT dm1): rank-one h-twist C_Z^{(h)} = r(n)·C_Z (not diagonal)
+    where r(n) = (n+4)³/[(n+5/2)(n+7/2)(n+9/2)]
+  - Sage code from Q5202 found exact R(n) ∈ GL₃(Q(n)):
+    - Denominator degree 25 = (n+3)³·(n+5/2)⁴·(n+7/2)⁴·(n+9/2)⁴·5 quadratics
+    - Numerator degrees: row 0 = 12, row 1 = 9, row 2 = 7
+    - Gauge equation verified SYMBOLICALLY (identity over Q(n))
+    - R(0)·z_b = x_q and R(0)·z_m = x_p (exact)
+    - det(R)/Δ = -5158853520225963849071198208000 (constant)
+  - Independent Python verification (exact Fraction, no Sage):
+    - All 9 entries of R(1) from gauge propagation match Sage exactly
+    - det(R)/Δ constant for n=0,...,9
+  - Transfer theorem: R(n) rational (O(n^d)) + h_n ~ n^{3/2} + Zudilin ε subdominant
+    → ê = R·h·ε = O(|ν_±|^n · n^{d}) → c₀(e) = 0
+- proof.tex updated: 12 pages, unconditional (Theorem removed "Assume c₀=0")
+  - New Section 7: gauge transfer (Zudilin recurrence, h-twist, gauge theorem, transfer)
+  - Zudilin [arXiv:math/0409023] reference added
+- commit: fccd4ff
+- P2.7 is DONE. 10/10 problems unconditional.
+- ChatGPT tabs: Q5209, Q5210, Q5211 dispatched (simplify R(n), write proof, factor det)
+- end: P2.7 complete
