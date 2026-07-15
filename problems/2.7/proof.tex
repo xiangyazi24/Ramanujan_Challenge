@@ -829,16 +829,17 @@ $X_n(\hat{u}) = C_P(n{-}1)\cdots C_P(0)\,X_0(\hat{u})$ and
 similarly for $Z_n$. Inducting on the gauge equation:
 \[
 X_n(\hat{e}) = R(n)\,\prod_{k=0}^{n-1} r(k)\,\cdot\,Z_n(\varepsilon)
-= R(n)\,h_{n+2}\,Z_n(\varepsilon),
+= R(n)\,h_n\,Z_n(\varepsilon),
 \]
-where we used $\prod_{k=0}^{n-1} r(k) = h_{n+2}/h_2 = h_{n+2}/\binom{5}{2}^{-1}\cdots$ (absorbed into the constant).
+where $\prod_{k=0}^{n-1} r(k) = h_n/h_0 = h_n$ since
+$r(k) = h_{k+1}/h_k$ and $h_0 = 1$.
 
-More precisely, $\|X_n(\hat{e})\| \le \|R(n)\|\cdot h_{n+2}\cdot\|Z_n(\varepsilon)\|$. We bound each factor:
+Therefore $\|X_n(\hat{e})\| \le \|R(n)\|\cdot h_n\cdot\|Z_n(\varepsilon)\|$. We bound each factor:
 \begin{itemize}
 \item $\|R(n)\| = O(n^d)$ for some $d \le 12$
 (rational function of~$n$ with numerator degree at most~12
 and nonvanishing denominator for $n \ge 0$).
-\item $h_{n+2} = O(n^{3/2})$ by~\eqref{eq:h} and Stirling's
+\item $h_n = O(n^{3/2})$ by~\eqref{eq:h} and Stirling's
 approximation.
 \item Zudilin \cite{Zudilin2004} proves that $\varepsilon_n$
 is in the subdominant subspace. By the Birkhoff--Adams theorem
