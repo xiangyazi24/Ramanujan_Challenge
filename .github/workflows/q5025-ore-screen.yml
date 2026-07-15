@@ -4,11 +4,13 @@ on:
     branches: [q5025-compute]
     paths:
       - scripts/q5025_poly_intertwiner_screen.py
+      - scripts/q5025_gauged_intertwiner_screen.py
       - .github/workflows/q5025-ore-screen.yml
   pull_request:
     branches: [main]
     paths:
       - scripts/q5025_poly_intertwiner_screen.py
+      - scripts/q5025_gauged_intertwiner_screen.py
       - .github/workflows/q5025-ore-screen.yml
   workflow_dispatch:
 permissions:
@@ -21,18 +23,25 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: q5025-compute
-      - name: Run exact modular screen
+      - name: Run ungauged exact modular screen
         shell: bash
         run: |
           set +e
           python3 -u scripts/q5025_poly_intertwiner_screen.py 2>&1 | tee q5025_screen_result.txt
           echo "EXIT=${PIPESTATUS[0]}" >> q5025_screen_result.txt
           exit 0
+      - name: Run corrected 64-gauged exact modular screen
+        shell: bash
+        run: |
+          set +e
+          python3 -u scripts/q5025_gauged_intertwiner_screen.py 2>&1 | tee q5025_gauged_screen_result.txt
+          echo "EXIT=${PIPESTATUS[0]}" >> q5025_gauged_screen_result.txt
+          exit 0
       - name: Commit result
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add q5025_screen_result.txt
-          git diff --cached --quiet || git commit -m 'Record Q5025 Ore screen result'
+          git add q5025_screen_result.txt q5025_gauged_screen_result.txt
+          git diff --cached --quiet || git commit -m 'Record Q5025 Ore screen results'
           git push origin HEAD:q5025-compute
