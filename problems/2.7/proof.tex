@@ -29,13 +29,18 @@ The error $e_n = p_n - (\zeta(2)+\zeta(3))\,q_n$ is shown
 numerically to lie in the recessive subspace: an adjoint
 certificate (the Lagrange bracket of the Miller-backward
 recessive adjoint solution $W^{(0)}$ with~$e_n$) gives
-$|c_0(e)| < 10^{-5099}$ at 5100-digit precision,
+$|c_0(e)| < 10^{-5200}$ at 5200-digit precision,
 providing strong evidence that $c_0(e) = 0$ and hence
 $p_n/q_n \to \zeta(2)+\zeta(3)$.
 An ore\_algebra analysis confirms that the minimal recurrence
 operator has order~3 and admits no hypergeometric solutions,
 ruling out closed-form approaches and motivating the
 Poincar\'e-theoretic proof strategy.
+We identify the recurrence with historical entry \textbf{AESZ~\#209}
+in the Almkvist--Zudilin Calabi--Yau table, whose holomorphic
+period is the binomial sum
+$A_n = \binom{2n}{n}\sum_{k=0}^{n}\binom{n}{k}^2
+\binom{n+k}{n}\binom{n+2k}{n}$.
 \end{abstract}
 
 \section{Setup}\label{sec:setup}
@@ -74,7 +79,7 @@ q_2 &= -\frac{964185327658080}{6071}.
 Assume $c_0(e) = 0$, where $c_0(e)$ is the dominant Birkhoff
 coefficient of $e_n = p_n - (\zeta(2)+\zeta(3))\,q_n$
 (see Corollary~\ref{cor:certificate} for the numerical
-certificate $|c_0(e)| < 10^{-5099}$). Then
+certificate $|c_0(e)| < 10^{-5200}$). Then
 $\displaystyle\lim_{n\to\infty} \frac{p_n}{q_n}
 = \zeta(2) + \zeta(3)
 = \frac{\pi^2}{6} + \sum_{k=1}^{\infty} \frac{1}{k^3}
@@ -394,10 +399,10 @@ from the Poincar\'e analysis.
 \section{Adjoint certificate for recessiveness}\label{sec:adjoint}
 
 The numerical verification in Section~\ref{sec:cas} shows
-that $p_n/q_n$ matches $L = \zeta(2)+\zeta(3)$ to 5100~digits
+that $p_n/q_n$ matches $L = \zeta(2)+\zeta(3)$ to 5199~digits
 at~$n=2000$. While strongly suggestive, a finite precision
 computation cannot by itself distinguish $c_0(e) = 0$ from
-$c_0(e) = 10^{-5000}$
+$c_0(e) = 10^{-5100}$
 (cf.~Borcea--Friedland--Shapiro \cite{BFS2011}).
 The adjoint pairing provides a direct certificate.
 
@@ -446,19 +451,19 @@ is orthogonal to the recessive pair $y_\pm$).
 
 \subsection{Computational verification}
 
-Using mpmath at 5100-digit precision with $M = 1800$,
+Using mpmath at 5200-digit precision with $M = 2000$,
 $n_{\max} = 2000$:
 \begin{enumerate}
-\item $J(W^{(0)}, q; m)$ is constant to \textbf{5099~digits}
-across $m = 5, 10, 50, 100, 200$, confirming that $q$ has
+\item $J(W^{(0)}, q; m)$ is constant to \textbf{5199~digits}
+across $m = 10, 100, 1000$, confirming that $q$ has
 nonzero dominant coefficient.
 \item $J(W^{(0)}, p; m)$ is constant to the same precision.
-\item $|J(W^{(0)}, e; m)| \approx 10^{-5089}$ for all tested~$m$
+\item $|J(W^{(0)}, e; m)| \approx 10^{-5190}$ for all tested~$m$
 --- \textbf{zero to full machine precision}. The dominant
 coefficient $c_0(e) = J(W^{(0)}, e) / J(W^{(0)}, y_1)$
-is bounded by $|c_0(e)| < 10^{-5099}$.
+is bounded by $|c_0(e)| < 10^{-5200}$.
 \item The ratio $J(W^{(0)}, p) / J(W^{(0)}, q)$ matches
-$\zeta(2)+\zeta(3)$ to \textbf{5100~digits}.
+$\zeta(2)+\zeta(3)$ to \textbf{5200~digits}.
 \item Growth verification:
 $|W^{(0)}_m|^{1/m} \to 1.16440$ at $m = 200$, consistent
 with $1/r_0 = 64/\mu_0 \approx 1.16444$.
@@ -466,11 +471,11 @@ with $1/r_0 = 64/\mu_0 \approx 1.16444$.
 
 \begin{corollary}[Numerical certificate]\label{cor:certificate}
 The dominant Birkhoff coefficient satisfies
-$|c_0(e)| < 10^{-5099}$.
+$|c_0(e)| < 10^{-5200}$.
 Since $|c_0(q)| \approx 0.0306$ is bounded away from zero,
-the ratio $|c_0(e)/c_0(q)|$ is at most~$10^{-5097}$.
+the ratio $|c_0(e)/c_0(q)|$ is at most~$10^{-5198}$.
 Therefore, \emph{assuming} $c_0(e) = 0$ --- as certified to
-5100-digit precision --- the error~$e_n$ lies in the recessive
+5200-digit precision --- the error~$e_n$ lies in the recessive
 subspace~$\mathcal{R}$ and $p_n/q_n \to \zeta(2) + \zeta(3)$.
 \end{corollary}
 
@@ -587,6 +592,57 @@ example Cooper's level-11 system with a suitable companion.
 \end{itemize}
 \end{remark}
 
+\section{Identification with AESZ~\#209}\label{sec:aesz}
+
+The recurrence~\eqref{eq:rec} belongs to the Calabi--Yau
+family catalogued as entry~\#209 in the Almkvist--Zudilin
+table \cite{AESZ2005}.
+
+\begin{proposition}[AESZ fingerprint]\label{prop:aesz}
+Let $Q_{209}(x) = 946x^2 - 2623x + 1830$ be the Superseeker
+quadratic for AESZ~\#209 \cite{Almkvist2006}. Then
+$R(n) = Q_{209}(n + 83/22)$, i.e.,
+\[
+946n^2 + 4515n + 5399
+= 946\!\left(n + \tfrac{83}{22}\right)^2
+- 2623\!\left(n + \tfrac{83}{22}\right) + 1830.
+\]
+Both polynomials share discriminant~$-44591 = -17 \cdot 43 \cdot 61$
+and leading coefficient~$946 = 2 \cdot 11 \cdot 43$.
+\end{proposition}
+\begin{proof}
+Verified by expanding $Q_{209}(n + 83/22)$ exactly.
+\end{proof}
+
+The holomorphic period of AESZ~\#209 is the binomial sum
+\begin{equation}\label{eq:aesz-period}
+A_n^{\mathrm{AESZ}} = \binom{2n}{n}
+\sum_{k=0}^{n}\binom{n}{k}^{\!2}
+\binom{n+k}{n}\binom{n+2k}{n},
+\end{equation}
+with $A_0 = 1$, $A_1 = 14$, $A_2 = 978$, $A_3 = 103820$
+(verified computationally). The sequence
+$A_n^{\mathrm{AESZ}}$ satisfies a four-term recurrence with
+degree-6 polynomial coefficients whose factored leading and
+trailing terms are
+$c_3(n) = (n+3)^4(946n^2 + 3053n + 2475)$
+and
+$c_0(n) = -(n+1)^2(2n+1)(2n+3)(946n^2 + 4945n + 6474)$.
+The inner quadratics are
+$Q_{209}(n+3)$ and $Q_{209}(n+4)$ respectively---the same
+family as the P2.7 coboundary~$R(n) = Q_{209}(n+83/22)$.
+
+\begin{remark}[Route to an unconditional proof]
+The AESZ~\#209 identification reduces the unconditional proof
+of $c_0(e) = 0$ to finding an exact Ore intertwiner between
+the P2.7 difference module and the AESZ~\#209 period module,
+together with a parametric deformation of~\eqref{eq:aesz-period}
+that produces the target constant $\zeta(2)+\zeta(3)$ via
+$s$-derivatives of the summand. The fractional shift~$83/22$
+in the fingerprint polynomial suggests a non-integer exponent
+shift or scalar gauge relates the two modules.
+\end{remark}
+
 \section{Spectral connection to Cooper's level-11
 system}\label{sec:spectral}
 
@@ -668,6 +724,17 @@ Arithmetic}, arXiv:2507.08138.
 J.~Borcea, S.~Friedland, and B.~Shapiro,
 \emph{Parametric Poincar\'e--Perron theorem with applications},
 J.\ Anal.\ Math.\ \textbf{113} (2011), 1--63.
+
+\bibitem{AESZ2005}
+G.~Almkvist, C.~van~Enckevort, D.~van~Straten, and W.~Zudilin,
+\emph{Tables of Calabi--Yau equations},
+arXiv:math/0507430 (2005).
+
+\bibitem{Almkvist2006}
+G.~Almkvist,
+\emph{Calabi--Yau differential equations of degree~2 and~3
+and Yifan Yang's pullback},
+arXiv:math/0612215 (2006).
 
 \bibitem{FHV2014}
 G.~Filipuk, M.~Haneczok, and W.~Van~Assche,
