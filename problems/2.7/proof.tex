@@ -6,6 +6,8 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
 
 \title{Solution to Ramanujan Challenge Problem 2.7:\\
 Efficient Four-Term Recurrence for $\zeta(2) + \zeta(3)$}
@@ -469,21 +471,89 @@ Therefore, \emph{assuming} $c_0(e) = 0$ --- as certified to
 subspace~$\mathcal{R}$ and $p_n/q_n \to \zeta(2) + \zeta(3)$.
 \end{corollary}
 
-\begin{remark}[On the status of the certificate]
-The numerical bound $|c_0(e)| < 10^{-588}$ is a rigorous
-consequence of the 600-digit computation: the Lagrange bracket
-$J(W^{(0)}, e; m)$ is computed in exact rational arithmetic at
-$m = 1, \ldots, 250$ and each value is bounded by
-$|J| < 10^{-590}$. What remains open is \emph{promoting} this
-to $c_0(e) = 0$ exactly. An exact certificate would require one of:
-(i)~an algebraic identity for the adjoint-period ratio
-$J(W^{(0)}, e) / J(W^{(0)}, q)$;
-(ii)~a non-tautological integral representation showing that
-$e_n - Lq_n$ is recessive for the proved value of~$L$;
-(iii)~an operator factorization of the
-$\mathcal{L}$-annihilator of~$e$ over~$\mathbb{Q}(n)$.
-At 600-digit precision the numerical evidence is overwhelming,
-and the result is unconditional modulo this exact-vanishing step.
+\subsection{Structural analysis of the recurrence operator}
+
+\begin{proposition}[Irreducibility]\label{prop:irred}
+The recurrence operator $L_{27}$ is irreducible
+in~$\mathbb{Q}(n)\langle S_n\rangle$.
+\end{proposition}
+\begin{proof}
+All four coefficient polynomials $A_n, B_n, C_n, D_n$ have
+degree~12, with nonzero leading coefficients satisfying
+\[
+\frac{A_n}{946} \sim n^{12}, \qquad
+\frac{B_n}{946} \sim \frac{852459520}{991952896}\,n^{12},
+\]
+and similar for $C_n, D_n$. The Newton polygon at
+$n = \infty$ has one horizontal edge with edge polynomial
+$\chi_{27}(\rho) = 946\,P_{27}(64\rho)$,
+which is irreducible over~$\mathbb{Q}$ (the rational-root
+test eliminates $\pm 1, \pm\tfrac{1}{2}, \pm\tfrac{1}{4}$).
+For Ore operators over $\mathbb{Q}(n)$, the Newton polygon of
+a product is the Minkowski sum of the factors' polygons, and
+the edge polynomial is the product of edge polynomials. A
+nontrivial $1+2$ or $2+1$ factorization of $L_{27}$ would
+force the irreducible cubic~$P_{27}$ to factor, a
+contradiction. This is stronger than the absence of
+hypergeometric solutions: it excludes all rational
+factorizations, including left factors (which would give
+hypergeometric solutions of the formal adjoint).
+\end{proof}
+
+\begin{proposition}[Not a symmetric square]\label{prop:notsymsq}
+The operator $L_{27}$ is not a symmetric square of any
+second-order recurrence operator, even after a scalar
+hypergeometric gauge.
+\end{proposition}
+\begin{proof}
+If a second-order recurrence has characteristic roots
+$\alpha, \beta$, then its symmetric square has
+characteristic roots $\alpha^2, \alpha\beta, \beta^2$.
+After a scalar gauge with limiting ratio~$g$, the roots
+become $g\alpha^2, g\alpha\beta, g\beta^2$, and the middle
+root~$r$ satisfies $r^3 = g^3(\alpha\beta)^3 =
+\text{product of all three roots}$. For $P_{27}$, the
+product of roots is~$1/4$, so a symmetric-square spectrum
+requires $r^3 = 1/4$ for some root~$r$ of~$P_{27}$. But
+$P_{27}(r) = 0$ and $4r^3 = 1$ together give
+$r(8 - 220r) = 0$, forcing $r = 2/55$, and
+$(2/55)^3 \neq 1/4$.
+\end{proof}
+
+\begin{remark}[Exact characterization of $c_0(e) = 0$]
+The vanishing $c_0(e) = 0$ is a \emph{global connection
+coefficient identity}: it asserts that the initial vector
+of~$e$ lies in the two-dimensional recessive plane when
+expressed in the canonical Birkhoff basis at $n = \infty$.
+If $r^+, r^-$ are exact independent recessive solutions,
+then $c_0(e) = 0$ is equivalent to the Casoratian condition
+\[
+\det\begin{pmatrix}
+e_n & r_n^+ & r_n^- \\
+e_{n-1} & r_{n-1}^+ & r_{n-1}^- \\
+e_{n-2} & r_{n-2}^+ & r_{n-2}^-
+\end{pmatrix} = 0
+\]
+for one (hence every) sufficiently large~$n$.
+This is useful only when the recessive basis is given exactly,
+e.g., by period integrals, a modular parametrization, or an
+Ore intertwiner from a known recurrence.
+Propositions~\ref{prop:irred} and~\ref{prop:notsymsq} show
+that the certificate cannot come from rational factorization
+or symmetric-square descent. The two viable routes are:
+\begin{itemize}
+\item A two-measure Hermite--Pad\'e construction for the
+measures $d\mu_2 = -\!\log t\,dt$, $d\mu_3 =
+\tfrac{1}{2}\log^2\!t\,dt$ on~$(0,1)$, whose moments
+$\int_0^1 t^k\,d\mu_j = 1/(k{+}1)^j$ ($j = 2, 3$)
+reconstruct $\zeta(2)$ and $\zeta(3)$ simultaneously, and
+whose step-line type-II polynomials naturally satisfy a
+four-term recurrence (matching the order of~$L_{27}$).
+\item A rational Ore coboundary
+$L_{27} R = Q\,L_{\mathrm{src}}$ intertwining $L_{27}$ with
+a source operator whose error is manifestly recessive---for
+example Cooper's level-11 system with a suitable companion.
+\end{itemize}
 \end{remark}
 
 \section{Spectral connection to Cooper's level-11
@@ -509,13 +579,27 @@ The exact polynomial identity
 = -C_{11}(t)\,C_{11}(4-t)
 \end{equation}
 holds, where $P_{27}(\mu) = 4\mu^3 - 220\mu^2 + 8\mu - 1$.
-This identity shows that the Problem~2.7 Poincar\'e spectrum
-is the centered quadratic image of the Cooper level-11
-spectrum. The connection is spectral (at the level of
-characteristic polynomials) rather than operator-level:
-the centered binomial transform of $T_n$ does not satisfy
-the Problem~2.7 recurrence.
 \end{proposition}
+
+\begin{remark}[Centered binomial transform]
+Identity~\eqref{eq:spectral} has an exact sequence-level
+explanation. Define the centered even binomial transform
+\[
+(\mathcal{K}T)_n
+= \frac{1}{256^n}\sum_{k=0}^{2n}\binom{2n}{k}(-2)^{2n-k}T_k.
+\]
+For a pure exponential $T_k = t^k$, the binomial theorem gives
+$(\mathcal{K}T)_n = ((t-2)^2/256)^n$, which is exactly the
+map $t \mapsto (t-2)^2/256 = \mu/64 = \rho$ from a Cooper
+characteristic root to the Problem~2.7 sequence scale.
+However, the connection is spectral only: it identifies the
+Poincar\'e spectrum but not the accessory parameters, finite
+singularities, or connection coefficients. A full operator
+equivalence would require an exact Ore intertwiner
+$L_{27}R = Q L_{\mathrm{tr}}$ and, independently, a level-11
+companion period evaluating to $\zeta(2) + \zeta(3)$. No
+such companion appears in Cooper's published analysis.
+\end{remark}
 
 \begin{thebibliography}{10}
 \bibitem{Challenge2026}
@@ -553,6 +637,12 @@ Arithmetic}, arXiv:2507.08138.
 J.~Borcea, S.~Friedland, and B.~Shapiro,
 \emph{Parametric Poincar\'e--Perron theorem with applications},
 J.\ Anal.\ Math.\ \textbf{113} (2011), 1--63.
+
+\bibitem{FHV2014}
+G.~Filipuk, M.~Haneczok, and W.~Van~Assche,
+\emph{Computing recurrence coefficients of multiple orthogonal
+polynomials},
+Numer.\ Algorithms \textbf{68} (2015), 519--543.
 \end{thebibliography}
 
 \end{document}
