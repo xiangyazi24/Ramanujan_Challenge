@@ -536,7 +536,17 @@ For adjacent indices ($e = d+1$), $N_1 = 1$ gives
 $\mathcal{R}_{d,1} = 1$, recovering the adjacent resultant formula.
 For nonadjacent indices, $\mathcal{R}_{d,r}$ is genuinely new.
 The reflection identity gives $|\mathcal{R}_{d,r}| = |\mathcal{R}_{r,d}|$.
-Computation: $\mathcal{R}_{2,2} = 2^5 \cdot 5^4 \cdot 11^2 \cdot
+The subtraction step does \emph{not iterate}: after one
+application, $N_d(x)$ and $N_{e-d}(x+d)$ live on disjoint
+shifted intervals with opposite orientations, so no second
+nested division is possible.
+For $d = 2$, writing $P(y) = (2y+1) Q(y)$ with $Q(y) =
+17y^2 + 17y + 5$ and $\theta$ a root of~$Q$, the norm
+decomposition
+$\mathcal{R}_{2,r} = 2^{3(r-1)} G_r(-\tfrac{1}{2}) \cdot
+17^{3(r-1)} \operatorname{N}_{\mathbb{Q}(\theta)/\mathbb{Q}}
+(G_r(\theta))$ (where $G_r = N_r(x+1)$) gives
+$\mathcal{R}_{2,2} = 2^5 \cdot 5^4 \cdot 11^2 \cdot
 17^3 \cdot 71$.
 At $p = 71$: $N_2(-5/2) \equiv N_4(-5/2) \equiv 0 \pmod{71}$
 with $-5/2 \not\in \{-1,-2,-3,-4\}$, a nonboundary common root
