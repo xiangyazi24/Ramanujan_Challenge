@@ -7,6 +7,12 @@ on:
     paths:
       - compute/q5161.sage
       - .github/workflows/q5161-compute.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - compute/q5161.sage
+      - .github/workflows/q5161-compute.yml
 
 permissions:
   contents: write
@@ -20,7 +26,15 @@ jobs:
       - name: Run Sage exact arithmetic
         run: |
           docker run --rm -v "$PWD:/work" -w /work sagemath/sagemath:latest sage compute/q5161.sage
-      - name: Commit generated report
+      - name: Print generated report
+        run: cat compute/q5161-results.md
+      - name: Upload generated report
+        uses: actions/upload-artifact@v4
+        with:
+          name: q5161-results
+          path: compute/q5161-results.md
+      - name: Commit generated report on push builds
+        if: github.event_name == 'push'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -31,5 +45,3 @@ jobs:
             git commit -m "Generate Q5161 exact computation report"
             git push
           fi
-
-# Triggered after the workflow file was already present on the branch.
