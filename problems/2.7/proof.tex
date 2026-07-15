@@ -29,7 +29,7 @@ The error $e_n = p_n - (\zeta(2)+\zeta(3))\,q_n$ is shown
 numerically to lie in the recessive subspace: an adjoint
 certificate (the Lagrange bracket of the Miller-backward
 recessive adjoint solution $W^{(0)}$ with~$e_n$) gives
-$|c_0(e)| < 10^{-588}$ at 600-digit precision,
+$|c_0(e)| < 10^{-1099}$ at 1100-digit precision,
 providing strong evidence that $c_0(e) = 0$ and hence
 $p_n/q_n \to \zeta(2)+\zeta(3)$.
 An ore\_algebra analysis confirms that the minimal recurrence
@@ -445,29 +445,31 @@ is orthogonal to the recessive pair $y_\pm$).
 
 \subsection{Computational verification}
 
-Using mpmath at 600-digit precision with $M = 300$:
+Using mpmath at 1100-digit precision with $M = 450$,
+$n_{\max} = 500$:
 \begin{enumerate}
-\item $J(W^{(0)}, q; m)$ is constant to \textbf{599~digits}
-across $m = 1, 2, \ldots, 250$, confirming that $q$ has
+\item $J(W^{(0)}, q; m)$ is constant to \textbf{1100~digits}
+across $m = 5, 10, 50, 100, 200$, confirming that $q$ has
 nonzero dominant coefficient.
-\item $J(W^{(0)}, p; m)$ is constant to \textbf{600~digits}.
-\item $J(W^{(0)}, e; m) \approx 10^{-590}$ for all tested~$m$
+\item $J(W^{(0)}, p; m)$ is constant to the same precision.
+\item $|J(W^{(0)}, e; m)| \approx 10^{-1122}$ for all tested~$m$
 --- \textbf{zero to full machine precision}. The dominant
 coefficient $c_0(e) = J(W^{(0)}, e) / J(W^{(0)}, y_1)$
-is bounded by $|c_0(e)| < 10^{-588}$.
+is bounded by $|c_0(e)| < 10^{-1099}$.
 \item The ratio $J(W^{(0)}, p) / J(W^{(0)}, q)$ matches
-$\zeta(2)+\zeta(3)$ to \textbf{600~digits}.
+$\zeta(2)+\zeta(3)$ to \textbf{1099~digits}.
 \item Growth verification:
-$|W^{(0)}_m|^{1/m} \to 1.16440$ at $m = 250$, consistent
+$|W^{(0)}_m|^{1/m} \to 1.16440$ at $m = 200$, consistent
 with $1/r_0 = 64/\mu_0 \approx 1.16444$.
 \end{enumerate}
 
 \begin{corollary}[Numerical certificate]\label{cor:certificate}
-The dominant Birkhoff coefficient satisfies $|c_0(e)| < 10^{-588}$.
+The dominant Birkhoff coefficient satisfies
+$|c_0(e)| < 10^{-1099}$.
 Since $|c_0(q)| \approx 0.0306$ is bounded away from zero,
-the ratio $|c_0(e)/c_0(q)|$ is at most~$10^{-586}$.
+the ratio $|c_0(e)/c_0(q)|$ is at most~$10^{-1097}$.
 Therefore, \emph{assuming} $c_0(e) = 0$ --- as certified to
-600-digit precision --- the error~$e_n$ lies in the recessive
+1100-digit precision --- the error~$e_n$ lies in the recessive
 subspace~$\mathcal{R}$ and $p_n/q_n \to \zeta(2) + \zeta(3)$.
 \end{corollary}
 
