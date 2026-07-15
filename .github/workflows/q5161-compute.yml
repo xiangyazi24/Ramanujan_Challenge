@@ -1,25 +1,20 @@
 name: Q5161 exact computation
 
 on:
-  push:
-    branches:
-      - chatgpt-compute-q5161
-    paths:
-      - compute/q5161.sage
-      - .github/workflows/q5161-compute.yml
   pull_request:
     branches:
-      - main
+      - chatgpt-compute-q5161-base
     paths:
       - compute/q5161.sage
+      - compute/q5161-trigger.txt
       - .github/workflows/q5161-compute.yml
 
 concurrency:
-  group: q5161-exact-computation
+  group: q5161-trusted-base-computation
   cancel-in-progress: true
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   compute:
@@ -37,15 +32,3 @@ jobs:
         with:
           name: q5161-results
           path: compute/q5161-results.md
-      - name: Commit generated report on push builds
-        if: github.event_name == 'push'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add compute/q5161-results.md
-          if git diff --cached --quiet; then
-            echo "No generated changes"
-          else
-            git commit -m "Generate Q5161 exact computation report"
-            git push
-          fi
