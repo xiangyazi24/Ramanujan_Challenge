@@ -49,3 +49,26 @@ jobs:
             git commit -m "Generate Q5161 exact computation report"
             git push
           fi
+
+  compute-self-hosted:
+    runs-on: self-hosted
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Sage exact arithmetic on self-hosted runner
+        run: |
+          if command -v sage >/dev/null 2>&1; then
+            sage compute/q5161.sage
+          elif command -v docker >/dev/null 2>&1; then
+            docker run --rm -v "$PWD:/work" -w /work sagemath/sagemath:latest sage compute/q5161.sage
+          else
+            echo "Neither Sage nor Docker is available on the self-hosted runner"
+            exit 1
+          fi
+      - name: Print generated report
+        run: cat compute/q5161-results.md
+      - name: Upload generated report
+        uses: actions/upload-artifact@v4
+        with:
+          name: q5161-results-self-hosted
+          path: compute/q5161-results.md
