@@ -470,10 +470,17 @@ N_h(x) \equiv 0\} \le \min\{H^2,\; p H^{2/3}\}.
 \]
 The first bound sums row degrees; the second sums column estimates.
 They cross at $H \sim p^{3/4}$.
-Improving the column exponent from~$2/3$ requires controlling
-common roots of distinct gap polynomials $N_d, N_e$
-simultaneously---a problem connected to the Euclidean
-algorithm for continuant polynomials.
+Note that a uniform bound $R_p(H) \le CH$ for all primes
+is \emph{false}: by the Chebotarev density theorem, for
+each fixed~$H$, infinitely many primes $p > H^2$ have
+every $N_h$ ($2 \le h \le H$) splitting completely
+over~$\mathbb{F}_p$, giving $R_p(H) = \frac{3}{2}H(H-1)$.
+The correct target is the \emph{mesoscopic} estimate
+$R_p(\lfloor\sqrt{p}\rfloor) = O(\sqrt{p})$,
+where the split-prime obstruction does not apply because
+$H = \sqrt{p}$ grows with~$p$.
+Such an estimate would improve the exponent in
+Proposition~\ref{prop:zp-bound} from~$2/3$ to~$1/2$.
 \end{remark}
 
 \subsection{Computational evidence}
