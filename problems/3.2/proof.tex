@@ -280,6 +280,13 @@ $p \nmid (h{-}1)!,\,(h{-}2)!,\,5$ for $h \le p$
 recovers Lemma~\ref{lem:nonvanish},
 while the range $p < h < 2p$ is excluded similarly
 via $r = h - p + 1$.
+Setting $\beta_n = (n!)^3 b_n$ and
+$F(z) = \sum_{n \ge 0} b_n z^n$, the endpoint factorization
+packages into the double generating function
+$\sum_{r,s \ge 0}
+\frac{N_{r+s+1}(-r{-}1)}{(r!)^3(s!)^3}\,u^r v^s
+= F(-u)\,F(v)$,
+showing that the boundary array is a rank-one tensor.
 \end{remark}
 
 \begin{remark}[Adjacent resultant formula]\label{rem:adj-res}
@@ -343,9 +350,20 @@ $(m{+}1, h)$ cannot both lie in the zero relation
 $\mathcal{Z} = \{(m,h) : N_h(m) \equiv 0\}$, since
 $N_{h+1}(m)\,N_{h+1}(m{+}1)$ would equal a nonzero
 product of sixth powers.
-This discrete Toda-lattice structure provides rigidity
-for the zero set of the family~$(N_h)$ beyond
-individual degree bounds.
+After a meromorphic gauge $\tau_h(x) = N_h(x)/d_h(x)$
+satisfying $d_{h+2}(x)\,d_h(x{+}1) = \prod_{j=2}^{h+1}(x{+}j)^6$,
+this becomes an exact $SL_2$-tiling:
+$\tau_{h+1}(x)\,\tau_{h+1}(x{+}1)
+- \tau_{h+2}(x)\,\tau_h(x{+}1) = 1$,
+equivalently an $A_1$ $T$-system (discrete Liouville equation).
+A zero of $\tau$ forces its transverse neighbors to be units
+(\emph{singularity confinement}), but abstract $SL_2$-tilings
+can have zeros of density~$1/2$ (e.g., $q_n = 0, 1, 0, -1, \ldots$
+with $q_n^2 - q_{n-1}q_{n+1} = 1$),
+so the bilinear structure alone does not force a sublinear zero count.
+The arithmetic content---endpoint factorization,
+restart identity (Lemma~\ref{lem:restart}), and polynomial
+degree bounds---is essential.
 \end{remark}
 
 \begin{remark}[Projective orbit reformulation]\label{rem:orbit}
@@ -383,6 +401,79 @@ This prediction is verified: for $262$ primes
 in $[1000, 3000]$, the measured averages are
 $0.98, 2.03, 1.11, 2.07, 1.11, 1.88$
 for $h = 3, \ldots, 8$.
+\end{remark}
+
+\subsection{Dual bounds: the restart identity and column estimate}
+
+The bound $Z(p) = O(p^{2/3})$ controls zeros along a \emph{fixed row}
+(varying $m$ for a given gap~$h$).
+A dual bound controls zeros along a \emph{fixed column}
+(varying $h$ for a given starting point~$x_0$).
+
+\begin{lemma}[Restart identity]\label{lem:restart}
+Suppose $N_r(x_0) = 0$ and $N_{r+1}(x_0) \ne 0$
+for some $x_0 \in \mathbb{F}_p$ and $r \ge 1$.
+Then for every $d \ge 0$,
+\begin{equation}\label{eq:restart}
+N_{r+d}(x_0) = N_{r+1}(x_0) \cdot N_d(x_0 + r).
+\end{equation}
+In particular, if $N_{r+d}(x_0) = 0$ as well,
+then $N_d(x_0 + r) = 0$.
+\end{lemma}
+
+\begin{proof}
+The sequence $Y_d = N_{r+d}(x_0)/N_{r+1}(x_0)$ has
+$Y_0 = 0$, $Y_1 = 1$, and satisfies
+$Y_{d+1} = P((x_0{+}r){+}d)\,Y_d - ((x_0{+}r){+}d)^6\,Y_{d-1}$,
+which is the defining recurrence for $N_d(x_0 + r)$.
+\end{proof}
+
+\begin{proposition}[Column bound]\label{prop:column}
+For every $x_0 \in \mathbb{F}_p$ and every interval
+$I$ of $H$ consecutive $h$-values with $H \le p$,
+\begin{equation}\label{eq:column-bound}
+\#\{h \in I : N_h(x_0) \equiv 0 \pmod{p}\}
+\le \tfrac{3^{4/3}}{2}\,H^{2/3} + O(H^{1/3} + 1).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Split $I$ at the unique transition $h$ where
+$x_0 + h \equiv 0 \pmod{p}$ (if it exists in~$I$),
+creating at most two nonsingular pieces plus an
+$O(1)$ additive cost.
+
+On a nonsingular piece, order the zero levels.
+For threshold $L \ge 2$: a gap of length $d \le L$
+between consecutive zeros at levels $r < r + d$ gives
+$N_d(x_0 + r) = 0$ by Lemma~\ref{lem:restart}.
+For fixed~$d$, there are at most $3(d{-}1)$ values of
+$x_0 + r$ satisfying this (by Lemma~\ref{lem:nonvanish}
+and $\deg N_d = 3(d{-}1)$).
+Gaps longer than~$L$ contribute at most $H/(L{+}1)$ zeros.
+Summing:
+\[
+\text{zero count} \le \frac{H}{L+1}
++ \sum_{d=2}^{L} 3(d{-}1) + O(1)
+= \frac{H}{L+1} + \tfrac{3}{2}L(L{-}1) + O(1).
+\]
+Optimizing $L \asymp (H/3)^{1/3}$ gives the stated bound.
+\end{proof}
+
+\begin{remark}[Rectangular incidence estimate]\label{rem:incidence}
+The row bound $|R_h| \le 3(h{-}1)$ and the
+column bound~\eqref{eq:column-bound} together give the
+rectangular incidence estimate
+\[
+\#\{(x,h) : x \in \mathbb{F}_p,\; 2 \le h \le H,\;
+N_h(x) \equiv 0\} \le \min\{H^2,\; p H^{2/3}\}.
+\]
+The first bound sums row degrees; the second sums column estimates.
+They cross at $H \sim p^{3/4}$.
+Improving the column exponent from~$2/3$ requires controlling
+common roots of distinct gap polynomials $N_d, N_e$
+simultaneously---a problem connected to the Euclidean
+algorithm for continuant polynomials.
 \end{remark}
 
 \subsection{Computational evidence}
