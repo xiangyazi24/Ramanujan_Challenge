@@ -31,3 +31,5 @@ jobs:
             git commit -m "Generate Q5161 exact computation report"
             git push
           fi
+
+# Triggered after the workflow file was already present on the branch.
