@@ -1,0 +1,33 @@
+name: q5144 hadamard search
+on:
+  push:
+    branches: [q5144-compute]
+    paths:
+      - scripts/q5144_hadamard_search.py
+      - .github/workflows/q5144-hadamard-search.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q5144-compute
+      - run: python3 -m pip install --upgrade sympy
+      - name: Run exact search
+        shell: bash
+        run: |
+          set +e
+          python3 -u scripts/q5144_hadamard_search.py 2>&1 | tee q5144_result.txt
+          echo "EXIT=${PIPESTATUS[0]}" >> q5144_result.txt
+          exit 0
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add q5144_result.txt
+          git diff --cached --quiet || git commit -m 'Record Q5144 Hadamard search result'
+          git push origin HEAD:q5144-compute
