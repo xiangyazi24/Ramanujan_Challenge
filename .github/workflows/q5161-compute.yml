@@ -1,16 +1,13 @@
 name: Q5161 exact computation
 
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - chatgpt-compute-q5161-base
-    paths:
-      - compute/q5161.sage
-      - compute/q5161-trigger.txt
-      - .github/workflows/q5161-compute.yml
+    types: [opened, synchronize, reopened]
 
 concurrency:
-  group: q5161-trusted-base-computation
+  group: q5161-trusted-target-computation
   cancel-in-progress: true
 
 permissions:
@@ -22,6 +19,8 @@ jobs:
     timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: chatgpt-compute-q5161-base
       - name: Run Sage exact arithmetic
         run: |
           docker run --rm -v "$PWD:/work" -w /work sagemath/sagemath:latest sage compute/q5161.sage
