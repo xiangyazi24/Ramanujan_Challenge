@@ -208,6 +208,7 @@ def verify_intertwiner(source, Rop):
 
 def search(source, label, dmax=3, Dmax=20):
     print('=== Polynomial intertwiner search:', label, '===')
+    trivial_dimension = 0
     for d in range(dmax+1):
         labels, rems = basis_remainders(source, d, Dmax)
         M, dd = exact_remainder_matrix(rems)
@@ -221,14 +222,26 @@ def search(source, label, dmax=3, Dmax=20):
         for idx, v in enumerate(ker):
             Rop = vector_to_operator(v, labels, d)
             ok, Qop, rem, diff = verify_intertwiner(source, Rop)
-            print('  kernel vector', idx, 'symbolic verification:', ok)
-            if ok and Rop != [0]:
-                print('FOUND R of order', len(Rop)-1)
-                print('R =', op_string(Rop))
-                print('Q =', op_string(Qop))
-                print('Exact identity verified:', all(x == 0 for x in diff))
-                return Rop, Qop
-    print('NO polynomial-coefficient intertwiner in the requested box.')
+            if not ok or Rop == [0]:
+                print('  kernel vector', idx, 'failed symbolic verification')
+                continue
+            Uop, Rred = right_divmod(Rop, source)
+            Rred = trim(Rred)
+            if Rred == [K(0)]:
+                trivial_dimension += 1
+                print('  kernel vector', idx, 'is a trivial right multiple of the source operator')
+                continue
+            okred, Qred, remred, diffred = verify_intertwiner(source, Rred)
+            print('  kernel vector', idx, 'has nonzero reduced representative; verification:', okred)
+            if okred:
+                print('FOUND NONTRIVIAL polynomial R of order', len(Rop)-1)
+                print('R_polynomial =', op_string(Rop))
+                print('R_reduced =', op_string(Rred))
+                print('Q_reduced =', op_string(Qred))
+                print('Exact identity verified:', all(x == 0 for x in diffred))
+                return Rred, Qred
+    print('NO NONTRIVIAL polynomial-coefficient intertwiner in the requested box.')
+    print('Trivial right-multiple kernel vectors encountered:', trivial_dimension)
     return None
 
 raw = search(LZ, 'raw LZ', dmax=3, Dmax=20)
@@ -237,8 +250,8 @@ scaled = search(LZ64, 'exponentially normalized LZ64 (z_n -> 64^{-n} z_n)', dmax
 print()
 
 if raw is None:
-    print('RAW CONCLUSION: no R with polynomial coefficients, order <= 3 and coefficient degree <= 20.')
+    print('RAW CONCLUSION: no nontrivial R with polynomial coefficients, order <= 3 and coefficient degree <= 20.')
 if scaled is None:
-    print('SCALED CONCLUSION: no polynomial R in the same requested box after the necessary 64^{-n} normalization.')
+    print('SCALED CONCLUSION: no nontrivial polynomial R in the same requested box after the necessary 64^{-n} normalization.')
 else:
-    print('SCALED CONCLUSION: exact rational Ore intertwiner found after the necessary exponential normalization.')
+    print('SCALED CONCLUSION: exact nontrivial rational Ore intertwiner found after the necessary exponential normalization.')
