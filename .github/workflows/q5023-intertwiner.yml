@@ -1,0 +1,19 @@
+name: Q5023 exact Ore intertwiner search
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/q5023_intertwiner.sage'
+      - '.github/workflows/q5023-intertwiner.yml'
+  workflow_dispatch:
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    container:
+      image: sagemath/sagemath:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact Sage search
+        run: sage scripts/q5023_intertwiner.sage
