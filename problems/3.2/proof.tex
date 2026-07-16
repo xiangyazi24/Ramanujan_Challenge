@@ -269,6 +269,22 @@ For $p = 2, 3, 5$: $Z(p) = 0$ (since $b_j$ for
 $j < 5$ is coprime to $2, 3, 5$).
 \end{proof}
 
+\begin{corollary}[Sub-interval zero count]\label{cor:subinterval}
+For every prime $p \ge 7$ and every interval
+$I \subseteq \{0, \ldots, p{-}1\}$,
+\[
+\#\{j \in I : p \mid b_j\} = O(|I|^{2/3}).
+\]
+\end{corollary}
+\begin{proof}
+Apply the proof of Proposition~\ref{prop:zp-bound} to
+the sub-interval~$I$ in place of $\{0,\ldots,p{-}1\}$:
+partition~$I$ into $\lceil|I|/H\rceil$ blocks of length~$H$,
+bound the non-first zeros in each block by the same gap
+polynomial argument (Lemma~\ref{lem:gap-poly} applies
+regardless of the interval), and optimize.
+\end{proof}
+
 \begin{remark}\label{rem:effective}
 The leading coefficient of the numerator of~$C_h$
 is $U_{h-1}(17)$, the Chebyshev polynomial of the second kind
@@ -1184,11 +1200,9 @@ p \mid b_q\}.
 Two bounds hold unconditionally:
 \begin{itemize}
 \item \emph{Sub-interval zero counting:}
-The proof of Proposition~\ref{prop:zp-bound}
-applies verbatim to any sub-interval~$I \subset [0,p{-}1]$:
-partitioning~$I$ into blocks of length~$H$
-and optimizing gives
-$\#\{j \in I : p \mid b_j\} = O(|I|^{2/3})$.
+By Corollary~\ref{cor:subinterval}, each prime
+$p \in (P, 2P]$ has at most $O(Q^{2/3})$ zeros
+of~$b_j$ in $(Q, 2Q]$.
 Summing over $\pi(2P)$ primes gives
 $D(P,Q) = O(P\,Q^{2/3}/\log P)$.
 \item \emph{Divisor counting:}
