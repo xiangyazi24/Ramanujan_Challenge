@@ -901,7 +901,7 @@ than Hypothesis~Z and consistent with
 $Z(p) \sim 2 \cdot \operatorname{Poisson}(1/2)$
 (which gives $\mathbb{E}[Z(p)] = 1$, independent of~$p$).
 It suffices for the conditional bound
-$\log G_n = O(\sqrt{n}(\log n)^{1+\varepsilon})$
+$\log G_n = O(\sqrt{n})$
 (Theorem~\ref{thm:main}).
 \end{remark}
 
@@ -1292,6 +1292,30 @@ The small-prime bound $O(\sqrt{n})$
 itself would need a finer analysis
 of $v_p(G_n)$ for small primes.
 \end{remark}
+
+\begin{corollary}[Conditional exceptional set]\label{cor:cond-except}
+Assume Hypothesis~$\bar{Z}$. For every
+$\varepsilon > 0$,
+\[
+\#\{n \le N : \log G_n > \varepsilon\,n\}
+= O_\varepsilon(N^{1/3}).
+\]
+\end{corollary}
+
+\begin{proof}
+Under Hypothesis~$\bar{Z}$, $R_N = O(N)$.
+By Proposition~\ref{prop:lead},
+$L_N = O(N^{4/3}/\log N)$.
+The threshold $B(n) > \varepsilon N/(7\log N)$
+is exceeded by at most
+\[
+\frac{O(N) + O(N^{4/3}/\log N)}%
+{\varepsilon N/(7\log N)}
+= O(N^{1/3}/\varepsilon).
+\]
+Dyadic summation over $(N/2^{j+1}, N/2^j]$
+gives the global bound.
+\end{proof}
 
 \begin{corollary}\label{cor:necessary}
 The condition $Z(p) = o(p)$ is \emph{necessary} for the
