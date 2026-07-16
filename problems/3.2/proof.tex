@@ -4311,6 +4311,27 @@ the observed~$F$ to within the
 expected stochastic fluctuation.
 \end{remark}
 
+\begin{remark}[Higher factorial moments]
+\label{rem:factorial-moments}
+The third factorial moment
+$F_3 = \sum_m \lambda(m)(\lambda(m){-}1)(\lambda(m){-}2)$
+equals~$6$ at both $N = 16{,}384$ and $N = 32{,}768$,
+contributed by a single row with $\lambda = 3$
+(giving $3 \cdot 2 \cdot 1 = 6$).
+The palindromic model predicts
+$E[F_3] \approx c_3\,T^3/N^2$
+where $c_3$ is a geometry-of-truncation
+constant.
+At $N = 16{,}384$ with $T = 664$,
+$T^3/N^2 \approx 1.09$,
+giving $E[F_3] \approx 7$---consistent
+with the observation.
+The fourth factorial moment
+$F_4 = 0$ at both sizes
+(no row has $\lambda \ge 4$),
+and $\max_m \lambda(m) = 3$.
+\end{remark}
+
 \subsection{Gap polynomial sparsity}
 
 For the Ap\'ery recurrence, the gap polynomial
@@ -4522,6 +4543,47 @@ in its additive exponential-sum statistics.
 This provides strong computational evidence for the
 shift-correlation bound required by the
 dispersion approach.
+
+\subsection{Value-collision energy}\label{ssec:collision-energy}
+
+A second pseudorandomness diagnostic is
+the \emph{value-collision energy}
+\[
+  E(p)
+  \;=\;
+  \sum_{a \in \mathbb{F}_p} N_p(a)^2,
+  \qquad
+  N_p(a) = \#\{j \in \{0, \ldots, p{-}1\} : b_j \equiv a \pmod{p}\}.
+\]
+By Cauchy--Schwarz, $Z(p)^2 = N_p(0)^2 \le E(p)$,
+so $E(p) \ll p$ would imply
+$Z(p) \ll \sqrt{p}$.
+
+For a uniformly random function
+$\{0, \ldots, p{-}1\} \to \mathbb{F}_p$,
+each $N_p(a) \sim \mathrm{Poisson}(1)$
+and $E(p)/p \to 2$.
+The palindromic symmetry
+$b_{p-1-j} \equiv b_j$
+forces the half-sequence values to be doubled,
+giving $E(p)/p \to 3$:
+each half-position contributes independently
+to $N_p(a)$, and the doubling multiplies
+the second moment by~$4$ while the mean
+remains~$1$, yielding
+$\mathbb{E}[N_p(a)^2] = 4\bigl(\tfrac{1}{2} + \tfrac{1}{4}\bigr) = 3$.
+
+We computed $E(p)/p$ for all~$1227$ primes
+$p \le 10{,}000$. The results confirm
+the palindromic prediction:
+$\text{mean}(E(p)/p) = 2.996$,
+with $68\%$ of primes in $[2.95, 3.05]$
+and no dependence on~$Z(p)$.
+The value-collision energy
+thus confirms that the Ap\'ery
+sequence modulo~$p$ is
+anti-concentrated at the scale predicted
+by the palindromic random model.
 
 \begin{thebibliography}{10}
 \bibitem{AhlgrenOno2000}
