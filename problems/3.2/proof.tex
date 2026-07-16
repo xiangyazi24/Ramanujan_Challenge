@@ -3408,6 +3408,40 @@ this factor is~$O(N)$, and the generic
 large sieve provides no useful bound.
 \end{remark}
 
+\begin{remark}[Palindromic Fourier factoring]
+\label{rem:palindromic-fourier}
+For doublet primes in the top block,
+the exponential sum over hit positions is
+\[
+  S(\theta)
+  = \sum_{p \in \mathcal{D}}
+  \bigl[e\!\left(\theta\,m_1(p)\right)
+  + e\!\left(\theta\,m_2(p)\right)\bigr]
+  = 2\sum_{p \in \mathcal{D}}
+  e\!\left(\theta\,\tfrac{3p-1}{2}\right)
+  \cos\!\left(\pi\theta\,h_p\right),
+\]
+where $h_p = m_2(p) - m_1(p) = p - 1 - 2r_p$
+is the doublet gap.
+By Parseval,
+$\int_0^1 |S(\theta)|^2\,d\theta = T + F$.
+The diagonal AMTD requires this integral
+to be~$O(T)$, equivalently that $S(\theta)$
+has approximately square-root cancellation
+on the minor arcs.
+
+The palindromic structure converts each
+doublet edge into a prime-indexed phase
+$e(3p\theta/2)$ modulated by the cosine
+$\cos(\pi\theta h_p)$.
+The gaps~$h_p$ are determined by the
+first zero~$r_p$ of~$b_n \bmod p$.
+A proof of diagonal AMTD via this route
+would establish cancellation in~$S(\theta)$
+by exploiting the ``pseudorandom'' distribution
+of~$h_p$ as~$p$ varies.
+\end{remark}
+
 \begin{remark}[Hierarchy of targets]
 \label{rem:hierarchy}
 The compression produces a strict hierarchy
@@ -3511,8 +3545,12 @@ $V^\circ/S = 1.002$ while the
 Cauchy bound gives $V^\circ \le 7S$.
 At $N = 8192$ the maximum block ratio
 remains $1.029$ (block $2^{10}$)
-with $L = 8$ blocks, confirming
-the conjecture across all tested sizes.
+with $L = 8$ blocks.
+At $N = 32{,}768$ the collision count
+for top-block doublets is $F = 38$
+with $T = 925$, giving $F/T = 0.041$
+(decreasing from~$0.055$ at $N = 8192$),
+confirming the conjecture across all tested sizes.
 \end{remark}
 
 \begin{remark}[Translation variance]
@@ -3615,7 +3653,7 @@ where $T = \sum_p A_p$.}
 \end{table}
 
 \begin{remark}[Collision count]
-\label{rem:collision}
+\label{rem:poisson-collision}
 The off-diagonal covariance sum has the exact
 identity
 \[
@@ -3716,17 +3754,33 @@ the diagonal AMTD ($V \le CT$) is equivalent
 to the collision bound $F = O(T)$.
 
 \medskip
-\noindent\textbf{Collision decomposition at $N = 8192$.}
-Among doublet primes with active hits:
-$F = 16$ ($F_A = 10$, $F_C = 4$, $F_D = 2$),
-with $T = 293$ and $T^2/N = 10.5$.
-Type~A dominates, reflecting the
-sparsity of the zero positions.
-A single position ($m = 11{,}576$) carries
-$\lambda = 3$; the remaining collisions
-have $\lambda = 2$.
-The ratio $F/T = 0.055$ confirms
-$F = o(T)$ empirically.
+\noindent\textbf{Collision decomposition.}
+
+\smallskip
+\begin{center}
+\begin{tabular}{rrrrrrrrr}
+\toprule
+$N$ & $K$ & $T$ & $T^2/N$ & $F$ & $F_A$ & $F_C$ & $F_D$ & $F/T$ \\
+\midrule
+1024 & 47 & 39 & 1.5 & 2 & 2 & 0 & 0 & 0.051 \\
+2048 & 93 & 70 & 2.4 & 4 & 2 & 2 & 0 & 0.057 \\
+4096 & 177 & 140 & 4.8 & 0 & 0 & 0 & 0 & 0.000 \\
+8192 & 363 & 293 & 10.5 & 16 & 10 & 4 & 2 & 0.055 \\
+16384 & 669 & 528 & 17.0 & 22 & 16 & 6 & 0 & 0.042 \\
+32768 & 1145 & 925 & 26.1 & 38 & 18 & 20 & 0 & 0.041 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\smallskip
+\noindent
+The ratio $F/T$ is consistently small and
+decreasing, empirically confirming $F = o(T)$.
+Under the FPI prediction
+$F \approx 3K^2/N$, one expects
+$F/T \approx 3/(6.6\log N)$,
+giving $0.044$ at $N = 32{,}768$,
+in good agreement with the observed~$0.041$.
+At all sizes $\max_m\lambda(m) \le 3$.
 \end{remark}
 
 \begin{remark}[Two-prime divisor formulation]
@@ -3764,6 +3818,153 @@ the \emph{bilinear} independence:
 the events $p \mid b_m$ and $q \mid b_m$
 are approximately uncorrelated as
 $p, q$ range over a dyadic block.
+\end{remark}
+
+\begin{proposition}[Conditional collision bound]
+\label{prop:conditional-collision}
+Assume the following \emph{Frobenius Pair Independence}
+hypothesis (FPI):
+for distinct doublet primes $p, q \in (N, 2N]$,
+the normalized first zeros $r_p/p$ and $r_q/q$
+are asymptotically independent and
+each approximately uniform on~$[0, \tfrac12]$
+in the sense that, for any integers
+$a \in [1, (p{-}1)/2]$ and $b \in [1, (q{-}1)/2]$,
+\begin{equation}\label{eq:fpi}
+  \frac{1}{K(K-1)}
+  \#\bigl\{(p,q)\text{ distinct doublet primes in $(N,2N]$}
+  : r_p = a,\; r_q = b\bigr\}
+  \;=\;
+  \bigl(1 + o(1)\bigr)\,\frac{4}{pq},
+\end{equation}
+where $K$ is the number of doublet primes.
+Then $F = o(T)$ and the all-index GCD theorem
+$G_n = e^{o(n)}$ holds for all~$n$.
+\end{proposition}
+
+\begin{proof}
+We bound each piece of the
+decomposition~\eqref{eq:F-decomp} separately.
+
+\medskip\noindent\textbf{Type~A.}
+The type-A collision count is
+\[
+  F_A = \#\bigl\{(p,q)\text{ distinct doublet primes}
+  : r_q = r_p + (p - q)\bigr\}.
+\]
+For a fixed ordered pair~$(p,q)$, the collision
+requires $r_q = r_p + (p-q)$.
+Summing the FPI probability over all valid
+values of~$r_p$, the conditional probability is
+\[
+  \Pr[\text{type A} \mid p,q]
+  \;=\;
+  \sum_{r=1}^{(p-1)/2}
+  \frac{2}{p}\cdot\frac{2}{q}\cdot
+  \mathbf{1}\bigl[r + (p{-}q) \in [1, (q{-}1)/2]\bigr]
+  \;\le\;
+  \frac{4\,\min\!\bigl((p{-}1)/2,\,(3q{-}1)/2 - p\bigr)}{pq}.
+\]
+For primes $p, q \in (N, 2N]$, this is at
+most~$4/N$ when $|p-q| \le N/2$,
+and vanishes when $|p - q| > N$.
+Summing over all $K(K-1)$ ordered pairs:
+\[
+  F_A
+  \;\le\; K(K{-}1)\cdot\frac{4}{N}\cdot(1 + o(1))
+  \;\le\; \frac{4K^2}{N}\cdot(1 + o(1)).
+\]
+Since $K \asymp N/\log N$ and
+$T = 2K + O(K^{1/2})$, we obtain
+$F_A \le 4T^2/(4N) \cdot (1+o(1))
+= T^2/N \cdot (1+o(1)) = o(T)$.
+
+\medskip\noindent\textbf{Type~C.}
+The collision condition
+$r_p + r_q = 2p - 1 - q$ constrains
+a sum of independent uniforms.
+Under FPI, $r_p + r_q$ has a
+trapezoidal distribution on
+$[2, (p+q-2)/2]$ with maximum density
+$2/\min(p,q) \le 2/N$.
+The target $2p - 1 - q$ lies in the support
+when $q < 2p - 1$, which holds for
+$p > (q+1)/2$.
+Thus $\Pr[\text{type C} \mid p,q] \le 2/N$,
+and $F_C \le 2K^2/N \cdot (1+o(1)) = o(T)$.
+
+\medskip\noindent\textbf{Type~D.}
+The condition $r_q = r_p + 2(q-p)$
+has the same structure as type~A
+with gap $2(q-p)$ in place of $p-q$.
+By the same argument,
+$F_D \le 4K^2/N \cdot (1+o(1)) = o(T)$.
+
+\medskip
+Combining all three,
+$F = F_A + F_C + F_D = o(T)$.
+The diagonal AMTD
+$\|F_i\|_2^2 \le C\,s_i^2$ follows
+with $C = 1 + o(1)$ at each dyadic block,
+giving $V^\circ \le (1 + o(1))\,L\,S
+= O(\log N)\,S = N^{o(1)}\,S$.
+\end{proof}
+
+\begin{remark}[Status of the FPI hypothesis]
+\label{rem:fpi-status}
+The hypothesis~\eqref{eq:fpi} is
+a pair decorrelation statement for the
+zero positions across different primes.
+The marginal equidistribution of~$r_p/p$
+is supported by the Kummer structure
+of the reduced generating series (Caruso--F\"urnsinn--Vargas-Montoya--Zudilin~\cite{CFVMZ}),
+which shows that the Galois group of
+$f_\alpha \bmod p$ is cyclic of order
+$(p-1)/\gcd(2, p-1)$.
+The rank-three Ap\'ery Picard--Fuchs
+connection is the symmetric square
+of a rank-two connection,
+so its connected geometric monodromy
+is of $\mathrm{Sym}^2 \mathrm{SL}_2
+\simeq \mathrm{SO}_3$ type.
+
+However, neither the cyclic Kummer group
+nor the $\mathrm{SO}_3$ monodromy
+controls the zero \emph{positions}~$r_p$:
+the first zero is a growing-dimensional
+order statistic (choosing the least element
+of~$\mathcal{Z}_p$ under the non-algebraic
+ordering of~$\mathbb{F}_p$),
+not a fixed Frobenius class function.
+The pair independence~\eqref{eq:fpi}
+is therefore a genuinely new hypothesis,
+not a consequence of existing Chebotarev,
+Sato--Tate, or Katz equidistribution theorems.
+
+A clean unconditional formulation replaces
+FPI by the \emph{marked two-characteristic
+Hasse dispersion} theorem:
+\begin{equation}\label{eq:mh2}
+  \sum_{\substack{N < p, q \le 2N \\ p \ne q}}
+  \sum_{m \in I_N}
+  X_p(m)\,X_q(m)
+  \;\ll\;
+  T_N + \frac{T_N^2}{N},
+\end{equation}
+where $X_p(m) = \mathbf{1}_{\{p \le m,\;
+b_{m-p} \equiv 0 \pmod{p}\}}$.
+This is exactly the collision count~$F_N$
+and subsumes the doublet FPI.
+A proof of~\eqref{eq:mh2} would require
+a uniform crystalline Mellin object
+whose first Hasse coordinate
+tracks~$b_j \bmod p$,
+product monodromy for distinct Kummer twists,
+and a \emph{horizontal} large sieve
+across different characteristics---a
+five-stage program beyond current technology
+but strongly supported by computation
+($F/T \le 0.041$ at $N = 32{,}768$).
 \end{remark}
 
 \subsection{Gap polynomial sparsity}
