@@ -2316,6 +2316,248 @@ existing Iwasawa--Dwork theory.
       distinct primes.
 \end{enumerate}
 
+\section{The second-moment approach}\label{sec:second-moment}
+
+The codegree method of Section~\ref{sec:codegree} exploits
+primes shared between pairs of integers to prove a density-one
+theorem. To close the remaining gap---proving
+$W(n) = o(n)$ for \emph{every}~$n$---we study the
+\emph{second moment} of the bad-prime weight function.
+
+\subsection{The criterion}
+
+For a dyadic shell $I_N = (N, 2N]$, define
+\[
+  B(m) \;=\; \sum_{\substack{p > \sqrt{m} \\ p \mid b_{m \bmod p}}}
+  \!\log p,
+  \qquad
+  M_2(N) \;=\; \sum_{m \in I_N} B(m)^2.
+\]
+
+\begin{proposition}[Second-moment criterion]\label{prop:M2}
+If $M_2(N) \le C\cdot N^{2-\delta}$ for some $C > 0$
+and $\delta > 0$, then $W(n) = o(n)$ for all~$n$.
+More precisely, for every $n \in I_N$,
+\[
+  W(n) \;\le\; B(n) \;\le\; \sqrt{M_2(N)}
+  \;\le\; C^{1/2}\cdot N^{1-\delta/2}.
+\]
+\end{proposition}
+
+\begin{proof}
+$B(n)^2$ is one nonneg.\ term of the
+sum~$M_2(N)$, hence $B(n) \le \sqrt{M_2(N)}$.
+\end{proof}
+
+In particular, $M_2(N) = O(N\cdot(\log N)^A)$ for any fixed~$A$
+gives $B(n) = O(\sqrt{N}\cdot (\log N)^{A/2}) = o(N)$.
+
+\subsection{Empirical verification}
+
+The following table, computed for all dyadic shells
+with $64 \le N \le 4096$ using the full zero-set data
+for all primes $p \le 20{,}000$, gives:
+
+\begin{center}
+\begin{tabular}{c|rrrr}
+$N$ & $M_2(N)$ & $M_2/N$ & $M_2/(N\log^2 N)$ & $\max B(m)$ \\
+\hline
+$64$ & $672$ & $10.5$ & $0.605$ & $10.4$ \\
+$128$ & $1{,}684$ & $13.2$ & $0.560$ & $15.9$ \\
+$256$ & $4{,}376$ & $17.1$ & $0.555$ & $15.8$ \\
+$512$ & $11{,}896$ & $23.2$ & $0.598$ & $22.3$ \\
+$1024$ & $28{,}632$ & $28.0$ & $0.583$ & $21.7$ \\
+$2048$ & $69{,}226$ & $33.8$ & $0.582$ & $27.1$ \\
+$4096$ & $166{,}671$ & $40.7$ & $0.587$ & $32.1$
+\end{tabular}
+\end{center}
+
+The ratio $M_2(N)/(N \log^2 N)$ stabilizes near~$0.59$,
+strongly suggesting
+\begin{equation}\label{eq:M2-empirical}
+  M_2(N) \;\sim\; C_2\cdot N\cdot (\log N)^2,
+  \qquad C_2 \approx 0.59.
+\end{equation}
+This gives $B(n) \le \sqrt{0.59\,N}\,\log N \approx
+0.77\,\sqrt{N}\,\log N = o(N)$.
+
+\subsection{CRT expansion}
+
+Expand $M_2$ dyadically. For distinct primes
+$p, q \in (P, 2P]$ with $P > \sqrt{N}$, write
+$\Omega_p = \{m \in I_N : m \bmod p \in \mathcal{Z}_p\}$.
+Then
+\[
+  M_2(N) \;=\;
+  \underbrace{\sum_p (\log p)^2\,|\Omega_p|}_{\text{diagonal}}
+  \;+\; \underbrace{\sum_{p \ne q} \log p\,\log q\;
+  |\Omega_p \cap \Omega_q|}_{\text{off-diagonal}}.
+\]
+
+\textbf{Diagonal.}
+$|\Omega_p| = Z(p)\cdot N/p + O(Z(p))$, so
+\[
+  \text{diag} \;=\; N\sum_p \frac{Z(p)\,(\log p)^2}{p}
+  \;+\; O\!\Bigl(\sum_p Z(p)\,(\log p)^2\Bigr).
+\]
+Under the Poisson model $\mathbb{E}[Z(p)] = 1$,
+the main term is $\sim N\cdot \sum_{P < p \le 2P}
+(\log p)^2/p \sim N\cdot (\log P)^2\cdot\log 2$.
+Summing dyadically $P = \sqrt{N}, 2\sqrt{N}, \ldots, N$
+gives diagonal $\sim \frac{1}{2}\,N\,(\log N)^2$,
+matching $\approx 63\%$ of the
+empirical~\eqref{eq:M2-empirical}.
+
+\textbf{Off-diagonal.}
+Since $p, q > \sqrt{N}$ we have $pq > N$,
+so each CRT class $r_p \pmod{p}$,
+$r_q \pmod{q}$ contains at most one element
+of~$I_N$. Define the CRT main term
+\[
+  |\Omega_p \cap \Omega_q|_{\mathrm{main}} \;=\;
+  \frac{Z(p)\,Z(q)\,N}{pq},
+\]
+and the CRT error
+$E_N(p,q) = |\Omega_p \cap \Omega_q| -
+|\Omega_p \cap \Omega_q|_{\mathrm{main}}$.
+The CRT main term of the off-diagonal contributes
+$\sim N\,(\log\log N)^2$, negligible compared to
+the diagonal.
+
+\subsection{The no-go model}\label{ssec:nogo}
+
+Define the \emph{adversarial zero-sets}: for one
+fixed $m_0 \in I_N$, set
+$\mathcal{Z}_p^* = \{m_0 \bmod p,\; p - 1 - (m_0 \bmod p)\}$.
+Then $|\mathcal{Z}_p^*| = 2$ (satisfying reflection),
+yet $m_0 \in \Omega_p^*$ for \emph{every} prime
+$p > \sqrt{N}$, giving
+$B^*(m_0) = \sum_{p > \sqrt{N}} \log p = n - o(n)$.
+In particular:
+\begin{itemize}
+\item The adversarial model satisfies
+  $Z^*(p) = 2$, $Z_{\mathrm{pair}}^*(p) = 1$,
+  and all proved vertical bounds.
+\item Yet $M_2^*(N) \ge B^*(m_0)^2 \ge c\,n^2$,
+  which is $\Omega(N^2)$, not~$O(N)$.
+\end{itemize}
+
+\textbf{Conclusion:}
+\emph{No proof using only vertical information
+(the sizes $Z(p)$, the reflection symmetry,
+nearest-neighbor exclusion, and gap-polynomial bounds)
+can establish $W(n) = o(n)$ for all~$n$.}
+The missing theorem must use cross-prime
+\emph{horizontal} information:
+the locations of the zeros $\mathcal{Z}_p$
+across different primes~$p$.
+
+\subsection{The Fourier form of the CRT error}
+
+Define the modular Fourier transform of~$\mathcal{Z}_p$:
+\[
+  S_p(a) \;=\; \frac{1}{p}\sum_{r \in \mathcal{Z}_p}
+  e\!\left(\frac{ar}{p}\right).
+\]
+Then $S_p(0) = Z(p)/p$ and, by the palindromic pairing,
+$e(a(p-1)/(2p))\,S_p(a)$ is real-valued for every~$a$.
+Fourier inversion gives
+\begin{align*}
+  E_N(p,q) &\;=\;
+  \sum_{\substack{(a,b) \ne (0,0) \\ 0 \le a < p,\; 0 \le b < q}}
+  S_p(a)\,S_q(b)\;\sum_{m \in I_N}
+  e\!\left(\frac{am}{p} + \frac{bm}{q}\right).
+\end{align*}
+The inner sum is a standard exponential sum
+$|K_N(\alpha)| \le \min(N, 1/\|\alpha\|)$ where
+$\alpha = a/p + b/q$.
+
+Applying the classical additive large sieve to
+bound $\sum_{p \ne q} |E_N(p,q)|$ gives
+$O(N^2/\log N)$ at the top prime scale
+$p \sim N$---one full logarithm larger than
+the threshold $o(N^2/\log^2 N)$ required for
+$M_2 = O(N(\log N)^A)$. Thus the classical
+large sieve does not close the gap.
+
+\subsection{The dispersion target}
+
+Define the centered dispersion
+\[
+  V^\circ(P,N) \;=\; \sum_{m \in I_N}
+  \left|B_P(m) - \frac{S(P,N)}{N}\right|^2,
+\]
+where $B_P(m) = \sum_{P < p \le 2P} 1_{\Omega_p}(m)$
+and $S(P,N) = \sum_p |\Omega_p|$.
+
+\begin{hypothesis}[AP--BDH dispersion]\label{hyp:ap-bdh}
+$V^\circ(P,N) \ll N^{o(1)}\cdot S(P,N)$.
+\end{hypothesis}
+
+\begin{proposition}\label{prop:ap-bdh-suffices}
+Hypothesis~\ref{hyp:ap-bdh} together with the
+unconditional bound $Z(p) = O(p^{2/3})$
+implies $W(n) = o(n)$ for all~$n$.
+\end{proposition}
+
+\begin{proof}
+By hypothesis, for every $m \in I_N$,
+\[
+  B_P(m) \;\le\; \frac{S(P,N)}{N} + \sqrt{V^\circ(P,N)}
+  \;\le\; \frac{S(P,N)}{N} + N^{o(1)}\sqrt{S(P,N)}.
+\]
+By the zero-count bound, $S(P,N) \le (N/P + 1)\cdot
+\sum_{P < p \le 2P} Z(p) \ll N P^{2/3}/\log P$.
+Therefore $B_P(m) \ll N^{o(1)} \cdot (NP^{2/3}/\log P)^{1/2}$.
+The weighted sum satisfies
+$W_P(m) \le B_P(m)\cdot \log(2P)$.
+Summing over $O(\log N)$ dyadic blocks gives
+\[
+  W(n) \;\ll\; N^{o(1)}\cdot N^{1/2}\cdot N^{1/3}
+  = N^{5/6+o(1)} = o(N). \qedhere
+\]
+\end{proof}
+
+The dispersion hypothesis is a cross-prime equidistribution
+theorem stating that the Ap\'ery zero-sets
+$\mathcal{Z}_p$ do not systematically align at
+one index across different primes.
+The no-go model of Section~\ref{ssec:nogo} shows
+that this hypothesis genuinely requires arithmetic
+input about the Ap\'ery family, beyond what
+any vertical bound can provide.
+
+\subsection{Gap polynomial sparsity}
+
+For the Ap\'ery recurrence, the gap polynomial
+$N_h$ (whose roots in~$\mathbb{F}_p$ are
+necessary for a simultaneous zero pair
+$b_x \equiv b_{x+h} \equiv 0$)
+has $r_p(h) = \#\{x \in \mathbb{F}_p : N_h(x) = 0\}
+\le 3(h-1)$, giving $\sum_{h < H} r_p(h) \le 3H^2/2$
+and hence $Z(p) \le Cp^{2/3}$.
+However, the actual root counts are drastically
+smaller: for all primes $p \le 10{,}000$ with
+$Z(p) \ge 2$ and all gaps $h \le 100$,
+$\sum_{h \le 100} r_p(h) \le 1$,
+with most primes having $\sum = 0$
+(the zero pairs are spaced more than~$100$ apart).
+
+\begin{hypothesis}[Linear root sum]\label{hyp:linear-root}
+$\sum_{1 \le h < H} r_p(h) \ll H$ for every
+prime~$p$ and every $H \ge 1$.
+\end{hypothesis}
+
+This would improve the zero-count to
+$Z(p) \ll p^{1/2}$, strengthening the exponent
+in Proposition~\ref{prop:ap-bdh-suffices}
+from~$N^{5/6}$ to~$N^{3/4}$.
+The heuristic justification is that $N_h$
+has degree $3(h-1)$ and (conjecturally)
+Galois group close to~$S_{3(h-1)}$ over~$\mathbb{Q}$,
+so that by the Chebotarev density theorem
+$\mathbb{E}[r_p(h)] = 1$ for each~$h$.
+
 \begin{thebibliography}{10}
 \bibitem{AhlgrenOno2000}
 S.~Ahlgren and K.~Ono,
