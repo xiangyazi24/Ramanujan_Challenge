@@ -325,6 +325,68 @@ need a genuinely new one-point rainbow estimate.
 17. ★ **Companion-height bound** (NEW): companion-block weight O(n^{2/3}) at every index
 18. **Remaining open problem** clearly identified: pointwise radical estimate
 
+## ★ BREAKTHROUGH 4: Certificate gap and the b_n radical obstruction (Q5373, Q5374, Q5376)
+
+### W(p) = O(1) is HEURISTICALLY UNLIKELY and UNNECESSARY (Q5373)
+- **Poisson(1/2) model:** The histogram W=1,3,5,7 fits Poisson(1/2) to <2% TV.
+  This predicts UNBOUNDED support — W(p) → ∞ along rare primes.
+- **Unconditional theorem:** W(p) ≪ p^{2/3} from gap polynomials (same framework as Z(p)).
+- **Even W(p) = O(1) would NOT suffice:** quantifier inversion — one n can have ~n/log n
+  companion primes even if each prime has ≤3 zeros (Q5373 §9).
+- **BUT: companion channel is ALREADY O(n^{2/3})** by prop:companion-height. So W(p) is moot.
+
+### The sole remaining target: W(n) = o(n) (Q5374, Q5376)
+Define W(n) = Σ_{p > √n, p | b_{n mod p}} log p (lower-digit bad-prime weight).
+By Lucas: every bad prime p | b_{n mod p} also divides b_n itself. So W(n) ≤ log rad_{>√n}(b_n).
+
+**CRITICAL COMPUTATION (this session):**
+- log rad_{>√n}(b_n) ≈ 3.5n (NOT o(n)!) — almost all factorization weight is in large primes
+- BUT W(n) is empirically O(log n) — typically 0, max ≈ 8.67 for n ≤ 150
+- MOST large primes dividing b_n are quotient-digit primes (p | b_q), which are HARMLESS for G_n
+- The certificate bound W(n) ≤ log rad_{>√n}(b_n) = O(n) is too loose by a factor of n/log n
+
+### Why log rad_{>√n}(b_n) = O(n) is NOT the right target (Q5376)
+The GCD sum Σ log gcd(n-r, b_r) is also NOT o(n) — even the prime 5 contributes Ω(n).
+The right decomposition (Q5376 eq. 0.7):
+  W(n) = O(n^{2/3}) + Σ_{p > √n, p | b_n, p ∤ b_{⌊n/p⌋}} log p
+The second term is the "pure lower-digit" weight — primes dividing b_n where
+the quotient-digit sequence does NOT explain the divisibility.
+
+### Key structural facts
+1. **Injectivity:** p ↦ (n mod p) is injective on primes > √n (Q5376 §1)
+2. **At most one large prime factor per residue:** n-r can have at most one prime > √n (Q5376 §1)
+3. **No polynomial certificate exists:** b_n is the natural certificate, but log b_n = O(n) (Q5376 §4)
+4. **Palindromic gap polynomial is tautological:** reflected gap gives forced linear factor (Q5376 §5)
+5. **No recurrence-only one-hit invariant exists:** gap polynomial is intrinsically two-hit (Q5374 §2)
+
+### Hard-core pruning (Q5374 §3)
+Endpoint zeros (s_p < R), near-central zeros (h_p < H), and large-quotient (q > Q)
+are all O(n^{2/3}) with Q=R=H=n^{1/3}. The remaining "hard core" has:
+- p ∈ (n^{2/3+ε}, n/2)
+- zeros in the bulk (away from endpoints and center)
+No rigorous bound for this hard core beyond O(n).
+
+### Two viable routes (Q5374 §9)
+1. **New subexponential certificate:** An integer R_n divisible by every bad prime,
+   with log R_n = o(n). No candidate beyond b_n is known.
+2. **Rainbow large sieve / growing-moment theorem:** A spectral or high-moment
+   nonconcentration bound for one row of the incidence matrix. Needs new arithmetic input.
+
+## ChatGPT Q&A processed (post-reflection session)
+- Q5373 (dm3): ★ W(p) analysis — Poisson(1/2) heuristic, W(p) ≪ p^{2/3} theorem,
+  quantifier inversion, companion channel harmless. Paper-ready proposition.
+- Q5374 (dm4): One-hit invariant impossibility, hard-core pruning theorem, K3 Weil
+  correction (O(p) not O(p^{3/2})), spectral large sieve formulation.
+- Q5375 (dm1): Clean companion-height proof with optimal constants. Confirmed.
+- Q5376 (dm1): ★ GCD sum FALSE as o(n) target (p=5 contributes Ω(n)). Certificate
+  is b_n with exponential height. Quotient-relative decomposition eq (0.7).
+
+## Currently dispatched (4 dm tabs processing)
+- dm1: Lower-digit radical proof approaches (BV, CRT, Sato-Tate)
+- dm2: Bombieri-Vinogradov angle for Apéry divisibility array
+- dm3: Pointwise radical theorem (comprehensive, 5 specific approaches)
+- dm4: Large-prime radical of b_n (Stewart, Corvaja-Zannier, hypergeometric motives)
+
 ## Resources
 - ChatGPT Pro: dm1-dm4 (SOL). All tabs dispatched.
 - uisai2: Z(p) computation COMPLETED. Max Z(p)=12 at p=159977 through p~1.3M.
