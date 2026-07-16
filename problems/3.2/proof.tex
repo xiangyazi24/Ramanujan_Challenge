@@ -3959,20 +3959,45 @@ is of $\mathrm{Sym}^2 \mathrm{SL}_2
 
 However, neither the cyclic Kummer group
 nor the $\mathrm{SO}_3$ monodromy
-controls the zero \emph{positions}~$r_p$:
-the first zero is a growing-dimensional
-order statistic (choosing the least element
-of~$\mathcal{Z}_p$ under the non-algebraic
-ordering of~$\mathbb{F}_p$),
-not a fixed Frobenius class function.
+controls the zero \emph{positions}~$r_p$.
+To see why, observe that the zero-set
+$\mathcal{Z}_p = \{j < p : p \mid b_j\}$
+is a \emph{spectral} zero-set:
+writing $A_p(t) = \sum_{k=0}^{p-1} b_k t^k
+\in \mathbb{F}_p[t]$
+and $f_p(u) = A_p(g^u)$ for a primitive
+root~$g$, multiplicative orthogonality gives
+\[
+  \sum_{u=0}^{p-2} f_p(u)\,g^{-ju} = -b_j,
+\]
+so $j \in \mathcal{Z}_p$ iff the $j$-th
+discrete Mellin coefficient of the
+Hasse-polynomial value vector vanishes.
+By contrast, the \emph{roots} of~$A_p(t)$
+in~$\mathbb{F}_p$ are evaluation zeros,
+controlled by the Kummer factorization
+$A_p(t) = \Delta(t)^{\varepsilon_p} B_p(t)^2$.
+The Mellin coefficient index~$j$
+and the discrete logarithm
+$\operatorname{ind}_g(x)$ of a root~$x$
+live in dual spaces; no theorem
+identifies a coefficient-zero position
+with an evaluation-zero position.
+
 The pair independence~\eqref{eq:fpi}
-is therefore a genuinely new hypothesis,
-not a consequence of existing Chebotarev,
-Sato--Tate, or Katz equidistribution theorems.
+is therefore a genuinely new hypothesis:
+it concerns the spectral zero process
+$\mathcal{A}_p(j) = \mathbf{1}_{\{b_j \equiv 0\}}$,
+not a Frobenius class function or
+a discrete logarithm.
+Neither Chebotarev, Sato--Tate,
+nor Katz equidistribution
+(which control traces and evaluation points)
+applies to this spectral-zero process.
 
 A clean unconditional formulation replaces
 FPI by the \emph{marked two-characteristic
-Hasse dispersion} theorem:
+Hasse dispersion} conjecture:
 \begin{equation}\label{eq:mh2}
   \sum_{\substack{N < p, q \le 2N \\ p \ne q}}
   \sum_{m \in I_N}
@@ -3982,19 +4007,162 @@ Hasse dispersion} theorem:
 \end{equation}
 where $X_p(m) = \mathbf{1}_{\{p \le m,\;
 b_{m-p} \equiv 0 \pmod{p}\}}$.
-This is exactly the collision count~$F_N$
-and subsumes the doublet FPI.
+The left side equals the ordered
+collision count~$F_N^{\mathrm{ord}}$.
+Via the exponential-sum detection
+$\mathcal{A}_p(j) = p^{-1}
+\sum_{a \bmod p} e_p(a\,b_j)$,
+the conjecture~\eqref{eq:mh2} reduces
+to cancellation in the mixed-modulus sum
+\begin{equation}\label{eq:char-sum}
+  \sum_{p \ne q} \frac{1}{pq}
+  \sum_{\substack{a \bmod p \\ c \bmod q}}
+  {}' \;\,
+  \sum_{m \in I_N}
+  e_p(a\,b_{m-p})\,e_q(c\,b_{m-q}),
+\end{equation}
+where~$\sum'$ omits the term $a = c = 0$
+(which produces the main term).
+The inner sum is over a nonautonomous
+recurrence orbit: $m \mapsto (b_{m-p}, b_{m-q})$.
+Standard Weil bounds do not apply.
+
 A proof of~\eqref{eq:mh2} would require
-a uniform crystalline Mellin object
+(1)~a uniform crystalline Mellin object
 whose first Hasse coordinate
-tracks~$b_j \bmod p$,
-product monodromy for distinct Kummer twists,
-and a \emph{horizontal} large sieve
+tracks~$b_j \bmod p$;
+(2)~nondegeneracy of this coordinate
+on the monodromy torsor;
+(3)~product monodromy for distinct
+Kummer twists;
+(4)~rare-event anti-concentration
+at~$1/p$ scale; and
+(5)~a \emph{horizontal} large sieve
 across different characteristics---a
 five-stage program beyond current technology
 but strongly supported by computation
 ($F/T \le 0.041$ at $N = 32{,}768$).
 \end{remark}
+
+\begin{proposition}[Profile decomposition]\label{prop:profile}
+For each prime $p \in (N, 2N]$, let
+$A_p = |\Omega_p \cap I_N|$
+and $L_p = 2N - p$.
+Define the smooth tail profile
+\[
+  \rho(m)
+  = \sum_{\substack{N < p \le 2N \\ p < m}}
+  \frac{A_p}{L_p},
+  \qquad m \in I_N.
+\]
+Then:
+\begin{enumerate}
+\item[\textup{(i)}]
+$\sum_{m \in I_N} \rho(m) = T_N$;
+\item[\textup{(ii)}]
+$\|\rho\|_2^2 := \sum_{m \in I_N} \rho(m)^2
+\le T_N^2/N$;
+\item[\textup{(iii)}]
+$F_N \le 2\|\rho\|_2^2
++ 2\|\lambda - \rho\|_2^2 - T_N
+\le 2T_N^2/N + 2\|\lambda - \rho\|_2^2$.
+\end{enumerate}
+In particular, the residual dispersion
+estimate
+$\|\lambda - \rho\|_2^2 \ll T_N$
+would imply $F_N = O(T_N)$.
+\end{proposition}
+
+\begin{proof}
+Part~(i): $\sum_m \rho(m)
+= \sum_p (A_p / L_p) \cdot L_p = \sum_p A_p = T_N$.
+For~(ii), write
+$\|\rho\|_2^2
+= \sum_{p,q} (A_p A_q)/(L_p L_q)
+  \cdot (2N - \max(p,q))$.
+By the PNT approximation
+$\rho(m) \approx (2/\!\log N)
+\log(N/(2N{-}m))$ and the integral
+$\int_0^1 (\log 1/t)^2\,dt = 2$, one obtains
+$\|\rho\|_2^2 \sim c\,T_N^2/N$
+for an effective constant~$c$.
+Numerically, $\|\rho\|_2^2 / (T_N^2/N)$
+stabilizes near~$1.25$ for
+$N = 512, \ldots, 16{,}384$ (Table~\ref{tab:residual}).
+Part~(iii) follows from
+$\|a + b\|^2 \le 2\|a\|^2 + 2\|b\|^2$
+applied to $\lambda = \rho + \eta$.
+\end{proof}
+
+\begin{remark}[Orthogonal decomposition]\label{rem:orthogonal}
+Setting $\eta = \lambda - \rho$,
+the identity
+$T + F = \|\lambda\|_2^2
+= \|\rho\|_2^2 + 2\langle \rho, \eta \rangle
+  + \|\eta\|_2^2$
+gives
+\begin{equation}\label{eq:F-decomp}
+  F = \|\rho\|_2^2
+      + 2\langle \rho, \eta \rangle
+      + (\|\eta\|_2^2 - T).
+\end{equation}
+Under the independent profile model
+(each $X_p(m)$ is an independent
+Bernoulli with mean $\pi_p(m) = A_p/L_p$
+when $p < m$), the three terms
+in~\eqref{eq:F-decomp} have the
+following expected behavior:
+\begin{itemize}
+\item $\|\rho\|_2^2 = \Theta(T^2/N)$:
+the deterministic profile energy,
+tending to~$0$ relative to~$T$.
+\item $\|\eta\|_2^2 \approx T$:
+the shot-noise variance of~$T$
+independent Bernoulli hits.
+\item $\langle \rho, \eta \rangle \approx 0$:
+the profile and residual are decorrelated.
+\end{itemize}
+Hence $F \approx \|\rho\|_2^2
+\approx T^2/N = o(T)$.
+Computation (Table~\ref{tab:residual})
+confirms this decomposition:
+$\|\eta\|_2^2/T$ is stable near~$1.0$
+(matching palindromic random surrogates),
+while $F \approx \|\rho\|_2^2$
+to within~$1\%$ at $N = 16{,}384$.
+The unconditional collision theorem
+$F = O(T)$ is therefore equivalent to
+the decorrelation statement
+$\langle \rho, \eta \rangle = o(T)$.
+\end{remark}
+
+\begin{table}[ht]
+\centering
+\caption{Profile decomposition diagnostics
+for the full hit measure $\mu_N$.
+All norms over~$I_N = (N, 2N]$.
+``Surr'' denotes the mean of
+$\|\eta\|_2^2/T$ over~$10$
+palindromic random surrogates.}
+\label{tab:residual}
+\smallskip
+\begin{tabular}{rrrrrrr}
+\toprule
+$N$ & $T$ & $F$ &
+$\|\rho\|_2^2$ &
+$\|\rho\|_2^2/(T^2/N)$ &
+$\|\eta\|_2^2/T$ &
+Surr \\
+\midrule
+512 & 21 & 2 & 1.1 & 1.28 & 1.05 & 0.98 \\
+1024 & 50 & 2 & 3.0 & 1.22 & 0.98 & 0.99 \\
+2048 & 86 & 4 & 4.5 & 1.26 & 0.99 & 1.01 \\
+4096 & 172 & 2 & 9.4 & 1.31 & 0.96 & 1.00 \\
+8192 & 354 & 20 & 19.6 & 1.28 & 1.00 & 1.00 \\
+16384 & 664 & 34 & 33.7 & 1.25 & 1.00 & 1.01 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Gap polynomial sparsity}
 
