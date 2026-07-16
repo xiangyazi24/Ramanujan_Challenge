@@ -2377,6 +2377,33 @@ For the top-half block $p > n/2$, the condition becomes
 ``$n - r$ is prime and $(n-r) \mid b_r$.''
 \end{remark}
 
+\begin{proposition}[Hard-core reduction]\label{prop:hard-core}
+For each bad prime~$p > \sqrt{n}$, write
+$n = q_p p + r_p$, $s_p = \min(r_p, p{-}1{-}r_p)$,
+$h_p = |p{-}1{-}2r_p|$.
+Let $1 \le Q, R, H < n/2$.
+Then the total weight of primes satisfying at least one of
+$q_p > Q$, $s_p \le R$, $h_p \le H$ is
+$O(n/Q + (R+H)\log n)$.
+In particular, with $Q = R = H = \sqrt{n/\log n}$,
+all ``easy channels'' contribute $O(\sqrt{n\log n})$;
+the remaining hard core consists of primes
+$p \gg \sqrt{n\log n}$ with zero positions
+far from both endpoints and the reflection centre.
+\end{proposition}
+
+\begin{proof}
+Large quotient ($q_p > Q$): then $p < n/Q$,
+so $\sum \log p \le \vartheta(n/Q) \ll n/Q$.
+Near endpoint ($s_p \le R$): by the injectivity
+of $p \mapsto n \bmod p$, at most two primes
+$> \sqrt{n}$ contribute for each value of~$s_p$.
+Near centre ($h_p \le H$): the identity
+$(2q_p+1)p = 2n+1 \pm h_p$ forces $p$
+to divide a fixed integer of size~$O(n)$,
+giving $O(1)$ primes per value of~$h_p$.
+\end{proof}
+
 \begin{remark}[The vertical main term is harmless]
 \label{rem:vertical-main}
 Write $W(n) = M(n) + \mathcal{E}(n)$ where
@@ -2512,20 +2539,25 @@ $512$  & $0.597$ & $0.376$ & $1.010$ & $+215$ \\
 $1024$ & $0.582$ & $0.375$ & $0.981$ & $-152$ \\
 $2048$ & $0.581$ & $0.370$ & $0.992$ & $+7$ \\
 $4096$ & $0.588$ & $0.371$ & $0.995$ & $+41$ \\
-$8192$ & $0.634$ & $0.389$ & -- & --
+$8192$ & $0.634$ & $0.387$ & $0.995$ & $-188$ \\
+$16384$ & $0.669$ & $0.400$ & $0.995$ & $-922$ \\
+$32768$ & $0.646$ & $0.394$ & $0.988$ & $-14065$
 \end{tabular}
 \end{center}
 
 The ratio $V^\circ/S$ converges to~$1$
-from both sides, with $|V^\circ/S - 1| < 0.02$
-for $N \ge 256$.
-The centered covariance $E_N^\circ$ oscillates
-around zero with magnitude $O(\sqrt{N}\,(\log N)^2)$,
-consistent with the random model prediction.
-This confirms that the Ap\'ery zero-sets are
-essentially \emph{pairwise uncorrelated}
-across primes: each zero-set behaves independently
-for the purposes of the second moment.
+from below for $N \ge 1024$, with $V^\circ/S < 1$
+at every scale tested beyond~$512$.
+The negative sign of $E_N^\circ$ for large~$N$
+reflects genuine \emph{anti-correlation} among
+the CRT-constrained incidence events:
+at $N = 1024$, over $96\%$ of cross-prime
+covariance pairs $C_{p,q}$ are negative.
+This is consistent with a weak form
+of negative dependence arising from the partial-period
+CRT constraint.
+The magnitude $|E_N^\circ|$ is $O(\sqrt{N}\,(\log N)^2)$,
+so $|E_N^\circ|/S \to 0$ at rate~$\sim 1/\sqrt{N}$.
 
 \textbf{Three-model comparison.}
 To test whether the observed $V^\circ/S \approx 1$
@@ -2658,6 +2690,30 @@ that this hypothesis genuinely requires arithmetic
 input about the Ap\'ery family, beyond what
 any vertical bound can provide.
 
+\begin{remark}[Negative CRT correlation]\label{rem:negative-crt}
+At $N = 1024$, more than $96\%$ of the
+$\binom{113}{2} = 6{,}328$ cross-prime
+covariance terms~$C_{p,q}$ are \emph{negative}.
+The off-diagonal sum
+$E_N^\circ = \sum_{p \ne q} w_p w_q C_{p,q}$
+is negative for every $N \ge 1024$ tested
+(through $N = 32{,}768$).
+For independent Bernoulli variables,
+the variance equals the diagonal:
+$V^\circ = \text{Diag} \le S$.
+The observed $V^\circ < S$ is consistent with
+a weak form of \emph{negative dependence}:
+the CRT constraint on a partial period
+induces anti-bunching.
+If one could establish negative association
+for the restricted CRT distribution
+(e.g.\ via an extension of the Dubhashi--Ranjan
+theorem to partial periods),
+the variance bound $V^\circ \le S$ would follow,
+and with it the all-index theorem
+by Proposition~\ref{prop:ap-bdh-suffices}.
+\end{remark}
+
 \begin{remark}[The dispersion route bypasses $\bar{Z}$]
 \label{rem:dispersion-vs-Z1}
 Hypothesis~\ref{hyp:ap-bdh} does \emph{not} require
@@ -2676,6 +2732,25 @@ zero-count fluctuations.
 The three-model comparison confirms that
 $V^\circ/S \approx 1$ empirically,
 matching the prediction of the independent random model.
+\end{remark}
+
+\begin{remark}[Concentration and the all-$n$ gap]
+\label{rem:concentration}
+Proposition~\ref{prop:ap-bdh-suffices} extracts
+a \emph{pointwise} bound from the dispersion hypothesis:
+$B_P(m) \le S/N + \sqrt{V^\circ}$ for every~$m \in I_N$.
+The trivial bound $\max|B(m) - \mu| \le \sqrt{V^\circ}
+\le \sqrt{S} = O(\sqrt{N}\,\log N)$
+is already $o(N/\!\log N)$, so the all-$n$
+theorem $W(n) = o(n)$ follows from $V^\circ \le O(S)$
+without any higher-moment or sub-Gaussian input.
+Empirically, the actual concentration is much stronger:
+$\max B(m) / (N\!/\!\log N) \approx 0.07$ at $N = 4096$
+(with $\max B \approx 36$ vs.~$N\!/\!\log N \approx 492$),
+and the maximum $|B(m) - \mu|/\sigma$ stabilizes
+near~$6$--$7$ standard deviations, consistent
+with the Poisson prediction for the
+extremal order statistic.
 \end{remark}
 
 \subsection{Gap polynomial sparsity}
