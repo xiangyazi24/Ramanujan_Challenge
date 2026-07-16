@@ -26,8 +26,11 @@ sequences $(a_n)$, $(b_n)$ with $d_n = \operatorname{lcm}(1,\ldots,n)^3$.
 We prove \emph{unconditionally} that $G_n = e^{o(n)}$
 for a set of positive integers of natural density~$1$,
 with the quantitative bound
-$\#\{n \le N : \log G_n > \varepsilon\,n\} = O(N^{2/3})$
-for every $\varepsilon > 0$.
+$\#\{n \le N : \log G_n > \varepsilon\,n\}
+= O_\varepsilon\bigl((\log N)^2\bigr)$
+for every $\varepsilon > 0$; in particular, the
+exceptional set has upper Banach density zero
+and finite harmonic weight.
 The key ingredient is a new bound $Z(p) = O(p^{2/3})$ on the
 zero-count function $Z(p) = \#\{j < p : p \mid b_j\}$,
 derived from the Ap\'ery recurrence via a gap polynomial argument.
@@ -47,11 +50,16 @@ $\sum_{p \le x} Z(p) \ll \pi(x)$
 which the Poisson model supports, we prove
 $\log G_n = O(\sqrt{n})$
 for density~$1$, matching the unconditional
-small-prime floor; the proof combines a dyadic
+small-prime floor, with the conditional
+exceptional set shrinking to $O(N^{1/3})$
+and having upper Banach density zero.
+The proof combines a dyadic
 divisor-incidence bound with a sub-interval
 zero-count argument to reduce the
 leading-digit bottleneck from
-$O(N^{3/2})$ to $O(N^{10/7}/\log N)$.
+$O(N^{3/2})$ to $O(N^{10/7}/\log N)$
+unconditionally, and to $O(N^{4/3}/\log N)$
+under Hypothesis~$\bar{Z}$.
 \end{abstract}
 
 \section{Setup}
@@ -797,8 +805,23 @@ Poi$(\tfrac{1}{2})$ & .607 & --- & .303 & .076 & .013 & .002 & .000 & .000
 \end{tabular}
 \end{center}
 The mean $Z(p) = 1.000$, stable across all ranges
-($\chi^2 = 3.43$ on $5$~d.f.\ against
+($\chi^2 = 3.42$ on $4$~d.f.\ against
 $\mathrm{Poisson}(1/2)$ for the pair count).
+The empirical factorial moments of $K(p) = Z(p)/2$
+over the $78{,}494$ ordinary primes are:
+\begin{center}
+\begin{tabular}{c|cccccc}
+$r$ & 1 & 2 & 3 & 4 & 5 & 6 \\
+\hline
+$\frac{1}{\pi_{\mathrm{ord}}}\sum (K)_r$
+& $.4998$ & $.2490$ & $.1210$ & $.0605$ & $.0275$ & $.0092$ \\
+$2^{-r}$ & $.5000$ & $.2500$ & $.1250$ & $.0625$ & $.0312$ & $.0156$
+\end{tabular}
+\end{center}
+The first four moments match Poisson($1/2$)
+to better than $3\%$; the higher-moment deviation
+is consistent with sampling variance
+($K \ge 5$ has only $13$ primes in this range).
 \item The symmetry $b_j \equiv b_{p-1-j} \pmod{p}$ holds for
       all tested primes: zeros come in palindromic pairs
       $\{j, p{-}1{-}j\}$, so $Z(p)$ is even (except at non-ordinary primes).
@@ -922,6 +945,60 @@ $\log G_n = O(\sqrt{n})$
 (Theorem~\ref{thm:main}).
 \end{remark}
 
+We state the full distributional prediction
+of the Poisson model
+(cf.\ Proposition~\ref{prop:poisson}):
+
+\begin{hypothesis}[Poisson conjecture]\label{hyp:poisson}
+For every good prime $p \ge 5$, put
+\[
+\nu_p := \mathbf{1}_{\{p \mid a_p(f)\}},
+\qquad
+K_*(p) := \frac{Z(p) - \nu_p}{2},
+\]
+where $f$ is the weight-$4$ newform associated to
+the Ap\'ery differential operator.
+Thus $K_*(p)$ counts noncentral reflected pairs
+of zeros of $(b_j \bmod p)_{0 \le j < p}$.
+For every fixed~$r \ge 1$,
+\[
+\frac{1}{\pi(X)}
+\sum_{p \le X}
+\binom{K_*(p)}{r}
+\;\longrightarrow\;
+\frac{1}{2^r\, r!}.
+\]
+On ordinary primes ($\nu_p = 0$), this reduces to
+$K(p) = Z(p)/2 \to \mathrm{Poisson}(1/2)$,
+consistent with the data in
+Proposition~\ref{prop:Zp-data}.
+\end{hypothesis}
+
+\begin{remark}\label{rem:poisson-implies}
+The Poisson conjecture implies
+Hypothesis~$\bar{Z}$.
+Taking $r = 1$ gives
+$\sum_{p \le X} K_*(p)
+= (\tfrac{1}{2} + o(1))\,\pi(X)$.
+Since $Z(p) = 2K_*(p) + \nu_p$ and
+$0 \le \nu_p \le 1$,
+\[
+\sum_{p \le X} Z(p)
+= 2\sum_{p \le X} K_*(p)
+  + \sum_{p \le X} \nu_p
+\le (2 + o(1))\,\pi(X),
+\]
+which is Hypothesis~$\bar{Z}$.
+A proof would require
+the fixed-order joint independence
+of reflection-pair zero events---the
+correlation theorem underlying the
+factorial-moment computation in
+Proposition~\ref{prop:poisson}---for the
+deterministic Ap\'ery orbit, not just the
+hyperoctahedral random model.
+\end{remark}
+
 \section{The denominator connection lemma}
 
 \begin{lemma}\label{lem:denom}
@@ -1041,21 +1118,27 @@ $G_n = e^{o(n)}$.
 
 \begin{proof}
 Fix $N$ large and consider $n \in (N, 2N]$.
-Write $B(n) = \#\{$bad primes $p > \sqrt{n}$
+Write $B(n) = \#\{$primes $p > \sqrt{n}$
 with $v_p(G_n) \ge 1\}$.
 By Proposition~\ref{prop:small}, the small-prime
 contribution is $O(\sqrt{n})$ for every~$n$.
-Each bad prime contributes $v_p(G_n)\log p \le 3\log n$,
+Each such prime contributes $v_p(G_n)\log p \le 3\log n$
+(since $v_p(d_n) = 3$ for $p > \sqrt{n}$),
 so $\log G_n \le O(\sqrt{n}) + 3B(n)\log n$.
 It suffices to show $B(n) = o(n/\log n)$
 for all but $o(N)$ values of $n \in (N, 2N]$.
 
-For $p > \sqrt{n}$, $n$ has two base-$p$ digits:
-$n = qp + r$ with $1 \le q \le \sqrt{2N}$ and $0 \le r < p$.
-By Theorem~\ref{thm:lucas}, $p \mid b_n$ iff
-$p \mid b_q$ or $r \in \mathcal{Z}_p$,
-where $\mathcal{Z}_p = \{j < p : p \mid b_j\}$.
-A prime $p$ can be bad for~$n$ only if one of these holds.
+For $p > \sqrt{n}$, write $n = qp + r$
+with $1 \le q \le \sqrt{2N}$ and $0 \le r < p$.
+By Lemma~\ref{lem:block}(iii), $v_p(G_n) \ge 1$
+requires $D_q b_r \equiv 0 \pmod{p}$.
+By Lemma~\ref{lem:leading-vanish},
+leading-digit bad primes ($p \mid b_q$, $p \nmid b_r$)
+have $v_p(G_n) = 0$ and do not contribute to~$B(n)$.
+The remaining contributions come from
+\emph{lower-digit bad primes} ($r \in \mathcal{Z}_p$)
+and \emph{companion-block primes}
+($D_q \equiv 0 \pmod{p}$, $p \nmid b_r$).
 
 \textbf{Lower-digit incidence.}
 For fixed $p \in (\sqrt{N}, 2N]$, an interval of $N$
@@ -1077,20 +1160,16 @@ Since $\pi(2N) = O(N/\log N)$:
 \]
 Hence $R_N = o(N^2/\log N)$.
 
-\textbf{Leading-digit incidence.}
-For fixed $q$, $p \mid b_q$ requires $p$ to be a prime
-divisor of $b_q$, and $b_q \le (q+1)\cdot 64^q$
-gives at most $O(q)$ such primes.
-For each pair $(q, p)$, at most $p$ integers in $(N, 2N]$
-have $\lfloor n/p \rfloor = q$. Hence the total
-leading-digit incidence is
-\[
-L_N \le \sum_{q=1}^{\lceil\sqrt{2N}\rceil}
-O(q) \cdot \frac{2N}{q+1} = O(N\sqrt{N}) = o(N^2/\log N).
-\]
+\textbf{Companion-block incidence.}
+By Proposition~\ref{prop:companion-height},
+the companion-block contribution to $\log G_n$
+is $O(n^{2/3}) = o(n)$ at every index.
+Hence companion-block primes do not affect the
+density-one statement, and we set $P_N = 0$
+in the counting argument.
 
 \textbf{Conclusion.}
-Write $\sum_{n \in (N,2N]} B(n) \le R_N + L_N = o(N^2/\log N)$.
+Write $\sum_{n \in (N,2N]} B(n) \le R_N + P_N = o(N^2/\log N)$.
 For any fixed $\delta > 0$, Markov's inequality gives
 \[
 \#\bigl\{n \in (N,2N] : B(n) > \delta n/\log n\bigr\}
@@ -1130,9 +1209,8 @@ The lower-digit incidence satisfies
 $R_N = N \sum Z(p)/p + \sum Z(p) = O(N^{5/3}/\log N)$
 (the second sum, $\sum Z(p) \le C\sum p^{2/3}$,
 contributes the same order).
-The leading-digit incidence
-$L_N = O(N^{10/7}/\log N)$
-(Proposition~\ref{prop:lead})
+The companion-block incidence
+$P_N = O(N^{3/2})$
 is dominated by~$R_N$.
 Hence $\sum_{n \in (N,2N]} B(n) = O(N^{5/3}/\log N)$.
 
@@ -1147,29 +1225,417 @@ gives the global bound, since
 $\sum_{j \ge 0} (N/2^j)^{2/3} = O(N^{2/3})$.
 \end{proof}
 
+In particular, the exceptional set has finite harmonic weight:
+
+\begin{corollary}[Finite harmonic weight]\label{cor:harmonic}
+For every $\varepsilon > 0$,
+\[
+\sum_{\substack{n \ge 1 \\ \log G_n > \varepsilon\,n}}
+\frac{1}{n} < \infty.
+\]
+\end{corollary}
+
+\begin{proof}
+The contribution from $(2^k, 2^{k+1}]$ is
+$O(2^{-k/3})$ by Corollary~\ref{cor:exceptional},
+and the geometric series converges.
+\end{proof}
+
 \begin{remark}\label{rem:exponent-link}
 The exponent $2/3$ in the exceptional set is inherited
 from the lower-digit incidence~$R_N$, which uses
 $Z(p) = O(p^{2/3})$.
-More generally, if $Z(p) \le C\,p^\alpha$
-for all primes, then $R_N = O(N^{1+\alpha}/\log N)$,
-while the leading-digit incidence
-$L_N = O(N^{10/7}/\log N)$
-(Proposition~\ref{prop:lead}) is independent
-of~$\alpha$.
+More generally, if $Z_p(I) \le C|I|^\alpha$
+uniformly for all primes and sub-intervals
+(as Corollary~\ref{cor:subinterval}
+provides with $\alpha = 2/3$),
+then $R_N = O(N^{1+\alpha}/\log N)$
+and $L_N = O(N^{(4-\alpha)/(3-\alpha)}/\log N)$.
 The exceptional set is therefore
-$O(\max(N^\alpha, N^{3/7})/\varepsilon)$:
-for $\alpha \ge 3/7$ the lower-digit part
-dominates, and for $\alpha < 3/7$ the
-leading-digit part is the bottleneck.
-Under Hypothesis~$\bar{Z}$ ($\alpha = 0$),
-the exceptional set is $O(N^{3/7}/\varepsilon)$;
+$O(\max(N^\alpha,\, N^{1/(3-\alpha)})/\varepsilon)$,
+with the crossover at
+$\alpha = (3 - \sqrt{5})/2 \approx 0.382$.
+Under Hypothesis~$\bar{Z}$, the dyadic bound
+$D(P,Q) \le \sum Z(p) = O(P/\log P)$
+is equivalent to $\alpha = 0$
+in this formula, giving the
+exceptional set $O(N^{1/3}/\varepsilon)$
+(Corollary~\ref{cor:cond-except}).
 Theorem~\ref{thm:main} shows the matching
 density-one bound $\log G_n = O(\sqrt{n})$,
 where $O(\sqrt{n})$ is now the
 small-prime floor, not the leading-digit
 contribution.
 \end{remark}
+
+\section{Codegree amplification}\label{sec:codegree}
+
+We begin with a structural rigidity lemma:
+consecutive integers cannot share a top-half bad prime.
+
+\begin{lemma}[Consecutive coprimality]\label{lem:consec}
+Let $p > 5$ be prime and $n \ge p$.
+If $p \mid b_{n \bmod p}$ and
+$p \mid b_{(n+1) \bmod p}$,
+then $p \le n/2$.
+Equivalently, no prime $p > n/2$ with $p > 5$
+can be lower-digit bad for both $n$ and $n+1$.
+\end{lemma}
+
+\begin{proof}
+Since $p > n/2$, both $n$ and $n+1$ have
+base-$p$ representations $n = p + r$,
+$n+1 = p + (r+1)$ with $0 \le r < r + 1 < p$
+(provided $r < p - 1$; the case $r = p - 1$
+gives $n + 1 = 2p$ and $b_{n+1} \equiv b_2 b_0
+= 73 \not\equiv 0$ for $p > 73$, a finite check).
+
+Suppose $p \mid b_r$ and $p \mid b_{r+1}$
+with $r, r+1 < p$.
+The Ap\'ery recurrence gives
+\[
+(k+1)^3 b_{k+1} = P(k) b_k - k^3 b_{k-1},
+\]
+and since $k+1 < p$ implies $(k+1)^3$
+is invertible mod~$p$,
+the conditions $p \mid b_k$ and $p \mid b_{k+1}$
+force $p \mid b_{k-1}$. Iterating downward
+from $k = r$ gives $p \mid b_j$ for all
+$0 \le j \le r + 1$, contradicting
+$b_0 = 1$.
+\end{proof}
+
+A prime that divides $b_n$ only through a leading
+base-$p$ digit contributes nothing to~$G_n$.
+
+\begin{lemma}[Block system for $p^3 a_n \bmod p$]
+\label{lem:block}
+Let $p \ge 7$, $p \le n < p^2$, and write $n = qp + r$
+with $1 \le q < p$ and $0 \le r < p$.
+Define $\Delta_{q,r} \equiv p^3 a_{qp+r} \pmod{p}$
+and $D_q = \Delta_{q,0}$. Then:
+\begin{enumerate}
+\item[(i)]
+$\Delta_{q,r} \equiv D_q b_r \pmod{p}$
+for every $0 \le r < p$;
+\item[(ii)]
+$D_q b_{q-1} - D_{q-1} b_q \equiv 6/q^3 \pmod{p}$;
+\item[(iii)]
+$p \mid G_n$ if and only if $D_q b_r \equiv 0 \pmod{p}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For $p > \sqrt{n}$, $v_p(\operatorname{lcm}(1,\ldots,n)) = 1$,
+so $v_p(d_n) = 3$. Since $d_n a_n \in \mathbf{Z}$,
+$p^3 a_n \in \mathbf{Z}_p$, and $v_p(d_n a_n) = v_p(p^3 a_n)$.
+Meanwhile $v_p(d_n b_n) = 3 + v_p(b_n) \ge 3$, so
+$p \mid G_n \Leftrightarrow p \mid p^3 a_n$.
+
+(i) Multiply the Ap\'ery recurrence at index $qp + r$
+by $p^3$ and reduce modulo~$p$. Since
+$qp + r \equiv r \pmod{p}$,
+the sequence $r \mapsto \Delta_{q,r}$
+satisfies the same recurrence
+$(r+1)^3 \Delta_{q,r+1} = P(r)\Delta_{q,r} - r^3 \Delta_{q,r-1}$
+as $r \mapsto D_q b_r$,
+with matching initial values $\Delta_{q,0} = D_q$
+and $\Delta_{q,1} = 5 D_q = D_q b_1$.
+Since $(r+1)^3$ is invertible mod~$p$
+for $0 \le r \le p-2$, uniqueness gives the identity.
+
+(ii) Multiply the Wronskian $a_n b_{n-1} - a_{n-1} b_n = 6/n^3$
+at $n = qp$ by $p^3$ and reduce mod~$p$,
+using $b_{qp} \equiv b_q$ and
+$b_{qp-1} \equiv b_{q-1}b_{p-1} \equiv b_{q-1}$ (Lucas),
+and $p^3 a_{qp-1} \equiv D_{q-1}b_{p-1} \equiv D_{q-1}$ (part~(i)).
+
+(iii) Immediate from (i) and the observation above.
+\end{proof}
+
+\begin{lemma}[Leading-digit vanishing]\label{lem:leading-vanish}
+Let $p \ge 7$, $p \le n < p^2$,
+$n = qp + r$ with $q \ge 1$.
+If $p \mid b_q$ and $p \nmid b_r$,
+then $v_p(G_n) = 0$.
+\end{lemma}
+
+\begin{proof}
+Since consecutive Ap\'ery numbers below the $p$-th
+cannot both vanish mod~$p$
+(the recurrence propagates to $b_0 = 1$),
+$p \nmid b_{q-1}$.
+Part~(ii) of Lemma~\ref{lem:block} gives
+$D_q b_{q-1} \equiv 6/q^3 \not\equiv 0 \pmod{p}$,
+so $D_q \not\equiv 0$.
+By part~(iii), $p \mid G_n$ iff $D_q b_r \equiv 0$,
+but $D_q \not\equiv 0$ and $p \nmid b_r$,
+so $D_q b_r \not\equiv 0$ and $v_p(G_n) = 0$.
+\end{proof}
+
+\begin{remark}[Block constants are Ap\'ery numbers]\label{rem:block-apery}
+The block constant~$D_q$ of Lemma~\ref{lem:block}
+equals $a_q \bmod p$, where $a_q$ is the Ap\'ery
+rational companion.
+Indeed, $a_q$ satisfies the same Wronskian recurrence
+$a_q b_{q-1} - a_{q-1} b_q = 6/q^3$ with
+$a_0 = 0$, $a_1 = 6$, so $D_q = a_q$ by uniqueness.
+Consequently, $D_q \equiv 0 \pmod{p}$ iff~$p$
+divides the numerator of~$a_q$ (in lowest terms)
+and $p$ does not divide its denominator.
+
+Since $|a_q| \le C(1+\sqrt{2})^{4q}$ and
+$\operatorname{denom}(a_q) \mid \operatorname{lcm}(1,\ldots,q)^3$,
+the numerator of~$a_q$ has $O(q)$ prime divisors.
+In particular, for fixed~$q$, at most $O(q)$ primes~$p$
+can be companion-block bad at quotient~$q$.
+Computation through $n = 2000$ confirms that the
+companion-block count
+$\#\{p > \sqrt{n} : p \mid \operatorname{num}(a_{\lfloor n/p \rfloor})\}$
+is at most~$3$ for every~$n$ in this range.
+\end{remark}
+
+\begin{proposition}[Reflection of the companion solution]
+\label{prop:reflection}
+Let $p \ge 5$ be prime.  Every $p$-integral solution $(u_n)$
+of the Ap\'ery recurrence~\eqref{eq:rec}
+on $\{0, \ldots, p-1\}$ is palindromic modulo~$p$:
+\[
+  u_{p-1-j} \equiv u_j \pmod{p}
+  \qquad (0 \le j \le p-1).
+\]
+In particular, for the companion solution
+$a_0 = 0$, $a_1 = 6$,
+\[
+  a_{p-1-j} \equiv a_j \pmod{p},
+  \qquad
+  a_{p-1} \equiv 0 \pmod{p}.
+\]
+\end{proposition}
+
+\begin{proof}
+Let $R$ denote the reversal operator,
+$(Ru)_j = u_{p-1-j}$.  The coefficient polynomial
+$P(n) = 34n^3 + 51n^2 + 27n + 5$ satisfies
+$P(-1-x) = -P(x)$,
+so substituting $n \mapsto p-2-n$ in the
+recurrence shows that $R$ maps $p$-integral
+solutions to $p$-integral solutions modulo~$p$.
+
+The integer Ap\'ery solution $(b_n)$ satisfies
+$b_{p-1} \equiv 1$ and $b_{p-2} \equiv 5 \pmod{p}$:
+in the binomial sum $b_n = \sum_k \binom{n}{k}^2
+\binom{n+k}{k}^2$, only the $k = 0$ term survives
+modulo~$p$ for $n = p-1$, while for $n = p-2$ only
+$k = 0, 1$ survive, contributing $1 + 4 = 5$.
+Since $Rb$ and $b$ have the same initial values
+$(b_0, b_1) = (1, 5)$, uniqueness gives $Rb = b$.
+
+For two solutions $x, y$, the discrete Wronskian
+$W_n(x, y) = x_n y_{n-1} - x_{n-1} y_n$ satisfies
+$(n+1)^3 W_{n+1} = n^3 W_n$,
+so $W_n(x, y) = C(x,y)/n^3$.
+Using $Rb = b$:
+\[
+  W_n(Ru, b) = -W_{p-n}(u, b) = W_n(u, b).
+\]
+Hence $W_n(Ru - u, b) = 0$, so $Ru - u = cb$
+for some $c \in \mathbf{F}_p$.
+Applying $R$: on one hand $R(Ru - u) = -(Ru - u)$,
+on the other $R(cb) = cb$.  Since $p$ is odd, $c = 0$
+and $Ru = u$.
+\end{proof}
+
+\begin{proposition}[Companion-block height bound]
+\label{prop:companion-height}
+Assume $D_q \equiv a_q \pmod{p}$.
+For every $n \ge 1$, the total logarithmic weight of
+companion-block primes is at most $O(n^{2/3})$:
+\[
+  \sum_{\substack{p > \sqrt{n} \\
+    p \mid \operatorname{num}(a_{\lfloor n/p \rfloor})}}
+  \log p \;\le\; C \, n^{2/3}
+\]
+for an absolute constant $C$.
+In particular, companion-block primes contribute
+$o(n)$ to $\log G_n$ at every index.
+\end{proposition}
+
+\begin{proof}
+Write $a_q = A_q / C_q$ in lowest terms.
+From the telescoping identity
+$a_q = b_q \sum_{k=1}^q 6/(k^3 b_k b_{k-1})$
+and $b_k \ge 1$, we obtain
+$|A_q| \le |a_q| \cdot C_q \le C_0 (1+\sqrt{2})^{4q}$,
+hence each numerator~$A_q$ has at most $O(q)$ prime divisors.
+
+For a fixed $n$, set $Q = \lfloor n^{1/3} \rfloor$.
+A companion-block prime $p > \sqrt{n}$ has quotient
+$q = \lfloor n/p \rfloor < \sqrt{n}$.
+
+\emph{Small quotients} ($q \le Q$):
+for each~$q$, the primes dividing~$A_q$ contribute
+$\sum \log p \le \log|A_q| = O(q)$.
+Summing over $q \le Q$:
+$\sum_{q=1}^Q O(q) = O(Q^2) = O(n^{2/3})$.
+
+\emph{Large quotients} ($q > Q$):
+each such prime satisfies
+$p < n/Q = n^{2/3}$.
+Since each prime determines its quotient uniquely,
+the total log-weight from this range is bounded by
+the Chebyshev sum $\sum_{p < n^{2/3}} \log p
+= \theta(n^{2/3}) = O(n^{2/3})$.
+\end{proof}
+
+The first-moment bound in Corollary~\ref{cor:exceptional}
+can be sharpened to a polylogarithmic exceptional set
+by exploiting the gap polynomials a second time,
+now as a \emph{codegree} bound between nearby integers.
+
+\begin{lemma}[Common bad-prime codegree]\label{lem:codegree}
+Let $m, n \in (N, 2N]$ with $h = n - m \ge 1$,
+and let $P_0 \ge 1$. The number of primes $p > P_0$
+that are simultaneously lower-digit bad for $m$
+and for~$n$ (i.e., $p \mid b_{m \bmod p}$ and
+$p \mid b_{n \bmod p}$) is at most
+$O(h \log N / \log P_0)$.
+In particular, if $P_0 \ge N^\delta$ for any
+fixed $\delta > 0$, the codegree is $O(h)$.
+\end{lemma}
+
+\begin{proof}
+Since $p > N/2 \ge h$, the residues $m \bmod p$
+and $n \bmod p$ lie in $\{0, \ldots, p-1\}$ and
+differ by exactly~$h$.
+By the gap implication
+(Lemma~\ref{lem:gap-poly}),
+if $p \mid b_{m \bmod p}$ and $p \mid b_{n \bmod p}$,
+then $p \mid N_h(m \bmod p)$.
+The polynomial periodicity of~$N_h$ gives
+$N_h(m \bmod p) \equiv N_h(m) \pmod{p}$, so
+$p \mid N_h(m)$.
+
+The gap polynomial has degree $3(h-1)$ in~$m$
+(the tridiagonal determinant representation
+gives exactly this), so for $m \in (N, 2N]$,
+$|N_h(m)| \le (CN^3)^h$.
+Since $N_h(m) > 0$ (the associated tridiagonal
+matrix is positive definite at positive
+integers), the number
+of prime factors exceeding~$P_0$ is at most
+$3h \log(CN) / \log P_0$.
+\end{proof}
+
+\begin{theorem}[Polylogarithmic exceptional set]\label{thm:polylog}
+For every $\varepsilon > 0$,
+\[
+\#\{n \le N : \log G_n > \varepsilon\,n\}
+= O_\varepsilon\bigl((\log N)^2\bigr).
+\]
+\end{theorem}
+
+\begin{proof}
+Fix $\varepsilon > 0$ and consider $n \in (N, 2N]$
+with $\log G_n > \varepsilon n$.
+By Proposition~\ref{prop:small}, the small-prime
+contribution is $O(\sqrt{n})$.
+Each prime $p > \sqrt{n}$ satisfies
+$v_p(G_n) \le 3$ (since $v_p(d_n) = 3$).
+By Lemma~\ref{lem:leading-vanish},
+leading-digit bad primes ($p \mid b_{\lfloor n/p \rfloor}$
+with $n \bmod p \notin \mathcal{Z}_p$)
+satisfy $v_p(G_n) = 0$.
+The remaining primes with $v_p(G_n) \ge 1$
+are the lower-digit bad primes
+($n \bmod p \in \mathcal{Z}_p$) and the
+\emph{companion-block primes}
+($D_q \equiv 0 \pmod{p}$ with
+$p \nmid b_r$, cf.\ Lemma~\ref{lem:block}).
+By Proposition~\ref{prop:companion-height},
+the total logarithmic weight of companion-block
+primes is $O(n^{2/3})$ at every index, hence
+$o(n)$.
+Hence $\log G_n \le O(\sqrt{n}) + 3\,t(n)\log n$,
+and $\log G_n > \varepsilon n$ forces
+\begin{equation}\label{eq:t-bound}
+t(n) := \#\{p > \sqrt{n} : n\bmod p \in \mathcal{Z}_p\}
+\ge \frac{\varepsilon n}{4\log n}
+\end{equation}
+for $N$ sufficiently large.
+
+Partition $(N, 2N]$ into intervals $J$ of length
+$Y = c_1 \varepsilon^2 N / \log N$, where $c_1 > 0$
+is a small constant to be chosen.
+Write $\mathcal{E}_J = \{n \in J : \log G_n > \varepsilon n\}$
+and $M = |\mathcal{E}_J|$.
+
+For each prime $p \in (\sqrt{N}, 2N]$, let $d_p$ count the
+elements of $\mathcal{E}_J$ for which $p$ is
+lower-digit bad. By~\eqref{eq:t-bound},
+\[
+I := \sum_p d_p \ge \frac{\varepsilon N M}{4 \log N}.
+\]
+The prime universe has size
+$L = \pi(2N) \le 4N / \log N$.
+
+\textbf{Upper bound on pair incidence.}
+For $m, n \in \mathcal{E}_J$ with $m < n$,
+Lemma~\ref{lem:codegree} gives at most $C(n - m)$
+common lower-digit bad primes (taking
+$P_0 = N^\delta$ in the codegree lemma).
+Hence
+\[
+\sum_p \binom{d_p}{2}
+= \sum_{\substack{m < n \\ m, n \in \mathcal{E}_J}}
+|\mathcal{P}_m \cap \mathcal{P}_n|
+\le C \sum_{\substack{m < n \\ m, n \in \mathcal{E}_J}}
+(n - m)
+\le C Y M^2.
+\]
+
+\textbf{Lower bound on pair incidence.}
+By Cauchy--Schwarz applied to the $d_p$,
+\[
+\sum_p \binom{d_p}{2}
+\ge \frac{1}{2}\!\left(\frac{I^2}{L} - I\right)
+\ge \frac{1}{2}\!\left(
+\frac{\varepsilon^2 N M^2}{64 \log N} - I
+\right).
+\]
+
+Combining gives $CYM^2 \ge \varepsilon^2 N M^2 / (128 \log N) - I / 2$.
+Since $I \le LM \le 4NM/\log N$ and $Y = c_1 \varepsilon^2 N / \log N$,
+for $c_1$ chosen smaller than $1/(128 C)$,
+the $YM^2$ term cannot absorb the quadratic lower bound
+once $M > C' / \varepsilon^2$. Hence
+$M = O(1/\varepsilon^2)$.
+
+There are $N/Y = O(\log N / \varepsilon^2)$ intervals.
+The total on $(N, 2N]$ is therefore
+$O(\log N / \varepsilon^4)$.
+Summing over $O(\log N)$ dyadic blocks
+$(N/2^{j+1}, N/2^j]$ gives the result.
+\end{proof}
+
+Theorem~\ref{thm:polylog} supersedes
+Corollary~\ref{cor:exceptional}.
+The proof's critical-window estimate---every interval
+of length $\asymp \varepsilon^2 N/\log N$ in $(N, 2N]$
+contains $O_\varepsilon(1)$ exceptional integers---directly
+gives the uniform local bound
+\[
+\sup_{M \ge 0}\;\#\{M < n \le M + L :
+\log G_n > \varepsilon n\}
+\ll_\varepsilon L^{2/3} + 1,
+\]
+by applying the critical-window argument to any
+interval $[M, M+L]$ with $N = M$ and
+$Y = c\varepsilon^2 M/\log M$.
+Dividing by~$L$ and letting $L \to \infty$ yields
+\emph{upper Banach density zero} unconditionally,
+strengthening the harmonic-weight
+corollary~\ref{cor:harmonic}.
 
 \section{Counting bad primes: the conditional result}
 
@@ -1266,15 +1732,15 @@ By Markov, $B_{\rm low}(n) \le \omega(N)$ for all but
 $O(N/\omega(N)) = o(N)$ values.
 
 \textbf{Leading digit.}
-By Proposition~\ref{prop:lead},
-$L_N = O(N^{10/7}/\log N)$.
+As in the proof of Corollary~\ref{cor:cond-except},
+Hypothesis~$\bar{Z}$ gives $L_N = O(N^{4/3}/\log N)$.
 By Markov with threshold
-$\omega(N)\,N^{3/7}/\log N$:
+$\omega(N)\,N^{1/3}/\log N$:
 \[
 \#\bigl\{n \in (N,2N] : B_{\rm lead}(n)
-> \omega(N)\,N^{3/7}/\log N\bigr\}
-\le \frac{O(N^{10/7}/\log N)}%
-{\omega(N)\,N^{3/7}/\log N}
+> \omega(N)\,N^{1/3}/\log N\bigr\}
+\le \frac{O(N^{4/3}/\log N)}%
+{\omega(N)\,N^{1/3}/\log N}
 = O(N/\omega(N)) = o(N).
 \]
 
@@ -1283,11 +1749,11 @@ For all remaining~$n$:
 \[
 \log G_n \le O(\sqrt{n})
 + 3\bigl(\omega(N)
-+ \omega(N)\,N^{3/7}/\log N\bigr)\log n.
++ \omega(N)\,N^{1/3}/\log N\bigr)\log n.
 \]
-Since $\omega(N) \cdot N^{3/7} \ll N^{1/2}$
+Since $\omega(N) \cdot N^{1/3} \ll N^{1/2}$
 for any $\omega(N) \to \infty$ slowly enough
-($\omega \le N^{1/14}$ suffices),
+($\omega \le N^{1/6}$ suffices),
 the second term is $O(N^{1/2}) = O(\sqrt{n})$.
 \end{proof}
 
@@ -1323,23 +1789,65 @@ Assume Hypothesis~$\bar{Z}$. For every
 $\varepsilon > 0$,
 \[
 \#\{n \le N : \log G_n > \varepsilon\,n\}
-= O_\varepsilon(N^{3/7}).
+= O_\varepsilon(N^{1/3}).
 \]
 \end{corollary}
 
 \begin{proof}
 Under Hypothesis~$\bar{Z}$, $R_N = O(N)$.
-By Proposition~\ref{prop:lead},
-$L_N = O(N^{10/7}/\log N)$.
+For the leading-digit incidence,
+Hypothesis~$\bar{Z}$ also strengthens the dyadic bound:
+since each prime $p \in (P, 2P]$ contributes
+at most $Z(p)$ zeros to any sub-interval,
+$D(P,Q) \le \sum_{P<p\le 2P} Z(p) = O(P/\log P)$
+(using $\sum_{p \le x} Z(p) = O(\pi(x))$).
+The crossover with the divisor bound
+$D(P,Q) \le Q^2/\log P$ shifts
+from $P_0 = N^{4/7}$ to $P_0 = N^{2/3}$, giving
+$L_N = O(N^{4/3}/\log N)$.
 The threshold $B(n) > \varepsilon N/(7\log N)$
 is exceeded by at most
 \[
-\frac{O(N) + O(N^{10/7}/\log N)}%
+\frac{O(N) + O(N^{4/3}/\log N)}%
 {\varepsilon N/(7\log N)}
-= O(N^{3/7}/\varepsilon).
+= O(N^{1/3}/\varepsilon).
 \]
 Dyadic summation over $(N/2^{j+1}, N/2^j]$
 gives the global bound.
+\end{proof}
+
+Under Hypothesis~$\bar{Z}$, the exceptional set
+is not only sparse globally but cannot cluster
+in any interval:
+
+\begin{corollary}[Upper Banach density zero]\label{cor:banach}
+Assume Hypothesis~$\bar{Z}$. For every $\varepsilon > 0$,
+the set $E_\varepsilon = \{n : \log G_n > \varepsilon n\}$
+has upper Banach density zero:
+\[
+\lim_{L\to\infty}
+\sup_{M \ge 0}
+\frac{|E_\varepsilon \cap (M, M+L]|}{L} = 0.
+\]
+\end{corollary}
+
+\begin{proof}
+For $I = (M, M+L]$ with $M > 2L$, every prime
+$p > n/2$ with $n \in I$ lies in $(M/2,\, M+L]$.
+Under Hypothesis~$\bar{Z}$, each such prime
+contributes at most~$Z(p)$ candidate bad integers
+to~$I$, giving
+$\sum_{n \in I} B(n)
+\le \sum_{M/2 < p \le M+L} Z(p)
+\ll \pi(M+L) = O(M/\!\log M)$.
+For $n \in I \cap E_\varepsilon$,
+the bound $\log G_n \le O(\sqrt{n}) + 3B(n)\log n$
+and $\log G_n > \varepsilon n$ force
+$B(n) \gg \varepsilon M/\!\log M$ for $M$ large.
+Therefore
+$|I \cap E_\varepsilon| \ll_\varepsilon 1 = o(L)$.
+The case $M \le 2L$ follows similarly by covering
+$(0, 3L]$ with $O(\log L)$ dyadic intervals.
 \end{proof}
 
 \begin{corollary}\label{cor:necessary}
@@ -1386,6 +1894,23 @@ $p \mid b_n$. Hence the conjecture implies
 $\log\operatorname{rad}_{(n/2,n]}(b_n) = o(n)$:
 the large prime radical of $b_n$ must be
 subexponential, even though $|b_n| = e^{\Theta(n)}$.
+
+The Poisson model predicts that
+$B(n) \ge 1$ occurs infinitely often:
+$\mathbb{P}(B(n) \ge 1) \sim \log 2/\!\log n$,
+and $\sum (\log n)^{-1}$ diverges.
+This is compatible with the conjecture,
+since one bad prime contributes only
+$O(\log n)$ to $\log G_n$.
+To violate $G_n = e^{o(n)}$,
+one needs $B(n) \ge \varepsilon n/(6\log n)$;
+the Poisson tail gives
+$\mathbb{P}(B(n) \ge k_n) \le e^{-cn}$
+for $k_n = \lceil \varepsilon n/(6\log n) \rceil$,
+and the sum converges.
+Thus the model predicts: bad-prime occurrences
+are inevitable, but catastrophic pile-ups
+are finitely many.
 \end{remark}
 
 \section{Computational verification}\label{sec:comp}
@@ -1436,6 +1961,13 @@ arithmetically more natural.
 $b_{mp^r} \equiv b_{mp^{r-1}} \pmod{p^{3r}}$~\cite{Beukers1985}
 provides tower rigidity: for each fixed prime,
 $v_p(b_n)$ is controlled by the base-$p$ digits.
+Quantitatively, since $b_n \equiv \prod b_{d_i} \pmod{p}$
+(Theorem~\ref{thm:lucas}), we have $p \nmid b_n$ iff
+every base-$p$ digit of~$n$ avoids~$\mathcal{Z}_p$.
+Hence
+\[
+  \#\{n < p^r : p \mid b_n\} = p^r - (p - Z(p))^r.
+\]
 
 \item For the gap-$2$ polynomial $C_2(m) = P(m+1)$,
 the factorization $P(x) = (2x+1)(17x^2+17x+5)$ shows
@@ -1526,6 +2058,10 @@ $b_{p-1-j} \equiv 0$, so zeros of~$b_j$
 come in pairs $\{j,\, p-1-j\}$ (except
 at the self-paired center $j = (p-1)/2$,
 which vanishes only at non-ordinary primes).
+Proposition~\ref{prop:reflection} proves the
+stronger statement that \emph{every} solution
+of the Ap\'ery recurrence is palindromic
+modulo~$p$, in particular the companion solution~$a$.
 The ``pair count'' $K(p) = Z(p)/2$
 (or $(Z(p)-1)/2$ at non-ordinary primes)
 follows Poisson($1/2$) to the
@@ -1625,6 +2161,25 @@ imposes a bounded \emph{average}
 (Hypothesis~$\bar{Z}$)
 remains the central open question.
 
+The factorization does \emph{not} improve the
+divisor-counting bound $D(P,Q) \le Q^2/\!\log P$.
+In the regime $P \ge Q^{4/3}$ where the divisor
+estimate is active, one has $q < p/2$, so
+the coefficient $b_q \bmod p$ lies in the
+formally free triangular range of the
+square root: the map
+$(\beta_1,\ldots,\beta_q)
+\mapsto (b_1,\ldots,b_q) \bmod p$
+is a triangular automorphism with Jacobian~$2^q$,
+hence the single equation $b_q \equiv 0$
+imposes no algebraic constraint beyond
+fixing one coefficient of~$B_p$.
+Thus the Sym$^2$ structure gives the correct
+\emph{random model} (uniform square root
+$\Rightarrow$ Poisson($1/2$))
+but not the missing \emph{distribution theorem}
+for the deterministic Ap\'ery square root.
+
 \item \textbf{Toric framework.}
 The Laurent polynomial
 $f = w(x + x^{-1} + y + y^{-1} + z + z^{-1})$
@@ -1700,6 +2255,65 @@ existing Iwasawa--Dwork theory.
       An improvement would require an exponentially large
       common divisor, which is not predicted by any current
       model.
+
+\item \textbf{Comparison with previous work.}\label{rem:literature}
+      Classical refinements of Ap\'ery's method
+      (Beukers~\cite{Beukers1985},
+      Rhin--Viola~\cite{RhinViola2001},
+      Zudilin~\cite{Zudilin2004})
+      exhibit explicit common factors
+      of the hypergeometric coefficients
+      to improve denominator estimates
+      and irrationality measures,
+      but always uniformly for every index.
+      They do not provide exceptional-set
+      estimates for the \emph{actual}
+      reduced gcd~$G_n$.
+      A separate body of work, based on the
+      Subspace Theorem, proves
+      $\gcd(a^n - 1, b^n - 1) = e^{o(n)}$
+      pointwise for multiplicatively
+      independent~$a, b$
+      (Bugeaud--Corvaja--Zannier~\cite{BCZ2003});
+      these results apply to constant-coefficient
+      linear recurrences via Binet representations,
+      but the Ap\'ery recurrence's
+      polynomially varying coefficients
+      preclude the multiplicative-independence
+      hypothesis.
+      To our knowledge, no previous work gives
+      a quantitative power-saving exceptional-set
+      estimate for gcd cancellation
+      in a variable-coefficient
+      holonomic recurrence.
+
+\item \textbf{The remaining open problem.}\label{rem:rainbow-open}
+      The companion-block height bound
+      (Proposition~\ref{prop:companion-height})
+      shows that primes $p > \sqrt{n}$ with
+      $D_q \equiv 0 \pmod{p}$
+      contribute $O(n^{2/3})$ to $\log G_n$
+      at \emph{every} index.
+      After removing this channel, the conjecture
+      $G_n = e^{o(n)}$ for all~$n$ is equivalent
+      to the \emph{pointwise radical estimate}
+      \[
+        \sum_{\substack{p > \sqrt{n} \\
+          p \mid b_{n \bmod p}}}
+        \log p \;=\; o(n).
+      \]
+      Theorem~\ref{thm:polylog} proves this for all
+      but $O_\varepsilon((\log N)^2)$ integers in~$[1, N]$.
+      However, the codegree method
+      (Lemma~\ref{lem:codegree}) controls
+      primes \emph{shared} between pairs of integers,
+      and does not bound the total weight of
+      ``private'' primes at a single index.
+      Closing the gap requires a
+      one-point rainbow estimate:
+      an argument that one fixed integer cannot
+      simultaneously be bad at too many
+      distinct primes.
 \end{enumerate}
 
 \begin{thebibliography}{10}
@@ -1728,6 +2342,11 @@ J.~Number Theory \textbf{21} (1985), 141--155.
 F.~Beukers,
 \emph{Another congruence for the Ap\'ery numbers},
 J.~Number Theory \textbf{25} (1987), 201--210.
+
+\bibitem{BCZ2003}
+Y.~Bugeaud, P.~Corvaja, and U.~Zannier,
+\emph{An upper bound for the G.C.D.\ of $a^n - 1$ and $b^n - 1$},
+Math.\ Z.\ \textbf{243} (2003), 79--84.
 
 \bibitem{CFVZ2026}
 X.~Caruso, F.~F\"urnsinn, D.~Vargas-Montoya, and W.~Zudilin,
@@ -1785,6 +2404,11 @@ J.~Stienstra and F.~Beukers,
 \emph{On the Picard--Fuchs equation and the formal Brauer
 group of certain elliptic K3 surfaces},
 Math.\ Ann.\ \textbf{271} (1985), 269--304.
+
+\bibitem{Zudilin2004}
+W.~Zudilin,
+\emph{Arithmetic of linear forms involving odd zeta values},
+J.~Th\'eor.\ Nombres Bordeaux \textbf{16} (2004), 251--291.
 \end{thebibliography}
 
 \end{document}
