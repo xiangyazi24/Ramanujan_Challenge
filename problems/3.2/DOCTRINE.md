@@ -103,16 +103,20 @@ Histogram matches Poisson(log 2/log n) to <0.2% TV distance.
 ## NEW: Quantitative exceptional set (Corollary cor:exceptional)
 #{n ≤ N : log G_n > εn} = O(N^{2/3}/ε). This is a POWER-SAVING bound
 on the exceptional set, directly from Z(p) = O(p^{2/3}).
-The exponent 2/3 is linked: Z(p) = O(p^α) → exceptional set O(max(N^α, N^{1/3})).
+The exponent 2/3 is linked: Z(p) = O(p^α) → exceptional set O(max(N^α, N^{3/7})).
 
-## NEW: Dyadic leading-digit bound (Proposition prop:lead)
-L_N = O(N^{4/3}/log N) — unconditional, improves old O(N^{3/2}).
-Uses D(P,Q) ≤ min(P, Q²)/log P with dyadic decomposition.
+## Dyadic leading-digit bound (Proposition prop:lead) — CORRECTED
+L_N = O(N^{10/7}/log N) — unconditional, improves old O(N^{3/2}).
+Uses D(P,Q) ≤ min(PQ^{2/3}, Q²)/log P with dyadic decomposition.
+**Bug fixed**: prior "prime counting" bound D(P,Q) ≤ π(2P) was unjustified
+(each prime can contribute multiple (p,q) pairs). Replaced with sub-interval
+zero count bound from prop:zp-bound applied to (Q,2Q]: each prime contributes
+O(Q^{2/3}) zeros in the interval. Crossover P₀ = N^{4/7}.
 
-## NEW: Improved conditional theorem (Theorem thm:main)
+## Improved conditional theorem (Theorem thm:main)
 Under Z̄: log G_n = O(√n) for density-1 (was O(ω√n log n)).
 The big-prime contribution is now absorbed into the small-prime
-floor O(√n). Under Z̄, exceptional set #{log G_n > εn} = O(N^{1/3}/ε).
+floor O(√n). Under Z̄, exceptional set #{log G_n > εn} = O(N^{3/7}/ε).
 
 ### Avenue (c) — ANALYZED, no improvement
 CRT injectivity gives: for p, q > √N distinct primes, the joint
@@ -129,11 +133,11 @@ Paper polish. The full conjecture remains open.
 1. Unconditional density-1: G_n = e^{o(n)} (Theorem thm:density1)
 2. Unconditional quantitative: #{log G_n > εn} = O(N^{2/3}/ε)
 3. Conditional O(√n): log G_n = O(√n) under Z̄ (Theorem thm:main)
-4. Conditional exceptional: #{log G_n > εn} = O(N^{1/3}/ε) under Z̄
-5. Dyadic incidence: L_N = O(N^{4/3}/log N) unconditional
+4. Conditional exceptional: #{log G_n > εn} = O(N^{3/7}/ε) under Z̄
+5. Dyadic incidence: L_N = O(N^{10/7}/log N) unconditional
 6. Sym² factorization: theorem (Caruso et al.)
 7. Poisson model: Var/E = 1.003 for n ≤ 200k, B(n) ≤ 3
-8. Leading-digit bottleneck: N^{1/3} (from D(P,Q) = Q²/log P)
+8. Leading-digit bottleneck: N^{3/7} (from D(P,Q) ≤ min(PQ^{2/3}, Q²)/log P)
 
 ## Resources
 - ChatGPT Pro: dm1-dm4 (SOL, 1hr+). Q5293-Q5296 processing.

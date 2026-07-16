@@ -47,10 +47,11 @@ $\sum_{p \le x} Z(p) \ll \pi(x)$
 which the Poisson model supports, we prove
 $\log G_n = O(\sqrt{n})$
 for density~$1$, matching the unconditional
-small-prime floor; the proof uses a dyadic
-divisor-incidence bound that reduces the
+small-prime floor; the proof combines a dyadic
+divisor-incidence bound with a sub-interval
+zero-count argument to reduce the
 leading-digit bottleneck from
-$O(N^{3/2})$ to $O(N^{4/3}/\log N)$.
+$O(N^{3/2})$ to $O(N^{10/7}/\log N)$.
 \end{abstract}
 
 \section{Setup}
@@ -1114,7 +1115,7 @@ $R_N = N \sum Z(p)/p + \sum Z(p) = O(N^{5/3}/\log N)$
 (the second sum, $\sum Z(p) \le C\sum p^{2/3}$,
 contributes the same order).
 The leading-digit incidence
-$L_N = O(N^{4/3}/\log N)$
+$L_N = O(N^{10/7}/\log N)$
 (Proposition~\ref{prop:lead})
 is dominated by~$R_N$.
 Hence $\sum_{n \in (N,2N]} B(n) = O(N^{5/3}/\log N)$.
@@ -1137,16 +1138,16 @@ $Z(p) = O(p^{2/3})$.
 More generally, if $Z(p) \le C\,p^\alpha$
 for all primes, then $R_N = O(N^{1+\alpha}/\log N)$,
 while the leading-digit incidence
-$L_N = O(N^{4/3}/\log N)$
+$L_N = O(N^{10/7}/\log N)$
 (Proposition~\ref{prop:lead}) is independent
 of~$\alpha$.
 The exceptional set is therefore
-$O(\max(N^\alpha, N^{1/3})/\varepsilon)$:
-for $\alpha \ge 1/3$ the lower-digit part
-dominates, and for $\alpha < 1/3$ the
+$O(\max(N^\alpha, N^{3/7})/\varepsilon)$:
+for $\alpha \ge 3/7$ the lower-digit part
+dominates, and for $\alpha < 3/7$ the
 leading-digit part is the bottleneck.
 Under Hypothesis~$\bar{Z}$ ($\alpha = 0$),
-the exceptional set is $O(N^{1/3}/\varepsilon)$;
+the exceptional set is $O(N^{3/7}/\varepsilon)$;
 Theorem~\ref{thm:main} shows the matching
 density-one bound $\log G_n = O(\sqrt{n})$,
 where $O(\sqrt{n})$ is now the
@@ -1157,8 +1158,9 @@ contribution.
 \section{Counting bad primes: the conditional result}
 
 We first sharpen the leading-digit incidence
-from $O(N^{3/2})$ to $O(N^{4/3}/\log N)$ via
-a dyadic divisor-counting argument; this is
+from $O(N^{3/2})$ to $O(N^{10/7}/\log N)$ via
+a dyadic argument combining divisor-counting
+with the sub-interval zero bound; this is
 unconditional and also strengthens the
 conditional theorem below.
 
@@ -1168,7 +1170,7 @@ The leading-digit incidence $L_N$
 $p > \sqrt{n}$ prime, and
 $p \mid b_{\lfloor n/p \rfloor}$) satisfies
 \[
-L_N \;=\; O\!\left(\frac{N^{4/3}}{\log N}\right).
+L_N \;=\; O\!\left(\frac{N^{10/7}}{\log N}\right).
 \]
 \end{proposition}
 
@@ -1181,8 +1183,14 @@ p \mid b_q\}.
 \]
 Two bounds hold unconditionally:
 \begin{itemize}
-\item \emph{Prime counting:}
-$D(P,Q) \le \pi(2P) \le 2P/\log P$.
+\item \emph{Sub-interval zero counting:}
+The proof of Proposition~\ref{prop:zp-bound}
+applies verbatim to any sub-interval~$I \subset [0,p{-}1]$:
+partitioning~$I$ into blocks of length~$H$
+and optimizing gives
+$\#\{j \in I : p \mid b_j\} = O(|I|^{2/3})$.
+Summing over $\pi(2P)$ primes gives
+$D(P,Q) = O(P\,Q^{2/3}/\log P)$.
 \item \emph{Divisor counting:}
 Since $\log b_q \le (q{+}1)\log 64$,
 the number of prime factors of~$b_q$
@@ -1192,26 +1200,27 @@ $q \in (Q, 2Q]$ gives
 $D(P,Q) \le \sum_{q} O(q/\log P)
 = O(Q^2/\log P)$.
 \end{itemize}
-Hence $D(P,Q) \le \min(P,\, Q^2)/\log P$.
+Hence $D(P,Q) \le \min(P\,Q^{2/3},\, Q^2)/\log P$.
 
 Each pair $(p,q)$ in~$D(P,Q)$ contributes to at
 most $p \le 2P$ values of~$n$ with
 $\lfloor n/p \rfloor = q$,
 so the block's contribution to~$L_N$ is at most
 $D(P,Q) \cdot 2P
-\le 2\min(P^2,\, N^2/P)/\log P$.
-The crossover is at $P_0 = N^{2/3}$.
+\le 2\min(P^{4/3}\,N^{2/3},\; N^2/P)/\log P$
+(using $Q = \Theta(N/P)$).
+The crossover is at $P_0 = N^{4/7}$.
 Summing $O(\log N)$ dyadic blocks
 $P \in [\sqrt{N},\, 2N]$:
 \[
 L_N \;\le\;
-\sum_{P \le N^{2/3}} \frac{2P^2}{\log P}
+\sum_{P \le N^{4/7}} \frac{2P^{4/3}\,N^{2/3}}{\log P}
 \;+\;
-\sum_{P > N^{2/3}} \frac{2N^2}{P\log P}
-\;=\; O\!\left(\frac{N^{4/3}}{\log N}\right),
+\sum_{P > N^{4/7}} \frac{2N^2}{P\log P}
+\;=\; O\!\left(\frac{N^{10/7}}{\log N}\right),
 \]
 since both sums are geometric series dominated by
-the $P = N^{2/3}$ boundary term.
+the $P = N^{4/7}$ boundary term.
 \end{proof}
 
 \begin{theorem}\label{thm:main}
@@ -1244,14 +1253,14 @@ $O(N/\omega(N)) = o(N)$ values.
 
 \textbf{Leading digit.}
 By Proposition~\ref{prop:lead},
-$L_N = O(N^{4/3}/\log N)$.
+$L_N = O(N^{10/7}/\log N)$.
 By Markov with threshold
-$\omega(N)\,N^{1/3}/\log N$:
+$\omega(N)\,N^{3/7}/\log N$:
 \[
 \#\bigl\{n \in (N,2N] : B_{\rm lead}(n)
-> \omega(N)\,N^{1/3}/\log N\bigr\}
-\le \frac{O(N^{4/3}/\log N)}%
-{\omega(N)\,N^{1/3}/\log N}
+> \omega(N)\,N^{3/7}/\log N\bigr\}
+\le \frac{O(N^{10/7}/\log N)}%
+{\omega(N)\,N^{3/7}/\log N}
 = O(N/\omega(N)) = o(N).
 \]
 
@@ -1260,11 +1269,11 @@ For all remaining~$n$:
 \[
 \log G_n \le O(\sqrt{n})
 + 3\bigl(\omega(N)
-+ \omega(N)\,N^{1/3}/\log N\bigr)\log n.
++ \omega(N)\,N^{3/7}/\log N\bigr)\log n.
 \]
-Since $\omega(N) \cdot N^{1/3} \ll N^{1/2}$
+Since $\omega(N) \cdot N^{3/7} \ll N^{1/2}$
 for any $\omega(N) \to \infty$ slowly enough
-($\omega \le N^{1/6}$ suffices),
+($\omega \le N^{1/14}$ suffices),
 the second term is $O(N^{1/2}) = O(\sqrt{n})$.
 \end{proof}
 
@@ -1288,8 +1297,8 @@ giving expected $B_{\rm lead} = \sum C/p = O(1)$.
 Making this rigorous
 would require $D(P,Q) \ll Q/\log P$
 (the random-divisibility prediction),
-improving the proven $D(P,Q) \le Q^2/\log P$
-by a factor of~$Q$.
+improving the proven
+$D(P,Q) \le \min(P\,Q^{2/3},\, Q^2)/\log P$.
 The small-prime bound $O(\sqrt{n})$
 itself would need a finer analysis
 of $v_p(G_n)$ for small primes.
@@ -1300,20 +1309,20 @@ Assume Hypothesis~$\bar{Z}$. For every
 $\varepsilon > 0$,
 \[
 \#\{n \le N : \log G_n > \varepsilon\,n\}
-= O_\varepsilon(N^{1/3}).
+= O_\varepsilon(N^{3/7}).
 \]
 \end{corollary}
 
 \begin{proof}
 Under Hypothesis~$\bar{Z}$, $R_N = O(N)$.
 By Proposition~\ref{prop:lead},
-$L_N = O(N^{4/3}/\log N)$.
+$L_N = O(N^{10/7}/\log N)$.
 The threshold $B(n) > \varepsilon N/(7\log N)$
 is exceeded by at most
 \[
-\frac{O(N) + O(N^{4/3}/\log N)}%
+\frac{O(N) + O(N^{10/7}/\log N)}%
 {\varepsilon N/(7\log N)}
-= O(N^{1/3}/\varepsilon).
+= O(N^{3/7}/\varepsilon).
 \]
 Dyadic summation over $(N/2^{j+1}, N/2^j]$
 gives the global bound.
