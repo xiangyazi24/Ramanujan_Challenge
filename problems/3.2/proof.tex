@@ -2033,12 +2033,30 @@ and overconvergent $F$-crystal theory
 do not by themselves bound~$Z(p)$;
 they control the root locus, not the
 Fourier support.
-A bounded-conductor realization of~$H_p$ as an
-$\ell$-adic trace function could connect to
-the Forey--Fres\'an--Kowalski
-framework~\cite{FFK2023}, but
-equidistribution of complex traces does not
-directly control exact zeros modulo~$p$.
+A bounded-complexity geometric lift \emph{does}
+exist: the lisse sheaf
+$\mathcal{V}_\ell = R^2f_*\mathbb{Q}_\ell$
+on the smooth locus of the K3 pencil
+(rank~$22$, conductor independent of~$p$)
+satisfies $\operatorname{Tr}(\operatorname{Frob}_t
+\mid \mathcal{V}_\ell) \equiv A_p(t) \pmod{p}$
+by the Hasse--Witt congruence.
+The Mellin sum $\mathscr{M}_{p,j}
+= \sum_t \tau_p(t)\,\omega_p(t)^{-j}$
+is then realized on
+$R\Gamma_c(U_{\bar{\mathbb{F}}_p},
+\mathcal{V}_\ell \otimes \mathcal{L}_{\omega_p^{-j}})$
+with bounded rank and conductor.
+However, the event $b_j \equiv 0 \pmod{p}$
+is the \emph{same-characteristic} divisibility
+$\mathfrak{p}_p \mid \mathscr{M}_{p,j}$,
+a crystalline condition outside the scope of
+$\ell$-adic equidistribution
+(Forey--Fres\'an--Kowalski~\cite{FFK2023}).
+The missing theorem is a
+\emph{crystalline Mellin anti-concentration}
+estimate controlling $\#\{j : p \mid
+\mathscr{M}_{p,j}\}$.
 
 \item \textbf{Palindromic symmetry.}
 For $0 \le j \le p-1$ and $0 \le k \le p-1-j$,
