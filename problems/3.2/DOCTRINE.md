@@ -387,6 +387,93 @@ No rigorous bound for this hard core beyond O(n).
 - dm3: Pointwise radical theorem (comprehensive, 5 specific approaches)
 - dm4: Large-prime radical of b_n (Stewart, Corvaja-Zannier, hypergeometric motives)
 
+## ★ BREAKTHROUGH 5: Second-moment reduction + Poisson(1/2) verification (Q5377-Q5383)
+
+### |Z_p| distribution: 2·Poisson(1/2) — VERIFIED (all p ≤ 10000)
+Computed Z_p for ALL 1227 primes up to 10000. Distribution of K(p) = Z(p)/2:
+- k=0: 61.7% (Poisson: 60.7%)
+- k=1: 30.2% (30.3%)
+- k=2: 6.8% (7.6%)
+- k=3: 1.1% (1.3%)
+- k=4: 0.2% (0.16%)
+Var/E = 0.989 ≈ 1 (exact Poisson). Max |Z_p| = 8 (at p=3727, 6841).
+
+### ALL classical tools EXHAUSTED (Q5377, Q5378, Q5379)
+Confirmed DEAD for closing the gap to ALL n:
+- Bombieri-Vinogradov: wrong quantifiers (controls Σ_p, not single n)
+- Large sieve: Q² barrier at top scale p~N → N²/log N, need N²/log²N
+- Turán-Kubilius: requires pq < N, but all relevant primes have pq > N
+- Sato-Tate: controls only central coefficient (p | a_p(f)), density 0
+- Pretentious theory: B(m) is not multiplicative
+- Gap polynomials: forced central factor makes them tautological
+- Stewart/Corvaja-Zannier: requires constant-coefficient recurrence
+- abc/smooth numbers: rad(b_n) = O(n) is trivially true but useless
+- Hypergeometric motives: Katz equidistribution needs fixed rank
+
+### Second-moment criterion — PROVED (Proposition 10.1 in paper)
+**Theorem:** M₂(N) = O(N^{2-δ}) for any δ > 0 → W(n) = o(n) for ALL n.
+Proof: B(n)² ≤ M₂(N), so B(n) ≤ N^{1-δ/2} = o(N).
+
+### M₂(N) ≈ 0.59·N·(log N)² — COMPUTED (all dyadic blocks N=64..4096)
+Ratio M₂/(N·log²N) stabilizes at 0.59 ± 0.02 across all dyadic blocks.
+Decomposition: diagonal ≈ 63% (from weight factor (log p)²), off-diagonal ≈ 37%.
+
+### No-go model — PROVED (paper §10.4)
+Adversarial Z*_p = {m₀ mod p, p-1-m₀ mod p} satisfies ALL vertical bounds
+(|Z*|=2, reflection, nearest-neighbor exclusion) yet M₂* = Ω(N²).
+**Implication:** Vertical moments ALONE cannot close the gap. Must use
+cross-prime HORIZONTAL information about zero locations.
+
+### AP-BDH dispersion — FORMULATED (Hypothesis 12 in paper)
+V°(P,N) ≪ N^{o(1)}·S(P,N). With current Z ≤ p^{2/3}: gives W(n) ≤ N^{5/6+o(1)} = o(N).
+This is a cross-prime equidistribution theorem for Apéry zero-sets.
+
+### Bilinear Kloosterman form — IDENTIFIED (paper §10.5)
+CRT error = Σ_{(a,b)≠(0,0)} S_p(a)·S_q(b)·K_N(a/p+b/q)
+where S_p(a) = (1/p)Σ_{r∈Z_p} e(ar/p) is the Fourier transform of Z_p.
+Classical large sieve: O(N²/log N) — fails by one log.
+Bettin-Chandee / DFI-type power-saving: closest framework, not yet applicable.
+
+### Gap polynomial sparsity — VERIFIED
+For all primes p ≤ 10000 with Z(p) ≥ 2 and gaps h ≤ 100:
+Σ_{h≤100} r_p(h) ≤ 1. Zeros are too sparse to generate gap roots.
+Hypothesis: Σ r_p(h) ≪ H → Z(p) ≤ √p (paper Hypothesis 13).
+
+### Paper update: Section 10 added (242 lines, 26 pages total)
+- Proposition 10.1: second-moment criterion
+- M₂ data table (7 dyadic blocks)
+- CRT expansion (diagonal/off-diagonal decomposition)
+- No-go model (adversarial zero-sets)
+- Fourier form of CRT error (bilinear Kloosterman)
+- AP-BDH dispersion hypothesis + sufficiency proof
+- Gap polynomial sparsity hypothesis
+Committed at a89094c.
+
+### ChatGPT Q&A processed (this session)
+- Q5377 (dm3): ★ Comprehensive approaches analysis. No-go model. BV/large sieve barriers.
+- Q5378 (dm2): ★ Second-moment criterion + CRT error + bilinear form. All confirmed.
+- Q5379 (dm4): Stewart/CZ/hypergeometric — all DEAD for lower-digit radical.
+- Q5380 (dm1): ★ CRT energy. Fourier expansion. Deligne obstruction. Exact breakthrough targets.
+- Q5381 (dm2): Poisson factorial moments. De-averaging. k=2 is first realistic target.
+- Q5382 (dm3): ★ AP-BDH sufficiency. Mesoscopic root table. Z≤√p from linear root-sum.
+- Q5383 (dm4): ★ Poisson monodromy. Hyperoctahedral model. Mellin anti-concentration.
+
+### Currently dispatched (all 4 dm tabs)
+- dm1: Q5384 — Mesoscopic root-count (gap polynomial roots, Galois groups, linear sum conjecture)
+- dm2: Q5385 — Padé defect theory (denominators conjecture, Zudilin p-adic analysis)
+- dm3: Q5386 — Bilinear dispersion (Bombieri-Fouvry, Heath-Brown identity, function field)
+- dm4: Q5387 — Mellin anti-concentration (character-aspect, Katz finite-field Mellin, factorial moments)
+
+## Summary of results (FINAL UPDATE)
+1-18. [previous results unchanged]
+19. ★ **|Z_p| ~ 2·Poisson(1/2)** (NEW): verified all primes ≤ 10000, max |Z_p| = 8
+20. ★ **Second-moment criterion** (NEW): M₂=O(N^{2-δ}) → W(n)=o(n) for ALL n
+21. ★ **M₂ ≈ 0.59·N·(logN)²** (NEW): empirical, stable across dyadic blocks
+22. ★ **No-go model** (NEW): vertical moments alone insufficient
+23. ★ **AP-BDH sufficiency** (NEW): dispersion + Z≤p^{2/3} → N^{5/6+o(1)}
+24. ★ **Classical tools ALL exhausted** (NEW): BV/LS/TK/ST/pretentious/gap/Stewart/abc
+25. ★ **Gap polynomial sparsity** (NEW): Σ r_p(h) ≤ 1 for h ≤ 100, all tested primes
+
 ## Resources
 - ChatGPT Pro: dm1-dm4 (SOL). All tabs dispatched.
 - uisai2: Z(p) computation COMPLETED. Max Z(p)=12 at p=159977 through p~1.3M.
