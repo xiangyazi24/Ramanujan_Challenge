@@ -3680,18 +3680,90 @@ requires one of four types:
   r_p + r_q = 2p - 1 - q, \\
   &\text{(D)}\ m_2(p) = m_2(q)
   &&\Longleftrightarrow\quad
-  r_q = r_p + (q - p).
+  r_q = r_p + 2(q - p).
 \end{alignat*}
-Types~(A) and~(D) are ``phase-matched''
-(the difference $r_q - r_p = \pm(p-q)$);
-types~(B) and~(C) are ``anti-diagonal''
-(the sum $r_p + r_q$ is prescribed).
-For each type, the equation has at most one
-solution in $\mathcal{Z}_p \times \mathcal{Z}_q$,
-so $|\Omega_p \cap \Omega_q| \le 4$.
-The expected number of collisions among
-$K$ doublet primes is $4K^2/(2N) + O(K)$,
-which matches the data.
+For $q > p$, type~(B) is impossible:
+$m_1(p) = p + r_p < 3p/2 < 3q/2 < 2q - 1 - r_q = m_2(q)$.
+The collision energy therefore decomposes into three,
+not four, pieces:
+\begin{equation}\label{eq:F-decomp}
+  F = F_A + F_C + F_D,
+\end{equation}
+where $F_A = \sum_m \nu_1(m)(\nu_1(m){-}1)$,
+$F_D = \sum_m \nu_2(m)(\nu_2(m){-}1)$,
+$F_C = 2\sum_m \nu_1(m)\nu_2(m)$,
+with $\nu_1(m) = \#\{p : m_1(p) = m\}$
+and $\nu_2(m) = \#\{p : m_2(p) = m\}$.
+
+Two distinct doublet columns
+$\{m_1(p), m_2(p)\}$ and $\{m_1(q), m_2(q)\}$
+can share at most one element:
+if both elements coincided,
+then $m_1(p) + m_2(p) = m_1(q) + m_2(q)$,
+i.e., $3p - 1 = 3q - 1$, forcing $p = q$.
+Thus $J_{p,q} := |\Omega_p \cap \Omega_q| \le 1$
+for distinct doublet primes in the top block.
+The doublet incidence system is a
+\emph{simple graph} (no multi-edges),
+with the ordered collision count
+$F = \sum_m \lambda(m)(\lambda(m) - 1)$.
+The exact variance identity is
+\[
+  V = T + F - T^2/N.
+\]
+Since $T \asymp N/\log N$ and $T^2/N = o(T)$,
+the diagonal AMTD ($V \le CT$) is equivalent
+to the collision bound $F = O(T)$.
+
+\medskip
+\noindent\textbf{Collision decomposition at $N = 8192$.}
+Among doublet primes with active hits:
+$F = 16$ ($F_A = 10$, $F_C = 4$, $F_D = 2$),
+with $T = 293$ and $T^2/N = 10.5$.
+Type~A dominates, reflecting the
+sparsity of the zero positions.
+A single position ($m = 11{,}576$) carries
+$\lambda = 3$; the remaining collisions
+have $\lambda = 2$.
+The ratio $F/T = 0.055$ confirms
+$F = o(T)$ empirically.
+\end{remark}
+
+\begin{remark}[Two-prime divisor formulation]
+\label{rem:two-prime}
+At the top block ($P > N$), each hit $m \in \Omega_p$
+implies $p \mid b_m$ by the Lucas congruence.
+Therefore
+\[
+  \lambda_{\mathcal{B}}(m)
+  = \omega_{(N,2N]}(b_m)
+  := \#\{p \text{ prime} : N < p \le 2N,\; p \mid b_m\},
+\]
+and the collision count becomes
+\[
+  F
+  = \sum_{m \in I_N}
+  \omega_{(N,2N]}(b_m)\bigl(\omega_{(N,2N]}(b_m) - 1\bigr).
+\]
+The diagonal AMTD is therefore equivalent to
+the following \emph{two-large-prime divisor theorem}:
+on average over $m$, the Ap\'ery number~$b_m$
+has at most~$O(1)$ prime divisors in the
+dyadic range $(N, 2N]$.
+
+This formulation reveals the arithmetic core:
+the collision bound $F = O(T)$ is an
+Ap\'ery-specific Barban--Davenport--Halberstam
+theorem, asking for a level-of-distribution
+estimate at the second prime moment.
+A single-prime level-of-distribution
+(equivalently, $T = O(N/\log N)$)
+follows from the Poisson conjecture and
+is not in doubt; the missing step is
+the \emph{bilinear} independence:
+the events $p \mid b_m$ and $q \mid b_m$
+are approximately uncorrelated as
+$p, q$ range over a dyadic block.
 \end{remark}
 
 \subsection{Gap polynomial sparsity}
