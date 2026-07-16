@@ -4662,6 +4662,123 @@ sequence modulo~$p$ is
 anti-concentrated at the scale predicted
 by the palindromic random model.
 
+\section{Conclusion}
+
+The principal unconditional result is the quantitative
+exceptional-set theorem:
+for every fixed $\varepsilon > 0$,
+\[
+  \#\{n \le X : \log G_n > \varepsilon\, n\}
+  \;\ll_\varepsilon\;
+  (\log X)^2.
+\]
+Consequently $G_n = e^{o(n)}$ on a set of natural
+density one; the exceptional set has upper Banach
+density zero and finite harmonic weight.
+The arithmetic engine is the uniform interval
+estimate $Z(p) \ll p^{2/3}$, proved by the
+gap-polynomial and separated-block method.
+
+The all-$n$ theorem reduces to the block
+second-factorial-moment estimate
+\begin{equation}\label{eq:bfm2-concl}
+  F_N \;\ll\; T_N + \frac{T_N^2}{N},
+\end{equation}
+which asserts that prime columns in the
+top block do not systematically align at
+one integer.
+The profile decomposition of~$F_N$ separates
+this into the deterministic profile energy
+$\|\rho\|^2 \sim c_2\,T^2/N$
+(with $c_2$ given exactly by~\eqref{eq:c2}),
+a deterministic cross-term
+$\langle\rho,\eta\rangle = o(T)$,
+and the residual shot-noise term
+$\|\eta\|^2$.
+The estimate~\eqref{eq:bfm2-concl} is
+equivalent to the shot-noise bound
+$\|\eta\|^2 = O(T)$,
+and computation through $N = 32{,}768$
+gives $\|\eta\|^2/T \approx 1.0$.
+
+This gap is genuine.
+All classical sieves (Selberg, Brun,
+Rosser--Iwaniec, GPY) are circular
+for~\eqref{eq:bfm2-concl}: they expand
+into the same intersection counts
+$A_{pq}(N)$ that the estimate controls,
+and their quadratic-form optimization
+requires the two-prime level of
+distribution as input
+(Remark~\ref{rem:sieve-limitation}).
+On the geometric side, the K3 lisse
+sheaf $R^2f_*\mathbb{Q}_\ell$
+has bounded rank and conductor, but
+the event $p \mid b_j$ is a
+same-characteristic crystalline condition.
+The Jacobi counterexample shows that
+a rank-one sheaf with the same formal
+properties can have $\gg p$ bad tame
+characters.
+The gap-polynomial identities are
+monochromatic: they control two
+incidences of the \emph{same} prime
+and do not constrain the rainbow
+intersections that determine~$\|\eta\|^2$.
+
+Two precise sufficient criteria for
+Hypothesis~$Z$ emerge:
+a bounded-degree tame Hasse polynomial
+(giving $Z(p) \le 2D$),
+or a unique-unit-root theorem for
+all but $O(1)$ tame twists.
+The fiberwise Hasse--Witt invariant
+$A_p(t) = \sum_{n < p} b_n\,t^n$
+is explicitly known from
+Stienstra--Beukers~\cite{SB1985},
+but it controls which \emph{fibers}
+are nonordinary, not which
+\emph{Mellin coefficients} vanish;
+the character-twisted Hasse computation
+is a fundamentally different problem
+on the global twisted cohomology
+$H^1_{\mathrm{rig},c}(U,
+\mathcal{V}_{\mathrm{tr}}
+\otimes \mathcal{K}_{\omega^{-j}})$.
+The raw interpolation $j \mapsto b_j$
+has degree $p - 2$ already for
+$p = 11$ and~$13$, so bounded
+tame Hasse degree is not automatic;
+it would require a nontrivial
+Gauss/Jacobi normalization of the
+first Frobenius block.
+
+Computation through all $78{,}496$ primes
+$p \le 10^6$ gives $Z(p) \le 12$ and
+mean~$\approx 1$;
+the value-collision energy ratio
+$E(p)/p \to 3$ and the profile constant
+$c_2 \to 1.262$ match the palindromic
+null at every tested scale.
+These observations support all
+conjectures but are not used as proofs.
+
+The most direct path forward is an
+explicit Hasse--Witt calculation for the
+rank-three transcendental crystal,
+determining the slope-zero multiplicity
+of the Kummer-twisted
+compactly supported cohomology
+as a function of the character parameter.
+The Galois-group analysis of reductions
+of Ap\'ery-like series by
+Caruso--F\"urnsinn--Vargas-Montoya--Zudilin~\cite{CFVZ2026}
+may provide algebraic input, though
+their results concern the fiber
+parameter and do not directly control
+the character-twisted Mellin structure
+or the two-prime dispersion.
+
 \begin{thebibliography}{10}
 \bibitem{AhlgrenOno2000}
 S.~Ahlgren and K.~Ono,
