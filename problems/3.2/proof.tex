@@ -2974,36 +2974,55 @@ $N$ & $K$ & $\|H\|_{\mathrm{op}}$ & $\lambda_{\max}$ & $\lambda_{\min}$ &
 1024 & 113 & 1.088 & $+1.088$ & $-0.707$ & 0.021 \\
 2048 & 205 & 0.896 & $+0.896$ & $-0.735$ & 0.004 \\
 4096 & 380 & 0.904 & $+0.904$ & $-0.734$ & 0.002 \\
+8192 & 742 & 1.210 & $+1.210$ & $-1.000$ & 0.009 \\
 \hline
 \end{tabular}
 \caption{Spectral data for the normalized covariance matrix~$H$.
 The operator norm~$\|H\|_{\mathrm{op}}$ appears bounded
-(fluctuating near~$1$, not growing with~$N$).
+(fluctuating between $0.8$ and~$1.2$, not growing with~$N$).
 The Rayleigh quotient
 $v^T H v/|v|^2 = E^\circ/D_w$
 for the logarithmic weight vector~$v$ is
-much smaller and decreasing toward zero,
-explaining why $V^\circ \approx S$.}
+much smaller and non-monotone with mean~$\approx 0.01$,
+explaining why $V^\circ \approx S$.
+At $N = 8192$, two eigenvalues equal~$-1$ exactly,
+arising from a three-prime collision cluster
+with $A_p \in \{1,2,3\}$.}
 \label{tab:operator-norm}
 \end{table}
 
 The striking gap between~$\|H\|_{\mathrm{op}} \approx 1$
-and the Rayleigh quotient~$\approx 0.002$ at $N = 4096$
-is explained by \emph{eigenvector localization}:
-at $N = 4096$, the top eigenvector
-($\lambda \approx 0.904$) concentrates on three
-primes ($p = 4523, 7333, 2069$) with very sparse
-columns ($A_p = 1$--$4$). These primes correspond to
-an accidental CRT collision---a single integer~$m$
-marked by all three. The logarithmic weight vector~$v$
-assigns negligible mass to these primes
-(combined contribution $\le 0.5\%$ of~$|v|^2$),
+and the Rayleigh quotient~$\approx 0.01$ is explained by
+\emph{eigenvector localization}.
+At every computed~$N$, the top eigenvector concentrates
+on two or three primes with very sparse columns
+($A_p \le 4$): these are large primes that share a
+common marked integer by CRT coincidence.
+At $N = 8192$ ($\lambda_{\max} = 1.21$), the cluster
+consists of $p = 14851, 7937, 7559$ with
+$A_p = 1, 2, 3$ respectively.
+The logarithmic weight vector~$v_p = (\log p)\sqrt{D_p}$
+assigns negligible mass to these sparse primes
+(combined contribution~$< 0.5\%$ of~$|v|^2$ at every~$N$),
 so it is nearly orthogonal to the localized
 extreme eigenvectors.
 At $N = 4096$, only $3\%$ of~$|v|^2$ lies in
 the top~$5$ eigenvectors; the largest projection
-of~$v$ ($10\%$ of~$|v|^2$) falls on an eigenvalue
-of magnitude~$0.14$, deep in the spectral bulk.
+of~$v$ ($10\%$) falls on an eigenvalue of
+magnitude~$0.14$, deep in the spectral bulk.
+At $N = 8192$, the projection drops to~$0.5\%$.
+
+This localization has a combinatorial origin:
+the extreme eigenvalues of~$H$ arise from
+$k$-fold CRT collisions---integers $m$ marked by
+$k \ge 3$ distinct large primes. The corresponding
+eigenvectors span a $(k{-}1)$-dimensional space
+of eigenvalue~$-1$ and one direction of
+eigenvalue~$k{-}1$.
+The logarithmic weight vector, being smoothly
+spread across all~$K$ active primes, is
+structurally immune to these localized
+collision artifacts.
 
 \subsection{AMTD: the precise remaining conjecture}
 \label{ssec:amtd}
@@ -3065,6 +3084,22 @@ $F_p(a)$---their palindromic phase constraint
 their connection to the $\mathrm{Sym}^2$ K3 Hasse
 polynomial, or the arithmetic of the zero sets
 $\mathcal{Z}_p$ themselves.
+
+\begin{remark}[Partial large-sieve result for small primes]
+\label{rem:partial-ls}
+For dyadic blocks with $P \le \sqrt{N}$,
+the classical additive large sieve gives
+$V^\circ(P,N) \le (N + 4P^2)\sum_{P < p \le 2P}
+w_p^2 Z(p)/p \le 5\,S(P,N)$.
+Thus AMTD holds \emph{unconditionally} for
+primes below~$\sqrt{N}$ with constant~$C = 5$.
+The open case is $P > \sqrt{N}$,
+where the large-sieve factor $1 + 4P^2/N$
+exceeds any fixed constant.
+At the top block $P \sim N$,
+this factor is~$O(N)$, and the generic
+large sieve provides no useful bound.
+\end{remark}
 
 \subsection{Gap polynomial sparsity}
 
