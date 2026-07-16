@@ -2901,6 +2901,171 @@ theorem, or fourth-moment bound is needed:
 the $L^2$-to-$L^\infty$ trivial inequality
 together with $V^\circ = O(S)$ completes the proof.
 
+\subsection{The exact random CRT model}\label{ssec:random-crt-model}
+
+The independent fixed-margin CRT model gives a
+rigorous null prediction for the covariance structure.
+For each active prime~$p$, retain the observed column size~$A_p$
+and choose the incidence set~$\Omega_p$
+uniformly among all $A_p$-subsets of~$I_N$,
+independently across primes.
+Put $D_p = A_p(1 - A_p/N)$ and
+$D_w = \sum_p w_p^2 D_p = S_{\mathrm{diag}}$.
+
+\begin{proposition}[Random CRT second moment]\label{prop:random-crt-moment}
+Under the independent fixed-margin model,
+$\mathbf{E}\,C_{p,q} = 0$ and
+$\operatorname{Var}(C_{p,q}) = D_p D_q/(N-1)$.
+Moreover, $\mathbf{E}(C_{p,q} C_{p,r}) = 0$ for
+all triples of distinct primes.
+Consequently,
+\begin{equation}\label{eq:random-E2}
+  \mathbf{E}\bigl[(E^\circ)^2\bigr]
+  \;=\;
+  \frac{2}{N-1}
+  \Bigl(D_w^2 - \sum_p w_p^4 D_p^2\Bigr).
+\end{equation}
+If no single prime column carries a positive
+proportion of~$D_w$, then
+\begin{equation}\label{eq:random-crt-ratio}
+  \frac{\operatorname{sd}(E^\circ)}{S}
+  \;\sim\; \sqrt{\frac{2}{N}},
+\end{equation}
+matching the empirical ratio
+$|E^\circ|/S$ in Table~\ref{tab:covariance}
+to within the expected fluctuations.
+\end{proposition}
+
+\begin{proof}
+Given~$\Omega_p$, the intersection count~$J_{p,q}$
+is hypergeometric with parameters $(N, A_p, A_q)$,
+giving $\mathbf{E}\,C_{p,q} = 0$
+and $\operatorname{Var}(C_{p,q}) = D_p D_q/(N-1)$.
+For triples, conditioning on~$\Omega_p$ makes
+$C_{p,q}$ and~$C_{p,r}$ conditionally independent
+with zero mean, so $\mathbf{E}(C_{p,q}C_{p,r})=0$.
+Expanding $(E^\circ)^2$ and using orthogonality
+gives~\eqref{eq:random-E2}.
+\end{proof}
+
+\subsection{The operator norm and eigenvector localization}
+\label{ssec:operator-norm}
+
+Define the normalized off-diagonal covariance matrix~$H$
+with entries
+\[
+  H_{p,q} = \frac{C_{p,q}}{\sqrt{D_p D_q}}
+  \quad (p \ne q), \qquad
+  H_{p,p} = 0.
+\]
+Then $V^\circ = S_{\mathrm{diag}} + v^T H v$
+where $v_p = w_p \sqrt{D_p}$ and $|v|^2 = D_w$.
+Consequently, $V^\circ \le (1 + \|H\|_{\mathrm{op}})\,S_{\mathrm{diag}}$.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrr}
+\hline
+$N$ & $K$ & $\|H\|_{\mathrm{op}}$ & $\lambda_{\max}$ & $\lambda_{\min}$ &
+  Rayleigh$(v)$ \\
+\hline
+256  & 39  & 0.824 & $+0.824$ & $-0.706$ & 0.022 \\
+512  & 67  & 0.987 & $+0.987$ & $-0.576$ & 0.031 \\
+1024 & 113 & 1.088 & $+1.088$ & $-0.707$ & 0.021 \\
+2048 & 205 & 0.896 & $+0.896$ & $-0.735$ & 0.004 \\
+4096 & 380 & 0.904 & $+0.904$ & $-0.734$ & 0.002 \\
+\hline
+\end{tabular}
+\caption{Spectral data for the normalized covariance matrix~$H$.
+The operator norm~$\|H\|_{\mathrm{op}}$ appears bounded
+(fluctuating near~$1$, not growing with~$N$).
+The Rayleigh quotient
+$v^T H v/|v|^2 = E^\circ/D_w$
+for the logarithmic weight vector~$v$ is
+much smaller and decreasing toward zero,
+explaining why $V^\circ \approx S$.}
+\label{tab:operator-norm}
+\end{table}
+
+The striking gap between~$\|H\|_{\mathrm{op}} \approx 1$
+and the Rayleigh quotient~$\approx 0.002$ at $N = 4096$
+is explained by \emph{eigenvector localization}:
+at $N = 4096$, the top eigenvector
+($\lambda \approx 0.904$) concentrates on three
+primes ($p = 4523, 7333, 2069$) with very sparse
+columns ($A_p = 1$--$4$). These primes correspond to
+an accidental CRT collision---a single integer~$m$
+marked by all three. The logarithmic weight vector~$v$
+assigns negligible mass to these primes
+(combined contribution $\le 0.5\%$ of~$|v|^2$),
+so it is nearly orthogonal to the localized
+extreme eigenvectors.
+At $N = 4096$, only $3\%$ of~$|v|^2$ lies in
+the top~$5$ eigenvectors; the largest projection
+of~$v$ ($10\%$ of~$|v|^2$) falls on an eigenvalue
+of magnitude~$0.14$, deep in the spectral bulk.
+
+\subsection{AMTD: the precise remaining conjecture}
+\label{ssec:amtd}
+
+The dispersion target (Hypothesis~\ref{hyp:ap-bdh}) is
+\emph{not} a consequence of the Elliott--Halberstam
+conjecture, the generalized Elliott--Halberstam conjecture,
+or Barban--Davenport--Halberstam for fixed sequences.
+Those conjectures concern the discrepancy of a
+\emph{fixed} arithmetic function in residue classes;
+here the tested residue function~$1_{\mathcal{Z}_p}$
+varies with the modulus.
+This is a fundamental structural distinction,
+not a technical gap.
+
+We therefore propose:
+
+\begin{hypothesis}[Ap\'ery Moving-Target Dispersion (AMTD)]
+\label{hyp:amtd}
+There exists an absolute constant~$C$ such that,
+for every dyadic interval $I_N = (N, 2N]$
+and every dyadic prime block $P < p \le 2P$
+with $P > \sqrt{N}$,
+\[
+  V^\circ(P,N)
+  \;\le\; C\, N^{o(1)}\, S(P,N).
+\]
+\end{hypothesis}
+
+The strongest structural sufficient condition is
+a \emph{short-arc Fourier orthogonality} conjecture:
+\begin{equation}\label{eq:short-arc}
+  \int_{\mathbb{R}/\mathbb{Z}}
+  \!\Biggl|\!
+  \sum_{\substack{P < p \le 2P \\ 1 \le a < p \\
+  x < a/p \le x + 1/N}}
+  \!\!\frac{(\log p)\,F_p(a)}{p}
+  \Biggr|^2\!\!dx
+  \;\ll\;
+  \frac{N^{o(1)}}{N}
+  \sum_{P<p\le 2P}\sum_{a=1}^{p-1}
+  \left|\frac{(\log p)\,F_p(a)}{p}\right|^{\!2},
+\end{equation}
+where $F_p(a) = \sum_{r \in \mathcal{Z}_p} e_p(ar)$.
+By Gallagher's lemma, \eqref{eq:short-arc}
+implies AMTD block by block.
+
+The classical additive large sieve gives the
+right-hand side of~\eqref{eq:short-arc} multiplied
+by $(1 + P^2/N)$. For $P > \sqrt{N}$, this factor
+exceeds~$2$ and grows to~$O(N)$ at the top block
+$P \sim N$. The $P^2$ barrier is intrinsic to
+the generic large-sieve proof and cannot be removed
+by average-spacing refinements alone.
+A proof of~\eqref{eq:short-arc} must therefore exploit the
+special structure of the Ap\'ery Fourier coefficients
+$F_p(a)$---their palindromic phase constraint
+($e_p(a/2)\,F_p(a) \in \mathbb{R}$),
+their connection to the $\mathrm{Sym}^2$ K3 Hasse
+polynomial, or the arithmetic of the zero sets
+$\mathcal{Z}_p$ themselves.
+
 \subsection{Gap polynomial sparsity}
 
 For the Ap\'ery recurrence, the gap polynomial
