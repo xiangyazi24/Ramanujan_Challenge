@@ -2059,6 +2059,69 @@ The missing theorem is a
 estimate controlling $\#\{j : p \mid
 \mathscr{M}_{p,j}\}$.
 
+\item \textbf{Jacobi counterexample: bounded complexity is
+  not enough.}
+Fix an integer $d \ge 2$.
+For every prime $p \equiv 1 \pmod{d}$,
+the rank-$1$ Kummer sheaf
+$\mathcal{L}_{\psi}$ on
+$\mathbb{P}^1 \setminus \{0,1,\infty\}$
+attached to $\psi = \omega_p^{-(p-1)/d}$
+(order~$d$)
+has Mellin transforms
+$M_j = J(\omega_p^{-j}, \psi)$.
+The Gross--Koblitz/Stickelberger valuation
+$v_p(g(\omega^{-k})) = k/(p{-}1)$
+and the Jacobi factorization
+$J(\alpha,\beta) = g(\alpha)g(\beta)/g(\alpha\beta)$
+give $v_p(M_j) = 1$ whenever
+$j \ge (p{-}1)(d{-}1)/d$,
+yielding at least $(p{-}1)/d - 1$
+characters with $p \mid M_j$.
+Thus a sheaf of \emph{fixed} rank, conductor,
+and Weil bound $O(\sqrt{p})$ can have
+$\gg p$ bad tame characters.
+This shows that bounded cohomological
+complexity alone cannot control~$Z(p)$;
+any proof of Hypothesis~$Z$ must use
+Ap\'ery-specific arithmetic.
+
+\item \textbf{Sufficient criteria for Hypothesis~$Z$.}
+Two clean algebraic conditions, either of which
+would imply $Z(p) = O(1)$:
+
+\emph{(a) Bounded tame-Hasse polynomial.}
+Suppose there exist an absolute integer $D$
+and, for each sufficiently large~$p$,
+a nonzero Laurent polynomial
+$Q_p \in \mathbb{F}_p[X, X^{-1}]$
+of degree at most~$D$ and units
+$u_{p,j} \in \mathbb{F}_p^\times$ such that
+$\mathscr{M}_{p,j} \equiv u_{p,j}\, Q_p(\omega_p^j)
+\pmod{p}$ for every nontrivial tame character.
+Then $Z(p) \le 2D$, since $Q_p$
+(after clearing negative exponents)
+has at most $2D$ roots.
+
+\emph{(b) Bounded nonordinary twists.}
+Suppose for each~$p$ the set~$E_p$
+of tame characters~$\chi$ for which
+the twisted crystal
+$H^1_{\mathrm{rig},c}(U, \mathcal{V}
+\otimes \mathcal{K}_\chi)$
+fails to have a unique unit-root eigenvalue
+satisfies $|E_p| \le C$.
+Then $Z(p) \le C + O(1)$,
+since a unique unit root forces
+$v_p(\mathscr{M}_{p,j}) = 0$.
+
+Criterion~(a) is the algebraic version of
+Hypothesis~$Z$; criterion~(b) is its
+$p$-adic-slopes formulation.
+The Jacobi counterexample above shows that
+neither criterion holds for general
+bounded-complexity sheaves.
+
 \item \textbf{Palindromic symmetry.}
 For $0 \le j \le p-1$ and $0 \le k \le p-1-j$,
 the identity
