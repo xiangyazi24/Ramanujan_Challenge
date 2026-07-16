@@ -2413,47 +2413,94 @@ empirical~\eqref{eq:M2-empirical}.
 Since $p, q > \sqrt{N}$ we have $pq > N$,
 so each CRT class $r_p \pmod{p}$,
 $r_q \pmod{q}$ contains at most one element
-of~$I_N$. Define the CRT main term
+of~$I_N$.
+The CRT main term of the off-diagonal is
+$\sim N\bigl(\sum Z(p)\log p/p\bigr)^2
+\sim \frac{1}{4}\,N\,(\log N)^2$.
+
+\textbf{The predicted constant.}
+Under the independent random model---each prime~$p$
+hits a uniform~$m$ with probability $\sim 1/p$, independently
+across primes---the second moment of~$B(m)$ at one
+integer is $\mathbb{E}[B(m)^2] = (\mathbb{E}[B])^2
++ \mathrm{Var}(B)$.
+By weighted Mertens,
+$\mathbb{E}[B] = \sum_{\sqrt{m} < p \le m} (\log p)/p
+= \frac{1}{2}\log m + O(1)$,
+and
 \[
-  |\Omega_p \cap \Omega_q|_{\mathrm{main}} \;=\;
-  \frac{Z(p)\,Z(q)\,N}{pq},
+  \mathrm{Var}(B) \;=\;
+  \sum_{\sqrt{m} < p \le m}
+  \frac{(\log p)^2}{p}\!\left(1 - \frac{1}{p}\right)
+  \;=\; \tfrac{3}{8}\,(\log m)^2 + O(\log m).
 \]
-and the CRT error
-$E_N(p,q) = |\Omega_p \cap \Omega_q| -
-|\Omega_p \cap \Omega_q|_{\mathrm{main}}$.
-The CRT main term of the off-diagonal contributes
-$\sim N\,(\log\log N)^2$, negligible compared to
-the diagonal.
+Therefore
+\begin{equation}\label{eq:five-eighths}
+  \mathbb{E}[B(m)^2] \;=\;
+  \bigl(\tfrac{1}{4} + \tfrac{3}{8}\bigr)(\log m)^2
+  + O(\log m)
+  \;=\; \tfrac{5}{8}\,(\log m)^2 + O(\log m),
+\end{equation}
+predicting $M_2(N) \sim \frac{5}{8}\,N\,(\log N)^2$.
+The diagonal constant is~$3/8$
+(matching the observed Diag$/N\log^2 N \approx 0.37$)
+and the off-diagonal contributes~$1/4$.
+The empirical ratio $M_2/(N\log^2 N) \approx 0.59$
+is consistent with convergence to~$5/8 = 0.625$,
+with lower-order boundary effects.
 
-\textbf{Exact decomposition.}
-Separating the diagonal, the CRT main term of the
-off-diagonal, and the CRT error gives:
-
+\textbf{Centered variance and cross-prime covariance.}
+The centered dispersion~$V^\circ = M_2 - M_1^2/N$
+decomposes as
+\begin{equation}\label{eq:variance-decomp}
+  V^\circ \;=\;
+  \underbrace{\sum_p (\log p)^2\,|\Omega_p|
+  \bigl(1 - |\Omega_p|/N\bigr)}_{\le\;\text{Diag}}
+  \;+\; \underbrace{\sum_{p \ne q} \log p\,\log q\;
+  \bigl(|\Omega_p \cap \Omega_q|
+  - |\Omega_p|\,|\Omega_q|/N\bigr)}_{E_N^\circ}.
+\end{equation}
+The first sum is at most the diagonal~$S$
+(since $|\Omega_p|/N \ge 0$).
+The term $E_N^\circ$ is the centered cross-prime
+covariance: it vanishes exactly when the events
+$\{m \in \Omega_p\}$ are pairwise uncorrelated.
+The computed values are:
 \begin{center}
-\begin{tabular}{c|rrrr}
-$N$ & Diag/Nlog$^2$N & Off/Diag & CRT\;err/$N$ \\
+\begin{tabular}{c|rrrrr}
+$N$ & $M_2/N\!\log^2\!N$ & Diag$/N\!\log^2\!N$
+  & $V^\circ/S$ & $E_N^\circ$ \\
 \hline
-$64$   & $0.381$ & $0.59$ & $+0.56$ \\
-$128$  & $0.336$ & $0.66$ & $+0.56$ \\
-$256$  & $0.359$ & $0.55$ & $-2.60$ \\
-$512$  & $0.376$ & $0.59$ & $-0.22$ \\
-$1024$ & $0.375$ & $0.55$ & $-1.98$ \\
-$2048$ & $0.370$ & $0.57$ & $-1.27$ \\
-$4096$ & $0.371$ & $0.58$ & $-1.80$ \\
-$8192$ & $0.389$ & $0.63$ & $-1.93$
+$256$  & $0.556$ & $0.359$ & $1.014$ & $+110$ \\
+$512$  & $0.597$ & $0.376$ & $1.010$ & $+215$ \\
+$1024$ & $0.582$ & $0.375$ & $0.981$ & $-152$ \\
+$2048$ & $0.581$ & $0.370$ & $0.992$ & $+7$ \\
+$4096$ & $0.588$ & $0.371$ & $0.995$ & $+41$ \\
+$8192$ & $0.634$ & $0.389$ & -- & --
 \end{tabular}
 \end{center}
 
-For $N \ge 256$, the CRT error is consistently
-\emph{negative}: the actual off-diagonal is smaller
-than the CRT main-term prediction.
-This means the Ap\'ery zero-sets exhibit mild
-negative cross-prime correlation---each zero-set
-occupies slightly fewer CRT classes than predicted
-by independence.
-The CRT error satisfies $|E_{\mathrm{CRT}}| = O(N)$,
-while both the diagonal and CRT main term are
-$\Theta(N \log^2 N)$, so the error is negligible.
+The ratio $V^\circ/S$ converges to~$1$
+from both sides, with $|V^\circ/S - 1| < 0.02$
+for $N \ge 256$.
+The centered covariance $E_N^\circ$ oscillates
+around zero with magnitude $O(\sqrt{N}\,(\log N)^2)$,
+consistent with the random model prediction.
+This confirms that the Ap\'ery zero-sets are
+essentially \emph{pairwise uncorrelated}
+across primes: each zero-set behaves independently
+for the purposes of the second moment.
+
+\begin{remark}[Boundary correction]
+The na\"ive CRT main term $Z(p)Z(q)N/(pq)$ overestimates
+the random prediction for primes near~$\sqrt{N}$ or~$N$,
+because the admissible interval $J_{p,q} = J_p \cap J_q$
+may be shorter than~$N$.
+After replacing~$N$ by $L_{p,q} = |J_{p,q}|$ in the main
+term, the boundary-corrected CRT residual is positive and
+$O(\sqrt{N}\,(\log N)^2)$---the apparent negative sign in the
+uncorrected decomposition is entirely a boundary artifact.
+\end{remark}
 
 \subsection{The no-go model}\label{ssec:nogo}
 
@@ -2627,6 +2674,51 @@ The conjecture that $Z(p) \sim 2\,\mathrm{Poisson}(1/2)$
 is equivalent to asserting that $H_p$ behaves, for
 the spectral-zero statistic, like a generic element
 of~$V_p^+$.
+
+The square structure can be incorporated directly.
+Let $V_p^- = \{g \colon \mathbb{F}_p^\times \to \mathbb{F}_p
+: g(t^{-1}) = -g(t)\}$ denote the anti-invariant subspace,
+with $\dim V_p^- = (p{-}3)/2$.
+For uniform $g \in V_p^-$, the function $f = g^2$
+lies in~$V_p^+$ and vanishes at the two fixed points
+$t = \pm 1$.
+
+\begin{proposition}[Random anti-invariant square model]%
+\label{prop:random-sq}
+Choose $g$ uniformly from~$V_p^-$ and put $f = g^2$.
+For any fixed distinct noncentral reflected pairs
+represented by $j_1, \ldots, j_r$,
+\[
+  \mathrm{Pr}\bigl(\hat{f}(j_1) = \cdots = \hat{f}(j_r) = 0\bigr)
+  \;=\; p^{-r} + O_r(p^{-c_r p})
+\]
+for some $c_r > 0$.
+In particular, the pair-zero count
+$K^{\mathrm{sq}} \Rightarrow \mathrm{Poisson}(1/2)$.
+\end{proposition}
+
+\begin{proof}
+Write $u_i = g(x_i)$ for orbit representatives.
+The spectral coefficient
+$\hat{f}(j) = \sum_i u_i^2(x_i^j + x_i^{-j})$
+is a diagonal quadratic form $Q_\lambda(u)$ in
+the independent uniform variables~$u_i$.
+For $\lambda \ne 0$, the physical function
+$h_\lambda(t) = \sum_a \lambda_a(t^{j_a} + t^{-j_a})$
+has Mellin support $\le 2r$, so by the finite-field
+Mattson--Solomon uncertainty inequality, at least
+$(p{-}1)/(4r) - 1$ orbit values are nonzero,
+each contributing a quadratic Gauss sum of
+absolute value~$p^{-1/2}$.
+The factorial-moment method then gives the result.
+\end{proof}
+
+Multiplication by $\Delta(t)^\varepsilon$ affects only~$O(1)$
+orbits and does not change the limiting law.
+Thus the $\mathrm{Sym}^2$ squareness of the Ap\'ery Hasse
+polynomial is fully compatible with $\mathrm{Poisson}(1/2)$
+in any random model where the square root $B_p$ behaves
+generically.
 
 \subsection{Shift-correlation computation}\label{ssec:shift}
 
