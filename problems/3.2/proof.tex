@@ -3024,6 +3024,162 @@ spread across all~$K$ active primes, is
 structurally immune to these localized
 collision artifacts.
 
+\subsection{Palm decorrelation and the cancellation mechanism}
+\label{ssec:palm}
+
+The identity~\eqref{eq:variance-decomp} decomposes
+$V^\circ = S_{\mathrm{diag}} + E^\circ$ where the off-diagonal
+$E^\circ = v^T H v$.
+The Rayleigh quotient $R_v = v^T H v / |v|^2 = E^\circ / D_w$
+admits a transparent conditional-expectation interpretation.
+Define the \emph{load excess}
+\begin{equation}\label{eq:palm}
+  \eta_p
+  \;=\;
+  \frac{(Hv)_p}{v_p}
+  \;=\;
+  \frac{
+    \displaystyle
+    \frac{1}{A_p}\!\sum_{m \in \Omega_p}
+    \!\bigl(B_{-p}(m) - \mu_{-p}\bigr)
+  }{w_p\,(1 - A_p/N)},
+\end{equation}
+where $B_{-p}(m) = B(m) - w_p X_p(m)$ is the total
+load excluding prime~$p$, and
+$\mu_{-p} = \mu - w_p A_p / N$.
+The quantity~$\eta_p$ measures the average excess load
+from all \emph{other} primes, conditional on~$m \in \Omega_p$,
+normalized by the centered self-weight.
+Under exact independence, $\eta_p = 0$ for every~$p$.
+The Rayleigh quotient is the weighted average
+\begin{equation}\label{eq:rayleigh-palm}
+  R_v
+  \;=\;
+  \sum_p \frac{v_p^2}{D_w}\,\eta_p.
+\end{equation}
+Thus $V^\circ \approx S$ says: averaged with
+the natural variance weights, conditioning on one
+prime hitting does not bias the load from all other primes.
+This is the arithmetic content of the observed
+approximate orthogonality.
+
+\begin{remark}[Cancellation, not near-null]\label{rem:cancellation}
+The small Rayleigh quotient does \emph{not} mean
+that~$v$ is a near-null vector of~$H$.
+Computation gives $\|Hv\|/|v| \approx 0.31$
+at all tested sizes $N = 512, \ldots, 4096$,
+while $R_v = v^T H v / |v|^2$ decreases from~$0.031$
+to~$0.002$.
+The cancellation indicator
+$\|Hv\|/(|v|\,|R_v|)$ grows from~$12$ to~$154$:
+positive and negative spectral contributions to~$R_v$
+individually exceed~$0.13$ but nearly cancel.
+This is the standard trace-zero mechanism:
+since $\operatorname{tr} H = \sum_j \lambda_j = 0$
+and the projections $|\langle u, e_j\rangle|^2$
+are approximately uniform ($u = v/|v|$ is
+delocalized), the identity
+$R_v = \sum_j \lambda_j
+(|\langle u, e_j\rangle|^2 - 1/K)$
+produces cancellation to order~$K^{-1/2}$.
+The extreme eigenvalues are localized
+(IPR of top eigenvector~$\approx 0.25$,
+effective dimension~$\approx 4$), so their
+projections deviate from~$1/K$ but contribute
+little to the weighted sum.
+\end{remark}
+
+\subsection{Dyadic block compression}
+\label{ssec:block-compression}
+
+Partition the active primes into
+$L = O(\log N)$ dyadic blocks
+$\mathcal{B}_1, \ldots, \mathcal{B}_L$
+according to $\lfloor \log_2 p \rfloor$.
+For each block, define the restricted weight
+$s_j = \|v|_{\mathcal{B}_j}\|$ and the unit share
+$a_j = s_j / |v|$.
+The \emph{compressed covariance matrix}
+$\tilde{H} \in \mathbb{R}^{L \times L}$ is
+\begin{equation}\label{eq:compressed}
+  \tilde{H}_{i,j}
+  \;=\;
+  \frac{(v^{(i)})^T H\, v^{(j)}}{s_i\, s_j},
+\end{equation}
+where $v^{(j)}$ is~$v$ restricted to~$\mathcal{B}_j$.
+Then the Rayleigh quotient factors exactly as
+\begin{equation}\label{eq:compressed-rayleigh}
+  R_v \;=\; a^T \tilde{H}\, a.
+\end{equation}
+This reduces the $K \times K$ problem to an
+$L \times L$ one ($L \le 8$) in the single
+direction of interest.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrrr}
+\hline
+$N$ & $K$ & $L$ & $\|H\|_{\mathrm{op}}$
+  & $\|\tilde{H}\|_{\mathrm{op}}$
+  & $R_v$ & $\|Hv\|/|v|$ \\
+\hline
+512  & 67  & 6 & 0.987 & 0.113 & 0.031 & 0.386 \\
+1024 & 113 & 6 & 1.088 & 0.111 & 0.021 & 0.302 \\
+2048 & 205 & 7 & 0.896 & 0.097 & 0.004 & 0.311 \\
+4096 & 380 & 7 & 0.904 & 0.040 & 0.002 & 0.313 \\
+\hline
+\end{tabular}
+\caption{Full operator norm~$\|H\|_{\mathrm{op}}$
+versus compressed operator norm~$\|\tilde{H}\|_{\mathrm{op}}$.
+The full norm remains bounded near~$1$;
+the compressed norm is much smaller and \emph{decreasing},
+from~$0.113$ at $N = 512$ to~$0.040$ at $N = 4096$.
+The column $\|Hv\|/|v|$ shows that~$v$ is not a
+near-null vector of~$H$;
+the small Rayleigh quotient arises from
+spectral cancellation.}
+\label{tab:compressed}
+\end{table}
+
+The compressed norm~$\|\tilde{H}\|_{\mathrm{op}}$
+controls the Rayleigh quotient via
+$|R_v| \le \|\tilde{H}\|_{\mathrm{op}}$,
+and is both numerically accessible (an $L \times L$
+eigenvalue problem) and analytically tractable
+(each entry is a doubly-weighted average of
+covariances over a dyadic block pair).
+
+The Marchenko--Pastur null model
+for~$K$ independent isotropic columns in~$\mathbb{R}^N$
+predicts $\|H\|_{\mathrm{op}} \approx
+2\sqrt{K/(N{-}1)} + K/(N{-}1)$;
+with $K \sim N / \log N$, this gives
+$2/\sqrt{\log N} + 1/\log N$,
+which matches the observed range~$0.8$--$1.2$
+to within~$20$--$40\%$ (the excess is consistent
+with sparse localized spikes from low-$A_p$ columns).
+For the compressed matrix, the same model predicts
+$\|\tilde{H}\|_{\mathrm{op}} \sim \sqrt{L/N}
+\sim \sqrt{\log N / N} \to 0$,
+consistent with the observed decrease.
+
+\begin{remark}[Row leverage]\label{rem:leverage}
+The maximum \emph{normalized row leverage}
+$\rho(n) = \sum_{p:\, n \in \Omega_p} 1/D_p$
+is bounded near~$1.5$ at all tested sizes,
+dominated by one singleton column ($1/D_p \approx 1$)
+and one or two doublet columns ($1/D_p \approx 0.5$).
+No singleton collisions (two singletons at the same~$m$)
+occur up to~$N = 4096$.
+By the Gram identity $H + I = U^T U$ where
+$U$ is the $N \times K$ normalized incidence matrix,
+$\|H\|_{\mathrm{op}} + 1 \le \max_n \rho(n) \cdot K$
+is a trivial upper bound.
+A tighter bound via $\max_n \rho(n)$ governs
+the localized spectral spikes; if $\rho(n) \le C$
+uniformly, then $\|H\|_{\mathrm{op}} \le C - 1$.
+\end{remark}
+
 \subsection{AMTD: the precise remaining conjecture}
 \label{ssec:amtd}
 
