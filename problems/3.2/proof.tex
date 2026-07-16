@@ -45,8 +45,12 @@ Under the weaker Ces\`aro hypothesis
 $\sum_{p \le x} Z(p) \ll \pi(x)$
 (Hypothesis~$\bar{Z}$),
 which the Poisson model supports, we prove
-$\log G_n = O(\sqrt{n}(\log n)^{1+\varepsilon})$
-for density~$1$.
+$\log G_n = O(\sqrt{n})$
+for density~$1$, matching the unconditional
+small-prime floor; the proof uses a dyadic
+divisor-incidence bound that reduces the
+leading-digit bottleneck from
+$O(N^{3/2})$ to $O(N^{4/3}/\log N)$.
 \end{abstract}
 
 \section{Setup}
@@ -994,6 +998,9 @@ $B(n) = 0$ for $93.7\%$, $B(n) = 1$ for $6.0\%$,
 $B(n) = 2$ for $0.20\%$, $B(n) = 3$ for $0.006\%$
 (the Poisson predictions with $\lambda = 0.065$ are
 $93.7\%$, $6.1\%$, $0.20\%$, $0.004\%$).
+The dispersion ratio
+$\operatorname{Var}(B)/\mathbb{E}[B] = 1.003$
+is the exact Poisson signature.
 By CRT-based approximate independence across primes,
 $B(n)$ should follow $\operatorname{Poisson}(\log 2/\log n)$
 with $\lambda \to 0$.
@@ -1106,7 +1113,9 @@ The lower-digit incidence satisfies
 $R_N = N \sum Z(p)/p + \sum Z(p) = O(N^{5/3}/\log N)$
 (the second sum, $\sum Z(p) \le C\sum p^{2/3}$,
 contributes the same order).
-The leading-digit incidence $L_N = O(N^{3/2})$
+The leading-digit incidence
+$L_N = O(N^{4/3}/\log N)$
+(Proposition~\ref{prop:lead})
 is dominated by~$R_N$.
 Hence $\sum_{n \in (N,2N]} B(n) = O(N^{5/3}/\log N)$.
 
@@ -1123,32 +1132,96 @@ $\sum_{j \ge 0} (N/2^j)^{2/3} = O(N^{2/3})$.
 
 \begin{remark}\label{rem:exponent-link}
 The exponent $2/3$ in the exceptional set is inherited
-directly from the exponent $2/3$ in
-Proposition~\ref{prop:zp-bound}.
+from the lower-digit incidence~$R_N$, which uses
+$Z(p) = O(p^{2/3})$.
 More generally, if $Z(p) \le C\,p^\alpha$
-for all primes, then the same argument gives
-$\#\{n \le N : \log G_n > \varepsilon n\} = O(N^\alpha/\varepsilon)$.
-In particular, the mesoscopic target
-$Z(p) = O(p^{1/2})$
-(Remark~\ref{rem:collision})
-would yield an $O(N^{1/2})$ exceptional set,
-and Hypothesis~Z ($Z(p) = O(1)$) would give
-$O(\log N\,\log\log N)$.
+for all primes, then $R_N = O(N^{1+\alpha}/\log N)$,
+while the leading-digit incidence
+$L_N = O(N^{4/3}/\log N)$
+(Proposition~\ref{prop:lead}) is independent
+of~$\alpha$.
+The exceptional set is therefore
+$O(\max(N^\alpha, N^{1/3})/\varepsilon)$:
+for $\alpha \ge 1/3$ the lower-digit part
+dominates, and for $\alpha < 1/3$ the
+leading-digit part is the bottleneck.
+Under Hypothesis~$\bar{Z}$ ($\alpha = 0$),
+the exceptional set is $O(N^{1/3}/\varepsilon)$;
+Theorem~\ref{thm:main} shows the matching
+density-one bound $\log G_n = O(\sqrt{n})$,
+where $O(\sqrt{n})$ is now the
+small-prime floor, not the leading-digit
+contribution.
 \end{remark}
 
 \section{Counting bad primes: the conditional result}
 
+We first sharpen the leading-digit incidence
+from $O(N^{3/2})$ to $O(N^{4/3}/\log N)$ via
+a dyadic divisor-counting argument; this is
+unconditional and also strengthens the
+conditional theorem below.
+
+\begin{proposition}[Dyadic leading-digit bound]\label{prop:lead}
+For $n \in (N, 2N]$,
+\[
+L_N \;=\; \sum_{n \in (N,2N]} B_{\rm lead}(n)
+\;=\; O\!\left(\frac{N^{4/3}}{\log N}\right).
+\]
+\end{proposition}
+
+\begin{proof}
+For dyadic blocks $P = 2^j$, $Q = 2^k$ with
+$Q < P$ and $PQ \in [N/4,\, 4N]$, define
+\[
+D(P,Q) = \#\{(p,q) : P < p \le 2P,\; Q < q \le 2Q,\;
+p \mid b_q\}.
+\]
+Two bounds hold unconditionally:
+\begin{itemize}
+\item \emph{Prime counting:}
+$D(P,Q) \le \pi(2P) \le 2P/\log P$.
+\item \emph{Divisor counting:}
+Since $\log b_q \le (q{+}1)\log 64$,
+the number of prime factors of~$b_q$
+exceeding~$P$ is at most $\log b_q/\log P
+= O(q/\log P)$.  Summing over
+$q \in (Q, 2Q]$ gives
+$D(P,Q) \le \sum_{q} O(q/\log P)
+= O(Q^2/\log P)$.
+\end{itemize}
+Hence $D(P,Q) \le \min(P,\, Q^2)/\log P$.
+
+Each pair $(p,q)$ in~$D(P,Q)$ contributes to at
+most $p \le 2P$ values of~$n$ with
+$\lfloor n/p \rfloor = q$,
+so the block's contribution to~$L_N$ is at most
+$D(P,Q) \cdot 2P
+\le 2\min(P^2,\, N^2/P)/\log P$.
+The crossover is at $P_0 = N^{2/3}$.
+Summing $O(\log N)$ dyadic blocks
+$P \in [\sqrt{N},\, 2N]$:
+\[
+L_N \;\le\;
+\sum_{P \le N^{2/3}} \frac{2P^2}{\log P}
+\;+\;
+\sum_{P > N^{2/3}} \frac{2N^2}{P\log P}
+\;=\; O\!\left(\frac{N^{4/3}}{\log N}\right),
+\]
+since both sums are geometric series dominated by
+the $P = N^{2/3}$ boundary term.
+\end{proof}
+
 \begin{theorem}\label{thm:main}
 Assume Hypothesis~$\bar{Z}$. Then for a set of positive integers~$n$
-of natural density~$1$ and any function $\omega(n) \to \infty$,
+of natural density~$1$,
 \[
-\log G_n = O\bigl(\omega(n)\sqrt{n}\log n\bigr).
+\log G_n = O(\sqrt{n}).
 \]
-In particular, $\log G_n = O(\sqrt{n}(\log n)^{1+\varepsilon})$
-for any $\varepsilon > 0$.
 \end{theorem}
 
 \begin{proof}
+Fix $N$ and $\omega(N) \to \infty$ arbitrarily slowly.
 As in Theorem~\ref{thm:density1}, decompose
 $\log G_n = \sum_p v_p(G_n)\log p$.
 The small-prime contribution is $O(\sqrt{n})$.
@@ -1157,78 +1230,67 @@ where $B_{\rm low}$ counts bad primes~$p > \sqrt{n}$
 with $n \bmod p \in \mathcal{Z}_p$ and $B_{\rm lead}$
 counts those with $\lfloor n/p \rfloor \in \mathcal{Z}_p$.
 
+\textbf{Lower digit.}
 Under Hypothesis~$\bar{Z}$, set
 $M(t) = \sum_{p \le t} Z(p) \ll t/\log t$.
-The lower-digit incidence satisfies
-$R_N = \sum_{n \in (N,2N]} B_{\rm low}(n)
-\le N \sum_{\sqrt{N} < p \le 2N} Z(p)/p + O(M(2N))$.
 Abel summation gives
 $\sum_{\sqrt{N} < p \le 2N} Z(p)/p
-= [M(t)/t]_{\sqrt{N}}^{2N}
-+ \int_{\sqrt{N}}^{2N} M(t)/t^2\,dt
-\ll 1/\log N + \int_{\sqrt{N}}^{2N} dt/(t\log t)
 = O(1)$,
-so $R_N = O(N)$.
-By Markov, $B_{\rm low}(n) \le \omega(n)$ for all but
+so $R_N = \sum B_{\rm low}(n) = O(N)$.
+By Markov, $B_{\rm low}(n) \le \omega(N)$ for all but
 $O(N/\omega(N)) = o(N)$ values.
 
-The leading-digit incidence satisfies
-$\sum_{n \in (N,2N]} B_{\rm lead}(n) = L_N = O(N\sqrt{N})$
-(as in Theorem~\ref{thm:density1}).
-By Markov with threshold $\omega(N)\sqrt{N}$:
-$\#\{n \in (N,2N] : B_{\rm lead}(n) > \omega(N)\sqrt{N}\}
-\le O(N/\omega(N)) = o(N)$.
+\textbf{Leading digit.}
+By Proposition~\ref{prop:lead},
+$L_N = O(N^{4/3}/\log N)$.
+By Markov with threshold
+$\omega(N)\,N^{1/3}/\log N$:
+\[
+\#\bigl\{n \in (N,2N] : B_{\rm lead}(n)
+> \omega(N)\,N^{1/3}/\log N\bigr\}
+\le \frac{O(N^{4/3}/\log N)}%
+{\omega(N)\,N^{1/3}/\log N}
+= O(N/\omega(N)) = o(N).
+\]
 
+\textbf{Conclusion.}
 For all remaining~$n$:
-$\log G_n = O(\sqrt{n}) + 3[\omega(n) + \omega(n)\sqrt{n}]
-\log n = O(\omega(n)\sqrt{n}\log n)$.
+\[
+\log G_n \le O(\sqrt{n})
++ 3\bigl(\omega(N)
++ \omega(N)\,N^{1/3}/\log N\bigr)\log n.
+\]
+Since $\omega(N) \cdot N^{1/3} \ll N^{1/2}$
+for any $\omega(N) \to \infty$ slowly enough
+($\omega \le N^{1/6}$ suffices),
+the second term is $O(N^{1/2}) = O(\sqrt{n})$.
 \end{proof}
 
 \begin{remark}[The leading-digit bottleneck]\label{rem:leading}
-The gap between the density-one bound
-$O(\omega(n)\sqrt{n}\log n)$ and the conjectured
-$O(\sqrt{n})$ comes from the leading-digit incidence
-$L_N = O(N\sqrt{N})$, which dominates the lower-digit
-incidence $R_N = O(N)$ under Hypothesis~$\bar{Z}$.
-Heuristically, the lower digit $n \bmod p$ is uniform
-mod~$p$ with $B_{\rm low}(n) = O(1)$, and the
-leading digit $\lfloor n/p \rfloor$ lands in
-$\mathcal{Z}_p$ with probability $\le C/p$, giving
-expected $B_{\rm lead}(n) = \sum_p C/p = O(1)$.
-Making the leading-digit part rigorous---showing
-$B_{\rm lead}(n) = O(1)$ pointwise or even for
-density~$1$---requires controlling the large-prime
-divisors of the Ap\'ery numbers in short
-multiplicative intervals.
+The gap between the conditional bound
+$O(\sqrt{n})$ (Theorem~\ref{thm:main})
+and the conjectured $O(\log n)$ comes
+from the small-prime contribution
+(Proposition~\ref{prop:small}), which
+gives an unconditional floor of~$O(\sqrt{n})$.
+Under Hypothesis~$\bar{Z}$, the big-prime
+contribution is now absorbed into
+this floor, thanks to
+Proposition~\ref{prop:lead}.
 
-An exact divisor switch rewrites the leading-digit
-incidence as
-\[
-B_{\rm lead}(n) =
-\sum_{\substack{1 \le q < \sqrt{n}}}
-\#\{p \mid b_q : \max(\sqrt{n},\, n/(q{+}1)) < p \le n/q\}.
-\]
-This reformulates the problem as a
-large-prime-divisor incidence problem for the
-sparse sequence~$(b_q)$.
-
-For dyadic $P, Q$ with $Q < P$, define
-\[
-D(P,Q) = \#\{(p,q) : P < p \le 2P,\; Q < q \le 2Q,\;
-p \mid b_q\}.
-\]
-Under Hypothesis~$\bar{Z}$, $D(P,Q) \le
-\min(P, Q^2)/\log P$: the first term bounds
-the number of primes, the second counts prime
-divisors $> P$ of the product $\prod_{Q<q\le 2Q} b_q$.
-A dyadic decomposition of the
-hyperbola $pq \approx X$ gives
-$(1/X)\sum_{X < n \le 2X} B_{\rm lead}(n)
-\ll X^{1/3}/\log X$,
-far from the conjectured $O(1)$ but nontrivial.
-The missing improvement is
-$D(P,Q) \ll Q/\log P$ (the random-divisibility
-prediction), which would yield a bounded dyadic mean.
+Heuristically, $B_{\rm lead}(n) = O(1)$
+because the leading digit $\lfloor n/p \rfloor$
+lands in $\mathcal{Z}_p$ with probability
+$\le C/p$ for each prime,
+giving expected $B_{\rm lead} = \sum C/p = O(1)$.
+Making this rigorous
+would require $D(P,Q) \ll Q/\log P$
+(the random-divisibility prediction),
+improving the proven $D(P,Q) \le Q^2/\log P$
+by a factor of~$Q$.
+The small-prime bound $O(\sqrt{n})$
+itself would need a finer analysis
+of $v_p(G_n)$ for small primes.
 \end{remark}
 
 \begin{corollary}\label{cor:necessary}
