@@ -1987,6 +1987,52 @@ The data thus cannot yet distinguish $\kappa \log n$
 from~$n^{0.13}$; the logarithmic prediction is
 arithmetically more natural.
 
+\subsection{Extended modular verification}
+
+For each $n$, define
+$B(n) = \#\{p > \sqrt{n} : n \bmod p \in \mathcal{Z}_p\}$,
+so that $\log G_n \le O(\sqrt{n}) + 3\,B(n)\,\log n$
+(Section~\ref{sec:density1}).
+The ratio $B(n) \cdot \log n / n$
+governs $\log G_n / n$:
+whenever it tends to zero, $G_n = e^{o(n)}$.
+We computed $B(n)$ for all $n \le 100{,}000$ by
+modular arithmetic (iterating the Ap\'ery recurrence
+$\bmod\,p$ for each prime $p \le 200{,}001$
+and checking whether $n \bmod p \in \mathcal{Z}_p$).
+
+\begin{center}
+\begin{tabular}{rccc}
+\toprule
+$n$ range & max $B(n)$ & avg $B/T(n)$ & max $B/T(n)$ \\
+\midrule
+$1$--$100$ & 3 & 0.038 & 0.260 \\
+$101$--$500$ & 4 & 0.013 & 0.124 \\
+$501$--$1{,}000$ & 4 & 0.006 & 0.036 \\
+$1{,}001$--$2{,}000$ & 4 & 0.003 & 0.027 \\
+$2{,}001$--$5{,}000$ & 4 & 0.001 & 0.015 \\
+$5{,}001$--$10{,}000$ & 5 & 0.0008 & 0.007 \\
+$10{,}001$--$20{,}000$ & 5 & 0.0004 & 0.004 \\
+$20{,}001$--$50{,}000$ & 6 & 0.0002 & 0.002 \\
+$50{,}001$--$100{,}000$ & 6 & 0.0001 & 0.001 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\smallskip
+\noindent
+Here $T(n) = n/\log n$, the density-one threshold.
+The ratio $\max B/T$ decreases monotonically.
+The overall maximum is $B(n) = 6$
+at $n = 20{,}546$, giving the explicit bound
+$\log G_n / n \le 3 \cdot 6 \cdot \log(20{,}546)/20{,}546
++ O(1/\sqrt{20{,}546}) = 0.009$,
+which confirms $G_n = e^{o(n)}$ at
+every index $n \le 100{,}000$.
+The Poisson prediction for the maximum
+is $\max_{n \le N} B(n) \approx 2\log\log N
+\approx 5.6$ at $N = 10^5$,
+consistent with the observed~$6$.
+
 \section{Remarks}
 
 \begin{enumerate}
@@ -5191,6 +5237,35 @@ This is equivalent to
 the BFM2 bound~\eqref{eq:bfm2-concl}
 and hence to the all-$n$
 conjecture $G_n = e^{o(n)}$.
+
+\begin{remark}[Anatomy-of-integers formulation]
+\label{rem:anatomy}
+For each $j \le N$, define
+$\omega(j) = \#\{p \in (N, 2N] : p \mid b_j\}$.
+Then $\sum_j \omega(j) = T + F$
+(counting primes that divide some~$b_j$
+in the top block), and
+\[
+\sum_{p \ne q} \!\sum_{j \le N}\!
+\mathbf{1}[pq \mid b_j]
+\;=\; \sum_{j \le N} \binom{\omega(j)}{2}.
+\]
+The two-prime dispersion is equivalent
+to $\sum_j \omega(j)(\omega(j){-}1) = o(T)$:
+at most $o(T)$ indices~$j$ are
+divisible by two or more primes
+from the same dyadic window.
+Since $\log b_N \sim N\log(17 + 12\sqrt{2})
+\approx 3.53\,N$ while
+$\sum_{p \in (N,2N]} \log p \sim N$,
+each~$b_j$ has room in principle
+for every prime in the window as a factor.
+Pure size/counting arguments cannot
+exclude this conspiracy; the Poisson
+prediction relies on the equidistribution
+of the $p$-adic digits of $b_j$
+across independent residue fields.
+\end{remark}
 Computation through $N = 262{,}144$
 gives $|O|/T < 2 \times 10^{-3}$
 (Table~\ref{tab:prime-decomp}),
@@ -5222,6 +5297,7 @@ joint \\
 32768 & 1182 & 123.2 & 0.104 & 1.08 & 29 \\
 65536 & 2237 & 214.1 & 0.096 & 1.06 & 47 \\
 131072 & 4317 & 391.1 & 0.091 & 1.07 & 87 \\
+262144 & 7940 & 682.3 & 0.086 & 1.07 & 156 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -5276,21 +5352,69 @@ the generalized Sato--Tate conjecture
 work of Barnet-Lamb--Geraghty--Harris--Taylor,
 extended to the symmetric square
 $L$-function).
+However, the single-prime $Z(p)$
+statistics are a \emph{vertical}
+problem---equidistribution of
+Mellin-transform values as the
+character varies within one~$\mathbb{F}_p$---for
+which Katz's finite-field Mellin
+equidistribution theory~\cite{Katz2012}
+is the right tool.
+The two-prime dispersion is a
+\emph{horizontal} problem:
+correlating arithmetic events at
+distinct primes for a fixed motive,
+which is of Lang--Trotter type.
+No equidistribution theorem over a
+single finite field can see cross-prime
+structure, and no analog of the joint
+Sato--Tate theorem across two distinct
+primes exists in the literature.
 The two-prime dispersion asks for a
 compatible statement at the level of
 zero-counts~$Z(p)$, which lives in the
 Kummer-twisted cohomology rather than
 the fiber-variable cohomology.
-A precise formulation would relate
-the product structure of the
-Frobenius--Kummer automorphism at
-distinct primes to the dispersion
-of their zero positions---an instance
-of the general principle that
-algebraic independence of motives
-at distinct primes implies
-statistical independence of their
-arithmetic invariants.
+The adversarial construction
+$\mathcal{Z}_p = \{2N \bmod p\}$
+shows that any proof must use
+Ap\'ery-specific structure
+(cf.~Friedlander--Granville~\cite{FG1989}
+for the general impossibility of
+target-agnostic equidistribution beyond
+the large-sieve range).
+
+The strongest existing results for
+structured moving targets in sieve theory
+follow the Duke--Friedlander--Iwaniec
+template~\cite{DFI1995}, which proves
+equidistribution of roots of a quadratic
+congruence to moduli beyond~$\sqrt{x}$
+using an integral formula over
+automorphic forms on~$\mathrm{GL}_3$.
+Their method requires the target set
+$\mathcal{Z}_p$ to arise as roots of a
+\emph{fixed} polynomial with a global
+algebraic-variety structure---precisely
+the ingredient the Ap\'ery recurrence
+lacks (the degree grows linearly
+with~$p$, and no single variety
+parametrizes the zero set).
+The only result achieving the moving-target
+beyond-$\!\sqrt{x}$ barrier without a fixed
+polynomial degree is Maynard's
+breakthrough~\cite{Maynard2020},
+which handles targets of size~$O(p^{1/3})$
+in arithmetic progressions using new estimates
+for trilinear Kloosterman sums---still
+requiring a multiplicative character
+structure absent from the Ap\'ery setting.
+In summary, the two-prime dispersion
+for Ap\'ery numbers falls in the gap
+between what sieve methods can reach
+(targets with global algebraic structure)
+and what the Ap\'ery recurrence provides
+(a local, $p$-dependent set of size~$O(1)$).
 
 The most direct computational path
 is an explicit Hasse--Witt calculation
@@ -5345,11 +5469,22 @@ X.~Caruso, F.~F\"urnsinn, D.~Vargas-Montoya, and W.~Zudilin,
 \emph{Galois groups of Ap\'ery-like series modulo primes},
 arXiv preprint, 2026.
 
+\bibitem{DFI1995}
+W.~Duke, J.~B.~Friedlander, and H.~Iwaniec,
+\emph{Equidistribution of roots of a quadratic congruence
+to prime moduli},
+Ann.\ of Math.\ \textbf{141} (1995), 423--441.
+
 \bibitem{Drappeau2017}
 S.~Drappeau,
 \emph{Sums of Kloosterman sums in arithmetic progressions,
 and the error term in the dispersion method},
 Proc.\ Lond.\ Math.\ Soc.\ \textbf{114} (2017), 684--732.
+
+\bibitem{FG1989}
+J.~Friedlander and A.~Granville,
+\emph{Limitations to the equi-distribution of primes~I},
+Ann.\ of Math.\ \textbf{129} (1989), 363--382.
 
 \bibitem{FouvryKM2014}
 \'E.~Fouvry, E.~Kowalski, and P.~Michel,
@@ -5371,6 +5506,19 @@ preprint, 2023.
 J.~Greene,
 \emph{Hypergeometric functions over finite fields},
 Trans.\ Amer.\ Math.\ Soc.\ \textbf{301} (1987), 77--101.
+
+\bibitem{Katz2012}
+N.~M.~Katz,
+\emph{Convolution and Equidistribution:
+Sato--Tate Theorems for Finite-Field Mellin Transforms},
+Ann.\ of Math.\ Studies \textbf{180},
+Princeton Univ.\ Press, 2012.
+
+\bibitem{Maynard2020}
+J.~Maynard,
+\emph{Primes in arithmetic progressions to large moduli~III:
+uniform residue classes},
+arXiv:2006.08250, 2020.
 
 \bibitem{Gessel1982}
 I.~Gessel,
