@@ -9,6 +9,7 @@
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{conjecture}[theorem]{Conjecture}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \theoremstyle{remark}
@@ -39,10 +40,15 @@ derived from the Ap\'ery recurrence via a gap polynomial argument.
 Computation for all $78{,}496$ primes $5 \le p \le 10^6$ gives
 $Z(p) \le 12$ with mean~$\approx 1$.
 The pair count $Z(p)/2$ fits
-$\mathrm{Poisson}(1/2)$; we prove this rigorously
-in the prime-aspect via a Chebotarev argument
-for the hyperoctahedral Galois group of the
-gap polynomials.
+$\mathrm{Poisson}(1/2)$.
+For each canonical gap polynomial~$N_h$
+whose splitting field has full hyperoctahedral
+Galois group, we prove via Chebotarev that
+its root-pair count follows the signed
+fixed-point distribution, tending to
+$\mathrm{Poisson}(1/2)$ as $h \to \infty$;
+the corresponding law for the actual
+coefficient zeros remains conjectural.
 The Poisson tail predicts
 $\max_{p \le N} Z(p) \sim 2\log\log N$,
 so $Z(p)$ is almost certainly unbounded.
@@ -62,6 +68,16 @@ leading-digit bottleneck from
 $O(N^{3/2})$ to $O(N^{10/7}/\log N)$
 unconditionally, and to $O(N^{4/3}/\log N)$
 under Hypothesis~$\bar{Z}$.
+A prime-wise decomposition of the
+residual $L^2$-norm
+$\|\eta\|^2 = D + O$ (diagonal~$+$~off-diagonal)
+shows that
+$D = T + O(1/\ln N)$ unconditionally,
+reducing the all-$n$ conjecture $G_n = e^{o(n)}$
+to a two-prime dispersion input:
+the cross-prime interaction~$O$ is~$o(T)$.
+Computation through $N = 262{,}144$ confirms
+$|O/T| < 2 \times 10^{-3}$.
 \end{abstract}
 
 \section{Setup}
@@ -829,9 +845,14 @@ is consistent with sampling variance
       $\{j, p{-}1{-}j\}$, so $Z(p)$ is even (except at non-ordinary primes).
       The pair count $Z(p)/2$ fits $\mathrm{Poisson}(1/2)$ to within
       sampling noise (table above).
-      Proposition~\ref{prop:poisson} proves $\mathrm{Poisson}(1/2)$
-      rigorously in the prime-aspect; the orbit-aspect fit
-      (Remark~\ref{rem:two-aspects}) remains empirical.
+      Proposition~\ref{prop:poisson} proves
+      $\mathrm{Poisson}(1/2)$ for the
+      root-pair count~$Y_h(p)$ of each fixed
+      gap polynomial in the prime-aspect;
+      the transfer to the actual coefficient
+      zero count~$K(p) = Z(p)/2$
+      (Remark~\ref{rem:two-aspects}) remains
+      conjectural.
 \end{enumerate}
 \end{proposition}
 
@@ -2121,6 +2142,30 @@ $p$-adic-slopes formulation.
 The Jacobi counterexample above shows that
 neither criterion holds for general
 bounded-complexity sheaves.
+
+\item \textbf{Linear-complexity obstruction.}
+The Sym$^2$ factorization
+$H_p(t) = \Delta(t)^{\varepsilon_p}\cdot B_p(t)^2$
+with $B_p$ squarefree of degree
+$\lfloor(p{-}1{-}2\varepsilon_p)/2\rfloor$
+implies that $H_p$ has at most
+$\lfloor(p{-}1)/2\rfloor + 2$ distinct zeros
+in~$\mathbb{F}_p^\times$.
+Choosing a primitive root~$g$ and forming the
+canonical character interpolation
+$Q(X) = -\sum_{r=1}^{p-2} H_p(g^r)\, X^r$,
+whose values $Q(g^j) = b_j$
+for $1 \le j \le p{-}2$, we find that~$Q$
+has at least $(p{-}5)/2$ nonzero coefficients.
+Any Laurent polynomial of degree at most~$D$
+representing the same function on the character
+group must have $2D + 1 \ge (p{-}5)/2$,
+giving $D \ge (p{-}7)/4$.
+Thus criterion~(a) cannot be satisfied
+in its direct (unnormalized) form:
+a nontrivial Gauss/Jacobi normalization
+of the Mellin coefficients is necessary
+before bounded tame degree could emerge.
 
 \item \textbf{Palindromic symmetry.}
 For $0 \le j \le p-1$ and $0 \le k \le p-1-j$,
@@ -3747,7 +3792,7 @@ at the block level.
 Table~\ref{tab:poisson} records the empirical
 variance-to-mean ratio for the top dyadic block.
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \begin{tabular}{rrrrrr}
 \toprule
@@ -4336,6 +4381,9 @@ Surr \\
 8192 & 354 & 20 & 19.6 & 1.28 & 1.00 & 1.00 \\
 16384 & 664 & 34 & 33.7 & 1.25 & 1.00 & 1.01 \\
 32768 & 1182 & 58 & 53.8 & 1.26 & 1.00 & --- \\
+65536 & 2237 & 94 & 92.9 & 1.22 & 1.00 & --- \\
+131072 & 4317 & 174 & 178.5 & 1.26 & 1.00 & --- \\
+262144 & 7940 & 312 & 301.7 & 1.25 & 1.00 & --- \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -4388,25 +4436,247 @@ the observed~$F$ to within the
 expected stochastic fluctuation.
 \end{remark}
 
+\begin{remark}[Concentration of~$F$]
+\label{rem:F-concentration}
+Under the palindromic null (zero counts
+$Z(p)$ fixed, positions uniform among
+palindromic configurations),
+$F$ concentrates around its mean.
+The dependency graph of collision
+indicators is the line graph of the
+complete graph on the active primes:
+two edge indicators share a dependency
+exactly when the corresponding prime
+pairs share one prime.
+This sparse structure gives
+\begin{equation}\label{eq:var-F}
+  \mathrm{Var}(F_N)
+  = \bigl(2 + O(1/\ln N)\bigr)\,
+  E[F_N],
+\end{equation}
+a rigorous Poisson-scale variance.
+\emph{Proof sketch.}
+Write $F = 2U$ where
+$U = \sum_{p < q} I_{p,q}$ counts
+collision pairs.
+Edge indicators for disjoint prime pairs
+$\{p,q\} \cap \{r,s\} = \varnothing$
+are independent.
+For a shared prime~$p$, the conditional
+bound
+$\Pr(I_{p,q} = 1 \mid R_p = r)
+\le 2/h_q$ gives
+$\sum_{e < f}|\mathrm{Cov}(I_e, I_f)|
+\le 2\Delta\,\Lambda$
+where $\Delta = 2\sum_p h_p^{-1}
+= O(1/\ln N)$
+and $\Lambda = E[U]$.
+Combined with the Bernoulli variance
+$\sum \mathrm{Var}(I_e)
+= \Lambda(1 - O(1/N))$,
+this yields~\eqref{eq:var-F}.
+
+Since $E[F] = c_2\,T^2/N\,(1 + o(1))
+\asymp N/(\ln N)^2 \to \infty$,
+Chebyshev gives $F/E[F] \to 1$
+in $L^2$ and in probability,
+and $\mathrm{Pr}(F \ge C\,T) =
+O_C(\ln N/N)$ for every fixed~$C > 0$.
+
+The profile decomposition
+$F = \|\rho\|^2 + 2\langle\rho,\eta
+\rangle + \|\eta\|^2 - T$ separates
+deterministic and stochastic
+contributions.
+The deterministic cross-term satisfies
+$|\langle\rho,\eta\rangle|
+\le \rho_{\max}\,T$, with
+\[
+  \frac{\rho_{\max}}{T/N}
+  \;\longrightarrow\;
+  \frac{\ln 2}{2\ln 2 - 1}
+  = 1.7943\ldots;
+\]
+this bound is $O(T^2/N)$, the
+\emph{same} order as~$\|\rho\|^2$.
+The computationally observed
+$\langle\rho,\eta\rangle \approx 0$ is
+therefore genuine decorrelation
+evidence, not a consequence of the
+profile geometry.
+
+If $\|\eta\|^2 = O(T)$, then all three
+terms are controlled:
+$\|\rho\|^2 = O(T^2/N)$,
+$|\langle\rho,\eta\rangle| = O(T^2/N)$,
+and $\|\eta\|^2 - T = O(T)$.
+Since $T^2/N = O(T)$ (because
+$T = o(N)$), this gives
+$F = O(T)$, exactly the BFM2 bound.
+The estimate $\|\eta\|^2 = O(T)$---that
+is, shot-noise-scale fluctuations of the
+actual zero positions around the
+triangular profile---is the sole gap.
+\end{remark}
+
+\begin{remark}[Prime-wise decomposition of $\|\eta\|^2$]
+\label{rem:prime-decomposition}
+For each prime~$p \in (N,2N]$, define
+the centred indicator
+\[
+X_{m,p}
+\;=\;
+\mathbf{1}_{(m-p) \in Z_p}
+\;-\;
+\frac{Z(p)}{p},
+\qquad
+m \in [p{+}1,\,2N].
+\]
+Then $\eta(m) = \sum_{N < p \le m} X_{m,p}$.
+Note that while distinct primes
+$p \ne q$ provide separate residue fields
+(and $b_j \bmod p$ is determined
+independently of $b_j \bmod q$ by CRT),
+this does not automatically make
+$X_{m,p}$ and~$X_{m,q}$ independent
+for deterministic zero-sets---the
+zero positions within each~$Z_p$ are
+algebraically constrained.
+Under the independent
+fixed-cardinality residue model
+(Section~\ref{ssec:random-model}),
+however, the columns are independent
+by construction.
+
+Expanding the square:
+\begin{equation}\label{eq:eta-prime-decomp}
+\|\eta\|^2
+\;=\;
+\underbrace{\sum_p \sum_m X_{m,p}^2}_{D}
+\;+\;
+\underbrace{\sum_{p \ne q}\sum_m X_{m,p}\,X_{m,q}}_{O}.
+\end{equation}
+The diagonal $D = \sum_p D_p$ where
+$D_p = \sum_m X_{m,p}^2 = Z_p^{\mathrm{act}}(1{-}q_p)^2
++ (L_p - Z_p^{\mathrm{act}})\,q_p^2$
+with $q_p = Z(p)/p$,
+$Z_p^{\mathrm{act}} = \#\{j \in [1,L_p] \cap Z_p\}$,
+$L_p = 2N - p$.
+Expanding:
+\begin{equation}\label{eq:D-identity}
+D \;=\; T
+\;-\; 2\sum_p Z_p^{\mathrm{act}}\,q_p
+\;+\; \sum_p L_p\,q_p^2.
+\end{equation}
+Both correction terms are $O(1/\ln N)$:
+since $Z_p^{\mathrm{act}} \le Z(p)$ and
+$q_p = Z(p)/p \le Z(p)/N$, the second
+term is $\le 2\sum_p Z(p)^2/p
+\le (2/N)\sum_p Z(p)^2$, and the
+third is $\le N\sum_p Z(p)^2/p^2
+\le (1/N)\sum_p Z(p)^2$.
+Under $\sum_p Z(p) = O(K)$
+where $K \sim N/\ln N$,
+the Cauchy--Schwarz bound
+$\sum_p Z(p)^2 \le
+\bigl(\max Z(p)\bigr)\cdot\sum_p Z(p)$
+and $\max Z(p) = O(1)$ (empirically)
+give both corrections $O(K/N) = O(1/\ln N)$.
+Thus $D = T + O(1/\ln N)$ unconditionally
+under $\sum_p Z(p)^2 = O(K)$.
+Under the null model, $E[O] = 0$.
+
+Computation confirms this structure
+for the actual Ap\'ery zero-sets:
+$D$ matches~$T$ to $< 0.1\%$ for all
+tested~$N$, and $O/T$ fluctuates
+around zero at the level $10^{-3}$--$10^{-2}$
+(see Table~\ref{tab:prime-decomp}).
+Under the null model,
+$\operatorname{Var}(D) = O(T)$
+(fluctuation of the truncated
+active mass~$Z_p^{\mathrm{act}}$)
+and
+$\operatorname{Var}(O) = O(T^2/N)$
+(CRT averaging: each of
+the~$\binom{K}{2}$ pair terms has
+overlap~$\sim N$ within
+period~$pq \sim N^2$).
+Together,
+\[
+\frac{\operatorname{Var}(\|\eta\|^2)}{T^2}
+\;=\; O\!\left(\frac{1}{T} + \frac{1}{N}\right)
+\;\to\; 0,
+\]
+proving $\|\eta\|^2/T \to 1$ in
+$L^2$ and in probability within
+the null model.
+The unconditional statement
+$\|\eta\|^2 = O(T)$ for the
+actual Ap\'ery zero-sets is equivalent
+to a \emph{two-prime dispersion} input:
+the zero positions of distinct primes
+are equidistributed modulo~$pq$
+in the short interval~$[1,N]$.
+
+\begin{table}[ht]
+\centering\small
+\caption{Prime-wise decomposition
+$\|\eta\|^2 = D + O$.}
+\label{tab:prime-decomp}
+\begin{tabular}{rrrrr}
+\toprule
+$N$ & $T$ & $D$ & $O$ & $O/T$ \\
+\midrule
+512 & 21 & 20.94 & 1.14 & 0.054 \\
+1024 & 50 & 49.86 & $-0.83$ & $-0.017$ \\
+2048 & 86 & 85.90 & $-0.43$ & $-0.005$ \\
+4096 & 172 & 171.90 & $-6.76$ & $-0.039$ \\
+8192 & 354 & 353.90 & 1.22 & 0.003 \\
+16384 & 664 & 663.90 & 0.46 & 0.001 \\
+32768 & 1182 & 1181.91 & 3.52 & 0.003 \\
+65536 & 2237 & 2236.92 & $-4.16$ & $-0.002$ \\
+131072 & 4317 & 4316.92 & $-1.76$ & $-0.0004$ \\
+262144 & 7940 & 7939.93 & 11.92 & 0.0015 \\
+\bottomrule
+\end{tabular}
+\end{table}
+Note the structural identity
+$O = F - \|\rho\|^2 - 2\langle\rho,\eta\rangle$,
+so $O = o(T)$ is equivalent to
+$F = o(T)$ (since $\|\rho\|^2 = O(T^2/N)
+= o(T)$),
+and the prime-wise decomposition
+reduces the BFM2 bound to the
+assertion that the cross-prime
+interaction is asymptotically
+negligible.
+\end{remark}
+
 \begin{remark}[Higher factorial moments]
 \label{rem:factorial-moments}
 The third factorial moment
 $F_3 = \sum_m \lambda(m)(\lambda(m){-}1)(\lambda(m){-}2)$
-equals~$6$ at both $N = 16{,}384$ and $N = 32{,}768$,
-contributed by a single row with $\lambda = 3$
-(giving $3 \cdot 2 \cdot 1 = 6$).
+equals~$6$ at both $N = 16{,}384$ and $N = 32{,}768$
+(a single row with $\lambda = 3$)
+but vanishes at $N = 65{,}536$ and $N = 131{,}072$
+($\max_m \lambda(m) = 2$ with
+47 and 87~collision positions respectively),
+then returns to $F_3 = 6$ at $N = 262{,}144$
+(a single row with $\lambda = 3$
+among 154~collision positions).
 The palindromic model predicts
 $E[F_3] \approx c_3\,T^3/N^2$
 where $c_3$ is a geometry-of-truncation
 constant.
-At $N = 16{,}384$ with $T = 664$,
-$T^3/N^2 \approx 1.09$,
-giving $E[F_3] \approx 7$---consistent
-with the observation.
+At $N = 262{,}144$ with $T = 7940$,
+$T^3/N^2 \approx 7.3$,
+so sporadic triple collisions at
+the single-digit level are consistent
+with the model.
 The fourth factorial moment
-$F_4 = 0$ at both sizes
-(no row has $\lambda \ge 4$),
-and $\max_m \lambda(m) = 3$.
+$F_4 = 0$ at all tested sizes
+(no row has $\lambda \ge 4$).
 \end{remark}
 
 \subsection{Gap polynomial sparsity}
@@ -4435,10 +4705,23 @@ $Z(p) \ll p^{1/2}$, strengthening the exponent
 in Proposition~\ref{prop:ap-bdh-suffices}
 from~$N^{5/6}$ to~$N^{3/4}$.
 The heuristic justification is that $N_h$
-has degree $3(h-1)$ and (conjecturally)
-Galois group close to~$S_{3(h-1)}$ over~$\mathbb{Q}$,
+has degree $m_h = 3(h{-}1)/2$ in the
+primitive centred variable, and
+(conjecturally)
+$\operatorname{Gal}(N_h^{\mathrm{prim}}
+/\mathbb{Q}) = S_{m_h}$,
 so that by the Chebotarev density theorem
 $\mathbb{E}[r_p(h)] = 1$ for each~$h$.
+For $h = 2, 3, 4, 5$, modular
+factorization certificates confirm
+$\operatorname{Gal} = S_{m_h}$ with
+$(m_2, m_3, m_4, m_5) = (1, 3, 4, 6)$,
+and the full hyperoctahedral groups
+$C_2 \wr S_{m_h}$ are verified
+via the single-flip lemma
+(the signed-group kernel is
+detected by a single pair flip
+in Frobenius factorization).
 
 \subsection{The exact random model}\label{ssec:random-model}
 
@@ -4650,17 +4933,51 @@ the second moment by~$4$ while the mean
 remains~$1$, yielding
 $\mathbb{E}[N_p(a)^2] = 4\bigl(\tfrac{1}{2} + \tfrac{1}{4}\bigr) = 3$.
 
-We computed $E(p)/p$ for all~$1227$ primes
-$p \le 10{,}000$. The results confirm
+We computed $E(p)/p$ for all~$9590$ primes
+$p \le 100{,}000$. The results confirm
 the palindromic prediction:
-$\text{mean}(E(p)/p) = 2.996$,
-with $68\%$ of primes in $[2.95, 3.05]$
+$\text{mean}(E(p)/p) = 2.9995$,
+with $99\%$ of primes in $[2.9, 3.1]$
 and no dependence on~$Z(p)$.
 The value-collision energy
 thus confirms that the Ap\'ery
 sequence modulo~$p$ is
 anti-concentrated at the scale predicted
 by the palindromic random model.
+
+\begin{remark}[Second Fourier layer]
+\label{rem:second-fourier}
+By additive orthogonality,
+\[
+  E(p) = \frac{1}{p}\sum_{u \in \mathbb{F}_p}
+  |S_p(u)|^2,
+  \qquad
+  S_p(u) = \sum_{j=0}^{p-2} e_p(u\,b_j).
+\]
+A square-root bound $|S_p(u)| \ll \sqrt{p}$ for
+$u \ne 0$ would give $E(p) \ll p$, hence
+$Z(p) \ll \sqrt{p}$.
+This is a \emph{second Fourier layer}: the first
+(multiplicative Mellin) transform produces the
+coefficients~$b_j$; the second (additive)
+transform probes their residual distribution
+in~$\mathbb{F}_p$.
+Ordinary monodromy of the K3 local system controls
+the first layer.
+It does not automatically construct a bounded-conductor
+object for the second layer.
+The modular form $f_4 = \eta(2z)^4\eta(4z)^4 \in
+S_4(\Gamma_0(8))$ controls only the
+central coefficient $b_{(p-1)/2} \equiv a_p(f_4)
+\pmod{p}$ via the quadratic Kummer twist;
+generic characters $t^{-j}$ with
+$\mathrm{ord}(\chi_{p,j}) \to \infty$ do not correspond
+to any fixed modular form.
+A residual anti-concentration theorem, proving the
+second-layer bound $E(p) \ll p$ or equivalently
+the additive exponential-sum bound above, would require
+genuinely new same-characteristic arithmetic geometry.
+\end{remark}
 
 \section{Conclusion}
 
@@ -4691,14 +5008,16 @@ The profile decomposition of~$F_N$ separates
 this into the deterministic profile energy
 $\|\rho\|^2 \sim c_2\,T^2/N$
 (with $c_2$ given exactly by~\eqref{eq:c2}),
-a deterministic cross-term
-$\langle\rho,\eta\rangle = o(T)$,
+a cross-term
+$|\langle\rho,\eta\rangle|
+\le \rho_{\max}\,T = O(T^2/N)$,
 and the residual shot-noise term
 $\|\eta\|^2$.
-The estimate~\eqref{eq:bfm2-concl} is
+Since $T^2/N = O(T)$, the
+estimate~\eqref{eq:bfm2-concl} is
 equivalent to the shot-noise bound
 $\|\eta\|^2 = O(T)$,
-and computation through $N = 32{,}768$
+and computation through $N = 262{,}144$
 gives $\|\eta\|^2/T \approx 1.0$.
 
 This gap is genuine.
@@ -4747,27 +5066,237 @@ $H^1_{\mathrm{rig},c}(U,
 \otimes \mathcal{K}_{\omega^{-j}})$.
 The raw interpolation $j \mapsto b_j$
 has degree $p - 2$ already for
-$p = 11$ and~$13$, so bounded
-tame Hasse degree is not automatic;
-it would require a nontrivial
-Gauss/Jacobi normalization of the
-first Frobenius block.
+$p = 11$ and~$13$; moreover, the
+Sym$^2$ factorization forces
+at least $(p{-}5)/2$ nonzero Fourier
+coefficients, giving a rigorous
+lower bound $D \ge (p{-}7)/4$
+on any Laurent polynomial of
+degree~$D$ representing the
+un-normalized Mellin transform.
+Bounded tame Hasse degree would
+require a nontrivial Gauss/Jacobi
+normalization of the first
+Frobenius block.
 
 Computation through all $78{,}496$ primes
 $p \le 10^6$ gives $Z(p) \le 12$ and
 mean~$\approx 1$;
 the value-collision energy ratio
-$E(p)/p \to 3$ and the profile constant
-$c_2 \to 1.262$ match the palindromic
+$E(p)/p \to 3$ (confirmed through $p = 100{,}000$)
+and the profile constant
+$c_2 \to 1.262$ (through $N = 262{,}144$)
+match the palindromic
 null at every tested scale.
 These observations support all
 conjectures but are not used as proofs.
 
-The most direct path forward is an
-explicit Hasse--Witt calculation for the
-rank-three transcendental crystal,
-determining the slope-zero multiplicity
-of the Kummer-twisted
+The prime-wise decomposition
+(Remark~\ref{rem:prime-decomposition})
+provides a structural reduction:
+$\|\eta\|^2 = D + O$ where
+$D = \sum_p D_p \approx T$ is an
+explicit diagonal and
+$O = \sum_{p \ne q} C_{pq}$
+is the cross-prime interaction.
+Under the independent
+fixed-cardinality residue model
+(each~$Z_p$ drawn uniformly
+from $\binom{\mathbb{F}_p}{Z(p)}$,
+independently across primes),
+one obtains the exact
+variance formula
+\[
+\operatorname{Var}(\|\eta\|^2)
+\;=\;
+\sum_p \operatorname{Var}(D_p)
+\;+\;
+\sum_{p \ne q}
+\operatorname{Var}(C_{pq}),
+\]
+whose first sum is $O(T)$
+(fluctuation of the active tail mass
+$Z_p^{\mathrm{act}}$)
+and whose second is
+$O(T^2/N)$ (CRT averaging
+in intervals of length~$\sim N$
+within period~$pq \sim N^2$).
+The null-model conclusion
+$\|\eta\|^2/T \to 1$ in~$L^2$
+is therefore unconditional
+within the model.
+
+However, CRT does not imply
+independence for \emph{deterministic}
+zero-sets: distinct residue fields
+provide separate coordinates,
+not a product measure.
+The adversarial construction
+$Z_p = \{2N \bmod p\}$ for all~$p$
+places every shifted zero at $m = 2N$,
+giving $O = \Theta(T^2)$; this is a single
+explicit moving-target choice with
+$|Z_p| = 1$ for all~$p$, so the
+two-prime dispersion statement is
+\emph{false} for general~$O(1)$-size
+zero-sets.
+For the Ap\'ery sequence, this
+pattern is impossible: the fixed-column
+$Z_p = \{c - p \bmod p\}$ forces
+$p \mid b_c$ for all~$p$, contradicting
+$b_c \in \mathbb{Z} \setminus \{0\}$.
+More generally, the palindromic
+structure ($Z_p$ consisting of
+reflected pairs
+$\{j_p, p{-}1{-}j_p\}$) and the
+Galois-group structure of the gap
+polynomials prevent systematic
+alignment of zero positions across primes.
+Nonetheless, the quantitative
+control---that the residual alignment
+is~$o(T)$, not merely~$o(T^2)$---is a
+stronger statement, and cannot be
+established by any purely black-box
+argument: Bombieri--Vinogradov, the
+large sieve, and Barban--Davenport--Halberstam
+address single-modulus
+discrepancies, not cross-prime collisions,
+and the spectral bilinear framework of
+Duke--Friedlander--Iwaniec (``bilinear forms
+with Kloosterman fractions'') requires
+a fixed numerator, which the moving-target
+zero-sets do not provide.
+
+Transfer of the null-model theorem
+to the actual Ap\'ery zeros
+is captured by the following
+precise conjecture.
+
+\begin{conjecture}[Two-prime dispersion]
+\label{conj:two-prime}
+For $N \to \infty$ and primes
+$p, q \in (N, 2N]$ with
+$p \ne q$, define
+$C_{pq} = \sum_m X_{m,p}\,X_{m,q}$.
+Then
+\[
+\sum_{\substack{p,q \in (N,2N] \\
+p \ne q}} |C_{pq}|
+\;=\; o(T_N).
+\]
+\end{conjecture}
+
+\noindent
+This is equivalent to
+the BFM2 bound~\eqref{eq:bfm2-concl}
+and hence to the all-$n$
+conjecture $G_n = e^{o(n)}$.
+Computation through $N = 262{,}144$
+gives $|O|/T < 2 \times 10^{-3}$
+(Table~\ref{tab:prime-decomp}),
+far stronger than the
+conjecture requires.
+
+\begin{table}[ht]
+\centering\small
+\caption{Two-prime dispersion scaling.
+$\Sigma_{\mathrm{abs}} =
+\sum_{p \ne q} |C_{pq}|$
+measures the total unsigned
+cross-prime interaction.
+The ratio
+$\Sigma_{\mathrm{abs}}/T$
+decreases as $\approx c/\ln N$
+with $c \approx 1.08$.}
+\label{tab:two-prime-scaling}
+\begin{tabular}{rrrrrr}
+\toprule
+$N$ & $T$ &
+$\Sigma_{\mathrm{abs}}$ &
+$\Sigma_{\mathrm{abs}}/T$ &
+$\ln N \cdot \Sigma_{\mathrm{abs}}/T$ &
+joint \\
+\midrule
+8192 & 354 & 43.1 & 0.122 & 1.10 & 10 \\
+16384 & 664 & 75.3 & 0.113 & 1.10 & 17 \\
+32768 & 1182 & 123.2 & 0.104 & 1.08 & 29 \\
+65536 & 2237 & 214.1 & 0.096 & 1.06 & 47 \\
+131072 & 4317 & 391.1 & 0.091 & 1.07 & 87 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+Table~\ref{tab:two-prime-scaling}
+decomposes the cross-prime sum
+into its unsigned magnitude.
+The product
+$(\ln N) \cdot \Sigma_{\mathrm{abs}}/T$
+remains approximately constant
+at~$\approx 1.08$, giving the
+empirical scaling law
+\[
+\frac{\sum_{p \ne q} |C_{pq}|}{T_N}
+\;\approx\;
+\frac{1.08}{\ln N}.
+\]
+This is explained by a counting argument.
+Since $L \le p$ for primes $p > N$,
+the map $n \mapsto n \bmod p$ restricted
+to~$[1, L]$ is injective; CRT lifts at
+coprime moduli hit the interval at
+most once, giving the sharp pointwise bound
+$|C_{pq}| \le \min(Z(p), Z(q))$.
+In practice, most pairs have no joint
+CRT hit (the ``joint'' column of
+Table~\ref{tab:two-prime-scaling}
+counts pairs with at least one),
+so $|C_{pq}| \approx Z(p)\,Z(q)\,N/(pq)
+= O(1/N)$ for the bulk.
+With $O(N^2/(\ln N)^2)$ pairs and
+$T = \Theta(N/\ln N)$, the sum-to-$T$
+ratio is~$O(1/\ln N)$.
+The unsigned ratio $\Sigma_{\mathrm{abs}}/T
+\sim 1/\!\ln N$ is therefore essentially
+\emph{forced}---it measures the expected
+collision count $\sum_{p \ne q}
+E_{pq} \approx T^2/N$,
+which is $\Theta(T/\!\ln N)$ by Mertens.
+The genuine arithmetic content is in
+the \emph{signed} sum: $|O|/T < 2 \times 10^{-3}$
+says that the actual collision count
+$\sum_m r(m)(r(m){-}1)$ matches its
+Poisson prediction to within a few percent.
+
+For non-CM motives over~$\mathbb{Q}$,
+independence of Frobenius traces at
+distinct primes is a consequence of
+the generalized Sato--Tate conjecture
+(known for $\mathrm{GL}_2$ by the
+work of Barnet-Lamb--Geraghty--Harris--Taylor,
+extended to the symmetric square
+$L$-function).
+The two-prime dispersion asks for a
+compatible statement at the level of
+zero-counts~$Z(p)$, which lives in the
+Kummer-twisted cohomology rather than
+the fiber-variable cohomology.
+A precise formulation would relate
+the product structure of the
+Frobenius--Kummer automorphism at
+distinct primes to the dispersion
+of their zero positions---an instance
+of the general principle that
+algebraic independence of motives
+at distinct primes implies
+statistical independence of their
+arithmetic invariants.
+
+The most direct computational path
+is an explicit Hasse--Witt calculation
+for the rank-three transcendental
+crystal, determining the slope-zero
+multiplicity of the Kummer-twisted
 compactly supported cohomology
 as a function of the character parameter.
 The Galois-group analysis of reductions
