@@ -3127,15 +3127,19 @@ $N$ & $K$ & $L$ & $\|H\|_{\mathrm{op}}$
 1024 & 113 & 6 & 1.088 & 0.111 & 0.021 & 0.302 \\
 2048 & 205 & 7 & 0.896 & 0.097 & 0.004 & 0.311 \\
 4096 & 380 & 7 & 0.904 & 0.040 & 0.002 & 0.313 \\
+8192 & 742 & 8 & 1.210 & 0.052 & 0.009 & 0.291 \\
 \hline
 \end{tabular}
 \caption{Full operator norm~$\|H\|_{\mathrm{op}}$
 versus compressed operator norm~$\|\tilde{H}\|_{\mathrm{op}}$.
-The full norm remains bounded near~$1$;
-the compressed norm is much smaller and \emph{decreasing},
-from~$0.113$ at $N = 512$ to~$0.040$ at $N = 4096$.
+The full norm is bounded near~$1$ with a spike
+to~$1.21$ at $N = 8192$ (from the first singleton collision);
+the compressed norm is much smaller,
+ranging from~$0.113$ at $N = 512$ to~$0.040$--$0.052$
+at $N = 4096$--$8192$.
 The column $\|Hv\|/|v|$ shows that~$v$ is not a
-near-null vector of~$H$;
+near-null vector of~$H$
+($\|Hv\|/|v| \approx 0.3$ at all sizes);
 the small Rayleigh quotient arises from
 spectral cancellation.}
 \label{tab:compressed}
@@ -3178,6 +3182,152 @@ is a trivial upper bound.
 A tighter bound via $\max_n \rho(n)$ governs
 the localized spectral spikes; if $\rho(n) \le C$
 uniformly, then $\|H\|_{\mathrm{op}} \le C - 1$.
+\end{remark}
+
+\subsection{Gram identity and block aggregates}
+\label{ssec:gram-identity}
+
+The compression admits an exact Gram-matrix interpretation.
+Define the \emph{normalized block aggregate}
+\begin{equation}\label{eq:block-aggregate}
+  Y_i(m) \;=\; \frac{1}{s_i}
+  \sum_{p \in \mathcal{B}_i} (\log p)
+  \left(X_p(m) - \frac{A_p}{N}\right),
+  \qquad 1 \le i \le L,
+\end{equation}
+where each~$Y_i$ is a centered function on~$I_N$
+with $\sum_m Y_i(m) = 0$.
+Let~$Y$ be the $N \times L$ matrix with columns~$Y_i$.
+Then
+\begin{equation}\label{eq:gram-identity}
+  \boxed{I_L + \tilde{H} \;=\; Y^T\!Y \;\succeq\; 0,}
+\end{equation}
+or entrywise, $\tilde{H}_{i,j} = \langle Y_i, Y_j \rangle
+- \delta_{ij}$.
+This is the key structural identity:
+$I + \tilde{H}$ is the Gram matrix of~$L$ vectors
+in~$\mathbb{R}^N$, so every eigenvalue of~$\tilde{H}$
+is at least~$-1$.
+Only the positive edge requires an arithmetic bound.
+
+The Rayleigh identity~\eqref{eq:compressed-rayleigh}
+now reads
+\[
+  R_v \;=\; a^T \tilde{H}\, a
+  \;=\; \left\|\sum_i a_i Y_i\right\|_2^2 - 1.
+\]
+Thus $R_v = O(1)$ is equivalent to approximate
+orthonormality of the $L$ aggregate functions~$Y_i$.
+
+\begin{remark}[Low-to-high transfer]
+\label{rem:low-to-high}
+Let $P = EE^T$ denote orthogonal projection onto
+the $L$-dimensional block-smooth subspace.
+Then $PHu = E\tilde{H}a$ and
+\begin{equation}\label{eq:low-high}
+  \|Hu\|^2 \;=\;
+  \|\tilde{H}a\|^2 + \|(I-P)HEa\|^2.
+\end{equation}
+At $N = 4096$, the data give $\|Hu\| \approx 0.31$
+and $\|PHu\| \le \|\tilde{H}\|_{\mathrm{op}} \approx 0.04$,
+so $\|(I-P)Hu\| \ge 0.307$.
+Almost all of~$Hu$ lies in the within-block
+oscillatory subspace, not the block-smooth subspace.
+The covariance operator converts a smooth
+prime-scale profile into oscillations inside the blocks.
+This is a strictly sharper diagnosis than spectral
+cancellation alone.
+\end{remark}
+
+\subsection{Exact random CRT prediction}
+\label{ssec:random-crt}
+
+The independent \emph{fixed-margin} CRT model
+(Section~\ref{ssec:random-crt-model})
+yields exact second-moment formulas for the
+compressed matrix.
+Each normalized column satisfies the isotropy identity
+$\mathbf{E}[\phi_p \phi_p^T] = \frac{1}{N-1}P_0$,
+where $P_0 = I - \frac{1}{N}\mathbf{1}\mathbf{1}^T$.
+For distinct primes,
+$\mathbf{E}[H_{p,q}^2] = \frac{1}{N-1}$.
+
+\begin{proposition}[Compressed second moments]
+\label{prop:compressed-moments}
+In the independent fixed-margin model,
+$\mathbf{E}[\tilde{H}_{i,j}] = 0$ for all~$i,j$, and
+\begin{equation}\label{eq:cross-block-var}
+  \mathbf{E}[\tilde{H}_{i,j}^2] \;=\;
+  \frac{1}{N-1} \qquad (i \ne j),
+\end{equation}
+\begin{equation}\label{eq:diag-block-var}
+  \mathbf{E}[\tilde{H}_{i,i}^2] \;=\;
+  \frac{2}{N-1}(1 - \kappa_i),
+  \qquad
+  \kappa_i = \sum_{p \in \mathcal{B}_i} e_i(p)^4.
+\end{equation}
+Consequently, the Frobenius norm satisfies
+\begin{equation}\label{eq:frobenius-random}
+  \mathbf{E}\|\tilde{H}\|_F^2 \;=\;
+  \frac{L^2 + L - 2\sum_i \kappa_i}{N-1}
+  \;\asymp\; \frac{L^2}{N}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+For $i \ne j$, disjoint block supports give
+$\tilde{H}_{i,j} = \sum_{p \in \mathcal{B}_i}
+\sum_{q \in \mathcal{B}_j} e_i(p) e_j(q) H_{p,q}$.
+Since different unordered prime pairs have uncorrelated
+entries (including those sharing one prime, by
+conditioning), only the diagonal terms survive:
+$\mathbf{E}[\tilde{H}_{i,j}^2]
+= \frac{1}{N-1}\sum_p e_i(p)^2 \sum_q e_j(q)^2
+= \frac{1}{N-1}$.
+The diagonal entries involve
+$\sum_{p < q \in \mathcal{B}_i} e_i(p)^2 e_i(q)^2$,
+giving the~$\kappa_i$ correction.
+\end{proof}
+
+This proves $\|\tilde{H}\|_{\mathrm{op}} \to 0$
+\emph{in the random model} whenever $L = o(\sqrt{N})$.
+The GOE refinement predicts
+$\|\tilde{H}\|_{\mathrm{op}} \approx 2\sqrt{L/N}$,
+with the factor~$2$ being the asymptotic edge constant.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrcc}
+\hline
+$N$ & $L$ & $\sqrt{L/N}$ &
+  $\|\tilde{H}\|_{\mathrm{op}}$ &
+  $\|\tilde{H}\|_{\mathrm{op}}/\sqrt{L/N}$ \\
+\hline
+512  & 6 & 0.108 & 0.113 & 1.04 \\
+1024 & 6 & 0.077 & 0.111 & 1.45 \\
+2048 & 7 & 0.058 & 0.097 & 1.66 \\
+4096 & 7 & 0.041 & 0.040 & 0.97 \\
+8192 & 8 & 0.031 & 0.052 & 1.67 \\
+\hline
+\end{tabular}
+\caption{The compressed operator norm tracks
+the random CRT prediction $\sqrt{L/N}$ with
+ratio $\approx 1$--$1.7$.}
+\label{tab:scaling}
+\end{table}
+
+\begin{remark}[Random surrogate comparison]
+\label{rem:surrogate}
+For each~$N$, we generate~$20$ random palindromic
+zero sets of the same sizes~$|Z_p|$, build the
+corresponding~$\tilde{H}$, and compare
+$\|\tilde{H}\|_{\mathrm{op}}$.
+At $N = 2048$: actual $= 0.097$,
+random mean $= 0.097$, $z$-score $= -0.01$.
+At $N = 1024$: actual $= 0.111$,
+random mean $= 0.130$, $z$-score $= -0.91$.
+The actual Ap\'ery matrix is statistically
+indistinguishable from its random palindromic surrogate.
 \end{remark}
 
 \subsection{AMTD: the precise remaining conjecture}
@@ -3255,6 +3405,105 @@ exceeds any fixed constant.
 At the top block $P \sim N$,
 this factor is~$O(N)$, and the generic
 large sieve provides no useful bound.
+\end{remark}
+
+\begin{remark}[Hierarchy of targets]
+\label{rem:hierarchy}
+The compression produces a strict hierarchy
+of increasingly weak---and therefore increasingly
+tractable---conjectures:
+\begin{enumerate}
+\item[\textup{(A)}]
+  \textbf{Full operator bound:}
+  $\|H\|_{\mathrm{op}} = O(1)$.
+  This implies a Bessel inequality for all
+  prime columns and is far stronger than needed.
+\item[\textup{(B)}]
+  \textbf{Compressed Bessel bound:}
+  $\|\tilde{H}\|_{\mathrm{op}} = O(1)$.
+  This asks for approximate orthonormality of
+  only $L = O(\log N)$ block-aggregate functions,
+  and suffices for the all-index GCD estimate.
+\item[\textup{(C)}]
+  \textbf{Scalar Rayleigh bound:}
+  $a^T\tilde{H}a = O(1)$.
+  This is the weakest statement that closes
+  the all-index theorem, equivalent to
+  $V^\circ \ll S$.
+  It preserves all useful signs and remains
+  a two-prime problem.
+\end{enumerate}
+Each implication (A)$\Rightarrow$(B)$\Rightarrow$(C)
+is strict. The random CRT model predicts
+$\|\tilde{H}\|_{\mathrm{op}} \asymp \sqrt{L/N} \to 0$
+and $|a^T\tilde{H}a| \asymp N^{-1/2}$,
+both of which are far stronger than~(B) and~(C).
+\end{remark}
+
+\begin{remark}[Diagonal AMTD via Cauchy--Schwarz]
+\label{rem:diagonal-amtd}
+The all-index GCD theorem admits a simpler
+closing route that avoids cross-block estimates entirely.
+Define the uncentered block load
+$F_i(m) = \sum_{p \in \mathcal{B}_i} (\log p)\,g_p(m)
+= s_i\,Y_i(m)$, so that
+$V^\circ = \|\sum_i F_i\|_2^2$.
+If each dyadic block satisfies
+\begin{equation}\label{eq:diagonal-amtd}
+  \|F_i\|_2^2 \;\le\; C\,s_i^2
+  \qquad\text{(Diagonal AMTD)},
+\end{equation}
+equivalently $1 + \tilde{H}_{ii} \le C$,
+then by Cauchy--Schwarz,
+\[
+  V^\circ
+  \;\le\;
+  \Bigl(\sum_i \|F_i\|_2\Bigr)^2
+  \;\le\;
+  L \sum_i \|F_i\|_2^2
+  \;\le\;
+  CL\,S.
+\]
+Since $L = O(\log N) = N^{o(1)}$, this gives
+$V^\circ \le N^{o(1)}\,S$, which suffices for
+$\max_m |B(m) - \mu| \le \sqrt{V^\circ}
+= O\bigl(\sqrt{N}\,(\log N)^{3/2}\bigr) = o(N/\log N)$.
+The within-block estimate~\eqref{eq:diagonal-amtd}
+is a \emph{two-prime} signed dispersion problem---it
+preserves useful signs, does not require
+four-prime correlations, and avoids the full
+operator norm or Frobenius arguments.
+At the top block $P \sim N$, it reduces to
+a sparse translated-set collision problem:
+bounding the additive energy of
+$\{p + r : r \in \mathcal{Z}_p\}$
+for primes $p$ in a dyadic range.
+\end{remark}
+
+\begin{remark}[Translation variance]
+\label{rem:translate}
+For each pair of distinct primes $p, q$,
+averaging over all translates $x \bmod pq$
+gives
+\[
+  \frac{1}{pq} \sum_{x \bmod pq}
+  |T_{p,q}(x; N)|^2
+  \;\le\;
+  \frac{N\,Z(p)^2 Z(q)^2}{pq},
+\]
+where $T_{p,q}(x; L) = \sum_{j=1}^L f_p(x+j)\,f_q(x+j)$.
+For bounded zero counts $Z(p) = O(1)$,
+this is already at the random scale for a
+\emph{typical} translate.
+However, the GCD problem samples the single
+translate $x = N$ simultaneously for all prime
+pairs.
+Summing individual pair bounds absolutely
+costs $O(N^{3/2})$, which exceeds $S \asymp N(\log N)^2$.
+The $P^2$ large-sieve barrier arises because
+the Fourier support of~$f_p$ has $\sim p$
+nonzero frequencies (not~$Z(p)$), and
+palindromic symmetry improves only absolute constants.
 \end{remark}
 
 \subsection{Gap polynomial sparsity}
