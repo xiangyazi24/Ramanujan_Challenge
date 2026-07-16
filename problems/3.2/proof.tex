@@ -4344,31 +4344,44 @@ Surr \\
 \label{rem:profile-constant}
 The column $\|\rho\|_2^2/(T^2/N)$ in
 Table~\ref{tab:residual} converges
-to a constant~$c_2 \approx 1.262$
-as~$N \to \infty$.
-This constant arises from the
-geometry of truncation in the palindromic
-doublet model: a prime $p = N(1{+}s)$
-contributes retained hits to the
-interval $(p, 2N]$ with a nonuniform
-density that tapers as~$s \to 1$.
-The exact constant is determined by
-the profile shape
-$\rho(m) \propto \sum_{p < m} A_p/(2N{-}p)$
-and can be computed from the prime-pair
-intersection counts of
-Section~\ref{ssec:random-crt-model}.
-
+to a constant~$c_2$ as~$N \to \infty$,
+with exact closed form
+\begin{equation}\label{eq:c2}
+  c_2
+  \;=\;
+  \frac{2(\ln 2)^2 - 4\ln 2 + 2}
+       {(2\ln 2 - 1)^2}
+  \;=\; 1.261982\ldots
+\end{equation}
+The derivation is direct.
+The triangular profile
+$\rho(m) = \sum_{N < p \le m} Z(p)/p$
+for $m \in I_N$ has the continuous
+approximation $\rho(Nt) \approx
+(\ln t)/(\ln N)$ for $t \in [1,2]$,
+by Mertens' theorem.
+Then
+\begin{align*}
+  T &= \sum_m \rho(m)
+  \;\approx\; \frac{N}{\ln N}
+  \int_1^2 \ln t\,dt
+  = \frac{N}{\ln N}\,(2\ln 2 - 1),\\
+  \|\rho\|_2^2 &= \sum_m \rho(m)^2
+  \;\approx\; \frac{N}{(\ln N)^2}
+  \int_1^2 (\ln t)^2\,dt
+  = \frac{N}{(\ln N)^2}\,
+  \bigl(2(\ln 2)^2 - 4\ln 2 + 2\bigr).
+\end{align*}
+The ratio gives~\eqref{eq:c2}.
 The exact palindromic null expectation
 confirms the match:
-the A/C/D pair-intersection formula
-(where A, C, D classify collisions
-by branch orientation)
-gives $E_{\mathrm{null}}[F]/(T^2/N)$
-$= 1.236$ at $N = 1024$,
-$1.254$ at $N = 4096$,
-$1.257$ at $N = 16{,}384$,
-converging to the same limit~$c_2$.
+at $N = 1024$ the finite-$N$ ratio
+is~$1.209$,
+at $N = 4096$ it is~$1.281$,
+at $N = 16{,}384$ it is~$1.254$,
+oscillating around~$c_2$ with
+$O(1/\ln N)$ corrections from the
+prime number theorem.
 At all tested sizes,
 $E_{\mathrm{null}}[F]$ agrees with
 the observed~$F$ to within the
