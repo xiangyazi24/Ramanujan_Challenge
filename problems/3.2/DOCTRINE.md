@@ -503,25 +503,101 @@ Gap to Apéry: H_p has algebraic structure (square of anti-palindromic B_p).
 Added: N=8192 row, exact decomposition table, random model proposition,
 shift-correlation computation subsection.
 
-### Currently dispatched (4 dm tabs)
-- dm1: Q5384 — Mesoscopic root-count (still processing)
-- dm2: Q5388 — Orbit mixing / shift-correlation theory (Ostafe-Shparlinski, Peluse)
-- dm3: Q5389 — CRT decomposition analysis (negative error, V° ≤ S proof strategy)
-- dm4: Q5390 — Crystalline anti-concentration (reciprocal-square sublocus, dimension counting)
+### ChatGPT Q&A processed (Q5388-Q5390)
+- Q5388 (dm2): ★ PGL₂ generation PROVED: T(1),T(2),T(3) generate PGL₂(F_p) for all p ≥ 7.
+  Proof: T(1)T(2)^{-1} = unipotent, T(1)T(3)^{-1} = different unipotent with coprime steps,
+  these generate B⁺, plus det(T(k)) = k³ gives non-square semisimple → full PGL₂.
+  BUT: prefix ≠ orbit. No existing dynamics theorem (Helfgott, Bourgain-Gamburd, Breuillard-
+  Green-Tao) gives fixed-seed power saving. The "group-growth program" (Steps 1-3) is
+  identified but requires genuinely new input: spectral gap → prefix equidistribution
+  for the SPECIFIC seed B_p, not a generic seed.
+
+- Q5389 (dm3): ★★ **5/8 CONSTANT DERIVED.** Clean formula C₂(μ) = 3μ/8 + μ²/4.
+  For μ = E[Z(p)] ≈ 1: C₂(1) = 3/8 + 1/4 = 5/8. Diagonal 3/8 (from E[Z(Z-1)] + E[Z]),
+  off-diagonal 1/4 (from E[Z]²). Observed ≈ 0.59 converges from below (boundary effects).
+  **Boundary correction:** using L_{p,q} (admissible interval length) instead of N in CRT
+  main term, the genuine residual is POSITIVE and O(√N (log N)²). The "negative CRT error"
+  from Breakthrough 6 was an artifact of using N for prime pairs near the boundaries.
+  **V° decomposition:** V° = Σ w_p² A_p(1-A_p/N) + E°_N where E°_N = centered cross-prime
+  covariance. Need V° ≤ C·S (and (Z1) + (CRT2)) for the theorem.
+
+- Q5390 (dm4): ★★★ **RANDOM-SQUARE POISSON(1/2):** For uniform g ∈ V_p^- (anti-invariant),
+  f = g² gives K ~ Poisson(1/2) RIGOROUSLY. Proof: quadratic Gauss sums + Mattson-Solomon
+  uncertainty inequality. Discriminant factor Δ^ε doesn't change the law.
+  **TRIANGULAR POISSON(1/4):** First ~p/4 Mellin coefficients of Δ^ε B² are triangular-
+  linear in free β_k, hence independent uniform. Gives Poisson(1/4) for first half of
+  reflected pairs. Full 1/2 needs complete-intersection theorem for the QUADRATIC range.
+  **Shift-correlation ≠ zero anti-concentration (KEY):** Changing z entries changes C_s(a)
+  by O(z). Even perfect √p cancellation gives Z(p) = 1 + O(√p), not O(1). The objects are
+  genuinely different: C_s is an additive character sum, Z counts solutions.
+
+## ★ BREAKTHROUGH 7: Centered variance, 5/8 constant, boundary correction (computation + Q5389-Q5390)
+
+### V°/S → 1 — COMPUTED (variance_computation.py)
+Centered variance V° = M₂ - M₁²/N computed directly for N = 64..4096:
+| N    | V°/S   |
+|------|--------|
+| 256  | 1.014  |
+| 512  | 1.010  |
+| 1024 | 0.981  |
+| 2048 | 0.992  |
+| 4096 | 0.995  |
+This IS the exact prediction of the independent Bernoulli model (V° = S when events
+are independent). The centered cross-prime covariance E°_N oscillates around 0 with
+|E°_N| = O(√N (log N)²). **Apéry zero-sets are essentially pairwise uncorrelated.**
+
+### 5/8 constant — DERIVED (Q5389)
+M₂(N) / (N log²N) → 5/8 = 0.625. Formula: C₂(μ) = 3μ/8 + μ²/4.
+Diagonal contribution 3/8 (from Var[Z] + E[Z] = μ/2 + μ per prime).
+Off-diagonal contribution 1/4 (from E[Z]² = μ² per prime pair).
+Observed ≈ 0.59 converges from below due to boundary effects.
+
+### "Negative CRT error" CORRECTED — was boundary artifact
+Previous finding (Breakthrough 6): "CRT error is negative for N ≥ 256".
+Correction: the CRT main term used N instead of L_{p,q} (the actual admissible
+interval for each prime pair, accounting for p ≤ m < p² constraint). After boundary
+correction, the genuine residual is POSITIVE and O(√N (log N)²). No arithmetic
+repulsion — the data is consistent with random.
+
+### Random-square Poisson — PROVED (Proposition prop:random-sq in paper)
+For uniform g ∈ V_p^-, f = g² gives Poisson(1/2). Added to paper §12.
+
+### Paper updated (28 pages, committed db75857)
+Added to §12: 5/8 constant derivation, V°/S table, boundary correction remark,
+random-square Poisson proposition.
+
+### Currently dispatched (3 dm tabs processing)
+- dm2: Q5393 — Rainbow estimate / one-point bound approaches
+- dm3: Q5391 — Variance convolution structure / cross-prime covariance
+- dm4: Q5392 — Triangular Poisson complete-intersection / second 1/4
+- dm1: DEAD (both Q5384 and status check failed — tab offline)
+
+### Three clean remaining targets
+1. **V° ≤ C·S (cross-prime near-independence):** V°/S → 1 empirically. Need a theorem.
+   Routes: CRT independence via equidistribution, or random-model coupling.
+2. **First moment (Z1): Σ Z(p) ≪ π(x):** Bounded average number of zeros per prime.
+   Routes: counting (p,r) pairs with p | b_r, triangular Poisson(1/4), growth rate of b_r.
+3. **Rainbow estimate: B(n) = o(n/log n) for all n:** The one-point bound.
+   Routes: Waiting for Q5393. Integrality of b_r, recurrence constraints, sieve.
 
 ## Summary of results (UPDATED)
 19. ★ |Z_p| ~ 2·Poisson(1/2) — verified all primes ≤ 10000
 20. ★ Second-moment criterion — M₂=O(N^{2-δ}) → W(n)=o(n)
-21. ★ M₂ ≈ 0.59·N·(logN)² — with exact decomposition, CRT error negative
+21. ★ M₂ ≈ 0.59·N·(logN)² → 5/8 constant (diagonal 3/8 + off-diagonal 1/4)
 22. ★ No-go model — vertical bounds alone insufficient
 23. ★ AP-BDH sufficiency — dispersion + Z≤p^{2/3} → N^{5/6+o(1)}
 24. ★ Classical tools ALL exhausted — confirmed by 7+ ChatGPT audits
 25. ★ Gap polynomial sparsity — Σ r_p(h) ≤ 1 for h ≤ 100
 26. ★★ **Shift-correlation RANDOM** — max|C_p|/√p ≈ √(2logp), all p ≤ 5000
 27. ★★ **Exact random model** — Bin((p-3)/2, 1/p) → Poisson(1/2) for V_p^+
-28. ★★ **CRT error NEGATIVE** — zero sets mildly negatively correlated
+28. ★★ **CRT error = boundary artifact** — after correction, positive and O(√N log²N)
 29. ★ **Exact decomposition** — Off/Diag ≈ 0.58, |CRT err|/N = O(1)
+30. ★★★ **V°/S → 1** — Apéry zeros pairwise uncorrelated across primes
+31. ★★★ **5/8 constant** — C₂(μ) = 3μ/8 + μ²/4, exact random prediction
+32. ★★ **Random-square Poisson(1/2)** — rigorous for V_p^- model (prop in paper)
+33. ★★ **Triangular Poisson(1/4)** — rigorous for first half of spectrum
+34. ★★ **PGL₂ generation** — T(1),T(2),T(3) → PGL₂(F_p), p ≥ 7
 
 ## Resources
-- ChatGPT Pro: dm1-dm4 (SOL). All tabs dispatched.
+- ChatGPT Pro: dm2,dm3,dm4 (SOL, processing). dm1 DEAD.
 - uisai2: Z(p) computation COMPLETED. Max Z(p)=12 at p=159977 through p~1.3M.

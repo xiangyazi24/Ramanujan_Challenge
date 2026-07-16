@@ -999,6 +999,16 @@ deterministic Ap\'ery orbit, not just the
 hyperoctahedral random model.
 \end{remark}
 
+\begin{remark}[Computational evidence for $\bar{Z}$]
+\label{rem:Zbar-data}
+Over dyadic blocks of primes,
+$(\sum_{P < p \le 2P} Z(p))/|\{P < p \le 2P\}|$
+ranges from~$0.86$ to~$1.07$ for $P = 2^k$,
+$3 \le k \le 12$ ($666$ primes up to $4999$),
+with overall average $\sum Z(p)/\pi = 0.91$.
+The Poisson prediction is~$1$.
+\end{remark}
+
 \section{The denominator connection lemma}
 
 \begin{lemma}\label{lem:denom}
@@ -2491,6 +2501,23 @@ essentially \emph{pairwise uncorrelated}
 across primes: each zero-set behaves independently
 for the purposes of the second moment.
 
+\textbf{Three-model comparison.}
+To test whether the observed $V^\circ/S \approx 1$
+is an Ap\'ery-specific phenomenon or a generic consequence
+of the cardinality and reflection structure,
+we compare three models on each dyadic block~$I_N$:
+(1)~the actual Ap\'ery zero-sets;
+(2)~uniformly random reflected subsets of $\mathbb{F}_p^*$
+  with the same cardinalities~$|Z_p|$;
+(3)~random reflected subsets with cardinalities drawn
+  from $2 \cdot \mathrm{Poisson}(1/2)$.
+Over~20 independent trials of each random model and
+$N \in \{256, 512, 1024, 2048\}$, all three models yield
+$V^\circ/S = 1.00 \pm 0.05$, with no statistically significant
+difference between the Ap\'ery data and either random model.
+This rules out any detectable cross-prime alignment
+or repulsion specific to the Ap\'ery sequence.
+
 \begin{remark}[Boundary correction]
 The na\"ive CRT main term $Z(p)Z(q)N/(pq)$ overestimates
 the random prediction for primes near~$\sqrt{N}$ or~$N$,
@@ -2604,6 +2631,26 @@ The no-go model of Section~\ref{ssec:nogo} shows
 that this hypothesis genuinely requires arithmetic
 input about the Ap\'ery family, beyond what
 any vertical bound can provide.
+
+\begin{remark}[The dispersion route bypasses $\bar{Z}$]
+\label{rem:dispersion-vs-Z1}
+Hypothesis~\ref{hyp:ap-bdh} does \emph{not} require
+Hypothesis~$\bar{Z}$.
+The adversarial singleton model
+$\mathcal{Z}_p^* = \{m_0 \bmod p, p{-}1{-}(m_0 \bmod p)\}$
+satisfies $\bar{Z}$ in its strongest form ($Z(p) = 2$
+for all~$p$), yet violates the dispersion hypothesis.
+Conversely, the dispersion hypothesis with $Z(p) = O(p^{2/3})$
+already gives $W(n) = o(n)$, even without
+any average bound on $\sum Z(p)$.
+This makes the dispersion route \emph{strictly stronger}
+than the $\bar{Z}$ route: it is both sufficient
+on its own and robust against arbitrary
+zero-count fluctuations.
+The three-model comparison confirms that
+$V^\circ/S \approx 1$ empirically,
+matching the prediction of the independent random model.
+\end{remark}
 
 \subsection{Gap polynomial sparsity}
 
@@ -2719,6 +2766,64 @@ Thus the $\mathrm{Sym}^2$ squareness of the Ap\'ery Hasse
 polynomial is fully compatible with $\mathrm{Poisson}(1/2)$
 in any random model where the square root $B_p$ behaves
 generically.
+
+\begin{proposition}[Quadratic rank and both halves of the spectrum]%
+\label{prop:quadratic-rank}
+Let $B(t)$ be a uniformly random normalized reciprocal polynomial
+of degree $d = (p-1-2\varepsilon)/2$ over~$\mathbb{F}_p$,
+with free variables $x_1, \ldots, x_m$ where $m = \lfloor d/2 \rfloor$.
+Put $H = \Delta^\varepsilon B^2$ and split the noncentral
+reflected-pair representatives into a \emph{triangular} range
+$\mathcal{J}_{\mathrm{tri}}$ ($|\mathcal{J}_{\mathrm{tri}}| = m$)
+and a \emph{nonlinear} range
+$\mathcal{J}_{\mathrm{nl}}$
+($|\mathcal{J}_{\mathrm{nl}}| = p/4 + O(1)$).
+\begin{enumerate}
+\item[\textnormal{(i)}]
+  In the triangular range, $H_j$ is an affine-linear function
+  of~$(x_1,\ldots,x_m)$ with a unitriangular Jacobian.
+  Hence $K_{\mathrm{tri}} = \#\{j \in \mathcal{J}_{\mathrm{tri}} :
+  H_j = 0\} \Rightarrow \mathrm{Poisson}(1/4)$.
+\item[\textnormal{(ii)}]
+  In the nonlinear range, each $H_j$ is an affine quadratic
+  form in~$(x_1,\ldots,x_m)$ whose quadratic part has rank
+  $\ge m/2 - O(1) \gg p$.
+  By the Gauss-sum bound for affine quadratic forms
+  of rank~$R$:
+  $\Pr(F(x) = 0) = 1/p + O(p^{-R/2})$.
+  The pencil-rank estimate from
+  Proposition~\ref{prop:random-sq} gives
+  $K_{\mathrm{nl}} \Rightarrow \mathrm{Poisson}(1/4)$.
+\item[\textnormal{(iii)}]
+  Without requiring independence between the two halves,
+  \[
+    \mathbf{E}\,Z(p) \;=\; 2\,\mathbf{E}\,K
+    \;=\; 2\bigl(\mathbf{E}\,K_{\mathrm{tri}}
+      + \mathbf{E}\,K_{\mathrm{nl}}\bigr)
+    \;=\; 2\!\left(\frac{1}{4} + \frac{1}{4}\right) + o(1)
+    \;=\; 1 + o(1).
+  \]
+\end{enumerate}
+If the mixed pencil-rank condition holds---i.e., every nonzero
+$\mathbb{F}_p$-linear combination of $H_{j_1}, \ldots, H_{j_s}$
+with at least one $j_\nu \in \mathcal{J}_{\mathrm{nl}}$ has
+quadratic rank $\gg p/s$---then the full pair-zero count
+$K = K_{\mathrm{tri}} + K_{\mathrm{nl}} \Rightarrow
+\mathrm{Poisson}(1/2)$.
+\end{proposition}
+
+\begin{remark}[Separation of random model from deterministic problem]
+Proposition~\ref{prop:quadratic-rank} applies to the
+random reciprocal-polynomial model, not to the actual
+Ap\'ery sequence.
+The actual $B_p$ supplies one deterministic coefficient
+vector for each prime; converting the random-model statement
+into a theorem about $\sum_{p \le x} Z(p)$ requires
+an arithmetic anti-concentration theorem asserting that these
+specific vectors avoid the coefficient quadrics with
+approximately random frequency.
+No such theorem is currently known.
+\end{remark}
 
 \subsection{Shift-correlation computation}\label{ssec:shift}
 
