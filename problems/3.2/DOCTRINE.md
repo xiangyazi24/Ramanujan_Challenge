@@ -458,21 +458,69 @@ Committed at a89094c.
 - Q5382 (dm3): ★ AP-BDH sufficiency. Mesoscopic root table. Z≤√p from linear root-sum.
 - Q5383 (dm4): ★ Poisson monodromy. Hyperoctahedral model. Mellin anti-concentration.
 
-### Currently dispatched (all 4 dm tabs)
-- dm1: Q5384 — Mesoscopic root-count (gap polynomial roots, Galois groups, linear sum conjecture)
-- dm2: Q5385 — Padé defect theory (denominators conjecture, Zudilin p-adic analysis)
-- dm3: Q5386 — Bilinear dispersion (Bombieri-Fouvry, Heath-Brown identity, function field)
-- dm4: Q5387 — Mellin anti-concentration (character-aspect, Katz finite-field Mellin, factorial moments)
+### ChatGPT Q&A processed (Q5385-Q5387)
+- Q5385 (dm2): ★ Bombieri-Fouvry segmented Weil FAILS (conductor O(H) in block H).
+  Heath-Brown/Buchstab NO new gain. Function field literal analogue DEGENERATE.
+  KEY: identified exact missing lemma = "Apéry shift-correlation target":
+  |Σ_r e_p(a(b_{r+s}-b_r))| ≪ p^{1-η}. Autonomous birational map F(x,u,v) has
+  slow O(s) degree growth. Van der Corput step → hybrid algebraic-dynamical sum.
+- Q5386 (dm3): ★ Padé/G-function gives UPPER bounds only (Fischler-Rivoal).
+  GCD conjecture = denominator sharpness + residual coprimality (G_n = (L_n³/C_n)·gcd(A_n,b_n)).
+  Nesterenko one-way (uses GCD, doesn't bound it). ζ(2) analogue: NO published all-n proof.
+  Zudilin p-adic: most concrete route via Frobenius matrix factorization, but even
+  exact local formula needs global cross-prime support theorem.
+- Q5387 (dm4): ★★ EXACT random model for Poisson(1/2): uniform f ∈ V_p^+ (inversion-
+  invariant functions) gives K ~ Bin((p-3)/2, 1/p) → Poisson(1/2) RIGOROUSLY.
+  Gap: H_p = Δ^ε B_p² is deterministic, not random in V_p^+. Named the missing
+  theorem: "Apéry crystalline Mellin anti-concentration." Katz character-aspect
+  is genuine but controls ℓ-adic angles, not p-adic valuation. Function field
+  needs different geometric variable.
 
-## Summary of results (FINAL UPDATE)
-1-18. [previous results unchanged]
-19. ★ **|Z_p| ~ 2·Poisson(1/2)** (NEW): verified all primes ≤ 10000, max |Z_p| = 8
-20. ★ **Second-moment criterion** (NEW): M₂=O(N^{2-δ}) → W(n)=o(n) for ALL n
-21. ★ **M₂ ≈ 0.59·N·(logN)²** (NEW): empirical, stable across dyadic blocks
-22. ★ **No-go model** (NEW): vertical moments alone insufficient
-23. ★ **AP-BDH sufficiency** (NEW): dispersion + Z≤p^{2/3} → N^{5/6+o(1)}
-24. ★ **Classical tools ALL exhausted** (NEW): BV/LS/TK/ST/pretentious/gap/Stewart/abc
-25. ★ **Gap polynomial sparsity** (NEW): Σ r_p(h) ≤ 1 for h ≤ 100, all tested primes
+## ★ BREAKTHROUGH 6: Shift-correlation random + exact decomposition + random model
+
+### Exact M₂ decomposition (N=64..8192)
+Diagonal ≈ 63%, off-diagonal ≈ 37% of M₂, consistently.
+**CRT error is NEGATIVE** for N ≥ 256: the actual off-diagonal is SMALLER than
+the CRT independence prediction. Zero sets have mild negative cross-prime correlation.
+|CRT error|/N = O(1), negligible vs diagonal = Θ(N log²N).
+
+### Shift-correlation: RANDOM (all 666 primes ≤ 5000)
+C_p(a) = Σ_r e_p(a·(b_{r+1} - b_r)) satisfies:
+- max|C_p(a)|/√p: mean 3.35, max 5.07
+- max|C_p(a)|/(√p · √(log p)): mean 1.23, max 1.80
+- EXACTLY consistent with random differences (Gumbel law for √(2 log p))
+- All shifts s=1,2,3,5 give same behavior
+- Histogram of differences: std/mean ≈ 1 (Poisson!), zeros ≈ p/e (= 1/e fraction)
+**Bottom line:** b_r mod p is INDISTINGUISHABLE from random in F_p.
+
+### Exact random model (Proposition in paper, from Q5387)
+For uniform f ∈ V_p^+ (space of palindromic functions F_p* → F_p):
+K ~ Bin((p-3)/2, 1/p) → Poisson(1/2)
+Proof: DFT is invertible, reflected spectral pairs are independent uniform.
+Gap to Apéry: H_p has algebraic structure (square of anti-palindromic B_p).
+
+### Paper updated (27 pages, committed e85fd3f)
+Added: N=8192 row, exact decomposition table, random model proposition,
+shift-correlation computation subsection.
+
+### Currently dispatched (4 dm tabs)
+- dm1: Q5384 — Mesoscopic root-count (still processing)
+- dm2: Q5388 — Orbit mixing / shift-correlation theory (Ostafe-Shparlinski, Peluse)
+- dm3: Q5389 — CRT decomposition analysis (negative error, V° ≤ S proof strategy)
+- dm4: Q5390 — Crystalline anti-concentration (reciprocal-square sublocus, dimension counting)
+
+## Summary of results (UPDATED)
+19. ★ |Z_p| ~ 2·Poisson(1/2) — verified all primes ≤ 10000
+20. ★ Second-moment criterion — M₂=O(N^{2-δ}) → W(n)=o(n)
+21. ★ M₂ ≈ 0.59·N·(logN)² — with exact decomposition, CRT error negative
+22. ★ No-go model — vertical bounds alone insufficient
+23. ★ AP-BDH sufficiency — dispersion + Z≤p^{2/3} → N^{5/6+o(1)}
+24. ★ Classical tools ALL exhausted — confirmed by 7+ ChatGPT audits
+25. ★ Gap polynomial sparsity — Σ r_p(h) ≤ 1 for h ≤ 100
+26. ★★ **Shift-correlation RANDOM** — max|C_p|/√p ≈ √(2logp), all p ≤ 5000
+27. ★★ **Exact random model** — Bin((p-3)/2, 1/p) → Poisson(1/2) for V_p^+
+28. ★★ **CRT error NEGATIVE** — zero sets mildly negatively correlated
+29. ★ **Exact decomposition** — Off/Diag ≈ 0.58, |CRT err|/N = O(1)
 
 ## Resources
 - ChatGPT Pro: dm1-dm4 (SOL). All tabs dispatched.
