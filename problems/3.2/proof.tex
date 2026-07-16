@@ -3903,6 +3903,45 @@ therefore a genuinely horizontal,
 two-prime-divisor assertion about~$b_m$.
 \end{remark}
 
+\begin{remark}[Why classical sieves do not close the argument]
+\label{rem:sieve-limitation}
+The collision bound $F = O(T)$ has the form of
+a two-dimensional upper-bound sieve
+(Selberg, Rosser--Iwaniec, Brun, GPY),
+but no classical sieve theorem
+deduces it from the one-prime data alone.
+After weight expansion, every such sieve
+introduces the counts
+$A_{pq}(N) = \#\{m : pq \mid b_m\}$
+for products $pq \asymp N^2$.
+Since the observation interval has length only~$N$,
+each individual expected count is~$O(1/N)$
+and only an \emph{averaged} large-modulus
+discrepancy theorem can hold.
+The difficulty is intrinsic: even the strongest
+conceivable one-prime bound $A_p(N) \le 1$
+for every~$p$ does not control cross-prime
+alignment.
+An adversarial configuration with all zero sets
+concentrating at a single index~$m_0$
+satisfies $A_p = 1$ while $F \asymp (N/\log N)^2$.
+Thus the sieve machinery can \emph{package}
+a two-prime distribution theorem as a
+collision bound, but it cannot
+\emph{manufacture} that theorem from
+one-prime information.
+The minimum new input is the bilinear estimate
+\begin{equation}\label{eq:bfm2}
+  \sum_{\substack{p \ne q \\ p,q \in (N,2N]}}
+  A_{pq}(N)
+  \;\ll\;
+  T + \frac{T^2}{N},
+\end{equation}
+which is precisely the block second-factorial-moment
+conjecture (diagonal AMTD,
+Hypothesis~\ref{hyp:amtd}).
+\end{remark}
+
 \begin{proposition}[Conditional collision bound]
 \label{prop:conditional-collision}
 Assume the following \emph{Frobenius Pair Independence}
@@ -4236,6 +4275,41 @@ Surr \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{remark}[Exact profile constant]
+\label{rem:profile-constant}
+The column $\|\rho\|_2^2/(T^2/N)$ in
+Table~\ref{tab:residual} converges
+to a constant~$c_2 \approx 1.262$
+as~$N \to \infty$.
+This constant arises from the
+geometry of truncation in the palindromic
+doublet model: a prime $p = N(1{+}s)$
+contributes retained hits to the
+interval $(p, 2N]$ with a nonuniform
+density that tapers as~$s \to 1$.
+The exact constant is determined by
+the profile shape
+$\rho(m) \propto \sum_{p < m} A_p/(2N{-}p)$
+and can be computed from the prime-pair
+intersection counts of
+Section~\ref{ssec:random-crt-model}.
+
+The exact palindromic null expectation
+confirms the match:
+the A/C/D pair-intersection formula
+(where A, C, D classify collisions
+by branch orientation)
+gives $E_{\mathrm{null}}[F]/(T^2/N)$
+$= 1.236$ at $N = 1024$,
+$1.254$ at $N = 4096$,
+$1.257$ at $N = 16{,}384$,
+converging to the same limit~$c_2$.
+At all tested sizes,
+$E_{\mathrm{null}}[F]$ agrees with
+the observed~$F$ to within the
+expected stochastic fluctuation.
+\end{remark}
 
 \subsection{Gap polynomial sparsity}
 
