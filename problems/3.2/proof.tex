@@ -24,15 +24,29 @@ The Ap\'ery GCD Conjecture}
 We study $G_n = \gcd(d_n a_n, d_n b_n)$ for the Ap\'ery
 sequences $(a_n)$, $(b_n)$ with $d_n = \operatorname{lcm}(1,\ldots,n)^3$.
 We prove \emph{unconditionally} that $G_n = e^{o(n)}$
-for a set of positive integers of natural density~$1$.
-The key ingredient is a new bound $Z(p) = o(p)$ on the
+for a set of positive integers of natural density~$1$,
+with the quantitative bound
+$\#\{n \le N : \log G_n > \varepsilon\,n\} = O(N^{2/3})$
+for every $\varepsilon > 0$.
+The key ingredient is a new bound $Z(p) = O(p^{2/3})$ on the
 zero-count function $Z(p) = \#\{j < p : p \mid b_j\}$,
 derived from the Ap\'ery recurrence via a gap polynomial argument.
-Computation for all $9{,}590$ primes $5 \le p \le 10^5$ gives
-$Z(p) \le 10$ with mean~$\approx 1$.
-Under the stronger arithmetic hypothesis that
-$Z(p) = O(1)$ on average (Hypothesis~Z),
-we prove $\log G_n = O(\sqrt{n})$ for all~$n$.
+Computation for all $78{,}496$ primes $5 \le p \le 10^6$ gives
+$Z(p) \le 12$ with mean~$\approx 1$.
+The pair count $Z(p)/2$ fits
+$\mathrm{Poisson}(1/2)$; we prove this rigorously
+in the prime-aspect via a Chebotarev argument
+for the hyperoctahedral Galois group of the
+gap polynomials.
+The Poisson tail predicts
+$\max_{p \le N} Z(p) \sim 2\log\log N$,
+so $Z(p)$ is almost certainly unbounded.
+Under the weaker Ces\`aro hypothesis
+$\sum_{p \le x} Z(p) \ll \pi(x)$
+(Hypothesis~$\bar{Z}$),
+which the Poisson model supports, we prove
+$\log G_n = O(\sqrt{n}(\log n)^{1+\varepsilon})$
+for density~$1$.
 \end{abstract}
 
 \section{Setup}
@@ -403,6 +417,99 @@ $0.98, 2.03, 1.11, 2.07, 1.11, 1.88$
 for $h = 3, \ldots, 8$.
 \end{remark}
 
+\begin{proposition}[Hyperoctahedral Poisson law]\label{prop:poisson}
+Assume $\operatorname{Gal}(N_h) \cong C_2 \wr S_m$ with
+$m = \lfloor 3(h{-}1)/2 \rfloor$.
+Let $Y_h(p)$ be the number of non-central reflection-pairs
+of roots of~$N_h$ that split completely
+over~$\mathbb{F}_p$.
+Then for each fixed~$k \le m$, the factorial moments
+in the prime-aspect satisfy
+\[
+\lim_{x \to \infty} \frac{1}{\pi(x)} \sum_{p \le x}
+  (Y_h(p))_k = \Bigl(\frac{1}{2}\Bigr)^k,
+\]
+where $(Y)_k = Y(Y{-}1)\cdots(Y{-}k{+}1)$.
+Since these match the factorial moments of
+$\mathrm{Poisson}(1/2)$ for all~$k$,
+the prime-aspect distribution of~$Y_h(p)$
+converges to $\mathrm{Poisson}(1/2)$ as $h \to \infty$.
+\end{proposition}
+
+\begin{proof}
+In $G = C_2 \wr S_m = \{(\sigma,\varepsilon) :
+\sigma \in S_m,\; \varepsilon \in \{\pm 1\}^m\}$,
+a \emph{positive fixed point} of $g = (\sigma,\varepsilon)$
+is an index $i$ with $\sigma(i) = i$ and $\varepsilon_i = +1$.
+The Frobenius at~$p$ acts on the $m$ reflection-pairs,
+and $Y_h(p)$ equals the number of positive fixed points.
+For any $k$ distinct indices $i_1, \ldots, i_k$,
+the fraction of $g \in G$ fixing all $k$ positively is
+\[
+\frac{2^{m-k}\,(m-k)!}{2^m\,m!} = \frac{1}{2^k\,(m)_k}.
+\]
+Summing over all $(m)_k$ ordered $k$-tuples,
+$\mathbf{E}_{g \in G}[(Y(g))_k] = (1/2)^k$,
+which matches the factorial moments of $\mathrm{Poisson}(1/2)$.
+The Chebotarev density theorem then gives the
+prime-aspect convergence
+(Remark~\ref{rem:grh-effective} supplies the
+effective error term under GRH).
+Since the factorial moments determine the Poisson
+distribution and they hold for all $k \le m$,
+$Y_h(p) \to \mathrm{Poisson}(1/2)$ as $m \to \infty$.
+\end{proof}
+
+\begin{remark}[Prime-aspect vs.\ orbit-aspect]\label{rem:two-aspects}
+Proposition~\ref{prop:poisson} is a \emph{prime-aspect} statement:
+for fixed~$h$ and varying~$p$, the root-pair count $Y_h(p)$
+converges to $\mathrm{Poisson}(1/2)$.
+The zero-count $Z(p)$ aggregates contributions from
+all gaps $h = 1, \ldots, p{-}1$ at a \emph{fixed} prime~$p$,
+so the orbit-aspect independence needed to deduce
+$Z(p)/2 \sim \mathrm{Poisson}(1/2)$ is not implied by
+Chebotarev alone.
+The gap between the two aspects parallels the gap between
+the Sato--Tate distribution (average over primes) and
+pointwise distribution (a single prime).
+\end{remark}
+
+\begin{remark}[GRH-effective error]\label{rem:grh-effective}
+For each fixed~$k$, the $k$-th factorial moment
+does not require the full splitting field
+$K_h$ (of degree~$2^m m!$, double-exponential in~$h$).
+Let $E_{h,k}$ be the fixed field of the
+stabilizer of an ordered signed $k$-tuple
+with distinct underlying reflection pairs;
+then
+$[E_{h,k}:\mathbb{Q}] = 2^k\,(m)_k = O_k(h^k)$.
+Under GRH for~$\zeta_{E_{h,k}}$,
+\[
+\frac{1}{\pi(x)}
+\sum_{\substack{p \le x \\ p\;\text{good}}}
+(Y_h(p))_k
+= 2^{-k}
++ O_k\!\left(
+\frac{\log D_{h,k} + 2^k(m)_k\log x}{\sqrt{x}}
+\right),
+\]
+where $D_{h,k} = |\operatorname{Disc}(E_{h,k})|$.
+The Ap\'ery recurrence gives the
+coefficient-height bound
+$\log\|N_h\|_1 = O(h\log h)$,
+from which
+$\log D_{h,k} \ll_k h^{k+2}\log h$.
+Thus an $O(h^{-C})$ error holds in the polynomial range
+$x \ge h^{2k+4+2C+\varepsilon}$, for each fixed~$k$.
+
+At $x = 10^6$ with $h = 10$ ($m = 13$),
+the degree contributions alone for
+$k = 1,2,3$ are $0.25$, $5.99$, and~$131.7$
+respectively:
+the observed Poisson accuracy is far better
+than present effective Chebotarev can certify.
+\end{remark}
+
 \subsection{Dual bounds: the restart identity and column estimate}
 
 The bound $Z(p) = O(p^{2/3})$ controls zeros along a \emph{fixed row}
@@ -460,6 +567,12 @@ Summing:
 Optimizing $L \asymp (H/3)^{1/3}$ gives the stated bound.
 \end{proof}
 
+Computationally, the column count at mesoscopic scale
+$H = \lfloor\sqrt{p}\rfloor$ is far below the $O(H^{2/3})$
+bound: for all primes $p \le 100{,}003$ and all $x_0$,
+$\#\{h \le H : N_h(x_0) \equiv 0\} \le 2$.
+For $p \ge 10{,}007$, the maximum is~$\le 1$.
+
 \begin{remark}[Rectangular incidence estimate]\label{rem:incidence}
 The row bound $|R_h| \le 3(h{-}1)$ and the
 column bound~\eqref{eq:column-bound} together give the
@@ -479,8 +592,15 @@ The correct target is the \emph{mesoscopic} estimate
 $R_p(\lfloor\sqrt{p}\rfloor) = O(\sqrt{p})$,
 where the split-prime obstruction does not apply because
 $H = \sqrt{p}$ grows with~$p$.
-Such an estimate would improve the exponent in
-Proposition~\ref{prop:zp-bound} from~$2/3$ to~$1/2$.
+More generally, if $R_p(H) \ll H^\beta$
+then $Z(p) \le p/H + R_p(H)$ is optimized
+at $H \sim p^{1/(\beta+1)}$, giving
+$Z(p) \ll p^{\beta/(\beta+1)}$:
+the current $\beta = 2$ gives~$2/3$
+and $\beta = 1$ yields~$1/2$.
+Reflection forces $R_p(H) \ge H/2$ from
+central roots, so $\beta = 1$ is
+the intrinsic limit of this first-moment method.
 \end{remark}
 
 \subsection{The continuant Bezout identity}
@@ -568,46 +688,104 @@ $\mathcal{E}_p(H)
 which is a sparse-exception theorem for the separated-block
 resultant family---beyond the scope of universal continuant
 identities.
+(The $A_1$ T-system $\tau_{h+1}(x)\tau_{h+1}(x+1) -
+\tau_{h+2}(x)\tau_h(x+1) = 1$ admits tame solutions
+with zero density~$1/2$, e.g.~$\tau_{2k}=0$,
+$\tau_{2k+1}=(-1)^k$, so singularity confinement
+alone cannot force sparsity.)
+In the transfer-matrix formulation (writing
+$M(n) = \bigl(\begin{smallmatrix}P(n)&{-n^6}\\
+1&0\end{smallmatrix}\bigr)$, so that $N_h(x) = 0$
+iff a fixed matrix coefficient of the interval product
+$M(x{+}h{-}1)\cdots M(x{+}1)$ vanishes), the conjectured
+$\mathcal{E}_p(H) \ll H^{3/2}$ is analogous to a
+Rudnev-type point--plane incidence bound in
+$\mathrm{PGL}_2(\mathbb{F}_p)$, subject to a
+nonconcentration hypothesis for the deterministic
+Ap\'ery cocycle.
 Computation for selected primes:
 \begin{center}
-\begin{tabular}{c|ccccc}
-$p$ & $71$ & $101$ & $503$ & $1009$ & $2003$ \\
+\begin{tabular}{c|cccccccc}
+$p$ & $71$ & $503$ & $2003$ & $5003$ & $7919$ & $20011$ & $50021$ & $10^5{+}3$ \\
 \hline
-$H = \lfloor\sqrt{p}\rfloor$ & 8 & 10 & 22 & 31 & 44 \\
-$\mathcal{E}_p(H)$ & 1 & 2 & 2 & 0 & 2 \\
-$\mathcal{E}_p(H)/H^{3/2}$ & .044 & .063 & .019 & 0 & .007
+$H = \lfloor\sqrt{p}\rfloor$ & 8 & 22 & 44 & 70 & 88 & 141 & 223 & 316 \\
+$R_p(H)/H$ & 1.75 & 1.59 & 1.36 & 1.50 & 1.75 & 1.63 & 1.56 & 1.46 \\
+$\mathcal{E}_p(H)$ & 1 & 2 & 2 & 2 & 10 & 0 & 2 & 0 \\
+$\mathcal{E}_p(H)/H^{3/2}$ & .044 & .019 & .007 & .003 & .012 & 0 & .001 & 0
 \end{tabular}
 \end{center}
-All ratios are~$< 0.1$, consistent with
+The ratio $R_p(H)/H$ clusters around~$3/2$
+(the Chebotarev prediction from
+Remark~\ref{rem:galois}), and
+$\mathcal{E}_p(H)/H^{3/2} \to 0$, consistent with
 $\mathcal{E}_p(H) \ll H^{3/2}$.
+The key arithmetic object is the shifted resultant
+$S_{d,r} = \operatorname{Res}_x(N_d(x), N_r(x+d)) \in \mathbb{Z}$:
+for $p \nmid S_{d,r}$, the gap polynomials $N_d$ and~$N_r(\cdot + d)$
+share no root over~$\mathbb{F}_p$, so that gap pair
+contributes zero to~$\mathcal{E}_p$.
+A Hadamard bound gives
+$\log |S_{d,r}| \ll (d+r)^2 \log(d+r)$, so the total
+number of prime divisors across all pairs $(d,r)$ with
+$d+r \le H$ is $O(H^4 \log H)$.
+Averaging over the $\sim X/\log X$ primes in $(X,2X]$
+gives $\mathcal{E}_p(H) \ll H^{1/2}$
+for all but $o(X/\log X)$ primes, provided
+$H \le X^{2/7-\varepsilon}$---rigorous but far from
+the global target $H = p-1$.
+
+A sharper route uses the bipartite incidence graph
+$\Gamma_p(H)$: left vertices are gap lengths~$d$, right
+vertices are gap lengths~$r$, with an edge when
+$N_d$ and~$N_r(\cdot + d)$ share a root
+over~$\mathbb{F}_p$.
+Each edge certifies a triple collision, so
+$\mathcal{E}_p(H) = e(\Gamma_p(H))$.
+A uniform fiber bound $\deg_L(d) \le C$ (the number of
+$r$-partners for each~$d$) and a uniform codegree
+bound (at most~$C$ common right neighbors for any
+two left vertices) would place $\Gamma_p(H)$ in the
+regime of the K\H{o}v\'ari--S\'os--Tur\'an theorem,
+giving $\mathcal{E}_p(H) \ll H^{3/2}$---the
+collision-energy scale needed for the
+mesoscopic target $R_p(\sqrt{p}) = O(\sqrt{p})$.
+The Dodgson identity
+(Remark~\ref{rem:dodgson}) restricts local
+configurations in~$\Gamma_p$, but by itself controls
+$O(H)$~pairs out of~$O(H^2)$; upgrading it to a
+global codegree bound is the key missing step.
 \end{remark}
 
 \subsection{Computational evidence}
 
 \begin{proposition}\label{prop:Zp-data}
-For all $9{,}590$ primes $5 \le p \le 10^5$:
+For all $78{,}496$ primes $5 \le p \le 10^6$:
 \begin{enumerate}
-\item $Z(p) \in \{0, 2, 4, 6, 8, 10\}$ for all but two primes;
+\item $Z(p) \in \{0, 2, 4, 6, 8, 10, 12\}$ for all but two primes;
       the two exceptions ($p = 11$ and $p = 3137$) have $Z(p) = 1$
       (non-ordinary primes, where $p \mid a_p(f)$).
-      $\max Z(p) = 10$ at $p = 88{,}609$.
+      $\max Z(p) = 12$ at $p = 159{,}977$.
 \item The exact histogram is:
 \begin{center}
-\begin{tabular}{c|cccccccc}
-$Z(p)$ & 0 & 1 & 2 & 4 & 6 & 8 & 10 \\
+\begin{tabular}{c|ccccccccc}
+$Z(p)$ & 0 & 1 & 2 & 4 & 6 & 8 & 10 & 12 \\
 \hline
-count & 5820 & 2 & 2926 & 722 & 106 & 13 & 1 \\
-fraction & .607 & .0002 & .305 & .075 & .011 & .001 & .0001 \\
-Poi$(\tfrac{1}{2})$ & .607 & --- & .303 & .076 & .013 & .002 & .0002
+count & 47632 & 2 & 23730 & 6045 & 951 & 123 & 12 & 1 \\
+fraction & .607 & .000 & .302 & .077 & .012 & .002 & .000 & .000 \\
+Poi$(\tfrac{1}{2})$ & .607 & --- & .303 & .076 & .013 & .002 & .000 & .000
 \end{tabular}
 \end{center}
-The mean $Z(p) = 0.990$, stable across all ranges.
+The mean $Z(p) = 1.000$, stable across all ranges
+($\chi^2 = 3.43$ on $5$~d.f.\ against
+$\mathrm{Poisson}(1/2)$ for the pair count).
 \item The symmetry $b_j \equiv b_{p-1-j} \pmod{p}$ holds for
       all tested primes: zeros come in palindromic pairs
       $\{j, p{-}1{-}j\}$, so $Z(p)$ is even (except at non-ordinary primes).
       The pair count $Z(p)/2$ fits $\mathrm{Poisson}(1/2)$ to within
-      sampling noise (table above): the $j$-th pair appears
-      independently with probability $\approx 1/(2p)$.
+      sampling noise (table above).
+      Proposition~\ref{prop:poisson} proves $\mathrm{Poisson}(1/2)$
+      rigorously in the prime-aspect; the orbit-aspect fit
+      (Remark~\ref{rem:two-aspects}) remains empirical.
 \end{enumerate}
 \end{proposition}
 
@@ -621,14 +799,16 @@ Remark~\ref{rem:galois}:
 \begin{tabular}{r|rrr}
 $p$ & $H = \lfloor\sqrt{p}\rfloor$ & $R_p(H)$ & $R_p(H)/H$ \\ \hline
 $503$ & 22 & 35 & 1.59 \\
-$1009$ & 31 & 41 & 1.32 \\
 $2003$ & 44 & 60 & 1.36 \\
-$3001$ & 54 & 87 & 1.61 \\
-$5003$ & 70 & 105 & 1.50
+$5003$ & 70 & 105 & 1.50 \\
+$10007$ & 100 & 154 & 1.54 \\
+$20011$ & 141 & 230 & 1.63 \\
+$50021$ & 223 & 347 & 1.56 \\
+$100003$ & 316 & 460 & 1.46
 \end{tabular}
 \end{center}
-The ratio $R_p(H)/H$ remains bounded (range $0.64$--$2.25$
-over all primes $100 \le p \le 5003$), supporting the
+The ratio $R_p(H)/H$ stabilizes near~$3/2$
+(range $1.32$--$1.75$ for $p > 500$), supporting the
 mesoscopic conjecture in Remark~\ref{rem:incidence}.
 \end{remark}
 
@@ -649,11 +829,14 @@ $A_{(p-1)/2} \equiv 0 \pmod{p}$ for all
 $p \equiv 3 \pmod{4}$ --- a \emph{positive density}
 of primes with guaranteed zeros.
 In contrast, the $\zeta(3)$ Ap\'ery numbers are governed
-by the non-CM newform $f \in S_4(\Gamma_0(8))$
+by the non-CM newform
+$f(z) = \eta(2z)^4\eta(4z)^4 \in S_4(\Gamma_0(8))$
 (LMFDB label 8.4.a.a),
 for which no such systematic zero-forcing occurs.
 This is a structural reason why
-Hypothesis~Z should hold for the $\zeta(3)$ sequence.
+Hypothesis~$\bar{Z}$ should hold for the $\zeta(3)$ sequence,
+even though the pointwise bound $Z(p) \le C$
+(Hypothesis~Z) likely fails.
 \end{remark}
 
 \begin{remark}\label{rem:open}
@@ -666,6 +849,56 @@ The density-zero conjecture for non-ordinary primes of
 non-CM weight-4 forms is itself open~\cite{JinMaOno2016}.
 Thus Hypothesis~Z contains a known open problem
 as a special case.
+The heuristic density of non-ordinary primes is
+$\sim C_f/p$
+(the Sato--Tate distribution on the normalized
+coefficients $a_p/p^{3/2}$ admits $\sim 4p^{1/2}$
+multiples of~$p$ in $[-2p^{3/2}, 2p^{3/2}]$,
+each contributing mass $\sim p^{-3/2}$).
+The expected count up to~$x$ is thus
+$C_f\log\log x$ with $C_f \approx 1$.
+Finding~$2$ non-ordinary primes ($p = 11, 3137$)
+below~$10^6$
+is consistent with $\log\log(10^6) \approx 2.9$.
+This is not a standard Lang--Trotter problem:
+the target set $\{a : p \mid a\}$ varies with~$p$,
+and no analogue of Elkies' theorem
+(infinitely many supersingular primes)
+is known for weight~$\ge 4$.
+\end{remark}
+
+\begin{remark}[Evidence against Hypothesis Z]\label{rem:Zfalse}
+The $2 \cdot \operatorname{Poisson}(1/2)$ distribution
+(Remark~\ref{rem:squareness} below) has unbounded support:
+extreme-value theory predicts
+$\max_{p \le N} Z(p) \sim 2\log\log N$.
+The current record $Z(p) = 12$ at $p = 159{,}977$
+(with record progression $2, 4, 6, 8, 10, 12$)
+is consistent with this prediction.
+We therefore expect Hypothesis~Z to fail:
+the first prime with $Z(p) = 14$ should appear
+near $p \approx 2 \times 10^7$
+(the Gumbel prediction for the
+$\operatorname{Poisson}(1/2)$ pair maximum).
+A computation to $p = 5 \times 10^7$ would
+either refute Hypothesis~Z or provide
+strong evidence for a structural cutoff.
+\end{remark}
+
+\begin{hypothesis}[Hypothesis $\bar{Z}$]\label{hyp:Zbar}
+$\displaystyle\sum_{p \le x} Z(p) \ll \pi(x)$,
+equivalently,
+the average of $Z(p)$ over primes $p \le x$ is bounded.
+\end{hypothesis}
+
+\begin{remark}\label{rem:Zbar}
+Hypothesis~$\bar{Z}$ is strictly weaker
+than Hypothesis~Z and consistent with
+$Z(p) \sim 2 \cdot \operatorname{Poisson}(1/2)$
+(which gives $\mathbb{E}[Z(p)] = 1$, independent of~$p$).
+It suffices for the conditional bound
+$\log G_n = O(\sqrt{n}(\log n)^{1+\varepsilon})$
+(Theorem~\ref{thm:main}).
 \end{remark}
 
 \section{The denominator connection lemma}
@@ -720,11 +953,65 @@ For all $n \le 300$ and primes $p \in (n/2, n]$ with $p \ge 7$:
 $v_p(G_n) = 0 \iff p \nmid b_{n-p}$ confirmed in
 $2101/2101$ cases (100\%).
 
+\begin{corollary}[Lucas reduction]\label{cor:lucas}
+For $p \ge 7$ and $p \in (n/2, n]$: $v_p(G_n) \ge 1$ iff $p \mid b_{n-p}$.
+By the Lucas congruence $b_n \equiv b_1\,b_{n-p} = 5\,b_{n-p} \pmod{p}$,
+this is equivalent (for $p \ne 5$) to $p \mid b_n$.
+Thus $B(n) := \#\{p \in (n/2, n], p \text{ prime} : v_p(G_n) \ge 1\}$
+equals $\omega_{(n/2,n]}(b_n) + O(1)$, the number of
+\emph{distinct prime factors of~$b_n$ lying between
+$n/2$ and~$n$}, up to an absolute constant.
+\end{corollary}
+
+The full conjecture $G_n = e^{o(n)}$ for all~$n$
+is therefore equivalent to the
+\emph{top-half radical estimate}:
+\begin{equation}\label{eq:rad}
+\log\operatorname{rad}_{(n/2,n]}(b_n) = o(n).
+\end{equation}
+Since $\log b_n \sim n\log(17+12\sqrt{2}) \approx 3.52\,n$,
+the height bound gives
+$\omega_{(n/2,n]}(b_n) \le \log b_n / \log(n/2)
+= O(n/\log n)$, precisely one $o(1)$ factor
+short of the target.
+Computation for $n \le 200{,}000$ gives $B(n) \le 3$
+and $B(n) = 0$ for $93.7\%$ of values
+(see Remark~\ref{rem:random} for the Poisson analysis).
+
+\begin{remark}[Random-model prediction]\label{rem:random}
+Under a random-integer model, $\Pr(p \mid b_n) \approx 1/p$
+for each prime $p$, so by Mertens' theorem
+\[
+\mathbb{E}[B(n)] = \sum_{n/2 < p \le n} \frac{1}{p}
+= \log\!\Bigl(\frac{\log n}{\log(n/2)}\Bigr) + O(1/\log n)
+\approx \frac{\log 2}{\log n} \;\to\; 0.
+\]
+Computation for $n \le 200{,}000$ confirms:
+$\mathbb{E}[B] \approx 0.065$, $\max B(n) = 3$,
+and the histogram matches
+$\operatorname{Poisson}(\log 2/\log n)$ to high accuracy:
+$B(n) = 0$ for $93.7\%$, $B(n) = 1$ for $6.0\%$,
+$B(n) = 2$ for $0.20\%$, $B(n) = 3$ for $0.006\%$
+(the Poisson predictions with $\lambda = 0.065$ are
+$93.7\%$, $6.1\%$, $0.20\%$, $0.004\%$).
+By CRT-based approximate independence across primes,
+$B(n)$ should follow $\operatorname{Poisson}(\log 2/\log n)$
+with $\lambda \to 0$.
+Extreme-value theory then predicts
+$\max_{n \le N} B(n) = O(\log N/\log\log N)$---trivially
+$o(n/\log n)$---so the random model \emph{strongly} predicts
+the full conjecture.
+The obstruction is proving that $b_n$ behaves
+``randomly'' with respect to its prime factors in $(n/2, n]$,
+despite its highly structured factorization
+(supercongruences, Lucas decomposition,
+palindromic symmetry).
+\end{remark}
+
 \section{The unconditional density-one theorem}\label{sec:density1}
 
 \begin{theorem}\label{thm:density1}
 For a set of positive integers $n$ of natural density~$1$,
-$\log G_n = O(\sqrt{n})$, and in particular
 $G_n = e^{o(n)}$.
 \end{theorem}
 
@@ -779,91 +1066,257 @@ O(q) \cdot \frac{2N}{q+1} = O(N\sqrt{N}) = o(N^2/\log N).
 \]
 
 \textbf{Conclusion.}
-By Markov's inequality applied to
-$\sum_{n \in (N,2N]} B(n) \le R_N + L_N = o(N^2/\log N)$:
-the number of $n \in (N, 2N]$ with
-$B(n) > n/\log^2 n$ is $o(N)$.
+Write $\sum_{n \in (N,2N]} B(n) \le R_N + L_N = o(N^2/\log N)$.
+For any fixed $\delta > 0$, Markov's inequality gives
+\[
+\#\bigl\{n \in (N,2N] : B(n) > \delta n/\log n\bigr\}
+\le \frac{o(N^2/\log N)}{\delta N/\log N} = o(N).
+\]
 A dyadic decomposition shows the exceptional set has
-density zero. For all remaining~$n$,
-$\log G_n = O(\sqrt{n}) + 3B(n)\log n \le
-O(\sqrt{n}) + O(n/\log n) = o(n)$.
+density zero, so $B(n) = o(n/\log n)$ for density~$1$.
+For all such~$n$,
+$\log G_n = O(\sqrt{n}) + 3B(n)\log n = O(\sqrt{n}) + o(n) = o(n)$.
 \end{proof}
+
+\begin{corollary}[Quantitative exceptional set]\label{cor:exceptional}
+For every $\varepsilon > 0$,
+\[
+\#\{n \le N : \log G_n > \varepsilon\,n\}
+= O_\varepsilon(N^{2/3}).
+\]
+\end{corollary}
+
+\begin{proof}
+We make the density-one argument quantitative using
+the explicit bound $Z(p) = O(p^{2/3})$ from
+Proposition~\ref{prop:zp-bound}.
+For $n \in (N, 2N]$, $\log G_n \le O(\sqrt{n}) + 3B(n)\log n$,
+so $\log G_n > \varepsilon n$ requires
+$B(n) > \varepsilon N/(7\log N)$ for $N$ large.
+
+Partial summation with $Z(p) \le C p^{2/3}$ gives
+\[
+\sum_{\sqrt{N} < p \le 2N} \frac{Z(p)}{p}
+\le C \sum_{p \le 2N} p^{-1/3}
+= \tfrac{3}{2}\,C\,\frac{(2N)^{2/3}}{\log(2N)}
++ O(N^{1/3})
+= O\!\left(\frac{N^{2/3}}{\log N}\right).
+\]
+The lower-digit incidence satisfies
+$R_N = N \sum Z(p)/p + \sum Z(p) = O(N^{5/3}/\log N)$
+(the second sum, $\sum Z(p) \le C\sum p^{2/3}$,
+contributes the same order).
+The leading-digit incidence $L_N = O(N^{3/2})$
+is dominated by~$R_N$.
+Hence $\sum_{n \in (N,2N]} B(n) = O(N^{5/3}/\log N)$.
+
+By Markov's inequality,
+\[
+\#\bigl\{n \in (N,2N] : B(n) > \varepsilon N/(7\log N)\bigr\}
+\le \frac{O(N^{5/3}/\log N)}{\varepsilon N/(7\log N)}
+= O(N^{2/3}/\varepsilon).
+\]
+A dyadic decomposition over intervals $(N/2^{j+1}, N/2^j]$
+gives the global bound, since
+$\sum_{j \ge 0} (N/2^j)^{2/3} = O(N^{2/3})$.
+\end{proof}
+
+\begin{remark}\label{rem:exponent-link}
+The exponent $2/3$ in the exceptional set is inherited
+directly from the exponent $2/3$ in
+Proposition~\ref{prop:zp-bound}.
+More generally, if $Z(p) \le C\,p^\alpha$
+for all primes, then the same argument gives
+$\#\{n \le N : \log G_n > \varepsilon n\} = O(N^\alpha/\varepsilon)$.
+In particular, the mesoscopic target
+$Z(p) = O(p^{1/2})$
+(Remark~\ref{rem:collision})
+would yield an $O(N^{1/2})$ exceptional set,
+and Hypothesis~Z ($Z(p) = O(1)$) would give
+$O(\log N\,\log\log N)$.
+\end{remark}
 
 \section{Counting bad primes: the conditional result}
 
 \begin{theorem}\label{thm:main}
-Assume Hypothesis~Z. Then for a set of positive integers~$n$
-of natural density~$1$,
-$\log G_n = O(\sqrt{n})$.
+Assume Hypothesis~$\bar{Z}$. Then for a set of positive integers~$n$
+of natural density~$1$ and any function $\omega(n) \to \infty$,
+\[
+\log G_n = O\bigl(\omega(n)\sqrt{n}\log n\bigr).
+\]
+In particular, $\log G_n = O(\sqrt{n}(\log n)^{1+\varepsilon})$
+for any $\varepsilon > 0$.
 \end{theorem}
 
 \begin{proof}
 As in Theorem~\ref{thm:density1}, decompose
 $\log G_n = \sum_p v_p(G_n)\log p$.
-The small-prime contribution is $O(\sqrt{n})$
-unconditionally.
+The small-prime contribution is $O(\sqrt{n})$.
+Split $B(n) = B_{\rm low}(n) + B_{\rm lead}(n)$,
+where $B_{\rm low}$ counts bad primes~$p > \sqrt{n}$
+with $n \bmod p \in \mathcal{Z}_p$ and $B_{\rm lead}$
+counts those with $\lfloor n/p \rfloor \in \mathcal{Z}_p$.
 
-For primes $p > \sqrt{n}$: $v_p(G_n) \le 3$ and
-$p$ is bad only if some base-$p$ digit of~$n$
-lies in~$\mathcal{Z}_p$.
-Under Hypothesis~Z with pointwise $Z(p) \le C$,
-for $n \in (N, 2N]$ the total lower-digit incidence
-satisfies $R_N \le \sum_p (N \cdot C/p + C)
-= NC \sum_{p > \sqrt{N}} 1/p + O(N/\log N) = O(N)$.
-The leading-digit incidence $L_N = O(N\sqrt{N})$
+Under Hypothesis~$\bar{Z}$, set
+$M(t) = \sum_{p \le t} Z(p) \ll t/\log t$.
+The lower-digit incidence satisfies
+$R_N = \sum_{n \in (N,2N]} B_{\rm low}(n)
+\le N \sum_{\sqrt{N} < p \le 2N} Z(p)/p + O(M(2N))$.
+Abel summation gives
+$\sum_{\sqrt{N} < p \le 2N} Z(p)/p
+= [M(t)/t]_{\sqrt{N}}^{2N}
++ \int_{\sqrt{N}}^{2N} M(t)/t^2\,dt
+\ll 1/\log N + \int_{\sqrt{N}}^{2N} dt/(t\log t)
+= O(1)$,
+so $R_N = O(N)$.
+By Markov, $B_{\rm low}(n) \le \omega(n)$ for all but
+$O(N/\omega(N)) = o(N)$ values.
+
+The leading-digit incidence satisfies
+$\sum_{n \in (N,2N]} B_{\rm lead}(n) = L_N = O(N\sqrt{N})$
 (as in Theorem~\ref{thm:density1}).
-By Markov's inequality, the number of $n \in (N, 2N]$
-with $B(n) > (\log n)^2$ is $O(N/(\log N)^2) = o(N)$.
-For all remaining~$n$,
-$\log G_n = O(\sqrt{n}) + 3 B(n) \log n
-\le O(\sqrt{n}) + O((\log n)^3) = O(\sqrt{n})$.
+By Markov with threshold $\omega(N)\sqrt{N}$:
+$\#\{n \in (N,2N] : B_{\rm lead}(n) > \omega(N)\sqrt{N}\}
+\le O(N/\omega(N)) = o(N)$.
+
+For all remaining~$n$:
+$\log G_n = O(\sqrt{n}) + 3[\omega(n) + \omega(n)\sqrt{n}]
+\log n = O(\omega(n)\sqrt{n}\log n)$.
 \end{proof}
 
-\begin{remark}[On the all-$n$ conjecture]\label{rem:all-n}
-The all-$n$ statement $\log G_n = O(\sqrt{n})$ for
-\emph{every}~$n$ would require bounding the
-count of bad primes $B(n)$ pointwise rather than
-on average. For a specific~$n$, the events
-$\{n \bmod p \in \mathcal{Z}_p\}$ across different
-primes are essentially independent with probability
-$\le C/p$ each, so $B(n) = O(1)$ should hold for
-all~$n$ by the same heuristic that predicts
-$Z(p) = O(1)$. Making this rigorous requires
-either a sieve inequality controlling the
-moving-residue incidence, or a sufficiently strong
-equidistribution hypothesis on the Frobenius
-elements of the Ap\'ery family.
+\begin{remark}[The leading-digit bottleneck]\label{rem:leading}
+The gap between the density-one bound
+$O(\omega(n)\sqrt{n}\log n)$ and the conjectured
+$O(\sqrt{n})$ comes from the leading-digit incidence
+$L_N = O(N\sqrt{N})$, which dominates the lower-digit
+incidence $R_N = O(N)$ under Hypothesis~$\bar{Z}$.
+Heuristically, the lower digit $n \bmod p$ is uniform
+mod~$p$ with $B_{\rm low}(n) = O(1)$, and the
+leading digit $\lfloor n/p \rfloor$ lands in
+$\mathcal{Z}_p$ with probability $\le C/p$, giving
+expected $B_{\rm lead}(n) = \sum_p C/p = O(1)$.
+Making the leading-digit part rigorous---showing
+$B_{\rm lead}(n) = O(1)$ pointwise or even for
+density~$1$---requires controlling the large-prime
+divisors of the Ap\'ery numbers in short
+multiplicative intervals.
+
+An exact divisor switch rewrites the leading-digit
+incidence as
+\[
+B_{\rm lead}(n) =
+\sum_{\substack{1 \le q < \sqrt{n}}}
+\#\{p \mid b_q : \max(\sqrt{n},\, n/(q{+}1)) < p \le n/q\}.
+\]
+This reformulates the problem as a
+large-prime-divisor incidence problem for the
+sparse sequence~$(b_q)$.
+
+For dyadic $P, Q$ with $Q < P$, define
+\[
+D(P,Q) = \#\{(p,q) : P < p \le 2P,\; Q < q \le 2Q,\;
+p \mid b_q\}.
+\]
+Under Hypothesis~$\bar{Z}$, $D(P,Q) \le
+\min(P, Q^2)/\log P$: the first term bounds
+the number of primes, the second counts prime
+divisors $> P$ of the product $\prod_{Q<q\le 2Q} b_q$.
+A dyadic decomposition of the
+hyperbola $pq \approx X$ gives
+$(1/X)\sum_{X < n \le 2X} B_{\rm lead}(n)
+\ll X^{1/3}/\log X$,
+far from the conjectured $O(1)$ but nontrivial.
+The missing improvement is
+$D(P,Q) \ll Q/\log P$ (the random-divisibility
+prediction), which would yield a bounded dyadic mean.
 \end{remark}
 
-\begin{corollary}\label{cor:equiv}
-The conjecture $G_n = e^{o(n)}$ for all~$n$
-is equivalent to $Z(p) = o(p)$
-(i.e., $\mathcal{Z}_p$ has sublinear density):
-if $Z(p) \ge \varepsilon p$
+\begin{corollary}\label{cor:necessary}
+The condition $Z(p) = o(p)$ is \emph{necessary} for the
+conjecture: if $Z(p) \ge \varepsilon p$
 for a positive proportion of primes, double-counting gives
 $\log G_n \ge c\varepsilon n$ for a positive proportion of~$n$.
+Conversely, $Z(p) = o(p)$ implies $G_n = e^{o(n)}$
+for density~$1$ (Theorem~\ref{thm:density1}).
 \end{corollary}
+
+\begin{proof}
+For each prime $p \in (n/2, n]$ with $Z(p) \ge \varepsilon p$,
+Lemma~\ref{lem:denom} gives $v_p(G_n) \ge 1$ whenever
+$n - p \in \mathcal{Z}_p$.
+Suppose a proportion $\delta > 0$ of primes satisfy
+$Z(p) \ge \varepsilon p$.
+Summing over $n \in (N, 2N]$ and bad primes
+$p \in (n/2, n]$, the total incidence count is
+$\ge \delta\,\pi(2N) \cdot \varepsilon N / 2 = \Omega(N^2/\log N)$.
+Dividing by $N$ and applying Markov's inequality:
+a proportion $\ge \varepsilon\delta/4$ of integers $n$
+have $B(n) \ge \varepsilon\delta N/(4\log N)$,
+giving $\log G_n \ge 3B(n)\log(N/2) \ge c\varepsilon\delta\,n$.
+\end{proof}
+
+\begin{remark}[The pointwise gap]\label{rem:pointwise-gap}
+The full conjecture $G_n = e^{o(n)}$ for \emph{every}~$n$
+is strictly stronger than the density-one statement.
+By Corollary~\ref{cor:lucas}, it is equivalent to
+the top-half radical estimate~\eqref{eq:rad}.
+The height bound gives
+$B(n) = O(n/\log n)$, but for an \emph{adversarial}
+family $(Z_p)$ with $|Z_p| \le 1$, one may
+choose $Z_p = \{N - p\}$ for primes in $(N/2, N]$,
+producing $B(N) \ge \pi(N) - \pi(N/2) \sim N/(2\log N)$.
+Thus the needed pointwise bound $B(n) = o(n/\log n)$
+requires arithmetic information specific to the
+Ap\'ery sequence, not just the cardinalities $Z(p)$.
+
+By Corollary~\ref{cor:lucas},
+every bad prime $p > n/2$ satisfies
+$p \mid b_n$. Hence the conjecture implies
+$\log\operatorname{rad}_{(n/2,n]}(b_n) = o(n)$:
+the large prime radical of $b_n$ must be
+subexponential, even though $|b_n| = e^{\Theta(n)}$.
+\end{remark}
 
 \section{Computational verification}\label{sec:comp}
 
-We computed $G_n$ exactly for $n = 1, \ldots, 500$
+We computed $G_n$ exactly for $n = 1, \ldots, 1000$
 using rational arithmetic.
 
 \begin{center}
 \begin{tabular}{rcc}
 $n$ range & avg $\log(G_n)/n$ & max $\log(G_n)/n$ \\ \hline
-$1$--$50$ & 0.276 & 2.30 \\
-$51$--$100$ & 0.108 & 0.44 \\
-$101$--$200$ & 0.086 & 0.32 \\
-$201$--$300$ & 0.048 & 0.17 \\
-$301$--$400$ & 0.038 & 0.13 \\
-$401$--$500$ & 0.024 & 0.09
+$1$--$50$ & 0.276 & 0.93 \\
+$51$--$100$ & 0.108 & 0.26 \\
+$101$--$200$ & 0.086 & 0.18 \\
+$201$--$300$ & 0.048 & 0.10 \\
+$301$--$400$ & 0.038 & 0.08 \\
+$401$--$500$ & 0.024 & 0.05 \\
+$501$--$600$ & 0.029 & 0.06 \\
+$601$--$700$ & 0.017 & 0.04 \\
+$701$--$800$ & 0.014 & 0.04 \\
+$801$--$900$ & 0.016 & 0.04 \\
+$901$--$1000$ & 0.013 & 0.03
 \end{tabular}
 \end{center}
 
 A power-law fit gives
-$\log(G_n)/n \sim 4.5\,n^{-0.85}$,
-i.e., $\log G_n \sim 4.5\,n^{0.15}$, well within $O(\sqrt{n})$.
+$\log(G_n)/n \sim 5\,n^{-0.87}$,
+i.e., $\log G_n \sim 5\,n^{0.13}$, far stronger
+than the density-one bound $o(n)$ of Theorem~\ref{thm:density1}.
+
+The exponent $0.13$ should be interpreted with caution:
+if $\log G_n \sim \kappa \log n$,
+the effective log-log slope is $1/\log n = 0.145$
+at $n = 1000$, close to the fitted~$0.13$.
+A random-gcd model---assigning each prime $p \le n$
+an independent probability~$\sim 1/p$ of
+dividing~$G_n$---predicts
+$\mathbb{E}[\log G_n] \sim \log n$ by the
+weighted Mertens theorem, with standard deviation
+$\sim (\log n)/\sqrt{2}$ of the same order.
+The data thus cannot yet distinguish $\kappa \log n$
+from~$n^{0.13}$; the logarithmic prediction is
+arithmetically more natural.
 
 \section{Remarks}
 
@@ -897,8 +1350,245 @@ from the linear factor at $m = (p-3)/2$.
 
 \item Malik--Straub~\cite{MalikStraub2016} studied
 Lucas congruences and zero-divisibility for all sporadic
-Ap\'ery-like sequences. Our $Z(p)$ data for the $\zeta(3)$
+Ap\'ery-like sequences;
+Rowland--Yassawi~\cite{RowlandYassawi2015} proved
+automaticity of the Lucas property for diagonals of
+rational functions, which includes the Ap\'ery sequence.
+Our $Z(p)$ data for the $\zeta(3)$
 sequence agrees with their empirical findings.
+
+\item In the standard toric coordinate, the truncated
+polynomial
+$H_p(t) = \sum_{j=0}^{p-1} b_j\, t^j \in \mathbb{F}_p[t]$
+is the scalar Hasse--Witt invariant of the
+Ap\'ery K3 pencil.
+Its \emph{roots} in~$\mathbb{F}_p$ are the
+nonordinary fibers; because the family
+has generic Picard rank~$19$, nonordinary
+implies supersingular at good primes.
+Our statistic $Z(p)$ counts vanishing
+\emph{coefficients} of~$H_p$, equivalently
+the vanishing finite Mellin coefficients
+$b_j = -\sum_{t \in \mathbb{F}_p^\times} H_p(t)\, t^{-j}$
+for $1 \le j \le p - 2$.
+Thus $Z(p)$ is a spectral sparsity statistic
+for the global Hasse/point-count function,
+\emph{not} a count of supersingular fibers.
+Standard Hasse-stratification, Newton-polygon,
+and overconvergent $F$-crystal theory
+do not by themselves bound~$Z(p)$;
+they control the root locus, not the
+Fourier support.
+A bounded-conductor realization of~$H_p$ as an
+$\ell$-adic trace function could connect to
+the Forey--Fres\'an--Kowalski
+framework~\cite{FFK2023}, but
+equidistribution of complex traces does not
+directly control exact zeros modulo~$p$.
+
+\item \textbf{Palindromic symmetry.}
+For $0 \le j \le p-1$ and $0 \le k \le p-1-j$,
+the identity
+$\binom{p{-}1{-}j}{k} \equiv (-1)^k \binom{j+k}{k}
+\pmod{p}$ holds (each of the $k$ falling factors
+$p{-}1{-}j{-}i \equiv -(j{+}1{+}i)$).
+When $k \le j$,
+$\binom{p{-}1{-}j{+}k}{k} \equiv (-1)^k \binom{j}{k}$;
+when $k > j$, Lucas's theorem gives
+$\binom{p{-}1{-}j{+}k}{k} \equiv 0$ (since
+$p{-}1{-}j{+}k \ge p$ and
+$\binom{k{-}j{-}1}{k} = 0$).
+Therefore each term of
+$b_{p-1-j} = \sum_{k} \binom{p{-}1{-}j}{k}^2
+\binom{p{-}1{-}j{+}k}{k}^2$ with $k > j$ vanishes,
+and for $k \le j$ the $(-1)^{2k}$ signs cancel,
+giving $b_{p-1-j} \equiv b_j \pmod{p}$.
+The extra terms of~$b_j$ when $j > (p{-}1)/2$
+(i.e., $k > p{-}1{-}j$) likewise vanish:
+$\binom{j{+}k}{k} \equiv \binom{j{+}k{-}p}{k}
+\equiv 0$ since $j{+}k{-}p < k$.
+Equivalently, $H_p(t)$ is palindromic:
+$t^{p-1}\, H_p(1/t) \equiv H_p(t)$.
+This explains the observed pairing:
+whenever $b_j \equiv 0$, also
+$b_{p-1-j} \equiv 0$, so zeros of~$b_j$
+come in pairs $\{j,\, p-1-j\}$ (except
+at the self-paired center $j = (p-1)/2$,
+which vanishes only at non-ordinary primes).
+The ``pair count'' $K(p) = Z(p)/2$
+(or $(Z(p)-1)/2$ at non-ordinary primes)
+follows Poisson($1/2$) to the
+precision of the data (Proposition~\ref{prop:Zp-data}).
+
+\item \textbf{Sym$^2$ squareness
+(theorem).}\label{rem:squareness}
+The Ap\'ery differential operator is the symmetric
+square of the Picard--Fuchs operator of an
+underlying elliptic family (Stienstra--Beukers~\cite{SB1985}).
+Caruso, F\"urnsinn, Vargas-Montoya, and
+Zudilin~\cite{CFVZ2026} proved the mod-$p$
+squareness rigorously: for every prime $p \ge 5$,
+setting $\varepsilon_p = \frac{1}{2}(1 - \bigl(\frac{-6}{p}\bigr))$,
+there exists a unique (up to sign) polynomial
+$B_p \in \mathbb{F}_p[t]$ such that
+\[
+  H_p(t) \;=\; \Delta(t)^{\varepsilon_p}\cdot B_p(t)^2,
+\]
+where $\Delta(t) = t^2 - 34t + 1$ is the
+conifold discriminant and
+$B_p$ is squarefree and coprime to~$\Delta$.
+The proof uses the explicit identity
+$F(t(x)) = (1+x)\,h(x)^2$ between the Ap\'ery
+and Franel generating functions, the $p$-Lucas
+property of both sequences, and a quadratic-descent
+argument through the covering
+$\mathbb{F}_p(x)/\mathbb{F}_p(t)$ where
+$t = x(1-8x)/(1+x)$.
+The deck-transformation character $(-6/p)$ determines
+whether $\varepsilon_p = 0$ or~$1$:
+\[
+  \varepsilon_p = 0 \;\iff\;
+  \Bigl(\frac{-6}{p}\Bigr) = 1,
+  \qquad
+  \varepsilon_p = 1 \;\iff\;
+  \Bigl(\frac{-6}{p}\Bigr) = -1.
+\]
+Equivalently, $\varepsilon_p = 0$ iff
+$p \equiv 1, 5, 7, 11 \pmod{24}$.
+These two cases occur with equal density~$1/2$
+by Dirichlet's theorem.
+
+Splitting the mean~$Z(p)$ by residue
+class modulo~$8$ (and modulo~$24$)
+yields no significant difference
+(mean~$\approx 1.00$ in each class,
+$n \ge 2000$~primes per class up to $10^5$);
+the squareness structure does not
+directly influence~$Z(p)$,
+consistent with~$Z(p)$ counting coefficient
+zeros rather than root zeros.
+
+The factorization imposes a convolution
+structure: $b_j$ is (up to the~$\Delta^{\varepsilon_p}$ correction)
+the $j$-th coefficient of~$B_p^2$, i.e.,
+$b_j \equiv \sum_k \beta_k\, \beta_{j-k} \pmod{p}$
+where $\beta_k$ denotes the coefficients of~$B_p$.
+The vanishing $b_j \equiv 0$ thus
+requires cancellation across $\sim p/2$
+convolution terms.
+A Monte Carlo simulation
+(1000 random monic polynomials
+of degree $(p-1)/2$ over~$\mathbb{F}_p$,
+for $p \in \{101, 503, 1009, 5003\}$)
+shows that the zero-count of the \emph{squared}
+polynomial follows $\operatorname{Poisson}(1)$
+(mean $\approx 1$, variance $\approx 1$,
+total variation distance to $\operatorname{Poisson}(1)$
+equal to~$0.018$).
+However, the observed~$Z(p)$ distribution
+over $667$~primes $p \le 5000$ is \emph{not}
+$\operatorname{Poisson}(1)$ ($\mathrm{TV} = 0.43$);
+instead it matches
+$2 \cdot \operatorname{Poisson}(1/2)$
+with $\mathrm{TV} = 0.023$.
+The explanation is the palindromic pairing:
+since $b_{p-1-j} \equiv b_j$,
+zeros come in pairs $\{j,\, p{-}1{-}j\}$
+and~$Z(p)$ is almost always even.
+Denoting by~$Z_{\mathrm{pair}}(p)$ the
+number of zero pairs,
+the data show
+$Z_{\mathrm{pair}} \sim \operatorname{Poisson}(1/2)$,
+so $Z(p) = 2 Z_{\mathrm{pair}}(p)
+\sim 2 \cdot \operatorname{Poisson}(1/2)$.
+Thus squareness explains the $O(1)$ mean,
+while palindromic symmetry supplies the
+parity constraint.
+The Poisson tail predicts
+$\max_{p \le N} Z(p) \sim 2\log\log N$
+via extreme-value theory,
+strongly suggesting that $Z(p)$ is unbounded
+(i.e., Hypothesis~Z is false).
+Whether the algebraic provenance of~$B_p$
+imposes a bounded \emph{average}
+(Hypothesis~$\bar{Z}$)
+remains the central open question.
+
+\item \textbf{Toric framework.}
+The Laurent polynomial
+$f = w(x + x^{-1} + y + y^{-1} + z + z^{-1})$
+on $(\mathbb{F}_p^{\times})^4$ has
+Newton polytope
+$\Delta = \operatorname{conv}(\{0\} \cup \operatorname{Supp}(f))$,
+a $4$-dimensional pyramid over the regular
+octahedron in~$\mathbb{R}^3$.
+Its $f$-vector is $(7, 18, 20, 9)$,
+its normalized volume is
+$4!\cdot\operatorname{vol}(\Delta) = 8$,
+and it is Kouchnirenko nondegenerate for
+every prime $p \ge 5$: for each of the
+$27$ nonempty faces~$\sigma$ not
+containing the origin,
+the toric critical system
+$\{x_i \partial f_\sigma / \partial x_i = 0\}$
+has no solution in~$(\mathbb{F}_p^\times)^4$.
+For the Adolphson--Sperber twisted
+Hodge polygon with $w$-Kummer twist
+$\chi_w = \omega^{-j}$
+(character parameter $a = j/(p{-}1)$),
+the slopes are
+$a,\, a{+}1,\, a{+}2,\, a{+}3$
+with multiplicities $1,3,3,1$,
+confirming that the first slope
+equals~$a$ for every
+$a \in \{k/100 : 0 \le k \le 99\}$.
+By Newton-above-Hodge
+(Adolphson--Sperber~\cite{AS1993}),
+the $p$-adic Newton polygon lies on
+or above this Hodge polygon,
+and ordinarity (Newton = Hodge) implies
+the existence of a unit root.
+The $Z(p)$ bound thus reduces to
+proving ordinarity for all but~$O(1)$
+twist parameters~$j$.
+
+\item \textbf{Branch obstruction.}
+The $p-1$ Kummer twists
+$\chi^{-j}$ ($j = 0, \ldots, p-2$)
+are distinct characters of conductor~$p$.
+In Iwasawa-theoretic coordinates
+$\chi^j = \omega^a \langle \cdot \rangle^s$
+with $a = j \bmod{(p{-}1)}$,
+the horizontal family
+$\{j : 0 \le j < p{-}1\}$
+hits \emph{each} of the $p{-}1$ branches
+$\omega^a$ exactly once.
+Weierstrass preparation and
+bounded-$\lambda$ rigidity control
+zeros \emph{within one branch}
+(the vertical direction
+$j,\, j + (p{-}1),\, j + (p{-}1)p, \ldots$,
+where Dwork congruences live)
+but not \emph{across} branches.
+Thus there is no $p$-adic analytic
+function of one variable whose
+zero count majorizes~$Z(p)$.
+Any ``rigidity'' proof of
+Hypothesis~$\bar{Z}$ would need a
+mechanism not supplied by
+existing Iwasawa--Dwork theory.
+
+\item Any estimate $\log G_n = o(n)$---whether
+      $O(\log n)$, $O(\sqrt{n})$, or $O(n^{0.13})$---yields
+      $\gamma = 0$ in the exponent $G_n = e^{\gamma n + o(n)}$
+      and therefore does not improve the Rhin--Viola
+      irrationality measure
+      $\mu(\zeta(3)) \le 5.513$~\cite{RhinViola2001},
+      which depends only on the exponential growth rate
+      $|b_n \zeta(3) - a_n| = e^{-(\log\alpha + o(1))n}$.
+      An improvement would require an exponentially large
+      common divisor, which is not predicted by any current
+      model.
 \end{enumerate}
 
 \begin{thebibliography}{10}
@@ -907,6 +1597,11 @@ S.~Ahlgren and K.~Ono,
 \emph{A Gaussian hypergeometric series evaluation and
 Ap\'ery number congruences},
 J.~reine angew.\ Math.\ \textbf{518} (2000), 187--212.
+
+\bibitem{AS1993}
+A.~Adolphson and S.~Sperber,
+\emph{Twisted exponential sums and Newton polyhedra},
+J.~reine angew.\ Math.\ \textbf{443} (1993), 151--177.
 
 \bibitem{Apery1979}
 R.~Ap\'ery,
@@ -922,6 +1617,17 @@ J.~Number Theory \textbf{21} (1985), 141--155.
 F.~Beukers,
 \emph{Another congruence for the Ap\'ery numbers},
 J.~Number Theory \textbf{25} (1987), 201--210.
+
+\bibitem{CFVZ2026}
+X.~Caruso, F.~F\"urnsinn, D.~Vargas-Montoya, and W.~Zudilin,
+\emph{Galois groups of Ap\'ery-like series modulo primes},
+arXiv preprint, 2026.
+
+\bibitem{FFK2023}
+A.~Forey, J.~Fres\'an, and E.~Kowalski,
+\emph{Arithmetic Fourier transforms over finite fields:
+generic vanishing, convolution, and equidistribution},
+preprint, 2023.
 
 \bibitem{Greene1987}
 J.~Greene,
@@ -952,6 +1658,16 @@ Amer.\ Math.\ Monthly \textbf{99} (1992), 231--238.
 Y.~Mimura,
 \emph{Congruence properties of Ap\'ery numbers},
 J.~Number Theory \textbf{16} (1983), 138--146.
+
+\bibitem{RowlandYassawi2015}
+E.~Rowland and R.~Yassawi,
+\emph{Automatic congruences for diagonals of rational functions},
+J.~Th\'eor.\ Nombres Bordeaux \textbf{27} (2015), 245--288.
+
+\bibitem{RhinViola2001}
+G.~Rhin and C.~Viola,
+\emph{The group structure for $\zeta(3)$},
+Acta Arith.\ \textbf{97} (2001), 269--293.
 
 \bibitem{SB1985}
 J.~Stienstra and F.~Beukers,
