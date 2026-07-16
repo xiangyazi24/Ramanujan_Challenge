@@ -3818,6 +3818,35 @@ the \emph{bilinear} independence:
 the events $p \mid b_m$ and $q \mid b_m$
 are approximately uncorrelated as
 $p, q$ range over a dyadic block.
+
+\medskip
+\noindent\textbf{Vertical vs.\ horizontal projections.}
+The incidence graph has primes on one side
+and integers on the other; an edge
+$(p, n)$ records $p \mid b_n$.
+Grouping by the integer index~$n$ gives
+the \emph{vertical} prime-divisor count
+$W_N(n) = \omega_{(N,2N]}(b_n)$,
+$n \in [1, N]$.
+Grouping by the hit position
+$m = n + p$ gives the
+\emph{horizontal} column multiplicity~$\lambda(m)$.
+These are different projections.
+By the Lucas congruence
+$b_{p+r} \equiv 5\,b_r\pmod{p}$
+(for $r < p$), the horizontal multiplicity
+$\lambda(m) = \omega_{(N,m]}(b_m)$---it
+counts large prime divisors of~$b_m$ itself.
+Crucially, even the pointwise bound
+$W_N(n) \le 1$ for \emph{every} $n \le N$
+does not control~$\lambda(m)$:
+many distinct $(n_i, p_i)$ pairs can satisfy
+$n_i + p_i = m$ with $p_i \mid b_{n_i}$,
+all contributing \emph{different} prime
+divisors of the single integer~$b_m$.
+The collision bound $F = O(T)$ is
+therefore a genuinely horizontal,
+two-prime-divisor assertion about~$b_m$.
 \end{remark}
 
 \begin{proposition}[Conditional collision bound]
@@ -3917,7 +3946,7 @@ a pair decorrelation statement for the
 zero positions across different primes.
 The marginal equidistribution of~$r_p/p$
 is supported by the Kummer structure
-of the reduced generating series (Caruso--F\"urnsinn--Vargas-Montoya--Zudilin~\cite{CFVMZ}),
+of the reduced generating series (Caruso--F\"urnsinn--Vargas-Montoya--Zudilin~\cite{CFVZ2026}),
 which shows that the Galois group of
 $f_\alpha \bmod p$ is cyclic of order
 $(p-1)/\gcd(2, p-1)$.
