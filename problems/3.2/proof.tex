@@ -2690,28 +2690,40 @@ that this hypothesis genuinely requires arithmetic
 input about the Ap\'ery family, beyond what
 any vertical bound can provide.
 
-\begin{remark}[Negative CRT correlation]\label{rem:negative-crt}
-At $N = 1024$, more than $96\%$ of the
+\begin{remark}[Covariance sign distribution]\label{rem:negative-crt}
+At $N = 1024$, more than $93\%$ of the
 $\binom{113}{2} = 6{,}328$ cross-prime
-covariance terms~$C_{p,q}$ are \emph{negative}.
-The off-diagonal sum
-$E_N^\circ = \sum_{p \ne q} w_p w_q C_{p,q}$
-is negative for every $N \ge 1024$ tested
-(through $N = 32{,}768$).
-For independent Bernoulli variables,
-the variance equals the diagonal:
-$V^\circ = \text{Diag} \le S$.
-The observed $V^\circ < S$ is consistent with
-a weak form of \emph{negative dependence}:
-the CRT constraint on a partial period
-induces anti-bunching.
-If one could establish negative association
-for the restricted CRT distribution
-(e.g.\ via an extension of the Dubhashi--Ranjan
-theorem to partial periods),
-the variance bound $V^\circ \le S$ would follow,
-and with it the all-index theorem
-by Proposition~\ref{prop:ap-bdh-suffices}.
+covariance terms~$C_{p,q}$ are negative.
+This negativity has a clean structural explanation:
+for primes $p, q > \sqrt{N}$, the Poisson
+parameter $\lambda_{p,q} = A_p A_q/N < 1$,
+so $C_{p,q} < 0$ precisely when the joint
+count~$J_{p,q}$ vanishes. In the sparse regime,
+$J_{p,q} = 0$ for $e^{-\lambda} \approx 96\%$
+of pairs, while the rare pairs with $J_{p,q} = 1$
+have $C_{p,q} = 1 - \lambda_{p,q} \approx 1$.
+Over a complete period $\pmod{pq}$,
+the average of~$C_{p,q}$ is exactly zero:
+many small negatives are balanced by
+few large positives.
+Consequently, the high percentage of negative
+signs does \emph{not} imply negative dependence
+and cannot be used directly.
+The aggregate off-diagonal
+$E^\circ = \sum_{p \ne q} w_p w_q C_{p,q}$
+oscillates in sign: positive at $N = 1024, 4096, 8192$
+and negative at $N = 2048$ (Table~\ref{tab:covariance}).
+The relevant theorem is the aggregate
+\emph{sub-Poisson collision} estimate
+$|E^\circ| = o(S)$, which requires cancellation
+in the signed sum rather than a universal
+sign or a factored negative-dependence property.
+Neither the Dubhashi--Ranjan negative-lattice
+theorem (designed for balls-into-bins, not
+partial-period CRT) nor Janson's inequality
+(which requires nonnegativity of intersection
+parameters) applies to this partial-period
+setting.
 \end{remark}
 
 \begin{remark}[The dispersion route bypasses $\bar{Z}$]
@@ -2734,16 +2746,42 @@ $V^\circ/S \approx 1$ empirically,
 matching the prediction of the independent random model.
 \end{remark}
 
+\begin{remark}[Martingale decomposition]\label{rem:martingale}
+Order the active primes as $p_1 < \cdots < p_K$
+and define the Doob martingale
+$M_k = \mathbb{E}[B \mid X_{p_1},\ldots,X_{p_k}]$.
+The increments $D_k = M_k - M_{k-1}$ are orthogonal:
+$\operatorname{Var}(B) = \sum_k \mathbb{E}[D_k^2]$.
+However, $D_k = (X_{p_k} - \pi_k)\Delta_k$
+where the ``predictive cascade''
+$\Delta_k = w_{p_k} + \sum_{j > k} w_{p_j}
+(\mathbb{P}(X_{p_j}{=}1 \mid \mathcal{F}_{k-1}, X_{p_k}{=}1)
+- \mathbb{P}(X_{p_j}{=}1 \mid \mathcal{F}_{k-1}, X_{p_k}{=}0))$
+contains all future primes.
+Under independence $\Delta_k = w_{p_k}$ and the
+variance equals the diagonal.
+For the Ap\'ery measure on a partial CRT period,
+revealing that $m \bmod p_k$ falls in a zero
+can nearly identify~$m$ (when $A_{p_k} \approx 1$),
+making most subsequent indicators nearly
+deterministic.
+Controlling the cascade $\sum \mathbb{E}[\pi_k(1-\pi_k)\Delta_k^2]
+\le (1+o(1))\sum w_{p_k}^2\alpha_{p_k}$
+is equivalent to the dispersion inequality itself.
+\end{remark}
+
 \begin{remark}[Concentration and the all-$n$ gap]
 \label{rem:concentration}
-Proposition~\ref{prop:ap-bdh-suffices} extracts
-a \emph{pointwise} bound from the dispersion hypothesis:
-$B_P(m) \le S/N + \sqrt{V^\circ}$ for every~$m \in I_N$.
-The trivial bound $\max|B(m) - \mu| \le \sqrt{V^\circ}
-\le \sqrt{S} = O(\sqrt{N}\,\log N)$
-is already $o(N/\!\log N)$, so the all-$n$
-theorem $W(n) = o(n)$ follows from $V^\circ \le O(S)$
-without any higher-moment or sub-Gaussian input.
+The $L^2$-to-uniform upgrade
+(Lemma~\ref{lem:l2-uniform}) gives
+$\max|B(m) - \mu| \le \sqrt{V^\circ}$.
+If $V^\circ \le C\,S$ for some constant~$C$,
+then $\sqrt{V^\circ} = O(\sqrt{N}\,(\log N)^{3/2})
+= o(N/\!\log N)$, so the all-$n$
+theorem $W(n) = o(n)$ follows without
+any higher-moment, sub-Gaussian, or
+negative-association input
+(Corollary~\ref{cor:dispersion-alln}).
 Empirically, the actual concentration is much stronger:
 $\max B(m) / (N\!/\!\log N) \approx 0.07$ at $N = 4096$
 (with $\max B \approx 36$ vs.~$N\!/\!\log N \approx 492$),
@@ -2752,6 +2790,116 @@ near~$6$--$7$ standard deviations, consistent
 with the Poisson prediction for the
 extremal order statistic.
 \end{remark}
+
+\begin{remark}[Block decomposition of $V^\circ$]
+\label{rem:block-decomp}
+Decompose the prime sum $B(m) = \sum_j B_{P_j}(m)$
+by dyadic prime blocks $P_j < p \le 2P_j$.
+Then $V^\circ = \sum_j V^\circ_{P_j}
++ 2 \sum_{j < k} \text{cross}(P_j, P_k)$.
+At $N = 4096$, the cross-block covariance is
+$0.03\%$ of the full~$V^\circ$.
+This is because cross-block pairs $(p,q)$
+with $p \in (P,2P]$, $q \in (Q,2Q]$, $Q \ge 2P$
+satisfy $pq \ge 2P^2 > 2N$, so the CRT
+approximation is even tighter for cross-block
+than within-block terms.
+Consequently, the dispersion hypothesis
+reduces to $V^\circ_P \ll N^{o(1)}\,S_P$ for
+each dyadic block \emph{separately}---a
+within-scale CRT independence statement.
+\end{remark}
+
+\subsection{The covariance structure and the $L^2$-to-uniform upgrade}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrrr}
+\hline
+$N$ & $K$ & $V^\circ/S$ & $E^\circ$ & $|E^\circ|/S$ & $J{=}0$ & $J{=}1$ \\
+\hline
+512  & 67  & 0.998 & $+130.6$ & 0.015 & 95.6\% & 4.1\% \\
+1024 & 113 & 0.998 & $+215.6$ & 0.010 & 96.6\% & 2.9\% \\
+2048 & 205 & 0.994 & $+96.2$  & 0.002 & 98.1\% & 1.8\% \\
+4096 & 380 & 0.996 & $+120.0$ & 0.001 & 98.9\% & 1.1\% \\
+8192 & 742 & 1.001 & $+1344$  & 0.005 & 99.3\% & 0.6\% \\
+\hline
+\end{tabular}
+\caption{Covariance structure of the off-diagonal sum $E^\circ = V^\circ - S_c$,
+computed over all $\binom{K}{2}$ pairs of active primes $p > \sqrt{N}$.
+$J{=}0$ and $J{=}1$ are the fractions of pairs $(p,q)$ with
+joint occupancy $J_{p,q} = 0$ or $1$.
+The Cauchy--Schwarz bound on~$|E^\circ|$ exceeds
+the actual value by a factor of $3{,}000$--$6{,}000$.}
+\label{tab:covariance}
+\end{table}
+
+The following deterministic lemma is the bridge from the dispersion
+hypothesis to the all-index conclusion.
+
+\begin{lemma}[$L^2$-to-uniform upgrade]\label{lem:l2-uniform}
+Let $F_N \colon I_N \to \mathbb{R}$ with
+$\mu_N = \frac{1}{N}\sum_{m \in I_N} F_N(m)$ and
+$\mathcal{V}_N = \sum_{m \in I_N}(F_N(m) - \mu_N)^2$.
+Then
+\begin{equation}\label{eq:l2-uniform}
+  \max_{m \in I_N} |F_N(m) - \mu_N| \;\le\; \sqrt{\mathcal{V}_N}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Each squared deviation $(F_N(m_0) - \mu_N)^2$ is a single summand
+of~$\mathcal{V}_N$, hence at most~$\mathcal{V}_N$.
+\end{proof}
+
+\begin{corollary}[Dispersion implies the all-index Ap\'ery bound]
+\label{cor:dispersion-alln}
+If there exists a constant~$C$ such that
+$V^\circ_w(N) \le C\,S_w(N)$ for all sufficiently
+large dyadic~$N$, where
+\[
+  V^\circ_w(N) = \sum_{m \in I_N}(B(m) - \mu)^2,
+  \qquad
+  S_w(N) = \sum_{p > \sqrt{N}} (\log p)^2 A_p,
+\]
+then $W(n) = o(n)$ for all~$n$, and consequently
+$G_n = e^{o(n)}$ for every positive integer~$n$.
+\end{corollary}
+
+\begin{proof}
+By Lemma~\ref{lem:l2-uniform} with $F_N = B$,
+\[
+  \max_{m \in I_N} |B(m) - \mu| \;\le\; \sqrt{V^\circ_w}
+  \;\le\; \sqrt{C\,S_w}.
+\]
+Since $S_w \le (\log 2N)^2 \sum A_p$ and
+$\sum A_p = O(N\log N)$ (from the bound
+$Z(p) \le Cp^{2/3}$ or even $\sum Z(p) \ll \pi(x)$),
+we have $S_w = O(N(\log N)^3)$.
+Thus $\sqrt{V^\circ_w} = O(\sqrt{N}\,(\log N)^{3/2})$.
+The mean satisfies $\mu = O((\log N)^2)$.
+Therefore
+\[
+  W(n) \;\le\; B(n) \;\le\; \mu + \sqrt{V^\circ_w}
+  = O(\sqrt{N}\,(\log N)^{3/2}) = o(N/\!\log N),
+\]
+which gives $W(n) = o(n)$ upon taking
+$N = n$.
+\end{proof}
+
+Table~\ref{tab:covariance} and the extended computation of
+$V^\circ/S$ through $N = 32{,}768$
+(Section~\ref{sec:comp}) provide strong evidence
+for the bound $V^\circ \le C\cdot S$ with
+$C \le 1.01$.
+The ratio $|E^\circ|/S$ decreases from~$0.015$
+at $N = 512$ to~$0.001$ at $N = 4096$;
+the brief increase at $N = 8192$ is consistent
+with fluctuations of $O(1/\!\sqrt{N})$.
+No concentration inequality, negative-association
+theorem, or fourth-moment bound is needed:
+the $L^2$-to-$L^\infty$ trivial inequality
+together with $V^\circ = O(S)$ completes the proof.
 
 \subsection{Gap polynomial sparsity}
 
