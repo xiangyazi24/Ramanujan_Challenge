@@ -3408,6 +3408,42 @@ this factor is~$O(N)$, and the generic
 large sieve provides no useful bound.
 \end{remark}
 
+\begin{remark}[Linnik dispersion route]\label{rem:linnik}
+The most plausible analytic pathway is
+Linnik's dispersion method: expand the
+$L^2$-discrepancy, isolate the diagonal,
+and seek cancellation in the off-diagonal
+via reciprocity and bilinear trace-function
+estimates \`a la
+Kowalski--Michel--Sawin~\cite{KMS2017}
+and Drappeau~\cite{Drappeau2017}.
+This reduces the problem to a
+\emph{bounded-complexity representation
+theorem}: either the Fourier coefficient
+$a \mapsto \hat{\mathcal{Z}}_p(a)
+= \sum_{r \in \mathcal{Z}_p} e_p(ar)$
+or the phase $m \mapsto e_p(u\,b_m)$
+must belong to a uniformly controlled
+trace-function family.
+The obstacle is that $b_m \bmod p$ is
+computed from a nonautonomous recurrence
+whose complexity grows with~$p$, and
+no fixed bounded-conductor $\ell$-adic
+sheaf with trace function~$A_p(t)$
+uniformly in~$p$ is currently known.
+The closest available framework is
+Forey--Fres\'an--Kowalski~\cite{FFK2023},
+which studies arithmetic Fourier transforms
+of a fixed perverse sheaf over a fixed
+finite field; four mismatches remain
+(growing complexity, horizontal vs.\
+extension-degree aspect, crystalline vs.\
+$\ell$-adic, and one- vs.\ two-characteristic
+dispersion).
+A polylogarithmic loss in~\eqref{eq:short-arc}
+already suffices for the competition target.
+\end{remark}
+
 \begin{remark}[Palindromic Fourier factoring]
 \label{rem:palindromic-fourier}
 For doublet primes in the top block,
@@ -4088,7 +4124,7 @@ $\|\rho\|_2^2 \sim c\,T_N^2/N$
 for an effective constant~$c$.
 Numerically, $\|\rho\|_2^2 / (T_N^2/N)$
 stabilizes near~$1.25$ for
-$N = 512, \ldots, 16{,}384$ (Table~\ref{tab:residual}).
+$N = 512, \ldots, 32{,}768$ (Table~\ref{tab:residual}).
 Part~(iii) follows from
 $\|a + b\|^2 \le 2\|a\|^2 + 2\|b\|^2$
 applied to $\lambda = \rho + \eta$.
@@ -4101,7 +4137,7 @@ $T + F = \|\lambda\|_2^2
 = \|\rho\|_2^2 + 2\langle \rho, \eta \rangle
   + \|\eta\|_2^2$
 gives
-\begin{equation}\label{eq:F-decomp}
+\begin{equation}\label{eq:F-decomp-orth}
   F = \|\rho\|_2^2
       + 2\langle \rho, \eta \rangle
       + (\|\eta\|_2^2 - T).
@@ -4110,7 +4146,7 @@ Under the independent profile model
 (each $X_p(m)$ is an independent
 Bernoulli with mean $\pi_p(m) = A_p/L_p$
 when $p < m$), the three terms
-in~\eqref{eq:F-decomp} have the
+in~\eqref{eq:F-decomp-orth} have the
 following expected behavior:
 \begin{itemize}
 \item $\|\rho\|_2^2 = \Theta(T^2/N)$:
@@ -4129,11 +4165,29 @@ confirms this decomposition:
 $\|\eta\|_2^2/T$ is stable near~$1.0$
 (matching palindromic random surrogates),
 while $F \approx \|\rho\|_2^2$
-to within~$1\%$ at $N = 16{,}384$.
+to within~$1\%$ at $N = 16{,}384$
+and within~$8\%$ at $N = 32{,}768$.
+The cross-term $\langle \rho, \eta \rangle$
+is~$O(1)$ at every tested scale
+(e.g.\ $-0.03$ at $N = 16{,}384$
+and $0.40$ at $N = 32{,}768$,
+versus $T = 664$ and $1182$).
+Moreover, the cross-term has a
+\emph{deterministic} bound:
+$|\langle \rho, \eta \rangle|
+\le \rho_{\max} \cdot T$
+where $\rho_{\max} = \max_{m} \rho(m)
+= \sum_p A_p/(2N{-}p)$.
+Since $\rho_{\max}/(T/N)$ stabilizes
+near~$1.8$ (Table~\ref{tab:residual}),
+$|\langle \rho, \eta \rangle|
+\le 1.8\,T^2/N = o(T)$.
 The unconditional collision theorem
 $F = O(T)$ is therefore equivalent to
-the decorrelation statement
-$\langle \rho, \eta \rangle = o(T)$.
+the shot-noise estimate
+$\|\eta\|_2^2 = O(T)$,
+which is the residualized AMTD
+(Hypothesis~\ref{hyp:amtd}).
 \end{remark}
 
 \begin{table}[ht]
@@ -4160,6 +4214,7 @@ Surr \\
 4096 & 172 & 2 & 9.4 & 1.31 & 0.96 & 1.00 \\
 8192 & 354 & 20 & 19.6 & 1.28 & 1.00 & 1.00 \\
 16384 & 664 & 34 & 33.7 & 1.25 & 1.00 & 1.01 \\
+32768 & 1182 & 58 & 53.8 & 1.26 & 1.00 & --- \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -4412,6 +4467,22 @@ Math.\ Z.\ \textbf{243} (2003), 79--84.
 X.~Caruso, F.~F\"urnsinn, D.~Vargas-Montoya, and W.~Zudilin,
 \emph{Galois groups of Ap\'ery-like series modulo primes},
 arXiv preprint, 2026.
+
+\bibitem{Drappeau2017}
+S.~Drappeau,
+\emph{Sums of Kloosterman sums in arithmetic progressions,
+and the error term in the dispersion method},
+Proc.\ Lond.\ Math.\ Soc.\ \textbf{114} (2017), 684--732.
+
+\bibitem{FouvryKM2014}
+\'E.~Fouvry, E.~Kowalski, and P.~Michel,
+\emph{Algebraic trace functions over the primes},
+Duke Math.\ J.\ \textbf{163} (2014), 1683--1736.
+
+\bibitem{KMS2017}
+E.~Kowalski, P.~Michel, and W.~Sawin,
+\emph{Bilinear forms with Kloosterman sums and applications},
+Ann.\ of Math.\ \textbf{186} (2017), 413--500.
 
 \bibitem{FFK2023}
 A.~Forey, J.~Fres\'an, and E.~Kowalski,
