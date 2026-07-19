@@ -751,3 +751,43 @@ Ledger Q5510/Q5511/Q5512/Q5515 (07-16): GITDROP SHAs unresolvable in ANY repo
    EXACT open statement after prop:quotient-reduction.
 3. Fiber/energy port (Codex C1) — strengthens unconditional toolbox.
 4. Computation (Codex C2) — Poisson consistency at 10× the old range.
+
+### Later findings (same session, 2026-07-19 afternoon)
+
+- ★ Paper NEW section ssec:high-moment (committed fa026ae, aaaa94c):
+  Hypothesis (HM)_k; Prop hm2 (k=2 unconditional, constant 5);
+  Thm hm-pointwise ((HM)_k ⟹ log G_n ≪ n^{2/3+2/k+o(1)} for EVERY n;
+  k=8 → n^{11/12}; any k>6 closes the conjecture); computational table
+  R_k = Σ(K)_k/(X²λ^k) = O(1) for k=2,3,4 at X ≤ 2048 (scripts/p32_hm_check.py).
+  Abstract + Conclusion updated. Bottom-block edge case fixed.
+
+- ⚠ Q97 (13:05 today) vs Q117 (13:23): the "range content theorem"
+  (uniform nonvanishing of the bordered certificate D_{h,j} mod p) is
+  listed NOT PROVED in Q97 — endpoint evaluations x = -1, -h, -j give a
+  non-contradictory Pell–Apéry congruence system; missing: either the
+  two-coefficient gcd estimate (Q97 §6) or a singular-specialization
+  propagation lemma (Q97 §7). Q117 cites "the completed range theorem"
+  as a prerequisite of (4.D) — the other host may have closed it between
+  13:05 and 13:23, or is citing an unpushed proof. TREAT AS CONDITIONAL
+  until its text lands. Codex C1's Step 3 may stall here — expected.
+
+- Codex C1 interim discovery (empirical): D_{h,k} ≡ 0 mod p DOES happen
+  for structured patterns: p=419 (h,k multiples of 35, 12·35=p+1),
+  p=449/457 (multiples of 56/57, 8·56=p−1), p=433 (54, 8·54=p−1),
+  p=487 (81, 6·81=p+1). Degenerate step d is always LARGE (~p/12..p/6),
+  consistent with orbit periodicity d | (p±1)/small. The naive
+  "D_{h,k} ≢ 0 for all h<k<p" is FALSE; the fiber-bound argument only
+  needs k ≤ H ~ p^{1/4} ≪ d — the RANGE restriction is essential and
+  explains the name "range content theorem".
+
+- Impossibility scope check (mine): the Q119 adversarial construction
+  extends to ANY package of single-prime distributional axioms (fiber
+  bounds, energy included) — the adversary prescribes only zero sets and
+  fills values generically. So fiber/energy theorems are for the
+  average/exceptional-set toolbox and eventual cross-prime machinery,
+  NOT a loophole around cross-prime coupling.
+
+- Synergy noted: fiber bound max_a N_p(a) ≪ p^{3/4} ⟹ collision energy
+  E_p ≪ p^{7/4}, the first unconditional energy saving (η = 1/4) — Q94
+  lists E_p ≪ p^{2-η} as its "weakest believable sufficient hypothesis"
+  frame (though the induced Z(p) ≪ p^{7/8} is weaker than direct p^{2/3}).
