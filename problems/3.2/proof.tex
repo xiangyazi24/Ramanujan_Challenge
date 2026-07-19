@@ -78,6 +78,17 @@ to a two-prime dispersion input:
 the cross-prime interaction~$O$ is~$o(T)$.
 Computation through $N = 262{,}144$ confirms
 $|O/T| < 2 \times 10^{-3}$.
+Two structural reductions further localize the gap:
+prime counting alone disposes of every prime
+$p \le n/(f(n)\log n)$ for any $f \to \infty$,
+so only the quotient classes
+$\lfloor n/p \rfloor < f(n)\log n$ matter;
+and a single fixed factorial moment
+$(\mathrm{HM})_k$ with $k > 6$---at the independence
+scale, compatible with $Z(p) \ll p^{2/3}$, and proved
+here unconditionally for $k = 2$---would give the
+full conjecture with the power saving
+$\log G_n \ll n^{2/3 + 2/k + o(1)}$.
 \end{abstract}
 
 \section{Setup}
@@ -5108,6 +5119,138 @@ the additive exponential-sum bound above, would require
 genuinely new same-characteristic arithmetic geometry.
 \end{remark}
 
+\subsection{The high-moment criterion}\label{ssec:high-moment}
+
+The dispersion hypothesis (Hypothesis~\ref{hyp:ap-bdh}) is a
+second-moment statement localized in short windows.
+An alternative sufficient condition---global in the integer
+variable, but requiring a single fixed higher moment---is
+the following.
+
+For a dyadic block of primes $(X, 2X]$ and an integer~$m$,
+define
+\[
+  K_X(m) \;=\; \#\bigl\{p \in (X, 2X] :\ m \bmod p \in Z_p\bigr\},
+  \qquad
+  \lambda_X \;=\; \sum_{X < p \le 2X} \frac{Z(p)}{p},
+\]
+so that $\lambda_X \ll X^{2/3}/\log X$ by
+Proposition~\ref{prop:zp-bound}.
+Write $(K)_k = K(K-1)\cdots(K-k+1)$ for the falling factorial.
+
+\begin{hypothesis}[High-moment bound $(\mathrm{HM})_k$]
+\label{hyp:high-moment}
+For one fixed integer $k \ge 3$, uniformly over dyadic~$X$,
+\[
+  \sum_{0 \le m < X^2} \bigl(K_X(m)\bigr)_k
+  \;\ll\; X^{2 + o(1)}\, \lambda_X^{\,k}.
+\]
+\end{hypothesis}
+
+\begin{proposition}[The case $k = 2$ holds unconditionally]
+\label{prop:hm2}
+$\displaystyle
+  \sum_{0 \le m < X^2} \bigl(K_X(m)\bigr)_2
+  \;\le\; 5\, X^2 \lambda_X^2 .$
+\end{proposition}
+
+\begin{proof}
+Expanding the falling factorial over ordered pairs of
+distinct primes,
+\[
+  \sum_{m < X^2} \bigl(K_X(m)\bigr)_2
+  = \sum_{\substack{p, q \in (X,2X] \\ p \ne q}}\
+    \sum_{\substack{r \in Z_p \\ s \in Z_q}}
+    \#\bigl\{m < X^2 : m \equiv r \ (p),\ m \equiv s \ (q)\bigr\}.
+\]
+By the Chinese remainder theorem the inner count is at most
+$X^2/(pq) + 1$, and since $pq \le 4X^2$ the additive~$1$ is
+at most $4X^2/(pq)$, so the count is at most $5X^2/(pq)$.
+Summing,
+\[
+  \sum_{m<X^2}\bigl(K_X(m)\bigr)_2
+  \le 5X^2 \!\!\sum_{\substack{p,q \in (X,2X] \\ p \neq q}}\!\!
+  \frac{Z(p)Z(q)}{pq}
+  \le 5X^2\lambda_X^2. \qedhere
+\]
+\end{proof}
+
+\begin{remark}[Where the frontier begins]\label{rem:hm-frontier}
+For $k \ge 3$, distinct primes have
+$p_1\cdots p_k > X^k > X^2$, so each residue tuple
+$(r_1, \ldots, r_k) \in Z_{p_1} \times \cdots \times Z_{p_k}$
+has \emph{at most one} CRT representative below~$X^2$, and the
+trivial bound on the $k$-th moment is the total tuple count
+$\asymp (X\lambda_X)^k$, which exceeds the conjectured
+$X^2\lambda_X^k$ by the factor $X^{k-2}$.
+Hypothesis~$(\mathrm{HM})_k$ thus asserts that only the
+expected proportion $\asymp X^2/(p_1 \cdots p_k)$ of the
+actual Ap\'ery zero tuples admit a representative in
+$[0, X^2)$ --- a genuine cross-prime equidistribution
+statement, strictly beyond Proposition~\ref{prop:hm2},
+yet far weaker than the Poisson conjecture
+(Hypothesis~\ref{hyp:poisson}).
+\end{remark}
+
+\begin{theorem}[$(\mathrm{HM})_k$ implies a pointwise power
+saving]\label{thm:hm-pointwise}
+Assume Hypothesis~\ref{hyp:high-moment} for one fixed
+$k \ge 3$. Then for \emph{every}~$n$,
+\[
+  \log G_n \;\ll\; n^{2/3 + 2/k + o(1)}.
+\]
+In particular $k = 8$ gives
+$\log G_n \ll n^{11/12 + o(1)}$, and any fixed $k > 6$
+proves the full conjecture $G_n = e^{o(n)}$ for all~$n$.
+\end{theorem}
+
+\begin{proof}
+Let $M_X = \max_{0 \le m < X^2} K_X(m)$.
+If $M_X \ge 2k$, then $(M_X)_k \ge (M_X/2)^k$; taking the
+maximizing~$m$ inside the hypothesis,
+\[
+  (M_X/2)^k
+  \;\le\; \sum_{m<X^2}\bigl(K_X(m)\bigr)_k
+  \;\ll\; X^{2+o(1)}\lambda_X^k .
+\]
+In either case ($M_X < 2k$ or not),
+\[
+  M_X \;\ll\; X^{2/k + o(1)} \lambda_X + 1
+  \;\ll\; \frac{X^{2/3 + 2/k + o(1)}}{\log X}.
+\]
+Now fix~$n$. For each dyadic $X = 2^j$ with
+$\sqrt n \le X \le n$: since $X > \sqrt n$ implies
+$n < X^2$, the integer $m = n$ is admissible in the maximum,
+so the block $(X, 2X]$ contains at most $M_X$ lower-digit
+bad primes, each of weight $\log p \le \log 2X$. Hence
+\[
+  \sum_{\substack{\sqrt n < p \le 2n \\ p \mid b_{\,n \bmod p}}}
+  \log p
+  \;\ll\; \sum_{\substack{X = 2^j \\ \sqrt n \le X \le n}}
+    X^{2/3 + 2/k + o(1)}
+  \;\ll\; n^{2/3 + 2/k + o(1)},
+\]
+the geometric sum being dominated by its top block.
+Adding the small-prime bound
+(Proposition~\ref{prop:small}), the companion-block bound
+(Proposition~\ref{prop:companion-height}), and reducing to
+the lower-digit channel by Lemma~\ref{lem:block}(iii),
+the claim follows.
+For $k > 6$ the exponent satisfies $2/3 + 2/k < 1$,
+so $\log G_n = o(n)$.
+\end{proof}
+
+\begin{remark}
+Among all sufficient conditions collected in this paper
+(Hypothesis~Z, $\bar{Z}$, Poisson, AP--BDH, AMTD),
+Hypothesis~$(\mathrm{HM})_8$ appears to be the weakest that
+still closes the full conjecture: it requires no pointwise
+information about any single prime, no short-window
+localization, and no variance identity---only one fixed
+factorial moment at the independence scale, compatible with
+the worst proved cardinality bound $Z(p) \ll p^{2/3}$.
+\end{remark}
+
 \section{Conclusion}
 
 The principal unconditional result is the quantitative
@@ -5593,6 +5736,24 @@ their results concern the fiber
 parameter and do not directly control
 the character-twisted Mellin structure
 or the two-prime dispersion.
+
+Finally, the open problem now has a sharply
+localized form. The quotient reduction
+(Proposition~\ref{prop:quotient-reduction})
+shows that prime counting alone disposes of every
+prime below $n/(f(n)\log n)$, so the conjecture is
+equivalent to controlling the lower-digit channel
+uniformly over the bounded quotient classes
+$q = \lfloor n/p \rfloor < f(n)\log n$; and among
+all sufficient conditions collected here, the
+single fixed factorial moment
+$(\mathrm{HM})_8$
+(Hypothesis~\ref{hyp:high-moment}), proved
+unconditionally for $k = 2$
+(Proposition~\ref{prop:hm2}), appears to be the
+weakest cross-prime statement that closes the
+full conjecture
+(Theorem~\ref{thm:hm-pointwise}).
 
 \begin{thebibliography}{10}
 \bibitem{AhlgrenOno2000}
