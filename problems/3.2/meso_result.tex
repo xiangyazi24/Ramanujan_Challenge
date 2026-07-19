@@ -1,0 +1,698 @@
+% Separated-block resultants: rigorous G3 results and the exact G4 obstruction.
+% This is a fragment intended to be read with proof.tex and nv_theorem.tex.
+
+\subsection{Separated root strips and centered resultant structure}
+
+Retain the notation
+\[
+ P(n)=(2n+1)(17n^2+17n+5),\qquad
+ N_{h+1}(x)=P(x+h)N_h(x)-(x+h)^6N_{h-1}(x),
+\]
+with $N_0=0$ and $N_1=1$, and, for $d,r\geq2$, put
+\[
+ \mathcal R_{d,r}
+ =\operatorname {Res}_x\bigl(N_d(x),N_r(x+d)\bigr).
+\]
+We use the standard resultant convention.  The first result proves, in
+particular, that every integer $\mathcal R_{d,r}$ is nonzero.
+
+We will use only the absolute adjacent-resultant formula from
+Remark~\ref{rem:adj-res}.  With the standard signed convention, its
+one-step recursion for $h\geq2$ has the correction
+\[
+ \operatorname {Res}(N_h,N_{h+1})
+ =(-1)^{h-1}N_h(-h)^6\operatorname {Res}(N_{h-1},N_h);
+\]
+the factor $(-1)^{h-1}$ comes from the scalar minus sign in the recurrence.
+
+\begin{proposition}[Separated root strips]\label{prop:meso-root-strip}
+For $d\geq2$, every complex root $\alpha$ of $N_d$ satisfies
+\begin{equation}\label{eq:meso-root-strip}
+ -d<\operatorname {Re}\alpha<-1.
+\end{equation}
+Consequently, for all $d,r\geq2$,
+\[
+ \mathcal R_{d,r}>0.
+\]
+\end{proposition}
+
+\begin{proof}
+Let $\mathsf A_d(x)$ be the $(d-1)\times(d-1)$ symmetric tridiagonal matrix
+with
+\[
+ (\mathsf A_d)_{ii}=P(x+i),\qquad
+ (\mathsf A_d)_{i,i+1}=(\mathsf A_d)_{i+1,i}=(x+i+1)^3.
+\]
+Expansion at the last row gives the defining continuant recurrence, so
+$\det\mathsf A_d(x)=N_d(x)$.
+
+Suppose $\operatorname {Re}x\geq-1$ and set
+$z_i=x+i+\tfrac12$.  Then $|z_i|\geq\tfrac12$ and
+\[
+ P(x+i)=34z_i^3+\frac32z_i.
+\]
+It follows that
+\[
+ |P(x+i)|
+ \geq |z_i|\bigl(34|z_i|^2-\tfrac32\bigr)
+ \geq28|z_i|^3.
+\]
+The sum of the absolute values of the two possible off-diagonal entries
+in row $i$ is at most
+\[
+ |z_i-\tfrac12|^3+|z_i+\tfrac12|^3
+ \leq2(|z_i|+\tfrac12)^3
+ \leq16|z_i|^3.
+\]
+Thus $\mathsf A_d(x)$ is strictly row-diagonally dominant and is invertible.
+There is no root with $\operatorname {Re}x\geq-1$.
+
+If $J$ is the reversal matrix, the definitions and
+$P(-z-1)=-P(z)$ give
+\[
+ \mathsf A_d(-x-d-1)=-J\mathsf A_d(x)J.
+\]
+Taking determinants proves the reflection identity
+\[
+ N_d(-x-d-1)=(-1)^{d-1}N_d(x)
+\]
+then excludes $\operatorname {Re}x\leq-d$, proving
+\eqref{eq:meso-root-strip}.  The roots of $N_r(x+d)$ lie in the
+disjoint strip
+\[
+ -d-r<\operatorname {Re}x<-d-1,
+\]
+so the two polynomials have no common complex root and their resultant
+is nonzero.
+
+Finally, the leading coefficients $\ell_d,\ell_r$ are positive.  In the
+root-product formula for the resultant, a difference of two real roots is
+positive because the first root strip lies strictly to the right of the
+second.  Nonreal roots can be grouped with their conjugates, making the
+corresponding products positive squared absolute values.  Hence the
+resultant itself is positive.
+\end{proof}
+
+It is useful to clear all dyadic denominators in the natural centered
+coordinate.  For $h\geq1$, if $n_h=3(h-1)$, define
+\begin{equation}\label{eq:meso-M-def}
+ M_h(Y)=2^{n_h}N_h\left(\frac{Y-h-1}{2}\right)\in\mathbb Z[Y].
+\end{equation}
+Then
+\[
+ M_h(-Y)=(-1)^{h-1}M_h(Y),\qquad
+ \operatorname {lc}M_h=\ell_h,
+\]
+and a linear change of variable gives the exact normalization
+\begin{equation}\label{eq:meso-M-resultant}
+ \operatorname {Res}_Y\bigl(M_d(Y),M_r(Y+d+r)\bigr)
+ =2^{n_dn_r}\mathcal R_{d,r}.
+\end{equation}
+
+\begin{proposition}[Centered norm decomposition]\label{prop:meso-centered-norm}
+For $d,r\geq2$, write
+\[
+ \widehat N_d(Y)=N_d\left(Y-\frac{d+1}{2}\right)
+ =\begin{cases}
+ A_d(Y^2),&d\ \text{odd},\\
+ YA_d(Y^2),&d\ \text{even},
+ \end{cases}
+\]
+where $A_d\in\mathbb Z[1/2][U]$, and set
+\[
+ G_{d,r}(Y)=N_r\left(Y+\frac{d-1}{2}\right),\qquad
+ \Psi_{d,r}(Y^2)=G_{d,r}(Y)G_{d,r}(-Y).
+\]
+Then
+\begin{equation}\label{eq:meso-centered-norm}
+ |\mathcal R_{d,r}|=
+ \begin{cases}
+ |\operatorname {Res}_U(A_d,\Psi_{d,r})|,&d\ \text{odd},\\
+ \left|N_r\bigl((d-1)/2\bigr)\right|
+ |\operatorname {Res}_U(A_d,\Psi_{d,r})|,&d\ \text{even}.
+ \end{cases}
+\end{equation}
+Moreover, the centered-coefficient formulas of
+Lemma~\ref{lem:nv-centered-coefficients} give
+\[
+ A_d(U)=\ell_dU^m+u_dU^{m-1}+v_dU^{m-2}+\cdots
+\]
+with the evident adjustment when $d$ is even.
+\end{proposition}
+
+\begin{proof}
+In the centered variable $Y=x+(d+1)/2$, the second polynomial is
+$G_{d,r}(Y)$.  If $d$ is odd, the roots of $A_d(Y^2)$ occur in pairs
+$\{\sqrt u,-\sqrt u\}$, and their two contributions to the root-product
+formula multiply to $\Psi_{d,r}(u)$.  This is exactly the first
+resultant in~\eqref{eq:meso-centered-norm}.  If $d$ is even, the
+additional root $Y=0$ contributes $G_{d,r}(0)=N_r((d-1)/2)$.
+The last assertion is the parity statement and the coefficient formulas
+of Lemma~\ref{lem:nv-centered-coefficients}.
+\end{proof}
+
+Equivalently, in the finite $\mathbb Q$-algebra
+\[
+ K_d=\mathbb Q[X]/(N_d),\qquad \alpha=X\bmod N_d,
+\]
+one has
+\begin{equation}\label{eq:meso-quotient-norm}
+ \mathcal R_{d,r}
+ =\ell_d^{3(r-1)}
+ \operatorname {Nm}_{K_d/\mathbb Q}\bigl(N_r(\alpha+d)\bigr).
+\end{equation}
+No irreducibility or separability assumption is needed for this
+determinantal norm identity.  For $d=2$,
+$A_2(U)=34U+\tfrac32$; Proposition~\ref{prop:meso-centered-norm}
+is precisely the rational linear factor times quadratic norm decomposition
+recorded in Remark~\ref{rem:sep-res}.
+
+\subsection{Half-integer center factors and their propagation}
+
+The even centered factor gives a genuine divisibility lattice, rather than
+only a numerical repetition pattern.
+
+\begin{proposition}[Even-block center recurrence]\label{prop:meso-center-recurrence}
+Fix an even integer $a\geq2$ and define
+\[
+ T_0^{(a)}=0,\qquad T_1^{(a)}=1,\qquad
+ T_b^{(a)}=2^{3(b-1)}N_b\left(\frac{a-1}{2}\right)
+ \quad(b\geq2).
+\]
+If $z=a+2b-1$, then
+\begin{equation}\label{eq:meso-center-recurrence}
+ T_{b+1}^{(a)}
+ =\bigl(34z^3+102z^2+108z+40\bigr)T_b^{(a)}
+ -z^6T_{b-1}^{(a)}.
+\end{equation}
+In particular, every $T_b^{(a)}$ is an integer.  Furthermore,
+\begin{equation}\label{eq:meso-center-divides-first}
+ T_b^{(a)}\mid\mathcal R_{a,b},
+\end{equation}
+and the odd part of $T_b^{(a)}$ divides $\mathcal R_{b,a+b}$.
+By symmetry, if $b$ is even, the odd part of $T_a^{(b)}$ divides
+both $\mathcal R_{a,b}$ and $\mathcal R_{a,a+b}$.
+\end{proposition}
+
+\begin{proof}
+Substitute $x=(a-1)/2$ in the recurrence for $N_b$ and multiply by
+$2^{3b}$.  Since $2(x+b)=a+2b-1=z$ and
+\[
+ 8P(z/2)=34z^3+102z^2+108z+40,
+\]
+one obtains~\eqref{eq:meso-center-recurrence}.
+
+Because $a$ is even, reflection shows that
+$c=-(a+1)/2$ is a root of $N_a$.  Gauss's lemma gives
+\[
+ N_a(X)=(2X+a+1)Q_a(X),\qquad Q_a\in\mathbb Z[X].
+\]
+Resultant multiplicativity and the linear-root formula yield
+\[
+ \operatorname {Res}_X(2X+a+1,N_b(X+a))
+ =2^{3(b-1)}N_b(c+a)=T_b^{(a)},
+\]
+which proves~\eqref{eq:meso-center-divides-first}.
+
+Let $p^e$ be any odd prime power dividing $T_b^{(a)}$.  Since $2$ is a
+unit modulo $p^e$, this says
+\[
+ N_b(t)=0\pmod {p^e},\qquad t=(a-1)/2.
+\]
+The restart identity is valid without division in the present situation:
+the two sides satisfy the same recurrence and hence
+\[
+ N_{a+b}(c)=N_{a+1}(c)N_b(c+a)
+             =N_{a+1}(c)N_b(t)=0\pmod {p^e}.
+\]
+Put $y=-t-b-1$.  Reflection gives
+$N_b(y)=(-1)^{b-1}N_b(t)=0$, while $y+b=c$, so
+$N_{a+b}(y+b)=0$.  The Sylvester--B\'ezout identity for the resultant,
+evaluated at $y\in\mathbb Z/p^e\mathbb Z$, gives
+$p^e\mid\mathcal R_{b,a+b}$.  Taking all odd prime powers proves the
+claim.  The symmetric assertion follows from
+$\mathcal R_{a,b}=\mathcal R_{b,a}$.
+\end{proof}
+
+There is also a simultaneous center factor for every pair.  With
+$T_b^{(a)}$ as above, define
+\[
+ \mathfrak C_{d,r}=
+ \begin{cases}
+ 1,&d,r\ \text{odd},\\
+ |T_r^{(d)}|,&d\ \text{even},\ r\ \text{odd},\\
+ |T_d^{(r)}|,&d\ \text{odd},\ r\ \text{even},\\
+ \displaystyle\frac{|T_r^{(d)}T_d^{(r)}|}{2(d+r)},
+     &d,r\ \text{even}.
+ \end{cases}
+\]
+Then $\mathfrak C_{d,r}$ is an integer and
+\begin{equation}\label{eq:meso-center-factor}
+ \mathfrak C_{d,r}\mid\mathcal R_{d,r}.
+\end{equation}
+Indeed, factor every available central linear factor before applying
+resultant multiplicativity.  When both indices are even, the two linear
+factors have resultant $2(d+r)$, which accounts for the denominator and
+prevents counting their mutual resultant twice.
+
+\subsection{The diagonal square law}
+
+For the diagonal family, the centered pairing becomes an exact square.
+
+\begin{theorem}[Diagonal square law]\label{thm:meso-diagonal-square}
+For $d\geq2$, let $n=3(d-1)$ and put
+\[
+ f_d(T)=N_d\left(T-\frac{2d+1}{2}\right)
+       =E_d(T^2)+TO_d(T^2),
+ \qquad E_d,O_d\in\mathbb Q[U].
+\]
+Then
+\begin{equation}\label{eq:meso-diagonal-square-rational}
+ \mathcal R_{d,d}
+ =(-1)^{d-1}2^n\ell_d
+ N_d\left(-\frac{2d+1}{2}\right)
+ \operatorname {Res}_U(O_d,E_d)^2.
+\end{equation}
+Moreover,
+\[
+ D_d=2^nN_d(-1/2)\in\mathbb Z,
+ \qquad Q_d=\operatorname {Res}_U(O_d,E_d)\in\mathbb Z,
+\]
+and therefore
+\begin{equation}\label{eq:meso-diagonal-square-integral}
+ \boxed{\mathcal R_{d,d}=\ell_d|D_d|Q_d^2.}
+\end{equation}
+For every odd prime $p$,
+\begin{equation}\label{eq:meso-diagonal-valuation}
+ v_p(\mathcal R_{d,d})
+ =v_p(\ell_d)+v_p(D_d)+2v_p(Q_d).
+\end{equation}
+In particular, if $p\nmid\ell_dD_d$, then
+$v_p(\mathcal R_{d,d})$ is even.
+\end{theorem}
+
+\begin{proof}
+We first record a general identity.  Let
+\[
+ f(T)=aT^n+\cdots=E(T^2)+TO(T^2),
+\]
+and suppose the two parity parts have the full degrees forced by nonzero
+coefficients in degrees $n$ and $n-1$.  If $\alpha_i$ are the roots of
+$f$, then
+\[
+ f(-\alpha_i)=-2\alpha_iO(\alpha_i^2),
+\]
+and the root-product formula gives
+\begin{equation}\label{eq:meso-square-step1}
+ \operatorname {Res}_T(f(T),f(-T))
+ =2^na^{n-1}f(0)\prod_iO(\alpha_i^2).
+\end{equation}
+If $s=\deg O$, $e=\deg E$, and $b=\operatorname {lc}O$, then
+\begin{align*}
+ a^{2s}\prod_iO(\alpha_i^2)
+ &=\operatorname {Res}_T(f(T),O(T^2))\\
+ &=b^{n-2e}\operatorname {Res}_U(O,E)^2.
+\end{align*}
+For $n=2m$, one has $(e,s)=(m,m-1)$.  For $n=2m+1$, one has
+$(e,s)=(m,m)$ and $b=a$.  In either case, substitution into
+\eqref{eq:meso-square-step1} gives
+\begin{equation}\label{eq:meso-general-square}
+ \operatorname {Res}_T(f(T),f(-T))
+ =2^na f(0)\operatorname {Res}_U(O,E)^2.
+\end{equation}
+
+For $f=f_d$, the natural centered parity of $N_d$ shows that the
+coefficient of $T^{n-1}$ is $-nd\ell_d/2$, so the stated degree
+conditions hold.  Reflection gives
+\[
+ N_d(T-1/2)=(-1)^{d-1}f_d(-T).
+\]
+After the translation $T=x+(2d+1)/2$, scaling the second argument of
+the resultant contributes
+$(-1)^{(d-1)n}=(-1)^{d-1}$.  Equation
+\eqref{eq:meso-general-square} is therefore exactly
+\eqref{eq:meso-diagonal-square-rational}.
+
+It remains only to justify the integral form.  Integrality of $D_d$ is
+immediate from evaluating an integer polynomial of degree $n$ at a
+half-integer.  Put $c=2d+1$ and $V=X(X+c)$.  Reduction by the monic
+relation $X^2=V-cX$ gives the free-module decomposition
+\[
+ \mathbb Z[X]=\mathbb Z[V]\oplus X\mathbb Z[V].
+\]
+Thus there are $A,B\in\mathbb Z[V]$ such that
+\[
+ N_d(X)=A(V)+XB(V).
+\]
+Since $T=X+c/2$ and $U=T^2$, one has $V=U-c^2/4$, and comparison with
+$f_d(T)=E_d(U)+TO_d(U)$ gives
+\[
+ O_d(U)=B(U-c^2/4),
+ \qquad
+ E_d(U)=A(U-c^2/4)-\frac c2B(U-c^2/4).
+\]
+Translation invariance reduces $Q_d$ to
+$\operatorname {Res}_V(B,A-\tfrac c2B)$.  In fact $\deg A=\deg E_d$.
+When $n=2m$, this follows from $\deg E_d=m$ and $\deg B=m-1$.
+When $n=2m+1$, the leading coefficients computed above give
+\[
+ \operatorname {lc}B=\ell_d,\qquad
+ \operatorname {lc}A
+ =\frac{c-nd}{2}\ell_d,
+\]
+and $c-nd=-3d^2+5d+1\ne0$ for every integer $d\geq2$.  The
+root-product formula therefore gives
+\[
+ Q_d=\operatorname {Res}_U(O_d,E_d)
+ =\operatorname {Res}_V(B,A-\tfrac c2B)
+ =\operatorname {Res}_V(B,A)\in\mathbb Z.
+\]
+Finally, reflection gives
+\[
+ \left|N_d\left(-\frac{2d+1}{2}\right)\right|=|N_d(-1/2)|.
+\]
+Proposition~\ref{prop:meso-root-strip} supplies the sign, and
+\eqref{eq:meso-diagonal-square-integral} follows.  The valuation formula
+is immediate.
+\end{proof}
+
+In odd characteristic the affine diagonal roots can also be read off
+exactly.  In the coordinate used above,
+\[
+ f_d(T)=f_d(-T)=0
+ \quad\Longleftrightarrow\quad
+ E_d(T^2)=0,\quad TO_d(T^2)=0.
+\]
+Thus the number of distinct $\mathbb F_p$-roots is
+\begin{equation}\label{eq:meso-diagonal-root-count}
+ \mathbf1_{p\mid f_d(0)}
+ +2\#\{u\in(\mathbb F_p^\times)^2:E_d(u)=O_d(u)=0\}.
+\end{equation}
+This distinguishes an actual split collision from a nonsplit quadratic
+factor of the resultant.
+
+\subsection{What resultant divisibility does and does not mean}
+
+\begin{proposition}[Projective validity domain]\label{prop:meso-resultant-validity}
+For integer polynomials of their nominal degrees,
+$p\mid\mathcal R_{d,r}$ if and only if their nominal homogenizations
+have a common point in $\mathbb P^1(\overline{\mathbb F}_p)$.  If the
+two leading coefficients do not both vanish modulo $p$, this is
+equivalent to an affine common root in $\overline{\mathbb F}_p$.
+It is not, in general, equivalent to a common root in $\mathbb F_p$.
+The universally valid implication is only
+\[
+ \{x\in\mathbb F_p:N_d(x)=N_r(x+d)=0\}\ne\varnothing
+ \quad\Longrightarrow\quad p\mid\mathcal R_{d,r}.
+\]
+\end{proposition}
+
+Two mesoscopic examples show both failures of the converse.
+For $d=r=2$ and $p=17$,
+\[
+ N_2(X)\equiv5(2X+3),\qquad
+ N_2(X+2)\equiv5(2X+7)\pmod {17}.
+\]
+They have no affine common root, although
+$17^3\mid\mathcal R_{2,2}$; both nominal cubics lost their leading
+terms and meet at infinity.  On the other hand, for $d=r=3$ and
+$p=110629$, the leading coefficient is a unit and
+\[
+ \gcd\bigl(N_3(X),N_3(X+3)\bigr)
+ =X^2+7X-15495.
+\]
+Its discriminant is $62029$, a nonsquare modulo $110629$.  Hence there
+is an affine common root over $\overline{\mathbb F}_p$ but none over
+$\mathbb F_p$, even though $110629^2\mid\mathcal R_{3,3}$.
+
+The centered coefficients identify the complete lattice of automatic
+infinity edges.  Recall
+\[
+ \ell_0=0,\quad\ell_1=1,\quad
+ \ell_{n+1}=34\ell_n-\ell_{n-1}.
+\]
+For $p\geq5$, choose $\lambda\in\mathbb F_{p^2}$ with
+$\lambda+\lambda^{-1}=34$.  Then
+\[
+ \ell_n=\frac{\lambda^n-\lambda^{-n}}
+              {\lambda-\lambda^{-1}}.
+\]
+If $\rho_p=\operatorname {ord}(\lambda^2)$, then
+\begin{equation}\label{eq:meso-rank-lattice}
+ p\mid\ell_n\quad\Longleftrightarrow\quad\rho_p\mid n,
+ \qquad \rho_p\mid p-\left(\frac2p\right).
+\end{equation}
+Consequently every pair with $\rho_p\mid d,r$ is in the raw resultant
+support, independently of affine collisions.  If
+$M=\lfloor H/\rho_p\rfloor$, these pairs alone number
+\begin{equation}\label{eq:meso-infinity-count}
+ V_p^{\mathrm{infinity}}(H)=\frac{M(M-1)}2.
+\end{equation}
+
+There is a legitimate centered-coefficient transfer here, but it detects
+only the false edge at infinity.  Suppose $p\geq7$ and $d<p$.  If
+$\ell_d=0$, Cassini gives $\ell_{d-1}^2=1$, while
+Lemma~\ref{lem:nv-centered-coefficients} gives
+\[
+ u_d=\frac{5d\ell_{d-1}}{256}\ne0\pmod p.
+\]
+Because the natural centered polynomial contains only every other power,
+its degree drops by exactly two.  If $\rho_p\mid d,r$, the two nominal
+homogenizations have a common factor of order two at infinity; equivalently,
+the nominal Sylvester matrix has nullity at least two modulo $p$.  Its Smith
+normal form therefore gives
+\begin{equation}\label{eq:meso-infinity-square}
+ p^2\mid\mathcal R_{d,r}.
+\end{equation}
+
+For example, $p=665857$ has $\rho_p=8$ and
+$H=\lfloor\sqrt p\rfloor=816$.  Formula
+\eqref{eq:meso-infinity-count} already gives $5151$ raw resultant pairs,
+without producing a single affine collision.  Thus the unsaturated integer
+resultant support is not the correct collision graph.
+
+The centered/Pell method from Theorem~\ref{thm:nv-range} cannot be used
+pointwise in the opposite direction.  At $(d,r,p)=(2,2,71)$ and
+$x=-5/2$, the two natural centered variables are $-1$ and $1$, and
+\[
+ \widehat N_2(Y)=34Y^3+\frac32Y,\qquad
+ \widehat N_2(\pm1)=\pm\frac{71}{2}\equiv0\pmod {71},
+\]
+while $\ell_2=34\ne0\pmod {71}$.  The proof of
+Theorem~\ref{thm:nv-range} compares coefficients only after assuming
+that an entire certificate polynomial is identically zero.  Two point-value
+equations do not make its coefficients $L,C_1,C_2,C_4$ vanish.  In
+particular, its $C_4$ formula is valid only inside the stated danger case
+and cannot be transferred to this collision.
+
+\subsection{The two missing counting lemmas}
+
+For an integer $H\geq2$, define
+\[
+ \mathscr D_H=\{(d,r)\in\mathbb Z_{\geq2}^2:d+r\leq H\},
+\]
+\[
+ X_{d,r}(p)=\{x\in\mathbb F_p:
+ N_d(x)=N_r(x+d)=0\},\qquad m_{d,r}(p)=|X_{d,r}(p)|.
+\]
+The collision energy is the weighted count
+\[
+ \mathcal E_p(H)=\sum_{(d,r)\in\mathscr D_H}m_{d,r}(p).
+\]
+Define also the simple affine support
+\[
+ W_p(H)=\#\{(d,r)\in\mathscr D_H:m_{d,r}(p)>0\}.
+\]
+The raw resultant support
+\[
+ V_p(H)=\#\{(d,r)\in\mathscr D_H:p\mid\mathcal R_{d,r}\}
+\]
+is the edge count of a still larger projective-support graph.  Thus
+\[
+ W_p(H)\leq\mathcal E_p(H),\qquad W_p(H)\leq V_p(H).
+\]
+Remark~\ref{rem:collision} identified $\mathcal E_p(H)$ with the edge
+count $W_p(H)$ by forgetting that one pair can have several root witnesses.
+For example, at $p=3109$ the pair $(d,r)=(8,8)$ has two distinct
+$\mathbb F_p$ common roots, so it contributes one to $W_p$ and two to
+$\mathcal E_p$.  The examples above exhibit the separate failure of
+$W_p(H)=V_p(H)$.
+
+The same distinction changes the averaging statement in that remark.
+The Hadamard argument controls only
+\[
+ \sum_{X<p\leq2X}V_p(H)\ll\frac{H^4\log H}{\log X}.
+\]
+After inserting the available multiplicity bound, its valid consequence is
+\[
+ \sum_{X<p\leq2X}\mathcal E_p(H)
+ \ll\frac{H^5\log H}{\log X}.
+\]
+Since there are $\asymp X/\log X$ primes in the interval, this proves
+$\mathcal E_p(H)\ll H^{1/2}$ for all but $o(X/\log X)$ of them only in
+the range $H\leq X^{2/9-\varepsilon}$, rather than the stated
+$X^{2/7-\varepsilon}$ range.  The latter exponent applies to simple
+support, not to the collision energy.
+
+The existing gcd estimate gives
+\[
+ m_{d,r}(p)\leq3(\min(d,r)-1).
+\]
+Accordingly, define the degree-weighted support
+\[
+ \mathcal W_p(H)=
+ \sum_{(d,r)\in\mathscr D_H}
+ (\min(d,r)-1)\mathbf1_{p\mid\mathcal R_{d,r}}.
+\]
+Then the rigorous implication is
+\begin{equation}\label{eq:meso-weighted-energy}
+ \mathcal E_p(H)\leq3\mathcal W_p(H).
+\end{equation}
+In particular,
+\begin{equation}\label{eq:meso-V-only}
+ V_p(H)\ll H\quad\Longrightarrow\quad
+ \mathcal E_p(H)\ll H^2,
+\end{equation}
+not $H^{3/2}$.  This loss is real at the level of the proposed graph
+argument: take $\asymp H$ exceptional pairs with $d,r\asymp H$, make them
+a matching (maximum degree one and codegree zero), and assign
+$\asymp H$ distinct root witnesses to every edge.  This obeys the available
+per-pair degree bound and has energy $\asymp H^2$.  The ordinary
+K\H{o}v\'ari--S\'os--Tur\'an theorem applies to a simple graph and cannot
+control those parallel root witnesses.
+
+Thus a sufficient replacement for G1 is the genuinely weighted estimate
+\begin{equation}\label{eq:meso-missing-weighted}
+ \boxed{\mathcal W_p(H)\ll H^{3/2}.}
+\end{equation}
+Alternatively, together with $V_p(H)\ll H$, it would suffice to prove an
+average actual gcd-degree bound $O(H^{1/2})$ on the exceptional pairs, or
+a corresponding multiplicity-tail estimate.
+
+There is a second, independent gap between energy and the first moment
+$R_p(H)=\sum_{h=2}^H r_p(h)$.  Let
+\[
+ k_x=\#\{2\leq h\leq H:N_h(x)=0\},\qquad
+ \partial_H=\{-2,-3,\ldots,-H\}\subseteq\mathbb F_p.
+\]
+For $x\notin\partial_H$, Proposition~\ref{prop:bezout} maps every pair
+$2\leq d<e\leq H$ counted by $\binom{k_x}{2}$ injectively to the energy
+term $(x,d,e-d)$.  Indeed $e-d=1$ cannot occur: in that case the B\'ezout
+right-hand side is $S_d(x)^6N_1=S_d(x)^6\ne0$.  Thus every resulting
+pair has $e-d\geq2$ and lies in $\mathscr D_H$.  Hence
+\begin{equation}\label{eq:meso-column-pairs}
+ \sum_{x\notin\partial_H}\binom{k_x}{2}\leq\mathcal E_p(H).
+\end{equation}
+The exclusion of $\partial_H$ is essential.  The unsaturated degree claim
+following Proposition~\ref{prop:bezout} fails at cut-edge roots: for
+$(d,e,p)=(3,4,73)$,
+\[
+ \gcd_{\mathbb F_{73}[X]}(N_3,N_4)=X+3,
+\]
+whereas $N_{e-d}=N_1=1$.  Thus that claim is valid only for the saturated
+gcd, or as an away-from-boundary root count; the use above has precisely
+that domain.
+
+The same example invalidates the proof of the unrestricted column bound in
+Proposition~\ref{prop:column}.  Since $b_2=73$, the endpoint formula gives
+\[
+ N_h(-3)\equiv0\pmod {73}\qquad(h\geq3).
+\]
+At the singular transition the recurrence has reached two consecutive
+zeros, so the entire later tail remains zero; it cannot be charged as an
+$O(1)$ transition cost.  Thus that proof does not establish the proposition
+or the rectangular incidence bound derived from it; a valid version needs
+an explicit boundary term or an unpolluted nonsingular initial state.  The
+present argument excludes such columns from
+\eqref{eq:meso-column-pairs} and retains their full contribution in
+$R_p^\partial(H)$.
+But columns with $k_x=1$ contribute nothing to either side of
+\eqref{eq:meso-column-pairs}.  Energy alone cannot bound their total mass.
+
+For a precise sufficient condition, set $K=\lceil\sqrt H\rceil$ and
+\[
+ R_p^\partial(H)=\sum_{x\in\partial_H}k_x,
+ \qquad
+ L_p(H)=\sum_{\substack{x\notin\partial_H\\0<k_x<K}}k_x.
+\]
+Since $k\leq2\binom{k}{2}/(K-1)$ for $k\geq K$,
+\eqref{eq:meso-column-pairs} gives the deterministic inequality
+\begin{equation}\label{eq:meso-amplification-exact}
+ \boxed{
+ R_p(H)\leq R_p^\partial(H)+L_p(H)
+ +\frac{2}{\lceil\sqrt H\rceil-1}\mathcal E_p(H).}
+\end{equation}
+Thus the missing low-fiber amplification is
+\begin{equation}\label{eq:meso-missing-amplification}
+ R_p^\partial(H)+L_p(H)\ll H,
+\end{equation}
+or, in compressed form,
+\[
+ R_p(H)\ll H+H^{-1/2}\mathcal E_p(H).
+\]
+This is a lower-participation assertion; K\H{o}v\'ari--S\'os--Tur\'an is
+an upper-bound theorem and does not supply it.  The boundary term cannot
+be discarded, since the endpoint factorization of $N_h(-j)$ can make a
+cut-edge column large when $p\mid b_{j-1}$.
+
+Combining the two genuinely missing estimates
+\eqref{eq:meso-missing-weighted} and
+\eqref{eq:meso-missing-amplification} would give
+\[
+ \mathcal E_p(H)\ll H^{3/2},\qquad R_p(H)\ll H.
+\]
+Only then does the valid last step
+\[
+ Z(p)\leq\left\lceil\frac pH\right\rceil+R_p(H-1)
+\]
+give $Z(p)\ll\sqrt p$ at $H=\lfloor\sqrt p\rfloor$.
+
+For completeness, suppose only the proposed G2 support estimate
+\[
+ V_p(H)\ll H^{2-\delta}
+\]
+is available.  The present ingredients give merely
+\[
+ \mathcal E_p(H)\ll H^{3-\delta}.
+\]
+Partition $\{0,\ldots,p-1\}$ into nonwrapping consecutive blocks of
+length at most $H$, and let their Ap\'ery zero counts be $z_i$.  Three
+zeros $m<m+d<m+d+r$ in one block have $d,r\geq2$ by
+Lemma~\ref{lem:no-consec}.  All intervening recurrence denominators are
+units modulo $p$, so the gap-polynomial identity gives the distinct energy
+witness $(m,d,r)$.  Hence
+\[
+ \sum_i\binom{z_i}{3}\leq\mathcal E_p(H)
+\]
+and H\"older's inequality yields
+\begin{equation}\label{eq:meso-triple-endpoint}
+ Z(p)\ll\frac pH+p^{2/3}H^{(1-\delta)/3}.
+\end{equation}
+If the G2 estimate holds uniformly for $H\leq\sqrt p$, then, after
+combining with the existing $p^{2/3}$ bound,
+\[
+ Z(p)\ll
+ \begin{cases}
+ p^{2/3},&0<\delta\leq1,\\
+ p^{(5-\delta)/6},&1<\delta\leq2.
+ \end{cases}
+\]
+Thus even $V_p(H)\ll H$ ($\delta=1$) recovers only the existing exponent
+from the currently proved inputs.  Even a separately proved
+$\mathcal E_p(H)\ll H^{3/2}$ would give only $Z(p)\ll p^{7/12}$ by this
+triple-counting route unless the low-fiber amplification is also proved.
+
+Finally, the recurrence does not close on the scalar resultants.  In the
+algebra $K_d$ of~\eqref{eq:meso-quotient-norm}, put
+$u_r=N_r(\alpha+d)$.  Then
+\[
+ u_{r+1}=P(\alpha+d+r)u_r-(\alpha+d+r)^6u_{r-1}.
+\]
+The norm of a sum depends on all polarized mixed norms, so
+$\operatorname {Nm}(u_r)$ and $\operatorname {Nm}(u_{r-1})$ do not
+determine $\operatorname {Nm}(u_{r+1})$.  Modulo $p$, different values of
+$r$ may also vanish in different residue-field components, whereas restart
+requires the same root witness.  This root-witness alignment, the weighted
+support estimate~\eqref{eq:meso-missing-weighted}, and the low-fiber
+amplification~\eqref{eq:meso-missing-amplification} are the exact missing
+lemmas left by the present attack.

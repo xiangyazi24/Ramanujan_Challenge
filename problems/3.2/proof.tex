@@ -375,9 +375,13 @@ The adjacent resultants satisfy the exact formula
 = \prod_{j=1}^{h-1} \bigl(j!^3\,b_j\bigr)^6.
 \end{equation}
 This follows from the recursion
-$\operatorname{Res}(N_h, N_{h+1}) = N_h(-h)^6\,
-\operatorname{Res}(N_{h-1}, N_h)$ (since
-$N_{h+1} \equiv -(m{+}h)^6 N_{h-1} \pmod{N_h}$),
+$|\operatorname{Res}(N_h, N_{h+1})| = |N_h(-h)|^6\,
+|\operatorname{Res}(N_{h-1}, N_h)|$ (since
+$N_{h+1} \equiv -(m{+}h)^6 N_{h-1} \pmod{N_h}$;
+with the standard signed convention the recursion
+carries an additional factor $(-1)^{h-1}$ from the
+scalar minus sign, which is why the formula is stated
+in absolute value),
 combined with $N_h(-h) = (-1)^{h-1}N_h(-1)
 = (-1)^{h-1}((h{-}1)!)^3 b_{h-1}$
 (the reflection identity and the first evaluation
@@ -600,9 +604,35 @@ $Y_{d+1} = P((x_0{+}r){+}d)\,Y_d - ((x_0{+}r){+}d)^6\,Y_{d-1}$,
 which is the defining recurrence for $N_d(x_0 + r)$.
 \end{proof}
 
-\begin{proposition}[Column bound]\label{prop:column}
-For every $x_0 \in \mathbb{F}_p$ and every interval
-$I$ of $H$ consecutive $h$-values with $H \le p$,
+Call a column $x_0 \in \mathbb{F}_p$ \emph{polluted} if
+$x_0 \equiv -m \pmod p$ for some $2 \le m < p$ with
+$p \mid b_{m-1}$.
+By the endpoint factorization
+$N_h(-m) = \pm\, b_{m-1} b_{h-m}
+((m{-}1)!)^3((h{-}m)!)^3$
+(Remark~\ref{rem:content}), a polluted column satisfies
+$N_h(x_0) \equiv 0$ for \emph{every} $h \ge m$: the
+column recurrence in~$h$ reaches two consecutive zeros
+and then vanishes identically.
+Conversely, two consecutive zero levels
+$N_{h-1}(x_0) = N_h(x_0) = 0$ propagate backwards
+through the column recurrence
+$N_{h+1} = P(x_0{+}h)N_h - (x_0{+}h)^6 N_{h-1}$
+until a vanishing coefficient blocks the descent, which
+forces $x_0 \equiv -m$ with $N_m(-m) = \pm\,
+b_{m-1}((m{-}1)!)^3 \equiv 0$, i.e.\ $p \mid b_{m-1}$.
+Thus pollution is \emph{exactly} the presence of two
+consecutive zero levels, and the number of polluted
+columns with $m \le M$ is the zero count
+$\#\{j < M : p \mid b_j\} = O(M^{2/3})$
+(Corollary~\ref{cor:subinterval}).
+
+\begin{proposition}[Column bound, unpolluted case]
+\label{prop:column}
+Let $x_0 \in \mathbb{F}_p$ be a column whose zero levels
+in the interval~$I$ (of $H$ consecutive $h$-values,
+$H \le p$) contain no two consecutive integers---in
+particular, any unpolluted column.  Then
 \begin{equation}\label{eq:column-bound}
 \#\{h \in I : N_h(x_0) \equiv 0 \pmod{p}\}
 \le \tfrac{3^{4/3}}{2}\,H^{2/3} + O(H^{1/3} + 1).
@@ -610,15 +640,12 @@ $I$ of $H$ consecutive $h$-values with $H \le p$,
 \end{proposition}
 
 \begin{proof}
-Split $I$ at the unique transition $h$ where
-$x_0 + h \equiv 0 \pmod{p}$ (if it exists in~$I$),
-creating at most two nonsingular pieces plus an
-$O(1)$ additive cost.
-
-On a nonsingular piece, order the zero levels.
+Order the zero levels in~$I$.
 For threshold $L \ge 2$: a gap of length $d \le L$
 between consecutive zeros at levels $r < r + d$ gives
-$N_d(x_0 + r) = 0$ by Lemma~\ref{lem:restart}.
+$N_d(x_0 + r) = 0$ by Lemma~\ref{lem:restart}
+(the hypothesis $N_{r+1}(x_0) \ne 0$ holds because
+the zero levels contain no two consecutive integers).
 For fixed~$d$, there are at most $3(d{-}1)$ values of
 $x_0 + r$ satisfying this (by Lemma~\ref{lem:nonvanish}
 and $\deg N_d = 3(d{-}1)$).
@@ -632,11 +659,18 @@ Summing:
 Optimizing $L \asymp (H/3)^{1/3}$ gives the stated bound.
 \end{proof}
 
-Computationally, the column count at mesoscopic scale
-$H = \lfloor\sqrt{p}\rfloor$ is far below the $O(H^{2/3})$
-bound: for all primes $p \le 100{,}003$ and all $x_0$,
-$\#\{h \le H : N_h(x_0) \equiv 0\} \le 2$.
-For $p \ge 10{,}007$, the maximum is~$\le 1$.
+Polluted columns genuinely violate the
+bound~\eqref{eq:column-bound}: at $p = 73$ (where
+$b_2 = 73$), the column $x_0 \equiv -3$ has
+$N_h(-3) \equiv 0$ for every $h \ge 3$.
+Computationally, at mesoscopic scale
+$H = \lfloor\sqrt{p}\rfloor$ the \emph{unpolluted}
+column counts are far below the $O(H^{2/3})$
+bound: for all primes $p \le 5000$ and all unpolluted
+$x_0$, $\#\{h \le H : N_h(x_0) \equiv 0\} \le 4$
+(maximum attained at $p = 653$), while the $11$
+polluted columns in this range reach counts as large
+as~$19$ (at $p = 541$).
 
 \begin{remark}[Rectangular incidence estimate]\label{rem:incidence}
 The row bound $|R_h| \le 3(h{-}1)$ and the
@@ -646,7 +680,11 @@ rectangular incidence estimate
 \#\{(x,h) : x \in \mathbb{F}_p,\; 2 \le h \le H,\;
 N_h(x) \equiv 0\} \le \min\{H^2,\; p H^{2/3}\}.
 \]
-The first bound sums row degrees; the second sums column estimates.
+The first bound sums row degrees; the second sums the
+unpolluted column estimates plus the polluted-column
+contribution $\le Z(p) \cdot H \ll p^{2/3} H
+\le p H^{2/3}$ (for $H \le p$), which does not change
+the order.
 They cross at $H \sim p^{3/4}$.
 Note that a uniform bound $R_p(H) \le CH$ for all primes
 is \emph{false}: by the Chebotarev density theorem, for
@@ -703,9 +741,18 @@ N_d(\alpha) \equiv N_e(\alpha) \equiv 0 \pmod{p}
 \quad\Longleftrightarrow\quad
 N_d(\alpha) \equiv N_{e-d}(\alpha+d) \equiv 0 \pmod{p}.
 \]
-In particular, $\deg\gcd_{\mathbb{F}_p}(N_d, N_e)
+In particular, the \emph{saturated} gcd satisfies
+$\deg\bigl(\gcd_{\mathbb{F}_p}(N_d, N_e) : S_d^\infty\bigr)
 \le 3(\min(d, e{-}d) - 1)$, which improves the naive
 $3(d{-}1)$ when $e - d < d$.
+The saturation is essential: the full gcd may contain
+cut-edge factors dividing~$S_d$.  For example, at
+$p = 73$ (where $b_2 = 73$),
+$\gcd_{\mathbb{F}_{73}}(N_3, N_4) = X + 3$
+even though $N_{e-d} = N_1 = 1$;
+the factor $X + 3$ divides $S_3 = (x{+}2)(x{+}3)$.
+The unsaturated degree can exceed the displayed bound
+by at most $\deg S_d = d - 1$.
 \end{corollary}
 
 \begin{remark}[Separated-block resultant]\label{rem:sep-res}
@@ -793,10 +840,26 @@ A Hadamard bound gives
 $\log |S_{d,r}| \ll (d+r)^2 \log(d+r)$, so the total
 number of prime divisors across all pairs $(d,r)$ with
 $d+r \le H$ is $O(H^4 \log H)$.
-Averaging over the $\sim X/\log X$ primes in $(X,2X]$
-gives $\mathcal{E}_p(H) \ll H^{1/2}$
-for all but $o(X/\log X)$ primes, provided
-$H \le X^{2/7-\varepsilon}$---rigorous but far from
+Two caveats are essential here
+(they are developed in the separated-resultant
+subsection below).
+First, this counts the \emph{support}
+$W_p(H) = \#\{(d,r) : \exists x,\ N_d(x) \equiv
+N_r(x{+}d) \equiv 0\}$, not the energy: one supported
+pair can carry up to $3(\min(d,r){-}1)$ root witnesses,
+so the averaging conclusion
+$W_p(H) \ll H^{1/2}$ for all but $o(X/\log X)$ primes
+holds for $H \le X^{2/7-\varepsilon}$, while the
+corresponding energy statement
+$\mathcal{E}_p(H) \ll H^{1/2}$ only follows in the
+shorter range $H \le X^{2/9-\varepsilon}$.
+Second, $p \mid S_{d,r}$ detects a common
+\emph{projective} root over $\overline{\mathbb F}_p$;
+pairs with $p \mid \ell_d, \ell_r$ (an infinity
+collision) or with a nonsplit common quadratic factor
+lie in the resultant support without contributing any
+$\mathbb F_p$-root witness.
+Either way this is rigorous but far from
 the global target $H = p-1$.
 
 A sharper route uses the bipartite incidence graph
@@ -911,6 +974,20 @@ stronger statement for $a = 0$, so
 $\max_a N_p(a) = O(p^{3/4})$ with the maximum over
 \emph{all}~$a$.
 \end{remark}
+
+The next block of results develops the arithmetic of the
+separated-block resultants
+$\mathcal R_{d,r} = \operatorname{Res}_x(N_d(x),
+N_r(x+d))$ themselves: complex root localization
+(hence positivity), a centered norm decomposition,
+half-integer center divisor lattices, an exact
+square law on the diagonal, the precise projective
+meaning of $p \mid \mathcal R_{d,r}$, and the two
+counting lemmas that separate the present state of
+the collision-energy program from the mesoscopic
+target $Z(p) \ll \sqrt p$.
+
+\input{meso_result}
 
 \subsection{Computational evidence}
 

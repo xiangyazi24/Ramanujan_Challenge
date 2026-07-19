@@ -196,3 +196,11 @@
   UNCONDITIONAL. Audit found+repaired a general-identity misstatement in C4
   (valid only in danger case); 309-case independent danger-family check PASS.
 - paper 63 pp clean; session total: 51 → 63 pages, all committed & pushed
+- W1 ((HM)_3): G4 — Palm characterization + anchored-star upgraded
+  impossibility; found+fixed codegree wrap gap and profile CS-direction bug
+- W2 (resultants): G3+G4 — root strips, diagonal square law R_dd = l|D|Q²,
+  projective validity, two missing lemmas formalized (weighted support
+  H^{3/2} + low-fiber amplification); found+fixed prop:column FALSITY
+  (polluted columns), sep-block saturation, adj-res sign, collision E/W
+- new intermediate target: E ≪ H^{3/2} ⟹ Z ≪ p^{7/12} (beats 2/3)
+- paper: 79 pp clean, all pushed

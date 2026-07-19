@@ -936,3 +936,55 @@ New attack waves dispatched (Codex gpt-5.6-sol xhigh, both background):
    paper itself only ever uses the ≤ direction, no change needed.)
 
 **hm3_result.tex integrated into paper (69 pp, clean).**
+
+### W2 harvest (separated resultants, Codex xhigh 515k tokens) — G3+G4 + more paper repairs
+
+**New theorems (integrated, \input{meso_result}, paper now 79 pp clean):**
+- ★ prop:meso-root-strip: ALL complex roots of N_d lie in −d < Re < −1
+  (diagonal dominance on the tridiagonal continuant + reflection) ⟹ every
+  separated resultant R_{d,r} > 0.
+- prop:meso-centered-norm: centered norm decomposition (generalizes d=2).
+- prop:meso-center-recurrence: even-block center integer sequences T_b^{(a)}
+  with T_b^{(a)} | R_{a,b}, odd-part propagation to R_{b,a+b}; center
+  factor lattice 𝔠_{d,r} | R_{d,r}.
+- ★★ thm:meso-diagonal-square: R_{d,d} = ℓ_d·|D_d|·Q_d² (EXACT square law;
+  independently verified d=2..5, Q² perfect square each time). Valuation:
+  v_p even unless p | ℓ_d D_d.
+- prop:meso-resultant-validity: p | R_{d,r} ⟺ common projective root over
+  F̄_p — NOT F_p-collision. Infinity lattice: ρ_p | d,r ⟹ p² | R (rank of
+  apparition ρ_p of ℓ mod p); e.g. p=665857 (ρ=8): 5151 raw support pairs,
+  ZERO affine collisions. Nonsplit example p=110629 (3,3).
+
+**G4 — my W2 chain had two real gaps (both now formalized in paper):**
+- Multiplicity: V_p(H) ≪ H gives only E ≪ H² (parallel root witnesses; KST
+  is simple-graph). Correct sufficient target: WEIGHTED support
+  W_p(H) := Σ (min(d,r)−1)·1_{p | R} ≪ H^{3/2} (eq:meso-missing-weighted).
+- Low-fiber amplification: R_p(H) ≤ R^∂ + L_p + 2E/√H
+  (eq:meso-amplification-exact); need R^∂ + L_p ≪ H — a LOWER-participation
+  assertion no upper-bound graph theorem supplies.
+- Even E ≪ H^{3/2} alone ⟹ Z ≪ p^{7/12} via block triple-counting (WOULD
+  beat p^{2/3}! new intermediate target), but with amplification ⟹ √p.
+
+**Paper bugs found by W2 and FIXED this session (all independently verified):**
+1. ★ prop:column was FALSE as stated: polluted columns x₀ ≡ −m with
+   p | b_{m−1} vanish identically for all h ≥ m (p=73, x₀=−3: all h ≥ 3,
+   verified). Restated for unpolluted columns (⟺ no two consecutive zero
+   levels — complete characterization proved via backward propagation);
+   pollution count = O(M^{2/3}). Old computational claim "≤2 all x₀,
+   p ≤ 100,003" was WRONG; replaced with verified: unpolluted ≤ 4
+   (p ≤ 5000, max at p=653), polluted reach 19 (p=541).
+2. cor:sep-block's unsaturated deg-gcd claim false at cut-edge roots
+   (gcd(N_3,N_4) = X+3 at p=73, verified); now saturation-qualified with
+   +（d−1) allowance.
+3. rem:adj-res recursion sign: needs (−1)^{h−1} with signed convention;
+   now absolute-value form.
+4. rem:collision conflated W (support) and E (energy): averaging range
+   X^{2/7} valid for W only; E needs X^{2/9}. Fixed + projective caveat.
+5. rem:incidence: polluted-column term added (order unchanged).
+
+**Chain status after W1+W2:** Z(p) ≪ √p now needs exactly:
+(a) W_p(H) ≪ H^{3/2} (weighted support), AND
+(b) R^∂_p(H) + L_p(H) ≪ H (low-fiber amplification).
+Intermediate: E ≪ H^{3/2} alone already ⟹ Z ≪ p^{7/12}.
+Norm-recurrence obstruction: Nm(u_r) does not satisfy a closed recurrence
+(polarized mixed norms; root-witness alignment across residue components).
