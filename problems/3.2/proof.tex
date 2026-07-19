@@ -668,9 +668,10 @@ $H = \lfloor\sqrt{p}\rfloor$ the \emph{unpolluted}
 column counts are far below the $O(H^{2/3})$
 bound: for all primes $p \le 5000$ and all unpolluted
 $x_0$, $\#\{h \le H : N_h(x_0) \equiv 0\} \le 4$
-(maximum attained at $p = 653$), while the $11$
-polluted columns in this range reach counts as large
-as~$19$ (at $p = 541$).
+(maximum attained at $p = 653$), while the polluted columns in this range reach counts
+as large as~$50$ (at $p = 3331$, where
+$b_7 = 3331 \cdot 175415$, so the column
+$x_0 \equiv -8$ vanishes for every $h \ge 8$).
 
 \begin{remark}[Rectangular incidence estimate]\label{rem:incidence}
 The row bound $|R_h| \le 3(h{-}1)$ and the
@@ -988,6 +989,8 @@ the collision-energy program from the mesoscopic
 target $Z(p) \ll \sqrt p$.
 
 \input{meso_result}
+
+\input{energy_result}
 
 \subsection{Computational evidence}
 

@@ -998,3 +998,34 @@ check /tmp/codex_energy.log for the 'Worked for' banner and
 problems/3.2/energy_result.tex; audit with the same discipline
 (counterexample verification against actual polynomials before trusting
 any general identity — see the C4 and prop:column lessons).
+
+### W3 harvest (collision energy, Codex xhigh 257k tokens) — G2-formula fix + G3 + G4
+
+- G1 NOT proved; STALL with a PROOF that the E↔R fixed-point bootstrap
+  cannot contract (prop: exact fixed-point audit). Current tools: E ≪ H^{8/3}.
+- ★ CORRECTED triple-counting exponent (my spec had it wrong):
+  Z(p) ≪ p/H + p^{2/3} H^{(β−2)/3} for E ≪ H^β uniformly to H = √p.
+  ⟹ ANY β < 2 beats p^{2/3} (not just β = 3/2!). β=3/2 → p^{7/12};
+  β→2⁻ → p^{2/3−ε}. New wider target: E_p(H) ≪ H^{2−δ} for any δ > 0.
+- G3 proved: shallow strips min(d,r) ≤ H^{1/4} and diagonal bands with
+  min ≤ H^{3/4} are controlled; exact infinity-lattice weight; center
+  witnesses O(H^{5/3}); diagonal square law only saves constants on average.
+- G4: the exact remaining lemma = "split affine gcd-tail lemma".
+- Exact identity: E_p°(H) = Σ_{x∉∂_H} C(k_x, 2) (off-boundary energy IS the
+  column pair count — clean).
+- Data corrections: max polluted column k = 50 at p=3331 (b_7 = 3331·175415)
+  — my "19 at p=541" in the paper was an eyeballing error, FIXED;
+  max R = 203 (p=4283), max E = 16 (p=653), E/H^{3/2} max tiny (0.16).
+- energy_verify.py: 669 primes ≤ 5000, PASS (independently re-run,
+  digest 0e134a06...).
+- Paper: energy_result integrated after meso_result. 88 pages, clean.
+
+### Standing state for the next session
+- Sharpest single-prime target: E_p(H) ≪ H^{2−δ} (ANY δ>0) for H ≤ √p ⟹
+  Z(p) ≪ p^{2/3−δ/3}. Remaining lemma named: split affine gcd-tail.
+- Sharpest cross-prime targets (for the FULL conjecture): (HM)_k any k>6
+  (pair-Palm form, thm:hm3-palm-characterization), AP-BDH localized
+  dispersion, bounded-quotient top-half (prop:quotient-reduction).
+- ChatGPT tabs were down on this host all session; the parallel host's
+  (4.A)-(4.E) text remains unpushed. On reconnect: fire pair-Palm and
+  gcd-tail lemmas at dm channels; check origin for the other host's push.

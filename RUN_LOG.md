@@ -204,3 +204,10 @@
   (polluted columns), sep-block saturation, adj-res sign, collision E/W
 - new intermediate target: E ≪ H^{3/2} ⟹ Z ≪ p^{7/12} (beats 2/3)
 - paper: 79 pp clean, all pushed
+- W3 (energy): fixed-point route refuted; corrected exponent formula (ANY
+  beta<2 beats 2/3); shallow strips/diagonal bands controlled; remaining
+  lemma = split affine gcd-tail; my 19@541 data error fixed (50@3331)
+- paper 88 pp clean; session totals: 51→88 pages, 13 commits, 3 new
+  unconditional theorem groups (NV+fiber+energy; quotient reduction; HM
+  framework), 8 paper bugs found & fixed via adversarial audits
+- end: session complete, W-wave harvests all banked

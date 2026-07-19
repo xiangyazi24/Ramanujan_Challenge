@@ -1,0 +1,671 @@
+% Collision-energy audit for CODEX_SPEC_energy.md.
+% This is a fragment intended to be read with proof.tex, nv_theorem.tex,
+% and meso_result.tex.  The finite computations are in energy_verify.py.
+
+\subsection{Collision energy is an off-boundary factorial moment}
+
+Retain
+\[
+ \mathscr D_H=\{(d,r)\in\mathbb Z_{\geq2}^2:d+r\leq H\},
+ \qquad
+ \mathcal E_p(H)=\sum_{(d,r)\in\mathscr D_H}m_{d,r}(p),
+\]
+and assume throughout that $p\geq7$ and $H\leq\sqrt p$; the omitted
+small cases are empty or immediate.  For $x\in\mathbb F_p$ put
+\[
+ k_x=k_x(H)=\#\{2\leq h\leq H:N_h(x)=0\},
+ \qquad R_p(H)=\sum_{x\in\mathbb F_p}k_x,
+\]
+and put
+\[
+ \partial_H=\{-2,-3,\ldots,-H\}\subseteq\mathbb F_p.
+\]
+Split the energy as
+\[
+ \mathcal E_p(H)=\mathcal E_p^\circ(H)+\mathcal E_p^\partial(H)
+\]
+according as its root witness lies outside or inside $\partial_H$.
+
+\begin{proposition}[Exact off-boundary column identity]
+\label{prop:energy-column-exact}
+One has
+\begin{equation}\label{eq:energy-column-exact}
+ \boxed{\mathcal E_p^\circ(H)
+ =\sum_{x\notin\partial_H}\binom{k_x}{2}.}
+\end{equation}
+At the boundary only the following direction is universally valid:
+\begin{equation}\label{eq:energy-boundary-sandwich}
+ 0\leq\mathcal E_p^\partial(H)
+ \leq\sum_{x\in\partial_H}\binom{k_x}{2}.
+\end{equation}
+Consequently
+\begin{equation}\label{eq:energy-global-sandwich}
+ \sum_{x\notin\partial_H}\binom{k_x}{2}
+ \leq\mathcal E_p(H)
+ \leq\sum_{x\in\mathbb F_p}\binom{k_x}{2}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The continuant addition formula used in the proof of
+Proposition~\ref{prop:bezout} gives
+\[
+ N_{d+r}(x)
+ =N_d(x)N_{r+1}(x+d-1)
+  -(x+d)^6N_{d-1}(x)N_r(x+d).
+\]
+Thus an energy witness $(x,d,r)$ gives the two zero levels $d$ and
+$d+r$ in the column $x$.  This map is injective, since its lower level
+and the difference recover $(d,r)$.  It proves the upper bound in
+\eqref{eq:energy-boundary-sandwich} and the upper bound in
+\eqref{eq:energy-global-sandwich}.
+
+Conversely, suppose that $x\notin\partial_H$ and that $2\leq d<e\leq H$
+are two zero levels.  Then $S_d(x)$ is a unit, so the saturated B\'ezout
+identity gives
+\[
+ N_{e-d}(x+d)=0.
+\]
+The difference $e-d$ cannot be one: in that case the right-hand side of
+\eqref{eq:bezout} would be $S_d(x)^6N_1=S_d(x)^6\ne0$.  Hence
+$(x,d,e-d)$ is an energy witness.  This is inverse to the preceding map
+and proves~\eqref{eq:energy-column-exact}.
+\end{proof}
+
+The equality is stronger than~\eqref{eq:meso-column-pairs}, but it also
+shows why the boundary exclusion cannot be repaired by changing an
+inequality sign.  At $p=73$, $H=8$, the polluted column $x=-3$ has six
+zero levels and hence $15$ column pairs, while only two boundary energy
+witnesses occur in the entire computation.
+
+\begin{corollary}[What the present column estimates prove]
+\label{cor:energy-eight-thirds}
+Uniformly for $H\leq\sqrt p$,
+\begin{equation}\label{eq:energy-eight-thirds}
+ \mathcal E_p(H)\ll H^{8/3}.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+The row-degree bound gives
+\begin{equation}\label{eq:energy-R-trivial}
+ R_p(H)\leq\sum_{h=2}^H3(h-1)=\frac32H(H-1).
+\end{equation}
+Define the window-polluted set
+\[
+ \mathcal P_H=
+ \{-m:2\leq m\leq H,\ p\mid b_{m-1}\}.
+\]
+The pollution characterization following Lemma~\ref{lem:restart} and
+Corollary~\ref{cor:subinterval} give
+\[
+ P_H:=|\mathcal P_H|\ll H^{2/3}.
+\]
+Every column outside $\mathcal P_H$ has no adjacent zero levels in
+$[2,H]$.  (A globally polluted column whose cut occurs after $H$ has no
+adjacent pair in this window.)  Proposition~\ref{prop:column} therefore
+gives
+\[
+ M_H:=\max_{x\notin\mathcal P_H}k_x\ll H^{2/3}.
+\]
+By Proposition~\ref{prop:energy-column-exact},
+\begin{align*}
+ \mathcal E_p(H)
+ &\leq\sum_x\binom{k_x}{2}\\
+ &\leq\frac{M_H-1}{2}
+       \sum_{x\notin\mathcal P_H}k_x
+       +P_H\binom{H-1}{2}\\
+ &\ll H^{2/3}H^2+H^{2/3}H^2.
+\end{align*}
+This is~\eqref{eq:energy-eight-thirds}.
+\end{proof}
+
+This saves $H^{1/3}$ over the direct $O(H^3)$ degree bound, but its
+exponent is still larger than two and hence has no consequence for the
+record exponent of $Z(p)$.
+
+\subsection{The proposed fixed point is not a contraction}
+
+For an arbitrary threshold $2\leq K\leq H$, define
+\[
+ R_p^\circ(H)=\sum_{x\notin\partial_H}k_x,
+ \qquad
+ L_{p,K}(H)=
+ \sum_{\substack{x\notin\partial_H\\0<k_x<K}}k_x,
+\]
+and let
+\[
+ M_p^\circ(H)=\max_{x\notin\partial_H}k_x.
+\]
+
+\begin{proposition}[Exact fixed-point audit]
+\label{prop:energy-fixed-point-audit}
+For every such $K$,
+\begin{equation}\label{eq:energy-amplification-K}
+ R_p(H)\leq R_p^\partial(H)+L_{p,K}(H)
+ +\frac{2}{K-1}\mathcal E_p^\circ(H),
+\end{equation}
+where $R_p^\partial(H)=\sum_{x\in\partial_H}k_x$.  On the other hand,
+\begin{equation}\label{eq:energy-upper-from-R}
+ \mathcal E_p^\circ(H)
+ \leq\frac{M_p^\circ(H)-1}{2}R_p^\circ(H).
+\end{equation}
+Combining the two estimates never gives an absorptive fixed point.
+\end{proposition}
+
+\begin{proof}
+For $k\geq K$ one has
+\[
+ k\leq\frac{2}{K-1}\binom{k}{2}.
+\]
+Summing this over the high off-boundary columns and using
+\eqref{eq:energy-column-exact} proves~\eqref{eq:energy-amplification-K}.
+The elementary inequality
+$\binom{k}{2}\leq(M_p^\circ-1)k/2$ proves
+\eqref{eq:energy-upper-from-R}.
+
+Substitution gives
+\begin{equation}\label{eq:energy-feedback}
+ \mathcal E_p^\circ
+ \leq\frac{M_p^\circ-1}{2}L_{p,K}
+ +\frac{M_p^\circ-1}{K-1}\mathcal E_p^\circ.
+\end{equation}
+If $K\leq M_p^\circ$, the feedback coefficient is at least one.  If
+$K>M_p^\circ$, every nonzero off-boundary column is already included in
+$L_{p,K}$, so $L_{p,K}=R_p^\circ$ and~\eqref{eq:energy-feedback} is the
+original tautology.  These two cases exhaust all thresholds.
+\end{proof}
+
+In particular, the proposed $K=\lceil\sqrt H\rceil$ does not interact
+contractively with the available $M_p^\circ\ll H^{2/3}$ estimate.  The
+amplification inequality is a lower bound on the factorial moment carried
+by high fibers; it is not a second upper bound for that moment.  Singleton
+columns can make $R_p(H)$ large while contributing nothing to energy, and
+even an independent $R_p(H)\ll H$ estimate together with only
+$k_x\ll H^{2/3}$ permits the abstract scale
+$\mathcal E_p(H)\asymp H^{5/3}$.
+
+There is also a notation obstruction in the suggested partition.  In
+\texttt{meso\_result.tex}, $W_p(H)$ denotes simple affine support and
+$\mathcal W_p(H)$ denotes degree-weighted raw resultant support.  A raw
+resultant-supported pair need have no $\mathbb F_p$ witness at all, and
+therefore cannot be assigned to a witness column.  Even after restricting
+to affine support, the artificial weight $\min(d,r)-1$ is not bounded by
+the number of actual witnesses.  Thus an inequality of the form
+``$\mathcal W_p(H)\leq\sum_x\binom{k_x}{2}$'' is unavailable; the valid
+column statement is Proposition~\ref{prop:energy-column-exact} for the
+actual energy.
+
+\subsection{The exact triple-counting exponent}
+
+\begin{proposition}[Optimization from an energy exponent]
+\label{prop:energy-beta-optimization}
+Suppose, uniformly in a range of $H$, that
+\[
+ \mathcal E_p(H)\ll H^\beta.
+\]
+Then block triple-counting gives
+\begin{equation}\label{eq:energy-beta-endpoint}
+ Z(p)\ll\frac pH+p^{2/3}H^{(\beta-2)/3}.
+\end{equation}
+If the estimate is uniform for every $H\leq\sqrt p$, the optimized
+triple-counting exponent is
+\begin{equation}\label{eq:energy-beta-piecewise}
+ \theta_{\rm triple}(\beta)=
+ \begin{cases}
+  1/2,&\beta\leq1,\\
+  (\beta+2)/6,&1\leq\beta\leq2,\\
+  \beta/(\beta+1),&\beta\geq2.
+ \end{cases}
+\end{equation}
+After combining with the existing $Z(p)\ll p^{2/3}$ estimate, every
+$1<\beta<2$ gives
+\[
+ Z(p)\ll p^{(\beta+2)/6},
+\]
+and in particular $\beta=3/2$ gives $Z(p)\ll p^{7/12}$.
+\end{proposition}
+
+\begin{proof}
+Partition the index interval into $B\ll p/H$ nonwrapping blocks and let
+$z_i$ be their zero counts.  As in the proof of
+\eqref{eq:meso-triple-endpoint},
+\[
+ \sum_i\binom{z_i}{3}\leq\mathcal E_p(H).
+\]
+The elementary bound
+\[
+ z\leq2+\bigl(6\tbinom z3\bigr)^{1/3}
+\]
+and H\"older's inequality give
+\[
+ Z(p)\ll B+B^{2/3}\mathcal E_p(H)^{1/3},
+\]
+which is~\eqref{eq:energy-beta-endpoint}.
+
+Write $H=p^\alpha$, $0<\alpha\leq1/2$.  The two exponents are
+\[
+ 1-\alpha,
+ \qquad
+ \frac23+\frac{\beta-2}{3}\alpha.
+\]
+When $\beta<2$, both decrease with $\alpha$, so one takes
+$\alpha=1/2$.  This gives
+$\max\{1/2,(\beta+2)/6\}$.  At $\beta=2$ the second exponent is $2/3$.
+For $\beta>2$, balancing the two terms at
+$\alpha=1/(\beta+1)$ gives $\beta/(\beta+1)$.  This proves
+\eqref{eq:energy-beta-piecewise} and the stated comparison.
+\end{proof}
+
+Thus the power $(\beta-1)/3$ displayed in the specification is not the
+output of block triple-counting: the factor $B^{2/3}$ contributes
+$H^{-2/3}$, not $H^{-1/3}$.  Equivalently, the displayed formula is
+missing one further factor $H^{-1/3}$.  More generally, if
+$\beta<2$ is available only through $H\leq p^\eta$, then taking the
+largest permitted $H$ gives
+\begin{equation}\label{eq:energy-range-beta}
+ \theta(\beta,\eta)=
+ \max\left\{1-\eta,
+ \frac23+\frac{\eta(\beta-2)}3\right\}.
+\end{equation}
+It beats $2/3$ exactly when $\eta>1/3$ and $\beta<2$.  No interior
+balancing is required in this decreasing regime.
+
+\subsection{Structured subfamilies}
+
+To avoid the clash between simple affine support and weighted resultant
+support, write, for $\mathscr S\subseteq\mathscr D_H$,
+\[
+ \mathcal W_p^{\rm res}(\mathscr S)
+ =\sum_{(d,r)\in\mathscr S}
+  (\min(d,r)-1)\mathbf1_{p\mid\mathcal R_{d,r}},
+ \qquad
+ \mathcal E_p(\mathscr S)
+ =\sum_{(d,r)\in\mathscr S}m_{d,r}(p).
+\]
+
+\begin{proposition}[Shallow strips and diagonal bands]
+\label{prop:energy-structured-combinatorial}
+Let $2\leq K\leq H/2$ and $k=\lfloor K\rfloor$.  Then
+\begin{align}
+ \mathcal W_p^{\rm res}
+ \{(d,r):\min(d,r)\leq K\}
+ &\leq B_H(k),\label{eq:energy-shallow-W}\\
+ \mathcal E_p
+ \{(d,r):\min(d,r)\leq K\}
+ &\leq3B_H(k),\label{eq:energy-shallow-E}
+\end{align}
+where
+\begin{equation}\label{eq:energy-BHK}
+ B_H(k)=\sum_{s=2}^k(s-1)(2H-4s+1)
+ \leq Hk(k-1).
+\end{equation}
+In particular, both quantities are $O(H^{3/2})$ in the deterministic
+range
+\[
+ \min(d,r)\leq H^{1/4}.
+\]
+The larger suggested strip $\min(d,r)\leq\sqrt H$ has only the bound
+$O(H^2)$ after the necessary degree weight is included.
+
+For a fixed $C\geq0$ and $D\leq H/2$,
+\begin{equation}\label{eq:energy-diagonal-band-partial}
+ \mathcal W_p^{\rm res}
+ \{(d,r):|d-r|\leq C,\ \min(d,r)\leq D\}
+ \ll(C+1)D^2,
+\end{equation}
+and the same bound, up to a factor three, holds for the energy.  Hence
+the part $\min(d,r)\leq H^{3/4}$ of a fixed-width diagonal band is
+$O_C(H^{3/2})$, whereas the full band has only the present bound
+$O_C(H^2)$.
+\end{proposition}
+
+\begin{proof}
+For a fixed value $s=\min(d,r)$ there are exactly
+$2H-4s+1$ ordered pairs in $\mathscr D_H$.  Summing the weight $s-1$
+gives~\eqref{eq:energy-BHK}.  Since the reductions of $N_h$ are nonzero
+in the present range,
+\[
+ m_{d,r}(p)\leq3(\min(d,r)-1),
+\]
+which proves~\eqref{eq:energy-shallow-E}.
+
+In the band $|d-r|\leq C$, each possible minimum occurs in at most
+$2C+1$ ordered pairs.  Summing its degree weight gives
+\eqref{eq:energy-diagonal-band-partial}.
+\end{proof}
+
+The thresholds are not artifacts of a loose summation: exactly
+\[
+ B_H(k)=Hk(k-1)+O(k^3).
+\]
+Thus if $k\to\infty$ and $k=o(H)$, then
+$B_H(k)=(1+o(1))Hk^2$.  The unweighted support of the
+$\sqrt H$ strip is $O(H^{3/2})$, but this says nothing about its energy
+multiplicities.  Even after discarding shifted columns which are
+polluted, Proposition~\ref{prop:column} gives only
+\begin{equation}\label{eq:energy-unpolluted-shallow}
+ \sum_{\substack{2\leq d\leq K,\ 2\leq r,\ d+r\leq H\\
+                  x\in X_{d,r}(p),\ x+d\ {\mathrm{unpolluted}}}}1
+ \ll K^2H^{2/3};
+\end{equation}
+The symmetric orientation obeys the same estimate.  For $K=\sqrt H$
+this is $H^{5/3}$, still above the target.
+
+The ambient degree weight satisfies
+\begin{equation}\label{eq:energy-total-ambient-weight}
+ \sum_{(d,r)\in\mathscr D_H}(\min(d,r)-1)
+ =\frac{H^3}{12}+O(H^2).
+\end{equation}
+Removing the whole $\sqrt H$ strip and any fixed-width diagonal band
+changes~\eqref{eq:energy-total-ambient-weight} by only $O_C(H^2)$.
+Thus the ambient dominant region is the balanced off-diagonal bulk
+\[
+ \min(d,r)>\sqrt H,\qquad |d-r|>C.
+\]
+This does not mean that the actual worst contribution has been localized:
+the shallow annulus $H^{1/4}<\min(d,r)\leq\sqrt H$ and the high part of
+the diagonal band are themselves unresolved at the $H^{3/2}$ scale.
+
+\subsubsection{Infinity and center lattices}
+
+\begin{proposition}[Exact weight of the infinity lattice]
+\label{prop:energy-infinity-weight}
+Let $\rho=\rho_p$ and $M=\lfloor H/\rho\rfloor$.  The automatic
+projective-infinity pairs $\rho\mid d,r$ have raw degree weight
+\begin{equation}\label{eq:energy-infinity-weight}
+ \mathcal I_p(H)
+ =\rho\sum_{s=2}^{M}\left\lfloor\frac{s^2}{4}\right\rfloor
+  -\binom M2
+ =\frac{H^3}{12\rho^2}+O\left(\frac{H^2}{\rho}\right).
+\end{equation}
+They contribute no automatic affine witness and must be saturated before
+using resultant support as a collision proxy.
+\end{proposition}
+
+\begin{proof}
+Write $d=\rho a$, $r=\rho b$.  For $s=a+b$,
+\[
+ \sum_{a=1}^{s-1}\min(a,s-a)=\left\lfloor\frac{s^2}{4}\right\rfloor.
+\]
+There are $\binom M2$ ordered pairs, and subtracting the $1$ in each
+weight gives~\eqref{eq:energy-infinity-weight}.
+
+Let $\overline N_d$ be the reduction of $N_d$ modulo $p$, let
+$n_d=3(d-1)$ be its nominal degree, and define its nominal
+homogenization by
+\[
+ \overline F_d(X,Z)=Z^{n_d}\overline N_d(X/Z).
+\]
+When $\rho\mid d$ and $d<p$, the centered-coefficient calculation after
+\eqref{eq:meso-rank-lattice} shows that the nominal homogenization has
+the exact form
+\[
+ \overline F_d(X,Z)=Z^2F_d^{\rm sat}(X,Z),
+ \qquad F_d^{\rm sat}(1,0)\ne0.
+\]
+Modulo $p$, dividing $Z^2$ from each nominal form removes the automatic
+infinity intersection exactly.  One must not delete the whole pair: its
+saturated forms may still have a separate affine common root.
+\end{proof}
+
+For example, the already recorded values $p=665857$, $\rho_p=8$, and
+$H=816$ give $\mathcal I_p(H)=712657$, whereas
+$H^{3/2}=23309.6\ldots$.  This is why the raw weighted resultant support
+is not the statement to which a witness-column proof can apply.
+
+The center factors have the opposite status: they are genuine affine
+witnesses and cannot be saturated away.
+
+\begin{proposition}[Present bound for distinguished center witnesses]
+\label{prop:energy-center-witnesses}
+For $(d,r)\in\mathscr D_H$, define
+\[
+ c_{d\to r}(p)=
+ \begin{cases}
+  \mathbf1_{p\mid T_r^{(d)}},&d\ \text{even},\\
+  0,&d\ \text{odd},
+ \end{cases}
+ \qquad
+ c_{d,r}(p)=c_{d\to r}(p)+c_{r\to d}(p).
+\]
+Then $c_{d,r}(p)$ is the number of distinguished central
+$\mathbb F_p$-witnesses supplied by the two even blocks, and
+\begin{equation}\label{eq:energy-center-count}
+ \sum_{(d,r)\in\mathscr D_H}c_{d,r}(p)\ll H^{5/3}.
+\end{equation}
+Their degree-weighted support is consequently at most $O(H^{8/3})$ with
+the present inputs.
+\end{proposition}
+
+\begin{proof}
+If $d$ is even, $x=-(d+1)/2$ is a root of $N_d$, and
+\[
+ N_r(x+d)=N_r((d-1)/2)=0
+ \quad\Longleftrightarrow\quad p\mid T_r^{(d)},
+\]
+because $p$ is odd.  The symmetric root is
+$x=-d-(r+1)/2$.  When both occur, their difference is $(d+r)/2\ne0$
+modulo $p$, so they are distinct.
+
+For fixed even $d$, the column $y=(d-1)/2$ is nonsingular throughout
+$2\leq r\leq H-d$: indeed
+\[
+ 0<2(y+r)=d-1+2r<2H<p.
+\]
+Proposition~\ref{prop:column} bounds its zero levels by $O(H^{2/3})$.
+Summing over the $O(H)$ even values of $d$ and adding the symmetric
+orientation proves~\eqref{eq:energy-center-count}.  Multiplication by
+the largest possible degree weight gives $O(H^{8/3})$.
+\end{proof}
+
+Thus the center structure explains repeated genuine factors, but the
+proved column exponent leaves a gap of $H^{1/6}$ even for their
+unweighted witness count.
+
+\subsubsection{What the diagonal square does and does not buy}
+
+\begin{proposition}[Diagonal midpoint and split off-center roots]
+\label{prop:energy-diagonal-decomposition}
+Put
+\[
+ M_p(H)=\#\{2\leq d\leq H/2:p\mid D_d\}.
+\]
+Then $M_p(H)\ll H^{2/3}$.  If
+\[
+ q_d(p)=\#\{u\in(\mathbb F_p^\times)^2:
+                   E_d(u)=O_d(u)=0\},
+\]
+then the diagonal energy has the exact decomposition
+\begin{equation}\label{eq:energy-diagonal-decomposition}
+ \mathcal E_p^\Delta(H):=\sum_{2d\leq H}m_{d,d}(p)
+ =\sum_{2\leq d\leq H/2}
+   \left(\mathbf1_{p\mid D_d}+2q_d(p)\right)
+ =O(H^{2/3})+2\sum_{2\leq d\leq H/2}q_d(p).
+\end{equation}
+The corresponding degree-weighted support caused by the $D_d$ factors
+is $O(H^{5/3})$.  The unresolved diagonal contribution is the sum of
+split off-center counts $q_d(p)$.  Each such root forces $p\mid Q_d$,
+but the converse need not hold.
+\end{proposition}
+
+\begin{proof}
+Since $p$ is odd,
+\[
+ p\mid D_d\quad\Longleftrightarrow\quad N_d(-1/2)=0.
+\]
+The column $x=-1/2$ is nonsingular, so
+Proposition~\ref{prop:column} gives $M_p(H)\ll H^{2/3}$.  Formula
+\eqref{eq:meso-diagonal-root-count} is exactly
+\eqref{eq:energy-diagonal-decomposition}.  Weighting the
+$O(H^{2/3})$ midpoint indices by at most $H$ gives the last support
+bound.
+\end{proof}
+
+In the factorization
+$\mathcal R_{d,d}=\ell_d|D_d|Q_d^2$, the explicit factor $\ell_d$
+comes from the leading coefficient and $D_d$ detects the midpoint
+$T=0$; $Q_d$ is the remaining parity resultant.  Its square reflects
+the formal parity pairing $T,-T$, which may coincide or degenerate, not
+two independent supported indices.
+The three factors need not be coprime, and $p\mid Q_d$ does not imply a
+split affine root: it may instead come from a nonsplit common $u$, or,
+when $p\mid\ell_d$, from a degree degeneration at $U$-infinity.  For
+example, $p=577$, $d=4$ has $p\mid\ell_4Q_4$ but no affine common root.
+
+\begin{proposition}[The valuation gain is only a constant in averaging]
+\label{prop:energy-diagonal-valuation-average}
+Let $H\leq\sqrt X$ and define
+\[
+ \mathscr G_p(H)=\{2\leq d\leq H/2:
+ p\mid\mathcal R_{d,d},\ p\nmid\ell_dD_d\}.
+\]
+Then
+\begin{align}
+ \sum_{X<p\leq2X}\#\mathscr G_p(H)
+ &\ll\frac{H^3\log H}{\log X},
+ \label{eq:energy-diagonal-average-count}\\
+ \sum_{X<p\leq2X}\sum_{d\in\mathscr G_p(H)}(d-1)
+ &\ll\frac{H^4\log H}{\log X}.
+ \label{eq:energy-diagonal-average-weight}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+The diagonal valuation law gives $p^2\mid\mathcal R_{d,d}$ for every
+indicated pair.  Therefore
+\[
+ 2\log X\sum_{X<p\leq2X}\#\mathscr G_p(H)
+ \leq\sum_{2\leq d\leq H/2}\log\mathcal R_{d,d}.
+\]
+The Hadamard estimate
+$\log\mathcal R_{d,d}\ll d^2\log(2d)$ proves
+\eqref{eq:energy-diagonal-average-count}.  Applying the same argument to
+$\prod_{2\leq d\leq H/2}\mathcal R_{d,d}^{d-1}$ proves
+\eqref{eq:energy-diagonal-average-weight}.
+\end{proof}
+
+Without the square valuation, the same argument merely omits the factor
+$2$ on the left.  Thus it improves a prime-averaged constant, not an
+$H$-exponent.  At the mesoscopic endpoint $H\asymp\sqrt X$, both
+resulting estimates are weaker than the trivial $O(H)$ count and
+$O(H^2)$ degree weight.  For much shorter ranges they can exclude an
+initial polylogarithmic segment, but they give no uniform $H$-power gain
+in the target range.  Hence the diagonal square law does not prove the
+requested diagonal-band case.
+
+\subsection{The exact remaining lemma and stall report}
+
+For $(d,r)\in\mathscr D_H$, define the split affine gcd degree
+\[
+ g_{d,r}^{\rm sp}(p)=
+ \deg\gcd_{\mathbb F_p[X]}
+ \bigl(\overline N_d(X),\overline N_r(X+d),X^p-X\bigr).
+\]
+The polynomial $X^p-X$ is squarefree, and $N_d,N_r$ are nonzero in the
+present range, so
+\begin{equation}\label{eq:energy-split-gcd-equals-m}
+ g_{d,r}^{\rm sp}(p)=m_{d,r}(p).
+\end{equation}
+If
+\[
+ A_p(H;j)=\#\{(d,r)\in\mathscr D_H:g_{d,r}^{\rm sp}(p)\geq j\},
+\]
+then the layer-cake identity is
+\begin{equation}\label{eq:energy-layer-cake}
+ \boxed{\mathcal E_p(H)=\sum_{j\geq1}A_p(H;j).}
+\end{equation}
+
+Accordingly, the minimal missing arithmetic statement can be isolated as
+the following split affine gcd-tail lemma:
+\begin{equation}\label{eq:energy-missing-gcd-tail}
+ \boxed{
+ \sum_{j\geq1}
+ \#\left\{(d,r)\in\mathscr D_H:
+ \deg\gcd\bigl(\overline N_d,\overline N_r(\,\cdot+d),X^p-X\bigr)
+ \geq j\right\}
+ \ll H^{3/2}.}
+\end{equation}
+It is exactly equivalent to the energy target, automatically discards
+the infinity lattice and nonsplit common factors, and charges the actual
+multiplicity instead of the worst possible degree.  A slightly stronger
+purely algebraic sufficient statement replaces the three-polynomial gcd
+by the degree of the radical of the affine gcd
+$\gcd(\overline N_d,\overline N_r(\,\cdot+d))$.
+
+The degree-weighted raw resultant estimate is a convenient sufficient
+condition, but it is not minimal: it both inserts the worst-case degree
+$3(\min(d,r)-1)$ and counts projective and nonsplit support.  Likewise,
+the fixed-point inequalities contain no mechanism capable of proving
+\eqref{eq:energy-missing-gcd-tail}; a new arithmetic incidence or
+split-gcd tail estimate is required.
+
+\paragraph{Finite verification.}
+The script \texttt{energy\_verify.py} evaluates the continuant recurrence
+pointwise for all $669$ primes $p\leq5000$, always with
+$H=\lfloor\sqrt p\rfloor$.  It computes $R_p(H)$, total and boundary
+energy, both factorial column moments, $R_p^\partial(H)$, low-fiber mass,
+and polluted-column counts.  It verifies
+\eqref{eq:energy-column-exact}, \eqref{eq:energy-global-sandwich}, and
+the integer form of~\eqref{eq:energy-amplification-K} for
+$K=\lceil\sqrt H\rceil$ whenever $H\geq2$ (the $667$ primes $p\geq5$).
+The column identities are checked for all $669$ primes.  Selected records
+are:
+\[
+\begin{array}{c|r|r|r|r|r|r|r|r}
+p&H&R&\mathcal E&\mathcal E^\circ&
+ \sum_x\binom{k_x}{2}&R^\partial&P_H&
+ \sum_{x\in\mathcal P_H}k_x\\ \hline
+73&8&19&2&0&16&11&1&6\\
+131&11&17&6&6&6&0&0&0\\
+653&25&38&16&16&16&0&0&0\\
+3331&57&187&0&0&1225&98&1&50\\
+4283&65&203&4&2&1084&93&1&47
+\end{array}
+\]
+The canonical comma-separated $669$-record digest printed by the script
+is recorded in the verifier itself.  Across the scan,
+\[
+ \max\mathcal E_p(H)=16\quad(p=653),
+ \qquad
+ \max\frac{\mathcal E_p(H)}{H^{3/2}}
+ =\frac6{11^{3/2}}\quad(p=131),
+\]
+and the largest unpolluted column has four returns.  These data are only
+tests of the deterministic identities, not evidence used in their proofs.
+In fact every off-boundary column in the $667$ records with $K\geq2$ has
+$k_x<K$, so $R_p(H)=R_p^\partial(H)+L_{p,K}(H)$ there.  The tested
+amplification inequality is therefore completely vacuous on every record
+in its stated domain, exactly as the fixed-point audit predicts.
+
+The dynamic-height scan also corrects one reconnaissance datum in the
+existing text.  Since
+\[
+ b_7=584307365=3331\cdot175415,
+\]
+the column $x=-8$ at $p=3331$ vanishes at every level
+$8\leq h\leq57$ and has $k_{-8}=50$.  Thus the statement that the
+largest polluted count through $p=5000$ is $19$ at $p=541$ is false for
+$H=\lfloor\sqrt p\rfloor$; $19$ is the value at that particular prime.
+
+\paragraph{STALL REPORT.}
+The target $\mathcal E_p(H)\ll H^{3/2}$ is not proved.  The rigorous
+outputs are:
+\begin{enumerate}
+ \item the exact off-boundary identity
+       \eqref{eq:energy-column-exact} and the sharp boundary directions;
+ \item the proof that the proposed $\mathcal E\leftrightarrow R$ fixed
+       point cannot contract, together with the unconditional
+       $\mathcal E_p(H)\ll H^{8/3}$ consequence of current inputs;
+ \item the corrected optimization
+       $Z(p)\ll p/H+p^{2/3}H^{(\beta-2)/3}$, under which every
+       $\beta<2$ available past $H=p^{1/3}$ improves $2/3$;
+ \item $H^{3/2}$ bounds for the deterministic shallow strip
+       $\min(d,r)\leq H^{1/4}$ and for the low part
+       $\min(d,r)\leq H^{3/4}$ of a fixed-width diagonal band;
+ \item exact removal of the infinity lattice, a bound for genuine center
+       witnesses, and the isolation of the actual split off-center counts
+       $q_d(p)$, each of which forces $p\mid Q_d$;
+ \item the exact missing split affine gcd-tail statement
+       \eqref{eq:energy-missing-gcd-tail}.
+\end{enumerate}
