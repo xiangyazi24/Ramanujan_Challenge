@@ -988,3 +988,13 @@ New attack waves dispatched (Codex gpt-5.6-sol xhigh, both background):
 Intermediate: E ≪ H^{3/2} alone already ⟹ Z ≪ p^{7/12}.
 Norm-recurrence obstruction: Nm(u_r) does not satisfy a closed recurrence
 (polarized mixed norms; root-witness alignment across residue components).
+
+### W3 dispatched (2026-07-19 night)
+CODEX_SPEC_energy.md — target E_p(H)/W_p(H) ≪ H^{3/2} for H ≤ √p
+(⟹ Z(p) ≪ p^{7/12}, beats 2/3). Most promising route flagged: the
+E ↔ R coupled fixed-point bootstrap (eq:meso-column-pairs one way,
+column-partition of W the other). If this session ends before harvest,
+check /tmp/codex_energy.log for the 'Worked for' banner and
+problems/3.2/energy_result.tex; audit with the same discipline
+(counterexample verification against actual polynomials before trusting
+any general identity — see the C4 and prop:column lessons).
