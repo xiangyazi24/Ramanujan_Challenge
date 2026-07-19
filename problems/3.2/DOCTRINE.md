@@ -678,3 +678,76 @@ Remark rem:martingale. Corrected rem:negative-crt. Updated rem:concentration.
 ## Resources
 - ChatGPT Pro: dm1,dm2,dm3,dm4 (SOL, all processing).
 - uisai2: Z(p) computation COMPLETED. Max Z(p)=12 at p=159977 through p~1.3M.
+
+## Session 2026-07-19 (dm window, relayed from cron)
+
+### Cross-host harvest (IMPORTANT coordination note)
+Another host ran a fresh Q84–Q119 campaign TODAY (2026-07-19, Notion drops,
+separate ledger numbering). Harvested the 10 Apéry-relevant answers into
+chatgpt-answers/ (Q89, Q90, Q92, Q94, Q96, Q97, Q101, Q117, Q118, Q119).
+That host has UNPUSHED chain text ("bordered certificate" rewrite) — do not
+duplicate its (4.E) repair work. This machine's bridge: server up, ZERO tabs
+registered → ChatGPT dispatch unavailable here until tabs reconnect.
+Ledger Q5510/Q5511/Q5512/Q5515 (07-16): GITDROP SHAs unresolvable in ANY repo
+(hallucinated commits, [reported]-trap); treat as lost — superseded by Q84-Q119.
+
+### Q117 (adversarial audit of the parallel session's chain)
+- (4.A)–(4.D) VALID, including TWO NEW unconditional theorems:
+  ★ value-fiber bound max_a N_p(a) ≪ p^{3/4} (bordered 2×2 determinant
+  D_{h,k}(t) = N_h(Π_k − B_k) − N_k(Π_h − B_h), a-independent certificate)
+  ★ collision energy E(p) = Σ_a N_p(a)² ≪ p^{7/4}
+- (4.E) FATAL for THAT chain: support law omits companion-block channel
+  (counterexample 13 | G_26 with b_0 = 1). OUR paper is unaffected —
+  prop:companion-height already handles that channel at every index.
+- Repair list (§10): correct depth v_p ≤ 6 (that chain), dyadic Markov
+  localization, companion channel estimate.
+
+### Q119 (strategic verdict on the pointwise gap)
+- ★ IMPOSSIBILITY THEOREM: no proof from |Z_p| ≪ p^{2/3} + reflection +
+  no-consecutive + n < X² alone — explicit adversarial S_p = {n₀ mod p,
+  p−1−n₀ mod p} hits every prime. Cross-prime arithmetic coupling of the
+  ACTUAL Apéry sets is mandatory. (Matches our no-go model, paper §10.4.)
+- Target A: fixed high moment (HM)_k, k ≥ 7 (k = 8):
+  Σ_{m<X²} (K_X(m))_k ≪ X^{2+o(1)} λ_X^k  ⟹  max K ≪ X^{2/3+2/k+o(1)}
+  ⟹ W(n) ≪ n^{11/12+o(1)} with existing Z ≪ p^{2/3}. Sharpest concrete target.
+- Target B: small-quotient shifted divisibility, q ≤ log²n only.
+- Harmless-range observation (now formalized in paper as
+  prop:quotient-reduction): primes √n < p ≤ n/(f(n)log n) are killed by
+  prime counting alone.
+- ⚠ Q119 §6 IS WRONG (poisoned premise): the "unconditional
+  log G_n ≤ 2.2467n via Rhin–Viola" uses q_n = b_n/G_n from the OUTGOING
+  question; the true reduced denominator is q_n = d_n b_n/G_n, which gives
+  only log G_n ≤ 5.25n — WORSE than the trivial Wronskian bound 3n.
+  Do NOT propagate 2.2467n. (Verified independently this session.)
+  Lesson instance: pre-verify premises embedded in outgoing prompts.
+
+### My verification of the (HM)_k structure
+- (HM)_2 holds trivially and unconditionally: each pair (p,q) has
+  ≤ 1 + X²/pq CRT representatives below X², and (Σ Z_p)² ≍ X²λ_X².
+- For k ≥ 3, Πp_i > X² ⟹ ≤ 1 representative per tuple; (HM)_k becomes a
+  genuine equidistribution statement (fraction X²/Πp of ~(Xλ)^k tuples).
+  k > 6 needed for the max-bound to beat trivial. All consistent with Q119.
+- Windowed-dispersion sufficiency (localized V° ≤ CS at scale-X windows ⟹
+  W(n) ≪ n^{5/6+o(1)}) is the window-local form of the paper's existing
+  AP-BDH Hypothesis 12 — same funnel: Fourier uniformity/cross-prime
+  equidistribution of actual zero sets is THE missing input.
+
+### Paper changes (this session)
+- NEW prop:quotient-reduction + rem:bounded-quotients: the conjecture is
+  EQUIVALENT to the lower-digit channel bound uniformly over quotient
+  classes q < f(n)log n (any f → ∞); primes below n/(f log n) are free.
+  Sharpened rem:rainbow-open accordingly. 52 pages, compiles clean.
+
+### Codex dispatched (this session)
+- C1 (xhigh): CODEX_SPEC_fiber.md — port the value-fiber p^{3/4} theorem +
+  energy corollary as fiber_bound.tex + fiber_verify.py.
+- C2: CODEX_SPEC_bigcompute.md — B(n) scan to 10^6–2×10^6 via (p,r) scatter
+  from per-prime zero sets + windowed dispersion statistics + Z(p) histogram
+  cross-check. Headline: does B(n) ≤ 3 persist?
+
+### Current priority ranking
+1. (HM)_8 / Target A — the cleanest formulated missing theorem.
+2. Uniform-in-q top-half machinery (Target B for q < f log n) — now the
+   EXACT open statement after prop:quotient-reduction.
+3. Fiber/energy port (Codex C1) — strengthens unconditional toolbox.
+4. Computation (Codex C2) — Poisson consistency at 10× the old range.

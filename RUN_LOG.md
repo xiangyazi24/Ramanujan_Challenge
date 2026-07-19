@@ -163,3 +163,24 @@
 - P2.7 is DONE. 10/10 problems unconditional.
 - ChatGPT tabs: Q5209, Q5210, Q5211 dispatched (simplify R(n), write proof, factor det)
 - end: P2.7 complete
+
+## Run 2026-07-16 (P3.2 — full conjecture attack)
+- doctrine version: problems/3.2/DOCTRINE.md (2026-07-16)
+- starting avenue: (a) arithmetic large-prime-divisor bound
+- goal: prove G_n = e^{o(n)} for ALL n (currently only density-1)
+- prior session upgrades: Hypothesis Z→Z̄, Poisson model, Sym² flagged,
+  15-page proof, 0 errors
+- end: <TBD>
+- final result: <TBD>
+
+## Run 2026-07-19 (P3.2 — cross-host harvest + quotient reduction; dm window)
+- context: relayed from cron window; another host ran Q84-Q119 today (Notion)
+- harvested 10 Apéry answers (incl. Q117 audit, Q119 strategy) into chatgpt-answers/
+- DEBUNKED: Q119 §6 Rhin-Viola bootstrap 2.2467n (poisoned normalization; real
+  bound 5.25n, worse than trivial 3n) — do not propagate
+- NEW in paper: prop:quotient-reduction + rem:bounded-quotients — conjecture
+  ⟺ lower-digit channel o(n) uniformly in q < f(n)log n; 52 pp clean
+- Codex dispatched: C1 fiber bound p^{3/4} port (xhigh), C2 B(n) scan to 1-2M
+- bridge on this host: 0 tabs registered — ChatGPT unavailable; Q5510-15 lost
+  (hallucinated GITDROP SHAs)
+- end: session continuing

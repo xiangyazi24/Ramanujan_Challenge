@@ -1521,6 +1521,78 @@ the Chebyshev sum $\sum_{p < n^{2/3}} \log p
 = \theta(n^{2/3}) = O(n^{2/3})$.
 \end{proof}
 
+\begin{proposition}[Quotient reduction]\label{prop:quotient-reduction}
+Let $f$ be any function with $f(n) \to \infty$ and
+$f(n) \le \log n$. Then
+\[
+  \sum_{\substack{\sqrt{n} < p \le n/(f(n)\log n) \\ p \mid G_n}}
+  v_p(G_n) \log p
+  \;=\; O\!\left(\frac{n}{f(n)}\right) = o(n).
+\]
+Consequently,
+\[
+  \log G_n = O(\sqrt{n}) + O(n^{2/3})
+  + O\!\left(\frac{n}{f(n)}\right)
+  + \sum_{\substack{n/(f(n)\log n) < p \le n \\
+      p \mid b_{\,n \bmod p}}}
+    v_p(G_n)\log p ,
+\]
+and the full conjecture $G_n = e^{o(n)}$ is equivalent to
+the last sum being $o(n)$ for some (equivalently, every)
+such~$f$. Every prime in that sum has quotient
+$q = \lfloor n/p\rfloor < f(n)\log n$.
+\end{proposition}
+
+\begin{proof}
+For $p > \sqrt{n}$ we have $p^2 > n$, so
+$\lfloor \log_p n\rfloor = 1$ and $v_p(G_n) \le 3$
+by~\eqref{eq:vp-bound}; each bad prime therefore
+contributes at most $3\log p \le 3\log n$.
+The number of primes up to $Y = n/(f(n)\log n)$ is
+$\pi(Y) \ll Y/\log Y \ll n/(f(n)\log^2 n)$,
+using $\log Y \ge \tfrac12 \log n$ for large~$n$
+(as $f(n) \le \log n$).
+Multiplying by $3 \log n$ gives the first display.
+For the second display, split $\log G_n$ into:
+primes $p \le \sqrt{n}$
+(Proposition~\ref{prop:small}: $O(\sqrt n)$);
+companion-block primes $p > \sqrt n$ with
+$p \mid \operatorname{num}(a_{\lfloor n/p\rfloor})$
+(Proposition~\ref{prop:companion-height}: $O(n^{2/3})$);
+the remaining bad primes $p > \sqrt{n}$, which by
+Lemma~\ref{lem:block}(iii) and
+Lemma~\ref{lem:leading-vanish} satisfy the lower-digit
+condition $p \mid b_{\,n\bmod p}$, split at
+$n/(f(n)\log n)$ by the first display.
+For the equivalence: one direction is the display; the
+other is immediate since any sub-sum of
+$\sum_p v_p(G_n)\log p$ is at most $\log G_n$.
+\end{proof}
+
+\begin{remark}[The conjecture lives at bounded quotients]
+\label{rem:bounded-quotients}
+Proposition~\ref{prop:quotient-reduction} localizes the
+entire remaining difficulty to the top
+$O(\log\log n)$ dyadic blocks of primes:
+only $p \in (n/(f(n)\log n),\, n]$ matters, i.e., the
+quotient classes $q = \lfloor n/p \rfloor < f(n)\log n$.
+For each fixed~$q$, the bad primes with quotient~$q$
+form the shifted-divisibility set
+\[
+  \bigl\{\, p = (n - r)/q \ \text{prime} :\
+  0 \le r < p,\ \ p \mid b_r \,\bigr\},
+\]
+in which both the modulus and the index move with~$r$.
+The case $q = 1$ is precisely the top-half radical
+estimate~\eqref{eq:rad}; the bounded-quotient cases are
+its mild deformations. Thus any method that resolves the
+top-half channel uniformly in $q < f(n)\log n$ for a
+single slowly growing~$f$ proves the full conjecture.
+Conversely, prime counting alone is already sufficient
+below this range, so no further structural information
+about small bad primes is needed anywhere in the argument.
+\end{remark}
+
 The first-moment bound in Corollary~\ref{cor:exceptional}
 can be sharpened to a polylogarithmic exceptional set
 by exploiting the gap polynomials a second time,
@@ -2498,6 +2570,15 @@ existing Iwasawa--Dwork theory.
       an argument that one fixed integer cannot
       simultaneously be bad at too many
       distinct primes.
+      By the quotient reduction
+      (Proposition~\ref{prop:quotient-reduction}),
+      the estimate is only needed for the primes
+      $p > n/(f(n)\log n)$ with $f$ growing
+      arbitrarily slowly---equivalently, uniformly
+      over the quotient classes
+      $q = \lfloor n/p \rfloor < f(n)\log n$---%
+      since prime counting alone handles
+      the range $\sqrt{n} < p \le n/(f(n)\log n)$.
 \end{enumerate}
 
 \section{The second-moment approach}\label{sec:second-moment}
@@ -3587,7 +3668,9 @@ Linnik's dispersion method: expand the
 $L^2$-discrepancy, isolate the diagonal,
 and seek cancellation in the off-diagonal
 via reciprocity and bilinear trace-function
-estimates \`a la
+estimates in the framework of
+Fouvry--Kowalski--Michel~\cite{FouvryKM2014},
+extended by
 Kowalski--Michel--Sawin~\cite{KMS2017}
 and Drappeau~\cite{Drappeau2017}.
 This reduces the problem to a
@@ -5266,6 +5349,64 @@ prediction relies on the equidistribution
 of the $p$-adic digits of $b_j$
 across independent residue fields.
 \end{remark}
+
+\noindent
+Table~\ref{tab:omega-dist} verifies the
+anatomy-of-integers formulation directly:
+at every tested scale, the distribution
+of~$\omega(j)$ matches
+$\mathrm{Poisson}(\lambda)$ with
+$\lambda = T/(N{+}1)$
+to within sampling noise.
+In particular, $\max_j \omega(j) \le 3$
+through $N = 131{,}072$, consistent with
+the Poisson prediction
+$N \cdot \lambda^3\!/6 \approx 5$
+at this scale.
+The second factorial moment satisfies
+$\sum_j \omega(j)(\omega(j){-}1)/T
+\approx \lambda$,
+which is exactly the collision rate
+$T/N \approx 1/\!\ln N$ predicted by
+Mertens---the same rate appearing in
+the two-prime scaling law below.
+
+\begin{table}[ht]
+\centering\small
+\caption{Distribution of~$\omega(j)
+= \#\{p \in (N,2N] : p \mid b_j\}$.
+$\lambda = T/(N{+}1)$ is the mean;
+the Poisson column gives
+$e^{-\lambda}\lambda^k/k!$.}
+\label{tab:omega-dist}
+\begin{tabular}{rrrrrrr}
+\toprule
+$N$ & $T$ & $\lambda$ &
+$\max\omega$ &
+$\#\{\omega{\ge}2\}$ &
+$\sum\omega(\omega{-}1)/T$ &
+Poisson fit \\
+\midrule
+8192 & 608 & 0.074
+& 2 & 22 & 0.072
+& $<0.1\%$ \\
+32768 & 2048 & 0.063
+& 3 & 53 & 0.056
+& $<0.1\%$ \\
+65536 & 3944 & 0.060
+& 3 & 108 & 0.057
+& $<0.1\%$ \\
+131072 & 7584 & 0.058
+& 3 & 227 & 0.063
+& $<0.1\%$ \\
+262144 & 14104 & 0.054
+& 3 & 351 & 0.051
+& $<0.1\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
 Computation through $N = 262{,}144$
 gives $|O|/T < 2 \times 10^{-3}$
 (Table~\ref{tab:prime-decomp}),
@@ -5416,6 +5557,27 @@ between what sieve methods can reach
 and what the Ap\'ery recurrence provides
 (a local, $p$-dependent set of size~$O(1)$).
 
+The Diophantine-approximation approach to GCDs of
+recurrence terms---the Subspace-Theorem framework
+of Bugeaud--Corvaja--Zannier~\cite{BCZ2003},
+Levin~\cite{Levin2019}, and
+Xiao~\cite{Xiao2024}---requires the sequence
+to admit a finite exponential-polynomial
+representation (a constant-coefficient
+linear recurrence).
+The Ap\'ery sequence satisfies a recurrence
+with polynomial coefficients and obeys
+$b_n \sim C\alpha^n n^{-3/2}$, where
+the fractional exponent~$-3/2$ is
+incompatible with constant-coefficient
+recurrences.
+Moreover, even in the exponential-polynomial
+setting, same-sequence GCD bounds fail:
+$\gcd(2^m{-}1, 2^n{-}1) = 2^{\gcd(m,n)}{-}1$
+is exponentially large when~$m \mid n$.
+Therefore no existing Subspace-Theorem
+argument yields $G_n = e^{o(n)}$ for all~$n$.
+
 The most direct computational path
 is an explicit Hasse--Witt calculation
 for the rank-three transcendental
@@ -5514,6 +5676,12 @@ Sato--Tate Theorems for Finite-Field Mellin Transforms},
 Ann.\ of Math.\ Studies \textbf{180},
 Princeton Univ.\ Press, 2012.
 
+\bibitem{Levin2019}
+A.~Levin,
+\emph{Greatest common divisors and Vojta's conjecture
+for blowups of algebraic tori},
+Invent.\ Math.\ \textbf{215} (2019), 493--533.
+
 \bibitem{Maynard2020}
 J.~Maynard,
 \emph{Primes in arithmetic progressions to large moduli~III:
@@ -5560,6 +5728,12 @@ J.~Stienstra and F.~Beukers,
 \emph{On the Picard--Fuchs equation and the formal Brauer
 group of certain elliptic K3 surfaces},
 Math.\ Ann.\ \textbf{271} (1985), 269--304.
+
+\bibitem{Xiao2024}
+L.~Xiao,
+\emph{Greatest common divisors of integral points of
+numerically equivalent divisors},
+Math.\ Z.\ \textbf{306} (2024), article 61.
 
 \bibitem{Zudilin2004}
 W.~Zudilin,
