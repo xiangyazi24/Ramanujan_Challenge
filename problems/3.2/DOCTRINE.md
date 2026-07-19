@@ -885,3 +885,17 @@ fiber_bound.tex (stall comment updated), abstract + conclusion updated.
 needs cross-prime input — (HM)_8, or localized dispersion, or bounded-
 quotient top-half machinery. Single-prime facts (incl. the new fiber/energy
 theorems) cannot close it (impossibility construction).
+
+## Directive 2026-07-19 (Xiang via TG): FULL UNCONDITIONAL, 不让步
+
+New attack waves dispatched (Codex gpt-5.6-sol xhigh, both background):
+- W1 (CODEX_SPEC_hm3.md): (HM)_3 — first hard case of the high-moment chain.
+  Ranked: full (HM)_3 / partial exponent / weakest-sufficient-hypothesis /
+  sharp obstruction. Computational duty: enumerate actual zero-triples with
+  CRT rep < X², inspect structure of contributors.
+- W2 (CODEX_SPEC_meso.md): separated-block resultants R_{d,r} — transfer the
+  centered/Pell technique that cracked NV. Chain: V_p(H) ≪ H ⟹ E_p(H) ≪
+  H^{3/2} ⟹ R_p(√p) ≪ √p ⟹ ★ Z(p) ≪ √p.
+  SYNERGY: Z ≪ √p lowers the (HM) requirement from k > 6 to k > 4.
+- ChatGPT tabs still down on this host; on reconnect, fire (HM)_8
+  combinatorial expansion + the W1/W2 residual lemmas at the dm channels.
