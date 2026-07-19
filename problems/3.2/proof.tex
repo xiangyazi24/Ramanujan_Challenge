@@ -37,6 +37,13 @@ and finite harmonic weight.
 The key ingredient is a new bound $Z(p) = O(p^{2/3})$ on the
 zero-count function $Z(p) = \#\{j < p : p \mid b_j\}$,
 derived from the Ap\'ery recurrence via a gap polynomial argument.
+A companion centered-coefficient analysis of the bordered
+value-return certificates proves the \emph{uniform} fiber bound
+$\max_{a}\#\{j < p : b_j \equiv a\} = O(p^{3/4})$
+and the collision-energy bound
+$\sum_a \#\{j : b_j \equiv a\}^2 = O(p^{7/4})$,
+both unconditional, with the underlying certificate
+nonvanishing proved in the sharp range $1 \le h < k < p$.
 Computation for all $78{,}496$ primes $5 \le p \le 10^6$ gives
 $Z(p) \le 12$ with mean~$\approx 1$.
 The pair count $Z(p)/2$ fits
@@ -832,106 +839,63 @@ cleared recurrence.
 The determinant factors exactly as
 $D_{h,k} = \Pi_h \cdot \Delta_{h,k}$, and the analogue of
 Lemma~\ref{lem:nonvanish} for the reduced certificate
-$\Delta_{h,k}$ is \emph{genuinely open}: the endpoint
+$\Delta_{h,k}$ is subtler: the endpoint
 evaluations assert equalities of separated Ap\'ery values
 rather than consecutive zeros, so the no-consecutive-zero
 mechanism does not apply (an explicit two-point
 obstruction occurs at $p = 131$, $(h,k) = (12,55)$; see
 the proof below).
-Under the nonvanishing hypothesis in the required short
-range, the same block-partition count that proves
-$Z(p) = O(p^{2/3})$ yields a \emph{uniform} fiber bound
-$O(p^{3/4})$.
+Nevertheless, a centered-coefficient analysis---using the
+Pell--Chebyshev structure of the leading coefficients
+rather than endpoint values---proves the nonvanishing in
+the \emph{full} range $1 \le h < k < p$
+(Theorem~\ref{thm:nv-range} below), and the range $k < p$
+is sharp: at $p = 7$ the certificates $\Delta_{h,21}$
+vanish identically.
+Consequently the same block-partition count that proves
+$Z(p) = O(p^{2/3})$ yields an \emph{unconditional uniform}
+fiber bound $O(p^{3/4})$.
+We first state the counting mechanism conditionally, then
+prove the nonvanishing.
 
 \input{fiber_bound}
 
-\begin{remark}[Status of the nonvanishing hypothesis
-$(\mathrm{NV}_{p,H})$]\label{rem:nv-status}
-Three computations support the hypothesis, all
-machine-verified:
-(i) for every prime $7 \le p \le 700$ and every pattern
-$1 \le h < k \le 40$, the reduced certificate
-$\Delta_{h,k}$ is \emph{not} the zero polynomial
-modulo~$p$ --- no identically vanishing pattern was found
-at any tested prime, well beyond the range
-$k \le H \asymp p^{1/4}$ needed in
-Proposition~\ref{prop:fiber-bound-conditional};
-(ii) for all primes $p \in [50, 300]$, every in-fiber
-triple satisfies $D_{h,k}(t) \equiv 0$, confirming the
-certificate identity;
-(iii) for $p \le 2000$ the empirical maximum
-$\max_{a \ne 0} N_p(a) = 12$ is $0.36$ times the
-conditional bound curve.
-Two candidate proof routes for
-$(\mathrm{NV}_{p,H})$ parallel the content analysis of
-the gap polynomials: exhibit a second explicit
-coefficient of $\Delta_{h,k}$ whose gcd with the leading
-Chebyshev combination $\ell_h + \ell_{k-h} - \ell_k$ is
-controlled, or propagate the full network of singular
-specializations $\Delta_{h,k}(-m)$, $1 \le m \le k$
-(products of factorial cubes and differences of Ap\'ery
-values), to a contradiction with
-Lemma~\ref{lem:no-consec}.
-Neither is completed; the statement is a strict
-strengthening of Lemma~\ref{lem:nonvanish} and we record
-it as the precise missing ingredient for an
-\emph{unconditional} uniform fiber bound.
+\input{nv_theorem}
+
+\begin{remark}[Verification and sharpness]
+\label{rem:nv-status}
+The nonvanishing theorem and its boundary are
+machine-verified from several independent directions:
+(i) direct polynomial-level scans find no identically
+vanishing $\Delta_{h,k}$ for any prime $7 \le p \le 700$
+and $1 \le h < k \le 40$, nor in $1000$ random cases
+with $p \le 997$;
+(ii) the centered coefficient formulas for $L$, $C_1$,
+$C_2$ were checked against exact expansions over
+$\mathbb Q$, and the danger-case pipeline
+($L = C_1 = C_2 = 0$, $B = D = -1$,
+$C_3 = 0$, $C_4 = -75hdk/2048$) was confirmed on $309$
+constructed rank-of-apparition cases across all primes
+$p \le 3000$ and on three genuine drop-four cases at
+$p \approx 10^7$, in every instance against the actual
+centered polynomial;
+(iii) the $p = 7$, $k = 21$ degeneration is exact:
+$T^3 = (x^7 - x)^9 I$ for the seven-step transfer
+matrix, so $N_{21} \equiv 0$ and $R_{21} \equiv 0$
+identically.
+The theorem makes the range restriction $k < p$
+explicit and sharp; for the fiber count only
+$k \le H \asymp p^{1/4}$ is used.
 \end{remark}
 
-\begin{corollary}[Unconditional uniform fiber bound,
-logarithmic range]\label{cor:fiber-log}
-For every prime $p \ge 7$ and every $a \in \mathbb F_p^\times$,
-\[
-  N_p(a) \;\le\; \frac{2\log 34}{\log p}\,p\,(1 + o(1))
-  \;=\; O\!\left(\frac{p}{\log p}\right).
-\]
-\end{corollary}
-
-\begin{proof}
-From the recurrence and positivity,
-$b_{n+1} = \bigl(P(n)b_n - n^3 b_{n-1}\bigr)/(n+1)^3
-< 34\,b_n$, since $P(n) < 34(n+1)^3$; hence
-$(b_n)$ is strictly increasing with $b_n < 34^n$.
-Take $H = \lfloor \log p/\log 34 \rfloor$.
-For $1 \le h < k \le H$, the endpoint
-evaluation~\eqref{eq:Delta-left} at $r = 1$ gives
-\[
-  \Delta_{h,k}(-1) = \bigl((k-1)!\bigr)^3
-  \,(b_{h-1} - b_{k-1}),
-\]
-and $0 < b_{k-1} - b_{h-1} < b_{k-1} < 34^{H-1} < p$,
-so $\Delta_{h,k}(-1) \not\equiv 0 \pmod p$
-(the factorial is a unit).
-Thus $(\mathrm{NV}_{p,H})$ holds \emph{unconditionally}
-for this~$H$, and~\eqref{eq:fiber-exact} gives
-\[
-  N_p(a) \le
-  2\left\lfloor\frac{p-1}{H+1}\right\rfloor
-  + \frac{H(H-1)(2H-1)}{2} + 2
-  = \frac{2\log 34}{\log p}\,p + O(\log^3 p). \qedhere
-\]
-\end{proof}
-
-\begin{remark}
-The logarithmic range is intrinsic to size forcing: once
-$k \gtrsim \log_{34} p$, the integers
-$b_{k-1} - b_{h-1}$ exceed~$p$ and divisibility can no
-longer be excluded by magnitude alone.
-Improving $O(p/\log p)$ to the conditional
-$O(p^{3/4})$ scale requires
-$(\mathrm{NV}_{p,H})$ for $H \asymp p^{1/4}$, which is
-exactly the range-content problem of
-Remark~\ref{rem:nv-status}.
-\end{remark}
-
-\begin{remark}[Why a uniform fiber bound matters]
+\begin{remark}[Why the uniform fiber bound matters]
 \label{rem:fiber-motivation}
 The energy bound
 $E(p) = \sum_a N_p(a)^2 = O(p^{7/4})$
-(Corollary~\ref{cor:fiber-energy-conditional})
-is the first power saving over the trivial $E(p) \le
-p \max_a N_p(a) \le p^2$ scale for the value
-distribution of Ap\'ery numbers modulo~$p$; the
+(Corollary~\ref{cor:fiber-bound-unconditional})
+is the first \emph{unconditional} power saving over the
+trivial $E(p) \le p \max_a N_p(a) \le p^2$ scale for the
+value distribution of Ap\'ery numbers modulo~$p$; the
 random-map prediction is $E(p) \asymp p$.
 Any bound $E(p) \ll p^{2-\eta}$ gives
 $Z(p) \le E(p)^{1/2} \ll p^{1-\eta/2}$, so energy
@@ -941,6 +905,11 @@ value-collision structure enters the two-prime
 dispersion analysis of
 Section~\ref{sec:second-moment} through the
 equal-value pattern counts.
+Note that the $p^{3/4}$ fiber bound also complements the
+zero-fiber bound: $Z(p) = O(p^{2/3})$ remains the
+stronger statement for $a = 0$, so
+$\max_a N_p(a) = O(p^{3/4})$ with the maximum over
+\emph{all}~$a$.
 \end{remark}
 
 \subsection{Computational evidence}
@@ -5913,6 +5882,20 @@ their results concern the fiber
 parameter and do not directly control
 the character-twisted Mellin structure
 or the two-prime dispersion.
+
+On the single-prime side, the bordered-certificate
+analysis (Section~\ref{ssec:value-fibers}) settles the
+value-distribution question at the $3/4$ exponent:
+$\max_a N_p(a) = O(p^{3/4})$ and
+$E(p) = O(p^{7/4})$ unconditionally, with the
+certificate nonvanishing
+(Theorem~\ref{thm:nv-range}) sharp at $k < p$.
+By the impossibility construction discussed in
+Section~\ref{sec:second-moment}, no package of
+single-prime distributional facts---including
+these---can close the pointwise conjecture; their role
+is in the averaged theorems and as input to any future
+cross-prime argument.
 
 Finally, the open problem now has a sharply
 localized form. The quotient reduction

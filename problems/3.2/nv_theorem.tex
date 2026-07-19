@@ -1,0 +1,336 @@
+% HEADLINE RESULTS.
+% (1) The unrestricted assertion is false: over F_7 one has
+%     Delta_{h,21}=0 for every 1<=h<21.
+% (2) The natural nonsingular range is completely clean: for every prime
+%     p>=7 and every 1<=h<k<p, Delta_{h,k} is not the zero polynomial.
+% Thus (NV_{p,H}) holds with H=p-1, far beyond the p^{1/4} range needed
+% for the unconditional uniform fiber bound.
+
+\begin{proposition}[An exact degeneration outside the nonsingular range]
+\label{prop:nv-counterexample}
+Over $\mathbb F _7[x]$ one has
+\[
+  \Delta_{h,21}(x)=0 \qquad (1\leq h<21).
+\]
+In particular, a restriction on the size of $k$ relative to the
+characteristic is essential.
+\end{proposition}
+
+\begin{proof}
+Put
+\[
+ A_j(x)=
+ \begin{pmatrix}
+  P(x+j)&-(x+j)^6\\
+  1&0
+ \end{pmatrix},
+ \qquad T=A_7A_6\cdots A_1,
+ \qquad q=x^7-x.
+\]
+All matrices in this proof are over $\mathbb F _7[x]$.
+Expanding the seven factors, equivalently applying the continuant
+recurrence seven times, gives the exact identities
+\[
+ \operatorname {tr}T=-q^3,
+ \qquad
+ \det T=\prod_{j=1}^7(x+j)^6=q^6.
+\]
+The second identity also follows immediately by multiplying the
+determinants.  Cayley--Hamilton now gives
+\begin{equation}
+ T^2+q^3T+q^6I=0,
+ \qquad\text{hence}\qquad
+ T^3=q^9I.                                      \label{eq:nv-T3}
+\end{equation}
+Since $A_{j+7}=A_j$ in characteristic~$7$, the transfer matrix for
+twenty-one steps is $T^3$.  Applying~\eqref{eq:nv-T3} to the initial vectors
+$(N_1,N_0)^{\mathsf T}=(1,0)^{\mathsf T}$ and
+$(B_1,B_0)^{\mathsf T}=(0,1)^{\mathsf T}$ yields
+\[
+ N_{21}=0,
+ \qquad B_{21}=q^9.
+\]
+On the other hand,
+\[
+ \Pi_{21}
+ =\left(\prod_{j=1}^{21}(x+j)\right)^3
+ =q^9.
+\]
+Thus $R_{21}=\Pi_{21}-B_{21}=0$, and consequently
+\[
+ D_{h,21}=N_hR_{21}-N_{21}R_h=0.
+\]
+The factorization $D_{h,21}=\Pi_h\Delta_{h,21}$ and the fact that
+$\mathbb F _7[x]$ is an integral domain finish the proof.
+\end{proof}
+
+We next compute the few leading coefficients that detect every possible
+degeneration before a singular step is reached.  Recall that
+$\ell_0=0$, $\ell_1=1$, and
+$\ell_{m+1}=34\ell_m-\ell_{m-1}$.
+
+\begin{lemma}[Centered continuant coefficients]
+\label{lem:nv-centered-coefficients}
+For $m\geq1$, set
+\[
+ \widehat N_m(Y)=N_m\left(Y-\frac{m+1}{2}\right).
+\]
+Let $u_m$ and $v_m$ be respectively the coefficients of
+$Y^{3m-5}$ and $Y^{3m-7}$ in $\widehat N_m$; a coefficient with a
+negative exponent is understood to be zero.  Then
+\begin{align}
+ u_m={}&
+ \frac{-(m-1)(32m^2-64m-11)\ell_m
+             +5m\ell_{m-1}}{256},                    \label{eq:nv-u}\\
+ v_m={}&
+ \frac{(m-1)(5120m^5-31744m^4+62016m^3-19264m^2
+                    -37024m-2095)\ell_m}{655360}
+ \notag\\
+ &\quad-
+ \frac{m(320m^3-1600m^2-320m+621)\ell_{m-1}}{131072}.
+                                                        \label{eq:nv-v}
+\end{align}
+Moreover, if
+\[
+ \widehat\Pi_m(Y)=\Pi_m\left(Y-\frac{m+1}{2}\right),
+\]
+then
+\begin{equation}
+ \widehat\Pi_m(Y)
+ =Y^{3m}-\frac{m(m^2-1)}8Y^{3m-2}
+   +\text{terms of degree at most }3m-4.               \label{eq:nv-pi-center}
+\end{equation}
+All these identities hold over $\mathbb Z[1/10]$.
+\end{lemma}
+
+\begin{proof}
+The reflection identity
+$N_m(-x-m-1)=(-1)^{m-1}N_m(x)$ shows that
+$\widehat N_m$ contains only powers of the same parity as $3m-3$.
+To compare its first three possible powers, center the recurrence for
+$N_{m+1}$ by putting $T=x+(m+2)/2$.  The natural centered variables for
+$N_m$ and $N_{m-1}$ are then $T-1/2$ and $T-1$, respectively, and
+\[
+ P(x+m)=34\left(T+\frac{m-1}{2}\right)^3
+       +\frac32\left(T+\frac{m-1}{2}\right),
+ \qquad
+ (x+m)^6=\left(T+\frac{m-2}{2}\right)^6.
+\]
+Comparison of the coefficients two and four places below the leading
+one gives
+\begin{align}
+ u_{m+1}={}&34u_m-u_{m-1}
+ -\frac34(17m^2-17m-2)\ell_m
+ +\frac34m(m-2)\ell_{m-1},                     \label{eq:nv-u-rec}\\
+ v_{m+1}={}&34v_m-v_{m-1}
+ -\frac34(17m^2-17m-36)u_m
+ +\frac34(m^2-2m-4)u_{m-1}\\
+ &+\frac{3(m-1)(17m^3+51m^2-90m-24)}{64}\ell_m
+ -\frac{3m(m-2)(m^2-6)}{16}\ell_{m-1}.         \label{eq:nv-v-rec}
+\end{align}
+For completeness, the coefficient extraction in the second line uses
+only
+\[
+ e_2=\frac{S_1^2-S_2}{2},\qquad
+ e_4=\frac{S_1^4-6S_1^2S_2+3S_2^2+8S_1S_3-6S_4}{24}
+\]
+for the appropriate repeated shifts.  The cases $m=1,2,3$ are checked
+directly from $N_1=1$ and $N_2=P(x+1)$.  Substitution of
+\eqref{eq:nv-u} and~\eqref{eq:nv-v} into
+\eqref{eq:nv-u-rec}--\eqref{eq:nv-v-rec}, followed by
+$\ell_{m+1}=34\ell_m-\ell_{m-1}$, makes the coefficients of both
+$\ell_m$ and $\ell_{m-1}$ agree identically.  This proves the two
+closed forms by induction.
+
+Finally,
+\[
+ \widehat\Pi_m(Y)
+ =\prod_{j=1}^m
+   \left(Y+j-\frac{m+1}{2}\right)^3.
+\]
+The repeated shifts have sum zero, while the coefficient two below the
+top is
+\[
+ -\frac32\sum_{j=1}^m
+       \left(j-\frac{m+1}{2}\right)^2
+ =-\frac{m(m^2-1)}8.
+\]
+This proves~\eqref{eq:nv-pi-center}.
+\end{proof}
+
+\begin{theorem}[Range nonvanishing of the bordered certificate]
+\label{thm:nv-range}
+Let $p\geq7$ be prime.  For every pair of integers
+\[
+ 1\leq h<k<p,
+\]
+the reduced bordered certificate satisfies
+\[
+ \Delta_{h,k}\not\equiv0\pmod p
+ \qquad\text{in }\mathbb F_p[x].
+\]
+Consequently $(\mathrm{NV}_{p,H})$ holds for every $H\leq p-1$; in
+particular it holds throughout the range required in
+Proposition~\ref{prop:fiber-bound-conditional}.
+\end{theorem}
+
+\begin{proof}
+Work in $\mathbb F_p$.  Put
+\[
+ d=k-h,\qquad n=3(k-1),\qquad z=x+\frac{k+1}{2}.
+\]
+The two centered variables in the first product defining
+$\Delta_{h,k}$ are $z-d/2$ and $z+h/2$; in the last product they occur
+in the opposite order.  Write
+\[
+ \Delta_{h,k}(x)
+ =Lz^n+C_1z^{n-1}+C_2z^{n-2}+\cdots.
+\]
+Multiplying the centered expansions in
+Lemma~\ref{lem:nv-centered-coefficients} gives
+\begin{align}
+ L={}&\ell_h+\ell_d-\ell_k,                              \label{eq:nv-L}\\
+ C_1={}&\frac32(d\ell_h-h\ell_d),                       \label{eq:nv-C1}\\
+ C_2={}&u_h+u_d-u_k\notag\\
+ &+\frac{d(-d^2+1+12d-3hk)\ell_h
+          +h(-h^2+1+12h-3dk)\ell_d}{8}.                \label{eq:nv-C2}
+\end{align}
+For example, in the first product the degree-two loss from the shifted
+leading powers is $3d(4d-hk)/8$; adding the second coefficient of
+$\widehat\Pi_d$ gives the coefficient displayed in~\eqref{eq:nv-C2}.
+
+Suppose for a contradiction that $\Delta_{h,k}=0$.  Then
+$L=C_1=C_2=0$.  Set
+\[
+ A=\ell_h,\quad B=\ell_{h-1},\quad
+ C=\ell_d,\quad D=\ell_{d-1}.
+\]
+The recurrence for $\ell_m$ gives, by induction,
+\begin{align}
+ \ell_{h+d}&=34AC-AD-BC,                                \label{eq:nv-add1}\\
+ \ell_{h+d-1}&=AC-BD,                                  \label{eq:nv-add2}\\
+ B^2-34AB+A^2&=1,\qquad
+ D^2-34CD+C^2=1.                                       \label{eq:nv-cassini}
+\end{align}
+Since $h,d,k$ are nonzero in $\mathbb F_p$,
+equation~\eqref{eq:nv-C1} gives a unique $\rho\in\mathbb F_p$ with
+\begin{equation}
+ A=h\rho,\qquad C=d\rho.
+                                                        \label{eq:nv-rho}
+\end{equation}
+We first show that $\rho=0$.  Otherwise put $U=h\rho$.  From
+$L=0$, \eqref{eq:nv-rho}, and~\eqref{eq:nv-add1}, after division by $\rho$,
+\begin{equation}
+ hD=d(34U-B)-k.
+                                                        \label{eq:nv-hD}
+\end{equation}
+Substitute \eqref{eq:nv-rho} and~\eqref{eq:nv-hD} into the second Cassini identity in
+\eqref{eq:nv-cassini}, multiply it by $h^2$, and subtract $d^2$
+times the first Cassini identity.  Direct expansion leaves
+\[
+ 2dk(B-17U+1)=0.
+\]
+Thus $B=17U-1$.  The first Cassini identity now reduces to
+$-288U^2=0$, impossible because $p\geq7$ and $U\ne0$.
+Therefore
+\begin{equation}
+ A=C=0.
+                                                        \label{eq:nv-ACzero}
+\end{equation}
+
+Equations~\eqref{eq:nv-add1}--\eqref{eq:nv-cassini} now give
+\[
+ \ell_k=0,\qquad \ell_{k-1}=-BD,\qquad B,D\in\{1,-1\}.
+\]
+Using~\eqref{eq:nv-u} in~\eqref{eq:nv-C2}, together with
+\eqref{eq:nv-ACzero},
+we obtain
+\begin{equation}
+ C_2=\frac5{256}\bigl(hB+dD+kBD\bigr).
+                                                        \label{eq:nv-C2-sign}
+\end{equation}
+For $(B,D)=(1,1),(1,-1),(-1,1),(-1,-1)$, the parenthesis in
+\eqref{eq:nv-C2-sign}
+is respectively $2k,-2d,-2h,0$.  Since $h,d,k<p$, its only possible
+zero is therefore
+\begin{equation}
+ B=D=-1,\qquad \ell_{k-1}=-1.
+                                                        \label{eq:nv-danger}
+\end{equation}
+
+It remains to inspect one more even coefficient.  Under
+\eqref{eq:nv-ACzero} and~\eqref{eq:nv-danger},
+formulas~\eqref{eq:nv-u} and~\eqref{eq:nv-v} become, for
+$m=h,d,k$,
+\begin{equation}
+ u_m=-\frac{5m}{256},\qquad
+ v_m=\frac{m(320m^3-1600m^2-320m+621)}{131072}.
+                                                        \label{eq:nv-uv-danger}
+\end{equation}
+(The dangerous case cannot contain $m=1$, since $\ell_1=1$.)
+Let $C_4$ denote the coefficient of $z^{n-4}$ in $\Delta_{h,k}$.
+In the present case $A = C = 0$, the shifted products
+and~\eqref{eq:nv-pi-center} give
+\begin{align}
+ C_4={}&v_h+v_d-v_k\\
+ &+\frac18u_hd(-d^2+1+30d-3hk)
+  +\frac18u_dh(-h^2+1+30h-3dk).                        \label{eq:nv-C4}
+\end{align}
+Indeed, by the parity structure of $\widehat N_m$ and
+$\widehat\Pi_m$, every contribution to the $z^{n-4}$
+coefficient of the two shifted products other than those
+displayed carries the factor $\ell_h$ (in
+$\widehat N_h\cdot\widehat\Pi_d$) or $\ell_d$ (in
+$\widehat\Pi_h\cdot\widehat N_d$)---namely the pairings
+of the leading coefficient of $\widehat N$ with the
+levels $0$, $-2$, $-4$ of $\widehat\Pi$ and with the
+shift binomials---and these vanish here;
+equation~\eqref{eq:nv-C4} is \emph{not} asserted for
+general $(h,k)$.
+For the $u_h$ term the degree-two loss from the shifted leading
+powers is $3d(10d-hk)/8$, and the contribution from
+$\widehat\Pi_d$ is $-d(d^2-1)/8$; the other term is symmetric.
+Substitution of~\eqref{eq:nv-uv-danger} into~\eqref{eq:nv-C4} gives
+\begin{align*}
+ v_h+v_d-v_k
+ &=-\frac{5hd(4d^2+6dh-15d+4h^2-15h-2)}{2048},\\
+ \text{the two $u$-terms}
+ &=\frac{10hd(2d^2+3dh-15d+2h^2-15h-1)}{2048}.
+\end{align*}
+Consequently
+\[
+ C_4=-\frac{75hdk}{2048}.
+\]
+This is nonzero in $\mathbb F_p$, because $p\geq7$ and
+$0<h,d,k<p$.  This final contradiction proves the theorem.
+\end{proof}
+
+\begin{corollary}[Unconditional uniform fiber and energy bounds]
+\label{cor:fiber-bound-unconditional}
+For every prime $p\geq7$, every $a\in\mathbb F_p^\times$, and every
+$2\leq H\leq(p-1)/2$,
+\[
+ N_p(a)
+ \leq
+ 2\left\lfloor\frac{p-1}{H+1}\right\rfloor
+ +\frac{H(H-1)(2H-1)}2+2.
+\]
+In particular, with $H=\lceil(2p/3)^{1/4}\rceil$,
+\[
+ N_p(a)
+ \leq4(2/3)^{3/4}p^{3/4}
+      +\sqrt6\,p^{1/2}
+      +3(2/3)^{1/4}p^{1/4}+3.
+\]
+Moreover,
+\[
+ \sum_{a\in\mathbb F_p}N_p(a)^2=O(p^{7/4}).
+\]
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:nv-range} supplies hypothesis
+$(\mathrm{NV}_{p,H})$ in Proposition~\ref{prop:fiber-bound-conditional}.
+That proposition gives the first two assertions, and
+Corollary~\ref{cor:fiber-energy-conditional} gives the last one.
+\end{proof}

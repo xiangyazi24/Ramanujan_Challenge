@@ -836,3 +836,52 @@ computational claims updated to 2×10^6.
    (or the other host may already have it — check its push before working).
 2. (HM)_8 / Target A — the weakest cross-prime sufficient condition.
 3. Uniform-in-q top-half machinery (bounded quotient classes).
+
+## ★★★ BREAKTHROUGH 9: The NV range theorem — unconditional p^{3/4} fiber bound
+## (Codex NV wave, 2026-07-19 late; audited and repaired by this session)
+
+**Theorem (thm:nv-range, now in paper):** for every prime p ≥ 7 and ALL
+1 ≤ h < k < p, Δ_{h,k} ≢ 0 in F_p[x]. Range k < p is SHARP: at p = 7,
+Δ_{h,21} ≡ 0 identically for all h (T³ = (x⁷−x)⁹·I for the 7-step transfer
+matrix — exact degeneration, proved).
+
+**Proof mechanism (Codex gpt-5.6-sol xhigh, 467k tokens):** centered
+coefficients of Δ at z = x+(k+1)/2. Closed forms: L = ℓ_h+ℓ_d−ℓ_k,
+C₁ = (3/2)(dℓ_h−hℓ_d), C₂, C₄ via u_m, v_m (coefficients of N̂_m at levels
+−2, −4; Pell/Chebyshev ℓ-algebra). Δ ≡ 0 forces L=C₁=C₂=C₄=0:
+C₁=0 ⟹ (ℓ_h,ℓ_d) = ρ(h,d); ρ≠0 killed by double Cassini (−288U²=0);
+ρ=0 ⟹ ℓ_h=ℓ_d=ℓ_k=0, B,D∈{±1}, C₂ = (5/256)(hB+dD+kBD) kills all but
+B=D=−1; there C₃=0 and C₄ = −75hdk/2048 ≠ 0 (p ≥ 7, h,d,k < p). ∎
+
+**AUDIT (this session — important):**
+- Codex's verify script (5 checks) PASSES but its danger-kill check (c)
+  computed C₄ FROM THE FORMULA (self-grading). Check (d) however tests 3
+  genuine drop-four cases at p ≈ 10⁷ against the ACTUAL polynomial — passes.
+- My independent audit (nv_danger_family_check.py, banked): 6-case exact-Q
+  check found eq (nv-C4) FALSE as a general identity (L, C₁, C₂ exact;
+  C₄ mismatched) — the missing terms all carry ℓ_h/ℓ_d factors, which vanish
+  precisely in the danger case where C₄ is used. REPAIRED the .tex: C₄
+  formula now asserted only under A=C=0 with the parity/ℓ-factor
+  justification sentence.
+- Decisive test: 309 rank-of-apparition danger cases (all p ≤ 3000):
+  L=C₁=0 automatic, actual C₂ = formula in all; 164 killed by C₂;
+  145 full danger cases: actual C₃=0, actual C₄ = −75hdk/2048 ≠ 0. ZERO
+  problems. Theorem is solid.
+
+**Consequences now UNCONDITIONAL in the paper (cor:fiber-bound-unconditional):**
+- max_a N_p(a) ≤ 2.951·p^{3/4} + O(√p) — uniform value-fiber bound.
+- E(p) = Σ_a N_p(a)² = O(p^{7/4}) — first unconditional collision-energy
+  power saving (random-model prediction E ≍ p; any E ≪ p^{2−η} gives
+  Z ≪ p^{1−η/2}).
+- The earlier log-range corollary (O(p/log p)) removed as superseded.
+- The other host's "range content theorem" question is RESOLVED
+  independently — when its (4.A)-(4.E) text lands, cite thm:nv-range.
+
+**Paper: 63 pages, compiles clean.** Files: nv_theorem.tex (repaired),
+nv_verify.py (Codex), nv_danger_family_check.py (my audit),
+fiber_bound.tex (stall comment updated), abstract + conclusion updated.
+
+**Remaining open (unchanged by this):** the pointwise conjecture still
+needs cross-prime input — (HM)_8, or localized dispersion, or bounded-
+quotient top-half machinery. Single-prime facts (incl. the new fiber/energy
+theorems) cannot close it (impossibility construction).

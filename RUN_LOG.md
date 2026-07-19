@@ -191,3 +191,8 @@
 - my scans: zero identically-vanishing Delta (p<=700, h<k<=40); corrected
   earlier misread of C1 exploration log
 - paper: 58 pp clean; commits df85e03, fa026ae, aaaa94c, + this one
+- ★★★ Codex NV wave: thm:nv-range PROVED (Delta_{h,k} nonzero mod p, full range
+  h<k<p, sharp via p=7 k=21 exact degeneration) → fiber p^{3/4} + energy p^{7/4}
+  UNCONDITIONAL. Audit found+repaired a general-identity misstatement in C4
+  (valid only in danger case); 309-case independent danger-family check PASS.
+- paper 63 pp clean; session total: 51 → 63 pages, all committed & pushed
