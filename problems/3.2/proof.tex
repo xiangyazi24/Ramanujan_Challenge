@@ -5250,15 +5250,20 @@ In either case ($M_X < 2k$ or not),
   M_X \;\ll\; X^{2/k + o(1)} \lambda_X + 1
   \;\ll\; \frac{X^{2/3 + 2/k + o(1)}}{\log X}.
 \]
-Now fix~$n$. For each dyadic $X = 2^j$ with
-$\sqrt n \le X \le n$: since $X > \sqrt n$ implies
-$n < X^2$, the integer $m = n$ is admissible in the maximum,
-so the block $(X, 2X]$ contains at most $M_X$ lower-digit
-bad primes, each of weight $\log p \le \log 2X$. Hence
+Now fix~$n$. The primes in $(\sqrt n,\, 2\sqrt n\,]$
+contribute at most
+$\pi(2\sqrt n)\log(2\sqrt n) = O(\sqrt n)$ trivially.
+The remaining range $(2\sqrt n,\, n]$ is covered by dyadic
+blocks $(X, 2X]$ with $X = 2^j \le n$; every block meeting
+$(2\sqrt n,\, n]$ has $2X > 2\sqrt n$, hence $X > \sqrt n$
+and therefore $n < X^2$.
+Hence $m = n$ is admissible in the maximum, and the block
+$(X, 2X]$ contains at most $M_X$ lower-digit bad primes,
+each of weight $\log p \le \log 2X$. Therefore
 \[
   \sum_{\substack{\sqrt n < p \le 2n \\ p \mid b_{\,n \bmod p}}}
   \log p
-  \;\ll\; \sum_{\substack{X = 2^j \\ \sqrt n \le X \le n}}
+  \;\ll\; \sqrt{n} \;+ \sum_{\substack{X = 2^j \\ \sqrt n < X \le n}}
     X^{2/3 + 2/k + o(1)}
   \;\ll\; n^{2/3 + 2/k + o(1)},
 \]
