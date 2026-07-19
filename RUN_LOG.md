@@ -184,3 +184,10 @@
 - bridge on this host: 0 tabs registered — ChatGPT unavailable; Q5510-15 lost
   (hallucinated GITDROP SHAs)
 - end: session continuing
+- Codex C1: conditional fiber bound 2.951 p^{3/4} + energy p^{7/4} delivered,
+  verified, integrated (ssec:value-fibers); (NV) isolated as exact missing lemma
+- Codex C2: max B(n)=3 for ALL n <= 2,000,000 (10x extension), Var/E=0.9991,
+  no window pile-up; raw pairs banked
+- my scans: zero identically-vanishing Delta (p<=700, h<k<=40); corrected
+  earlier misread of C1 exploration log
+- paper: 58 pp clean; commits df85e03, fa026ae, aaaa94c, + this one

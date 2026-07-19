@@ -791,3 +791,48 @@ Ledger Q5510/Q5511/Q5512/Q5515 (07-16): GITDROP SHAs unresolvable in ANY repo
   E_p ≪ p^{7/4}, the first unconditional energy saving (η = 1/4) — Q94
   lists E_p ≪ p^{2-η} as its "weakest believable sufficient hypothesis"
   frame (though the induced Z(p) ≪ p^{7/8} is weaker than direct p^{2/3}).
+
+### Codex harvest + integration (2026-07-19 evening)
+
+**C1 delivered (fiber_bound.tex + fiber_verify.py, all 5 checks PASS,
+independently re-run).** Honest conditional result, exactly as Q97 predicted:
+- ★ Exact factorization D_{h,k} = Π_h · Δ_{h,k} (Casoratian identity
+  N_h B_k − N_k B_h = −Π_h² N_{k−h}(x+h)); B_m = −(x+1)^6 N_{m−1}(x+1).
+- ★ prop:fiber-bound-conditional: under (NV_{p,H}) (Δ_{h,k} ≢ 0 mod p for
+  h<k≤H), max_{a≠0} N_p(a) ≤ 2.951·p^{3/4} + l.o.t. with H = ⌈(2p/3)^{1/4}⌉.
+- ★ cor:fiber-energy-conditional: E(p) = Σ_a N_p(a)² = O(p^{7/4}).
+- Step 3 STALL is genuine: after removing Π_h, endpoint evaluations give
+  VALUE EQUALITIES (b_{h-r} ≡ b_{k-r}), not consecutive zeros; explicit
+  two-point obstruction p=131, (h,k)=(12,55): b_10=b_53=15, b_11=b_54=15.
+  (NV) is a strict strengthening of lem:nonvanish — the "range content
+  theorem". Missing routes: second-coefficient gcd, or singular-
+  specialization network (= Q97 §6/§7).
+
+**CORRECTION of the earlier "degenerate patterns" note:** the p=419/449/487
+structured (h,k) lists in C1's exploration log are NOT identically-vanishing
+certificates. Independent polynomial-level verification: Δ_{35,70} mod 419
+has 206 nonzero coefficients; a full scan (all primes 7..700, all h<k≤40)
+found ZERO identically-vanishing Δ. Those lists were realized in-fiber
+patterns (orbit periodicity), not certificate degenerations. (NV) has NO
+known counterexample at any tested range.
+
+**C2 delivered (bn_bigscan.c + report + data_zp_pairs.bin, 345s, 12 threads).**
+- ★★ max B(n) = 3 for ALL n ≤ 2,000,000 (53 maximizers, zero B ≥ 4) —
+  10× the old range. Var/E = 0.9991 global; per-shell 0.95–1.00.
+- Windowed dispersion (64 windows/shell): no localized pile-up; largest
+  window sum 481 vs mean 429.5 at N=2^19 (Var/mean up to 1.36 — mild,
+  consistent with Poisson fluctuation).
+- 200k reference + million-prime Z(p) histogram both re-verified.
+- Raw (p,r) pairs banked in data_zp_pairs.bin (149,112 records, uint32×2,
+  SHA-256 in report) — future sessions post-process without recompute.
+
+**Paper integrated (58 pages, compiles clean):** new ssec:value-fibers
+(framing + \input{fiber_bound} + rem:nv-status + rem:fiber-motivation);
+computational claims updated to 2×10^6.
+
+### Updated priority ranking
+1. Prove (NV_{p,H}) for H ~ p^{1/4} — sharply isolated, two named routes,
+   massive computational support. Good ChatGPT target when tabs return
+   (or the other host may already have it — check its push before working).
+2. (HM)_8 / Target A — the weakest cross-prime sufficient condition.
+3. Uniform-in-q top-half machinery (bounded quotient classes).

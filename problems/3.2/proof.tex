@@ -814,6 +814,89 @@ $O(H)$~pairs out of~$O(H^2)$; upgrading it to a
 global codegree bound is the key missing step.
 \end{remark}
 
+\subsection{Value fibers: the bordered certificate}
+\label{ssec:value-fibers}
+
+The zero-count bound $Z(p) = O(p^{2/3})$
+(Proposition~\ref{prop:zp-bound}) concerns the single
+fiber $a = 0$, where one return condition
+$b_t \equiv b_{t+h} \equiv 0$ already forces a gap
+polynomial to vanish.
+For a \emph{general} fiber
+$\{t : b_t \equiv a \pmod p\}$ with $a \ne 0$, two return
+conditions are needed to eliminate the two unknowns
+$(b_{t+1}, a)$, and the resulting certificate is a
+bordered $2 \times 2$ determinant $D_{h,k}$ built from
+the gap polynomials and the second solution of the
+cleared recurrence.
+The determinant factors exactly as
+$D_{h,k} = \Pi_h \cdot \Delta_{h,k}$, and the analogue of
+Lemma~\ref{lem:nonvanish} for the reduced certificate
+$\Delta_{h,k}$ is \emph{genuinely open}: the endpoint
+evaluations assert equalities of separated Ap\'ery values
+rather than consecutive zeros, so the no-consecutive-zero
+mechanism does not apply (an explicit two-point
+obstruction occurs at $p = 131$, $(h,k) = (12,55)$; see
+the proof below).
+Under the nonvanishing hypothesis in the required short
+range, the same block-partition count that proves
+$Z(p) = O(p^{2/3})$ yields a \emph{uniform} fiber bound
+$O(p^{3/4})$.
+
+\input{fiber_bound}
+
+\begin{remark}[Status of the nonvanishing hypothesis
+$(\mathrm{NV}_{p,H})$]\label{rem:nv-status}
+Three computations support the hypothesis, all
+machine-verified:
+(i) for every prime $7 \le p \le 700$ and every pattern
+$1 \le h < k \le 40$, the reduced certificate
+$\Delta_{h,k}$ is \emph{not} the zero polynomial
+modulo~$p$ --- no identically vanishing pattern was found
+at any tested prime, well beyond the range
+$k \le H \asymp p^{1/4}$ needed in
+Proposition~\ref{prop:fiber-bound-conditional};
+(ii) for all primes $p \in [50, 300]$, every in-fiber
+triple satisfies $D_{h,k}(t) \equiv 0$, confirming the
+certificate identity;
+(iii) for $p \le 2000$ the empirical maximum
+$\max_{a \ne 0} N_p(a) = 12$ is $0.36$ times the
+conditional bound curve.
+Two candidate proof routes for
+$(\mathrm{NV}_{p,H})$ parallel the content analysis of
+the gap polynomials: exhibit a second explicit
+coefficient of $\Delta_{h,k}$ whose gcd with the leading
+Chebyshev combination $\ell_h + \ell_{k-h} - \ell_k$ is
+controlled, or propagate the full network of singular
+specializations $\Delta_{h,k}(-m)$, $1 \le m \le k$
+(products of factorial cubes and differences of Ap\'ery
+values), to a contradiction with
+Lemma~\ref{lem:no-consec}.
+Neither is completed; the statement is a strict
+strengthening of Lemma~\ref{lem:nonvanish} and we record
+it as the precise missing ingredient for an
+\emph{unconditional} uniform fiber bound.
+\end{remark}
+
+\begin{remark}[Why a uniform fiber bound matters]
+\label{rem:fiber-motivation}
+The energy bound
+$E(p) = \sum_a N_p(a)^2 = O(p^{7/4})$
+(Corollary~\ref{cor:fiber-energy-conditional})
+is the first power saving over the trivial $E(p) \le
+p \max_a N_p(a) \le p^2$ scale for the value
+distribution of Ap\'ery numbers modulo~$p$; the
+random-map prediction is $E(p) \asymp p$.
+Any bound $E(p) \ll p^{2-\eta}$ gives
+$Z(p) \le E(p)^{1/2} \ll p^{1-\eta/2}$, so energy
+savings are a strictly weaker---hence potentially more
+accessible---avenue than direct zero-set bounds, and the
+value-collision structure enters the two-prime
+dispersion analysis of
+Section~\ref{sec:second-moment} through the
+equal-value pattern counts.
+\end{remark}
+
 \subsection{Computational evidence}
 
 \begin{proposition}\label{prop:Zp-data}
@@ -1116,8 +1199,9 @@ the height bound gives
 $\omega_{(n/2,n]}(b_n) \le \log b_n / \log(n/2)
 = O(n/\log n)$, precisely one $o(1)$ factor
 short of the target.
-Computation for $n \le 200{,}000$ gives $B(n) \le 3$
-and $B(n) = 0$ for $93.7\%$ of values
+Computation for $n \le 2{,}000{,}000$ gives $B(n) \le 3$
+(with exactly $53$ maximizers and no value $B(n) \ge 4$)
+and $B(n) = 0$ for $94.8\%$ of values
 (see Remark~\ref{rem:random} for the Poisson analysis).
 
 \begin{remark}[Random-model prediction]\label{rem:random}
@@ -1139,6 +1223,16 @@ $93.7\%$, $6.1\%$, $0.20\%$, $0.004\%$).
 The dispersion ratio
 $\operatorname{Var}(B)/\mathbb{E}[B] = 1.003$
 is the exact Poisson signature.
+The extended scan to $n \le 2{,}000{,}000$
+(with all $148{,}930$ primes $7 \le p \le 2 \times 10^6$)
+confirms the picture at ten times the range:
+$\max B(n) = 3$ still, overall
+$\operatorname{Var}(B)/\mathbb{E}[B] = 0.9991$,
+per-shell $\operatorname{Var}/\mathbb{E}$ between
+$0.95$ and $1.00$, and windowed sums over
+$64$~windows per dyadic shell show no localized
+pile-up (largest window sum $481$ against a
+window mean of $429.5$ at $N = 2^{19}$).
 By CRT-based approximate independence across primes,
 $B(n)$ should follow $\operatorname{Poisson}(\log 2/\log n)$
 with $\lambda \to 0$.

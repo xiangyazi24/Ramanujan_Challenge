@@ -1,0 +1,260 @@
+% STALL REPORT (Step 3: determinant nonvanishing).
+% The proposed proof of the unconditional proposition cannot be completed from
+% lem:no-consec, lem:nonvanish, and rem:content.  In fact the raw bordered
+% determinant factors as D_{h,k}=Pi_h Delta_{h,k}, where
+% Pi_h=prod_{j=1}^h(x+j)^3.  Thus D_{h,k}(-1),...,D_{h,k}(-h) vanish for
+% structural reasons.  After Pi_h is removed, the evaluations at -1 and -2
+% assert equality of two pairs of nonzero Apery values, rather than the
+% vanishing of two consecutive Apery values.  For example, modulo 131 and for
+% (h,k)=(12,55), b_10=b_53=15 and b_11=b_54=15, so
+% Delta_{12,55}(-1)=Delta_{12,55}(-2)=0 although there are no consecutive
+% zeros; Delta_{12,55}(-3)=2.  What is missing is a range-content theorem
+% asserting Delta_{h,k} is not the zero polynomial modulo p in the required
+% short range.  The cited nonvanishing lemma concerns N_h, not Delta_{h,k}.
+% The proposition below therefore states and proves exactly the rigorous
+% conditional result.  The accompanying script verifies the missing assertion
+% in the finite ranges requested by the specification, but that computation is
+% not used as a proof.
+
+\begin{proposition}[Uniform fiber bound conditional on bordered nonvanishing]
+\label{prop:fiber-bound-conditional}
+Let
+\[
+ P(n)=34n^3+51n^2+27n+5
+\]
+and let $(b_n)_{n\geq 0}$ be the Ap\'ery numbers, with
+$b_0=1$, $b_1=5$, and
+\[
+ (n+1)^3b_{n+1}=P(n)b_n-n^3b_{n-1}.
+\]
+For a prime $p\geq 7$ and $a\in\mathbb F_p$, put
+\[
+ N_p(a)=\#\{0\leq t<p:b_t\equiv a\pmod p\}.
+\]
+Define $N_0(x)=0$, $N_1(x)=1$, and, for $m\geq1$,
+\[
+ N_{m+1}(x)=P(x+m)N_m(x)-(x+m)^6N_{m-1}(x),
+\]
+and set
+\[
+ \Pi_m(x)=\prod_{j=1}^m(x+j)^3,
+ \qquad
+ \begin{aligned}
+ \Delta_{h,k}(x)
+  ={}&N_h(x)\Pi_{k-h}(x+h)-N_k(x)\\
+     &+\Pi_h(x)N_{k-h}(x+h).
+ \end{aligned}
+\]
+Let $H$ be an integer with $2\leq H\leq(p-1)/2$, and assume
+\begin{equation}
+ \Delta_{h,k}\not\equiv0\pmod p
+ \quad\text{in }\mathbb F_p[x]
+ \qquad(1\leq h<k\leq H).
+ \tag{NV$_{p,H}$}\label{eq:fiber-nv}
+\end{equation}
+Then, for every $a\in\mathbb F_p^\times$,
+\begin{equation}
+ N_p(a)
+ \leq
+ 2\left\lfloor\frac{p-1}{H+1}\right\rfloor
+ +\frac{H(H-1)(2H-1)}2+2.
+ \label{eq:fiber-exact}
+\end{equation}
+In particular, if~\eqref{eq:fiber-nv} holds for
+\[
+ H=\left\lceil(2p/3)^{1/4}\right\rceil,
+\]
+then
+\begin{align}
+ N_p(a)
+ &\leq 4(2/3)^{3/4}p^{3/4}
+      +\sqrt6\,p^{1/2}
+      +3(2/3)^{1/4}p^{1/4}+3.                 \label{eq:fiber-explicit}
+\end{align}
+Thus the leading constant supplied by this argument is
+\[
+4(2/3)^{3/4}=2.951151\ldots.
+\]
+\end{proposition}
+
+\begin{proof}
+We first establish the exact algebra behind the bordered certificate.
+For a base point $r$ put
+\[
+ Y_m=\left(\frac{(r+m)!}{r!}\right)^3b_{r+m}
+     =\Pi_m(r)b_{r+m}.
+\]
+As long as $0\leq r$ and $r+m\leq p-1$, clearing the denominators in the
+Ap\'ery recurrence gives
+\begin{equation}
+ Y_{m+1}=P(r+m)Y_m-(r+m)^6Y_{m-1},             \label{eq:Y-rec}
+\end{equation}
+with $Y_0=b_r$ and $Y_1=(r+1)^3b_{r+1}$.
+Let $B_0(x)=1$, $B_1(x)=0$, and let $B_m$ satisfy the same recurrence in
+$m$ as $N_m$.  The two fundamental solutions of~\eqref{eq:Y-rec} give
+\begin{equation}
+ Y_m=N_m(r)Y_1+B_m(r)Y_0.                      \label{eq:Y-solution}
+\end{equation}
+Moreover,
+\begin{equation}
+ B_m(x)=-(x+1)^6N_{m-1}(x+1)\qquad(m\geq1).   \label{eq:B-closed}
+\end{equation}
+Indeed, this has the correct value at $m=1$, and its induction step is
+exactly the recurrence for $N_{m-1}(x+1)$.
+
+Write $R_m(x)=\Pi_m(x)-B_m(x)$.  If
+$b_t=b_{t+m}=a$, equation~\eqref{eq:Y-solution} becomes
+\begin{equation}
+ N_m(t)(t+1)^3b_{t+1}-R_m(t)a=0.              \label{eq:return-row}
+\end{equation}
+Consequently, if $b_t=b_{t+h}=b_{t+k}=a$ with
+$1\leq h<k$ and $t+k\leq p-1$, the nonzero vector
+$((t+1)^3b_{t+1},a)$ is killed by the two rows in
+~\eqref{eq:return-row}.  Hence
+\begin{equation}
+ D_{h,k}(t)=0,
+ \qquad
+ D_{h,k}(x):=N_h(x)R_k(x)-N_k(x)R_h(x).       \label{eq:D-def}
+\end{equation}
+
+The structural factors of this determinant are important.  A continuant
+Casoratian calculation gives
+\begin{equation}
+ N_hB_k-N_kB_h=-\Pi_h^2N_{k-h}(x+h).          \label{eq:NB-cas}
+\end{equation}
+For completeness, both sides, as functions of $k$, satisfy the same
+second-order recurrence; at $k=h$ they vanish, while at $k=h+1$ they
+equal $-\Pi_h^2$.  Substituting~\eqref{eq:NB-cas} in~\eqref{eq:D-def}
+yields the exact factorization
+\begin{equation}
+ \boxed{D_{h,k}(x)=\Pi_h(x)\Delta_{h,k}(x).}  \label{eq:D-factor}
+\end{equation}
+Let $\ell_0=0$, $\ell_1=1$, and
+$\ell_{m+1}=34\ell_m-\ell_{m-1}$.  Since $\ell_m$ is the leading
+coefficient of $N_m$, the leading coefficient of $\Delta_{h,k}$ is
+\[
+ \ell_h+\ell_{k-h}-\ell_k<0.
+\]
+The inequality follows, for example, from the strict increase of
+$(\ell_m)$ and $\ell_{m+1}>2\ell_m$.  Therefore, over $\mathbb Z$,
+\begin{equation}
+ \deg\Delta_{h,k}=3(k-1),\qquad
+ \deg D_{h,k}=3(h+k)-3.                       \label{eq:D-degrees}
+\end{equation}
+The leading coefficient can, however, vanish modulo~$p$, so its
+characteristic-zero nonvanishing does not prove~\eqref{eq:fiber-nv}.
+
+Besides the cubic boundary factor $\Pi_h$, interval reflection gives all
+three immediately forced midpoint factors:
+\begin{equation}
+ \begin{aligned}
+ 2\mid h     &\ \Longrightarrow\ 2x+h+1\mid\Delta_{h,k},\\
+ 2\mid k     &\ \Longrightarrow\ 2x+k+1\mid\Delta_{h,k},\\
+ 2\mid(k-h)  &\ \Longrightarrow\ 2x+h+k+1\mid\Delta_{h,k}.
+ \end{aligned}                                                   \label{eq:midpoint-factors}
+\end{equation}
+These follow by applying
+$N_m(-x-m-1)=(-1)^{m-1}N_m(x)$ to the first interval, the whole
+interval, and the translated final interval, respectively.  Exactly one
+of the three lengths $h,k,k-h$ is even unless $h$ and $k$ are both even,
+in which case all three are even.  These are the factors forced by the
+three reflections; in the exceptional smallest case
+$\Delta_{1,2}=-4(2x+3)^3$.
+
+We record why the known endpoint facts do not establish the missing
+nonvanishing.  Using Remark~\ref{rem:content} in~\eqref{eq:D-factor}
+gives, for $1\leq r\leq h$,
+\begin{align}
+ \Delta_{h,k}(-r)
+  ={}&(-1)^{r-1}b_{r-1}\bigl(b_{h-r}-b_{k-r}\bigr)
+       \bigl((r-1)!(k-r)!\bigr)^3,             \label{eq:Delta-left}
+\end{align}
+whereas, for $h<r\leq k$,
+\begin{align}
+ \Delta_{h,k}(-r)
+  ={}&(-1)^{r-1}b_{k-r}\bigl(b_{r-h-1}-b_{r-1}\bigr)
+       \bigl((r-1)!(k-r)!\bigr)^3.             \label{eq:Delta-right}
+\end{align}
+In particular, the raw determinant vanishes structurally at
+$-1,\ldots,-h$.  After removing $\Pi_h$, its first two evaluations
+(when $h\geq2$) are
+\[
+ \Delta_{h,k}(-1)=(k-1)!^3(b_{h-1}-b_{k-1}),
+ \quad
+ \Delta_{h,k}(-2)=-5(k-2)!^3(b_{h-2}-b_{k-2}).
+\]
+Thus their simultaneous vanishing gives two equalities, not two
+consecutive zeros, and Lemma~\ref{lem:no-consec} does not contradict it.
+For example, modulo $131$, the recurrence gives
+\[
+ b_{10}=b_{53}=15,\qquad b_{11}=b_{54}=15;
+\]
+hence both evaluations vanish for $(h,k)=(12,55)$, while
+$\Delta_{12,55}(-3)=2$.  Removing the forced midpoint factor
+$2x+13$ does not change this example, since it is nonzero at $-1$ and
+$-2$.  Lemma~\ref{lem:nonvanish} proves the corresponding assertion for
+the individual $N_m$, but it does not imply~\eqref{eq:fiber-nv} for this
+bordered combination.
+
+We now use the explicitly stated hypothesis~\eqref{eq:fiber-nv}.  List
+the $a$-fiber in increasing order as
+\[
+ t_1<t_2<\cdots<t_s.
+\]
+For $1\leq i\leq s-2$ put
+\[
+ h_i=t_{i+1}-t_i,\qquad k_i=t_{i+2}-t_i.
+\]
+If $k_i\leq H$, then~\eqref{eq:D-factor} and
+$t_i+k_i\leq p-1$ show that $\Pi_{h_i}(t_i)$ is a unit modulo~$p$.
+Thus $t_i$ is a root of the nonzero polynomial
+$\Delta_{h_i,k_i}$.  For a fixed pair $(h,k)$ there are at most
+$3(k-1)$ such bases, by~\eqref{eq:D-degrees}.  Summing over all short
+patterns gives
+\begin{equation}
+ \sum_{k=2}^H\sum_{h=1}^{k-1}3(k-1)
+ =3\sum_{j=1}^{H-1}j^2
+ =\frac{H(H-1)(2H-1)}2.                       \label{eq:short-count}
+\end{equation}
+
+For the remaining indices, $t_{i+2}-t_i>H$, hence this integer is at
+least $H+1$.  Splitting the indices $i$ according to parity, the
+corresponding increments telescope and have total at most $p-1$ in each
+parity class.  The number of long indices is therefore at most
+\[
+ 2\left\lfloor\frac{p-1}{H+1}\right\rfloor.
+\]
+Together with the two final fiber elements, this proves
+~\eqref{eq:fiber-exact}.
+
+Finally put $x=(2p/3)^{1/4}$ and $H=\lceil x\rceil$.  This $H$ lies in
+$[2,(p-1)/2]$ for $p\geq7$.  Using
+$H(H-1)(2H-1)/2<H^3\leq(x+1)^3$ and
+$2(p-1)/(H+1)<2p/x=3x^3$, the right-hand side of
+~\eqref{eq:fiber-exact} is at most
+\[
+ 4x^3+3x^2+3x+3,
+\]
+which is exactly~\eqref{eq:fiber-explicit}.
+\end{proof}
+
+\begin{corollary}[Collision energy, conditional form]
+\label{cor:fiber-energy-conditional}
+Under the bordered nonvanishing hypothesis of
+Proposition~\ref{prop:fiber-bound-conditional}, let $U(p)$ denote the
+right-hand side of~\eqref{eq:fiber-explicit}.  Then
+\[
+ E(p):=\sum_{a\in\mathbb F_p}N_p(a)^2
+ \leq p\max\{Z(p),U(p)\}=O(p^{7/4}).
+\]
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:zp-bound}, $N_p(0)=Z(p)=O(p^{2/3})$, while the
+conditional proposition gives $N_p(a)\leq U(p)=O(p^{3/4})$ for
+$a\ne0$.  Since $\sum_aN_p(a)=p$,
+\[
+ E(p)\leq\bigl(\max_aN_p(a)\bigr)\sum_aN_p(a)
+       \leq p\max\{Z(p),U(p)\}=O(p^{7/4}).
+\]
+\end{proof}
