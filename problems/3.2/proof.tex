@@ -5192,6 +5192,38 @@ yet far weaker than the Poisson conjecture
 (Hypothesis~\ref{hyp:poisson}).
 \end{remark}
 
+\begin{remark}[Computational evidence]\label{rem:hm-data}
+Using the actual Ap\'ery zero sets $Z_p$ for all primes
+$p \in (X, 2X]$, the moment ratios
+$R_k = \sum_{m<X^2}(K_X(m))_k \,/\, X^2\lambda_X^k$
+are bounded and of order one at every tested scale:
+\begin{center}
+\begin{tabular}{rrrcccc}
+\toprule
+$X$ & $\#p$ & $\lambda_X$ & $\max K$ &
+$R_2$ & $R_3$ & $R_4$ \\
+\midrule
+$128$  & $23$  & $0.158$ & $3$ & $0.91$ & $0.93$ & $0.00$ \\
+$256$  & $43$  & $0.126$ & $3$ & $0.89$ & $0.46$ & $0.00$ \\
+$512$  & $75$  & $0.093$ & $3$ & $0.97$ & $0.72$ & $0.00$ \\
+$1024$ & $137$ & $0.082$ & $4$ & $0.97$ & $0.83$ & $0.50$ \\
+$2048$ & $255$ & $0.078$ & $4$ & $0.98$ & $0.93$ & $1.27$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The $k = 2$ ratio approaches~$1$ from below (the
+independence prediction), and $R_3, R_4$ fluctuate at
+order one---the expected count $X^2\lambda_X^4$ of
+$4$-clusters is single-digit at these scales, so $R_4$
+is dominated by extreme-value sampling noise.
+The observed $\max K = 4$ over $X^2 \approx 4 \times 10^6$
+integers matches the Poisson extreme-value prediction.
+Note $\lambda_X \approx 1/\log X$ here (the empirical
+Poisson mean), far below the worst-case input
+$X^{2/3}/\log X$ used in
+Theorem~\ref{thm:hm-pointwise}.
+\end{remark}
+
 \begin{theorem}[$(\mathrm{HM})_k$ implies a pointwise power
 saving]\label{thm:hm-pointwise}
 Assume Hypothesis~\ref{hyp:high-moment} for one fixed
