@@ -1730,17 +1730,21 @@ fixed $\delta > 0$, the codegree is $O(h)$.
 \end{lemma}
 
 \begin{proof}
-Since $p > N/2 \ge h$, the residues $m \bmod p$
-and $n \bmod p$ lie in $\{0, \ldots, p-1\}$ and
-differ by exactly~$h$.
-By the gap implication
-(Lemma~\ref{lem:gap-poly}),
-if $p \mid b_{m \bmod p}$ and $p \mid b_{n \bmod p}$,
-then $p \mid N_h(m \bmod p)$.
-The polynomial periodicity of~$N_h$ gives
-$N_h(m \bmod p) \equiv N_h(m) \pmod{p}$, so
-$p \mid N_h(m)$.
+We split the common bad primes into three classes.
 
+\emph{Small primes} ($P_0 < p \le h$): counting
+all of them trivially,
+$\pi(h) \ll h \ll h \log N/\log P_0$
+(as $P_0 \le 2N$ in any nonvacuous application).
+
+\emph{No wrap} ($p > h$ and
+$(m \bmod p) + h < p$): here
+$n \bmod p = (m \bmod p) + h$, so the two zeros of
+$b$ modulo~$p$ are at distance exactly~$h$, and the
+gap implication (Lemma~\ref{lem:gap-poly}) gives
+$p \mid N_h(m \bmod p)$; polynomial periodicity
+$N_h(m \bmod p) \equiv N_h(m) \pmod{p}$ then gives
+$p \mid N_h(m)$.
 The gap polynomial has degree $3(h-1)$ in~$m$
 (the tridiagonal determinant representation
 gives exactly this), so for $m \in (N, 2N]$,
@@ -1750,7 +1754,38 @@ matrix is positive definite at positive
 integers), the number
 of prime factors exceeding~$P_0$ is at most
 $3h \log(CN) / \log P_0$.
+
+\emph{Wrap} ($p > h$ and
+$(m \bmod p) + h \ge p$): writing
+$r = m \bmod p$, the wrap condition says
+$r = p - j$ for some $1 \le j \le h$, i.e.\
+$p \mid m + j$.
+Hence every wrapped prime divides the nonzero integer
+$\prod_{j=1}^{h}(m+j) \le (3N)^h$,
+so there are at most
+$h \log(3N)/\log P_0$ of them---no zero-set
+information is needed in this case.
+(If $r + h = p$ exactly, then $n \equiv 0$ and
+$b_0 = 1$, so $p$ is not lower-digit bad for~$n$;
+this boundary case is vacuous but in any event
+covered by $j = h$.)
+
+Summing the three classes gives
+$O(h \log N/\log P_0)$.
 \end{proof}
+
+\begin{remark}[Wrap is essential]\label{rem:codegree-wrap}
+The no-wrap case alone does not exhaust the lemma:
+at $p = 37$ one has
+$\mathcal Z_{37} = \{17, 19\}$, and
+$m = 93$, $n = 128$ (so $h = 35$) give residues
+$19$ and~$17$---not differing by~$h$.
+Here $p \mid m + 18$, and the wrap class
+accounts for it.
+In the top-half application
+($p \in (N, 2N]$, quotient~$1$) wrap cannot occur,
+since $n \le 2N < 2p$.
+\end{remark}
 
 \begin{theorem}[Polylogarithmic exceptional set]\label{thm:polylog}
 For every $\varepsilon > 0$,
@@ -4512,34 +4547,43 @@ Then:
 $\sum_{m \in I_N} \rho(m) = T_N$;
 \item[\textup{(ii)}]
 $\|\rho\|_2^2 := \sum_{m \in I_N} \rho(m)^2
-\le T_N^2/N$;
+\le \rho_{\max} T_N$, where
+$\rho_{\max} := \max_{m \in I_N} \rho(m)
+\le \sum_p A_p/L_p$;
+under the PNT profile approximation,
+$\|\rho\|_2^2 = (c_2 + o(1))\,T_N^2/N$
+with $c_2$ as in~\eqref{eq:c2}
+(note $c_2 > 1$: by Cauchy--Schwarz
+$\|\rho\|_2^2 \ge T_N^2/N$ always);
 \item[\textup{(iii)}]
 $F_N \le 2\|\rho\|_2^2
-+ 2\|\lambda - \rho\|_2^2 - T_N
-\le 2T_N^2/N + 2\|\lambda - \rho\|_2^2$.
++ 2\|\lambda - \rho\|_2^2 - T_N$.
 \end{enumerate}
-In particular, the residual dispersion
-estimate
+In particular, if
+$\|\rho\|_2^2 = O(T_N^2/N)$
+(as the profile approximation and the data indicate),
+the residual dispersion estimate
 $\|\lambda - \rho\|_2^2 \ll T_N$
-would imply $F_N = O(T_N)$.
+would imply $F_N = O(T_N)$,
+since $T_N^2/N = O(T_N)$.
 \end{proposition}
 
 \begin{proof}
 Part~(i): $\sum_m \rho(m)
 = \sum_p (A_p / L_p) \cdot L_p = \sum_p A_p = T_N$.
-For~(ii), write
-$\|\rho\|_2^2
-= \sum_{p,q} (A_p A_q)/(L_p L_q)
-  \cdot (2N - \max(p,q))$.
-By the PNT approximation
+Part~(ii): $\|\rho\|_2^2 \le \rho_{\max}\sum_m\rho(m)
+= \rho_{\max} T_N$, and $\rho(m)$ is a partial sum of
+the positive terms $A_p/L_p$.
+For the profile asymptotics: by the PNT approximation
 $\rho(m) \approx (2/\!\log N)
 \log(N/(2N{-}m))$ and the integral
 $\int_0^1 (\log 1/t)^2\,dt = 2$, one obtains
-$\|\rho\|_2^2 \sim c\,T_N^2/N$
-for an effective constant~$c$.
+$\|\rho\|_2^2 \sim c_2\,T_N^2/N$.
 Numerically, $\|\rho\|_2^2 / (T_N^2/N)$
 stabilizes near~$1.25$ for
-$N = 512, \ldots, 32{,}768$ (Table~\ref{tab:residual}).
+$N = 512, \ldots, 32{,}768$
+(Table~\ref{tab:residual}), matching
+$c_2 = 1.262\ldots$ from~\eqref{eq:c2}.
 Part~(iii) follows from
 $\|a + b\|^2 \le 2\|a\|^2 + 2\|b\|^2$
 applied to $\lambda = \rho + \eta$.
@@ -5396,6 +5440,19 @@ localization, and no variance identity---only one fixed
 factorial moment at the independence scale, compatible with
 the worst proved cardinality bound $Z(p) \ll p^{2/3}$.
 \end{remark}
+
+The next two statements make the $(\mathrm{HM})_3$
+frontier exact: a sharp reformulation as a positive
+pair--Palm excess, and an incidence model showing that
+\emph{all} presently proved primewise and pairwise
+facts---including the fiber and energy bounds of
+Section~\ref{ssec:value-fibers} and even a uniform
+$O(1)$ row-codegree---are jointly insufficient for any
+power saving at $k = 3$.
+(In this block, $\Omega_p$ temporarily denotes the bad
+set $\{0 \le m < X^2 : m \bmod p \in \mathcal Z_p\}$.)
+
+\input{hm3_result}
 
 \section{Conclusion}
 

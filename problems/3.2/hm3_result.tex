@@ -1,0 +1,404 @@
+% W1 outcome: a sharp G4 characterization/obstruction for (HM)_3.
+% This is a fragment meant to use the notation and theorem environments of
+% proof.tex.  It does not claim an unconditional proof of (HM)_3.
+
+\subsection*{The third factorial moment: exact obstruction}
+
+Write
+\[
+  \mathcal P_X=\{p\text{ prime}:X<p\le 2X\},\qquad M=X^2,
+\]
+where $X\ge 2$ is integral, and put
+\[
+  \Omega_p=\{0\le m<M:m\bmod p\in\mathcal Z_p\},\qquad
+  f_p(m)=\mathbf 1_{\Omega_p}(m).
+\]
+Thus $K_X(m)=\sum_{p\in\mathcal P_X}f_p(m)$.  Set
+\[
+  A_p=|\Omega_p|,\qquad \rho_p=\frac{A_p}{M},\qquad
+  \mu=\sum_{p\in\mathcal P_X}\rho_p
+      =\frac1M\sum_{m<M}K_X(m),
+\]
+and retain
+\[
+  \lambda=\lambda_X=\sum_{p\in\mathcal P_X}\frac{Z(p)}p.
+\]
+For ordered distinct primes $p,q\in\mathcal P_X$, define
+\begin{align*}
+  J_{p,q}&=|\Omega_p\cap\Omega_q|,\\
+  T_{p,q}&=\sum_{m\in\Omega_p\cap\Omega_q}
+       \sum_{\ell\in\mathcal P_X\setminus\{p,q\}}f_\ell(m),\\
+  \lambda_{p,q}&=\sum_{\ell\in\mathcal P_X\setminus\{p,q\}}
+       \frac{Z(\ell)}\ell,\qquad
+  \mu_{p,q}=\sum_{\ell\in\mathcal P_X\setminus\{p,q\}}\rho_\ell.
+\end{align*}
+The two aggregate positive pair--Palm excesses are
+\begin{align}
+  \mathscr P_3(X)
+    &=\sum_{p\ne q}\bigl(T_{p,q}-J_{p,q}\lambda_{p,q}\bigr)_+,
+       \label{eq:hm3-palm-periodic}\\
+  \mathscr P_3^{\rm fin}(X)
+    &=\sum_{p\ne q}\bigl(T_{p,q}-J_{p,q}\mu_{p,q}\bigr)_+.
+       \label{eq:hm3-palm-finite}
+\end{align}
+The first uses the complete-period densities $Z(\ell)/\ell$; the second
+uses the exact marginals on $[0,M)$ and therefore absorbs every one-column
+boundary error.
+
+\begin{theorem}[Sharp pair--Palm characterization of $(\mathrm{HM})_3$]
+\label{thm:hm3-palm-characterization}
+With all prime tuples ordered, one has the exact identities
+\begin{align}
+  \sum_{p\ne q}J_{p,q}
+    &=\sum_{m<M}(K_X(m))_2,                              \label{eq:hm3-F2-id}\\
+  \sum_{p\ne q}T_{p,q}
+    &=\sum_{m<M}(K_X(m))_3.                              \label{eq:hm3-F3-id}
+\end{align}
+Moreover,
+\begin{align}
+  \mathscr P_3(X)
+  &\le \sum_{m<M}(K_X(m))_3
+  \le \mathscr P_3(X)+5M\lambda^3,                     \label{eq:hm3-palm-sandwich}\\
+  \mathscr P_3^{\rm fin}(X)
+  &\le \sum_{m<M}(K_X(m))_3
+  \le \mathscr P_3^{\rm fin}(X)
+       +5(1+2/X)M\lambda^3.                             \label{eq:hm3-palm-fin-sandwich}
+\end{align}
+Consequently $(\mathrm{HM})_3$ is equivalent to either one of
+\[
+  \mathscr P_3(X)\ll X^{2+o(1)}\lambda_X^3,
+  \qquad
+  \mathscr P_3^{\rm fin}(X)\ll X^{2+o(1)}\lambda_X^3.
+\]
+More generally, for every fixed $\theta\ge0$, the estimate in Goal~G2
+with exponent $\theta$ is equivalent to either positive-excess estimate
+with right-hand side $X^{2+\theta+o(1)}\lambda_X^3$.
+
+There is also an exact centered formulation.  Define
+\[
+  V_X=\sum_{m<M}(K_X(m)-\mu)^2,
+  \qquad
+  C_{3,X}=\sum_{m<M}(K_X(m)-\mu)^3
+\]
+and the third factorial-moment defect
+\begin{equation}
+  \mathfrak D_3(X)
+  =(C_{3,X}-M\mu)+3(\mu-1)(V_X-M\mu).                  \label{eq:hm3-defect-def}
+\end{equation}
+Then
+\begin{equation}
+  \sum_{m<M}(K_X(m))_3=M\mu^3+\mathfrak D_3(X).        \label{eq:hm3-defect-id}
+\end{equation}
+Thus $(\mathrm{HM})_3$ is equivalently the one-sided estimate
+\[
+  \bigl(\mathfrak D_3(X)\bigr)_+
+  \ll X^{2+o(1)}\lambda_X^3.
+\]
+The same equivalence holds at every G2 exponent $\theta\ge0$.
+\end{theorem}
+
+\begin{proof}
+If $p\ne q$ lie in $\mathcal P_X$, then $pq>M$.  Hence every residue
+pair $(a\bmod p,b\bmod q)$ has at most one representative in $[0,M)$.
+This removes, rather than estimates, the usual CRT boundary term.  At an
+integer with $K_X(m)=k$, there are exactly $(k)_2$ ordered choices of
+$(p,q)$, and each has $k-2$ choices of a third prime.  Its contribution
+to $\sum_{p\ne q}T_{p,q}$ is therefore
+$(k)_2(k-2)=(k)_3$.  This proves
+\eqref{eq:hm3-F2-id}--\eqref{eq:hm3-F3-id}; in particular, no factor $3!$
+is missing.
+
+For nonnegative $A,B$,
+\[
+  (A-B)_+\le A\le B+(A-B)_+.
+\]
+Apply this with $A=T_{p,q}$ and $B=J_{p,q}\lambda_{p,q}$, sum over
+ordered pairs, and use $\lambda_{p,q}\le\lambda$ together with the
+proved second factorial moment:
+\[
+  \sum_{p\ne q}J_{p,q}\lambda_{p,q}
+  \le\lambda\sum_{m<M}(K_X(m))_2
+  \le5M\lambda^3.
+\]
+This proves~\eqref{eq:hm3-palm-sandwich}.
+
+For each $p$ and each residue in $\mathcal Z_p$, the number of its
+representatives below $M$ differs from $M/p$ by less than one.  Therefore
+\[
+  |A_p-MZ(p)/p|\le Z(p),
+  \qquad
+  |\mu-\lambda|\le\frac1M\sum_pZ(p)
+       \le\frac{2\lambda}{X},                          \label{eq:hm3-mu-lambda}
+\]
+where the final inequality uses $p\le2X$.  In particular
+$\mu\le(1+2/X)\lambda$.  Applying the same positive-part inequality
+with $B=J_{p,q}\mu_{p,q}$ gives
+\[
+  \sum_{p\ne q}J_{p,q}\mu_{p,q}
+  \le\mu\sum_{m<M}(K_X(m))_2
+  \le5(1+2/X)M\lambda^3,
+\]
+which proves~\eqref{eq:hm3-palm-fin-sandwich}.  Each equivalence follows
+in both directions from its sandwich.  This is a characterization, not a
+new estimate hidden in a renamed hypothesis: the unproved arithmetic is
+exactly the positive conditional overload of third primes on the actual
+two-prime CRT loci.
+
+Finally write $Y_m=K_X(m)-\mu$, so that $\sum_mY_m=0$.  Expanding
+$K^3-3K^2+2K$ gives
+\[
+ \sum_{m<M}(K_X(m))_3
+ =C_{3,X}+3(\mu-1)V_X+M(\mu^3-3\mu^2+2\mu),
+\]
+which rearranges to~\eqref{eq:hm3-defect-id}.  Since the main term is
+nonnegative,
+\[
+  (\mathfrak D_3(X))_+
+  \le\sum_{m<M}(K_X(m))_3
+  \le M\mu^3+(\mathfrak D_3(X))_+.
+\]
+Equation~\eqref{eq:hm3-mu-lambda} bounds $M\mu^3$ by a constant multiple
+of $M\lambda^3$, proving the last equivalences.  When $\lambda=0$ all
+zero sets, all pair loci, and all displayed quantities vanish.  The same
+is true of the Palm sums when there is no pair locus, so no division by a
+possibly zero parameter has been suppressed.
+\end{proof}
+
+\subsection*{Why the available primewise and pairwise tools do not imply G2}
+
+\begin{proposition}[An anchored rainbow star with bounded codegrees]
+\label{prop:hm3-anchored-star}
+For every sufficiently large integral $X$ there is a family
+$(\mathcal Z_p^*)_{p\in\mathcal P_X}$ with the following properties.
+Writing
+\begin{align*}
+ K_X^*(m)&=\sum_{p\in\mathcal P_X}
+       \mathbf 1_{\{m\bmod p\in\mathcal Z_p^*\}},
+ &\lambda_X^*&=\sum_{p\in\mathcal P_X}\frac{|\mathcal Z_p^*|}{p},\\
+ \mu^*&=X^{-2}\sum_{m<X^2}K_X^*(m),
+\end{align*}
+one has:
+\begin{enumerate}
+\item Every $\mathcal Z_p^*$ has size zero or two.  Every nonempty set is
+reflection-invariant, has no consecutive elements, avoids
+$0,1,p-2,p-1$, and satisfies
+\[
+  |\mathcal Z_p^*\cap I|\le2|I|^{2/3}
+\]
+for every nonempty interval $I\subseteq\{0,\ldots,p-1\}$.
+\item The universal CRT bound
+\[
+  \sum_{m<X^2}(K_X^*(m))_2\le5X^2(\lambda_X^*)^2
+\]
+holds, and even the global centered second moment has the natural scale
+\[
+  \sum_{m<X^2}(K_X^*(m)-\mu^*)^2\ll X^2\lambda_X^*.
+\]
+\item If $\mathcal P^*(m)=\{p:m\bmod p\in\mathcal Z_p^*\}$, then for all
+distinct $0\le m,n<X^2$,
+\[
+  |\mathcal P^*(m)\cap\mathcal P^*(n)|\le7.
+\]
+Thus even a uniform $O(1)$ row-codegree bound does not prevent the model.
+\item Nevertheless,
+\[
+  \lambda_X^*\asymp\frac1{\log X},
+  \qquad
+  \sum_{m<X^2}(K_X^*(m))_3
+     \gg\frac{X^3}{(\log X)^3}.
+\]
+Consequently the family violates every G2 estimate with fixed
+$\theta<1$.
+\end{enumerate}
+The family can additionally be extended to a reflection-invariant value
+map whose largest fiber is at most two and whose collision energy is at
+most $2p$.  Hence the numerical consequences of the bordered
+nonvanishing theorem---the $O(p^{3/4})$ fiber bound and $O(p^{7/4})$
+energy bound---also do not rule it out.
+
+If one uses the gap-polynomial reflection identity
+$N_h(-x-h-1)=(-1)^{h-1}N_h(x)$, the unique pair in every nonempty
+$\mathcal Z_p^*$ also satisfies its corresponding necessary gap
+certificate modulo $p$.
+\end{proposition}
+
+\begin{proof}
+Put $M=X^2$, choose $m_0=\lfloor3M/4\rfloor$, and let $d=2m_0+1$.
+Delete from $\mathcal P_X$ the primes dividing
+\[
+  E=(m_0-1)m_0(m_0+1)(m_0+2)d.
+\]
+Only $O(1)$ primes are deleted: $|E|\ll X^{10}$ and every deleted prime
+exceeds $X$.  For every remaining prime define
+\[
+  a_p=m_0\bmod p,
+  \qquad
+  \mathcal Z_p^*=\{a_p,p-1-a_p\},
+\]
+and put $\mathcal Z_p^*=\varnothing$ for deleted primes.  The deletion
+makes the two displayed residues distinct and excludes the four endpoint
+residues.  Their difference is a nonzero even integer, so they are not
+consecutive.  Reflection is built in, and the interval estimate is
+immediate because an interval contains at most two marked residues.
+
+Let $L$ be the number of nonempty columns.  The prime number theorem and
+Mertens' theorem give
+\[
+  L\sim\frac{X}{\log X},
+  \qquad
+  \lambda_X^*=2\sum_{\substack{X<p\le2X\\p\nmid E}}\frac1p
+  \asymp\frac1{\log X}.
+\]
+Every active prime marks $m_0$, so $K_X^*(m_0)=L$ and
+\[
+  \sum_{m<M}(K_X^*(m))_3\ge(L)_3
+  \gg\frac{X^3}{(\log X)^3}.
+\]
+Dividing by $X^{2+\theta+o(1)}(\lambda_X^*)^3$ leaves
+$X^{1-\theta-o(1)}$, which tends to infinity for $\theta<1$.
+The second-factorial-moment estimate is universal and follows by the same
+CRT argument as Proposition~\ref{prop:hm2}.  Also
+\begin{align*}
+  \sum_m(K_X^*(m)-\mu^*)^2
+  &\le\sum_m(K_X^*(m))^2\\
+  &=\sum_mK_X^*(m)+\sum_m(K_X^*(m))_2\\
+  &\ll M\lambda_X^*+M(\lambda_X^*)^2
+  \ll M\lambda_X^*.
+\end{align*}
+
+It remains to check the codegree.  Fix $0\le m<n<M$ and put $h=n-m$.
+If an active prime marks both integers, their two residues are chosen from
+$a_p$ and $-1-a_p$.  Equal choices give $p\mid h$; different choices give
+\[
+  h\equiv\pm(2a_p+1)\equiv\pm d\pmod p.
+\]
+Thus every common prime divides the nonzero integer
+\[
+  H=h(h-d)(h+d).
+\]
+Here $0<h<M<d$, and $|H|<8M^3=8X^6$.  If there are $k$ common primes,
+their product exceeds $X^k$ and divides $|H|$, whence
+\[
+  k\le\frac{\log(8X^6)}{\log X}\le7
+\]
+for sufficiently large $X$.
+
+For the value-map assertion, partition the residues into the orbits of
+$r\mapsto p-1-r$.  At an active prime, assign zero to the marked orbit
+and distinct nonzero values to all other orbits.  At a deleted prime,
+assign distinct nonzero values to every orbit; this is possible because
+there are $(p+1)/2\le p-1$ orbits.  Thus the zero fiber is exactly
+$\mathcal Z_p^*$ in both cases.  Every fiber has size at most two, and,
+since $t^2\le2t$ for $t\in\{0,1,2\}$, the fiber energy is at most $2p$.
+
+For completeness, the gap-polynomial reflection identity used here is
+symbolic.  For $h\ge2$, let $D_h(x)$ be the symmetric
+$(h-1)\times(h-1)$ tridiagonal matrix with diagonal entries
+$P(x+i)$, $1\le i<h$, and off-diagonal entries
+$(x+i+1)^3$, $1\le i<h-1$.  Expansion in the last row and the defining
+recurrence for $N_h$ give $\det D_h(x)=N_h(x)$.  If $R$ is the matrix
+that reverses the coordinate order, then $P(-v-1)=-P(v)$ gives, entry by
+entry,
+\[
+  D_h(-x-h-1)=-R D_h(x)R.
+\]
+Consequently
+\begin{equation}
+  N_h(-x-h-1)=(-1)^{h-1}N_h(x).                       \label{eq:hm3-gap-reflection}
+\end{equation}
+(For $h=1$ this is immediate from $N_1=1$.)  This proves the identity
+for every $h$, without numerical verification.
+
+Finally let $u=\min(a_p,p-1-a_p)$ and $h_p=p-1-2u$.
+The deleted endpoints ensure $1\le u<u+h_p<p$; moreover $h_p$ is positive
+and even.  Since
+\[
+  -u-h_p-1=u-p\equiv u\pmod p,
+\]
+the gap-polynomial reflection identity gives
+$N_{h_p}(u)\equiv-N_{h_p}(u)\pmod p$, hence
+$N_{h_p}(u)\equiv0\pmod p$ for odd $p$.
+\end{proof}
+
+\begin{remark}[Scope of the obstruction]
+The preceding family is an incidence model, not the actual zero family of
+the Ap\'ery recurrence.  It proves that reflection, no consecutive zeros,
+the interval $O(|I|^{2/3})$ bound, the universal CRT second moment, the
+primewise fiber/energy bounds, the gap-polynomial pair certificates, and
+even uniform $O(1)$ row codegree do not imply any G2 power saving.  The
+missing arithmetic must constrain, across distinct primes, which of the
+structurally permitted reflection orbits is selected as the zero fiber.
+The pair--Palm quantity in Theorem~\ref{thm:hm3-palm-characterization}
+is the minimal aggregate positive overload that measures exactly this
+selection problem.
+\end{remark}
+
+\subsection*{Computational findings}
+
+The direct CRT enumerator in \texttt{hm3\_explore.py}, independently
+cross-checked against an $m$-scatter, gives the following ordered third
+factorial moments:
+\[
+\begin{array}{c|r|r|c}
+X&\sum_{m<X^2}(K_X(m))_3&X^2\lambda_X^3&R_3\\ \hline
+256&60&131.989926&0.454580146\\
+512&150&209.308570&0.716645284\\
+1024&486&583.330960&0.833146247\\
+2048&1824&1953.964920&0.933486564\\
+4096&7218&7608.237134&0.948708600
+\end{array}
+\]
+At $X=4096$, the $1203$ canonical prime triples are supported on $1161$
+integers; $1147$ have $K_X=3$ and $14$ have $K_X=4$.  The conditional
+third-prime extension rate per unordered pair hit is $0.073422$, close to
+$\lambda_X=0.0768283$.  Quotient repetitions, reflection-orbit pileups,
+and residue correlations show no visible clustering.  Full histograms and
+reproduction details are in \texttt{hm3\_exploration.md}.  These data are
+evidence for $(\mathrm{HM})_3$, not a proof.
+
+\subsection*{Stall report and infrastructure audit}
+
+Goals G1 and G2 are not proved here, and no G3 hypothesis is claimed.
+In particular, a third-order Palm condition should not be advertised as
+``weaker than AP--BDH'': the latter is an $L^2$ condition and the two
+statements are not ordered without extra hypotheses.  The completed
+deliverable is G4, Theorem~\ref{thm:hm3-palm-characterization}, together
+with the sharpness obstruction above.
+
+Two issues in the supplied route are material to this conclusion.
+First, Lucas gives only
+\[
+  m\bmod p\in\mathcal Z_p\quad\Longrightarrow\quad p\mid b_m.
+\]
+The converse can fail through the leading digit.  For example, $b_2=73$;
+with $X=64$, $p=73$, and $m=146<X^2$, Lucas gives
+$b_{146}\equiv b_2b_0\equiv0\pmod{73}$, while
+$m\bmod73=0\notin\mathcal Z_{73}$.  Hence
+$K_X(m)\le\omega_{(X,2X]}(b_m)$, but equality and the corresponding
+factorial-moment identity asserted in the specification are false.
+
+Second, the written proof of Lemma~\ref{lem:codegree} starts with the
+unavailable assertion $p>N/2\ge h$ and then says that the two residues
+``differ by exactly $h$''.  Quotient wrap invalidates that sentence even
+under the displayed extra inequalities: for $p=37$ one has
+$\mathcal Z_{37}=\{17,19\}$, and $m=93$, $n=128$, $N=70$ give
+$37>N/2\ge n-m$ while the residues are $19$ and $17$.  The lemma may be
+repairable by a separate wrap argument using reflection, but the proof as
+written cannot be used as an established HM3 input.  The anchored-star
+proposition shows that even a repaired, stronger $O(1)$ row-codegree
+estimate would still not control a one-row rainbow pileup.
+
+Finally, Proposition~\ref{prop:profile} in the second-moment section states
+$\|\rho\|_2^2\le T_N^2/N$, whereas Cauchy--Schwarz gives the reverse
+inequality and the proposition's own table reports a ratio near $1.25$.
+No step above uses that proposition.
+
+The trivial tuple estimate used for comparison should also be read as the
+uniform inequality
+\[
+  \sum_{m<X^2}(K_X(m))_3
+  \le\Bigl(\sum_{X<p\le2X}Z(p)\Bigr)^3
+  \le8X^3\lambda_X^3.
+\]
+It need not be asymptotic to $(2X\lambda_X)^3$ when the zero mass is
+concentrated on fewer than three primes.

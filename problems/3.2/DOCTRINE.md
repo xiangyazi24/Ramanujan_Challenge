@@ -899,3 +899,40 @@ New attack waves dispatched (Codex gpt-5.6-sol xhigh, both background):
   SYNERGY: Z ≪ √p lowers the (HM) requirement from k > 6 to k > 4.
 - ChatGPT tabs still down on this host; on reconnect, fire (HM)_8
   combinatorial expansion + the W1/W2 residual lemmas at the dm channels.
+
+### W1 harvest ((HM)_3, Codex xhigh 337k tokens) — G4 delivered + paper audit
+
+**No proof of (HM)_3 (G1-G3 declined honestly). Delivered G4:**
+- ★ thm:hm3-palm-characterization: (HM)_3 ⟺ pair-Palm positive excess
+  P_3(X) = Σ_{p≠q}(T_{p,q} − J_{p,q}λ_{p,q})_+ ≪ X^{2+o(1)}λ³ (exact
+  sandwich, both directions, plus centered-defect form). The unproved
+  arithmetic = positive conditional overload of third primes on actual
+  two-prime CRT loci.
+- ★★ prop:hm3-anchored-star: UPGRADED IMPOSSIBILITY. An incidence model
+  satisfying reflection + no-consec + interval O(|I|^{2/3}) + CRT second
+  moment + fiber ≤ 2 + energy ≤ 2p + gap certificates + uniform O(1)
+  row-codegree (≤7) still has Σ(K)_3 ≫ X³/log³X. So even our NEW fiber/
+  energy theorems AND any O(1)-codegree theorem jointly cannot give k=3
+  power saving. The missing arithmetic: cross-prime constraint on WHICH
+  reflection orbit is selected as the zero fiber.
+- Empirics: R_3 ratio → 0.949 at X=4096 (1203 triples; no clustering);
+  cross-validates my p32_hm_check table exactly at shared scales.
+
+**Paper bugs found by W1's audit — BOTH CONFIRMED and FIXED (this session):**
+1. lem:codegree proof had a WRAP GAP ("residues differ by exactly h" fails
+   when m mod p ≥ p−h; verified counterexample p=37, m=93, n=128,
+   Z_37={17,19}). REPAIRED with 3-case proof: p ≤ h trivial; no-wrap via
+   N_h; wrap ⟺ p | m+j (j ≤ h) via height of ∏(m+j). Same bound
+   O(h log N/log P_0) — lemma statement and thm:polylog UNAFFECTED.
+   Added rem:codegree-wrap (top-half application has no wrap).
+2. prop:profile(ii) direction was FALSE (claimed ‖ρ‖² ≤ T²/N; CS gives ≥,
+   c₂ = 1.262 > 1, data 1.25). FIXED: unconditional ‖ρ‖² ≤ ρ_max T_N;
+   profile asymptotics (c₂+o(1))T²/N stated under PNT approximation.
+   NOTE: conclusion's cross-term claim |⟨ρ,η⟩| ≤ ρ_max T = O(T²/N) assumes
+   ρ_max = O(T/N) which needs its own justification (tail primes p→2N have
+   small L_p) — flagged for a hygiene pass; nothing load-bearing routes
+   through it.
+3. (Spec-level only: Lucas converse b_2=73 example — K_X(m) ≤ ω, not =;
+   paper itself only ever uses the ≤ direction, no change needed.)
+
+**hm3_result.tex integrated into paper (69 pp, clean).**
