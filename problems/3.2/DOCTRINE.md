@@ -1090,3 +1090,27 @@ Both waves independently confirm the same logical barrier:
    input that anchored star cannot satisfy.
 4. **Z(p) ≪ p^{1/2}** (from E ≪ H^{2-δ}): would lower (HM) threshold to k > 4.
    But E ≪ H^{2-δ} itself needs a new global sparsity argument beyond column bounds.
+
+## Directive 2026-07-20 (Xiang via TG): 继续双 oracle 磨，fully unconditional 是目标
+
+Single-prime toolbox proven exhausted (W4+W5) ⟹ both oracles now attack the
+ONLY remaining avenue: cross-prime coupling ⟹ AMTD / eq:short-arc ⟹ fully
+unconditional. ChatGPT tabs still down on this host, so "double oracle" =
+two ORTHOGONAL Codex xhigh waves (analytic + arithmetic) that meet in the middle.
+
+- Oracle A (CODEX_SPEC_oracleA.md): ANALYTIC. Prove short-arc Fourier
+  orthogonality eq:short-arc (break the large-sieve P² barrier for P>√N via
+  doublet minor-arc cancellation of S(θ)=Σ_p e(θ(3p-1)/2)cos(πθ h_p), Linnik
+  dispersion + FKM bilinear, DFI amplification). Polylog loss OK. ⟹ AMTD ⟹
+  W(n)=o(n) all n.
+- Oracle B (CODEX_SPEC_oracleB.md): ARITHMETIC. Supply the horizontal fact A
+  needs: prove the actual Z_p decorrelate — r_p / h_p equidistribution via
+  Frobenius on the FIXED pencil E_t: y²=x(x-1)(x-t(1-t)) (NOT moving B_p —
+  quantifier trap that killed Q5291); or #{p≤X:m_0∈Z_p}=o(π(X)) killing
+  anchored star; or bounded-complexity of B_p (H_p=Δ B_p²) opening A's route.
+
+They meet: B describes h_p/r_p arithmetic distribution, A converts it to S(θ)
+cancellation. Each wave: prove / partial / reduce-to-named-weaker / sharp G4.
+Audit discipline (C4 + prop:column lessons): verify every identity against
+actual polynomials/data before trusting; honest quantifier order (moving vs
+fixed geometric family is THE trap for B).
