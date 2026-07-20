@@ -1029,3 +1029,64 @@ any general identity — see the C4 and prop:column lessons).
 - ChatGPT tabs were down on this host all session; the parallel host's
   (4.A)-(4.E) text remains unpushed. On reconnect: fire pair-Palm and
   gcd-tail lemmas at dm channels; check origin for the other host's push.
+
+## Session 2026-07-20 (cron window, Codex W4+W5 dispatch)
+
+### W4 harvest (gcd-tail, Codex xhigh) — STALL with sharp obstruction
+
+**No proof of E_p^deep(H) = o(H^2).** All four proposed routes exhausted:
+1. Column-pair partition → paired-column identity (eq:gcdtail-pairwise-m) is exact but
+   column cap + row mass → H^{8/3}; abstract rectangle model proves H^2 is achievable
+   under all known local constraints.
+2. Center-resultant propagation → only controls center witnesses, O(H^{5/3}).
+3. GCD of resultants → identity is FALSE (p=257 counterexample, prop:gcdtail-resultant-counterexample);
+   correct aligned replacement is higher factorial moment (misses singletons).
+4. Averaging/Plancherel → is the target itself in rescaled form; CS reproduces H^{8/3}.
+
+**New structural results (gcdtail_result.tex, all verified):**
+- Paired-column identity: m_{d,r} = Σ_y a_d(ι(y)) a_r(y)
+- Witness involution τ(d,r,x) = (r,d,-x-d-r-1), fixed points = diagonal midpoints
+- Four-column rectangle structure for every witness
+- Clean orientation: P_H ∩ ι(P_H) = ∅, pollution contribution O(H^{7/3})
+- Deep boundary energy O(H^{7/3})
+- Off-diagonal annulus H^{1/4} < min(d,r) ≤ H^{3/4} explicitly unresolved
+- Layer-cake decomposition (eq:gcdtail-deep-layer-cake) for the exact remaining target
+
+### W5 harvest (pair-Palm, Codex xhigh) — sharp framework, no (HM)_k proved
+
+**No proof of (HM)_7 or (HM)_8.** But complete structural framework:
+
+**New theorems (pairpalm_result.tex, 7 checks PASS):**
+- ★ Higher pair-Palm hierarchy (thm:pairpalm-hierarchy): F_k = Σ T_{p,q}^{k-2} exact identity
+  + general sandwich + periodic/finite-marginal baselines
+- ★ (PP_7) exact target (cor:pairpalm-hm7-target): (HM)_7 ⟺ fifth-extension positive excess
+- ★ Unconditional envelope: F_k ≪ X^{k+4/3}/(log X)^k (prop:pairpalm-unconditional-envelope)
+- ★ Anchored star sharp for ALL k (prop:pairpalm-star-all-k): the impossibility construction
+  matches the unconditional envelope — all single-prime tools provably exhausted
+- Double CS route REFUTED: correct CS has overlap terms (eq:pairpalm-correct-CS4),
+  naive F_4^2 ≤ F_2 F_6 is FALSE, CRT F_6 ≪ X^2 λ^6 also FALSE
+- Alpha-threshold (cor:pairpalm-alpha-threshold): Z(p) ≪ p^{1/2+o(1)} → (HM)_5 suffices
+- Pair-Palm pgf formulation: exact fifth conditional coefficient target
+- Height + integer sequence non-implication: lcm(1,...,m) counterexample
+
+### CONCLUSION after W4+W5: single-prime toolbox FULLY exhausted
+
+Both waves independently confirm the same logical barrier:
+- **Single-prime facts** (Z ≪ p^{2/3}, NV, fiber ≪ p^{3/4}, energy ≪ p^{7/4},
+  reflection, no-consecutive, column bounds, gap certificates, row-codegree) —
+  ALL have matching impossibility constructions.
+- **The only remaining avenue**: cross-prime arithmetic coupling of the ACTUAL
+  Apéry zero sets. Anchored star / abstract rectangle violate every (HM)_k and
+  every E ≪ H^{2-δ} while satisfying all known single-prime constraints.
+
+### Remaining live targets (updated)
+1. **AP-BDH dispersion** (Hypothesis 12): V°(P,N) ≪ N^{o(1)} S(P,N).
+   Empirical: V°/S → 1. The L²-to-uniform bridge (lem:l2-uniform) says
+   V° ≤ CS → all-n. This is the cleanest sufficient condition.
+2. **Crystalline Frobenius coupling**: the b_n integer sequence constrains
+   which zero-fiber each prime selects. Quantifying this coupling is THE
+   missing arithmetic theorem.
+3. **(HM)_k for any k > 6**: equivalent to pair-Palm (PP_k). Needs cross-prime
+   input that anchored star cannot satisfy.
+4. **Z(p) ≪ p^{1/2}** (from E ≪ H^{2-δ}): would lower (HM) threshold to k > 4.
+   But E ≪ H^{2-δ} itself needs a new global sparsity argument beyond column bounds.
