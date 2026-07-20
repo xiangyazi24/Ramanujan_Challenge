@@ -1,0 +1,594 @@
+% W5 outcome: exact higher pair--Palm reduction, sharp deterministic bounds,
+% and a complete audit of the proposed double-Cauchy--Schwarz route.
+% No unconditional proof of (HM)_7 or (HM)_8 is claimed.
+
+\subsection*{Higher pair--Palm moments: exact reduction and obstruction}
+
+\paragraph{Two normalization corrections.}
+The high-moment hypothesis in
+Section~\ref{ssec:high-moment}, and the proved estimate
+Proposition~\ref{prop:hm2}, use
+\begin{equation}\label{eq:pairpalm-lambda}
+ \lambda=\lambda_X
+ =\sum_{p\in\mathcal P_X}\frac{Z(p)}p,
+ \qquad
+ \mathcal P_X=\{p\text{ prime}:X<p\leq2X\}.
+\end{equation}
+Thus the unweighted expression $\sum_p1/p$ in the task description
+must be replaced by~\eqref{eq:pairpalm-lambda}; otherwise even the
+scale of Proposition~\ref{prop:hm2} is not the one stated in the paper.
+There is a second, independent multiplicity issue.  The third-prime
+quantity in the pair--Palm description must count \emph{all} third
+primes which hit, not merely indicate that one exists.  At a row with
+$K_X(m)=4$, the existential version contributes $(4)_2=12$, whereas
+the required ordered third factorial moment is $(4)_3=24$.
+
+Put $M=X^2$ and, as in Theorem~\ref{thm:hm3-palm-characterization}, set
+\[
+ \Omega_p=\{0\leq m<M:m\bmod p\in\mathcal Z_p\},
+ \qquad f_p(m)=\mathbf1_{\Omega_p}(m),
+ \qquad K(m)=\sum_{p\in\mathcal P_X}f_p(m).
+\]
+For $k\geq2$ write
+\[
+ F_k(X)=\sum_{m<M}(K(m))_k.
+\]
+
+\begin{lemma}[A four-constant second-moment bound]
+\label{lem:pairpalm-hm2-four}
+One has
+\begin{equation}\label{eq:pairpalm-hm2-four}
+ F_2(X)\leq4M\lambda^2.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For distinct $p,q\in\mathcal P_X$ one has $pq>X^2=M$.
+Consequently a fixed residue pair modulo $(p,q)$ has at most one
+representative in $[0,M)$, and hence
+\[
+ |\Omega_p\cap\Omega_q|\leq Z(p)Z(q).
+\]
+Summing over ordered pairs and using $p\leq2X$ gives
+\[
+ F_2(X)
+ \leq\left(\sum_pZ(p)\right)^2
+ \leq\left(2X\sum_p\frac{Z(p)}p\right)^2
+ =4M\lambda^2.
+\]
+This only sharpens the harmless constant~$5$ in
+Proposition~\ref{prop:hm2}; no new distributional input is used.
+\end{proof}
+
+For ordered $p\ne q$ define
+\[
+ J_{p,q}=|\Omega_p\cap\Omega_q|,
+ \qquad
+ \lambda_{p,q}
+ =\sum_{\ell\in\mathcal P_X\setminus\{p,q\}}
+       \frac{Z(\ell)}\ell.
+\]
+For a fixed $k\geq3$, put $r=k-2$ and define the ordered
+$r$-extension count
+\begin{align}
+ T_{p,q}^{[r]}
+ &=\sum_{m\in\Omega_p\cap\Omega_q}(K(m)-2)_r
+                                                        \label{eq:pairpalm-T}\\
+ &=\sum_{\substack{
+     (\ell_1,\ldots,\ell_r)
+       \in(\mathcal P_X\setminus\{p,q\})^r\\
+     \ell_1,\ldots,\ell_r\ \mathrm{pairwise\ distinct}}}
+   |\Omega_p\cap\Omega_q\cap
+     \Omega_{\ell_1}\cap\cdots\cap\Omega_{\ell_r}|. \notag
+\end{align}
+
+\begin{theorem}[The higher pair--Palm hierarchy]
+\label{thm:pairpalm-hierarchy}
+For every fixed $k\geq3$,
+\begin{equation}\label{eq:pairpalm-anchor-identity}
+ \boxed{F_k(X)=\sum_{p\ne q}T_{p,q}^{[k-2]}.}
+\end{equation}
+More generally, for arbitrary nonnegative numbers $b_{p,q}$, put
+\[
+ \mathscr P_{k,b}(X)
+ =\sum_{p\ne q}
+   \bigl(T_{p,q}^{[k-2]}-J_{p,q}b_{p,q}\bigr)_+.
+\]
+Then the exact sandwich
+\begin{equation}\label{eq:pairpalm-general-sandwich}
+ \mathscr P_{k,b}(X)
+ \leq F_k(X)
+ \leq\mathscr P_{k,b}(X)+\sum_{p\ne q}J_{p,q}b_{p,q}
+\end{equation}
+holds.
+
+In particular, the periodic Poisson baseline
+$b_{p,q}=\lambda_{p,q}^{k-2}$ gives
+\begin{align}
+ \mathscr P_k(X)
+ &:=\sum_{p\ne q}
+   \bigl(T_{p,q}^{[k-2]}
+          -J_{p,q}\lambda_{p,q}^{k-2}\bigr)_+,
+                                                        \label{eq:pairpalm-Pk}\\
+ \mathscr P_k(X)
+ &\leq F_k(X)
+ \leq\mathscr P_k(X)+4M\lambda^k.                    \label{eq:pairpalm-periodic-sandwich}
+\end{align}
+
+There is also a finite-marginal version.  Let
+\[
+ A_p=|\Omega_p|,\qquad \rho_p=A_p/M,\qquad
+ \mu_{p,q}=\sum_{\ell\notin\{p,q\}}\rho_\ell,
+\]
+and replace $\lambda_{p,q}^{k-2}$ in
+\eqref{eq:pairpalm-Pk} by $\mu_{p,q}^{k-2}$, calling the result
+$\mathscr P_k^{\rm fin}(X)$.  Then
+\begin{equation}\label{eq:pairpalm-finite-sandwich}
+ \mathscr P_k^{\rm fin}(X)
+ \leq F_k(X)
+ \leq\mathscr P_k^{\rm fin}(X)
+   +4(1+2/X)^{k-2}M\lambda^k.
+\end{equation}
+Consequently $(\mathrm{HM})_k$ is equivalent to any one of
+\begin{equation}\label{eq:pairpalm-equivalence}
+ F_k(X)\ll X^{2+o(1)}\lambda_X^k,
+ \qquad
+ \mathscr P_k(X)\ll X^{2+o(1)}\lambda_X^k,
+ \qquad
+ \mathscr P_k^{\rm fin}(X)\ll X^{2+o(1)}\lambda_X^k.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Fix a row $m$ and write $t=K(m)$.  It supplies $(t)_2$ ordered
+anchor pairs $(p,q)$.  After an anchor pair is fixed, it supplies
+$(t-2)_{k-2}$ ordered, pairwise distinct extension tuples.  Hence its
+total contribution to the right side of
+\eqref{eq:pairpalm-anchor-identity} is
+\[
+ (t)_2(t-2)_{k-2}=(t)_k.
+\]
+This proves the identity, with no missing binomial or factorial factor.
+
+For nonnegative $A,B$ one has
+$(A-B)_+\leq A\leq B+(A-B)_+$.  Apply this with
+$A=T_{p,q}^{[k-2]}$ and $B=J_{p,q}b_{p,q}$, then sum over ordered
+pairs.  This proves~\eqref{eq:pairpalm-general-sandwich}.
+For the periodic baseline,
+\[
+ \sum_{p\ne q}J_{p,q}\lambda_{p,q}^{k-2}
+ \leq\lambda^{k-2}\sum_{p\ne q}J_{p,q}
+ =\lambda^{k-2}F_2(X)
+ \leq4M\lambda^k
+\]
+by Lemma~\ref{lem:pairpalm-hm2-four}, proving
+\eqref{eq:pairpalm-periodic-sandwich}.
+
+For every $p$, the number of representatives below $M$ of each residue
+class differs from $M/p$ by less than one.  Thus
+\[
+ |A_p-MZ(p)/p|\leq Z(p),
+ \qquad
+ \left|\sum_p\rho_p-\lambda\right|
+ \leq\frac1M\sum_pZ(p)\leq\frac{2\lambda}{X}.
+\]
+In particular $\sum_p\rho_p\leq(1+2/X)\lambda$.
+Using this in~\eqref{eq:pairpalm-general-sandwich} proves
+\eqref{eq:pairpalm-finite-sandwich}.
+Each positive excess is at most $F_k$, while each upper sandwich differs
+from it by $O_k(M\lambda^k)$; this proves every implication in
+\eqref{eq:pairpalm-equivalence}.  If $\lambda=0$, all zero sets and all
+displayed quantities vanish, so the zero case requires no division.
+\end{proof}
+
+\begin{remark}[Bernoulli versus Poisson baseline]
+The exact independent-Bernoulli factorial baseline is
+\begin{equation}\label{eq:pairpalm-bernoulli-baseline}
+ \Lambda_{p,q}^{[r]}
+ =\sum_{\substack{\ell_1,\ldots,\ell_r\notin\{p,q\}\\
+                   \ell_i\ \mathrm{pairwise\ distinct}}}
+   \prod_{i=1}^r\frac{Z(\ell_i)}{\ell_i}
+ =r!\,e_r\left(
+   \left(\frac{Z(\ell)}\ell\right)_{\ell\notin\{p,q\}}
+   \right).
+\end{equation}
+It satisfies
+$0\leq\Lambda_{p,q}^{[r]}\leq\lambda_{p,q}^r$.
+Therefore it may replace the Poisson baseline in
+Theorem~\ref{thm:pairpalm-hierarchy}, with the same $4M\lambda^k$
+error.  The Poisson power is slightly larger because its expansion
+contains repeated prime labels; it is chosen in
+\eqref{eq:pairpalm-Pk} because it produces the weakest positive-excess
+condition among these two natural baselines.
+\end{remark}
+
+\begin{corollary}[The exact remaining pair--Palm lemma for $(\mathrm{HM})_7$]
+\label{cor:pairpalm-hm7-target}
+The following aggregate statement is equivalent to $(\mathrm{HM})_7$:
+\begin{equation}\tag{$\mathrm{PP}_7$}\label{eq:pairpalm-PP7}
+ \boxed{
+ \sum_{p\ne q}
+ \left(
+  \sum_{m\in\Omega_p\cap\Omega_q}(K(m)-2)_5
+  -J_{p,q}\lambda_{p,q}^5
+ \right)_+
+ \ll X^{2+o(1)}\lambda_X^7.}
+\end{equation}
+In particular,~\eqref{eq:pairpalm-PP7} implies
+\[
+ \log G_n\ll n^{20/21+o(1)}=o(n)
+\]
+for every $n$.  Replacing the fifth extension moment by the sixth and
+$\lambda_X^7$ by $\lambda_X^8$ gives the equivalent target for
+$(\mathrm{HM})_8$ and the exponent $11/12$.
+\end{corollary}
+
+\begin{proof}
+The left side of~\eqref{eq:pairpalm-PP7} is exactly
+$\mathscr P_7(X)$.  Theorem~\ref{thm:pairpalm-hierarchy} gives
+\[
+ \mathscr P_7(X)\leq F_7(X)
+ \leq\mathscr P_7(X)+4X^2\lambda_X^7.
+\]
+This proves both directions of the equivalence.  The pointwise bounds
+then follow from Theorem~\ref{thm:hm-pointwise}.
+\end{proof}
+
+The importance of Corollary~\ref{cor:pairpalm-hm7-target} is diagnostic:
+it locates the missing arithmetic at the fifth factorial extension of
+an actual two-prime CRT locus.  It is not itself a new cancellation
+estimate and must not be advertised as weaker than $(\mathrm{HM})_7$;
+the two statements are exactly equivalent.  A uniform estimate for
+each individual pair would be a genuinely stronger hypothesis.
+
+For $J_{p,q}>0$, the exact conditional content can be recorded by the
+pair-Palm generating function
+\begin{equation}\label{eq:pairpalm-pgf}
+ \Phi_{p,q}(z)
+ =\frac1{J_{p,q}}
+  \sum_{m\in\Omega_p\cap\Omega_q}
+  \prod_{\ell\in\mathcal P_X\setminus\{p,q\}}
+       (1+zf_\ell(m)).
+\end{equation}
+Its fifth derivative is
+\[
+ \Phi_{p,q}^{(5)}(0)=\frac{T_{p,q}^{[5]}}{J_{p,q}},
+\]
+while the Poisson comparison $e^{\lambda_{p,q}z}$ has fifth derivative
+$\lambda_{p,q}^5$ at zero.  Thus~\eqref{eq:pairpalm-PP7} says exactly
+\begin{equation}\label{eq:pairpalm-pgf-target}
+ \sum_{p\ne q}J_{p,q}
+ \left(\Phi_{p,q}^{(5)}(0)-\lambda_{p,q}^5\right)_+
+ \ll X^{2+o(1)}\lambda_X^7,
+\end{equation}
+with a zero summand when $J_{p,q}=0$.  Controlling only $J_{p,q}$
+re-estimates the mass of the conditioning locus; it does not control this
+fifth conditional coefficient.
+
+\subsection*{The sharp deterministic envelope from present inputs}
+
+Let
+\[
+ L_X=\#\{p\in\mathcal P_X:Z(p)>0\}.
+\]
+
+\begin{proposition}[Lifting the proved second moment]
+\label{prop:pairpalm-unconditional-envelope}
+For every fixed $k\geq3$,
+\begin{align}
+ F_k(X)
+ &\leq(L_X-2)_{k-2}F_2(X)                              \label{eq:pairpalm-F2-lift}\\
+ &\leq4X^2\lambda_X^2(L_X-2)_{k-2},                    \label{eq:pairpalm-F2-lift2}\\
+ F_k(X)
+ &\leq
+ \sum_{\substack{p_1,\ldots,p_k\in\mathcal P_X\\
+                   p_i\ \mathrm{pairwise\ distinct}}}
+ \prod_{i=1}^k Z(p_i)
+ \leq(2X\lambda_X)^k.                                 \label{eq:pairpalm-tuple-bound}
+\end{align}
+Here the first expression is interpreted as zero when $L_X<k$.
+Since
+\[
+ L_X\ll X\min\{\lambda_X,1/\log X\},
+\]
+one obtains the parameter-sensitive unconditional estimate
+\begin{equation}\label{eq:pairpalm-current-best}
+ \boxed{
+ F_k(X)\ll_k
+ X^k\lambda_X^2
+ \min\{\lambda_X,1/\log X\}^{k-2}.}
+\end{equation}
+Using the proved $Z(p)\ll p^{2/3}$ bound, hence
+$\lambda_X\ll X^{2/3}/\log X$, gives
+\begin{equation}\label{eq:pairpalm-current-X-bound}
+ F_k(X)\ll_k\frac{X^{k+4/3}}{(\log X)^k}.
+\end{equation}
+In particular, the present unconditional bounds are
+\[
+ F_7(X)\ll\frac{X^{25/3}}{(\log X)^7},
+ \qquad
+ F_8(X)\ll\frac{X^{28/3}}{(\log X)^8}.
+\]
+\end{proposition}
+
+\begin{proof}
+Pointwise, $K(m)\leq L_X$ and
+\[
+ (K(m))_k=(K(m))_2(K(m)-2)_{k-2}
+ \leq(K(m))_2(L_X-2)_{k-2}.
+\]
+Summing and using Lemma~\ref{lem:pairpalm-hm2-four} proves
+\eqref{eq:pairpalm-F2-lift}--\eqref{eq:pairpalm-F2-lift2}.
+
+Expanding $F_k$ over ordered distinct prime labels and their zero
+residues, the product $p_1\cdots p_k>X^k>M$ shows that each residue
+tuple has at most one representative below $M$.  This proves the first
+inequality in~\eqref{eq:pairpalm-tuple-bound}; the second follows from
+$\sum_pZ(p)\leq2X\lambda_X$.
+
+Every active prime contributes at least one zero, so
+$L_X\leq\sum_pZ(p)\leq2X\lambda_X$.  The prime number theorem also gives
+$L_X\leq\pi(2X)-\pi(X)\ll X/\log X$.  Substitution in
+\eqref{eq:pairpalm-F2-lift2} proves
+\eqref{eq:pairpalm-current-best}.  Finally
+Proposition~\ref{prop:zp-bound} and prime counting give
+$\lambda_X\ll X^{2/3}/\log X$, yielding
+\eqref{eq:pairpalm-current-X-bound}.
+\end{proof}
+
+\begin{proposition}[The anchored star is sharp for every fixed moment]
+\label{prop:pairpalm-star-all-k}
+The family constructed in Proposition~\ref{prop:hm3-anchored-star}
+satisfies, for every fixed $k\geq3$,
+\begin{equation}\label{eq:pairpalm-star-all-k}
+ F_k^*(X)\asymp_k\frac{X^k}{(\log X)^k}
+ \asymp_k X^k(\lambda_X^*)^k,
+ \qquad
+ \mathscr P_k^*(X)\asymp_k F_k^*(X).
+\end{equation}
+It therefore violates every estimate
+\[
+ F_k^*(X)\ll X^{2+\theta+o(1)}(\lambda_X^*)^k
+\]
+with fixed $\theta<k-2$.
+\end{proposition}
+
+\begin{proof}
+In that construction $L\asymp X/\log X$ active columns all contain the
+anchor row $m_0$.  Hence
+\[
+ F_k^*(X)\geq(K_X^*(m_0))_k=(L)_k
+ \asymp_k X^k/(\log X)^k.
+\]
+On the other hand $\lambda_X^*\asymp1/\log X$, and the universal tuple
+bound~\eqref{eq:pairpalm-tuple-bound} supplies the matching upper bound.
+The sandwich~\eqref{eq:pairpalm-periodic-sandwich} also gives
+\[
+ \mathscr P_k^*(X)
+ \geq F_k^*(X)-4X^2(\lambda_X^*)^k.
+\]
+For $k\geq3$ the subtracted term is lower order than the displayed
+$X^k/(\log X)^k$ scale.  This proves~\eqref{eq:pairpalm-star-all-k} and
+the final assertion.
+\end{proof}
+
+Thus~\eqref{eq:pairpalm-current-best} is of the correct order for the
+full package of presently known primewise and pairwise incidence facts.
+Any improvement to the independence scale must use an arithmetic
+cross-prime restriction which the anchored-star model does not satisfy.
+
+\subsection*{Why double Cauchy--Schwarz does not close the gap}
+
+\begin{proposition}[Exact overlap audit]
+\label{prop:pairpalm-CS-audit}
+For integers $K\geq0$ and $k\geq2$,
+\begin{equation}\label{eq:pairpalm-overlap-identity}
+ (K)_k^2
+ =(K)_2\sum_{i=0}^{k-2}\binom{k-2}{i}^2i!\,
+       (K)_{2k-2-i}.
+\end{equation}
+Consequently Cauchy--Schwarz gives the valid inequality
+\begin{equation}\label{eq:pairpalm-correct-CS}
+ F_k(X)^2
+ \leq F_2(X)
+ \sum_{i=0}^{k-2}\binom{k-2}{i}^2i!\,
+       F_{2k-2-i}(X).
+\end{equation}
+For $k=4$ this is
+\begin{equation}\label{eq:pairpalm-correct-CS4}
+ F_4^2\leq F_2(F_6+4F_5+2F_4),
+\end{equation}
+not $F_4^2\leq F_2F_6$.
+The latter inequality and the proposed bound
+$F_6\ll X^2\lambda_X^6$ from CRT injectivity are both false as
+deterministic deductions.
+\end{proposition}
+
+\begin{proof}
+The standard overlap identity
+\[
+ (Y)_a(Y)_b
+ =\sum_{i=0}^{\min(a,b)}\binom ai\binom bi i!\,
+   (Y)_{a+b-i}
+\]
+counts two ordered injective lists by the size~$i$ of their common
+image.  Apply it with $Y=K-2$ and $a=b=k-2$, then multiply by
+$(K)_2^2$; this is exactly
+\eqref{eq:pairpalm-overlap-identity}.  Writing the right side as
+$(K)_2B_K$ and summing
+$(K)_k=\sqrt{(K)_2B_K}$ over rows, Cauchy--Schwarz proves
+\eqref{eq:pairpalm-correct-CS}.  Formula
+\eqref{eq:pairpalm-correct-CS4} is the specialization $k=4$.
+
+For a configuration with one row of size $K=6$ and all other rows
+empty,
+\[
+ F_2=30,\qquad F_4=360,\qquad F_6=720,
+\]
+so $F_4^2=6F_2F_6>F_2F_6$.  Already $K=4$ gives $F_4=24$ but
+$F_6=0$.  The missing $F_5$ and $F_4$ terms in
+\eqref{eq:pairpalm-correct-CS4} are precisely the overlap patterns of
+the two extension tuples.
+
+Finally, CRT injectivity for six primes says only that each ordered
+choice of six prime labels and six zero residues contributes at most
+one representative.  It therefore proves
+\[
+ F_6(X)\leq
+ \sum_{p_1,\ldots,p_6\ \mathrm{distinct}}
+ \prod_{i=1}^6Z(p_i)
+ \leq(2X\lambda_X)^6,
+\]
+not $X^2\lambda_X^6$.  The missing factor $X^{-4}$ would be the
+unproved assertion that the unique CRT representative lands below
+$X^2$ with its expected probability.  Proposition
+\ref{prop:pairpalm-star-all-k} has
+$F_6^*(X)\asymp X^6(\lambda_X^*)^6$ and gives a counterexample which
+also satisfies all structural conditions listed in
+Proposition~\ref{prop:hm3-anchored-star}.
+\end{proof}
+
+The overlap terms cannot be suppressed by assuming a sixth-moment bound.
+For an abstract sparse degree sequence, take
+$R=\lfloor M\lambda^2/20\rfloor$ rows of degree~$5$ and rows of degree at
+most one elsewhere.  Then
+\[
+ F_2=20R\leq M\lambda^2,
+ \qquad F_6=0,
+ \qquad F_4=120R\asymp M\lambda^2,
+\]
+so $(\mathrm{HM})_4$ fails by the factor $\lambda^{-2}$ as
+$\lambda\to0$.  This is only an interpolation counterexample; the anchored
+star supplies the stronger modular reflection-pair obstruction.
+
+\paragraph{What the common integer sequence currently supplies.}
+Lucas does give a genuine coupling:
+\[
+ m\bmod p\in\mathcal Z_p\quad\Longrightarrow\quad p\mid b_m.
+\]
+Hence the product of the distinct primes counted by $K_X(m)$ divides
+$b_m$, and the known exponential growth $\log b_m=O(m)$ gives
+\[
+ K_X(m)\log X\leq\log b_m=O(m).
+\]
+For $m\asymp X^2$ this is $K_X(m)=O(X^2/\log X)$, weaker than the
+trivial column bound $K_X(m)\ll X/\log X$.  Thus integer height plus
+CRT does not make the joint residues uniform.  A crystalline argument
+could still prove~\eqref{eq:pairpalm-PP7}, but it would need a new
+quantitative equidistribution or orbit-selection theorem; growth alone
+does not provide it.
+
+Indeed the single integral sequence
+$c_m=\operatorname{lcm}(1,\ldots,m)$ has $\log c_m=O(m)$, but every
+prime in $(X,2X]$ divides $c_m$ as soon as $m\geq2X$.  Exponential height
+and a common integer sequence can therefore coexist with maximal
+cross-prime alignment.
+
+There is also a discrepancy-scale obstruction before height enters.  For
+distinct $p_1,\ldots,p_k$, CRT gives exact independence over the complete
+period $P=p_1\cdots p_k$:
+\begin{equation}\label{eq:pairpalm-full-period}
+ \frac1P\sum_{m<P}\prod_{i=1}^kf_{p_i}(m)
+ =\prod_{i=1}^k\frac{Z(p_i)}{p_i}.
+\end{equation}
+For $k=7$, however, $M/P<X^{-5}$.  The interval in
+$(\mathrm{HM})_7$ is an extremely short prefix of one period, and
+\eqref{eq:pairpalm-full-period} gives no prefix-discrepancy estimate.
+
+Finally, primewise Fourier control alone does not eliminate the obstruction.
+For the anchored star, every active zero set has two elements, so
+\[
+ \left|\sum_{r\in\mathcal Z_p^*}e^{2\pi iar/p}\right|\leq2
+ \qquad(a\in\mathbb F_p),
+\]
+yet all columns meet at $m_0$ and
+\eqref{eq:pairpalm-star-all-k} holds.  A large-sieve route must therefore
+control mixed phases across distinct primes, not merely the Fourier
+transform of each column separately.
+
+\begin{corollary}[Threshold under an improved zero-set exponent]
+\label{cor:pairpalm-alpha-threshold}
+Suppose $Z(p)\ll p^{\alpha+o(1)}$ for some fixed
+$0\leq\alpha<1$ and suppose
+$(\mathrm{HM})_k$ holds.  Then, for every $n$,
+\begin{equation}\label{eq:pairpalm-alpha-threshold}
+ \log G_n\ll n^{\max\{2/3,\,\alpha+2/k\}+o(1)}.
+\end{equation}
+In particular, a bound $Z(p)\ll p^{1/2+o(1)}$ makes
+$(\mathrm{HM})_5$ sufficient for the full conjecture.
+\end{corollary}
+
+\begin{proof}
+Prime counting gives $\lambda_X\ll X^\alpha/\log X$.
+The maximum-row argument in the proof of
+Theorem~\ref{thm:hm-pointwise} then yields
+\[
+ \max_{m<X^2}K_X(m)
+ \ll X^{2/k+o(1)}\lambda_X+1
+ \ll X^{\alpha+2/k+o(1)}/\log X.
+\]
+The same dyadic summation gives the exponent $\alpha+2/k$ for the
+lower-digit channel.  Combining it with the already proved small-prime and
+$O(n^{2/3})$ companion-block bounds proves
+\eqref{eq:pairpalm-alpha-threshold}.
+For $\alpha=1/2$ and $k=5$ the exponent is $9/10<1$.
+\end{proof}
+
+\subsection*{Finite verification and stall report}
+
+The standard-library script \texttt{pairpalm\_verify.py} performs seven
+groups of exact checks.  It computes the Ap\'ery zero sets both from the
+divided recurrence and from the cleared recurrence $y_m=(m!)^3b_m$, and
+cross-checks fixed zero sets, reflection, and no consecutive zeros.  For
+the actual block $X=128$ it finds
+\[
+ \#\mathcal P_X=23,\qquad
+ \#\{p:Z(p)>0\}=13,\qquad
+ \sum_pZ(p)=30,
+\]
+\[
+ \#\{m:K(m)=0,1,2,3\}=(13976,2242,156,10),
+ \qquad
+ (F_2,F_3,F_4,\ldots,F_8)=(372,60,0,\ldots,0).
+\]
+At the first tested block with a fourth-order collision, $X=1024$, two
+independent algorithms---row scattering and direct CRT enumeration in
+prime/residue space---agree on
+\[
+ \#\mathcal P_X=137,\qquad
+ \#\{p:Z(p)>0\}=47,\qquad
+ \sum_pZ(p)=120,\qquad \lambda_X=0.082244154\ldots,
+\]
+\[
+ (F_2,F_3,F_4,F_5,F_6,F_7,F_8)
+ =(6894,486,24,0,0,0,0).
+\]
+The existential-third-prime aggregate is $474$, rather than the correct
+multiplicity count $F_3=486$.  The periodic fourth-moment Palm excess is
+$23.448043852\ldots$ (the finite-marginal value is
+$23.448002897\ldots$), and every periodic and finite sandwich is checked
+with exact rational arithmetic for $3\leq k\leq8$.
+
+A separate synthetic incidence table has a row of size~$8$ and gives
+nonzero strict positive-excess tests through $k=8$.  The script also checks
+the overlap identity~\eqref{eq:pairpalm-overlap-identity}, both
+Cauchy--Schwarz counterexamples, the CRT six-tuple failure, the height
+counterexample, and the exact moments through $k=8$ of the anchored star at
+$X=64$:
+\[
+ F_7^*=3{,}991{,}680,
+ \qquad F_8^*=19{,}958{,}400.
+\]
+All seven groups print \texttt{PASS}.  The vanishing of the actual
+$F_7,F_8$ at these finite scales tests identities only; it is not evidence
+for the required uniform asymptotic bound.
+
+No estimate of~\eqref{eq:pairpalm-PP7}, $(\mathrm{HM})_7$, or
+$(\mathrm{HM})_8$ is proved here.  The sharp unconditional output from
+the present toolbox is Proposition
+\ref{prop:pairpalm-unconditional-envelope}; the anchored-star family
+shows why the known reflection, interval, fiber, energy, gap-certificate,
+and row-codegree statements cannot improve it.  The exact remaining
+load-bearing input is the aggregate fifth-extension positive-excess
+bound~\eqref{eq:pairpalm-PP7}, or an arithmetic theorem which implies it
+such as a suitable cross-prime Fourier/dispersion estimate.

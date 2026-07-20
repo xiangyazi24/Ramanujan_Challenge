@@ -1,0 +1,354 @@
+% Audit of CODEX_SPEC_gcdtail.md.
+% This is a fragment intended to be read with proof.tex, energy_result.tex,
+% meso_result.tex, and nv_theorem.tex.  Finite checks are in
+% gcdtail_verify.py.
+
+\subsection{The split affine gcd tail: reformulations and obstructions}
+
+Assume throughout that $p\geq7$ is prime and $H\leq\sqrt p$.  Put
+\[
+ \mathscr R_h(p)=\{y\in\mathbb F_p:N_h(y)=0\},
+ \qquad \iota(y)=-y-1,
+\]
+and define the deep part of the collision energy by
+\[
+ \mathcal E_p^{\rm deep}(H)=
+ \sum_{\substack{d,r\geq2,\ d+r\leq H\\
+                  \min(d,r)>H^{3/4}}}m_{d,r}(p).
+\]
+
+\begin{proposition}[Fixed-involution form of a split collision]
+\label{prop:gcdtail-involution}
+For every $d,r\geq2$ one has
+\begin{equation}\label{eq:gcdtail-involution}
+ m_{d,r}(p)
+ =\#\bigl(\mathscr R_r(p)\cap\iota(\mathscr R_d(p))\bigr)
+ =\sum_{y\in\mathbb F_p}
+   \mathbf1_{\mathscr R_d(p)}(-y-1)
+   \mathbf1_{\mathscr R_r(p)}(y).
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:gcdtail-swap}
+ (d,r,x)\longmapsto(r,d,-x-d-r-1)
+\end{equation}
+is an involution on the collision triples.  In particular
+$m_{d,r}(p)=m_{r,d}(p)$.
+
+For fixed $d$ the exact slice identity is
+\begin{equation}\label{eq:gcdtail-slice}
+ \sum_{r=2}^{H-d}m_{d,r}(p)
+ =\sum_{x\in\mathscr R_d(p)}
+   \#\{2\leq r\leq H-d:N_r(x+d)=0\}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Set $y=x+d$.  The reflection identity gives
+\[
+ N_d(-y-1)=(-1)^{d-1}N_d(y-d)=(-1)^{d-1}N_d(x).
+\]
+Thus $x\mapsto y=x+d$ is a bijection from $X_{d,r}(p)$ to
+$\mathscr R_r(p)\cap\iota(\mathscr R_d(p))$, proving
+\eqref{eq:gcdtail-involution}.  If $x'=-x-d-r-1$, then
+\[
+ N_r(x')=(-1)^{r-1}N_r(x+d),\qquad
+ N_d(x'+r)=(-1)^{d-1}N_d(x).
+\]
+This proves~\eqref{eq:gcdtail-swap}; applying the map twice returns $x$.
+Finally, sum the defining root count over $r$ and interchange the two
+finite sums to obtain~\eqref{eq:gcdtail-slice}.
+\end{proof}
+
+Restricting Proposition~\ref{prop:energy-column-exact} gives the other
+useful grouping:
+\begin{equation}\label{eq:gcdtail-deep-column-exact}
+ \mathcal E_p^{{\rm deep},\circ}(H)
+ =\sum_{x\notin\partial_H}
+  \#\left\{\begin{array}{c}
+       d<e\leq H:N_d(x)=N_e(x)=0,\\
+       d>H^{3/4},\quad e-d>H^{3/4}
+     \end{array}\right\}.
+\end{equation}
+The boundary qualifier cannot be deleted merely because both gaps are
+deep.  For example, at $p=4283$, $H=65$, one has
+$\lfloor H^{3/4}\rfloor=22$, $p\mid b_{18}$, and the two deep witnesses
+\[
+ (d,r,x)=(24,33,-39),\qquad(33,24,-19).
+\]
+Indeed, the zero levels of the column $-39$ in this window are $24,57$,
+whereas the polluted column $-19$ vanishes at every level from $19$ to
+$65$.  The two witnesses are exchanged by~\eqref{eq:gcdtail-swap}.
+
+The estimates already proved in \texttt{energy\_result.tex} give only
+\begin{equation}\label{eq:gcdtail-current-bound}
+ \mathcal E_p^{\rm deep}(H)\leq\mathcal E_p(H)\ll H^{8/3}.
+\end{equation}
+The deep separation does not improve the direct column squaring: a
+single column may still contain quadratically many pairs of well-separated
+levels.  The following model makes the obstruction precise.
+
+\begin{proposition}[Incidence-model obstruction to column squaring]
+\label{prop:gcdtail-affine-plane-obstruction}
+For infinitely many $H$ there is an abstract level--column incidence
+system with levels $2\leq h\leq H$ such that:
+\begin{enumerate}
+ \item no column contains consecutive levels, and its intersection with
+       every interval of $L$ consecutive levels has size at most
+       $L^{2/3}+2$;
+ \item level $h$ lies in at most $3(h-1)$ columns;
+ \item two distinct levels lie together in at most one column;
+ \item nevertheless, for $K=H^{3/4}$ the number of incident triples
+       $(x,d,e)$ satisfying
+       \[
+        d>K,\qquad e-d>K,\qquad e\leq H,
+        \qquad |d-(e-d)|>H/8
+       \]
+       is $(1/1024+o(1))H^2$.
+\end{enumerate}
+Thus the current row degrees, the full local column estimate, and even
+codegree one do not by themselves imply $o(H^2)$ for the deep pairs.
+This is an obstruction to those inputs, not a counterexample involving
+the actual polynomials $N_h$.
+\end{proposition}
+
+\begin{proof}
+Let $q>91$ run through odd primes and set $H=8q^2$.  Order the elements
+of $\mathbb F_q$ by the representatives $0,\ldots,q-1$.  To a point
+$(u,v)\in\mathbb A^2(\mathbb F_q)$ assign the snake rank
+\[
+ s(u,v)=
+ \begin{cases}
+  vq+u,&v\ \text{even},\\
+  vq+(q-1-u),&v\ \text{odd},
+ \end{cases}
+ \qquad h(u,v)=2q^2+s(u,v).
+\]
+The columns are the $q(q-1)$ affine lines
+\[
+ L_{a,b}:v=au+b,qquad a\in\mathbb F_q^\times,quad b\in\mathbb F_q,
+\]
+with incidence inherited from the affine plane.
+
+Every point lies on $q-1$ selected lines, and two points lie on at most
+one.  Consecutive points in the snake order share either their $u$- or
+their $v$-coordinate, so no selected line contains both.  A selected line
+contains exactly one point in every block of $q$ snake ranks having fixed
+$v$.  Consequently an interval of $L$ ranks meets it at most $L/q+2$
+times.  Since $L\leq H=8q^2\leq q^3$ for $q\geq8$, this is at most
+$L^{2/3}+2$.  Also $q-1\leq3(h-1)$ because every used level is at least
+$2q^2$.
+
+Put $a_0=\lfloor q/4\rfloor$ and select on each line the points in the
+two horizontal bands
+\[
+ 0\leq v<a_0,qquad q-a_0\leq v<q.
+\]
+There are exactly $a_0$ points from each band on each selected line.
+For a lower-band level $d$ and an upper-band level $e$, one has
+\[
+ d\geq2q^2,qquad \frac{q^2}{2}<e-d<q^2,qquad e<3q^2<H.
+\]
+For $q>91$, both $d$ and $e-d$ exceed
+$(8q^2)^{3/4}$, while $|d-(e-d)|>q^2=H/8$.  The number of these pairs is
+\[
+ q(q-1)a_0^2=(1/1024+o(1))H^2,
+\]
+as asserted.
+\end{proof}
+
+\subsubsection{Scalar resultants lose the root-component label}
+
+The proposed gcd-of-resultants identity has the wrong direction.  If a
+primitive polynomial $q$ divides both $g$ and $h$ in $\mathbb Z[X]$, then
+resultant multiplicativity gives
+\[
+ \operatorname {Res}(f,q)\mid\operatorname {Res}(f,g),qquad
+ \operatorname {Res}(f,q)\mid\operatorname {Res}(f,h).
+\]
+The converse fails: the same rational prime can enter the two resultants
+through different roots, or different residue-field components, of $f$.
+
+\begin{proposition}[Deep component-misalignment counterexample]
+\label{prop:gcdtail-resultant-counterexample}
+Take
+\[
+ p=5683,qquad H=72,qquad d=33,qquad r=29,qquad s=39.
+\]
+Then $H^2<p$, both $(d,r)$ and $(d,s)$ are deep pairs in
+$\mathscr D_H$, and, with monic gcds in $\mathbb F_{5683}[X]$,
+\begin{align}
+ \gcd\bigl(N_{33}(X),N_{29}(X+33)\bigr)&=X+4912,
+ \label{eq:gcdtail-deep-gcd-one}\\
+ \gcd\bigl(N_{33}(X),N_{39}(X+33)\bigr)&=X+1497,
+ \label{eq:gcdtail-deep-gcd-two}\\
+ \gcd\bigl(N_{29}(X+33),N_{39}(X+33)\bigr)&=1.
+ \label{eq:gcdtail-deep-gcd-cross}
+\end{align}
+Thus $5683$ divides both $\mathcal R_{33,29}$ and
+$\mathcal R_{33,39}$, although the common-factor resultant on the
+suggested right-hand side is $1$.  In particular,
+\[
+ \gcd(\mathcal R_{d,r},\mathcal R_{d,s})
+ =\operatorname {Res}\bigl(N_d,
+       \gcd(N_r(\,\cdot+d),N_s(\,\cdot+d))\bigr)
+\]
+is false, including in the exact deep region.
+\end{proposition}
+
+\begin{proof}
+The three leading coefficients modulo $5683$ are respectively
+$4692,1160,3467$, so no displayed common root is an infinity
+degeneration.  Direct application of the defining recurrence followed by
+the Euclidean algorithm gives
+\eqref{eq:gcdtail-deep-gcd-one}--\eqref{eq:gcdtail-deep-gcd-cross}.
+The two roots of $N_{33}$ used in the first two lines are $771$ and
+$4186$, respectively.  These exact computations are independently
+repeated in \texttt{gcdtail\_verify.py}.
+
+Over $\mathbb Q$, $N_{29}$ and $N_{39}$ are coprime by the separated-block
+criterion and the disjoint complex root strips (the cut-edge evaluations
+are nonzero positive Ap\'ery products).  Hence the polynomial gcd on the
+right is also $1$ if it is interpreted over $\mathbb Q$; line
+\eqref{eq:gcdtail-deep-gcd-cross} gives the same conclusion if it is
+interpreted after reduction modulo $p$.  The first two lines imply the two
+integer resultant divisibilities.
+
+Finally,
+\[
+ 72^2=5184<5683,qquad 29^4=707281>72^3=373248,
+\]
+and $33+29\leq72$, $33+39=72$.  Thus both pairs are deep.  All three
+indices are odd, so the example is not supplied by an even-block center
+factor.
+\end{proof}
+
+In the norm language of~\eqref{eq:meso-quotient-norm}, the failure is the
+familiar one that a rational prime may divide $\operatorname {Nm}(u_r)$
+and $\operatorname {Nm}(u_s)$ at two different primes above $p$.  Taking
+the gcd of the scalar norms forgets which component vanished.  The exact
+identity~\eqref{eq:gcdtail-slice} retains that label.  It also shows why
+$\deg N_d=3(d-1)$ does not bound the $r$-fiber at a fixed $(d,x)$: the
+degree controls the number of outer $x$-summands, whereas the inner count
+is a column return count.  Applying Proposition~\ref{prop:column} to every
+unpolluted inner column yields only
+\[
+ \sum_r m_{d,r}(p)\ll dH^{2/3},
+\]
+before the polluted contribution, and summing this scale over $d$ returns
+$H^{8/3}$.
+
+The center recurrence does give a genuine partial result: the
+distinguished center witnesses contribute $O(H^{5/3})$, as proved in
+Proposition~\ref{prop:energy-center-witnesses}.  It does not form a
+fixed-$d$ divisibility chain.  Already
+\[
+ T_2^{(2)}=2200,qquad T_3^{(2)}=16220375,qquad
+ \gcd(T_2^{(2)},T_3^{(2)})=25,
+\]
+so neither consecutive term divides the other.  The proved propagation
+$(a,b)\mapsto(b,a+b)$ changes the first index, and
+$T_b^{(a)}\mid\mathcal R_{a,b}$ is a one-way source of supported pairs,
+not an upper bound for the remaining quotient.
+
+There is also a weight obstruction in the proposed fixed-$d$ support
+bound.  If
+\[
+ S_d(H)=\sum_{r=2}^{H-d}\mathbf1_{p\mid\mathcal R_{d,r}},
+\]
+then the present B\'ezout estimate gives only
+\begin{equation}\label{eq:gcdtail-support-weight-loss}
+ \mathcal E_p(H)\leq3\sum_{d=2}^{H-2}(d-1)S_d(H).
+\end{equation}
+Consequently $S_d=o(d)$ would give at best $o(H^3)$, under a uniform
+interpretation of the little-$o$, not $H^{2-\delta}$.  It supplies no
+fixed power rate, either.  Even $S_d=O(1)$ gives only $O(H^2)$ through
+\eqref{eq:gcdtail-support-weight-loss}.  A split-gcd multiplicity tail,
+not raw resultant support, is required.
+
+\subsubsection{The averaging and Plancherel route}
+
+Let $f_h=\mathbf1_{\mathscr R_h(p)}$, let
+$e_p(t)=\exp(2\pi it/p)$, and normalize
+\[
+ \widehat f_h(t)=\sum_{y\in\mathbb F_p}f_h(y)e_p(-ty).
+\]
+Proposition~\ref{prop:gcdtail-involution} gives the exact Fourier formula
+\begin{equation}\label{eq:gcdtail-fourier}
+ m_{d,r}(p)=\frac1p\sum_{t\in\mathbb F_p}
+ e_p(-t)\widehat f_d(t)\widehat f_r(t).
+\end{equation}
+For a set of levels $I$, put $A_I(y)=\sum_{h\in I}f_h(y)$.  Dropping the
+triangle condition $d+r\leq H$ and applying Cauchy--Schwarz gives, for
+$I=\{h:H^{3/4}<h\leq H\}$,
+\begin{align}
+ \mathcal E_p^{\rm deep}(H)
+ &\leq\sum_y A_I(\iota(y))A_I(y)\notag\\
+ &\leq\sum_y A_I(y)^2.                 \label{eq:gcdtail-plancherel-stall}
+\end{align}
+Outside the $O(H^{2/3})$ window-polluted columns one has
+$A_I(y)\ll H^{2/3}$, while $\sum_yA_I(y)\ll H^2$.  The unpolluted part of
+the last member of~\eqref{eq:gcdtail-plancherel-stall} is therefore only
+$O(H^{8/3})$.  On the polluted columns the bounds
+$A_I(y)\leq H$ and $|\mathcal P_H|\ll H^{2/3}$ give the same exponent.
+Thus Plancherel reproduces~\eqref{eq:gcdtail-current-bound}; it supplies no
+power saving without a new cross-correlation or nonzero-frequency
+estimate.
+
+Likewise, averaging~\eqref{eq:gcdtail-slice} over $d$ is exactly
+$\mathcal E_p(H)/H$ up to endpoints.  To prove
+$\mathcal E_p(H)\ll H^{2-\delta}$ by this route one must prove the new
+average slice estimate $O(H^{1-\delta})$; Cauchy--Schwarz and the current
+column second moment do not furnish it.
+
+\subsubsection{Stall report}
+
+The estimate
+\[
+ \mathcal E_p(H)\ll H^{2-\delta}
+\]
+is \emph{not proved}.  The four suggested approaches stop for distinct,
+rigorously identifiable reasons:
+\begin{enumerate}
+ \item the column inputs allow $\asymp H^2$ deep, far-off-diagonal pairs
+       even with codegree one
+       (Proposition~\ref{prop:gcdtail-affine-plane-obstruction});
+ \item the center divisibilities control only the already bounded
+       $O(H^{5/3})$ distinguished subfamily, do not chain at fixed $d$,
+       and raw resultant support loses the multiplicity in
+       \eqref{eq:gcdtail-support-weight-loss};
+ \item the proposed gcd-of-resultants identity is false because scalar
+       resultants lose the root-component label, even for deep pairs
+       (Proposition~\ref{prop:gcdtail-resultant-counterexample});
+ \item the fixed-$d$ average and Plancherel bounds reduce to the same
+       $H^{8/3}$ column second moment.
+\end{enumerate}
+The exact remaining input is therefore still a genuinely arithmetic,
+split affine gcd-tail estimate, for example
+\[
+ \sum_{\substack{d+r\leq H\\\min(d,r)>H^{3/4}}}
+ \deg\gcd_{\mathbb F_p[X]}
+ \bigl(\overline N_d(X),\overline N_r(X+d),X^p-X\bigr)
+ \ll H^{2-\delta}
+\]
+for some fixed $\delta>0$.  None of the scalar-support or one-column
+statements above implies this estimate.
+
+\paragraph{Finite verification.}
+The pure-Python script \texttt{gcdtail\_verify.py} checks every prime
+$p\leq2000$ and every $4\leq H\leq\lfloor\sqrt p\rfloor$, for $7439$
+height records in total.  It verifies the reflection identity,
+\eqref{eq:gcdtail-involution}, the swap involution, the per-pair degree
+bound, the exact off-boundary column identity and boundary sandwich, and
+their deep restrictions.  Across this finite scan the total of the deep
+energies over all height records is $57$ and the maximum for one record is
+$2$; at the endpoint $H=\lfloor\sqrt p\rfloor$ the total is $12$.
+The canonical record digest is
+\[
+ \texttt{76b9e86cf7f8f007826efba856bf2728875eff0feddf10afd947cec050941a84}.
+\]
+The script separately repeats the modular Euclidean algorithms in
+Proposition~\ref{prop:gcdtail-resultant-counterexample}, a smaller
+$p=257$ component-misalignment example, the two center values above, and
+the $p=4283$ deep boundary example.  These computations verify the finite
+identities and counterexamples only; they are not used to infer a uniform
+bound.
