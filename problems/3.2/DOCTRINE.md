@@ -1262,3 +1262,32 @@ arithmetic-geometry / analytic-number-theory move Codex cannot make alone.
 Standing chain: A(SDC bilinear) ← B(mh2 dispersion) ← C(marked coordinate = fixed
 toric Λ, CT(Λ^n)=b_n, (p,j)-uniform bounded Betti). The ONLY gap = horizontal
 control of moving characters. Fable consulted on exactly this. Awaiting its route.
+
+### Fable oracle harvest (horizontal dispersion) — ROUTE FOUND, Codex dispatched
+
+★★ Fable delivered a decisive strategic reframing (full report in
+chatgpt-answers/FABLE_oracle_horizontal_dispersion.md), verified by me:
+
+1. LEMMA 0 (Lucas collapse, VERIFIED): (mh2)'s p≠q coupling is a DETECTOR
+   ARTIFACT. b_m≡5b_{m−p} mod p ⟹ X_p(m)=1_{p|b_m}, L_N(m)=#{p∈(N,m]:p|b_m}.
+   So (mh2) ⟸ pointwise (♦): max_m #{p∈(N,m]:p|b_m} ≪ N^{o(1)} — ONE integer
+   b_m's window prime-divisor count. (This is the top-half radical estimate,
+   now cleanly the SOLE target.) Size-permitted adversary ⟹ non-archimedean
+   input mandatory. VERIFIED: Lucas + collapse + 6.7-9.9x size slack.
+
+2. ★ CRYSTALLINE DICHOTOMY (the new mechanism): j∈Z_p ⟺ 𝔭|S_j is a
+   STICKELBERGER/digit event, NOT monodromy — ℓ-adic FKM/FFK is provably blind
+   (Gross-Koblitz: v_𝔭=s_p(j)/(p−1)). Z_p ⊆ {j: slope-0 unit-count ≠1}: an
+   explicit digit-defined set E_p + Poisson-rate collisions A_p. Matches the
+   empirical Poisson(1/2). This is why every prior (ℓ-adic, FKM, two-Frobenii)
+   route failed — wrong cohomology theory.
+
+3. DEAD ENDS oracle-confirmed: ℓ-adic Mellin/FKM/FFK in j (Q1), two-char
+   cohomology (Q2), Fourier-exponent detection + dispersion/vdC/Hooley (Q3).
+
+Codex now implementing LEMMA A (CODEX_SPEC_lemmaA.md): (A1) Jacobi-sum skeleton
+b_j≡−Σ_k c(j,k)ΠJ_i (verify exact p≤200 + γ_p anchor); (A2) Stickelberger
+container Z_p⊆{j:U(j)≠1} with explicit digit U(j); (A3) DECISION GATE p≤5000 —
+|{U≠1}|=polylog(S1,route wins) / p^θ digit(S3,Mauduit-Rivat) / unstructured(S2,
+report). Hot Fable persists (agentId tracked) for the next round after Codex's
+gate verdict.
