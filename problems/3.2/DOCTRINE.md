@@ -1114,3 +1114,39 @@ cancellation. Each wave: prove / partial / reduce-to-named-weaker / sharp G4.
 Audit discipline (C4 + prop:column lessons): verify every identity against
 actual polynomials/data before trusting; honest quantifier order (moving vs
 fixed geometric family is THE trap for B).
+
+### Oracle A harvest (analytic, Codex xhigh 356k tokens) — G3+G4, integrated
+
+**No proof of eq:short-arc (G1). Delivered a sharp G3/G4 that PINS the exact
+missing analytic lemma and MEETS Oracle B:**
+- ★ Exact triangular-kernel/Fejér identity (prop:oracleA-triangle):
+  ∫|A_{P,M}|² = Σ_k γ_M(k)|D_P(k)|² with D_P(k) = Σ_p log p (1_{Z_p}(k) − Z(p)/p).
+  Independently verified (my check: LHS=RHS to 1e-3).
+- ★ Corrected Gallagher reduction (prop:oracleA-gallagher): dilation to M=4N
+  (raw γ_N(N)=0!) ⟹ short-arc ⟹ weighted dispersion Σ|D_P(k)|² ≪ N^{1+o(1)}Q_P
+  ⟹ W(n)=o(n) all n. Fully rigorous REDUCTION (the "⟹ fully unconditional"
+  half is now airtight; only eq:short-arc itself is open).
+- ★ SDC — the exact missing bilinear lemma (eq:oracleA-sdc): after removing
+  harmless same-prime terms, need Re R_≠(P,M) ≤ C M^{−1+o(1)} Q_P, i.e. a
+  one-sided moving reciprocal-fraction estimate Re B_{P,M} ≤ C M^{o(1)} Q_P
+  (eq:oracleA-moving-reciprocal). This is the precise Linnik-route input.
+- ★ prop:oracleA-doublet-trace: on doublets a↦F_p(a) = e_p(ar_p)+e_p(−a(1+r_p))
+  is a rank-2 bounded-conductor trace ⟹ REMOVES the growing-complexity FFK
+  mismatch. Surviving obstruction = horizontal control of the moving slope r_p
+  — EXACTLY what Oracle B supplies. THE TWO ORACLES MEET HERE.
+- ★ prop:oracleA-anchored: reflection + palindromic phase + doublet + vertical
+  Parseval + generic spacing all TOGETHER fail short-arc by N^{1−o(1)}
+  (D_N*(2N)≍N). Independently verified. Proves an Apéry-specific horizontal
+  fact is mandatory ⟹ hands the baton to Oracle B.
+
+**Paper bugs found by Oracle A and FIXED (verified):**
+1. ssec:amtd "eq:short-arc implies AMTD block by block" — imprecise: RHS is
+   log-weighted Q_P, not S(P,N); raw scale has γ_N(N)=0. Fixed to cite the
+   corrected dilation prop:oracleA-gallagher (weighted dispersion suffices).
+2. rem:palindromic-fourier unqualified 2-term S(θ): only valid on the clipped
+   lift domain 2p−1−2N ≤ r_p ≤ 2N−p; verified only 5/36 top-block doublets
+   have centre (3p−1)/2. Added clipping caveat.
+
+**Verification:** oracleA_verify.py 9/9 PASS (independently re-run); my
+independent 3-check (Fejér identity, doublet phase Z_17, anchored D≍N) PASS.
+Integrated \input{oracleA_result} after ssec:amtd. Paper 94 pp, clean.

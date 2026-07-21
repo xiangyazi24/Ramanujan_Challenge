@@ -1,0 +1,458 @@
+% ORACLE A analytic audit for CODEX_SPEC_oracleA.md.
+% This is a fragment intended to be read with proof.tex.  The exact finite
+% checks are in oracleA_verify.py and the numerical reconnaissance is recorded
+% in oracleA_exploration.md.  No numerical observation is used below as proof.
+
+\subsection{The exact short--arc transform and the remaining bilinear form}
+\label{ssec:oracleA-result}
+
+Write $e(t)=e^{2\pi i t}$ and $\mathbb T=\mathbb R/\mathbb Z$.  For a
+prime block $P<p\leq2P$ put
+\[
+ c_{p,a}=\frac{(\log p)F_p(a)}p,
+ \qquad
+ Q_P=\sum_{P<p\leq2P}\sum_{a=1}^{p-1}|c_{p,a}|^2,
+\]
+and, for an integer $M\geq2$, define the cyclic short--arc sum
+\[
+ A_{P,M}(x)=
+ \sum_{\substack{P<p\leq2P,\ 1\leq a<p\\
+             a/p\in(x,x+1/M]_{\mathbb T}}}c_{p,a}.
+\]
+Endpoints are immaterial.  Finally set
+\[
+ D_P(k)=\sum_{P<p\leq2P}\sum_{a=1}^{p-1}
+          c_{p,a}e(-ka/p),\qquad k\in\mathbb Z.
+\]
+
+\begin{proposition}[Exact triangular-kernel identity]
+\label{prop:oracleA-triangle}
+With $\|t\|$ denoting distance to the nearest integer, one has
+\begin{align}
+ \int_{\mathbb T}|A_{P,M}(x)|^2\,dx
+ &=\sum_{p,a}\sum_{q,b}c_{p,a}\overline{c_{q,b}}
+   \left(\frac1M-\left\|\frac ap-\frac bq\right\|\right)_+
+ \label{eq:oracleA-triangle}\\
+ &=\sum_{k\in\mathbb Z}\gamma_M(k)|D_P(k)|^2,
+ \label{eq:oracleA-fejer}
+\end{align}
+where
+\[
+ \gamma_M(0)=\frac1{M^2},\qquad
+ \gamma_M(k)=\left(\frac{\sin(\pi k/M)}{\pi k}\right)^2
+ \quad(k\ne0).
+\]
+Moreover Fourier inversion on each $\mathbb F_p$ gives the exact identity
+\begin{equation}
+ D_P(k)=\sum_{P<p\leq2P}(\log p)
+ \left(\mathbf1_{\mathcal Z_p}(k\bmod p)-\frac{Z(p)}p\right).
+ \label{eq:oracleA-D-incidence}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+For a point $\lambda\in\mathbb T$, the set of $x$ for which
+$\lambda\in(x,x+1/M]_{\mathbb T}$ is a cyclic interval of length $1/M$.
+The intersection of the two intervals belonging to $\lambda$ and $\mu$
+has measure $(M^{-1}-\|\lambda-\mu\|)_+$, proving
+\eqref{eq:oracleA-triangle}.  The $k$-th Fourier coefficient of an interval
+of length $1/M$ has squared modulus $\gamma_M(k)$; Parseval proves
+\eqref{eq:oracleA-fejer}.  Finally,
+\[
+ \frac1p\sum_{a=0}^{p-1}F_p(a)e_p(-ak)
+ =\mathbf1_{\mathcal Z_p}(k),
+\]
+and removing $a=0$, for which $F_p(0)=Z(p)$, proves
+\eqref{eq:oracleA-D-incidence}.
+\end{proof}
+
+The two notions of zero frequency are both visible here.  The modular
+frequency $a=0$ has been removed and produces the vertical centre
+$\sum_p(\log p)Z(p)/p$.  The integer Fourier mode $k=0$ remains in
+\eqref{eq:oracleA-fejer}; since $b_0=1$, it equals
+$D_P(0)=-\sum_p(\log p)Z(p)/p$ and is weighted by $M^{-2}$.
+Thus it has neither been silently discarded nor identified with the
+empirical mean on $I_N$.  If $\mu_{P,I}$ is that empirical mean, then
+orthogonal projection gives
+\[
+ \sum_{k\in I_N}|B_P^{(w)}(k)-\mu_{P,I}|^2
+ \leq\sum_{k\in I_N}|D_P(k)|^2,
+\]
+where $B_P^{(w)}(k)=\sum_{P<p\leq2P}(\log p)
+\mathbf1_{\mathcal Z_p}(k\bmod p)$.
+
+There is a small but consequential point in applying this identity.
+At the scale printed in~\eqref{eq:short-arc},
+$\gamma_N(N)=\gamma_N(2N)=0$, so that estimate at scale $N$ does not by
+itself control the shell $I_N=(N,2N]$.  Uniformity in the scale repairs
+the problem without a phase twist.
+
+\begin{proposition}[Correct Gallagher reduction by dilation]
+\label{prop:oracleA-gallagher}
+Assume that~\eqref{eq:short-arc}, with a factor $M^{o(1)}$, holds for
+every pair $(P,M)$ satisfying $\sqrt M<P\leq M$.  Then, uniformly for
+$\sqrt N<P\leq N$,
+\begin{equation}
+ \sum_{N<k\leq2N}|D_P(k)|^2\ll N^{1+o(1)}Q_P.
+ \label{eq:oracleA-weighted-dispersion}
+\end{equation}
+Consequently, together with the unconditional $Z(p)\ll p^{2/3}$, the
+short--arc target implies $W(n)=o(n)$ for every $n$ and hence
+$G_n=e^{o(n)}$.
+\end{proposition}
+
+\begin{proof}
+First suppose $P>2\sqrt N$.  Apply~\eqref{eq:short-arc} with the scale
+$M=4N$.  This is legitimate because $\sqrt{4N}<P\leq4N$.  For
+$N<k\leq2N$,
+\[
+ \gamma_{4N}(k)
+ =\left(\frac{\sin(\pi k/(4N))}{\pi k}\right)^2
+ \geq\frac1{8\pi^2N^2}.
+\]
+Equations~\eqref{eq:oracleA-fejer} and~\eqref{eq:short-arc} therefore give
+\[
+ \sum_{N<k\leq2N}|D_P(k)|^2
+ \leq8\pi^2N^2\int_{\mathbb T}|A_{P,4N}(x)|^2\,dx
+ \ll N^{1+o(1)}Q_P.
+\]
+For $\sqrt N<P\leq2\sqrt N$, the ordinary additive large sieve, applied
+on any interval of $N$ consecutive integers, gives
+\[
+ \sum_{N<k\leq2N}|D_P(k)|^2
+ \leq (N+4P^2)Q_P\ll NQ_P.
+\]
+This proves~\eqref{eq:oracleA-weighted-dispersion}.
+
+Finite Fourier Parseval gives
+\begin{equation}
+ Q_P=\sum_{P<p\leq2P}(\log p)^2
+ \left(\frac{Z(p)}p-\frac{Z(p)^2}{p^2}\right)
+ \leq\sum_{P<p\leq2P}\frac{(\log p)^2Z(p)}p.
+ \label{eq:oracleA-Q-parseval}
+\end{equation}
+Thus $Q_P\ll P^{2/3}\log P$, while
+\[
+ \mu_P:=\sum_{P<p\leq2P}\frac{(\log p)Z(p)}p\ll P^{2/3}.
+\]
+By~\eqref{eq:oracleA-D-incidence}, the logarithmically weighted bad-prime
+sum in this block is at most
+\[
+ \mu_P+|D_P(k)|
+ \ll P^{2/3}+N^{1/2+o(1)}P^{1/3}
+ \ll N^{5/6+o(1)}
+\]
+for every $k\in I_N$.  Summing the $O(\log N)$ dyadic blocks and using the
+small-prime and companion-block estimates already invoked in
+Proposition~\ref{prop:ap-bdh-suffices} proves the claimed all-index bound.
+\end{proof}
+
+\begin{remark}[What this does and does not imply]
+\label{rem:oracleA-weighted-not-amtd}
+The direct assertion in Subsection~\ref{ssec:amtd} that
+\eqref{eq:short-arc} ``implies AMTD block by block'' is not the conclusion
+of the displayed Fourier calculation.  Its right-hand side is
+\eqref{eq:oracleA-Q-parseval}; it is not
+$S(P,N)=\sum_p|\Omega_p|$, and its coefficients carry the weights
+$\log p$.  In particular, when $p>N$, a residue in $\mathcal Z_p$ need
+not have a representative in $I_N$.  Proposition~\ref{prop:oracleA-gallagher}
+is the valid conclusion: a weighted dispersion estimate with the vertical
+majorant $NQ_P$, which is already strong enough for the conclusion of
+Proposition~\ref{prop:ap-bdh-suffices}.  No unproved comparison with
+$S(P,N)$ is needed.
+\end{remark}
+
+\subsection{Palindromic phases and top-block clipping}
+
+\begin{lemma}[Exact doublet Fourier phase]
+\label{lem:oracleA-doublet-phase}
+Suppose
+$\mathcal Z_p=\{r,p-1-r\}$, choose $0\leq r\leq(p-1)/2$, and put
+$h=p-1-2r$.  Then, for every $a\bmod p$,
+\begin{equation}
+ F_p(a)=2e_p\!\left(\frac{a(p-1)}2\right)
+             \cos\!\left(\frac{\pi ah}{p}\right).
+ \label{eq:oracleA-doublet-F}
+\end{equation}
+Here $e_p(a/2)$ in the palindromic reality statement means multiplication
+by the inverse of $2$ in $\mathbb F_p$; consequently
+$e_p(a/2)F_p(a)=2\cos(\pi ah/p)\in\mathbb R$.
+\end{lemma}
+
+\begin{proof}
+The two integers $r$ and $p-1-r$ have average $(p-1)/2$ and difference
+$h$.  Factoring their two exponentials proves~\eqref{eq:oracleA-doublet-F}.
+Since $(p+1)/2$ represents $2^{-1}\pmod p$, multiplying the phase in
+\eqref{eq:oracleA-doublet-F} by $e_p(a(p+1)/2)$ cancels it.
+\end{proof}
+
+In ordinary real arguments this real rotation is
+$e(-a(p-1)/(2p))F_p(a)$, because $(p+1)/2\equiv-(p-1)/2\pmod p$.
+The expression with the opposite ordinary sign is not generally real;
+the distinction is checked on the actual doublet
+$\mathcal Z_{17}=\{3,13\}$ by \texttt{oracleA\_verify.py}.
+
+The phase $e(\theta(3p-1)/2)$ in
+Remark~\ref{rem:palindromic-fourier} is a phase of two particular
+\emph{integer lifts}; it is not the ordinary real phase used to make
+$F_p(a)$ real.  At the discrete value $\theta=a/p$ it does coincide
+modulo $1$ with the phase $e_p(a(p-1)/2)$ in
+\eqref{eq:oracleA-doublet-F}, since the two centres differ by $p$.
+For continuous $\theta$, however, it is the centre of the chosen integer
+lifts and therefore changes when those lifts change.  It also has a
+restricted validity domain.  In general
+the contribution of a residue $u\bmod p$ to the shell is the finite set
+\begin{equation}
+ H_{N,p}(u)=\{u+\ell p:N<u+\ell p\leq2N,\ \ell\in\mathbb Z\}.
+ \label{eq:oracleA-hit-lifts}
+\end{equation}
+The shell Fourier sum must use
+$H_{N,p}(r)\cup H_{N,p}(p-1-r)$, including every admissible lift.
+For example, when $p\in(N,2N]$, the two displayed lifts
+\[
+ m_1=p+r,\qquad m_2=2p-1-r
+\]
+both belong to $I_N$ precisely when
+\begin{equation}
+ 2p-1-2N\leq r\leq2N-p.
+ \label{eq:oracleA-two-lift-domain}
+\end{equation}
+Only on this subfamily does
+\[
+ e(\theta m_1)+e(\theta m_2)
+ =2e\!\left(\theta\frac{3p-1}{2}\right)
+       \cos(\pi\theta h)
+\]
+hold for the contribution of the actual hit set $\Omega_p\cap I_N$.
+Outside~\eqref{eq:oracleA-two-lift-domain}, one or both lifts are clipped;
+when the reflected residue $p-1-r$ itself lies in $I_N$, the relevant pair
+has centre $(2p-1)/2$, not $(3p-1)/2$.  Parseval still gives
+\[
+ \int_{\mathbb T}\left|\sum_p\sum_{m\in\Omega_p\cap I_N}e(\theta m)
+ \right|^2d\theta
+ =T+F,
+\]
+but only when the sum uses the actual, clipped hit positions.  Thus the
+unqualified formula in Remark~\ref{rem:palindromic-fourier} cannot be the
+starting point for all top-block doublets.  In the computational block
+$N/2<p\leq N$, there can additionally be quotient-$2$ or quotient-$3$
+lifts in~\eqref{eq:oracleA-hit-lifts}; these are also absent from the
+complete two-term sum in that remark.
+
+\subsection{The exact cross-prime lemma and a sharp obstruction}
+
+Put $K_M(t)=(M^{-1}-\|t\|)_+$.  Splitting
+\eqref{eq:oracleA-triangle} into equal and unequal primes gives
+\[
+ \int_{\mathbb T}|A_{P,M}|^2
+ =\frac{Q_P}{M}+R_{=}(P,M)+R_{\ne}(P,M),
+\]
+where
+\begin{equation}
+ R_{\ne}(P,M)=
+ \sum_{\substack{P<p,q\leq2P\\p\ne q}}
+ \sum_{a=1}^{p-1}\sum_{b=1}^{q-1}
+ K_M\!\left(\frac ap-\frac bq\right)
+ \frac{(\log p)(\log q)}{pq}
+ F_p(a)\overline{F_q(b)}.
+ \label{eq:oracleA-cross-bilinear}
+\end{equation}
+Since $p\leq2P\leq2M$, each $a/p$ has at most two same-prime neighbours
+in an arc of length $1/M$, and $|R_{=}(P,M)|\leq2Q_P/M$ by
+$2|uv|\leq|u|^2+|v|^2$.  Hence the precise missing analytic lemma is the
+one-sided scalar estimate
+\begin{equation}
+ \operatorname{Re}R_{\ne}(P,M)\leq C M^{-1+o(1)}Q_P.
+ \tag{SDC}\label{eq:oracleA-sdc}
+\end{equation}
+Equivalently, this asks for cancellation among the near-Farey solutions
+\[
+ \left\|\frac ap-\frac bq\right\|<\frac1M,
+ \qquad
+ \min\{|aq-bp|,\,pq-|aq-bp|\}<\frac{pq}{M}.
+\]
+This is a scalar Rayleigh bound for the actual Ap\'ery vector; it neither
+asks for a full operator norm nor discards the signs as Cauchy--Schwarz
+does.  It is the exact bilinear input still missing from the Linnik route
+of Remark~\ref{rem:linnik}.
+
+There is also an exact reciprocal-fraction parametrization.  Let
+$\langle d\rangle_{pq}$ be the representative of $d\bmod pq$ of least
+absolute value, and let $\bar q$ and $\bar p$ denote inverses modulo $p$
+and $q$, respectively.  For $p\ne q$, putting
+$k=\langle aq-bp\rangle_{pq}$ is a bijection between the pairs occurring
+in~\eqref{eq:oracleA-cross-bilinear} and
+\[
+ 0<|k|<\frac{pq}{M},\qquad (k,pq)=1,
+ \qquad a\equiv k\bar q\pmod p,\quad
+ b\equiv-k\bar p\pmod q.
+\]
+Since $F_q(-u)=\overline{F_q(u)}$, one obtains
+\begin{align}
+ R_{\ne}(P,M)&=\frac1M\,\mathcal B_{P,M},
+ \label{eq:oracleA-reciprocal-form}\\
+ \mathcal B_{P,M}
+ &=\sum_{\substack{P<p,q\leq2P\\p\ne q}}
+   \frac{(\log p)(\log q)}{pq}
+   \sum_{\substack{0<|k|<pq/M\\(k,pq)=1}}
+   \left(1-\frac{M|k|}{pq}\right)
+   F_p(k\bar q)F_q(k\bar p).
+ \label{eq:oracleA-moving-reciprocal}
+\end{align}
+Thus~\eqref{eq:oracleA-sdc} is precisely the one-sided moving
+reciprocal-fraction estimate
+$\operatorname{Re}\mathcal B_{P,M}\leq C M^{o(1)}Q_P$.
+The numerators $k\bar q$, $k\bar p$ and both zero sets move jointly with
+$p,q$; palindromy only replaces each doublet transform by a real cosine
+after a moving phase rotation.  It does not turn
+\eqref{eq:oracleA-moving-reciprocal} into a fixed-numerator bilinear form.
+
+\begin{proposition}[One trace-function mismatch removed on doublets]
+\label{prop:oracleA-doublet-trace}
+On the doublet sector, $a\mapsto F_p(a)$ is the trace function of a
+rank-$2$, uniformly bounded-conductor sheaf: explicitly it is the direct
+sum of the two rank-$1$ Artin--Schreier sheaves with traces
+$a\mapsto e_p(ar_p)$ and
+$a\mapsto e_p(-a(1+r_p))$.  Thus the growing-complexity obstruction for
+representing the \emph{local Fourier coefficient} disappears completely
+on this sector.
+\end{proposition}
+
+\begin{proof}
+For $\mathcal Z_p=\{r_p,p-1-r_p\}$,
+\[
+ F_p(a)=e_p(ar_p)+e_p(-a(1+r_p)).
+\]
+Each summand is a linear additive-character trace of rank and conductor
+bounded independently of both $p$ and the slope.  Direct sum proves the
+claim.
+\end{proof}
+
+This does not make the frameworks discussed in Remark~\ref{rem:linnik}
+applicable as stated.  The slope $r_p$ is selected by a same-characteristic
+Ap\'ery zero condition and moves with $p$; there is no fixed sheaf over one
+fixed finite field whose extension-degree traces give this horizontal
+family.  Moreover~\eqref{eq:oracleA-moving-reciprocal} couples two varying
+characteristics at once.  The anchored family below has exactly the same
+rank-$2$ conductor bound and still violates the target.  Hence bounded
+local conductor removes one of the four mismatches listed in
+Remark~\ref{rem:linnik}, but horizontal control of the moving slopes
+remains the load-bearing arithmetic input.
+
+Palindromic reality and the bound $Z(p)=O(1)$ cannot prove
+\eqref{eq:oracleA-sdc}.  The following construction quantifies the
+obstruction at exactly the required short-arc scale.
+
+\begin{proposition}[Reflected anchored obstruction]
+\label{prop:oracleA-anchored}
+Let
+\[
+ \mathcal P_N=\{p\text{ prime}:N<p\leq2N,\
+                     p\nmid(4N+1)(2N+1)\}
+\]
+and, for $p\in\mathcal P_N$, set
+\[
+ \mathcal Z_p^*=\{\,2N\bmod p,\,-2N-1\bmod p\,\}.
+\]
+Then every $\mathcal Z_p^*$ is a two-element set invariant under
+$r\mapsto p-1-r$; it contains neither $0$ nor adjacent residues.  Yet the
+short--arc estimate at $(P,M)=(N,4N)$ fails by a factor
+$N^{1-o(1)}$.  Simultaneously, all columns contain the point
+$2N\in I_N$, so their centered block dispersion is $\gg N^2$ in the
+logarithmically weighted normalization.
+\end{proposition}
+
+\begin{proof}
+The divisors of $4N+1$ are exactly those for which the two displayed
+residues coincide; excluding divisors of $2N+1$ also keeps $0$ out of
+the sets and rules out one of the two possible adjacency congruences.
+The other would force $p\mid2N$, impossible for a prime $p\in(N,2N)$.
+These exclusions remove only $O(1)$ primes from this dyadic range.  For
+the corresponding Fourier coefficients, let
+$D_N^*$ denote~\eqref{eq:oracleA-D-incidence}.  Since
+$2N\bmod p\in\mathcal Z_p^*$ for every $p\in\mathcal P_N$, the prime
+number theorem gives
+\[
+ D_N^*(2N)=\sum_{p\in\mathcal P_N}(\log p)(1-2/p)\asymp N.
+\]
+At $M=4N$ the Fej\'er weight of this mode is
+\[
+ \gamma_{4N}(2N)=\frac1{4\pi^2N^2}.
+\]
+Therefore~\eqref{eq:oracleA-fejer} gives
+\[
+ \int_{\mathbb T}|A^*_{N,4N}(x)|^2dx\gg1.
+\]
+On the other hand, finite Fourier Parseval gives
+\[
+ Q_N^*=\sum_{p\in\mathcal P_N}(\log p)^2
+          \left(\frac2p-\frac4{p^2}\right)\asymp\log N.
+\]
+Thus the proposed right-hand side is
+$(4N)^{-1+o(1)}Q_N^*=N^{-1+o(1)}\log N=o(1)$.
+The same common hit at $2N$ gives a centered deviation $\asymp N$ and
+hence weighted dispersion $\gg N^2$: indeed every column has at most two
+hits in the interval of length $N$, so the empirical weighted mean is
+$O(N^{-1}\sum_{p\in\mathcal P_N}\log p)=O(1)$.
+\end{proof}
+
+The obstruction is not an assertion about the Ap\'ery zeros.  It proves
+the required impossibility content: reflection, the exact palindromic
+phase, doublet cardinality, vertical Parseval, and generic prime spacing
+do not imply the short--arc bound.  A successful proof must insert an
+Ap\'ery-specific horizontal fact into~\eqref{eq:oracleA-cross-bilinear},
+exactly as anticipated in Remark~\ref{rem:linnik}; the separately running
+arithmetic oracle is responsible for such an input.
+
+\subsection{Computational reconnaissance}
+
+The reproducible computation in \texttt{oracleA\_explore.py} and
+\texttt{oracleA\_exploration.md} uses the exact zero-set bank and the
+blocks $N/2<p\leq N$ for
+$N=8192,16384,32768,65536$.  For the complete two-position doublet sum,
+the exact Parseval ratios $(T+F)/T$ are between $1.0224$ and $1.0319$.
+After declaring the major arcs
+$|\theta-a/q|\leq16/(qN)$ with $q\leq16$, the largest sampled minor-arc
+peaks are between $3.38\sqrt T$ and $3.69\sqrt T$.  The largest
+nondegenerate connected correlation between
+$e(3p\theta/2)$ and $\cos(\pi\theta h_p)$ at those small-denominator
+rationals falls from $0.2204$ to $0.0657$ across the four scales.
+An independent-uniform-gap collision model predicts the observed
+complete-pair collision count within ratios $0.756$ to $1.128$.
+
+The shell computation separately enumerates every lift in
+\eqref{eq:oracleA-hit-lifts}.  With logarithmic weights its true
+off-diagonal ratios $E^\circ/S_c$ are respectively
+$0.00497,0.00185,-0.00689,0.00340$.  Direct counting and an independent
+finite-group Fourier reconstruction agree within $4.4\cdot10^{-10}$.
+The clipping distinction is numerically substantial: at $N=8192$ the
+complete two-position sum retains only $162$ of its displayed positions
+in $I_N$, whereas the actual doublet columns have $374$ shell lifts.
+These observations support square-root-scale cancellation, but none is
+used to infer~\eqref{eq:short-arc}.
+
+\paragraph{STALL REPORT.}
+The target~\eqref{eq:short-arc} is not proved, either for the full Ap\'ery
+sum or for its doublet sub-sum.  The rigorous analytic outputs are:
+\begin{enumerate}
+ \item the exact triangular-kernel/Fej\'er identity
+       \eqref{eq:oracleA-triangle}--\eqref{eq:oracleA-D-incidence};
+ \item the corrected dilation argument proving that the stated uniform
+       short--arc target really would imply the fully unconditional
+       all-index conclusion, without the unsupported identification of
+       its Fourier energy with $S(P,N)$;
+ \item the exact doublet phase and the clipping domain
+       \eqref{eq:oracleA-two-lift-domain}, correcting the unrestricted
+       use of Remark~\ref{rem:palindromic-fourier};
+ \item the one-sided cross-prime short-determinant estimate
+       \eqref{eq:oracleA-sdc}, isolated as the precise missing bilinear
+       lemma after the harmless same-prime terms are removed;
+ \item Proposition~\ref{prop:oracleA-doublet-trace}, which removes the
+       growing-conductor trace-function mismatch on the doublet sector
+       while locating the surviving obstruction in the horizontal
+       distribution of the moving slopes $r_p$;
+ \item the reflected anchored family of
+       Proposition~\ref{prop:oracleA-anchored}, which proves that none of
+       palindromy, doublet dominance, vertical bounds, or generic large
+       sieve geometry can supply that lemma.
+\end{enumerate}

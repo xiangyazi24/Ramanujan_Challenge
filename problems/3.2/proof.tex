@@ -3864,7 +3864,18 @@ a \emph{short-arc Fourier orthogonality} conjecture:
 \end{equation}
 where $F_p(a) = \sum_{r \in \mathcal{Z}_p} e_p(ar)$.
 By Gallagher's lemma, \eqref{eq:short-arc}
-implies AMTD block by block.
+implies the weighted cross-prime dispersion bound of
+Proposition~\ref{prop:oracleA-gallagher}
+(Subsection~\ref{ssec:oracleA-result}); a dilation to
+scale $M = 4N$ is needed because the Fej\'er weight
+$\gamma_N(N)$ vanishes at the raw scale, and the
+resulting majorant is the log-weighted energy~$Q_P$
+of~\eqref{eq:oracleA-Q-parseval} rather than
+$S(P,N)$ literally.
+That weighted bound already suffices for the all-index
+conclusion of Proposition~\ref{prop:ap-bdh-suffices},
+so no direct comparison with $S(P,N)$ is required
+(Remark~\ref{rem:oracleA-weighted-not-amtd}).
 
 The classical additive large sieve gives the
 right-hand side of~\eqref{eq:short-arc} multiplied
@@ -3967,6 +3978,24 @@ A proof of diagonal AMTD via this route
 would establish cancellation in~$S(\theta)$
 by exploiting the ``pseudorandom'' distribution
 of~$h_p$ as~$p$ varies.
+
+The compact two-term factorization above holds
+only on the clipped subfamily where both lifts
+$m_1 = p + r_p$ and $m_2 = 2p - 1 - r_p$ actually
+fall in $I_N = (N, 2N]$, i.e.\
+$2p - 1 - 2N \le r_p \le 2N - p$
+(Lemma~\ref{lem:oracleA-doublet-phase} and the
+clipping analysis of
+Subsection~\ref{ssec:oracleA-result}); outside it,
+one lift is clipped and the reflected residue
+contributes a pair centred at $(2p-1)/2$ rather than
+$(3p-1)/2$, and in the block $N/2 < p \le N$ there are
+additional quotient-$2$ and quotient-$3$ lifts.
+Computationally only a small fraction of top-block
+doublets ($5$ of $36$ at the tested scale) have the
+displayed centre $(3p-1)/2$, so the honest
+cancellation problem is for the full clipped hit
+set, not the unqualified two-term sum.
 \end{remark}
 
 \begin{remark}[Hierarchy of targets]
@@ -4105,6 +4134,8 @@ the Fourier support of~$f_p$ has $\sim p$
 nonzero frequencies (not~$Z(p)$), and
 palindromic symmetry improves only absolute constants.
 \end{remark}
+
+\input{oracleA_result}
 
 \subsection{Poisson variance formulation}\label{ssec:poisson}
 
