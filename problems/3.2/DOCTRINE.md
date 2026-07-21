@@ -1357,3 +1357,41 @@ PRE-AUTHORIZED PIVOT if G1 fires (program does not stall):
   constraint; doesn't kill anchored star — file as constraint inventory).
 
 Hot Fable persists (fd2a39) for the G1/G2 verdict → next lemma spec.
+
+### Lemma B′ harvest — G1 (crystalline route KILLED, but a real theorem produced)
+
+Codex delivered a deep, complete arithmetic-geometry computation; I independently
+verified the decisive structure. Verdict G1 (KILL) is SOLID:
+- ★ CHAR POLY THEOREM (eq:lemmaBprime-factor, a genuine positive result):
+  the χ_j-twisted marked coordinate is the balanced hypergeometric
+  Hyp(ε,ε,ε,ε; A,A,A⁻¹,A⁻¹) (the ζ(3) ₄F₃ structure), Frobenius factor
+  P_{p,j}(X) = (X−p)(X²−a_{p,j}X+p³), a_{p,j}=S_{p,j}^{(1)}−p ≡ b_j mod 𝔭.
+  MY INDEPENDENT CHECK (F_7,F_49 twisted traces): S2 = p²+(S1−p)²−2p³ EXACT for
+  j=1..5 ⟹ Tate factor (X−p) + quadratic det=p³ confirmed.
+- slope-0 count m_0(p,j) ∈ {0,1} ALWAYS (1 iff b_j≢0, 0 iff b_j≡0). p≤60 all 405
+  pairs: (0,1,3)=390 ordinary, (1,1,2)=15 non-ordinary (=exactly the 15 b_j=0), and
+  **m_0≥2 ZERO times**. p≤300: 63 zeros all slopes (1,1,2), no two-unit pair.
+- ★ Codex DISPROVED Fable's 17±12√2 bet directly: those ARE Λ's conifold critical
+  values (17±12√2=(1±√2)⁴ solve the log-critical eqns) but NOT Frobenius eigenlines;
+  the rank-2 quadratic is self-dual with eigenvalue fields Q(√−1291),Q(√−83),
+  Q(√−199) (imaginary quadratic, weight-3 pair), NOT split explicit units. At p=7
+  the Teichmüller candidates {2,4} fail mod 7 (unit residues 5,3,3).
+- inclusion Z_p⊆{m_0≠1} is a THEOREM but a TAUTOLOGY (moving unit root exists ⟺
+  its Hasse invariant b_j≠0). Crystalline route confirmed DEAD (Hasse-invariant),
+  exactly as Fable's razor (c) predicted.
+
+Integrated lemmaA_result + lemmaBprime_result into proof.tex (the crystalline
+analysis chain: skeleton real → Jacobi-Mellin trivial/circular → eigenvalue lens →
+char poly theorem → G1 tautology). 115 pages, compiles clean.
+
+PIVOT EXECUTING (Fable pre-authorized, program does not stall):
+- π3 DISPATCHED (CODEX_SPEC_pi3.md): unconditional pair cross-correlation
+  #{p∈(N,2N]: p|b_m and p|b_{m+g}} ≪ 1+g (sharpen codegree, remove log; generalizes
+  no-consecutive-zeros). Constraint-inventory result, honest it doesn't kill anchored star.
+- π1 (I will write up): lock the reduction chain full ⟺ (mh2) ⟸ (♦) [Lucas collapse]
+  + 7×-size-slack proof that sieve-axiom routes provably fail, as THE headline
+  conditional structure.
+- π2 (write up): conditional closure from uniform moving-target non-ordinarity
+  #{p∈(N,2N]: (m−p)-twist non-ordinary} ≪ N^{o(1)} + Poisson data.
+
+Hot Fable (fd2a39) in sync; will spec π2's precise hypothesis after π3 lands.

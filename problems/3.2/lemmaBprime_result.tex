@@ -1,0 +1,468 @@
+% LEMMA B' RESULT.
+% Corrected AS/GKZ Hodge polygon, genuine Frobenius factor, and binary gate.
+
+\subsection{The eigenvalue Newton polygon of the marked coordinate}
+\label{ssec:lemmaBprime-result}
+
+We retain the marked Laurent polynomial of
+Theorem~\ref{thm:oracleC-marked-coordinate} and the exact Jacobi skeleton of
+Theorem~\ref{thm:lemmaA-skeleton}.  For $q=p^r$ and
+$1\leq j\leq p-2$, put
+\[
+ A=\chi_{p,j}\circ N_{\mathbb F_q/\mathbb F_p},
+ \qquad
+ S_{p,j}^{(r)}=-\sum_{x\in U(\mathbb F_q)}A(\Lambda(x)).
+\]
+For an auxiliary prime $\ell\ne p$, write $E_\ell$ for a coefficient field
+containing the values of $A$.
+Thus $S_{p,j}^{(1)}=\widetilde c_{p,j}^{\rm tor}$ and
+$S_{p,j}^{(1)}\equiv b_j\pmod{\mathfrak p}$.  We use the effective sign
+convention in which $S_{p,j}^{(r)}$ is a Frobenius power trace.  The signed
+trace on $R\Gamma_c(U,\mathcal L_{p,j})$ is its negative.  This sign will be
+restored in the slope-zero inclusion below.
+
+\subsubsection{The corrected Adolphson--Sperber object}
+
+The coordinate change already used in the proof of
+Proposition~\ref{prop:oracleC-uniform-complexity},
+\[
+ u=\frac{1+y}{y},\qquad v=\frac{1+z}{z},\qquad
+ w=-\frac{x}{uv},
+\]
+gives
+\begin{equation}
+ \Lambda=\frac{uv(w-1)(1-uvw)}{w(u-1)(v-1)},
+ \qquad
+ U=(\mathbb G_m)^3\setminus\{u=1,v=1,w=1,uvw=1\}.
+ \label{eq:lemmaBprime-arrangement}
+\end{equation}
+
+There is an important trap here.  Converting the Kummer sum to an additive
+sum with the phase $t\Lambda$ does \emph{not} permit direct application of
+the nondegenerate Newton-polytope theorem.  At $x=y=-1$ two factors of
+$\Lambda$ vanish, so $t\Lambda$ and all four toric logarithmic derivatives
+vanish simultaneously.  In fact, if $P=\operatorname{Newt}(\Lambda)$, then
+\[
+ P=\{(X,Y,Z):-1\leq X,Y,Z\leq1,\ X-Y\leq1,\ X-Z\leq1\}.
+\]
+Its cross-sectional area is $4$ for $-1\leq X\leq0$ and $(2-X)^2$ for
+$0\leq X\leq1$, whence
+\begin{equation}
+ 3!\operatorname{vol}(P)=6\left(4+\int_0^1(2-X)^2\,dX\right)=38.
+ \label{eq:lemmaBprime-wrong-volume}
+\end{equation}
+The same number is the normalized volume of
+$\operatorname{conv}(0,P\times\{1\})$.  A naive use of this polytope would
+therefore manufacture $38$ slots.  It is incompatible with the cancelled
+rank below (and with $\chi_c(U)=1-7+17-14=-3$), precisely because the phase
+is degenerate.
+
+The correct Adolphson--Sperber/GKZ object follows by first performing the
+Jacobi convolution.  Base change of
+Theorem~\ref{thm:lemmaA-skeleton} gives the exact identity
+\begin{equation}
+ S_{p,j}^{(r)}=-\frac1{q-1}\sum_\rho
+ J_q(\bar\rho,A)^2J_q(\bar\rho,A\rho)^2,
+ \label{eq:lemmaBprime-A1-extension}
+\end{equation}
+where \emph{all} $q-1$ characters of $\mathbb F_q^\times$ occur.  With
+$g_q(C)=\sum_tC(t)\psi(t)$ and $g_q(\varepsilon)=-1$, including the
+inverse-character degeneracies, one has
+\begin{equation}
+ J_q(\bar\rho,A)^2J_q(\bar\rho,A\rho)^2
+ =q^{-2}g_q(\bar\rho)^4g_q(A\rho)^2g_q(A^{-1}\rho)^2.
+ \label{eq:lemmaBprime-gauss-eight}
+\end{equation}
+For example, when $\rho=A$ the Jacobi factor
+$J_q(A^{-1},A)^2$ and the product $g_q(A^{-1})^2g_q(A)^2=q^2$
+give the same formula; no exceptional summand has been dropped.
+To fix all signs, inversions, and Tate normalizations, define
+\[
+ \mathcal H_{q,A}(t):=-\frac{1}{q^2(q-1)}
+ \sum_\rho g_q(\bar\rho)^4g_q(A\rho)^2
+                    g_q(A^{-1}\rho)^2\rho(t).
+\]
+This is our trace convention for the Tate-normalized balanced
+hypergeometric object
+\begin{equation}
+ \operatorname {Hyp}(\varepsilon,\varepsilon,\varepsilon,\varepsilon;
+ A,A,A^{-1},A^{-1}).
+ \label{eq:lemmaBprime-hyp}
+\end{equation}
+Equations~\eqref{eq:lemmaBprime-A1-extension} and
+\eqref{eq:lemmaBprime-gauss-eight} say exactly that
+$\mathcal H_{q,A}(1)=S_{p,j}^{(r)}$.  The opposite Katz ordering exchanges
+the two parameter lists and replaces $t$ by $t^{-1}$, hence gives the same
+stalk at $t=1$.
+Introduce the usual hypergeometric parameter $t$.  Expanding the eight
+Gauss factors gives the associated GKZ circuit, which is nondegenerate for
+generic $t\ne1$; this, rather than the degenerate phase $t\Lambda$, is the
+object to which the twisted-height recipe of
+Adolphson--Sperber~\cite{AS1993} applies.  The value $t=1$ is the unique
+balanced-circuit singularity and must subsequently be treated by middle
+extension and nearby cycles.
+
+Here is the requested closed form.  Put
+\[
+ a=\left\langle\frac{j}{p-1}\right\rangle\in(0,1),\qquad
+ \boldsymbol\alpha=(0,0,0,0),
+\]
+and sort the fractional-part data
+\begin{equation}
+ \boldsymbol\beta(a)
+ =\operatorname {sort}\bigl(
+   \langle a\rangle,\langle a\rangle,
+   \langle-a\rangle,\langle-a\rangle\bigr)
+ =\operatorname {sort}(a,a,1-a,1-a).
+ \label{eq:lemmaBprime-beta}
+\end{equation}
+For $k=1,\ldots,4$, the twisted lattice-height statistic is
+\begin{equation}
+ \rho_a(k)=\#\{i:\alpha_i<\beta_k(a)\}-k=4-k.
+ \label{eq:lemmaBprime-rho}
+\end{equation}
+Indeed, every entry of~\eqref{eq:lemmaBprime-beta} is strictly positive,
+including at $a=1/2$.  Thus the generic circuit has Hodge polynomial
+\begin{equation}
+ H_a^{\rm gen}(T)=\sum_{k=1}^4T^{\rho_a(k)}
+ =1+T+T^2+T^3.
+ \label{eq:lemmaBprime-generic-HP}
+\end{equation}
+
+The two character multisets in~\eqref{eq:lemmaBprime-hyp} are disjoint, so
+the generic hypergeometric object is irreducible of rank four.  The balanced
+hypergeometric local-monodromy theorem (in the convolution normalization of
+Katz~\cite{Katz2012}) says that the monodromy at $t=1$ is a nontrivial
+pseudoreflection.  Its special eigenvalue is
+\[
+ \exp\!\left(2\pi i\left(\sum_k\beta_k-
+                  \sum_i\alpha_i\right)\right)=\exp(4\pi i)=1.
+\]
+Thus $T_1=\exp N$ with $N\ne0$, $N^2=0$, and $\operatorname {rank}N=1$.
+The standard rank-one-unipotent hypergeometric nearby-cycle calculation now
+applies.  The parameter multiset is invariant under complex conjugation, so
+the variation has a real form.  The polarized monodromy filtration $W(N)[3]$
+has rank-one graded pieces in weights $2$ and $4$; the real form forces them
+to have types $(1,1)$ and $(2,2)$, respectively.  Together with the four
+generic Hodge degrees in~\eqref{eq:lemmaBprime-generic-HP}, this gives, after
+one complex coefficient embedding,
+\[
+ \operatorname {Gr}_2^W\text{ of type }(1,1),\qquad
+ \operatorname {Gr}_3^W\text{ of types }(3,0)+(0,3),\qquad
+ \operatorname {Gr}_4^W\text{ of type }(2,2),
+\]
+where $N:\operatorname {Gr}_4^W\buildrel\sim\over\longrightarrow
+\operatorname {Gr}_2^W(-1)$.  The middle extension has stalk
+$\ker(T_1-1)=\ker N=W_3$, and strictness computes its induced Hodge
+filtration from the graded types above.
+It therefore removes the slope-$2$ slot, not the slope-$0$ slot.  The toric Hodge polynomial
+and the requested multiplicity are
+\begin{equation}
+ H_{a,t=1}(T)=1+T+T^3,\qquad
+ \boxed{\ h^0(j)=[T^0]H_{a,t=1}(T)=1\ }
+ \quad(1\leq j\leq p-2).
+ \label{eq:lemmaBprime-h0}
+\end{equation}
+This is a closed fractional-part formula; it uses no Ap\'ery value and no
+numerical input.
+
+For completeness, the three slots can also be seen on the arrangement.
+The only non-simple-normal-crossings point is $(u,v,w)=(1,1,1)$.  On its
+exceptional plane, with local coordinates denoted by $a,b,c$, the leading
+Kummer function is
+\[
+ \Lambda_E=-\frac{c(a+b+c)}{ab}.
+\]
+For every nontrivial character $A$ over $\mathbb F_q$, setting $b=1$ gives
+\begin{align*}
+ \sum_{E^\circ(\mathbb F_q)}A(\Lambda_E)
+ &=A(-1)\sum_{a,c\ne0}A(c)A(a+1+c)A^{-1}(a)=q.
+\end{align*}
+For $c\ne-1$ the inner $a$-sum is $-1$, while at $c=-1$ it is $q-1$;
+the last equality follows after summing $A(c)$.  In perverse normalization,
+the Mellin identity identifies the $t=1$ stalk with the effective class
+$-[R\Gamma_c]$.  The blow-up weight spectral sequence identifies the
+exceptional-plane contribution with its unique rank-one weight-$2$ piece,
+$\operatorname {Gr}_2^W(\ker N)\simeq E_\ell(-1)$ above, and the displayed
+sum says that geometric Frobenius acts on it by $q=p^r$.  Hence its
+eigenvalue in the effective polynomial is exactly $+p$; the outer minus sign
+has already been absorbed in $-[R\Gamma_c]$.
+
+The involution
+\begin{equation}
+ \tau(u,v,w)=\bigl(w,(uvw)^{-1},u\bigr),\qquad
+ \Lambda\circ\tau=\Lambda^{-1},
+ \label{eq:lemmaBprime-involution}
+\end{equation}
+is defined over $\mathbb F_p$ and carries $\mathcal L_A$ to
+$\mathcal L_{A^{-1}}$.  Composing this identification with Poincar\'e
+duality gives a Frobenius-equivariant alternating perfect pairing
+\[
+ V_A\otimes_{E_\ell}V_A\longrightarrow E_\ell(-3)
+\]
+on the remaining rank-two quotient, with no residual constant Kummer twist.
+In rank two the determinant equals the similitude multiplier, hence it is
+$p^3$.  Therefore the effective characteristic factor is
+the theorem-level identity
+\begin{equation}
+ \boxed{
+ P_{p,j}(X)=(X-p)\bigl(X^2-a_{p,j}X+p^3\bigr),
+ \qquad
+ a_{p,j}=S_{p,j}^{(1)}-p.}
+ \label{eq:lemmaBprime-factor}
+\end{equation}
+The equality is an equality of the semisimplified effective virtual
+Frobenius class $-[R\Gamma_c(U,\mathcal L_{p,j})]$ with the rank-three
+middle-extension stalk.  Thus it does not confuse the $q-1$ Mellin
+summands in~\eqref{eq:lemmaBprime-A1-extension} with eigenvalues.
+
+\subsubsection{Newton polygons and the inclusion theorem}
+
+Since $a_{p,j}\equiv S_{p,j}^{(1)}\equiv b_j\pmod{\mathfrak p}$, put
+$m=v_{\mathfrak p}(a_{p,j})$.  The two roots of the quadratic factor in
+\eqref{eq:lemmaBprime-factor} have valuations
+\begin{equation}
+ \begin{cases}
+ (0,3),&m=0,\\
+ (1,2),&m=1,\\
+ (3/2,3/2),&m\geq2.
+ \end{cases}
+ \label{eq:lemmaBprime-quadratic-slopes}
+\end{equation}
+Adding the Tate slope $1$ gives
+\begin{equation}
+ m_0(p,j)=
+ \begin{cases}
+ 1,&b_j\not\equiv0\pmod p,\\
+ 0,&b_j\equiv0\pmod p.
+ \end{cases}
+ \label{eq:lemmaBprime-unit-count}
+\end{equation}
+In particular, $m_0(p,j)$ is never at least two.  At an ordinary point the
+Newton slopes are $(0,1,3)$ and equal the Hodge slopes in
+\eqref{eq:lemmaBprime-h0}; at a Hasse zero the polygon rises strictly above
+the Hodge polygon.
+
+We record explicitly the theorem required in the specification.  In the
+effective convention, the unique unit root reduces to $b_j$.  Restoring
+the sign of $R\Gamma_c$, its signed slope-zero sum is therefore
+$-b_j\pmod{\mathfrak p}$.  Consequently
+\begin{theorem}[Slope-zero inclusion]
+\label{thm:lemmaBprime-inclusion}
+For every prime $p\geq5$,
+\begin{equation}
+ \mathcal Z_p\subseteq
+ \{1\leq j\leq p-2:m_0(p,j)\ne1\}.
+ \label{eq:lemmaBprime-inclusion}
+\end{equation}
+For this marked coordinate equality holds in
+\eqref{eq:lemmaBprime-inclusion}: both sides are exactly the Hasse-zero set.
+\end{theorem}
+
+Thus the inclusion is a theorem, but it is also a tautology: the moving
+unit root exists exactly when its Hasse invariant $b_j$ is nonzero.
+
+\paragraph{Extension-field computation.}
+To check~\eqref{eq:lemmaBprime-factor} without making the circular
+Jacobi-unit count, the script evaluates the full base-changed skeleton
+\eqref{eq:lemmaBprime-A1-extension}.  If $\gamma$ generates
+$\mathbb F_q^\times$, set
+\[
+ f_n=A(1-\gamma^n),\qquad
+ g_n=A\left(\frac{\gamma^n}{1+\gamma^n}\right).
+\]
+Multiplicative Fourier inversion turns the complete $q-1$ character sum
+into the exact cyclic convolution
+\begin{equation}
+ S_{p,j}^{(r)}=-\sum_{c\in\mathbb Z/(q-1)}(f*f)_c(g*g)_c.
+ \label{eq:lemmaBprime-cyclic-engine}
+\end{equation}
+This is the promised $\mathbb F_{p^r}$ use of
+Theorem~\ref{thm:lemmaA-skeleton}.  Only the characters with index
+$K=(q-1)k/(p-1)$ are Hasse--Davenport lifts of base-field characters; the
+other extension characters cannot be omitted.  At $(p,j,r)=(5,1,2)$ the
+correct trace is $-125$, whereas the invalid termwise lifting shortcut
+gives $-153$.
+
+Newton's identities recover the cubic coefficients from $S_1,S_2,S_3$:
+\[
+ e_1=S_1,\qquad e_2=\frac{S_1^2-S_2}{2},\qquad
+ e_3=\frac{S_1^3-3S_1S_2+2S_3}{6}.
+\]
+On six rational probe pairs, the portable direct-count and full-$q-1$ A1
+engines independently compute all three traces and give
+$e_2=pS_1+p^3-p^2$ and $e_3=p^4$, as predicted by
+\eqref{eq:lemmaBprime-factor}.  The $p=13$ row below uses an independently
+computed $S_1$ and the theorem-level factor.  Representative rows are
+\begin{center}
+\begin{tabular}{c|c|r|r|r|c}
+ $p$ & $j$ & $S_1$ & $e_2$ & $e_3$ & Newton slopes \\ \hline
+ $5$  & $1$ & $-5$  & $75$  & $625$   & $(1,1,2)$ \\
+ $5$  & $2$ & $3$   & $115$ & $625$   & $(0,1,3)$ \\
+ $7$  & $1$ & $-2$  & $280$ & $2401$  & $(0,1,3)$ \\
+ $7$  & $3$ & $31$  & $511$ & $2401$  & $(0,1,3)$ \\
+ $11$ & $5$ & $-33$ & $847$ & $14641$ & $(1,1,2)$ \\
+ $13$ & $1$ & $5$   & $2093$& $28561$ & $(0,1,3)$
+\end{tabular}
+\end{center}
+For example, the complete traces at $(p,j)=(7,1)$ are
+\[
+ (S_1,S_2,S_3,S_4)=(-2,-556,8875,133128),
+\]
+and at $(11,5)$ they are $(-33,-605,91839)$.  A genuinely cyclotomic
+check at $p=11,j=1$, with $\zeta=\zeta_{10}$, gives
+\[
+ S_1=8\zeta^3-8\zeta^2-27,\qquad
+ e_2=88\zeta^3-88\zeta^2+913,\qquad e_3=14641.
+\]
+
+For every prime $p\leq60$ and every nontrivial $j$ ($405$ pairs), an
+independent production scan computed the complete traces $S_1,S_2,S_3$
+modulo $p^6$ from~\eqref{eq:lemmaBprime-cyclic-engine}.  Thus every one of
+the $q-1$ extension characters was retained for $q=p,p^2,p^3$; neither the
+Ap\'ery recurrence nor~\eqref{eq:lemmaBprime-factor} was used to construct
+the traces.  The optional \texttt{--full-small-scan} mode of
+\texttt{lemmaBprime\_explore.py}, run under \texttt{sage -python}, is the
+reproduction path; the standard portable verifier uses the exact anchor
+probes instead of repeating this seven-minute scan.  Newton's identities
+then gave
+\begin{center}
+\begin{tabular}{c|r|r|r}
+ range & $(0,1,3)=\mathrm{NP}=\mathrm{HP}$ & $(1,1,2)$ & $m_0\geq2$ \\ \hline
+ $p\leq60$, all $j$ & $390$ & $15$ & $0$
+\end{tabular}
+\end{center}
+The $15$ nonordinary points are
+\[
+\begin{gathered}
+ (5;1,3),\ (11;5),\ (17;3,13),\ (19;8,10),\\
+ (31;8,22),\ (37;17,19),\ (41;10,30),\ (59;9,49).
+\end{gathered}
+\]
+They are exactly the $15$ pairs with $b_j=0$ in this range.
+
+For every prime $p\leq300$, the second range run used the already proved factor
+\eqref{eq:lemmaBprime-factor}: it evaluated the base-field A1 skeleton
+$p$-adically at every $j\in\mathcal Z_p$, and classified $20$ deterministic
+random coordinates per prime from the factor and their base trace modulo $p$
+(all available coordinates for the smallest primes).
+It contained $63$ zero coordinates and $1140$ sampled coordinates.  All $63$ zeros had
+$v_{\mathfrak p}(a_{p,j})=1$ and slopes $(1,1,2)$.  The random sample split
+as $1127$ ordinary coordinates with slopes $(0,1,3)$ and $13$ hits on the
+already enumerated zero set, again with slopes $(1,1,2)$.  No pair had two
+slope-zero roots.  Thus the $p\leq60$ table is a full extension-field check
+of the factor, while the $p\leq300$ table is a theorem-driven enumeration
+plus independent base-A1 valuation checks at all Hasse zeros.  Neither table
+is used to prove the non-numerical Hodge formula
+\eqref{eq:lemmaBprime-h0}.
+
+\subsubsection{Exact eigenvalue tests and the discriminant}
+
+The polynomial
+\[
+ \Delta(t)=t^2-34t+1
+\]
+does occur naturally, but not as a Frobenius eigenline.  From
+\eqref{eq:lemmaBprime-arrangement}, the logarithmic critical equations are
+\[
+ u^2vw-2uvw+1=0,\qquad
+ uv^2w-2uvw+1=0,\qquad
+ uvw^2-1=0.
+\]
+On $U$ they give
+\[
+ u=v=2-w,\qquad w^2-2w-1=0,
+\]
+and substitution yields the two critical values
+\begin{equation}
+ \Lambda_{\rm crit}=17\pm12\sqrt2=(1\pm\sqrt2)^4.
+ \label{eq:lemmaBprime-critical-values}
+\end{equation}
+Thus the roots of $\Delta$ are conifold critical values of the map
+$\Lambda$.  The involution~\eqref{eq:lemmaBprime-involution} exchanges
+them.  The actual rank-two quotient remains self-dual; neither critical
+value thereby becomes a rank-one Teichm\"uller eigenline.
+
+The exact tests make this distinction visible.
+At the split prime $p=7$, the roots of $\Delta$ are $2$ and $4$.  For
+$j=1,2,3$ the quadratic factors are
+\[
+ X^2+9X+343,\qquad X^2+25X+343,\qquad X^2-24X+343.
+\]
+Their unit-root residues are respectively $5,3,3$, whereas the proposed
+Teichm\"uller targets are respectively $\{2,4\}$, $\{2,4\}$, and
+$\{1\}$.  Hence the candidate already fails modulo $7$.  More strongly,
+for $j=1,2$ reduction modulo $\Phi_3(X)=X^2+X+1$ leaves
+$8X+342$ and $24X+342$, and for $j=3$ the last quadratic evaluates to
+$320$ at $X=1$.  There is no exact cyclotomic match.
+
+The three quadratic eigenvalue fields in this test are
+\[
+ \mathbb Q(\sqrt{-1291}),\qquad
+ \mathbb Q(\sqrt{-83}),\qquad
+ \mathbb Q(\sqrt{-199}),
+\]
+none of which is the base Jacobi field
+$E_7=\mathbb Q(\zeta_6)=\mathbb Q(\sqrt{-3})$.  Thus no base-field
+Jacobi-sum monomial, affine in $j$ or otherwise, equals the unit root in
+these exact cases.  In $\mathbb Q_7$, the unit residues $5,3,3$ are all
+nonsquares; the other two slopes are $1$ and $3$, both odd.  Hence none of
+the three actual eigenvalues is a square in the natural coefficient
+completion.  This rules out the nonvacuous local Sym$^2$ square test.
+
+At the inert prime $p=11$, the roots of $\Delta$ lie in
+$\mathbb F_{11^2}$ and have order $6$.  For $j=1,2,4$ their powers do not
+even lie in $\mathbb F_{11}$; for $j=3$ the target is $-1$ but
+$b_3\equiv4\pmod {11}$; and $j=5$ has no unit root.  Residue coincidences
+can occur: at $j=6$ both the target and the unit-root residue are $1$.
+
+Fix an embedding
+$\iota_p:\overline{\mathbb Q}\hookrightarrow\overline{\mathbb Q}_p$.
+A Teichm\"uller lift of either reduction of $17\pm12\sqrt2$ is
+$\iota_p(\xi)$ for a prime-to-$p$ root of unity $\xi$; in the inert case it
+lies in the unramified quadratic extension.  Every complex conjugate of
+$\xi$ has absolute value $1$.  By contrast, each root of the pure
+weight-$3$ quotient is a Weil $p$-number whose complex conjugates have
+absolute value $p^{3/2}$.  Injectivity of $\iota_p$ therefore forbids exact
+equality in $\overline{\mathbb Q}_p$ with
+$\omega(17\pm12\sqrt2)^{\pm j}$, although isolated congruences modulo $p$
+are possible.
+
+The $p=7$ field and square computations are additional exact sample checks:
+they exclude every base-field Jacobi monomial in those cases and every
+square in the natural coefficient completion
+$E_{7,\mathfrak p}=\mathbb Q_7$.  We do not claim a universal classification
+of affine Jacobi monomials, or a square obstruction after arbitrary scalar
+extension.  The sole universally identified rank-one eigenvalue is $p$, of
+slope $1$, and is irrelevant to a slope-zero collision.
+
+\paragraph{Binary verdict.}
+Equation~\eqref{eq:lemmaBprime-h0} gives $h^0(j)=1$ for every nontrivial
+twist, so Newton-above-Hodge allows at most one slope-zero eigenvalue.
+Equation~\eqref{eq:lemmaBprime-unit-count} says that the Newton polygon
+equals the Hodge polygon precisely away from the original Hasse zeros.
+Thus the two-unit-root split required by G2 is structurally impossible,
+independently of whether the single moving root has an isolated alternative
+description.  The requested verdict is therefore
+\begin{center}
+ \fbox{\textbf{G1 (KILL).}}
+\end{center}
+The crystalline criterion is exactly the Hasse-invariant tautology
+$p\mid b_j\Longleftrightarrow m_0(p,j)=0$.  There is no second unit root
+with which a moving root could collide.  In particular,
+the critical values $17\pm12\sqrt2$ do not open a unit-root
+anti-concentration problem.
+
+\paragraph{Fail-closed computational consistency verification.}
+Running \texttt{python3 problems/3.2/lemmaBprime\_verify.py} ends with
+\begingroup\scriptsize
+\begin{verbatim}
+PASS full A1 probes: 6 pairs r<=3; p13 r=1; cyclotomic p11,j1 S1
+PASS cubic factor: 6 probed cubics; 5 r4 recurrences; p13 predicted
+PASS p<=59 classification: 405 factor classifications; base-A1 v(a)=1 at 15/15 zeros
+PASS p<=300 sample: base-A1 v(a)=1 at 63/63 zeros; sample 1140, zero hits 13
+PASS candidate matches: critical values; p7 exact Teich/Jacobi/Q7-square rejection
+PASS binary gate: G1 (h0=1; the only fixed branch is Tate slope 1)
+SUMMARY: 11 PASS, 0 FAIL
+\end{verbatim}
+\endgroup
