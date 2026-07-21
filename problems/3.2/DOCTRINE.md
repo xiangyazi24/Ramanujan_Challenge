@@ -1234,3 +1234,31 @@ two-loci separation).
 Paper 100→105 pp, compiles clean. Chain now: C gives A/B's marked coordinate a
 fixed-complexity toric anchor; remaining = j-Mellin sheafification (algebraic,
 Codex-tractable) + two-char dispersion (deep analytic, ChatGPT).
+
+## Directive 2026-07-20 (Xiang via TG): 把 P3.2 完全解决，不退缩 — fable-ora mode
+
+ChatGPT tabs down all session ⟹ Xiang's call: use Fable as the strategic oracle
+(replacing the down ChatGPT deep-water role) + Codex gpt-5.6-sol as workhorse.
+This is the CORRECT form of "不退缩": not re-dispatching Codex into the quantifier
+wall Oracle C already proved (marked family is NOT a j-line sheaf ⟹ FKM doesn't
+directly apply), but bringing in a premium strategic oracle for the deep
+arithmetic-geometry / analytic-number-theory move Codex cannot make alone.
+
+### fable-ora coordinator loop (this campaign)
+- I (Opus) = coordinator: pre-digest repo → compact self-contained brief (Fable
+  NEVER reads the repo), synthesize, write Codex spec, verify, commit.
+- Hot Fable = strategic oracle (persistent, reuse via SendMessage). Spawned with
+  the meeting-point brief: 4 batched questions on horizontal dispersion of the
+  moving character j —
+  (1) character→geometry (Mellin/arithmetic-Fourier turning moving j into a
+      geometric point so FKM/FFK applies);
+  (2) two-characteristic coupling (same fixed toric Λ over p≠q, product/convolution
+      on U×U for the bilinear cancellation);
+  (3) bypass sheaf entirely (direct large-sieve/dispersion on b_j via toric
+      constant-term; shift-correlation Σ_r e_p(a(b_{r+s}−b_r)));
+  (4) first concrete sub-lemma for Codex, honest about equal-hardness.
+- Codex gpt-5.6-sol xhigh = sole workhorse; all implementation via spec.
+
+Standing chain: A(SDC bilinear) ← B(mh2 dispersion) ← C(marked coordinate = fixed
+toric Λ, CT(Λ^n)=b_n, (p,j)-uniform bounded Betti). The ONLY gap = horizontal
+control of moving characters. Fable consulted on exactly this. Awaiting its route.
