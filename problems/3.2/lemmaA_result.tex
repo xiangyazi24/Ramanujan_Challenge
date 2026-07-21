@@ -1,0 +1,347 @@
+% LEMMA A RESULT.
+% Exact Jacobi skeleton, Stickelberger container, and decision gate.
+
+\subsection{Jacobi--Stickelberger analysis of the marked coordinate}
+\label{ssec:lemmaA-result}
+
+We use the fixed Laurent polynomial~\eqref{eq:oracleC-Lambda} and the
+marked-coordinate identity of
+Theorem~\ref{thm:oracleC-marked-coordinate}.  Put
+\[
+ h=p-1,
+ \qquad E_p=\mathbb Q(\mu_h),
+ \qquad \chi=\omega^j,
+\]
+where $\omega\colon\mathbb F_p^\times\to\mu_h$ is the Teichm\"uller
+character associated with the chosen prime $\mathfrak p\mid p$ of~$E_p$.
+Every multiplicative character, including the trivial character
+$\varepsilon$, is extended by zero at~$0$.  We write
+\[
+ J(A,B)=\sum_{t\in\mathbb F_p}A(t)B(1-t).
+\]
+All character exponents below are read modulo~$h$.
+
+\subsubsection{A1: an exact four-Jacobi skeleton}
+
+\begin{theorem}[Jacobi skeleton]
+\label{thm:lemmaA-skeleton}
+For $1\leq j\leq p-2$, the cyclotomic lift in
+\eqref{eq:oracleC-Frobenius-coordinate} has the exact expression
+\begin{equation}
+ \widetilde c_{p,j}^{\rm tor}
+ =-\frac1h\sum_{k=0}^{h-1}
+ J(\omega^{-k},\omega^j)^2
+ J(\omega^{-k},\omega^{j+k})^2.
+ \label{eq:lemmaA-skeleton}
+\end{equation}
+Thus the skeleton has one character variable and four Jacobi factors,
+all with arguments affine in $(j,k)$.
+
+At $j=0$, let the right side of~\eqref{eq:lemmaA-skeleton}, with
+$\chi=\varepsilon$, be denoted by $\mathscr S_{p,0}$.  The exact endpoint
+formula is
+\begin{equation}
+ \widetilde c_{p,0}^{\rm tor}
+ =\mathscr S_{p,0}-4p^2+14p-13
+ =-(p-1)^3.
+ \label{eq:lemmaA-endpoint}
+\end{equation}
+In particular, reduction modulo $\mathfrak p$ gives $b_j$ for every
+$0\leq j\leq p-2$.
+\end{theorem}
+
+\begin{proof}
+For a character $A$ and $t\in\mathbb F_p^\times$, finite Mellin
+inversion gives
+\begin{equation}
+ A(1+t)=\frac1h\sum_{\rho}
+ \rho(-1)J(\overline\rho,A)\rho(t),
+ \label{eq:lemmaA-mellin}
+\end{equation}
+where $\rho$ runs over all multiplicative characters of
+$\mathbb F_p^\times$.  Indeed, the Fourier coefficient at~$\rho$ is
+\[
+ \sum_{t\ne0}A(1+t)\overline\rho(t)
+ =\rho(-1)J(\overline\rho,A).
+\]
+
+For $x,y,z\ne0$, put
+\[
+ s=\frac{(1+y)(1+z)}{xyz}.
+\]
+The marked coordinate factors as
+\begin{equation}
+ \Lambda(x,y,z)=(1+x)(1+y)(1+z)(1+s).
+ \label{eq:lemmaA-factor-Lambda}
+\end{equation}
+If $j>0$, the summand is already zero when $y=-1$ or $z=-1$.
+We may therefore apply~\eqref{eq:lemmaA-mellin} to $s$ and then restore
+those zero-contribution values.  With $\rho=\omega^k$, the three
+variable sums separate:
+\begin{align*}
+ \sum_{x\ne0}\chi(1+x)\overline\rho(x)
+   &=\rho(-1)J(\overline\rho,\chi),\\
+ \sum_{y\ne0}(\chi\rho)(1+y)\overline\rho(y)
+   &=\rho(-1)J(\overline\rho,\chi\rho),\\
+ \sum_{z\ne0}(\chi\rho)(1+z)\overline\rho(z)
+   &=\rho(-1)J(\overline\rho,\chi\rho).
+\end{align*}
+Together with the factor $\rho(-1)$ in
+\eqref{eq:lemmaA-mellin}, the four signs multiply to~$1$.
+The outer minus sign in the definition of
+$\widetilde c_{p,j}^{\rm tor}$ now gives
+\eqref{eq:lemmaA-skeleton}.
+
+This argument includes all degenerate values of~$k$: the identities
+\[
+ J(\varepsilon,A)=J(A,\varepsilon)=-1,
+ \quad J(A,A^{-1})=-A(-1),
+ \quad J(\varepsilon,\varepsilon)=p-2
+\]
+are built into the unnormalized Jacobi sum.  In particular, no
+Gauss-sum quotient is being used illegally when a product character is
+trivial.
+
+At $j=0$, zero-extension of $\varepsilon$ computes the open-set sum
+$\mathscr S_{p,0}=-\#U(\mathbb F_p)$ rather than the prescribed raw
+zeroth power.  Equation~\eqref{eq:oracleC-U-count} gives
+\[
+ \#U(\mathbb F_p)-(p-1)^3=-4p^2+14p-13,
+\]
+which proves~\eqref{eq:lemmaA-endpoint}.  This is the necessary
+$0^0=1$ correction; it is not a choice of character convention.
+\end{proof}
+
+For completeness, the reduction of every Jacobi factor has an
+$O(1)$ formula.  If $a,b\in\{0,\ldots,h-1\}$ and
+$\overline J_p(a,b)$ denotes the reduction of
+$J(\omega^a,\omega^b)$ modulo~$\mathfrak p$, then
+\begin{equation}
+ \overline J_p(a,b)=
+ \begin{cases}
+ -2,&a=b=0,\\
+ -1,&\text{exactly one of $a,b$ is zero},\\
+ 0,&a,b>0\text{ and }h-a>b,\\
+ -(-1)^{h-a}\binom b{h-a},
+      &a,b>0\text{ and }h-a\leq b.
+ \end{cases}
+ \label{eq:lemmaA-Jmodp}
+\end{equation}
+This follows by expanding $(1-t)^b$: among the powers $t^{a+r}$,
+only $a+r=h$ can survive torus orthogonality.  Since
+$-h^{-1}\equiv1\pmod p$, equations
+\eqref{eq:lemmaA-skeleton} and~\eqref{eq:lemmaA-Jmodp} are an entirely
+explicit finite-field formula for~$b_j$.
+
+For $1\leq j\leq p-2$, if
+\[
+ m=\min(j,h-j),
+\]
+then only $0\leq k\leq m$ survive modulo~$\mathfrak p$, and on that
+range
+\begin{align}
+ \overline J_p(-k,j)&=(-1)^{k+1}\binom jk,\notag\\
+ \overline J_p(-k,j+k)&=(-1)^{k+1}\binom{j+k}k.
+ \label{eq:lemmaA-unit-reduction}
+\end{align}
+Consequently the surviving $k$-th skeleton term is exactly
+\begin{equation}
+ \binom jk^2\binom{j+k}k^2.
+ \label{eq:lemmaA-Apery-summand}
+\end{equation}
+When $j>h/2$, the omitted terms of the usual Ap\'ery sum have
+$j+k\geq p$ and hence $p\mid\binom{j+k}k$.  This also proves directly,
+without numerical input, that the reduction of the skeleton is~$b_j$.
+
+The script \texttt{lemmaA\_verify.py} independently compares the
+skeleton with the Ap\'ery recurrence for every prime $5\leq p\leq200$
+and every $0\leq j\leq p-2$ ($4178$ pairs).  It also compares both with
+the direct three-dimensional torus sum through $p=31$.  At
+$j=h/2$, it expands
+\[
+ \eta(2z)^4\eta(4z)^4
+ =q\prod_{n\geq1}(1-q^{2n})^4(1-q^{4n})^4
+ =\sum_{r\geq1}a_rq^r
+\]
+and verifies
+\begin{equation}
+ \widetilde c_{p,h/2}^{\rm tor}\equiv b_{h/2}\equiv a_p\pmod p
+ \label{eq:lemmaA-midpoint-anchor}
+\end{equation}
+for every prime $5\leq p\leq200$, reproducing the modular-form anchor
+in Remark~\ref{rem:open}.
+
+\subsubsection{A2: the explicit Stickelberger container}
+
+Choose a prime $\mathfrak P\mid\mathfrak p$ of $E_p(\mu_p)$ and
+normalize $v_{\mathfrak P}(p)=1$.  With
+\[
+ g(A)=\sum_{t\in\mathbb F_p}A(t)\zeta_p^t,
+\]
+Gross--Koblitz computes this valuation; its restriction to $E_p$ is
+the $\mathfrak p$-adic valuation used below.  For an exponent~$a$,
+write
+\[
+ d_h(a)=\frac{[-a]_h}{h}
+       =\left\langle-\frac ah\right\rangle,
+\]
+where $[-a]_h\in\{0,\ldots,h-1\}$ and the fractional part of an
+integer is~$0$.  Gross--Koblitz gives
+$v_{\mathfrak P}(g(\omega^a))=d_h(a)$.  Including the inverse-character
+degeneracy, the resulting formula valid for every $a,b$ is
+\begin{equation}
+ \nu_h(a,b):=v_{\mathfrak p}\!\left(J(\omega^a,\omega^b)\right)
+ =d_h(a)+d_h(b)-d_h(a+b)
+ -\mathbf1_{\substack{a\not\equiv0,\ b\not\equiv0\ (h)\\
+                       a+b\equiv0\ (h)}}.
+ \label{eq:lemmaA-Jvaluation}
+\end{equation}
+Indeed, away from a trivial product character this is the valuation of
+$g(\omega^a)g(\omega^b)/g(\omega^{a+b})$; when the two nontrivial
+characters are inverse, $J(A,A^{-1})=-A(-1)$ is a unit and supplies
+the last correction.  Formula~\eqref{eq:lemmaA-Jvaluation} also gives
+zero in the cases involving a trivial factor.  Its values are always
+$0$ or~$1$.
+
+For the remainder of A2 assume $1\leq j\leq p-2$, and let
+\[
+ T_{j,k}=J(\omega^{-k},\omega^j)^2
+          J(\omega^{-k},\omega^{j+k})^2.
+\]
+Equations~\eqref{eq:lemmaA-skeleton} and
+\eqref{eq:lemmaA-Jvaluation} give the requested digit/fractional-part
+valuation
+\begin{align}
+ v(k;j)
+ &=2\nu_h(-k,j)+2\nu_h(-k,j+k)\notag\\
+ &=2\mathbf1_{\{k>j\}}+2\mathbf1_{\{k>h-j\}},
+ \qquad 0\leq k\leq h-1.
+ \label{eq:lemmaA-term-valuation}
+\end{align}
+Thus its minimum is zero and
+\begin{equation}
+ \{k:v(k;j)=0\}=\{0,1,\ldots,\min(j,h-j)\},
+ \qquad
+ U_p(j)=1+\min(j,h-j).
+ \label{eq:lemmaA-U-explicit}
+\end{equation}
+This is computable in $O(1)$ operations per~$(p,j)$.
+
+\begin{theorem}[Unique-unit container]
+\label{thm:lemmaA-container}
+For $1\leq j\leq p-2$, if $U_p(j)=1$, then
+$b_j\not\equiv0\pmod p$.  Hence
+\begin{equation}
+ \mathcal Z_p\subseteq
+ \{1\leq j\leq p-2:U_p(j)\ne1\}.
+ \label{eq:lemmaA-container}
+\end{equation}
+The endpoints $j=0,p-1$ are absent from $\mathcal Z_p$ because their
+marked values are~$1$.
+\end{theorem}
+
+\begin{proof}
+Jacobi sums are algebraic integers, $-1/h$ is a unit at
+$\mathfrak p$, and the minimum in
+\eqref{eq:lemmaA-term-valuation} is~$0$.  If exactly one $T_{j,k}$ has
+valuation zero, reduction of~\eqref{eq:lemmaA-skeleton} kills every
+other term and leaves one nonzero residue.  Therefore the reduction of
+$\widetilde c_{p,j}^{\rm tor}$, which is $b_j$ by
+\eqref{eq:oracleC-coordinate-equality}, cannot vanish.
+\end{proof}
+
+There are two normalization points in this argument.  First, the Gauss
+sums live in $E_p(\mu_p)$, but the Jacobi sums lie in~$E_p$; because
+$p\equiv1\pmod h$, the residue field at $\mathfrak p$ is
+$\mathbb F_p$.  Second, if the valuation is instead normalized by
+$v(1-\zeta_p)=1$, every value in
+\eqref{eq:lemmaA-Jvaluation}--\eqref{eq:lemmaA-term-valuation} must be
+multiplied by~$h$.  No Greene $p^{-1}J$ normalization is used here.
+
+The explicit answer~\eqref{eq:lemmaA-U-explicit} now exposes the
+decision gate:
+\begin{equation}
+ U_p(j)=1+\min(j,p-1-j)\geq2
+ \qquad(1\leq j\leq p-2).
+ \label{eq:lemmaA-U-never-one}
+\end{equation}
+Thus the implication in Theorem~\ref{thm:lemmaA-container} is correct
+but never triggers on a nontrivial character.  Moreover,
+\eqref{eq:lemmaA-Apery-summand} shows that the simultaneous unit terms
+reconstruct the original Ap\'ery sum modulo~$p$: cancellation among
+unit terms is the original vanishing problem, not a lower-complexity
+replacement for it.
+
+It is important here that the $h$ Jacobi summands are a Mellin expansion
+of the trace, not the at most $B_\Lambda$ Frobenius eigenvalues in
+Proposition~\ref{prop:oracleC-uniform-complexity}.  Their unit count
+depends on the chosen integral character expansion and is not a
+crystalline slope multiplicity.  The fixed-dimensional cohomological
+trace occurs only after the length-$h$ Mellin sum has cancelled.  Thus
+\eqref{eq:lemmaA-U-never-one} does not contradict the uniform Betti
+bound; it identifies the precise point at which this Jacobi skeleton
+fails to produce a unique unit summand and hence gives no
+unique-unit-root certificate.
+
+\subsubsection{A3: empirical computation and verdict}
+
+The zero sets were computed from the Ap\'ery recurrence, independently
+of the skeleton.  A zero at $j=h/2$ was classified first as
+\emph{non-ordinary}; every other zero was classified as a collision of
+at least two unit skeleton terms.  The results are:
+\begin{center}
+\begin{tabular}{r|r|r|r|r|r|r}
+ bound & primes & $\sum_p Z(p)$ & zero-free & $U=0$ & $U\geq2$ collision
+       & non-ordinary \\ \hline
+ $200$  & $44$  & $41$  & $25$  & $0$ & $40$  & $1$ \\
+ $500$  & $93$  & $95$  & $53$  & $0$ & $94$  & $1$ \\
+ $1000$ & $166$ & $165$ & $96$  & $0$ & $164$ & $1$ \\
+ $2000$ & $301$ & $283$ & $184$ & $0$ & $282$ & $1$ \\
+ $5000$ & $667$ & $608$ & $418$ & $0$ & $606$ & $2$
+\end{tabular}
+\end{center}
+For $p\leq2000$, the distribution of $Z(p)$ is
+\[
+ \#\{Z=0,1,2,4,6\}=\{184,1,95,17,4\}.
+\]
+For the stretch range $p\leq5000$, it is
+\[
+ \#\{Z=0,1,2,4,6,8\}=\{418,2,199,41,6,1\}.
+\]
+The non-ordinary points in the stretch range are
+\[
+ (p,j)=(11,5),\ (3137,1568);
+ \qquad a_{11}=-44,
+ \quad a_{3137}=207042=66\cdot3137.
+\]
+
+The container size is not merely empirical: by
+\eqref{eq:lemmaA-U-never-one}, for every $p\geq5$,
+\begin{equation}
+ \#\{1\leq j\leq p-2:U_p(j)\ne1\}=p-2.
+ \label{eq:lemmaA-container-size}
+\end{equation}
+Therefore the decision-gate verdict is \textbf{S2}.  Generic~$j$ has
+multiple unit Jacobi terms (in fact every nontrivial~$j$ does), and all
+observed zeros are either non-ordinary midpoint zeros or cancellations
+among these unit terms.  This presentation of the crystalline/Jacobi
+route alone gives no estimate $|\mathcal Z_p|\ll p^\theta$ with
+$\theta<1$.  The unconditional
+$Z(p)\ll p^{2/3}$ bound in Proposition~\ref{prop:zp-bound} remains
+available, but it comes from the gap-polynomial argument, not from
+\eqref{eq:lemmaA-container}.
+
+Finally, the Lemma--0 collapse is fully compatible with this negative
+gate.  Corollary~\ref{cor:lucas} gives, for $m\in(N,2N]$ and
+$N<p\leq m$,
+\[
+ b_m\equiv5b_{m-p}\pmod p,
+ \qquad
+ L_N(m)=\#\{p\in(N,m]:p\mid b_m\}.
+\]
+Since~\eqref{eq:lemmaA-container-size} excludes no nontrivial affine
+target $j=m-p$, it supplies neither the pointwise anti-concentration
+required after the collapse nor the centered estimate
+\eqref{eq:oracleB-mh2}.  The exact skeleton and its Stickelberger
+valuation are therefore complete, but their decision-gate output is
+the valid S2 obstruction specified in the task.

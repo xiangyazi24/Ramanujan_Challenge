@@ -1291,3 +1291,33 @@ container Z_p⊆{j:U(j)≠1} with explicit digit U(j); (A3) DECISION GATE p≤50
 |{U≠1}|=polylog(S1,route wins) / p^θ digit(S3,Mauduit-Rivat) / unstructured(S2,
 report). Hot Fable persists (agentId tracked) for the next round after Codex's
 gate verdict.
+
+### Lemma A harvest (Codex, decision gate = S2) — skeleton real, container trivial
+
+Codex delivered + I independently verified (p=13 char-0 Jacobi):
+- ★ (A1) EXACT Jacobi skeleton (thm:lemmaA-skeleton): c̃_{p,j} = −(1/h)Σ_{k=0}^{h−1}
+  J(ω^{−k},ω^j)²J(ω^{−k},ω^{j+k})², h=p−1. mod 𝔭 the k-th term = C(j,k)²C(j+k,k)²
+  (the Apéry summand!), so skeleton ≡ b_j. Verified exact p≤200 all j (4178 pairs)
+  + γ_p anchor at j=(p−1)/2 (b_{(p−1)/2}≡a_p(f)). My check: integer ≡ b_j mod 13. REAL.
+- (A2) Stickelberger container (thm:lemmaA-container): v(k;j)=2·1_{k>j}+2·1_{k>h−j},
+  U_p(j)=1+min(j,h−j) ≥ 2 ALWAYS ⟹ {U≠1}=all p−2 coords ⟹ container TRIVIAL.
+- (A3) gate = **S2**: p≤5000, 667 primes, ΣZ=608, classes U=0:0 / U≥2-collision:606
+  / non-ordinary:2 (p=11 j=5, p=3137 j=1568=a_3137/66·... a_3137=66·3137). No |Z_p|≪p^θ.
+
+★ CODEX'S KEY DIAGNOSIS (why S2, and whether the route is circular):
+The h Jacobi summands are a MELLIN EXPANSION of the trace, NOT the ≤B_Λ Frobenius
+eigenvalues of prop:oracleC-uniform-complexity. Their unit count depends on the
+integral character expansion, is NOT a crystalline slope multiplicity; the
+fixed-dim cohomological trace appears only AFTER the length-h Mellin sum cancels.
+Worse: eq:lemmaA-Apery-summand shows the simultaneous unit terms RECONSTRUCT the
+Apéry sum mod p — "cancellation among unit terms IS the original vanishing problem,
+not a lower-complexity replacement." ⟹ possible circularity of the Jacobi-Mellin
+form of the crystalline route.
+
+OPEN QUESTION for Hot Fable (its own route's stall): is the true dichotomy the
+O(1) Frobenius-eigenvalue slope count (compute by DIRECT numerical diagonalization
+of Frobenius on the ≤B_Λ-dim toric H^*_c, which may be sparse) — or is Codex's
+circularity diagnosis fatal (Mellin unit terms = Apéry sum ⟹ back to start)?
+Also: S2 data shows ~all zeros are "U≥2 collision", no digit-defined E_p emerging
+— does this refute Fable's E_p∪A_p split, or does E_p need Newton-Hodge-polygon
+identification (not Jacobi-Mellin)? Sent to Hot Fable this round.
