@@ -1321,3 +1321,39 @@ circularity diagnosis fatal (Mellin unit terms = Apéry sum ⟹ back to start)?
 Also: S2 data shows ~all zeros are "U≥2 collision", no digit-defined E_p emerging
 — does this refute Fable's E_p∪A_p split, or does E_p need Newton-Hodge-polygon
 identification (not Jacobi-Mellin)? Sent to Hot Fable this round.
+
+### Hot Fable adjudication (Lemma A stall) — eigenvalue object + binary kill-gate
+
+Fable ENDORSED Codex's circularity verdict for the Jacobi-Mellin lens (the h≈p
+"unit terms" ARE the Apéry summands — Kummer's theorem; (A1) is a real reusable
+engine, (A2)/(A3) void). My Lemma-A spec conflated two decompositions of the same
+trace; S2 carried zero info about the eigenvalue lens.
+
+★ The corrected object = ≤B_Λ Frobenius eigenvalues of H*_c(U,L_{p,j}):
+- (a) Σ(slope-0 eigenvalues) ≡ −b_j mod 𝔭 ⟹ Z_p ⊆ {j: Newton slope-0 count ≠1}
+  is a THEOREM (inclusion automatic).
+- (b) Hodge polygon = Adolphson–Sperber polytope combinatorics (j via ⟨j·w/(p−1)⟩),
+  closed-form, no b_j ⟹ NON-CIRCULAR to compute.
+- (c) ★ THE RAZOR: route is a genuine reduction IFF h⁰(j)≥2 with identifiable
+  eigenvalues; if h⁰≡1 generically it's a Hasse-invariant TAUTOLOGY (dead).
+- ★ STRUCTURAL BET: Δ(t)=t²−34t+1 roots 17±12√2=(1±√2)⁴ = global units of b_n
+  growth. slope-0 MAY split {μ_j moving unit root} ⊕ {explicit ω(17±12√2)^{±j}},
+  making p|b_j ⟺ collision μ_j ≡ ±ω(17+12√2)^{±j} mod 𝔭 — a NEW attack surface.
+
+DECISION: LEMMA B′ (CODEX_SPEC_lemmaBprime.md, dispatched) — binary cheap gate:
+  Part1 Hodge h⁰(j) closed form; Part2 Newton polygon numerics via (A1)@F_{p^r};
+  Part3 match slope-0 eigenvalues vs ω(17±12√2)^{±j} etc.
+  G1 (h⁰=1, Newton=Hodge, no branch) = crystalline route TAUTOLOGICAL/dead → pivot.
+  G2 (h⁰≥2, explicit eigenvalue) = TRANSFORM to unit-root anti-concentration.
+
+PRE-AUTHORIZED PIVOT if G1 fires (program does not stall):
+- π1: lock+write the reduction chain as the result — full ⟺ (mh2) ⟸ (♦) [Lucas
+  collapse; no single b_m divisible by >N^{o(1)} window primes], with the 7×-size-
+  slack proof that every sieve-axiom route provably fails.
+- π2: conditional closure from uniform moving-target non-ordinarity
+  #{p∈(N,2N]: (m−p)-twist non-ordinary} ≪ N^{o(1)} + Poisson data.
+- π3: one unconditional nugget (short run) — from Casoratian 6/(n+1)³ + transfer
+  heights, prove #{p∈(N,2N]: p|b_m and p|b_{m+g}} ≪ 1+g (new cross-correlation
+  constraint; doesn't kill anchored star — file as constraint inventory).
+
+Hot Fable persists (fd2a39) for the G1/G2 verdict → next lemma spec.
