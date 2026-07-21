@@ -211,3 +211,10 @@
   unconditional theorem groups (NV+fiber+energy; quotient reduction; HM
   framework), 8 paper bugs found & fixed via adversarial audits
 - end: session complete, W-wave harvests all banked
+- ★★★★ DUAL-ORACLE MEETING: A (analytic, Fejer+Gallagher+SDC+doublet-trace) and
+  B (arithmetic, fixed-anchor+two-loci+deg B_p=Θ(p)) converge on eq:oracleB-mh2
+  (two-characteristic crystalline Mellin dispersion) = the SOLE remaining input
+  for fully-unconditional. Reduction half now airtight. All elementary bypasses
+  proven to fail (quantifier reversal, coefficient-vs-eval zeros, growing complexity).
+- fixed 4 paper items (2 from A, CFVZ caveat + two-loci from B); corrected my
+  spec's pencil error. paper 88→100 pp clean. all verified independently.

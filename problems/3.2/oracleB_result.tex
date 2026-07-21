@@ -1,0 +1,408 @@
+% STALL REPORT: G2 (literal fixed-anchor anti-concentration) is proved below,
+% but it has the wrong quantifier order for the scale-dependent anchored star.
+% G1 is not proved; literal G2 is proved but does not imply AMTD; G3 is not
+% reached; G4 is the principal output.  B1 and B2 as stated in
+% CODEX_SPEC_oracleB.md confuse
+% coefficient/Mellin zeros with evaluation roots.  The exact surviving
+% arithmetic input is the marked two-characteristic crystalline Mellin
+% dispersion statement (eq:oracleB-mh2), which remains open.
+
+\subsection{Arithmetic oracle B: a fixed-anchor theorem and the sharp
+horizontal obstruction}
+\label{ssec:oracleB-result}
+
+Put
+\[
+ \mathcal Z_p=\{0\leq j<p:b_j\equiv0\pmod p\},
+ \qquad H_p(t)=\sum_{j=0}^{p-1}b_jt^j.
+\]
+The requested AMTD estimate is not proved here.  There is nevertheless an
+unconditional answer to the literal fixed-target question in goal~G2.  It is
+stronger than density zero, but it also exposes the decisive quantifier
+reversal: a target fixed before the prime varies is elementary, whereas the
+no-go target is chosen after the dyadic scale.
+Thus the status of the ranked goals is: G1 is open; literal G2 is proved
+below but is insufficient for the moving target; G3 is not achieved because
+the required marked crystalline coordinate has not been constructed; and G4,
+the sharp obstruction with the exact missing input, is achieved.
+
+\begin{proposition}[Fixed Ap\'ery anchors are finite]
+\label{prop:oracleB-fixed-anchor}
+For $c\in\mathbb Z$, let $\bar c_p\in\{0,\ldots,p-1\}$ be its residue
+modulo~$p$, and set
+\[
+ c^\flat=\begin{cases}
+ c,&c\geq0,\\
+ -c-1,&c<0.
+ \end{cases}
+\]
+Then
+\begin{equation}
+ \{p\geq5:\bar c_p\in\mathcal Z_p\}
+ \subseteq \{p\geq5:p\mid b_{c^\flat}\}.
+ \label{eq:oracleB-fixed-inclusion}
+\end{equation}
+Consequently, for every fixed~$c$,
+\begin{equation}
+ \#\{p\leq X:\bar c_p\in\mathcal Z_p\}
+ \leq\omega(b_{c^\flat})=O_c(1)=o(\pi(X)).
+ \label{eq:oracleB-fixed-density}
+\end{equation}
+For $p>|c|$, the inclusion in~\eqref{eq:oracleB-fixed-inclusion} is an
+equivalence.
+\end{proposition}
+
+\begin{proof}
+First suppose that $c\geq0$, and write $c=\sum_i c_ip^i$ in base~$p$.
+The lowest digit is $c_0=\bar c_p$.  If
+$\bar c_p\in\mathcal Z_p$, then $p\mid b_{c_0}$, and Gessel's
+Lucas congruence (Theorem~\ref{thm:lucas}) gives
+\[
+ b_c\equiv\prod_i b_{c_i}\equiv0\pmod p.
+\]
+
+Now let $c=-d<0$ and write $d=qp+s$ with $0\leq s<p$.  If $s=0$,
+then $\bar c_p=0$ and there is no hit because $b_0=1$.  If $s>0$,
+then $\bar c_p=p-s$.  Reflection (Remark~\ref{rem:orbit}, or
+Proposition~\ref{prop:reflection}) gives
+\[
+ b_{p-s}\equiv b_{s-1}\pmod p.
+\]
+Thus a hit implies $p\mid b_{s-1}$.  The lowest base-$p$ digit of
+$d-1$ is $s-1$, so another application of Lucas gives
+$p\mid b_{d-1}=b_{c^\flat}$.  This proves the inclusion.
+
+The binomial formula for $b_n$ has positive integral summands and its
+$k=0$ summand is~$1$; hence $b_n$ is a fixed nonzero integer for fixed
+$n$.  It has only finitely many prime divisors, proving
+\eqref{eq:oracleB-fixed-density}.  Finally, if $p>|c|$, then for
+$c\geq0$ one has $\bar c_p=c$, while for $c=-d<0$ reflection gives
+$b_{\bar c_p}=b_{p-d}\equiv b_{d-1}$; both implications are then
+reversible.
+\end{proof}
+
+\begin{remark}[Why this does not kill the anchored star]
+\label{rem:oracleB-quantifiers}
+Proposition~\ref{prop:oracleB-fixed-anchor} has the quantifier order
+\begin{equation}
+ \forall c\in\mathbb Z\;\exists C_c\;\forall X:\qquad
+ \#\{p\leq X:\bar c_p\in\mathcal Z_p\}\leq C_c.
+ \label{eq:oracleB-fixed-quantifiers}
+\end{equation}
+In Section~\ref{ssec:nogo}, however, the anchor is
+$m_0=m_0(N)\in I_N$ and is allowed to move with~$N$.  To exclude just
+one full star in a dyadic prime block, one would already need a uniform
+statement such as
+\begin{equation}
+ \sup_{m\in I_N}
+ \#\{P<p\leq2P:m\bmod p\in\mathcal Z_p\}
+   =o(P/\log P),
+ \label{eq:oracleB-moving-anchor}
+\end{equation}
+in the relevant range $P>\sqrt N$.  AMTD asks for a centered second
+moment, which is stronger still.
+
+Lucas merely turns the expression inside the supremum into a count of
+large prime divisors of the moving integer~$b_m$.  The elementary height
+bound $\log b_m=O(m)$ gives at best $O(N/\log N)$ prime divisors of size
+$\asymp N$ when $m\asymp N$, exactly the size of a full prime block.
+Thus this Lucas/height argument supplies no way to move the constants
+$C_c$ outside the supremum.  This is the same distinction exhibited
+by the anchored-star/no-go construction in
+Section~\ref{sec:second-moment}.
+\end{remark}
+
+\subsubsection{The two zero loci are in dual spaces}
+
+The proposed B1 and B2 routes make an object-level identification that is
+false.  The following elementary calculation makes the distinction exact.
+
+\begin{proposition}[Coefficient zeros are not Hasse-polynomial roots]
+\label{prop:oracleB-two-zero-loci}
+For $1\leq j\leq p-2$, the following identity holds in~$\mathbb F_p$:
+\begin{equation}
+ b_j=-\sum_{t\in\mathbb F_p^\times}H_p(t)t^{-j}.
+ \label{eq:oracleB-mellin}
+\end{equation}
+Consequently,
+\[
+ \mathcal Z_p=\{j:[t^j]H_p(t)=0\}
+\]
+is a coefficient, or finite-Mellin, zero-set.  It is not the evaluation
+root locus of $H_p$ or of the square root in
+Remark~\ref{rem:squareness}.
+\end{proposition}
+
+\begin{proof}
+After inserting $H_p(t)=\sum_{k=0}^{p-1}b_kt^k$, multiplicative
+orthogonality gives
+\[
+ \sum_{t\in\mathbb F_p^\times}H_p(t)t^{-j}
+ =\sum_{k=0}^{p-1}b_k\sum_{t\in\mathbb F_p^\times}t^{k-j}
+ =-b_j,
+\]
+because $1\leq j\leq p-2$ and the inner sum vanishes unless $k=j$.
+
+For a concrete separation, exact reduction at $p=7$ gives
+\begin{align*}
+ H_7(t)
+ &=1+5t+3t^2+3t^3+3t^4+5t^5+t^6\\
+ &=(t-1)^2(t^2+1)^2\pmod7.
+\end{align*}
+No coefficient is zero, so $\mathcal Z_7=\varnothing$, whereas $t=1$
+is an evaluation root of both $H_7$ and its square root.
+\end{proof}
+
+In particular, if $\rho_p=\min\mathcal Z_p$, then $\rho_p$ need not be
+a root of~$B_p(t)$, and no theorem identifies the two notions; they can
+coincide accidentally at individual primes.  A Weil bound for
+$V(B_p)$ therefore does not bound
+\[
+ F_p(a)=\sum_{j\in\mathcal Z_p}e_p(aj).
+\]
+Nor is $\rho_p$ equivalent to the whole zero-set: it is undefined when
+$\mathcal Z_p$ is empty, and for example
+\[
+ \mathcal Z_{181}=\{19,47,133,161\}.
+\]
+For a center singleton the first zero trivially determines the set; only on
+the doublet subfamily $Z(p)=2$ does it determine a noncentral reflected pair
+and its gap.  Once there are at least two noncentral pairs, it does not
+determine the whole zero-set.
+
+\subsubsection{Why the square root is not a bounded-complexity family}
+
+Let $\Delta(t)=t^2-34t+1$.  The factorization stated in
+Remark~\ref{rem:squareness} and proved, at the level of factorization, by
+Caruso--F\"urnsinn--Vargas-Montoya--Zudilin~\cite{CFVZ2026} is
+\begin{equation}
+ H_p(t)=\Delta(t)^{\varepsilon_p}B_p(t)^2,
+ \qquad
+ \deg B_p=\frac{p-1-2\varepsilon_p}{2}.
+ \label{eq:oracleB-square}
+\end{equation}
+Thus $\deg B_p=\Theta(p)$.  This yields a second, independent obstruction
+to B2 even if one temporarily replaces coefficient zeros by evaluation
+roots.
+
+\begin{proposition}[Fixed family versus moving Hasse section]
+\label{prop:oracleB-complexity}
+The polynomials $B_p$ cannot be the reductions of one fixed bounded-degree
+divisor on the $t$-line.  If $B_p$ is squarefree, then
+$V(B_p)_{\overline{\mathbb F}_p}$ has $\deg B_p=\Theta(p)$ geometric
+points.  The equation $B_p(t)=0$ is zero-dimensional and has no genus;
+if it is replaced by the hyperelliptic curve $y^2=B_p(t)$, then
+\[
+ g_p=\left\lfloor\frac{\deg B_p-1}{2}\right\rfloor=\Theta(p).
+\]
+Hence the standard degree/genus form of the Weil--Bombieri estimate supplies
+no constant uniform in~$p$ for either version.
+\end{proposition}
+
+\begin{proof}
+A fixed relative divisor of degree~$D$ has fibers of degree~$D$, whereas
+\eqref{eq:oracleB-square} has unbounded degree.  The remaining assertions
+are the point count of a squarefree zero-dimensional divisor and the
+standard genus formula for a squarefree hyperelliptic equation.
+\end{proof}
+
+There is no contradiction between this proposition and the existence of a
+fixed Picard--Fuchs family.  A fixed family can produce, separately in each
+characteristic~$p$, a new Frobenius/Hasse section whose weight and degree
+grow with~$p$.  ``The geometric family is fixed'' does not imply ``the
+derived Hasse polynomial has bounded complexity.''  This is precisely the
+moving-polynomial versus fixed-family quantifier distinction.
+
+There are two source cautions.  First, Theorem~1.2 of~\cite{CFVZ2026}
+states the square/quadratic-times-square factorization.  Its proof uses the
+Franel relation
+\begin{equation}
+ f_\alpha(t(x))=(1+x)h(x)^2,
+ \qquad t=\frac{x(1-8x)}{1+x},
+ \label{eq:oracleB-franel-cover}
+\end{equation}
+and the quadratic extension with discriminant~$\Delta$.  It does not state
+that $B_p$ is squarefree, and it does not formulate the theorem in terms of
+a Hasse invariant, a Picard group, or an elliptic pencil.  The squarefree
+and coprimality assertions in Remark~\ref{rem:squareness} therefore require
+a separate proof or reference; the finite verification below is not such a
+proof.
+
+Second, the explicit pencil proposed in the oracle specification,
+\begin{equation}
+ E_t:\quad y^2=x(x-1)\bigl(x-t(1-t)\bigr),
+ \label{eq:oracleB-proposed-pencil}
+\end{equation}
+is not identified with the Ap\'ery truncation in the cited material.  In
+the displayed coordinate its discriminant is
+\[
+ 16t^2(1-t)^2(1-t+t^2)^2,
+\]
+whose support differs from $\Delta(t)=0$.  More concretely, at $p=7$ its
+raw Deuring polynomial is obtained by substituting
+$\lambda=t(1-t)$ in
+$1+2\lambda+2\lambda^2+\lambda^3$; its unique $\mathbb F_7$ root is
+$t=4$, while the Ap\'ery polynomial above has root~$t=1$.  This does not
+exclude an additional base change and gauge.  It proves that
+\eqref{eq:oracleB-proposed-pencil}, as printed, cannot simply be declared
+to produce~$B_p$, and in any event evaluation Frobenius cannot produce the
+coefficient-first-zero~$\rho_p$ without the Mellin step
+\eqref{eq:oracleB-mellin}.
+
+\subsubsection{The moving-target quantifier trap}
+
+Remark~\ref{rem:orbit} identifies $b_m\equiv0\pmod p$ with collisions in
+the projective Ap\'ery orbit and supplies reflection.  For every fixed gap
+$h$, the corresponding gap polynomial $N_h(m)\in\mathbb Z[m]$ is fixed,
+so a prime-aspect Chebotarev theorem may be applied after~$h$ is fixed.
+The first actual gap, however, may range up to $O(p)$, no uniform
+$o(p)$ bound is known, and it varies with the same prime being counted.
+The available quantifiers are
+\[
+ \text{for every fixed }h,\quad X\longrightarrow\infty;
+\]
+AMTD would require estimates uniform for moving $h\ll p$ inside
+one dyadic block.  Degrees, splitting fields, discriminants, and effective
+Chebotarev constants all move with~$h$.  Interchanging these limits is
+exactly the forbidden moving-polynomial argument.
+
+The center gives an even sharper warning.  Beukers' congruence in
+Remark~\ref{rem:open} says
+\[
+ b_{(p-1)/2}\equiv a_p(f)\pmod p,
+ \qquad f=\eta(2z)^4\eta(4z)^4.
+\]
+The index $(p-1)/2$ moves with~$p$, and the density-zero conjecture for
+the nonordinary primes $p\mid a_p(f)$ is open for this non-CM weight-four
+form.  Ordinary Sato--Tate controls fixed intervals for normalized traces;
+it does not prove this shrinking, same-characteristic divisibility event.
+It therefore cannot be invoked to prove B1 or B3.
+
+Finally, equidistribution of $\rho_p$ modulo each fixed integer~$q$ would
+still be only a marginal statement.  It has neither the uniformity in
+growing frequencies needed for the minor arcs nor the two-prime joint
+information needed for collision hyperplanes.  In particular it cannot,
+by itself, exclude the scale-dependent anchored star.
+
+\subsubsection{The correct fixed-family reduction}
+
+The minimum horizontal statement can be written without referring to a
+spurious root of~$B_p$.  For $N<p\leq2N$ and $m\in I_N=(N,2N]$, put
+\[
+ X_p(m)=\mathbf1_{\{p\leq m\}}
+          \mathbf1_{\{b_{m-p}\equiv0\pmod p\}},
+ \qquad
+ T_N=\sum_{N<p\leq2N}\sum_{m\in I_N}X_p(m).
+\]
+Then the centered marked two-characteristic Hasse dispersion statement is
+\begin{equation}
+ \left|
+ \sum_{\substack{N<p,q\leq2N\\p\ne q}}
+ \sum_{m\in I_N}X_p(m)X_q(m)
+ -\frac{T_N^2}{N}
+ \right|
+ \ll N^{o(1)}T_N.
+ \label{eq:oracleB-mh2}
+\end{equation}
+Writing
+\[
+ F_N:=\sum_{m\in I_N}L_N(m)(L_N(m)-1),
+\qquad L_N(m)=\sum_{N<p\leq2N}X_p(m),
+\]
+for the ordered collision count, the left side of
+\eqref{eq:oracleB-mh2} is $|F_N-T_N^2/N|$.  The exact identity
+\[
+ \sum_{m\in I_N}\left(L_N(m)-\frac{T_N}{N}\right)^2
+ =T_N+F_N-\frac{T_N^2}{N}
+\]
+shows directly that~\eqref{eq:oracleB-mh2} gives the top-block AMTD bound.
+It also kills a full top-block anchored star (for example the anchor
+$m_0=2N$), for which $L_N(m_0)$ has order $N/\log N$, and it is the
+top-block form of the centered second-factorial-moment input used by AMTD.
+The corresponding statement for all $P>\sqrt N$, with the centering of
+Hypothesis~\ref{hyp:amtd}, is the precise input needed by the
+analytic oracle.
+
+A genuine fixed-family route would have to construct, from one integral
+transcendental crystal (morally the symmetric square of the underlying
+rank-two Picard--Fuchs connection), the Kummer-twisted objects
+\begin{equation}
+ \mathcal M_{p,j}=
+ R\Gamma_{c,\mathrm{rig}}
+ \bigl(U_p,\mathcal V_{\mathrm{tr},p}
+       \otimes\mathcal K_{\omega_p^{-j}}\bigr)
+ \label{eq:oracleB-crystalline-mellin}
+\end{equation}
+and a marked Hasse coordinate $c_{p,j}$ satisfying
+\[
+ c_{p,j}=0\quad\Longleftrightarrow\quad b_j\equiv0\pmod p.
+\]
+It would then have to prove~\eqref{eq:oracleB-mh2} for these marked zeros,
+uniformly in the two characteristics and in the moving characters~$j$.
+This is a $1/p$-scale crystalline anti-concentration and horizontal large
+sieve statement, not ordinary Frobenius equidistribution.  Fixed
+rank/conductor of an $\ell$-adic sheaf does not supply it: the Jacobi-sum
+counterexample discussed with the Sym$^2$ remarks has fixed complexity but
+linearly many bad tame characters.
+
+Thus a construction of~\eqref{eq:oracleB-crystalline-mellin}, its marked
+coordinate, and the centered two-characteristic estimate
+\eqref{eq:oracleB-mh2} would be a quantifier-correct reduction of AMTD to a
+fixed arithmetic family.  This is a specification of the missing package,
+not an achieved G3 reduction to an existing Frobenius/Sato--Tate theorem:
+neither the marked coordinate with all its integral control nor its
+horizontal dispersion theorem is presently available.
+
+\subsubsection{Finite verification}
+
+The reproducible computation in \texttt{oracleB\_explore.py} recomputes
+all $\mathcal Z_p$ for the $2260$ primes $5\leq p\leq20000$ and compares
+them entrywise with the independent binary zero-set bank.  The exact
+histogram is
+\[
+\begin{array}{c|rrrrrr}
+ Z(p)&0&1&2&4&6&8\\ \hline
+ \#p&1356&2&695&176&27&4.
+\end{array}
+\]
+Among the 695 doublets, the KS distance of
+$2\rho_p/(p-1)$ from the reflection-constrained uniform limit is
+$0.03894$.  Small-modulus permutation tests for the outer gap
+$h_p\bmod q$ against $p\bmod q$, using all $904$ active primes and
+$q=3,5,7,11,13$, have p-values between $0.257$ and $0.675$.
+
+An exact Sage/FLINT worker verified~\eqref{eq:oracleB-square}, the predicted
+degree, squarefreeness, and coprimality to~$\Delta$ at every one of the
+$2260$ primes.  It also verified $B_p\mid t^{p^2}-t$ and used
+$\deg\gcd(B_p,t^p-t)$ to extract the exact linear/quadratic factorization
+type at every prime in the range.  Complete factorization into explicit
+factor polynomials was restricted to a sparse cross-check sample.
+At $p=101,503,1009,5003,10007,19997$, the degrees of $B_p$ are respectively
+$50,250,504,2501,5002,9998$, and the numbers of irreducible factors are
+$30,148,262,1284,2595,5058$.  These calculations demonstrate growing
+complexity and catch transcription errors; they prove no assertion beyond
+the finite range.  Exact identity checks used in the propositions above are
+repeated independently by \texttt{oracleB\_verify.py}.
+
+\paragraph{STALL REPORT.}
+The actual cross-prime decorrelation of the Ap\'ery coefficient zero-sets,
+and hence G1/AMTD, is not proved.  G3 is not reached for the reason stated
+above; literal G2 is proved but has insufficient uniformity; the obstruction
+and exact missing input constitute G4.  The rigorous outputs are:
+\begin{enumerate}
+ \item Proposition~\ref{prop:oracleB-fixed-anchor}, which proves the
+       literal G2 count is $O_{m_0}(1)$ for every fixed anchor;
+ \item Remark~\ref{rem:oracleB-quantifiers}, which proves that this has
+       the wrong quantifier order for the moving anchored-star family;
+ \item Proposition~\ref{prop:oracleB-two-zero-loci} and the exact $p=7$
+       counterexample, which show that B1/B2 as stated confuse Mellin
+       coefficient zeros with evaluation roots;
+ \item Proposition~\ref{prop:oracleB-complexity}, which isolates the
+       linear-degree obstruction even on the evaluation-root side;
+ \item the fixed-gap/fixed-prime-family audit, including the open
+       nonordinary center slice from Remark~\ref{rem:open};
+ \item the quantifier-correct remaining arithmetic input
+       \eqref{eq:oracleB-mh2}, together with the crystalline Mellin package
+       \eqref{eq:oracleB-crystalline-mellin} that a fixed-family proof would
+       have to supply.
+\end{enumerate}

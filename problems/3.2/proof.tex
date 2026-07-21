@@ -2575,6 +2575,29 @@ $B_p \in \mathbb{F}_p[t]$ such that
 where $\Delta(t) = t^2 - 34t + 1$ is the
 conifold discriminant and
 $B_p$ is squarefree and coprime to~$\Delta$.
+(A caveat on attribution: Theorem~1.2
+of~\cite{CFVZ2026} establishes the
+quadratic-times-square \emph{factorization};
+the squarefreeness and coprimality-to-$\Delta$
+assertions used here are verified computationally
+for all $p \le 20{,}000$
+(Subsection~\ref{ssec:oracleB-result}) but are not
+formulated in~\cite{CFVZ2026} as a Hasse-invariant,
+Picard-group, or elliptic-pencil statement, and a
+separate reference or proof is needed for their use
+in full generality.
+Crucially, $\mathcal{Z}_p$ is the set of vanishing
+\emph{coefficients} of $H_p$
+(the finite Mellin transform), \emph{not} the
+evaluation roots of $H_p$ or of~$B_p$; the two loci
+are genuinely different---e.g.\ at $p = 7$,
+$H_7 = (t{-}1)^2(t^2{+}1)^2$ has the evaluation root
+$t = 1$ yet no vanishing coefficient, so
+$\mathcal{Z}_7 = \varnothing$
+(Proposition~\ref{prop:oracleB-two-zero-loci}).
+A Weil bound for the curve $B_p(t) = 0$ therefore
+does \emph{not} bound the Fourier sum
+$F_p(a) = \sum_{j \in \mathcal{Z}_p} e_p(aj)$.)
 The proof uses the explicit identity
 $F(t(x)) = (1+x)\,h(x)^2$ between the Ap\'ery
 and Franel generating functions, the $p$-Lucas
@@ -4136,6 +4159,8 @@ palindromic symmetry improves only absolute constants.
 \end{remark}
 
 \input{oracleA_result}
+
+\input{oracleB_result}
 
 \subsection{Poisson variance formulation}\label{ssec:poisson}
 
