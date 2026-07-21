@@ -1,0 +1,367 @@
+% ORACLE C RESULT.
+% This fragment addresses only the algebraic marked-coordinate prerequisite.
+% It proves no dispersion estimate and makes no claim toward
+% eq:oracleA-sdc or eq:oracleB-mh2.
+
+\subsection{A fixed toric marked coordinate}
+\label{ssec:oracleC-result}
+
+Put
+\begin{equation}
+ \Lambda(x,y,z)=
+ \frac{(1+x)(1+y)(1+z)
+  \bigl((1+y)(1+z)+xyz\bigr)}{xyz}
+ \in\mathbb Z[x^{\pm1},y^{\pm1},z^{\pm1}].
+ \label{eq:oracleC-Lambda}
+\end{equation}
+This one Laurent polynomial gives the required marked scalar.  In
+particular, it avoids both loci ruled out by
+Propositions~\ref{prop:oracleB-two-zero-loci}
+and~\ref{prop:oracleB-complexity}: it is neither an evaluation of $H_p$
+nor an evaluation of its factor $B_p$.
+
+\begin{lemma}[Fixed constant-term realization]
+\label{lem:oracleC-constant-term}
+For every integer $n\geq0$,
+\begin{equation}
+ \operatorname {CT}_{x,y,z}\Lambda(x,y,z)^n
+ =\sum_{r=0}^n\binom nr^2\binom{n+r}{r}^2=b_n.
+ \label{eq:oracleC-constant-term}
+\end{equation}
+Moreover, every exponent of each of $x,y,z$ occurring in~$\Lambda$ lies
+between $-1$ and $1$.
+\end{lemma}
+
+\begin{proof}
+Write
+\[
+ A=(1+x)(1+y)(1+z),\qquad
+ E=(1+y)(1+z)+xyz.
+\]
+Then the constant term in question is
+\[
+ [x^{n}y^{n}z^{n}]A^nE^n.
+\]
+If exactly $k$ of the $n$ factors selected in $E^n$ contribute $xyz$,
+the $x$-coefficient contributes a second factor $\binom nk$, while the
+$y$- and $z$-coefficients both contribute
+$\binom{2n-k}{n-k}$.  Hence
+\[
+ \operatorname {CT}\Lambda^n
+ =\sum_{k=0}^n\binom nk^2\binom{2n-k}{n-k}^2.
+\]
+The substitution $r=n-k$ gives~\eqref{eq:oracleC-constant-term}.
+The exponent assertion follows directly from the numerator of
+\eqref{eq:oracleC-Lambda}, whose degree in each variable is between $0$
+and $2$, followed by division by $xyz$.
+\end{proof}
+
+\begin{theorem}[The marked coordinate]
+\label{thm:oracleC-marked-coordinate}
+Let $p\geq5$ be prime.  For $0\leq j\leq p-2$, define the scalar
+\begin{equation}
+ c_{p,j}^{\rm tor}
+ :=-\sum_{(x,y,z)\in(\mathbb F_p^\times)^3}
+       \Lambda(x,y,z)^j\in\mathbb F_p,
+ \label{eq:oracleC-toric-coordinate}
+\end{equation}
+where the zeroth power is the constant Laurent polynomial $1$, including
+at the zeros of $\Lambda$.  Define separately
+\[
+ c_{p,p-1}^{\rm tor}:=1.
+\]
+Then, for every $0\leq j\leq p-1$,
+\begin{equation}
+ c_{p,j}^{\rm tor}=b_j\pmod p.
+ \label{eq:oracleC-coordinate-equality}
+\end{equation}
+Consequently
+\begin{equation}
+ c_{p,j}^{\rm tor}=0
+ \quad\Longleftrightarrow\quad
+ b_j\equiv0\pmod p.
+ \label{eq:oracleC-marked-zero}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+For an integer $e$,
+\[
+ \sum_{a\in\mathbb F_p^\times}a^e
+ =\begin{cases}-1,&p-1\mid e,\\0,&p-1\nmid e,
+ \end{cases}
+ \qquad\text{in }\mathbb F_p.
+\]
+By Lemma~\ref{lem:oracleC-constant-term}, every exponent in
+$\Lambda^j$ belongs to $[-j,j]$ in each coordinate.  If
+$0\leq j\leq p-2$, the only multiple of $p-1$ in this interval is zero.
+Three applications of torus orthogonality therefore give
+\[
+ \sum_{(\mathbb F_p^\times)^3}\Lambda^j
+ =(-1)^3\operatorname {CT}\Lambda^j=-b_j,
+\]
+which proves~\eqref{eq:oracleC-coordinate-equality} on this range.  At the
+remaining endpoint, the reflection in Remark~\ref{rem:orbit} gives
+$b_{p-1}=b_0=1$ modulo $p$, exactly the separately defined value.
+\end{proof}
+
+\begin{remark}[The endpoint is not a cosmetic convention]
+\label{rem:oracleC-endpoint}
+The raw power sum at $j=p-1$ cannot replace the separate definition.
+If
+\[
+ T=(\mathbb G_m)^3,\qquad U=T\setminus V(\Lambda),
+\]
+then direct inclusion--exclusion gives
+\begin{equation}
+ \#U(\mathbb F_p)=p^3-7p^2+17p-14.
+ \label{eq:oracleC-U-count}
+\end{equation}
+Indeed, the union of $x=-1$, $y=-1$, and $z=-1$ has
+$(p-1)^3-(p-2)^3$ points.  Off $y=-1$ and $z=-1$, the fourth zero
+equation determines a unique nonzero $x$ and has $(p-2)^2$ points; its
+intersection with the first union has $p-2$ points, given by
+$x=-1$ and $1+y+z=0$.  Subtracting this zero locus from $(p-1)^3$
+gives~\eqref{eq:oracleC-U-count}.
+Thus
+$-\sum_{T(\mathbb F_p)}\Lambda^{p-1}=-\#U(\mathbb F_p)\equiv14\pmod p$,
+not $b_{p-1}=1$ in general.  At $p=7$ the raw endpoint is even zero.
+For $j=0$, by contrast, the convention in
+\eqref{eq:oracleC-toric-coordinate} gives
+$-(p-1)^3=1$ in $\mathbb F_p$.
+\end{remark}
+
+\subsubsection{Uniform geometric complexity}
+
+For $1\leq j\leq p-2$, let $E_p=\mathbb Q(\mu_{p-1})$.  Choose a prime
+$\mathfrak p\mid p$ and a Teichm\"uller character
+$\omega_p\colon\mathbb F_p^\times\to\mu_{p-1}$ such that
+$\omega_p(a)\equiv a\pmod{\mathfrak p}$, and put
+$\chi_{p,j}=\omega_p^j$.  Fix $\ell=2$ (recall that $p\geq5$), choose an
+embedding $E_p\hookrightarrow\overline{\mathbb Q}_2$, and let
+$\mathcal K_{\chi_{p,j}}$ be the associated rank-one Kummer sheaf, with
+the Frobenius convention chosen to have trace $\chi_{p,j}$.  On the fixed
+threefold $U$ put
+\begin{equation}
+ \mathcal L_{p,j}=\Lambda^*\mathcal K_{\chi_{p,j}}.
+ \label{eq:oracleC-Kummer-object}
+\end{equation}
+The Grothendieck trace formula gives the cyclotomic integer
+\begin{equation}
+ \widetilde c_{p,j}^{\rm tor}
+ =-\operatorname {Tr}_{\rm alt}\!\left(
+   \operatorname {Frob}_p\mid
+   R\Gamma_c(U_{\overline{\mathbb F}_p},\mathcal L_{p,j})
+  \right)
+ =-\sum_{u\in U(\mathbb F_p)}\chi_{p,j}(\Lambda(u)).
+ \label{eq:oracleC-Frobenius-coordinate}
+\end{equation}
+Its reduction at the chosen prime above $p$ is
+$c_{p,j}^{\rm tor}=b_j$.  Both endpoints may instead be represented by
+the constant sheaf on $T$: its negative Frobenius supertrace is
+$-(p-1)^3$, whose reduction is $1$.  Thus their cohomological complexity
+is fixed as well.  Using the trivial Kummer sheaf extended by zero from
+$U$ would give the wrong value in Remark~\ref{rem:oracleC-endpoint}.
+
+\begin{proposition}[Uniform complexity of the toric object]
+\label{prop:oracleC-uniform-complexity}
+The ambient variety and rational map in
+\eqref{eq:oracleC-Kummer-object} are independent of $p$ and $j$.  The
+coefficient sheaf has rank one.  There is an absolute constant
+$B_\Lambda$ such that
+\begin{equation}
+ \sum_i\dim H_c^i
+ \bigl(U_{\overline{\mathbb F}_p},\mathcal L_{p,j}\bigr)
+ \leq B_\Lambda
+ \label{eq:oracleC-Betti-bound}
+\end{equation}
+for all $p\geq5$ and $1\leq j\leq p-2$.  In particular, both the total
+degree of the corresponding cohomological $L$-factor and the ramification
+complexity are $O(1)$ uniformly in $(p,j)$.  This is geometric complexity:
+as for the Kummer twists in~\eqref{eq:oracleB-crystalline-mellin}, it does
+not count the degree of the varying cyclotomic coefficient field $E_p$.
+\end{proposition}
+
+\begin{proof}
+In $(\mathbb P^1)^3$, the principal divisor of $\Lambda$ has the four
+simple zero components
+\[
+ x=-1,\qquad y=-1,\qquad z=-1,\qquad
+ \overline Q:\
+ X_0(Y_0+Y_1)(Z_0+Z_1)+X_1Y_1Z_1=0
+\]
+and the six simple pole components
+\[
+ x=0,\ x=\infty,\ y=0,\ y=\infty,\ z=0,\ z=\infty.
+\]
+The fourth zero component is smooth and geometrically irreducible.  Indeed,
+its two coefficients as a linear form in $(X_0,X_1)$ are coprime, and a
+direct check of the six displayed partial derivatives has no projective
+common zero.  On the torus, smoothness is already immediate from
+$\partial((1+y)(1+z)+xyz)/\partial x=yz$.
+Thus the input divisor has ten fixed components of fixed multidegrees.
+The full divisor is not asserted to be simple normal crossings.
+
+More explicitly, the change of coordinates
+\[
+ u=\frac{1+y}{y},\qquad v=\frac{1+z}{z},\qquad
+ w=-\frac{x}{uv}
+\]
+identifies $U$ with the fixed toric-arrangement complement
+\[
+ (\mathbb G_m)^3\setminus
+ \{u=1,\ v=1,\ w=1,\ uvw=1\}.
+\]
+In particular, a finite stratification depends only on this four-member
+arrangement, not on the character.
+
+Every $\chi_{p,j}$ has order dividing $p-1$.  Its pullback is therefore
+tame along every divisorial valuation and has Swan conductor zero.  Take
+one log resolution of this fixed integral divisor and spread it out away
+from finitely many characteristics.  The resulting stratification has a
+fixed finite number of strata.  At every good prime, tame specialization
+for this log-smooth pair applies because the local monodromy has order
+prime to $p$; it compares the relevant rank-one representation with one on
+the characteristic-zero fiber.  Fix a finite CW model of that complex
+fiber.  Its cellular cochain groups have dimension at most the number of
+cells for every rank-one representation, independently of its monodromy,
+and hence give~\eqref{eq:oracleC-Betti-bound}.
+The finitely many excluded characteristics contribute only finitely many
+additional $(p,j)$ and may be absorbed into $B_\Lambda$.  This proves a
+uniform bound without claiming that the original ten-component divisor is
+normal crossings or that the cohomology is concentrated in one degree.
+\end{proof}
+
+\begin{remark}[What vanishes]
+\label{rem:oracleC-integral-warning}
+Equation~\eqref{eq:oracleC-marked-zero} concerns the reduction of the
+cyclotomic trace~\eqref{eq:oracleC-Frobenius-coordinate} modulo a prime
+above $p$.  It does not assert that the characteristic-zero Frobenius
+trace itself vanishes.  For example, at $(p,j)=(11,5)$ the quadratic
+character sum gives $\widetilde c_{11,5}^{\rm tor}=-33\ne0$, while its
+reduction and $b_5$ both vanish modulo $11$.  This integral distinction is
+essential in any later attempt to prove~\eqref{eq:oracleB-mh2}.
+\end{remark}
+
+\subsubsection{Audits of the two originally suggested coordinates}
+
+The toric construction above is not a disguised bounded-length transfer
+word.  With $B_n=(n!)^3b_n$ and the matrix $M(n)$ from
+Remark~\ref{rem:orbit}, put $T_0=I$ and
+$T_j=M(j-1)\cdots M(0)$.  The recurrence gives the exact identity
+\begin{equation}
+ T_j=\begin{pmatrix}B_j&0\\B_{j-1}&0\end{pmatrix}
+ \qquad(j\geq1).
+ \label{eq:oracleC-transfer-marker}
+\end{equation}
+Thus the marked entry is $(1,1)$, not $(1,2)$, and it detects $b_j=0$
+for $j<p$.  Its matrix size is fixed, but its word length is $j$.  Exact
+symbolic multiplication of
+$R_\ell(x)=M(x+\ell-1)\cdots M(x)$ gives, for $\ell\geq2$,
+\[
+ \deg R_\ell=
+ \begin{pmatrix}3\ell&3\ell+3\\3\ell-3&3\ell\end{pmatrix}.
+\]
+For completeness, if $A_\ell=(R_\ell)_{11}$ and $\lambda_\ell$ is its
+leading coefficient, then
+\[
+ A_{\ell+1}=P(x+\ell)A_\ell-(x+\ell)^6A_{\ell-1},
+ \qquad
+ \lambda_{\ell+1}=34\lambda_\ell-\lambda_{\ell-1},
+ \quad(\lambda_0,\lambda_1)=(1,34).
+\]
+The $\lambda_\ell$ are positive and strictly increasing, so the two
+leading terms never cancel.  The remaining entries satisfy
+\[
+ (R_\ell)_{21}=A_{\ell-1}(x),\qquad
+ (R_\ell)_{12}=-x^6A_{\ell-1}(x+1),\qquad
+ (R_\ell)_{22}=-x^6A_{\ell-2}(x+1),
+\]
+for $\ell\geq2$.  This proves the displayed degree matrix rather than
+extrapolating it from finitely many products.
+Likewise, the standard factorial gauge has marked coefficient
+\[
+ \frac{N_h(m)}{\prod_{s=2}^h(m+s)^3}.
+\]
+The endpoint identity used in Remark~\ref{rem:content},
+\[
+ N_h(-s)=(-1)^{s-1}B_{s-1}B_{h-s}\ne0
+ \qquad(1\leq s\leq h),
+\]
+shows that it has exactly $h-1$ uncancelled finite poles, each of order
+three.  These facts rule out the direct word and this direct gauge; they
+are not a no-go theorem for all constructions, as
+Theorem~\ref{thm:oracleC-marked-coordinate} demonstrates.
+
+The raw Mellin coordinate from
+Proposition~\ref{prop:oracleB-two-zero-loci} has a different restricted
+obstruction.  If $g$ is a primitive root, its corrected group-algebra
+element is
+\begin{equation}
+ Q_p(X)=-\sum_{r=0}^{p-2}H_p(g^r)X^{-r}
+ \quad\text{in }\mathbb F_p[X^{\pm1}]/(X^{p-1}-1).
+ \label{eq:oracleC-group-algebra}
+\end{equation}
+For $1\leq j\leq p-2$, $Q_p(g^j)=b_j$.  The factorization in
+Remark~\ref{rem:squareness} implies, without any squarefreeness or
+coprimality assumption,
+\[
+ \#\{t\in\mathbb F_p^\times:H_p(t)=0\}
+ \leq\deg B_p+2\varepsilon_p
+ =\frac{p-1}{2}+\varepsilon_p,
+\]
+and hence
+\[
+ \#\operatorname {supp}Q_p
+ =\#\{t\in\mathbb F_p^\times:H_p(t)\ne0\}
+ \geq\frac{p-1}{2}-\varepsilon_p
+ \geq\frac{p-3}{2}.
+\]
+Hence the raw periodic coordinate has growing group-algebra support and
+growing minimal cyclic constant-coefficient recurrence order: the distinct
+characters in~\eqref{eq:oracleC-group-algebra} are linearly independent
+because the $(p-1)$-point Fourier/Vandermonde matrix is invertible in
+$\mathbb F_p$.  This is a
+no-go only for exact raw-value realizations of that form, not for the
+zero-equivalent toric coordinate.
+
+Finally, bounded complexity of a Kummer factor on the original $t$-line
+does not by itself repair~\eqref{eq:oracleB-crystalline-mellin}.  At
+$p=31$, the two roots of the conifold discriminant are $14$ and $20$,
+with $H_{31}(14)=H_{31}(20)=7$ and $b_8=b_{22}=0$.  For $j=8$ the omitted
+bad-fiber contribution is
+\[
+ 7(14^{-8}+20^{-8})=11\pmod {31},
+\]
+so the Mellin sum restricted to the smooth locus is $20$, not zero; the
+same failure occurs for $j=22$.  Boundary terms require integral control.
+
+\subsubsection{Quantifier boundary}
+
+The family~\eqref{eq:oracleC-Kummer-object} is a uniformly bounded family
+of cohomological spaces indexed by the tame character $j$.  It is not a
+single sheaf on a ``$j$-line'' whose trace function is
+$j\mapsto b_j$.  Therefore a number of $j$-singularities or a conductor
+of such a $j$-line sheaf is not defined.  In particular,
+Proposition~\ref{prop:oracleC-uniform-complexity} does not turn the
+moving-character problem into an ordinary FKM bilinear estimate.
+It is also an alternative toric Kummer realization of the marked scalar,
+not a construction of, or a comparison with, the transcendental crystal
+$\mathcal V_{\mathrm{tr},p}$ in
+\eqref{eq:oracleB-crystalline-mellin}.  Thus it supplies exactly the
+algebraic coordinate requested here, not the rest of that crystalline
+Mellin package.
+
+\paragraph{STALL REPORT.}
+The literal algebraic goal G1 is achieved by
+\eqref{eq:oracleC-toric-coordinate}: the marked scalar is exactly $b_j$
+modulo $p$, and its ambient dimension, coefficient rank, divisor data,
+Swan conductors, and total cohomological dimension are uniformly bounded
+in $(p,j)$.  G2 is false in its universal form and is not claimed; the
+transfer and raw-Mellin statements above are restricted no-go results.
+G3 is deliberately not attempted.  No estimate for
+\eqref{eq:oracleA-sdc}, no short-arc bound, no two-characteristic
+dispersion estimate~\eqref{eq:oracleB-mh2}, and no reduction of any of
+them to an existing theorem is proved here.  The remaining obstruction is
+precisely horizontal control of the moving characters and their reductions,
+not the existence of an algebraic marked coordinate.

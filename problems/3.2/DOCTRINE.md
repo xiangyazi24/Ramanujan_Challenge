@@ -1205,3 +1205,32 @@ geometry) should fire when tabs return. Paper: 100 pages, compiles clean.
 Both oracle result files integrated; A verified 9/9 + my 3 independent; B core
 verified by my 4 independent checks (fixed-anchor, p=7 factorization, Mellin,
 two-loci separation).
+
+### Oracle C harvest (marked coordinate, Codex xhigh 468k tokens) — G1 DONE, verified
+
+★ **The marked coordinate exists as a FIXED toric object** (ssec:oracleC-result):
+  Λ(x,y,z) = (1+x)(1+y)(1+z)((1+y)(1+z)+xyz)/(xyz), a single fixed Laurent
+  polynomial (independent of p AND j), with CT_{x,y,z} Λ^n = b_n. Hence for
+  0≤j≤p-2:  c_{p,j} := -Σ_{(F_p^×)³} Λ(x,y,z)^j ≡ b_j (mod p),  and c_{p,j}=0
+  ⟺ b_j≡0 ⟺ j∈Z_p. (j=p-1 defined as 1 separately.)
+  VERIFIED independently: CT(Λ^n)=b_n for n=0..4 (5,73,1445,33001); marked
+  exponential sum = b_j mod 13 for all j. oracleC_verify.py 10/10 PASS.
+
+**Why this matters — it beats the growing-complexity no-go:**
+  b_j mod p is now an exponential sum of Λ^j over a FIXED 3-torus — a rank-1
+  tame Kummer complex, 4 zero + 6 pole divisors, Swan=0, UNIFORMLY BOUNDED
+  Betti numbers. This is exactly the fixed geometric family FKM trace-function
+  bounds want, and it is NOT an evaluation of H_p or B_p (deg Θ(p)), so it
+  evades prop:oracleB-two-zero-loci AND prop:oracleB-complexity. The
+  marked-coordinate half of the crystalline Mellin package (eq:oracleB-
+  crystalline-mellin) now has an explicit fixed-complexity realization.
+
+**Honest scope (Codex + my read):** this is a PER-j toric coordinate, not yet
+  the j-line trace SHEAF V_{tr,p}. The remaining construction: organize
+  {c_{p,j}}_j into a j-direction Mellin sheaf with j-uniform bounded conductor
+  (opens FKM), then prove the two-characteristic dispersion eq:oracleB-mh2.
+  Neither the j-line sheafification nor the dispersion is done here.
+
+Paper 100→105 pp, compiles clean. Chain now: C gives A/B's marked coordinate a
+fixed-complexity toric anchor; remaining = j-Mellin sheafification (algebraic,
+Codex-tractable) + two-char dispersion (deep analytic, ChatGPT).
