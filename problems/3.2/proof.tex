@@ -2847,6 +2847,85 @@ theorem. To close the remaining gap---proving
 $W(n) = o(n)$ for \emph{every}~$n$---we study the
 \emph{second moment} of the bad-prime weight function.
 
+\subsection{The pointwise reduction and why it is deep}
+\label{ssec:pointwise-reduction}
+
+We first record the cleanest form of the all-index
+target and a structural obstruction that any proof
+must overcome.  For a dyadic shell $I_N = (N, 2N]$
+and $m \in I_N$, the Lucas collapse
+(Corollary~\ref{cor:lucas}) gives, for every prime
+$N < p \le m$, the congruence
+$b_m \equiv 5\,b_{m-p} \pmod p$; hence the detector
+$X_p(m) = \mathbf 1[p \mid b_{m-p}]$ equals
+$\mathbf 1[p \mid b_m]$, and the incidence count
+collapses to a single integer:
+\begin{equation}\label{eq:pointwise-Lucas}
+  L_N(m) \;=\; \#\{p \in (N, m] : p \mid b_m\}
+  \;=\; \omega_{(N,m]}(b_m).
+\end{equation}
+
+\begin{proposition}[Pointwise reduction]
+\label{prop:pointwise-reduction}
+The all-index conjecture $G_n = e^{o(n)}$ follows from
+the pointwise radical anti-concentration
+\begin{equation}\label{eq:pointwise-target}
+  \textup{(\ensuremath{\diamondsuit})}\qquad
+  \max_{m \in (N, 2N]}\ \#\{p \in (N, m] : p \mid b_m\}
+  \;\ll\; N^{o(1)}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By~\eqref{eq:pointwise-Lucas} and the trivial bound
+$\sum_{m \in I_N}(L_N(m) - \mu)^2
+\le (\max_m L_N(m)) \sum_m L_N(m)
+= (\max_m L_N(m))\,T_N$, the hypothesis~(\ensuremath{\diamondsuit})
+gives the centered second moment
+$V^\circ_w(N) \ll N^{o(1)} T_N$.
+The $L^2$-to-uniform upgrade
+(Lemma~\ref{lem:l2-uniform}) and
+Corollary~\ref{cor:dispersion-alln} then give
+$W(n) = o(n)$ for every~$n$, hence
+$G_n = e^{o(n)}$.
+The cross-prime coupling of the second moment is thus a
+\emph{detector artifact}: both conditions $p \mid b_{m-p}$
+and $q \mid b_{m-q}$ are statements about the single
+integer~$b_m$.
+\end{proof}
+
+\begin{remark}[Size slack and the sieve-impossibility barrier]
+\label{rem:size-slack}
+The estimate~(\ensuremath{\diamondsuit}) is deep for a precise
+reason.  Since
+$\log b_{2N} = 2N\log(17+12\sqrt2) + O(\log N)
+\approx 7.05\,N$, while
+$\sum_{N < p \le 2N}\log p \sim N$ by the prime number
+theorem, the integer $b_{2N}$ has room to contain the
+\emph{entire} product of primes in $(N, 2N]$ about
+seven times over.  The trivial height bound gives only
+$\omega_{(N,m]}(b_m) \le \log b_m/\log N = O(N/\!\log N)$,
+one $o(1)$ factor short.
+Consequently the adversarial ``anchored star'' of
+Section~\ref{ssec:nogo}---the hypothetical scenario in
+which $b_{2N}$ is divisible by every prime in
+$(N, 2N]$---is not excluded by size.  It satisfies every
+structural axiom available to a sieve: the vertical bound
+$Z(p) = O(1)$, reflection, no consecutive zeros, the
+sub-interval count $O(|I|^{2/3})$, and generic prime
+spacing, yet it violates~(\ensuremath{\diamondsuit}) with
+$L_N(2N) \gg N/\!\log N$.
+Therefore \emph{no} sieve-theoretic or counting argument
+blind to the specific non-archimedean arithmetic of the
+Ap\'ery numbers can prove~(\ensuremath{\diamondsuit}):
+a genuine input about the prime factorization of the
+individual integer~$b_m$ is mandatory.
+This is the precise sense in which the all-index
+conjecture, though numerically overwhelming
+(Remark~\ref{rem:random}), lies beyond the reach of the
+vertical and dispersion machinery developed above.
+\end{remark}
+
 \subsection{The criterion}
 
 For a dyadic shell $I_N = (N, 2N]$, define

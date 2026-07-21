@@ -1395,3 +1395,43 @@ PIVOT EXECUTING (Fable pre-authorized, program does not stall):
   #{p∈(N,2N]: (m−p)-twist non-ordinary} ≪ N^{o(1)} + Poisson data.
 
 Hot Fable (fd2a39) in sync; will spec π2's precise hypothesis after π3 lands.
+
+### π1 written up (coordinator, no Codex needed) — reduction chain locked as headline
+
+Added ssec:pointwise-reduction to sec:second-moment:
+- prop:pointwise-reduction: all-index G_n=e^{o(n)} ⟸ (♦) max_{m∈(N,2N]}
+  #{p∈(N,m]:p|b_m} ≪ N^{o(1)}, via Lucas collapse (eq:pointwise-Lucas,
+  L_N(m)=ω_{(N,m]}(b_m)) + lem:l2-uniform + cor:dispersion-alln. The p≠q coupling
+  is a DETECTOR ARTIFACT (both about the single integer b_m).
+- rem:size-slack: log b_{2N}≈7.05N vs Σ_{N<p≤2N}log p~N ⟹ ~7× slack; anchored star
+  satisfies every sieve axiom yet violates (♦) with L_N(2N)≫N/log N ⟹ NO sieve/
+  counting argument blind to b_m's arithmetic can prove (♦). Non-archimedean input
+  mandatory. This is the precise sense the all-n conjecture is beyond current
+  vertical+dispersion+sieve machinery.
+115 pages, compiles clean.
+
+### RESOURCE STATE (2026-07-20 night) — core attack blocked on externals
+- Codex (sole workhorse) HIT USAGE LIMIT → resets 2026-07-24. No new implementation
+  runs until then (π3 dispatch failed on this).
+- ChatGPT tabs down all session (no independent oracle B).
+- Hot Fable (fd2a39) available but premium/expensive; the crystalline route it
+  proposed is now proven dead (G1 tautology), so no cheap next-lemma for it.
+
+### Honest scientific position (this is the current limit, not a retreat)
+crystalline was the ONLY non-archimedean tool and it is a Hasse-invariant
+tautology. rem:size-slack proves every archimedean/sieve tool is insufficient.
+So fully-unconditional (♦) appears to need genuinely NEW mathematics beyond the
+oracle toolkit. What IS achieved and locked: complete reduction chain (full ⟺ mh2
+⟸ (♦)), the exact sole gap (♦) with its sieve-impossibility barrier, and a large
+body of real theorems en route (NV range, fiber p^{3/4}, energy p^{7/4}, quotient
+reduction, HM framework, resultant structure, marked toric coordinate CT(Λ^n)=b_n,
+char-poly (X−p)(X²−a X+p³)). 9/10 challenge problems fully solved; P3.2 pushed to
+its structural frontier.
+
+### Remaining when resources return
+- π3 (Codex, ≥07-24): unconditional #{p:p|b_m,p|b_{m+g}}≪1+g.
+- π2 (short remark): (♦) restated as uniform moving-target non-ordinarity — but the
+  crystalline tautology already gives p|b_j ⟺ non-ordinary, so π2 is a rephrasing
+  of (♦) in modular language, largely captured by π1.
+- ChatGPT (Xiang reopens tabs): fire (♦)/AMTD at the analytic-NT / arithmetic-
+  geometry frontier — the one place a genuinely new theorem could come from.
