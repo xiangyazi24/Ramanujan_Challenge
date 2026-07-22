@@ -1,13 +1,13 @@
 # Ramanujan Challenge — Lean Formalization
 
-## Status: 4 sorry (P24, P28 hard; P32 in progress)
+## Status: P24(1), P28(1), P32(3 sorry, Wronskian done)
 
 Problems with genuine sorry's in strong-form statements:
 - P24 (polylogarithm identity) — VERY HARD, requires Wilf-Zeilberger
 - P28 (Chudnovsky series) — VERY HARD, requires CM theory
-- P32 (Apéry GCD conjecture) — IN PROGRESS, 4 sorry's in initial scaffolding
+- P32 (Apéry GCD conjecture) — 3 sorry's; Wronskian layer complete; no-consecutive-zeros proved modulo recurrence identity
 
-Build: ~2950 jobs (including P32 modules), warnings only (sorry declarations).
+Build: ~2944 jobs, warnings only (sorry declarations).
 All non-sorry theorems axiom-clean: {propext, Classical.choice, Quot.sound}.
 
 ## Module Structure
@@ -38,24 +38,26 @@ All non-sorry theorems axiom-clean: {propext, Classical.choice, Quot.sound}.
 ```
 Problem32/AperyDef.lean    ← Apéry recurrence, b_n, a_n, d_n, Z(p) ✅ (0 sorry)
     ↓
-Problem32/Wronskian.lean   ← W_n = 6/n³ base case ✅, step + full proof sorry
+Problem32/Wronskian.lean   ← W_n = 6/n³ ✅ (0 sorry, all axiom-clean)
     ↓
-Problem32/Main.lean        ← Main theorem statements (4 sorry)
+Problem32/Main.lean        ← Main theorem (3 sorry)
 ```
 
-### P3.2 Sorry Census
-1. `wronskian_step` — Wronskian ratio W_{n+1}·(n+1)³ = W_n·n³
-2. `wronskian_eq` — Full Wronskian identity W_n = 6/n³
-3. `zero_count_sublinear` — Z(p) = O(p^{2/3})
-4. `no_consecutive_zeros` — b_j, b_{j+1} can't both vanish mod p
-5. `problem32_polylog_exceptional` — Main theorem
-6. `aperyB_recurrence` — b_n satisfies the Apéry recurrence
+### P3.2 Sorry Census (3 sorry)
+1. `aperyB_recurrence_int` — b_n (closed form) satisfies the Apéry recurrence (WZ identity)
+2. `zero_count_sublinear` — Z(p) = O(p^{2/3}) (gap polynomial argument)
+3. `problem32_polylog_exceptional` — Main theorem
 
-### Key Proved Results
+### P3.2 Proved Results
 - **aperyB_zero/one/two**: b_0 = 1, b_1 = 5, b_2 = 73 ✅
 - **aperyA_zero/one**: a_0 = 0, a_1 = 6 ✅
+- **aperyA/BQ_recurrence**: definitional from recurrence construction ✅
 - **wronskian_one**: W_1 = 6 ✅
-- **aperyMiddle_zero/one**: P(0) = 5, P(1) = 117 ✅
+- **wronskian_step**: (n+1)³W_{n+1} = n³W_n via `linear_combination` ✅
+- **wronskian_mul**: W_n·n³ = 6 by induction ✅
+- **wronskian_eq**: W_n = 6/n³ ✅
+- **no_consecutive_zeros**: b_j, b_{j+1} can't both vanish mod p (modulo aperyB_recurrence_int) ✅
+- **aperyP_zero/one**: P(0) = 5, P(1) = 117 ✅
 
 ## Build & Verify
 
@@ -69,4 +71,4 @@ lake env lean -c '#print axioms problem22_limit_exists'
 # Expected: {propext, Classical.choice, Quot.sound}
 ```
 
-Last verified: 2026-07-22
+Last verified: 2026-07-22 (Wronskian layer complete, no_consecutive_zeros proved)

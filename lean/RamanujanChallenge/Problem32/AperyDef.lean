@@ -7,11 +7,11 @@
 
   Initial values: a_0 = 0, a_1 = 6, b_0 = 1, b_1 = 5.
 
-  b_n = Σ_{k=0}^n C(n,k)² C(n+k,k)² ∈ ℤ  (the Apéry numbers).
-  a_n ∈ ℚ in general; d_n · a_n ∈ ℤ where d_n = lcm(1,...,n)³.
+  We define BOTH sequences by recurrence over ℚ. The Wronskian identity
+  W_n = 6/n³ then follows directly from the shared recurrence structure.
 
-  G_n = gcd(d_n · a_n, d_n · b_n).
-  The conjecture: G_n = e^{o(n)}, i.e., log G_n = o(n).
+  The closed form b_n = Σ C(n,k)² C(n+k,k)² ∈ ℤ and the integrality
+  d_n · a_n ∈ ℤ are stated as separate theorems.
 
   Reference: Xiang Huang, "On Ramanujan Challenge Problem 3.2:
   The Apéry GCD Conjecture", July 2026.
@@ -28,20 +28,77 @@ open Finset
 
 /-! ## The middle coefficient polynomial -/
 
-def aperyMiddle (n : ℤ) : ℤ := 34 * n ^ 3 + 51 * n ^ 2 + 27 * n + 5
+def aperyP (n : ℚ) : ℚ := 34 * n ^ 3 + 51 * n ^ 2 + 27 * n + 5
 
-theorem aperyMiddle_zero : aperyMiddle 0 = 5 := by unfold aperyMiddle; ring
+theorem aperyP_zero : aperyP 0 = 5 := by unfold aperyP; ring
 
-theorem aperyMiddle_one : aperyMiddle 1 = 117 := by unfold aperyMiddle; ring
+theorem aperyP_one : aperyP 1 = 117 := by unfold aperyP; ring
 
-/-! ## Apéry numbers b_n (closed form) -/
+/-! ## Apéry recurrence step
+
+Given u_n, u_{n-1}, compute u_{n+1} via:
+  (n+1)³ u_{n+1} = P(n) u_n - n³ u_{n-1}
+-/
+
+def aperyStep (n : ℕ) (u_n u_nm1 : ℚ) : ℚ :=
+  (aperyP (n : ℚ) * u_n - (n : ℚ) ^ 3 * u_nm1) / ((n : ℚ) + 1) ^ 3
+
+/-! ## Both sequences via recurrence -/
+
+def aperyA : ℕ → ℚ
+  | 0 => 0
+  | 1 => 6
+  | (n + 2) => aperyStep (n + 1) (aperyA (n + 1)) (aperyA n)
+
+def aperyBQ : ℕ → ℚ
+  | 0 => 1
+  | 1 => 5
+  | (n + 2) => aperyStep (n + 1) (aperyBQ (n + 1)) (aperyBQ n)
+
+theorem aperyA_zero : aperyA 0 = 0 := rfl
+theorem aperyA_one : aperyA 1 = 6 := rfl
+
+theorem aperyBQ_zero : aperyBQ 0 = 1 := rfl
+theorem aperyBQ_one : aperyBQ 1 = 5 := rfl
+
+/-! ## Recurrence identity (by definition)
+
+Since both sequences are DEFINED by the recurrence, the recurrence
+identity holds definitionally.
+-/
+
+theorem aperyA_recurrence (n : ℕ) (hn : n ≥ 1) :
+    ((n : ℚ) + 1) ^ 3 * aperyA (n + 1) =
+      aperyP (n : ℚ) * aperyA n - (n : ℚ) ^ 3 * aperyA (n - 1) := by
+  cases n with
+  | zero => omega
+  | succ m =>
+    simp only [aperyA, aperyStep, Nat.succ_sub_one]
+    have hne : ((m : ℚ) + 1 + 1) ^ 3 ≠ 0 := by positivity
+    field_simp
+
+theorem aperyBQ_recurrence (n : ℕ) (hn : n ≥ 1) :
+    ((n : ℚ) + 1) ^ 3 * aperyBQ (n + 1) =
+      aperyP (n : ℚ) * aperyBQ n - (n : ℚ) ^ 3 * aperyBQ (n - 1) := by
+  cases n with
+  | zero => omega
+  | succ m =>
+    simp only [aperyBQ, aperyStep, Nat.succ_sub_one]
+    have hne : ((m : ℚ) + 1 + 1) ^ 3 ≠ 0 := by positivity
+    field_simp
+
+/-! ## The Wronskian -/
+
+def wronskian (n : ℕ) : ℚ :=
+  aperyA n * aperyBQ (n - 1) - aperyA (n - 1) * aperyBQ n
+
+/-! ## Apéry numbers b_n (closed form, integer) -/
 
 def aperyB (n : ℕ) : ℤ :=
   ∑ k ∈ Finset.range (n + 1),
     (Nat.choose n k : ℤ) ^ 2 * (Nat.choose (n + k) k : ℤ) ^ 2
 
-theorem aperyB_zero : aperyB 0 = 1 := by
-  simp [aperyB]
+theorem aperyB_zero : aperyB 0 = 1 := by simp [aperyB]
 
 theorem aperyB_one : aperyB 1 = 5 := by
   unfold aperyB
@@ -50,28 +107,6 @@ theorem aperyB_one : aperyB 1 = 5 := by
 theorem aperyB_two : aperyB 2 = 73 := by
   unfold aperyB
   simp [Finset.sum_range_succ, Nat.choose]
-
-/-! ## Apéry companion sequence a_n (over ℚ, via recurrence) -/
-
-def aperyA : ℕ → ℚ
-  | 0 => 0
-  | 1 => 6
-  | (n + 2) =>
-    let m : ℚ := ↑(n + 1)
-    ((34 * m ^ 3 + 51 * m ^ 2 + 27 * m + 5) * aperyA (n + 1) -
-     m ^ 3 * aperyA n) / (m + 1) ^ 3
-
-theorem aperyA_zero : aperyA 0 = 0 := rfl
-
-theorem aperyA_one : aperyA 1 = 6 := rfl
-
-/-! ## The Wronskian W_n = a_n · b_{n-1} - a_{n-1} · b_n
-
-The Casorati determinant satisfies W_n = 6/n³ for all n ≥ 1.
--/
-
-def wronskian (n : ℕ) : ℚ :=
-  aperyA n * ↑(aperyB (n - 1)) - aperyA (n - 1) * ↑(aperyB n)
 
 /-! ## The zero-count function Z(p) -/
 
