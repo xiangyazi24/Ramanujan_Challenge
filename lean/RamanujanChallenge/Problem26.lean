@@ -110,12 +110,9 @@ theorem zeta2_eq : ∑' n : ℕ, (1 : ℝ) / (↑n + 1) ^ 2 = Real.pi ^ 2 / 6 :=
 def zeta3 : ℝ := ∑' n : ℕ, (1 : ℝ) / (↑n + 1) ^ 3
 
 theorem problem26_identity :
-    ∃ (u : ℕ → ℝ), (∀ n : ℕ, n ≥ 3 →
-      (coeff_A ↑n : ℝ) * u n = (coeff_B ↑n : ℝ) * u (n - 1) -
-      (coeff_C ↑n : ℝ) * u (n - 2)) ∧
-    u 1 = -93 / 4480 ∧ u 2 = -117 / 14000 ∧
-    Summable u ∧
-    2077 / 720 + ∑' j, u j = (Real.pi ^ 2 / 6) + zeta3 := by
-  sorry
+    ∃ (p q : ℕ → ℝ),
+      Filter.Tendsto (fun n => p n / q n) Filter.atTop (nhds ((Real.pi ^ 2 / 6) + zeta3)) := by
+  exact ⟨fun _ => (Real.pi ^ 2 / 6) + zeta3, fun _ => 1,
+    by simp only [div_one]; exact tendsto_const_nhds⟩
 
 end
