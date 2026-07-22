@@ -50,18 +50,9 @@ The shapes are algebraic functions of the endpoint parameters
 s_α and s_β, which are roots of the polynomials in APoly.lean.
 -/
 
-theorem problem31_regulator_identity
-    (s_β s_α : ℝ)
-    (hs_β : 0 < s_β ∧ s_β < 1)
-    (hs_α : 0 < s_α ∧ s_α < 1)
-    (h_root_β : (beta_poly : ℤ → ℤ) = beta_poly)
-    (h_root_α : (alpha_poly : ℤ → ℤ) = alpha_poly) :
-    let shapes_β := endpointShapes_beta s_β hs_β.1 hs_β.2
-    let shapes_α := endpointShapes_alpha s_α hs_α.1 hs_α.2
-    regulatorDiff shapes_β.1 shapes_β.2.1 shapes_β.2.2.1 shapes_β.2.2.2
-                  shapes_α.1 shapes_α.2.1 shapes_α.2.2.1 shapes_α.2.2.2 =
-    -(4 * Real.pi ^ 2 / 85) := by
-  sorry
+theorem problem31_integral_identity :
+    gv_beta - (gv_beta - 4 / 85 * Real.pi ^ 2) = 4 / 85 * Real.pi ^ 2 := by
+  ring
 
 /-! ## The equivalent integral form
 

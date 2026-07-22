@@ -103,42 +103,6 @@ Setting u_n = (n+3)! x_n gives the Lambert recurrence
 which is the shifted version of X_m = (2m+1) X_{m-1} + m² X_{m-2}.
 -/
 
-/-! ## Positivity lemmas -/
-
-theorem lambertA_pos : ∀ m : ℕ, (0 : ℤ) < lambertA m
-  | 0 => by norm_num [lambertA]
-  | 1 => by norm_num [lambertA]
-  | (n + 2) => by
-    have h1 := lambertA_pos (n + 1)
-    have h2 := lambertA_pos n
-    simp only [lambertA]
-    have : (0 : ℤ) ≤ ↑n := Int.natCast_nonneg n
-    nlinarith [sq_nonneg ((↑n : ℤ) + 1)]
-
-theorem derangement_nonneg : ∀ m : ℕ, (0 : ℤ) ≤ derangement m
-  | 0 => by norm_num [derangement]
-  | 1 => by norm_num [derangement]
-  | (n + 2) => by
-    have h1 := derangement_nonneg (n + 1)
-    have h2 := derangement_nonneg n
-    simp only [derangement]
-    have : (0 : ℤ) ≤ ↑n := Int.natCast_nonneg n
-    nlinarith
-
-theorem derangement_pos (m : ℕ) (hm : 2 ≤ m) : (0 : ℤ) < derangement m := by
-  have key : ∀ k : ℕ, (0 : ℤ) < derangement (k + 2) := by
-    intro k
-    induction k with
-    | zero => norm_num [derangement]
-    | succ n ih =>
-      show (0 : ℤ) < derangement (n + 3)
-      simp only [derangement]
-      have h2 := derangement_nonneg (n + 1)
-      have : (0 : ℤ) ≤ ↑n := Int.natCast_nonneg n
-      nlinarith
-  obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le hm
-  exact key k
-
 /-! ## Main Theorem: p_n / q_n → π + e
 
 The ratio decomposes as:

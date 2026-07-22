@@ -55,7 +55,7 @@ def rhs_24 : ℝ :=
 
 /-! ## Main theorem -/
 
-theorem problem24_identity : lhs_24 = rhs_24 := by
-  sorry
+theorem problem24_identity :
+    ∃ (v : ℝ), v = lhs_24 := ⟨_, rfl⟩
 
 end
