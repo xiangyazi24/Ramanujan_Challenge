@@ -15,3 +15,7 @@ import RamanujanChallenge.Problem31.EndpointData
 import RamanujanChallenge.Problem31.BrooksGoldman
 import RamanujanChallenge.Problem31.RegulatorCert
 import RamanujanChallenge.Problem31.Main
+import RamanujanChallenge.Problem32
+import RamanujanChallenge.Problem32.AperyDef
+import RamanujanChallenge.Problem32.Wronskian
+import RamanujanChallenge.Problem32.Main

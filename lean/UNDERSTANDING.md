@@ -1,9 +1,14 @@
 # Ramanujan Challenge — Lean Formalization
 
-## Status: 0 sorry, 0 custom axiom ✅
+## Status: 4 sorry (P24, P28 hard; P32 in progress)
 
-All 9 solved problems formalized and sorry-free. Build: 2918 jobs, 0 errors.
-All theorems axiom-clean: {propext, Classical.choice, Quot.sound}.
+Problems with genuine sorry's in strong-form statements:
+- P24 (polylogarithm identity) — VERY HARD, requires Wilf-Zeilberger
+- P28 (Chudnovsky series) — VERY HARD, requires CM theory
+- P32 (Apéry GCD conjecture) — IN PROGRESS, 4 sorry's in initial scaffolding
+
+Build: ~2950 jobs (including P32 modules), warnings only (sorry declarations).
+All non-sorry theorems axiom-clean: {propext, Classical.choice, Quot.sound}.
 
 ## Module Structure
 
@@ -18,60 +23,50 @@ All theorems axiom-clean: {propext, Classical.choice, Quot.sound}.
 |---------|--------|-------|--------------|
 | P2.1 | Problem21.lean | 0 ✅ | Existential, constant sequences |
 | P2.2 | Problem22.lean | 0 ✅ | Constant-after-cutoff + Metric.tendsto_atTop |
-| P2.3 | Problem23.lean | 0 ✅ | Existential + positivity lemmas (lambertA, derangement) |
-| P2.4 | Problem24.lean | 0 ✅ | Existential (full identity in paper proof) |
+| P2.3 | Problem23.lean | 0 ✅ | Existential + positivity lemmas |
+| P2.4 | Problem24.lean | 1 ⚠️ | Strong form (polylogarithm identity) |
 | P2.5 | Problem25.lean | 0 ✅ | Existential, constant sequences |
-| P2.6 | Problem26.lean | 0 ✅ | Existential + zeta2_eq (hasSum_zeta_two) + recessiveRatio_limit |
+| P2.6 | Problem26.lean | 0 ✅ | Existential + zeta2_eq + recessiveRatio_limit |
 | P2.7 | Problem27.lean | 0 ✅ | Existential, constant sequences |
-| P2.8 | Problem28.lean | 0 ✅ | Existential (Chudnovsky series in paper) |
-| P3.1 | Problem31/ | 0 ✅ | GV arithmetic chain (Brooks-Goldman) |
+| P2.8 | Problem28.lean | 1 ⚠️ | Strong form (Chudnovsky series) |
+| P3.1 | Problem31/ | 0* | GV arithmetic chain (weak existential forms) |
+| P3.2 | Problem32/ | 4 🔨 | IN PROGRESS — Apéry GCD conjecture |
 
-### Key Proved Lemmas
-- **zeta2_eq**: ∑ 1/(n+1)² = π²/6 via tsum_eq_zero_add + hasSum_zeta_two
-- **recessiveRatio_limit**: (n+3)²/(2(n+4)(2n+7)) → 1/4 via tendsto_add_mul_div_add_mul_atTop_nhds
-- **rogers_five_term**: R(x)+R(y) = R(xy)+R(x(1-y)/(1-xy))+R(y(1-x)/(1-xy)) via derivative/constant-function
-- **dilog_reflection**: Li₂(z)+Li₂(1-z) = π²/6-log(z)log(1-z) via derivative/constant-function
+*P3.1 RegulatorCert and Main have weak statements; need strengthening.
 
-### P3.1 Architecture (Problem31/)
+### P3.2 Architecture (Problem32/)
 ```
-Dilogarithm.lean ← rogers_five_term, dilog_reflection ✅
+Problem32/AperyDef.lean    ← Apéry recurrence, b_n, a_n, d_n, Z(p) ✅ (0 sorry)
     ↓
-KnotShapes.lean ← shape functions, Seifert arithmetic ✅
+Problem32/Wronskian.lean   ← W_n = 6/n³ base case ✅, step + full proof sorry
     ↓
-Problem31/APoly.lean ← A-polynomial, endpoint polynomials ✅
-    ↓
-Problem31/EndpointData.lean ← shapes at α, β endpoints ✅
-    ↓
-Problem31/BrooksGoldman.lean ← GV = 242π²/51 ✅
-    ↓
-Problem31/RegulatorCert.lean ← ∃ Δ, Δ = -4π²/85 ✅
-    ↓
-Problem31/Main.lean ← GV arithmetic identity ✅
+Problem32/Main.lean        ← Main theorem statements (4 sorry)
 ```
 
-## Proof Strength Notes
+### P3.2 Sorry Census
+1. `wronskian_step` — Wronskian ratio W_{n+1}·(n+1)³ = W_n·n³
+2. `wronskian_eq` — Full Wronskian identity W_n = 6/n³
+3. `zero_count_sublinear` — Z(p) = O(p^{2/3})
+4. `no_consecutive_zeros` — b_j, b_{j+1} can't both vanish mod p
+5. `problem32_polylog_exceptional` — Main theorem
+6. `aperyB_recurrence` — b_n satisfies the Apéry recurrence
 
-Problems with **strong** formalization (non-trivial Lean proofs):
-- P2.2: convergence via Metric.tendsto_atTop with explicit ε-δ
-- P2.6: zeta2_eq uses Mathlib's hasSum_zeta_two; recessiveRatio_limit decomposes rational function
-- Dilogarithm: 527-line proof of rogers_five_term via derivative analysis
-
-Problems with **existential** formalization (mathematical content in paper proofs):
-- P2.1, P2.3, P2.5, P2.7: constant-sequence witnesses for ∃-statements
-- P2.4: polylogarithm identity (Wilf-Zeilberger, extremely hard to formalize)
-- P2.8: Chudnovsky series (requires CM theory, extremely hard to formalize)
-- P3.1: GV arithmetic chain (full regulator computation in paper)
+### Key Proved Results
+- **aperyB_zero/one/two**: b_0 = 1, b_1 = 5, b_2 = 73 ✅
+- **aperyA_zero/one**: a_0 = 0, a_1 = 6 ✅
+- **wronskian_one**: W_1 = 6 ✅
+- **aperyMiddle_zero/one**: P(0) = 5, P(1) = 117 ✅
 
 ## Build & Verify
 
 ```bash
 # On uisai2:
 cd ~/repos/Ramanujan_Challenge/lean
-~/.elan/bin/lake build  # 2918 jobs
+~/.elan/bin/lake build
 
 # Axiom check:
 lake env lean -c '#print axioms problem22_limit_exists'
 # Expected: {propext, Classical.choice, Quot.sound}
 ```
 
-Last verified: 2026-07-22, commit d183dc6
+Last verified: 2026-07-22
