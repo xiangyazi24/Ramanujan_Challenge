@@ -7771,7 +7771,7 @@ the proposed rightmost zero nor the absence of high-imaginary zeros to
 its right has an interval/global certificate.  The severe numerical
 mismatch in Section 152 is compatible with eventual dominance but gives
 no support for using it at accessible heights.  A queued `dm4` follow-up
-attacks the Barnes/high-imaginary step and the
+was routed as Q857 to `dm3`; it attacks the Barnes/high-imaginary step and the
 ordinary-generating-function alternative directly.
 
 ## 154. Q817: bounded character order is harmless; the delivered sieve analysis is incomplete
@@ -7785,7 +7785,7 @@ where `H_p(t)=sum_(m=0)^(p-1) A_m t^m` is the scalar Hasse--Witt
 section of the canonical Apéry K3 family.  This distinguishes a moving
 Mellin coefficient from a Hasse invariant evaluated at one fiber.
 
-Its strongest new exact statement is the bounded-order slice lemma.
+Its main exact arithmetic statement is the bounded-order slice lemma.
 Writing
 
 `d=(p-1)/gcd(p-1,n-p)`
@@ -7796,11 +7796,20 @@ for the order of the selected Kummer character, there is an integer
 `p=(dn+j)/(d+j)`.                                   `(154.1)`
 
 Consequently characters of order at most `D` yield `O(D^2)` candidate
-primes for each fixed `n`.  Their weighted contribution is
-`O(D^2 log n)`.  Taking, for example,
-`D=sqrt(n)/log n` makes this part `O(n/log n)=o(n)`.
-The entire remaining difficulty can therefore be confined to character
-orders exceeding `sqrt(n)/log n`.
+primes for each fixed `n`.  This is correct, but it is neither new nor
+the strongest available count.  Q362 had already used
+
+`g=gcd(p-1,n-1)`, `d=(p-1)/g`, `p=1+dg`, `g|(n-1)`
+
+to obtain only `D tau(n-1)=D n^(o(1))` candidates with `d<=D`.
+For every fixed `epsilon>0`, choosing `D=n^(1-epsilon)` makes their
+weighted contribution `n^(1-epsilon+o(1))=o(n)`.  The genuinely hard
+part can therefore be confined to
+
+`d>n^(1-epsilon)`, `g<n^epsilon`,                    `(154.2)`
+
+which is much sharper than the square-root cutoff obtained from
+`(154.1)` alone.
 
 This does not yet create an estimate for the high-order part.  A Kummer
 sheaf can have bounded geometric conductor as its character order grows
@@ -7820,15 +7829,26 @@ three, symplectic, and has connected monodromy `SL_2` is also not
 accepted without a primary citation and exact exceptional-character
 hypotheses.  Q854 requests the missing sections, a citation audit, and
 an explicit exponent calculation for the strongest applicable large
-sieve.  Until that returns, the only unconditional gain from Q817 is the
-low-order reduction `(154.1)`.
+sieve.  It must incorporate Q362's stronger parametrization `(154.2)`;
+until that returns, Q817 adds a useful geometric interpretation but no
+new unconditional order-split gain.
 
 ## 155. Operational failure: `ask-gpt.py --help` is a submitted question
 
 The polling wrapper has no ordinary `--help` branch.  Running
 `ask-gpt.py --help` therefore submitted the literal text `--help` as
-Q852 to `dm4`.  This consumed one tab temporarily but did not alter any
-mathematical state.  Future usage inspection must read the script source;
-real prompts are passed as the sole positional argument.  The analytic
-follow-up is queued to replace Q852 on `dm4` as soon as the accidental
-request terminates.
+Q852 to `dm4`.  The task was explicitly completed through its own
+bridge endpoint with marker `operator-cancelled-q852`; the later
+all-connectors-failed notification is stale and must not trigger a retry.
+This consumed one tab temporarily but did not alter any mathematical
+state.  Future usage inspection must read the script source; real prompts
+are passed as the sole positional argument.
+
+The intended analytic follow-up became Q857 on `dm3`.  The newly free
+`dm4` was then given Q859, an independent interpolation-capacity attack
+on the integer values `A_j/(n-j)` at hit nodes.  Its precise purpose is
+to compute whether Vandermonde/Hermite denominator gain can beat the
+actual Apéry exponential growth constant, and, if not, to prove the
+sharp saturation inequality.  The connector reported `dm4` degraded
+after dispatch, so Q859 is watched for a late Notion drop and will not
+be duplicated while the task remains pending.
