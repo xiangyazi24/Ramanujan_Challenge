@@ -7984,21 +7984,24 @@ From `(157.3)`:
 
 1. if `Z_p(H)` is empty, then `p` does not divide `m_H`;
 2. if `Z_p(H)` contains two distinct nodes, then `p|m_H`;
-3. if `Z_p(H)={r}` and `v_p(A_r)=1`, then `p` does not divide `m_H` and
-   `z_H(r)=0 mod p`.
+3. if `Z_p(H)={r}`, with arbitrary positive `v_p(A_r)`, then `p` does
+   not divide `m_H` and
+   `v_p(z_H(r))>=v_p(A_r)`.
 
 The second assertion is immediate: if `p` did not divide `m_H`, then
 `z_H` would vanish at every node of `Z_p(H)`, impossible for a primitive
-nonzero linear polynomial modulo `p`.  For the third, reduce the cleared
-moments
+nonzero linear polynomial modulo `p`.  For the third, write
+`E=v_p(A_r)` and reduce the cleared moments
 
 `X_H=sum_s (-1)^s binom(H,s)L_H/A_s`,
 
 `Y_H=sum_s (-1)^s binom(H,s)sL_H/A_s`
 
-modulo `p`.  With a unique zero node, only its term survives, so
-`Y_H=rX_H mod p` and `X_H` is a unit.  Higher `p`-adic multiplicity leaves
-the exact residual condition in `(157.3)`.
+`p`-adically.  With a unique zero node, its term is a unit while every
+other term is divisible by `p^E`, so `X_H` is a unit and
+`Y_H-rX_H=0 mod p^E`.  Hence the whole node valuation is cancelled from
+the multiplier.  Section 163 proves the general order-statistic form of
+this statement.
 
 Thus every prime with at least two prefix zeros is unconditional
 good-prime pollution in the multiplier, independently of the projective
@@ -8234,3 +8237,96 @@ prove that a whole-family determinant argument based only on integer
 interpolation and Archimedean growth cannot work.  A successful Fitting
 estimate must insert a recurrence-specific restriction on the minors or a
 cross-prime consequence of the Apéry differential equation.
+
+## 163. Exact all-degree content theorem and the universal Fitting no-go
+
+Q867 proves the exact `a=1` refinement
+
+`v_p(content(P_(H,1)))=`
+
+`the second-largest {v_p(A_s):0<=s<=H}`.           `(163.1)`
+
+For `a=1`, `content(P_(H,1))=m_H` in Q850's
+`P_(H,1)=m_H z_H`, so `(163.1)` says that the multiplier is supported
+*exactly* on primes having at least two prefix zeros, with its full
+exponent equal to the second-largest node valuation.  In particular, a
+unique zero of any multiplicity is completely removed from `m_H`; this
+corrects the weaker statement formerly recorded in Section 159.
+
+The same statement holds in every numerator degree.  Let
+`(P_(H,a),Q_(H,a))` be a primitive integral interpolation pair, let
+`p>H`, and order
+
+`e_s=v_p(A_s)` as `e_(1)>=...>=e_(H+1)`.
+
+Then
+
+`v_p(content(P_(H,a)))=e_(a+1)`.                  `(163.2)`
+
+This is a general DVR interpolation lemma, not special to Apéry numbers.
+For any `a+1` distinct nodes in `[0,H]`, evaluation of a degree-at-most
+`a` polynomial in the binomial basis is an invertible map over `Z_p`: its
+determinant is a Vandermonde divided by `prod_(r=0)^a r!`, hence a
+`p`-unit.  Therefore the minimum coefficient valuation of `P` equals the
+minimum valuation of its values on any chosen `a+1` nodes.
+
+Choose the `a+1` nodes with the largest `e_s`.  Since `Q` is integral,
+all corresponding values `P(s)=A_sQ(s)` have valuation at least
+`e_(a+1)`, proving the lower bound in `(163.2)`.  If every coefficient of
+`P` were divisible by `p^(e_(a+1)+1)`, choose instead the remaining
+`H-a` nodes together with one node at the threshold, namely any `H-a+1`
+nodes whose valuations are at most `e_(a+1)`.  At all of them,
+
+`v_p(Q(s))=v_p(P(s))-e_s>=1`.
+
+The degree bound `deg Q<=H-a` and the corresponding invertible evaluation
+matrix would force every coefficient of `Q` to be divisible by `p`.
+Both `P` and `Q` would then be divisible by `p`, contradicting primitive
+normalization.  This proves the upper bound and `(163.2)`.
+
+The exponent-one shadow is precisely the zero-absorber criterion:
+
+`P_(H,a)=0 in F_p[x]`
+
+if and only if at least `a+1` node values are zero modulo `p`.  The updated
+verifier checks the full equality `(163.2)`, not just this shadow, in
+2,640 cases through `H=24`.
+
+This stronger local theorem still supplies no global height compression.
+At the experimental scale `a=ceil(H^(2/3))`, dividing `P_(H,a)` by its
+integer coefficient content leaves a projective evaluation with 3,467
+bits at `H=40` and 5,506 bits at `H=50`; its logarithm divided by `H` is
+about `60.08` and `76.32`, respectively.  Thus a single
+content-stripped growing-degree numerator is much larger than
+`exp(o(H))`.
+
+Q885 independently gives the exact full interpolation-matrix ledger.  If
+`C_(H,a)` is the `(H+1)` by `(H+2)` node interpolation matrix,
+`delta_(H,a)` is the gcd of its maximal minors, and `E_(H,a)(n)` is its
+bordered numerator-evaluation determinant, then
+
+`P_(H,a)^prim(n)=+-E_(H,a)(n)/delta_(H,a)`,         `(163.3)`
+
+and
+
+`v_p(G_(H,A)(n))=min_(a<=A)`
+
+`  (v_p(E_(H,a)(n))-v_p(delta_(H,a)))`.            `(163.4)`
+
+Its CRT construction assigns one zero node to every prime
+`2H<p<=3H+1` while choosing an integral lift outside the finitely many
+rank-defect hypersurfaces.  Every interpolation matrix is then normal,
+every local zero set has cardinality one, yet the whole candidate
+primorial divides the growing-family gcd.  This proves that Smith,
+Fitting, compound-matrix, subresultant, or geometry-of-numbers identities
+valid for arbitrary node vectors cannot establish the desired
+little-oh estimate.  Section 162 strengthens the same warning by showing
+that even the Apéry exponential-plus-polynomial size profile can coexist
+with linear moving-prime weight.
+
+The remaining positive target is therefore recurrence-specific: use the
+actual Apéry recurrence to bound the frequency of a positive excess in
+`(163.4)`, or construct an explicit recurrence-derived combination of the
+normalized values of height `exp(o(H))`.  Q888 attacks this exact
+recurrence-minor problem.  Q887 asks for an independent audit and any
+additional p-adic consequences of `(163.2)`.
