@@ -7852,3 +7852,33 @@ actual Apéry exponential growth constant, and, if not, to prove the
 sharp saturation inequality.  The connector reported `dm4` degraded
 after dispatch, so Q859 is watched for a late Notion drop and will not
 be duplicated while the task remains pending.
+
+## 156. Exact scan: the first multi-hit examples survive in the near-primitive regime
+
+The canonical C++ scan was rerun through outer index `50000` and extended
+to print
+
+`g=gcd(p-1,n-1)`, `d=(p-1)/g`
+
+for every maximum-multiplicity q=1 tuple.  The largest q=1 multiplicity
+in this range is still three.  Several three-hit examples lie entirely
+in one very small-kernel class:
+
+- at `n=11576`, the three direct primes have `g=1` and orders
+  `8892,9318,11436`;
+- at `n=18444`, all three hits again have `g=1`;
+- at `n=26164`, the three direct primes all have `g=3`;
+- at `n=47066`, the three reflected primes all have `g=1`;
+- at `n=47859`, all three hits have `g=2`.
+
+Thus Q362's low-order estimate is a genuine reduction but does not
+explain even the earliest multi-hit configurations: the hard
+near-primitive stratum is already populated and can contain several
+aligned zeros with the same small kernel.  Conversely, this is only
+finite numerical evidence; it neither disproves an asymptotic horizontal
+large sieve nor supplies a pointwise bound.  The exact output is
+reproducible with
+
+`g++ -O3 -std=c++17 q32_scan.cpp -o /tmp/q32_scan`
+
+`/tmp/q32_scan 50000`.

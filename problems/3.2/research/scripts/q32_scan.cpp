@@ -126,8 +126,11 @@ int main(int argc, char** argv) {
     for (int p : q1_hits[n]) {
       const int r = n - p;
       const int j = std::min(r, p - 1 - r);
+      const int kernel = std::gcd(p - 1, n - 1);
+      const int order = (p - 1) / kernel;
       std::cout << " (p=" << p << ",r=" << r << ",j=" << j
-                << ",branch=" << (j == r ? "D" : "R") << ")";
+                << ",branch=" << (j == r ? "D" : "R")
+                << ",g=" << kernel << ",d=" << order << ")";
     }
     std::cout << "\n";
   }
