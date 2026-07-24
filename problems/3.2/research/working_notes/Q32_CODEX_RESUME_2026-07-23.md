@@ -7882,3 +7882,154 @@ reproducible with
 `g++ -O3 -std=c++17 q32_scan.cpp -o /tmp/q32_scan`
 
 `/tmp/q32_scan 50000`.
+
+## 157. Q850: the primitive `a=1` lattice is exactly one-dimensional
+
+Q850 removes the remaining normalization ambiguity in Section 147.  Put
+
+`L_H=lcm(A_0,...,A_H)`,
+
+`X_H=L_H U_H`,
+
+`Y_H=L_H H(U_H-U_(H-1))`,
+
+`h_H=gcd(X_H,Y_H)`,
+
+`z_H(x)=(Y_H-X_H x)/h_H`.
+
+Then `z_H` is primitive linear, and the exact least multiplier making the
+node quotients integral is
+
+`m_H=lcm_(0<=s<=H) A_s/gcd(A_s,z_H(s))`.            `(157.1)`
+
+The primitive integral Padé numerator is, up to sign,
+
+`P_H^prim(x)=m_H z_H(x)`.                           `(157.2)`
+
+This follows because the Pascal transformation between integer node
+values and integer Newton coefficients is unimodular.  If a prime divided
+every coefficient of the pair after the least multiplier was used, one
+could divide the multiplier by that prime, contradicting minimality.
+The local formula is
+
+`v_l(m_H)=max_s max(0,v_l(A_s)-v_l(z_H(s)))`.        `(157.3)`
+
+The formula was checked independently for every `2<=H<=12` against
+`primitive_a_one_pair`; both primitive numerator coefficients agree up to
+one global sign.
+
+Q850's same-sign lemma is also valid.  If `U_H U_(H-1)>0`, the rational
+root of `z_H` lies to the left of `H`; nodewise divisibility at `H-1` and
+`H` then gives
+
+`|P_H^prim(3H+1)|>=A_(H-1)`.                        `(157.4)`
+
+This is a no-go result for obtaining a small integral certificate from the
+fixed-`a=1` direction.  It is not a proof of the q=1 radical bound.
+Q850's remaining proposed lower bound `log m_H>=cH` at sign changes is
+another cross-index gcd problem.  Formula `(157.1)` is bankable; that
+lower bound remains open and is not needed for the support audit below.
+
+## 158. Q854: the Mellin large-sieve continuation confirms a quantifier barrier but loses the best order split
+
+Q854 withdraws Q817's unsupported assertion that the generic Mellin
+cohomology is automatically rank two, pure of weight three, symplectic,
+and has connected monodromy `SL_2`.  A tame compact-support
+Euler-characteristic calculation naturally starts at dimension six if
+the endpoint invariants vanish; obtaining a rank-two primitive quotient
+would require an explicit local-monodromy decomposition.  Moreover a
+generic Kummer twist is paired with its inverse twist rather than being
+self-dual by itself.  Thus none of the claimed symplectic package is
+currently available.
+
+Its theorem audit reaches the same negative conclusion as Section 154:
+fixed-field character equidistribution, fixed-modulus trace-function prime
+sums, and effective Chebotarev have the wrong quantifiers for one marked
+character in each varying residual field and the same-characteristic
+condition `p|A_(n-p)`.  Q854 isolates a sufficient new “marked Mellin
+diagonal local-limit” estimate, but this is a name for the missing
+power-saving theorem, not an existing result.
+
+Q854 did not follow the requested strongest arithmetic reduction.  It
+uses the weaker count `O(D^2)` and consequently stops at
+`D<sqrt(n)/log^2(n)`.  The already proved parametrization
+
+`p=1+dg`, `g|(n-1)`
+
+gives only `D tau(n-1)=D n^(o(1))` candidates with `d<=D`, so every
+`D=n^(1-epsilon)` is allowed.  The correct hard range remains `(154.2)`.
+Accordingly Q854 contributes a useful hostile audit of the geometric
+claims, but no improvement to the unconditional q=1 estimate.
+
+## 159. The single-`a=1` candidate-window radical has unavoidable multi-zero pollution
+
+A tempting sufficient statement after `(157.2)` was
+
+`log W_H=o(H)`,
+
+`W_H=rad_(2H<p<=3H+1)`
+
+`     gcd(P_H^prim(3H+1),binom(3H+1,H+1))`.         `(159.1)`
+
+Every direct target prime divides `W_H`, while the enormous prime factors
+of `P_H^prim(3H+1)` outside the candidate window are irrelevant.  Exact
+computation initially made `(159.1)` look plausible.  The following local
+classification shows why that impression was misleading.
+
+Fix a candidate prime `p>2H` and let
+
+`Z_p(H)={s in [0,H]:p|A_s}`.
+
+From `(157.3)`:
+
+1. if `Z_p(H)` is empty, then `p` does not divide `m_H`;
+2. if `Z_p(H)` contains two distinct nodes, then `p|m_H`;
+3. if `Z_p(H)={r}` and `v_p(A_r)=1`, then `p` does not divide `m_H` and
+   `z_H(r)=0 mod p`.
+
+The second assertion is immediate: if `p` did not divide `m_H`, then
+`z_H` would vanish at every node of `Z_p(H)`, impossible for a primitive
+nonzero linear polynomial modulo `p`.  For the third, reduce the cleared
+moments
+
+`X_H=sum_s (-1)^s binom(H,s)L_H/A_s`,
+
+`Y_H=sum_s (-1)^s binom(H,s)sL_H/A_s`
+
+modulo `p`.  With a unique zero node, only its term survives, so
+`Y_H=rX_H mod p` and `X_H` is a unit.  Higher `p`-adic multiplicity leaves
+the exact residual condition in `(157.3)`.
+
+Thus every prime with at least two prefix zeros is unconditional
+good-prime pollution in the multiplier, independently of the projective
+direction.  A unique simple zero is instead cancelled from the multiplier;
+when it is the moving node `r=3H+1-p`, it reappears in the root factor
+`z_H(3H+1)`, exactly as required for a target prime.  Root primes with no
+prefix zero are a second, sporadic pollution source.
+
+Two reproducible scans now separate these effects:
+
+- `q32_a1_window_support.py` computes the exact local valuations of
+  `X_H,Y_H,z_H,m_H` through `H=500`, without constructing the full
+  degree-`H-1` denominator.
+- `q32_a1_multiplier_window.cpp` scans only Apéry recurrences modulo
+  candidate primes.  It gives an exact lower bound from primes having at
+  least two prefix zeros and an upper bound from primes having at least
+  one prefix zero.
+
+At `H=50000`, the unavoidable multi-zero lower-bound weight divided by
+`H` is `0.07427438645`, from 317 primes.  Over
+`25000<=H<=50000`, its maximum ratio is `0.07430410809` at `H=49980`.
+The one-zero-or-more upper ratio at `H=50000` is `0.3452990877`.
+Meanwhile the exact moving target at that particular height is empty.
+
+These finite computations do not disprove the asymptotic `(159.1)`.
+They do overturn the sparse-support heuristic: the forced pollution
+shows no decay through height `50000` and agrees with the previously
+measured reflection-paired zero-orbit statistics.  Proving `(159.1)`
+would require showing that primes with two lower-half zero orbits have
+vanishing weighted density in every moving prime window, contrary to the
+current data and stronger than the original alignment problem in a
+different direction.  The single-`a=1` support bound should therefore be
+treated as a likely false route.  A second certificate is needed to
+remove this multiplier pollution; Q871 asks for exactly that separation.
