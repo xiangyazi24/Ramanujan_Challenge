@@ -8099,3 +8099,79 @@ The verifier `q32_pade_zero_absorber.py` checks `(160.1)--(160.3)` with
 the exact primitive kernels for every `2<=H<=22` and every prime
 `H<p<=3H+1`: 2,100 polynomial reductions and 1,071 growing-family support
 tests pass.  The proof above is independent of the computation.
+
+## 161. The zero-absorber-scale family gcd is tiny through height 40
+
+The exact experiment `q32_pade_family_gcd.py` now computes
+
+`G_(H,A)(3H+1)=gcd_(0<=a<=A) P_(H,a)(3H+1)`
+
+at the first scale relevant to `(160.3)`,
+
+`A=ceil(H^(2/3))`.                                  `(161.1)`
+
+It uses the already verified primitive cofactor kernels, checks every
+interpolation equation before taking a gcd, and independently checks the
+candidate-window support predicted by `(160.3)`.  Selected exact outputs
+are:
+
+| `H` | `A` | bits of `G_(H,A)` | `log G_(H,A)/H` | factorization |
+|---:|---:|---:|---:|:---|
+| 10 | 5 | 5 | 0.321888 | `5^2` |
+| 20 | 8 | 7 | 0.241416 | `5^3` |
+| 25 | 9 | 13 | 0.359861 | `5^2*17*19` |
+| 30 | 10 | 13 | 0.281308 | `5^3*37` |
+| 35 | 11 | 10 | 0.183936 | `5^4` |
+| 40 | 12 | 9 | 0.151302 | `5^2*17` |
+
+This collapse is substantial.  At `H=40`, the constant-numerator member
+alone has 3,666 bits, the gcd after `a=1` has 34 bits, after `a=6` it has
+12 bits, and after `a=12` only 9 bits remain.  Across every
+`2<=H<=40`, the final gcd has at most 15 bits in this computation.
+
+There is an exact bordered-minor formulation behind the experiment.  Let
+
+`M_(k,l)=binom(k,l) Delta^(k-l) A_l`
+
+be the Newton multiplication matrix, put `b=H-a`, and let
+
+`R_(H,a)=M_[a+1..H,0..b]`.
+
+This is a `b` by `b+1` matrix.  If `delta_(H,a)` is the gcd of its maximal
+minors, its signed cofactor vector divided by `delta_(H,a)` is precisely
+the primitive denominator vector `q_(H,a)`.  Define the evaluation row
+
+`w_l(n)=sum_(k=0)^H binom(n,k) M_(k,l)`, `0<=l<=b`.
+
+The bottom Padé equations let one include all rows in this sum, and
+cofactor expansion gives the exact identity
+
+`P_(H,a)(n)=(-1)^b det([R_(H,a);w(n)])/delta_(H,a)`. `(161.2)`
+
+Thus the new gcd is a gcd of *individually saturated bordered minors*.
+The different saturation indices `delta_(H,a)` are the precise obstacle
+to declaring it, without further work, a single ordinary determinantal
+divisor.
+
+The computation is only evidence.  Except for the small hit
+`H=5, p=11`, the direct candidate window is empty through `H=40`; the
+next direct hits occur at `H=74` and `H=80`.  Therefore the tiny values
+above do not sample a dense target regime, and a pointwise asymptotic
+cannot be inferred from them.  Hadamard bounds control each unnormalized
+bordered determinant in the wrong direction and at quadratic-exponential
+height.  Adjacent cross determinants still contain the full
+`binom(3H+1,H+1)` carrier.  Generic many-integer gcd heuristics also give
+no deterministic estimate.
+
+The now sharply isolated sufficient lemma is
+
+`log gcd_(0<=a<=ceil(H^(2/3)))`
+
+`        |P_(H,a)(3H+1)| = o(H)`,                   `(161.3)`
+
+or merely the same estimate for its `p>2H` radical.  Q885 asks for a
+whole-family height/Smith argument for `(161.3)`.  Q886 asks first for a
+single Fitting presentation that correctly incorporates the varying
+indices in `(161.2)`, or a rigorous saturation counterexample.  Until one
+of those steps is proved, `(161.3)` remains a promising numerical
+strengthening, not an unconditional advance.
