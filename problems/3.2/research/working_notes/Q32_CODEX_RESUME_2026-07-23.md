@@ -7466,3 +7466,88 @@ The first is slope-independent and survives every adjacent chain.
 Therefore the adjacent-gcd route cannot bypass Problem 3.2; it can only
 add a second problem.  Q832 now attacks the fixed core `(148.1)` directly
 through hypergeometric remainders and Bézout certificates.
+
+## 149. Q822: the canonical endomorphism route is scalar; the exact cubic is the remaining datum
+
+Q822 audits whether the canonical low-height Apéry gauge has an
+endomorphism, contiguous operator, or modular correspondence that could
+create a second synchronized integral section.  The answer is negative.
+For
+
+`T(t)=[[P(t),-t^6],[1,0]]`,
+
+`P(t)=34t^3+51t^2+27t+5`,
+
+every rational horizontal endomorphism satisfying
+
+`E(t+1)T(t)=T(t)E(t)`
+
+is scalar.  The proof reduces a non-scalar endomorphism to a rational
+solution of
+
+`z(t+1)=P(t)-t^6/z(t)`.
+
+Writing `z=A/B` forces
+
+`z=c t^3 B(t+1)/B(t)`.
+
+The coefficients at infinity then give
+
+`c+c^(-1)=34`,
+
+`deg B=(51-3c)/(c-c^(-1))=-3/2`,
+
+an impossibility.  Hence every forward `h`-shift intertwiner is a scalar
+multiple of the canonical transfer product.  The determinant pairing is
+the unique adjoint/self-duality map up to scalar and does not create an
+independent solution.
+
+The modular picture has the same outcome.  The rank-two
+`Gamma_1(6)` local system has scalar commutant, as does its symmetric
+square.  Hecke and Atkin--Lehner correspondences move the base point or
+level structure; any same-base descent is scalar.  Thus the
+Picard--Fuchs origin supplies no hidden second holomorphic integral
+section.
+
+Q822 also quantifies the cost of abandoning the canonical gauge.  If an
+integral matrix `G` sends `(1,5)` to an independent state synchronized
+with a star subset of radical `R_S`, then
+
+`||G||_infinity>=R_S/36`,
+
+and already
+
+`max(||G^(-1)T(1)G||,||G^(-1)T(2)G||)>=R_S/72`.
+
+Thus Q800's CRT conjugacy necessarily writes the unknown radical into the
+initial coefficient height.
+
+The exact surviving same-gauge detector is
+
+`det(row_a,row_b)=(a!)^6 N_(b-a)(a)`,               `(149.1)`
+
+where `N_h` is the gap continuant.  If `p>b` and `p|A_a`, then
+
+`p|det(row_a,row_b) <=> p|A_b`.                     `(149.2)`
+
+This converts a second zero under the same prime into a canonical integer,
+but supplies no frequency lower bound.  Q822 formulates one sufficient
+cross-incidence estimate: if the star has size `K` and its ordered
+off-diagonal incidence count is at least
+
+`K^(1+delta)n^(-o(1))`
+
+for some `delta>2/3`, then the known vertical zero bound forces
+`K=o(n/log n)`.
+
+Finally, a hostile recurrence can preserve the fixed initial state,
+coefficient size `O(n^3)`, off-diagonal term `-m^6`, adjacent determinant
+law, and arbitrary prescribed reflected zero pairs.  What it changes is
+exactly the diagonal cubic `P(m)`.  Therefore bounded height and the
+Casoratian law do not imply the needed correlation; a successful proof
+must use the exact cubic or its modular/Dwork meaning.
+
+Q822 does not improve the unconditional radical bound, but it closes the
+canonical symmetry/endomorphism/constant-conjugacy route cleanly.  Q836
+now attacks the explicit gap continuants in `(149.1)` for strong
+divisibility, resultants, or a genuine exact-cubic correlation theorem.

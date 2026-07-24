@@ -1,0 +1,445 @@
+
+Moreover the first two conjugated transfer matrices already satisfy
+
+
+Thus the CRT conjugacy from Q800 cannot preserve bounded-height canonical coefficients unless the desired radical is already subexponential.
+
+1. There is an exact canonical off-diagonal detector. If (mathbf r_m=(r_m,s_m)) is the canonical integral transfer row, then
+
+
+where (N_h) is the Apéry gap continuant. If (p>b) and (pmid A_a), then
+
+
+This is the fixed-gauge integer that detects a genuinely second zero under the same prime.
+
+1. Bounded coefficients plus the determinant law still do not force correlation. For every finite prescribed reflection star, one can construct a single recurrence with the fixed initial state ((1,5)), coefficient bound (O(n^3)), off-diagonal coefficient (-m^6), and the exact adjacent determinant ((m!)^6), whose only zeros modulo each star prime are the prescribed reflection pair. What this model loses is precisely the exact cubic diagonal coefficient
+
+
+and therefore the modular/Picard–Fuchs origin. Consequently neither bounded coefficient height nor the adjacent determinant can by itself prove expansion.
+
+I do not obtain the q = 1 bound. The sharpest surviving theorem is now a canonical-row correlation statement. Let (S_1(n)) be the q = 1 star, (K_1(n)=|S_1(n)|), and (j_p) its folded indices. Define
+
+
+A lower bound
+
+
+would imply (K_1(n)=o(n/log n)), hence (log R_1(n)=o(n)). The countermodel proves that such a theorem must use the exact cubic (P(m)), not merely its degree, size, determinant, reflection pairs, or generic recurrence identities.
+
+Source context: canonical resume, Q800, Q778, Q340, and Q338.
+
+---
+
+## 1. The canonical difference module
+
+Put
+
+
+For arbitrary initial data (u_0=x,u_1=y), scale by
+
+
+Then
+
+
+Equivalently, with (Y_m=(X_m,X_{m-1})^T),
+
+
+Let (K=overline{mathbf Q}(t)), with shift (sigma f(t)=f(t+1)). The associated rank-two difference module is
+
+
+Q800 writes
+
+
+and proves
+
+
+The theorem below classifies all same-base rational symmetries of this canonical module.
+
+---
+
+## 2. Scalar-centralizer theorem for the Apéry difference module
+
+### Theorem 2.1
+
+Let (E(t)inmathrm{Mat}_2(overline{mathbf Q}(t))) satisfy the horizontal endomorphism equation
+
+
+Then
+
+
+for some constant (lambdainoverline{mathbf Q}).
+
+Consequently,
+
+
+and the endomorphisms preserving the standard integral initial-state lattice are precisely (mI), (minmathbf Z). The integral automorphisms are (pm I).
+
+### Proof
+
+The endomorphism equation gives
+
+
+Therefore (operatorname{tr}E) and (det E) are rational functions of period one. A rational function in characteristic zero with period one is constant: a finite pole would generate infinitely many translated poles, and a pole-free rational function is a polynomial, hence a constant if periodic.
+
+Suppose (E) is not scalar. Its characteristic polynomial has constant coefficients. Over (overline{mathbf Q}(t)), either it has two distinct eigenspaces or it has a nontrivial Jordan kernel. In either case the difference module has a rational invariant line.
+
+Represent that line generically by the vector ((z(t),1)^T). Invariance under (T(t)) gives the Riccati equation
+
+
+We now prove that (2.1) has no solution in (overline{mathbf Q}(t)). Write (z=A/B) with coprime (A,Binoverline{mathbf Q}[t]). Cross-multiplication gives
+
+
+Since (A(t+1)) and (B(t+1)) are coprime, (2.2) implies
+
+
+Write (A(t)=B(t+1)C(t)). Rearranging (2.2) also gives
+
+
+Because (A) and (B) are coprime, (C) is coprime to (B), and hence
+
+
+Thus
+
+
+Degree comparison in (2.1) forces (k=3). Put (d=deg B). At infinity,
+
+
+Comparing the coefficients of (t^3) and (t^2) in (2.1) yields
+
+
+The first equation gives (c-c^{-1}=2(c-17)). The second then gives
+
+
+which is impossible for the degree of a polynomial. Hence there is no rational invariant line and (E) is scalar. ∎
+
+### 2.2 Constant centralizer check
+
+There is also a short exact check for constant matrices. The first two transfer matrices are
+
+
+If (C=begin{pmatrix}a&b\c&dend{pmatrix}) commutes with both, the lower-right entry of (CT(m)=T(m)C) gives
+
+
+for (m=1,2). Hence (b=c=0), and the remaining entries give (d=a). Thus even the constant centralizer is exactly scalar.
+
+---
+
+## 3. Classification of contiguous and adjoint transformations
+
+### 3.1 Forward shifts
+
+For (hge0), define
+
+
+It satisfies
+
+
+### Theorem 3.1
+
+Every nonzero rational intertwiner (G(t)) satisfying
+
+
+is of the form
+
+
+for a constant (lambda).
+
+Indeed, a nonzero rank-one intertwiner would produce an invariant line, already excluded. Thus (G) is generically invertible, and (F_h^{-1}G) is an endomorphism of the original module. Theorem 2.1 makes it scalar.
+
+Therefore every rational contiguous transformation is just the canonical shift of the same solution. It does not create a second comparison section.
+
+### 3.2 Adjoint and self-duality
+
+Let
+
+
+For every two-by-two matrix (M), one has (M^TJM=(det M)J). Hence
+
+
+This is the canonical determinant-twisted self-duality of the Apéry module. It identifies (M) with (M^veeotimesdet M), not with a new independent copy of (M). Any other rational adjoint intertwiner differs from (J) by an endomorphism of (M), and is therefore a scalar multiple of (J).
+
+The classical companion solution is not produced by an endomorphism. It is a chosen second solution with nonzero Casoratian. At a large folded zero the Casoratian is a unit, so it is specifically not synchronized with the Apéry solution.
+
+### 3.3 Reflection
+
+The coefficient polynomial satisfies
+
+
+This gives a reversal isomorphism between the module and the pullback under (tmapsto-t-1); it is not a same-time endomorphism. The balanced hypergeometric continuation
+
+
+is invariant under (zmapsto-z-1), because the numerator parameters are merely interchanged. Thus reflection sends the distinguished Apéry section to itself. Its two zero positions are two evaluations of the same local scalar, exactly as Q715 and Q778 found; reflection creates no independent section.
+
+---
+
+## 4. The modular and K3 origin has scalar endomorphism ring
+
+The Apéry generating function satisfies the order-three operator
+
+
+Equivalently, in ordinary derivatives,
+
+
+This is the symmetric square of the rank-two Picard–Fuchs equation
+
+
+At the level of local systems,
+
+
+The elliptic local system is the one attached to the semistable elliptic surface over the modular curve for (Gamma_1(6)), with singular fibers of types
+
+
+The modular identification and these four fiber types are recorded in G. Almkvist and D. van Straten, “Calabi–Yau operators of degree two”; the K3 and monodromy origins go back to Beukers–Peters and Peters.
+
+### Theorem 4.1
+
+The commutant of the rank-two modular monodromy over (mathbf Q) is scalar, and so is the commutant of its symmetric square.
+
+### Proof
+
+The group (Gamma_1(6)) contains
+
+
+A matrix commuting with (U) has the form
+
+
+Commuting also with (V) forces (b=0). Therefore
+
+
+The group (Gamma_1(6)) is Zariski dense in (mathrm{SL}_2), and (operatorname{Sym}^2) of the standard representation is absolutely irreducible. Schur's lemma gives
+
+
+∎
+
+### 4.2 Atkin–Lehner and Hecke audit
+
+A same-base automorphism of the marked elliptic surface must preserve Kodaira fiber type. Since (I_6,I_3,I_2,I_1) are pairwise distinct, it fixes all four singular points; a Möbius transformation fixing three points is the identity. Thus the canonical marked family has no nontrivial base automorphism from which a second horizontal section could arise.
+
+Atkin–Lehner involutions naturally act on (X_0(6)), while the canonical marked family is over (X_1(6)). After pullback they either move the base point/level structure or cease to preserve the chosen marked family. Hecke operators are likewise correspondences between different fibers. If any such correspondence descends to a horizontal endomorphism over the identity of the base, (4.2) forces it to be scalar.
+
+The same applies to modular self-isogenies: multiplication-by-(m) acts as a scalar on the rank-two rational local system, and as (m^2) on its symmetric square. It cannot send the holomorphic Apéry period to an independent period.
+
+### 4.3 No hidden holomorphic section
+
+At the maximally unipotent point (x=0), equation (4.1) has one holomorphic period and one logarithmic period. Its symmetric square has one holomorphic solution, one logarithmic solution, and one log-squared solution. Hence there is no second canonical holomorphic Taylor section with integral coefficients at (x=0). The modular/K3 origin supplies the polarization and the logarithmic companions, but not a second synchronized integral sequence.
+
+---
+
+## 5. Quantitative height of a noncanonical synchronized gauge
+
+Let
+
+
+Suppose the solution with initial state (Gv) vanishes at the folded zero for every prime in a subset (S) of the q = 1 star. Q800's local-line theorem says that, for each (pin S),
+
+
+Therefore (p) divides
+
+
+Writing (R_S=prod_{pin S}p), we have
+
+
+If (Gv) is independent of (v), then (Delta(G)ne0), and
+
+
+Thus
+
+
+The same statement holds for a rational matrix after multiplying by a primitive common denominator, provided the star primes do not divide that denominator. In particular, denominators supported on primes at most (n/2) cannot hide the q = 1 radical.
+
+For a finite family (G_1,ldots,G_k) whose synchronized subsets cover the star,
+
+
+so
+
+
+This is the quantitative form of the statement that a finite canonical family cannot have subexponential determinant product unless it already proves the desired bound.
+
+---
+
+## 6. The conjugated recurrence itself must become radical-sized
+
+The preceding estimate concerns the conjugating matrix. The next lemma shows that the coefficient height of the conjugated transfer system also becomes large immediately.
+
+Let (Ginmathrm{SL}_2(mathbf Z)), and set
+
+
+Use the matrix units (E_{ij}). Direct calculation gives
+
+
+The coefficient determinant is
+
+
+Therefore
+
+
+Conjugating (6.1) and using the max-entry norm gives
+
+
+Since
+
+
+we also get
+
+
+For (G=begin{pmatrix}a&b\c&dend{pmatrix}), (det G=1),
+
+
+Equations (6.2)–(6.3) imply
+
+
+and hence the safe bound
+
+
+Combining (5.3) and (6.4), any integral conjugacy that sends the Apéry state to an independent section synchronized with a star subset (S) satisfies
+
+
+Thus Q800's CRT conjugacy necessarily encodes the star radical in the very first transfer coefficients. Constant-gauge monodromy countermodels cannot preserve the canonical bounded-height model cheaply.
+
+---
+
+## 7. A canonical off-diagonal determinant lemma
+
+Recall
+
+
+Let (N_h(x)) be the gap continuant normalized by
+
+
+### Theorem 7.1
+
+For (0le a<b),
+
+
+### Proof
+
+For fixed (a), put (D_h=det(mathrm{row}a,mathrm{row}{a+h})). Then
+
+
+and the row recurrence gives
+
+
+This is exactly the recurrence and initial data of ((a!)^6N_h(a)). ∎
+
+### Corollary 7.2: exact second-zero detector
+
+Let (p>b) and assume (pmid A_a). Q800 gives
+
+
+Therefore
+
+
+Since (p>b), all scalar factors are units, and
+
+
+This equivalence is symmetric in (a,b) once one of the two Apéry values is known to vanish.
+
+Equation (7.2) is the exact canonical-gauge integer divisibility lemma missing from the varying-state countermodel. It does not yet give a lower bound on how often it occurs.
+
+---
+
+## 8. The precise canonical correlation theorem that would finish q = 1
+
+For fixed (n), let
+
+
+Define the ordered canonical cross-incidence count
+
+
+By Corollary 7.2,
+
+
+The map (qmapsto j_q) has multiplicity at most two: a folded index (j) can come only from
+
+
+The unconditional vertical bound (|Z_p^+|ll p^{2/3}) therefore gives
+
+
+Suppose one could prove, for some fixed (delta>2/3),
+
+
+Combining (8.2) and (8.3) yields
+
+
+Since (delta>2/3), the exponent is strictly less than one. Hence
+
+
+Thus (8.3) is one explicit theorem sufficient to close the q = 1 target. It is formulated entirely in the canonical integral transfer rows and gap continuants.
+
+---
+
+## 9. Bounded coefficients and the adjacent determinant do not imply (8.3)
+
+The next construction includes the fixed initial state and the exact determinant law. It shows precisely what additional arithmetic (8.3) must use.
+
+### Proposition 9.1: fixed-state polynomial-height star model
+
+Fix (n) and a finite set (S) of odd primes in ((n/2,n]). For each (pin S), prescribe the reflected pair
+
+
+Discard the possible central duplication and assume, as for actual large Apéry stars, that none of the prescribed times is (0) or (1). Then there exist integers (c_1,ldots,c_{n-1}) with
+
+
+such that the sequence
+
+
+has, modulo each (pin S), zeros in ([0,p-1]) exactly at the prescribed reflected pair and nowhere else.
+
+### Proof
+
+Choose (c_m) successively. Suppose all values through (U_m) have been fixed.
+
+If (U_mnotequiv0pmod p), exactly one residue class of (c_mpmod p) makes (U_{m+1}equiv0):
+
+
+Impose (9.2) when (m+1) is a prescribed zero for (p), and avoid it otherwise.
+
+If (U_mequiv0pmod p), then (m) is a prescribed zero. The prescribed zeros are nonconsecutive, and induction gives (U_{m-1}ne0). Since (m<p),
+
+
+independently of (c_m).
+
+For a fixed time (m+1), at most two primes require a residue: the equations are
+
+
+or
+
+
+Let (M) be the product of these required primes, so (Mle n^2), and choose one CRT solution (c_0pmod M). Every other star prime forbids at most one value of (kpmod p) in
+
+
+There are at most (K=|S|) forbidden primes, while every (pin S) satisfies (p>n/2ge K). Among (k=0,1,ldots,K), each prime excludes at most one value, so at least one choice remains. This gives
+
+
+The induction proves the proposition. ∎
+
+For the transfer rows of (9.1), the off-diagonal coefficient is still (-m^6), so exactly as in Q800,
+
+
+The model also has no consecutive zeros and all generic continuant, addition, and Casoratian identities of a second-order recurrence. Yet its star can be arbitrarily large and its leaves can remain isolated.
+
+What it does not preserve is
+
+
+nor the resulting modular Picard–Fuchs equation and exact polynomial reflection symmetry. Therefore:
+
+The fixed state, coefficient bound (O(n^3)), off-diagonal term (-m^6), adjacent determinant ((m!)^6), no-consecutive-zero property, and prescribed reflected zero pairs do not imply off-diagonal expansion. Any proof of (8.3) must exploit the exact cubic law or an equivalent modular/Dwork identity.
+
+---
+
+## 10. Classification summary
+
+This classification is complete for the natural rational/integral operations that could yield a same-index comparison section. It does not classify arbitrary nonlinear constructions from many coefficients; those are exactly the interpolation/content/Padé routes already isolated elsewhere in the repository.
+
+---
+
+## 11. Sharp reopen condition
+
+The endomorphism and modular classifications rule out a canonical second section. The fixed-state polynomial-height model rules out any theorem based only on coarse coefficient height and the adjacent determinant. The remaining load-bearing feature is the exact arithmetic of
+
+
+A concrete theorem that would close q = 1 is:
+
+
+Equivalent formulations may use the row determinants in (8.1), the actual Apéry values (A_{j_q}), or the off-diagonal leaf count from Q778. A proof must be sensitive to the exact canonical cubic and cannot be invariant under arbitrary bounded-height changes of the diagonal coefficient.
+
+A weaker but still useful alternative is a direct low-height determinant theorem:
