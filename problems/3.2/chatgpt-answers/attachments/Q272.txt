@@ -1,0 +1,8 @@
+
+Representative references are:
+
+- É. Fouvry and P. Michel, Sur certaines sommes d'exponentielles sur les nombres premiers, Ann. Sci. ÉNS 31 (1998), 93–130;
+
+- É. Fouvry, E. Kowalski, P. Michel, Algebraic Trace Functions over the Primes, Duke Math. J. 163 (2014), 1683–1736.
+
+The Apéry sum has the reverse quantifiers:

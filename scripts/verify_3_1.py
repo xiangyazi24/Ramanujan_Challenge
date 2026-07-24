@@ -7,7 +7,7 @@ Based on ChatGPT analysis (Q4654). Run on uisai2 for higher precision."""
 from __future__ import annotations
 import mpmath as mp
 
-DPS = 60
+DPS = 200
 mp.mp.dps = DPS
 
 def _coefficients(M):

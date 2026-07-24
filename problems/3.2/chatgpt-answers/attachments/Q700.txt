@@ -1,0 +1,300 @@
+
+---
+
+## 1. Exact coefficient and resultant formulas
+
+Put
+
+The standard-cutoff coefficients are
+
+and, for d>0,
+
+In particular,
+
+Write
+
+For a monic polynomial
+
+one has the two exact forms
+
+up to the irrelevant resultant sign.
+
+Define the root measure of P by
+
+and the moving external field by
+
+Then
+
+Equivalently,
+
+where
+
+From (1.1) and Stirling's formula,
+
+Plain text:
+
+
+### 1.1 Primitive resultant
+
+Write
+
+Then
+
+The second factor is a nonzero integer. Therefore
+
+This is exactly why a low resultant proves a low content. It also shows that constructing a unit primitive resultant is not automatically enough: one still needs an independent Archimedean bound on the total resultant to deduce that \Gamma_n is small.
+
+---
+
+## 2. Exact saddle field
+
+The exact Legendre–Gegenbauer kernel is
+
+and
+
+The Franel transform has generic exponential base
+
+For m=\beta n+O(1), the saddle equation is
+
+At a critical point,
+
+The absolute saddle envelope is therefore
+
+and
+
+Away from anti-Stokes curves and vanishing leading amplitudes, this is the actual exponential rate of |T_n(c)|. On a cancellation curve it is only an upper envelope.
+
+The checks are
+
+and, at the endpoint saddle \beta=1/3,
+
+A successful moving family cannot have a fixed limiting conjugate distribution supported away from the moving anti-Stokes/zero set unless the average of this field vanishes. All standard fixed-center and equidistributed cyclotomic families therefore retain positive rate.
+
+---
+
+## 3. The exact moving integer-Chebyshev constant
+
+Define
+
+Then
+
+The resultant route succeeds exactly if one constructs P_n with
+
+along the chosen degrees.
+
+Equivalently, for the multiset Z_n=\{\beta_{n,1},\ldots,\beta_{n,n}\}, define the geometric monic integer-Chebyshev quantity
+
+Then
+
+This is a geometric-mean problem on the complete moving Galois set of zeros, not a supremum-norm problem on a fixed compact set.
+
+The distinction is essential. Borwein–Pinner–Pritsker show that a proper subset of a complete conjugate set can admit monic integer polynomials arbitrarily small on that subset. But when all conjugates of an irreducible factor are included, the resultant restores the integer obstruction. Approximating all but one zero of an orbit merely forces the omitted value to compensate. See Borwein–Pinner–Pritsker, Monic integer Chebyshev problem.
+
+---
+
+## 4. A canonical growing-degree construction with positive rate
+
+For t\in\mathbf R, define the polynomial lemniscate
+
+The capacity of a polynomial lemniscate is exact:
+
+Let
+
+Its equilibrium measure is the normalized pullback of Haar measure on the circle:
+
+It satisfies
+
+If t>\ell_n, then \operatorname{cap}K_n(t)>1. The equilibrium measure is an arithmetic probability measure, and the constructive theorem of Orloski–Sardari produces monic irreducible integer polynomials of arbitrarily large degree whose conjugates lie in any prescribed thin neighborhood of K_n(t) and equidistribute to \omega_{n,t}. Their algorithm is polynomial-time in the output degree for fixed input measure. See Orloski–Sardari, Limiting distributions of conjugate algebraic integers and A quantitative converse of Fekete's theorem.
+
+Choose the neighborhood inside
+
+It is disjoint from the zero set of T_n, so the resulting resultant is automatically nonzero. For sufficiently large output degree d,
+
+Taking t=\ell_n+\epsilon_n with \epsilon_n\downarrow0, and then taking d_n sufficiently large for each n, gives an explicit algorithmic family satisfying
+
+This is a genuine growing-degree construction. It improves the c=0 benchmark \log8 by
+
+but it does not approach zero.
+
+### 4.1 What is and is not charged
+
+The coefficient height of P_{n,d} is not an extra term. Once the roots are constructed, the resultant is exactly the product in (1.2). Large coefficients matter only insofar as they force conjugates away from the chosen lemniscate.
+
+The Orloski–Sardari approximation error is subexponential in d for a fixed arithmetic measure. Since n is also moving, one must choose d_n after n so that the measure-dependent approximation error is o(nd_n). This is effective, but no uniform polynomial bound on d_n in terms of n is claimed.
+
+Plain text construction:
+
+
+---
+
+## 5. Exact limitation of the single-sublevel strategy
+
+For a fixed n, Fekete's theorem gives:
+
+- if t<\ell_n, then \operatorname{cap}E_n(t)<1, so only finitely many complete conjugate sets of algebraic integers can lie entirely in E_n(t);
+
+- if t>\ell_n, the construction in Section 4 gives arbitrarily large degrees.
+
+Thus \ell_n is the exact fixed-n threshold for the all-conjugates-in-one-sublevel strategy.
+
+There is, however, a crucial quantifier warning:
+
+Finiteness for each fixed n does not give a uniform degree bound as n changes.
+
+It therefore does not rule out one exceptional high-degree polynomial P_n inside a subcritical moving lemniscate for every n. A negative solution of Q700 needs a quantitative Fekete theorem uniform in the moving degree-n lemniscates, or the stronger arithmetic equilibrium inequality of Section 8.
+
+At the target scale t=o(1),
+
+Any successful near-zero construction would therefore be a genuinely moving exceptional Fekete family. It cannot be obtained from the standard converse theorem alone.
+
+---
+
+## 6. Why splitting conditions and unit-resultant shortcuts do not close it
+
+For the primitive polynomial \widetilde T_n=T_n/\Gamma_n,
+
+is equivalent to saying that P and \widetilde T_n have no common root modulo any prime, with the corresponding leading-coefficient conditions. This is an infinite family of local conditions.
+
+Fekete–Szegő theorems with splitting conditions can impose prescribed behavior at finitely many places. They cannot directly impose this global unit-resultant condition. The obstruction is not cosmetic: even for quadratic target polynomials, the existence of an odd-degree integral polynomial with resultant \pm1 is an arithmetic sparsity problem; see Browning–Chan, Solubility of a resultant equation and applications.
+
+The Franel Dwork theorem proves the content divisor and its prime-power integrality. It does not remove the primitive resultant problem. In exact terms, it controls the first factor in
+
+but supplies no global unit in the order cut out by \widetilde T_n.
+
+---
+
+## 7. Standard families in the moving-measure language
+
+### 7.1 Cyclotomic families
+
+If the conjugates of P equidistribute on the unit circle, Jensen's formula gives
+
+where M(T_n) is the Mahler measure. Growing the cyclotomic conductor does not change this limiting field.
+
+Shifted cyclotomic families replace Haar measure by its polynomial or affine pushforward and again give a fixed positive average unless that pushforward tracks the moving zero set.
+
+### 7.2 Algebraic units
+
+For algebraic units,
+
+This balances large and small conjugates, but does not make the resultant cost disappear. For large |c|,
+
+so every escaping conjugate pays its logarithmic house directly in (1.3). Conjugates compensating near zero encounter
+
+No general unit-distribution inequality currently forces a zero average, and the bounded-house/small-height regime returns to unit-circle equidistribution.
+
+### 7.3 Near-zeros of T_n
+
+Approximating a proper subset of the zero set can be extremely effective, but a full Galois orbit cannot be ignored. For each irreducible factor Q of \widetilde T_n,
+
+If many factors on the left are tiny, the remaining conjugates or another orbit must absorb the integer resultant. This is the exact reason that Motzkin-style “approximate all but one conjugate” constructions do not automatically lower the geometric mean.
+
+---
+
+## 8. The precise arithmetic weighted-equilibrium problem
+
+Classical logarithmic energy is too weak. The correct feasible measures are the arithmetic probability measures of Orloski–Sardari.
+
+For a compact conjugation-invariant set \Sigma with capacity at least 1, define
+
+Orloski–Sardari prove that this is exactly the set of weak limits of complete conjugate sets of algebraic integers supported near \Sigma. They also give a constructive approximation algorithm.
+
+For bounded-house families define
+
+where the infimum is over compact conjugation-invariant \Sigma with capacity at least 1 and over measures for which the logarithmic integral is finite.
+
+Because T_n\in\mathbf Z[c]\setminus\{0\}, one of the defining arithmetic inequalities is
+
+Therefore
+
+The upper bound is supplied by the lemniscate equilibrium measure of Section 4.
+
+The bounded-house resultant route succeeds if one proves
+
+with regular near-minimizers for which the quantitative conjugate approximation controls the logarithmic singularities at the zeros of T_n.
+
+A theorem
+
+would close every bounded-house algebraic-center strategy negatively.
+
+### 8.1 The house-escape correction
+
+A general monic polynomial may have a vanishing fraction of conjugates escaping to infinity. Weak convergence alone misses their cost. The correct relaxation includes an escape variable \eta\ge0.
+
+A necessary limiting constraint is
+
+The term \deg(Q)\eta records the lost logarithmic house, since
+
+For Q=T_n, the normalized resultant objective becomes
+
+Define the moving arithmetic resultant capacity
+
+where (\mu,\eta) ranges over conjugation-invariant probability measures with finite logarithmic potential satisfying every inequality (8.4).
+
+This is the precise weighted equilibrium problem that includes Pisot, Salem, cyclotomic, shifted, near-zero, and Motzkin-outlier constructions in one formulation.
+
+The final route would be settled by one of the following mutually exclusive theorems:
+
+Construction theorem
+
+with a quantitative realization by monic irreducible integer polynomials whose logarithmic potentials approximate (\mu_n,\eta_n) at the zeros of T_n.
+
+Obstruction theorem
+
+The existing Orloski–Sardari theorem supplies sufficiency when \eta=0 and the measure is regular on a fixed compact set. Extending the realization theorem uniformly to the moving pair (T_n,\mu_n) and to \eta>0 is itself part of the remaining work.
+
+Plain text:
+
+
+---
+
+## 9. Why ordinary weighted capacity is insufficient
+
+If one retains only the logarithmic-energy condition
+
+then mass can be placed extremely close to the moving zeros of T_n and compensated by a small amount of distant mass. The negative logarithmic singularity of \log|T_n| can then overwhelm the relaxed objective. Such measures need not satisfy
+
+for other integer polynomials Q.
+
+Therefore the standard weighted equilibrium measure for the external field V_n is not the correct arithmetic object. The full infinite collection of integer-polynomial inequalities is load-bearing.
+
+A positive lower bound would amount to a linear-programming certificate over this arithmetic cone. A finite univariate dual certificate would seek nonnegative numbers \lambda_r and integer polynomials Q_r such that
+
+on the relevant support. Globally this is obstructed by the zeros of T_n unless the auxiliary product shares those zeros, which tends to make the certificate tautological. Orloski–Sardari's equivalent multivariate inequalities suggest that a genuine negative proof may require a multivariate auxiliary polynomial rather than ordinary one-variable capacity.
+
+---
+
+## 10. A reproducible constructive search that is not a bounded-degree scan
+
+The correct numerical experiment is an arithmetic-measure linear program followed by exact polynomial construction, not a search over small quadratic centers.
+
+### 10.1 Primal program
+
+For each n:
+
+1. Build T_n exactly from the coefficient formula in Section 1.
+
+1. Sample the complex saddle/zero geometry and choose a compact symmetric search region \Sigma_n.
+
+1. Discretize a probability measure \mu on \Sigma_n.
+
+1. Impose
+
+1. Minimize
+
+1. Add constraints until the optimum stabilizes under new Q_r.
+
+1. Regularize the measure away from the zeros of T_n.
+
+1. Feed the measure to the Orloski–Sardari construction at increasing degree d.
+
+1. Verify exactly
+
+1. Record
+
+### 10.2 Exact verification skeleton
+
+
+### 10.3 Canonical benchmark check
+
+Use the pullback-Haar measure on

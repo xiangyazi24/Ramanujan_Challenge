@@ -1,0 +1,206 @@
+
+---
+
+## 2. Complete classification of off-diagonal leaf incidences
+
+Fix n and p\in\mathcal P_1(n). Let \ell\ne p be q = 1 bad at the leaf m_p. Then there exists
+
+such that m_p is one endpoint of E(\ell,k).
+
+### 2.1 Direct incidence at the leaf
+
+If
+
+then
+
+so
+
+### 2.2 Reflected incidence at the leaf
+
+If
+
+then
+
+so
+
+Conversely, either equation, together with
+
+produces the corresponding off-diagonal incidence.
+
+This is an exact equivalence, not merely a necessary condition.
+
+For fixed (\ell,k), equation (2.1) determines at most one p, and equation (2.2) determines at most one p. Hence one folded zero pair of \ell can hit at most two leaves of the star.
+
+Since
+
+and a q = 1 prime at m_p lies in (m_p/2,m_p], every off-diagonal label satisfies
+
+Plain text:
+
+
+---
+
+## 3. A star prime needs an additional zero to hit another leaf
+
+Let \ell\in\mathcal P_1(n), and let j_\ell be the folded zero responsible for the edge through n. Its edge is exactly
+
+If this same zero pair meets a star leaf m_p, then
+
+Apart from the unique possible central loop, the first is impossible; the second implies p=\ell by injectivity of p\mapsto m_p.
+
+Therefore every internal off-diagonal incidence
+
+uses a folded zero
+
+Because each such additional zero can hit at most two leaves,
+
+This is the exact opposite of a deterministic expansion theorem: a large star does not force extra incidences unless the primes already carry additional Apéry zero pairs.
+
+More generally,
+
+The known vertical zero-fiber estimate turns (3.2) into an upper bound of the familiar shell size; it supplies no lower bound.
+
+---
+
+## 4. Product-of-differences certificates are exactly orthogonal to the target
+
+Let
+
+Its Vandermonde is
+
+By (1.3),
+
+Fix a target prime r\in\mathcal P_1(n). Then
+
+and for distinct p,q\in(n/2,n],
+
+Thus r\nmid p-q, and therefore r\nmid m_p-m_q.
+
+Hence, for n>6,
+
+This kills the most natural discriminant, Vandermonde, and product-of-differences route: those integers do not merely have excessive height; they contain none of the desired primes.
+
+The same observation applies to the simplest elimination of two spokes. Differences among
+
+have absolute value below every target prime once the obvious factor 3 is removed. No target divisor follows.
+
+Plain text:
+
+
+---
+
+## 5. Leaf-to-leaf edges and the exact triangle equation
+
+An edge labelled \ell joins two leaves m_p and m_q precisely when
+
+Since every leaf satisfies
+
+condition (5.1) is possible only if
+
+Assume n\equiv1\pmod3. Substituting
+
+into (5.1) gives
+
+If m_p is the direct endpoint \ell+k, then
+
+Interchanging p and q replaces k by \ell-1-k.
+
+Thus a leaf triangle requires all of the following:
+
+1. n\equiv1\pmod3;
+
+1. the integer in (5.3) is prime;
+
+1. the integer in (5.4) lies in [0,(\ell-1)/2];
+
+1. \ell\mid A_k.
+
+Additive energy of the star-prime set can produce many repeated sums p+q, but it does not force condition 4. Indeed, for a fixed \ell, every actual leaf-to-leaf edge consumes one distinct folded zero of \ell. High additive energy therefore translates into a demand for many zeros of the same prime, not into an automatic edge count.
+
+For
+
+there are no edges between two leaves at all. Any second-neighborhood expansion must then leave the star and create new outside vertices.
+
+As checks:
+
+- n=321\equiv0\pmod3 has leaves 215,257,311 from the known primes 179,193,211; no edge can join two of those leaves.
+
+- n=11576\equiv2\pmod3 has known leaves 15102,16380,22734; again no leaf-to-leaf edge is arithmetically possible.
+
+---
+
+## 6. Continuant addition and Casoratian identities remain single-characteristic
+
+Let N_h(x) be the cleared gap continuant from Q338. The recurrence gives the same-prime implication
+
+under the usual non-singularity hypotheses.
+
+The addition, Dodgson, and Casoratian identities compare quantities such as
+
+inside one coefficient field.
+
+A star gives instead
+
+with p\ne q. Even if two gaps are equal, the hypotheses needed by a resultant or addition identity are absent: no single prime is known to divide both relevant evaluations.
+
+In particular, an integer resultant
+
+acquires a prime divisor only when the same prime divides both polynomial values at a common residue. Different spokes provide two different primes and therefore do not imply divisibility of this resultant.
+
+The reflection pair itself is already saturated. If
+
+then the reflection identity
+
+gives, at x=j modulo p,
+
+Since p is odd,
+
+automatically. Equivalently, the continuant has the forced reflection factor
+
+which equals p at x=j.
+
+So the continuant identities certify each spoke separately but do not connect different spokes.
+
+---
+
+## 7. Cross-prime resultants and interpolation collapse to the known height problem
+
+For two star primes,
+
+A classical resultant argument needs two polynomials to have a common root modulo the same prime. Here the roots and moduli differ. Chinese remaindering places the conditions in different direct-product coordinates; it does not create a common residue field.
+
+To force a single integer divisible by all star primes, one must interpolate the values A_j by an integer-valued polynomial or Padé object and evaluate it at n. This is exactly the route audited in Q475, Q729, and Q754:
+
+- ordinary Newton evaluation has a positive exponential rate;
+
+- fixed-order recurrence-aware variants reduce to one selective coordinate;
+
+- signed growing-degree Newton–Padé remains an explicit Smith-normalized determinant problem.
+
+Thus a cross-prime resultant becomes useful only after solving the same low-height interpolation problem already isolated there. It is not a new consequence of the star geometry.
+
+---
+
+## 8. A recurrence-realizable local model for an arbitrary reflection spoke
+
+The prime-local obstruction can be made exact at the level of the Apéry recurrence module.
+
+Fix an odd prime p and an integer
+
+Put
+
+The reflection identity for the continuant gives
+
+Now solve the exact Apéry recurrence modulo p with local state
+
+By the defining transfer formula for N_h, the value at the reflected point is a unit multiple of N_h(j), so
+
+The recurrence transfer matrices are invertible between these indices. Hence two consecutive values cannot both vanish; otherwise the whole solution would be zero, contradicting \nu_{j+1}=1.
+
+Therefore every prescribed reflection spoke is compatible with the exact Apéry recurrence, reflection continuant, no-consecutive-zero theorem, addition laws, and Casoratian identities, provided the initial state is allowed to depend on the prime.
+
+What distinguishes the actual Apéry sequence is that all primes use the reductions of the one fixed global state
+
+None of the listed recurrence-module identities couples those reductions across different characteristics.
+
+Plain text:

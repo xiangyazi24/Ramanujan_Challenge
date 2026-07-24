@@ -1,0 +1,96 @@
+
+---
+
+# 2. Exact block formula for every cutoff
+
+Let
+
+Polynomial Lucas gives
+
+Taking the coefficient of y^{ap+b} after substituting t=c+y gives
+
+Franel Lucas congruences similarly give
+
+Split the sum defining T_{n,J} into the A complete low-digit blocks and the final partial block. Since r<p, one has
+
+Therefore:
+
+## Theorem 2.1: arbitrary-cutoff block identity
+
+For every admissible A,B,
+
+This is the formula in the question, including A=0 through the convention T_{q,-1}=0.
+
+There is no unproved cancellation in (2.5): it is a direct blockwise factorization of the summands.
+
+---
+
+# 3. Specialization to q=1
+
+Now let
+
+Since
+
+we have
+
+and
+
+The block formula becomes:
+
+### Low block, 0\le B<p
+
+### High block, 0\le B\le r
+
+These two formulas describe every cutoff 0\le J\le n.
+
+---
+
+# 4. Folding the low digit and proving the endpoints
+
+Put
+
+If r=j, nothing must be changed. If r=p-1-j, then for 0\le k\le j,
+
+so
+
+For k>j, the second binomial has a carry and vanishes. Hence
+
+and consequently
+
+The support of Q_j ends at j, so
+
+For B<j, the polynomial is nonzero. Indeed, its coefficient of c^j is
+
+Because 2j<p, both binomial factors in (4.6) are p-adic units.
+
+Thus
+
+This proves the beginning and end of every zero plateau; there is no hidden earlier zero cutoff.
+
+---
+
+# 5. Complete q=1 cutoff profile
+
+Assume p\ge7. Since A_r\equiv A_j\pmod p, equations (3.2), (3.3), and (4.7) give:
+
+## Theorem 5.1
+
+For 0\le J\le n,
+
+### Proof at the four boundaries
+
+- At J=j-1, equation (4.6) makes the low factor nonzero.
+
+- At J=j, T_{r,j}=A_j, so the low zero plateau starts.
+
+- At J=p, the high formula contains T_{r,0}; for j>0 this is nonzero, so the low plateau has stopped.
+
+- At J=p+j, T_{r,j}=A_j, so the high plateau starts.
+
+If r=j is direct, then B\le r=j in the high block, hence the second interval consists only of
+
+If r=p-1-j is reflected, the high interval is
+
+At the central case j=(p-1)/2, the direct and reflected descriptions coincide and the high interval again reduces to J=n.
+
+Plain text:

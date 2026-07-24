@@ -1,0 +1,193 @@
+
+The same proof works for a rational polynomial whose denominators are prime to all candidate primes. After multiplying by a common denominator D_n, the local multipliers become 63D_n and -D_n.
+
+The minus functional is therefore the cleaner object: its local multiplier is always a unit for every q = 3 candidate prime.
+
+---
+
+## 2. Falling-factorial coordinates and the exact moment lattice
+
+It is useful to enlarge from \mathbf Z[x] to the ring of integer-valued polynomials. Write
+
+Every polynomial in \mathbf Z[x] has such an expansion with integer a_k, but the converse class is larger and therefore gives a stronger search space.
+
+Define the Taylor moments
+
+Then
+
+and
+
+Consequently
+
+For 1\le k<p,
+
+so every q = 3 candidate prime divides every D_k^\varepsilon with k\ge1 and k<p. Since
+
+this applies throughout the natural degree range m\le J.
+
+Put
+
+With unrestricted integer coefficients a_k, the set of all degree-at-most-m values is exactly the affine lattice
+
+Thus the smallest possible nonzero value, without a coefficient-height restriction, is the least nonzero absolute residue of D_0^\varepsilon modulo g_{n,m}^\varepsilon:
+
+This is an exact finite test of the entire unrestricted degree-m Euler-functional route.
+
+At full degree m=n, the transform
+
+is triangular with diagonal entries \varepsilon^k, hence unimodular. Therefore
+
+So the growing-degree Euler route is the dual lattice formulation of the coefficient-content problem. It is not locally independent of Q556/Q569; its possible advantage can only come from finding an unusually short affine-lattice vector.
+
+---
+
+## 3. The baseline minus certificate and its exact rate
+
+The value at c=-1 has a particularly simple exact form. Since
+
+we have
+
+Also
+
+Hence
+
+The Franel numbers have dominant base 8, so their binomial transform has dominant base 9:
+
+For m\sim\beta n,
+
+where
+
+At the endpoint \beta=1/7,
+
+Moreover
+
+at m/n=1/7, and
+
+Thus the final summand is larger than the preceding summand by a factor tending to 432. The alternating sum in (3.1) is therefore endpoint dominated, not exponentially cancelled. It follows that
+
+So P=1 is selective and nonzero, but still exponentially large.
+
+---
+
+## 4. Taylor-shift filters: exact formula and the linear-degree threshold
+
+For a scalar z, define the truncated binomial polynomial
+
+Then
+
+If m=n, this is exactly the shifted value
+
+For example, starting from \varepsilon=-1, the choice z=-1/2 targets the low-cancellation center c=-1/2 studied in Q543.
+
+However, a fixed macroscopic shift requires linear degree. For a coefficient index d\sim\delta n, the full binomial expansion
+
+has its largest terms at k\asymp d. If z is a fixed nonzero constant, truncating at m=o(n) does not approximate the shifted factor at exponential scale. Equivalently, the Taylor remainder from \varepsilon to a fixed distinct center is still exponentially large unless
+
+Thus the attractive fixed-center cancellations in (-1,0) cannot be reached by a sublinear-degree Taylor filter.
+
+When z=a/b is rational, clearing the truncation requires at most b^m. For linear m, this already costs \exp(\Theta(n)). For m=o(n) the denominator cost is subexponential, but then the filter does not move the exponential saddle.
+
+---
+
+## 5. Exact obstruction for saddle-jet annihilation
+
+A different proposal is to choose P_n with a high-order zero at the dominant coefficient saddle d\sim\tau n. A nondegenerate Gaussian saddle has width \asymp\sqrt n. A zero of order s in the amplitude improves a Laplace integral by at most
+
+Therefore suppressing an exponential factor e^{\delta n} requires
+
+For integer polynomials this has an unavoidable arithmetic cost. Let
+
+If \widetilde P has s roots, counted with multiplicity, satisfying
+
+then its Mahler measure satisfies
+
+Landau's inequality
+
+gives
+
+Combining (5.1) and (5.2), any exact saddle-jet capable of a constant exponential improvement has
+
+The same statement applies to rational P after clearing its denominator. This closes the natural exact Chebyshev/reciprocal-polynomial construction in the regime of subexponential coefficient height.
+
+It does not rule out arithmetic cancellation in the moment lattice that is not realized by a visible cluster of macroscopic roots. That remaining possibility is precisely why a universal impossibility theorem would be too strong.
+
+---
+
+## 6. A concrete surviving family: Krawtchouk filters
+
+Choose integers
+
+Define the symmetric Krawtchouk polynomial
+
+Its generating function is
+
+It satisfies
+
+For every candidate prime p>N and a=0,1,2,3,
+
+Since N<p, this multiplier is a p-adic unit. Therefore
+
+and
+
+satisfy
+
+They are exact integer certificates whenever nonzero.
+
+Their generating description is especially clean:
+
+This is the most concrete new family produced by the degree-growing idea.
+
+Strictly speaking, K_m(x;N) is integer-valued rather than always belonging to \mathbf Z[x]. But
+
+and its constant value
+
+is still a unit modulo every candidate prime. Equivalently, normalize by \binom Nm over \mathbf Q; its denominator is supported on primes at most N<n/4.
+
+### What is proved about the degree threshold
+
+If m=o(n) and N=O(n), the coefficient extraction in (6.5)–(6.6) stays in a shrinking neighborhood of z=0. Under the nondegenerate dominant-saddle expansion of T_n,
+
+More explicitly, the extra coefficient-extraction factor is of size
+
+for m=o(n). Thus a Krawtchouk filter can alter the exponential constant only in the linear regime
+
+For linear m=\eta n and N=\nu n, its rate is the explicit saddle value of
+
+where \Phi_3(c) is the actual q = 3 complex-center rate of T_{n,3}(c). This is a finite ACSV problem, but the cancellation-sensitive function \Phi_3 has not yet been computed on the required complex Möbius curves.
+
+This linear-degree Krawtchouk problem is not killed by the Mahler argument in the integer-valued normalization. It is the narrowest explicit family still worth testing.
+
+---
+
+## 7. Why an unrestricted existence argument is not enough
+
+Let
+
+For a monomial-basis polynomial
+
+one has
+
+Thus, without a coefficient bound, Bézout reduction can always replace the problem by the least residue of M_0^- modulo
+
+This does not prove smallness. Every candidate prime divides all M_r^- for r\ge1, so that gcd already contains the full candidate primorial. The least residue is precisely another encoding of the selective horizontal radical.
+
+A geometry-of-numbers argument can find spectacular numerical cancellation once m is large, but it can also return the zero functional, which is useless. Proving a small nonzero residue is the arithmetic heart of the problem, not a formal consequence of having many coefficients.
+
+---
+
+## 8. Exact computational search plan
+
+The following search distinguishes the unrestricted lattice optimum from named orthogonal-polynomial filters.
+
+
+Every reported candidate must pass four exact checks:
+
+1. R_n^-\ne0 as an integer.
+
+1. For every prime n/4<p\le n/3, direct reduction agrees with (6.4).
+
+1. The local multiplier is a unit modulo p.
+
+1. The coefficient/denominator height and the value height are recorded separately.
+
+The critical scaling regimes are

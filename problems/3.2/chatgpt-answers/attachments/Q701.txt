@@ -1,0 +1,337 @@
+
+---
+
+# 2. Exact digital support of the increment polynomial
+
+The polynomial Lucas identity established for the Legendre kernel is
+
+where
+
+For one digit 0\le d<p, the coefficient
+
+is nonzero modulo p exactly when
+
+Therefore
+
+Substitute t=c+y in (2.1). Since
+
+the coefficient of y^J, where J=\sum J_ap^a, is a product of digit coefficients. Uniqueness of the base-p expansion gives:
+
+## Proposition 2.1: digital Hasse-support criterion
+
+Define
+
+Then
+
+Equivalently,
+
+This is the exact unit-support description requested in the question.
+
+---
+
+# 3. Stabilization and stopping
+
+Because g_J has leading coefficient \pm1, it is nonzero modulo every prime. Hence
+
+Thus T_{n,J}\bmod p is constant as J moves through a gap of \mathscr S_p(n).
+
+At a support index J\in\mathscr S_p(n), the increment h_J is nonzero. Therefore, if the preceding cutoff polynomial is zero modulo p, divisibility must stop at that support index:
+
+A zero plateau may begin at a support index through cancellation, but once it begins, its endpoint is exactly the next digital-support index.
+
+## Corollary 3.1: exact criterion for the common gcd
+
+For every prime p,
+
+This gives a complete support classification even for small primes. The remaining sections simplify it for p>\sqrt{2n}.
+
+---
+
+# 4. A recursive cutoff profile
+
+Let
+
+For m=bp+u, polynomial Lucas gives
+
+The Franel numbers satisfy Lucas congruences, and therefore the binomially shifted Franel polynomial satisfies
+
+Indeed, expand g_{bp+u}, write the summation index as ap+v, and apply Lucas separately to the binomial coefficient and to F_{ap+v}\equiv F_aF_v.
+
+Put
+
+If t\ge j, then every low-digit block in the truncated sum is complete. Factoring the two digit sums gives:
+
+## Proposition 4.1: recursive profile
+
+Assume q,s<p and t\ge j. Then
+
+### Proof
+
+Split the cutoff sum into blocks m=bp+u. Equations (4.1)--(4.2) give
+
+For every completed low block,
+
+The last block is also complete because t\ge j and K_{r,u}=0 modulo p for u>j. Summing the outer blocks gives T_{q,s}(c^p). \square
+
+Three small outer profiles will be used below:
+
+and
+
+The quotient polynomial in (4.6) is primitive.
+
+---
+
+# 5. Large-prime carrier classification
+
+Assume now
+
+Then p^2>2n and
+
+Thus
+
+and the digital support is
+
+We now ask when this set misses [H+1,M].
+
+## 5.1 Quotient q=0: the above-n branch
+
+Here p>n. Since M<p, only the block a=0 is relevant. The support is
+
+It misses the cutoff interval exactly when
+
+For p>n this is equivalent to
+
+Writing
+
+this is 0\le j\le H.
+
+## 5.2 Quotient q=1: every top-half prime
+
+Here
+
+Because M<p, only the low block matters. Its endpoint is
+
+and the elementary folding inequality gives
+
+Hence every top-half prime satisfies
+
+The two parametrizations are
+
+and
+
+with 0\le j\le H.
+
+## 5.3 Quotient q=2: killed at J=p
+
+If n=2p+r, then
+
+Since p=1\cdot p+0\in\mathscr S_p(n), the interval is not a plateau. Thus no q=2 prime survives the common gcd.
+
+## 5.4 Quotient q=3: one reflected band survives
+
+Write
+
+Then
+
+The only relevant support block is
+
+It misses [H+1,M] exactly when
+
+The direct half r\le(p-1)/2 never satisfies (5.6). On the reflected half put
+
+Then (5.6) is equivalent to
+
+Since
+
+condition (5.7) becomes
+
+Equivalently, the surviving primes are exactly
+
+This is a reflected q=3 band of width asymptotic to n/60.
+
+## 5.5 Quotients q=4 and q=5: killed at J=2p
+
+For both q=4 and q=5,
+
+Since 2p\in\mathscr S_p(n), these primes do not survive.
+
+## 5.6 Quotients q\ge6: a multiple of p lies in the interval
+
+Now p\le n/6. Put
+
+Then
+
+Also a\le q=e_p(q). Hence
+
+so no such prime survives.
+
+Combining the cases proves the carrier statement (C).
+
+---
+
+# 6. The carrier is squarefree at large primes
+
+Put
+
+For n\ge33, all primes in the three intervals in (C) exceed \sqrt{2n}. The preceding classification gives
+
+In fact every displayed large prime occurs to exponent exactly one in \mathfrak K_n.
+
+For the q=0, noncentral q=1, and reflected q=3 branches, the constant coefficient
+
+has p-adic valuation exactly one, by a one-carry calculation. At the possible central q=1 prime, the coefficient corresponding to k=p is
+
+and again has valuation exactly one. Thus
+
+The logarithmic size of the universal large-prime carrier is therefore
+
+So the carrier itself is exponentially large. Its usefulness comes only from intersecting it with the selective cutoff content.
+
+---
+
+# 7. Exact large-prime support of I_n
+
+It remains to impose
+
+The recursive profile from Proposition 4.1 gives this exactly.
+
+## 7.1 The q=0 branch
+
+Here
+
+and
+
+Thus
+
+## 7.2 The q=1 branch
+
+Here
+
+For p>2, the profile polynomial is primitive, so
+
+This is the desired target.
+
+## 7.3 The reflected q=3 branch
+
+In the surviving band,
+
+Therefore
+
+By (4.6), T_{3,1}/5 is primitive. Hence, for p>5,
+
+Equations (7.1)--(7.3) prove the radical identity (R).
+
+---
+
+# 8. Small-prime valuations
+
+The small primes do not obstruct a sublinear estimate. From (1.7),
+
+Since the content divides every coefficient, in particular the constant coefficient,
+
+Now
+
+The p-adic valuation of a binomial coefficient is the number of base-p carries and is at most the number of digits. Hence
+
+Therefore
+
+Chebyshev's bounds sharpen the displayed error to O(\sqrt n), but the weaker form already suffices.
+
+This proves (S) and the weighted identity (W).
+
+---
+
+# 9. Exact explanation of the numerical data
+
+## 9.1 Above-n pollution: n=13
+
+One has
+
+The prime
+
+lies on the q=0 branch. Therefore
+
+even though 17 is not a top-half target prime for n=13.
+
+This proves concretely that the common cutoff gcd is not target-pure.
+
+## 9.2 Reflected q=3 pollution: n=64
+
+Here
+
+Also
+
+and 17\mid A_3. Hence
+
+This is the second extra branch.
+
+## 9.3 The factor 11 at n=180
+
+In base 11,
+
+The digital support below 11^2 has maximum
+
+so it misses
+
+Moreover
+
+This explains the persistent factor 11 in the computed value I_{180}=55. It belongs to the small-prime digital bucket covered by (8.3), not to the large three-interval classification.
+
+## 9.4 The three-hit value n=321
+
+For n=321, the large surviving q=1 primes are exactly
+
+The computation that the common gcd drops to
+
+by J=125 is precisely what the plateau theorem predicts when no q=0 or reflected q=3 zero occurs.
+
+---
+
+# 10. Why Q692 does not apply—and what replaces it
+
+Q692 studies determinants of several cutoff rows. If q rows are equal modulo p, a determinant has q-1 universal powers of p; a bad fiber creates only one additional power. This produces a multiplicity-versus-height obstruction.
+
+The present gcd behaves differently:
+
+
+Thus the universal multiplicity is removed automatically. There is no determinant of quadratic height and no need to divide a large repeated-row factor.
+
+However, the same rank-one local geometry reappears as a plateau condition. The gcd keeps a prime precisely when one zero plateau covers the entire cutoff interval. The q=0 and reflected q=3 plateaux are as legitimate as the desired q=1 plateau.
+
+The q=0 obstruction is especially rigid. If
+
+then Q_n(t)\bmod p has degree j. Hence
+
+and
+
+Therefore this prime divides every later cutoff content, even if the intersection is extended from M all the way to J=n.
+
+This proves the cutoff-only no-go:
+
+No gcd of a tail of cutoff content ideals can isolate the q=1 support. The above-n q=0 branch is permanent after its folded index.
+
+---
+
+# 11. The exact remaining theorem
+
+Define
+
+Then the exact conclusion of this audit is
+
+Thus the weakest theorem that closes the raw intersection route is
+
+This is a three-slope horizontal nonalignment theorem. It is strictly stronger than the original q=1 statement L_1(n)=o(n).
+
+An equivalent arithmetic formulation uses the explicit increment carrier
+
+A sufficient new theorem is
+
+Its large-prime support is exactly the union of the three products in (R).
+
+For a genuinely q=1-specific intersection method, one needs an additional integral family—not merely more cutoffs—whose local profile is nonzero on the q=0 and reflected q=3 plateaux while remaining zero on the two q=1 branches. No such branch-separating integral row is supplied by tail integrality, ordinary cutoff differences, or the Q692 determinant construction.
+
+---
+
+# 12. Exact verification code
+
+The following Sage code verifies the consecutive-cutoff identity, computes I_n, and checks the predicted large-prime support.

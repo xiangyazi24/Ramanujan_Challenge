@@ -1,0 +1,367 @@
+
+This rules out a direct Kummer-valuation attack. Gross–Koblitz or Stickelberger can describe the predictable valuations of the Gauss factors in a finite hypergeometric realization, but in this balanced case the minimum slope is zero: the zero of (A_jbmod p) occurs in the unit-level leading coefficient.
+
+---
+
+# 2. A fixed Laurent polynomial gives an exact complete character sum
+
+Use the Laurent polynomial
+
+A standard constant-term form of the Apéry diagonal is
+
+This is equivalent to the rational-diagonal representations used by Straub. Notice that every exponent of every monomial of (Lambda) lies in ([-1,1]^3).
+
+## 2.1 Exact torus-moment identity
+
+Let (p>2j), (j>0), and reduce (Lambda) modulo (p). Then
+
+Proof: write
+
+Because (|a|,|b|,|c|le j<p-1), multiplicative orthogonality gives
+
+Only (u_{0,0,0}=A_j) survives, and the three torus coordinates contribute ((-1)^3=-1).
+
+## 2.2 Character-sum/Frobenius formulation
+
+Let (omega_p:mathbf F_p^timestomu_{p-1}) be the Teichmüller character, extended by (0) at (0), and define
+
+Choose the standard prime (mathfrak p) of the cyclotomic field for which (omega_p(a)equiv apmod{mathfrak p}). Then
+
+This is an exact complete Kummer sum. By Grothendieck’s trace formula it is the alternating Frobenius trace on the compactly supported cohomology of the pullback of a rank-one Kummer sheaf by the fixed map (Lambda:(mathbf G_m)^3tomathbf A^1). The geometry in the (x,y,z) variables is bounded independently of (p) and of the order of the nontrivial character. The project’s rank-two, weight-three Mellin object is the primitive normalized piece of this construction; the congruence (2.5) itself does not require choosing that normalization.
+
+This is the strongest positive geometric fact: locally, at each fixed (p), the raw trace is a bounded-complexity character sum.
+
+## 2.3 In a fixed q=1 row, the character exponent is fixed
+
+For every top-half candidate put
+
+Since (pequiv1pmod{p-1}),
+
+Therefore
+
+Plain text:
+
+
+The folded reflected index (j=p-1-r) corresponds to the inverse character (omega_p^{1-n}); the equality (A_jequiv A_rpmod p) is the first-block reflection. Using the unfurled remainder (r=n-p), however, both branches are represented uniformly by (omega_p^{n-1}).
+
+---
+
+# 3. New fixed-(n) coefficient-shell identity
+
+The previous character sum can be rewritten using one single integer Laurent polynomial depending only on (n), not on the candidate prime.
+
+Put
+
+For a top-half prime (p<n), let (r=n-p>0). Pointwise on the torus,
+
+including the points where (Lambda=0), because both exponents are positive. Hence
+
+On the other hand, multiplicative orthogonality now selects every exponent divisible by (p-1):
+
+If (p>n/2) and (pne(n+1)/2), then
+
+Thus only the (27) exponent vectors
+
+can occur. The excluded central value (p=(n+1)/2) has (r=p-1) and
+
+so it is never a hit.
+
+Combining (3.1)–(3.2) gives the exact identity announced above:
+
+where
+
+Consequently
+
+This is a genuine global compression:
+
+
+## 3.1 Why this still does not give a small certificate
+
+The polynomial (Lambda) has nonnegative coefficients and
+
+Therefore
+
+The raw shell values still have linear exponential height. For two hits at primes (p,q), the cross-weighted integer
+
+is divisible by (pq), but it has height (exp(O(n))), not (exp(O(|p-q|operatorname{polylog}n))). An unweighted finite difference can have Archimedean cancellation, but it is not forced to be divisible by either hit prime.
+
+Thus (3.3) identifies the distinguished global object that the bare recurrence was missing, but it does not yet produce the low-gap divisibility gain sought in Q589.
+
+A plausible next algebraic experiment is to derive a bivariate holonomic system for (E_n(m)) from the fixed Laurent polynomial and search for a normalized close-shell resultant. What is required is not merely a recurrence: one needs a resultant whose divisibility survives the two different moduli and whose logarithmic height is (O(hoperatorname{polylog}n)). No such normalization is currently visible.
+
+---
+
+# 4. The truncation polynomial and its exact Mellin coefficient
+
+Define the first-block truncation
+
+For (1le jle p-2), multiplicative Fourier inversion gives
+
+Indeed, among (0le rle p-1), only (r=j) satisfies (r-jequiv0pmod{p-1}).
+
+This formula makes the conceptual distinction precise:
+
+- (tmapstomathscr A_p(t)) is the Hasse–Witt/period polynomial in the geometric parameter of the Apéry K3 realization;
+
+- (A_j) is a Mellin coefficient of that polynomial;
+
+- it is not the value of that polynomial at the field element (j).
+
+Stienstra–Beukers identify the Apéry Picard–Fuchs series with the formal Brauer group and Frobenius data of an elliptic K3 pencil. Formula (4.2) is the coefficient-index/Mellin direction of that structure.
+
+## 4.1 The 2026 square factorization does not control coefficient zeros
+
+Caruso–Fürnsinn–Vargas-Montoya–Zudilin, Theorem 1.2, prove that there is (B_pinmathbf F_p[t]) such that
+
+and
+
+This is strong information about the Kummer class of the whole polynomial. It does not bound the zero coefficients. If
+
+then a coefficient of (B_p^2) is the convolution
+
+or a fixed three-term combination of such convolutions in the second branch. One convolution coefficient may vanish without any factor of (B_p), any root of (B_p), or any drop in the cyclic Galois group.
+
+The two supplied triples include primes from both factorization classes, so even the congruence class of (pbmod24) gives no clustering prohibition.
+
+---
+
+# 5. Exact modular parametrization—and its growing complexity
+
+Beukers–Tsai–Ye record the classical Apéry parametrization
+
+where
+
+and
+
+Here (t=q+O(q^2)), and (Z) has weight (2) on (Gamma_0(6)+w_6).
+
+Residue invariance under (t=t(q)) gives an exact coefficient formula. Put (D=q,d/dq). Then
+
+Proof:
+
+The expression in brackets in (5.4) is a weakly holomorphic modular form of weight (4), but its pole order at the cusp is (j). Thus the q=1 hit condition is a divisibility statement for the constant term of a modular form whose principal part grows with the moving index.
+
+Plain text:
+
+
+Sturm bounds, fixed-form Chebotarev, and fixed Galois representations therefore do not apply uniformly. Clearing the pole by multiplication with a cusp form introduces degree and height linear in (j), reproducing the exponential-certificate barrier.
+
+## 5.1 The central Ahlgren–Ono theorem is exceptional
+
+Let
+
+Ahlgren–Ono, Theorem 5, prove for every odd prime (p)
+
+This is the quadratic-character slice. It does not extend in the cited paper to arbitrary (j), where the selected character has order
+
+For a fixed q=1 row, the central relation (j=(p-1)/2) together with (p+j=n) determines
+
+Thus even a complete theorem for the central modular form controls at most one candidate prime for each (n), contributing only (O(log n)) weight.
+
+---
+
+# 6. A rigorous reduction to almost-faithful characters
+
+For every q=1 candidate, folded or unfurled,
+
+If (d_ple D), then
+
+Therefore
+
+The logarithmic weight of these primes is at most
+
+For every fixed (varepsilon>0), taking (D=n^{1-varepsilon}) gives (n^{1-varepsilon+o(1)}), hence (o(n)).
+
+One can sharpen the formulation using the classical maximal-order estimate
+
+For example, take
+
+Then the weight in (6.3) is (o(n)), while every remaining hard prime satisfies
+
+Thus, after an unconditional (o(n)) loss, the selected character is faithful up to a subpolynomial kernel.
+
+This is useful localization, but Q362’s norm audit applies exactly here: because (d_pmid p-1), (p) splits completely in (mathbf Q(zeta_{d_p})). A zero at the selected prime above (p) contributes one factor (p) in the minimal trace-field norm. Galois conjugation moves the character and the prime above (p) together. Large character order does not amplify one selected zero.
+
+---
+
+# 7. Why the standard arithmetic-geometric theorems do not close the row
+
+## 7.1 Vertical zero bounds
+
+A bound such as
+
+controls all indices at one fixed prime. The q=1 problem samples one moving index (r=n-p) at each prime. Local cardinality alone permits complete alignment: the abstract singleton choice
+
+has (|Z_p|=1) and makes every candidate prime hit the same (n).
+
+Therefore no vertical root count, even (|Z_p|=1), proves the pointwise row theorem without cross-prime information.
+
+## 7.2 Katz equidistribution in the character aspect
+
+For a fixed (p), the family
+
+is a legitimate finite-field Mellin family, and bounded geometric complexity can yield equidistribution or correlation estimates as (chi) varies. But the q=1 row takes the single character
+
+and then changes (p). A theorem averaging all characters at each (p) does not control this diagonal selection.
+
+The required family is not one fixed compatible system: its tame character order and coefficient field grow with the sampled residue characteristic.
+
+## 7.3 Chebotarev
+
+Chebotarev applies to Frobenius classes in one fixed finite extension or compatible system. Here:
+
+
+For a fixed character order (d), one may obtain a fixed motive after sorting congruence classes, but (6.2) already shows that bounded-order characters form an (o(n)) contribution. The hard part has (d_p=n^{1-o(1)}).
+
+## 7.4 Sato–Tate
+
+Sato–Tate controls complex normalized traces in fixed intervals. The event here is a shrinking (p)-adic congruence condition. Even in the favorable rational-trace model with a weight-three bound
+
+the condition (pmid T_p) permits (O(sqrt p)) different multiples of (p). In normalized scale these values are spaced by (p^{-1/2}). Ordinary Sato–Tate, which tests fixed intervals, does not give a shrinking-target estimate at that resolution. In the actual high-degree trace field, the condition concerns one selected prime ideal above (p), which is still farther from a complex equidistribution statement.
+
+## 7.5 Gross–Koblitz and norms
+
+Gross–Koblitz provides the exact (p)-adic gamma expression for the Gauss factors, but in the balanced Apéry sum the predictable valuation is zero. Vanishing is cancellation among unit leading coefficients.
+
+Moreover,
+
+so (p) splits completely in the cyclotomic trace field. One simple selected zero costs one factor (p), not (p^{varphi(d_p)}). The archimedean norm grows proportionally to the field degree, cancelling any artificial benefit from passing to a larger field.
+
+---
+
+# 8. Close pairs in the exact Mellin language
+
+Let
+
+and
+
+For (hge1), put
+
+A direct/direct pair corresponds to
+
+and the exact character conditions are
+
+A reflected/reflected pair has (h) even and
+
+with the same two selected Mellin-vanishing conditions.
+
+This is now an arithmetic-geometric two-prime problem for the same fixed Laurent polynomial but two different finite fields and two different Kummer characters. There is no common finite field in which a usual tensor-product correlation sum can be formed. The product-ring obstruction from Q589 remains, but the distinguished initial direction is encoded by the common map (Lambda) and the common exponent (n-1).
+
+Ignoring the Apéry conditions, an upper-bound sieve for the prime pair (p,p-h) is only of size roughly
+
+That is far larger than the (h,n^{o(1)}) scale needed for the close-pair route. A successful theorem must use the two Mellin nonordinary conditions, not only the primality of the two linear forms.
+
+The fixed-(n) shell identity (3.3) offers a concrete algebraic target:
+
+But the evident pair certificate
+
+has exponential height. No known Sylvester resultant or finite difference of the shell sequence simultaneously preserves the (pq)-divisibility and reduces the height to (O(hoperatorname{polylog}n)).
+
+---
+
+# 9. Exact audit of the supplied triples
+
+The supplied hit data give the following invariants. Here
+
+is the exact order of the selected q=1 character.
+
+The calculations are elementary:
+
+
+Consequences:
+
+1. The (n=11576) triple lies entirely in the hardest near-primitive regime. A bounded-character-order or fixed-motive argument cannot explain it.
+
+1. Both triples cross the CFVZ square/nonsquare factorization split modulo (24).
+
+1. The sorted folded gaps are
+
+1. With (H=lfloor n^{1/3}rfloor), neither triple contains a pair at distance below (H). Thus these examples refute uniqueness but do not refute the Q589 short-gap amplification strategy.
+
+They should be mandatory regression cases for any proposed character-order, congruence-class, square-factorization, or close-pair theorem.
+
+---
+
+# 10. The narrowest arithmetic-geometric theorem that would finish
+
+The exact packing inequality from Q589 says that for either branch set (Xsubseteq[0,J]),
+
+Therefore the following aggregate theorem is sufficient and is weaker than a pointwise bound for each gap.
+
+Horizontal Mellin close-pair theorem ((mathrm{HMC}_2)). Uniformly for every (n), with (H=lfloor n^{1/3}rfloor),
+
+boxed{
+
+sum_{1le h<H}
+
+bigl(m_D(n,h)+m_R(n,h)bigr)
+
+le H^2 n^{o(1)}.
+
+}
+
+tag{HMC2}
+
+Then (10.1), applied to both branches, gives
+
+Hence
+
+In the torus language, ((mathrm{HMC}_2)) is an aggregate non-clustering theorem for the pairs
+
+
+This is the narrowest geometric target I see. It does not ask for:
+
+- equidistribution of all (A_rbmod p);
+
+- a power-saving vertical zero bound;
+
+- independence for all prime pairs;
+
+- a full large sieve over all (n).
+
+It asks only that close double nonordinary events for one fixed toric Mellin family do not cluster much more than their natural sparse scale.
+
+No cited theorem currently proves ((mathrm{HMC}_2)). It would require a genuinely cross-characteristic Mellin large sieve or a low-height close-shell resultant for the coefficient array in Section 3.
+
+---
+
+# 11. A concrete finite calculation that can falsify the strongest working version
+
+The q=1 incidences can be generated prime-first without factoring the enormous integers (A_j).
+
+For each prime (ple N):
+
+1. compute (A_0,ldots,A_{(p-1)/2}bmod p) using the Apéry recurrence; every denominator ((j+1)^3) is invertible in this range;
+
+1. whenever (A_jequiv0pmod p), record
+
+1. for each row (n), sort the direct and reflected indices and tabulate all same-branch gaps.
+
+Pseudocode:
+
+
+The asymptotic theorem ((mathrm{HMC}_2)) predicts
+
+A useful stronger, exactly falsifiable pilot is
+
+A single row containing two same-branch pairs with the same short gap disproves ((mathrm{BC1})). The two supplied triples pass this test: their pairwise gaps are all distinct and all exceed (n^{1/3}).
+
+A second exact regression test uses the new shell identity. For every recorded hit ((n,p)), compute the (27) coefficients in (3.4) modulo (p) and verify
+
+The six supplied primes
+
+should be the first mandatory cases. A mismatch would falsify the coefficient-shell implementation, not merely a heuristic.
+
+Finally, the same computation can search for a low-order bivariate recurrence or a normalized resultant for (E_n(m)). The reopen criterion is precise:
+
+
+Any construction with height (exp(Omega(n))) does not improve Q589.
+
+---
+
+# 12. Final assessment
+
+The binomial, diagonal, K3, finite-hypergeometric, and modular descriptions are all real and mutually compatible. Their exact contribution is:
+
+
+For q=1 and fixed (n), this sharpens further to

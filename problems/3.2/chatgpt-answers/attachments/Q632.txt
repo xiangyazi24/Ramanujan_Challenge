@@ -1,0 +1,263 @@
+
+## 1.2 Newton coefficients
+
+Let
+
+The binomial transform is exact:
+
+Let
+
+Conjugating the Apéry Picard–Fuchs operator gives the exact differential equation
+
+with
+
+This is an exact polynomial-coefficient recurrence specification for (c_k) after coefficient extraction.
+
+Put
+
+Then
+
+## 1.3 The six Newton interpolation sections
+
+For
+
+one has
+
+Define
+
+Use the fixed Apéry Laurent polynomial
+
+and put
+
+The six generating functions have exact rational constant-term descriptions. With
+
+one has
+
+and
+
+By Lipshitz's diagonal theorem these are D-finite, hence U_s and V_s are P-recursive. Equations (1.13)–(1.14), rather than a guessed recurrence from initial terms, are the exact certified holonomic specification. A scalar annihilating recurrence can be produced by creative telescoping, but a minimal expanded recurrence has not been certified in the project and should not be quoted as if it had been.
+
+Their dominant saddle expansions are
+
+and
+
+Thus the dominant roots per m-step are
+
+The signs in (1.16) are included in \Lambda_V.
+
+The corresponding rates per original index n are
+
+## 1.4 The q=1 Legendre–Euler prefix and branch carriers
+
+Let
+
+and define
+
+For n=3m+s, this is
+
+The Franel recurrence is
+
+The other exact holonomic input is
+
+Equations (1.21)–(1.22), with the moving endpoint in (1.20), give a certified creative-telescoping construction of a fixed P-recursive equation for each S_s. Again, an expanded minimal scalar recurrence is not needed for the gcd audit and has not been certified here.
+
+At the endpoint k=m+O(1),
+
+and
+
+The endpoint ratio tends to 64, so the prefix is endpoint dominated and
+
+Put
+
+so that
+
+The direct and reflected carriers are
+
+They satisfy the exact first-order recurrences
+
+and
+
+Their asymptotics are
+
+Plain text:
+
+
+---
+
+# 2. Why these are not finite power sums
+
+## 2.1 The exact Binet class used by the gcd literature
+
+A constant-coefficient algebraic linear recurrence has an exact representation
+
+where the \alpha_i are fixed algebraic numbers and the P_i are polynomials. This is the power-sum/Binet class used by Fuchs, Levin, Grieve–Wang, and Xiao.
+
+If one root has strictly largest modulus and its contribution does not cancel, then
+
+with
+
+A finite collection of dominant roots of equal modulus merely replaces C\alpha^m by a finite exponential polynomial; the power of m is still a nonnegative integer.
+
+## 2.2 Immediate obstruction for the raw Apéry objects
+
+The powers
+
+in (1.8), (1.15), (1.16), (1.23), and (1.27) are impossible in (2.1). Therefore none of
+
+is a constant-coefficient linear recurrence sequence.
+
+Equivalently, their generating functions are not rational. The m^{-2} terms arise from logarithmic singularities of the rational diagonals; rational generating functions have only pole singularities and produce polynomial, not negative-power, amplitudes.
+
+This proves that the raw sequences do not admit the finite power-sum representation required by the cited gcd theorems.
+
+## 2.3 What about algebraic normalization?
+
+Multiplication by a fixed algebraic exponential does not alter the powers of m. Multiplication by any fixed polynomial in m cannot turn the Apéry power m^{-3/2} into a nonnegative integral power. Hence no normalization of the form
+
+enters the Binet class.
+
+For U_s, V_s, or S_s, multiplication by m^2 removes the leading negative power only asymptotically. It does not make the sequence an exact finite power sum: the rational diagonal has logarithmic monodromy and a full inverse-power saddle expansion. The transformed generating function remains non-rational.
+
+An arbitrary sequence-dependent normalization would be vacuous—for example, dividing by the sequence itself—and is not a hypothesis in any gcd theorem. Factorial or gamma normalizations are also unsuitable for the Subspace-Theorem applications: their prime support changes with m, so the resulting points do not lie in one fixed finitely generated multiplicative group or in the S-units for one fixed finite S.
+
+No exact finite power-sum or fixed-S-unit representation is presently known for the Apéry, Newton, or Legendre–Euler sections.
+
+## 2.4 The dominant roots are nevertheless independent
+
+The favorable multiplicative-independence check can be done exactly. In \mathbf Q(\sqrt2),
+
+whereas
+
+and
+
+Therefore \lambda^3 is multiplicatively independent from either Newton dominant base.
+
+For the branch pairs,
+
+so 512 is multiplicatively independent from each carrier root separately.
+
+This checks one classical hypothesis. It does not manufacture the missing finite-torus representation.
+
+---
+
+# 3. Exact audit of the existing gcd theorems
+
+## 3.1 Bugeaud–Corvaja–Zannier
+
+The theorem states that for fixed multiplicatively independent integers a,b\ge2 and every \varepsilon>0,
+
+for all sufficiently large n.
+
+The proof uses the Subspace Theorem after encoding the two powers in the fixed rank-two group generated by a and b. Algebraic dominant roots of a P-recursive asymptotic are not enough: one needs the exact coordinates a^n,b^n.
+
+## 3.2 Fuchs
+
+Fuchs studies linear recurring sequences with exact Binet expressions, in particular simple sequences with finitely many fixed characteristic roots. His theorem concerns divisibility/common factors in the ring of power sums. The Apéry sections have no element in that ring to which the theorem can be applied.
+
+Even the weaker conclusion in Fuchs—an exponent strictly below one relative to the height of one sequence—would not by itself give e^{o(n)} unless supplemented by the stronger multiplicative-independence structure. In any case the class hypothesis already fails.
+
+## 3.3 Levin, Grieve–Wang, and Xiao
+
+Levin's theorem fixes
+
+as a finitely generated group and evaluates fixed coprime polynomials at points of \Gamma.
+
+Grieve–Wang allow moving polynomial targets, but their points remain moving S-unit points and their recurrence applications remain algebraic constant-coefficient linear recurrences.
+
+Xiao's Theorem 1.5 explicitly starts with
+
+His almost-S-unit extension still fixes a finite set S and assumes that the non-S height is a controlled fraction of the total height. No such estimate is known for b_n, U_s, V_s, S_s, or the factorial-ratio carriers. Proving it would itself be a strong prime-factor theorem of essentially the type sought here.
+
+## 3.4 G-functions and diagonals
+
+The rational-diagonal descriptions imply:
+
+- D-finiteness/P-recursiveness;
+
+- arithmetic growth and denominator bounds;
+
+- global nilpotence/geometricity in the appropriate cases;
+
+- full saddle expansions.
+
+They do not imply that two values have small gcd. The Fischler–Rivoal theorem controls an integer \delta_N clearing denominators of
+
+for one G-function. It says nothing about
+
+for two integral G-function sequences.
+
+In the present problem all principal sequences are already integral, so the denominator theorem is vacuous at the required step.
+
+## 3.5 Uniformity failure if the dimension grows
+
+One might truncate a saddle expansion after R terms and regard the resulting approximation as a power sum with R auxiliary coordinates. This does not fit the Subspace-Theorem theorems uniformly:
+
+- an exact equality is required, not an exponentially accurate approximation;
+
+- to improve the error with n, the number R grows;
+
+- the ambient torus dimension and group rank then grow;
+
+- exceptional subspaces and constants in the Subspace Theorem are not uniform in that growing dimension.
+
+This is why “infinitely many saddle corrections” is a genuine obstruction, not a technicality.
+
+---
+
+# 4. \Gamma_n versus the Newton gcd
+
+## 4.1 The exact common target
+
+For every sufficiently large top-half prime, the folded congruences give
+
+on the direct branch, and
+
+on the reflected branch.
+
+The Legendre–Euler polynomial
+
+has local coefficient vector of rank one. Its content is
+
+The exact local normal form gives
+
+Consequently
+
+## 4.2 Does \Gamma_n divide \mathcal G_n^{\rm Newt}?
+
+No such divisibility has been proved, and it does not follow from the constructions.
+
+- \Gamma_n is the content ideal of the Legendre–Euler coefficient vector built from the Franel data.
+
+- \mathcal G_n^{\rm Newt} is a gcd of the Apéry value with two Newton-interpolation evaluations built from (\Delta^kb)_0.
+
+- The Smith reductions in the two constructions identify the same top-half rank-one residue, but do not give an integral map sending the entire coefficient-content ideal into the Newton ideal.
+
+Thus the proof-grade statement is (4.1), not
+
+Using the latter as a lemma would be an error unless a new explicit Bézout identity is supplied.
+
+## 4.3 Support pollution
+
+The auxiliary Newton gcd can contain primes much larger than n, because it divides the exponentially large integer b_n and there is no support theorem restricting all prime divisors of b_n to the index range.
+
+The coefficient content has a more limited but still real pollution range. The explicit last coefficient is
+
+so
+
+Hence every prime divisor of \Gamma_n is at most 2n, but primes in
+
+and small-prime powers are not excluded by the target interpretation.
+
+For the branch-purified ideals
+
+the carrier B_n^- has prime support at most n, while B_n^+ has prime support at most
+
+Therefore:
+
+- a full-gcd bound e^{o(n)} is sufficient and stronger than Problem 3.2;
+
+- a large full gcd need not come from top-half bad primes;
+
+- decay of the full-gcd data is encouraging, but it is not an exact reformulation unless the nuisance support is saturated away.
+
+Plain text:

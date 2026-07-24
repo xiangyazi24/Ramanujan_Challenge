@@ -1,0 +1,2750 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\num}{num}
+\DeclareMathOperator{\rad}{rad}
+\newcommand{\Z}{\mathbb{Z}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\renewcommand{\thetheorem}{\Alph{theorem}}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{hypothesis}{Hypothesis}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\title{The Ap\'ery gcd: a density-one theorem and the pointwise endpoint}
+\author{X. Huang}
+\date{}
+
+\begin{document}
+\raggedbottom
+
+\begin{abstract}
+Let $a_n$ and $b_n$ be the two standard solutions of the Ap\'ery
+recurrence for $\zeta(3)$.  Put
+\[
+ d_n=\lcm(1,\ldots,n)^3,
+ \qquad G_n=\gcd(d_na_n,d_nb_n).
+\]
+We prove that for every $\varepsilon>0$ the set of $n\leq X$ for which
+$\log G_n>\varepsilon n$ has cardinality $o(X)$.
+More precisely, on every dyadic shell $(N,2N]$ the average of
+$\log G_n$ is $O(N^{2/3}\log N)$.  For the pointwise problem we
+identify the exact radical middle prime channel, prove a reflection
+functional equation, and construct fixed gap-eliminant polynomials
+$U_g$.  In the only delicate range we lower the pointwise problem to a
+depth-$2$ pair gate and then to a single-arc exact-collision conjecture.
+We prove complementary cross-arc and structured-resonance results, give
+two algebraic descriptions of the zero sets, and record barrier
+certificates showing why horizontal equidistribution does not resolve
+the remaining scale-zero collision problem.
+\end{abstract}
+
+\maketitle
+
+\section{Statement}
+
+Ap\'ery's construction \cite{Apery1979} gives two $\zeta(3)$ solutions
+$b_n$ and $a_n$ of
+\[
+ (n+1)^3u_{n+1}
+ = (2n+1)(17n^2+17n+5)u_n-n^3u_{n-1},
+\]
+with $(b_0,b_1)=(1,5)$, where the $b_n$ are integers, and
+$(a_0,a_1)=(0,6)$, where the $a_n$ are rational and
+\[
+ v_p(a_n)\geq -3\lfloor\log_p n\rfloor.
+\]
+Set
+\[
+ d_n=\lcm(1,\ldots,n)^3,
+ \qquad
+ G_n=\gcd(d_na_n,d_nb_n).
+\]
+
+\begin{theorem}\label{thm:density-one}
+For every $\varepsilon>0$,
+\[
+ \#\{n\leq X:\log G_n>\varepsilon n\}=o(X).
+\]
+Quantitatively, on every dyadic shell,
+\[
+ \frac1N\sum_{N<n\leq2N}\log G_n=O(N^{2/3}\log N).
+\]
+\end{theorem}
+
+Write
+\[
+ P(t)=(2t+1)(17t^2+17t+5)
+\]
+throughout.  Unless stated otherwise, $p$ always denotes a prime at least
+$7$.  The primes $2,3,5$ contribute $O(\log^2 n)$ to $\log G_n$, since
+\[
+ v_p(G_n)\leq v_p(d_n)+O(\log_p n)=O(\log n),
+\]
+and they are absorbed into the small-prime estimate.
+
+\begin{remark}[Provenance and status]
+This proof chain was assembled on July 19, 2026, by extracting and
+streamlining \texttt{Q3.2\_paper\_draft.md}.  Every lemma used below is
+included, and a summary of the accompanying exact verification appears in
+the appendix.
+\end{remark}
+
+\section{Preliminaries}
+
+\subsection{Wronskian}
+
+Define
+\[
+ W_n:=a_{n+1}b_n-a_nb_{n+1}.
+\]
+Then
+\[
+ W_n=\frac{6}{(n+1)^3}.
+\]
+Indeed, $W_0=6$, and the recurrence gives
+$W_n=\frac{n^3}{(n+1)^3}W_{n-1}$.  In particular, $W_n\neq0$, and for
+$\sqrt n<p\leq n$, with $p\geq7$,
+\[
+ v_p(G_n)\leq6.
+\]
+
+\begin{proof}
+The integer $G_n$ divides both $d_na_n$ and $d_nb_n$, hence it divides the
+integer combination
+\begin{align*}
+ &d_{n+1}b_{n+1}(d_na_n)
+ -d_{n+1}a_{n+1}(d_nb_n)\\
+ &\qquad=-d_nd_{n+1}W_n\\
+ &\qquad=-\frac{6d_nd_{n+1}}{(n+1)^3}.
+\end{align*}
+For $\sqrt n<p\leq n$, one has
+$v_p(d_n),v_p(d_{n+1})\leq3$ and $p\nmid6$.  Therefore
+\[
+ v_p(G_n)\leq6+v_p(6)-3v_p(n+1)\leq6.
+\]
+\end{proof}
+
+\begin{remark}[Audit correction]
+Any absolute constant depth suffices for the averaging argument.  The
+bound $6$ above replaces an earlier unproved bound $4$ identified during
+the hostile audit.
+\end{remark}
+
+\subsection{Cleared continuants}
+
+Let
+\[
+ N_0=0,
+ \qquad
+ N_1=1,
+ \qquad
+ N_{r+1}(x)=P(x+r)N_r(x)-(x+r)^6N_{r-1}(x)\in\Z[x].
+\]
+Then $\deg N_r=3(r-1)$ for $r\geq1$.  Every solution of the local cleared recurrence
+at base $x$ satisfies
+\begin{equation}
+ \begin{aligned}
+ Q_h(x)y_h
+ &=N_h(x)y_1-(x+1)^3N_{h-1}(x+1)y_0,\\
+ Q_h(x)&=\prod_{i=2}^h(x+i)^3.
+ \end{aligned}
+ \tag{1.2}\label{eq:solution-formula}
+\end{equation}
+
+\subsection{Lucas congruence}
+
+If $n=\sum_i d_ip^i$ is the base-$p$ expansion of $n$, then
+\[
+ b_n\equiv\prod_i b_{d_i}\pmod p.
+\]
+This is Gessel's Lucas congruence \cite{Gessel1982}; related divisibility
+and Lucas phenomena for Ap\'ery-like sequences are developed in
+\cite{MalikStraub2016,LucaShparlinski2008}.
+
+\section{Five continuant lemmas}
+
+\begin{lemma}[No consecutive zeros; both solutions]\label{lem:no-consecutive}
+For $p\geq7$ and $0\leq r\leq p-2$, it is not the case that both
+$b_r\equiv0\pmod p$ and $b_{r+1}\equiv0\pmod p$.  For
+$1\leq q\leq p-2$, it is not the case that both
+$a_q\equiv0\pmod p$ and $a_{q+1}\equiv0\pmod p$; here $a_q$ is
+$p$-integral because $q<p$.
+\end{lemma}
+
+\begin{proof}
+Two consecutive zeros back-propagate through the recurrence, because all
+coefficients $m^3$ with $m<p$ are invertible.  For $b$ this reaches
+$b_0=1$, a contradiction.  For $a$ it reaches $a_1=6$, and $p\nmid6$.
+\end{proof}
+
+\begin{lemma}[Evaluation identities]\label{lem:evaluation}
+For every $r\geq1$,
+\begin{enumerate}
+\item[(i)] $N_r(-1)=((r-1)!)^3b_{r-1}$;
+\item[(ii)] $N_r(-x-r)=(-1)^{r-1}N_r(x-1)$, and consequently
+\[
+ N_r(-r)=(-1)^{r-1}((r-1)!)^3b_{r-1}.
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For the first identity, $v_r:=N_r(-1)$ satisfies $v_1=1$,
+$v_2=P(0)=5$, and
+\[
+ v_{r+1}=P(r-1)v_r-(r-1)^6v_{r-1}.
+\]
+Substituting $v_r=((r-1)!)^3b_{r-1}$ reduces this to the Ap\'ery
+recurrence at $n=r-1$.
+
+For the second identity, under $x\mapsto-x-r$ each diagonal entry of the
+defining tridiagonal matrix transforms by $P(-1-t)=-P(t)$, and each
+off-diagonal cube is negated, in reversed order.  Simultaneous
+row-and-column reversal preserves the determinant, while the negation
+contributes $(-1)^{r-1}$ because the matrix has size $r-1$.
+\end{proof}
+
+\begin{lemma}[Continuant lemma]\label{lem:continuant}
+For $p\geq7$ and $1\leq h<p$, one has
+$N_h\not\equiv0\pmod p$.  For $p=5$ the same assertion follows by a
+direct check for $h<5$.
+\end{lemma}
+
+\begin{proof}
+Suppose that $N_h\equiv0\pmod p$.  Lemma~\ref{lem:evaluation}(i) gives
+$b_{h-1}\equiv0\pmod p$.  The defining recurrence, evaluated at
+$x=1-h$, gives
+\[
+ N_h(1-h)=P(0)N_{h-1}(1-h)=5N_{h-1}(1-h).
+\]
+Since $p\neq5$, it follows that
+$N_{h-1}(1-h)=N_{h-1}(-(h-1))\equiv0\pmod p$.  By
+Lemma~\ref{lem:evaluation}(ii), $b_{h-2}\equiv0\pmod p$, contrary to
+Lemma~\ref{lem:no-consecutive}.
+\end{proof}
+
+\begin{lemma}[Pair certificate]\label{lem:pair-certificate}
+Let $y$ be any solution of the Ap\'ery recurrence modulo $p$ on a window
+$[m,m+h]$, where $m+h<p$.  If
+\[
+ y_m\equiv y_{m+h}\equiv0\pmod p
+ \qquad\text{and}\qquad
+ y_{m+1}\not\equiv0\pmod p,
+\]
+then $N_h(m)\equiv0\pmod p$.
+\end{lemma}
+
+\begin{proof}
+Formula~\eqref{eq:solution-formula} at base $x=m$, with $y_0=0$, gives
+\[
+ Q_h(m)y_{m+h}=N_h(m)y_{m+1}.
+\]
+All factors $m+i$ for $2\leq i\leq h$ lie in
+$(m,m+h]\subseteq(0,p)$, so $Q_h(m)$ is a unit.  The two hypotheses on
+$y_{m+h}$ and $y_{m+1}$ force $N_h(m)\equiv0\pmod p$.
+\end{proof}
+
+\begin{lemma}[Zero-fiber bounds]\label{lem:zero-fiber}
+For $p\geq7$,
+\[
+ \begin{aligned}
+ \mathcal Z_b(p)&:=\{0\leq r<p:b_r\equiv0\pmod p\},\\
+ Z_b(p)&:=|\mathcal Z_b(p)|\leq3p^{2/3}+O(1),
+ \end{aligned}
+\]
+and
+\[
+ \begin{aligned}
+ \mathcal Z_a(p)&:=\{1\leq q<p:a_q\equiv0\pmod p\},\\
+ Z_a(p)&:=|\mathcal Z_a(p)|\leq3p^{2/3}+O(1).
+ \end{aligned}
+\]
+\end{lemma}
+
+\begin{proof}
+Let $r_1<\cdots<r_z$ be the zeros and set
+$h_i=r_{i+1}-r_i$, so that $\sum_i h_i<p$.  By
+Lemmas~\ref{lem:no-consecutive} and~\ref{lem:pair-certificate}, every
+consecutive pair with $h_i\leq K$ makes $r_i$ a root of
+$\overline N_{h_i}\neq0$; the nonvanishing follows from
+Lemma~\ref{lem:continuant}.  For a fixed $h$ the bases are distinct.
+Since $\deg N_h=3(h-1)$, at most
+\[
+ \sum_{h\leq K}3(h-1)<\frac32K^2
+\]
+pairs have gap at most $K$, while fewer than $p/K$ have gap greater than
+$K$.  Taking $K=p^{1/3}$ proves the bound for $Z_b(p)$.  The $a$-case is
+identical; the zero $a_0=0$ is excluded from the count, and its windows
+start at $q\geq1$.
+\end{proof}
+
+\section{The support law}
+
+Write $\widetilde a_n=p^3a_n$ where relevant; this quantity is
+$p$-integral for $n<p^2$.  To make the binomial notation used below
+explicit, set
+\[
+ H_N^{(3)}=\sum_{j=1}^N\frac1{j^3},
+ \qquad
+ T(N,K)=\binom NK^2\binom{N+K}K^2,
+\]
+and
+\[
+ E(N,K)=H_N^{(3)}+
+ \sum_{j=1}^K
+ \frac{(-1)^{j-1}}
+ {2j^3\binom Nj\binom{N+j}j}.
+\]
+The second Ap\'ery solution has the standard representation
+\[
+ a_N=\sum_{K=0}^N T(N,K)E(N,K).
+\]
+For background on congruences for these and closely related Ap\'ery sums,
+see \cite{Mortenson2005,Sun2012,WangSun2024}.
+
+\begin{lemma}[The congruence $\alpha_p\equiv6$]\label{lem:alpha-six}
+For $p\geq7$,
+\[
+ p^3a_p\equiv6\pmod p.
+\]
+\end{lemma}
+
+\begin{proof}
+In the binomial sum
+$a_p=\sum_{k=0}^pT(p,k)E(p,k)$, the $p^3$-pole survives only at
+$k=0$ and $k=p$.  For $1\leq k\leq p-1$, one has
+$v_p(\binom pk^2)\geq2$.  After multiplication by $p^3$, the
+$H_p^{(3)}$ part therefore has valuation at least $2$, while the inner
+sum, whose $p$-adic valuation is at least $-1$, has valuation at least
+$4$.  Thus all these terms vanish modulo $p$.  The $k=0$ term contributes
+\[
+ p^3H_p^{(3)}=p^3H_{p-1}^{(3)}+1\equiv1\pmod p.
+\]
+The $k=p$ term contributes
+\[
+ \binom{2p}p^2\left(1+\frac14\right)
+ \equiv4\cdot\frac54=5\pmod p.
+\]
+Here Lucas gives $\binom{2p}p\equiv2\pmod p$; the $j=p$ inner term
+gives
+\[
+ \frac{p^3}{2p^3\binom{2p}p}\equiv\frac14\pmod p,
+\]
+and the inner terms with $j<p$ have pole order at most $1$.  The total is
+$1+5=6$.
+\end{proof}
+
+\begin{lemma}[Boundary lemma]\label{lem:boundary}
+For $1\leq q<p$ and $p\geq7$,
+\[
+ p^3a_{qp}\equiv a_q\pmod p.
+\]
+\end{lemma}
+
+\begin{proof}[Kummer bookkeeping]
+In the sum for $a_{qp}$, $T(qp,K)$ is a $p$-unit if and only if
+$K=\ell p$ with $q+\ell<p$.  Indeed, by Kummer, any $s>0$ in
+$K=\ell p+s$ forces borrows.  Together with the carry indicator of
+$\binom{qp+K}K$, this gives total valuation at least $2$.  The bound
+$v_p(E(qp,K))\geq-3$ shows that non-unit terms die after multiplication
+by $p^3$; termwise, the inner terms with $p\nmid j$ have total valuation
+at least $3$, and the terms $j=tp$ have total valuation at least $1$.
+
+On the surviving terms, Lucas gives
+$T(qp,\ell p)\equiv T(q,\ell)\pmod p$; moreover,
+\[
+ p^3H_{qp}^{(3)}\equiv H_q^{(3)}\pmod p,
+\]
+because only the multiples of $p$ survive, and the inner sum reduces
+index by index with $(-1)^{tp-1}=(-1)^{t-1}$.  This yields
+\[
+ \sum_{\ell:\,q+\ell<p}T(q,\ell)E(q,\ell).
+\]
+Restoring the terms with $q+\ell\geq p$ costs nothing: there
+$v_p(T(q,\ell))=2$ from one carry, squared, while
+$v_p(E(q,\ell))\geq-1$.
+\end{proof}
+
+\begin{lemma}[Block law in the $r$-direction]\label{lem:block-law}
+For $0\leq r<p$ and $1\leq q<p$,
+\[
+ \widetilde a_{qp+r}\equiv\widetilde a_{qp}b_r\pmod p.
+\]
+\end{lemma}
+
+\begin{proof}
+Multiply the recurrence at $n=qp+r$ by $p^3$.  For
+$1\leq r\leq p-2$, the coefficients reduce to those in the
+$b$-recurrence.  At the entry $r=0$, the backward term carries
+$(qp)^3=q^3p^3$ against the $p$-integral number
+$\widetilde a_{qp-1}$, and hence vanishes modulo $p$; also
+$(qp+1)^3\equiv1\pmod p$, so
+\[
+ \widetilde a_{qp+1}\equiv P(0)\widetilde a_{qp}
+ =5\widetilde a_{qp}\pmod p.
+\]
+Thus both sides satisfy the same nondegenerate recurrence with initial
+data
+\[
+ \widetilde a_{qp}(1,5)=\widetilde a_{qp}(b_0,b_1).
+\]
+\end{proof}
+
+\begin{theorem}[Support law]\label{thm:support-law}
+Let $p\geq7$ and $\sqrt n<p\leq n$.  Write $n=qp+r$, where
+$1\leq q<p$ and $0\leq r<p$.  Then
+\[
+ p\mid G_n
+ \quad\Longleftrightarrow\quad
+ a_qb_r\equiv0\pmod p.
+\]
+\end{theorem}
+
+\begin{proof}
+In this range $v_p(d_n)=3$, and $v_p(b_n)\geq0$.  Hence
+\[
+ p\mid G_n
+ \quad\Longleftrightarrow\quad
+ v_p(a_n)\geq-2
+ \quad\Longleftrightarrow\quad
+ \widetilde a_n=p^3a_n\equiv0\pmod p.
+\]
+By Lemmas~\ref{lem:boundary} and~\ref{lem:block-law},
+\[
+ \widetilde a_n
+ \equiv\widetilde a_{qp}b_r
+ \equiv a_qb_r\pmod p.
+\]
+\end{proof}
+
+\begin{remark}[Historical correction]
+The earlier one-channel claim
+``$p\mid G_n\Rightarrow b_r\equiv0\pmod p$'' is false outside
+$n/2<p<n$: the hostile audit found the counterexamples
+$13\mid G_{26}$ and $13\mid G_{27}$.  In the top range $q=1$, however,
+$a_1=6$ is a unit, and the old claim is recovered.
+\end{remark}
+
+\section{Proof of Theorem A}\label{sec:proof-density}
+
+\begin{proof}[Proof of Theorem A]
+Fix the shell $(N,2N]$.  For $n$ in this shell, abbreviate
+$v_p=v_p(G_n)$ and write
+\[
+ \log G_n
+ =\underbrace{\sum_{p\leq\sqrt n}v_p\log p}_{S_1(n)}
+ +\underbrace{\sum_{\sqrt n<p\leq n}v_p\log p}_{S_2(n)}.
+\]
+
+\paragraph{Small primes.}
+For every $p\leq\sqrt n$,
+\[
+ v_p(G_n)\leq v_p(d_n)+\max(0,v_p(a_n))=O(\log_p n).
+\]
+Consequently,
+\[
+ S_1(n)=O(\pi(\sqrt n)\log n)=O(\sqrt n).
+\]
+
+\paragraph{Large primes.}
+By Theorem~\ref{thm:support-law}, a prime $p$ is bad if and only if
+$b_r\equiv0\pmod p$ in the lower channel or
+$a_q\equiv0\pmod p$ in the companion channel.  By the Wronskian depth
+estimate, each bad prime costs at most $6\log(2N)$.
+
+For the lower channel, fix $p$.  The shell integers with
+$n\bmod p$ in the zero fiber counted by $Z_b(p)$ number at most
+\[
+ Z_b(p)\left(\frac Np+O(1)\right).
+\]
+The endpoint term is $O(Z_b(p))$ for each prime.  Lemma~\ref{lem:zero-fiber}
+therefore gives
+\begin{align*}
+ \sum_{p\leq2N}Z_b(p)\left(\frac Np+O(1)\right)
+ &\ll N\sum_{p\leq2N}p^{-1/3}
+     +\sum_{p\leq2N}p^{2/3}\\
+ &\ll N^{5/3}.
+\end{align*}
+
+For the companion channel, fix $q\geq1$.  The congruence
+$a_q\equiv0\pmod p$ means that $p$ divides the fixed nonzero integer
+$\num(a_q)$.  This integer is nonzero because $a_q>0$ for $q\geq1$, and
+\[
+ \log|\num(a_q)|=O(q).
+\]
+It therefore has at most $O(q/\log N)$ prime divisors exceeding
+$\sqrt N$.  Each such pair $(q,p)$ poisons at most
+$p\leq2N/q$ shell integers, namely those for which
+$\lfloor n/p\rfloor=q$.  The total number of incidences is
+\[
+ \sum_{q\leq2\sqrt{2N}}
+ \frac{2N}{q}\,O\left(\frac q{\log N}\right)
+ =O\left(\frac{N^{3/2}}{\log N}\right).
+\]
+
+\paragraph{Assembly.}
+Summing both channels over the shell and multiplying by the depth cost
+gives
+\begin{align*}
+ \sum_{N<n\leq2N}S_2(n)
+ &\ll\left(N^{5/3}+\frac{N^{3/2}}{\log N}\right)\log N\\
+ &\ll N^{5/3}\log N.
+\end{align*}
+Together with the small-prime estimate, this shows that the shell average
+of $\log G_n$ is $O(N^{2/3}\log N)$.  Markov's inequality on the shell
+now yields
+\begin{align*}
+ \#\{n\in(N,2N]:\log G_n>\varepsilon n\}
+ &\leq\#\{n\in(N,2N]:\log G_n>\varepsilon N\}\\
+ &\ll_{\varepsilon}N^{2/3}\log N.
+\end{align*}
+Summing over dyadic shells up to $X$ gives $o(X)$.
+\end{proof}
+
+\section{The pointwise reduction}\label{sec:pointwise}
+
+Put
+\[
+ b_m=\sum_{k=0}^m\binom mk^2\binom{m+k}k^2,
+ \qquad
+ Z_p=\{0\leq r<p:b_r\equiv0\pmod p\},
+\]
+and write $e(t)=\exp(2\pi i t)$ and $\|t\|=\operatorname{dist}(t,\Z)$.
+
+\subsection{Reflection}
+
+\begin{lemma}[Reflection functional equation]\label{lem:reflection}
+For every prime $p$ and every $0\leq n\leq p-1$,
+\[
+ b_{p-1-n}\equiv b_n\pmod p.
+\]
+\end{lemma}
+
+\begin{proof}
+For $0\leq k<p$, the product formula for binomial coefficients gives
+\[
+ \binom{p-1-m}{k}
+ \equiv(-1)^k\binom{m+k}{k}\pmod p.
+\]
+Apply this first with $m=n$ and then with $m=n-k$.  Thus
+\[
+ \begin{aligned}
+ \binom{p-1-n}{k}&\equiv(-1)^k\binom{n+k}{k},\\
+ \binom{p-1-n+k}{k}&\equiv(-1)^k\binom nk\pmod p.
+ \end{aligned}
+\]
+Both Ap\'ery sums may be extended to $0\leq k<p$: outside the original
+summation range the corresponding binomial factor is zero modulo $p$.
+The two displayed congruences therefore identify their summands term by
+term, after squaring, and summation proves the result.
+\end{proof}
+
+This direct proof is Lemma~6.2 of Malik--Straub
+\cite{MalikStraub2016}; see also the broader congruence work of Beukers
+and Coster \cite{Beukers1985,Coster1988}.  The identity was also
+checked with no failure for all primes $p\leq12809$; the termwise
+congruence was checked for $p\leq809$.
+
+\subsection{The common lower channel}
+
+Let $\sqrt n<p\leq n$ and write $n=qp+r$, with
+$q=\lfloor n/p\rfloor$ and $0\leq r<p$.  The support law of
+Theorem~\ref{thm:support-law} and the Gessel--Coster Lucas congruence give
+two different two-channel decompositions:
+\begin{align}
+ p\mid G_n
+ &\quad\Longleftrightarrow\quad a_qb_r\equiv0\pmod p,
+ \label{eq:G-two-channel}\\
+ p\mid b_n
+ &\quad\Longleftrightarrow\quad b_qb_r\equiv0\pmod p.
+ \label{eq:b-two-channel}
+\end{align}
+The second equivalence follows from
+$b_{qp+r}\equiv b_qb_r\pmod p$ \cite{Gessel1982,Coster1988}.
+The two decompositions share exactly the condition $r\in Z_p$.
+
+\begin{lemma}[Both digit channels are pointwise-free]
+\label{lem:digit-channels}
+For every $n$,
+\begin{align*}
+ \#\{p\in(\sqrt n,n]:a_{\lfloor n/p\rfloor}\equiv0\pmod p\}
+ &\ll n^{2/3},\\
+ \#\{p\in(\sqrt n,n]:\lfloor n/p\rfloor\in Z_p\}
+ &\ll n^{2/3}.
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+For fixed $q$, every prime under consideration lies in
+\[
+ I_q(n)=\left(\frac n{q+1},\frac nq\right],
+ \qquad |I_q(n)|<\frac n{q^2}.
+\]
+In the first line it divides the fixed nonzero integer $\num(a_q)$; in
+the second it divides the fixed positive integer $b_q$.  The standard
+growth estimates $\log|\num(a_q)|,\log b_q=O(q)$ show that either integer
+has $O(q/\log n)$ prime factors exceeding $\sqrt n$.  Hence each
+$q\leq\sqrt n$ contributes at most
+\[
+ \min\left(\frac n{q^2}+1,\frac{Cq}{\log n}\right).
+\]
+Splitting the sum at $q=n^{1/3}$ proves both assertions.
+\end{proof}
+
+Define the radical lower-channel mass
+\[
+ R_b(n)=\sum_{\substack{\sqrt n<p\leq n\\n\bmod p\in Z_p}}\log p
+\]
+and the radical middle part of $b_n$ by
+\[
+ M_{\mathrm{rad}}(n)
+ =\sum_{\substack{\sqrt n<p\leq n\\p\mid b_n}}\log p.
+\]
+
+\begin{theorem}[Exact pointwise endpoint]\label{thm:pointwise-reduction}
+As $n\to\infty$,
+\begin{align}
+ R_b(n)
+ &\leq\log G_n,
+ \label{eq:lower-Rb}\\
+ \log G_n
+ &\leq6R_b(n)+O(n^{2/3}\log n+\sqrt n),
+ \label{eq:upper-Rb}\\
+ M_{\mathrm{rad}}(n)
+ &=R_b(n)+O(n^{2/3}\log n).
+ \label{eq:middle-radical}
+\end{align}
+Consequently,
+\[
+ \log G_n=o(n)\quad\text{for every $n$}
+ \quad\Longleftrightarrow\quad
+ M_{\mathrm{rad}}(n)=o(n)\quad\text{for every $n$}.
+\]
+\end{theorem}
+
+\begin{proof}
+If $n\bmod p\in Z_p$, then \eqref{eq:G-two-channel} gives $p\mid G_n$,
+which proves \eqref{eq:lower-Rb}.  Conversely, every prime in the large
+range dividing $G_n$ belongs either to the common lower channel or to the
+first digit channel in Lemma~\ref{lem:digit-channels}; each has depth at
+most $6$.  The small-prime estimate in
+Section~\ref{sec:proof-density} is $O(\sqrt n)$, proving
+\eqref{eq:upper-Rb}.  Finally, \eqref{eq:b-two-channel} and the second
+line of Lemma~\ref{lem:digit-channels} give
+\eqref{eq:middle-radical}.
+\end{proof}
+
+\begin{conjecture}[Full-multiplicity middle part]
+The stronger full-multiplicity statement requested in the original
+program is
+\begin{equation}
+ \log\prod_{\substack{\sqrt n<p\leq n\\p\mid b_n}}
+ p^{v_p(b_n)}=o(n).
+ \tag{T}\label{eq:T}
+\end{equation}
+It implies the pointwise theorem, but the converse is not proved: the gcd
+sees each middle prime only to depth at most $6$.  Thus
+Theorem~\ref{thm:pointwise-reduction}, not \eqref{eq:T} with full
+multiplicity, is the unconditional equivalence.
+\end{conjecture}
+
+\begin{remark}[Rhin--Viola correction]
+The Rhin--Viola irrationality measure \cite{RhinViola2001} gives
+\[
+ \limsup_{n\to\infty}\frac{\log G_n}{n}
+ \leq 3+\log(17+12\sqrt2)
+ -\frac{2\log(17+12\sqrt2)}{5.51389\ldots}
+ =5.24673\ldots.
+\]
+The earlier value, $2.24672\ldots$, omitted the contribution
+$\log d_n/n\to3$ and is retracted.
+\end{remark}
+
+\subsection{The in-range window}
+
+For a dyadic parameter $X$, put
+\[
+ K_X(y)=\#\{p\in(X,2X]:y\bmod p\in Z_p\}.
+\]
+
+\begin{remark}[The required range]\label{rem:required-range}
+Fix $A>0$.  A full block $(X,2X]$ is delicate only when
+\[
+ (X,2X]\subset\left(\frac{n}{(\log n)^A},n\right].
+\]
+After increasing $A$ harmlessly, all such blocks are covered by the
+working window
+\[
+ \mathcal J_X=\{y\in\Z:2X\leq y\leq X L\},
+ \qquad L=(\log X)^A.
+ \tag{6.1}\label{eq:in-range-window}
+\]
+If $X\leq n/(\log n)^A$, the trivial estimate
+$K_X(n)\leq\pi(2X)$ closes the block after multiplication by its
+logarithmic weight.  Thus no estimate at $n=O(1)$ is used.
+\end{remark}
+
+\begin{lemma}[Intercept vacuity]\label{lem:intercept-vacuity}
+Suppose $p,p'\in(X,2X]$ are distinct and two incidences lie on the
+affine line
+\[
+ r=up+v,\qquad r'=up'+v.
+\]
+If their unwrapped phases are $X^{-1}$-close at $n$, then
+\[
+ |p-p'|\leq\frac{pp'}{X|n-v|}
+ \leq\frac{4X}{|n-v|}.
+ \tag{6.2}\label{eq:intercept-vacuity}
+\]
+Consequently, for fixed $B$, if $|v|\ll(\log X)^B$ and $n\geq2X$,
+then $|p-p'|\leq2$ for all sufficiently large $X$.  A line carrying
+$T$ incidences contributes only $O(T)$ close pairs, independently of
+any ordinarity assertion.
+\end{lemma}
+
+\begin{proof}
+The pair intercept is
+\[
+ \frac{rp'-r'p}{p'-p}=v,
+\]
+and on the lift determined by the line,
+\[
+ \left|\frac{r-n}{p}-\frac{r'-n}{p'}\right|
+ =\frac{|n-v|\,|p-p'|}{pp'}.
+\]
+The close-pair condition and $pp'\leq4X^2$ give
+\eqref{eq:intercept-vacuity}.  Its right-hand side is $2+o(1)$ in the
+stated range; integrality gives the assertion.  Each prime has only
+$O(1)$ possible partners at those gaps.
+\end{proof}
+
+The central Ap\'ery zero, when it occurs, has intercept $-1/2$.
+Lemma~\ref{lem:intercept-vacuity} therefore shows that density-one
+ordinarity for the non-CM form $8.4.a.a$ is irrelevant to the in-range
+problem.  The analogous forced central line for the $\zeta(2)$ Ap\'ery
+sequence is likewise an out-of-range obstruction only.
+
+\begin{conjecture}[The first shifted-prime track]
+\label{conj:shifted-prime-divisor}
+For every fixed $A>0$, uniformly for $y\in\mathcal J_X$,
+\[
+ \#\{p\in(X,2X]:0\leq y-p<p,\ p\mid b_{y-p}\}
+ =o\left(\frac{\pi(X)}{L}\right).
+\]
+\end{conjecture}
+
+This is the slope-$1$ member of the terminal single-arc family below.
+It is a shifted-prime divisor problem for a fixed holonomic sequence,
+in the circle of pointwise questions represented by Hooley and by
+Murty--Rosen--Silverman \cite{Hooley1973,MurtyRosenSilverman1996}.
+It is not used as a substitute for the all-slope collision conjecture.
+
+\begin{proposition}[Dyadic maximum criterion]\label{prop:dyadic-max}
+Suppose that, for some fixed $\delta>0$ and every sufficiently large
+$X$,
+\[
+ \max_{m<X^2}K_X(m)\ll X^{1-\delta}.
+\]
+Then $\log G_n=o(n)$ for every $n$.
+More generally, the same conclusion holds if
+$|E_X|\ll X^{1-\delta}$ and the displayed maximum bound is known for
+\[
+ K_X^{G}(m)
+ =\#\{p\in(X,2X]\setminus E_X:m\bmod p\in Z_p\}.
+\]
+\end{proposition}
+
+\begin{proof}
+The blocks with $X<2\sqrt n$ cost $O(\sqrt n\log n)$.  On every
+remaining block, $n<X^2$, and the assumed estimate gives
+$O(X^{1-\delta}\log(2X))$.  The dyadic sum is dominated by the top
+block and is $O(n^{1-\delta}\log n)=o(n)$.  The same calculation bounds
+the discarded primes without imposing any condition on their residues.
+Theorem~\ref{thm:pointwise-reduction} completes the proof.
+\end{proof}
+
+\subsection{The depth-$2$ pair gate}
+
+Write
+\[
+ \mathcal M_X=\sum_{X<p\leq2X}|Z_p|.
+\]
+
+\begin{conjecture}[Mass conjecture $(\mathrm C1)$]\label{conj:C1}
+For every $\varepsilon>0$,
+\[
+ \mathcal M_X\ll_{\varepsilon}X^{1+\varepsilon}.
+ \tag{C1}\label{eq:C1}
+\]
+\end{conjecture}
+
+The proved bound in Lemma~\ref{lem:zero-fiber} is
+$\mathcal M_X\ll X^{5/3+o(1)}$.  Computations instead suggest about one
+root per prime on average: after grouping noncentral roots into
+reflection pairs, the pair count is close to a Poisson variable of mean
+$1/2$.  Thus $\mathbb E|Z_p|\approx1$, not $1/8$.  The central fixed
+point prevents an unconditional parity assertion for $|Z_p|$.
+
+For a set $E_X$ of exceptional block primes define
+\[
+ P_{2,X}^{G}
+ =\sum_{y\in\mathcal J_X}\binom{K_X^{G}(y)}2.
+ \tag{6.3}\label{eq:P2-definition}
+\]
+We write $P_{2,X}$ for the same quantity with $E_X=\varnothing$.
+
+\begin{proposition}[Pair rigidity and the depth-$2$ gate]
+\label{prop:pair-gate}
+For fixed $A$ and sufficiently large $X$, a pair of distinct block
+primes together with one zero class at each prime has at most one
+landing in $\mathcal J_X$.  Moreover,
+\[
+ \sup_{y\in\mathcal J_X}K_X^{G}(y)
+ \leq1+\sqrt{2P_{2,X}^{G}}.
+ \tag{6.4}\label{eq:pair-gate}
+\]
+Thus, for any $\delta>0$,
+\[
+ P_{2,X}^{G}\ll X^{2-2\delta}
+ \quad\Longrightarrow\quad
+ \sup_{y\in\mathcal J_X}K_X^{G}(y)\ll X^{1-\delta}.
+ \tag{6.5}\label{eq:P2-to-sup}
+\]
+Together with $|E_X|\ll X^{1-\delta}$ at every dyadic scale, this
+implies the pointwise conclusion.
+\end{proposition}
+
+\begin{proof}
+Two simultaneous zero-class congruences have period $pq$.  Since
+$p,q>X$, one has $pq>X^2>XL=\max\mathcal J_X$ for sufficiently large
+$X$, so two solutions cannot lie in the window.  For each fixed $y$,
+$\binom{K_X^{G}(y)}2\leq P_{2,X}^{G}$, which gives
+\eqref{eq:pair-gate}.  The last assertion is
+Proposition~\ref{prop:dyadic-max}.
+\end{proof}
+
+\begin{conjecture}[Exceptional-tolerant pair gate $(P_2)^G$]
+\label{conj:P2G}
+For every fixed $A>0$ there are $\delta>0$ and sets $E_X$, chosen
+independently of $y$, such that
+\[
+ |E_X|\ll X^{1-\delta},\qquad
+ P_{2,X}^{G}\ll X^{2-2\delta}.
+ \tag{$P_2^G$}\label{eq:P2G}
+\]
+\end{conjecture}
+
+Under $(\mathrm C1)$, Markov's inequality permits the canonical choice
+$E_X=\{p:|Z_p|>X^\varepsilon\}$, for which
+$|E_X|\leq X^{1-\varepsilon+o(1)}$.  Also under $(\mathrm C1)$, the
+existence of some power saving in \eqref{eq:P2G} is equivalent, after
+renaming the exponent, to a power-saving bound for
+$\sup K_X^G$.  Indeed,
+\[
+ \sum_{y\in\mathcal J_X}K_X^G(y)\leq L\mathcal M_X,
+ \qquad
+ P_{2,X}^{G}\leq\frac12(\sup K_X^G)
+       \sum_yK_X^G(y).
+\]
+This is the exact depth-$2$ target.  It requires neither a third moment
+nor an input of Elliott--Halberstam strength.
+
+\subsection{Single arcs and exact collisions}
+
+For $1\leq a\leq L$ and $y\in\mathcal J_X$, define
+\begin{align*}
+ S_{a,X}(y)
+ &=\{p\in(X,2X]:0\leq y-ap<p,\ y-ap\in Z_p\},\\
+ R_{a,X}(y)&=|S_{a,X}(y)|.
+\end{align*}
+The digit restriction is part of the definition.  It gives
+\[
+ K_X(y)=\sum_{1\leq a\leq L}R_{a,X}(y),
+ \qquad
+ \sum_{y\in\mathcal J_X}R_{a,X}(y)\leq\mathcal M_X.
+ \tag{6.6}\label{eq:arc-mass}
+\]
+Cauchy's inequality and \eqref{eq:P2-definition} yield
+\[
+ P_{2,X}
+ \leq\frac12\sum_yK_X(y)^2
+ \leq\frac{L^2}{2}\max_{a\leq L}
+       \sum_{y\in\mathcal J_X}R_{a,X}(y)^2.
+ \tag{6.7}\label{eq:single-arc-collapse}
+\]
+The Gessel--Coster Lucas congruence gives, for $p\in S_{a,X}(y)$,
+\[
+ b_y=b_{ap+(y-ap)}\equiv b_a b_{y-ap}\equiv0\pmod p.
+\]
+Consequently
+\[
+ R_{a,X}(y)\leq
+ \omega_{(X,2X]}(b_y),
+ \tag{6.8}\label{eq:arc-omega}
+\]
+where $\omega_I(m)$ counts distinct prime divisors of $m$ in $I$.
+
+\begin{conjecture}[Single-arc cap $(\mathrm{SA})$]
+\label{conj:SA}
+For every fixed $A>0$ there is $\eta>0$ such that, uniformly for
+$a\leq L$ and $y\in\mathcal J_X$,
+\[
+ R_{a,X}(y)\ll_A X^{1-\eta}.
+ \tag{$\mathrm{SA}_\eta$}\label{eq:SA}
+\]
+\end{conjecture}
+
+\begin{conjecture}[Middle-prime cap $(\Omega)$]
+\label{conj:Omega}
+For every fixed $A>0$ there is $\eta>0$ such that, uniformly for
+$y\in\mathcal J_X$,
+\[
+ \omega_{(X,2X]}(b_y)\ll_A X^{1-\eta}.
+ \tag{$\Omega_\eta$}\label{eq:Omega}
+\]
+\end{conjecture}
+
+In the existential ``some positive power'' sense,
+Conjectures~\ref{conj:SA} and~\ref{conj:Omega} are equivalent after
+renaming $\eta$.  One direction is \eqref{eq:arc-omega}.  Conversely,
+Lucas splits a prime counted by $\omega_{(X,2X]}(b_y)$ between the
+lower digit and the condition $p\mid b_{\lfloor y/p\rfloor}$.  The
+latter channel is $O(y^{2/3})$ by Lemma~\ref{lem:digit-channels}, while
+the lower channel is at most $L\max_aR_{a,X}(y)$.
+
+Define the ordered exact-collision count
+\begin{align}
+ N_{\mathrm{coll},a}(X)
+ &=\#\bigl\{(p,z;q,w):p\ne q,\ p,q\in(X,2X],
+       \ z\in Z_p,\ w\in Z_q,\notag\\[-2pt]
+ &\hspace{92pt}ap+z=aq+w\in\mathcal J_X\bigr\}.
+ \tag{6.9}\label{eq:Ncoll-definition}
+\end{align}
+Opening the square gives the exact identity
+\[
+ \sum_{y\in\mathcal J_X}R_{a,X}(y)^2
+ =\sum_{y\in\mathcal J_X}R_{a,X}(y)
+  +N_{\mathrm{coll},a}(X).
+ \tag{6.10}\label{eq:Ncoll-identity}
+\]
+
+\begin{conjecture}[Terminal exact-collision conjecture]
+\label{conj:Ncoll}
+For every fixed $A>0$ there is $\eta>0$ such that
+\[
+ \max_{1\leq a\leq L}N_{\mathrm{coll},a}(X)
+ \ll_A X^{2-\eta}.
+ \tag{$\mathrm{NC}_\eta$}\label{eq:Ncoll}
+\]
+\end{conjecture}
+
+\begin{theorem}[Exceptional-tolerant reduction to exact collisions]
+\label{thm:exact-collision-reduction}
+Conjecture~\ref{conj:Ncoll} implies the pointwise conclusion
+$\log G_n=o(n)$.  Under Conjecture~\ref{conj:C1}, the three properties
+$(\mathrm{SA})$, $(\Omega)$, and $(\mathrm{NC})$ are equivalent in the
+sense that each asserts the existence of some fixed positive power
+saving; their exponents need not be the same.  They are also equivalent,
+in this sense, to the power-saving target for $\sup K_X$ and to
+$(P_2)^G$.
+\end{theorem}
+
+\begin{proof}
+From \eqref{eq:Ncoll-definition}, for each $a,y$,
+\[
+ R_{a,X}(y)(R_{a,X}(y)-1)
+ \leq N_{\mathrm{coll},a}(X).
+\]
+Thus $(\mathrm{NC}_\eta)$ gives
+$R_{a,X}(y)\ll X^{1-\eta/2}$.  Conversely, $(\mathrm{SA}_\eta)$ and
+$(\mathrm C1)$ give
+\[
+ N_{\mathrm{coll},a}(X)
+ \leq(\sup_yR_{a,X}(y))\sum_yR_{a,X}(y)
+ \ll X^{2-\eta+o(1)}.
+\]
+This proves the asserted equivalence, together with the Lucas-channel
+comparison above.  Finally, \eqref{eq:single-arc-collapse},
+\eqref{eq:Ncoll-identity}, and the proved estimate
+$\mathcal M_X\ll X^{5/3+o(1)}$ give a positive power saving for
+$P_{2,X}$.  Proposition~\ref{prop:pair-gate} and then
+Proposition~\ref{prop:dyadic-max} prove the pointwise conclusion.
+\end{proof}
+
+\begin{remark}[No exceptional-$y$ loophole]
+An ``off a sparse set of $y$'' formulation is insufficient for a
+pointwise theorem unless the exceptional fibers receive their own
+collision bound: one exceptional $y$ may carry a fiber of size
+$X^{1-o(1)}$.  The uniform formulation \eqref{eq:SA}, or equivalently
+the global moment formulation \eqref{eq:Ncoll}, is the precise terminal
+statement used here.
+\end{remark}
+
+\begin{remark}[Numerical and structural evidence for the terminal conjecture]
+\label{rem:evidence}
+Direct computation supports \eqref{eq:Ncoll}.  With $G_n$ computed
+exactly for all $n\leq 15000$, the extreme values obey the
+Poisson-independence law
+\[
+ \max_{n\leq N}\log G_n\;\approx\;0.85\,(\log N)^2,
+\]
+a single constant across three orders of magnitude, so
+$\log G_n/n=O((\log n)^2/n)$ with no phase transition.  The two channels
+of a hypothetical counterexample are both closed numerically.  The
+small-prime part is unconditionally $O(\sqrt n\log n)$, so only the
+middle collision count can grow; but the exact avalanche count
+$K(n)=\#\{\sqrt n<p\leq n:p\mid G_n\}$ never exceeds $7$ for $n\leq15000$
+(a counterexample needs $K(n)\gg n/\log n$), and the middle-prime
+multiplicity is identically $1$ outside the range $n\leq 6$, so the
+full-multiplicity form \eqref{eq:T} shows no phantom.  A targeted search
+of the one structured locus is equally negative: the non-ordinary primes
+$p\mid\gamma(p)$ of $8.4.\mathrm{a}.\mathrm{a}$ below $12010$ are only
+$\{11,3137\}$, and at their forced apex indices $d=(p-1)/2$ the ratio
+$\log G_d/d$ is unremarkable while the forced prime does not divide
+$G_d$; the coincidence of Lemma-\ref{lem:intercept-vacuity} type lives on
+an intercept-$O(1)$ line and does not concentrate at a single $n$.  This
+is empirical and heuristic support, not a proof of \eqref{eq:Ncoll}.
+\end{remark}
+
+\section{Unconditional structural theorems}\label{sec:structure}
+
+\subsection{The gap eliminant $U_g$}\label{sec:gap-eliminant}
+
+Fix integers $g\geq1$ and $r\geq0$.  Let $u^{(r)}$ be the rational
+solution of the Ap\'ery recurrence initialized by
+\[
+ u^{(r)}_r=0,
+ \qquad
+ u^{(r)}_{r+1}=1.
+\]
+For concision, write $u_j=u^{(r)}_j$ while $r$ is fixed.
+
+\begin{lemma}[Eliminant identity]\label{lem:eliminant-identity}
+Let $p\geq7$ and $0\leq r<r+g<p$.  If $r\in Z_p$, then
+$p\nmid b_{r+1}$ and
+\[
+ p\mid b_{r+g}
+ \quad\Longleftrightarrow\quad
+ p\mid u_{r+g}.
+\]
+Here the last divisibility means that the $p$-integral rational number
+$u_{r+g}$ reduces to zero in $\mathbb F_p$.
+\end{lemma}
+
+\begin{proof}
+Lemma~\ref{lem:no-consecutive} gives $p\nmid b_{r+1}$.  On the interval
+$[r,r+g]$ all denominators in the recurrence are $p$-units.  The two
+solutions $b_j$ and $b_{r+1}u_j$ have the same initial values at
+$j=r,r+1$, so uniqueness for the recurrence gives
+\[
+ b_{r+j}\equiv b_{r+1}u_{r+j}\pmod p
+ \qquad(0\leq j\leq g).
+\]
+The assertion follows because $b_{r+1}$ is a unit.
+\end{proof}
+
+Recall the continuants $N_g(x)$ and $Q_g(x)$ from
+\eqref{eq:solution-formula}.  That formula, applied to the normalized
+solution above, gives
+\[
+ Q_g(r)u_{r+g}=N_g(r),
+ \qquad
+ Q_g(r)=\prod_{j=2}^g(r+j)^3.
+\]
+
+\begin{theorem}[Gap-eliminant theorem]\label{thm:Ug}
+For every $g\geq1$ there is a fixed polynomial
+\[
+ U_g(x):=N_g(x)\in\Z[x]
+\]
+with the following properties:
+\begin{enumerate}
+\item $\deg U_g=3(g-1)$;
+\item the coefficient height of $U_g$ is
+$\exp(O(g\log g))$;
+\item $U_g(r)>0$ for every integer $r\geq0$;
+\item if $p\geq7$ and $0\leq r<r+g<p$, then
+\[
+ r,r+g\in Z_p\quad\Longrightarrow\quad p\mid U_g(r).
+\]
+\end{enumerate}
+For $g=1$, this means $U_1=1$ and the last assertion is vacuous by
+Lemma~\ref{lem:no-consecutive}.
+\end{theorem}
+
+\begin{proof}
+The identity preceding the theorem proves that clearing the denominators
+of $u_{r+g}$ gives the fixed integer polynomial $U_g=N_g$.
+
+Let $L_g$ be the leading coefficient of $N_g$.  From the continuant
+recurrence,
+\[
+ L_1=1,\qquad L_2=34,\qquad L_{g+1}=34L_g-L_{g-1}.
+\]
+Inductively $L_g>L_{g-1}>0$.  Hence no top-degree cancellation occurs,
+and $\deg N_g=3(g-1)$.
+
+For the height, let $\|F\|_1$ denote the sum of the absolute values of
+the coefficients of $F$.  Shifting the fixed cubic $P$ and the sixth
+power in the continuant recurrence gives
+\[
+ \|N_{g+1}\|_1
+ \leq C(g+1)^6\max(\|N_g\|_1,\|N_{g-1}\|_1).
+\]
+Iteration yields
+$\log\|N_g\|_1=O(\sum_{j\leq g}\log j)=O(g\log g)$, which proves the
+height bound.
+
+For positivity, the Wronskian identity gives
+\[
+ u_{r+g}
+ =\frac{a_{r+g}b_r-b_{r+g}a_r}
+ {a_{r+1}b_r-b_{r+1}a_r}.
+\]
+The denominator is $W_r>0$, and the numerator is positive because the
+positive sequence $b_j$ has strictly increasing ratios $a_j/b_j$, again
+by $W_j>0$.  Thus $u_{r+g}>0$ and consequently
+$U_g(r)=Q_g(r)u_{r+g}>0$.
+
+Finally, if $r,r+g\in Z_p$, Lemma~\ref{lem:eliminant-identity} gives
+$u_{r+g}\equiv0\pmod p$.  Every factor of $Q_g(r)$ is a $p$-unit, so
+$p\mid U_g(r)$.
+\end{proof}
+
+\begin{corollary}[Bounded-gap pairs]\label{cor:bounded-gap}
+Uniformly for $1\leq G\leq X$,
+\[
+ \#\left\{(p,r,g):
+ \begin{array}{l}
+ X<p\leq2X,\quad1\leq g\leq G,\\
+ 0\leq r<r+g<p,\quad r,r+g\in Z_p
+ \end{array}\right\}
+ \ll G^2X.
+\]
+\end{corollary}
+
+\begin{proof}
+For $r<2X$ and $g\leq G\leq X$, the degree and height bounds give
+\[
+ \log U_g(r)\ll g\log X.
+\]
+Since $U_g(r)>0$, it has $O(g)$ prime divisors exceeding $X$.  Sum this
+bound over $r<2X$ and $g\leq G$.
+\end{proof}
+
+\begin{remark}[Scope of root distribution]
+Theorem~\ref{thm:Ug} embeds bounded-gap double zeros into roots of a
+fixed polynomial, which is the algebraic prerequisite for the
+Hooley--DFI circle.  It does not by itself prove that the Ap\'ery subset
+of those roots is equidistributed.  In particular,
+\[
+ U_2(r)=(2r+3)(17r^2+51r+39)
+\]
+has a linear factor.  The theorem of Duke, Friedlander, and Iwaniec
+treats roots of an irreducible quadratic to prime moduli \cite{DFI1995},
+while Hooley's general theorem orders roots by all moduli
+\cite{Hooley1964}.  Thus the
+stronger prime-axis equidistribution claim in the working notes is not an
+unconditional corollary and is not used here.
+\end{remark}
+
+\subsection{A cross-arc eliminant}
+
+\begin{lemma}[Cross-arc lemma]\label{lem:cross-arc}
+Fix $A>0$.  Uniformly for $1\leq a,m\leq L$ and
+$y,y+m\in\mathcal J_X$, one has, for sufficiently large $X$,
+\[
+ |S_{a,X}(y)\cap S_{a,X}(y+m)|
+ \leq\omega_{>X}(U_m(y))\leq4m.
+ \tag{7.1}\label{eq:cross-arc}
+\]
+\end{lemma}
+
+\begin{proof}
+If $p$ belongs to the intersection, then
+$r=y-ap$ and $r+m=y+m-ap$ both lie in $Z_p$, with
+$0\leq r<r+m<p$.  Theorem~\ref{thm:Ug} gives
+\[
+ p\mid U_m(r),\qquad U_m(r)\equiv U_m(y)\pmod p.
+\]
+Thus every such $p$ divides the fixed positive integer $U_m(y)$.
+The degree and coefficient-height estimates in
+Theorem~\ref{thm:Ug}, together with $y\leq XL$ and $m\leq L$, give
+\[
+ \log U_m(y)\leq(3+o(1))m\log X.
+\]
+It therefore has at most $4m$ prime divisors exceeding $X$ for all
+sufficiently large $X$.
+\end{proof}
+
+\subsection{Structured resonance}
+
+For $R,H<X/2$, let $Z_p^{\rm str}(R,H)$ consist of those $r\in Z_p$
+which either satisfy
+\[
+ \min(r,p-1-r)\leq R
+ \quad\text{or}\quad
+ |2r-(p-1)|\leq2R,
+ \tag{7.2}\label{eq:anchors}
+\]
+or have a second zero $s\in Z_p$ with $0<|r-s|\leq H$.  Put
+\[
+ K_{R,H}(x)=\#\{p\in(X,2X]:x\bmod p\in Z_p^{\rm str}(R,H)\}.
+\]
+
+\begin{theorem}[Structured-resonance theorem]
+\label{thm:structured-resonance}
+Let $0\leq\delta_0<1$, $2X\leq x\leq Y\leq X^{2+\delta_0}$, and
+$1\leq R,H\leq X/4$.  Then
+\[
+ K_{R,H}(x)\ll_{\delta_0}R+H^2+1.
+ \tag{7.3}\label{eq:structured-K}
+\]
+Consequently, with $(t)_3=t(t-1)(t-2)$,
+\[
+ A_3^{\rm str}(Y,X;R,H)
+ :=\sum_{2X\leq x\leq Y}(K_{R,H}(x))_3
+ \ll_{\delta_0}Y(R+H^2+1)^3.
+ \tag{7.4}\label{eq:structured-A3}
+\]
+The contribution in which all three primes hit the exact center
+$r=(p-1)/2$ is zero for sufficiently large $X$.
+\end{theorem}
+
+\begin{proof}
+The anchor conditions force a block prime to divide the nonzero integer
+\[
+ L_R(x)=
+ \prod_{0\leq t\leq R}(x-t)(x+1+t)
+ \prod_{|t|\leq R}(2x+1-2t).
+\]
+There are $O(R+1)$ linear factors, and
+$\log|L_R(x)|\ll_{\delta_0}(R+1)\log X$; hence only
+$O_{\delta_0}(R+1)$ prime divisors of $L_R(x)$ exceed $X$.
+
+If $x\bmod p$ has a second zero at distance $h\leq H$, then, according
+to which zero is smaller, Theorem~\ref{thm:Ug} makes $p$ divide either
+$U_h(x)$ or $U_h(x-h)$.  Thus every close-pair prime divides
+\[
+ C_H(x)=\prod_{1\leq h\leq H}U_h(x)U_h(x-h),
+\]
+which is positive because $x-h>0$.  The degree and height of the
+factors give
+\[
+ \log C_H(x)\ll_{\delta_0}H^2\log X.
+\]
+It has $O_{\delta_0}(H^2)$ prime divisors exceeding $X$.  This proves
+\eqref{eq:structured-K}; summing its cube proves
+\eqref{eq:structured-A3}.
+
+Finally, an exact-center hit gives $p\mid2x+1$.  Three distinct block
+primes would give $pqs\mid2x+1$, whereas
+$pqs>X^3>2X^{2+\delta_0}+1\geq2x+1$ for sufficiently large $X$.
+This is impossible.
+\end{proof}
+
+\subsection{Two lenses on the zero set}
+
+\begin{remark}[The Ap\'ery--Hasse polynomial]
+For a prime $p$, define
+\[
+ \Phi_p(T)=\sum_{0\leq k<p}
+   \binom Tk^2\binom{T+k}k^2\in\mathbb F_p[T].
+ \tag{7.5}\label{eq:Hasse-polynomial}
+\]
+Then $\deg\Phi_p=4(p-1)$ and
+\[
+ Z_p=\{r\in\{0,\ldots,p-1\}:\Phi_p(r)=0\}.
+\]
+The classical identity
+\[
+ b_r={}_4F_3\!\left[
+ \begin{matrix}-r,-r,r+1,r+1\\1,1,1\end{matrix};1\right]
+\]
+has finite-field and $p$-adic counterparts.  In particular, for
+$1\leq r\leq p-2$, Kalita--Chetry express $b_r$ modulo $p$ as a
+Greene ${}_4F_3$ character sum, while McCarthy's notation writes the
+same balanced family as
+${}_4G(r/(p-1),r/(p-1),1-r/(p-1),1-r/(p-1))_p$
+\cite{KalitaChetry2017,Greene1987,McCarthy2012}.  These are sums over
+characters, not bounded products, so they supply a moment lens rather
+than a compressive cross-prime invariant.
+
+At the central index $r=(p-1)/2$, Ahlgren--Ono and Kilbourn give the
+modular-form congruences with the weight-$4$, level-$8$ newform
+$\eta(2\tau)^4\eta(4\tau)^4$ \cite{AhlgrenOno2000,Kilbourn2006}.
+The Ap\'ery index is $(p-1)/2$, not $p-1$; indeed
+$b_{p-1}\equiv1\pmod p$.
+\end{remark}
+
+\begin{remark}[Projective Frobenius lens]
+Let $m=(p-1)/2$ and let $\gamma(p)$ be the $p$th coefficient of
+$\eta(2\tau)^4\eta(4\tau)^4$.  Reducing the recurrence around $m$
+produces universal rational continuant coefficients $A_j,B_j$, on
+every local interval where the recurrence denominators are $p$-units,
+such that
+\[
+ \begin{aligned}
+ b_{m+j}&\equiv A_j\gamma(p)+B_jb_{m-1}\pmod p,\\
+ (A_0,B_0)&=(1,0),\qquad(A_1,B_1)=(0,1).
+ \end{aligned}
+ \tag{7.6}\label{eq:two-seed}
+\]
+The Wronskian prevents the two seeds from vanishing simultaneously.
+Thus the root condition can be read projectively as
+\[
+ [A_j:B_j]=u_p,
+ \qquad
+ u_p=[-b_{m-1}:\gamma(p)]\in\mathbb P^1(\mathbb F_p).
+ \tag{7.7}\label{eq:projective-frobenius}
+\]
+This is complementary to \eqref{eq:Hasse-polynomial}: a fixed
+continuant curve meets a moving projective Frobenius datum.  No
+cross-prime anti-concentration theorem for $u_p$ is asserted here.
+Newton--Thorne symmetric-power functoriality controls the archimedean
+Sato--Tate distribution, not the self-characteristic condition
+$p\mid\gamma(p)$ \cite{NewtonThorne2021}.
+\end{remark}
+
+\section{Difficulty certification}\label{sec:difficulty}
+
+\subsection{Phantom locality}
+
+\begin{remark}[Phantom-locality doctrine]\label{rem:phantom-locality}
+Every currently available holonomic divisibility constraint in this
+problem is local at one prime: the Lucas and Dwork congruences,
+reflection, the Wronskian and Casoratian, the $U_g$ and cross-arc
+certificates, coefficient heights, and the polynomial $\Phi_p$.
+None supplies a map from zero positions at different primes to a common
+object with substantially fewer fibers.  They therefore do not exclude
+the possibility that, at many primes, one locally admissible zero lies
+at $z_p\equiv y_0-ap\pmod p$.  Reflection adds a partner locally and the
+eliminants constrain local pairs, but neither operation couples the
+chosen positions across different primes.  Such an abstract arc
+phantom would create one large exact fiber.
+
+This is a limitation of the banked invariant list, not a construction
+of alternative roots of the actual polynomial $\Phi_p$.  In
+particular, it does not prove logical independence from all possible
+Ap\'ery identities.  It identifies the missing kind of input: a
+cross-prime compressive invariant.  The multiplicative-order fibration
+in Lemma~\ref{lem:Mersenne} below is the model of such an invariant.
+\end{remark}
+
+The usual single-value eliminant is $b_y$ itself, whose exponential
+height reproduces the trivial divisor bound.  Hermite--Pad\'e
+denominator bounds, the Casoratian, and fixed-prime hypergeometric
+identities do not alter this cross-prime obstruction.  The available
+Ap\'ery factorization and congruence results
+\cite{CFVMZ2026,Delaygue2018,RowlandYassawiKrattenthaler2021}
+provide strong local information but no such fibration.
+
+\subsection{A fibration calibration}
+
+\begin{lemma}[Mersenne fibration]\label{lem:Mersenne}
+Fix $A>0$.  Uniformly for $1\leq a\leq L$ and
+$y\in\mathcal J_X$, the admissible Mersenne arc satisfies
+\[
+ \#\{p\in(X,2X]:0\leq y-ap<p,\ p\mid2^{y-ap}-1\}
+ \ll_A X^{1/2+o(1)}.
+ \tag{8.1}\label{eq:Mersenne}
+\]
+\end{lemma}
+
+\begin{proof}
+Let $d_p=\operatorname{ord}_p(2)$.  The divisibility condition is
+$d_p\mid y-ap$.  Since $d_p\mid p-1$, it follows that
+\[
+ d_p\mid y-a.
+ \tag{8.2}\label{eq:Mersenne-fibration}
+\]
+Here $0<y-a\ll_A X(\log X)^A$, so
+$\tau(y-a)=X^{o(1)}$ uniformly.
+
+For a divisor $d\leq\sqrt X$ of $y-a$, every prime with $d_p=d$
+divides $2^d-1$.  The number of its prime divisors exceeding $X$ is
+$O(d/\log X)$.  Summing over the possible $d$ costs
+$X^{1/2+o(1)}$.  If $d>\sqrt X$, then $p\equiv1\pmod d$, so the
+interval $(X,2X]$ contains $O(X/d+1)=O(\sqrt X)$ candidates for each
+such divisor.  Another use of $\tau(y-a)=X^{o(1)}$ proves
+\eqref{eq:Mersenne}.
+\end{proof}
+
+The restriction to the in-range window is essential: with unrestricted
+$y$, the integer $y-a$ could be a common multiple of all relevant
+orders.  The lemma exhibits exactly what Ap\'ery lacks.  Mersenne zero
+positions fiber through the divisor lattice of one small integer
+$y-a$; Ap\'ery zero positions are not known to fiber through a subgroup
+or any other compressive cross-prime object.
+
+\subsection{The horizontal Fourier barrier}
+
+Put
+\[
+ W_X(h)=\sum_{X<p\leq2X}\ \sum_{m\in Z_p}e\left(\frac{hm}{p}\right),
+ \qquad
+ \mathcal S_X=\{p\in(X,2X]:p\mid\gamma(p)\},
+ \tag{8.3}\label{eq:W-definition}
+\]
+where $\gamma(p)$ is the coefficient in
+$\eta(2\tau)^4\eta(4\tau)^4$.  Ahlgren--Ono identify
+\[
+ p\in\mathcal S_X
+ \quad\Longleftrightarrow\quad
+ (p-1)/2\in Z_p.
+ \tag{8.4}\label{eq:central-equivalence}
+\]
+
+\begin{theorem}[Barrier R9.2: Lang--Trotter hardness]
+\label{thm:R92}
+Let $2\leq H\leq X$.  There is an absolute $c>0$ such that
+\[
+ cH|\mathcal S_X|
+ \leq\mathcal M_X+2\sum_{1\leq h<H}|W_X(h)|.
+ \tag{8.5}\label{eq:Fejer-barrier}
+\]
+Consequently, if for some fixed $\delta>0$ one has, with
+$H=\lfloor X/(4L)\rfloor$,
+\[
+ \max_{1\leq h<H}|W_X(h)|\ll X^{1-\delta},
+ \tag{8.6}\label{eq:W-sup-bound}
+\]
+then $|\mathcal S_X|\ll X^{1-\delta'}$ for some $\delta'>0$.
+The same conclusion follows from
+\[
+ \sum_{1\leq h<H}|W_X(h)|^2\ll H X^{2-2\delta}.
+ \tag{8.7}\label{eq:W-second-bound}
+\]
+In particular, either horizontal estimate implies that the primes
+$p$ for which $p\mid\gamma(p)$ have density zero.
+\end{theorem}
+
+\begin{proof}
+For the Fej\'er kernel
+\[
+ F_H(t)=\frac1H\left|\sum_{j=0}^{H-1}e(jt)\right|^2
+ =\sum_{|h|<H}\left(1-\frac{|h|}{H}\right)e(ht),
+\]
+positivity gives
+\begin{align*}
+ 0&\leq
+ \sum_{|h|<H}\left(1-\frac{|h|}{H}\right)
+ e(-h/2)W_X(h)\\
+ &=\sum_{X<p\leq2X}\ \sum_{m\in Z_p}
+ F_H\left(\frac mp-\frac12\right).
+\end{align*}
+If $m=(p-1)/2$ and $H\leq X<p$, then
+$F_H(-1/(2p))\geq cH$.  Keeping these nonnegative terms and bounding
+the nonzero Fourier modes in absolute value proves
+\eqref{eq:Fejer-barrier}.
+
+Lemma~\ref{lem:zero-fiber} gives
+$\mathcal M_X\ll X^{5/3+o(1)}$.  Divide
+\eqref{eq:Fejer-barrier} by $H\asymp X/L$ and use
+\eqref{eq:W-sup-bound}; the two terms are
+$X^{2/3+o(1)}$ and $X^{1-\delta}$, up to powers of $\log X$.
+This gives a fixed power saving.  Under \eqref{eq:W-second-bound}, use
+Cauchy's inequality before dividing by $H$.
+\end{proof}
+
+The form $8.4.a.a$ is non-CM of weight $4$.  No theorem currently
+gives even $o(\pi(X))$ non-ordinary primes for this fixed form.  Deligne's
+bound allows $\gamma(p)=cp$ with $|c|\ll\sqrt p$ and does not force
+vanishing, while Newton--Thorne controls an archimedean Sato--Tate
+distribution rather than divisibility by the varying prime.  Thus
+Theorem~\ref{thm:R92} is an implication to a recognized open
+Lang--Trotter-type problem, not a claim that \eqref{eq:W-sup-bound} is
+logically unprovable.
+
+\begin{remark}[Barrier R9.1: bandwidth insufficiency]
+\label{rem:R91}
+For a planted arc $m_p\equiv y_0\pmod p$, the summand in $W_X(h)$ is
+$e(hy_0/p)$.  Reciprocal-phase cancellation can make the high-frequency
+range look equidistributed while all planted primes still collide at
+the exact integer $y_0$.  The working-note R9.1 proposes correcting the
+low frequencies by a small perturbation among the remaining primes,
+thereby producing an abstract full-bandwidth phantom.  The notes do not
+supply a positivity- and integrality-preserving realization as actual
+root sets of the fixed polynomials $\Phi_p$, so this stronger
+construction is recorded as a barrier model rather than a theorem.
+
+Its robust conclusion is categorical: Fourier bounds for the normalized
+points $m/p$ control intervals of positive width.  The condition
+$ap+m=aq+w$ is an exact equality at scale zero.  Without an input tied
+to that equality, horizontal equidistribution is neither the terminal
+statement nor a replacement for \eqref{eq:Ncoll}.
+\end{remark}
+
+\subsection{The scale-zero core}
+
+Identity~\eqref{eq:Ncoll-identity} is the corrected detector.  Opening
+$N_{\mathrm{coll},a}$ by the Chinese remainder theorem and applying
+additive orthogonality produces a reciprocity-twisted quadrilinear form
+with moduli $pq$.  Away from the locus on which the two reciprocal
+phases recombine, this has the formal shape treated by the bilinear and
+trilinear Kloosterman-fraction estimates of Duke--Friedlander--Iwaniec
+and Bettin--Chandee \cite{DFI1997,BettinChandee2018}.  No estimate for
+the Ap\'ery-weighted form is proved here; attaching those tools to the
+non-degenerate periphery remains a prospective step.
+
+\begin{remark}[Degeneracy certificate]
+On the recombination locus, an arc phantom makes both phases combine
+to a constant depending on the common exact value.  The mass on that
+locus is precisely $N_{\mathrm{coll},a}$, so an equidistribution
+estimate for the complementary locus leaves the terminal conjecture
+unchanged.  Rationally aligned central clusters do not import the
+weight-$4$ ordinarity obstruction into $N_{\mathrm{coll},a}$: after
+clearing the fixed denominator, the collision congruence is a multiple
+of $pq$ whose absolute value is smaller than $pq$, and hence is an
+integer equality.  This is why the horizontal Fourier route asks for
+strictly more than the exact-collision reduction needs.
+\end{remark}
+
+\begin{remark}[Current technology boundary]
+The nearest exact-divisibility tools exploit multiplicative structure:
+large prime factors in Lucas and Lehmer sequences
+\cite{Stewart2012}, or Subspace-Theorem bounds for greatest common
+divisors of $S$-unit values \cite{CorvajaZannier2005}.  The available
+results on Ap\'ery numbers are one-sided valuation or Lucas-congruence
+statements \cite{LucaShparlinski2008,Delaygue2018,
+RowlandYassawiKrattenthaler2021}; they do not give an upper bound for
+$\omega_{(X,2X]}(b_y)$.  No standard GRH-type hypothesis presently
+formulates, let alone implies, \eqref{eq:Omega}.
+
+The two live directions are therefore: construct a cross-prime
+compressive invariant for the vanishing positions of the mod-$p$
+Picard--Fuchs solutions, or develop an exact-collision tool for
+holonomic values.  The non-degenerate Kloosterman-fraction periphery
+\cite{DFI1997,BettinChandee2018} is the natural first
+test case; matching the Ap\'ery weights to the hypotheses of those
+methods, so as to obtain a theorem-level bound on the provable
+periphery of $(\Omega)$, remains to be carried out.
+\end{remark}
+
+\subsection{The six-fold barrier map}\label{sec:sixfold-barrier}
+
+The preceding barriers admit a common organization.  The word
+``complete'' below is relative to the audited mechanisms: five
+ensemble methods and one single-index adelic method.  A barrier
+certificate says that the stated input class cannot distinguish the
+terminal event; it is not a logical independence result for arbitrary
+future mathematics.
+
+\subsubsection{Sieve complexity and the integrality criterion}
+
+For a family of $p$-local relations $\mathcal R_p$, define its
+\emph{sieve complexity} $c_X(\mathcal R)$ to be the least number of
+global integral relations whose reductions cover $\mathcal R_p$ for
+all $p\in(X,2X]$.  Only the order of magnitude of this invariant will
+be used.  The calibrating examples are
+\[
+\begin{array}{c|c|c}
+\text{relation}&c_X&\text{status of the corresponding cover}\\ \hline
+\text{weight-$3$ ordinarity}&O(1)&\text{provable}\\
+\text{weight-$4$ form $8.4.a.a$}&X^{1/2}&\text{open}\\
+\text{Mersenne divisibility}&X^{o(1)}&\text{provable}\\
+\text{Ap\'ery divisibility at index }n&e^{\Theta(n)}&
+  \text{outside the subexponential range}.
+\end{array}
+\tag{8.8}\label{eq:sieve-complexity-table}
+\]
+For the first row, Deligne's interval $|a_p|\leq2p$ leaves the five
+integer classes $a_p=cp$.  For weight $4$, the interval
+$|\gamma(p)|\leq2p^{3/2}$ leaves $\asymp\sqrt X$ such classes.  In the
+Mersenne model, the classes are the divisors of $y-a$, as in
+\eqref{eq:Mersenne-fibration}.  For Ap\'ery numbers, writing a
+divisibility relation as a global equality introduces a cofactor of
+exponential range.
+
+\begin{proposition}[Integrality criterion]
+\label{prop:integrality-criterion}
+A fixed-quotient Galois or sieve argument can test a relation uniformly
+across varying primes only after that relation has been expressed by
+global integral classes.  A condition defined only in $\mathbb F_p$
+has no reduction in a fixed auxiliary quotient.  Consequently, such a
+method applied to $n\bmod p\in Z_p$ must first pay the covering cost
+$c_X$ in \eqref{eq:sieve-complexity-table}.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+A global equality over $\mathbb Z$ may be reduced modulo every fixed
+auxiliary prime and is therefore visible to a fixed-quotient sieve.
+By contrast, the residue $z_p\in\mathbb F_p$ belongs to a different
+fiber for each $p$; there is no canonical image of the equality
+$n\equiv z_p\pmod p$ in a fixed quotient.  Replacing it by global
+equalities amounts precisely to enumerating its integral lifts.  The
+four counts following the table give the asserted calibration.  Thus
+the criterion does not say that large image never detects equality;
+it separates globally integral equalities, which it can detect, from
+self-characteristic $p$-local equalities, which require a cover.
+\end{proof}
+
+\subsubsection{The five ensemble barriers}
+
+\begin{proposition}[Barrier R9: analytic closure]
+\label{prop:barrier-analytic}
+The horizontal Fourier route is closed in two complementary senses.
+First, the estimates \eqref{eq:W-sup-bound} or
+\eqref{eq:W-second-bound} imply a density-zero theorem for the
+weight-$4$ nonordinary primes through Theorem~\ref{thm:R92}, an open
+Lang--Trotter-type endpoint.  Second, the bandwidth model in
+Remark~\ref{rem:R91} can preserve an exact planted collision while
+matching the available positive-width distribution data.  In
+particular, the exact-collision count \eqref{eq:Ncoll} is a scale-zero
+statistic not determined by horizontal equidistribution.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The first assertion is the Fej\'er-positivity argument
+\eqref{eq:Fejer-barrier}.  The second is the reciprocal-phase
+calculation in Remark~\ref{rem:R91}.  That calculation is a barrier
+model, not a realization by the actual roots of $\Phi_p$; the robust
+conclusion is only that interval discrepancy and exact equality belong
+to different categories of information.
+\end{proof}
+
+\begin{proposition}[Barrier R10a: collision decoupling]
+\label{prop:collision-decoupling}
+For distinct $p,q\in(X,2X]$, an exact collision factors into
+\[
+ \bigl[z\in Z_p\bigr]\quad\times\quad
+ \bigl[w\in Z_q\bigr]\quad\times\quad
+ \bigl[ap+z=aq+w\in\mathcal J_X\bigr].
+ \tag{8.9}\label{eq:collision-decoupling}
+\]
+The first two factors are separate self-characteristic conditions,
+while the last factor is a Frobenius-free CRT window condition.  There
+is no joint algebraic relation between the projective data $u_p$ and
+$u_q$ in \eqref{eq:collision-decoupling}.  Accordingly, joint
+large-image, Mumford--Tate, and fixed-quotient Chebotarev information
+does not by itself make the collision rare.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+For fixed $p$ and $q$, CRT makes the two residue conditions independent;
+the only coupling is the requirement that their common lift lie in the
+short archimedean window.  Each local factor lives in its own
+characteristic and $b_{(p-3)/2}$ is not a common Weil-number datum.
+Even a square-root Chebotarev error for a pair has size
+$(pq)^{1/2}\asymp X$; summing such errors over prime pairs is larger
+than the target.  Finally, the abstract coherent zero-section from
+Remark~\ref{rem:phantom-locality} is compatible with maximal
+fixed-quotient and Sato--Tate data while failing $(\mathrm{SA})$.
+This is the Galois-phantom certificate.  As before, it is a certificate
+for the stated hypothesis class, not a second system of roots for
+$\Phi_p$.
+\end{proof}
+
+Put
+\[
+ \lambda=\log(17+12\sqrt2)=4\log(1+\sqrt2).
+\]
+
+\begin{proposition}[Barrier R10b: the $3n$ determinant cap]
+\label{prop:determinant-cap}
+If an archimedean one-form argument uses an irrationality exponent
+$\mu\geq2$ for $\zeta(3)$, then its resulting coefficient is bounded
+by the template
+\[
+ \log G_n\leq
+ n\frac{(\mu-1)(3+\lambda)-(\lambda-3)}{\mu}+o(n).
+ \tag{8.10}\label{eq:determinant-cap}
+\]
+At the Rhin--Viola value $\mu=5.51389\ldots$ this is
+$5.24673\ldots n$, while the best conceivable limit $\mu\to2$ is
+exactly $3n\sim\log d_n$.  Thus neither this one-form method nor its
+Hermite--Pad\'e determinant localization can yield $o(n)$ without new
+$p$-local input.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The right-hand side of \eqref{eq:determinant-cap} equals
+$3+\lambda-2\lambda/\mu$, which is the corrected Rhin--Viola
+calculation recorded above.  Sending $\mu$ to the Roth threshold $2$
+leaves $3$.  In a multi-form determinant the Ap\'ery row still carries
+the denominator $d_n$; the Casoratian has only polynomial height and
+prime support below $n$.  Hence localization reproduces, rather than
+removes, the same $3n$ budget.  This is the point at which general
+Subspace-Theorem and multiplicative-group technology
+\cite{Schmidt1980,EvertseSchlickeweiSchmidt2002,
+BugeaudCorvajaZannier2003} returns the problem to the missing local
+support law.
+\end{proof}
+
+Consider the projective skew product over the shift $t\mapsto t+1$
+with transfer matrix
+\[
+ M(t)=
+ \begin{pmatrix}
+ P(t)&-t^3\\ (t+1)^3&0
+ \end{pmatrix}.
+ \tag{8.11}\label{eq:mobius-cocycle}
+\]
+Scalar normalization is irrelevant projectively.
+
+\begin{proposition}[Barrier R11: torus versus $\mathrm{SL}_2$]
+\label{prop:barrier-dynamical}
+Let $G$ be the difference-Galois group over $\overline{\mathbb Q}(t)$
+of the rank-$2$ Ap\'ery difference module defined by
+\eqref{eq:mobius-cocycle}.
+\begin{enumerate}
+\item[(NI-1)] One has $G\supseteq\mathrm{SL}_2$.
+\item[(NI-2)] For each fixed degree bound $D$, a nonconstant
+invariant $F\in\mathbb F_p(x,t)$ of degree at most $D$ for infinitely
+many $p$ would lift to characteristic zero.  Hence, outside finitely
+many primes, the mod-$p$ cocycle has no uniformly bounded-complexity
+first integral beyond the determinant line, represented here by the
+Casoratian.
+\end{enumerate}
+The Mersenne comparison has toric difference-Galois group and a full
+character lattice of invariants.  Thus the torus/$\mathrm{SL}_2$
+dichotomy identifies large monodromy with the failure of a compressive
+first integral.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Birkhoff asymptotics at infinity leave characteristic factors
+$\alpha^{\pm t}t^{-3/2}(1+\cdots)$, with
+$\alpha=17+12\sqrt2$.  Substitution in the hyperexponential
+possibilities excludes a rank-$1$ solution; the half-integral exponent
+is the terminal certificate in this calculation.  A dihedral image
+would give a hyperexponential solution of the symmetric-square
+recurrence, whose three candidate exponential ratios are
+$\alpha^2,1,\alpha^{-2}$.  The terminating Hyper computation excludes
+them, in the Hendriks--Singer classification
+\cite{HendriksSinger1999}.  Irreducibility, primitivity, and infinitude
+then give (NI-1).
+
+For (NI-2), the coefficients of an invariant of degree at most $D$
+satisfy a finite linear system over $\mathbb Z[t]$.  Its rank can drop
+modulo only the finitely many primes dividing the relevant nonzero
+minors.  Invariants for infinitely many primes would therefore lift,
+contradicting (NI-1).  Algebraic entropy alone is not the relevant
+test: the base shift makes the skew product have zero algebraic entropy
+while its invariant ring remains minimal
+\cite{BellonViallet1999}.  The Lucas--Gessel factorization at
+$t\equiv-1,0\pmod p$ is instead an arithmetic singularity-confinement
+event, in the sense of almost-good reduction
+\cite{KankiMadaTokihiro2013}; it supplies the already-used digit law,
+not a cross-prime first integral.
+\end{proof}
+
+\begin{proposition}[Barrier R12: star collapse and the three habitats]
+\label{prop:barrier-additive}
+Let
+\[
+ \mathcal T_X=\{(a,p,z):1\leq a\leq L, p\in(X,2X],
+ z\in Z_p, ap+z\in\mathcal J_X\}
+\]
+and let $r_X(y)$ be the number of representations $y=ap+z$ from
+$\mathcal T_X$.  Then the following certificates hold.
+\begin{enumerate}
+\item If $\mathcal A_X=\{ap:1\leq a\leq L, p\in(X,2X]\}$ and
+$M=|\mathcal A_X|$, then
+\[
+ E_+(\mathcal A_X)\gg \frac{M^3}{\log X}.
+ \tag{8.12}\label{eq:log-density-energy}
+\]
+Thus the prime-slope set already has nearly maximal additive energy.
+\item The collision graph on $\mathcal T_X$ is a disjoint union of
+cliques indexed by $y$, and
+\[
+ N_*(X):=\sum_y r_X(y)(r_X(y)-1),\qquad
+ \sum_y r_X(y)=|\mathcal T_X|.
+ \tag{8.13}\label{eq:star-collapse}
+\]
+Under $(\mathrm C1)$, a power saving for $N_*(X)$ is equivalent, after
+renaming exponents, to a power saving for $\max_y r_X(y)$, hence to the
+power-saving forms of $(\mathrm{SA})$ and $(\Omega)$.
+\item The coherent section $z_p\equiv y_0\pmod p$ has the same
+fiber-size, prime-slope, and normalized-distribution inputs as the
+abstract phantom, but it creates one fiber of large multiplicity.  In
+the line model $v=pu+z_p$, writing
+$z_p=y_0-b_pp$ with $b_p=\lfloor y_0/p\rfloor$ makes every line meet
+the horizontal fiber $v=y_0$ at an allowed integer $u=b_p$.  After the
+section-dependent trivialization $c=u-b_p$, this is the projected
+pencil with apex $(0,y_0)$.
+\end{enumerate}
+Consequently, additive combinatorics has only three relevant habitats:
+a fixed auxiliary quotient, closed by
+Proposition~\ref{prop:integrality-criterion}; the individual fibers
+$\mathbb F_p$, where singleton-scale sets have no internal structure;
+and global $\mathbb Z$, where \eqref{eq:log-density-energy} and
+\eqref{eq:star-collapse} return the argument to the supremum cap.
+Within these hypotheses, sum-product and incidence methods are
+phantom-transparent.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Distinct products $ap$ are unique for $a\leq L=o(X)$, so
+$M\asymp LX/\log X$, while $\mathcal A_X+\mathcal A_X$ lies in an
+interval of length $O(LX)$.  Cauchy's inequality gives
+$E_+(\mathcal A_X)\geq M^4/|\mathcal A_X+\mathcal A_X|$, proving
+\eqref{eq:log-density-energy}.
+
+Two progressions with distinct moduli $p,q$ can meet at most once in
+the window: two meetings would make the differences of their slope
+parameters multiples of $q$ and $p$, larger than $L$.  The same-prime
+representation is unique.  This proves the clique decomposition.  If
+$R=\max_y r_X(y)$ and $T=\sum_y r_X(y)$, then
+\[
+ R(R-1)\leq N_*(X)\leq RT.
+\]
+Under $(\mathrm C1)$, $T\leq L\mathcal M_X=X^{1+o(1)}$, giving the
+claimed equivalence after exponent renaming.  The third assertion is
+the direct substitution $y_0=b_pp+z_p$.  It is a certificate for
+hypotheses built from fiber statistics, mass, prime distribution, and
+equidistribution; it does not assert that the coherent section is the
+actual Ap\'ery zero-section.  Bilinear and incidence estimates can
+still treat a nondegenerate periphery
+\cite{FouvryIwaniec1983,BombieriFriedlanderIwaniec1986,
+DFI1997,BettinChandee2018}, but the concentrated fiber is exactly the
+quantity in $(\Omega)$.
+\end{proof}
+
+\subsubsection{The single-index adelic barrier}
+
+Let $D_n=\lcm(1,\ldots,n)$, so that $d_n=D_n^3$, and put
+\[
+ \mathcal B_n=D_n^3b_n,\qquad
+ \mathcal A_n=D_n^3a_n,\qquad
+ \ell_n=b_n\zeta(3)-a_n.
+ \tag{8.14}\label{eq:adelic-data}
+\]
+The standard Ap\'ery remainders $\ell_n$ are positive and satisfy
+$|\ell_n|\asymp e^{-\lambda n}n^{-3/2}$.
+
+\begin{lemma}[Casoratian floor]
+\label{lem:casoratian-floor}
+For every $n\geq0$,
+\[
+ |\ell_n|\geq\frac{6}{(n+1)^3b_{n+1}}
+ =e^{-\lambda n-O(\log n)}.
+ \tag{8.15}\label{eq:casoratian-floor}
+\]
+\end{lemma}
+
+\begin{proof}
+The Casoratian identity gives
+\[
+ b_{n+1}\ell_n-b_n\ell_{n+1}
+ =a_{n+1}b_n-a_nb_{n+1}=\frac6{(n+1)^3}.
+\]
+Both remainders have the same sign, so
+$b_{n+1}|\ell_n|\geq6/(n+1)^3$.  The known growth
+$b_{n+1}=e^{\lambda n+O(\log n)}$ proves the last equality.
+\end{proof}
+
+\begin{proposition}[Barrier R13a: the critical adelic ledger]
+\label{prop:critical-ledger}
+For $x_n=(\mathcal B_n:\mathcal A_n)\in\mathbb P^1(\mathbb Q)$,
+\[
+ h(x_n)=(\lambda+3)n+O(\log n).
+\]
+The best-form bookkeeping from the Ap\'ery lattice has total local
+smallness
+\[
+ (3\lambda+3)n+O(\log n),
+\]
+whereas the rank-$2$ Roth--Subspace threshold is
+$2h(x_n)=2(\lambda+3)n+O(\log n)$.  The surplus is therefore exactly
+\[
+ (\lambda-3)n+O(\log n),
+ \tag{8.16}\label{eq:critical-ledger}
+\]
+the same margin used in Ap\'ery's irrationality argument.  It is not a
+second budget that can also pay for locating the primes dividing
+$b_n$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The height is the sum of the exponential growth $\lambda n$ of the
+Ap\'ery solution and the denominator-clearing tax
+$3\log D_n=3n+o(n)$.  Tallying the best local form at infinity and at
+the finite places gives $(3\lambda+3)n$; subtracting twice the height
+gives \eqref{eq:critical-ledger}.  The only form carrying this positive
+surplus at infinity has coefficient $\zeta(3)$ and is therefore not an
+algebraic-coefficient form to which the Subspace Theorem applies.
+Removing it leaves the ledger exactly critical.  Lemma
+\ref{lem:casoratian-floor} also shows that the determinant and
+archimedean channels are two readings of one identity and cannot be
+added.
+\end{proof}
+
+\begin{proposition}[Barrier R13b: the remaining adelic gates]
+\label{prop:barrier-adelic}
+The single-$n$, many-place route meets the following four additional
+certificates.
+\begin{enumerate}
+\item \emph{Partition blindness.}  The logarithm of the contribution
+of primes in $(X,2X]$ is an internal partition of the fixed mass
+$\log b_n$.  Heights weigh that divisor but do not locate its support.
+Every algebraic arithmetization of \eqref{eq:adelic-data} pays the
+$D_n^3$ tax, which is divisible at all window primes and hence has no
+localizing content.
+\item \emph{Unit-points versus approximation-vectors.}  The
+Subspace-Theorem amplification for $S$-unit points uses coordinate
+mass and form smallness on disjoint place sets.  Here the coordinate
+$b_n$ itself vanishes at each moving prime, so the input is the unknown
+middle-prime mass.  A manufactured second integer can help only when
+the residues share a fixed lift $z'$; then every window prime divides
+$n-z'$, giving only polylogarithmically many primes unless $n=z'$.
+The latter is precisely the coherent apex excluded by $(\Omega)$.
+\item \emph{Wrong sign and wrong disc.}  The
+Andr\'e--Chudnovsky denominator theory contributes the same $D_n^3$
+tax, not a denominator gain.  Available $p$-adic $G$-function
+transcendence works inside a strict $p$-adic disc, whereas the Dwork
+evaluations defining $Z_p$ occur at Teichm\"uller boundary points of
+absolute value $1$ \cite{Andre1989,Chudnovsky1985,Dwork1969}.
+Uniformly reaching that boundary would already require the missing
+unit-root information.
+\item \emph{Skeleton frontier and radical transparency.}  The current
+frontier is summarized by
+\[
+\begin{array}{c|c|c}
+\text{sequence}&\text{apparition skeleton}&\text{status}\\ \hline
+2^n-1&\operatorname{ord}_p(2)\mid n&X^{o(1)}\text{ elementary}\\
+\text{two-torus $S$-units}&\text{finite-rank lattice}&
+ \text{unconditional}\\
+\text{elliptic divisibility}&\text{elliptic apparition law}&
+ \text{Vojta-conditional}\\
+\text{Hecke coefficients}&\text{multiplicative, ensemble-level}&
+ \text{open}\\
+\text{Ap\'ery numbers}&\text{no known apparition law}&
+ \text{beyond this frontier}.
+\end{array}
+\tag{8.17}\label{eq:skeleton-frontier}
+\]
+Moreover, an $abc$ argument based on radical versus height sees the
+excess $(v_p-1)\log p$ but is transparent to the valuation-one primes
+that make up the radical target $(\Omega)$.  The valuation-one phantom
+therefore passes this input as well.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The first item is invariance of projective height under repartitioning
+the finite-place contribution.  The second contrasts the
+finite-rank-unit mechanism behind the Corvaja--Zannier gcd theorem
+\cite{BugeaudCorvajaZannier2003} with the self-referential coordinate
+$b_n$; the fixed-lift assertion follows because the product of distinct
+window primes dividing the nonzero integer $n-z'$ is bounded by its
+size.  The third item is the location of the known $G$-function
+estimates relative to the Teichm\"uller boundary.  The fourth records
+the progressively weaker multiplicative skeleton; the conditional
+abelian-variety frontier is represented by Silverman's Vojta analysis
+\cite{Silverman2005}.  Finally, valuation-one primes do not enlarge the
+difference between the logarithm of an integer and the logarithm of
+its radical, which proves the stated $abc$-transparency certificate.
+\end{proof}
+
+\subsubsection{Composition and the missing comparison}
+
+\begin{proposition}[Two unifying principles]
+\label{prop:two-principles}
+The six barriers compose without circularity.
+\begin{enumerate}
+\item \emph{Phantom-transparency:} the five ensemble families use
+statistics unchanged when the true zero-section is exchanged for the
+coherent projected-pencil section, whereas $(\mathrm{SA})$ is changed.
+\item \emph{Critical adelic ledger:} the single-$n$ arithmetic family
+does not use that exchangeability; it stops because its
+algebraic-form surplus is exactly the already-spent irrationality
+margin \eqref{eq:critical-ledger}, and because heights cannot locate a
+divisor's support.
+\end{enumerate}
+Thus the first five barriers and the sixth adelic barrier are
+independent certificates for the two proposed exits.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The first five barrier propositions inspect ensemble or fixed-quotient
+data.  Proposition~\ref{prop:barrier-adelic} instead fixes one $n$ and
+audits the product-formula ledger across its places.  Its obstruction
+does not assume the ensemble phantom, while the phantom remains
+compatible with its radical and height data.  No premise of either
+certificate is therefore borrowed from the desired conclusion of the
+other.
+\end{proof}
+
+\begin{remark}[Scope of the six-fold map]
+Current multi-place tools factor through one or more of three kinds of
+input: heights, separate per-place data, and ensemble statistics.
+Partition blindness, the boundary-disc obstruction, and
+phantom-transparency respectively block those three inputs.  In this
+precise methodological sense the audit leaves no seventh current
+family.  This is an optimality statement for the reduction and the
+audited technology, not a theorem that an unknown kind of comparison
+cannot exist.
+\end{remark}
+
+\begin{remark}[The missing product formula for periods]
+\label{rem:period-product-formula}
+The remaining target may be named a \emph{product formula for periods}:
+a place-mixing inequality for the Ap\'ery motive at one integer index
+$n$, comparing its Betti/de Rham realization, represented by the
+archimedean period remainder $\ell_n$, with its crystalline
+realizations at every $p\in(X,2X]$, represented by digit evaluations of
+the Frobenius crystal at Teichm\"uller boundary points.  Such an
+inequality would have to imply a power saving in $(\Omega)$ without
+factoring through an algebraic avatar that pays the universal $D_n^3$
+tax.  This is a description of the required new conjectural input, not
+a theorem supplied here.  Neither the standard GRH-type information
+audited above nor $abc$ provides this place-mixing comparison.
+\end{remark}
+
+\subsubsection{The seventh barrier: constructing the comparison}
+
+Write $(\mathrm B)$ for the terminal exact-collision target
+\eqref{eq:Ncoll}, or, under $(\mathrm C1)$ and after renaming positive
+exponents, for either of its equivalent forms $(\mathrm{SA})$ and
+$(\Omega)$.  The preceding discussion characterizes the desired
+output of a place-mixing construction.  Indeed, if a nonzero integer
+$C_n$ is divisible by every prime in $(X,2X]$ which divides $b_n$,
+then
+\[
+ \omega_{(X,2X]}(b_n)\leq\frac{\log|C_n|}{\log X}.
+ \tag{8.18}\label{eq:avatar-bound}
+\]
+Thus an avatar-integer proof of $(\Omega)$ would have to produce a
+window-supported $C_n$ with
+$\log|C_n|\ll X^{1-\eta}\log X$.  The ordinary holonomic avatars have
+logarithmic height comparable with $n$, which is
+$X(\log X)^{O(1)}$ in the in-range window.  The missing saving is a
+genuine power of $X$, not a logarithmic refinement of the height
+ledger.
+
+\begin{proposition}[Barrier R14: the construction gate]
+\label{prop:barrier-construction}
+The three proposed constructions of the comparison in
+Remark~\ref{rem:period-product-formula} meet the following five
+certificates.  Each assertion is relative to the indicated
+construction formalism.
+\begin{enumerate}
+\item \emph{Functoriality and the invariant ring.}  A bounded complexity
+scalar constructed functorially from the fixed rank-$2$ difference
+module lies in its invariant calculus.  Parts (NI-1) and (NI-2) of
+Proposition~\ref{prop:barrier-dynamical} show that this calculus
+factors through the determinant, or Casoratian, line.  Its
+logarithmic height is $O(\log n)$, but its prime support is confined to
+the recurrence singularities $n\equiv0,-1\pmod p$ and is therefore
+window-blind.  In the Birkhoff-weight calculus, every nonzero weight is
+on the exponential scale $e^{c n}$.  The resulting height spectrum is
+gapped: it contains no window-supported avatar in the intermediate
+slot required by \eqref{eq:avatar-bound}.  Multiplying the available
+per-prime continuant certificates across $p$ simply restores the full
+height ledger.
+
+\item \emph{No cross-prime interpolation.}  The digit value
+$b_r\bmod p$ is represented by a finite-field hypergeometric datum
+whose parameter $r/(p-1)$ moves with $p$ along $r=n\bmod p$
+\cite{KalitaChetry2017}.  These formulas therefore do not place the
+moving data in the fixed-object interpolation spaces used by motivic
+or $p$-adic $L$-function constructions.
+The fixed-parameter channels are sparse for an elementary reason: if
+\[
+ \frac{r}{p-1}=\frac ak
+ \quad\text{and}\quad r\equiv n\pmod p
+\]
+with $a/k$ fixed, then $p\mid kn+a$.  For fixed $a/k$ these channels
+contain only $O(\log n)$ prime divisors, and the central channel
+$a/k=1/2$ is exactly $p\mid2n+1$, where the Ahlgren--Ono modular-form
+congruence applies \cite{AhlgrenOno2000}.  Existing $L$-value and
+regulator constructions for a fixed object consequently see either
+these torsion-digit channels or global heights; neither output locates
+the generic moving digit.
+
+\item \emph{Elliptic-divisibility calibration.}  Even an exact
+place-by-place height formula is not a locating theorem.  Elliptic
+divisibility sequences possess such a formula and, in addition, a
+fixed-quotient apparition law, yet their effective window problem
+still passes through growing-level Chebotarev estimates.  The precise
+calibration is recorded in Remark~\ref{rem:EDS-calibration} below.
+
+\item \emph{Boundary and non-overconvergence.}  Fontaine--Laffaille and
+integral $p$-adic Hodge comparison theorems provide functorial
+filtration and lattice divisibilities
+\cite{FontaineLaffaille1982,BhattMorrowScholze2018}.  Their uniform
+part is independent of the digit and hence reproduces the universal
+$D_n^3$ tax.  At Teichm\"uller digit points, the available
+sequence-specific output remains the Beukers--Vlasenko vertical tower
+\[
+ b_{mp^k}\equiv b_{mp^{k-1}}\pmod {p^{3k}}
+ \qquad(p\geq5),
+\]
+in its applicable range \cite{Coster1988,BeukersVlasenko2021}.  This compares
+$p$-power indices at one prime; it neither couples two primes nor
+locates $n\bmod p$ inside $Z_p$.  Integral refinement does not lower
+the intrinsic linear-in-$p$ complexity of the digit polynomial
+$\Phi_p$ or supply the missing uniform continuation from a strict
+$p$-adic disc to all Teichm\"uller boundary points.
+
+\item \emph{Direction of place mixing.}  The audited local-to-global
+theorems run from strong information at many primes to a rigid global
+conclusion: Fontaine's nonexistence theorem, the
+Grothendieck--Katz $p$-curvature paradigm, and arithmetic
+algebraization are standard examples
+\cite{Fontaine1985,Katz1972,Andre1989,Bost2001,Chudnovsky1985}.
+Target $(\mathrm B)$ asks for the reverse direction, from soft
+archimedean information to a cap on a conspiracy of self-characteristic
+local events.  The Pila--Zannier strategy likewise requires a
+bounded-complexity family of special loci
+\cite{PilaZannier2008}; the available defining polynomials
+$\Phi_p$ have degree $4(p-1)$, and no bounded-complexity replacement
+has been supplied.  Consequently this strategy, without a new
+uniformity theorem, re-enters the same height ledger rather than producing
+\eqref{eq:avatar-bound}.  In this audited sense there is no eighth
+current family beyond the construction gate.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The first item is Proposition~\ref{prop:barrier-dynamical} applied to
+functorial scalars, together with the two Birkhoff weights used in its
+proof.  The invariant line gives only the Casoratian factors; a
+non-invariant covariant has nonzero difference weight.  The second
+item uses the displayed congruence $kn\equiv-a\pmod p$; counting prime
+divisors of the fixed nonzero integer $kn+a$ gives the stated
+logarithmic bound.  The third item is
+Remark~\ref{rem:EDS-calibration}.  In the fourth item, filtration
+divisibility is uniform in the point, whereas the displayed Dwork
+tower is vertical at a fixed prime.  The final item compares the
+directions and the complexity hypotheses of the cited theorems.  None
+of these arguments claims logical independence from an unknown
+construction; they certify the limits of the stated mechanisms.
+\end{proof}
+
+\begin{remark}[EDS calibration: a product formula that still does not locate]
+\label{rem:EDS-calibration}
+Let $E/\mathbb Q$ be an elliptic curve, let $P\in E(\mathbb Q)$ be
+nontorsion, and write, on a minimal model,
+\[
+ x(mP)=\frac{A_m}{B_m^2},\qquad (A_m,B_m)=1.
+\]
+At every prime of good reduction, the finite local N\'eron height has
+the exact denominator term
+\[
+ \lambda_p(mP)=v_p(B_m)\log p.
+\]
+After the standard corrections at the finitely many bad places, the
+local heights satisfy the exact global decomposition
+\[
+ \sum_v\lambda_v(mP)=\widehat h(mP)=m^2\widehat h(P).
+ \tag{8.19}\label{eq:EDS-height}
+\]
+Moreover, if $r_p$ is the order of the reduction of $P$ in
+$E(\mathbb F_p)$, then
+\[
+ p\mid B_m\quad\Longleftrightarrow\quad r_p\mid m,
+ \qquad r_p\mid\#E(\mathbb F_p).
+\]
+These apparition conditions are visible in finite division and Kummer
+quotients \cite{SilvermanEDS2005}.  Nevertheless, the standard route
+to a one-sequence window cap must count Frobenius conditions in levels
+growing with the window; estimates of the needed uniform strength are
+GRH-grade, while unconditional effective Chebotarev is too weak for
+that route.  For two independent divisibility sequences, Silverman's
+strong gcd cap used in this calibration is conditional on Vojta's
+conjecture \cite{Silverman2005}.  Thus the EDS model possesses both an exact
+place-by-place ledger and a fixed-quotient apparition law, but these do
+not by themselves give the required unconditional locating estimate.
+The product formula is the necessary \emph{format} of the proposed
+comparison, not its locating content.
+\end{remark}
+
+\begin{conjecture}[Quotient-free locating for the Ap\'ery loci]
+\label{conj:quotient-free-locating}
+The terminal bound \eqref{eq:Ncoll} holds for the self-characteristic
+loci $n\bmod p\in Z_p$.  Equivalently under $(\mathrm C1)$, after
+renaming the positive exponent, either \eqref{eq:SA} or
+\eqref{eq:Omega} holds.
+\end{conjecture}
+
+This is the same numerical assertion as
+Conjecture~\ref{conj:Ncoll}, not an additional hypothesis.  The new
+name records the mechanism that is missing: an effective
+apparition/equidistribution theorem for entropy-positive $p$-local
+loci which does not first map the events to a fixed auxiliary
+quotient.  No theorem in the cited $p$-adic Hodge, GRH--Chebotarev,
+$abc$, Vojta, or unlikely-intersection frameworks supplies this
+quotient-free statement.
+
+\begin{proposition}[The seven-fold map and three unifying principles]
+\label{prop:sevenfold-map}
+Within the scope stated in the barrier propositions, the analytic,
+algebraic geometry, Diophantine, dynamical, additive combinatorics,
+adelic, and motivic construction barriers compose without circularity.
+Their obstructions are organized by three principles:
+\begin{enumerate}
+\item \emph{Phantom-transparency} for the five ensemble families;
+\item the \emph{critical adelic ledger} for algebraic single-index
+avatars; and
+\item \emph{quotient-free locating}: every locating mechanism in the
+calibrated siblings factors through a fixed quotient, while the
+Ap\'ery digit event has no bounded-complexity quotient in the audited
+invariant calculus.
+\end{enumerate}
+The missing statement after all seven barriers is
+Conjecture~\ref{conj:quotient-free-locating}, not merely the existence
+of a period comparison.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Proposition~\ref{prop:two-principles} composes the first six barriers.
+Proposition~\ref{prop:barrier-construction} does not use a replacement
+zero-section or spend a second copy of the adelic surplus: it audits
+the proposed construction of the comparison itself.  The EDS
+calibration then separates a place-by-place ledger from the additional
+act of locating its support.  Hence the seventh certificate adds the
+third principle without borrowing the desired collision bound.
+\end{proof}
+
+\begin{remark}[Relation to the six-fold scope statement]
+The phrase ``no seventh current family'' above referred to output
+formats already covered by heights, separate per-place data, and
+ensemble statistics.  Proposition~\ref{prop:barrier-construction}
+instead treats the previously unaudited attempt to \emph{construct}
+the proposed comparison and records it as the seventh barrier.
+Its direction-of-place-mixing item preempts an eighth family assembled
+from the presently cited tools.
+Both scope claims remain methodological, not logical-independence
+theorems.
+\end{remark}
+
+\begin{remark}[Numerical evidence against a disproof]
+Exact integer/rational computation through $n=6000$ gives
+\[
+ \max_{n\leq N}\log G_n\approx0.75(\log N)^2;
+\]
+over three decades the observed ratio to $(\log N)^2$ stays between
+about $0.6$ and $0.9$.  The worst cases are diffuse rather than
+single-prime spikes.  At the recorded worst indices the largest prime
+factor always occurs with $v_p=1$, and no in-range full-multiplicity
+phantom occurs.  This is the Poisson-independence scale predicted by
+the zero-count data and makes the available disproof mechanisms
+numerically nonviable.  It is not a proof of the pointwise conjecture:
+the finite computation cannot exclude an extremely sparse later
+phase transition.
+\end{remark}
+
+\section{Conclusion}
+
+The density form of Problem~3.2 is unconditional.  The reflection
+functional equation, the gap-eliminant theorem for $U_g$, the cross-arc
+lemma, and the structured-resonance theorem are unconditional as well.
+The only delicate dyadic blocks are in range, and there the reduction is
+\[
+ \begin{aligned}
+ \text{terminal exact-collision conjecture}
+ &\Longrightarrow (P_2)^G\\
+ &\Longrightarrow \sup K_X\text{ has a power saving}\\
+ &\Longrightarrow \text{pointwise Problem~3.2}.
+ \end{aligned}
+\]
+Under the mass conjecture $(\mathrm C1)$, the terminal conjecture is
+equivalent, after renaming positive exponents, to the uniform
+single-arc cap $(\mathrm{SA})$, the middle-prime cap $(\Omega)$, and the
+power-saving supremum target.  The present argument does not claim that
+the qualitative conclusion $\log G_n=o(n)$ conversely forces a fixed
+power saving.
+
+The terminal problem is a holonomic shifted-prime divisor problem in
+the circle of Hooley and Murty--Rosen--Silverman, sharpened to exact
+collisions.  Lemma~\ref{lem:Mersenne} shows how a compressive
+multiplicative invariant solves the Mersenne analogue; no counterpart
+is known for Ap\'ery zeros.  Phantom locality, the bandwidth model
+R9.1, and the Lang--Trotter implication R9.2 certify the limits of the
+currently banked divisibility and equidistribution routes.  What
+remains is genuinely scale zero: either find a cross-prime compressive
+invariant, or prove an exact-collision theorem for holonomic values.
+
+The six-fold map sharpens this status.  The density theorem is fully
+unconditional.  At the fixed-power endpoint, and under the mass
+conjecture $(\mathrm C1)$ where required, $(\mathrm{SA})$,
+$(\Omega)$, and $(\mathrm{NC})$ are equivalent after exponent renaming,
+and each implies pointwise Problem~3.2.  This is the named
+Murty--Rosen--Silverman holonomic-sibling exact-collision problem.  The
+computations in the appendix are compatible with the Poisson model and
+leave a large numerical margin.  As stated above, no converse from the
+merely qualitative conclusion to a fixed power saving is claimed.
+
+The reduction is optimal relative to the audited technology: five
+ensemble families---analytic, algebraic-geometric, Diophantine,
+dynamical, and additive combinatorics---share the phantom-transparency
+principle.  The single-index adelic family instead stops at the critical
+ledger.  The two certificates compose without circularity.
+Heights, separate per-place information, and ensemble statistics
+exhaust the input formats of the present multi-place tools, in the
+qualified sense of Remark~\ref{rem:period-product-formula}.
+
+A fully unconditional pointwise theorem therefore needs genuinely new
+place-mixing input of the type described there: a product formula for
+periods comparing the Betti/de Rham and crystalline realizations of the
+Ap\'ery motive at one integer point.  Standard GRH-type hypotheses do
+not formulate this comparison, and the valuation-one radical target is
+transparent to $abc$.  The paper thus resolves the status of the
+pointwise problem while leaving its named scale-zero conjecture open.
+
+The construction audit in Proposition~\ref{prop:barrier-construction}
+refines this last description.  The elliptic-divisibility calibration
+shows that a product formula for periods would provide the right
+place-by-place \emph{format}, but would not by itself locate the
+window-prime support.  The exact fixed-power reduction is
+\[
+ \text{pointwise Problem~3.2}
+ \quad\Longleftarrow\quad
+ (\mathrm{SA})\Longleftrightarrow(\Omega)
+ \Longleftrightarrow(\mathrm{NC}),
+\]
+where the equivalences use $(\mathrm C1)$ when required and allow
+renaming the saving exponent.  The reverse implication from the
+qualitative pointwise statement is not claimed.
+
+The optimality certificate is therefore seven-fold: the five ensemble
+families, the single-index adelic family, and the
+motivic-comparison/construction gate R14.  It is summarized by
+phantom-transparency, the critical adelic ledger, and quotient-free
+locating.  Exact computation through $n=6000$ supports, over the tested
+range, $\max_{n\leq N}\log G_n\approx0.75(\log N)^2$ and exhibits
+no full-multiplicity phantom, but remains numerical evidence only.
+The missing mathematics is
+Conjecture~\ref{conj:quotient-free-locating}: an effective locating
+theorem for entropy-positive self-characteristic local loci without a
+fixed quotient.  None of the audited consequences of $p$-adic Hodge
+theory, GRH, $abc$, Vojta's conjecture, or unlikely-intersection
+technology supplies it.  In this precise sense the required theorem is
+new, rather than a new combination of the seven audited families.
+
+\appendix
+
+\section{Verification summary}
+
+\begin{itemize}
+\item Lemmas~\ref{lem:no-consecutive}--\ref{lem:zero-fiber},
+Lemma~\ref{lem:block-law}, and Theorem~\ref{thm:support-law} were checked
+exactly on all $8434$ triples $(p,q,r)$ with $7\leq p\leq200$, including
+the support equivalence against exact $G_n$.  The zero-pair certificate
+was checked on all $232$ consecutive zero pairs with $p<3000$, and the
+evaluation identities and reflection functional equation were checked
+exactly through $r=9$.
+
+\item Lemma~\ref{lem:alpha-six} was checked for all $31$ primes
+$7\leq p\leq139$.
+
+\item Lemma~\ref{lem:boundary} was checked for $q=2,3$ and all
+$p\leq139$, in addition to its role in the $8434$-triple support check.
+
+\item After noncentral roots are grouped into reflection pairs, the
+$Z_b$ data are close to a Poisson law of mean $1/2$; the maximum
+$|Z_p|$ is $16$ among the $2704$ primes up to $80000$.  The empirical
+mean of $|Z_p|$ is about $1$; the value $1/8$ belongs to a different
+collision statistic and is not a zero-count mean.  Thus the $p^{2/3}$
+bound is far from tight.
+
+\item In the pointwise probe,
+\[
+ B(n)=\#\{\text{bad primes }p>\sqrt n\}\leq5
+\]
+for every $n\leq10^4$.
+
+\item At five dyadic scales, the all-range and in-range data were
+\[
+ \begin{array}{c|ccccc}
+ X&400&800&1600&3200&6400\\ \hline
+ \max_{m<X^2}K_X(m)&3&4&4&4&5\\
+ P_{2,X}&6&28&49&109&276\\
+ \max_{y\in[2X,X\log X]}K_X(y)&2&2&3&3&3
+ \end{array}
+\]
+These are numerical checks only.
+
+\item The reflection functional equation had no failure for
+$p\leq12809$; its termwise binomial proof was checked for $p\leq809$.
+
+\item For $n=250,500,1000,2000,3000,4000$, respectively, the numbers of
+distinct prime divisors of $b_n$ in $(\sqrt n,n]$ were
+\[
+ 2,3,0,0,0,2,
+\]
+and the corresponding full-multiplicity logarithmic ratios were
+\[
+ 0.030,0.029,0,0,0,0.003.
+\]
+The largest observed middle-prime
+multiplicity was $1$.
+
+\item The eliminant identity was checked in $116$ cases over primes from
+$101$ through $1601$, with no failure.  For $g=2,3,4,5$, symbolic
+calculation gave degrees $3,6,9,12$ and coefficient heights
+$231$, $2.6\cdot10^5$, $6.6\cdot10^8$, and $3.6\cdot10^{12}$.
+
+\item The $\zeta(2)$ central congruence had no mismatch for primes
+$5\leq p\leq1200$.  At $X=1600$, its out-of-range count was
+$C_{X,0}=3934$, while six sampled in-range counts were
+$35,26,34,38,40,32$, on the random-model pair scale.  These values
+support only the range correction, not an anti-collision theorem.
+
+\item Exact bignum computation of $G_n$ through $n=6000$ found, over
+three decades,
+\[
+ 0.6\lesssim
+ \frac{\max_{n\leq N}\log G_n}{(\log N)^2}
+ \lesssim0.9.
+\]
+At the recorded worst-ratio indices
+$n=523, 1667, 2098, 3471, 4855$, the gcd mass was diffuse and the
+largest prime factor had exponent $1$; no in-range full-multiplicity
+phantom was observed.  These are numerical checks only.
+\end{itemize}
+
+\section{v3 changelog}
+
+\begin{itemize}
+\item Replaced the obsolete depth-$3$, BAC, singleton-row, and interval-
+overlap endpoints by the in-range depth-$2$ pair gate and the terminal
+single-arc exact-collision conjecture.
+\item Added exceptional-prime tolerance, the precise arc digit
+restriction, the $(\mathrm{SA})$--$(\Omega)$ comparison, and the exact
+identity \eqref{eq:Ncoll-identity}.  Power-saving equivalences now
+explicitly allow exponent renaming.
+\item Added the cross-arc lemma, the structured-resonance theorem, and
+the Ap\'ery--Hasse and projective-Frobenius descriptions of $Z_p$.
+\item Added the Mersenne fibration calibration and barriers R9.1 and
+R9.2.  R9.1 is labelled as a model because the source notes do not give
+an actual root-set realization.
+\item Corrected the zero-count mean to approximately $1$, retained the
+Rhin--Viola constant $5.24673\ldots$, restricted Lemma~\ref{lem:Mersenne}
+to the admissible window, and removed the false fixed-exponent and
+exceptional-$y$ equivalences.
+\end{itemize}
+
+\section{v4 changelog}
+
+\noindent Added the sieve-complexity invariant, the complete six-fold barrier map and adelic ledger, the product-formula-for-periods target, and the corresponding pointwise-status conclusion.
+
+\section{v5 changelog}
+
+\noindent Added the R14 construction gate, EDS calibration, quotient-free-locating frontier, seven-fold barrier map, disproof probe, and refined pointwise-status conclusion.
+
+\begin{thebibliography}{99}
+\raggedright
+
+\bibitem{AhlgrenOno2000}
+Scott Ahlgren and Ken Ono,
+\emph{A Gaussian hypergeometric series evaluation and Ap\'ery number
+congruences},
+J. Reine Angew. Math. \textbf{518} (2000), 187--212.
+DOI: \texttt{10.1515/crll.2000.004}.
+
+\bibitem{Andre1989}
+Yves Andr\'e,
+\emph{$G$-Functions and Geometry},
+Aspects of Mathematics, vol.~E13, Vieweg, Braunschweig, 1989.
+DOI: \texttt{10.1007/978-3-663-14108-2}.
+
+\bibitem{Apery1979}
+Roger Ap\'ery,
+\emph{Irrationalit\'e de $\zeta(2)$ et $\zeta(3)$},
+Ast\'erisque \textbf{61} (1979), 11--13.
+
+\bibitem{Beukers1985}
+Frits Beukers,
+\emph{Some congruences for the Ap\'ery numbers},
+J. Number Theory \textbf{21} (1985), no.~2, 141--155.
+DOI: \texttt{10.1016/0022-314X(85)90047-2}.
+
+\bibitem{BeukersVlasenko2021}
+Frits Beukers and Masha Vlasenko,
+\emph{Dwork crystals II},
+Int. Math. Res. Not. IMRN \textbf{2021} (2021), no.~6, 4427--4444.
+DOI: \texttt{10.1093/imrn/rnaa120}.
+
+\bibitem{BellonViallet1999}
+Marc P. Bellon and Claude-Michel Viallet,
+\emph{Algebraic entropy},
+Comm. Math. Phys. \textbf{204} (1999), 425--437.
+DOI: \texttt{10.1007/s002200050652}.
+
+\bibitem{BettinChandee2018}
+Sandro Bettin and Vorrapan Chandee,
+\emph{Trilinear forms with Kloosterman fractions},
+Adv. Math. \textbf{328} (2018), 1234--1262.
+DOI: \texttt{10.1016/j.aim.2018.01.026}.
+
+\bibitem{BhattMorrowScholze2018}
+Bhargav Bhatt, Matthew Morrow, and Peter Scholze,
+\emph{Integral $p$-adic Hodge theory},
+Publ. Math. Inst. Hautes \'Etudes Sci. \textbf{128} (2018), 219--397.
+DOI: \texttt{10.1007/s10240-019-00102-z}.
+
+\bibitem{BombieriFriedlanderIwaniec1986}
+Enrico Bombieri, John B. Friedlander, and Henryk Iwaniec,
+\emph{Primes in arithmetic progressions to large moduli},
+Acta Math. \textbf{156} (1986), 203--251.
+DOI: \texttt{10.1007/BF02399204}.
+
+\bibitem{Bost2001}
+Jean-Beno\^\i t Bost,
+\emph{Algebraic leaves of algebraic foliations over number fields},
+Publ. Math. Inst. Hautes \'Etudes Sci. \textbf{93} (2001), 161--221.
+DOI: \texttt{10.1007/s10240-001-8191-3}.
+
+\bibitem{BugeaudCorvajaZannier2003}
+Yann Bugeaud, Pietro Corvaja, and Umberto Zannier,
+\emph{An upper bound for the G.C.D. of $a^n-1$ and $b^n-1$},
+Math. Z. \textbf{243} (2003), 79--84.
+
+\bibitem{CFVMZ2026}
+Xavier Caruso, Florian F\"urnsinn, Daniel Vargas-Montoya, and
+Wadim Zudilin,
+\emph{Galois groups of Ap\'ery-like series modulo primes},
+arXiv:2510.23298 (2025; revised 2026).
+
+\bibitem{Chudnovsky1985}
+David V. Chudnovsky and Gregory V. Chudnovsky,
+\emph{Applications of Pad\'e approximations to Diophantine
+inequalities in values of $G$-functions},
+in \emph{Number Theory}, Lecture Notes in Mathematics, vol.~1135,
+Springer, Berlin, 1985, 9--51.
+DOI: \texttt{10.1007/BFb0074600}.
+
+\bibitem{Coster1988}
+Matthijs J. Coster,
+\emph{Supercongruences},
+Ph.D. thesis, Universiteit Leiden, 1988.
+
+\bibitem{CorvajaZannier2005}
+Pietro Corvaja and Umberto Zannier,
+\emph{A lower bound for the height of a rational function at
+$S$-unit points},
+Monatsh. Math. \textbf{144} (2005), no.~3, 203--224.
+
+\bibitem{Delaygue2018}
+\'Eric Delaygue,
+\emph{Arithmetic properties of Ap\'ery-like numbers},
+Compos. Math. \textbf{154} (2018), no.~2, 249--274.
+DOI: \texttt{10.1112/S0010437X17007552}.
+
+\bibitem{DFI1995}
+William Duke, John B. Friedlander, and Henryk Iwaniec,
+\emph{Equidistribution of roots of a quadratic congruence to prime
+moduli},
+Ann. of Math. (2) \textbf{141} (1995), no.~2, 423--441.
+DOI: \texttt{10.2307/2118527}.
+
+\bibitem{DFI1997}
+William Duke, John B. Friedlander, and Henryk Iwaniec,
+\emph{Bilinear forms with Kloosterman fractions},
+Invent. Math. \textbf{128} (1997), no.~1, 23--43.
+DOI: \texttt{10.1007/s002220050135}.
+
+\bibitem{Dwork1969}
+Bernard Dwork,
+\emph{$p$-adic cycles},
+Publ. Math. Inst. Hautes \'Etudes Sci. \textbf{37} (1969), 27--115.
+DOI: \texttt{10.1007/BF02684886}.
+
+\bibitem{EvertseSchlickeweiSchmidt2002}
+Jan-Hendrik Evertse, Hans Peter Schlickewei, and Wolfgang M. Schmidt,
+\emph{Linear equations in variables which lie in a multiplicative
+group},
+Ann. of Math. (2) \textbf{155} (2002), no.~3, 807--836.
+DOI: \texttt{10.2307/3062133}.
+
+\bibitem{Fontaine1985}
+Jean-Marc Fontaine,
+\emph{Il n'y a pas de vari\'et\'e ab\'elienne sur $\mathbb Z$},
+Invent. Math. \textbf{81} (1985), no.~3, 515--538.
+
+\bibitem{FontaineLaffaille1982}
+Jean-Marc Fontaine and Guy Laffaille,
+\emph{Construction de repr\'esentations $p$-adiques},
+Ann. Sci. \'Ecole Norm. Sup. (4) \textbf{15} (1982), no.~4, 547--608.
+DOI: \texttt{10.24033/asens.1437}.
+
+\bibitem{FouvryIwaniec1983}
+\'Etienne Fouvry and Henryk Iwaniec,
+\emph{Primes in arithmetic progressions},
+Acta Arith. \textbf{42} (1983), 197--218.
+DOI: \texttt{10.4064/aa-42-2-197-218}.
+
+\bibitem{Gessel1982}
+Ira Gessel,
+\emph{Some congruences for Ap\'ery numbers},
+J. Number Theory \textbf{14} (1982), no.~3, 362--368.
+DOI: \texttt{10.1016/0022-314X(82)90071-3}.
+
+\bibitem{Greene1987}
+John Greene,
+\emph{Hypergeometric functions over finite fields},
+Trans. Amer. Math. Soc. \textbf{301} (1987), no.~1, 77--101.
+DOI: \texttt{10.1090/S0002-9947-1987-0879564-8}.
+
+\bibitem{HendriksSinger1999}
+Peter A. Hendriks and Michael F. Singer,
+\emph{Solving difference equations in finite terms},
+J. Symbolic Comput. \textbf{27} (1999), no.~3, 239--259.
+
+\bibitem{Hooley1964}
+Christopher Hooley,
+\emph{On the distribution of the roots of polynomial congruences},
+Mathematika \textbf{11} (1964), 39--49.
+DOI: \texttt{10.1112/S0025579300003466}.
+
+\bibitem{Hooley1973}
+Christopher Hooley,
+\emph{On the largest prime factor of $p+a$},
+Mathematika \textbf{20} (1973), no.~2, 135--143.
+DOI: \texttt{10.1112/S002557930000471X}.
+
+\bibitem{KankiMadaTokihiro2013}
+Masataka Kanki, Jun Mada, and Tetsuji Tokihiro,
+\emph{The space of initial conditions and the property of an almost
+good reduction in discrete Painlev\'e II equations over finite fields},
+J. Nonlinear Math. Phys. \textbf{20} (2013), suppl.~1, 101--109.
+DOI: \texttt{10.1080/14029251.2013.862437}.
+
+\bibitem{KalitaChetry2017}
+Gautam Kalita and Arjun Singh Chetry,
+\emph{Congruences for generalized Ap\'ery numbers and Gaussian
+hypergeometric series},
+Res. Number Theory \textbf{3} (2017), Paper No.~5.
+DOI: \texttt{10.1007/s40993-016-0069-z}.
+
+\bibitem{Katz1972}
+Nicholas M. Katz,
+\emph{Algebraic solutions of differential equations
+($p$-curvature and the Hodge filtration)},
+Invent. Math. \textbf{18} (1972), no.~1--2, 1--118.
+DOI: \texttt{10.1007/BF01389714}.
+
+\bibitem{Kilbourn2006}
+Timothy Kilbourn,
+\emph{An extension of the Ap\'ery number supercongruence},
+Acta Arith. \textbf{123} (2006), no.~4, 335--348.
+DOI: \texttt{10.4064/aa123-4-3}.
+
+\bibitem{LucaShparlinski2008}
+Florian Luca and Igor E. Shparlinski,
+\emph{Arithmetic properties of Ap\'ery numbers},
+J. Lond. Math. Soc. (2) \textbf{78} (2008), no.~3, 545--562.
+DOI: \texttt{10.1112/jlms/jdn031}.
+
+\bibitem{MalikStraub2016}
+Amita Malik and Armin Straub,
+\emph{Divisibility properties of sporadic Ap\'ery-like numbers},
+Res. Number Theory \textbf{2} (2016), no.~1, Paper No.~5, 26~pp.
+DOI: \texttt{10.1007/\allowbreak s40993-\allowbreak016-\allowbreak0036-8}.
+
+\bibitem{McCarthy2012}
+Dermot McCarthy,
+\emph{Extending Gaussian hypergeometric series to the $p$-adic
+setting},
+Int. J. Number Theory \textbf{8} (2012), no.~7, 1581--1612.
+DOI: \texttt{10.1142/S1793042112500844}.
+
+\bibitem{Mortenson2005}
+Eric Mortenson,
+\emph{Supercongruences for truncated ${}_{n+1}F_n$ hypergeometric series
+with applications to certain weight three newforms},
+Proc. Amer. Math. Soc. \textbf{133} (2005), no.~2, 321--330.
+DOI: \texttt{10.1090/S0002-9939-04-07697-X}.
+
+\bibitem{MurtyRosenSilverman1996}
+M. Ram Murty, Michael Rosen, and Joseph H. Silverman,
+\emph{Variations on a theme of Romanoff},
+Internat. J. Math. \textbf{7} (1996), no.~3, 373--391.
+DOI: \texttt{10.1142/\allowbreak S0129167X\allowbreak96000220}.
+
+\bibitem{NewtonThorne2021}
+James Newton and Jack A. Thorne,
+\emph{Symmetric power functoriality for holomorphic modular forms},
+Publ. Math. Inst. Hautes \'Etudes Sci. \textbf{134} (2021), 1--116.
+
+\bibitem{PilaZannier2008}
+Jonathan Pila and Umberto Zannier,
+\emph{Rational points in periodic analytic sets and the
+Manin--Mumford conjecture},
+Atti Accad. Naz. Lincei Cl. Sci. Fis. Mat. Natur. \textbf{19} (2008),
+no.~2, 149--162.
+DOI: \texttt{10.4171/RLM/514}.
+
+\bibitem{RhinViola2001}
+Georges Rhin and Carlo Viola,
+\emph{The group structure for $\zeta(3)$},
+Acta Arith. \textbf{97} (2001), no.~3, 269--293.
+DOI: \texttt{10.4064/aa97-3-6}.
+
+\bibitem{Romanoff1934}
+N. P. Romanoff,
+\emph{\"Uber einige S\"atze der additiven Zahlentheorie},
+Math. Ann. \textbf{109} (1934), no.~1, 668--678.
+DOI: \texttt{10.1007/BF01449161}.
+
+\bibitem{RowlandYassawiKrattenthaler2021}
+Eric Rowland, Reem Yassawi, and Christian Krattenthaler,
+\emph{Lucas congruences for the Ap\'ery numbers modulo $p^2$},
+Integers \textbf{21} (2021), Paper No.~A20, 15~pp.
+
+\bibitem{Schmidt1980}
+Wolfgang M. Schmidt,
+\emph{Diophantine Approximation},
+Lecture Notes in Mathematics, vol.~785, Springer, Berlin, 1980.
+
+\bibitem{Schuett2009}
+Matthias Sch\"utt,
+\emph{CM newforms with rational coefficients},
+Ramanujan J. \textbf{19} (2009), no.~2, 187--205.
+DOI: \texttt{10.1007/s11139-008-9147-8}.
+
+\bibitem{SilvermanEDS2005}
+Joseph H. Silverman,
+\emph{$p$-adic properties of division polynomials and elliptic
+divisibility sequences},
+Math. Ann. \textbf{332} (2005), no.~2, 443--471.
+DOI: \texttt{10.1007/s00208-004-0608-0}.
+
+\bibitem{Silverman2005}
+Joseph H. Silverman,
+\emph{Generalized greatest common divisors, divisibility sequences,
+and Vojta's conjecture for blowups},
+Monatsh. Math. \textbf{145} (2005), no.~4, 333--350.
+
+\bibitem{StienstraBeukers1985}
+Jan Stienstra and Frits Beukers,
+\emph{On the Picard--Fuchs equation and the formal Brauer group of
+certain elliptic K3-surfaces},
+Math. Ann. \textbf{271} (1985), no.~2, 269--304.
+DOI: \texttt{10.1007/BF01455990}.
+
+\bibitem{Stewart2012}
+Cameron L. Stewart,
+\emph{On divisors of Lucas and Lehmer numbers},
+Acta Math. \textbf{211} (2013), no.~2, 291--314.
+
+\bibitem{Sun2012}
+Zhi-Wei Sun,
+\emph{On sums of Ap\'ery polynomials and related congruences},
+J. Number Theory \textbf{132} (2012), no.~11, 2673--2699.
+DOI: \texttt{10.1016/j.jnt.2012.05.014}.
+
+\bibitem{WangSun2024}
+Chen Wang and Zhi-Wei Sun,
+\emph{$p$-adic analogues of hypergeometric identities and their
+applications},
+Nanjing Univ. J. Math. Biquarterly \textbf{41} (2024), no.~1, 34--56.
+arXiv:1910.06856.
+
+\end{thebibliography}
+
+\end{document}

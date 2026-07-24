@@ -51,4 +51,10 @@ problems/          -- one subdir per problem (2.1/, 2.2/, ..., 3.2/)
 lean/              -- Lean 4 project for formal proofs
 papers/            -- compiled PDF proofs
 scripts/           -- shared utilities (CAS, verification)
+chatgpt-answers/   -- cross-problem oracle answers
 ```
+
+The sole authoritative checkout is this repository.  Problem 3.2's current
+frontier, failed-route log, exact experiments, and dedicated ChatGPT archive
+are under [`problems/3.2/research/`](problems/3.2/research/) and
+[`problems/3.2/chatgpt-answers/`](problems/3.2/chatgpt-answers/).

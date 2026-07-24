@@ -1,0 +1,289 @@
+
+---
+
+# 2. Exact two-branch moving-divisor formula
+
+Let p\in I_n and put r=n-3p.
+
+If r\le(p-1)/2, set j=r. Then
+
+If r\ge(p-1)/2, set
+
+Then
+
+In both cases j\le J=K-1. Conversely, every integral prime value in (2.1) or (2.2), with 0\le j<K, belongs to I_n.
+
+Gessel's Lucas congruence and the first-block reflection give
+
+Q555 proves
+
+Therefore
+
+where E_{\mathrm{cent}}(n) subtracts one copy of the central prime if the two branches coincide and that prime is bad.
+
+## 2.1 The stronger size relation p>2j
+
+Since j\le J, one has
+
+On the direct branch,
+
+On the reflected branch,
+
+This is stronger than the proposed p>7j/4.
+
+Consequences:
+
+- every integer 1,\ldots,2j is a p-adic unit;
+
+- every individual summand
+
+- p\mid A_j is cancellation among j+1 nonzero terms;
+
+- factorial-ratio valuation and carry arguments cannot detect the zero.
+
+---
+
+# 3. What purely arithmetic pruning does give
+
+Two elementary reductions remove large easy subfamilies but do not change the leading constant 1/12.
+
+## 3.1 Small folded indices
+
+Take
+
+There are at most two candidate primes for each j. Hence the contribution from j\le J_0 is
+
+Thus only
+
+is genuinely difficult.
+
+## 3.2 Low-order selected characters
+
+Put
+
+For p\in I_n, let
+
+On the direct branch,
+
+Write p-1=gd and j=gb, with \gcd(b,d)=1. Then
+
+On the reflected branch,
+
+so
+
+For each fixed d, there are at most 2\varphi(d) possibilities. Therefore
+
+With
+
+the weighted contribution is
+
+Hence it is enough to prove (MD3) after imposing both
+
+This is a one-high-order-character-per-prime problem.
+
+---
+
+# 4. Seven residue-class sequences and what their recurrences do not prove
+
+Write
+
+and define
+
+Then
+
+and
+
+Thus B_s is hypergeometric, with exact ratio
+
+The corresponding section of S_n is
+
+The Franel numbers satisfy the order-two recurrence
+
+Consequently the summand in (4.3) is holonomic in (m,k). Wilf–Zeilberger/creative-telescoping theory produces, for each s, an explicit recurrence
+
+after the boundary terms are homogenized.
+
+This establishes P-recursiveness. It does not provide a pointwise gcd estimate.
+
+A common divisor of S_s(m) and B_s(m) at one index does not imply divisibility of neighboring terms. Hence:
+
+- an Ore gcd of the annihilating operators is not an integer Bézout identity for the values;
+
+- an Ore resultant can show that the two sequences do not satisfy a common recurrence, but it does not bound \gcd(S_s(m),B_s(m));
+
+- recurrence singularities and leading coefficients do not encode the moving prime divisor p=(n-j)/3 or (n+1+j)/4.
+
+This is a logical, not merely computational, obstruction.
+
+## 4.1 Exact exponential scales
+
+Stirling's formula gives
+
+The positive sum S_n is dominated by its endpoint region, and F_k^{1/k}\to8. Therefore
+
+In fact the local endpoint ratios give the sharper asymptotic
+
+Indeed,
+
+and
+
+Thus the last summand of S_n/(B_nF_K) tends to 1/384, and successive backward summands have limiting ratio 1/384. Summing the limiting geometric tail gives
+
+This explains why a same-index combination such as
+
+may cancel one leading asymptotic coefficient but cannot, by a fixed-order argument, become subexponential. A finite number of asymptotic cancellations yields at most powers of 1/n; the exponential base remains e^\sigma>1 unless an exact all-orders identity is found.
+
+The trivial interval bound (0.2) has exponential rate only 1/12. Thus every certificate with any fixed positive exponential rate is still far too large for the desired o(n) theorem.
+
+---
+
+# 5. Why the standard proposed theories do not apply
+
+## 5.1 G-function denominator theorems
+
+The seven generating functions
+
+are diagonals/holonomic G-functions after the usual section extraction. The André–Chudnovsky–Katz theory and the denominator results of Fischler–Rivoal control:
+
+- differential equations;
+
+- global nilpotence;
+
+- common denominators of Taylor coefficients.
+
+Here S_s(m) is already an integer. The problem concerns large prime divisors of the numerator at one moving index. Denominator theorems contain no such conclusion.
+
+A concrete countermodel is the central-binomial algebraic G-function
+
+whose coefficients contain all primes in substantial linear intervals. Algebraicity and excellent denominator control do not imply sparse numerator support.
+
+Reference: S. Fischler and T. Rivoal, On the denominators of the Taylor coefficients of G-functions, Kyushu J. Math. 71 (2017), 287–298.
+
+## 5.2 Schmidt's Subspace Theorem
+
+The gcd theorems of Corvaja–Zannier, Levin, Grieve–Wang, and Xiao apply to power sums, linear recurrences, or evaluations of fixed polynomials at S-unit points. Their load-bearing input is a finite set of algebraic exponential bases.
+
+The section S_s(m) is P-recursive with polynomially varying coefficients; it is not a constant-coefficient linear recurrence or a finite power sum. The factorial ratio B_s(m) is hypergeometric, not an S-unit orbit. Replacing the exact sequences by their dominant asymptotic bases does not satisfy the hypotheses.
+
+Relevant references:
+
+- P. Corvaja and U. Zannier, Finiteness of integral values for the ratio of two linear recurrences, Invent. Math. 149 (2002), 431–451;
+
+- N. Grieve and J. T.-Y. Wang, Greatest common divisors with moving targets and consequences for linear recurrence sequences;
+
+- Z. Xiao, Greatest common divisors for polynomials in almost units and applications to linear recurrence sequences, Math. Z. 306 (2024), article 61.
+
+None of these theorems has hypotheses covering the pair (S_s(m),B_s(m)).
+
+## 5.3 p-adic analytic continuation
+
+Strassmann-type arguments count zeros of one fixed p-adic analytic function in one fixed residue characteristic. Here:
+
+- the prime p is the summation variable;
+
+- only one index is sampled for each p;
+
+- the selected index is j=n-3p or its reflection;
+
+- the local identity is exactly S_n\equiv A_j\pmod p.
+
+A p-adic interpolation of the section sequence would therefore restate the original zero condition. It would not couple the different primes.
+
+## 5.4 Arithmetic resultants and same-index norms
+
+An annihilating differential or recurrence operator acts on a whole sequence. A common prime divisor of two values at one index is not a common solution of the two operators. Therefore an operator resultant does not yield a scalar integer divisible by the pointwise gcd.
+
+Likewise, a norm argument requires S_s(m) and B_s(m) to be coordinates of a fixed algebraic extension or algebraic group orbit. No such finite-degree algebraic relation is known. D-finiteness alone does not supply a norm.
+
+Reopen condition: exhibit an explicit identity
+
+with U_m,V_m\in\mathbf Z, every candidate interval prime coprime to the coefficient multiplying its selective term, and
+
+No current recurrence, Padé, or norm construction produces such an E_m.
+
+---
+
+# 6. The exact horizontal arithmetic object
+
+The q = 3 slope has one useful special feature. For every p\in I_n,
+
+and in the character group of \mathbf F_p^\times,
+
+The reflected folded index gives the inverse character. Thus the whole target samples the pair
+
+once in each residue characteristic.
+
+Let T_p(\chi) be the primitive Apéry Mellin Frobenius trace, normalized so that
+
+Then, away from fixed exceptional primes,
+
+This is the precise horizontal object that a successful proof must control.
+
+## 6.1 Fixed-exponent torus power sum
+
+Using the fixed Laurent polynomial \Lambda for the Apéry numbers, one has for 1\le r\le p-2
+
+Because
+
+this becomes the exact fixed-n formula
+
+So the target is a horizontal divisibility theorem for one fixed exponent n-3 evaluated over the varying prime fields.
+
+This is more concrete than “fields vary,” but it also displays the obstruction: the degree of the power \Lambda^{n-3} is \asymp n\asymp p. Standard bounded-conductor trace-function estimates do not apply; their conductor constants grow with the exponent.
+
+A proof route would have to transform (6.5) into a varying-modulus exponential sum with a fixed-complexity coupled phase, for example a Kloosterman- or automorphic-type formula on which dispersion can act. No such reciprocity formula is presently known.
+
+---
+
+# 7. The narrowest sufficient new theorem
+
+The easy reductions in Section 3 show that the following is sufficient and strictly weaker than any uniform zero-fibre theorem.
+
+High-order q = 3 diagonal theorem. There exists \eta>0 such that, uniformly in n,
+
+#left{
+
+pin I_n:
+
+begin{array}{l}
+
+j_pge n/(log n)^2,\
+
+operatorname{ord}(omega_p^{n-3})>
+
+sqrt n/(log n)^2,\
+
+T_p(omega_p^{n-3})equiv0pmod{mathfrak p_p}
+
+end{array}
+
+right}
+
+ll_eta frac{n}{(log n)^{1+eta}}.
+
+tag{HD3}
+
+Here
+
+Because p\asymp n on I_n, (HD3), together with (3.1) and (3.8), gives
+
+This theorem asks for anti-concentration of one residual Mellin trace per prime, not all p characters and not a pointwise bound for |Z_p|.
+
+## 7.1 Concrete proof program
+
+A viable proof would need at least one of the following new identities.
+
+1. Horizontal reciprocity for the Mellin trace. Express
+
+1. A low-height integer norm. Construct an explicit nonzero integer E_n satisfying
+
+1. A prime-aspect coefficient theorem. Prove directly that the two moving divisors
+
+---
+
+# 8. Reproducible checks
+
+The valuation correction can be checked without constructing the Apéry numbers:
+
+
+The supplied double hits correspond to:
