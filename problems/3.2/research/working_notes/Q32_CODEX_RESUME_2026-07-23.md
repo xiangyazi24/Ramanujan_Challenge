@@ -7157,3 +7157,150 @@ order beats homogeneous degree, or prove an all-order jet-algebra
 saturation theorem.  Reopen the linear-ray route only if a higher jet
 creates selective order not paid for by the same universal finite
 difference or exterior degree.
+
+## 145. Q803: exact checkerboard reduction verified; fixed-strip proof still under audit
+
+Q803 rewrites the signed Newton--Padé cofactors as finite checkerboard
+orthogonal-polynomial ensembles.  For
+
+`w_H(s)=A_s/[s!(H-s)!]`
+
+and
+
+`Z_m^-(w)=sum_(|S|=m)(-1)^(sum S) Vand(S)^2 product_(s in S)w(s)`,
+
+the proposed projective formula is
+
+`|Phat(n)|=(n)_(H+1)/b! *
+ |Z_(b+1)^-(w_H/(n-s))/Z_b^-(w_H)|`.                `(145.1)`
+
+This is not merely a model.  Q803's own exact program verifies the
+denominator cofactor through `H=8`.  The independent script
+`research/scripts/q32_checkerboard_audit.py` constructs the original
+Padé kernel directly from
+
+`M_(k,l)=binom(k,l) Delta^(k-l)A_l`
+
+and verifies the full numerator/denominator ratio `(145.1)` in all 65
+cases `1<=H<=10`, `0<=b<=H`.  The signed-to-positive ratio is also the
+standard finite determinantal-process identity
+
+`Z_m^-/Z_m^+=det(I-2 K_(m,w) chi_odd)`.
+
+Thus the exact proportional problem really contains an order-`H`
+checkerboard full-counting-statistics determinant.  Positive equilibrium
+theory controls the unsigned free energy but does not control this
+parity determinant, which can vanish precisely when the odd-site
+compression has eigenvalue `1/2`.  This is a sharper exact statement of
+the signed `H`-scale obstruction from Q763.
+
+Q803 further claims that every fixed denominator degree `b` has the
+asymptotic
+
+`Phat_(H,b)(3H+1)
+ ~(-1)^b (lambda/gamma)^b c_(H-b) binom(3H+1,H-b)
+   (1-1/(2gamma))^(-b-1)`,                           `(145.2)`
+
+where `lambda=17+12sqrt(2)`, `gamma=lambda-1`, and
+`c_k=Delta^k A_0`.  Exact computations for `b<=8` and
+`H=40,80,120,180` strongly support `(145.2)`: at `H=180` the absolute
+exact/predicted ratio lies between `0.991342844761` and
+`1.000041243513`.
+
+The mechanism is transparent.  For fixed `b`, the normalized cofactor
+kernel approaches the weighted-Pascal polynomial with consecutive roots
+`H-b+1,...,H`.  At `k=H-b-r` its normalized value tends to
+
+`(-1)^b (lambda/gamma)^b binom(r+b,b)`.
+
+The endpoint ratios contribute `(2gamma)^(-r)`, and summing
+`binom(r+b,b)(2gamma)^(-r)` gives the last factor in `(145.2)`.
+
+Nevertheless the proof as returned is not yet theorem-grade.  Its
+displayed equations `(5.4)`--`(5.8)` were absent from the delivered
+answer, and it only asserts, without a written bound, the load-bearing
+facts that:
+
+1. sufficiently many terms of the Poincare expansion survive the
+   consecutive-row determinant cancellation uniformly for
+   `r<=C_B log H`;
+2. the rational cofactor kernel has a polynomial-in-`H` bound uniform in
+   the remaining `r`; and
+3. this bound and a uniform ratio bound for `c_k` make the tail
+   negligible.
+
+These facts are plausible and finite-dimensional for fixed `b`, but the
+claim “fixed `b` is closed” is withheld until these three estimates are
+written explicitly.  Q825 failed at delivery; Q828 is performing that
+hostile audit.
+
+The reciprocal complement formula supplies a second exact boundary.  For
+fixed numerator degree `a=1`, put
+
+`B_r(H)=sum_(s=0)^H (-1)^s binom(H,s)s^r/A_s`.
+
+Then `(145.1)` reduces exactly to
+
+`|Phat_(H,H-1)(n)|
+ =|H(nB_0-B_1)/(B_0B_2-B_1^2)|`.                   `(145.3)`
+
+The independent script verifies `(145.3)` for `2<=H<=10`.  This isolates
+the smallest unresolved reciprocal boundary as three alternating binomial
+transforms of `1/A_s`.  A finite Poincare expansion of `1/A_s` does not
+control them: its unsigned error has base `1+lambda^(-1)`, while the
+expected checkerboard answer has base `1-lambda^(-1)`.  Reopen this
+boundary only with analytic continuation/strong asymptotics for the
+reciprocal-Apery generating function, an exact recurrence for the three
+transforms, or a direct nonvanishing/Turan estimate for the determinant
+in `(145.3)`.  Q826 is attacking exactly this boundary.
+
+## 146. Q801: the selected order-two Hasse minor is exactly the target squared
+
+Q801 completes the audit of the first exterior-power construction.  With
+
+`C_d(N,J)=[c^d]T_(N,J-1)(c)`,
+
+put
+
+`D_2(n,J)=C_0(n,J)C_J(n+J,J)-C_J(n,J)C_0(n+J,J)`. `(146.1)`
+
+For a top-half prime `J=p>4`, write `n=p+r` and
+`j=min(r,p-1-r)`.  The two cutoff rows reduce coefficientwise to
+`A_j Q_1(c^p)` and `A_j Q_2(c^p)`.  Taking the columns of degrees `0`
+and `p` gives the exact unit test
+
+`D_2(n,p)=4A_j^2 (mod p)`.                           `(146.2)`
+
+If `p|A_j`, every entry of both rows is divisible by `p` over the
+integers, so `p^2|D_2(n,p)`.  Conversely `(146.2)` makes `D_2(n,p)` a
+`p`-unit whenever `p` is good.  Therefore
+
+`product_(n/2<p<=n) gcd(p^2,D_2(n,p))=R_1(n)^2`      `(146.3)`
+
+after omitting only the fixed primes at most `3`.  This proves that the
+prime-only “normalized aggregate” is not merely comparable to the
+unknown q=1 radical: it is exactly its square.  Any `o(2n)` bound for
+the left side is precisely the original `o(n)` moving-zero theorem
+multiplied by two.
+
+Q801 also expands `(146.1)` into four single sums and a double sum.  Its
+Legendre determinant kernel is strictly positive in the top-half range,
+but the Hasse-column weight contains a moving checkerboard sign.  Hence
+the full transform has no sign supplied by total positivity or Andreief.
+There is no universal `J`-content to remove, since `(146.2)` is nonzero
+at every good prime.  Desnanot--Jacobi, Christoffel--Darboux, WZ
+telescoping, Smith saturation, and the lcm over composite cutoffs only
+change representations or add contamination; they cannot reduce the
+selective-degree/height ratio.
+
+This agrees with the independent local calculation made before Q801
+returned.  The selected minor is a valid order-two amplifier but a
+tautological compression.  Reopen this route only if one obtains either:
+
+1. a genuinely uniform diagonal recurrence/asymptotic for the alternating
+   double sum that proves the original radical bound outright; or
+2. a mod-`p^2` quotient-row congruence producing selective order greater
+   than exterior degree.
+
+The first option is not a weaker subproblem, and Q804 already shows that
+the first jet does not provide the second.
