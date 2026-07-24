@@ -8489,3 +8489,97 @@ integer subresultant chain can preserve that marked evaluation without
 recreating the Padé-family gcd.  Q897 separately attacks the equivalent
 fixed-sum diagonal `p+j=n`, `p>2j`, while retaining the hard order split
 `(154.2)`.
+
+## 167. Q894 retracts the compound lift; Q896 contracts the fixed subresultant chain
+
+Q894 supplies the requested correction to Q888.  The scalar 12-term
+finite-difference recurrence is valid, and it can be written as an exact
+finite matrix identity
+
+`sum_i L_i Mtilde R_i=0`
+
+with twelve explicitly weighted shift terms.  After restriction to the
+Padé block, the exterior remainder is supported on two output rows and
+four output columns, so an ordinary matrix-level boundary-rank bound of
+at most six is valid.
+
+This does not lift linearly to compounds.  Polarizing an exterior power
+of the twelve-term sum produces mixed determinants in which different
+columns choose different shift terms.  Those are not minors of one
+uniformly shifted copy of `M`, and there are exponentially many choices.
+The exact smallest audit passes 120 scalar entries but gives
+
+`sum_(i=1)^12 det(A_i)=1687347858288`
+
+for the `2 by 2` output block on rows `2,3` and columns `0,1`; the omitted
+mixed determinants cancel this nonzero integer.  This independently
+verifies the failure identified in Section 166.  Q888's proposed
+shifted-minor family, saturation quotient, and primitive recurrence must
+be retracted.  A mixed-compound saturation theorem would be a new
+result, and even it would still need a separate nonzero low-height
+element.
+
+Q896 completely contracts the fixed-pair subresultant formulation.  Put
+
+`F_H(x)=sum_(k=0)^H Delta^k A_0 binom(x,k)`,
+
+`N_H(x)=prod_(s=0)^H(x-s)`, and `n=3H+1`.
+
+For every `p>H`,
+
+`gcd_(F_p[x])(F_H,N_H)=prod_(p|A_s)(x-s)`.
+
+If `p|N_H(n)`, its unique node is `j=n mod p`; hence the first nonzero
+polynomial subresultant vanishes at `n` exactly when `F_H(n)=0 mod p`.
+The entire marked subresultant stratification therefore contracts to
+the two-entry Fitting ideal
+
+`(F_H(n),N_H(n))`.
+
+In the candidate window its radical is exactly the direct target
+radical, and it agrees in support with the sufficiently long growing
+Padé-family gcd.  This removes the varying subresultant index but gives
+no smaller arithmetic object: both entries have positive exponential
+scale, and bounding their candidate-window gcd is the original theorem.
+Ordinary resultants forget the marked node; marked Fitting data collapse
+to the original fixed Newton carrier.
+
+## 168. Q871's anchored degree-three reduction needs an integer-valued correction
+
+Q871 pairs numerator degrees `1` and `3` and forms
+
+`W=P_(H,1)Q_(H,3)-P_(H,3)Q_(H,1)`.
+
+The degree bound and the `H+1` interpolation zeros imply that `W` is the
+node polynomial times a rational linear polynomial.  Its derivative
+argument is locally sound: if a candidate prime is good but divides both
+numerator values, then both denominator values vanish at the moving node;
+differentiating the cross identity forces the linear quotient to vanish
+there.  Thus the good-prime pollution of the anchored pair is supported
+on one linear evaluation.  The all-degree content theorem also shows
+that primes with at least four prefix zeros are automatic pollution.
+
+The answer's global integrality statement is false as written.  The
+Padé polynomials have integer coefficients in the binomial basis; they
+need not lie in `ZZ[x]`.  Consequently one cannot conclude
+
+`W=prod_(s=0)^H(x-s) K_H(x)` with `K_H in ZZ[x]`.
+
+Exact computation already gives a denominator `3` at `H=3`, `9` at
+`H=4`, and `18` at `H=5`.  The correct statement is obtained by clearing
+the rational linear quotient to a primitive integer polynomial
+`Ktilde_H`.  Its clearing denominators involve only primes below the
+candidate window, so the derivative support implication for `p>2H`
+survives unchanged.  Direct checks for every `3<=H<=32` verify a
+nonzero quotient of degree at most one and the support implication; the
+only common candidate in that range is the genuine target at `H=5`.
+The coefficients of `Ktilde_H` are enormous: the maximum coefficient
+already has 1,694 bits at `H=20` and 4,634 bits at `H=32`.  Thus linear
+degree by itself provides no height gain.  The reproducible audit is
+`q32_anchored_pade_pollution.py`.
+
+Q902 now audits the correct denominator, possible Padé defects, and a
+multi-degree anchored family.  Q900 attacks the hard small-kernel
+parametrization `n-1=gD`, `j=gk`, `p=1+g(D-k)`.  Q901 asks whether a
+certificate allowed to depend on a hypothetical large hit set can evade
+the universal full-grid CRT countermodels.

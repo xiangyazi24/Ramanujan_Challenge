@@ -1,0 +1,385 @@
+
+paired with the fixed numerator-degree-one primitive numerator
+
+
+Degree two is adjacent to degree one and returns exactly the Q802 constant-pollution identity. Degree three is the first genuinely nonadjacent choice. Its determinant quotient has degree one:
+
+
+At
+
+
+every direct q=1 target prime divides all three integers
+
+
+Moreover, every good-prime common divisor in the candidate window divides the single linear value K_H(n). This gives the exact support decomposition
+
+
+where
+
+
+is the original direct target core.
+
+This is a genuine improvement over merely adjoining the adjacent numerator: the entire good-prime pollution is compressed into one linear determinant value. But it does not yet prove o(H). The latest all-degree content theorem gives a sharp obstruction:
+
+
+Hence such a prime divides both certificate values for every evaluation point, independently of the moving node. If the moving node is not a zero, it is automatic good-prime pollution, and the determinant theorem forces it into K_H(n).
+
+Thus the degree-three certificate reduces the problem to two precise estimates:
+
+
+Neither estimate is currently proved. The first is a weighted four-prefix-zero theorem; the second is a candidate-window radical theorem for an explicit linear Padé determinant. Total-height bounds for K_H(n) are much too large.
+
+There is also a general dichotomy. For any fixed second numerator degree b>=2, the determinant pollution polynomial has degree at most b-2, but every candidate prime with at least b+1 prefix zeros is automatic common-content pollution. Taking b large enough—of order H^(2/3) using the proved zero-count bound—removes the content obstruction, but the pollution determinant then has growing degree O(H^(2/3)), and no sublinear candidate-window radical bound is known. This is the exact saturation point of the two-certificate route.
+
+Repository state audited: latest main commit
+
+
+with Q802, Q850, Q867, and working-note Sections 147--163. Q802's adjacent identity is used only as a comparison; the proof below is the nonadjacent degree-three identity and its exact pollution classification.
+
+---
+
+# 1. Canonical Padé notation and primitive normalization
+
+Let
+
+
+For each numerator degree a, the canonical primitive integral Padé pair is
+
+
+with total coefficient gcd one. The latest main branch proves the exact local content formula. If p>H and
+
+
+are the ordered node valuations, then
+
+
+In particular, writing
+
+
+one has
+
+
+For a=1, Q850 and Q867 identify
+
+
+and prove
+
+
+Thus P_(H,1) contains every candidate prime with at least two prefix zeros, regardless of the moving node.
+
+The degree-three pair is projectively independent of the degree-one pair. In the canonical normal Padé family its numerator has exact degree three; hence it cannot be a scalar multiple of a degree-one polynomial. This is the first nonadjacent degree for which the determinant quotient is nonconstant but still linear.
+
+---
+
+# 2. Why degree three is the optimal first second certificate
+
+For two numerator degrees a<b, define
+
+
+At every interpolation node s=0,...,H,
+
+
+Therefore the monic node polynomial
+
+
+divides W_(a,b) in Z[x]. The degree bound is
+
+
+so
+
+
+For a=1:
+
+
+The first line is exactly the adjacent Q802 constant kappa_1; it supplies no new direction-dependent support. The second line is the minimal genuinely nonadjacent determinant. We therefore set
+
+
+Explicitly,
+
+
+Even if the linear coefficient vanishes at an exceptional height, the identity remains valid; then the pollution is supported on one constant integer, reducing to the adjacent-type case.
+
+---
+
+# 3. Every target prime divides both certificates
+
+Put
+
+
+Let
+
+
+Then p>H, and for every integral polynomial of degree at most H, Newton/binomial reduction gives
+
+
+If p|A_j, interpolation gives for every Padé degree a
+
+
+Thus every target prime divides both
+
+
+The candidate-window binomial carrier satisfies
+
+
+because the numerator interval of B_H contains the unique factor p=n-j, while its denominator and every other numerator factor are p-units.
+
+Consequently
+
+
+Here
+
+
+using Apéry Lucas
+
+
+---
+
+# 4. Exact good-prime pollution theorem
+
+Define
+
+
+Since T_H|G_H, define the squarefree quotient
+
+
+## Theorem 4.1
+
+
+More exactly,
+
+
+### Proof
+
+The exact product formula (4.2) is simply the definition of the target quotient: candidate primes are selected by B_H; those with p|A_j form T_H; the remaining common numerator primes form E_H.
+
+Take a prime in (4.2). By (3.1),
+
+
+Because p not|A_j, interpolation implies
+
+
+Differentiate (2.2):
+
+
+Every term vanishes modulo p at x=j by (4.3) and the two numerator congruences. Hence
+
+
+On the right side of (2.2), since Phi_H(j)=0,
+
+
+The derivative is
+
+
+which is a p-unit because p>H. Therefore
+
+
+Finally n=j+p, so
+
+
+Thus every prime in E_H divides K_H(n), proving (4.1).
+
+This is strictly stronger than the adjacent identity. Q802 places adjacent pollution in an arbitrary large constant kappa_b. Here every good common prime is forced into one explicit polynomial value of degree at most one.
+
+---
+
+# 5. Exact content obstruction for the degree-three choice
+
+The all-degree content theorem (1.1) gives
+
+
+Therefore
+
+
+For every candidate prime satisfying (5.2),
+
+
+without using j=n-p and without using the projective roots.
+
+If additionally
+
+
+then p is good-prime pollution. Theorem 4.1 forces
+
+
+Hence the explicit automatic pollution factor
+
+
+satisfies
+
+
+This is the first exact obstruction that is absent from the adjacent discussion. The degree-three certificate does not merely inherit Q802's kappa pollution: it inherits a precisely characterized four-zero content factor.
+
+A height proof for K_H(n) would therefore automatically prove a weighted theorem about candidate primes with four prefix zeros. No such theorem is presently available from the pointwise zero-count bound
+
+
+That bound controls the number of zeros inside one prime; it does not control how often z_p(H)>=4 along the moving candidate line p=3H+1-j.
+
+---
+
+# 6. Complete candidate-window classification below the four-zero threshold
+
+For z_p(H)<=3, the degree-three numerator content is a p-unit. Its reduction after content removal is a nonzero polynomial of degree at most three that vanishes at every prefix zero.
+
+Combine this with Q867's exact degree-one classification.
+
+## z_p(H)=0
+
+
+A common prime is pure projective-root pollution:
+
+
+It is forced into K_H(n) by Theorem 4.1.
+
+## z_p(H)=1
+
+Let the unique zero node be r. Q867 gives
+
+
+Therefore there is no good-prime pollution from this class. If the degree-one numerator vanishes, the prime is already the target.
+
+## z_p(H)=2
+
+The degree-one numerator is divisible by p through its content. The degree-three projective numerator vanishes at the two genuine zero nodes and has at most one additional interpolation-node root. Thus a good common prime can occur only if the moving node is that one extra root.
+
+## z_p(H)=3
+
+Again the degree-one numerator is content-divisible. The degree-three projective numerator has the three genuine zero nodes as all of its interpolation-node roots. Hence it has no extra interpolation-node root. Therefore
+
+
+provided the degree-three reduction has exact degree three. In the canonical normal family this is the generic and expected case. If its degree drops modulo p, the statement weakens to the general theorem that the number of extra roots is at most 3-z_p(H)=0; so the conclusion still holds.
+
+Thus the only nonautomatic good-prime pollution below four zeros comes from
+
+
+or from the single extra root available when
+
+
+The exact decomposition is therefore
+
+
+where the factors are pairwise coprime squarefree products according to the three cases, and every factor divides rad(K_H(n)).
+
+This is a useful sharpening: the troublesome z=3 class is eliminated completely by choosing degree three rather than degree two.
+
+---
+
+# 7. The linear determinant does not yet have sublinear height
+
+From (2.2), evaluated at n,
+
+
+The denominator is explicit:
+
+
+Hence
+
+
+But the primitive Padé coefficients and values contain the lattice-index/content factors audited in Q850 and the later all-degree theorem. The available determinant estimates give only
+
+
+of at least linear and in raw determinant normalizations often superlinear size. Subtracting the explicit H log H+O(H) denominator in (7.1) does not yield
+
+
+The only unconditional support consequence is
+
+
+which is presently ineffective for the target asymptotic.
+
+There is no valid argument that a linear polynomial value must have small radical: its coefficients depend on H and can themselves carry an exponentially large candidate-window radical. The word “linear” refers to the variable x, not to coefficient height.
+
+The adjacent Plücker relation also explains why no hidden small coefficient appears automatically. Let
+
+
+Then the exact determinant identity gives
+
+
+These identities are proved by expanding both sides and cancelling the middle terms. They show that the linear pollution determinant is generated by the two adjacent constants after saturation by the middle Padé pair. They do not bound its height or radical; at primes where P_(H,2) also vanishes, (7.5) is tautological.
+
+Thus the nonadjacent choice is genuinely more selective at the support level, but its coefficient height is not automatically smaller than the adjacent constants.
+
+---
+
+# 8. General fixed-degree obstruction
+
+Take any fixed second numerator degree b>=2. From (2.1),
+
+
+The same derivative argument proves
+
+
+where E_(H,b) is the good-prime quotient of
+
+
+But the content theorem gives
+
+
+Therefore every fixed-degree pair retains the automatic pollution factor
+
+
+A fixed b trades a low-degree determinant for an unproved weighted (b+1)-zero theorem. Degree three is optimal among the first choices because:
+
+
+No fixed b removes the vertical-tail obstruction.
+
+---
+
+# 9. Growing-degree alternative and its exact saturation point
+
+The proved zero-count bound permits a numerator degree
+
+
+large enough that, for every candidate prime p<=3H+1,
+
+
+One may take an explicit uniform value from the block bound. For any integer L>=2,
+
+
+Choosing
+
+
+gives an explicit A_H=O(H^(2/3)) valid for the whole candidate window.
+
+Let
+
+
+Because z_p(H)<=A_H, the candidate prime does not divide the removed numerator content, and every target node is a root of Z_(H,A_H) modulo p. Hence the integral polynomial
+
+
+is another valid target certificate.
+
+This removes automatic content pollution from the second certificate. But the determinant with degree one now has
+
+
+The good-prime radical is again supported on
+
+
+and no o(H) height or candidate-window radical bound is known. The latest generic interpolation/Fitting audit proves that no theorem based only on integer interpolation, Smith data, or generic resultants can supply such a bound: a CRT countermodel can retain the full candidate primorial. Any positive estimate must use the Apéry recurrence in the normalized projective coefficients.
+
+Thus the route has an exact dichotomy:
+
+
+---
+
+# 10. Strongest proof-grade conclusion and next lemma
+
+The degree-three certificate gives the clean theorem
+
+
+The equality in the last line is the automatic-content part of the pollution; E_H^(0) and E_H^(2) are the remaining projective extra-root parts.
+
+A sufficient theorem is therefore:
+
+
+(SC3) immediately gives
+
+
+It does not by itself prove log T_H=o(H); the target core is intentionally retained. To solve the original q=1 target through two certificates, one still needs a second certificate whose common radical is itself o(H), or an independent estimate for T_H.
+
+The weakest useful decomposition is instead the pair of Apéry-specific lemmas
+
+
+Together, (V4)+(XR3) prove
+
+
+At present neither follows from the recurrence, Lucas congruences, the zero-count bound, or total-height estimates.
+
+The next concrete lemma should attack (V4), because it is forced into every fixed-degree certificate and is independent of coefficient-height normalization:
