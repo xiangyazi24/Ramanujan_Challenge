@@ -21,7 +21,7 @@ from __future__ import annotations
 
 from fractions import Fraction
 from itertools import combinations
-from math import comb, exp, factorial, log, prod, sqrt
+from math import comb, exp, factorial, gcd, lcm, log, prod, sqrt
 
 from q32_pade_total_positivity import (
     apery_values,
@@ -192,6 +192,81 @@ def verify_reciprocal_a_one(max_height: int = 10) -> int:
     return checked
 
 
+def primitive_a_one_pair(
+    height: int,
+    apery: list[int],
+) -> tuple[list[int], list[int]]:
+    """Return the primitive integral P and Q coefficients for a=1."""
+
+    moment_zero = reciprocal_binomial_moment(height, 0, apery)
+    moment_one = reciprocal_binomial_moment(height, 1, apery)
+    numerator = [moment_one, -moment_zero]
+    values = [
+        (numerator[0] + numerator[1] * node) / apery[node]
+        for node in range(height + 1)
+    ]
+
+    row = values
+    denominator = []
+    while len(row) > 1:
+        denominator.append(row[0])
+        row = [
+            row[index + 1] - row[index]
+            for index in range(len(row) - 1)
+        ]
+    assert row == [0]
+
+    rational_coefficients = numerator + denominator
+    scale = lcm(*(value.denominator for value in rational_coefficients))
+    integral_coefficients = [
+        value.numerator * (scale // value.denominator)
+        for value in rational_coefficients
+    ]
+    common = gcd(*integral_coefficients)
+    integral_coefficients = [
+        value // abs(common)
+        for value in integral_coefficients
+    ]
+    return integral_coefficients[:2], integral_coefficients[2:]
+
+
+def verify_primitive_a_one(max_height: int = 10) -> int:
+    apery = apery_values(max_height + 2)
+    coefficients = newton_coefficients(apery)
+    checked = 0
+    for height in range(2, max_height + 1):
+        numerator, denominator = primitive_a_one_pair(height, apery)
+        direct_denominator = rational_kernel(
+            height,
+            height - 1,
+            coefficients,
+        )
+        direct_scale = lcm(*(value.denominator for value in direct_denominator))
+        direct_integral = [
+            value.numerator * (direct_scale // value.denominator)
+            for value in direct_denominator
+        ]
+        direct_common = gcd(*direct_integral)
+        direct_integral = [
+            value // abs(direct_common)
+            for value in direct_integral
+        ]
+        assert denominator == direct_integral or denominator == [
+            -value for value in direct_integral
+        ]
+
+        reconstructed_numerator = [
+            sum(
+                denominator[ell] * entry(index, ell, coefficients)
+                for ell in range(min(height - 1, index) + 1)
+            )
+            for index in range(2)
+        ]
+        assert numerator == reconstructed_numerator
+        checked += 1
+    return checked
+
+
 def q803_fixed_strip_log_prediction(
     height: int,
     denominator_degree: int,
@@ -243,6 +318,8 @@ def main() -> None:
     print(f"exact checkerboard numerator/denominator ratios checked={checked}")
     reciprocal_checked = verify_reciprocal_a_one()
     print(f"exact reciprocal a=1 reductions checked={reciprocal_checked}")
+    primitive_checked = verify_primitive_a_one()
+    print(f"exact primitive a=1 pairs checked={primitive_checked}")
     for height, degree, ratio, rate in fixed_strip_ratios():
         print(
             f"H={height:3d} b={degree} "

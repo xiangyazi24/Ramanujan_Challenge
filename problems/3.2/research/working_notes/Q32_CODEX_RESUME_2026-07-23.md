@@ -7252,7 +7252,8 @@ expected checkerboard answer has base `1-lambda^(-1)`.  Reopen this
 boundary only with analytic continuation/strong asymptotics for the
 reciprocal-Apery generating function, an exact recurrence for the three
 transforms, or a direct nonvanishing/Turan estimate for the determinant
-in `(145.3)`.  Q826 is attacking exactly this boundary.
+in `(145.3)`.  Q826 did not remain attached to a live tab; Q830 and Q831
+replace it with the analytic-interpolation and primitive-lattice attacks.
 
 ## 146. Q801: the selected order-two Hasse minor is exactly the target squared
 
@@ -7304,3 +7305,164 @@ tautological compression.  Reopen this route only if one obtains either:
 
 The first option is not a weaker subproblem, and Q804 already shows that
 the first jet does not provide the second.
+
+## 147. The reciprocal `a=1` boundary splits into a tiny projective value and a huge primitive lattice
+
+The three moments in `(145.3)` simplify further.  Define
+
+`U_H=sum_(s=0)^H (-1)^s binom(H,s)/A_s`.
+
+Elementary binomial identities give
+
+`B_0=U_H`,
+
+`B_1=H(U_H-U_(H-1))`,
+
+`B_2=H^2U_H-H(2H-1)U_(H-1)+H(H-1)U_(H-2)`.
+
+Consequently, for `n=3H+1`,
+
+`Phat_(H,H-1)(n)
+ =+-[(2H+1)U_H+H U_(H-1)]`
+
+`   /[(H-1)U_HU_(H-2)+U_HU_(H-1)-H U_(H-1)^2]`.    `(147.1)`
+
+The rational numerator line itself is, up to scale,
+
+`P_H(x)=H(U_H-U_(H-1))-xU_H`,                       `(147.2)`
+
+with root
+
+`x_H=H(1-U_(H-1)/U_H)`.                             `(147.3)`
+
+The script now clears all coefficients of `(147.2)` and of the Newton
+interpolant of `P_H(s)/A_s`, divides their total gcd, and verifies the
+result against the original primitive Padé kernel for every `2<=H<=10`.
+Thus it computes the actual primitive pair, not only the projective
+quotient.
+
+The distinction is dramatic.  The exact projective rates remain small
+and irregular (about `0.01647` at `H=300`), but the primitive numerator
+has:
+
+| `H` | bits of `|P_primitive(3H+1)|` | `log|P|/(3H+1)` |
+|---:|---:|---:|
+| 40 | 3,686 | 21.10956 |
+| 80 | 15,158 | 43.59374 |
+| 100 | 23,978 | 55.21585 |
+| 120 | 34,868 | 66.94797 |
+| 140 | 47,730 | 78.58300 |
+
+This is numerical evidence of quadratic logarithmic height, not a
+theorem.  It does show that a zero projective rate would not by itself
+produce a useful integral certificate.
+
+There is a simple sufficient sign lemma.  If `U_(H-1)U_H>0`, then
+`x_H<H`.  Since the primitive integer-valued denominator makes
+
+`A_s | P_primitive(s)` for every `0<=s<=H`,
+
+and a nonzero linear polynomial cannot vanish at both `H-1` and `H`,
+one gets
+
+`|P_primitive(3H+1)|>=A_(H-1)`.                     `(147.4)`
+
+Thus eventual consecutive same sign would already close `a=1`
+exponentially, without any lower bound for `(147.1)`.  Exact computation
+finds `U_H>0` for every `84<=H<=2000`, but this is not yet a proof and
+the earlier signs occur in long blocks.
+
+A new analytic route is available from the primary source Golyshev--Zagier,
+*Interpolated Apéry Numbers*.  It proves that
+
+`A(z)=sum_(k>=0) binom(z,k)^2 binom(z+k,k)^2`
+
+is entire, agrees with `A_s` at nonnegative integers, and satisfies
+`A(z)=A(-z-1)` together with an explicit inhomogeneous Apéry recurrence.
+Therefore `1/A(z)`, rather than the ordinary reciprocal generating
+function, is the natural input to a Nörlund--Rice integral for `U_H`.
+
+A high-precision, non-rigorous search found the simple zeros
+
+`z=0.14598677311801086651 +- 0.58242614024485315072 i`
+
+with residual about `1.4e-26`, plus the conjugate and
+`z -> -z-1` partners.  Poles of `1/A(z)` at such zeros would contribute
+oscillatory powers `H^z` to the Rice expansion.  This explains why a
+finite Poincare expansion of `1/A_s` predicts the wrong exponential
+scale and suggests that the long sign blocks are logarithmic
+oscillations.
+
+This is promising but conditional on load-bearing analytic facts:
+
+1. locate all zeros of `A(z)` in the rightmost strip and certify their
+   simplicity;
+2. prove the vertical growth needed to shift the Rice contour;
+3. bound the remainder and the sparse integer `H` near zeros of the
+   leading cosine; and
+4. convert the resulting root control through `(147.3)` into `(147.4)`,
+   including sign-change indices.
+
+Q830 attacks this Rice/zero problem.  Q831 attacks the independent
+primitive denominator lattice and lcm/gcd route.
+
+## 148. Q802/Q806: every adjacent gcd contains one fixed Apéry--binomial core
+
+For `n=3H+1`, put
+
+`B_H=binom(3H+1,H+1)`,
+
+`T_H=rad_(p>2H) gcd(A_(3H+1),B_H)`.                 `(148.1)`
+
+The large-prime support of `B_H` consists exactly of primes
+`p=3H+1-j`, `0<=j<=H`, each with valuation one.  Lucas gives
+
+`A_(3H+1)=5A_j (mod p)`.
+
+Hence
+
+`T_H=product_(0<=j<=H, p=3H+1-j prime, p|A_j) p`,   `(148.2)`
+
+so `log T_H` is exactly the direct q=1 sum.  In the general notation
+`H=floor((n-1)/3)`, Q806 records the equivalent identity
+
+`S(n)=log rad_(p>2n/3) gcd(A_n,binom(n,H+1))`.       `(148.3)`
+
+This is a useful fixed two-integer formulation, but the carrier still has
+positive linear entropy and no audited existing G-function, Subspace
+Theorem, recurrence-gcd, affine-sieve, primitive-divisor, or
+greatest-prime-factor theorem gives the required pointwise radical bound.
+Q806's block-determinant compression lemma is a correct sufficient
+condition, but no construction satisfying it is supplied.
+
+Q802 proves a sharper exact obstruction for every adjacent Padé pair.
+Let
+
+`R_H(b)=rad_(p>2H) gcd(P_b(n),P_(b+1)(n))`.
+
+Then
+
+`R_H(b)=T_H N_H(b)`, `gcd(T_H,N_H(b))=1`,           `(148.4)`
+
+and every prime of `N_H(b)` divides the adjacent constant `kappa_b`.
+The only delicate case is a common prime that also divides `B_H` but not
+`A_n`.  It corresponds to a node `j` where both denominator polynomials
+vanish modulo `p`.  Differentiating
+
+`P_bQ_(b+1)-P_(b+1)Q_b=kappa_b binom(x,H+1)`
+
+at `x=j` shows `p|kappa_b`, because
+
+`[d/dx binom(x,H+1)]_(x=j)
+ =(-1)^(H-j)j!(H-j)!/(H+1)!`
+
+is a `p`-adic unit.  Thus `(148.4)` is fully exact, not a heuristic
+carrier statement.
+
+It follows that a subexponential adjacent gcd at any fixed slope is
+equivalent to two separate statements: the original core bound
+`log T_H=o(H)` and a Padé-specific pollution bound `log N_H(b)=o(H)`.
+The first is slope-independent and survives every adjacent chain.
+Therefore the adjacent-gcd route cannot bypass Problem 3.2; it can only
+add a second problem.  Q832 now attacks the fixed core `(148.1)` directly
+through hypergeometric remainders and Bézout certificates.
