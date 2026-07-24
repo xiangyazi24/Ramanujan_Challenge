@@ -8033,3 +8033,69 @@ current data and stronger than the original alignment problem in a
 different direction.  The single-`a=1` support bound should therefore be
 treated as a likely false route.  A second certificate is needed to
 remove this multiplier pollution; Q871 asks for exactly that separation.
+
+## 160. A growing family of Padé numerators exactly absorbs every bounded zero set
+
+The multi-zero obstruction has a clean general form.  Let
+`(P_(H,a),Q_(H,a))` be the primitive integral interpolation pair with
+
+`deg P_(H,a)<=a`, `deg Q_(H,a)<=H-a`,
+
+`P_(H,a)(s)=A_s Q_(H,a)(s)` for `0<=s<=H`.
+
+For a prime `p>H`, put
+
+`Z_p(H)={s in [0,H]:p|A_s}`, `z_p(H)=|Z_p(H)|`.
+
+Because every factorial in the Newton basis is a `p`-unit, reduction gives
+ordinary polynomials of the same degree over `F_p`.  The following exact
+zero-absorber lemma is then elementary:
+
+`P_(H,a)=0 in F_p[x]` if and only if `z_p(H)>a`.     `(160.1)`
+
+Indeed, `P` vanishes at every node of `Z_p(H)`, so more than `a` zeros
+force `P=0`.  Conversely, if `P=0`, then the nonzero polynomial `Q` must
+vanish at all `H+1-z_p(H)` complementary nodes.  Since
+`deg Q<=H-a`, this is possible only when `z_p(H)>=a+1`.  The reduced pair
+is nonzero because the integral coefficient vector is primitive.
+
+If `z_p(H)<=a`, then the nonzero `P_(H,a)` has all `z_p(H)` prescribed
+roots and at most `a-z_p(H)` extra interpolation-node roots.  In
+particular,
+
+`a=z_p(H) =>`
+
+`{s in [0,H]:P_(H,a)(s)=0 mod p}=Z_p(H)`.           `(160.2)`
+
+This yields an exact multi-certificate purification.  For
+
+`G_(H,A)(n)=gcd_(0<=a<=A) P_(H,a)(n)`
+
+and a candidate prime `p=n-j>2H`,
+
+`p|G_(H,A)(n)`
+
+if and only if
+
+`j in Z_p(H)` or `z_p(H)>A`.                        `(160.3)`
+
+If `z_p(H)<=A`, the member with `a=z_p(H)` has precisely the Apéry zero
+nodes as roots, while every target node is a root of every member.  If
+`z_p(H)>A`, `(160.1)` makes every numerator zero modulo `p`.
+
+The previously proved uniform vertical bound
+`|Z_p|<<p^(2/3)` therefore allows a sublinear family
+`A=O(H^(2/3))` whose common candidate-prime support is exactly the direct
+q=1 target.  This genuinely removes the positive-density multi-zero
+pollution found in Section 159; it does not yet bound the resulting gcd.
+The adjacent cross identities still carry the full binomial factor once
+per target prime, so their universal height estimates saturate.  The new
+opening is narrower: seek an `exp(o(H))` bound for the candidate-window
+radical of the *whole growing-family determinantal divisor*, using the
+codimension supplied by `(160.1)` rather than multiplying adjacent
+identities.
+
+The verifier `q32_pade_zero_absorber.py` checks `(160.1)--(160.3)` with
+the exact primitive kernels for every `2<=H<=22` and every prime
+`H<p<=3H+1`: 2,100 polynomial reductions and 1,071 growing-family support
+tests pass.  The proof above is independent of the computation.
