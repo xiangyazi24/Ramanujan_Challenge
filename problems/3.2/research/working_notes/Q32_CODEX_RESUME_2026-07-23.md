@@ -7705,3 +7705,130 @@ The reproducible calculation is
 `research/scripts/q32_reciprocal_boundary_audit.py`.  Q830 is testing the
 missing zero distribution and contour estimates; Q846 attacks primitive
 integrality independently.
+
+## 153. Q830: an unconditional zero-free line, but only a conditional Rice theorem
+
+After refetching the omitted Notion equation blocks, Q830 gives the exact
+Golyshev--Zagier interpolation
+
+`Acal(z)={}_4F_3(-z,-z,z+1,z+1;1,1,1;1)`.
+
+On the reflection line `z=-1/2+it`, every summand is
+
+`|(1/2+it)_k|^4/(k!)^4`,
+
+so the series converges to a positive real number at least `1`.  Therefore
+
+`Acal(-1/2+it) != 0`,
+
+`|1/Acal(-1/2+it)| <= 1`.                           `(153.1)`
+
+This is an unconditional and useful new lemma.
+
+For the Rice kernel
+
+`K_H(z)=Gamma(-z)Gamma(H+1)/Gamma(H+1-z)`,
+
+the same line gives the Fourier representation
+
+`K_H(-1/2+it)=FT[(1-e^(-u))^H e^(-u/2) 1_(u>0)](t)`.
+
+The squared `L^2` norm of this function is exactly `1/(2H+1)`, and
+the squared norm of its first derivative is `O(1/H)`.  The standard
+weighted Cauchy--Schwarz/Plancherel inequality consequently gives
+
+`int_R |K_H(-1/2+it)|dt=O(H^(-1/2))`.               `(153.2)`
+
+Together with `(153.1)`, this bounds the terminal-line integral by
+`O(H^(-1/2))` *if* the original finite Rice contour can first be moved to
+that line.  The line bound by itself does not justify the displacement.
+One still needs high-imaginary minimum-modulus estimates for `Acal`,
+horizontal-boundary decay, and summability of every crossed zero
+residue.  Q830 states these assumptions explicitly as its unproved
+Theorem ZR.  Thus its later asymptotics are conditional, not a theorem
+about `U_H`.
+
+Conditionally on one simple strictly rightmost conjugate zero pair
+`rho=alpha+i beta`, Q830's exact beta-mode algebra is sound:
+
+`D_H(v(rho)+v(sigma))`
+
+` =((rho-sigma)^2/H)v_H(rho)v_H(sigma)`.            `(153.3)`
+
+For the conjugate pair this makes the leading Casoratian negative and
+phase-free, of size `H^(2alpha-1)`.  The associated projective numerator
+at `3H+1` is generically of size `H^(2-alpha)` and has a uniform
+polynomial upper bound under the same contour and zero-gap hypotheses.
+This would show that any exponential size of the primitive `a=1`
+certificate comes from its Smith clearing multiplier, not its
+Archimedean projective direction.
+
+Two points remain under audit.  Q830 asserts weighted versions of
+`(153.2)` for every fixed moment without displaying the derivative
+calculation, and the infinite-residue/line cross terms used in the
+Casoratian require precisely those bounds.  More importantly, neither
+the proposed rightmost zero nor the absence of high-imaginary zeros to
+its right has an interval/global certificate.  The severe numerical
+mismatch in Section 152 is compatible with eventual dominance but gives
+no support for using it at accessible heights.  A queued `dm4` follow-up
+attacks the Barnes/high-imaginary step and the
+ordinary-generating-function alternative directly.
+
+## 154. Q817: bounded character order is harmless; the delivered sieve analysis is incomplete
+
+Q817 correctly rederives the q=1 Lucas diagonal and the exact Mellin
+coefficient identity
+
+`A_r=-sum_(t in F_p^*) H_p(t)t^(-r) (mod p)`,
+
+where `H_p(t)=sum_(m=0)^(p-1) A_m t^m` is the scalar Hasse--Witt
+section of the canonical Apéry K3 family.  This distinguishes a moving
+Mellin coefficient from a Hasse invariant evaluated at one fiber.
+
+Its strongest new exact statement is the bounded-order slice lemma.
+Writing
+
+`d=(p-1)/gcd(p-1,n-p)`
+
+for the order of the selected Kummer character, there is an integer
+`1<=j<=d/2` with
+
+`p=(dn+j)/(d+j)`.                                   `(154.1)`
+
+Consequently characters of order at most `D` yield `O(D^2)` candidate
+primes for each fixed `n`.  Their weighted contribution is
+`O(D^2 log n)`.  Taking, for example,
+`D=sqrt(n)/log n` makes this part `O(n/log n)=o(n)`.
+The entire remaining difficulty can therefore be confined to character
+orders exceeding `sqrt(n)/log n`.
+
+This does not yet create an estimate for the high-order part.  A Kummer
+sheaf can have bounded geometric conductor as its character order grows
+inside one finite field, but the residual field, character, and selected
+Mellin coefficient all move together here.  A vertical equidistribution
+or large-sieve theorem over many characters of one field does not
+control the single prescribed character in each different field.
+Restriction-of-scalars rank growth is relevant to a characteristic-zero
+compatible-system approach, but is not by itself an obstruction to a
+finite-field trace estimate.
+
+The delivered Q817 file is incomplete: it ends at Section 7, while its
+executive verdict cites Sections 8--10 and a sufficient composite-modulus
+local-limit theorem that do not occur in the answer.  Its unsupported
+claim that the generic Mellin cohomology is rank two, pure of weight
+three, symplectic, and has connected monodromy `SL_2` is also not
+accepted without a primary citation and exact exceptional-character
+hypotheses.  Q854 requests the missing sections, a citation audit, and
+an explicit exponent calculation for the strongest applicable large
+sieve.  Until that returns, the only unconditional gain from Q817 is the
+low-order reduction `(154.1)`.
+
+## 155. Operational failure: `ask-gpt.py --help` is a submitted question
+
+The polling wrapper has no ordinary `--help` branch.  Running
+`ask-gpt.py --help` therefore submitted the literal text `--help` as
+Q852 to `dm4`.  This consumed one tab temporarily but did not alter any
+mathematical state.  Future usage inspection must read the script source;
+real prompts are passed as the sole positional argument.  The analytic
+follow-up is queued to replace Q852 on `dm4` as soon as the accidental
+request terminates.
