@@ -8175,3 +8175,62 @@ single Fitting presentation that correctly incorporates the varying
 indices in `(161.2)`, or a rigorous saturation counterexample.  Until one
 of those steps is proved, `(161.3)` remains a promising numerical
 strengthening, not an unconditional advance.
+
+## 162. Growth and integer interpolation alone cannot bound the family gcd
+
+There is a rigorous adversarial construction showing what a proof of
+`(161.3)` must use.  Fix any `rho>1` and a rapidly separated sequence
+`H_m=4^m`.  For every prime
+
+`2H_m<p<=(5/2)H_m`
+
+assign the distinct index
+
+`j_(m,p)=3H_m+1-p`.
+
+These indices lie in `[H_m/2,H_m]`, and the index blocks for distinct `m`
+are disjoint.  Define a positive integer sequence `B_j` as follows.  At an
+assigned index, take the least positive multiple of `p` not below
+`rho^j`; at every other index take `ceil(rho^j)`.  Then
+
+`B_j/rho^j -> 1`.                                  `(162.1)`
+
+Indeed, the rounding error at an assigned index is at most
+`p=O(H_m)`, whereas `j>=H_m/2`, so the relative error is exponentially
+small.  The same construction works with the sharper model scale
+`rho^j j^(-3/2)` by rounding that quantity to the next multiple of `p`.
+
+For `n_m=3H_m+1`, every selected prime satisfies
+
+`p=n_m-j_(m,p)` and `p|B_(j_(m,p))`.
+
+Consequently its direct moving-prime weight obeys
+
+`sum_(0<=j<=H_m, n_m-j prime, n_m-j|B_j) log(n_m-j)`
+
+` >= theta((5/2)H_m)-theta(2H_m)`
+
+` = (1/2+o(1))H_m`                                 `(162.2)`
+
+by the prime number theorem.  Thus positivity, integrality, and even the
+correct first-order exponential-plus-polynomial size of the sampled
+sequence are compatible with a linear direct-prime weight along an
+infinite subsequence.
+
+The obstruction passes through every universal interpolation certificate:
+if an integral Newton polynomial `P` satisfies
+
+`P(s)=B_s Q(s)` for `0<=s<=H_m`,
+
+then for a selected `p>2H_m`, degree `<p` and `n_m=j_(m,p) mod p` give
+
+`P(n_m)=P(j_(m,p))=0 mod p`.
+
+Hence every numerator in any Padé family retains all primes in `(162.2)`,
+regardless of how its Smith presentation is organized.  This does not
+disprove `(161.3)` for the Apéry sequence: the constructed `B_j` does not
+satisfy the Apéry recurrence, reflection, or Dwork congruences.  It does
+prove that a whole-family determinant argument based only on integer
+interpolation and Archimedean growth cannot work.  A successful Fitting
+estimate must insert a recurrence-specific restriction on the minors or a
+cross-prime consequence of the Apéry differential equation.
