@@ -1,6 +1,13 @@
 name: Q889 Padé family gcd
 
 on:
+  push:
+    branches:
+      - 'agent/q889-pade-family-gcd-fast'
+    paths:
+      - 'problems/3.2/research/scripts/q32_pade_family_gcd_fast.cpp'
+      - 'problems/3.2/research/scripts/q32_pade_family_gcd_fast_report.py'
+      - '.github/workflows/q889-pade-family-gcd.yml'
   pull_request:
     paths:
       - 'problems/3.2/research/scripts/q32_pade_family_gcd_fast.cpp'
