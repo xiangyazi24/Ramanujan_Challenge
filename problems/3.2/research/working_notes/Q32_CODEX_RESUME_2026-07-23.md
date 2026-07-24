@@ -6961,3 +6961,35 @@ as the direct q=1 moving-zero estimate; it is not implied by the adjacent
 identity.  Reopen this route only with input about the actual Apéry
 holonomy/moment sequence beyond interpolation, Smith normalization,
 Plücker relations, and the universal binomial carrier.
+
+## 142. Canonical repository consolidation and next hostile batch
+
+The active campaign has been consolidated into the canonical GitHub
+repository `xiangyazi24/Ramanujan_Challenge`.  Commit `710a25d` contains
+the historical questions and answers, proof drafts, failed-route log, and
+reproducible scripts.  The Mini-synchronized Lean commits were preserved
+without modification; Lean is not the current research priority.  Commit
+`6aea822` adds the exact new prompt texts.  The stale Q-series checkout and
+the non-Git snapshot remain only as recovery copies.
+
+The next ChatGPT batch is deliberately split across six nonoverlapping
+paper-proof targets:
+
+- Q800: exploit the common Apéry initial state `(1,5)` across residue
+  characteristics to prove cross-prime expansion;
+- Q801: compute the selected order-two constant Hasse minor and determine
+  whether signed cancellation beats the ray height barrier;
+- Q802: attack one fixed interior adjacent Padé gcd using actual Apéry
+  arithmetic beyond universal interpolation identities;
+- Q803: prove or refute the missing `H`-scale strong asymptotic for the
+  signed proportional Krawtchouk deformation;
+- Q804: derive the mod-`p^2` ray-quotient formula needed to obtain a second
+  selective factor without exterior degree;
+- Q806: search for, or sharply rule out, a pointwise moving-linear
+  prime-divisor theorem for
+  `sum_(j<=H, n-j prime, n-j|A_j) log(n-j)`.
+
+Every answer remains untrusted until its load-bearing identity is
+independently derived or exactly checked.  Failed attempts must be recorded
+with the precise saturation mechanism and the condition under which they
+could be reopened.
