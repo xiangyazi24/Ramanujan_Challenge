@@ -28,7 +28,7 @@ jobs:
           python3 -m pip install --disable-pip-version-check sympy
       - name: Compile shared-elimination scanner
         run: |
-          g++ -O3 -DNDEBUG -std=c++17 \
+          g++ -O3 -std=c++17 \
             problems/3.2/research/scripts/q32_pade_family_gcd_fast.cpp \
             -lgmpxx -lgmp \
             -o /tmp/q32_pade_family_gcd_fast
