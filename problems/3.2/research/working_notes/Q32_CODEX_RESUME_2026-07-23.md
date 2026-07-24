@@ -8583,3 +8583,183 @@ multi-degree anchored family.  Q900 attacks the hard small-kernel
 parametrization `n-1=gD`, `j=gk`, `p=1+g(D-k)`.  Q901 asks whether a
 certificate allowed to depend on a hypothetical large hit set can evade
 the universal full-grid CRT countermodels.
+
+## 169. Hit-adaptive modular Siegel lattices collapse to one evaluation index
+
+There is an exact obstruction to the most tempting adaptive construction.
+Let `J` be any set of hit nodes, put `p_j=n-j` and
+
+`R_J=prod_(j in J) p_j`,
+
+and let `L<min_(j in J)p_j`.  For an integral binomial-basis polynomial
+
+`P(x)=sum_(k=0)^L c_k binom(x,k)`,
+
+define the congruence lattice
+
+`Lambda_J={c:p_j|P(j) for every j in J}`.
+
+Since `n=j mod p_j` and every `k<p_j`, binomial reduction gives
+
+`P(n)=P(j) mod p_j`.
+
+The converse is equally immediate.  Therefore
+
+`Lambda_J={c:R_J|P(n)}`.                            `(169.1)`
+
+The evaluation map from `ZZ^(L+1)` to `ZZ`, `c -> P(n)`, is surjective
+because the constant coefficient is free.  Hence `Lambda_J` has index
+exactly `R_J`; its evaluation-zero sublattice has rank `L`, and every
+vector outside that hyperplane has
+
+`|P(n)|>=R_J`.                                     `(169.2)`
+
+Thus taking `L` much larger than the number of hits does not distribute
+the determinant among many lattice directions.  All of the target
+radical is concentrated in the single evaluation quotient.  Minkowski
+or Siegel lemma can return many very short vectors, but they may all lie
+in `P(n)=0`; the first vector with nonzero evaluation already pays the
+unknown radical.  This is not a heuristic skew-lattice warning: it is
+the exact equality `(169.1)`.
+
+If one imposes the exact hit-node equations
+
+`P(j)=A_j Q(j)`,
+
+then every target prime still sends the numerator coefficient vector
+into `Lambda_J`.  A useful adaptive theorem would therefore have to use
+the exact Apéry equalities to prove that a *nonzero-evaluation* vector is
+small.  A dimension count or a modular Siegel bound alone is circular.
+This closes the purely congruential version of Q901 while leaving open a
+recurrence-specific exact-interpolation construction.
+
+## 170. The fixed four-zero tail shows linear-scale pollution numerically
+
+Q871 proposes the candidate four-prefix-zero estimate as the next lemma
+for its fixed degree-three certificate.  The complete zero-pair bank
+through prime `2,000,000` gives adverse evidence.  For candidate primes
+`2H<p<=3H+1`, define
+
+`z_p(H)=#{0<=s<=H:p|A_s}`.
+
+The exact finite measurements for primes with `z_p(H)>=4` are:
+
+| `H` | count | total `log(p)/H` | good-node `log(p)/H` |
+|---:|---:|---:|---:|
+| 20,000 | 1 | 0.000533623 | 0.000533623 |
+| 50,000 | 7 | 0.001629872 | 0.001629872 |
+| 100,000 | 2 | 0.000246654 | 0.000246654 |
+| 200,000 | 11 | 0.000723063 | 0.000723063 |
+| 400,000 | 25 | 0.000857732 | 0.000857732 |
+| 600,000 | 36 | 0.000849720 | 0.000849720 |
+
+At every listed height, none of these high-zero primes has the moving
+node as a zero.  The sample is finite and does not disprove a little-oh
+theorem.  It is, however, consistent with the measured Poisson law for
+zero pairs: a fixed tail event such as `z>=4` should have a small
+positive limiting frequency, hence linear logarithmic weight rather
+than little-oh weight.  A fixed numerator degree should therefore be
+expected to retain a small but linear automatic-content pollution.
+
+This makes a fixed-degree anchored certificate an implausible completion.
+Letting the degree threshold grow removes the fixed Poisson tail but
+returns to the full growing-family problem.  The reproducible finite
+audit is `q32_candidate_prefix_zero_tail.py`.
+
+## 171. Q889 supplies a computational optimization, not a height theorem
+
+Q889 rediscovers the exact zero-absorber support formula and the two first
+later target heights `H=74,p=193` and `H=80,p=197`.  Those full integer
+gcds had already been computed in Section 162, so its statement that the
+small- and middle-prime factors were unavailable is stale.  Its genuinely
+new proposal is to reverse the Newton multiplication matrix and observe
+that all denominator kernels are nested prefixes
+
+`K[0..b-1,0..b]`.
+
+If every leading flag minor used as a Bareiss pivot is nonzero, one
+fraction-free elimination of the master matrix followed by one
+back-substitution for each prefix recovers the whole primitive Padé family.
+This reduces the arithmetic-operation count from repeated cofactor
+determinants to
+
+`O(H^3+A H^2)`.
+
+The proposal is conditional: no all-height nonvanishing theorem for the
+chosen flag minors is known, and the answer did not deliver a locally
+executed implementation.  Pivoted exact nullspaces remain a valid fallback
+for computation.  More importantly, the shared elimination does not
+control the degree-dependent maximal-minor divisors `delta_(H,a)` and
+therefore gives no sublinear certificate.  It is useful engineering but
+does not alter the proof frontier.
+
+Q901 contains only its answer header and contributes no mathematical
+content.  Its exact-interpolation question has been resubmitted as Q912
+after incorporating the lattice collapse `(169.1)`.
+
+## 172. Q902's anchored support ledger survives only after basis correction
+
+Q902 again asserts that
+
+`W_(1,b)=P_(H,1)Q_(H,b)-P_(H,b)Q_(H,1)=Phi_H K_(H,b)`
+
+has `K_(H,b)` in `ZZ[x]`.  This is false for the canonical primitive
+family, whose coefficients are integral in the binomial basis.  For
+example, the exact degree-one/degree-three quotient has clearing
+denominators `3,9,18` at `H=3,4,5`.  One can instead rescale each pair to
+be integral in the ordinary power basis, or clear the denominator of
+`K_(H,b)`.  Every resulting denominator has prime factors at most `H`, so
+this correction does not change any reduction at a candidate prime
+`p>2H`.  Q902's ordinary-power-basis coefficient formulas must not be
+identified with the canonical primitive normalization or with its global
+height.
+
+After this correction, two local results are valid.
+
+First, at an interpolation node `j`,
+
+`Phi_H'(j)K_(H,b)(j)
+ =D_(H,1)(j)Q_(H,b)(j)-D_(H,b)(j)Q_(H,1)(j)`,
+
+where
+
+`D_(H,a)(j)=P_(H,a)'(j)-A_jQ_(H,a)'(j)`.
+
+For a good candidate at which the degree-one anchor vanishes, the second
+term is zero.  If `D_(H,1)(j)` is a unit, vanishing of the cleared
+`K_(H,b)` is equivalent to vanishing of `P_(H,b)`; on the derivative
+defect locus all anchored quotients vanish automatically.  This precisely
+identifies the missing converse in Q871.
+
+Second, the anchored numerator degrees
+
+`{1,3,4,...,B}`
+
+have four disjoint candidate support classes:
+
+1. the target moving node is a prefix zero;
+2. `z_p(H)=0` and the moving node is a common extra projective root;
+3. `z_p(H)=2` and it is a common extra root of all degrees at least three;
+4. `z_p(H)>B`, so every selected numerator is killed by content.
+
+No other good class is possible: degree one removes `z=1`, and degree
+`a=z` removes each `3<=z<=B`.  Adding the missing degrees zero and two
+removes the two permanent extra-root classes and recovers exactly the full
+growing-family support theorem.  Thus the anchored family is strictly
+weaker, not a compression of the full family.
+
+The independent exact script `q32_anchored_family_ledger.py` verifies the
+interpolation identities, rational quotient degrees and denominators,
+support split, derivative-defect implication, and regular-locus
+equivalence.  It passed 128 candidate primes for every `6<=H<=32` with
+`B=6`, then the 30 candidates at `H=74,80`.  The latter two heights retain
+exactly the targets `193` and `197`; no `E_0`, `E_2`, high-zero,
+derivative-defect, or false-positive quotient occurred in these finite
+ranges.  The cleared quotient denominators are already enormous, despite
+having only small prime support.  This confirms the local algebra but
+supplies no asymptotic estimate.
+
+The next oracle round is deliberately split: Q910 asks for target-specific
+high-zero `p`-adic amplification, Q911 asks for a growing zero-tail bound
+and its optimal threshold, and Q912 retries exact hit-adaptive Padé
+interpolation after the modular Siegel lattice was proved circular.
