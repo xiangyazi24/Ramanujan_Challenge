@@ -8330,3 +8330,162 @@ actual Apéry recurrence to bound the frequency of a positive excess in
 normalized values of height `exp(o(H))`.  Q888 attacks this exact
 recurrence-minor problem.  Q887 asks for an independent audit and any
 additional p-adic consequences of `(163.2)`.
+
+## 164. Fast primitive kernels reach the first nontrivial target heights
+
+The original `q32_pade_family_gcd.py` formed every coordinate of a kernel
+vector as a separate large cofactor.  At `H=74` this failed to return in a
+useful time.  The script now forms the same bottom Padé matrix over `ZZ`
+and calls one fraction-free `DomainMatrix.nullspace()` per numerator
+degree, followed by a gcd normalization of its single kernel row.  The
+new kernel agrees up to global sign with the old cofactor kernel in all
+133 pairs for every degree and `2<=H<=15`; every interpolation equation is
+still checked before a value enters the gcd.
+
+The first nontrivial direct target is now accessible.  At `H=74`,
+`A=ceil(H^(2/3))=18`, the exact output is
+
+`G_(74,18)(223)=5^2*17*31*193`.
+
+The candidate window contains exactly the target prime `193`, at moving
+node `30`; its prefix zero set has cardinality two.  The total gcd has 22
+bits, and the computation takes 11.7 seconds rather than the uncompleted
+repeated-cofactor run.  At the second target height,
+
+`G_(80,19)(241)=`
+
+`5^4*17^2*31*37*59*61*197`.
+
+Again the only candidate-window factor is the target, now `197` at node
+`44`; the total gcd has 48 bits.  This is important evidence because it
+samples both a multi-zero target (`H=74`) and a unique-zero target
+(`H=80`).  It removes the earlier caveat that all larger computed gcds
+had empty direct support.
+
+The evidence still does not establish a rate.  The total logarithmic
+ratios are about `0.1993` and `0.4078`, respectively, and are not
+monotone.  The candidate contribution at each height is only one prime,
+so its ratio is automatically `O(log H/H)` in these two examples.
+Pointwise control of heights having many simultaneous targets remains the
+theorem.
+
+Two larger empty-window controls show that the total family gcd remains
+small but irregular:
+
+`G_(100,22)(301)=5^2*11*19*31*41*59*61*73`
+
+has 41 bits and stabilizes already at numerator degree `19`, while
+
+`G_(120,25)(361)=5^3*19*61*73*97`
+
+has 30 bits and stabilizes at degree `21`.  Their logarithms divided by
+`H` are approximately `0.28188` and `0.17291`.  Neither height has a
+candidate-window or target factor.  These computations therefore test
+the fast kernel and early stabilization, but give no evidence about the
+worst pointwise target support.
+
+## 165. Global projective resultants forget the moving node and pollute
+
+After `(163.2)`, it is natural to divide each numerator by its coefficient
+content and consider the primitive projective polynomials
+
+`Z_(H,a)=P_(H,a)/content(P_(H,a))`.
+
+Once `a` is at least the prefix zero count, every target prime is a root
+prime of every later `Z_(H,a)`.  The script
+`q32_pade_projective_resultants.py` therefore computes adjacent resultants
+through the tail
+
+`Z_(H,L),...,Z_(H,ceil(H^(2/3))+1)`,
+
+where `L` is the maximum candidate-prefix zero count, and takes their
+gcd.  Factorial scaling converts the binomial-basis polynomials to
+primitive members of `ZZ[x]`; all scaling factors are units at candidate
+primes.
+
+The result is adverse.  The gcd of the tail resultants already has 50
+bits at `H=5`, 195 bits at `H=10`, and 539 bits at `H=16`; the individual
+resultants at `H=16` have 1,616 to 6,690 bits.  More decisively, the gcd
+has systematic candidate-window pollution even when the direct target is
+empty:
+
+- `H=6`: `17` occurs at moving node `2` as a good prime;
+- `H=8`: both `19` at node `6` and `17` at node `8` are good;
+- `H=14`: `41` at node `2` and `31` at node `12` are good.
+
+The mechanism is exact.  A prefix Apéry zero at *any* node is a common
+root of the projective tail modulo `p`, so a global resultant records it
+without remembering whether that root is the required moving node
+`3H+1-p`.  This reintroduces the same alignment pollution that the
+evaluation gcd had removed.  A resultant attack can advance only if it
+localizes the common root to the moving residue; doing that by direct
+evaluation returns to `(163.4)`.  Q890 audits whether the Apéry recurrence
+provides a non-circular localization, but the naive projective resultant
+route is closed.
+
+## 166. Sol audit of Q869, Q887, Q888, and Q890
+
+Q887 independently proves `(163.2)` in the correct generality.  The proof
+uses only that the interpolation nodes are distinct modulo the DVR
+uniformizer and that `(P,Q)` is a primitive integral pair.  It does not
+use one-dimensionality of the Padé kernel or any normality assumption.
+The lower bound is layer-by-layer root counting for `P`; one extra layer
+would make `Q` vanish at `H-a+1` distinct nodes and hence make both
+polynomials divisible by the uniformizer.  This confirms the local
+theorem but supplies no global height estimate.
+
+Q869 predates that theorem and its unique-zero discussion is not safe for
+higher multiplicity.  It proves only that a unique zero `r` gives
+`p|z_H(r)` and then leaves open
+
+`v_p(m_H)=max(0,v_p(A_r)-v_p(z_H(r)))`.
+
+It consequently permits a residual multiplier when `v_p(A_r)>1`.
+Equation `(163.1)` rules this out exactly: with a unique prefix zero the
+second-largest node valuation is zero, so `v_p(m_H)=0` regardless of the
+multiplicity at `r`.  Q869's exponent-one classification and its modular
+scan remain useful, but its proposed high-multiplicity nuisance term is
+superseded.
+
+Q888 contains one verified Apéry-specific identity.  For
+
+`N_(r,l)=Delta^r A_l`,
+
+applying finite differences to the cubic Apéry recurrence gives its
+displayed 12-term stencil on rows `k-1,k,k+1` and columns `l-1,...,l+4`.
+Direct exact tests pass 425 instances of the finite-difference identity
+and 630 instances of its weighted-value form.
+
+The claimed compound-minor continuation is not proved.  A scalar
+relation for one entry cannot be inserted into a determinant and turned
+into a minor obtained by moving a whole row or column: determinant
+multilinearity applies to entire rows or columns, whereas the other
+entries in the selected row and column do not undergo Q888's move.
+Moreover the annihilating operator in its Section 3 depends on the
+column index `l`; no explicit common displacement identity of the form
+
+`sum_i L_i M R_i = B`
+
+with a rigorously bounded boundary matrix `B` is supplied.  Thus the
+families `S_(H,a)`, `sigma_(H,a)`, and `q_(H,a)` in Q888 Sections 4--8
+are not yet consequences of the valid scalar stencil.  Q894 asks for
+exactly such an operator identity and a legitimate exterior-power or
+Cauchy--Binet lift, or a retraction of those claims.
+
+Q890 confirms the projective-resultant no-go in Section 165.  If
+`Z_p(H)` is the prefix zero set and `z=|Z_p(H)|`, then for every
+content-stripped degree `a>=z`,
+
+`D_p(x)=prod_(s in Z_p(H))(x-s) | Z_(H,a)(x) mod p`,
+
+with equality up to a unit at `a=z`.  Hence the gcd of the whole
+projective tail over `F_p[x]` is exactly `D_p`, and every ordinary
+resultant records the existence of *any* prefix zero.  Eliminating `x`
+therefore loses the moving-root condition.  The first nonzero
+subresultant, evaluated at the moving residue, is an exact reformulation
+of the target; its index and residue are both prime-dependent, so it is
+not yet a fixed small-height certificate.  Q896 asks whether a fixed
+integer subresultant chain can preserve that marked evaluation without
+recreating the Padé-family gcd.  Q897 separately attacks the equivalent
+fixed-sum diagonal `p+j=n`, `p>2j`, while retaining the hard order split
+`(154.2)`.

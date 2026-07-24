@@ -1,0 +1,373 @@
+
+is not closed. More importantly, the new exact support classification shows that it should not currently be treated as a plausible sparse-support theorem.
+
+Q850 gives
+
+
+For every candidate prime
+
+
+one has
+
+
+Hence the support of W_H is exactly the set of candidate primes satisfying
+
+
+The strongest rigorous result is the following complete local classification.
+
+
+Thus the four requested tags are most accurately used as overlapping flags:
+
+
+The non-target support has the exact structural decomposition
+
+
+The first set is not merely possible pollution: every prime in it is forced into m_H.
+
+The current canonical C++ scan, recorded in the working note, reaches H=50000. At H=50000, the logarithmic weight of candidate primes with at least two prefix zeros is
+
+
+coming from 317 primes. Over
+
+
+the maximum ratio is
+
+
+at H=49980. At H=50000 the actual moving target set is empty. This does not prove a positive asymptotic lower bound, but it rigorously defeats the finite-range sparse-pollution heuristic: the largest presently accessible scan shows a stable positive-looking forced-pollution mass rather than decay.
+
+Accordingly:
+
+
+A second independent certificate is needed to remove the multiplier pollution; increasing the numerator degree gives the exact zero-absorber rule discussed at the end.
+
+---
+
+# 1. Candidate primes are exactly the binomial window
+
+Let
+
+
+Since p>H+1 and p>2H, Legendre's formula gives
+
+
+Therefore
+
+
+No candidate prime occurs with higher multiplicity in the binomial coefficient. Hence radicalization loses no relevant local information:
+
+
+This also proves that every support classification can be carried out modulo p after the local normalization of z_H is handled correctly.
+
+---
+
+# 2. Q850's exact primitive data
+
+Use
+
+
+The coefficient pair of z_H is primitive:
+
+
+Q850 proves
+
+
+For every prime p, the local multiplier exponent is
+
+
+This formula is the only multiplier input needed below.
+
+---
+
+# 3. Proof of the classification theorem
+
+## 3.1 No prefix zero implies no multiplier support
+
+If
+
+
+then
+
+
+for every node. The local formula immediately gives
+
+
+This proves part (1).
+
+## 3.2 Two prefix zeros force multiplier support
+
+Assume there are distinct nodes
+
+
+Suppose for contradiction that
+
+
+Since p|A_r and p|A_t, nodewise integrality
+
+
+forces
+
+
+But z_H is a nonzero linear polynomial modulo p: its two integer coefficients are coprime, so they cannot both vanish modulo the same prime. Also
+
+
+so r and t are distinct in F_p. A nonzero linear polynomial cannot have two distinct roots. Contradiction.
+
+Therefore
+
+
+This proves part (2). Notice that no simplicity assumption on the Apéry zeros is used.
+
+## 3.3 One zero: cleared moments localize at that node
+
+Assume
+
+
+Then e is the maximum p-adic valuation among A_0,...,A_H. Divide the cleared moments by the common p-adic unit L_H/p^e. Modulo p, every term except s=r vanishes, while the surviving term is a unit because
+
+
+Consequently
+
+
+In particular
+
+
+Since z_H is nonzero linear modulo p, r is its unique root modulo p. Hence
+
+
+Now
+
+
+Thus
+
+
+This proves the root statement in parts (3) and (4).
+
+The multiplier statement is now exactly Q850's local formula. At every node other than r, v_p(A_s)=0; therefore
+
+
+If e=1, the already proved congruence p|z_H(r) gives
+
+
+This proves parts (3) and (4).
+
+## 3.4 Every target prime is supported
+
+Let
+
+
+If there is another prefix zero, part (2) gives p|m_H. If j is the unique prefix zero, part (4) gives p|z_H(n), because j=n-p. Hence in all cases
+
+
+and the binomial-window lemma gives
+
+
+This proves part (5).
+
+---
+
+# 4. Exact interpretation of the four support tags
+
+The requested classes are not disjoint. The correct record for one candidate prime is a four-bit tag.
+
+
+Examples of logically possible tags are
+
+
+A unique simple non-target zero has no tag at all:
+
+
+This is the strongest sparsification furnished by the a=1 structure.
+
+---
+
+# 5. Hostile audit of the proposed finite-range patterns
+
+## 5.1 Content and root support are not interchangeable
+
+The exact theorem separates them sharply.
+
+
+Thus neither factor can be discarded.
+
+## 5.2 Support does not force a second Apéry zero
+
+The assertion
+
+
+is false for two independent reasons.
+
+First, every direct target prime having one simple prefix zero is supported through z_H(n). Second, a zero-free prime can in principle divide z_H(n); the exact scan records such root pollution separately.
+
+The valid replacement is
+
+
+## 5.3 Uniqueness of a prefix zero is false
+
+The current prime-centric modular scan finds hundreds of candidate primes with at least two zeros in the prefix by height 50000. Therefore any theorem assuming that a candidate prime has at most one Apéry zero in 0,...,H is already numerically false over a large exact range.
+
+This is compatible with the reflection law for Apéry zeros modulo p: lower-half zeros commonly occur in distinct reflection orbits. The computation does not prove an asymptotic density, but it decisively prohibits using uniqueness as an unchecked lemma.
+
+## 5.4 Sparse multiplier support is not observed
+
+Define
+
+
+The classification theorem proves
+
+
+The recorded exact scan gives
+
+
+This is a rigorous finite computation, not an asymptotic theorem. It does show that the hoped-for sparse multiplier support is absent throughout the largest scanned range.
+
+---
+
+# 6. Efficient reproducible scans
+
+Two complementary programs are already present on canonical main.
+
+## 6.1 Full exact local classification through moderate H
+
+File:
+
+
+It avoids constructing the degree-H-1 denominator and avoids constructing m_H itself. It computes
+
+
+and checks local valuations directly. The output uses tags
+
+
+Reproduce with
+
+
+This implementation uses exact integers but still constructs the prefix lcm, so it is intended as the full-classification verifier rather than the large-range engine.
+
+## 6.2 Prime-centric modular scan through H=50000 and beyond
+
+File:
+
+
+It never constructs Apéry integers, reciprocal moments, L_H, m_H, or the Padé denominator. For each prime it computes the Apéry recurrence modulo that prime through the largest relevant prefix, and accumulates for all compatible heights:
+
+
+Compile and run with
+
+
+The algorithm is exact modulo each candidate prime. Its central recurrence is
+
+
+and every denominator is invertible because
+
+
+The scan is substantially faster than the Fraction implementation because it is prime-centric and reuses one prefix orbit for every compatible height.
+
+## 6.3 Fail-closed full-classification extension
+
+To classify M and R at much larger selected heights without global fractions, use the following local p-adic moment algorithm.
+
+For one candidate prime, set
+
+
+In Z_p, define
+
+
+The omitted factor
+
+
+is a common p-adic unit, so it does not affect valuations or the normalized root. Put
+
+
+Then the exact radical flags are
+
+
+A modular implementation computes the Apéry orbit modulo p^K, doubles K whenever an observed valuation reaches the precision boundary, and accepts a classification only when every compared valuation is strictly below K. This is fail-closed: no prime is classified from truncated equalities.
+
+The following pseudocode is sufficient to implement the extension in C++ using uint64_t plus __int128 for ordinary cases and boost::multiprecision::cpp_int only on precision escalation.
+
+
+For scanning all heights, the binomial transforms can be batched by convolution:
+
+
+with the analogous transform for Eta_H after replacing B_s by sB_s. Because H<p, all factorials are units modulo p^K. An arbitrary-modulus NTT/CRT convolution therefore reduces the per-prime transform from quadratic to quasi-linear time. This optimization is not needed for the already completed H=50000 multi-zero scan, but it is the correct route for a full M/R census at comparable range.
+
+---
+
+# 7. The strongest rigorous lower obstruction to log W_H=o(H)
+
+Define
+
+
+The forced multi-zero lemma gives the unconditional inequality
+
+
+Therefore the proposed target implies the separate theorem
+
+
+This is a strictly necessary condition. It does not involve the Padé root, primitive scaling, reciprocal moments, or any projective asymptotics. It is purely a vertical zero-multiplicity statement in a moving prime window.
+
+Presently there is no theorem proving it. The available continuant bound
+
+
+is far too weak: it bounds the number of zeros for one prime, not the weighted number of primes having at least two zeros in one moving prefix.
+
+The current scan suggests that D_2(H)/H may stay positive, but no positive lower limit has been proved. Thus the most honest status is
+
+
+---
+
+# 8. Exact remaining gap, decomposed into three estimates
+
+Let
+
+
+The classification theorem gives
+
+
+and, more precisely, the support is the union of those sets with the target roots, with overlaps counted only once.
+
+A proof of
+
+
+would reduce log W_H=o(H) to the original direct target weight. But using W_H to prove the original target requires proving the whole union is o(H), so these estimates are not automatic simplifications.
+
+The first estimate is currently the dominant obstruction. The second is likely smaller but needs a uniform theorem on repeated prime divisibility of Apéry values. The third is an independent linear-moment congruence with no known Apéry-zero interpretation.
+
+---
+
+# 9. Why increasing numerator degree changes, but does not automatically solve, the obstruction
+
+For the primitive Padé pair with
+
+
+put
+
+
+Reduction modulo a candidate prime gives the exact zero-absorber lemma
+
+
+The forward implication follows because a nonzero degree-a polynomial cannot vanish at more than a interpolation nodes. Conversely, if the reduced numerator is zero, the reduced denominator must vanish at every nonzero Apéry node; the degree bound forces at least a+1 zero nodes.
+
+For a=1, this is exactly the forced multiplier phenomenon:
+
+
+so the prime divides the numerator content.
+
+A second certificate, or a family with numerator degree growing beyond the observed zero multiplicity, can separate this pollution. But a single fixed a always absorbs every prime with more than a prefix zeros into its content. Therefore the correct continuation is not another sparsity conjecture for one fixed numerator. It is a separation theorem using two or more certificates whose content supports do not align.
+
+---
+
+# Final conclusion
+
+The a=1 primitive-integrality formula yields a complete and useful local theorem, but the new radical W_H does not presently close Problem 3.2.
+
+The bankable theorem is
+
+
+It proves every direct target prime is supported and gives an exact four-tag classification. It also identifies a forced pollution family whose measured logarithmic mass is approximately 0.0743H at height 50000.
+
+Therefore the precise remaining gap is not an uncomputed Smith factor or a missing projective asymptotic. It is the new horizontal/vertical statement
+
+
+plus control of high-multiplicity residual support and zero-free root support. No known lemma proves these estimates, and the first one is contrary to the current finite data.
+
+The route should be classified as follows:

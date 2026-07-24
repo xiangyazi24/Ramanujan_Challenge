@@ -21,14 +21,17 @@ from __future__ import annotations
 import argparse
 from math import gcd, log
 
+from sympy import ZZ
+from sympy.polys.matrices import DomainMatrix
+
 from q32_adjacent_pade_kappa import (
     apery_values,
     evaluate_newton,
     is_prime,
     log_integer,
     newton_coefficients,
-    primitive_pair,
 )
+from q32_pade_total_positivity import entry
 
 
 def ceil_two_thirds(height: int) -> int:
@@ -39,6 +42,38 @@ def ceil_two_thirds(height: int) -> int:
     while cutoff**3 < target:
         cutoff += 1
     return cutoff
+
+
+def primitive_pair_fast(
+    height: int,
+    numerator_degree: int,
+    differences: list[int],
+) -> tuple[list[int], list[int]]:
+    """Compute one primitive pair with a single fraction-free nullspace."""
+
+    denominator_degree = height - numerator_degree
+    if denominator_degree == 0:
+        return differences[: height + 1], [1]
+    rows = [
+        [
+            ZZ(entry(row, column, differences))
+            for column in range(denominator_degree + 1)
+        ]
+        for row in range(numerator_degree + 1, height + 1)
+    ]
+    nullspace = DomainMatrix.from_list(rows, ZZ).nullspace()
+    assert nullspace.shape == (1, denominator_degree + 1)
+    denominator = [int(value) for value in nullspace.to_list()[0]]
+    common = abs(gcd(*denominator))
+    denominator = [value // common for value in denominator]
+    numerator = [
+        sum(
+            denominator[column] * entry(row, column, differences)
+            for column in range(min(denominator_degree, row) + 1)
+        )
+        for row in range(numerator_degree + 1)
+    ]
+    return numerator, denominator
 
 
 def candidate_data(
@@ -67,7 +102,7 @@ def factor_small(value: int) -> str:
     """Format the exact factorization when the residual gcd is small."""
 
     value = abs(value)
-    if value == 0 or value.bit_length() > 128:
+    if value == 0 or value.bit_length() > 48:
         return "-"
     factors: list[str] = []
     divisor = 2
@@ -96,6 +131,7 @@ def audit_height(
     data, maximum_zero_count = candidate_data(height, apery)
 
     common = 0
+    running_gcds: list[int] = []
     milestones = {
         0,
         min(1, cutoff),
@@ -106,9 +142,9 @@ def audit_height(
     milestone_rows: list[tuple[int, int, float]] = []
 
     for numerator_degree in range(cutoff + 1):
-        numerator, denominator = primitive_pair(
+        numerator, denominator = primitive_pair_fast(
             height,
-            height - numerator_degree,
+            numerator_degree,
             differences,
         )
         for node in range(height + 1):
@@ -117,6 +153,7 @@ def audit_height(
             )
         value = evaluate_newton(numerator, n)
         common = gcd(common, abs(value))
+        running_gcds.append(common)
         if numerator_degree in milestones:
             milestone_rows.append(
                 (
@@ -147,6 +184,12 @@ def audit_height(
     for prime in candidate_primes:
         candidate_radical *= prime
 
+    stabilization_degree = next(
+        degree
+        for degree, running_gcd in enumerate(running_gcds)
+        if running_gcd == common
+    )
+
     milestones_text = ",".join(
         f"a={degree}:bits={bits}:log/H={rate:.6f}"
         for degree, bits, rate in milestone_rows
@@ -155,6 +198,7 @@ def audit_height(
         f"H={height} A={cutoff} max_z={maximum_zero_count} "
         f"G_bits={common.bit_length()} "
         f"G_factor={factor_small(common)} "
+        f"stable_a={stabilization_degree} "
         f"log_G/H={log_integer(common) / height:.6f} "
         f"window_count={len(candidate_primes)} "
         f"log_window/H={log_integer(candidate_radical) / height:.6f} "
