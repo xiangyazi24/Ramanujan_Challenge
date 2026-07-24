@@ -6972,7 +6972,7 @@ without modification; Lean is not the current research priority.  Commit
 `6aea822` adds the exact new prompt texts.  The stale Q-series checkout and
 the non-Git snapshot remain only as recovery copies.
 
-The next ChatGPT batch is deliberately split across six nonoverlapping
+The next ChatGPT batch is deliberately split across seven nonoverlapping
 paper-proof targets:
 
 - Q800: exploit the common Apéry initial state `(1,5)` across residue
@@ -6988,8 +6988,172 @@ paper-proof targets:
 - Q806: search for, or sharply rule out, a pointwise moving-linear
   prime-divisor theorem for
   `sum_(j<=H, n-j prime, n-j|A_j) log(n-j)`.
+- Q817: audit from first principles whether the fixed-outer-index quantity
+  `A_n mod p` is a Frobenius trace or Hasse invariant of one fixed
+  `n`-dependent fiber, and whether any available uniform Frobenius sieve
+  survives the growing height and the moving trace multiplier.
 
 Every answer remains untrusted until its load-bearing identity is
 independently derived or exactly checked.  Failed attempts must be recorded
 with the precise saturation mechanism and the condition under which they
 could be reopened.
+
+## 143. Q800: the fixed initial state gives an exact star lattice, not expansion
+
+Q800 supplies a clean integral formulation of the cross-characteristic
+coherence that Q778 deliberately omitted.  For arbitrary initial data
+`u_0=x,u_1=y`, put
+
+`X_m=(m!)^3 u_m`.
+
+Then the Apéry recurrence becomes
+
+`X_(m+1)=P(m)X_m-m^6X_(m-1)`,
+
+where `P(m)=34m^3+51m^2+27m+5`.  If
+`X_m=r_m x+s_m y`, direct transfer-matrix induction gives
+
+`det((r_m,s_m),(r_(m+1),s_(m+1)))=(m!)^6`.          `(143.1)`
+
+Hence for a candidate prime `p>m` the row `(r_m,s_m)` is nonzero modulo
+`p`.  At an actual folded Apéry zero `p|A_m`, that row annihilates
+`(1,5)`, so it is necessarily a nonzero multiple of `(-5,1)`.  Therefore
+an arbitrary integral initial state vanishes at that same local zero if
+and only if
+
+`y=5x (mod p)`.                                      `(143.2)`
+
+Let `R_1(n)` be the product of the q=1 star primes for the fixed outer
+index `n`.  Intersecting `(143.2)` over those distinct primes gives the
+exact simultaneous lattice
+
+`Lambda_n=Z(1,5)+Z(0,R_1(n))`,
+
+with Smith invariants `(1,R_1(n))`.  In particular, every independent
+comparison state synchronized with all star zeros has determinant with
+`(1,5)` divisible by `R_1(n)`, and its Euclidean norm is at least
+`R_1(n)/sqrt(26)`.  More generally, any finite family whose synchronized
+prime subsets cover the star carries the full radical in the product of
+its comparison determinants.
+
+This is exact, but it is a saturation theorem rather than a height saving.
+The fixed Apéry state supplies the short first lattice direction; the
+unknown radical is precisely the second successive minimum.  The rational
+companion cannot supply a second direction because the Apéry Casoratian is
+a unit at every low candidate prime.
+
+Q800 also refines the Q778 countermodel by a constant integral conjugacy:
+one may CRT-lift prime-local gauges so that a single coordinate vector
+realizes any prescribed finite collection of spokes.  This correctly
+rules out arguments invariant under constant gauge and depending only on
+monodromy or the existence of a fixed state.  It does **not** model the
+canonical Apéry scalar sequence at bounded height: the conjugating matrix
+and transformed observable encode the prescribed radical.  The remaining
+load-bearing feature is therefore the canonical low-height integral gauge,
+not fixed-state coherence by itself.
+
+The route can be reopened in either of two genuinely new ways:
+
+1. construct a canonical independent synchronized section, or a finite
+   family of such sections, whose determinant product has logarithm
+   `o(n)`; or
+2. prove an actual cross-characteristic off-diagonal incidence lower bound
+   for the canonical Apéry coefficients, for example the Q778/Q800
+   condition
+   `E_off(n)>=K_1(n)^(1+delta)n^(-o(1))` for some `delta>2/3`.
+
+Q822 asks whether the canonical Picard--Fuchs/modular integral structure
+has an endomorphism or quantitative row constraint that survives this
+gauge audit.  Until such input appears, Q800 closes the fixed-state,
+finite-comparison, product-formula, and gauge-invariant monodromy routes
+without advancing the unconditional bound.
+
+## 144. Q804: the first Frobenius jet is a second state, not a second zero
+
+Q804 derives the first genuinely outer-index mod-`p^2` formula for the
+cutoff row at `J=p-1`.  Put
+
+`S_q(p,r)=[c^0]T_(qp+r,p-1)(c)`
+
+and
+
+`Acal_p(X)=sum_(m=0)^(p-1) L(X,m)F_m`.
+
+Since `S_q(p,r)=Acal_p(r+qp)` and `Acal_p(r)=A_r`, ordinary Taylor
+expansion over `Z_(p)` gives the exact two-state congruence
+
+`S_q(p,r)=A_r+qp Dcal_(p,r) (mod p^2)`,             `(144.1)`
+
+where `Dcal_(p,r)=Acal_p'(r) mod p`.  On a bad digit, writing
+`u_r=A_r/p mod p`,
+
+`S_q(p,r)/p=u_r+q Dcal_(p,r) (mod p)`.              `(144.2)`
+
+Thus two ray rows recover the two first-jet coordinates `(u_r,Dcal)`.
+Badness kills the zeroth reduction `A_r mod p`; it imposes no vanishing
+condition on either quotient coordinate.  The first ray difference has
+one universal factor `p` and quotient `Dcal`; the second difference has a
+universal factor `p^2`.  Saturating those universal powers leaves no
+selective amplification.
+
+The full coefficientwise calculation has the same structure.  For
+`k=ap+b`, Q804 defines the integral first Lucas defect
+
+`lambda=[L(qp+r,ap+b)-L(q,a)L(r,b)]/p`
+
+and the integral binomial-translation defect
+
+`mu=[B_p(ap+b;c)-c^(ap)F_b]/p`.
+
+Substitution gives
+
+`T_(qp+r,p-1)=A_r Q_q(c^p)+pE_(q,r,p)(c) (mod p^2)`, `(144.3)`
+
+with an explicit finite double sum for `E`.  In the no-carry range the
+Lucas defect is
+
+`lambda=L(q,a)L(r,b) Phi (mod p)`,
+
+`Phi=(q+a)H_(r+b)-(q-a)H_(r-b)-2aH_b`.
+
+The translation defect is the parameter derivative of
+`binom(ap+b,m)` and includes the simple-zero terms with `m>b`.  Those
+terms are important: truncating the derivative to `m<=r` would give a
+false formula for `Dcal`.
+
+Independent exact checks completed here:
+
+- 22,731 no-carry tuples for `p=3,5,7,11,13,17,19,23` satisfy the
+  displayed harmonic Lucas-defect formula;
+- 13,205 binomial-translation tuples over the same primes satisfy Q804's
+  two-branch derivative formula;
+- the constant-row values at `(p,r)=(5,1)` are exactly
+  `1,188,265` and `159,262,225`, and their divided first difference is
+  `2 mod 5`, not zero;
+- 1,023 tuples with `p<=19`, `0<=q,r<p` satisfy the published
+  Gessel--Lucas congruence modulo `p^2` after rational denominators are
+  interpreted in `Z_(p)`;
+- for the stronger counterexample `A_3=5*17^2`, one has
+  `A_20=85 mod 17^2` and `A_13=-17 mod 17^2`, so propagation and
+  reflection both fall back to valuation one.
+
+Straub's Theorem 5.1 (published as Theorem 1.3) gives
+
+`A_(qp+r)=A_r A_q+pq A'_r A_q (mod p^2)`             `(144.4)`
+
+for `0<=r<p`; the author's corrigendum explicitly repairs the published
+misprint in this digit range.  Formula `(144.4)` has the same two-state
+obstruction.  The source and corrigendum were checked against the author's
+preprint page and arXiv preprint, rather than accepted only from Q804.
+
+The order-two constant Hasse minor still has selective `p^2`, but only
+because it is an exterior product of two rows already divisible by `p`.
+Q804 supplies neither a third factor nor an improved Archimedean bound.
+Therefore the proposed new mod-`p^2` linear escape is closed.
+
+Q824 is testing the next and final natural version of this idea: compute
+the second jet modulo `p^3` and either find a jet invariant whose selective
+order beats homogeneous degree, or prove an all-order jet-algebra
+saturation theorem.  Reopen the linear-ray route only if a higher jet
+creates selective order not paid for by the same universal finite
+difference or exterior degree.
