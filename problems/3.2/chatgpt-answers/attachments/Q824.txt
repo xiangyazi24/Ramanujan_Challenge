@@ -1,0 +1,414 @@
+
+Then
+
+
+Thus three rays recover a three-state jet. Their finite differences satisfy
+
+
+where D=\mathcal A_p'(r) and E=\mathcal A_p''(r)/2. The powers in the second and third differences are universal, not selective.
+
+At the first bad fiber p=5,r=1, the exact values are
+
+
+Every normalized jet is a unit. A discrete Schwarzian-type numerator has exactly its universal order:
+
+
+For the full cutoff vector, the exact prime-cube expansion is
+
+
+with explicit integral defects below. At (p,r)=(5,1), after dividing the three bad rows by 5, the coefficient matrix on degrees 0,5,10 is
+
+
+Its determinant is 1 modulo 5. Hence the associated 3\times3 Hasse minor has valuation exactly 3, not 4. The order-two minor on rows q=1,2 and degrees 0,5 has normalized determinant 2 modulo 5, so its valuation is exactly 2, not 3.
+
+No supermultiplicative selective invariant emerges. The correct closure theorem is an associated-graded saturation theorem:
+
+After all universal finite-difference, factorial, or block factors are removed, a multihomogeneous invariant of total row degree D can acquire at most D powers of a bad prime from the equation A_r\equiv0\pmod p. Any further power is equivalent to a new algebraic relation among the normalized singular Frobenius-jet coordinates.
+
+The actual p=5 and p=17 examples show that the natural derivative, determinant, Wronskian, Hessian, and Schwarzian initial forms do not satisfy such a relation.
+
+No unconditional proof of Problem 3.2 is claimed. The higher-jet ray route is closed unless one proves a new horizontal algebraic relation among singular jets. A genuinely different reopen lemma is the short-gap pair bound stated in Section 12.
+
+---
+
+# 1. Audit boundary and execution status
+
+The canonical source state requested in the question is commit
+
+710a25d4be1630e5df54c4df2b7b3382fa04d8d6.
+
+The exact mod-p block theorem is in
+
+Q32_ALL_CUTOFF_BLOCK_AND_LOSS_PROOF.md, and the coefficient-ring Dwork argument is in
+
+Q32_FRANEL_TAIL_DWORK_PROOF.md.
+
+The latter remains classified by the repository’s hostile audit as a highly supported proof draft rather than a verbatim application of a published coefficient-ring theorem. None of the new prime-square or prime-cube formulas below uses that draft.
+
+Existing broad computations in the repository were checked at the level of their source and recorded assertions:
+
+
+One correction to Q804’s presentation is that its own final code block checks the specific p=5 and p=17 cases; it is not itself a broad coefficientwise scan.
+
+The dispatch forbids Python/code-interpreter/sandbox execution. I therefore do not claim a new runtime result. Section 13 gives a fail-closed exact checker for the new p^3 formulas and matrix examples.
+
+---
+
+# 2. Definitions and the audited mod-p² identity
+
+Use
+
+
+and
+
+
+For J=p-1, define
+
+
+Then
+
+
+Write
+
+
+The two Lucas principal parts are
+
+
+Define the exact integral quotients
+
+
+Let the sum range over
+
+
+Then Q804’s first-defect formula is correct:
+
+
+where
+
+
+The proof is purely finite algebra: substitute the two exact decompositions, discard the product p^2\lambda\mu, and factor the principal sum as
+
+
+No exchange of an infinite series and no Dwork hypothesis occurs.
+
+---
+
+# 3. Audit of the first harmonic defects
+
+All formulas in this section are identities in \mathbf Z_{(p)}.
+
+## 3.1 No-carry Lucas defect
+
+Assume
+
+
+Then b\le r, r+b<p, and q+a<p. Every displayed harmonic denominator is a p-adic unit. Put
+
+
+The audited formula is
+
+
+It follows from
+
+
+and
+
+
+For b>j, a Lucas principal factor vanishes. The normalized carry term \lambda\bmod p remains explicit, but it is a first-defect coordinate and is not controlled by A_j=0.
+
+## 3.2 Binomial-translation defect
+
+For 1\le m<p, define
+
+
+Explicitly,
+
+
+Then
+
+
+and therefore
+
+
+This formula is correct. The m>b part is indispensable: \binom{x}{m} has a simple zero at x=b, not a double zero.
+
+## 3.3 Harmonic-scope correction
+
+For the constant derivative below, expressions such as
+
+
+remain valid when r+m\ge p, but the product must be evaluated as one p-integral rational number. The factor L(r,m) cancels the possible 1/p denominator. It is not legitimate to reduce H_{r+m} and L(r,m) separately modulo p.
+
+---
+
+# 4. Exact prime-cube coefficientwise formula
+
+Keep the exact quotients \lambda and \mu rather than truncating them. Since
+
+
+one obtains the exact identity
+
+
+where
+
+
+This equality is over \mathbf Z[c]; reducing E_q^{(1)} modulo p^2 and E_q^{(2)} modulo p gives the complete row modulo p^3.
+
+If p\mid A_r and u_r=A_r/p, then
+
+
+Thus the second quotient level contains new defect coordinates. It does not collapse to a scalar function of u_r and the first derivative.
+
+---
+
+# 5. Second-order no-carry formulas
+
+The following clean formulas require p\ge5. For p=3, the exact definition of \lambda remains valid, but the high-block ratio \binom{px}{py}/\binom xy contributes an additional p^2 correction.
+
+Put
+
+
+In the no-carry range of Section 3,
+
+
+Equivalently,
+
+
+For the translation term, define
+
+
+Then
+
+
+Consequently
+
+
+and
+
+
+These formulas, together with E_q^{(2)}=\sum\lambda\mu, are the sharp explicit prime-cube lift of Q804.
+
+---
+
+# 6. Constant coefficient: the complete second Frobenius jet
+
+At c=0,
+
+
+Since \mathcal A_p(X)\in\mathbf Z_{(p)}[X], ordinary Taylor expansion gives
+
+
+The first three rays invert this jet exactly:
+
+
+For m\le r, the derivative contributions are
+
+
+For m>r, put
+
+
+Then
+
+
+Again, when a displayed harmonic index crosses p, evaluate the grouped rational product before reducing modulo p.
+
+---
+
+# 7. Reflection through p³
+
+For 0\le j\le(p-1)/2, put
+
+
+The Q804 reflection formula is correct:
+
+
+The exact next term is
+
+
+where
+
+
+The first sum is the second-order expansion of the two reflected binomial factors. In the second sum, one binomial coefficient contains exactly one factor p; after squaring, it contributes the displayed normalized p^2 tail.
+
+At p=5,j=1,
+
+
+At p=17,j=3,
+
+
+Thus the reflected value still has exactly one factor 17, even through the prime-cube calculation.
+
+There is also a useful polynomial formulation. Since
+
+
+one has
+
+
+The first and second jets transform by parity; neither is forced to vanish on a bad fiber.
+
+---
+
+# 8. Actual p=5 scalar jets and nonlinear invariants
+
+For p=5,r=1,
+
+
+Hence
+
+
+The exact forward differences quoted in the verdict satisfy
+
+
+So none of the first three normalized jets vanishes.
+
+A natural integer Schwarzian numerator is
+
+
+Because \Delta S_q is universally divisible by p, and its first differences add further universal powers, p^4\mid C for every polynomial ray. Here
+
+
+so v_5(C)=4 exactly. The apparent nonlinear gain is entirely universal.
+
+For comparison, the good fiber p=5,r=2 has
+
+
+Thus the prime-square second difference occurs on good fibers as well.
+
+---
+
+# 9. The full coefficient vector is not two-state
+
+For J=p-1, the coefficient formula is
+
+
+with
+
+
+At the actual bad fiber (p,r)=(5,1), use the three outer indices
+
+
+Every row is coefficientwise divisible by 5. Dividing by 5 and reducing modulo 5 on degrees 0,5,10 gives
+
+
+Its determinant is 1 modulo 5. Therefore
+
+
+The order-two subminor is
+
+
+so the Q777 order-two Hasse minor has valuation exactly 2.
+
+This is the decisive scope correction to Q804:
+
+
+Higher ray rows do not collapse to one derivative extension of the Hasse line.
+
+---
+
+# 10. All-order saturation for the constant coefficient
+
+Let R=\mathbf Z_{(p)}, let f\in R[X], and put
+
+
+## Theorem 10.1: universal finite-difference filtration
+
+For every m\ge0,
+
+
+More exactly,
+
+
+where S(\nu,m) is the Stirling number of the second kind. For m<p,
+
+
+The normalized jets d_m/p^m, 0\le m<h<p, are algebraically independent in the universal polynomial class: arbitrary values in \mathbf F_p are realized by a polynomial of degree at most h.
+
+## Theorem 10.2: selective-degree saturation
+
+Give d_m universal weight m. Let
+
+
+be a polynomial of ordinary degree at most D. Remove its maximal universal power of p, as determined by the minimum weighted degree of its monomials. On the bad locus
+
+
+the additional order forced solely by badness is the order of vanishing of the initial polynomial along the hyperplane d_0=0. It is at most D.
+
+Equivalently:
+
+
+Any larger order means that the initial polynomial vanishes identically in the normalized higher jets. That is a new algebraic relation, not a consequence of Taylor expansion, finite differences, Dwork congruences, or the single equation A_r=0.
+
+This theorem closes scalar finite differences, Hankel determinants, discrete Wronskians, Hessians, discriminants, and Schwarzian numerators derived only from the ray values S_q.
+
+---
+
+# 11. All-order saturation for the full cutoff rows
+
+Write the singular expansion formally as
+
+
+Let I(F_{q_1},\ldots,F_{q_t}) be a polynomial invariant that is multihomogeneous of row degrees d_1,\ldots,d_t, and put
+
+
+On a bad fiber, write a=pu. Every monomial of I contains exactly D row factors. Choosing a principal factor aQ_q contributes one p, while choosing a defect factor pE_{q,1} also contributes one p. Hence
+
+
+for every bad fiber. After division by p^D, its initial form is an explicit polynomial in
+
+
+There is no formal mechanism that supplies a (D+1)-st selective factor. Such a factor is equivalent to vanishing of this initial form on the actual singular jet tuple.
+
+For determinants, D is the matrix size. Thus
+
+
+and Q777’s exterior-power order is optimal in the formal jet algebra.
+
+## Independence hypothesis needed for a complete actual-array no-go
+
+To rule out every conceivable invariant for the distinguished Apéry array, one would need the following horizontal noncontainment theorem.
+
+
+This is not known. It is a cross-characteristic arithmetic theorem about the fixed Apéry initial state, not a local Dwork theorem.
+
+The actual counterexamples already prove nonvanishing for the natural low-degree candidates:
+
+
+So neither derivative dependence, reflected dependence, rank-two dependence, nor the first nonlinear jet relations hold on the actual Apéry family.
+
+---
+
+# 12. Height and the different reopen lemma
+
+Universal finite-difference powers do not improve the global height ratio. At the moving cutoff J=p, a universal factor p^w globalizes through a carrier containing J^w. The least common multiple already has
+
+
+For full row invariants of degree D, the local selective order is at most D, while standard coefficient bounds give exponential height \exp(O(Dn)). Factorial, Vandermonde, and Hasse normalizations remove universal powers but do not change this degree/order ratio.
+
+The higher-Frobenius-jet route should therefore be reopened only after an actual singular-jet relation is proved. A genuinely different route is the short-gap pair theorem isolated in Q589.
+
+Let m_D(n,h) and m_R(n,h) count direct/direct and reflected/reflected pairs of q=1 hits whose folded indices differ by h. The following uniform theorem would suffice:
+
+
+Indeed, if K hits lie in an interval of length O(n), at least K/2 adjacent gaps are at most 2n/K. Summing the proposed bound through that threshold gives
+
+
+hence
+
+
+The total q=1 logarithmic weight is then
+
+
+This lemma concerns two different moving primes and cannot be reduced to repeated Frobenius jets of one prime. It is therefore a genuinely different reopen condition.
+
+---
+
+# 13. Reproducible exact checker
+
+The following is a fail-closed standard-Python checker for the scalar p^3 Taylor law, the reflection correction, and the p=5 full-vector minors. It is supplied for execution in the canonical checkout; it was not run in this connector-only response.
+
+
+---
+
+# Final conclusion
+
+The prime-cube calculation does not reveal a hidden second or third selective Frobenius equation. It reveals a growing jet:

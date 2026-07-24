@@ -7551,3 +7551,157 @@ Q822 does not improve the unconditional radical bound, but it closes the
 canonical symmetry/endomorphism/constant-conjugacy route cleanly.  Q836
 now attacks the explicit gap continuants in `(149.1)` for strong
 divisibility, resultants, or a genuine exact-cubic correlation theorem.
+
+## 150. Q824: higher Frobenius jets saturate at homogeneous degree
+
+Q824 independently rederived the first ray defect and continued it through
+`p^3`.  For the constant coefficient
+
+`S_q(p,r)=[c^0]T_(qp+r,p-1)(c)`,
+
+ordinary Taylor expansion of the integral polynomial
+
+`Acal_p(X)=sum_(m=0)^(p-1)L(X,m)F_m`
+
+gives
+
+`S_q=A_r+qp Acal_p'(r)+q^2p^2 Acal_p''(r)/2 (mod p^3)`. `(150.1)`
+
+The first and second forward differences gain `p` and `p^2`
+universally, whether or not `p|A_r`.  At the first bad fiber `(p,r)=(5,1)`
+the normalized first three scalar jets are all units.  The natural
+Schwarzian numerator has valuation exactly its universal value `4`.
+
+The full coefficient vector is even less degenerate.  After dividing the
+three bad rows at outer indices `6,11,16` by `5`, their columns of degrees
+`0,5,10` reduce to
+
+`[[3,4,0],[0,4,3],[2,2,0]] (mod 5)`,
+
+whose determinant is `1`.  The corresponding order-three Hasse minor has
+valuation exactly `3`, and the order-two subminor has valuation exactly
+`2`.  The final checker in Q824 was extracted and run locally.  It
+verified the scalar `p^3` Taylor law for every odd prime through `43` and
+every residue, as well as all quoted `p=5` valuations and minors.
+
+The resulting formal saturation statement is precise.  After universal
+finite-difference powers are removed, one equation `A_r=0 (mod p)` can
+force at most one additional factor per homogeneous row degree.  A larger
+order is equivalent to a new algebraic relation among the normalized
+singular jets.  This is a theorem in the universal jet algebra; ruling out
+every specially designed invariant on the actual Apéry family would still
+require the horizontal singular-jet noncontainment statement formulated in
+Q824.  The explicit `p=5` and `p=17` fibers already rule out the natural
+derivative, reflection, low-order determinant, Hessian, and Schwarzian
+relations.
+
+Thus higher same-prime rays cannot improve the selective-order/height
+ratio by formal differentiation alone.  Q842 instead attacks the
+different-modulus short-gap pair bound isolated by Q824.
+
+## 151. Q828: the fixed-denominator strip asymptotic, with one repair
+
+After refetching the Notion equation blocks, Q828 supplies the missing
+uniform proof of the Q803 fixed-`b` asymptotic:
+
+`Phat_(H,b)(3H+1)`
+
+` ~(-1)^b (lambda/gamma)^b c_(H-b) binom(3H+1,H-b)`
+
+`   *(1-1/(2gamma))^(-b-1)`                         `(151.1)`
+
+uniformly on every fixed bounded set of denominator degrees.
+
+The primary input is genuine.  Edgar, *The Apéry Numbers as a Stieltjes
+Moment Sequence*, Proposition 11, represents `A_m` as the moments of a
+positive density on `[0,lambda]`; Proposition 25 and the normalized
+Frobenius solution give a convergent square-root expansion at the right
+endpoint.  Shifting the moment variable by one yields
+
+`c_k=int_(-1)^gamma y^k phi(y+1)dy`
+
+and hence the full differentiated endpoint expansion
+
+`c_k=kappa gamma^k k^(-3/2)(1+alpha_1/k+...)`.       `(151.2)`
+
+Q828 then converts each normalized multiplication column into a
+fixed-degree polynomial plus a symbol remainder.  Divided differences on
+the consecutive high rows expose the nonzero Vandermonde term uniformly
+over an `O(log H)` window.  Cramer's rule supplies a global polynomial
+cofactor bound, while the exact binomial ratio supplies a factor at most
+`2^(-r)`.  Choosing the logarithmic cutoff to pay for both polynomial
+losses makes the remaining tail `O(H^(-2))`.
+
+There is one false displayed estimate in the returned proof:
+
+`|c_k-C_+(k)| <= (1-epsilon)^k`.                    `(151.3)`
+
+The omitted negative interval reaches `y=-1`, and Edgar's density has a
+logarithmic singularity there, so its absolute contribution need not
+decay exponentially.  The proof only needs a relative estimate, and that
+repair is immediate:
+
+`|c_k-C_+(k)|<=int_0^1 phi(x)dx<=1`,
+
+whereas `C_+(k)` has size `gamma^k k^(-3/2)`.  Hence the relative error,
+and consequently the error in every fixed shifted ratio, is
+`O(gamma^(-k) k^(O(1)))`, which is exponentially small.  The determinant
+and tail argument is unchanged.  Positivity of the finitely many early
+`c_k` should also be cited or included as an exact finite verification
+rather than silently inferred from the eventual asymptotic.
+
+An independent exact computation with the existing checkerboard script
+confirmed the predicted ratios for every `b<=8` at `H=200,250,300`.  At
+`H=300` they range from `1.000024639128` for `b=0` to
+`0.994738599821` for `b=8`.
+
+This closes the fixed-denominator boundary, not the proportional
+checkerboard regime and not the reciprocal fixed-numerator boundary.
+Q845 is performing a final hostile audit with every formula forced into
+plain-text fences.
+
+## 152. The reciprocal boundary: the first complex zero is not a dominant term
+
+For
+
+`U_n=sum_(k=0)^n (-1)^k binom(n,k)/A_k`,
+
+there is an exact ordinary generating-function identity
+
+`sum_(n>=0) U_n z^n`
+
+` =(1-z)^(-1) R(-z/(1-z))`,
+
+`R(w)=sum_(k>=0) w^k/A_k`.                          `(152.1)`
+
+Thus the ordinary reciprocal generating function remains a natural
+object even though the Golyshev--Zagier interpolation also gives a formal
+Nörlund--Rice representation.
+
+For a simple zero `alpha` of that interpolation, the residue contribution
+to the finite difference, with the standard Rice orientation, is
+
+`Gamma(n+1)Gamma(-alpha)`
+
+` /(Gamma(n+1-alpha) A'(alpha))`.                   `(152.2)`
+
+The sign was checked against the exact model `f(z)=1/(z+a)`.
+Using the numerical zero
+
+`alpha=0.1459867731180108665+0.5824261402448531507 i`,
+
+the conjugate-pair contribution was compared with exact or
+high-precision values through `n=2000`.  It does not approximate the
+answer in this range.  For example, at `n=100` the true value is
+`0.2485554104` while this pair contributes `-1.169866351`; at `n=2000`
+the values are `0.06275541347` and `0.1772231020`.  Sampled true values
+remain positive through `n=10000` but oscillate slowly rather than
+converging to the initially suspected `1/16`.
+
+This does not refute eventual residue dominance.  It proves that the
+single-zero heuristic is not an audited argument: one must locate and
+sum the other poles and prove that the Rice contour remainder is smaller.
+The reproducible calculation is
+`research/scripts/q32_reciprocal_boundary_audit.py`.  Q830 is testing the
+missing zero distribution and contour estimates; Q846 attacks primitive
+integrality independently.
