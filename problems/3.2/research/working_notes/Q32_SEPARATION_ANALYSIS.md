@@ -119,7 +119,7 @@ pointwise theorem.
     adjacent pure-cross target pairs of gap \(O(\log n)\) must be
     \(o(n/\log n)\). Replacing the index gap \(h\) by \(qh\) extends the
     argument to every fixed quotient \(q\); after the Kummer pruning,
-    (PC.15) is the narrowest all-middle obstruction.
+    (PC.15) is one minimal all-middle obstruction.
 
 13. The CFVZ square-root structure does not yield a hidden low-order
     Casoratian. The reversed convolution \(b_r=\sum_i s_i s_{r-i}\) admits
@@ -154,7 +154,10 @@ pointwise theorem.
 
 17. Gessel--Lucas collapses every top-half event to \(p\mid b_n\), and
     the central binomial carrier gives an exact holonomic-gcd formulation.
-    This is a useful Path D interface, not yet a proof: checked
+    More generally, it suffices to prove
+    \(\log\gcd(b_n,\binom n{\lfloor n/d\rfloor})=o_d(n)\) for every
+    fixed prime \(d\): a fixed quotient \(q\) is captured by any
+    \(d\mid q+1\). This is a useful Path D interface, not yet a proof: checked
     moving-target gcd theorems cover \(S\)-unit or constant-coefficient
     recurrence orbits, not an Apéry \(P\)-recursive coefficient paired
     with a factorial ratio.
@@ -2356,6 +2359,30 @@ It can therefore cover at most \((3+o(1))(h-1)\) target primes. Any cover
 of \(K\) targets already has total gap \(\Omega(K)\); the determinant
 product is not an amplification mechanism.
 
+For completeness, the same continuant gives a sharp aggregate vertical
+repulsion statement.  For \(1\le h<p\), let
+
+\[
+ C_p^{\rm full}(h)=
+ \#\{0\le r<p-h:r,r+h\in Z_p\}.
+\]
+
+Conditional on \(r\in Z_p\), the return equation is equivalent to
+\(N_h(r)\equiv0\pmod p\).  The reduced continuant is nonzero and has
+degree at most \(3(h-1)\), so
+
+\[
+ C_p^{\rm full}(h)\le3(h-1),\qquad
+ \sum_{h\le H}C_p^{\rm full}(h)\le\frac32H(H-1).
+\tag{VR.1}
+\]
+
+This bounds the number of short differences, not the minimum gap.  A
+bounded number of gap-two or other fixed-gap pairs is allowed, and two
+individually well-spaced rows can still be exact translates at the one
+cross-prime shift being tested.  Thus (VR.1) strengthens the vertical
+\(p^{2/3}\) theory but supplies no horizontal decorrelation by itself.
+
 #### Quantitative closure of gap-continuant factorial moments
 
 The continuant obstruction can be made quantitative.  This also records the
@@ -2755,8 +2782,8 @@ pairs in this smaller ordered set. By (KO.6), the still weaker family
 
 also suffices. A forbidden spike retains linearly many vertices after the
 pointwise pruning, and the identical span and degeneracy argument applies
-inside the residual set. Thus (PC.15) is the narrowest all-middle
-horizontal theorem isolated in this audit. It is strictly weaker than
+inside the residual set. Thus (PC.15) is one of the two most focused
+all-middle horizontal theorems isolated in this audit. It is strictly weaker than
 the shell pair-energy condition (10.35): it asks only for short adjacent
 pairs, after all non-nearly-primitive vertices have already been discarded.
 
@@ -2844,7 +2871,13 @@ are not ordered by logical strength.  The former counts only adjacent
 \(O(\log n)\)-gap pairs and asks for \(o(n/\log n)\); the latter counts
 all same-kernel \(n^{o(1)}\)-gap pairs and asks for \(o(n)\).  The common
 kernel in (SK.4) is extra arithmetic structure which may make (SK.5) the
-more accessible target.
+more accessible target.  That possible advantage must not be overstated:
+the generic class is \(g=1\), where “same kernel” adds no nontrivial common
+modulus or bounded-order motive.  Of the 2,764 observed top-half target
+pairs, 1,606 have equal kernels and 826 of those have common kernel one.
+Among the 53 triple columns, 21 have one common kernel and 12 have kernel
+one at all three primes.  Thus (SK.5) remains genuinely
+cross-characteristic even in its arithmetically simplest class.
 
 There is also a hard uncovered component. If
 
@@ -2995,21 +3028,120 @@ The stronger assertion
 \tag{HD.2}
 \]
 
-would certainly suffice, but (HD.1) is all that Problem 3.2 asks from
-this carrier.  Similarly, the fixed-\(q\) carriers in (10.32) turn the
-all-middle problem into the family of interval-restricted gcd estimates
+would certainly suffice for the top-half branch, but (HD.1) is all that
+branch asks from this carrier.  The extra small-prime valuations in (HD.2) are
+automatically harmless. Kummer's theorem gives
+
+\[
+ v_p\binom n{\lfloor n/2\rfloor}
+ \le \lfloor\log_p n\rfloor+1,
+\]
+
+and therefore
+
+\[
+ \sum_{p\le\sqrt n}
+ v_p\binom n{\lfloor n/2\rfloor}\log p
+ \le\pi(\sqrt n)\log(n+1)=O(\sqrt n).
+\tag{HD.2a}
+\]
+
+For \(p>\sqrt n\), the binomial valuation is zero or one.  Thus the
+difference between (HD.1) and (HD.2) is additional middle-prime support,
+not a hidden linear contribution from powers of small primes.
+
+In fact that additional support has an exact quotient-parity description.
+Write \(n=qp+r\), \(0\le r<p\).  Legendre's formula gives
+
+\[
+ v_p\binom n{\lfloor n/2\rfloor}
+ =
+ \begin{cases}
+  1,&q\ \text{odd and }r\le p-2,\\
+  0,&q\ \text{even, or }r=p-1.
+ \end{cases}
+\tag{HD.2b}
+\]
+
+For \(q=2a\), both halves of \(n\) contain \(a\) copies of \(p\).  For
+\(q=2a+1\), both contain only \(a\), except that the upper half contains
+one more at the boundary \(r=p-1\).  Since that boundary is never an
+Apéry target, the central carrier contains every odd-\(q\) middle target
+simultaneously.  It may also contain primes coming from
+\(p\mid b_q\), so this is a support inclusion, not an unconditional
+equality for growing \(q\).  The even quotient arcs still require their
+own carriers.
+
+There is a useful fixed-denominator generalization.  For \(d\ge2\), put
+
+\[
+ B_{n,d}=\binom n{\lfloor n/d\rfloor}.
+\]
+
+Write \(q=dt+u\), \(0\le u<d\), and
+
+\[
+ \left\lfloor\frac nd\right\rfloor
+ =tp+\left\lfloor\frac{up+r}{d}\right\rfloor.
+\]
+
+Legendre's formula then gives one carry precisely when
+
+\[
+ \left\lfloor\frac{up+r}{d}\right\rfloor>r.
+\tag{HD.3}
+\]
+
+If \(q\equiv-1\pmod d\), so \(u=d-1\), condition (HD.3) holds for every
+\(r\le p-2\) and fails only at \(r=p-1\).  Consequently every actual
+target in every quotient arc
+
+\[
+ q\equiv-1\pmod d
+\]
+
+divides \(B_{n,d}\) exactly once.  The central-binomial parity law is the
+case \(d=2\).
+
+This yields a particularly clean sufficient Path D family:
+
+\[
+ \boxed{
+ \text{for every prime }d,\qquad
+ \log\gcd(b_n,B_{n,d})=o_d(n).
+ }
+\tag{HD.4}
+\]
+
+Indeed, a forbidden spike first localizes to one fixed quotient \(q\).
+Choose any prime divisor \(d\mid q+1\); every target in that arc then
+divides the gcd in (HD.4).  No uniformity in \(d\) is needed.  The carrier
+height remains linear for fixed \(d\),
+
+\[
+ \log B_{n,d}=n\,h(1/d)+O_d(\log n),
+\]
+
+so (HD.4) is still a genuinely new gcd theorem, but it organizes all
+quotient arcs into fixed factorial-ratio families rather than one carrier
+per \(q\).
+
+Equivalently, the fixed-\(q\) carriers in (10.32) give the
+interval-restricted estimates
 
 \[
  \log\operatorname{rad}_{(n/(q+1),\,n/q]}
  \gcd(b_n,C_{n,q})=o_q(n)
-\tag{HD.3}
+\tag{HD.5}
 \]
 
-for every fixed \(q\).
+for every fixed \(q\).  These turn the
+all-middle problem into a family of interval-restricted gcd estimates
+with no claim about irrelevant prime factors outside the indicated arc.
 
-Both entries in (HD.1) are holonomic: \(b_n\) is the Apéry
-polynomial-coefficient recurrence and the two parity subsequences of
-\(\binom n{\lfloor n/2\rfloor}\) are hypergeometric.  This observation
+All sequences in (HD.1) and (HD.4) are holonomic: \(b_n\) is the Apéry
+polynomial-coefficient recurrence, while for fixed \(d\) the \(d\)
+residue-class subsequences of \(B_{n,d}\) are hypergeometric. This observation
 does not put (HD.1) under an existing gcd theorem.  The moving-target
 Subspace-Theorem results checked here, including Grieve--Wang, treat
 polynomials evaluated on \(S\)-unit points and their applications to
@@ -3021,7 +3153,10 @@ Several tempting formal substitutes also fail:
 
 1. coprimality of the two Ore annihilators is a characteristic-zero
    statement about solution spaces, not a bound for
-   \(\gcd(b_n,C_n)\) at one moving index;
+   \(\gcd(b_n,C_n)\) at one moving index.  Even the sequences
+   \(u_n=2^n\) and \(v_n=6^n\) have distinct coprime first-order
+   annihilators and multiplicatively independent dominant bases, while
+   \(\gcd(u_n,v_n)=2^n\);
 2. multiplicative independence of the dominant Archimedean bases
    \(17+12\sqrt2\) and \(2\) gives no control of exact common prime
    divisors of their coefficient sequences;
@@ -3033,12 +3168,34 @@ Several tempting formal substitutes also fail:
 
 A targeted literature search on \(P\)-recursive, holonomic, D-finite, and
 \(G\)-function coefficient gcds found definitions, representation and
-asymptotic theorems, but no result implying (HD.1)--(HD.3).  Path D is
+asymptotic theorems, but no result implying (HD.1), (HD.4), or (HD.5). Path D is
 therefore a legitimate new theorem interface, not an application waiting
 only for citation.  To advance it one needs either a new arithmetic gcd
 theorem for a \(G\)-function coefficient and a factorial ratio, or an
 Apéry-specific low-height certificate which is selective inside the
 universal binomial support.
+
+The full-gcd strengthening (HD.2) is at least numerically plausible.  An
+exact recurrence computation through \(n=10{,}000\) gives the following
+maxima of
+
+\[
+ \frac1n\log\gcd\!\left(b_n,\binom n{\lfloor n/2\rfloor}\right)
+\]
+
+on successive blocks:
+
+| \(n\)-block | maximum | attained at |
+|---:|---:|---:|
+| \(501\)--\(1{,}000\) | \(0.0326690\) | \(676\) |
+| \(1{,}001\)--\(2{,}000\) | \(0.0249751\) | \(1{,}041\) |
+| \(2{,}001\)--\(5{,}000\) | \(0.0133423\) | \(2{,}005\) |
+| \(5{,}001\)--\(10{,}000\) | \(0.00547604\) | \(5{,}241\) |
+
+At the last maximum the exact gcd is \(2{,}912{,}053{,}021{,}625\).
+This is finite evidence only.  In particular it cannot substitute for a
+theorem controlling exceptional \(n\), the precise pointwise issue of
+Problem 3.2.
 
 ### 10.8 The corrected sufficient condition: cross-prime collision energy
 
@@ -3159,6 +3316,42 @@ the core becomes the fixed-sum collision
  p+r=q+s=n.
 \tag{10.29}
 \]
+
+For later computations, the exact dyadic window must be retained. If
+\(K_1(n)\) is the top-half count and \(p<\ell\), put
+
+\[
+ J_N(p,\ell)=
+ \left[
+  \max\{\ell-p,N-p+1,0\},\
+  \min\{p-1,2N-p\}
+ \right]\cap\mathbf Z.
+\]
+
+Then
+
+\[
+\begin{aligned}
+ \sum_{N<n\le2N}\binom{K_1(n)}2
+ =
+ \sum_{\substack{N/2<p<\ell\le2N\\p,\ell\ {\rm prime}}}
+ \sum_{r\in J_N(p,\ell)}
+ \mathbf1_{Z_p}(r)
+ \mathbf1_{Z_\ell}\bigl(r-(\ell-p)\bigr).
+\end{aligned}
+\tag{DE.1}
+\]
+
+Thus an independence benchmark for one prime pair is
+
+\[
+ |J_N(p,\ell)|\,\frac{|Z_p|}{p}\frac{|Z_\ell|}{\ell},
+\tag{DE.2}
+\]
+
+not \(|Z_p||Z_\ell|/\ell\) with the overlap window silently replaced by
+its maximal length. This correction changes finite pair statistics near
+the shell boundary, but not the theorem-shaped target (10.24).
 
 Equivalently, one needs additive-energy control for the family of translated
 sets
@@ -3458,7 +3651,7 @@ for any chosen subpolynomial \(F(n)\to\infty\). Thus fixed-order modular
 forms and bounded-order Kummer motives can be removed unconditionally before
 any collision estimate is attempted.
 
-Path D, the holonomic-gcd estimate (HD.1), is an alternative formulation
+Path D, the holonomic-gcd family (HD.4), is an alternative formulation
 rather than a collision hypothesis.  It is exact but presently requires a
 new arithmetic theorem outside the scope of known constant-coefficient
 recurrence gcd results.
@@ -3511,13 +3704,14 @@ The revised assessment is therefore:
     arbitrary common quotient \(A\).  It becomes useful only if a new
     many-prime jet elimination turns it into a nonzero sublinear-height
     certificate.
-11. The Lucas collapse gives the exact holonomic-gcd interface (HD.1), but
-    no checked theorem for \(P\)-recursive coefficients proves it.
+11. The Lucas collapse gives the exact holonomic-gcd interfaces
+    (HD.1), (HD.4), and (HD.5), but
+    no checked theorem for \(P\)-recursive coefficients proves them.
 
 This is a negative answer to the proposed shortcut, but a positive
 sharpening of the frontier: the missing theorem is now the explicit
-pure-cross estimate (PC.15) or (SK.5), equivalently a new selective
-holonomic-gcd mechanism such as (HD.1), not a vertical zero-fiber bound.
+pure-cross estimate (PC.15) or (SK.5), or a new selective
+holonomic-gcd mechanism such as (HD.4), not a vertical zero-fiber bound.
 
 ### 10.10 Sources checked for the geometry and congruences
 
