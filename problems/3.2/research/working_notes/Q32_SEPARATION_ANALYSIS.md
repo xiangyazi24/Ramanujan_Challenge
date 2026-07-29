@@ -117,7 +117,9 @@ pointwise theorem.
     the same continuant is a unit modulo both primes. Consequently the full
     pair-energy theorem can be weakened to one logarithmic-gap statement:
     adjacent pure-cross target pairs of gap \(O(\log n)\) must be
-    \(o(n/\log n)\). This is now the narrowest clean top-half obstruction.
+    \(o(n/\log n)\). Replacing the index gap \(h\) by \(qh\) extends the
+    argument to every fixed quotient \(q\); after the Kummer pruning,
+    (PC.15) is the narrowest all-middle obstruction.
 
 13. The CFVZ square-root structure does not yield a hidden low-order
     Casoratian. The reversed convolution \(b_r=\sum_i s_i s_{r-i}\) admits
@@ -126,6 +128,43 @@ pointwise theorem.
     while a general bounded-width collapse would contradict the
     \({\rm SL}_2\) differential Galois group. Its minimal outer telescoper
     is exactly the original symmetric-square Apéry operator.
+
+14. The divisor-sensitive order parametrization has an exact \(L^2\)
+    consequence, but it does not close the horizontal gap. Low--low
+    collision energy is negligible through order \(N^{1/2-o(1)}\), while
+    collisions with one unrestricted partner are controlled only through
+    \(N^{1/3-o(1)}\). The pointwise sieve should instead be applied first:
+    it reduces the sufficient pair-energy theorem to two nearly primitive
+    characters of order \(N^{1-o(1)}\). No Cauchy--Schwarz interpolation
+    bridges these scales.
+
+15. This nearly primitive restriction does not make the known local
+    structure horizontally selective. Taking centers with \(n-q\) prime
+    gives an exact reflected two-point adversary with
+    \(\gcd(p-1,n-q)=1\) for every selected \(q\)-arc prime. It also obeys
+    nonconsecutivity and the universal reflected-continuant factor. Thus
+    any proof of the residual pair energy must use arithmetic of the
+    distinguished Apéry initial state, not these local axioms alone.
+
+16. In the exact scan through two million, all 2,764 unordered top-half
+    target pairs are pure cross and none is degenerate. Only 16 of the
+    2,711 adjacent edges have gap at most \(10\log n\). This is finite
+    evidence, but it shows that the pure-cross logarithmic-gap criterion
+    isolates the observed residual without leakage.
+
+17. Gessel--Lucas collapses every top-half event to \(p\mid b_n\), and
+    the central binomial carrier gives an exact holonomic-gcd formulation.
+    This is a useful Path D interface, not yet a proof: checked
+    moving-target gcd theorems cover \(S\)-unit or constant-coefficient
+    recurrence orbits, not an Apéry \(P\)-recursive coefficient paired
+    with a factorial ratio.
+
+18. A forbidden spike has a second deterministic amplification. After
+    kernel partitioning it forces \(\Omega(n)\) pure-cross target pairs
+    with a common kernel and gap
+    \(O(\tau(n-q)\log^2n)=n^{o(1)}\). This yields the structured
+    same-kernel criterion (SK.5), complementary to the adjacent-gap
+    criterion (PC.15).
 
 Thus Routes A and B are closed **as presently formulated**. This is not a
 disproof of `log G_n=o(n)`. It identifies the exact missing ingredient:
@@ -533,6 +572,45 @@ The repository already contains the structural versions of this no-go:
 
 Thus “more Casoratians” do not add independent rows. They either remain in
 the same rank-two module or encode the target radical in their normalization.
+
+There is one exact many-prime identity, but it does not by itself change
+this verdict.  If the target primes at a fixed \(n\) are
+\(p_1,\ldots,p_K\), put
+
+\[
+ R=\prod_i p_i,\qquad A=b_n/R,\qquad
+ P(T)=\prod_i(T-p_i).
+\]
+
+Then
+
+\[
+ \frac{b_n}{p_i}
+ =A\prod_{j\ne i}p_j
+ \equiv(-1)^{K-1}A\,P'(p_i)\pmod {p_i}.
+\tag{A.5}
+\]
+
+All factors \(P'(p_i)\) are \(p_i\)-units in the top-half interval.
+Thus the normalized divided residues recover the same common coordinate:
+
+\[
+ (-1)^{K-1}\frac{b_n/p_i}{P'(p_i)}
+ \equiv A\pmod {p_i}.
+\tag{A.6}
+\]
+
+This coherence is exact and could be a useful interface for a genuinely
+new many-prime jet identity.  It is not yet quotient separation.  For any
+chosen distinct primes and any chosen integer \(A\), the integer
+\(A\prod_i p_i\) satisfies (A.5) identically.  Moreover,
+\(P'(p_i)\) depends on the entire target set, and its unreduced product
+has the same linear-height scale one is trying to beat.  CRT reconstruction
+of the normalized residues is simply reconstruction of \(A\bmod R\), the
+original quotient problem.  Transferring \(b_n/p_i\bmod p_i\) to a lower
+Apéry quotient through a modulo-\(p_i^2\) Lucas jet does not remove this
+free common \(A\).  A new relation among those transferred jets, with a
+nonzero sublinear-height elimination, is still required.
 
 ### 4.6 Route A verdict and reopen condition
 
@@ -1917,6 +1995,245 @@ set, and the sieve gives no estimate for their Apéry-zero condition. It
 removes bounded- and moderately growing-order motives; it does not replace
 the horizontal collision theorem.
 
+#### What the order sieve does and does not give in pair energy
+
+There is a deterministic \(L^2\) version of the divisor parametrization,
+but it stops far below the nearly primitive scale.  This is worth recording
+because otherwise (KO.6) can easily be misused through an invalid
+\(L^1\)-to-\(L^2\) inference.
+
+Fix \(q\), let \(N<n\le2N\), put \(m=n-q\), and let
+\(K_{q,\le D}(n)\) count target primes in the \(q\)-arc whose selected
+character order \(d_{p,n}\) is at most \(D\).  Set
+
+\[
+ H=(q+1)D,\qquad
+ a_{q,D}(h)=
+ \#\left\{d\le D:
+       \frac{h}{q+1}\le d\le\frac{h}{q},\
+       (d,h)=1\right\}.
+\tag{KO.8}
+\]
+
+The parametrization used in (KO.2) injects every such prime into one pair
+\((h,d)\), with \(h\mid m\).  Consequently
+
+\[
+ K_{q,\le D}(n)
+ \le A_{q,D}(m):=
+ \sum_{\substack{h\mid m\\h\le H}}a_{q,D}(h),
+ \qquad
+ a_{q,D}(h)\le\frac{h}{q(q+1)}+1.
+\tag{KO.9}
+\]
+
+Expanding the square and counting common multiples gives
+
+\[
+\begin{aligned}
+ \sum_{N<n\le2N}\bigl(K_{q,\le D}(n)\bigr)_2
+ &\le \sum_{N-q<m\le2N-q}A_{q,D}(m)^2\\
+ &\ll
+ N\left\{
+  \frac{D^2}{q^2}\log(2H)
+  +\frac Dq\log^2(2H)
+  +\log^3(2H)
+ \right\}
+ +(D^2+qD)^2.
+\end{aligned}
+\tag{KO.10}
+\]
+
+Indeed,
+
+\[
+ \sum_{h,k\le H}
+ \frac{a_{q,D}(h)a_{q,D}(k)(h,k)}{hk}
+ =
+ \sum_{e\le H}\varphi(e)
+ \left(
+   \sum_{\substack{h\le H\\e\mid h}}
+   \frac{a_{q,D}(h)}h
+ \right)^2,
+\]
+
+and the inner sum is
+
+\[
+ \ll \frac1e
+ \left\{\frac Dq+\log\frac{2H}{e}\right\}.
+\]
+
+The last term in (KO.10) is the accumulated \(+1\) in the count of
+multiples.  If \(H\le\sqrt N\), it is absorbed into the main
+least-common-multiple term.  In particular, for every fixed \(q\),
+
+\[
+ D\le\frac{\sqrt N}{\log^2N}
+ \quad\Longrightarrow\quad
+ \sum_{N<n\le2N}\bigl(K_{q,\le D}(n)\bigr)_2
+ =o_q\!\left(\frac{N^2}{\log^2N}\right).
+\tag{KO.11}
+\]
+
+Thus a pair in which **both** characters are low-order can be removed
+almost to the square-root scale.
+
+The mixed estimate is weaker.  Write
+
+\[
+ M_N=\max_{m\le2N}\tau(m).
+\]
+
+The vertical bound \(|Z_p|\ll p^{2/3}\) gives the first moment
+
+\[
+ \sum_{N<n\le2N}K_q(n)
+ \ll
+ \frac{N^{5/3}}{q^{5/3}\log(N/q)}.
+\tag{KO.12}
+\]
+
+Since (KO.2) gives
+\(K_{q,\le D}(n)\le M_N(D/q+2)\), the ordered-pair energy with
+at least one low-order member satisfies
+
+\[
+\begin{aligned}
+ \mathcal E_q^{L*}(N;D)
+ &\le
+ 2\max_n K_{q,\le D}(n)
+   \sum_{N<n\le2N}K_q(n)\\
+ &\ll
+ \frac{M_N(D+q)N^{5/3}}
+ {q^{8/3}\log(N/q)}.
+\end{aligned}
+\tag{KO.13}
+\]
+
+For fixed \(q\), this is negligible at the sufficient pair-energy scale
+when \(D\le N^{1/3-\epsilon}\).  More exactly, it is
+\(o(N^2/\log^2N)\) whenever
+
+\[
+ D+q=
+ o\left(
+ \frac{q^{8/3}N^{1/3}\log(N/q)}
+ {M_N\log^2N}
+ \right).
+\tag{KO.14}
+\]
+
+The exponent \(1/3\) is \(1-2/3\), and therefore records precisely the
+present vertical zero-fiber exponent.  No optimization of the divisor
+cutoff changes it.
+
+There is also a uniform harmless range in \(q\).  Brun--Titchmarsh bounds
+the number of candidate primes in one \(q\)-arc, while (KO.12) bounds the
+first moment, giving, uniformly for
+\(q\le N^{1/2-\delta}\),
+
+\[
+ \mathcal E_q(N)
+ \ll_\delta
+ \frac{N^{8/3}}
+ {q^{8/3}(q+1)
+  \log(N/q)\log(N/q^2)}.
+\tag{KO.15}
+\]
+
+Hence every \(q\ge N^{2/11+\epsilon}\) in this range is already negligible.
+For the pointwise theorem this is secondary, because a hypothetical
+linear-weight spike can first be localized to finitely many fixed
+quotients.
+
+The correct way to combine these statements with (KO.6) is not
+interpolation.  Define the nearly primitive residual count
+
+\[
+\begin{aligned}
+ K_q^{\rm np}(n;F)=
+ \#\bigl\{p:\;& n/(q+1)<p\le n/q,\quad
+                 n-qp\in Z_p,\\
+              &\gcd(p-1,n-q)
+                 \le\tau(n-q)\log n\,F(n)\bigr\}
+\end{aligned}
+\]
+
+and its energy
+
+\[
+ \mathcal E_q^{\rm np}(N;F)=
+ \sum_{N<n\le2N}\bigl(K_q^{\rm np}(n;F)\bigr)_2.
+\]
+
+Then the strictly weaker sufficient theorem is
+
+\[
+ \boxed{
+ \text{for every fixed }q,\qquad
+ \mathcal E_q^{\rm np}(N;F)
+ =o_q\!\left(\frac{N^2}{\log^2N}\right).
+ }
+\tag{KO.16}
+\]
+
+To prove this implication, apply (KO.6) pointwise first.  Its discarded
+primes have \(o(n)\) total logarithmic weight, so any forbidden spike
+leaves \(\gg n/\log n\) nearly primitive targets.  The same finite-\(q\)
+pigeonhole argument used for (10.35) then contradicts (KO.16).
+
+Conversely, (KO.6) does not imply that the discarded incidences have small
+shell pair energy: they could be concentrated on a sparse set of rows and
+meet many fresh high-order zeros there.  Nor do (KO.10)--(KO.13) touch
+the residual in (KO.16).  For fixed \(q\), its orders are
+\(d_{p,n}=N^{1-o(1)}\), whereas the mixed deterministic estimate ends at
+\(N^{1/3-o(1)}\).  The exact remaining problem is therefore correlation
+between two nearly primitive, different-characteristic Apéry
+coefficients.
+
+This residual still admits the same logical adversary as the earlier
+reflection star.  Fix \(q\), choose primes \(m_j\to\infty\) so rapidly
+that the intervals
+
+\[
+ I_j=\left(\frac{m_j+q}{q+1},\frac{m_j+q}{q}\right]
+\]
+
+are pairwise disjoint, and put \(n_j=m_j+q\).  For every prime
+\(p\in I_j\), apart from the \(O(1)\) central and boundary coincidences,
+set
+
+\[
+ r_p=n_j-qp,\qquad
+ S_p=\{r_p,p-1-r_p\}.
+\tag{KO.17}
+\]
+
+Here \(p-1<m_j=n_j-q\), so
+
+\[
+ \gcd(p-1,n_j-q)=1,\qquad d_{p,n_j}=p-1.
+\tag{KO.18}
+\]
+
+The sets (KO.17) are reflected, have no adjacent distinct elements, and
+put \(\asymp_q n_j/\log n_j\) primes on one column.  They also obey the
+known unsaturated continuant divisibility: for the reflected interval
+with lower endpoint \(a\) and gap \(h\),
+
+\[
+ 2a+h+1=p
+\]
+
+is the universal reflection factor of \(N_h(a)\), independently of any
+zero condition.  Saturating the continuant removes exactly this factor.
+Thus even full character order, reflection, nonconsecutivity, and the
+forced continuant factor do not logically imply horizontal dispersion.
+This is an abstract zero-set adversary, not a construction of actual
+Apéry zeros; its purpose is to identify the additional arithmetic input
+that (KO.16) must use.
+
 The exact scan confirms that the hard sector is already populated. Among
 106,039 top-half hits with \(n\le2,000,000\), 39,804 have
 \(\gcd(p-1,n-1)=1\). Of the 53 triple-hit columns, 12 have kernel 1 at all
@@ -2241,8 +2558,9 @@ fields:
 For \(\ell\), divisibility of \(N_h(s)\), together with
 \(\ell\mid b_s\), would propagate the zero to \(b_{s+h}\). For \(p\),
 divisibility of \(N_h(s)\), together with \(p\mid b_{s+h}\), would force
-\(p\mid N_{h-1}(s+1)\); the continuant Dodgson identity then contradicts
-the fact that all intervening indices are \(p\)-units. Thus the ordinary
+\(p\mid N_{h-1}(s+1)\). The continuant Dodgson identity has right-hand
+side \(-\prod_{j=2}^{h-1}(s+j)^6\), a \(p\)-unit because \(s+h<p\),
+and gives the contradiction. Thus the ordinary
 Casoratian detector does not merely fail to prove divisibility in the hard
 case: its relevant factor is provably nonzero modulo both moving primes.
 
@@ -2309,6 +2627,224 @@ certificates which see (PC.1) either depend on \(s\), retain the full
 exponential Apéry height, or insert the moving product \(p(p+h)\)
 universally. Thus (PC.8), rather than the full second moment, is the
 narrowest clean top-half horizontal target exposed so far.
+
+The complete scan through two million shows that this decomposition isolates
+the empirical obstruction with no leakage.  The 2,605 exact double-hit
+columns and 53 triple-hit columns contain
+
+\[
+ 2605+3\cdot53=2764
+\]
+
+unordered target pairs.  Direct lookup of both cross endpoints in the
+binary \(Z_p\) bank found **zero** degenerate pairs: all 2,764 are pure
+cross.  Likewise all
+
+\[
+ 2605+2\cdot53=2711
+\]
+
+adjacent target edges are pure cross.  Among those adjacent edges, only one
+has \(h\le\log n\), two have \(h\le2\log n\), six have
+\(h\le5\log n\), and sixteen have \(h\le10\log n\).  The smallest normalized
+gap is
+
+\[
+ n=587250,\qquad (p,\ell)=(296507,296519),\qquad
+ h/\log n=0.903396\ldots .
+\tag{PC.10}
+\]
+
+This is finite evidence only, but it confirms that (PC.8) targets exactly
+the observed rare event.  The unconditional bound (PC.3) is not being
+mistaken for an explanation of the existing double and triple columns:
+every one of them lies in the different-characteristic residual.
+
+The same reduction extends without loss to every fixed quotient \(q\).
+Define
+
+\[
+ T_{n,q}=
+ \left\{p:\frac{n}{q+1}<p\le\frac nq,\quad
+              p\mid b_{n-qp}\right\}.
+\tag{PC.11}
+\]
+
+For \(p<\ell=p+h\) in \(T_{n,q}\), put \(s=n-q\ell\).  The two
+conditions become
+
+\[
+ p\mid b_{s+qh},\qquad \ell\mid b_s.
+\tag{PC.12}
+\]
+
+Declare the pair degenerate if \(p\mid b_s\) or
+\(\ell\mid b_{s+qh}\).  The same transfer argument, now across the index
+gap \(qh\), shows that every degenerate pair contributes one of
+
+\[
+ p\mid N_{qh}(n-qh),\qquad
+ \ell\mid N_{qh}(n).
+\]
+
+For fixed \(q\),
+
+\[
+ \log\{N_{qh}(n-qh)N_{qh}(n)\}\ll_q h\log n.
+\]
+
+Both primes are \(\asymp_q n\), and a prime determines its mate once
+\(h\) is fixed.  Therefore
+
+\[
+ M_{q,h}^{\rm deg}(n)\ll_q h,\qquad
+ \sum_{h\le H}M_{q,h}^{\rm deg}(n)\ll_q H^2.
+\tag{PC.13}
+\]
+
+On the complementary pure-cross locus, \(N_{qh}(s)\) is a unit modulo
+both \(p\) and \(\ell\), by the same transfer and Dodgson proof as for
+(PC.6).
+
+Let \(A_{q,H}^{\times}(n)\) count adjacent primes in the ordered set
+\(T_{n,q}\) which are pure cross and have prime gap at most \(H\).
+Then the following fixed-\(q\) family already implies the full middle-prime
+little-oh:
+
+\[
+ \boxed{
+ \text{for every fixed }q,A>0,\qquad
+ \sup_{N<n\le2N}A_{q,A\log N}^{\times}(n)
+ =o_{q,A}(N/\log N).
+ }
+\tag{PC.14}
+\]
+
+Indeed, a failure of the desired logarithmic-weight estimate first
+localizes, after discarding \(p\le\eta n\), to one fixed \(q\) with
+\(|T_{n,q}|\gg n/\log n\).  The sum of all adjacent prime gaps in that
+arc is at most
+
+\[
+ \frac nq-\frac{n}{q+1}=\frac{n}{q(q+1)}.
+\]
+
+Choosing \(A\) sufficiently large leaves
+\(\gg n/\log n\) adjacent gaps at most \(A\log n\); (PC.13) makes only
+\(O_{q,A}(\log^2n)\) of them degenerate, contradicting (PC.14).
+The order pruning can be incorporated before taking adjacency. Fix any
+subpolynomial \(F(n)\to\infty\), let
+
+\[
+ T_{n,q}^{\rm np}(F)=
+ \left\{p\in T_{n,q}:
+ \gcd(p-1,n-q)\le\tau(n-q)\log n\,F(n)\right\},
+\]
+
+and let \(A_{q,H}^{{\rm np},\times}(n;F)\) count adjacent pure-cross
+pairs in this smaller ordered set. By (KO.6), the still weaker family
+
+\[
+ \boxed{
+ \text{for every fixed }q,A>0,\qquad
+ \sup_{N<n\le2N}A_{q,A\log N}^{{\rm np},\times}(n;F)
+ =o_{q,A}(N/\log N)
+ }
+\tag{PC.15}
+\]
+
+also suffices. A forbidden spike retains linearly many vertices after the
+pointwise pruning, and the identical span and degeneracy argument applies
+inside the residual set. Thus (PC.15) is the narrowest all-middle
+horizontal theorem isolated in this audit. It is strictly weaker than
+the shell pair-energy condition (10.35): it asks only for short adjacent
+pairs, after all non-nearly-primitive vertices have already been discarded.
+
+There is a complementary amplification which trades adjacency for a shared
+kernel.  It gives more pairs at a longer, but still subpolynomial, gap.
+Fix \(q\), write \(m=n-q\), and for a target prime put
+
+\[
+ g_p=\gcd(p-1,m),\qquad p-1=g_pd_p.
+\tag{SK.1}
+\]
+
+Suppose that a residual \(q\)-arc contains
+
+\[
+ K\ge c\,n/\log n
+\tag{SK.2}
+\]
+
+targets.  Partition the prime interval separately for every divisor
+\(g\mid m\) into cells of length \(\Delta\).  There are at most
+
+\[
+ B\le\tau(m)
+ \left\{\frac{n}{q(q+1)\Delta}+2\right\}
+\]
+
+cells.  If their occupancies are \(k_C\), Cauchy--Schwarz gives
+
+\[
+ \#\{p<\ell:g_p=g_\ell,\ \ell-p\le\Delta\}
+ \ge
+ \sum_C\binom{k_C}{2}
+ \ge\frac{K^2}{2B}-\frac K2.
+\tag{SK.3}
+\]
+
+Taking, for a sufficiently large constant depending only on \(c,q\),
+
+\[
+ \Delta_{n,q}=C_{c,q}\tau(n-q)\log^2n=n^{o(1)}
+\]
+
+forces \(\Omega_{c,q}(n)\) same-kernel close pairs.  The degenerate
+pairs among all gaps \(h\le\Delta_{n,q}\) number only
+
+\[
+ \sum_{h\le\Delta_{n,q}}M_{q,h}^{\rm deg}(n)
+ \ll_q\Delta_{n,q}^2=n^{o(1)}
+\]
+
+by (PC.13).  Hence a forbidden spike actually forces
+\(\Omega_{c,q}(n)\) **pure-cross, same-kernel** pairs.
+
+Their arithmetic normal form is explicit.  If
+\(\ell-p=gt\) and the common kernel is \(g\), then for some \(d,e\)
+
+\[
+\begin{aligned}
+ m&=g(qd+e),\\
+ p&=gd+1,& n-qp&=ge,\\
+ \ell&=g(d+t)+1,& n-q\ell&=g(e-qt).
+\end{aligned}
+\tag{SK.4}
+\]
+
+Thus both zero indices and the prime gap carry the same divisor \(g\).
+The following is consequently another sufficient all-middle theorem:
+
+\[
+ \boxed{
+ \begin{aligned}
+ \#\{p<\ell:\;&p,\ell\in T_{n,q}^{\rm np}(F),\
+ g_p=g_\ell,\ \ell-p\le\Delta_{n,q},\\
+ &\text{the pair is pure cross}\}=o_{c,q}(n)
+ \end{aligned}
+ }
+\tag{SK.5}
+\]
+
+uniformly for \(N<n\le2N\), for each fixed \(q,c>0\).
+One may omit \(c\) by requiring the statement for every fixed constant
+in the definition of \(\Delta_{n,q}\).  Conditions (PC.15) and (SK.5)
+are not ordered by logical strength.  The former counts only adjacent
+\(O(\log n)\)-gap pairs and asks for \(o(n/\log n)\); the latter counts
+all same-kernel \(n^{o(1)}\)-gap pairs and asks for \(o(n)\).  The common
+kernel in (SK.4) is extra arithmetic structure which may make (SK.5) the
+more accessible target.
 
 There is also a hard uncovered component. If
 
@@ -2441,6 +2977,68 @@ solve the top-half branch, but no known gcd theorem for fixed-dimensional
 consisting of an Apéry \(P\)-recursive term and a factorial ratio. The
 carrier is therefore an exact restatement, not the missing second
 Casoratian observable.
+
+#### Path D: the holonomic-gcd formulation is exact, but no theorem covers it
+
+The carrier isolates a concise alternative target:
+
+\[
+ \log\operatorname{rad}_{(n/2,n]}
+ \gcd\!\left(b_n,\binom n{\lfloor n/2\rfloor}\right)=o(n).
+\tag{HD.1}
+\]
+
+The stronger assertion
+
+\[
+ \log\gcd\!\left(b_n,\binom n{\lfloor n/2\rfloor}\right)=o(n)
+\tag{HD.2}
+\]
+
+would certainly suffice, but (HD.1) is all that Problem 3.2 asks from
+this carrier.  Similarly, the fixed-\(q\) carriers in (10.32) turn the
+all-middle problem into the family of interval-restricted gcd estimates
+
+\[
+ \log\operatorname{rad}_{(n/(q+1),\,n/q]}
+ \gcd(b_n,C_{n,q})=o_q(n)
+\tag{HD.3}
+\]
+
+for every fixed \(q\).
+
+Both entries in (HD.1) are holonomic: \(b_n\) is the Apéry
+polynomial-coefficient recurrence and the two parity subsequences of
+\(\binom n{\lfloor n/2\rfloor}\) are hypergeometric.  This observation
+does not put (HD.1) under an existing gcd theorem.  The moving-target
+Subspace-Theorem results checked here, including Grieve--Wang, treat
+polynomials evaluated on \(S\)-unit points and their applications to
+algebraic **constant-coefficient** linear recurrences.  An Apéry
+\(P\)-recursive orbit has a transition matrix depending on \(n\), and is
+not a fixed-dimensional \(S\)-unit orbit.
+
+Several tempting formal substitutes also fail:
+
+1. coprimality of the two Ore annihilators is a characteristic-zero
+   statement about solution spaces, not a bound for
+   \(\gcd(b_n,C_n)\) at one moving index;
+2. multiplicative independence of the dominant Archimedean bases
+   \(17+12\sqrt2\) and \(2\) gives no control of exact common prime
+   divisors of their coefficient sequences;
+3. the binomial sequence was chosen precisely because every top-half
+   candidate prime divides it.  Its holonomic recurrence supplies no
+   additional selective congruence at those primes;
+4. a one-index common zero does not give the repeated shifted zeros needed
+   for a recurrence resultant or Casoratian to accumulate valuation.
+
+A targeted literature search on \(P\)-recursive, holonomic, D-finite, and
+\(G\)-function coefficient gcds found definitions, representation and
+asymptotic theorems, but no result implying (HD.1)--(HD.3).  Path D is
+therefore a legitimate new theorem interface, not an application waiting
+only for citation.  To advance it one needs either a new arithmetic gcd
+theorem for a \(G\)-function coefficient and a factorial ratio, or an
+Apéry-specific low-height certificate which is selective inside the
+universal binomial support.
 
 ### 10.8 The corrected sufficient condition: cross-prime collision energy
 
@@ -2825,23 +3423,30 @@ which closes using only the currently proved vertical exponent:
  \frac23+\frac14=\frac{11}{12}<1.
 \]
 
-This fourth-moment route is stronger than the absolute no-spike criterion
-(10.35). The hierarchy is:
+This fourth-moment route is stronger than the fixed-\(q\) criteria.  From
+weakest to strongest, the clean sufficient hypotheses isolated above are:
 
-1. fixed-\(q\) pair energy (10.35), the weakest clean pointwise condition;
-2. a sharp first moment plus Poisson-scale pair dispersion;
-3. with only \(|Z_p|\ll p^{2/3}\), the relative fourth moment (10.36).
+1. nearly primitive, adjacent pure-cross logarithmic-gap depletion
+   (PC.15);
+2. nearly primitive fixed-\(q\) pair energy (KO.16);
+3. full fixed-\(q\) pair energy (10.35);
+4. with only \(|Z_p|\ll p^{2/3}\), the relative fourth moment (10.36).
 
 ### 10.9 Precise live route and corrected verdict
 
-The strongest genuinely live formulation exposed by the computation is:
+The two most focused genuinely live horizontal formulations exposed by the
+computation are:
 
-> Prove a power-saving upper bound for the number of cross-prime
-> fixed-sum coincidences \(p+r=q+s\), with \(r\in Z_p\) and \(s\in Z_q\),
-> or more generally prove (10.24)/(10.30) for the actual Apéry zero
-> positions.
+1. for every fixed quotient \(q\), prove (PC.15): after the pointwise
+   Kummer-order pruning, the number of adjacent pure-cross target primes
+   with prime gap \(O(\log n)\) is \(o(n/\log n)\);
+2. exploit the extra common divisor in (SK.4) and prove (SK.5):
+   same-kernel pure-cross pairs with subpolynomial gap are \(o(n)\).
 
-By (KO.6), this horizontal theorem only has to treat the nearly primitive
+The more standard but stronger alternatives are the residual pair energy
+(KO.16), the full fixed-\(q\) pair energy (10.35), or the global
+fixed-sum estimates (10.24)/(10.30).  By (KO.6), all of them only have to
+treat the nearly primitive
 sector
 
 \[
@@ -2853,10 +3458,17 @@ for any chosen subpolynomial \(F(n)\to\infty\). Thus fixed-order modular
 forms and bounded-order Kummer motives can be removed unconditionally before
 any collision estimate is attempted.
 
+Path D, the holonomic-gcd estimate (HD.1), is an alternative formulation
+rather than a collision hypothesis.  It is exact but presently requires a
+new arithmetic theorem outside the scope of known constant-coefficient
+recurrence gcd results.
+
 This requires an Apéry-specific horizontal mechanism, for example:
 
 - a reciprocity law turning \(p\mid b_{n-p}\) into divisibility of a
   bounded-height integer shared across different \(p\);
+- a fixed-\((q,h)\) pure-cross certificate of sublinear height, extending
+  (PC.9) beyond the degenerate continuant;
 - a bounded-complexity algebraic parametrization of the off-center root
   position as \(p\) varies;
 - a dispersion theorem for the moving character-index Hasse interpolation;
@@ -2886,10 +3498,26 @@ The revised assessment is therefore:
    reduces the remaining Mellin problem to characters of order
    \(p^{1-o(1)}\), but leaves the same horizontal alignment obstruction in
    that sector.
+8. Degenerate short-gap collisions are controlled pointwise by
+   \(M_{q,h}^{\rm deg}(n)\ll_qh\), but all 2,764 observed top-half pairs
+   are in the complementary pure-cross locus, where the continuant is a
+   unit in both characteristics.
+9. The exact remaining theorem can be weakened from global pair energy to
+   either (PC.15), an adjacent logarithmic-gap statement inside the nearly
+   primitive residual, or the structured same-kernel statement (SK.5).
+   The prime-center reflection star (KO.17) shows that all currently known
+   local constraints remain compatible with worst-case alignment there.
+10. The divided-residue coherence (A.5) is exact but tautological for an
+    arbitrary common quotient \(A\).  It becomes useful only if a new
+    many-prime jet elimination turns it into a nonzero sublinear-height
+    certificate.
+11. The Lucas collapse gives the exact holonomic-gcd interface (HD.1), but
+    no checked theorem for \(P\)-recursive coefficients proves it.
 
 This is a negative answer to the proposed shortcut, but a positive
 sharpening of the frontier: the missing theorem is now the explicit
-scale-zero collision estimate (10.24), not a vertical zero-fiber bound.
+pure-cross estimate (PC.15) or (SK.5), equivalently a new selective
+holonomic-gcd mechanism such as (HD.1), not a vertical zero-fiber bound.
 
 ### 10.10 Sources checked for the geometry and congruences
 
