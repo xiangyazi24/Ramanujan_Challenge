@@ -117,6 +117,7 @@ def root_data(
 def records_for_prime(prime: int) -> list[tuple[int, ...]]:
     max_height = isqrt(prime)
     roots, masks, levels_by_column = root_data(prime, max_height)
+    apery = apery_values_mod(prime, max(1, max_height - 1))
 
     pair_witnesses: dict[tuple[int, int], set[int]] = {}
     witnesses: list[tuple[int, int, int]] = []
@@ -165,6 +166,12 @@ def records_for_prime(prime: int) -> list[tuple[int, ...]]:
     for height in range(4, max_height + 1):
         cutoff = deep_cutoff(height)
         boundary = {(-endpoint) % prime for endpoint in range(2, height + 1)}
+        polluted = {
+            (-cut) % prime
+            for cut in range(2, height + 1)
+            if apery[cut - 1] == 0
+        }
+        assert all((-x - 1) % prime not in polluted for x in polluted)
         current_witnesses = [
             item for item in witnesses if item[0] + item[1] <= height
         ]
@@ -208,6 +215,23 @@ def records_for_prime(prime: int) -> list[tuple[int, ...]]:
         fiber: defaultdict[tuple[int, int], set[int]] = defaultdict(set)
         for first_gap, second_gap, x in deep:
             fiber[first_gap, x].add(second_gap)
+
+        # The aligned three-polynomial gcd identity, evaluated through
+        # its split roots: both sides count pairs of r-levels meeting the
+        # same root of N_d.
+        aligned_first = sum(len(values) for values in fiber.values())
+        aligned_second = sum(comb(len(values), 2) for values in fiber.values())
+        aligned_pairwise = 0
+        for first_gap in range(cutoff + 1, height - 1):
+            returns = list(range(cutoff + 1, height - first_gap + 1))
+            for index, second_gap in enumerate(returns):
+                for third_gap in returns[index + 1 :]:
+                    aligned_pairwise += len(
+                        pair_witnesses[first_gap, second_gap]
+                        & pair_witnesses[first_gap, third_gap]
+                    )
+        assert aligned_first == len(deep)
+        assert aligned_second == aligned_pairwise
 
         records.append(
             (
@@ -313,10 +337,22 @@ def gap_polynomials_mod(prime: int, max_height: int) -> list[list[int]]:
     return polynomials
 
 
+def center_values(even_block: int, max_index: int) -> list[int]:
+    """Generate T_b^(a) from the exact integer center recurrence."""
+
+    assert even_block >= 2 and even_block % 2 == 0
+    values = [0, 1]
+    for index in range(1, max_index):
+        z = even_block + 2 * index - 1
+        coefficient = 34 * z**3 + 102 * z**2 + 108 * z + 40
+        values.append(coefficient * values[index] - z**6 * values[index - 1])
+    return values
+
+
 def check_resultant_component_obstructions() -> None:
     # A small mismatch inside the main p<=2000 scan.
     prime, first_gap = 257, 4
-    polynomials = gap_polynomials_mod(prime, 11)
+    polynomials = gap_polynomials_mod(prime, 12)
     ninth = poly_shift(polynomials[9], first_gap, prime)
     eleventh = poly_shift(polynomials[11], first_gap, prime)
     assert [polynomials[first_gap][-1], ninth[-1], eleventh[-1]] == [172, 91, 67]
@@ -325,9 +361,26 @@ def check_resultant_component_obstructions() -> None:
     assert poly_gcd(ninth, eleventh, prime) == [1]
     assert poly_eval(ninth, 40, prime) == 0
     assert poly_eval(eleventh, 42, prime) == 0
+    assert [
+        second_gap
+        for second_gap in range(2, 13)
+        if poly_eval(
+            poly_shift(polynomials[second_gap], first_gap, prime), 40, prime
+        )
+        == 0
+    ] == [9]
+    assert [
+        second_gap
+        for second_gap in range(2, 13)
+        if poly_eval(
+            poly_shift(polynomials[second_gap], first_gap, prime), 42, prime
+        )
+        == 0
+    ] == [11]
 
     # The same component mismatch wholly inside the requested deep region.
     prime, height, first_gap = 5683, 72, 33
+    assert all(prime % divisor for divisor in range(2, isqrt(prime) + 1))
     assert height**2 < prime
     assert 29**4 > height**3
     polynomials = gap_polynomials_mod(prime, 39)
@@ -345,16 +398,35 @@ def check_resultant_component_obstructions() -> None:
     assert poly_eval(twenty_ninth, 771, prime) == 0
     assert poly_eval(polynomials[first_gap], 4186, prime) == 0
     assert poly_eval(thirty_ninth, 4186, prime) == 0
+    assert [
+        second_gap
+        for second_gap in range(deep_cutoff(height) + 1, height - first_gap + 1)
+        if poly_eval(
+            poly_shift(polynomials[second_gap], first_gap, prime), 771, prime
+        )
+        == 0
+    ] == [29]
+    assert [
+        second_gap
+        for second_gap in range(deep_cutoff(height) + 1, height - first_gap + 1)
+        if poly_eval(
+            poly_shift(polynomials[second_gap], first_gap, prime), 4186, prime
+        )
+        == 0
+    ] == [39]
 
     # The center values are not a fixed-first-index divisibility chain.
-    center_second = 2200
-    center_third = 16220375
+    centers = center_values(2, 3)
+    center_second = centers[2]
+    center_third = centers[3]
+    assert (center_second, center_third) == (2200, 16220375)
     assert gcd(center_second, center_third) == 25
     assert center_second % center_third and center_third % center_second
 
 
 def check_deep_boundary_example() -> None:
     prime, height = 4283, 65
+    assert all(prime % divisor for divisor in range(2, isqrt(prime) + 1))
     roots, masks, levels_by_column = root_data(prime, height)
     assert deep_cutoff(height) == 22
     assert apery_values_mod(prime, 18)[18] == 0

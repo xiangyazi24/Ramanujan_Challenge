@@ -68,7 +68,7 @@ def compute_b_mod_p_direct(j, p):
         s %= p
     return s
 
-PMAX = 10000
+PMAX = int(sys.argv[1]) if len(sys.argv) > 1 else 10000
 print(f"Computing Z(p) for primes up to {PMAX}...")
 sys.stdout.flush()
 t0 = time.time()

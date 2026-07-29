@@ -1,0 +1,242 @@
+Computing Z(p) for primes 5 <= p <= 1000000...
+  78498 primes total
+  78496 primes >= 5
+  NEW MAX Z(p) = 2 at p = 5
+  NEW MAX Z(p) = 4 at p = 181
+  NEW MAX Z(p) = 6 at p = 379
+  NEW MAX Z(p) = 8 at p = 3727
+  [  1.0%] p=6029, avg Z=0.923, max Z=8 (p=3727), elapsed 0s, ETA 30s
+  [  2.0%] p=13187, avg Z=0.963, max Z=8 (p=3727), elapsed 1s, ETA 71s
+  [  3.0%] p=20929, avg Z=1.015, max Z=8 (p=3727), elapsed 4s, ETA 117s
+  [  4.0%] p=28813, avg Z=1.019, max Z=8 (p=3727), elapsed 7s, ETA 165s
+  [  5.0%] p=36979, avg Z=1.016, max Z=8 (p=3727), elapsed 11s, ETA 215s
+  [  6.0%] p=45343, avg Z=1.011, max Z=8 (p=3727), elapsed 17s, ETA 267s
+  [  7.0%] p=53891, avg Z=1.011, max Z=8 (p=3727), elapsed 24s, ETA 318s
+  [  8.0%] p=62483, avg Z=0.999, max Z=8 (p=3727), elapsed 32s, ETA 370s
+  [  9.0%] p=71293, avg Z=0.989, max Z=8 (p=3727), elapsed 42s, ETA 423s
+  [ 10.0%] p=80077, avg Z=0.991, max Z=8 (p=3727), elapsed 53s, ETA 477s
+  NEW MAX Z(p) = 10 at p = 88609
+  [ 11.0%] p=89057, avg Z=0.988, max Z=10 (p=88609), elapsed 65s, ETA 531s
+  [ 12.0%] p=97883, avg Z=0.990, max Z=10 (p=88609), elapsed 82s, ETA 603s
+  [ 13.0%] p=106957, avg Z=0.993, max Z=10 (p=88609), elapsed 101s, ETA 675s
+  [ 14.0%] p=116177, avg Z=0.993, max Z=10 (p=88609), elapsed 121s, ETA 742s
+  [ 15.0%] p=125311, avg Z=0.996, max Z=10 (p=88609), elapsed 142s, ETA 808s
+  [ 16.0%] p=134593, avg Z=1.002, max Z=10 (p=88609), elapsed 165s, ETA 867s
+  [ 17.0%] p=143821, avg Z=1.006, max Z=10 (p=88609), elapsed 190s, ETA 929s
+  [ 18.0%] p=153067, avg Z=1.007, max Z=10 (p=88609), elapsed 216s, ETA 984s
+  NEW MAX Z(p) = 12 at p = 159977
+  [ 19.0%] p=162629, avg Z=1.008, max Z=12 (p=159977), elapsed 243s, ETA 1039s
+  [ 20.0%] p=172181, avg Z=1.009, max Z=12 (p=159977), elapsed 273s, ETA 1092s
+  [ 21.0%] p=181717, avg Z=1.006, max Z=12 (p=159977), elapsed 304s, ETA 1144s
+  [ 22.0%] p=191047, avg Z=1.003, max Z=12 (p=159977), elapsed 336s, ETA 1195s
+  [ 23.0%] p=200639, avg Z=1.008, max Z=12 (p=159977), elapsed 371s, ETA 1243s
+  [ 24.0%] p=210127, avg Z=1.011, max Z=12 (p=159977), elapsed 407s, ETA 1291s
+  [ 25.0%] p=219847, avg Z=1.008, max Z=12 (p=159977), elapsed 442s, ETA 1327s
+  [ 26.0%] p=229459, avg Z=1.009, max Z=12 (p=159977), elapsed 477s, ETA 1360s
+  [ 27.0%] p=239383, avg Z=1.007, max Z=12 (p=159977), elapsed 514s, ETA 1391s
+  [ 28.0%] p=248867, avg Z=1.006, max Z=12 (p=159977), elapsed 552s, ETA 1422s
+  [ 29.0%] p=258703, avg Z=1.005, max Z=12 (p=159977), elapsed 592s, ETA 1453s
+  [ 30.0%] p=268529, avg Z=1.005, max Z=12 (p=159977), elapsed 634s, ETA 1483s
+  [ 31.0%] p=278353, avg Z=1.007, max Z=12 (p=159977), elapsed 678s, ETA 1513s
+  [ 32.0%] p=288383, avg Z=1.006, max Z=12 (p=159977), elapsed 724s, ETA 1541s
+  [ 33.0%] p=298343, avg Z=1.005, max Z=12 (p=159977), elapsed 771s, ETA 1569s
+  [ 34.0%] p=308149, avg Z=1.006, max Z=12 (p=159977), elapsed 820s, ETA 1595s
+  [ 35.0%] p=318001, avg Z=1.006, max Z=12 (p=159977), elapsed 871s, ETA 1621s
+  [ 36.0%] p=327721, avg Z=1.007, max Z=12 (p=159977), elapsed 924s, ETA 1646s
+  [ 37.0%] p=337669, avg Z=1.006, max Z=12 (p=159977), elapsed 979s, ETA 1671s
+  [ 38.0%] p=347731, avg Z=1.006, max Z=12 (p=159977), elapsed 1037s, ETA 1695s
+  [ 39.0%] p=357677, avg Z=1.005, max Z=12 (p=159977), elapsed 1096s, ETA 1717s
+  [ 40.0%] p=367721, avg Z=1.004, max Z=12 (p=159977), elapsed 1156s, ETA 1738s
+  [ 40.9%] p=378083, avg Z=1.001, max Z=12 (p=159977), elapsed 1220s, ETA 1759s
+  [ 41.9%] p=388259, avg Z=1.001, max Z=12 (p=159977), elapsed 1286s, ETA 1779s
+  [ 42.9%] p=398171, avg Z=1.001, max Z=12 (p=159977), elapsed 1354s, ETA 1799s
+  [ 43.9%] p=408553, avg Z=1.000, max Z=12 (p=159977), elapsed 1424s, ETA 1817s
+  [ 44.9%] p=418657, avg Z=1.001, max Z=12 (p=159977), elapsed 1496s, ETA 1833s
+  [ 45.9%] p=428843, avg Z=0.999, max Z=12 (p=159977), elapsed 1570s, ETA 1847s
+  [ 46.9%] p=438829, avg Z=0.998, max Z=12 (p=159977), elapsed 1645s, ETA 1860s
+  [ 47.9%] p=449117, avg Z=0.999, max Z=12 (p=159977), elapsed 1723s, ETA 1871s
+  [ 48.9%] p=459353, avg Z=0.998, max Z=12 (p=159977), elapsed 1803s, ETA 1881s
+  [ 49.9%] p=469723, avg Z=0.999, max Z=12 (p=159977), elapsed 1884s, ETA 1889s
+  [ 50.9%] p=479761, avg Z=1.000, max Z=12 (p=159977), elapsed 1967s, ETA 1895s
+  [ 51.9%] p=490031, avg Z=0.999, max Z=12 (p=159977), elapsed 2052s, ETA 1899s
+  [ 52.9%] p=500197, avg Z=0.997, max Z=12 (p=159977), elapsed 2140s, ETA 1902s
+  [ 53.9%] p=510589, avg Z=0.999, max Z=12 (p=159977), elapsed 2228s, ETA 1903s
+  [ 54.9%] p=520837, avg Z=0.999, max Z=12 (p=159977), elapsed 2319s, ETA 1903s
+  [ 55.9%] p=531017, avg Z=0.999, max Z=12 (p=159977), elapsed 2413s, ETA 1901s
+  [ 56.9%] p=541571, avg Z=1.000, max Z=12 (p=159977), elapsed 2509s, ETA 1898s
+  [ 57.9%] p=551959, avg Z=1.000, max Z=12 (p=159977), elapsed 2606s, ETA 1892s
+  [ 58.9%] p=562501, avg Z=1.000, max Z=12 (p=159977), elapsed 2704s, ETA 1885s
+  [ 59.9%] p=572791, avg Z=1.000, max Z=12 (p=159977), elapsed 2805s, ETA 1876s
+  [ 60.9%] p=583171, avg Z=1.000, max Z=12 (p=159977), elapsed 2908s, ETA 1865s
+  [ 61.9%] p=593479, avg Z=0.999, max Z=12 (p=159977), elapsed 3010s, ETA 1851s
+  [ 62.9%] p=603893, avg Z=1.000, max Z=12 (p=159977), elapsed 3112s, ETA 1834s
+  [ 63.9%] p=614279, avg Z=1.000, max Z=12 (p=159977), elapsed 3216s, ETA 1815s
+  [ 64.9%] p=624683, avg Z=0.999, max Z=12 (p=159977), elapsed 3325s, ETA 1797s
+  [ 65.9%] p=635359, avg Z=0.999, max Z=12 (p=159977), elapsed 3437s, ETA 1777s
+  [ 66.9%] p=646147, avg Z=1.000, max Z=12 (p=159977), elapsed 3552s, ETA 1756s
+  [ 67.9%] p=656609, avg Z=1.001, max Z=12 (p=159977), elapsed 3669s, ETA 1733s
+  [ 68.9%] p=667021, avg Z=1.000, max Z=12 (p=159977), elapsed 3788s, ETA 1708s
+  [ 69.9%] p=677683, avg Z=1.000, max Z=12 (p=159977), elapsed 3909s, ETA 1682s
+  [ 70.9%] p=688031, avg Z=0.999, max Z=12 (p=159977), elapsed 4032s, ETA 1654s
+  [ 71.9%] p=698557, avg Z=1.000, max Z=12 (p=159977), elapsed 4158s, ETA 1624s
+  [ 72.9%] p=709123, avg Z=1.000, max Z=12 (p=159977), elapsed 4283s, ETA 1591s
+  [ 73.9%] p=719821, avg Z=0.999, max Z=12 (p=159977), elapsed 4408s, ETA 1556s
+  [ 74.9%] p=730237, avg Z=1.000, max Z=12 (p=159977), elapsed 4537s, ETA 1520s
+  [ 75.9%] p=740737, avg Z=1.000, max Z=12 (p=159977), elapsed 4676s, ETA 1484s
+  [ 76.9%] p=751747, avg Z=1.000, max Z=12 (p=159977), elapsed 4810s, ETA 1444s
+  [ 77.9%] p=762277, avg Z=1.000, max Z=12 (p=159977), elapsed 4954s, ETA 1405s
+  [ 78.9%] p=772721, avg Z=0.999, max Z=12 (p=159977), elapsed 5101s, ETA 1364s
+  [ 79.9%] p=783421, avg Z=0.999, max Z=12 (p=159977), elapsed 5251s, ETA 1321s
+  [ 80.9%] p=793979, avg Z=1.000, max Z=12 (p=159977), elapsed 5404s, ETA 1276s
+  [ 81.9%] p=804613, avg Z=0.999, max Z=12 (p=159977), elapsed 5558s, ETA 1228s
+  [ 82.9%] p=815341, avg Z=1.000, max Z=12 (p=159977), elapsed 5716s, ETA 1179s
+  [ 83.9%] p=825733, avg Z=1.000, max Z=12 (p=159977), elapsed 5877s, ETA 1128s
+  [ 84.9%] p=836501, avg Z=1.000, max Z=12 (p=159977), elapsed 6042s, ETA 1075s
+  [ 85.9%] p=847321, avg Z=1.000, max Z=12 (p=159977), elapsed 6208s, ETA 1019s
+  [ 86.9%] p=858113, avg Z=1.002, max Z=12 (p=159977), elapsed 6377s, ETA 962s
+  [ 87.9%] p=868669, avg Z=1.001, max Z=12 (p=159977), elapsed 6549s, ETA 902s
+  [ 88.9%] p=879371, avg Z=1.001, max Z=12 (p=159977), elapsed 6707s, ETA 838s
+  [ 89.9%] p=890107, avg Z=1.000, max Z=12 (p=159977), elapsed 6885s, ETA 774s
+  [ 90.9%] p=900971, avg Z=0.998, max Z=12 (p=159977), elapsed 7063s, ETA 708s
+  [ 91.9%] p=911459, avg Z=0.998, max Z=12 (p=159977), elapsed 7246s, ETA 640s
+  [ 92.9%] p=922457, avg Z=0.999, max Z=12 (p=159977), elapsed 7429s, ETA 569s
+  [ 93.9%] p=933173, avg Z=1.000, max Z=12 (p=159977), elapsed 7613s, ETA 496s
+  [ 94.9%] p=943871, avg Z=1.000, max Z=12 (p=159977), elapsed 7801s, ETA 421s
+  [ 95.9%] p=954973, avg Z=0.999, max Z=12 (p=159977), elapsed 7978s, ETA 343s
+  [ 96.9%] p=965777, avg Z=0.999, max Z=12 (p=159977), elapsed 8162s, ETA 263s
+  [ 97.9%] p=976537, avg Z=0.999, max Z=12 (p=159977), elapsed 8349s, ETA 181s
+  [ 98.9%] p=987739, avg Z=1.000, max Z=12 (p=159977), elapsed 8541s, ETA 97s
+  [ 99.9%] p=998623, avg Z=1.000, max Z=12 (p=159977), elapsed 8739s, ETA 11s
+
+Done in 8763.4s (78496 primes)
+
+=== Z(p) histogram (p <= 1000000) ===
+  Z(p) =   0:  47632 primes ( 60.68%)
+  Z(p) =   1:      2 primes (  0.00%)
+  Z(p) =   2:  23730 primes ( 30.23%)
+  Z(p) =   4:   6045 primes (  7.70%)
+  Z(p) =   6:    951 primes (  1.21%)
+  Z(p) =   8:    123 primes (  0.16%)
+  Z(p) =  10:     12 primes (  0.02%)
+  Z(p) =  12:      1 primes (  0.00%)
+
+=== Summary ===
+  Total primes (>= 5): 78496
+  Mean Z(p): 0.9996
+  Max Z(p): 12 at p = 159977
+  Primes with Z(p)=0: 47632 (60.7%)
+
+=== Average Z(p) by range ===
+  p in [      5,     100): avg=0.913, max=2, n=23
+  p in [    100,    1000): avg=1.007, max=6, n=143
+  p in [   1000,   10000): avg=0.951, max=8, n=1061
+  p in [  10000,  100000): avg=0.995, max=10, n=8363
+  p in [ 100000,  500000): avg=0.999, max=12, n=31946
+  p in [ 500000, 1000000): avg=1.002, max=10, n=36960
+
+=== Primes with Z(p) >= 6 ===
+  p=379: Z(p)=6
+  p=499: Z(p)=6
+  p=1049: Z(p)=6
+  p=1069: Z(p)=6
+  p=2693: Z(p)=6
+  p=3727: Z(p)=8
+  p=4679: Z(p)=6
+  p=5647: Z(p)=6
+  p=5897: Z(p)=6
+  p=6247: Z(p)=6
+  p=6781: Z(p)=6
+  p=6841: Z(p)=8
+  p=7489: Z(p)=6
+  p=7727: Z(p)=6
+  p=8753: Z(p)=6
+  p=9787: Z(p)=6
+  p=10847: Z(p)=6
+  p=11971: Z(p)=6
+  p=13217: Z(p)=6
+  p=13463: Z(p)=8
+  p=13711: Z(p)=6
+  p=13729: Z(p)=6
+  p=14419: Z(p)=6
+  p=14537: Z(p)=6
+  p=15551: Z(p)=6
+  p=16451: Z(p)=8
+  p=17903: Z(p)=6
+  p=18661: Z(p)=6
+  p=19031: Z(p)=6
+  p=19489: Z(p)=6
+  p=19681: Z(p)=6
+  p=20177: Z(p)=6
+  p=21481: Z(p)=6
+  p=21727: Z(p)=6
+  p=26417: Z(p)=6
+  p=27791: Z(p)=6
+  p=27919: Z(p)=6
+  p=28933: Z(p)=8
+  p=29303: Z(p)=6
+  p=30697: Z(p)=6
+  p=30853: Z(p)=6
+  p=31249: Z(p)=6
+  p=31259: Z(p)=6
+  p=32063: Z(p)=8
+  p=32173: Z(p)=6
+  p=32443: Z(p)=6
+  p=32693: Z(p)=6
+  p=33409: Z(p)=6
+  p=34297: Z(p)=6
+  p=35149: Z(p)=6
+  p=36709: Z(p)=6
+  p=38197: Z(p)=8
+  p=39341: Z(p)=6
+  p=40213: Z(p)=6
+  p=40483: Z(p)=6
+  p=40823: Z(p)=6
+  p=40933: Z(p)=6
+  p=42499: Z(p)=6
+  p=42683: Z(p)=6
+  p=43019: Z(p)=6
+  p=43051: Z(p)=6
+  p=43151: Z(p)=8
+  p=43577: Z(p)=6
+  p=45053: Z(p)=6
+  p=47303: Z(p)=6
+  p=47501: Z(p)=6
+  p=48109: Z(p)=8
+  p=48271: Z(p)=6
+  p=49199: Z(p)=6
+  p=49783: Z(p)=6
+  p=50033: Z(p)=6
+  p=50599: Z(p)=6
+  p=51151: Z(p)=6
+  p=51803: Z(p)=6
+  p=52379: Z(p)=6
+  p=52709: Z(p)=6
+  p=53161: Z(p)=6
+  p=54181: Z(p)=6
+  p=55721: Z(p)=6
+  p=55933: Z(p)=6
+  p=56731: Z(p)=6
+  p=57367: Z(p)=6
+  p=57557: Z(p)=6
+  p=60167: Z(p)=6
+  p=60649: Z(p)=6
+  p=62683: Z(p)=6
+  p=63949: Z(p)=6
+  p=64609: Z(p)=6
+  p=67079: Z(p)=6
+  p=67967: Z(p)=8
+  p=68897: Z(p)=6
+  p=70061: Z(p)=6
+  p=71287: Z(p)=6
+  p=72421: Z(p)=8
+  p=72559: Z(p)=6
+  p=72701: Z(p)=6
+  p=72883: Z(p)=8
+  p=73693: Z(p)=6
+  p=76157: Z(p)=6
+  p=76919: Z(p)=6
+  ... (showing first 100)
+
+=== Non-ordinary primes (odd Z(p)) ===
+  p=11: Z(p)=1
+  p=3137: Z(p)=1

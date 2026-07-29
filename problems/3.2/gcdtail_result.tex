@@ -79,6 +79,28 @@ Indeed, the zero levels of the column $-39$ in this window are $24,57$,
 whereas the polluted column $-19$ vanishes at every level from $19$ to
 $65$.  The two witnesses are exchanged by~\eqref{eq:gcdtail-swap}.
 
+The fixed involution removes the apparent worst pollution--pollution
+interaction.  Let
+\[
+ \mathcal P_H=\{-m:2\leq m\leq H,\ p\mid b_{m-1}\}.
+\]
+Then
+\begin{equation}\label{eq:gcdtail-pollution-disjoint}
+ \mathcal P_H\cap\iota(\mathcal P_H)=\varnothing.
+\end{equation}
+Indeed, an equality $-m=\iota(-n)=n-1$ would give
+$m+n\equiv1\pmod p$, whereas
+$4\leq m+n\leq2H\leq2\sqrt p<p+1$.  Since
+$|\mathcal P_H|\ll H^{2/3}$, a polluted column has at most $H$ zero
+levels, and its paired column is unpolluted in this window and has
+$O(H^{2/3})$ zero levels.  After summing
+\eqref{eq:gcdtail-involution} over the deep domain, the terms for which
+either paired column lies in $\mathcal P_H$ therefore contribute
+\begin{equation}\label{eq:gcdtail-polluted-paired-bound}
+ O\bigl(|\mathcal P_H|H\cdot H^{2/3}\bigr)=O(H^{7/3}).
+\end{equation}
+Thus pollution is not the source of the remaining $H^{8/3}$ exponent.
+
 The estimates already proved in \texttt{energy\_result.tex} give only
 \begin{equation}\label{eq:gcdtail-current-bound}
  \mathcal E_p^{\rm deep}(H)\leq\mathcal E_p(H)\ll H^{8/3}.
@@ -125,7 +147,8 @@ $(u,v)\in\mathbb A^2(\mathbb F_q)$ assign the snake rank
 \]
 The columns are the $q(q-1)$ affine lines
 \[
- L_{a,b}:v=au+b,qquad a\in\mathbb F_q^\times,quad b\in\mathbb F_q,
+ L_{a,b}:v=au+b,\qquad
+ a\in\mathbb F_q^\times,\quad b\in\mathbb F_q,
 \]
 with incidence inherited from the affine plane.
 
@@ -141,12 +164,12 @@ $2q^2$.
 Put $a_0=\lfloor q/4\rfloor$ and select on each line the points in the
 two horizontal bands
 \[
- 0\leq v<a_0,qquad q-a_0\leq v<q.
+ 0\leq v<a_0,\qquad q-a_0\leq v<q.
 \]
 There are exactly $a_0$ points from each band on each selected line.
 For a lower-band level $d$ and an upper-band level $e$, one has
 \[
- d\geq2q^2,qquad \frac{q^2}{2}<e-d<q^2,qquad e<3q^2<H.
+ d\geq2q^2,\qquad \frac{q^2}{2}<e-d<q^2,\qquad e<3q^2<H.
 \]
 For $q>91$, both $d$ and $e-d$ exceed
 $(8q^2)^{3/4}$, while $|d-(e-d)|>q^2=H/8$.  The number of these pairs is
@@ -162,7 +185,7 @@ The proposed gcd-of-resultants identity has the wrong direction.  If a
 primitive polynomial $q$ divides both $g$ and $h$ in $\mathbb Z[X]$, then
 resultant multiplicativity gives
 \[
- \operatorname {Res}(f,q)\mid\operatorname {Res}(f,g),qquad
+ \operatorname {Res}(f,q)\mid\operatorname {Res}(f,g),\qquad
  \operatorname {Res}(f,q)\mid\operatorname {Res}(f,h).
 \]
 The converse fails: the same rational prime can enter the two resultants
@@ -172,7 +195,7 @@ through different roots, or different residue-field components, of $f$.
 \label{prop:gcdtail-resultant-counterexample}
 Take
 \[
- p=5683,qquad H=72,qquad d=33,qquad r=29,qquad s=39.
+ p=5683,\qquad H=72,\qquad d=33,\qquad r=29,\qquad s=39.
 \]
 Then $H^2<p$, both $(d,r)$ and $(d,s)$ are deep pairs in
 $\mathscr D_H$, and, with monic gcds in $\mathbb F_{5683}[X]$,
@@ -215,7 +238,7 @@ integer resultant divisibilities.
 
 Finally,
 \[
- 72^2=5184<5683,qquad 29^4=707281>72^3=373248,
+ 72^2=5184<5683,\qquad 29^4=707281>72^3=373248,
 \]
 and $33+29\leq72$, $33+39=72$.  Thus both pairs are deep.  All three
 indices are odd, so the example is not supplied by an even-block center
@@ -237,12 +260,38 @@ unpolluted inner column yields only
 before the polluted contribution, and summing this scale over $d$ returns
 $H^{8/3}$.
 
+The correct replacement for a gcd of scalar resultants is an aligned
+three-polynomial split gcd.  Fix $d>H^{3/4}$ and put
+\[
+ G_r(X)=\overline N_r(X+d),\qquad
+ q_{d,x}=\#\{r:H^{3/4}<r\leq H-d,\ G_r(x)=0\}
+\]
+for $x\in\mathbb F_p$ with $\overline N_d(x)=0$.  Then
+\begin{align}
+ E_d^{\rm deep}
+ &:=\sum_{H^{3/4}<r\leq H-d}m_{d,r}(p)
+   =\sum_xq_{d,x},\label{eq:gcdtail-aligned-first}\\
+ A_d^{\rm deep}
+ &:=\sum_x\binom{q_{d,x}}2
+   =\sum_{H^{3/4}<r<s\leq H-d}
+       \deg\gcd(\overline N_d,G_r,G_s,X^p-X).
+ \label{eq:gcdtail-aligned-second}
+\end{align}
+The factor $X^p-X$ is squarefree, so the last degree counts exactly the
+common split witnesses.  Thus pairwise aligned gcds measure a higher
+factorial moment, not the energy.  They miss every component with
+$q_{d,x}=1$.  Both the $p=257$ regression in the verifier and
+Proposition~\ref{prop:gcdtail-resultant-counterexample} realize this
+failure with two different roots of the same $N_d$.  Even perfect control
+of~\eqref{eq:gcdtail-aligned-second} therefore leaves the singleton mass
+in~\eqref{eq:gcdtail-aligned-first} untreated.
+
 The center recurrence does give a genuine partial result: the
 distinguished center witnesses contribute $O(H^{5/3})$, as proved in
 Proposition~\ref{prop:energy-center-witnesses}.  It does not form a
 fixed-$d$ divisibility chain.  Already
 \[
- T_2^{(2)}=2200,qquad T_3^{(2)}=16220375,qquad
+ T_2^{(2)}=2200,\qquad T_3^{(2)}=16220375,\qquad
  \gcd(T_2^{(2)},T_3^{(2)})=25,
 \]
 so neither consecutive term divides the other.  The proved propagation
@@ -290,9 +339,11 @@ $A_I(y)\ll H^{2/3}$, while $\sum_yA_I(y)\ll H^2$.  The unpolluted part of
 the last member of~\eqref{eq:gcdtail-plancherel-stall} is therefore only
 $O(H^{8/3})$.  On the polluted columns the bounds
 $A_I(y)\leq H$ and $|\mathcal P_H|\ll H^{2/3}$ give the same exponent.
-Thus Plancherel reproduces~\eqref{eq:gcdtail-current-bound}; it supplies no
-power saving without a new cross-correlation or nonzero-frequency
-estimate.
+The exact paired formula improves the actual pollution-containing terms
+to $H^{7/3}$ by~\eqref{eq:gcdtail-polluted-paired-bound}, but the
+unpolluted part still has the $H^{8/3}$ bound above.  Thus Plancherel
+supplies no power saving without a new cross-correlation or
+nonzero-frequency estimate.
 
 Likewise, averaging~\eqref{eq:gcdtail-slice} over $d$ is exactly
 $\mathcal E_p(H)/H$ up to endpoints.  To prove
@@ -300,14 +351,33 @@ $\mathcal E_p(H)\ll H^{2-\delta}$ by this route one must prove the new
 average slice estimate $O(H^{1-\delta})$; Cauchy--Schwarz and the current
 column second moment do not furnish it.
 
+There is a separate scope issue in the specification.  The deep-tail
+statement is equivalent to the displayed count of deep triples, but the
+results currently proved in \texttt{energy\_result.tex} do not make it
+equivalent to a full bound for $\mathcal E_p(H)$.  The deterministic
+shallow estimate covers $\min(d,r)\leq H^{1/4}$, while the
+$H^{3/4}$ cutoff there applies only inside a fixed-width diagonal band.
+For every fixed $C$, the off-diagonal part
+\[
+ H^{1/4}<\min(d,r)\leq H^{3/4},\qquad |d-r|>C
+\]
+remains unresolved.  Indeed, substituting $K=H^{3/4}$ in the available
+unpolluted shallow estimate $K^2H^{2/3}$ gives $H^{13/6}$, still above
+$H^2$.  Hence a future proof of the deep lemma would still need an
+additional estimate for this complementary annulus.
+
 \subsubsection{Stall report}
 
-The estimate
+Neither the requested deep estimate
+\[
+ \mathcal E_p^{\rm deep}(H)\ll H^{2-\delta}
+\]
+nor the full estimate
 \[
  \mathcal E_p(H)\ll H^{2-\delta}
 \]
-is \emph{not proved}.  The four suggested approaches stop for distinct,
-rigorously identifiable reasons:
+is proved for any $\delta>0$.  The four suggested approaches stop for
+distinct, rigorously identifiable reasons:
 \begin{enumerate}
  \item the column inputs allow $\asymp H^2$ deep, far-off-diagonal pairs
        even with codegree one
@@ -316,14 +386,15 @@ rigorously identifiable reasons:
        $O(H^{5/3})$ distinguished subfamily, do not chain at fixed $d$,
        and raw resultant support loses the multiplicity in
        \eqref{eq:gcdtail-support-weight-loss};
- \item the proposed gcd-of-resultants identity is false because scalar
-       resultants lose the root-component label, even for deep pairs
-       (Proposition~\ref{prop:gcdtail-resultant-counterexample});
+ \item Proposition~\ref{prop:gcdtail-resultant-counterexample} disproves
+       the proposed resultant-gcd identity even for deep pairs: the two
+       scalar resultants use different roots.  The aligned replacement
+       \eqref{eq:gcdtail-aligned-second} still misses singleton fibers;
  \item the fixed-$d$ average and Plancherel bounds reduce to the same
        $H^{8/3}$ column second moment.
 \end{enumerate}
-The exact remaining input is therefore still a genuinely arithmetic,
-split affine gcd-tail estimate, for example
+The exact requested input for the deep portion is still a genuinely
+arithmetic split affine gcd-tail estimate, for example
 \[
  \sum_{\substack{d+r\leq H\\\min(d,r)>H^{3/4}}}
  \deg\gcd_{\mathbb F_p[X]}
@@ -331,7 +402,9 @@ split affine gcd-tail estimate, for example
  \ll H^{2-\delta}
 \]
 for some fixed $\delta>0$.  None of the scalar-support or one-column
-statements above implies this estimate.
+statements above implies this estimate.  For a full
+$\mathcal E_p(H)\ll H^{2-\delta}$ bound, the complementary annulus
+identified above requires an additional estimate as well.
 
 \paragraph{Finite verification.}
 The pure-Python script \texttt{gcdtail\_verify.py} checks every prime
@@ -339,13 +412,15 @@ $p\leq2000$ and every $4\leq H\leq\lfloor\sqrt p\rfloor$, for $7439$
 height records in total.  It verifies the reflection identity,
 \eqref{eq:gcdtail-involution}, the swap involution, the per-pair degree
 bound, the exact off-boundary column identity and boundary sandwich, and
-their deep restrictions.  Across this finite scan the total of the deep
-energies over all height records is $57$ and the maximum for one record is
-$2$; at the endpoint $H=\lfloor\sqrt p\rfloor$ the total is $12$.
+their deep restrictions, the aligned first- and second-moment identities,
+and~\eqref{eq:gcdtail-pollution-disjoint}.  Across this finite scan the
+total of the deep energies over all height records is $57$ and the maximum
+for one record is $2$; at the endpoint
+$H=\lfloor\sqrt p\rfloor$ the total is $12$.
 The canonical record digest is
-\[
- \texttt{76b9e86cf7f8f007826efba856bf2728875eff0feddf10afd947cec050941a84}.
-\]
+\begin{center}
+ {\small\texttt{76b9e86cf7f8f007826efba856bf2728875eff0feddf10afd947cec050941a84}}.
+\end{center}
 The script separately repeats the modular Euclidean algorithms in
 Proposition~\ref{prop:gcdtail-resultant-counterexample}, a smaller
 $p=257$ component-misalignment example, the two center values above, and

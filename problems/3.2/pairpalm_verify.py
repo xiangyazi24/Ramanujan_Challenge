@@ -184,6 +184,21 @@ def ordered_tuple_mass(zero_counts: list[int], order: int) -> int:
     return falling(order, order) * elementary[order]
 
 
+def ordered_bernoulli_baseline(
+    weights: list[Fraction], first: int, second: int, order: int
+) -> Fraction:
+    """Return order! e_order after excluding two anchored columns."""
+
+    elementary = [Fraction(0) for _ in range(order + 1)]
+    elementary[0] = Fraction(1)
+    for column, weight in enumerate(weights):
+        if column in (first, second):
+            continue
+        for degree in range(order, 0, -1):
+            elementary[degree] += weight * elementary[degree - 1]
+    return falling(order, order) * elementary[order]
+
+
 def crt_factorial_moments(
     primes: list[int],
     zero_sets: list[tuple[int, ...]],
@@ -344,6 +359,34 @@ def check_synthetic_pair_palm() -> str:
         else:
             assert signs == (56, 14, 20)
 
+        extension_order = order - 2
+        bernoulli_excess = Fraction(0)
+        bernoulli_baseline_sum = Fraction(0)
+        for first in range(len(weights)):
+            for second in range(len(weights)):
+                if first == second:
+                    continue
+                intersection = [
+                    row for row in rows if first in row and second in row
+                ]
+                extension = sum(
+                    falling(len(row) - 2, extension_order)
+                    for row in intersection
+                )
+                local_lam = lam - weights[first] - weights[second]
+                bernoulli = ordered_bernoulli_baseline(
+                    weights, first, second, extension_order
+                )
+                assert 0 <= bernoulli <= local_lam**extension_order
+                local_baseline = len(intersection) * bernoulli
+                bernoulli_baseline_sum += local_baseline
+                bernoulli_excess += max(
+                    Fraction(extension) - local_baseline, Fraction(0)
+                )
+        assert bernoulli_excess <= direct
+        assert direct <= bernoulli_excess + bernoulli_baseline_sum
+        assert bernoulli_baseline_sum <= lam**extension_order * f2
+
         overlap_moment = sum(
             comb(order - 2, shared) ** 2
             * falling(shared, shared)
@@ -351,6 +394,12 @@ def check_synthetic_pair_palm() -> str:
             for shared in range(order - 1)
         )
         assert direct**2 <= f2 * overlap_moment
+
+    zero_rows = [[] for _ in range(5)]
+    zero_weights = [Fraction(0) for _ in range(4)]
+    for order in range(3, 9):
+        zero_check = pair_palm(zero_rows, zero_weights, order)
+        assert zero_check[:4] == (0, 0, 0, 0)
     return "nondegenerate synthetic pair-Palm identities pass for k=3,...,8"
 
 
@@ -428,6 +477,9 @@ def check_actual_apery_1024() -> str:
     scale = 1024
     bound = scale * scale
     rows, weights, primes, zero_sets = build_actual_incidence(scale)
+    assert len(primes) == 137
+    assert sum(bool(zeros) for zeros in zero_sets) == 47
+    assert sum(map(len, zero_sets)) == 120
     for prime, cleared in zip(primes, zero_sets):
         assert apery_zeros_division(prime) == cleared
         zero_set = set(cleared)

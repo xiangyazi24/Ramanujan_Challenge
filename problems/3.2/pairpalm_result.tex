@@ -242,7 +242,7 @@ the two statements are exactly equivalent.  A uniform estimate for
 each individual pair would be a genuinely stronger hypothesis.
 
 For $J_{p,q}>0$, the exact conditional content can be recorded by the
-pair-Palm generating function
+pair-Palm factorial generating function
 \begin{equation}\label{eq:pairpalm-pgf}
  \Phi_{p,q}(z)
  =\frac1{J_{p,q}}
@@ -451,7 +451,7 @@ Proposition~\ref{prop:hm3-anchored-star}.
 The overlap terms cannot be suppressed by assuming a sixth-moment bound.
 For an abstract sparse degree sequence, take
 $R=\lfloor M\lambda^2/20\rfloor$ rows of degree~$5$ and rows of degree at
-most one elsewhere.  Then
+most one elsewhere, along a regime in which $M\lambda^2\to\infty$.  Then
 \[
  F_2=20R\leq M\lambda^2,
  \qquad F_6=0,
@@ -484,11 +484,16 @@ prime in $(X,2X]$ divides $c_m$ as soon as $m\geq2X$.  Exponential height
 and a common integer sequence can therefore coexist with maximal
 cross-prime alignment.
 
-There is also a discrepancy-scale obstruction before height enters.  For
-distinct $p_1,\ldots,p_k$, CRT gives exact independence over the complete
-period $P=p_1\cdots p_k$:
+There is also a discrepancy-scale obstruction before height enters.  Write
+\[
+ \widetilde f_p(m)=
+ \mathbf1_{\{m\bmod p\in\mathcal Z_p\}}
+\]
+for the periodic extension of the truncated column $f_p$.
+For distinct $p_1,\ldots,p_k$, CRT gives exact independence over the
+complete period $P=p_1\cdots p_k$:
 \begin{equation}\label{eq:pairpalm-full-period}
- \frac1P\sum_{m<P}\prod_{i=1}^kf_{p_i}(m)
+ \frac1P\sum_{m<P}\prod_{i=1}^k\widetilde f_{p_i}(m)
  =\prod_{i=1}^k\frac{Z(p_i)}{p_i}.
 \end{equation}
 For $k=7$, however, $M/P<X^{-5}$.  The interval in
@@ -519,7 +524,8 @@ $(\mathrm{HM})_5$ sufficient for the full conjecture.
 \end{corollary}
 
 \begin{proof}
-Prime counting gives $\lambda_X\ll X^\alpha/\log X$.
+Prime counting gives
+$\lambda_X\ll X^{\alpha+o(1)}/\log X$.
 The maximum-row argument in the proof of
 Theorem~\ref{thm:hm-pointwise} then yields
 \[
@@ -551,9 +557,9 @@ the actual block $X=128$ it finds
  \qquad
  (F_2,F_3,F_4,\ldots,F_8)=(372,60,0,\ldots,0).
 \]
-At the first tested block with a fourth-order collision, $X=1024$, two
-independent algorithms---row scattering and direct CRT enumeration in
-prime/residue space---agree on
+At $X=1024$, the first block with a fourth-order collision in the
+paper's tested dyadic table, two independent algorithms---row scattering
+and direct CRT enumeration in prime/residue space---agree on
 \[
  \#\mathcal P_X=137,\qquad
  \#\{p:Z(p)>0\}=47,\qquad
@@ -570,7 +576,9 @@ $23.448002897\ldots$), and every periodic and finite sandwich is checked
 with exact rational arithmetic for $3\leq k\leq8$.
 
 A separate synthetic incidence table has a row of size~$8$ and gives
-nonzero strict positive-excess tests through $k=8$.  The script also checks
+nonzero strict positive-excess tests through $k=8$, including the exact
+Bernoulli baseline~\eqref{eq:pairpalm-bernoulli-baseline}; an all-zero
+incidence table checks the $\lambda=0$ edge case.  The script also checks
 the overlap identity~\eqref{eq:pairpalm-overlap-identity}, both
 Cauchy--Schwarz counterexamples, the CRT six-tuple failure, the height
 counterexample, and the exact moments through $k=8$ of the anchored star at
