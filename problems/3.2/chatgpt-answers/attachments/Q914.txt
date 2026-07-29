@@ -1,0 +1,380 @@
+
+The desired theorem is
+
+
+I do not obtain such a theorem from a termwise WZ/creative-telescoping identity. I obtain an exact local decomposition and a sharp saturation result explaining why every first-order fixed-core identity falls back to the original moving zero.
+
+The decisive facts are:
+
+1. For every candidate prime
+
+
+the Apéry summand has exactly two Kummer-unit blocks: k=b and k=p+b, 0<=b<=j. Every other summand is divisible by p^2 after squaring.
+
+1. On the two unit blocks,
+
+
+where
+
+
+Consequently
+
+
+This is the complete first-order information. The middle Kummer strata supply no independent condition.
+
+1. Every candidate prime divides B_H exactly once:
+
+
+Thus, after clearing any rational coefficients whose denominators are supported on primes <=2H, every identity
+
+
+satisfies
+
+
+If u_H is a unit at every candidate prime, then the candidate-window support of E_H is exactly the target support. This is a re-encoding, not a height saving.
+
+1. If u_H=0, the identity retains the whole carrier interval. Its large-prime radical has
+
+
+If u_H is nonzero and candidate-prime-unit, proving |E_H|=exp(o(H)) is already a complete solution of the original target.
+
+1. A Gosper/WZ antidifference for the Apéry summand alone cannot have only fixed endpoint terms with polynomial or subexponential prefactors. The endpoint hypergeometric scale is at most 16^n up to subexponential factors, whereas
+
+
+The first unavoidable boundary is therefore the surviving low/high Kummer block carrying 5A_j; it cannot be replaced by the middle stratum.
+
+1. The multi-hit auxiliary form
+
+
+is exactly saturated by the selected prime product. Every p_r divides E, hence
+
+
+Any nonzero such integer already has logarithm at least the target weight. Dividing by the product removes the selective divisibility and makes the construction circular.
+
+1. Derivatives, reflection, and Hermite interpolation do not add local rank. The condition p|A_j supplies one scalar zero. It does not force an index derivative, a companion value, or a contiguous Apéry value to vanish. Hermite multiplicity therefore increases Vandermonde/factorial cost without increasing selective p-adic order.
+
+The definite verdict is:
+
+The fixed-core factorial decomposition is exact, but its first-order local quotient has rank one. Every admissible linear WZ/finite-difference identity either retains the full binomial carrier or produces an integer whose candidate support is exactly the original moving-zero support. No subexponential boundary follows from termwise Kummer stratification alone.
+
+The route can be reopened only with a genuinely new second local condition—such as a selective mod-p^2 relation not paid for by universal finite-difference factors—or an explicit WZ boundary whose cleared integer height is proved exp(o(H)).
+
+Repository state audited: latest main commit
+
+
+---
+
+# 1. Exact factorial summand
+
+Put
+
+
+Then
+
+
+Fix a candidate prime
+
+
+Write
+
+
+Since n<2p, every k has one of the forms
+
+
+or
+
+
+## Lemma 1.1 — exact unit strata
+
+For 0<=b<=j,
+
+
+For j<k<p,
+
+
+Therefore
+
+
+for every j<k<p.
+
+### Proof
+
+For the low block, Lucas gives
+
+
+and, because j+b< p,
+
+
+Thus the first congruence follows.
+
+For the high block,
+
+
+while the base-p digits of 2p+j+b and p+b give
+
+
+If j<k<p, the first binomial binom(p+j,k) has lower digit k>j and hence vanishes modulo p. Squaring proves the p^2 statement. ∎
+
+## Corollary 1.2 — complete first-order block reduction
+
+Split
+
+
+Modulo p,
+
+
+Hence
+
+
+Equivalently, there is an integer R_(p,j) such that
+
+
+The quotient R_(p,j) contains the first Lucas defects of the two unit blocks. The middle block begins only at order p^2; it cannot supply a second first-order equation.
+
+---
+
+# 2. Exact carrier valuation
+
+For
+
+
+and a candidate prime 2H<p<=3H+1,
+
+
+Therefore
+
+
+Conversely every prime in (2H,3H+1] divides B_H once. Thus
+
+
+and the prime number theorem gives
+
+
+The full Archimedean height is larger:
+
+
+because
+
+
+So the carrier has candidate radical rate 1 and integer height rate log(27/4)=1.909542... per H.
+
+---
+
+# 3. Exact saturation of every cleared linear identity
+
+Let
+
+
+where u_H,v_H,D_H are integers and every prime divisor of D_H is at most 2H. Clearing denominators gives
+
+
+For a candidate p=n-j, the denominator is a p-unit and
+
+
+## Theorem 3.1 — candidate-window ledger
+
+For every candidate prime p=n-j,
+
+
+Therefore:
+
+
+In particular, if
+
+
+then
+
+
+This is an exact equivalence. A bound
+
+
+would immediately prove the desired theorem, but no part of the factorial reduction bounds this integer.
+
+If u_H=0, then E_H=v_HB_H retains every candidate prime and has candidate radical exp(H+o(H)) unless v_H=0.
+
+## Corollary 3.2 — short families do not add local rank
+
+For a finite family
+
+
+with every u_(H,r) a candidate-prime unit,
+
+
+Thus several identities can remove good-prime pollution but do not strengthen the local target condition. Any nonzero member of subexponential height would already solve the theorem by itself.
+
+---
+
+# 4. What a WZ telescoper must leave at the boundary
+
+Suppose a termwise construction produces
+
+
+where
+
+
+and all cleared denominators are supported on primes <=2H. Summing gives
+
+
+At a candidate prime, the exact Kummer split from Section 1 shows:
+
+
+Therefore the boundary difference satisfies
+
+
+This identifies the first unavoidable boundary term. A telescoper can reorganize the summation, but modulo the candidate prime it cannot replace the surviving scalar A_j by a second independent quantity.
+
+## 4.1 No rational Gosper antidifference for the Apéry summand alone
+
+Assume, for contradiction, that
+
+
+with R(n,k) rational and with endpoint values having only polynomial or subexponential prefactors relative to F_n(0) and F_n(n). Summing would express A_n through endpoint scales
+
+
+But
+
+
+This is impossible. Hence a WZ proof must either use coefficients of exponential size, introduce additional interior boundaries, or retain a nontrivial sum. The first nonremovable interior boundary is precisely the low/high Kummer block above.
+
+---
+
+# 5. Exact failure of the multi-hit auxiliary form
+
+Let selected distinct candidate primes be
+
+
+and put
+
+
+Consider
+
+
+with integers c_r.
+
+Fix p_t. Every term with r!=t contains the explicit factor p_t. The remaining term contains A_(j_t), which is divisible by p_t. Therefore
+
+
+for every t, and hence
+
+
+If E!=0, then
+
+
+Thus this construction cannot prove that the target weight is smaller than the logarithm of its own certificate; it reproduces the target product exactly.
+
+Writing
+
+
+makes the saturation explicit. Dividing by P removes the selective divisibility and leaves an arbitrary integer linear form. Any proof that the quotient is zero or small is already an independent relation among the selected Apéry values.
+
+The same argument applies to determinant analogues: if one target factor is inserted once in each complementary cofactor, the determinant is divisible by the full selected product. Exterior degree increases local multiplicity and determinant degree together.
+
+---
+
+# 6. Why reflection, derivatives, and the companion do not cross the barrier
+
+## 6.1 Reflection
+
+The interpolation identity
+
+
+pairs a zero at j modulo p with the reflected index p-1-j. It does not create a second independent value at the direct outer index n=p+j. Both reductions carry the same scalar A_j.
+
+## 6.2 Index derivatives
+
+A value zero does not force
+
+
+The repository's exact derivative scans and mod-p^2 audits exhibit simple zeros. Therefore a Hermite condition has only one selective row; derivative rows are generally units.
+
+## 6.3 Companion solution
+
+Let C_j be the classical companion. Its Casoratian satisfies
+
+
+For p>2H>=2j, the right side is a p-unit. Hence
+
+
+So the companion and contiguous values explicitly fail to provide another zero.
+
+## 6.4 Hermite interpolation cost
+
+For irregular selected nodes j_1,...,j_K, ordinary divided differences have denominators
+
+
+These differences are candidate-prime units because their absolute values are at most H<p. Clearing them preserves the one existing p-factor but creates no new one. Repeating nodes through derivatives raises the confluent Vandermonde and factorial cost while the selective valuation remains one. Thus multiplicity does not improve the normalized local ledger.
+
+---
+
+# 7. Exact checks at the requested heights
+
+The identities above can be checked without factoring the enormous Apéry number: compute A_j mod p from the recurrence and verify the Kummer blocks term by term.
+
+The canonical repository scans give the following target cases.
+
+## H=5
+
+
+Thus
+
+
+The two unit blocks are k=0,...,5 and k=11,...,16; all k=6,...,10 summands are divisible by 11^2.
+
+## H=74
+
+
+The canonical exact scan records this as the unique direct hit at this height and verifies that the moving zero is simple. The two unit blocks are k=0,...,30 and k=193,...,223.
+
+## H=80
+
+
+Again the canonical exact scan records a unique simple direct hit. The two unit blocks are k=0,...,44 and k=197,...,241.
+
+A fail-closed exact checker is:
+
+
+This code is included for reproducibility; no new runtime claim is made here.
+
+---
+
+# 8. Sharp no-go theorem for the fixed-core first-order class
+
+Define a first-order fixed-core certificate to be any nonzero integer obtained after:
+
+
+## Theorem 8.1 — rank-one saturation
+
+For every such certificate E_H, its reduction at a candidate prime has the form
+
+
+where c_H(p,j) is an explicitly computable scalar. If c_H(p,j) is a unit throughout the candidate window, then
+
+
+If c_H(p,j)=0 for all candidates, the certificate is supported on the universal carrier and retains every candidate prime.
+
+### Proof
+
+Every middle summand is zero modulo p. The surviving low and high blocks reduce termwise to 1 and 4 times the same lower Apéry summand. Rational finite differences and contiguous combinations act linearly on these two blocks. Hence the entire first-order reduction is a scalar multiple of their common sum A_j. The carrier itself is zero modulo p. No other local coordinate survives. ∎
+
+This theorem is sharp: the identity A_n=5A_j mod p realizes a unit scalar, while B_H=0 mod p realizes the universal-carrier case.
+
+It does not exclude a genuinely second-order construction. To escape, one needs one of:
+
+
+The existing Frobenius-jet audits show that the obvious derivative and ray quotients are new states, not new zeros.
+
+---
+
+# 9. Final verdict
+
+The special factorial pair does admit a complete termwise audit. It explains the Lucas factor 5, identifies every Kummer valuation stratum, and proves that the fixed binomial carrier has exactly one copy of every candidate prime.
+
+What it does not do is compress the moving-zero radical. At first order, the local space is one-dimensional:
+
+
+Every admissible linear identity therefore has one of two outcomes:
+
+
+The first case is equivalent to the desired theorem once a subexponential height bound is requested; the second has linear radical weight. The multi-hit, Hermite, reflection, companion, and ordinary WZ variants do not alter this ledger.
+
+Accordingly, the fixed-core hypergeometric route is closed at first order. The weakest meaningful reopening lemma is:

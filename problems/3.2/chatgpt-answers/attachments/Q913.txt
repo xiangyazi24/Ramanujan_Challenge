@@ -1,0 +1,322 @@
+
+for primes 2H<p<=3H+1. Using only the exact second-order Apéry recurrence, its cleared transfer matrices, and the gap continuants, one can prove a fully explicit family of factorial-moment bounds. The strongest consequence is not the ordinary fixed-order Markov estimate. It is an adaptive short-gap second-moment estimate:
+
+
+Thus
+
+
+The same bound holds after restricting to target-conditioned primes
+
+
+At the available Padé scale
+
+
+the bound is only
+
+
+not o(H). It becomes o(H) only when
+
+
+for example
+
+
+which is larger than the currently available O(H^(2/3)) Padé degree scale.
+
+Higher fixed factorial moments and growing-order moments are rigorously worse. The pair estimate is optimal within the entire method that multiplies individual gap continuants and bounds them by absolute height. The missing ingredient is therefore not another choice of r. It is one Apéry-specific compressed short-gap carrier whose logarithmic height is o(H^(5/3)) while retaining one p-adic unit of multiplicity for every short zero pair. A precise statement appears in Section 10.
+
+This answer uses the latest main commit
+
+
+and the existing continuant/Casoratian framework. No numerical asymptotic is inferred from finite data.
+
+---
+
+# 1. Cleared recurrence and transfer determinant
+
+Write
+
+
+The Apéry recurrence is
+
+
+Clear the factorial denominators by
+
+
+Then
+
+
+Equivalently,
+
+
+The transfer determinant is
+
+
+For every candidate prime p>2H, all factorials and all integers 1,...,H are p-adic units. Therefore
+
+
+Also two consecutive zeros are impossible. If
+
+
+then repeated use of the invertible transfer matrices modulo p forces
+
+
+contradicting X_0=A_0=1.
+
+---
+
+# 2. Exact gap continuants
+
+For h>=1, define
+
+
+Induction in the recurrence gives
+
+
+The first exact cases are
+
+
+If 0<=s<s+h<=H and both endpoints are zero modulo a candidate prime, then X_(s+1) is a unit modulo p, because consecutive zeros are impossible. Equation (2.2) therefore gives the exact pair certificate
+
+
+The same statement follows from the corresponding two-by-two Casoratian minor.
+
+---
+
+# 3. Explicit height of one continuant
+
+For 0<=s<s+h<=H,
+
+
+Set
+
+
+The recurrence (2.1) gives inductively
+
+
+Only the upper bound is used below. It records the factorial-height trap explicitly: one gap of length h costs O(h log H) in logarithmic height.
+
+The degree ledger is also exact. As a polynomial in s,
+
+
+Its leading coefficients c_h satisfy
+
+
+Thus the polynomial degree itself already grows linearly with the gap.
+
+---
+
+# 4. Gap-resolved pair moment
+
+For a candidate prime define
+
+
+For fixed h, every occurrence counted by C_p(h) contributes one factor p to
+
+
+Hence
+
+
+Summing over gaps shorter than L gives
+
+
+This is the strongest direct second factorial-moment inequality from the individual gap continuants.
+
+For the unrestricted second factorial moment,
+
+
+so (4.2) yields
+
+
+In particular,
+
+
+---
+
+# 5. All fixed factorial moments
+
+Let
+
+
+Take an r-element zero set
+
+
+For each consecutive gap, (2.4) gives
+
+
+Therefore
+
+
+After multiplying over all zero r-subsets and counting how often a fixed pair can occur as consecutive members, one obtains
+
+
+Using (3.2),
+
+
+Thus, for every fixed r>=2,
+
+
+Hence
+
+
+For r=1, the elementary carrier p|A_s gives
+
+
+using the positive moment bound A_s<=(17+12sqrt(2))^s.
+
+---
+
+# 6. Ordinary Markov optimization fails
+
+For every r>=1,
+
+
+For fixed r>=2, (5.6) gives
+
+
+At
+
+
+this is
+
+
+The exponent increases with r. The fixed-order optimum is r=1, which only gives O(H^(4/3)); among genuine multi-zero moments, r=2 gives O(H^(5/3)log H).
+
+Letting r grow cannot help. Formula (5.5) contains both
+
+
+and the factorial factor r!/(r-1). For B<=H^(2/3), the ratio of the r+1 estimate to the r estimate is bounded below, up to absolute constants, by
+
+
+Thus every increase in moment order worsens the bound by at least a power of H.
+
+---
+
+# 7. Adaptive short-gap pair bound
+
+The ordinary moment wastes information because a large zero set must create many short gaps. Partition [0,H] into
+
+
+consecutive blocks of length at most L. If a prime has z=z_p(H) zeros, and z_i zeros fall in block i, then the number of zero pairs at distance <L is at least
+
+
+Assume
+
+
+Then
+
+
+Whenever z>B, equation (7.1) gives at least B/2 short zero pairs. Therefore
+
+
+Combining with (4.3),
+
+
+Since B<=H implies
+
+
+we obtain the explicit theorem
+
+
+This is strictly stronger than every ordinary fixed factorial-moment estimate at the relevant scale.
+
+---
+
+# 8. Target-conditioned primes
+
+Define
+
+
+Since this is a subfamily of the primes in (7.5),
+
+
+Retaining the marked zero does not improve the exponent through the available continuant identities. Indeed, write
+
+
+Each additional zero s yields the marked pair certificate
+
+
+But a marked zero may be isolated while the remaining zeros cluster elsewhere. The only unconditional consequence of z_p(H)>B is the existence of many short pairs somewhere in the zero set, not many short pairs incident to j. Passing to a marked resultant therefore loses exactly the short-gap multiplicity that makes (7.5) possible.
+
+The crude marked factorial moments satisfy
+
+
+which is weaker than (7.5) after Markov optimization. No extra p-adic digit follows from reflection; the first reflected factor is the same forced factor already encoded by the marked zero.
+
+---
+
+# 9. Sharp optimization at the Padé scale
+
+Put
+
+
+Then (7.5) gives
+
+
+Thus the continuant method proves only
+
+
+It reaches o(H) precisely under
+
+
+For example,
+
+
+works, while
+
+
+does not.
+
+Higher adaptive factorial moments do not repair this. If one counts r zeros in one block of length L, the continuant product has height
+
+
+while z>B forces only Omega_r(B) such local r-clusters when L is chosen at its minimum scale L asymp rH/B. The resulting tail estimate is
+
+
+At B=H^(2/3), this equals
+
+
+which is minimized at r=2. Growing r is still worse.
+
+This is the sharp no-go for all factorial-moment arguments obtained by multiplying individual gap continuants and paying their absolute factorial height.
+
+---
+
+# 10. Smallest Apéry-specific compression lemma that would change the result
+
+Let
+
+
+For a candidate prime define the short-pair count
+
+
+The naive carrier is
+
+
+It has
+
+
+but only the height bound
+
+
+The exact missing statement is:
+
+
+This lemma would immediately imply the desired weighted tail estimate at the available degree scale. Indeed, if
+
+
+then every prime with z_p(H)>B has
+
+
+so
+
+
+The target-conditioned version may weaken (10.6) by requiring the valuation inequality only for primes satisfying
+
+
+That is the smallest theorem exposed by the factorial-moment audit. It must compress many gap continuants jointly; a product, ordinary resultant, or pairwise Casoratian cannot meet the height threshold.
+
+---
+
+# 11. Final theorem
+
+The strongest unconditional continuant moment theorem is:

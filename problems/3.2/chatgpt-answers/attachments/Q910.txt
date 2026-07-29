@@ -1,0 +1,426 @@
+
+then the product of the canonical gap continuants over the consecutive zero gaps satisfies
+
+
+and this adaptive integer has logarithmic height only
+
+
+More precisely its p-adic valuation is at least
+
+
+This is the strongest clean positive amplification I can prove from the recurrence.
+
+It does not produce the requested fixed global integer E_H, because its factors depend on which nodes are zeros modulo the particular prime p.
+
+The strongest fixed global replacement is the short-gap product
+
+
+For every target prime with z=z_p(H),
+
+
+Its exact height bound is
+
+
+Consequently, if R_H(Z) is the product of direct target primes having at least Z prefix zeros, and
+
+
+then
+
+
+and hence
+
+
+In asymptotic form,
+
+
+This is the sharpest proved high-zero inequality from the target-anchored continuant route.
+
+It becomes o(H) only if
+
+
+But the existing vertical theorem gives
+
+
+in the candidate window. Thus the range in which the new inequality would be sublinear is eventually empty. Even an ideal factorial normalization removing the displayed log H would give only O(H) at Z of order H^(2/3). The gain/height balance therefore saturates exactly at the known vertical scale.
+
+The definite verdict is:
+
+
+A recurrence-compatible countermodel below shows why this failure is structural: the order-two recurrence, fixed initial state, unit off-diagonal transfer, exact Casoratian law, and no-consecutive-zero property permit an arbitrary prescribed nonconsecutive target zero set. The missing input must use the exact Apéry cubic or an equivalent Lucas/Dwork/hypergeometric identity that forces many zero pairs into one fixed sparse family of gaps.
+
+# 1. Repository state and scope
+
+I audited the canonical repository through main commit
+
+
+especially:
+
+
+The derivation below does not use Padé normality or numerical patterns. It works directly with the canonical Apéry transfer recurrence.
+
+The only fixed small exceptions are H<3 and primes 2,3,5. For H>=3, every candidate prime satisfies
+
+
+so every factorial, every index 1,...,H, and every denominator introduced by the unscaled recurrence is a p-adic unit.
+
+# 2. Integral transfer rows and gap continuants
+
+Put
+
+
+The Apéry recurrence becomes
+
+
+For arbitrary initial data (x,y), write
+
+
+Then
+
+
+The adjacent Casoratian is exact:
+
+
+For a>=0, define the gap continuants by
+
+
+Then
+
+
+This is the exact marked two-zero detector.
+
+# 3. Full p-adic two-zero valuation
+
+Fix p>H and put
+
+
+Because (s!)^3 is a p-unit,
+
+
+Use the unimodular change of columns
+
+
+If row_s=(r_s,s_s), then
+
+
+Therefore
+
+
+and hence
+
+
+Combining (2.4) with the fact that a! is a p-unit gives:
+
+
+In particular,
+
+
+The converse also holds once one endpoint is known to be a zero: since row_a is nonzero and annihilates (1,5) modulo p, it spans the line F_p*(-5,1), and (2.2) shows every transfer row is nonzero. Thus
+
+
+No recurrence singularity occurs on [0,H], because all transfer determinants m^6, m<=H, are p-units.
+
+Equation (2.2) also proves that two zeros cannot be consecutive.
+
+# 4. Positivity and exact height of one gap
+
+The gap continuants are positive. More strongly,
+
+
+For h=1, this is
+
+
+If (4.1) holds one step earlier, put m=a+h. Then
+
+
+so
+
+
+For an upper bound, for every m>=1,
+
+
+Since all N_h(a) are positive, (2.3) gives
+
+
+Thus, for d>=1,
+
+
+Every essential factor in the amplification is therefore a nonzero integer. There are no hidden candidate-prime denominators.
+
+# 5. The adaptive consecutive-gap amplifier
+
+Let
+
+
+The target condition says that the moving node
+
+
+is one of the t_i, but the argument below uses the complete zero set.
+
+Define
+
+
+By (3.2),
+
+
+Hence
+
+
+The zero gaps are disjoint and their total length is at most H. Applying (4.2) gives
+
+
+so
+
+
+This is a genuine compression. A star product joining the marked zero j separately to every companion would have total path length as large as zH; joining the zeros by their ordered path has total length at most H and keeps the same z-1 p-adic factors.
+
+Equivalently, (5.1) is the determinant of a block-diagonal collection of the Dirichlet recurrence blocks between consecutive zero nodes. It is the optimal spanning-tree choice after the zero set is known.
+
+The fatal defect is that C_(p,H) depends on p through Z_p(H). It is not one fixed integer attached only to H.
+
+# 6. The strongest fixed global continuant product
+
+For 2<=L<=H, define
+
+
+This integer is independent of p and contains every gap continuant of length at most L exactly once.
+
+Let
+
+
+Since
+
+
+the number of gaps with d_i>=L+1 is at most
+
+
+Every remaining consecutive gap contributes one factor of p to (6.1). Therefore
+
+
+This is the exact global amplification law.
+
+Using (4.2),
+
+
+Thus, if L is polylogarithmic,
+
+
+But then (6.2) is positive only when
+
+
+For every fixed polylogarithmic L, this threshold is
+
+
+which is much larger than the known upper bound O(H^(2/3)). Hence every candidate prime in the actual possible range has zero guaranteed exponent in every polylog-height member of this short-gap family.
+
+# 7. The sharp high-zero radical inequality
+
+For Z>=3, define
+
+
+Choose
+
+
+Then L_Z<=H. Moreover,
+
+
+For every prime in (7.1), equation (6.2) gives
+
+
+Therefore
+
+
+Combining (6.3) and (7.4) yields
+
+
+Since
+
+
+we obtain the explicit bound
+
+
+This is the sharpest proved inequality from the present amplification.
+
+At the largest possible zero scale
+
+
+the leading term in (7.6) is
+
+
+not o(H). To make it sublinear requires
+
+
+or
+
+
+The established vertical bound excludes (7.7) for all sufficiently large candidate primes. The theorem is therefore a genuine inequality but not a nonvacuous asymptotic saving.
+
+# 8. Why factorial normalization does not repair the exponent balance
+
+The large factors in (4.2) come from the scaled integral recurrence. One may divide by products of
+
+
+and work with the original rational recurrence. Every such denominator is supported on primes at most H, hence is a p-unit for the candidate primes.
+
+This can reduce Archimedean constants, but it cannot change the p-adic exponent in (6.2).
+
+Even under the unrealistically favorable replacement
+
+
+for every gap, the same global short-gap product would satisfy only
+
+
+and the optimized high-zero estimate would be
+
+
+At Z of order H^(2/3) this is still only O(H), not o(H). Thus the failure is not the spare logH in the crude height bound. The selective exponent and the number of possible gap locations are exactly balanced at the vertical 2/3 scale.
+
+# 9. Why the relation p+j=n is absent from the prefix recurrence
+
+On the interval [0,H], the recurrence contains only the index m and the fixed cubic P(m). Since p>H, every transfer matrix is invertible modulo p.
+
+The equality
+
+
+enters only when the solution is continued past the singular index m=p.
+
+For the scaled transfer matrix
+
+
+one has
+
+
+The transfer from j to n=p+j crosses m=p exactly once, so its determinant has the universal valuation
+
+
+This factor occurs for good and bad primes alike. Dividing by the universal p^6 returns the normalized singular transfer; it supplies no factor depending on z_p(H).
+
+The existing Frobenius-jet audits make the same point in a stronger form. At a bad residue, the zeroth coordinate vanishes, but normalized first and second singular jets can be p-units. Exterior order t forces p^t only because the construction has homogeneous determinant degree t; its height grows by the same order. No currently proved Dwork congruence makes the normalized jet valuation grow with the number of unrelated prefix zeros.
+
+Thus the moving relation p+j=n does not improve the recurrence-only gap ledger. A positive argument must use an additional cross-residue hypergeometric identity, not merely cross the singular transfer point.
+
+# 10. Determinants with z zero nodes: exact gain/height audit
+
+At a zero node, the transfer row is nonzero but lies on the fixed line
+
+
+Thus one zero does not make a row divisible by p; it imposes one projective rank condition. Each additional zero supplies one independent two-row minor divisible by p.
+
+A tree on the z zero nodes therefore gives exactly z-1 forced Casoratian factors. The consecutive-gap path in Section 5 minimizes the total recurrence span and achieves
+
+
+A determinant using an anchored star at j uses z-1 paths whose total length may be Theta(zH), so its height is O(zH logH) for the same p^(z-1) gain.
+
+An unmarked determinant or resultant using all possible nodes avoids choosing the zero set, but it must cover Theta(H^2) possible pairs. Its natural height becomes Theta(H^3 logH) before the z-fold gain is used. This is exactly the loss quantified by (7.6).
+
+Hence a z-row or z-edge determinant does not create superlinear amplification. It pays one multilinear degree, and at least one local span, for each forced p-factor.
+
+# 11. Exact recurrence-compatible countermodel
+
+The inability to choose a fixed sparse family of useful gaps is not special to the proof above.
+
+Fix H, a candidate prime
+
+
+and any nonconsecutive set
+
+
+There exist integers c_1,...,c_(H-1) with
+
+
+such that
+
+
+has zero set modulo p on [0,H] exactly equal to Z.
+
+## Construction
+
+Choose c_m successively.
+
+If
+
+
+there is exactly one residue class
+
+
+that makes U_(m+1)=0. Choose this residue when m+1 in Z, and choose any other residue otherwise.
+
+If
+
+
+then m in Z. Since Z has no consecutive elements, m+1 notin Z, and induction gives U_(m-1)!=0. Because m<p,
+
+
+independently of c_m.
+
+Taking least absolute representatives proves the coefficient bound.
+
+This model preserves:
+
+
+But it permits an arbitrary nonconsecutive companion-zero pattern.
+
+It does not preserve
+
+
+nor Apéry Lucas/Dwork congruences, reflection, or the hypergeometric/Picard--Fuchs origin.
+
+Therefore no theorem derived only from the generic second-order recurrence axioms can force the companion zeros into a predetermined sparse set of gaps.
+
+# 12. Sparse-gap obstruction for fixed continuant certificates
+
+Consider any fixed multiplicative certificate built from marked two-zero detectors
+
+
+for an edge set Gamma_H on the nodes 0,...,H.
+
+Its guaranteed p-adic exponent at a zero set Z is at most the number of selected edges induced by Z.
+
+If the certificate has logarithmic height O(H polylogH), then it can contain only O(H polylogH) distinct nontrivial gap factors, since every gap of length at least two has N_d(a)>1.
+
+A graph with O(H polylogH) edges has an independent set of cardinality
+
+
+This follows, for example, from
+
+
+Restricting first to one parity class ensures that the independent set is also nonconsecutive.
+
+For large H,
+
+
+The countermodel in Section 11 realizes a target zero set of size floor(H^(2/3)) inside such an independent set. Every selected pair detector is then a p-unit, although the target has z of the maximal expected order.
+
+This proves a rigorous no-go for the full class of fixed low-height products of marked continuants, Casoratian trees, and matrix-tree constructions whose valuation is certified edge by edge. It does not claim to classify every imaginable nonlinear hypergeometric identity; such an identity is precisely the missing extra structure.
+
+# 13. The exact extra Apéry identity that would reopen the route
+
+A sufficient recurrence-specific replacement is the following sparse marked-gap theorem.
+
+
+Under this theorem define
+
+
+Equations (3.2) and (4.2) give
+
+
+for every target prime, while
+
+
+Hence targets with z_p(H)>=Z would satisfy
+
+
+This is genuinely useful for every Z tending faster than the fixed polylogarithmic loss, and in particular throughout the high-zero regime.
+
+The countermodel proves that this theorem cannot follow from order two, bounded coefficients, the determinant law, or no consecutive zeros. It must exploit one of the following equivalent kinds of genuinely Apéry-specific information:
+
+
+A target-anchored version would be even sharper: find a fixed sparse graph for which a positive proportion of the edges joining the marked node j=3H+1-p to, or through, the other zero nodes is forced by the exact Apéry arithmetic.
+
+No current Lucas congruence supplies this. Lucas propagates one residue vertically,
+
+
+but does not correlate two distinct residues r and s. The first and higher singular-jet formulas likewise retain separate normalized coordinates and do not add their valuations.
+
+# 14. Final conclusion
+
+The attempted amplification succeeds locally and fails globally for a precise reason.
