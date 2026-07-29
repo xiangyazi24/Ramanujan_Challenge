@@ -1,0 +1,308 @@
+
+---
+
+# 1. The interpolation being used
+
+The object is the complex-index interpolation
+
+For a fixed compact set in z, the summand is O(k^{-2}) uniformly, so the series is locally uniformly convergent and defines an entire function. At a nonnegative integer m, the factor (-m)_k terminates the series and
+
+This is not the ordinary generating function
+
+The latter has a completely different complex variable and different singularities. Nörlund–Rice uses the meromorphic function 1/\mathcal A(z) in the index variable.
+
+The symmetry is termwise:
+
+hence
+
+Differentiating gives
+
+Because the Taylor coefficients are real,
+
+Therefore every nonreal zero occurs in the four-point orbit
+
+For the proposed zero,
+
+---
+
+# 2. A rigorous zero-free vertical line
+
+Set
+
+Then
+
+and the two Pochhammer factors are complex conjugates. Hence every summand in (1.1) is positive real:
+
+The k=0 summand is one, so
+
+Consequently
+
+This is stronger than a numerical zero-free line. It also makes the eventual Rice remainder quantitatively tractable.
+
+
+---
+
+# 3. Exact a=1 Padé formulas
+
+The reciprocal-Apéry duality in Q803 gives, for numerator degree a=1 and denominator degree H-1, a two-particle checkerboard determinant. It reduces to three scalar finite differences.
+
+Define the signed reciprocal moments
+
+Then
+
+and the binomial identity s\binom Hs=H\binom{H-1}{s-1} gives
+
+Similarly,
+
+so
+
+The two-particle determinant is
+
+where
+
+The raw numerator line is
+
+Its root is exactly
+
+when U_H\ne0.
+
+Normalizing the top denominator coefficient to one gives
+
+At the target n=3H+1,
+
+The signs depend only on the orientation chosen for the cofactor vector.
+
+
+---
+
+# 4. Nörlund–Rice kernel and residues
+
+Let
+
+Its residue at z=s\in\{0,\ldots,H\} is
+
+Thus -f(z)\mathscr K_H(z) is the standard Rice integrand for U_H.
+
+Suppose a contour enclosing 0,1,\ldots,H can be displaced to the line \Re z=-1/2, with the horizontal and right-boundary pieces tending to zero. Then
+
+where zeros are counted with their meromorphic residue contribution and
+
+For a simple zero \rho,
+
+so its contribution is
+
+This sign is checked by the model f(z)=1/(z+a), for which the binomial sum is the beta value
+
+The contour displacement is not automatic merely because \mathcal A is entire. It requires a vertical-strip growth or minimum-modulus estimate for 1/\mathcal A away from its poles. Golyshev–Zagier prove local uniform convergence and real-direction asymptotics, but do not state the global vertical-strip theorem needed here. This is included explicitly in Theorem ZR below.
+
+Reference for the general method: Flajolet–Sedgewick, Mellin transforms and asymptotics: finite differences and Rice's integrals.
+
+---
+
+# 5. The symmetry-line remainder is O(H^{-1/2})
+
+On z=-1/2+it,
+
+Use the beta integral and the substitution 1-x=e^{-u}:
+
+Thus it is the Fourier transform of
+
+Plancherel and Cauchy–Schwarz give
+
+The first norm is exact:
+
+Writing y=1-e^{-u} also gives
+
+Hence
+
+Combining (2.2) and (5.6),
+
+The same Sobolev argument with a fixed number of derivatives yields, for every fixed m,
+
+This weighted form is what is needed for the numerator and Casoratian estimates.
+
+
+---
+
+# 6. Exact beta-mode algebra
+
+For any fixed complex \rho, define
+
+The shift ratios are exact:
+
+and
+
+Therefore a pure beta mode satisfies
+
+It also has identically zero D_H:
+
+For two modes v(\rho),v(\sigma), expand D_H and use (6.1)–(6.2). The pure terms vanish and the cross term simplifies exactly to
+
+For a finite sum of modes,
+
+The same identity applies to the vertical-line integral by bilinearity and absolute convergence. It is the reason the apparently dangerous factors of H in (D) do not destroy the Rice error estimate.
+
+
+---
+
+# 7. Conditional rightmost-pair asymptotic for U_H
+
+Let
+
+Suppose the pair \rho,\overline\rho is simple and strictly rightmost, and all other zero contributions have real part at most \alpha-\eta for some \eta>0. Then
+
+The gamma-ratio expansion is
+
+Writing
+
+we obtain
+
+For the numerical candidate,
+
+Thus the leading reciprocal finite difference grows only like H^{0.145986\ldots} and oscillates on the logarithmic scale.
+
+The symmetry partners -1-\rho and -1-\overline\rho lie to the left of \Re z=-1/2 and therefore do not appear when the Rice contour is stopped on that line.
+
+---
+
+# 8. Consequences for D_H and the evaluated numerator
+
+Put
+
+The pair \rho,\overline\rho contributes to D_H
+
+The gap and the weighted line estimates give
+
+In particular,
+
+and D_H is eventually nonzero. Numerically,
+
+For the numerator, the exact identity (6.3) gives the leading pair contribution
+
+At n=3H+1, away from cancellation windows,
+
+If |\cos\theta_H|\ge\varepsilon, then
+
+Since
+
+this is polynomial.
+
+Uniformly, including phase-cancellation windows, the absolute numerator is O(H^{\alpha+1}) and (8.1) gives
+
+The line remainder can dominate the pair numerator in exceptionally deep cancellation windows, but it remains polynomial. Thus no \exp(cH) projective lower bound is possible under the rightmost-pair theorem.
+
+
+---
+
+# 9. Sparse phase zeros and why an all-H lower bound is not obtained
+
+The leading numerator vanishes at phases satisfying
+
+Equivalently,
+
+The phase increment is
+
+Thus the continuous cancellation scales are exponentially spaced in k, but each is sampled by an integer H at mesh size about 1/H in phase. Near such an H, the next zero orbit or the symmetry-line integral can control the numerator.
+
+To prove a polynomial lower bound uniformly in H, one would need a quantitative lower bound for
+
+unless the next residue terms are incorporated and shown not to cancel simultaneously. The constants \beta and \arg c have no known arithmetic description to which a Baker-type linear-forms theorem applies.
+
+Therefore the Rice method does not prove:
+
+- nonvanishing of \widehat P_H(3H+1) for every H;
+
+- a uniform polynomial lower bound;
+
+- or an exponential lower bound.
+
+It does prove a polynomial upper bound and, on subsequences staying away from (9.2), a full polynomial asymptotic.
+
+---
+
+# 10. Numerical root and residue certification
+
+The supplied candidate is
+
+Its conjugate and the two symmetry partners are forced by (1.2)–(1.4). What is not forced is that this orbit is simple, that the displayed digits are correct, or that no zero has larger real part.
+
+I did not execute an interval-arithmetic computation in this task, so I do not label the digits certified. A certificate can be made fully reproducible as follows.
+
+## 10.1 Stable evaluation
+
+Let
+
+Then
+
+The derivative is
+
+Direct summation converges only like 1/k in the tail. For high precision one should expand t_k(z) in inverse powers of k, sum the tail with rigorous Hurwitz-zeta balls, and differentiate that expansion. Arb's hypergeometric continuation routines are another suitable backend.
+
+## 10.2 Simple-root certificate
+
+Choose a complex ball B centered at \rho_0. An interval Newton or Krawczyk test must prove
+
+and
+
+This certifies exactly one simple zero in B. The residue is then the complex ball
+
+## 10.3 Counting every zero in a finite strip
+
+For a rectangle R whose boundary avoids zero balls, compute with ball arithmetic
+
+Adaptive interval quadrature must return a ball containing one integer only. Subtract the certified root balls to prove completeness in the rectangle.
+
+The left boundary \Re z=-1/2 needs no numerical sampling because (2.1) proves it zero-free exactly.
+
+## 10.4 The indispensable exterior step
+
+A finite rectangle does not prove that the root pair is globally rightmost. One must also prove a high-|\Im z| lower bound for |\mathcal A(z)| in the remaining strip. A numerical grid is not sufficient.
+
+A fail-closed certification program is:
+
+
+---
+
+# 11. The exact missing zero theorem
+
+The following statement is sufficient and close to minimal.
+
+## Theorem ZR — rightmost zeros and Rice admissibility
+
+There exist \eta>0 and a simple zero
+
+such that:
+
+1. Rightmost pair. The only zeros with real part greater than \alpha-\eta are \rho and \overline\rho.
+
+1. Residue summability. The zero contributions with -1/2<\Re z\le\alpha-\eta are locally finite and their Rice residue sum is O(H^{\alpha-\eta}), together with the first two backward shifts in H.
+
+1. Contour admissibility. For every H, there is a sequence of truncation heights along which the finite Rice contour can be displaced to \Re z=-1/2 and the horizontal/right pieces vanish.
+
+1. Certified location. Interval Newton and an argument-principle count certify the displayed ball for \rho and the absence of another zero with larger real part.
+
+Under Theorem ZR, equations (7.1), (8.1), and (8.6) are rigorous. If the pair is the only zero in the whole half-plane \Re z>-1/2, condition 2 is replaced by the explicit line error O(H^{-1/2}).
+
+A stronger but easier-to-apply analytic hypothesis is the vertical-strip lower bound
+
+for each fixed R, together with a sectorial zero-free asymptotic as \Re z\to+\infty. A Barnes-integral analysis of the Golyshev–Zagier hypergeometric function is the natural proof route. The real-axis asymptotic printed in the primary source does not by itself imply (11.1).
+
+---
+
+# 12. Primitive Smith normalization
+
+Let D_0,\ldots,D_{H-1} be the maximal cofactors of the a=1 denominator matrix, and let
+
+In the projective normalization q_{H-1}=1, the primitive integral pair is
+
+This is the normalization lemma from Q803 specialized to the reciprocal boundary.
+
+A positive projective lower bound would automatically survive because m_H\ge1. But the Rice asymptotic gives only polynomial projective size. Therefore an exponential primitive lower bound would require
+
+an arithmetic Smith theorem not visible in the complex zeros of \mathcal A(z).
+
+Conversely, a subexponential primitive construction would require both
+
+and
+
+Nörlund–Rice addresses only the second quantity, and even its all-H nonvanishing remains subject to the sparse phase problem.

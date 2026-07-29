@@ -45,20 +45,20 @@ def zero33(base=K):
 # 1. P2.7 companion matrix for qhat_n = 64^n q_n
 # ============================================================
 def A(x):
-    return (_sage_const_1024 *(_sage_const_2 *x+_sage_const_5 )**_sage_const_4 *(_sage_const_2 *x+_sage_const_7 )**_sage_const_3 *(_sage_const_2 *x+_sage_const_9 )**_sage_const_3 
+    return (_sage_const_1024 *(_sage_const_2 *x+_sage_const_5 )**_sage_const_4 *(_sage_const_2 *x+_sage_const_7 )**_sage_const_3 *(_sage_const_2 *x+_sage_const_9 )**_sage_const_3
             *(_sage_const_946 *x**_sage_const_2 +_sage_const_6407 *x+_sage_const_10860 ))
 
 
 def B(x):
-    return (_sage_const_128 *(_sage_const_2 *x+_sage_const_7 )**_sage_const_3 *(_sage_const_2 *x+_sage_const_9 )**_sage_const_3 
-            *(_sage_const_104060 *x**_sage_const_6 +_sage_const_1745370 *x**_sage_const_5 +_sage_const_12145238 *x**_sage_const_4 
-              +_sage_const_44886481 *x**_sage_const_3 +_sage_const_92943995 *x**_sage_const_2 
+    return (_sage_const_128 *(_sage_const_2 *x+_sage_const_7 )**_sage_const_3 *(_sage_const_2 *x+_sage_const_9 )**_sage_const_3
+            *(_sage_const_104060 *x**_sage_const_6 +_sage_const_1745370 *x**_sage_const_5 +_sage_const_12145238 *x**_sage_const_4
+              +_sage_const_44886481 *x**_sage_const_3 +_sage_const_92943995 *x**_sage_const_2
               +_sage_const_102256019 *x+_sage_const_46709052 ))
 
 
 def C(x):
-    return (_sage_const_16 *(x+_sage_const_3 )**_sage_const_4 *(_sage_const_2 *x+_sage_const_9 )**_sage_const_3 
-            *(_sage_const_3784 *x**_sage_const_5 +_sage_const_57792 *x**_sage_const_4 +_sage_const_351019 *x**_sage_const_3 
+    return (_sage_const_16 *(x+_sage_const_3 )**_sage_const_4 *(_sage_const_2 *x+_sage_const_9 )**_sage_const_3
+            *(_sage_const_3784 *x**_sage_const_5 +_sage_const_57792 *x**_sage_const_4 +_sage_const_351019 *x**_sage_const_3
               +_sage_const_1059230 *x**_sage_const_2 +_sage_const_1587211 *x+_sage_const_944620 ))
 
 
@@ -81,25 +81,25 @@ CP = matrix(K, [
 # 2. Zudilin companion matrix
 # ============================================================
 def Qz(x):
-    return _sage_const_946 *x**_sage_const_2  - _sage_const_731 *x + _sage_const_153 
+    return _sage_const_946 *x**_sage_const_2  - _sage_const_731 *x + _sage_const_153
 
 
 def Pz(x):
-    return (_sage_const_104060 *x**_sage_const_6 +_sage_const_127710 *x**_sage_const_5 +_sage_const_12788 *x**_sage_const_4 -_sage_const_34525 *x**_sage_const_3 
+    return (_sage_const_104060 *x**_sage_const_6 +_sage_const_127710 *x**_sage_const_5 +_sage_const_12788 *x**_sage_const_4 -_sage_const_34525 *x**_sage_const_3
             -_sage_const_8482 *x**_sage_const_2 +_sage_const_3298 *x+_sage_const_1071 )
 
 
 def Sz(x):
-    return (_sage_const_3784 *x**_sage_const_5 -_sage_const_1032 *x**_sage_const_4 -_sage_const_1925 *x**_sage_const_3 +_sage_const_853 *x**_sage_const_2 
+    return (_sage_const_3784 *x**_sage_const_5 -_sage_const_1032 *x**_sage_const_4 -_sage_const_1925 *x**_sage_const_3 +_sage_const_853 *x**_sage_const_2
             +_sage_const_328 *x-_sage_const_184 )
 
 
 def Rz(x):
-    return _sage_const_946 *x**_sage_const_2 +_sage_const_1161 *x+_sage_const_368 
+    return _sage_const_946 *x**_sage_const_2 +_sage_const_1161 *x+_sage_const_368
 
 
-m = n + _sage_const_2 
-denZ = Qz(m)*(_sage_const_2 *m+_sage_const_1 )*(m+_sage_const_1 )**_sage_const_3 
+m = n + _sage_const_2
+denZ = Qz(m)*(_sage_const_2 *m+_sage_const_1 )*(m+_sage_const_1 )**_sage_const_3
 alphaZ = K(Pz(m)/denZ)
 betaZ  = K(-m*Sz(m)/denZ)
 gammaZ = K(Rz(m)*m*(m-_sage_const_1 )**_sage_const_3 /(_sage_const_2 *denZ))
@@ -115,7 +115,7 @@ CZ = matrix(K, [
 # 3. Rank-one Kummer twist and determinant identity
 # ============================================================
 def Q209(x):
-    return _sage_const_946 *x**_sage_const_2  - _sage_const_2623 *x + _sage_const_1830 
+    return _sage_const_946 *x**_sage_const_2  - _sage_const_2623 *x + _sage_const_1830
 
 
 r = K((n+_sage_const_4 )**_sage_const_3  / ((n+QQ(_sage_const_5 )/_sage_const_2 )*(n+QQ(_sage_const_7 )/_sage_const_2 )*(n+QQ(_sage_const_9 )/_sage_const_2 )))
@@ -142,12 +142,12 @@ A9 = CZh.inverse().transpose().tensor_product(CP)
 # 4. Marked initial states
 # ============================================================
 q0 = QQ(-_sage_const_215040420000 )
-q1 = QQ(-_sage_const_167282265043404 )/_sage_const_905 
-q2 = QQ(-_sage_const_964185327658080 )/_sage_const_6071 
+q1 = QQ(-_sage_const_167282265043404 )/_sage_const_905
+q2 = QQ(-_sage_const_964185327658080 )/_sage_const_6071
 
 p0 = QQ(-_sage_const_612218384750 )
-p1 = QQ(-_sage_const_9525021973931919 )/_sage_const_18100 
-p2 = QQ(-_sage_const_29561828382772029 )/_sage_const_65380 
+p1 = QQ(-_sage_const_9525021973931919 )/_sage_const_18100
+p2 = QQ(-_sage_const_29561828382772029 )/_sage_const_65380
 
 zb = vector(QQ, [_sage_const_163 , _sage_const_7 , _sage_const_1 ])
 z2 = vector(QQ, [QQ(_sage_const_2145 )/_sage_const_8 , QQ(_sage_const_23 )/_sage_const_2 , _sage_const_0 ])
@@ -158,7 +158,7 @@ Z0 = matrix(QQ, _sage_const_3 , _sage_const_3 )
 Z0.set_column(_sage_const_0 , zb)
 Z0.set_column(_sage_const_1 , z2)
 Z0.set_column(_sage_const_2 , z3)
-assert Z0.det() == QQ(_sage_const_825 )/_sage_const_32 
+assert Z0.det() == QQ(_sage_const_825 )/_sage_const_32
 
 xq = vector(QQ, [_sage_const_64 **_sage_const_2 *q2, _sage_const_64 *q1, q0])
 xp = vector(QQ, [_sage_const_64 **_sage_const_2 *p2, _sage_const_64 *p1, p0])
@@ -198,7 +198,7 @@ def exact_gauge_basis(Dcommon, degree):
     residuals = [gauge_residual(E) for E in basis]
 
     # Bound the numerator degree of every possible residual entry.
-    maxdeg = _sage_const_0 
+    maxdeg = _sage_const_0
     forbidden = P.one()
     for i in range(_sage_const_3 ):
         for j in range(_sage_const_3 ):
@@ -207,17 +207,17 @@ def exact_gauge_basis(Dcommon, degree):
             forbidden = lcm(forbidden, dij)
             for R in residuals:
                 f = K(R[i, j]*dij)
-                assert f.denominator() == _sage_const_1 
+                assert f.denominator() == _sage_const_1
                 if f != _sage_const_0 :
                     maxdeg = max(maxdeg, P(f.numerator()).degree())
 
     # More than maxdeg regular points force each residual numerator to zero.
     points = []
-    a = _sage_const_0 
+    a = _sage_const_0
     while len(points) < maxdeg + _sage_const_1 :
         if forbidden(a) != _sage_const_0 :
             points.append(a)
-        a += _sage_const_1 
+        a += _sage_const_1
 
     rows = []
     for a in points:
@@ -283,7 +283,7 @@ def verify_candidate(R):
     assert all(x == _sage_const_0  for x in gauge_residual(R).list())
     assert evM(R, _sage_const_0 )*zb == xq
     assert evM(R, _sage_const_0 )*zm == xp
-    assert R.det() != _sage_const_0 
+    assert R.det() != _sage_const_0
 
     det_ratio = K(R.det()/Delta)
     assert sh(det_ratio) == det_ratio
@@ -353,7 +353,7 @@ def fit_propagated_family(Dcommon, degree, N=None):
     """
     Dcommon = P(Dcommon)
     if N is None:
-        N = degree + _sage_const_8 
+        N = degree + _sage_const_8
     vals = propagated_family(N)
 
     # Unknown vector:
@@ -415,4 +415,3 @@ for Dcand in candidates:
         if ans is not None:
             R, s_found = ans
             raise SystemExit
-

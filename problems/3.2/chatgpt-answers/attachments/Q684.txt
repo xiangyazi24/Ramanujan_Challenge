@@ -1,0 +1,295 @@
+
+Thus dividing out the universal factor leaves only one copy of each bad prime. The hoped-for weighted estimate
+
+does not survive normalization as a weighted gain.
+
+There is an additional universal q = 2 factor
+
+with
+
+Hence even after dividing by the q = 1 factor,
+
+The determinant route can be reopened only after removing all explicit Lucas-stabilization factors and then proving a new Smith-localized bound of order o(n), not merely o(n^2). That remaining theorem is stated precisely in Section 9.
+
+Source context: Q671, Q664, Q619, and Q533.
+
+---
+
+## 1. Exact row formula
+
+Put
+
+Then
+
+and
+
+Therefore
+
+If
+
+then
+
+The Franel polynomial from Q671 is
+
+and one also has the useful reciprocal form
+
+Plain text:
+
+
+---
+
+## 2. Determinant divisibility and row subtraction
+
+Let
+
+be arbitrary integral linear functionals. This includes:
+
+- coefficient extraction;
+
+- evaluation at an integer;
+
+- normalized Taylor coefficients at an integer;
+
+- finite differences;
+
+- columns of any unimodular basis of the dual coefficient lattice.
+
+Define
+
+Since
+
+the two matrices differ by a lower-unitriangular row transformation. Hence
+
+Every entry in row J of M^T is divisible by \Gamma_J. Thus
+
+This proves the determinant divisibility asserted in the question. The failure occurs because (2.2) is far from the complete divisibility of the determinant.
+
+---
+
+## 3. Stabilization modulo a top-half prime
+
+Let p>n/2 and write
+
+The polynomial Lucas identity is
+
+Since H<p, for every J\le H only the y^0 term of 1+2(c+y)^p contributes to coefficients [y^m] with m\le J. Therefore
+
+The folded polynomial Q_r has degree j modulo p. Once J\ge j, the lower pairing is complete and Q671's exact inverse gives
+
+Consequently
+
+without assuming p\mid A_j.
+
+If p is bad, then A_j\equiv0\pmod p, and (3.3) gives
+
+Thus every determinant has p-adic order at least
+
+This is the exact decomposition into universal and selective multiplicity.
+
+### 3.1 Arbitrary subsets of cutoffs
+
+The same obstruction persists if only some cutoffs are used. Let
+
+and put
+
+Then successive row differences above j_p give
+
+After removing the universal factor, the net selective gain is still at most one copy of p. Sparse, dyadic, or overlapping cutoff choices therefore do not restore multiplicity amplification.
+
+Plain text:
+
+
+---
+
+## 4. The universal q = 1 factor has quadratic height
+
+Define
+
+The two folded branches are separated at p=(2n+1)/3:
+
+Hence
+
+Using
+
+and
+
+one obtains
+
+Therefore every nonzero determinant satisfies
+
+This is independent of the values of the contents \Gamma_J.
+
+---
+
+## 5. A q = 2 universal factor remains after q = 1 purification
+
+Let
+
+Since H<p, the q = 2 Lucas factorization
+
+gives the same stabilization:
+
+Define
+
+The branch threshold is p=(2n+1)/5, and
+
+The q = 1 and q = 2 prime sets are disjoint, so
+
+In particular,
+
+and
+
+Thus q = 1 normalization alone cannot reopen the determinant route.
+
+---
+
+## 6. Exact factorization of the naive top-coefficient minor
+
+Let
+
+For 0\le r\le H, define
+
+where x^{\underline m}=x(x-1)\cdots(x-m+1).
+
+Then
+
+### Proof of the factorization
+
+After removing the row factor
+
+the coefficient [c^{n-r}]h_J becomes a polynomial P_r(J) of degree r:
+
+Its leading coefficient is
+
+The evaluation determinant at X=0,1,\ldots,H is the Vandermonde product
+
+which cancels the factors \prod r! and yields (6.2).
+
+Since the term w=r gives E_r(n)\ge F_r, Stirling's formula yields
+
+The constant is approximately
+
+Equivalently,
+
+This explains the observed finite-n values near 1.7–2.0: the top minor is moving toward a strictly positive, indeed large, normalized rate. It is not a low-height certificate.
+
+Plain text:
+
+
+---
+
+## 7. Smith form is the intrinsic optimization
+
+Let A_n be the (H+1)\times(n+1) integer matrix whose row J is the coefficient vector of h_J. It has full row rank because the top minor is nonzero.
+
+Write its Smith form as
+
+with
+
+The last determinantal divisor is
+
+For arbitrary integral functionals, Cauchy–Binet implies
+
+Conversely, the unimodular matrix V supplies a functional basis for which one determinant is exactly \pm\Delta_n. Hence \Delta_n is the exact optimum allowed by an unrestricted unimodular change of functional basis.
+
+The local argument gives
+
+So the Smith optimum itself retains the quadratic universal obstruction.
+
+### 7.1 Exact n = 45 audit
+
+For n=45, H=14, every cutoff content in the standard range is 1, but
+
+The explicit stabilization factors are
+
+and
+
+Thus even after both normalizations there remains
+
+There are no content factors at all in this example. The large Smith divisor is therefore not an artifact of \Gamma_J.
+
+### 7.2 Exact finite computations
+
+All values below are exact integer computations; only the displayed logarithms are floating-point summaries.
+
+At n=45 the Smith diagonal begins
+
+
+and ends with
+
+
+---
+
+## 8. Full contents, branch radical, and nuisance factors
+
+These objects must not be conflated.
+
+### Full cutoff contents
+
+contain:
+
+- q = 1 bad primes;
+
+- lower-quotient Apéry zeros;
+
+- small-prime powers;
+
+- accidental content factors.
+
+The Dwork-tail theorem proves \Gamma_J\mid A_n, but does not make the determinant small.
+
+### Universal q = 1 stabilization
+
+contains every top-half candidate prime, good or bad, with the multiplicity generated by repeated stabilized rows.
+
+### Selective q = 1 radical
+
+is the one additional copy left after q = 1 stabilization is removed.
+
+### Lower-quotient determinant nuisance
+
+The factor \mathcal U_{2,n} already has quadratic logarithmic height. Smaller primes and higher p-adic row content create further Smith factors.
+
+Therefore
+
+is not a q = 1 certificate of small expected height. It is polluted by deterministic lower-quotient geometry before any moving-zero arithmetic is considered.
+
+---
+
+## 9. The exact weakest remaining determinant theorem
+
+There are two useful formulations.
+
+### 9.1 Top-localized formulation
+
+Define
+
+Then
+
+Therefore the exact top-localized theorem sufficient for Problem 3.2 is
+
+This discards all primes at most n/2 and removes the forced q = 1 multiplicity exactly. It is stronger than the desired radical estimate because good top-half primes may still occur in \Delta_n^{\rm top}.
+
+### 9.2 Full Lucas-normalized Smith formulation
+
+For a prime \ell, write the base-\ell digits
+
+The Lucas support of Q_n permits the digit k_i only in
+
+Hence the Hasse derivative K_c(n,J) is identically zero modulo \ell whenever
+
+for at least one digit i. Define the explicit squarefree row stabilizer
+
+It contains \mathcal U_{1,n}\mathcal U_{2,n} and divides \Delta_n. The corresponding global determinant theorem is
+
+Either (DT-top) or (DT-global) would solve the q = 1 problem. Neither follows from the current tail ideal, Smith form, or holonomic recurrences. They are new localized holonomic gcd statements.
+
+The originally proposed statement
+
+is not merely unproved: it is false for every nonzero all-cutoff determinant because of \mathcal U_{1,n}.
+
+---
+
+## 10. Reproducible exact code
+
+The following Python/SymPy program reconstructs the rows, cutoff contents, natural minors, Smith factors, and the exact top-minor product formula.

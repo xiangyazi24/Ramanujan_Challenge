@@ -1,0 +1,193 @@
+
+a single radicand d_target in F*/F*2 can encode the characters of several weight-two words only when those words are blocks in the same Q-orbit and their stabilizer characters transport back to one character of J.
+
+Choose a base block word w0 with Stab_Q(w0)=J. For every word wt assigned to this sextic, choose qt in Q with
+
+
+for the right action. Then
+
+
+Transport its character back to J by
+
+
+The necessary and sufficient one-column compatibility test is
+
+
+Test equality on generators of J. If it fails, there is no single sextic radicand that realizes the tuple. The grouping into one norm column is wrong, or the cocycle/root coordinates are misaligned. Use one column per compatible word orbit/relation field instead.
+
+When the test passes, put
+
+
+The exact target square class is the unique class
+
+
+such that
+
+
+Equivalently,
+
+
+and the action of J on sqrt(d_target_i) is psi_i.
+
+This is the replacement for the coarse relative discriminant. The class
+
+
+of the quadratic extension K/F realizes only the particular character
+
+
+whose kernel is H. It is correct only when psi_i is that character.
+
+# 1. Why one class controls all three words
+
+Let
+
+
+For the base pair word w0,
+
+
+Choose gamma0 = sqrt(d_target_i) in L. Then for j in J,
+
+
+For wt=w0^qt, its relation product and root are automatically
+
+
+and its stabilizer character is the conjugate character
+
+
+Thus the three target characters are not three independent radicands in one sextic. They are three conjugate readings of one class. The global cocycle finder should already enforce this; make the equality above a hard assertion.
+
+There is no literal pullback from three unrelated fields F_w to F. In this clean weight-two lane, the fields F_wt are conjugates qt(F), and the other classes are qt(d_target_i). If a word has F_w=L^Stab(w) not conjugate to F, this function is not applicable; use the monomial-resolvent/relation-field path from Q165.
+
+# 2. Production-optimal construction: cache a radicand basis per sextic
+
+Let
+
+
+In GAP choose a basis
+
+
+For each basis character, construct one radicand
+
+
+Then every target character has coordinates
+
+
+and the target radicand is simply
+
+
+This works because multiplication of radicands adds quadratic characters. The expensive local/Selmer solve is therefore once per basis character, not once per target.
+
+Store the cache key
+
+
+and store each d_k as an element of the exact embedded sextic, not merely as an abstract isomorphic sextic polynomial.
+
+# 3. Exact local-symbol target
+
+## 3.1 Support set and probe set are different
+
+Use two disjoint sets of finite places of F.
+
+
+Do not put the Legendre probe primes into S_support. At a probe, the candidate must be a unit so that its ordinary quadratic residue symbol is defined.
+
+Since L is totally real, every target quadratic subextension inside L is totally real. Therefore the target sign bit at each of the six real places is zero:
+
+
+## 3.2 Exact chi -> bit rule
+
+For every probe prime p_l with chosen arithmetic Frobenius g_l in J, set
+
+
+Use the convention
+
+
+This is exactly the relation
+
+
+For a word wt=w0^qt, the same bit can be audited as
+
+
+All words assigned to the sextic must return the same bit at every probe after this transport.
+
+## 3.3 How many probes make the solve exact?
+
+Let
+
+
+be the complete 2-Selmer square-class space used by the solver, with basis
+
+
+Complete means:
+
+
+bnfsunit alone is not the complete Selmer group when the S-class group has 2-torsion. In PARI, bnfunits(bnf,S)[1] gives the independent S-unit generators including ordinary units and torsion; append your existing lifts of Cl_S[2].
+
+For probes p_l, form
+
+
+Append the six real-sign rows with target zero. Keep adding certified unramified probes until
+
+
+At that point the symbol map is injective on the chosen complete source. If the target subextension is unramified outside S_support, the solution is the unique square class in X with the requested character. This is an exact certificate, not a statistical Frobenius fingerprint.
+
+If full rank is reached and the system is inconsistent, one of the following is true:
+
+
+Enlarge T_probe to increase rank. Enlarge S_support only when the target conductor requires it; adding random support primes merely creates extraneous square classes.
+
+# 4. Executable GP pseudocode
+
+The GAP/Python side should export, per sextic:
+
+
+The GP side consumes square-class generators and target bits. The following is valid PARI/GP 2.17-style pseudocode.
+
+
+For the cached-basis version, run character_to_radicand once for each basis character psi_k, store d_k and delta_k, and form a target class by multiplying the d_k. You may either:
+
+
+The second path is effectively free:
+
+
+# 5. Norm feasibility is a separate exact gate
+
+The target character determines one square class in F*/F*2. It does not automatically imply that this class is in
+
+
+For the quadratic Galois extension K/F, PARI's rnfisnorm result is exact: accept only when its correction factor q is 1.
+
+This property depends only on the square class. Multiplying d_target by a square cannot repair a failed norm equation, because every square in F is already the norm of the same element viewed in K.
+
+Therefore
+
+
+is a certified base/sextic-route failure, not a reason to enlarge the Selmer support or retry random representatives.
+
+# 6. Exact-conductor refinement
+
+The full-rank unramified probe solve is enough to determine the target square class. For a smaller matrix, add local rows derived from the target subgroup:
+
+
+For a squarefree representative away from 2, encode this as the valuation-parity row
+
+
+At primes above 2, valuation parity is not a complete local square-class invariant. Either retain the full-rank good-prime probe method or add a full basis of local dyadic square-class/Hilbert-symbol rows. Do not represent a dyadic target by one parity bit.
+
+# 7. Pair-lane regression
+
+For the known-good 24T8152 pair lane:
+
+
+The transport-compatibility test is vacuous. The recipe gives
+
+
+This is exactly the old constructor. Regression tests should compare square classes, not literal coefficients:
+
+
+Then assert:
+
+
+# Bottom line
+
+The missing function is not “fit three independent word characters by one sextic element.” It is:

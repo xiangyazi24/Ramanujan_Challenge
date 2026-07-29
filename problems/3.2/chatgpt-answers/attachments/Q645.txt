@@ -1,0 +1,838 @@
+
+---
+
+# 2. Constant-term realization of the Franel numbers
+
+Set
+
+[
+
+Phi(u,v)=(1+u)(1+v)(1+(uv)^{-1}).
+
+]
+
+Then
+
+[
+
+oxed{F_r=operatorname{CT}_{u,v}Phi(u,v)^r.}
+
+]
+
+Indeed, choosing powers (a,b,c) from the three factors contributes exponent
+
+[
+
+(a-c,b-c),
+
+]
+
+so the constant term requires (a=b=c), giving
+
+[
+
+sum_{c=0}^{r}inom rc^3.
+
+]
+
+The Newton polygon of (Phi) is the hexagon with vertices
+
+[
+
+(-1,-1), (0,-1), (1,0), (1,1), (0,1), (-1,0).
+
+]
+
+Its only interior lattice point is the origin. This is the exact geometric hypothesis needed for the strong Dwork congruences.
+
+For a parameter (alpha), define
+
+[
+
+egin{aligned}
+
+H_alpha(x)
+
+&:=operatorname{CT}_{u,v}(1-xPhi(u,v))^alpha\
+
+&=sum_{rge0}(-1)^rinom{alpha}{r}F_rx^r.
+
+end{aligned}
+
+]
+
+When (alpha=J) is a nonnegative integer, (H_J(x)) is a polynomial of degree (J) with constant term one.
+
+---
+
+# 3. The canonical logarithmic construction
+
+Define (Q_d(alpha)inmathbf Q[alpha]) by
+
+[
+
+oxed{
+
+}
+
+]
+
+Equivalently,
+
+[
+
+Q_d(alpha)=d[x^d]log H_alpha(x).
+
+]
+
+Now set
+
+[
+
+oxed{z_d^{(J)}=-Q_d'(J).}
+
+]
+
+Introduce
+
+[
+
+Y_J(x)=sum_{dge1}rac{z_d^{(J)}}d x^d.
+
+]
+
+By definition,
+
+[
+
+oxed{
+
+Y_J(x)
+
+=-left.rac{partial}{partialalpha}log H_alpha(x)ight|_{alpha=J},
+
+}
+
+]
+
+and therefore
+
+[
+
+oxed{
+
+H_J(x)Y_J(x)
+
+=-left.rac{partial H_alpha(x)}{partialalpha}ight|_{alpha=J}.
+
+}
+
+]
+
+This single formal identity produces all rows of the matrix equation.
+
+## 3.1 Coefficient comparison for (k>J)
+
+For (k>J),
+
+[
+
+left.rac{d}{dalpha}inom{alpha}{k}ight|_{alpha=J}
+
+=(-1)^{k-J-1}rac{J!(k-J-1)!}{k!}.
+
+]
+
+Hence
+
+[
+
+-left.[x^k]rac{partial H_alpha}{partialalpha}ight|_{alpha=J}
+
+=rac{(-1)^JF_k}{(J+1)inom{k}{J+1}}.
+
+]
+
+On the other hand,
+
+[
+
+[x^k]H_JY_J
+
+=sum_{i=0}^{J}(-1)^iinom JiF_irac{z_{k-i}^{(J)}}{k-i}.
+
+]
+
+Equating (3.7) and (3.8), multiplying by
+
+[
+
+(-1)^J(J+1)inom{k}{J+1},
+
+]
+
+and using (1.2) gives
+
+[
+
+oxed{
+
+F_k=sum_{i=0}^{J}
+
+(-1)^{J-i}inom{k}{i}inom{k-i-1}{J-i}F_i z_{k-i}^{(J)}.
+
+}
+
+]
+
+This is exactly (T), with (d=k-i).
+
+Thus only one issue remains: prove (z_d^{(J)}inmathbf Z).
+
+---
+
+# 4. Frobenius-parameter Dwork congruence
+
+We use the strong congruence of Samol–van Straten and Mellit–Vlasenko in its coefficient-ring form.
+
+## Lemma 4.1: coefficient-ring form
+
+Let (R) be a (p)-torsion-free (p)-adically complete ring with a Frobenius lift
+
+[
+
+sigma:Rlongrightarrow R,
+
+qquad
+
+sigma(r)equiv r^ppmod p.
+
+]
+
+Let (Psiin R[u_1^{pm1},ldots,u_t^{pm1}]), and assume that the origin is the only interior lattice point of its Newton polytope. Put
+
+[
+
+B_m=operatorname{CT}Psi^m.
+
+]
+
+Then, for (a,mge0) and (sge1),
+
+[
+
+oxed{
+
+B_{a+mp^s},sigma(B_{lfloor a/pfloor})
+
+equiv
+
+B_a,sigma(B_{lfloor a/pfloor+mp^{s-1}})pmod{p^sR}.
+
+}
+
+]
+
+### Why this is the published Dwork proof, not a new hypothesis
+
+For (R=mathbf Z_p) with the identity Frobenius lift, (4.1) is the strong Dwork congruence
+
+[
+
+b_{a+mp^s}b_{lfloor a/pfloor}equiv
+
+b_ab_{lfloor a/pfloor+mp^{s-1}}pmod{p^s}
+
+]
+
+proved by Samol–van Straten and reproved through ghost terms by Mellit–Vlasenko.
+
+Their proof works verbatim over (R). The first ghost identity is obtained from
+
+[
+
+Psi(u)^pequivsigma(Psi)(u^p)pmod p.
+
+]
+
+All subsequent steps use only:
+
+1. divisibility of the ghost terms by powers of (p);
+
+1. containment of their Newton polytopes;
+
+1. the fact that the origin is the unique interior lattice point;
+
+1. coefficientwise ring operations.
+
+Replacing each occurrence of ordinary coefficient Frobenius by (sigma) changes none of those arguments. Thus (4.1) is the direct Frobenius-ring version of the published proof.
+
+## 4.2 Application to (H_a(x))
+
+Take
+
+[
+
+R=mathbf Z_p[[x]],
+
+qquad
+
+sigma(x)=x^p,
+
+qquad
+
+Psi=1-xPhi(u,v).
+
+]
+
+Its Newton polygon in the (u,v) variables is the hexagon (2.3), so Lemma 4.1 applies. Since
+
+[
+
+B_a=H_a(x),
+
+qquad
+
+sigma(B_a)=H_a(x^p),
+
+]
+
+we obtain
+
+[
+
+oxed{
+
+H_{a+mp^s}(x)H_{lfloor a/pfloor}(x^p)
+
+equiv
+
+H_a(x)H_{lfloor a/pfloor+mp^{s-1}}(x^p)pmod{p^s}.
+
+}
+
+]
+
+Every series here has constant term one and is therefore invertible. Dividing gives
+
+[
+
+oxed{
+
+rac{H_{a+mp^s}(x)}{H_a(x)}
+
+equiv
+
+left(
+
+rac{H_{lfloor a/pfloor+mp^{s-1}}(x)}
+
+ight)_{xmapsto x^p}pmod{p^s}.
+
+}
+
+]
+
+---
+
+# 5. Integer ghost coordinates and congruence preservation
+
+For a unit series
+
+[
+
+U(x)=1+u_1x+u_2x^2+cdotsin1+xmathbf Z_p[[x]],
+
+]
+
+define its (d)-th logarithmic ghost by
+
+[
+
+mathfrak g_d(U)=d[x^d]log U.
+
+]
+
+These are integer polynomials in the coefficients (u_1,ldots,u_d). Indeed,
+
+[
+
+]
+
+gives the recursion
+
+[
+
+oxed{
+
+mathfrak g_d(U)
+
+=du_d-sum_{r=1}^{d-1}mathfrak g_r(U)u_{d-r}.
+
+}
+
+]
+
+Consequently:
+
+[
+
+Uequiv Vpmod{p^s}Longrightarrow
+
+mathfrak g_d(U)equivmathfrak g_d(V)pmod{p^s},
+
+]
+
+and
+
+[
+
+mathfrak g_d(UV)=mathfrak g_d(U)+mathfrak g_d(V).
+
+]
+
+Also,
+
+[
+
+oxed{
+
+mathfrak g_d(U(x^p))=
+
+egin{cases}
+
+0,&p
+
+mid d,\
+
+p,mathfrak g_{d/p}(U),&pmid d.
+
+end{cases}
+
+}
+
+]
+
+Since
+
+[
+
+Q_d(a)=mathfrak g_d(H_a),
+
+]
+
+applying (mathfrak g_d) to (4.3) yields
+
+[
+
+egin{aligned}
+
+&Q_d(a+mp^s)-Q_d(a)\
+
+&qquadequiv
+
+egin{cases}
+
+0,&p
+
+mid d,\[1mm]
+
+pigl(Q_{d/p}(lfloor a/pfloor+mp^{s-1})
+
+-Q_{d/p}(lfloor a/pfloor)igr),&pmid d
+
+end{cases}pmod{p^s}.
+
+end{aligned}
+
+]
+
+Induction on (s) now proves
+
+[
+
+oxed{
+
+Q_d(a+mp^s)equiv Q_d(a)pmod{p^s}
+
+}
+
+]
+
+for every prime (p), all (a,mge0), and all (sge1).
+
+Thus each polynomial (Q_d) is congruence-preserving on the nonnegative integers.
+
+---
+
+# 6. Integer-point derivatives are integers
+
+Fix (Jge0). Taking (a=J) and (m=1) in (5.7) gives
+
+[
+
+rac{Q_d(J+p^s)-Q_d(J)}{p^s}inmathbf Z
+
+]
+
+for every (sge1).
+
+Because (Q_d(alpha)) is a rational polynomial, the left side converges (p)-adically to (Q_d'(J)):
+
+[
+
+rac{Q_d(J+p^s)-Q_d(J)}{p^s}longrightarrow Q_d'(J)
+
+quad	ext{in }mathbf Q_p.
+
+]
+
+Hence
+
+[
+
+Q_d'(J)inmathbf Z_p
+
+]
+
+for every prime (p). Since (Q_d'(J)inmathbf Q),
+
+[
+
+mathbf Qcapigcap_pmathbf Z_p=mathbf Z,
+
+]
+
+and therefore
+
+[
+
+oxed{Q_d'(J)inmathbf Z.}
+
+]
+
+Combining (3.2), (3.9), and (6.3) proves the theorem.
+
+---
+
+# 7. Fully constructive recursion
+
+Write
+
+[
+
+h_r(alpha)=(-1)^rinom{alpha}{r}F_r,
+
+qquad
+
+H_alpha(x)=sum_{rge0}h_r(alpha)x^r.
+
+]
+
+From
+
+[
+
+xH_alpha'(x)=H_alpha(x)sum_{dge1}Q_d(alpha)x^d,
+
+]
+
+we get
+
+[
+
+oxed{
+
+Q_d(alpha)
+
+=d,h_d(alpha)-sum_{r=1}^{d-1}Q_r(alpha)h_{d-r}(alpha).
+
+}
+
+]
+
+This constructs all (Q_d) recursively in (mathbf Q[alpha]), and then
+
+[
+
+z_d^{(J)}=-Q_d'(J).
+
+]
+
+One can avoid symbolic polynomials. Put
+
+[
+
+q_d=Q_d(J),qquad r_d=Q_d'(J).
+
+]
+
+Then
+
+[
+
+oxed{
+
+q_d=d,h_d(J)-sum_{r=1}^{d-1}q_rh_{d-r}(J),
+
+}
+
+]
+
+[
+
+oxed{
+
+r_d=d,h_d'(J)-sum_{r=1}^{d-1}
+
+igl(r_rh_{d-r}(J)+q_rh_{d-r}'(J)igr),
+
+}
+
+]
+
+and (z_d^{(J)}=-r_d).
+
+The required binomial derivatives are explicit:
+
+[
+
+left.rac d{dalpha}inom{alpha}{k}ight|_{alpha=J}
+
+=
+
+egin{cases}
+
+displaystyle
+
+inom Jkigl(H_J-H_{J-k}igr),&0le kle J,\[3mm]
+
+displaystyle
+
+(-1)^{k-J-1}rac{J!(k-J-1)!}{k!},&k>J,
+
+end{cases}
+
+]
+
+where (H_m=sum_{r=1}^m1/r) and (H_0=0).
+
+The Dwork argument proves that every rational number produced by (7.3) is in fact an integer.
+
+## 7.1 First cases
+
+The first ghost polynomials are
+
+[
+
+Q_1(alpha)=-2alpha,
+
+]
+
+[
+
+Q_2(alpha)=6alpha^2-10alpha,
+
+]
+
+[
+
+Q_3(alpha)=-6alpha^3+54alpha^2-56alpha,
+
+]
+
+[
+
+Q_4(alpha)=-3alpha^4-102alpha^3+435alpha^2-346alpha.
+
+]
+
+For (J=0),
+
+[
+
+z_d^{(0)}=F_d,
+
+]
+
+and the matrix is the identity on the tail.
+
+For (J=1),
+
+[
+
+(z_1,z_2,z_3,z_4,ldots)=(2,-2,-34,-206,ldots),
+
+]
+
+and (T) becomes
+
+[
+
+oxed{F_k=2kz_{k-1}-(k-1)z_k.}
+
+]
+
+For (J=2),
+
+[
+
+(z_1,z_2,z_3,z_4,ldots)=(2,-14,-88,-74,ldots).
+
+]
+
+---
+
+# 8. Tail-ideal theorem and (Gamma_nmid A_n)
+
+Let (w_{J+1},ldots,w_Ninmathbf Z) be arbitrary outer weights, and define the nonconstant coefficient vector
+
+[
+
+C_d=sum_{k=J+1}^{N}w_kA_{k,d}.
+
+]
+
+Using (T),
+
+[
+
+egin{aligned}
+
+sum_{k=J+1}^{N}w_kF_k
+
+&=sum_{k=J+1}^{N}w_ksum_{d=1}^{N}A_{k,d}z_d^{(J)}\
+
+&=sum_{d=1}^{N}C_dz_d^{(J)}.
+
+end{aligned}
+
+]
+
+Therefore
+
+[
+
+oxed{
+
+sum_{k=J+1}^{N}w_kF_kin(C_1,ldots,C_N)subsetmathbf Z.
+
+}
+
+]
+
+This is the tail-ideal theorem.
+
+If the constant coefficient of the transform is
+
+[
+
+C_0=sum_{k=0}^{J}w_kF_k,
+
+]
+
+then the complete weighted sum is
+
+[
+
+sum_{k=0}^{N}w_kF_k
+
+=C_0+sum_{d=1}^{N}C_dz_d^{(J)}.
+
+]
+
+Hence
+
+[
+
+oxed{gcd(C_0,C_1,ldots,C_N)midsum_{k=0}^{N}w_kF_k.}
+
+]
+
+In the truncated Legendre–Euler construction, the complete weighted sum is the Apéry number (A_n), while the gcd on the left is (Gamma_n). Thus
+
+[
+
+oxed{Gamma_nmid A_n.}
+
+]
+
+This holds for every cutoff and every integral outer weight vector for which the coefficient matrix is the one in the question.
+
+---
+
+# 9. The column lattice is not generally saturated
+
+The theorem does not say that the columns span all of (mathbf Z^{N-J}). They need not.
+
+For (J=1), (N=3),
+
+[
+
+A=egin{pmatrix}
+
+4&-1&0\
+
+0&6&-2
+
+end{pmatrix}.
+
+]
+
+The gcd of its (2	imes2) minors is
+
+[
+
+gcd(24,8,2)=2,
+
+]
+
+so its column lattice has index (2) in (mathbf Z^2). Nevertheless,
+
+[
+
+(F_2,F_3)^T=(10,56)^T
+
+=A(2,-2,-34)^T.
+
+]
+
+Thus tail membership is a special arithmetic property of the Franel vector, not a consequence of saturation.
+
+Likewise, arbitrary integer input sequences fail. For example, replace the Franel values by
+
+[
+
+1,0,1,0,1.
+
+]
+
+The analogous fourth ghost is
+
+[
+
+Q_4(alpha)=-rac{alpha(alpha-1)(alpha^2+alpha-3)}3,
+
+]
+
+so (Q_4'(1)=1/3). The corresponding (z_4) is not integral. This hostile check isolates exactly where the reflexive-Laurent/Dwork input enters.
+
+---
+
+# 10. Executable exact Python verification
+
+The following uses only Python's standard library. It constructs (z_d^{(J)}) from (7.2)–(7.4), asserts integrality, and verifies every row of (T).
+
+
+For a Sage matrix check, add:
+
+
+The computation verifies the formulas; the Dwork argument proves integrality for all (J,N).
+
+---
+
+# 11. Status and references
+
+Proved theorem: the Franel tail vector belongs to the integer column lattice for every (J,N), with the universal constructive vector (z_d^{(J)}=-Q_d'(J)).
+
+Not merely computational: exact tests suggested the theorem, but the proof is the chain

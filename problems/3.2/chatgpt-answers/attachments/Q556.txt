@@ -1,0 +1,291 @@
+
+---
+
+# 2. Lucas factorization of the Legendre kernel
+
+Let
+
+with
+
+Lucas gives
+
+For the second binomial, if r+s<p, Lucas gives
+
+If r+s\ge p, the lower digit of the upper entry is r+s-p<s, so the second binomial vanishes modulo p; the same carry makes L(r,s) vanish. Thus in all cases
+
+Summing over a,s gives the polynomial Lucas factorization
+
+In characteristic p,
+
+so
+
+Plain text:
+
+
+---
+
+# 3. Why the cutoff contains the folded index
+
+Let
+
+I claim
+
+If j=r, then 2r\le p-1, and
+
+If j=p-1-r, then 2r\ge p-1, and
+
+Thus (3.1) holds in both branches. Also J<p whenever p>q, since n<(q+1)p.
+
+For m\le J<p, only the y^0 term of Q_q(c^p+y^p) can contribute to [y^m]. Hence
+
+If r\le(p-1)/2, then j=r\le J, and the truncated pairing already contains the full degree-r polynomial. If r>(p-1)/2, then all coefficients of Q_r above degree j=p-1-r vanish modulo p by the same carry calculation, so the truncated pairing is again complete modulo p. Applying (1.1) at the lower index gives
+
+Combining with (3.2) proves the general congruence (G):
+
+---
+
+# 4. Exact coefficient formula
+
+Write
+
+The coefficient calculation is independent of q except through the cutoff J.
+
+The constant coefficient is
+
+For 1\le d\le n,
+
+Indeed, after setting d=k-i, the inner alternating sum is
+
+when J-i<d, and is zero when J-i\ge d.
+
+Two useful endpoint coefficients are
+
+Plain text:
+
+
+---
+
+# 5. Universal candidate factors
+
+Define the squarefree candidate product
+
+From (G), the coefficient of c^d is zero modulo p unless p\mid d. Therefore, for every d\ge1,
+
+For q=3 this becomes
+
+In particular,
+
+These factors are universal: they occur at good and bad primes alike. They must not be counted as evidence of Apéry badness.
+
+---
+
+# 6. The local Smith form for q=3
+
+For q=3,
+
+Modulo a candidate prime p, the coefficient row is
+
+Because the first coordinate is 1, the vector
+
+is primitive over every field. A column-unimodular matrix sends it to (1,0,0,0). Hence the evaluated coefficient row has Smith profile
+
+modulo p.
+
+Equivalently, for any integer linear functional
+
+one has
+
+Thus:
+
+- if the bracket is a unit, the functional is selective but merely restates A_j=0;
+
+- if the bracket vanishes, the functional is universally divisible by p and gives no selection.
+
+This is the exact algebraic reason that the coefficient content is locally rank one rather than four independent equations.
+
+---
+
+# 7. Exact support of the content
+
+Let
+
+Since the coefficient at d=0 is A_j modulo every candidate prime, while (G) makes every coefficient vanish when A_j=0, one gets
+
+for every fixed-q candidate prime p>q.
+
+For q=3,
+
+where
+
+Moreover,
+
+Therefore the full coefficient content gives exactly the same target support as the single Strehl prefix C_0.
+
+Plain text:
+
+
+---
+
+# 8. Comparison with the direct–Strehl pair
+
+Let
+
+Here
+
+Q555 proves the exact factorization
+
+where the denominator of H_J is supported on primes at most J<p. Every q=3 candidate prime divides B_n universally. Consequently
+
+Thus \Gamma_{n,3} does not strictly sharpen the direct–Strehl pair at the level relevant to Problem 3.2: their large-prime radicals are identical.
+
+As full integers, \Gamma_{n,3} can be numerically smaller because it imposes divisibility by many more coefficients. But that extra small-prime/content cancellation has no proven implication for the q=3 target. Also, \Gamma_{n,3}\mid S_n is automatic; no divisibility \Gamma_{n,3}\mid D_n should be asserted without a separate integer-linear representation of D_n in the coefficient vector.
+
+---
+
+# 9. Exact height of the constant coefficient
+
+Put
+
+For k=\beta n+O(1),
+
+where
+
+The Franel numbers satisfy
+
+All terms in C_0 are positive, and the term ratio is greater than 1 throughout the final portion of the range, so the final summand gives the exponential rate:
+
+For q=3, \beta=1/7, and this simplifies exactly to
+
+Numerically,
+
+Since \Gamma_{n,3}\mid C_0(n,3), this proves (Hfull).
+
+For the target radical, the prime number theorem gives the much stronger—but still linear—bound
+
+The smaller cutoff therefore does not by itself produce o(n).
+
+---
+
+# 10. Exact rational diagonal and the seven residue classes
+
+Use the Franel Laurent polynomial
+
+so that
+
+Also
+
+Define
+
+Then
+
+Now write
+
+and put
+
+Then
+
+Summing (10.2) over M gives the fixed rational constant-term representation
+
+This is a proof-grade recurrence certificate: each of the seven sections is the diagonal/constant term of one fixed rational function, hence is D-finite in Y and P-recursive in M.
+
+The basic input recurrences for direct creative telescoping are
+
+An expanded scalar recurrence can be generated exactly by creative telescoping from (10.3). Its expansion is not needed for the content audit: any such Ore operator acts on a global sequence, whereas the coefficient-content condition is the moving local rank-one condition (6.3).
+
+Exact pseudocode:
+
+
+---
+
+# 11. Differential and shift operations
+
+Modulo a candidate prime,
+
+Therefore every positive ordinary derivative vanishes:
+
+So any positive-order differential certificate carries the full candidate product universally. If an operator has a zero-order term, its only selective contribution is that term times A_jQ_3(c^p).
+
+Hasse derivatives can recover the sparse profile:
+
+but the required order ap depends on the candidate prime. There is no fixed-order operator that accesses all four positions 0,p,2p,3p simultaneously.
+
+For an integer shift a,
+
+The fourth finite difference is therefore universally zero modulo every candidate prime, while lower differences still have the single scalar factor A_j.
+
+A concrete selective evaluation is c=-1, because
+
+However,
+
+and the last term dominates exponentially. Its rate is
+
+which is slightly worse than the positive center c=0. Thus the simplest signed evaluation does not yield subexponential height.
+
+---
+
+# 12. Why ordinary resultants do not solve the problem
+
+One might form
+
+Modulo a candidate prime, the effective polynomials are
+
+The cubic polynomials Q_3(c) and Q_3(c+1) are coprime over characteristic zero: writing Q_3(c)=P_3(1+2c), a common root would require two roots of P_3 differing by 2, which is impossible.
+
+At the effective degree 3p, a suitable principal subresultant would reduce, up to a unit, to
+
+This would be selective.
+
+But the ordinary integer polynomials have nominal degree up to n=3p+r. Their top r coefficients vanish modulo p universally, so the ordinary full resultant is already divisible by every candidate prime, even when A_j\ne0. To recover (12.1) one must choose the principal subresultant indexed by the p-dependent effective degree 3p.
+
+This produces two fatal problems:
+
+1. the required subresultant index depends on the unknown candidate prime;
+
+1. the standard height bound for the resulting determinant is \exp(O(n^2)), far larger than the desired \exp(o(n)).
+
+Thus the degree-growing resultant idea does identify a selective local invariant, but not one global low-height integer.
+
+---
+
+# 13. Why naive normalization loses the target
+
+Let
+
+and define
+
+This removes the universal candidate factors. But for a bad prime p, the prime remains in the normalized coefficient only at the four positions
+
+It is removed from every other coefficient. Hence
+
+no longer contains the bad radical. Universal-factor normalization and content formation do not commute.
+
+This is the Smith-form version of the obstruction: the selective coordinates move with p.
+
+---
+
+# 14. Exact failure and reopening conditions
+
+A genuinely successful coefficient functional would be an explicit integer
+
+with denominators, if any, supported only on primes at most n/4, such that
+
+for every prime
+
+and
+
+Then every q=3 bad prime would divide R_n^*, proving
+
+For general fixed q, condition (14.1) becomes
+
+An equivalent arithmetic reopening is the pointwise factorial-ratio gcd theorem isolated in Q555:
+
+No current fixed-order Ore, finite-difference, differential, or content argument proves either (14.2) or (14.4).
+
+---
+
+# 15. Exact verification code
+
+
+---
+
+# 16. Plain-text formula ledger

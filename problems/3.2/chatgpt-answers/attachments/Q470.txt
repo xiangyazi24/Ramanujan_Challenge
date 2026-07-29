@@ -1,0 +1,367 @@
+
+For h != 0, the exact zero-indicator identities are
+
+
+These formulas are exact, but they do not put U_p(h) in the bounded-conductor trace-function category.
+
+The obstruction is concrete:
+
+1. The Apéry recurrence lifts b_r^(p-1) to the (p-1)st symmetric power of a two-dimensional transfer system. Its natural rank is p, not O(1).
+
+1. The rational-diagonal representation turns b_r^(p-1) into a diagonal of a product of p-1 independent copies; the number of variables grows linearly with p.
+
+1. The Caruso–Fürnsinn–Vargas-Montoya–Zudilin factorization
+
+1. If one tries to interpolate the zero indicator by a polynomial in r, its degree is almost p: whenever Z_p is nonempty,
+
+So no existing bounded-conductor trace-function theorem applies to U_p(h) merely from the recurrence, diagonal representation, or truncation-square theorem.
+
+I do not obtain a new unconditional numerical saving for K_1(n). I do obtain a sharper proof-grade reduction than the full L^infinity estimate in Q452.
+
+Set
+
+
+Choose
+
+
+Then a Fejér-majorant argument reduces the all-n target to the following low-frequency bilinear dispersion estimate:
+
+
+for any fixed eta>0, uniformly in n.
+
+This estimate is strictly less ambitious than Q452's full-frequency HLS_delta target in the relevant sense:
+
+- it uses only h < n^(2/3) log^2 n, not all h<p;
+
+- it asks only for a second-moment/bilinear logarithmic saving;
+
+- it yields exactly K_1(n)=o(n/log n), with no fixed rate required.
+
+It is also sharp at the correct obstruction scale: a singleton residue system aligned at one integer makes the left side of (LFBD_eta) of order n^(8/3), so any logarithmic saving rules out precisely the alignment that blocks the pointwise theorem.
+
+No current large-sieve, trace-function, Kloosterman-fraction, or CFVZ Galois-group theorem proves (LFBD_eta). This is the cleanest falsifiable residual target I see.
+
+---
+
+# 1. Exact zero-indicator formulas
+
+For an element x in F_p, Fermat gives
+
+
+as an F_p-valued function. Since the right side takes the literal integer values 0 and 1, it may be inserted into the complex Fourier sum without ambiguity.
+
+For h != 0,
+
+
+so
+
+
+Additive orthogonality gives a second exact formula:
+
+
+Therefore
+
+
+because the u=0 term again vanishes for h != 0.
+
+Formula (1.3) might look like a route to Deligne. The missing step would be a bounded-conductor realization of
+
+
+That step is not available. Even if r -> b_r is itself a Frobenius trace, exponentiating the numerical trace value by another additive character is not one of the bounded-complexity sheaf operations. The six-functor/trace-function formalism is linear and tensorial; it does not turn
+
+
+into a bounded-conductor sheaf uniformly in p.
+
+Fouvry–Kowalski–Michel's prime-sum theorem assumes a fixed-modulus trace weight of bounded conductor, with constants polynomial in that conductor; see Theorem 1.5 of Algebraic trace functions over the primes. Their own conductor examples show that an additive polynomial phase of degree d has conductor d+2. A conductor of order p destroys the uniform saving.
+
+---
+
+# 2. The recurrence produces a rank-p symmetric-power system
+
+Define the cleared Apéry sequence
+
+
+The recurrence becomes
+
+
+Thus
+
+
+For 0<=r<p, Fermat gives
+
+
+because r! is a p-unit.
+
+Now form all monomials of total degree p-1:
+
+
+They transform linearly under
+
+
+where A(r) is the 2 x 2 matrix in (2.2). This space has dimension exactly
+
+
+The coordinate W_r^(p-1)=b_r^(p-1) is one matrix coefficient of this rank-p system. Adding the constant 1 gives a rank-p+1 inhomogeneous realization of the zero indicator.
+
+After normalizing the transfer matrix to determinant one, Sym^(p-1) is the natural degree-p-1 representation of SL_2(F_p); on the full SL_2 envelope it is the p-dimensional Steinberg module. Thus the representation-theoretic object naturally selected by Fermat's exponent is maximally characteristic-dependent, not bounded rank.
+
+This does not prove that no miraculous unrelated bounded-rank description of the particular Apéry zero indicator can exist. It proves that the recurrence-plus-Fermat construction itself cannot provide one.
+
+---
+
+# 3. The rational diagonal also grows linearly in dimension
+
+Straub gives a fixed rational-diagonal representation for the Apéry generating series; one convenient form is
+
+
+See A. Straub, Multivariate Apéry numbers and supercongruences of rational functions.
+
+Let R(x1,x2,x3,x4) denote this rational function. Then
+
+
+is the full diagonal coefficient of
+
+
+The representation is exact, but it uses
+
+
+variables. Cohomological rank/Betti complexity therefore grows with p; fixed-complexity diagonal theorems do not apply uniformly.
+
+This is the diagonal analogue of the symmetric-power calculation: coefficientwise exponentiation is implemented by a tensor/Hadamard construction whose size grows with the exponent.
+
+Quantitative sheaf theory controls the six operations in terms of the input complexity; it does not make an input of complexity ~p bounded. See Forey–Fresán–Kowalski–Sawin, Quantitative sheaf theory, and Fouvry–Kowalski–Michel, On the conductor of cohomological transforms.
+
+---
+
+# 4. Why the CFVZ square factorization does not control coefficient zeros
+
+Let
+
+
+Caruso–Fürnsinn–Vargas-Montoya–Zudilin prove:
+
+
+for p == 1,5,7,11 mod 24, and
+
+
+for p == 13,17,19,23 mod 24. See Theorems 1–2 of Galois Groups of Apéry-like Series Modulo Primes, published online in the Bulletin of the Australian Mathematical Society in 2026.
+
+This factorization is powerful for the Kummer extension generated by the whole series, but it is the wrong multiplication for U_p(h).
+
+If
+
+
+then in the square branch
+
+
+The zero indicator requires
+
+
+There is no Frobenius collapse at exponent p-1. Already for two summands,
+
+
+because binom(p-1,k)=(-1)^k mod p; all mixed terms survive.
+
+Equivalently, define the coefficientwise/Hadamard power
+
+
+Then
+
+
+CFVZ controls ordinary multiplication of A_p(t). It gives no simplification of the Hadamard power in (4.4).
+
+There is also a characteristic obstruction to a naive discrete-Fourier diagonalization. The complex transform U_p(h) uses pth roots of unity, but in characteristic p
+
+
+The group algebra F_p[C_p] is non-semisimple and has no p distinct additive characters. Thus the mod-p square factorization cannot be diagonalized by the complex length-p DFT. There is no ring homomorphism F_p -> C preserving the convolution identity.
+
+This is the precise reason the cyclic Galois group of index 1 or 2 does not translate into a bound for U_p(h).
+
+---
+
+# 5. A degree lower bound for any polynomial zero-indicator model
+
+Let D_p(X) be the unique polynomial of degree at most p-1 satisfying
+
+
+If Z_p is nonempty, D_p is nonzero and has at least
+
+
+roots. Therefore
+
+
+Using the proved bound |Z_p|<=3p^(2/3)+O(1),
+
+
+The same argument applies to any rational-function representation with no poles on F_p: its numerator must have degree at least p-|Z_p|.
+
+So the zero indicator is not a bounded-degree polynomial/rational trace weight. This does not exclude an exotic bounded-conductor sheaf with the same trace values, but it shows that the most direct algebraic model has essentially maximal degree.
+
+---
+
+# 6. What the classical additive large sieve gives—and why it is too weak
+
+For a fixed dyadic block P<p<=2P, define
+
+
+Montgomery–Vaughan's additive large sieve gives, for an interval of length N,
+
+
+Parseval gives the exact same-prime identity
+
+
+Hence
+
+
+With |Z_p|<<p^(2/3) and N~P, this is
+
+
+The resulting pointwise bound from L^2 is worse than P and gives no saving over prime counting.
+
+The P^2 term is not a cosmetic artifact. The low Farey frequencies 1/p are separated only by ~P^(-2) and are highly coherent on intervals of length P. A moduli-only improvement by a logarithm would still miss the needed scale by a positive power.
+
+Iwaniec's large sieve with prime moduli concerns a different multiplicative-character setup and rough-supported coefficients. It does not estimate this two-variable additive array U_p(h).
+
+The sparse-moduli improvements of Baker–Munsch–Shparlinski depend on additive energy of the modulus sequence; see Additive energy and a large sieve inequality for sparse sequences. Here the moduli are already the ordinary primes. The obstruction lies in the numerator/root coefficients, not in sparse moduli.
+
+Bettin–Chandee and Duke–Friedlander–Iwaniec obtain savings for bilinear/trilinear forms with Kloosterman fractions such as
+
+
+with coefficient variables that separate multiplicatively. Our phase is
+
+
+and U_p(h) is an inseparable (p,h)-array. There is no modular inverse or product-factorization to which those theorems apply. See Bettin–Chandee, Trilinear forms with Kloosterman fractions.
+
+---
+
+# 7. A new rigorous low-frequency reduction
+
+The full Fourier identity uses all p-1 frequencies. Positivity allows us to retain only a shorter initial segment.
+
+For 1<=H<p, define the normalized Fejér kernel
+
+
+It is nonnegative and Phi_{p,H}(0)=1. Therefore, for every residue r,
+
+
+Expanding gives
+
+
+For the q=1 slice, r=n-p, and
+
+
+Thus, with
+
+
+we obtain the exact upper bound
+
+
+The proved zero-count estimate gives
+
+
+Choose
+
+
+Then
+
+
+Only the low-frequency form in (7.4) remains.
+
+---
+
+# 8. The precise weaker bilinear estimate that suffices
+
+Cauchy–Schwarz gives
+
+
+Set
+
+
+Expanding in the prime variable,
+
+
+where
+
+
+and
+
+
+The diagonal is already small. By Parseval,
+
+
+Therefore the following single estimate is sufficient:
+
+
+uniformly in n, for any fixed eta>0.
+
+Indeed, (8.6)–(8.7) give
+
+
+Then (8.1) and (7.4) imply
+
+
+Finally, the Wronskian bound v_p(G_n)<=6 for p>n/2 yields
+
+
+So (LFBD_eta) closes the entire q=1 weighted contribution.
+
+## Centered pair-correlation form
+
+Expanding U_p in roots shows exactly what (LFBD_eta) says. Put
+
+
+The Fejér kernel
+
+
+gives
+
+
+Thus (LFBD_eta) is a centered near-collision estimate for the moving rational points (n-r)/p.
+
+It is falsifiable and sharp:
+
+- A simultaneous q=1 hit has theta_{p,n-p}(n)=1.
+
+- If singleton sets are adversarially aligned at one n, then roughly n/log n points coincide at 1.
+
+- Their contribution is
+
+Hence a logarithmic saving in (LFBD_eta) excludes precisely the worst alignment and no more.
+
+This is materially weaker than proving Q452's full-frequency L^infinity bound: it asks only for a centered second moment over h<H=o(n) and only a logarithmic saving over the aligned extremum.
+
+---
+
+# 9. Why current machinery still does not prove (LFBD_eta)
+
+Expanding the phase difference gives
+
+
+The h-average localizes the integer numerator in (9.1) to a window of width about
+
+
+A proof of (LFBD_eta) therefore needs cancellation in the signed count of solutions to
+
+
+The available information
+
+
+does not control this cross-characteristic bilinear incidence.
+
+The classical spacing bound treats the pairs (p,r) as arbitrary Farey points and loses n^2. The square factorization is vertical in each F_p[t]; it gives no relation between the coefficient-zero locations for two different primes p and q. The recurrence is likewise characteristic-local.
+
+A proof would require one genuinely new ingredient, such as:
+
+- a cross-prime estimate for the low Fourier coefficients U_p(h);
+
+- a horizontal trace-function realization of the coefficient-zero indicator with bounded complexity;
+
+- or a direct determinant/resultant certificate for the bilinear relation (9.3) of subexponential height.
+
+None follows from the 2025–26 Galois-group theorem.
+
+---
+
+# 10. Final answer
+
+The exact zero-indicator identity does not unlock a bounded-complexity trace function. The exponent p-1 forces:

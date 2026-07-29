@@ -1,0 +1,31 @@
+
+The binomial carrier removes the first occurrence and keeps the second.
+
+---
+
+# 11. Weakest missing lemma
+
+Define the completely explicit ordinary integer
+
+The proved factorization is
+
+Therefore the narrowest new theorem is
+
+It is equivalent, up to the already controlled o(n) error, to the direct q=1 weighted theorem. It is weaker than the full q=1 problem because it does not include the reflected branch, but it is not presently easier by any known Smith, factorial, or height argument.
+
+A convenient stronger sufficient statement is: for some fixed \eta>0,
+
+The truly minimal form remains the weighted statement in (11.2).
+
+---
+
+# 12. Reproducible Sage regression code
+
+The proof above is uniform and does not depend on a scan. The following Sage script checks the coefficient formulas, Euclidean reduction, exact large-prime interval, exponent one, the two-branch factorization of D_n, and carrier purification.
+
+
+The scan limit is not part of the proof. Increasing 120 checks implementation details only; Sections 3–8 prove the assertions for every n.
+
+# Final conclusion
+
+The middle-third cutoff is algebraically well chosen:

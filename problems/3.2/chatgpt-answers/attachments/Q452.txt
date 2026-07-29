@@ -1,0 +1,232 @@
+
+For (n/2<ple n), put (r=n-p). Gessel–Lucas gives
+
+
+so, apart from (p=5),
+
+
+Thus the requested quantity is simply
+
+
+No known larger-sieve, Frobenius-sieve, or determinant-method argument improves the unconditional pointwise bound
+
+
+The 2025–26 Caruso–Fürnsinn–Vargas-Montoya–Zudilin theorem does not change this. It is a precise vertical, fixed-characteristic Kummer statement about the whole series (fbmod p). It gives no restriction on the location of a zero coefficient, no auxiliary-modulus residue restriction on the bad primes, and no compatible system to which a Frobenius large sieve can be applied.
+
+The exact missing input is a cross-characteristic Fourier/large-sieve estimate. If
+
+
+then Fourier inversion gives
+
+
+The proved bound (|Z_p|ll p^{2/3}) makes the first term (O(n^{2/3}/log n)). Therefore any uniform estimate
+
+
+for one fixed (delta>0) would prove (K_1(n)=o(n/log n)), and hence the desired weighted (q=1) bound. No available theorem supplies (HLS_delta).
+
+---
+
+## 1. What the 2025 Galois-group theorem actually says
+
+Caruso, Fürnsinn, Vargas-Montoya and Zudilin start from
+
+
+so that, in (mathbf F_p(t,f)),
+
+
+Their Theorems 1 and 2 state:
+
+
+The group therefore has order ((p-1)/2) or (p-1). See Caruso–Fürnsinn–Vargas-Montoya–Zudilin, Galois Groups of Apéry-like Series Modulo Primes, Theorems 1–2, first posted as arXiv:2510.23298.
+
+This is substantial algebraic information, but it concerns the Kummer class of the polynomial as a whole. The Galois action is
+
+
+It does not act on the coefficient index (r), and coefficient extraction
+
+
+is not a Frobenius conjugacy class or a splitting condition at a place (t=a). Function-field Chebotarev can study evaluations and splitting of places of (mathbf F_p(t)); it does not distribute the coefficients of the defining polynomial.
+
+The factorization is likewise insufficient. In the square case,
+
+
+and in the other case it is a fixed three-term linear combination of such convolutions. A convolution coefficient can vanish arbitrarily often. A large Galois group does not serve as a “degree bound” for coefficient fibres.
+
+---
+
+## 2. A rigorous demonstration that the Galois theorem alone has no horizontal content
+
+The following local models satisfy the same Kummer-group conclusions while having almost all coefficients equal to zero.
+
+Let (e=(p-1)/2).
+
+### Square-subgroup branch
+
+Take
+
+
+The polynomial has constant and leading coefficient (1), degree (p-1), and every coefficient of degree (1le rle p-2), except (r=e), is zero.
+
+Let (F_pinmathbf F_p[[t]]) be the unique unit series satisfying
+
+
+Explicitly,
+
+
+so its coefficients have the exact (p)-Lucas digit-product property. Also
+
+
+Since (B_p) has simple zeros, its class is not a proper power in (mathbf F_p(t)^times); the Kummer class of (B_p^{-2}) has order ((p-1)/2). Hence the generated Galois group is exactly the square subgroup.
+
+For a prescribed fixed (n), the target index is (r=n-p). The exceptional equality (r=e) determines at most one prime (p=(2n+1)/3). Thus this local model has the target coefficient zero for essentially every (pin(n/2,n]).
+
+### Full-group branch
+
+Let
+
+
+Then (A_p) again has degree (p-1), constant and leading coefficient (1), but only (O(1)) nonzero coefficient positions. Since (Delta) has simple zeros for (pge5), the divisor of (A_p) has a valuation equal to (1) at some place; its Kummer class has order (p-1), giving the full group (mathbf F_p^times).
+
+These examples are not reductions of one fixed rational diagonal. Their role is narrower and decisive:
+
+The exact Galois-group and square-factorization conclusions of the 2025 theorem are compatible with maximal coefficient sparsity and with alignment at one chosen integer. Therefore that theorem alone cannot feed a horizontal sieve.
+
+The fixed-integral-diagonal hypothesis is the only remaining source of cross-prime coherence, and the Galois theorem does not quantify it.
+
+---
+
+## 3. The fixed rational-diagonal property alone also cannot give a pointwise saving
+
+Straub represents the Apéry numbers as the diagonal coefficients of
+
+
+See A. Straub, “Multivariate Apéry numbers and supercongruences of rational functions,” Algebra & Number Theory 8 (2014), 1985–2008.
+
+But no class-level theorem for rational diagonals can yield (o(n/log n)). The central binomial coefficients are the diagonal of (1/(1-x-y)), and for every prime
+
+
+one has
+
+
+Indeed, writing (n=p+r), the addition (n+n) has one base-(p) carry exactly when (2rge p), i.e. (ple2n/3). Consequently
+
+
+So holonomicity, diagonality, algebraicity modulo (p), and fixed rational complexity do not by themselves force horizontal sparsity. Apéry needs a sequence-specific cross-prime theorem.
+
+---
+
+## 4. Gallagher’s larger sieve: the required hypothesis is absent
+
+Gallagher’s larger sieve bounds a set (mathcal Ssubset[1,N]) when, for many auxiliary moduli (ell), its elements occupy at most (g(ell)) residue classes modulo (ell), with
+
+
+in the relevant form. See P. X. Gallagher, “A larger sieve,” Acta Arith. 18 (1971), 77–81.
+
+To apply it to
+
+
+one would need, for many fixed auxiliary primes (ell), a theorem such as
+
+
+Nothing of this kind follows from the mod-(p) Galois group. That theorem merely partitions the running primes by (pbmod24), and both Galois branches permit coefficient zeros. It excludes no odd residue class modulo (24), and supplies no information modulo any growing family of auxiliary (ell).
+
+Thus the larger-sieve denominator has no positive input: from current knowledge one must take (g(ell)=ell). The self-divisibility condition (p|alpha_n) is not a residue-class restriction on (pbmodell).
+
+---
+
+## 5. Why the Frobenius large sieve does not apply
+
+Kowalski’s Frobenius sieve and its compatible-system variants require a fixed geometric family and auxiliary reductions. A typical setup fixes:
+
+
+See E. Kowalski, “The large sieve, monodromy and zeta functions of curves”, and C. Perret-Gentil, “Exponential sums over finite fields and the large sieve,” IMRN 2020, especially Definition 2.1 and Theorem 2.9.
+
+The Apéry coefficient problem violates the setup twice.
+
+### The representation moves with the sampled prime
+
+For every running prime (p), CFVZ construct a different extension
+
+
+of degree ((p-1)/2) or (p-1). The coefficient field, base field, defining polynomial, and group order all change with (p). There is no fixed compatible system in auxiliary (lambda), and no product-surjectivity statement across distinct residue characteristics.
+
+### The event is not Frobenius-theoretic
+
+The event is
+
+
+It is a linear condition on a coefficient of the truncation polynomial, not a condition on the Frobenius conjugacy class of a rational point (t=a). The Kummer group controls the roots of
+
+
+as a function-field extension. It does not control the additive Fourier spectrum of the coefficient-zero positions.
+
+Even a genuine fixed compatible system with integer traces would not automatically help with a condition reduced modulo the same running prime (p). A Frobenius sieve detects conditions modulo fixed auxiliary (ell); (p|alpha_n) has no proper local subset in those auxiliary images unless one first proves new congruences linking the quotient (alpha_n/p) to them.
+
+---
+
+## 6. Why the determinant method stops at the height bound
+
+The determinant method counts rational or integral points on varieties of fixed degree and dimension; its uniformity is with respect to coefficients while degree and dimension remain fixed. See, for example, P. Salberger, “Counting rational points on projective varieties,” Proc. LMS 126 (2023), 1092–1133.
+
+There is no fixed bounded-degree variety here.
+
+1. The algebraic degree of (fbmod p) is exactly ((p-1)/2) or (p-1), so a model built from the CFVZ algebraic equation has degree growing linearly with the point being counted.
+
+1. Writing (A_p=B_p^2) introduces (asymp p/2) coefficient variables. The ambient dimension grows with (p).
+
+1. The fixed rational diagonal gives a bounded-complexity generating object, but extracting its (n)-th diagonal coefficient is not a rational-point condition of bounded degree in the variable (p).
+
+If one instead discards the generating representation and treats (alpha_n) as one fixed integer, the determinant/height argument is simply
+
+
+Since
+
+
+this is (O(n/log n)), weaker than prime counting. In fact
+
+
+whereas (logalpha_nsim3.52549n). The integer (alpha_n) is large enough to contain every candidate prime without violating height. No determinant argument based only on size can save a logarithm.
+
+---
+
+## 7. The exact missing horizontal large-sieve inequality
+
+Let
+
+
+Fourier inversion on (mathbf F_p) gives
+
+
+Since (n-pequiv npmod p), this yields the exact identity (H) in the verdict.
+
+The current row bound gives
+
+
+Thus the q=1 pointwise theorem is reduced to a single explicit cross-prime estimate:
+
+
+uniformly in (n), for any fixed (delta>0).
+
+The ordinary Montgomery–Vaughan large sieve does not give this. Parseval gives
+
+
+For frequencies (h/p) with (pasymp N), the spacing is only (asymp N^{-2}). Therefore over an interval of (N) values of (n), the classical inequality gives only
+
+
+See H. Montgomery and R. Vaughan, “The large sieve,” Mathematika 20 (1973), 119–134.
+
+Even under the conjectural best-scale (A_Nasymp1/log N), the deterministic consequence is only
+
+
+which is larger than (N/log N). With the proved (A_Nll N^{2/3}/log N), it is much worse. A pointwise result therefore requires cancellation between different prime moduli and their coefficient-zero Fourier phases, not merely Parseval within each prime.
+
+Equivalent sufficient formulations are:
+
+
+The 2025 Galois theorem supplies none of these quantities.
+
+---
+
+## Final answer
+
+The strongest complete pointwise statement obtainable from the stated inputs is still

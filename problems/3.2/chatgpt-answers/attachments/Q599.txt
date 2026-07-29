@@ -1,0 +1,264 @@
+
+---
+
+# 2. Exact affine Hermite/Smith reduction
+
+Let
+
+The homomorphism
+
+has image
+
+Equivalently, there is a unimodular matrix U_m\in\operatorname{GL}_m(\mathbf Z) such that
+
+This is the complete Smith form of the one-row moment matrix. Translating by D_0^{\varepsilon} gives (0.2).
+
+Let g=|g_{n,m}^{\varepsilon}|, and let r be the least nonnegative residue of D_0^{\varepsilon} modulo g. Then
+
+The nonzero requirement is essential. If r=0, zero is attainable, but the least nonzero attainable value is g, not zero.
+
+## 2.1 Recovering an exact filter
+
+Choose Bézout coefficients u_1,\ldots,u_m with
+
+Let t be the signed centered representative:
+
+Then
+
+and
+
+satisfies
+
+The coefficients may be huge, but the final integer is exact. This matches the priority in the question: once Bézout existence is established, the value—not coefficient height—is decisive.
+
+---
+
+# 3. Global Vandermonde matrix: no covolume obstruction
+
+The moment transform is
+
+where
+
+The square minor formed by the columns d=0,1,\ldots,m is triangular with diagonal entries
+
+Its determinant is \pm1. Hence
+
+More generally, for distinct integers d_0,\ldots,d_m,
+
+This is the binomial-basis Vandermonde formula. Taking d_i=i gives determinant one.
+
+Consequences:
+
+- the Taylor-jet transform has no large determinant or covolume;
+
+- no Minkowski or generic Smith argument can force \mu to be large;
+
+- the large gcds observed numerically come from the special Apéry coefficient vector, not from the coordinate change.
+
+---
+
+# 4. Local p-dilated Smith theorem
+
+This is the precise Smith statement that explains the safe range.
+
+## Theorem
+
+Let p be prime, and let 0\le r\le m<p. Then the matrix
+
+has rank r+1 and nonzero Smith invariants
+
+## Proof
+
+Expand the integer-valued polynomial \binom{px}{k} in the binomial basis in x:
+
+Finite differences give
+
+For k<p,
+
+A coefficient of degree k<p in the $j$th power cannot use the term t^p. Therefore
+
+For k=j, the only degree-j contribution uses the linear term pt from every factor, so
+
+Thus the column lattice in the \binom xj coordinates is exactly
+
+Finally, the evaluation matrix
+
+is lower unitriangular. It is unimodular, so it does not change the Smith invariants. This proves the theorem.
+
+## 4.1 The q=3 profile
+
+Taking r=3 gives
+
+This says more than the mod-p equality P(0)=P(p)=P(2p)=P(3p). In finite-difference form,
+
+The first nonconstant invariant is only p, not p^2. Therefore the central folded candidate from Q568 does not acquire a universal square in the moment lattice, even though it can occur with exponent two in the separate factorial carrier B_n.
+
+A concrete counterexample to universal p^2 divisibility is the formal profile polynomial
+
+Its first plus and minus moments are exactly
+
+For p>11, these have valuation exactly one.
+
+---
+
+# 5. The exact degree-p rank jump
+
+Equation (1.2) also gives the first coefficient after the safe zero block. The coefficient of z^p is
+
+Since
+
+we obtain
+
+Equivalently,
+
+so the new integer-valued basis element \binom{x}{p} distinguishes the nodes 0,p,2p,3p.
+
+For example,
+
+satisfies
+
+not 1. Thus the full integer-valued polynomial lattice at degree m\ge p no longer has the fixed local multiplier.
+
+A nuance is important:
+
+- retention of an actually bad prime still holds at every degree, because A_j=0 makes every coefficient C_d vanish modulo p;
+
+- exact selectivity fails at degree p, because a good candidate prime may now divide or fail to divide a chosen combination for reasons unrelated to A_j.
+
+Therefore the full-degree unimodular transform is the coefficient-content problem of Q569, not the safe affine problem studied here.
+
+---
+
+# 6. Candidate primorial, midpoint, and escape indices
+
+For a prime \ell, define the first nonvanishing moment index
+
+with \kappa_{\ell}^{\varepsilon}=\infty if no such k exists.
+
+Then
+
+For every candidate prime p,
+
+If p is a good candidate and does not divide 132 or 12, respectively, then (5.1) gives
+
+If p is bad, the first nonvanishing index is larger, because the entire coefficient vector is zero modulo p.
+
+This gives an exact interpretation of the gcd chain:
+
+All candidate primes are frozen into the gcd until their own degree threshold. Every drop before p_{\min} is caused by a noncandidate prime or by a decrease in a prime-power valuation.
+
+The central candidate
+
+is counted once in \mathcal P_n. Its doubled valuation in the factorial ratio from Q568 is a separate phenomenon and should not be imported into g_{n,m}^{\varepsilon}.
+
+---
+
+# 7. Why the numerical optimum appears just before p_{\min}
+
+The gcd chain satisfies
+
+Therefore
+
+The minimum nonzero absolute value cannot increase. Thus
+
+The first degree at which the final minimum appears can be smaller than p_{\min}-1 for two exact reasons:
+
+1. gcd plateau:
+
+so g_{n,m+1}^{\varepsilon}=g_{n,m}^{\varepsilon};
+
+1. centered-residue plateau: the gcd becomes smaller, but the old minimizing integer already belongs to the enlarged affine lattice.
+
+Therefore the n=400 report “best at m=97 with p_{\min}-1=100” must be audited by checking
+
+
+If that equality fails, there is an implementation error in the centered-residue or zero case.
+
+The location of the first plateau is arithmetic. The Smith form does not force it to be exactly p_{\min}-4, and the degree three of Q_3 alone does not imply such a rule.
+
+---
+
+# 8. The Hasse-jet interpretation of nuisance factors
+
+Let
+
+Then
+
+For every prime \ell,
+
+If \ell>m, this says that c=\varepsilon is a root of multiplicity at least m+1 of
+
+modulo \ell.
+
+Candidate primes have this high multiplicity because the reduction is a polynomial in c^p. The residual factor
+
+records all other high-multiplicity Taylor congruences. The observed 0.58n scale is largely a statement about this residual Hasse-jet content.
+
+No current recurrence or G-function theorem bounds the centered class of D_0 modulo this varying gcd.
+
+---
+
+# 9. Why neither requested asymptotic conclusion follows from the lattice structure
+
+The centered minimum can be written as
+
+where \|x\| denotes distance to the nearest integer.
+
+A positive exponential lower bound requires simultaneous control of:
+
+1. the size of g_{n,m}^{\varepsilon};
+
+1. the fractional part of D_0^{\varepsilon}/g_{n,m}^{\varepsilon}.
+
+Asymptotics for the individual moments control neither. The denominator in (9.1) is itself a gcd changing with both n and m; it is not a fixed P-recursive sequence.
+
+There is also a rigorous structural obstruction to a generic lower-bound proof. The global jet matrix has Smith form I, so for arbitrary integral coefficient vectors one may prescribe
+
+Then
+
+Thus even “all nonconstant moments are divisible by the candidate primorial” is compatible with the smallest possible centered residue. The Apéry-specific Franel vector is indispensable.
+
+Accordingly:
+
+- I cannot prove \mu_{n,m}\ge e^{cn} for any fixed c>0;
+
+- I cannot exhibit an infinite sequence with \mu_{n,m}=e^{o(n)};
+
+- the computations through n=400 are evidence about a new Apéry-specific Diophantine separation problem, not about a universal Smith invariant.
+
+The narrow reopen condition is the explicit estimate
+
+By (0.7), this alone would prove the q=3 slice of Problem 3.2.
+
+---
+
+# 10. Exact and scalable computation
+
+The coefficient formula from Q556/Q569 is
+
+and, for d\ge1,
+
+Here
+
+The Franel numbers satisfy
+
+with F_0=1,F_1=2.
+
+The following Sage code computes the exact final integer, checks monotonicity, verifies the candidate primorial, and never chooses a floating approximation before the end.
+
+
+## 10.1 Modular gcd update
+
+Once the current gcd g is known, the next update needs only D_m\bmod g:
+
+Thus the large moments need not be materialized.
+
+
+This is exact: modular reduction is used only inside a gcd identity. It scales much better than storing all D_k.
+
+## 10.2 Verification of the degree-p jump
+
+For each candidate prime, one should also check
+
+
+Finally, for the reported n=400 case, the mandatory hostile-audit assertion is

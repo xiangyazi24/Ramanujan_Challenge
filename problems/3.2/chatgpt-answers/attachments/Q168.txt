@@ -1,0 +1,374 @@
+
+This closes the proposed density-to-pointwise route negatively. To exclude a spike, one still needs a genuinely cross-prime non-alignment theorem—essentially the A_3/small-CRT dispersion input in a new guise.
+
+Route (3) is also dead. The reduced denominator is d_n b_n/G_n, not b_n/G_n; the Rhin–Viola irrationality measure yields exactly the already-proved
+
+
+and has no leverage on a putative spike of size epsilon n for small fixed epsilon.
+
+---
+
+# 1. Normalize the objects before using the recurrence
+
+Let
+
+
+with
+
+
+The exact Wronskian is
+
+
+The current self-contained project proof records two facts that are decisive here:
+
+- for sqrt(n) < p <= n,
+
+- writing n=qp+r, 0<=r<p, one has the large-prime support law
+
+See Q3.2_density_theorem.md, especially the Wronskian estimate and Theorem B.
+
+There are therefore two channels:
+
+
+The companion channel has already been bounded pointwise by O(n^(2/3)) primes, hence contributes only
+
+
+to the large-prime gcd. Any hypothetical epsilon n counterexample must therefore obtain essentially all of its mass from the lower channel.
+
+This distinction also explains why the naive phrase “p divides both a_n and b_n” is misleading. For p<=n, the common divisor belongs to the denominator-cleared pair (d_n a_n,d_n b_n). It is not a common zero of the two raw solutions in a field where their Wronskian is a unit.
+
+Indeed, if two genuinely p-integral independent solutions both vanished at an index n with p not divide 6n, (W) at n-1 would give a contradiction. Large factors of G_n occur because the p^3 inside d_n changes the integral lattice.
+
+---
+
+# 2. What the three-term recurrence says locally
+
+Suppose a solution u is integral modulo a modulus D, with
+
+
+The recurrence gives only
+
+
+Thus a zero at n makes the two neighbors proportional. It does not make either neighbor zero.
+
+Apply this inside one non-singular base-p block. The proved companion block identity is
+
+
+while Gessel’s Lucas congruence is
+
+
+Gessel’s original reference is Ira Gessel, “Some congruences for Apéry numbers,” J. Number Theory 14 (1982), 362–368, DOI.
+
+Now take
+
+
+The restriction on r is automatic for a lower-channel zero: b_0=1, and the first-block palindromy gives b_{p-1}=b_0=1 mod p.
+
+The recurrence proves that no two consecutive first-block Apéry values vanish. Hence
+
+
+Using (2.2),
+
+
+Therefore, whenever the same large-prime support law applies at the neighbors,
+
+
+This is the exact opposite of the desired local propagation.
+
+### Companion-channel exception
+
+If instead a_q=0 mod p, then (2.2) gives
+
+
+This is genuine dense block propagation. But it occurs only in the companion channel, whose total pointwise weight is already o(n) by (1.3). The only channel large enough to support a counterexample is precisely the channel with isolated local zeros.
+
+---
+
+# 3. Exact arithmetic-progression propagation
+
+The lower channel does propagate, but only vertically through the quotient digit.
+
+## Proposition 3.1 — same-digit propagation
+
+Let p>=7, let r<p satisfy b_r=0 mod p, and let 1<=j<p. Then
+
+
+Proof. The integer m=jp+r satisfies sqrt(m)<p<=m because m<p^2. The support law and (2.2) give
+
+
+which holds. square
+
+Consequently, if N=qp+r, then
+
+
+for every k with
+
+
+For b_m alone, Lucas gives the stronger unrestricted statement
+
+
+But for G_m, the fully audited statement needed here is already (3.1), which covers every bounded neighborhood of N once p is comparable to N.
+
+## What does not propagate
+
+Equation (3.1) propagates only the support p | G_m. It does not imply
+
+
+So even the bounded exponent v_p(G_N)<=6 need not travel with the prime. Prime-power gcd mass propagates more weakly than squarefree support.
+
+---
+
+# 4. A hypothetical spike must come from many top-range lower primes
+
+Assume the large-prime part violates the target at some large N:
+
+
+The small-prime part is O(sqrt N), and the companion channel is O(N^(2/3)log N). Hence, for sufficiently large N, the lower channel alone carries at least (say)
+
+
+Use the depth bound v_p(G_N)<=6. For any fixed small eta>0, Chebyshev’s estimate gives
+
+
+for all sufficiently large N. Taking eta=epsilon/48 shows that lower-channel primes
+
+
+carry at least a fixed positive fraction of epsilon N.
+
+Since each such prime contributes at most 6log N, their number is at least
+
+
+for an absolute numerical c>0 (for the displayed allocation one may take c=1/12 after slightly enlarging the threshold for N).
+
+Thus the breakthrough scenario really is:
+
+one index N aligns asymp N/log N different zero-residue conditions, with all relevant primes comparable to N.
+
+This is exactly the bounded-quotient localization already found in the previous attack round.
+
+---
+
+# 5. Counting the propagated shadows in [N,2N]
+
+For each top prime in (4.4), same-digit propagation gives the points
+
+
+There are at most
+
+
+such points per prime.
+
+Hence the total number of forced incidences is only
+
+
+This is already density zero in the shell.
+
+More importantly, the incidences do not pile up.
+
+## Proposition 5.1 — no overlap of same-residue shadows
+
+Let N<m<=2N. If two distinct primes p,p'>sqrt N are inherited from N through their same zero residue, then
+
+
+Therefore
+
+
+But pp'>N while 0<m-N<=N, contradiction. Thus:
+
+
+So the K_N primes responsible for the spike at N fan out to essentially different neighboring indices. At N+p, the recurrence forces only the one prime p, contributing at most
+
+
+No such point is exceptional for the density theorem’s fixed threshold delta m.
+
+---
+
+# 6. The palindromic zero does not rescue propagation
+
+The first-block Apéry sequence also satisfies
+
+
+Thus a known zero r=N mod p forces one second residue
+
+
+For another index m, the two forced possibilities are therefore
+
+
+This yields a useful global product bound.
+
+## Theorem 6.1 — propagated-shadow bound
+
+Let P_N be any set of lower-channel primes p>sqrt N for which the known zero at N mod p is tracked, together with its palindromic mate. For m!=N, partition the primes forced at m into
+
+
+Then
+
+
+Consequently their squarefree logarithmic weight satisfies
+
+
+If m in [N,2N] and the primes are in the top range p>eta N, then p>sqrt m for large N, so v_p(G_m)<=6. Hence
+
+
+In particular,
+
+
+uniformly for every m in [N,2N], m!=N.
+
+This is a genuine theorem from the current recurrence, block identity, palindromy, and Wronskian depth bound. It is the strongest useful propagation statement available—and it rules out the desired bootstrap.
+
+### Why this remains an obstruction at arbitrary distance
+
+Suppose a squarefree product
+
+
+of old bad primes is to reappear through the same residues. Then the next common point satisfies
+
+
+so, apart from N, it lies at distance at least R. If the original inherited weight is log R >= cN, then
+
+
+Allowing each prime to choose its palindromic residue does not change this conclusion: (6.4) implies
+
+
+so log R <= 2log(m+N+1)+O(1).
+
+The full old divisor can recur only exponentially far away, where its logarithm is negligible relative to the new index.
+
+---
+
+# 7. Why density-one smallness cannot see this shadow
+
+The proved density theorem says that for every fixed delta>0,
+
+
+A counterexample at N with log G_N>epsilon N may cast:
+
+- asymp N/log N one-prime shadows in [N,2N];
+
+- each shadow carrying only O(log N) forced gcd weight;
+
+- no second point carrying a fixed positive fraction of its index.
+
+Therefore none of the shadows belongs to the exceptional set in (7.1) once N is large.
+
+Even the shell total is harmless. For top primes p>eta N,
+
+
+The existing density proof allows a shell total much larger than this. There is no contradiction.
+
+This gives a clean conceptual obstruction:
+
+Density-to-pointwise bootstrapping would require a large value of G_N to create many nearby values of order exp(cN). The recurrence creates many nearby values divisible by one old prime, which is only polynomial-size information.
+
+Finite-order recurrence rigidity controls the modular location of a prime; it does not preserve the simultaneous alignment of N/log N different primes.
+
+---
+
+# 8. Composite gcd propagation also fails
+
+Let D be the product of many lower-channel primes dividing G_N, all away from coefficient singularities. Reducing the recurrence modulo each prime gives
+
+
+not u_{N+1}=0. Chinese remaindering yields a vector congruence modulo rad(D), but no divisibility of either neighboring vector.
+
+The joint same-residue recurrence of all prime factors requires
+
+
+If log D >= epsilon N and every exponent is at most 6, then
+
+
+So the first joint recurrence lies at distance at least
+
+
+Again, at that index the inherited logarithmic gcd is only O(log m), not Omega(m).
+
+Thus there is no hidden composite-divisor propagation missed by the primewise discussion.
+
+---
+
+# 9. What extra input would actually make density imply pointwise?
+
+One would need a theorem not supplied by the recurrence alone. Equivalent useful forms include:
+
+1. Incidence expansion: every index incident to K bad primes forces cK-sized incidence at cN other indices, with many primes per index—not merely one prime per index.
+
+1. Small-CRT dispersion: a four-prime or higher-moment bound excluding a common unusually small CRT representative. This is the D4/A_3 route already isolated.
+
+1. A new cross-prime algebraic relation: the conditions
+
+1. A strong divisibility law: something comparable to Lucas sequences, forcing a large radical of G_N into many neighboring G_m. The Apéry sequence explicitly lacks this structure, and (2.7) rules out the most direct version.
+
+Any proof of one of these would be a real breakthrough. But it would not be “density plus recurrence” alone; it would be precisely the missing horizontal non-concentration theorem.
+
+The adversarial construction from the previous round captures the logical issue: sparse, palindromic, nonconsecutive zero sets can all be arranged to contain N mod p for a chosen N, creating one huge spike and clean immediate neighbors. Preventing that arrangement requires using the fact that all sets arise from the single global Apéry sequence—the hard cross-prime arithmetic.
+
+---
+
+# 10. Irrationality-measure route: exact calculation
+
+Let
+
+
+The Apéry asymptotics give
+
+
+and the prime number theorem gives
+
+
+After reducing the integer pair (d_n a_n,d_n b_n) by G_n, the denominator is
+
+
+not b_n/G_n. In particular,
+
+
+Write
+
+
+The effective approximation exponent of this particular rational is
+
+
+Rhin and Viola proved the upper irrationality-measure bound
+
+
+in Georges Rhin and Carlo Viola, “The group structure for zeta(3),” Acta Arith. 97 (2001), 269–293, DOI.
+
+Consequently an infinite subsequence with g_n above a fixed value can be excluded only when
+
+
+or equivalently
+
+
+This is exactly the already-proved bound
+
+
+For a putative log G_n>epsilon n with small epsilon, the exponent in (10.5) is only slightly larger than
+
+
+far below 5.513890.
+
+There is a second logical limitation: an irrationality measure is an asymptotic statement allowing finitely many exceptional rational approximations. It cannot, by itself, rule out one isolated anomalously large G_N.
+
+So route (3) is conclusively exhausted by (10.8): it gives the current 5.24673 limsup and nothing near o(n).
+
+---
+
+# 11. Final answer to the proposed breakthrough
+
+## (1) GCD propagation
+
+The exact useful law is:
+
+
+The second channel is already pointwise negligible. The first is the only mass-capable channel and is locally anti-propagating.
+
+## (2) Counting
+
+A spike of size epsilon N forces >>epsilon N/log N top-range lower primes, but in [N,2N] they create only O_epsilon(N/log N) distinct one-prime shadows. The inherited weight at every different point is O(log N), by Theorem 6.1. Therefore no positive-density set of delta m-large gcds is forced.
+
+Hence density-one smallness does not imply pointwise smallness through this mechanism.
+
+## (3) Irrationality feedback
+
+Confirmed dead. The correct reduced denominator includes d_n; Rhin–Viola yields only the threshold 5.24673..., and even that is a limsup statement rather than a prohibition on one isolated index.
+
+## Research verdict

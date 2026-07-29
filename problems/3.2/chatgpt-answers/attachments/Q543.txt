@@ -1,0 +1,233 @@
+
+---
+
+# 2. Exact complex-center kernel
+
+Recall
+
+and
+
+The Legendre generating function gives an exact closed form for (K_c). Since
+
+putting
+
+gives
+
+Equivalently,
+
+where (C_r^{lambda}) is a Gegenbauer polynomial. This is the correct entry point for uniform complex asymptotics; large-degree/large-order Legendre and Gegenbauer asymptotics are treated, for example, in T. M. Dunster’s work on associated Legendre functions and large parameters.
+
+The Franel binomial transform also has an exact generating function. If
+
+then
+
+The Franel recurrence has Poincaré roots (8) and (-1). Under the binomial transform these become
+
+Thus, away from a collision or a vanishing connection coefficient,
+
+Plain text:
+
+
+---
+
+# 3. The explicit saddle envelope
+
+Let
+
+The coefficient integral in (2.2) has phase
+
+Its critical-point equation is
+
+At a critical point,
+
+Therefore the real exponential contribution of a saddle is
+
+The absolute term envelope is
+
+and
+
+This yields the rigorous exponential upper envelope
+
+Away from Stokes curves, equal-modulus saddles, and vanishing leading amplitudes, the dominant saddle is unique and equality holds. On a cancellation locus, the actual rate can be strictly smaller. In particular, one must not replace (Phi_{rm abs}) by the actual logarithm when averaging over conjugates without checking phase cancellation.
+
+## 3.1 Check at (c=0)
+
+Here (x=1), (beta=1/3), and the dominant critical point is (z=1/2). Formula (3.4) gives
+
+Since (rho(0)=8),
+
+This recovers the exact Strehl-prefix rate from Q503.
+
+## 3.2 Check at (c=-1/2)
+
+Now (x=0). For (beta=1/3),
+
+Hence
+
+Therefore
+
+The two saddles are complex conjugates. Their phases can partially cancel, so an observed raw rate around (1.5) is compatible with (3.8); it is not evidence that the absolute envelope is wrong.
+
+At a zero of (T_n(c)), the logarithm is (-infty), but such a center has norm zero and is unusable.
+
+Plain text:
+
+
+---
+
+# 4. Rational centers: the denominator penalty is real
+
+Let
+
+Since (deg T_nle n),
+
+Thus the relevant integer has rate
+
+At (c=-1/2), even the absolute boundary estimate gives
+
+Using the smaller observed raw rate (1.5) still gives approximately
+
+Therefore the rational center (-1/2) does not improve the certified (log8) height.
+
+The same objection applies to rational approximations (a_n/b_n): to make the center accurate enough to preserve an (O(n)) saddle cancellation, the denominator usually grows, and the term (nlog b_n) enters before any norm advantage is obtained.
+
+---
+
+# 5. Exact resultant potential
+
+Let
+
+where zero roots are repeated, and let
+
+Then (1.2) gives the exact identity
+
+From Q533,
+
+so
+
+Here
+
+Equation (5.1) is the correct weighted-potential formulation. The measure (nu_alpha) is not arbitrary: it is a Galois orbit of an algebraic integer. The resultant is a nonzero integer, but that alone supplies only
+
+A positive lower bound requires new arithmetic information about these mutual energies.
+
+---
+
+# 6. What capacity proves—and what it does not
+
+For (tauinmathbb R), define the lemniscate
+
+The capacity of a polynomial lemniscate is explicit:
+
+Thus
+
+In particular, the raw low-rate region corresponding to (tauapprox1.5) has capacity strictly less than (1).
+
+Classical Fekete–Szegő theory says that a fixed compact set of capacity less than (1) contains only finitely many complete Galois orbits of algebraic integers. For real intervals the threshold is length (4); hence ([-1,0]), of capacity (1/4), cannot contain the conjugates of algebraic integers of unbounded degree. See Robert Rumely’s capacity monographs and his Fekete–Szegő theorem with local rationality conditions.
+
+This excludes the naive plan “put every conjugate near (-1/2).”
+
+It does not prove a positive lower bound for (5.1), for three reasons:
+
+1. (E_{n,tau}) changes with (n).
+
+1. The norm uses the average of (log|T_n|), not the maximum over all conjugates.
+
+1. A small fraction of very large conjugates may compensate, in the algebraic-integrality constraints, for many conjugates in a low-capacity region.
+
+Recent effective versions of Fekete’s theorem and weighted integer-Chebyshev theory quantify support and height restrictions, but they do not directly solve this moving mutual-resultant problem. Relevant frameworks include Igor Pritsker’s small integer polynomials, Borwein–Pinner–Pritsker’s monic integer Chebyshev problem, and Rumely’s adelic capacity theory.
+
+---
+
+# 7. Explicit algebraic-integer families
+
+## 7.1 Roots of unity
+
+Take (alpha=zeta_M). In an equidistributed large-degree regime,
+
+where (M(T_n)) is the Mahler measure. Jensen’s formula gives
+
+But
+
+is the Strehl prefix, and Q503 proves
+
+Thus an untuned cyclotomic orbit has asymptotic average at least (log8).
+
+This statement is safest in a separated or quantitatively equidistributed limit, where (M) grows sufficiently fast compared with the degree and zero complexity of (T_n). A specially tuned joint sequence (M=M(n)), chosen to make roots of unity approach zeros of (T_n), is again exactly a small-resultant problem and is not ruled out by qualitative equidistribution alone.
+
+## 7.2 Integer-shifted roots of unity
+
+For (alpha=a+zeta_M),
+
+Thus shifting a cyclotomic orbit cannot beat the corresponding integer center in the equidistributed regime. Q503 shows that among (age0), the best integer center is (a=0), with rate (log8); (a=-1) has the larger rate (2.118ldots).
+
+## 7.3 Cyclotomic traces
+
+A more relevant capacity-one family is
+
+whose conjugates become arcsine-distributed on ([-3,1]). Then the continuous average is the Mahler measure of the Laurent polynomial
+
+Multiplying by (z^n) makes this an ordinary polynomial of degree (2n), with leading coefficient (C_n^{rm lead}). Therefore
+
+Consequently this broad trace-cyclotomic construction retains at least the positive rate
+
+This lower floor is slightly below (log8), so such a construction might improve the numerical constant, but it cannot yield (o(n)) through ordinary equidistribution.
+
+More generally, if
+
+has an extreme Laurent coefficient equal to (pm1), then the polynomial (T_n(R(z))), after multiplication by a monomial, retains (|C_n^{rm lead}|) as an extreme coefficient. Its Mahler measure therefore has the same positive lower floor.
+
+## 7.4 Salem numbers
+
+For Salem numbers of degree tending to infinity with bounded house, all but two conjugates lie on the unit circle and the logarithmic Weil height tends to zero. Bilu’s theorem then forces equidistribution on the unit circle. See Yuri Bilu, Limit distribution of small points on algebraic tori.
+
+In the regime where this equidistribution is uniform enough relative to (n), the average rate is again at least (log8). The two real reciprocal conjugates have density (2/d) and do not change the limit.
+
+## 7.5 Pisot numbers
+
+A bounded-house sequence of Pisot numbers with degrees tending to infinity also has height tending to zero, so the same Bilu mechanism applies. Its conjugates cannot asymptotically concentrate near (-1/2); they equidistribute on the unit circle.
+
+Pisot families with growing house, or coupled degree/height comparable to the complexity of (T_n), are not covered by this argument. They belong to the unresolved weighted-resultant problem (WR±).
+
+---
+
+# 8. Why fixed-degree searches are informative but not conclusive
+
+For a fixed algebraic integer (alpha), each residue-class sequence
+
+is D-finite/P-recursive, because the exact constant-term representation of Q533 becomes a fixed rational diagonal after (n=3m+s). Its exponential roots can therefore be found by creative telescoping and Poincaré analysis.
+
+This gives a completely rigorous test for any specified quadratic, cubic, Pisot, Salem, or cyclotomic center. The reported scan of monic quadratics
+
+finding no improvement over (c=0) is therefore meaningful evidence.
+
+It is not a theorem for all degrees. The number of possible conjugate configurations grows, and anti-Stokes cancellation can occur at isolated algebraic parameters. A universal claim requires a resultant bound such as (WR−), not a finite center search.
+
+A reproducible exact test for a proposed minimal polynomial (P) is:
+
+
+---
+
+# 9. The exact theorem needed to close the route
+
+Define
+
+Then:
+
+- If
+
+- If there are explicit (P_n) with
+
+This is a monic integer-Chebyshev problem in the moving external field
+
+The field has logarithmic poles at the roots of (T_n), and both its degree and zero measure vary with (n). Existing fixed-set capacity theorems do not compute (delta_n).
+
+The narrowest useful next computation is therefore not another search over small quadratic coefficients. It is:
+
+Compute or rigorously bound (delta_n) for the first several hundred (n), using monic integer Chebyshev/LLL or integer semi-infinite programming on the resultant functional, and identify whether the minimizing polynomials stabilize in degree or form a growing-degree family.
+
+A persistent numerical lower bound near (2.02), (2.08), or any positive constant would support (WR−). A sequence tending toward zero would immediately provide the missing candidate family.
+
+---
+
+# 10. Plain-text formula ledger

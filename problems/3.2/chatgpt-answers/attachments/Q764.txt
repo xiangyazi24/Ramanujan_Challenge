@@ -1,0 +1,377 @@
+
+---
+
+# 2. Exact block formula along the ray
+
+The recursive cutoff profile from Q701 says that, if
+
+and t\ge j:=\min(r,p-1-r), then
+
+Take the cutoff immediately before the a-th loss:
+
+Since p-1\ge j, (2.1) gives
+
+The increment factorization gives
+
+and therefore
+
+For
+
+the right side is nonzero. Thus, if p\mid A_j, the pre-loss row in (2.2) is zero and the increment in (2.5) is nonzero: p is lost exactly at J=ap. These are precisely the \min(q,p-1-q) losses counted in (1.1).
+
+For the first loss, a=1, one has T_{q,0}=Q_q, so
+
+Moreover,
+
+and, for odd p,
+
+Hence
+
+in the loss range.
+
+Consequently, with q=s+1,
+
+This is the exact diagonal first-loss theorem.
+
+The key structural point is visible in (2.6): as s varies, all propagated rows are the same scalar A_j multiplying known block polynomials Q_{s+1}. The ray supplies many copies of one local equation; it does not supply independent arithmetic conditions on A_j.
+
+---
+
+# 3. A single global amplifier from one ray
+
+For fixed s\le s_*(n) define \mathcal A_{n,s} by (A):
+
+## Theorem 3.1
+
+One has
+
+### Proof
+
+Fix a prime p with M<p\le n. The only multiple of p in the interval (M,n] is J=p. Therefore
+
+If p is q=1 bad, (1.1)--(1.3) give
+
+If it is not bad, the same low digit j is nonzero and p does not occur in the loss product. Hence
+
+Intersecting with \Pi_n^{s+1} proves (3.1). \square
+
+Thus the proposed idea already yields a theorem-grade single integer with growing selective exponent.
+
+## 3.2 Exact universal height
+
+Every term in the defining lcm divides J^{s+1}, so
+
+For every prime power a\le n, some multiple of a lies in (M,n]. Indeed, if a>M, take a; if a\le M, then
+
+Therefore
+
+and hence
+
+This proves (C).
+
+The amplification and the universal height are both linear in s+1.
+
+---
+
+# 4. Multiplying all rays: quadratic exponent, quadratic cost
+
+Put
+
+and define
+
+For S\le s_*(n), the same one-multiple argument gives
+
+But
+
+so
+
+The quadratic gain B_S is paid for by the same quadratic exponent in the universal carrier. Dividing by B_S returns exactly the original linear scale.
+
+A prime-filtered version makes the obstruction sharp:
+
+Thus even perfect removal of every small/composite nuisance leaves a positive PNT rate.
+
+---
+
+# 5. A local t-fold coefficient determinant
+
+The ray does admit a clean local determinant amplifier. This is useful because it shows exactly what Smith saturation can and cannot add.
+
+Fix t\ge1. For J>M, define
+
+and form the t\times t matrix
+
+## 5.1 Exact triangularity
+
+If b>q, then
+
+because 2J>n. Hence
+
+So \mathcal M_t(n,J) is lower triangular over \mathbf Z, not merely modulo a prime.
+
+Let
+
+Then
+
+Thus the most natural coefficient determinant contains no cross-row cancellation at all: it is exactly a product of scalar carriers.
+
+Using the proved coefficient formula for T, one obtains
+
+The upper limit is n-J because J>n/2.
+
+## 5.2 Local profile at J=p
+
+Let p>M and write n=p+r, with folded digit j. Formula (2.6) gives
+
+In particular,
+
+If p>2t, then every diagonal factor \binom{2q}{q} is a p-unit, and
+
+If p\mid A_j, every coefficient of every row is divisible by p, so
+
+If p\nmid A_j, the determinant is a p-unit. Therefore
+
+for p>2t.
+
+For t=6, the profile determinant is
+
+which is a unit at all six known triple-example primes below.
+
+---
+
+# 6. Smith saturation gives the same target power
+
+Let \mathscr C_t(n,J) be the full coefficient matrix whose rows are the coefficient vectors of
+
+padded with zeros to a common length. Let
+
+be its t-th determinantal divisor, the gcd of all t\times t minors.
+
+For p>M and p>2t, (5.5) implies:
+
+- if p\mid A_j, all rows vanish modulo p, so every t-minor is divisible by p^t;
+
+- if p\nmid A_j, the minor in (5.1) is a p-unit.
+
+Hence
+
+This is an exact local Fitting amplifier.
+
+Globalize it by
+
+If 2t\le M, then
+
+But
+
+so
+
+Smith saturation can reduce the enormous raw minors, but the only unconditional global bound is still the universal lcm bound. After top-half purification, the Smith divisor is exactly the unknown radical raised to the t-th power.
+
+## 6.1 Crude raw-minor height
+
+Formula (5.4) also gives a completely explicit raw bound. Put
+
+Using
+
+one gets
+
+Therefore
+
+The naive determinant estimate is O(t^2n), worse than the required o(tn).
+
+---
+
+# 7. Positive products already have a matching lower barrier
+
+The constant coefficient of the pre-loss row is
+
+It contains the term i=J-1, so
+
+Since
+
+one has
+
+For J>M, therefore,
+
+Any product of t such positive scalar carriers has
+
+Thus the most direct product, positive-prefix, and evaluation-at-zero amplifiers are rigorously excluded: they pay a positive linear cost for every selective copy of p.
+
+This lower bound does not exclude a highly signed determinant or WZ cancellation. It identifies exactly what such a cancellation would have to overcome.
+
+---
+
+# 8. Resultants, discriminants, and derivatives do not improve the degree ratio
+
+Let
+
+where F_0,G_0 are primitive and have degrees d_F,d_G. Then
+
+If a bad prime divides each content once, the resultant gains exactly
+
+selective powers. Its standard height satisfies
+
+The p-adic exponent and the logarithmic height are multiplied by the same degrees.
+
+Likewise, for a degree-d polynomial,
+
+The discriminant supplies 2d-2 copies of a content prime and pays homogeneous degree 2d-2 in height. Resultants with derivatives are the same calculation.
+
+More generally, if \Phi is a multihomogeneous integer invariant of row degrees e_1,\ldots,e_t, then
+
+The propagated block formula gives only one scalar A_j in each row, so the selective exponent is exactly the total homogeneous degree
+
+There is no superlinear local valuation hidden in the Sylvester matrix.
+
+A miraculous small resultant is not logically impossible, but it cannot follow from homogeneity or standard coefficient-height bounds. It would be a new signed cancellation theorem of precisely the strength sought in Section 11.
+
+---
+
+# 9. Why eliminating the variable cutoff loses the amplification
+
+The obstruction is that the target cutoff is J=p and therefore varies with the target prime.
+
+Suppose first that a diagonal construction is represented by an integer polynomial F_n(X). The congruence
+
+only gives
+
+in general, because
+
+To transfer all t powers to F_n(0) one would need the additional order-t flatness
+
+which the cutoff block formulas do not provide.
+
+The resultant with X is merely
+
+so it loses all but one power. The resultant with X^t is
+
+which just raises the original one-factor carrier to a power.
+
+At the opposite extreme, eliminating all admissible cutoffs with
+
+gives
+
+This is exactly the raw product over O(n) large entries. It is not a compression.
+
+Thus the standard elimination dichotomy is:
+
+
+A diagonal coefficient extraction or a WZ telescope is linear in the rows. At a bad prime every propagated row is divisible by p, so a linear combination retains one factor of p, not p^t. To retain t factors one must use a degree-t nonlinear construction; Sections 6--8 show why all standard nonlinear constructions pay degree t in height.
+
+---
+
+# 10. A sharp block-local no-go theorem
+
+The previous calculations can be turned into a logical obstruction, not merely a failed estimate.
+
+## Theorem 10.1: all-bad formal model
+
+The following inputs are compatible with a model in which every top-half candidate prime, apart from O(\log n) endpoint candidates, is bad:
+
+- the exact block formulas (2.2)--(2.5);
+
+- the loss count \min(q,p-1-q);
+
+- the digital support theorem for K_{N,J};
+
+- the statement that every cutoff content divides a corresponding outer integer of exponential height;
+
+- arbitrary gcd, lcm, radical, Smith, Fitting, determinant, and universal-factor saturation operations on those content ideals.
+
+### Proof sketch
+
+For a fixed folded index j, at most two top-half primes map to j. Assign the formal low coefficient
+
+For j\ge C\log n, this has
+
+so it is compatible with an exponential height bound. The O(\log n) smaller indices have total possible prime weight O((\log n)^2) and may be omitted. At every remaining prime, impose the proved block profiles with scalar \widetilde A_j\equiv0\pmod p. Chinese remaindering gives integral coefficient rows satisfying all local profiles and transition supports. No listed operation couples different residue characteristics or different j values.
+
+Thus the block-content calculus does not exclude the case in which essentially every top-half prime is bad. \square
+
+Consequently, any universal integer C_{n,t} whose divisibility is proved only from these inputs and which contains p^t for every q=1 bad prime must, in that model, satisfy
+
+Hence
+
+Therefore no proof confined to the block-content calculus can establish
+
+This does not rule out an Apéry-specific identity using the actual recurrence, modular parametrization, or signed hypergeometric coefficients. It proves that such an identity must add genuinely new cross-prime arithmetic; the ray multiplicity itself is insufficient.
+
+## 10.2 Integration with Q709
+
+At the first loss, (2.9) shows that the increment polynomial is a p-unit in the content sense. The increment K_{N,p}g_p detects the transition but does not carry the bad prime. Conversely, Q709 shows that common gcds of the \kappa-ideals have large universal prime bands of positive PNT rate, including an above-outer-index branch. Thus:
+
+
+Combining the two sides does not produce an additional independent equation.
+
+---
+
+# 11. Weakest genuine reopen condition
+
+A successful ray argument must produce more than the exact lcm selectors (A), (4.1), or (6.2), because their top-half parts are identically powers of R_1(n).
+
+The clean sufficient target is the following.
+
+## Diagonal Fitting compression (DFC)
+
+There must exist integers t=t(n)\to\infty and nonzero integers C_{n,t}, constructed by one explicit cross-J identity from the actual Apéry/Franel coefficient array, such that
+
+while
+
+Then
+
+so
+
+To escape the proved no-go, C_{n,t} must satisfy at least one of:
+
+1. a genuine order-t supercongruence in one linear WZ boundary, rather than t repeated mod-p equations;
+
+1. a signed determinant/Fitting invariant with a proved nonzero value and cancellation of the full \Theta(tn) positive saddle;
+
+1. a cross-J recurrence whose boundary has subexponential height and whose local specialization has intersection multiplicity t at J=p;
+
+1. a global arithmetic carrier coupling the different folded values A_j across residue characteristics.
+
+A theorem only asserting that the diagonal Smith selector
+
+has height o(tn) would also suffice, but by (6.3) its top-half part is exactly R_1(n)^t. It is therefore an equivalent reformulation, not an independent mechanism.
+
+---
+
+# 12. Exact examples
+
+## 12.1 The reflected triple at n=321
+
+The q=1 hits are
+
+For 0\le s\le5, the propagated outer indices are:
+
+For each row,
+
+## 12.2 The direct triple at n=11576
+
+The q=1 hits are
+
+Again, for 0\le s\le5, every multiplicity sequence is
+
+The last propagated indices are
+
+respectively.
+
+These examples demonstrate the real amplification. They also demonstrate the fan-out obstruction: at the same value of s, the three primes live at three different outer indices.
+
+---
+
+# 13. Reproducible Sage/Python checks
+
+The code below verifies:
+
+- the folded Apéry zeros;
+
+- the exact ray multiplicities;
+
+- the block coefficient formula (5.5);
+
+- the triangular determinant profile.
+
+
+For the listed six primes the script should print the multiplicity sequence

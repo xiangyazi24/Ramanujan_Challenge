@@ -51,13 +51,13 @@ gammaP = K(_sage_const_64 **_sage_const_3 *Dp(n)/A(n))
 CP = matrix(K, [[alphaP, betaP, gammaP], [_sage_const_1 , _sage_const_0 , _sage_const_0 ], [_sage_const_0 , _sage_const_1 , _sage_const_0 ]])
 
 # Zudilin companion
-def Qz(x): return _sage_const_946 *x**_sage_const_2  - _sage_const_731 *x + _sage_const_153 
+def Qz(x): return _sage_const_946 *x**_sage_const_2  - _sage_const_731 *x + _sage_const_153
 def Pz(x): return (_sage_const_104060 *x**_sage_const_6 +_sage_const_127710 *x**_sage_const_5 +_sage_const_12788 *x**_sage_const_4 -_sage_const_34525 *x**_sage_const_3 -_sage_const_8482 *x**_sage_const_2 +_sage_const_3298 *x+_sage_const_1071 )
 def Sz(x): return (_sage_const_3784 *x**_sage_const_5 -_sage_const_1032 *x**_sage_const_4 -_sage_const_1925 *x**_sage_const_3 +_sage_const_853 *x**_sage_const_2 +_sage_const_328 *x-_sage_const_184 )
-def Rz(x): return _sage_const_946 *x**_sage_const_2 +_sage_const_1161 *x+_sage_const_368 
+def Rz(x): return _sage_const_946 *x**_sage_const_2 +_sage_const_1161 *x+_sage_const_368
 
-m = n + _sage_const_2 
-denZ = Qz(m)*(_sage_const_2 *m+_sage_const_1 )*(m+_sage_const_1 )**_sage_const_3 
+m = n + _sage_const_2
+denZ = Qz(m)*(_sage_const_2 *m+_sage_const_1 )*(m+_sage_const_1 )**_sage_const_3
 alphaZ = K(Pz(m)/denZ)
 betaZ  = K(-m*Sz(m)/denZ)
 gammaZ = K(Rz(m)*m*(m-_sage_const_1 )**_sage_const_3 /(_sage_const_2 *denZ))
@@ -65,7 +65,7 @@ gammaZ = K(Rz(m)*m*(m-_sage_const_1 )**_sage_const_3 /(_sage_const_2 *denZ))
 CZ = matrix(K, [[alphaZ, betaZ, gammaZ], [_sage_const_1 , _sage_const_0 , _sage_const_0 ], [_sage_const_0 , _sage_const_1 , _sage_const_0 ]])
 
 # Rank-one twist
-def Q209(x): return _sage_const_946 *x**_sage_const_2  - _sage_const_2623 *x + _sage_const_1830 
+def Q209(x): return _sage_const_946 *x**_sage_const_2  - _sage_const_2623 *x + _sage_const_1830
 r = K((n+_sage_const_4 )**_sage_const_3  / ((n+QQ(_sage_const_5 )/_sage_const_2 )*(n+QQ(_sage_const_7 )/_sage_const_2 )*(n+QQ(_sage_const_9 )/_sage_const_2 )))
 CZh = r * CZ
 
@@ -76,11 +76,11 @@ def gauge_residual(R):
 
 # Initial states
 q0 = QQ(-_sage_const_215040420000 )
-q1 = QQ(-_sage_const_167282265043404 )/_sage_const_905 
-q2 = QQ(-_sage_const_964185327658080 )/_sage_const_6071 
+q1 = QQ(-_sage_const_167282265043404 )/_sage_const_905
+q2 = QQ(-_sage_const_964185327658080 )/_sage_const_6071
 p0 = QQ(-_sage_const_612218384750 )
-p1 = QQ(-_sage_const_9525021973931919 )/_sage_const_18100 
-p2 = QQ(-_sage_const_29561828382772029 )/_sage_const_65380 
+p1 = QQ(-_sage_const_9525021973931919 )/_sage_const_18100
+p2 = QQ(-_sage_const_29561828382772029 )/_sage_const_65380
 
 zb = vector(QQ, [_sage_const_163 , _sage_const_7 , _sage_const_1 ])
 z2 = vector(QQ, [QQ(_sage_const_2145 )/_sage_const_8 , QQ(_sage_const_23 )/_sage_const_2 , _sage_const_0 ])
@@ -137,7 +137,7 @@ def propagated_family(N):
 def fit_propagated_family(Dcommon, degree, N=None):
     Dcommon = P(Dcommon)
     if N is None:
-        N = degree + _sage_const_8 
+        N = degree + _sage_const_8
     vals = propagated_family(N)
 
     n_unknown = _sage_const_3  + _sage_const_9 *(degree+_sage_const_1 )
@@ -249,4 +249,3 @@ if ans is not None:
     print("\nFull gauge written to gauge_R.txt")
 else:
     print("NOT FOUND at this denominator/degree")
-
