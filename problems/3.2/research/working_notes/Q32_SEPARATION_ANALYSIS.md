@@ -182,6 +182,34 @@ pointwise theorem.
     even an arbitrary compatible tower needs an independent small-lift or
     non-stabilization theorem to constrain the diagonal integer cofactor.
 
+20. The direct/reflected Casoratian extends unconditionally through the
+    eighth quotient digit.  With the raw endpoint residual
+    \[
+      {\cal F}_p=b_{2p-1}-5-8\Delta_p-\frac{336}{5}H_p,
+    \]
+    the fixed law is
+    \[
+      (166144+33296H_p+{\cal F}_p)D_8+5Z_8
+      \equiv166149\,b_{p+r}/p\pmod {p^8}.
+    \]
+    It is valid at \(p=769\); the former \(769\) exception came only from
+    splitting \({\cal F}_p\) into two normalized coordinates.  All \(163\)
+    target rows through \(p\le1000\), including the two rows at \(769\),
+    pass the exact audit.  The sole fixed inversion exception is \(18461\).
+    This gains one local digit but remains CRT-saturated.
+
+21. The proposed four-coordinate effective-weight-seven finite-MHS module
+    collapses rigorously to one line:
+    \[
+      3\eta=2\xi,\qquad3A=14\xi,\qquad2B=-7\xi.
+    \]
+    Thus the next local obstruction is not defect dimension.  A precise
+    all-\(m\) endpoint rank-one formula at precision eight passes \(6520\)
+    exact divisibility checks, but its symbolic proof still needs the
+    lifted lower-coordinate change and a Gosper certificate.  Even that
+    proof would not supply horizontal separation, because all fixed-order
+    local quotient rows reconstruct the same diagonal integer.
+
 Thus Routes A and B are closed **as presently formulated**. This is not a
 disproof of `log G_n=o(n)`. It identifies the exact missing ingredient:
 cross-prime, Apéry-specific Archimedean/p-adic coupling not already contained
