@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Fetch isolated Q5711 audit
+      - name: Fetch corrected isolated Q5711 audit
         shell: bash
         run: |
           git fetch origin chatgpt-drop
