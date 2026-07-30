@@ -9,7 +9,7 @@ on:
 
 jobs:
   audit:
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
