@@ -728,6 +728,31 @@ pointwise theorem.
     three.  Proving the missing endpoint would therefore close a local
     congruence, not create a fourth-order target carrier.
 
+56. There is a cleaner prime-free formulation of the entire remaining
+    problem.  Put
+    \[
+      {\cal R}_n=\operatorname {rad}
+      \gcd(b_n,\operatorname {lcm}(1,\ldots,n)).
+    \]
+    Apéry--Lucas shows that its primes above \(\sqrt n\) differ from
+    the moving zero radical only by fixed-high-digit divisors of total
+    logarithmic height \(O(n^{2/3})\).  Hence
+    \[
+      \text{P3.2}\quad\Longleftrightarrow\quad
+      \log{\cal R}_n=o(n).
+    \]
+    The inverse-Apéry four-scalar gcd \(C_n^\ast\) gives the same
+    equivalence quantitatively:
+    \[
+      \log{\cal R}_n-O(n^{2/3})
+      \le\log C_n^\ast
+      \le2\log{\cal R}_n+O(n^{2/3}).
+    \]
+    This removes all filter and quotient choices from the statement:
+    the unresolved theorem is that the \(n\)-smooth squarefree part of
+    the single integer \(b_n\) has sublinear logarithmic height.  It is
+    a genuine simplification, not a standard smooth-part theorem.
+
 Thus Routes A and B are closed **as presently formulated**. This is not a
 disproof of `log G_n=o(n)`. It identifies the exact missing ingredient:
 cross-prime, Apéry-specific Archimedean/p-adic coupling not already contained
@@ -9248,3 +9273,157 @@ the thinner locus \(\omega_{q,k,j}=0\) from (37.5).  Thus the missing
 endpoint theorem is worth proving as a clean companion supercongruence,
 but its first defect rules out the hoped-for fourth projective copy on
 the target locus.
+
+## 40. Prime-free reduction to the smooth radical of one Apéry number
+
+The latest `uisai2/dm` first-digit calculation removes the auxiliary
+filter architecture from the statement of the remaining problem.  Put
+\[
+ D_n=\operatorname {lcm}(1,\ldots,n),\qquad
+ {\cal R}_n=\operatorname {rad}\gcd(b_n,D_n),
+\tag{40.1}
+\]
+and define the moving large-prime radical
+\[
+ {\cal M}_n=
+ \prod_{\substack{\sqrt n<q\le n\\
+                   q\ {\rm prime}\\
+                   q\mid b_{n\bmod q}}}q.
+\tag{40.2}
+\]
+
+For \(q>\sqrt n\), write
+\[
+ n=aq+r,\qquad 0\le r<q.
+\tag{40.3}
+\]
+Then \(a<q\), and Apéry--Lucas gives
+\[
+ b_n\equiv b_ab_r\pmod q.
+\tag{40.4}
+\]
+Every prime in (40.2) therefore divides \(b_n\).  Conversely, a prime
+\(q>\sqrt n\) which divides \(b_n\) but not \(b_r\) must divide the
+fixed outer value \(b_a\).
+
+These converse exceptions have sublinear total height.  Primes
+\(q\le n^{2/3}\) contribute \(O(n^{2/3})\).  Above that threshold,
+\(a<n^{1/3}\), and for each fixed \(a\) all exceptional primes divide
+the single nonzero integer \(b_a\).  Hence
+\[
+ \sum_{a<n^{1/3}}\log b_a=O(n^{2/3}).
+\tag{40.5}
+\]
+Primes at most \(\sqrt n\) contribute only \(O(\sqrt n)\) to the
+radical in (40.1).  It follows that
+\[
+ \boxed{
+ \log{\cal R}_n=\log{\cal M}_n+O(n^{2/3}).
+ }
+\tag{40.6}
+\]
+In the top half \(a=1\), so \(b_a=5\) and there are no exceptions for
+the relevant primes \(q\ge7\).
+
+This same radical is the exact content of the inverse-Apéry
+four-scalar reformulation, up to the harmless exponent-two ledger.
+For completeness, let
+\[
+ C_n^\ast=\gcd(D_n^2,X_0(n),Y_0(n),Y_n^\ast)
+\tag{40.7}
+\]
+be the integer from the fixed inverse filter.  Its first two rows can
+be written
+\[
+\begin{split}
+ X_0&=\sum_{k=1}^n(-1)^{k+1}(D_n/k)^2b_{n-k},\\
+ Y_0&=\sum_{k=1}^n(-1)^k
+       (D_n/k)(D_nH_{k-1})b_{n-k}.
+\end{split}
+\tag{40.8}
+\]
+For \(q>\sqrt n\), put \(D_n=qU\).  Reducing the terms with
+\(k=tq\), the only ones surviving modulo \(q\), gives
+\[
+\begin{split}
+ X_0/U^2&\equiv b_r c_a,\\
+ Y_0/U^2&\equiv b_r\ell_a
+\end{split}
+\pmod q,
+\tag{40.9}
+\]
+where
+\[
+\begin{split}
+ c_a&=\sum_{j=1}^a
+       \frac{(-1)^{j+1}b_{a-j}}{j^2},\\
+ \ell_a&=\sum_{j=1}^a
+       \frac{(-1)^jH_{j-1}b_{a-j}}j.
+\end{split}
+\tag{40.10}
+\]
+Every integer-valued filtered \(Y\)-row, including \(Y_n^\ast\),
+has the same first-block factor \(b_r\).  Thus every prime in
+\({\cal M}_n\) divides \(C_n^\ast\).
+
+If \(q\mid C_n^\ast\) but \(q\nmid b_r\), (40.9) forces
+\(q\) to divide the numerator of \(c_a\).  Let
+\[
+ d_a=\operatorname {lcm}(1,\ldots,a),\qquad
+ \widehat c_a=d_a^2c_a\in\mathbb Z.
+\tag{40.11}
+\]
+This is nonzero.  The growth inequality \(b_{m+1}>5b_m\) for
+\(m\ge1\) gives, for \(a\ge2\),
+\[
+ c_a\ge
+ b_{a-1}-\sum_{j=2}^a\frac{b_{a-j}}{j^2}
+ >\frac{15}{16}b_{a-1}>0,
+\tag{40.12}
+\]
+while \(c_1=1\).  Moreover
+\[
+ \log|\widehat c_a|=O(a).
+\tag{40.13}
+\]
+The same split used in (40.5) therefore puts all nonmoving
+four-scalar exceptions into \(O(n^{2/3})\) logarithmic height.
+Since \(C_n^\ast\mid D_n^2\), its primes at most \(\sqrt n\) cost
+\(O(\sqrt n)\), while all larger exponents are at most two.  Hence
+\[
+ \boxed{
+ \log{\cal M}_n
+ \le\log C_n^\ast
+ \le2\log{\cal M}_n+O(n^{2/3}),
+ }
+\tag{40.14}
+\]
+and (40.6) yields
+\[
+ \boxed{
+ \log{\cal R}_n-O(n^{2/3})
+ \le\log C_n^\ast
+ \le2\log{\cal R}_n+O(n^{2/3}).
+ }
+\tag{40.15}
+\]
+
+The already proved small-prime and companion-channel estimates identify
+\(\log{\cal M}_n=o(n)\) with P3.2.  Consequently the whole conjecture is
+equivalent to the single prime-free statement
+\[
+ \boxed{
+ \log\operatorname {rad}
+ \gcd\!\left(b_n,\operatorname {lcm}(1,\ldots,n)\right)=o(n).
+ }
+\tag{40.16}
+\]
+This corrects the scope of Section 18.9: the *full* gcd
+\(\gcd(b_n,n!)\), with its prime-power depths, is stronger, whereas
+the radical of \(\gcd(b_n,D_n)\) is an exact interface up to
+\(O(n^{2/3})\).  No checked theorem on smooth parts of holonomic
+sequences proves (40.16).  The reduction is nevertheless valuable
+because any future proof may now work with one positive integer
+\(b_n\), without zero fibers, quotient slices, or filter coordinates.
+The exact first-digit audit is
+`../scripts/q32_mesoscopic_radical_audit.py`.
