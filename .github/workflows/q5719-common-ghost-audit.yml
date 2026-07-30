@@ -10,6 +10,7 @@ on:
 permissions:
   contents: read
 
+# Q5719 exact correction audit.
 jobs:
   geometry:
     runs-on: ubuntu-latest
