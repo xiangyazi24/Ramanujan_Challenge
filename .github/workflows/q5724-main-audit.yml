@@ -6,6 +6,9 @@ on:
       - '.github/workflows/q5724-main-audit.yml'
 permissions:
   contents: write
+concurrency:
+  group: q5724-trusted-main
+  cancel-in-progress: true
 jobs:
   audit:
     runs-on: ubuntu-slim
