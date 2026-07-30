@@ -671,6 +671,25 @@ pointwise theorem.
     and creates no second target equation except possibly on the
     further locus \(\omega_{q,k,j}=0\).
 
+53. The adjacent-cutoff module can be saturated exactly.  The literal
+    quotient \((S_L-S_M)/p^2\) is still exponentially large; only the
+    rational factor \(Q_d\) left after removing the complete boundary
+    square has height \(O(d\log n)\).  Modulo the second target
+    \(\ell\), the cutoff graph is
+    \(S_L=s+Q_dz=0\), monic in the long coordinate \(s\), so its
+    elimination ideal in the boundary coordinate \(z\) is zero.
+    Equivalently, the target lattice has basis
+    \[
+      (p\ell,0,p\ell),\qquad(-p^2,p^2,0).
+    \]
+    Quotienting by the first, exponentially tall direction leaves only
+    \(p\)-primary content; after dividing the universal \(p^2\), it is
+    primitive.  Thus finite linear cutoff relations, their Smith/Fitting
+    minors, and their primitive resultants cannot retain an
+    \(\ell\)-factor after eliminating the long prefix.  This is a
+    precise two-target no-go; a growing multi-target or new
+    initial-state identity is outside its scope.
+
 Thus Routes A and B are closed **as presently formulated**. This is not a
 disproof of `log G_n=o(n)`. It identifies the exact missing ingredient:
 cross-prime, Apéry-specific Archimedean/p-adic coupling not already contained
@@ -8767,6 +8786,26 @@ Its reduced rational height is
  h(Q_d(n(n+1)))=O(d\log n)=O(h\log n).
 \tag{36.11}
 \]
+It is important not to transfer this height estimate to the literal
+integer \(E/p^2\).  Since
+\[
+ \frac{E}{p^2}
+ =\left(\frac{\phi_{M+1}(n(n+1))}{p}\right)^2
+ Q_d(n(n+1)),
+\tag{36.11a}
+\]
+positivity and
+\[
+ \binom n{M+1}\ge2^{M+1},\qquad
+ \binom{n+M+1}{M+1}\ge3^{M+1}
+\]
+give
+\[
+ \log(E/p^2)\ge\frac n4\log36-O(\log n).
+\tag{36.11b}
+\]
+Thus \(Q_d\), not \(E/p^2\), is the short coordinate.
+
 But the \(p\)-factor in (36.9) is universal cutoff vanishing, while the
 \(\ell\)-target says
 \[
@@ -8774,6 +8813,49 @@ But the \(p\)-factor in (36.9) is universal cutoff vanishing, while the
 \tag{36.12}
 \]
 it does not force \(Q_d=0\pmod\ell\).
+
+This failure is an exact elimination statement rather than only the
+example in (36.12).  In the localized cutoff module put
+\[
+ s=S_M,\qquad z=\phi_{M+1}(n(n+1))^2.
+\]
+Every intermediate prefix is \(s+Q_jz\).  Modulo \(\ell\), the final
+target ideal is
+\[
+ I_\ell=(s+Q_dz),
+\qquad
+ (\mathbb F_\ell[s,z]/I_\ell)\simeq\mathbb F_\ell[z],
+\tag{36.13}
+\]
+and hence
+\[
+ I_\ell\cap\mathbb F_\ell[z]=(0).
+\tag{36.14}
+\]
+Adding the \(p\)-target with a quotient variable does not change this
+projection because \(p\) is a unit modulo \(\ell\).
+
+Over the integers the same fact is visible in the exact target lattice
+\[
+ (S_M,E,S_L)
+ =t(p\ell,0,p\ell)+c(-p^2,p^2,0).
+\tag{36.15}
+\]
+After the long vector is removed, the quotient has only the universal
+\(p^2\)-content.  Consequently no finite linear combination,
+operandwise-certified gcd, resultant, subresultant, or Fitting minor of
+the cutoff recurrence can produce a primitive boundary scalar carrying
+\(\ell\).  At the pure-cross example
+\[
+ (n,p,\ell)=(321,193,211)
+\]
+one finds
+\[
+ E/p^2\equiv87,\qquad Q_9(n(n+1))\equiv148\pmod {211},
+\tag{36.16}
+\]
+while \(S_M+E\equiv0\pmod {211}\); the target is cancellation with the
+long coordinate, not boundary vanishing.
 
 This is the exact height/selectivity tradeoff for the natural
 cutoff-contiguous module.  Retaining the integration constant \(S_M\)
