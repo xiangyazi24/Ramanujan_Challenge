@@ -12567,3 +12567,354 @@ direct/reflected branch pairs, \(70000\) local-density instances, and
 \(113571\) high-label cutoff instances.  The finite scan is a
 regression audit only; the little-oh estimate is the Selberg argument
 above.
+
+## 65. Exact terminal collapses and the block primitive-content interface
+
+The local analysis in Sections 53--63 leaves one marked scalar at each
+candidate characteristic.  There are now three exact global
+reformulations of that scalar.  The first two identify the terminal
+quotient-one and quotient-two families with short-interval prime
+divisors of one fixed Apéry number.  The third packages every
+fixed-moment block into one gcd with a Pascal coefficient.  None of the
+three identities is by itself a smallness estimate, but together they
+give the cleanest current statement of the missing arithmetic theorem.
+
+### 65.1 The quotient-one fixed point is an interval slice of \(b_M\)
+
+For \(0\le Y<M/2\), put
+\[
+ {\cal T}^{(1)}_M(Y)=
+ \prod_{\substack{0\le s\le Y\\
+                   p=M-s\ {\rm prime}\\
+                   p\mid b_s}}p .
+\tag{65.1}
+\]
+If \(p=M-s>5\), then \(M=p+s\) with \(s<p\), so Apéry--Lucas gives
+\[
+ b_M\equiv b_1b_s=5b_s\pmod p.
+\tag{65.2}
+\]
+Consequently
+\[
+ \boxed{\quad
+ {\cal T}^{(1)}_M(Y)
+ =\operatorname {rad}_{[M-Y,M]}(b_M),
+ \quad}
+\tag{65.3}
+\]
+apart from the fixed prime \(5\).  Thus the fixed point in (63.23) is
+not a new cross-index gcd: it is exactly the part of one integer
+\(b_M\) supported on the complementary prime interval.
+
+There is an exact primitive Newton carrier for (65.1).  If
+\(\Delta^j b_0\) denotes the head of the \(j\)-th forward-difference
+row, define
+\[
+ {\cal N}_{M,Y}
+ =\sum_{j=0}^{Y}\binom Mj\Delta^j b_0.
+\tag{65.4}
+\]
+For \(p=M-s\) as above, \(j\le Y<p\) and
+\(\binom Mj\equiv\binom sj\pmod p\).  Newton inversion therefore gives
+\[
+ {\cal N}_{M,Y}\equiv
+ \sum_{j=0}^{s}\binom sj\Delta^j b_0=b_s\pmod p.
+\tag{65.5}
+\]
+Every target in (65.1) divides the one carrier (65.4).  This is exact
+but not short.  Since
+\[
+ \Delta^j b_0=\operatorname {CT}(\Lambda-1)^j
+\]
+and \(\Lambda-1\) has nonnegative coefficients, (65.4) has no
+cancellation.  For \(Y=\alpha M+O(M^{1/3})\), \(0<\alpha<1/2\),
+the elementary upper and lower bounds give
+\[
+ \log{\cal N}_{M,Y}=\Theta(M),
+\tag{65.6}
+\]
+not \(o(M)\), and certainly not the \(o(M^{1/3})\) needed inside one
+mesoscopic block.
+
+### 65.2 The quotient-two diagonal is another interval slice of \(b_M\)
+
+Write
+\[
+ M=2P+\epsilon,\qquad \epsilon\in\{0,1\},
+\tag{65.7}
+\]
+and, for \(0\le j<H\), put
+\[
+ p_j=P-j,\qquad s_j=\epsilon+2j.
+\tag{65.8}
+\]
+Then \(M=2p_j+s_j\).  In the range \(H=o(M)\), one has \(s_j<p_j\),
+and Apéry--Lucas gives
+\[
+ b_M\equiv b_2b_{s_j}=73b_{s_j}\pmod {p_j}.
+\tag{65.9}
+\]
+After deleting the fixed prime \(73\),
+\[
+ \boxed{\quad
+ \prod_{\substack{0\le j<H\\p_j\ {\rm prime}\\
+                   p_j\mid b_{s_j}}}p_j
+ =
+ \operatorname {rad}_{(P-H,P]}(b_M)
+ =
+ \operatorname {rad}_{(P-H,P]}
+ \gcd\!\left(b_M,\binom PH\right).
+ \quad}
+\tag{65.10}
+\]
+The last equality is exact when \(P-H>H\): every prime in
+\((P-H,P]\) occurs exactly once in the numerator interval of
+\(\binom PH\), and none occurs in \(H!\).
+
+The parity subsequence \(u_j=b_{\epsilon+2j}\) has the corresponding
+Newton carrier
+\[
+ {\cal N}^{(2)}_{M,H}
+ =\sum_{k=0}^{H-1}\binom Pk\Delta^ku_0.
+\tag{65.11}
+\]
+At \(p_j=P-j\), one has \(P\equiv j\pmod {p_j}\), whence
+\[
+ {\cal N}^{(2)}_{M,H}\equiv u_j\pmod {p_j}.
+\tag{65.12}
+\]
+The actual Apéry positivity is strong enough to show
+\(\Delta^ku_0\ge b_\epsilon72^k\).  Hence, for
+\(H=M^{1/3}+O(1)\),
+\[
+ \log{\cal N}^{(2)}_{M,H}=\Theta(H\log M),
+\tag{65.13}
+\]
+again too large.
+
+Two hits \(j<k\) do have the exact common carrier
+\[
+ E_{j,k}=p_k u_j-p_j u_k,\qquad p_jp_k\mid E_{j,k}.
+\tag{65.14}
+\]
+Its logarithmic height is \(\Theta(k)\) when \(k\) is a fixed
+proportion of the block length.  In particular it depends on the
+absolute position, not only on the gap \(k-j\).  Thus (65.14) does not
+give the gap-local height required by the adjacent-collision reduction.
+
+### 65.3 Exact Newton--Pascal block gcd
+
+For an integer sequence \(Y=(Y_d)\), recall the primitive Newton
+carrier
+\[
+ G_{d,L}(Y)=
+ \sum_{i=0}^{L}(-1)^i
+ \binom{d+i}{i}\binom{d+L+1}{L-i}Y_{d+i}.
+\tag{65.15}
+\]
+For an interval \(I\), write
+\[
+ \operatorname {rad}_{I}(m)
+ =\prod_{\substack{q\in I\\q\ {\rm prime}\\q\mid m}}q .
+\tag{65.16}
+\]
+
+**Lemma 65.1 (exact block primitive-content identity).**
+Let \(D>N\ge1\), and put
+\[
+ A_{D,N}=G_{D-1,N}(Y),\qquad
+ B_{D,N}=\binom{D+N}{N},\qquad
+ Q_{D,N}=\prod_{\substack{D<q\le D+N\\q\ {\rm prime}}}q.
+\tag{65.17}
+\]
+Then
+\[
+ \boxed{\quad
+ \gcd(A_{D,N},Q_{D,N})
+ =
+ \operatorname {rad}_{(D,D+N]}
+       \gcd(A_{D,N},B_{D,N})
+ =
+ \prod_{\substack{D<q\le D+N\\q\mid Y_{q-1}}}q .
+ \quad}
+\tag{65.18}
+\]
+
+Indeed, write \(q=D+i\), \(1\le i\le N\).  The interpolation congruence
+(54.5) gives
+\[
+ A_{D,N}\equiv Y_{q-1}\pmod q.
+\tag{65.19}
+\]
+Moreover \(q>N\).  The numerator interval
+\((D,D+N]\) of \(B_{D,N}\) contains the single multiple \(q\), while
+\(N!\) is a \(q\)-unit.  Therefore
+\[
+ v_q(B_{D,N})=1.
+\tag{65.20}
+\]
+Equations (65.19)--(65.20) prove (65.18), with no probabilistic or
+asymptotic input.
+
+Now take \(Y_d=C_M(d)\).  Suppose all nodes
+\(d\in[D,D+N-1]\) lie in one interior quotient-\(a\) cell:
+\[
+ M=ad+r_d,\qquad 1\le r_d\le d-1.
+\tag{65.21}
+\]
+For \(q=d+1\), (48.10) gives
+\[
+ q\mid C_M(d)
+ \quad\Longleftrightarrow\quad
+ q\mid b_{r_d}.
+\tag{65.22}
+\]
+Thus (65.18) is exactly the target radical in this block; no
+non-target prime in the interval pollutes the restricted gcd.
+
+The missing theorem can consequently be stated without any local
+alias language:
+\[
+ \boxed{\quad
+ \log\operatorname {rad}_{(D,D+N]}
+ \gcd\!\left(
+   G_{D-1,N}(C_M),\binom{D+N}{N}
+ \right)=o(N).
+ \quad}
+\tag{65.23}
+\]
+A sufficiently uniform version of (65.23) over the mesoscopic block
+cover gives the block estimate of Sections 43--46 and hence
+\(\log G_n=o(n)\).  An averaged version with a total \(o(n)\) ledger
+would also suffice; uniform pointwise \(o(N)\) may be stronger than
+necessary.
+
+Equation (65.23) is an exact interface, not a proved estimate.  The
+ordinary archimedean bounds
+\[
+ \log|A_{D,N}|=O(M+N\log D),\qquad
+ \log B_{D,N}=\Theta(N\log(D/N)),
+\tag{65.24}
+\]
+do not imply it; evaluated hostile blocks exhibit linear-in-\(M\)
+carrier height.  Ordinary adjacent interpolation resultants also do
+not help: their target factors enter through the literal shared values
+\(Y_{q-1}\), while their only new scalar is a high finite difference
+which targetness does not force to vanish.
+
+### 65.4 The unit origin does not force a second \(p\)-adic digit
+
+There was one remaining local possibility after the alias theorem:
+perhaps the \(p\)-unit origin of the first Cartier cell could normalize
+the matched shell and expose a second target equation.  It does not do
+so automatically.
+
+For a top-half target write
+\[
+ n=p+r,\qquad M=n-1=p+s,\qquad s=r-1.
+\tag{65.25}
+\]
+The matched shell satisfies
+\[
+ C_M(p-1)\equiv b_r\equiv0\pmod p.
+\tag{65.26}
+\]
+The origin is a unit:
+\[
+ b_M\equiv5b_s\pmod p,\qquad b_s\not\equiv0\pmod p,
+\tag{65.27}
+\]
+because \(b_s\) and \(b_{s+1}=b_r\) cannot be consecutive zeros below
+\(p\).
+
+The sharp counterexample is
+\[
+ (n,p,r,s,M)=(20,17,3,2,19).
+\tag{65.28}
+\]
+Here
+\[
+ 17^2\mid b_3,
+\qquad
+ \frac{C_{19}(16)}{17}\equiv7\pmod {17}.
+\tag{65.29}
+\]
+Thus even an Apéry zero of depth two does not lift the matched shell
+to depth two.  In the same example
+\[
+ b_{19}\equiv8\pmod {17},\qquad
+ \frac{C_{19}(16)}{17}\,b_{19}^{-1}\equiv3\pmod {17},
+\tag{65.30}
+\]
+and the natural coefficient-forced cross multiplication
+\[
+ 5b_2C_{19}(16)-b_3b_{19}
+\tag{65.31}
+\]
+has divided digit \(5\pmod {17}\), not zero.
+
+More generally, the exact first Cartier expansion has the form
+\[
+ \frac{C_M(p-1)}p
+ \equiv
+ \frac{b_r}p+\Gamma_{p,s}\pmod p,
+\tag{65.32}
+\]
+where \(\Gamma_{p,s}\) is an integral Fermat-ghost digit.  Targetness
+kills neither \(\Gamma_{p,s}\) nor the sum in (65.32).  In the
+universal localized jet algebra, with the origin inverted and the
+remaining jet coordinates free, the target ideal is
+\[
+ I=(p,\tau),
+\tag{65.33}
+\]
+where \(\tau\) is the matched-shell alias.  A bounded-degree polynomial
+observation which is universally zero after division by \(p\) lies in
+\(I^2\); its conormal direction is therefore still the original
+\(\tau\).  This is a formal no-go for consequences of the proved
+Cartier factorization.  It does not rule out a new accidental identity
+of the distinguished Apéry state, but (65.28)--(65.31) rule out all
+natural first-digit candidates presently available.
+
+The exact audit through \(n=5000\) found \(446\) top-half targets with
+\(p>5\).  There was one vanishing divided shell digit, two vanishing
+ghost/cross digits, and one depth-two Apéry target; these exceptional
+sets did not coincide.  The depth-two case was exactly (65.28).
+
+### 65.5 Authoritative route verdict
+
+The Casoratian and defect-dimension routes have now done all of the
+following unconditionally:
+
+1. removed small-prime and state-overlap sectors;
+2. proved fixed-order first-cell propagation;
+3. classified the rank-one local target alias;
+4. pruned repeated folds and large quotient labels to \(o(n)\);
+5. reduced each surviving block to the exact primitive-content gcd
+   (65.18).
+
+They do **not** prove (65.23).  The quotient-one and quotient-two
+specializations (65.3) and (65.10) show why: the residual includes the
+problem of proving that the prime divisors of one distinguished Apéry
+number cannot occupy a positive proportion of a moving short prime
+interval.  This is genuinely cross-characteristic arithmetic and is
+not a consequence of local recurrence dimension.
+
+A targeted theorem audit found no published black box that implies
+(65.23).  Fixed-\(S\) Subspace-theorem gcd bounds, constant-coefficient
+recurrence theorems, arithmetic dynamics, and general \(G\)-function
+denominator bounds all fail a load-bearing hypothesis or work at the
+wrong height scale.  The best live route is therefore:
+
+> derive an Apéry-specific period/Padé or structured Bézout identity
+> for the pair in (65.23), and prove that its residual has
+> \(e^{o(N)}\) interval-prime radical.
+
+The new script `q32_block_pascal_gcd_audit.py` independently verifies
+(65.18) on \(2607\) arbitrary-sequence blocks and on \(506\)
+fixed-moment Apéry shell blocks.  It also checks \(345\) shell/Lucas
+target equivalences and \(30\) nontrivial shell targets.  The scripts
+`q5729_diagonal_audit.py` and
+`q5731_cartier_first_digit_audit.py` verify (65.7)--(65.14) and the
+first-digit obstruction respectively.  These computations certify the
+exact reductions; they are not evidence for the open little-oh bound.
