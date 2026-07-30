@@ -9650,3 +9650,98 @@ exceptional indices, and neither reflection nor Lucas lifting transports
 a positive proportion of a spike to another index of comparable size.
 The remaining theorem is therefore an exclusion of isolated horizontal
 conspiracies, not merely a density-one estimate.
+
+## 43. Sharp limit of the folded-boundary geometry
+
+`Q5680` gives the exact optimization of Section 41.  The obstruction is
+already present in the top half \(n/2<q\le n\), where the outer quotient
+is one.  The direct and reflected branches become
+\[
+ 3j+c=n,\qquad 3j+2c=n+1,
+\tag{43.1}
+\]
+respectively.  After deleting \(j\le J\) and \(c\le C\), the remaining
+ambient prime intervals are
+\[
+ \left(\frac{2n+C}{3},\,n-J\right)
+\tag{43.2}
+\]
+on the direct branch and
+\[
+ \left(\frac{n+J+1}{2},\,\frac{2n+2-C}{3}\right)
+\tag{43.3}
+\]
+on the reflected branch.  The prime number theorem therefore gives
+their total Chebyshev weight as
+\[
+ \frac n2-\frac{3J}{2}-\frac{2C}{3}+o(n)
+\tag{43.4}
+\]
+whenever \(J,C=o(n)\).
+
+In particular the sublinear thresholds allowed by (41.8) leave
+\(n/2+o(n)\) ambient weight.  To make both intervals empty it is
+necessary that
+\[
+ 3J+C\ge n+O(1),
+\tag{43.5}
+\]
+so one must pay for linearly many coordinate values.  Since each
+displayed atom costs \(O(\log n)\) under the elementary product bound,
+threshold optimization recovers only the trivial estimate
+\[
+ \sum_{\substack{n/2<q\le n\\q\ {\rm target}}}\log q
+ \le\vartheta(n)-\vartheta(n/2)
+ =\frac n2+o(n).
+\tag{43.6}
+\]
+
+This is not merely an inefficient choice of coordinates.  On the fixed
+direct strip
+\[
+ 3n/4<q\le4n/5
+\tag{43.7}
+\]
+one has
+\[
+ j(q)=n-q,\qquad c(q)=3q-2n,
+\tag{43.8}
+\]
+and the matching atoms satisfy
+\[
+ n-j(q)=q,\qquad 2n+c(q)=3q.
+\tag{43.9}
+\]
+For \(q\ne q'\) in this strip, all cross-differences
+\[
+ j(q)-j(q'),\qquad c(q)-c(q')
+\tag{43.10}
+\]
+are nonzero \(q\)-units.  Thus the valuation matrix of the linear
+coordinate atoms is diagonal.  Products, Vandermonde determinants,
+fixed-degree resultants, factorial-ratio packaging, and cyclotomic
+factorization cannot share the target valuation between two primes:
+retaining the matched atom retains \(q\) and costs \(\log q\); cancelling
+it loses \(q\).
+
+The smallest useful replacement is an Apéry-specific block-compression
+theorem.  For example, put \(H=n^{1/3}\).  It would suffice to prove
+uniformly for every length-\(H\) prime interval \(I\) lying inside one
+fixed quotient branch that there is a nonzero integer \(D_{n,I}\) with
+\[
+ \prod_{\substack{q\in I\\q\mid b_{j(q)}}}q\mid D_{n,I},
+\qquad
+ \log|D_{n,I}|=o(H).
+\tag{43.11}
+\]
+There are \(O(\sqrt n)\) quotient/fold boundaries.  Removing an
+\(O(H)\) neighborhood of each costs \(O(n^{5/6})\), and multiplying the
+remaining \(O(n/H)\) block carriers in (43.11) costs \(o(n)\).  Hence
+(43.11) would prove P3.2.
+
+Section 43 sharply separates the roles of the current result.  The
+folded carriers remove endpoint regions and localize the quotient, but
+they cannot compress a central block.  Any further progress must use
+the distinguished Apéry initial state to prove (43.11), or an equivalent
+cross-characteristic cancellation theorem; reflection and a vertical
+bound for \(|Z_q|\) are insufficient.
