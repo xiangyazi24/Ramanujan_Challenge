@@ -22,6 +22,8 @@ No `sorry`, no `native_decide`.  Every theorem depends only on
 `propext`, `Classical.choice`, `Quot.sound`.
 -/
 import Ramanujan31.Dilog.Basic
+import Ramanujan31.Dilog.RealBounds
+import Ramanujan31.Dilog.Certify
 import Ramanujan31.RatReconstruct
 import Ramanujan31.ChartSymmetry
 import Ramanujan31.ShapeField
