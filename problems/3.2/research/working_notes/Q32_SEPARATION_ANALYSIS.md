@@ -13652,7 +13652,7 @@ shell formula by Lucas binomial arithmetic, checks \(411\) small exact
 shells against direct integer evaluation, and reproduces all \(824\)
 targets and the three exceptions in (68.13).
 
-### 68.3 The rational right factor is a nonsplit Apéry extension
+### 68.3 The rational right factor is an extension, not a target equation
 
 The certified operator in (68.23) is reducible.  Exact Ore division gives
 \[
@@ -13727,197 +13727,50 @@ There is no literal common scalar solution with the Apéry module.  If
  =1.
 \tag{68.36}
 \]
-This does not exclude a rational gauge intertwiner.  In fact such an
-intertwiner exists.  Let \(M_{\mathcal A},M_{\mathcal L}\) be the
-companion matrices.  Exact uncoupling over \(\mathbb Q(s)\) produces a
-matrix \(G(s)\) such that
-\[
- \boxed{\qquad
- G(s+1)M_{\mathcal A}(s)=M_{\mathcal L}(s)G(s),
- \qquad \det G(s)\ne0.
- \qquad}
-\tag{68.37}
-\]
-For the distinguished solutions it has the particularly simple
-normalization
-\[
- \boxed{\qquad
- G(s)^{-1}
- \binom{K_s}{K_{s+1}}
- =-10080\binom{b_s}{b_{s+1}}.
- \qquad}
-\tag{68.38}
-\]
-
-There is a compact scalar certificate for (68.38).  Define
+This does not exclude a rational gauge intertwiner between
+\(\mathcal L\) and \(\mathcal A\), so a bounded search was also made
+against the distinguished solutions.  Define the integral transform
 \[
  \widetilde K_s=4A(s)J_{s+1}-4B(s)J_s.
+\tag{68.37}
+\]
+There are no polynomials \(U,V\in\mathbb Q[s]\), both of degree at most
+30, for which
+\[
+ \widetilde K_s=U(s)b_s+V(s)b_{s+1}
+\tag{68.38}
+\]
+holds identically.  This finite claim has a short exact certificate:
+form the \(63\)-by-\(63\) matrix, for \(0\le s\le62\), whose columns are
+\[
+ s^j b_s,\quad s^j b_{s+1}\quad(0\le j\le30),
+ \qquad \widetilde K_s.
 \tag{68.39}
 \]
-Put
+Its determinant modulo \(1000000007\) is
 \[
- D(s)=(s-1)^2s^2(s+2)^3(s+3)^2
+ 380490076\ne0.
 \tag{68.40}
 \]
-and
-\[
-\begin{aligned}
-P_0(s)={}&-2136s^{14}-35956s^{13}-275781s^{12}
--1295151s^{11}\\
-&-4204216s^{10}-9914534s^9-16999496s^8
--20566704s^7\\
-&-16905458s^6-9365542s^5-3782083s^4
--1149761s^3\\
-&-184974s^2-56736s-30240,\\
-P_1(s)={}&984s^{14}+10292s^{13}+50517s^{12}
-+159519s^{11}\\
-&+394364s^{10}+806062s^9+1086736s^8+510804s^7\\
-&-210002s^6+898742s^5+2061155s^4+572629s^3\\
-&-538602s^2-3168s+6048.
-\end{aligned}
-\tag{68.41}
-\]
-Then direct expansion of the first row of (68.38) gives
-\[
- \boxed{\qquad
- 3D(s)\widetilde K_s
- =P_0(s)b_s+P_1(s)b_{s+1}.
- \qquad}
-\tag{68.42}
-\]
+Therefore the corresponding integral determinant is nonzero, proving
+the asserted linear independence over \(\mathbb Q\).  This is only a
+degree-30 exclusion; it is not a theorem against arbitrary rational
+gauges.
 
-This corrects the bounded polynomial test formerly used here.  That
-test proved only that \(\widetilde K_s\) has no representation
-\(U(s)b_s+V(s)b_{s+1}\) with polynomial \(U,V\) of degree at most
-thirty.  The rational coefficients in (68.38) have nonconstant
-denominators, so there is no contradiction.
+Most importantly, (68.28) is vertical.  At a target,
+\(b_r\equiv0\pmod p\), while the new coordinate
+\(J_{r-1}\) is generally a unit.  Neither the rational kernel (68.32)
+nor the extension law (68.35) turns that one zero into a second
+target-preserving equation.  A mixed Casoratian can control primes
+dividing both an Apéry coordinate and an order-two \(K\)-coordinate;
+it does not contain every prime dividing \(b_r\).  Consequently the
+right factor, by itself, cannot supply the missing horizontal radical
+bound.  A positive continuation would have to produce an additional
+identity whose integer value:
 
-The extension itself does not split over \(\mathbb Q(s)\).  Writing a
-putative splitting as an order-one map \(V=v_0+v_1S_s\), reducing
-\(\mathcal RV-U\) modulo \(\mathcal A\), and uncoupling the resulting
-inhomogeneous \(3\)-by-\(3\) system gives an order-three scalar
-operator with no rational solutions.  Hence
-\[
- 0\longrightarrow\operatorname {Sol}(\mathcal R)
- \longrightarrow\operatorname {Sol}(\mathcal P)
- \longrightarrow\operatorname {Sol}(\mathcal A)
- \longrightarrow0
-\tag{68.43}
-\]
-is a nonsplit extension: the quotient is the Apéry module, while the
-kernel is the elementary hypergeometric solution (68.32).
+1. is divisible by every moving target prime, not merely the
+   simultaneous-zero subfamily; and
+2. has logarithmic height \(o(n)\).
 
-### 68.4 Ore--CRT origin cancellation is universally aliased
-
-The gauge allows the strongest possible linear continuation to be
-constructed exactly.  The unnormalized pullback operator \(T_0\) has
-order two and maps \(J\) to \(b\).  Add an order-one left multiple of
-\(\mathcal P\), chosen by a \(2\)-by-\(2\) Ore--CRT system, so that the
-result also vanishes modulo \(\mathcal A\).  After clearing
-denominators one obtains
-\[
- {\cal U}=\sum_{j=0}^4u_j(s)S_s^j,\qquad u_j\in\mathbb Z[s],
-\tag{68.44}
-\]
-with
-\[
- \boxed{\qquad
- {\cal U}(J)_s=M(s)b_s,\qquad
- {\cal U}(b)_s=0.
- \qquad}
-\tag{68.45}
-\]
-All five \(u_j\) have degree \(32\), \(M\) has degree \(30\), the
-integer content is one, and
-\(\gcd_{\mathbb Q[s]}(u_0,\ldots,u_4)=1\).  No interpolation or
-numerical guessing enters this construction.
-
-For a fixed global index \(n\), define the origin-cancelled shell
-\[
- Z_n(d)=
- \sum_{j=0}^4u_j(n)
- \{C_{n+j}(d-1)+C_{n+j}(d+1)\}.
-\tag{68.46}
-\]
-Let \(p\) be a top-half candidate, put \(r=n-p\), and suppose
-\(r+4\le p-5\).  Applying (68.6) and (68.11) at each shifted moment
-gives
-\[
- C_{n+j}(p-2)+C_{n+j}(p)\equiv J_{r+j}\pmod p.
-\tag{68.47}
-\]
-Since integer polynomials take the same value at \(n\) and \(r\)
-modulo \(p\), (68.45) yields
-\[
- \boxed{\qquad
- Z_n(p-1)\equiv M(r)b_r
- \equiv M(n)C_{n-1}(p-1)\pmod p.
- \qquad}
-\tag{68.48}
-\]
-The crucial point is that (68.48) holds for **every candidate prime**,
-not merely when \(p\mid b_r\).  The new shell is therefore another
-integral lift of the same marked scalar, not a second target equation.
-The finitely many omitted boundary residues reduce by reflection to
-prime divisors of fixed small Apéry numbers and are harmless for the
-asymptotic ledger.
-
-This universal alias persists after Newton projection.  For a block
-\((D,D+N]\), put
-\[
-\begin{aligned}
- A_I&=G_{D-1,N}\{d\mapsto C_{n-1}(d)\},\\
- B_I&=G_{D-1,N}\{d\mapsto Z_n(d)\},\\
- Q_I&=\prod_{\substack{D<p\le D+N\\p\ {\rm prime}}}p .
-\end{aligned}
-\tag{68.49}
-\]
-Lagrange reduction at every prime node in the block gives the exact
-integer divisibility
-\[
- \boxed{\qquad Q_I\mid B_I-M(n)A_I.\qquad}
-\tag{68.50}
-\]
-Writing \(B_I-M(n)A_I=Q_IH_I\), one has
-\[
- \gcd(A_I,B_I)=\gcd(A_I,Q_IH_I).
-\tag{68.51}
-\]
-The desired interval target radical is still precisely
-\(\gcd(A_I,Q_I)\).  Thus (68.50) can remove primes of \(A_I\) outside
-the candidate interval, but it places no new restriction on which
-prime factors of \(Q_I\) divide \(A_I\).
-
-The four hostile blocks make this distinction exact:
-\[
-\begin{array}{c|c|c|c|c}
-n&(D,N)&\text{targets}&
-(H_I\bmod p)_{p\ {\rm target}}&
-\gcd(A_I,B_I)\\ \hline
-200&(128,63)&139,181&(63,140)&25159\\
-272&(180,63)&191,233&(26,14)&44503\\
-300&(180,57)&191,227&(151,195)&43357\\
-321&(168,53)&179,193,211&(118,136,53)&7289417.
-\end{array}
-\tag{68.52}
-\]
-In every row \(\gcd(A_I,H_I)=1\), so the displayed gcd is exactly the
-target radical.  At the same time every displayed divided residue is
-nonzero: after the universal prime-node factor is removed, targetness
-does not supply another \(p\)-adic digit.
-
-The exact audit `q32_doubled_period_gauge_audit.sage` constructs the
-gauge and Ore--CRT operator, proves (68.37)--(68.48), verifies the
-nonsplitting computation, and with `--blocks` reproduces
-(68.50)--(68.52).  The older
-`q32_doubled_period_factor_audit.sage` remains a valid bounded
-polynomial-independence test, but not evidence against rational gauge
-equivalence.
-
-The net verdict is sharp.  The doubled-period identity completely
-identifies the order-two quotient and produces a global
-origin-cancelled carrier, but its local defect dimension remains one.
-Any positive continuation must use a nonlinear cross-characteristic
-relation or an independent arithmetic bound for
-\(\gcd(A_I,Q_I)\); adding further linear Ore--CRT lifts only changes
-the quotient \(H_I\) in (68.50).
+The exact audit `q32_doubled_period_factor_audit.sage` verifies
+(68.28)--(68.36) and the determinant certificate (68.40).
