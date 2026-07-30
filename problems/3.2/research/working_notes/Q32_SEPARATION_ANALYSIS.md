@@ -233,12 +233,18 @@ pointwise theorem.
         b_n,\binom n{\lfloor n/2\rfloor}\right),
     \]
     with no factor \(2\) for even \(n\).  Moreover the exact normalized
-    recurrence admits a rational solution with an arbitrary prescribed
-    squarefree product of simultaneous \((1,0,1)\) holes.  Consequently no
-    initial-state-uniform theorem based only on the recurrence, generic
-    \(G\)-function axioms, or local denominator propagation can prove
-    \(\log\mathfrak d_n=o(n)\).  A theorem for the one distinguished Apéry
-    initial state is not excluded.
+    primitive normalized recurrence has unit polar coefficients at every
+    top-half candidate and admits a rational solution with an arbitrary
+    prescribed squarefree product of simultaneous \((1,0,1)\) holes.  Its
+    exact primitive state-dependent carrier is divisible by
+    \(\mathfrak d_n\), but has logarithmic height at least
+    \[
+      n\log\!\left(\frac{17+12\sqrt2}{2}\right)-O(\log n).
+    \]
+    Consequently no initial-state-uniform theorem based only on the
+    recurrence, generic \(G\)-function axioms, or local denominator
+    propagation can prove \(\log\mathfrak d_n=o(n)\).  A theorem for the one
+    distinguished Apéry initial state is not excluded.
 
 24. Higher universal tensors satisfy an exact conservation law.  On a
     pure-cross pair, if \({\cal C}_{p,\ell}\) is the formal cross-divisibility
@@ -5307,24 +5313,42 @@ pattern.  Put
 \[
  y_n=\frac{b_n}{C_n}.
 \]
-The adjacent central-binomial ratios give the parity-dependent recurrence
+The adjacent central-binomial ratios give a primitive
+parity-dependent row
 \[
-\begin{array}{ll}
- 4(n+1)^4y_{n+1}
- =2(n+2)P(n)y_n-n^3(n+2)y_{n-1},
- &n\ {\rm even},\\[2mm]
- 4(n+1)^3y_{n+1}
- =2P(n)y_n-n^2(n+1)y_{n-1},
- &n\ {\rm odd}.
-\end{array}
+ \alpha_ny_{n+1}-\beta_ny_n+\epsilon_ny_{n-1}=0,
 \tag{16.26}
 \]
+where
+\[
+\begin{array}{c|ccc}
+ &\alpha_n&\beta_n&\epsilon_n\\ \hline
+ n\ {\rm even}
+ &(n+1)^4&\dfrac{n+2}{2}P(n)&
+      \dfrac{n^3(n+2)}4\\[3mm]
+ n\ {\rm odd}
+ &\dfrac{2(n+1)^3}{\gamma_n}&
+      \dfrac{P(n)}{\gamma_n}&
+      \dfrac{n^2(n+1)}{2\gamma_n}
+\end{array},
+\qquad
+ \gamma_n=\gcd(n+1,5).
+\tag{16.27}
+\]
+Indeed
+\(\gcd(n+1,P(n))=\gcd(n+1,5)\) on the odd rows, and the even polar
+coefficients are coprime.  Thus
+\[
+ \gcd(\alpha_n,\beta_n,\epsilon_n)=1
+\]
+in both parities.  Omitting \(\gamma_n\) would incorrectly call the odd
+row primitive when \(n\equiv4\pmod5\).
+
 Take an interior top-half candidate \(p\), so that
 \[
  n=p+r,\qquad1\le r\le p-3,\qquad p\ge7.
 \]
-The coefficients of \(y_{n+1}\) and \(y_{n-1}\) in (16.26) are
-\(p\)-units.  Therefore, if
+Both \(\alpha_n\) and \(\epsilon_n\) are \(p\)-units.  Therefore, if
 \[
  v_p(y_n)\ge0,\qquad v_p(y_{n-1})=-1,
 \]
@@ -5335,40 +5359,60 @@ solution, writing
 \]
 gives only the automatic polar cancellation
 \[
-\begin{array}{ll}
- 4(n+1)^4Y_+
- =-n^3(n+2)Y_-,
- &n\ {\rm even},\\[1mm]
- 4(n+1)^3Y_+
- =-n^2(n+1)Y_-,
- &n\ {\rm odd},
-\end{array}
-\qquad\pmod p.
-\tag{16.27}
+\alpha_nY_++\epsilon_nY_-\equiv0\pmod p.
+\tag{16.28}
 \]
 No singular coefficient or second zero condition occurs.
 
 More strongly, let \(R\) be any squarefree product of interior candidate
-primes at the same \(n\).  Prescribe a rational solution of (16.26) by
+primes at the same \(n\), and choose integers \(u,t\) coprime to \(R\).
+Prescribe
 \[
- y_{n-1}=R^{-1},\qquad y_n=0.
-\tag{16.28}
-\]
-For every \(p\mid R\), (16.26) gives
-\[
- v_p(y_{n-1},y_n,y_{n+1})=(-1,+\infty,-1).
+ y_{n-1}=\frac{\alpha_nu}{R},\qquad
+ y_n=\alpha_nt,\qquad
+ y_{n+1}=\beta_nt-\frac{\epsilon_nu}{R}.
 \tag{16.29}
+\]
+This triple satisfies (16.26) identically.  For every \(p\mid R\), the
+two polar reduced numerators are units, so
+\[
+ v_p(\operatorname {den}y_{n-1},
+     \operatorname {den}y_n,
+     \operatorname {den}y_{n+1})=(1,0,1).
+\tag{16.30}
 \]
 The two adjacent values determine a unique global rational solution in
 both directions.  Its reduced-denominator curvature at \(n\) is divisible
 by the arbitrarily prescribed product \(R\).
 
 Thus even simultaneous holes at all candidate primes are compatible with
-the exact normalized operator.  The solution in (16.28), however, depends
+the exact primitive normalized row.  Since \(\alpha_n\) is a \(p\)-unit,
+the coefficient map
+\[
+ (X_-,X_0,X_+)\longmapsto
+ \epsilon_nX_- -\beta_nX_0+\alpha_nX_+
+\]
+is surjective over \(\mathbb Z_p\); its cokernel and zeroth Fitting ideal
+carry no target torsion.  A coefficient discriminant or any
+state-independent bounded-window Fitting construction therefore cannot
+detect the regular hole.
+
+The solution in (16.29), however, depends
 on \(n\) and \(R\).  The construction rules out a local estimate uniform
 over rational initial states; it does **not** rule out a global theorem
 whose constants or proof use the one fixed initial state
 \((b_0,b_1)=(1,5)\).
+
+This quantifier distinction can itself be made sharp.  The model can be
+propagated through any fixed window of the exact Apéry rows.  It can also
+be joined to any protected initial prefix, with the exact initial values,
+by altering two intervening steering rows and then restoring the Apéry
+operator before the target window.  Hence generic D-finiteness, the two
+initial constants viewed in isolation, and exact local recurrence geometry
+still permit arbitrary holes.  What the model cannot preserve is both the
+exact Apéry row at **every** intervening index and the exact initial vector:
+those data uniquely determine the actual solution.  A valid positive
+theorem may use precisely that full global connection.
 
 There is a separate exact warning against invoking only the abstract
 \(G\)-function class.  Define
@@ -5383,7 +5427,7 @@ Its generating series is rational:
 \[
  \sum_{k\ge0}h_kx^k
  =\frac1{1-x^2}+\frac{x/2}{1-x^2/4}.
-\tag{16.30}
+\tag{16.31}
 \]
 If \(Q_k\) is the reduced denominator of \(h_k\), then at \(k=2m\)
 \[
@@ -5395,7 +5439,7 @@ so
  \frac{\gcd(Q_{k-1},Q_{k+1})}
       {\gcd(Q_{k-1},Q_k,Q_{k+1})}
  =2^{2m-1}.
-\tag{16.31}
+\tag{16.32}
 \]
 Even a rational \(G\)-function can therefore have exponential local
 denominator curvature at infinitely many indices.  This example is
@@ -5407,6 +5451,69 @@ or an arithmetic property equivalent in strength.  The normalized
 recurrence and local denominator propagation alone do not suffice, while a
 global theorem specific to the explicit Hadamard \(G\)-function remains a
 logically valid opening.
+
+### 16.5 Complete primitive denominator clearing is still exponentially tall
+
+The recurrence does give a genuine state-dependent integer divisible by
+the whole curvature carrier, but its evaluated height is already linear.
+Write the three actual reduced fractions as
+\[
+ y_{n+j}=\frac{u_j}{q_{n+j}},
+ \qquad \gcd(u_j,q_{n+j})=1,\qquad j=-1,0,1,
+\]
+and put
+\[
+ g=\gcd(q_{n-1},q_n,q_{n+1}),\qquad d=\mathfrak d_n.
+\]
+There are positive integers \(x_-,x_0,x_+\) such that
+\[
+ q_{n-1}=gdx_-,\qquad
+ q_n=gx_0,\qquad
+ q_{n+1}=gdx_+,
+\qquad
+ \gcd(x_-,x_+)=\gcd(d,x_0)=1.
+\tag{16.33}
+\]
+Clearing (16.26) by exactly these reduced denominators gives
+\[
+ x_0K_n^{\rm hole}
+ =\beta_nu_0\,d\,x_-x_+,
+ \qquad
+ K_n^{\rm hole}
+ =\alpha_nu_{+1}x_-+\epsilon_nu_{-1}x_+.
+\tag{16.34}
+\]
+Hence
+\[
+ \boxed{\mathfrak d_n\mid K_n^{\rm hole}.}
+\]
+This has removed the common triple denominator, the common hole factor
+from both polar denominators, their coprime residual cofactors, and the
+primitive row content.  There is no hidden factorial gauge in (16.34).
+
+Nevertheless all terms in \(K_n^{\rm hole}\) are positive, and
+\[
+ K_n^{\rm hole}\ge\alpha_nu_{+1}
+ \ge\alpha_ny_{n+1}.
+\]
+Since
+\[
+ y_n=\frac{b_n}{C_n}
+ =\Theta\!\left(
+   \left(\frac{17+12\sqrt2}{2}\right)^n n^{-1}\right),
+\]
+one obtains the exact route-specific height obstruction
+\[
+ \log K_n^{\rm hole}
+ \ge
+ n\log\!\left(\frac{17+12\sqrt2}{2}\right)-O(\log n).
+\tag{16.35}
+\]
+The raw factorial transfer has \(n\log n\) height; primitive
+central-binomial removal lowers it to the linear scale (16.35), not to
+\(o(n)\).  This does not prove that every nonlinear global carrier is
+large.  It proves that the canonical fully reduced one-row carrier cannot
+close Path D.
 
 The recurrence permits the two polar terms of valuation \(-1\) to
 cancel and produce a \(p\)-integral middle term; after primitive
@@ -5421,7 +5528,8 @@ residue-section prime anchors, and (16.19):
 ```
 
 Its default audit passes 219,903 candidate incidences and finds 248
-exact holes.
+exact holes.  It also checks 2,500 primitive recurrence rows, 2,500
+identities (16.34), and 1,000 prescribed simultaneous-hole valuations.
 
 ## 17. Higher tensor contraction: an exact bounded-class no-go
 

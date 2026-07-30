@@ -78,6 +78,25 @@ def coefficient_ratio_audit() -> int:
     return checked
 
 
+def primitive_normalized_row(n: int) -> tuple[int, int, int, int]:
+    """Return A, B, E, content for A*y[n+1]-B*y[n]+E*y[n-1]=0."""
+    polynomial = 34 * n**3 + 51 * n**2 + 27 * n + 5
+    if n % 2 == 0:
+        return (
+            (n + 1) ** 4,
+            ((n + 2) // 2) * polynomial,
+            n**3 * (n + 2) // 4,
+            1,
+        )
+    content = math.gcd(n + 1, 5)
+    return (
+        2 * (n + 1) ** 3 // content,
+        polynomial // content,
+        n**2 * (n + 1) // (2 * content),
+        content,
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=2500)
@@ -98,6 +117,9 @@ def main() -> None:
     max_rate = (0.0, 0)
     comparison_count = 0
     recurrence_count = 0
+    carrier_count = 0
+    countermodel_count = 0
+    model_primes = [7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43]
     for n in range(1, limit + 1):
         neighbor_gcd = math.gcd(denominators[n - 1], denominators[n + 1])
         defect[n] = neighbor_gcd // math.gcd(neighbor_gcd, denominators[n])
@@ -112,21 +134,63 @@ def main() -> None:
         y_previous = Fraction(values[n - 1], central[n - 1])
         y_current = Fraction(values[n], central[n])
         y_next = Fraction(values[n + 1], central[n + 1])
-        polynomial = 34 * n**3 + 51 * n**2 + 27 * n + 5
-        if n % 2 == 0:
-            left = 4 * (n + 1) ** 4 * y_next
-            right = (
-                2 * (n + 2) * polynomial * y_current
-                - n**3 * (n + 2) * y_previous
-            )
-        else:
-            left = 4 * (n + 1) ** 3 * y_next
-            right = (
-                2 * polynomial * y_current
-                - n**2 * (n + 1) * y_previous
-            )
-        assert left == right
+        row_a, row_b, row_e, row_content = primitive_normalized_row(n)
+        assert math.gcd(math.gcd(row_a, row_b), row_e) == 1
+        expected_content = 1 if n % 2 == 0 else math.gcd(n + 1, 5)
+        assert row_content == expected_content
+        assert row_a * y_next - row_b * y_current + row_e * y_previous == 0
         recurrence_count += 1
+
+        triple_gcd = math.gcd(
+            math.gcd(denominators[n - 1], denominators[n]),
+            denominators[n + 1],
+        )
+        left_cofactor = denominators[n - 1] // (
+            triple_gcd * defect[n]
+        )
+        middle_cofactor = denominators[n] // triple_gcd
+        right_cofactor = denominators[n + 1] // (
+            triple_gcd * defect[n]
+        )
+        primitive_carrier = (
+            row_a * y_next.numerator * left_cofactor
+            + row_e * y_previous.numerator * right_cofactor
+        )
+        assert (
+            middle_cofactor * primitive_carrier
+            == row_b
+            * y_current.numerator
+            * defect[n]
+            * left_cofactor
+            * right_cofactor
+        )
+        assert primitive_carrier > 0
+        assert primitive_carrier % defect[n] == 0
+        carrier_count += 1
+
+        if n <= min(limit, 250):
+            eligible = [
+                p for p in model_primes if row_a % p and row_e % p
+            ][:4]
+            if eligible:
+                prescribed = math.prod(eligible)
+                model_previous = Fraction(row_a, prescribed)
+                model_current = Fraction(row_a, 1)
+                model_next = Fraction(row_b, 1) - Fraction(
+                    row_e, prescribed
+                )
+                assert (
+                    row_a * model_next
+                    - row_b * model_current
+                    + row_e * model_previous
+                    == 0
+                )
+                for p in eligible:
+                    assert model_previous.denominator % p == 0
+                    assert model_current.denominator % p != 0
+                    assert model_next.denominator % p == 0
+                    countermodel_count += 1
+
         if n >= 11:
             max_bits = max(max_bits, (defect[n].bit_length(), n))
             rate = math.log(defect[n]) / n if defect[n] > 1 else 0.0
@@ -170,7 +234,18 @@ def main() -> None:
         "PASS: "
         f"{comparison_count} exact carrier-to-Apery-gcd comparisons"
     )
-    print(f"PASS: {recurrence_count} normalized recurrence identities")
+    print(
+        "PASS: "
+        f"{recurrence_count} primitive normalized recurrence identities"
+    )
+    print(
+        "PASS: "
+        f"{carrier_count} primitive denominator-carrier identities"
+    )
+    print(
+        "PASS: "
+        f"{countermodel_count} prescribed simultaneous-hole valuations"
+    )
     print(
         "PASS: "
         f"{incidence_count} top-half incidences, {target_count} exact holes"
