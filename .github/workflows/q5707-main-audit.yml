@@ -24,18 +24,19 @@ jobs:
           git show origin/chatgpt-drop:problems/3.2/research/scripts/q5707_cross_model_shell.py > /tmp/q5707_audit.py
           sed -i 's/from math import comb, gcd, log, log10/from math import comb, gcd, isqrt, log, log10/' /tmp/q5707_audit.py
           sed -i 's/int(n\*\*0.5)/isqrt(n)/g' /tmp/q5707_audit.py
+          sed -i 's/rows = (200, 272, 300, 321, 755)/rows = (321,)/' /tmp/q5707_audit.py
       - name: Run and capture output
         shell: bash
         run: |
           set +e
-          python3 /tmp/q5707_audit.py > q5707-audit.out 2>&1
-          echo $? > q5707-audit.status
+          python3 /tmp/q5707_audit.py > q5707-main-audit.out 2>&1
+          echo $? > q5707-main-audit.status
           exit 0
       - name: Persist output
         shell: bash
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add q5707-audit.out q5707-audit.status
-          git commit -m 'Record Q5707 exact shell audit output' || exit 0
+          git add q5707-main-audit.out q5707-main-audit.status
+          git commit -m 'Record Q5707 focused hostile-row output' || exit 0
           git push origin HEAD:main
