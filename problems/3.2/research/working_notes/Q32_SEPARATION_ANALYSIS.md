@@ -421,6 +421,108 @@ pointwise theorem.
     same unresolved pointwise denominator-defect estimate; it would not
     remove the cross-prime obstruction.
 
+39. The neighboring reduced companion denominators give a sharper exact
+    local dictionary.  For \(p\ge7\), \(n=p+r\), and \(p\mid b_n\), put
+    \(t=v_p(b_n)\).  Then
+    \[
+      (v_p(C_{n-1}),v_p(C_n),v_p(C_{n+1}))
+      =(3,\,3-\min(t,3),\,3).
+    \]
+    Hence the positive denominator curvature
+    \[
+      \kappa_n=
+      \frac{\gcd(C_{n-1},C_{n+1})}
+           {\gcd(C_{n-1},C_n,C_{n+1})}
+    \]
+    satisfies \(v_p(\kappa_n)=\min(t,3)\) throughout the top half.  This
+    proves the proposed implication
+    \(p\mid A_n,b_n\Rightarrow v_p(b_n)=3\), but also shows why it does not
+    solve P3.2: \(\kappa_n\) exactly re-encodes the full top-half
+    denominator defect.  In fact \(\kappa_n\mid b_n\) for every \(n\), and
+    the `uisai2` denominator-valley argument proves
+    \[
+      \log\kappa_n=o(n)
+      \quad\Longleftrightarrow\quad
+      \log\operatorname {rad}\gcd(b_n,d_n)=o(n),
+    \]
+    hence equivalently P3.2 after the already controlled channels.  This
+    is the cleanest target-free reformulation, not yet a height bound.
+
+40. There is a useful global common-carrier equivalence.  Let
+    \[
+      B(n)=\{p>\sqrt n:p\mid b_{n\bmod p}\},\qquad
+      C(n)=\{p>\sqrt n:p\mid b_n\}.
+    \]
+    Lucas gives \(B(n)\subset C(n)\).  The logarithmic weight of
+    \(C(n)\setminus B(n)\) is
+    \[
+      O(Q^2+n/Q)=O(n^{2/3})
+      \quad(Q=n^{1/3}),
+    \]
+    because a false positive with \(\lfloor n/p\rfloor=q\le Q\) divides
+    \(b_q\), while one with \(q>Q\) has \(p\le n/Q\).  Thus the remaining
+    channel is equivalent, up to an unconditional \(o(n)\) error, to
+    \[
+      \log\operatorname {rad}_{\sqrt n<p\le n,\ p\mid b_n}b_n=o(n).
+    \]
+    This removes the moving remainder from the statement, but current
+    prime-factor theorems for Apéry or \(G\)-function coefficients do not
+    prove this all-\(n\) large-prime-radical estimate.
+
+41. Delaygue's valuation theorem does not control the new multiplicity
+    issue.  It proves
+    \(v_p(b_n)\ge\alpha_p(b,n)\), where \(\alpha_p\) counts base-\(p\)
+    digits in \(Z_p\).  At \(n=p+r\), \(p\ge7\), this gives only
+    \(v_p(b_{p+r})\ge1\) when \(p\mid b_r\), exactly the Lucas
+    information.  It supplies no upper bound and cannot exclude cubic
+    divisibility.  An independent exact scan through \(p\le50000\) found
+    5165 shifted targets of valuation one, five of valuation two, and
+    none of valuation at least three.  Even a theorem excluding every
+    cubic event would control only \(\gcd(A_n,b_n)\), not the simple
+    targets which dominate the denominator defect.
+
+42. The Hasse--Witt Mellin normalization is now exact.  If
+    \(\Phi=(1+x)(1+y)(1+z)(1+1/(xyz))\), then
+    \(b_m=\operatorname {CT}\Phi^m\) and
+    \(F_{<p}(u)=\sum_{m<p}b_mu^m\) is the first Hasse--Witt scalar for
+    \(1-u\Phi=0\).  In the coordinate \(\Phi=t\), one has \(u=t^{-1}\),
+    up to the monomial unit determined by the Hodge-line
+    trivialization.  Exact zero detection of a Mellin coefficient opens
+    into a product over all \(p-1\) fibers, or equivalently a moment of
+    order \(p-1\); it does not reduce to an ordinary two-fiber
+    Katz--Deligne correlation.  This closes that naive fixed-order
+    expansion, not every possible geometric argument.
+
+43. Plain binomial-window carriers have an exact top-band obstruction.
+    For \(p>n/2\),
+    \[
+      p\mid\binom nk\quad\Longleftrightarrow\quad
+      p>\max(k,n-k).
+    \]
+    Therefore every prime \(p>n/2+H\) divides every coefficient in
+    \(|k-n/2|\le H\), and
+    \[
+      \log\gcd_{|k-n/2|\le H}\binom nk
+      \ge\vartheta(n)-\vartheta(n/2+H)
+      =n/2-H+o(n).
+    \]
+    Making this carrier subexponential forces
+    \(H=n/2-o(n)\), at which point it retains only the vanishing tail
+    \(p>n-o(n)\).  Thus the whole one-parameter window family has a rigid
+    height-versus-coverage tradeoff.
+
+44. The proved row bound already gives an unconditional density-one
+    theorem.  On \(N<n\le2N\), the total logarithmic channel-\(B\) mass is
+    \(O(N^{5/3})\).  Hence for every \(2/3<\alpha<1\), all but
+    \(O(N^{5/3-\alpha})\) integers in the shell have mass at most
+    \(N^\alpha=o(N)\); together with the pointwise small-prime and
+    companion bounds this proves P3.2 outside a density-zero set.  It
+    does not remove the sparse exceptional columns.  Direct computation
+    of the top-half falling second moment through \(N=128000\) is close
+    to the reflected-Poisson prediction \(N\lambda_N^2\), many orders
+    below the sufficient threshold
+    \(o(N^2/\log^2N)\), but remains finite evidence.
+
 Thus Routes A and B are closed **as presently formulated**. This is not a
 disproof of `log G_n=o(n)`. It identifies the exact missing ingredient:
 cross-prime, Apéry-specific Archimedean/p-adic coupling not already contained
@@ -7375,3 +7477,393 @@ Thus two neighboring determinants do not explain (24.3).  A proof would
 have to use how the distinguished companion numerator selects a primitive
 line inside this much larger denominator-supported carrier, rather than
 another rank-two determinant alone.
+
+## 25. Exact companion-denominator curvature
+
+The reduced-denominator experiment has a proof-grade strengthening.  It is
+important because it both validates the isolated-hole picture and prevents
+the cubic-divisibility observation from being mistaken for a solution.
+
+Let \(p\ge7\), \(n=p+r\), \(0<r<p\), and suppose \(p\mid b_n\).  Lucas,
+reflection, and the endpoint values imply
+\[
+ 2\le r\le p-3,\qquad
+ p\nmid b_{n-1}b_{n+1}.
+\tag{25.1}
+\]
+At the singular row,
+\[
+ p^3a_p\equiv6,\qquad p^3a_{p+1}\equiv30\pmod p.
+\tag{25.2}
+\]
+The first congruence follows from the Casoratian at \(p\), using
+\(b_{p-1}\equiv1\pmod {p^2}\); the second follows from the recurrence
+row \(p\).  Since \(p\ge7\), both displayed residues are units.  Every
+transfer row from \(p+1\) through \(n-1\) lies in
+\({\rm GL}_2(\mathbb Z_p)\), so
+\[
+ \min\{v_p(a_{n-1}),v_p(a_n)\}=-3.
+\tag{25.3}
+\]
+
+Put
+\[
+ t=v_p(b_n)\ge1,\qquad
+ \alpha=v_p(a_n),\qquad\beta=v_p(a_{n-1}).
+\]
+If \(\beta>-3\), (25.3) gives \(\alpha=-3\), and the two terms in
+\[
+ a_nb_{n-1}-a_{n-1}b_n=\frac6{n^3}
+\tag{25.4}
+\]
+would have valuations \(-3\) and \(>-3\), contradicting the unit
+right-hand side.  Hence \(\beta=-3\).  Comparing the two term valuations
+\(\alpha\) and \(t-3\) in (25.4) gives
+\[
+ \boxed{
+ \alpha=
+ \begin{cases}
+ t-3,&t=1,2,\\
+ \ge0,&t=3,\\
+ 0,&t\ge4.
+ \end{cases}}
+\tag{25.5}
+\]
+One further invertible row gives \(v_p(a_{n+1})=-3\).  Since a reduced
+denominator records the negative part of the valuation, this proves
+\[
+ \boxed{
+ (v_p(C_{n-1}),v_p(C_n),v_p(C_{n+1}))
+ =(3,\,3-\min(t,3),\,3).}
+\tag{25.6}
+\]
+
+Define the companion-denominator curvature
+\[
+ \kappa_n=
+ \frac{\gcd(C_{n-1},C_{n+1})}
+      {\gcd(C_{n-1},C_n,C_{n+1})}.
+\tag{25.7}
+\]
+Then
+\[
+ \boxed{v_p(\kappa_n)=\min\{v_p(b_n),3\}}
+ \qquad(n/2<p\le n,\ p\ge7).
+\tag{25.8}
+\]
+If \(p\nmid b_n\), the block congruence
+\(p^3a_{p+r}\equiv6b_r\pmod p\) makes the middle denominator exponent
+three, while the neighboring exponents are at most three, so the
+curvature is zero.  Thus (25.8) also has the exact converse at the level
+of support.
+
+There are two immediate corollaries.
+
+First, if \(p\mid A_n\) as well as \(p\mid b_n\), then
+\(\alpha\ge1\).  Formula (25.5) forces
+\[
+ \boxed{v_p(b_n)=3.}
+\tag{25.9}
+\]
+This is an equality, not only a lower bound.  Conversely a cubic target
+need not divide \(A_n\), so (25.9) does not characterize the intersection.
+An exact scan through \(p\le50000\) found 5170 shifted targets:
+5165 have valuation one and the five
+\[
+ (p,r)=(41,30),(97,25),(151,14),(1453,1180),(6781,3974)
+\tag{25.10}
+\]
+have valuation two; none has valuation at least three.  This is evidence,
+not an exclusion theorem.
+
+Second, if \(H_n=\gcd(A_n,b_n)\) and \(p^e\mid H_n\), clearing (25.4)
+gives the stronger neighboring bounds
+\[
+ v_p(C_{n-1})\ge e+3v_p(n),\qquad
+ v_p(C_{n+1})\ge e+3v_p(n+1).
+\tag{25.11}
+\]
+There is no conflict with (24.8): the integer
+\[
+ A_nC_{n-1}b_{n-1}-A_{n-1}C_nb_n
+ =\frac{6C_nC_{n-1}}{n^3}
+\tag{25.12}
+\]
+is divisible by \(H_n\).  In particular, the division by \(n^3\) in
+(24.8) is valid; an intermediate audit which objected to it had omitted
+the integrality and was withdrawn.
+
+Delaygue's Theorem 1 does not sharpen (25.5).  It proves only
+\[
+ v_p(b_m)\ge\alpha_p(b,m),
+\tag{25.13}
+\]
+where \(\alpha_p\) counts base-\(p\) digits lying in \(Z_p\).  For
+\(m=p+r\), \(p\ge7\), the digits are \((r,1)\) and \(b_1=5\), so a target
+gives only \(v_p(b_{p+r})\ge1\), exactly the Lucas lower bound.  The
+Landau--Legendre equality in that paper applies to the individual
+factorial ratios before summation, not to the Apéry multisum.
+
+The conceptual conclusion is exact: \(\kappa_n\) is a characteristic-zero
+carrier for the complete top-half target set, but (25.8) makes a height
+bound for it equivalent to the missing denominator-defect estimate.
+
+The `uisai2` `dm` session proved that this curvature is an exact carrier at
+every index, not only in the top half.  Put
+\[
+ T_n=\frac{C_{n-1}}{\gcd(C_{n-1},C_n)},\qquad
+ U_n=\frac{C_{n+1}}{\gcd(C_n,C_{n+1})}.
+\tag{25.14}
+\]
+Primewise, \(\kappa_n=\gcd(T_n,U_n)\).  Clearing the Casoratian and reducing
+modulo the coprime denominator drop gives
+\[
+ T_n\mid n^3b_n,\qquad U_n\mid(n+1)^3b_n.
+\tag{25.15}
+\]
+Since consecutive integers are coprime,
+\[
+ \boxed{\kappa_n\mid b_n}
+\tag{25.16}
+\]
+for every \(n\).
+
+There is also a reverse comparison outside a sublinear exceptional factor.
+Let
+\[
+ R_n=\operatorname {rad}\gcd(b_n,d_n).
+\tag{25.17}
+\]
+Choose \(y=\lceil n^{2/3}\rceil\), \(A=\lfloor n/y\rfloor\), and put
+\[
+ {\rm Err}_n=
+ \operatorname {rad}(d_y n(n+1))
+ \prod_{1\le q\le A}
+   \operatorname {rad}\!\left(b_q\,d_q^3a_q\right).
+\tag{25.18}
+\]
+The factors in (25.18) are integers and
+\[
+ \log{\rm Err}_n=O(n^{2/3}).
+\tag{25.19}
+\]
+If a prime \(p\mid R_n\) does not divide \({\rm Err}_n\), then
+\(p>y\), \(n=qp+r\) lies away from both block boundaries, and both upper
+coordinates \(b_q,a_q\) are \(p\)-units.  Lucas and the companion block
+law give
+\[
+ p\mid b_r,\qquad
+ p^3a_n\equiv0,\qquad
+ p^3a_{n-1},p^3a_{n+1}\not\equiv0\pmod p.
+\tag{25.20}
+\]
+Thus the denominator exponents at \(n-1,n,n+1\) have a strict valley and
+\(p\mid\kappa_n\).  Together with (25.16),
+\[
+ \operatorname {rad}(\kappa_n)\mid R_n
+ \mid\operatorname {rad}(\kappa_n)\,{\rm Err}_n.
+\tag{25.21}
+\]
+The denominator theorem also bounds the small-prime multiplicities, while
+every exponent above \(\sqrt n\) is at most three.  Consequently
+\[
+ \boxed{
+ \log R_n=o(n)\quad\Longleftrightarrow\quad
+ \log\kappa_n=o(n).}
+\tag{25.22}
+\]
+Combined with the already proved small-prime and companion-channel
+reductions, (25.22) is equivalent to P3.2.  This is the cleanest
+target-free statement presently available:
+\[
+ \log\gcd\!\left(
+ \frac{C_{n-1}}{\gcd(C_{n-1},C_n)},
+ \frac{C_{n+1}}{\gcd(C_n,C_{n+1})}
+ \right)=o(n).
+\tag{25.23}
+\]
+It remains a pointwise strict-valley anti-concentration theorem; ordinary
+telescoping of denominator rises and drops does not control the overlap in
+(25.23).
+
+## 26. The single common coefficient carrier
+
+The moving-remainder formulation can be replaced, up to a proved
+sublinear error, by a large-prime-factor question for the one integer
+\(b_n\).  Put
+\[
+ B(n)=\{p>\sqrt n:p\mid b_{n\bmod p}\},\qquad
+ C(n)=\{p>\sqrt n:p\mid b_n\}.
+\tag{26.1}
+\]
+If \(n=qp+r\), Lucas gives
+\[
+ b_n\equiv b_qb_r\pmod p,
+\tag{26.2}
+\]
+and hence \(B(n)\subset C(n)\).  A prime in \(C(n)\setminus B(n)\)
+divides \(b_q\).
+
+Fix \(1\le Q\le\sqrt n\).  For the false positives with \(q\le Q\),
+distinct primes are all factors of \(\prod_{q\le Q}b_q\), so
+\[
+ \sum_{\substack{p\in C(n)\setminus B(n)\\q\le Q}}\log p
+ \le\sum_{q\le Q}\log b_q=O(Q^2).
+\tag{26.3}
+\]
+For \(q>Q\), one has \(p<n/Q\), and therefore
+\[
+ \sum_{\substack{p\in C(n)\setminus B(n)\\q>Q}}\log p
+ \le\vartheta(n/Q)=O(n/Q).
+\tag{26.4}
+\]
+Choosing \(Q=n^{1/3}\) proves
+\[
+ \boxed{
+ \sum_{p\in C(n)}\log p
+ =\sum_{p\in B(n)}\log p+O(n^{2/3}).}
+\tag{26.5}
+\]
+
+Thus the unresolved channel is equivalent to
+\[
+ \boxed{
+ \log\operatorname {rad}_{\sqrt n<p\le n,\ p\mid b_n}b_n=o(n).}
+\tag{26.6}
+\]
+This is more than the one-way observation that channel-\(B\) primes divide
+\(b_n\): (26.5) proves that the extra large prime factors of \(b_n\) have
+sublinear total weight.
+
+The reformulation does not supply its own bound.  The exponential height
+\[
+ \log b_n=n\log(17+12\sqrt2)+O(\log n)
+\tag{26.7}
+\]
+allows a linear large-prime radical.  Theorems of Luca--Shparlinski give
+density-one lower bounds on prime factors; Delaygue gives lower
+\(p\)-adic valuations; standard \(G\)-function denominator results say
+nothing about numerator prime factors.  No checked theorem gives the
+all-\(n\) upper bound (26.6).
+
+For comparison, the ambient class cannot suffice: the central binomial
+coefficient is hypergeometric, holonomic, globally bounded, and a rational
+diagonal, yet every prime in \((n,2n]\) divides \(\binom{2n}{n}\).  Any
+successful theorem must use a feature specific to the Apéry initial state,
+not merely membership in one of these classes.
+
+## 27. Mellin normalization, exact-zero complexity, and density one
+
+Let
+\[
+ \Phi(x,y,z)=(1+x)(1+y)(1+z)(1+1/(xyz)).
+\tag{27.1}
+\]
+Then \(b_m=\operatorname {CT}\Phi^m\).  For the toric pencil
+\(1-u\Phi=0\), the first Hasse--Witt scalar in the standard residue
+trivialization is
+\[
+ F_{<p}(u)=\sum_{0\le m<p}b_mu^m,
+\tag{27.2}
+\]
+because
+\[
+ \operatorname {CT}(1-u\Phi)^{p-1}
+ \equiv\sum_{m<p}b_mu^m\pmod p.
+\tag{27.3}
+\]
+If the family is written as \(\Phi=t\), the period parameter is
+\(u=t^{-1}\); a change of Hodge-line trivialization may add a monomial
+unit.  Consequently the literal identity \(F_{<p}(t)=\alpha_p(t)\) in
+the \(\Phi=t\) coordinate is not correct.
+
+Finite Fourier inversion gives, for \(1\le r\le p-2\),
+\[
+ b_r=-\sum_{t\in\mathbb F_p^\times}
+       F_{<p}(t)t^{-r}\pmod p.
+\tag{27.4}
+\]
+At the boundary the sum is
+\(-b_0-b_{p-1}=-2\), so no zero mode was lost.
+
+The obstacle to the proposed trace-formula proof is exact.  Expanding
+\({\bf1}_{S=0}\) additively gives
+\[
+ \frac1p\sum_{\lambda\in\mathbb F_p}
+  e_p\!\left(\lambda\sum_t
+    F_{<p}(t)t^{-r}\right)
+ =
+ \frac1p\sum_\lambda\prod_t
+  e_p\!\left(\lambda F_{<p}(t)t^{-r}\right).
+\tag{27.5}
+\]
+The product involves all \(p-1\) fibers.  Equivalently,
+\({\bf1}_{S=0}=1-S^{p-1}\) uses a moment whose order grows with \(p\).
+Thus ordinary fixed-order Katz--Deligne correlations do not prove the
+bounded first moment for \(z_p\).  This is a no-go for that expansion,
+not for every possible use of the geometry.
+
+There is nevertheless an unconditional density-one theorem from the
+proved vertical estimate.  Let \(W_B(n)\) be the logarithmic weight of
+the channel-\(B\) primes.  On \(N<n\le2N\),
+\[
+\begin{aligned}
+ \sum_{N<n\le2N}W_B(n)
+ &\le
+ \sum_{\sqrt N<p\le2N}
+   \left(\frac Np+1\right)|Z_p|\log p\\
+ &=O(N^{5/3}),
+\end{aligned}
+\tag{27.6}
+\]
+using \(|Z_p|\ll p^{2/3}\).  Hence for every
+\(2/3<\alpha<1\),
+\[
+ \#\{N<n\le2N:W_B(n)>N^\alpha\}
+ =O(N^{5/3-\alpha})=o(N).
+\tag{27.7}
+\]
+The small-prime and companion channels are already \(o(n)\) pointwise.
+It follows that
+\[
+ \boxed{\log G_n=o(n)}
+\tag{27.8}
+\]
+outside a set of natural density zero.  The all-\(n\) problem is precisely
+the removal of the sparse exceptional columns left by (27.7).
+
+## 28. Exact obstruction for plain binomial windows
+
+For \(p>n/2\), Kummer's carry criterion simplifies to
+\[
+ p\mid\binom nk
+ \quad\Longleftrightarrow\quad
+ p>\max(k,n-k).
+\tag{28.1}
+\]
+Indeed \(n=p+r\), \(0\le r<p\), and the unique base-\(p\) carry occurs
+exactly when \(r<k<p\).
+
+Let
+\[
+ {\cal B}(n,H)=
+ \gcd_{\lvert k-n/2\rvert\le H}\binom nk.
+\tag{28.2}
+\]
+Every prime \(p>n/2+H\) divides every coefficient in the window, whence
+\[
+ \log{\cal B}(n,H)
+ \ge\vartheta(n)-\vartheta(n/2+H)
+ =n/2-H+o(n)
+\tag{28.3}
+\]
+whenever the prime-number-theorem error is uniform in the chosen range.
+Therefore a subexponential window gcd requires
+\(H=n/2-o(n)\), but then it captures only
+\(p>n-o(n)\).  At the other endpoint, the single central coefficient
+captures all of \((n/2,n]\) and has height \(n\log2+O(\log n)\).
+
+This proves a rigid coverage-height tradeoff for the whole plain-window
+family.  It does not exclude signed factorial ratios or an
+Apéry-dependent multiscale carrier, but any such construction must leave
+this one-parameter family.
