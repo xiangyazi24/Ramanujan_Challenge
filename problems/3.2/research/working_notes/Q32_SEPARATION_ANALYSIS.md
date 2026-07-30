@@ -12016,3 +12016,309 @@ whole \(M^{1/3}\)-block produces the same transfer-matrix ledger.
 Therefore fixed order is a genuine structural breakthrough, but a
 block-level common-divisor or descent theorem is still required to
 obtain the \(o(M^{1/3})\) bound in (54.13).
+
+## 63. The exact local alias no-go and the limit of Cartier descent
+
+The two remaining issues in Section 62 can now be separated completely.
+The marked target scalar has an exact universal module, while the actual
+state content has an exact one-step descent ledger.  Neither theorem
+closes the horizontal estimate, but together they prevent further
+mixing of these two obstructions.
+
+### 63.1 The universal target-preserving module
+
+Fix a good prime \(p\), localize at \(p\), and let \(V\) be any free
+recurrence-state lattice in which the target is cut out by a primitive
+linear functional
+\[
+ \tau_p\in V^\vee.
+\tag{63.1}
+\]
+A linear observation \(\lambda\in V^\vee\) is **universally
+target-preserving** if
+\[
+ \tau_p(v)\equiv0\pmod p
+ \quad\Longrightarrow\quad
+ \lambda(v)\equiv0\pmod p
+\tag{63.2}
+\]
+for every state \(v\).  The annihilator of the hyperplane
+\(\ker\overline{\tau}_p\) is its defining line, so the module of all
+such observations is exactly
+\[
+ \boxed{\quad
+ {\cal P}_p= \mathbb Z_{(p)}\tau_p+pV^\vee.
+ \quad}
+\tag{63.3}
+\]
+Consequently every matrix of target-preserving rows has rank at most
+one modulo \(p\).  If it has rational row rank \(m\), its local Smith
+exponents satisfy
+\[
+ e_1\ge0,\qquad e_i\ge1\quad(2\le i\le m).
+\tag{63.4}
+\]
+In particular every \(k\)-row minor is divisible by \(p^{k-1}\).
+
+For two prime nodes \(q-1,\ell-1\) in one short free shell-coordinate
+window \(J\), the statement is even more explicit.  A row guaranteed
+to retain both targets belongs to
+\[
+ \boxed{\quad
+ {\cal P}_{q,\ell}(J)
+ =
+ \ell\mathbb Z e_{q-1}^{\vee}
+ \oplus q\mathbb Z e_{\ell-1}^{\vee}
+ \oplus q\ell
+ \!\!\bigoplus_{j\notin\{q-1,\ell-1\}}\!\!
+ \mathbb Z e_j^\vee .
+ \quad}
+\tag{63.5}
+\]
+Indeed, testing a vector supported on one nonmatched coordinate proves
+the required coefficient divisibilities, and they are plainly
+sufficient.  Thus an \(m\)-row coefficient matrix has the shape
+\[
+ [\,\ell a\mid qb\mid q\ell C\,],
+\tag{63.6}
+\]
+and every full minor is divisible by
+\[
+ (q\ell)^{m-1}.
+\tag{63.7}
+\]
+
+The strongest elementary weighted-placement attempt attains this lower
+bound and no more.  On a stencil \(J\), multiply one Newton row by
+\(j-(q-1)\) and another by \(j-(\ell-1)\).  The first row is
+coefficient-forced at \(q\) and an alias at \(\ell\); the second has
+the opposite orientation.  Their local Smith forms are
+\[
+ \operatorname {diag}(1,q),\qquad
+ \operatorname {diag}(1,\ell),
+\tag{63.8}
+\]
+and the distinguished \(2\)-minor has valuation exactly one at each
+endpoint.  Dividing out \(q\ell\) can make the determinant a unit, but
+the divided observations are no longer target-forced.  This is the
+general form of the saturation already visible in (58.9).
+
+The same no-go covers bounded-degree nonlinear observations in the
+universal state algebra.  Over \(\mathbb F_p\), choose coordinates with
+\(x_1=\tau_p\).  If a polynomial of degree less than \(p\) in each
+variable vanishes on the entire hyperplane \(x_1=0\), polynomial
+interpolation gives
+\[
+ F\in(x_1).
+\tag{63.9}
+\]
+Hence the Jacobian of any bounded family has rank at most one on the
+target hyperplane.  This statement must not be overextended: a
+polynomial which vanishes only at the one distinguished Apéry state
+need not satisfy (63.9).  Such an extra relation would be precisely the
+new arithmetic target equation which is currently missing.
+
+At augmented recurrence rank \(\rho\le39\), every
+target-preserving observability determinant therefore carries
+\[
+ p^{\rho-1},
+\qquad\text{or}\qquad
+ (q\ell)^{\rho-1}
+\tag{63.10}
+\]
+for a pair.  Summing the logarithms of such determinants over a
+pair family \(E\) costs at least
+\[
+ (\rho-1)\sum_p\deg_E(p)\log p.
+\tag{63.11}
+\]
+Requiring this to be \(o(H)\) already requires the target-incidence
+estimate which the determinant was meant to prove.  Thus another
+bounded placement, weight, recurrence shift, exterior minor, or
+bounded-degree polynomial cannot desaturate the marked scalar.  A
+valid local escape must supply either a second distinguished-state
+equation or one extra \(p\)-adic digit which remains zero after
+division by a coefficient-forced \(p\).
+
+### 63.2 The exact state-prime block ledger
+
+Now consider the actual state content, which is a different issue.  Let
+\[
+ I(M;R,H)=\{R,\ldots,R+H-1\},
+\qquad R+H-1<M/2.
+\tag{63.12}
+\]
+For a prime \(p\), write \(M=a_pp+s_p\).  Define
+\[
+ {\cal S}(M;R,H)=
+ \left\{p:
+ \begin{array}{l}
+ p>R+H-1,\quad 2s_p<R,\\
+ p\mid b_{a_p}b_{s_p}
+ \end{array}\right\}.
+\tag{63.13}
+\]
+Equation (61.10) gives the block divisibility
+\[
+ \boxed{\quad
+ \prod_{p\in{\cal S}(M;R,H)}p
+ \mid
+ \gcd_{r\in I(M;R,H)}C_M(M-r).
+ \quad}
+\tag{63.14}
+\]
+This is a lower bound for the possible state nuisance, not an upper
+bound for the target radical.
+
+There is nevertheless exact multiplicity compression.  For a fixed
+lower residue \(s\), every residue-channel prime divides both \(M-s\)
+and \(b_s\), so
+\[
+ \prod_{\substack{p\in{\cal S}\\s_p=s\\p\mid b_s}}p
+ \mid \operatorname {rad}\gcd(M-s,b_s).
+\tag{63.15}
+\]
+For a fixed outer quotient \(a\),
+\[
+ \prod_{\substack{p\in{\cal S}\\a_p=a\\p\mid b_a}}p
+ \mid \operatorname {rad}(b_a).
+\tag{63.16}
+\]
+Put
+\[
+ A=\left\lfloor\frac{M}{R+H}\right\rfloor,\qquad
+ S=\left\lfloor\frac{R-1}{2}\right\rfloor.
+\tag{63.17}
+\]
+Assigning an overlap to only one channel gives
+\[
+ \boxed{\quad
+ \prod_{p\in{\cal S}}p
+ \mid
+ \left\{\prod_{a\le A}\operatorname {rad}(b_a)\right\}
+ \left\{\prod_{s\le S}
+ \operatorname {rad}\gcd(M-s,b_s)\right\}.
+ \quad}
+\tag{63.18}
+\]
+Since \(b_j\le40^j\),
+\[
+ \log\prod_{p\in{\cal S}}p
+ \le
+ \frac{A(A+1)}2\log40+
+ \sum_{s\le S}\min\{\log M,s\log40\}.
+\tag{63.19}
+\]
+The second term is \(O(R\log M)\), not \(o(H)\).
+
+The corresponding descent graph has depth one.  If \(p\mid b_{s_p}\),
+map it to the ordinary target row
+\[
+ N=p+s_p,\qquad p\mid b_{s_p}.
+\tag{63.20}
+\]
+For \(a_p\ge2\) and \(s_p<R/2<M/4\),
+\[
+ N=\frac{M+(a_p-1)s_p}{a_p}\le\frac58M.
+\tag{63.21}
+\]
+If \(p\mid b_{a_p}\), Apéry--Lucas supplies a base-\(p\) digit
+\(u<p\) with \(p\mid b_u\), giving the child \(N=p+u\).  When
+\(a_p<p\), this is at most \(M/2+O(\sqrt M)\); when \(a_p\ge p\), it
+is at most \(2\sqrt M\).
+
+At every child \(N=p+u\), however, the same prime has quotient one and
+residue \(u\).  The next application either returns the identical row
+\[
+ (N,p,u)\longmapsto(N,p,u)
+\tag{63.22}
+\]
+or its hypotheses fail.  Factoring \(b_u\) into other primes does not
+replace the prime \(p\) whose state divisibility is being charged.
+Thus (63.21) is a genuine one-step contraction, not an iterable
+geometric descent.
+
+### 63.3 Two exact terminal families
+
+The fixed point is present in the actual Apéry data.  Define
+\[
+ {\cal T}_M(S)=
+ \prod_{\substack{0\le s\le S\\p=M-s\ {\rm prime}\\p\mid b_s}}p.
+\tag{63.23}
+\]
+If \(2S<R\), then the quotient-one instance of (63.14) gives
+\[
+ \boxed{\quad
+ {\cal T}_M(S)
+ \mid\gcd_{r=R}^{R+H-1}C_M(M-r).
+ \quad}
+\tag{63.24}
+\]
+Every descent edge in (63.24) returns to the same outer row
+\(p+s=M\).  Notice that this does not contradict (61.15): the moment
+\(M\) is used to encode the top targets of row \(M+1\), whereas the
+state factors in (63.24) are the direct targets of the preceding row
+\(M\).
+
+There is a second exact terminal family at the natural block scale.
+Take \(H=M^{1/3}+O(1)\) and
+\[
+ R=\lfloor M/2\rfloor-2H.
+\tag{63.25}
+\]
+For every prime
+\[
+ M/2-H<p\le M/2,\qquad s=M-2p,
+\tag{63.26}
+\]
+the quotient-two conditions in (63.14) hold.  Since \(b_2=73\), apart
+from the fixed small prime one obtains
+\[
+ \boxed{\quad
+ \prod_{\substack{M/2-H<p\le M/2\\p\mid b_{M-2p}}}p
+ \mid
+ \gcd_{r=R}^{R+H-1}C_M(M-r).
+ \quad}
+\tag{63.27}
+\]
+The child rows \(N=M-p\) fill another interval of length \(H\).
+Brun--Titchmarsh gives only \(O(H)\) logarithmic weight for the ambient
+prime interval, exactly the full available block scale.  Hence the
+Cartier theorem alone supplies no little-oh saving.
+
+The two smallest missing arithmetic estimates exposed by the descent
+are therefore
+\[
+ \sum_{\substack{3M/4+H+O(1)\le p\le M\\p\mid b_{M-p}}}
+ \log p=o(H)
+\tag{63.28}
+\]
+for the quotient-one prefix embedded by (63.24), and
+\[
+ \sum_{\substack{M/2-H<p\le M/2\\p\mid b_{M-2p}}}
+ \log p=o(H)
+\tag{63.29}
+\]
+for the quotient-two diagonal.  These estimates are stronger than is
+needed globally when imposed on every single block, but they show
+exactly why a state-gcd theorem of height \(o(H)\) cannot follow from
+Cartier descent and size bounds alone.
+
+The scripts `q5727_target_alias_no_go.py` and
+`q32_cartier_descent_audit.py` verify the local coefficient modules,
+the cross-weighted Smith obstruction, the channel multiplicity ledger,
+the fixed-point edges, and the quotient-two diagonal edges.  The
+combined verdict is narrow:
+
+1. fixed-order recurrence has removed the old growing-dimension
+   presentation barrier;
+2. actual state factors are classified and cannot coincide with the
+   same top-half target;
+3. universal local placements cannot remove the last target scalar;
+4. Cartier residue descent terminates at actual horizontal target
+   families.
+
+Thus further progress must be genuinely horizontal: a second
+distinguished-state congruence, a target-forced extra \(p\)-adic digit,
+or a global many-prime identity whose height is sublinear after all
+endpoint factors are counted.
