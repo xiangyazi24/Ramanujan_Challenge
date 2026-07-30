@@ -1,0 +1,3 @@
+[build]
+  command = "mkdir -p public && git fetch origin q5724-audit && git show origin/q5724-audit:problems/3.2/research/scripts/q5724_minimal_probe.py > /tmp/q5724_probe.py && sed -i 's/MS = (1400, 1600, 1800)/MS = (1050, 1150)/' /tmp/q5724_probe.py && python -m pip install numpy sympy && python /tmp/q5724_probe.py | tee public/q5724-audit.txt && printf '<!doctype html><meta charset=utf-8><title>Q5724 audit</title><pre>' > public/index.html && cat public/q5724-audit.txt >> public/index.html && printf '</pre>' >> public/index.html"
+  publish = "public"
