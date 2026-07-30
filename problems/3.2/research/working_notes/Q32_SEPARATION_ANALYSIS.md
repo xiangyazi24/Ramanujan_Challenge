@@ -10249,3 +10249,366 @@ The dependency-free script
 `q32_fixed_moment_torus_audit.py` checks the constant-term identity
 through exponent \(8\) and (48.5) in \(1265\) cases
 \(q\le43,\ 1\le a\le5\), with no disagreement.
+
+## 49. Cartier packets: exact rank and exact defect
+
+The fixed-moment shell is the scalar shadow of a larger exact Cartier
+identity.  Write
+\[
+ \Lambda^m=\sum_{\nu\in\mathbb Z^3}c_m(\nu)X^\nu.
+\]
+Expanding the last factor in (48.1) gives the useful one-fold formula
+\[
+ \boxed{\;
+ c_m(u,v,w)=
+ \sum_{t=0}^m
+ \binom mt\binom m{t-u}
+ \binom{2m-t}{m-v}
+ \binom{2m-t}{m-w}. \;}
+\tag{49.1}
+\]
+All binomial coefficients outside their natural ranges are understood
+to be zero.
+
+The Newton polytope of \(\Lambda\) is
+\[
+ P=\{(x,y,z):
+ -1\le x,y,z\le1,\quad x-y\le1,\quad x-z\le1\}.
+\tag{49.2}
+\]
+Its lattice points are exactly the 22 exponent vectors of \(\Lambda\).
+Moreover
+\[
+ \operatorname {Supp}\Lambda^a=aP\cap\mathbb Z^3
+\tag{49.3}
+\]
+for every \(a\ge0\).  Here is an elementary integer-decomposition
+proof.  Given \((x,y,z)\in aP\cap\mathbb Z^3\), represent \(x\) using
+\(\max(x,0)\) entries \(1\), \(\max(-x,0)\) entries \(-1\), and zeros.
+Represent \(y\) and \(z\) similarly.  A negative \(y\)-entry or
+\(z\)-entry must be placed away from the \(x=1\) positions.  The two
+inequalities \(x-y\le a\) and \(x-z\le a\) say exactly that there are
+enough such positions.  The resulting \(a\) triples are lattice points
+of \(P\).  Positivity of the coefficients of \(\Lambda\) then gives
+(49.3).  In particular
+\[
+ N_a:=\#(aP\cap\mathbb Z^3)
+ =\frac{38a^3+57a^2+31a+6}{6}.
+\tag{49.4}
+\]
+
+Let
+\[
+ {\cal C}_q\!\left(\sum_\nu A_\nu X^\nu\right)
+ =\sum_\mu A_{q\mu}X^\mu
+\tag{49.5}
+\]
+be the Cartier coefficient selector.  If \(n=aq+r\), \(0\le r<q\),
+then the freshman's dream and the box bound on \(rP\) give
+\[
+ \boxed{\;
+ {\cal C}_q(\Lambda^n)
+ \equiv b_r\Lambda^a\pmod q,\qquad
+ c_n(q\mu)\equiv b_r c_a(\mu)\pmod q. \;}
+\tag{49.6}
+\]
+Indeed
+\(\Lambda^n\equiv\Lambda^r\Lambda^a(X^q)\pmod q\), and the only
+coefficient of \(\Lambda^r\) whose three coordinates are multiples of
+\(q\) is its constant term.  Since an exposed vertex coefficient of
+\(\Lambda^a\) equals \(1\), the vector
+\((c_a(\mu))_{\mu\in aP\cap\mathbb Z^3}\) is primitive.  Therefore
+vanishing of the entire \(N_a\)-coordinate packet in (49.6) is exactly
+one scalar condition:
+\[
+ {\cal C}_q(\Lambda^n)=0
+ \quad\Longleftrightarrow\quad b_r=0
+ \quad\text{in }\mathbb F_q.
+\tag{49.7}
+\]
+It is not \(N_a\) independent target equations.
+
+The coefficient PDE gives the same exact rank count.  Reducing
+\[
+ \Lambda\theta_iG-r(\theta_i\Lambda)G=0,
+ \qquad i=1,2,3,
+\tag{49.8}
+\]
+modulo \(q\), all Laurent-polynomial solutions with Newton polytope
+contained in \(nP\) are
+\[
+ \boxed{\;
+ G=\Lambda^r H(X^q),\qquad
+ \operatorname {Newt}(H)\subseteq aP. \;}
+\tag{49.9}
+\]
+To see this, divide by \(\Lambda^r\) in the rational function field.
+The common kernel of the three torus derivations is
+\(\mathbb F_q(x^q,y^q,z^q)\).  A denominator in that field occurs with
+multiplicity divisible by \(q\), so it cannot be cancelled by the
+multiplicity \(r<q\) of a nonmonomial factor of \(\Lambda^r\).
+Thus the quotient is a Laurent polynomial in \(X^q\).  Newton support
+functions then give \(\operatorname {Newt}(H)\subseteq aP\).
+Consequently the Frobenius defect dimension is exactly \(N_a\).
+Furthermore
+\[
+ {\cal C}_q(\Lambda^rH(X^q))=b_rH,
+\tag{49.10}
+\]
+so on a target the packet vanishes for every one of these \(N_a\)
+defect coordinates.  The packet and the logarithmic-derivative PDEs
+therefore supply no rank amplification.
+
+This is only a statement modulo \(q\).  It must not be promoted to a
+\(q\)-adic scalar factorization of the integer packet.  A sharp
+counterexample is
+\[
+ b_3=1445=5\cdot17^2.
+\tag{49.11}
+\]
+For \(n=20=17+3\), the packet coefficient
+\[
+ c_{20}(-17,-17,-17)
+\tag{49.12}
+\]
+has \(17\)-adic valuation exactly \(1\), as does
+\(C_{19}(16)\).  Thus even the stronger condition \(17^2\mid b_3\)
+does not force a second packet or shell layer.
+
+There is also an exact geometric obstruction to ordinary finite
+differences of nearby shells.  Let \(e=d+h\).  If
+\[
+ d>ah,
+\tag{49.13}
+\]
+then
+\[
+ d(aP\cap\mathbb Z^3)\cap
+ e(aP\cap\mathbb Z^3)=\{0\}.
+\tag{49.14}
+\]
+Indeed, if \(d\kappa=e\lambda\) and
+\(g=\gcd(d,e)=\gcd(d,h)\), then \(d/g\) divides every coordinate of
+\(\lambda\).  Since \(d/g\ge d/h>a\), one gets
+\(\lambda=\kappa=0\).  In the hard core
+\(a<(\log n)^2/3\) and \(h=O(\log n)\), (49.13) holds with a large
+margin.  Thus two close shell sums share only the origin coefficient
+\(b_M\); all their nonconstant coefficient coordinates are disjoint.
+
+## 50. The exact prime-power shell jet is still rank one
+
+Fix a prime \(p\), put \(d=p-1\), and for \(1\le r\le p-2\) define
+\[
+ E_j= C_{jd+r}(d),\qquad j\ge0.
+\tag{50.1}
+\]
+The exact root-of-unity filter over the Teichmuller lifts gives
+\[
+ d^3E_j=\sum_{\zeta\in\mu_d^3}
+ t_\zeta^{jd+r},\qquad t_\zeta=\Lambda(\zeta).
+\tag{50.2}
+\]
+Taking \(k\) finite differences in \(j\) gives
+\[
+ d^3\Delta^kE_j
+ =\sum_\zeta
+ t_\zeta^{jd+r}(t_\zeta^d-1)^k.
+\tag{50.3}
+\]
+If \(t_\zeta\) is a \(p\)-adic unit, its last factor has valuation at
+least \(k\).  If it is not a unit, the first factor has valuation at
+least \(jd+r\).  Since \(d\) is a \(p\)-adic unit,
+\[
+ \boxed{\;
+ v_p(\Delta^kE_j)\ge\min(k,jd+r). \;}
+\tag{50.4}
+\]
+
+For every asymptotically relevant target one has \(r\ge2\): \(b_1=5\),
+so \(r=1\) can occur only at the harmless prime \(5\).  Hence (50.4)
+implies the exact affine law
+\[
+ \boxed{\;
+ E_j\equiv b_r+jp\,U_{p,r}\pmod {p^2},\qquad
+ U_{p,r}=\frac{E_1-b_r}{p}\pmod p. \;}
+\tag{50.5}
+\]
+On a target,
+\[
+ \frac{E_j}{p}\equiv
+ \frac{b_r}{p}+jU_{p,r}\pmod p.
+\tag{50.6}
+\]
+The new scalar \(U_{p,r}\) is a free first Witt coordinate, not a
+second target zero.  The example (49.11)--(49.12) makes this failure
+explicit: for \(p=17,r=3,j=1\),
+\[
+ E_1/17\equiv7\pmod {17},
+\tag{50.7}
+\]
+although \(17^2\mid b_3\).  Higher finite differences give one new
+Mahler/Witt coordinate at each precision, with no implication from
+vanishing of the zeroth coordinate.  Thus the fixed shell reproduces,
+rather than evades, the rank-one lift obstruction of Sections 18 and
+22.
+
+The prime hypothesis in (48.8) is also essential.  For the first
+composite counterexample,
+\[
+ M=6,\quad d=5,\quad r=1,
+\qquad
+ C_6(5)\equiv1\not\equiv5=b_1\pmod6.
+\tag{50.8}
+\]
+The characteristic-\(p\) power reduction has no general composite
+analogue.
+
+## 51. An exact block carrier from Newton extrapolation
+
+The fixed-moment identity does produce one new characteristic-zero
+carrier, but its height is too large.  Let
+\[
+ d_i=d_0+i,\qquad0\le i\le L,
+\tag{51.1}
+\]
+stay in one quotient cell
+\(\lfloor M/d_i\rfloor=a\), and let \(F(D)\) be the polynomial of
+degree at most \(L\) satisfying
+\[
+ F(d_i)=C_M(d_i).
+\tag{51.2}
+\]
+Lagrange interpolation at the common residue \(-1\) gives the integer
+\[
+ \boxed{\;
+ {\mathfrak G}_{M,d_0,L}:=F(-1)
+ =\sum_{i=0}^L\omega_i C_M(d_i),\quad
+ \omega_i=(-1)^i
+ \binom{d_0+i}{i}
+ \binom{d_0+L+1}{L-i}. \;}
+\tag{51.3}
+\]
+The weights satisfy
+\[
+ \sum_{i=0}^L\omega_i=1,\qquad
+ \gcd(\omega_0,\ldots,\omega_L)=1.
+\tag{51.4}
+\]
+Thus the usual \(L!\) denominator of interpolation is entirely
+removable; (51.3) is already the primitive carrier.
+
+Suppose \(q_i=d_i+1\) is prime and \(q_i>L\).  In the product formula
+for the Lagrange weights, \(q_i\) divides every
+\(\omega_j\), \(j\ne i\), while \(\omega_i\equiv1\pmod {q_i}\).
+Consequently
+\[
+ {\mathfrak G}_{M,d_0,L}
+ \equiv C_M(d_i)\pmod {q_i}.
+\tag{51.5}
+\]
+Every target prime represented by a node in the block therefore divides
+one common integer:
+\[
+ \boxed{\;
+ \prod_{\substack{0\le i\le L\\q_i\ {\rm target}}}q_i
+ \mid {\mathfrak G}_{M,d_0,L}. \;}
+\tag{51.6}
+\]
+This is the first exact all-node carrier furnished by the fixed-moment
+reformulation.
+
+It does not have the needed height.  Every shell in (51.3) contains the
+same origin coefficient \(b_M\), and (51.4) leaves it with coefficient
+exactly \(1\).  By (49.14), the other coefficient variables of close
+shells are disjoint; interpolation has not created a hidden
+coefficientwise identity.  For fixed quotient \(a\), an even-stencil
+saddle calculation using the terminating kernel
+\[
+ W_{d_0,L}(z)=\sum_{i=0}^L\omega_i z^i
+ =\binom{d_0+L+1}{L}(d_0+1)
+ \int_0^1t^{d_0}(1-zt)^L\,dt
+\tag{51.7}
+\]
+shows that, for \(L=O(M^{1/3})\) inside a compact part of the quotient
+cell,
+\[
+ \log|{\mathfrak G}_{M,d_0,L}|=\Theta_a(M).
+\tag{51.8}
+\]
+The algebraic part of this statement is exact; a final presentation
+should include the uniform saddle estimates when using (51.8) as a
+formal no-go theorem.  Exact computation already shows the scale on the
+hostile row \(n=321\).  With
+\[
+ M=320,\qquad d_0=161,\qquad L=50,
+\tag{51.9}
+\]
+the primitive carrier is divisible by all three target primes
+\(179,193,211\), has 529 decimal digits, and
+\[
+ \frac{\log|{\mathfrak G}_{320,161,50}|}{320}
+ =3.805310\ldots.
+\tag{51.10}
+\]
+It is exponentially tall, whereas the block budget is only
+\(H=n^{1/3}\).
+
+The exact CRT saturation behind (51.3) is also informative.  If a
+linear form \(\sum c_iY_i\) must be divisible by \(q_i\) whenever only
+\(q_i\mid Y_i\) is known, then
+\[
+ q_i\mid c_j\qquad(i\ne j).
+\tag{51.11}
+\]
+A shortened stencil must therefore insert every omitted target prime
+into its remaining coefficients.  Nonlinear forms obey the analogous
+monomial-ideal condition \(P\in(q_i,Y_i)\).  This is a scoped no-go:
+it assumes no further identity among the distinguished shell values.
+
+## 52. What the new identity has and has not opened
+
+The fixed-moment route has produced three unconditional structural
+advances:
+
+1. all targets in a quotient block test one characteristic-zero
+   coefficient array, through (48.10);
+2. the full Cartier packet and its coefficient PDE have exactly
+   \(N_a\) Frobenius defect coordinates, so the packet is only one
+   target equation, not a source of rank amplification;
+3. Newton extrapolation gives the exact primitive common carrier
+   (51.3)--(51.6).
+
+The natural completions of the route fail for different precise reasons.
+Prime-power lifting leaves free Witt coordinates; nearby shell grids
+share only \(b_M\); and the block Newton carrier retains linear
+exponential height after all universal content is removed.
+
+The remaining opening is narrower but genuine.  Equations
+(49.9)--(49.10) allow arbitrary \(H\), whereas the Apéry array has the
+distinguished state
+\[
+ H=\Lambda^a.
+\tag{52.1}
+\]
+A successful continuation must use a nonlinear
+characteristic-zero identity special to (52.1), or a true
+cross-characteristic anti-clustering theorem.  In a close pair
+\(\ell=q+h\), the two low exponents differ by \(ah\), and
+\[
+ \Lambda^r=\Lambda^{ah}\Lambda^{r-ah}.
+\tag{52.2}
+\]
+The connecting kernel has logarithmic coefficient height
+\(O(ah)\), which is small in the remaining
+\(a<(\log n)^2/3,\ h=O(\log n)\) core.  What is missing is a way to
+make (52.2) preserve the two different target divisibilities without
+reintroducing a free Frobenius coordinate or a tall boundary value.
+That distinguished-state convolution problem is now the smallest
+identity-based gap.
+
+The dependency-free script
+`q32_cartier_packet_audit.py` verifies (49.1)--(49.7), the Ehrhart and
+integer-decomposition claims through \(a=6\), \(8052\) Cartier packet
+coordinates, the finite-difference congruences through \(p^3\), the
+grid-disjointness lemma in \(1143\) rows, the \(p=17\) lift
+counterexample, and the 529-digit Newton carrier (51.9).
