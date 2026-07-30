@@ -481,17 +481,25 @@ pointwise theorem.
     cubic event would control only \(\gcd(A_n,b_n)\), not the simple
     targets which dominate the denominator defect.
 
-42. The Hasse--Witt Mellin normalization is now exact.  If
-    \(\Phi=(1+x)(1+y)(1+z)(1+1/(xyz))\), then
-    \(b_m=\operatorname {CT}\Phi^m\) and
-    \(F_{<p}(u)=\sum_{m<p}b_mu^m\) is the first Hasse--Witt scalar for
-    \(1-u\Phi=0\).  In the coordinate \(\Phi=t\), one has \(u=t^{-1}\),
-    up to the monomial unit determined by the Hodge-line
-    trivialization.  Exact zero detection of a Mellin coefficient opens
-    into a product over all \(p-1\) fibers, or equivalently a moment of
-    order \(p-1\); it does not reduce to an ordinary two-fiber
-    Katz--Deligne correlation.  This closes that naive fixed-order
-    expansion, not every possible geometric argument.
+42. A previous Hasse--Witt normalization was false and has been removed.
+    The Laurent polynomial
+    \((1+x)(1+y)(1+z)(1+1/(xyz))\) has constant terms
+    \(\sum_k\binom mk^4\), beginning \(1,2,18,164,\ldots\), not the
+    Apéry numbers.  The proved fixed constant-term model is instead
+    \[
+      \Lambda=
+      \frac{(1+x)(1+y)(1+z)
+       \bigl((1+y)(1+z)+xyz\bigr)}{xyz},
+      \qquad \operatorname {CT}\Lambda^m=b_m.
+    \]
+    Hence
+    \(F_{<p}(u)=\sum_{m<p}b_mu^m
+      \equiv\operatorname {CT}(1-u\Lambda)^{p-1}\pmod p\).
+    The elementary Mellin coefficient identity and its
+    order-\(p-1\) exact-zero obstruction remain valid.  Calling this
+    scalar the Hasse--Witt invariant of a specified toric pencil,
+    including the parameter and Hodge-line normalization, requires a
+    separate geometric verification and is not used here.
 
 43. Plain binomial-window carriers have an exact top-band obstruction.
     For \(p>n/2\),
@@ -7752,30 +7760,35 @@ diagonal, yet every prime in \((n,2n]\) divides \(\binom{2n}{n}\).  Any
 successful theorem must use a feature specific to the Apéry initial state,
 not merely membership in one of these classes.
 
-## 27. Mellin normalization, exact-zero complexity, and density one
+## 27. Correct constant-term normalization, exact-zero complexity, and density one
 
 Let
 \[
- \Phi(x,y,z)=(1+x)(1+y)(1+z)(1+1/(xyz)).
+ \Lambda(x,y,z)=
+ \frac{(1+x)(1+y)(1+z)
+  \bigl((1+y)(1+z)+xyz\bigr)}{xyz}.
 \tag{27.1}
 \]
-Then \(b_m=\operatorname {CT}\Phi^m\).  For the toric pencil
-\(1-u\Phi=0\), the first Hasse--Witt scalar in the standard residue
-trivialization is
+The fixed constant-term lemma in `oracleC_result.tex` proves
+\(b_m=\operatorname {CT}\Lambda^m\).  In particular, the finite
+coefficient polynomial
 \[
  F_{<p}(u)=\sum_{0\le m<p}b_mu^m,
 \tag{27.2}
 \]
-because
+satisfies the purely algebraic identity
 \[
- \operatorname {CT}(1-u\Phi)^{p-1}
+ \operatorname {CT}(1-u\Lambda)^{p-1}
  \equiv\sum_{m<p}b_mu^m\pmod p.
 \tag{27.3}
 \]
-If the family is written as \(\Phi=t\), the period parameter is
-\(u=t^{-1}\); a change of Hodge-line trivialization may add a monomial
-unit.  Consequently the literal identity \(F_{<p}(t)=\alpha_p(t)\) in
-the \(\Phi=t\) coordinate is not correct.
+This follows from
+\(\binom{p-1}{m}(-1)^m\equiv1\pmod p\).  It does not by itself identify
+\(F_{<p}\) with a geometrically normalized Hasse--Witt invariant.  Such
+an identification for the pencil \(1-u\Lambda=0\), and its translation
+to any alternative family parameter, requires a separate check of the
+toric compactification, residue form, and Hodge-line trivialization.
+No geometric identification is assumed below.
 
 Finite Fourier inversion gives, for \(1\le r\le p-2\),
 \[
