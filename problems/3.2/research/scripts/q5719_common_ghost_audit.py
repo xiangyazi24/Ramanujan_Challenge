@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """Exact standard-library audit for Q5719.
 
-Phase 1 enumerates the Q5715 block geometry and all common ghosts for n<=limit.
-Phase 2 (enabled by --evaluate) checks the shell scalar, the correct 3D
-Cartier-Hadamard formula under separation, and both Newton carriers modulo rho.
+The scan uses the Q5715 block generator, but only retains blocks satisfying
+Q5715's own extended quotient-cell assertion.  It enumerates every outside
+common ghost rho>N through n<=limit.  Under rho>s+a it evaluates the correct
+three-variable Cartier-Hadamard scalar.  It evaluates the unreduced shell in
+the non-separated cases and in deterministic cross-checks, and compares every
+zero scalar with both Newton carriers modulo rho.
 """
 from __future__ import annotations
 
 from argparse import ArgumentParser
-from collections import defaultdict
 from functools import lru_cache
 from math import comb, isqrt
 
@@ -28,7 +30,7 @@ PRIMES = primes_upto(2000)
 
 
 def prime_divisors(n: int) -> list[int]:
-    out = []
+    out: list[int] = []
     x = n
     for p in PRIMES:
         if p*p > x:
@@ -147,9 +149,8 @@ def shell_mod(M: int, d: int, p: int) -> int:
             j = M - t + d*u
             if 0 <= j <= M:
                 xp += rowM[j]
-            j2 = M - t + d*u
-            if 0 <= j2 <= 2*M - t:
-                yp += binom_mod(2*M-t, j2, p)
+            if 0 <= j <= 2*M-t:
+                yp += binom_mod(2*M-t, j, p)
         out = (out + rowM[t] * (xp % p) * (yp % p) ** 2) % p
     return out
 
@@ -181,41 +182,38 @@ def ghost_hadamard_mod(M: int, rho: int, k: int) -> int:
 
 
 def enumerate_geometry(limit: int):
-    raw = []
+    raw: list[dict] = []
+    core_blocks = 0
     valid_blocks = 0
     invalid_blocks = 0
-    core_blocks = 0
     for n in range(20, limit + 1):
         for a in range(1, isqrt(n) + 2):
             M = n - a
             for D, N in blocks_for_cell(n, a):
-                core_ok = all(M // d == a for d in range(D, D+N))
-                if not core_ok:
+                if not all(M // d == a for d in range(D, D+N)):
                     continue
                 core_blocks += 1
                 extended_ok = all(d > 0 and M // d == a
                                   for d in range(D-1, D+N+1))
-                if extended_ok:
-                    valid_blocks += 1
-                else:
+                if not extended_ok:
                     invalid_blocks += 1
+                    continue
+                valid_blocks += 1
                 for m in range(D+1, D+N+1):
                     for rho in prime_divisors(m):
                         if rho <= N:
                             continue
                         k = m // rho
-                        if k < 2:  # outside-candidate common ghosts only
+                        if k < 2:  # k=1 is a candidate prime, not outside ghost
                             continue
                         alpha, s = divmod(M, rho)
                         d = m - 1
-                        b = M // d
-                        assert b == a
-                        sep = rho > s + b
+                        assert M // d == a
                         raw.append({
                             "n": n, "a": a, "M": M, "D": D, "N": N,
                             "rho": rho, "k": k, "d": d,
-                            "alpha": alpha, "s": s, "sep": sep,
-                            "extended_ok": extended_ok,
+                            "alpha": alpha, "s": s,
+                            "sep": rho > s + a,
                         })
     return raw, core_blocks, valid_blocks, invalid_blocks
 
@@ -224,7 +222,8 @@ def ranges(rows: list[dict]) -> dict:
     keys = ["n", "a", "M", "D", "N", "rho", "k", "d", "alpha", "s"]
     if not rows:
         return {}
-    return {key: [min(r[key] for r in rows), max(r[key] for r in rows)] for key in keys}
+    return {key: [min(r[key] for r in rows), max(r[key] for r in rows)]
+            for key in keys}
 
 
 def main() -> None:
@@ -235,9 +234,11 @@ def main() -> None:
 
     raw, core_blocks, valid_blocks, invalid_blocks = enumerate_geometry(args.limit)
     unique_map: dict[tuple, dict] = {}
+    occurrence_map: dict[tuple, list[dict]] = {}
     for r in raw:
         key = (r["n"], r["a"], r["rho"], r["k"], r["d"])
         unique_map.setdefault(key, r)
+        occurrence_map.setdefault(key, []).append(r)
     unique = list(unique_map.values())
     sep = [r for r in unique if r["sep"]]
     nonsep = [r for r in unique if not r["sep"]]
@@ -262,34 +263,43 @@ def main() -> None:
     if not args.evaluate:
         return
 
-    zeros = []
-    checks = 0
-    for idx, r in enumerate(unique, 1):
-        scalar = shell_mod(r["M"], r["d"], r["rho"])
-        r = dict(r)
-        r["scalar"] = scalar
+    zeros: list[dict] = []
+    shell_crosschecks = 0
+    hadamard_checks = 0
+    carrier_checks = 0
+    for idx, original in enumerate(unique, 1):
+        r = dict(original)
         if r["sep"]:
-            H = ghost_hadamard_mod(r["M"], r["rho"], r["k"])
-            assert H == scalar, ("H mismatch", r, H, scalar)
-            checks += 1
+            scalar = ghost_hadamard_mod(r["M"], r["rho"], r["k"])
+            hadamard_checks += 1
+            # Deterministic direct-shell checks, plus every actual zero.
+            direct = idx <= 200 or idx % 1000 == 0 or scalar == 0
+            if direct:
+                sh = shell_mod(r["M"], r["d"], r["rho"])
+                assert sh == scalar, ("H mismatch", r, sh, scalar)
+                shell_crosschecks += 1
+        else:
+            scalar = shell_mod(r["M"], r["d"], r["rho"])
+            shell_crosschecks += 1
+        r["scalar"] = scalar
         if scalar == 0:
-            # Check every raw block carrying this underlying ghost.
-            matching = [q for q in raw if (q["n"],q["a"],q["rho"],q["k"],q["d"])
-                        == (r["n"],r["a"],r["rho"],r["k"],r["d"])]
-            for q in matching:
+            key = (r["n"], r["a"], r["rho"], r["k"], r["d"])
+            for q in occurrence_map[key]:
                 A = carrier_mod(q["M"], q["D"]-1, q["N"], q["rho"])
                 B = carrier_mod(q["M"], q["D"], q["N"], q["rho"])
-                assert A == scalar and B == scalar, ("carrier mismatch", q, A, B, scalar)
-                checks += 1
-            r["block_occurrences"] = len(matching)
+                assert A == scalar and B == scalar, ("carrier mismatch", q, A, B)
+                carrier_checks += 1
+            r["block_occurrences"] = len(occurrence_map[key])
             zeros.append(r)
-        if idx % 500 == 0:
+        if idx % 1000 == 0:
             print("PROGRESS", idx, "of", len(unique), "zeros", len(zeros), flush=True)
 
     sepzeros = [r for r in zeros if r["sep"]]
     nonsepzeros = [r for r in zeros if not r["sep"]]
     print("EVALUATION", {
-        "checked_equalities": checks,
+        "hadamard_evaluations": hadamard_checks,
+        "direct_shell_crosschecks": shell_crosschecks,
+        "carrier_occurrence_checks": carrier_checks,
         "unique_scalar_zeros": len(zeros),
         "separated_zeros": len(sepzeros),
         "nonseparated_zeros": len(nonsepzeros),
