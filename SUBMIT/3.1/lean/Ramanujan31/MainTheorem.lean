@@ -112,9 +112,11 @@ theorem four_shape_sum_vanishes_of_root_mem
 `x` is `Re[ΔR]/π²`.  Its two external inputs are named:
 
 * `torsion` — `x` is rational with denominator dividing `2040 = lcm(120, 408)`,
-  the two `w₂` values coming from Merkurjev–Suslin;
+  the two `w₂` values coming from Merkurjev–Suslin.  (The write-up uses the
+  doubled bound `4080`, the extra factor `2` coming from the flattening
+  ambiguity; see `regulator_quotient_eq_4080`.)
 * `numeric` — `x` agrees with `−4/85` to well within `1/(2·2040²) ≈ 1.2·10⁻⁷`
-  (the computation gives `1.63·10⁻³⁰¹`).
+  (the computation gives `2·10⁻³⁰¹ (at 1000 bits)`).
 
 Given those, `x = −4/85` exactly.  Note `85 ∣ 2040`, a consistency check that the
 answer is compatible with the bound. -/

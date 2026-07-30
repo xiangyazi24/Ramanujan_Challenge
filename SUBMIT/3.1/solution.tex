@@ -429,8 +429,11 @@ endpoint data gives
 \]
 with
 $\bigl|\mathrm{Re}[\Delta\mathcal R]/\pi^2+\tfrac4{85}\bigr|
-=1.63\times10^{-301}$,
-far below the separation threshold. Rational reconstruction with denominator
+<2\times10^{-301}$,
+far below the separation threshold. (The residual is precision noise, not a
+quantity: independent runs at $1000$ bits give $1.11\times10^{-301}$ and
+$1.63\times10^{-301}$, so we quote the bound rather than a value. The Lean
+statement uses the threshold $10^{-300}$ for the same reason.) Rational reconstruction with denominator
 bound $Q$ therefore returns \emph{uniquely}
 \begin{equation}\label{eq:pin}
 \frac{\mathrm{Re}[\Delta\mathcal R]}{\pi^2}=-\frac4{85}.
@@ -451,9 +454,9 @@ divides $m=w_2(F)$ exactly as used above, but other normalisations of the
 Cheeger--Chern--Simons class carry conventional factors of $6$, $12$ or $24$.
 
 None of this affects the conclusion. The numerical certificate has error
-$1.63\times10^{-301}$ while the separation of rationals of denominator at most $Q$
+below $2\times10^{-301}$ while the separation of rationals of denominator at most $Q$
 is $1/Q^2$, so \eqref{eq:pin} follows from \emph{any} denominator bound
-$85\le Q\le 10^{150}$ (the sharp ceiling is $\sqrt{1/(2\varepsilon)}=1.75\times10^{150}$) --- roughly $146$ orders of magnitude of slack. A stray
+$85\le Q\le 10^{150}$ (the sharp ceiling is $\sqrt{1/(2\varepsilon)}=1.58\times10^{150}$) --- roughly $146$ orders of magnitude of slack, against the $Q=4080$ actually used. A stray
 factor of $6$ or $24$, or indeed of $10^{146}$, changes nothing. The Lean theorem
 \texttt{regulator\_quotient\_eq\_robust} states exactly this, and is instantiated
 there at the inflated bound $Q=24\cdot2040$, comfortably above the $4080$ used here.

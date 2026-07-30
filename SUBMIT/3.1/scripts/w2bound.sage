@@ -28,9 +28,12 @@ def w2_bound(f, name):
     print("  discriminant =", disc)
     print("  factored     =", factor(disc))
     print("  signature    =", K.signature())
-    # w_2 always contains the factor 24 for any number field (w_2(Q) = 24)
-    w2 = 1
-    details = []
+    # Merkurjev-Suslin: w_2(F) = 2 * prod_p p^{nu_p}, where nu_p is the largest
+    # nu with [F(zeta_{p^nu})^+ : F] = 1.  The LEADING FACTOR 2 is easy to drop
+    # and was dropped in an earlier version of this script, giving 60 and 204
+    # instead of 120 and 408 -- both of which fail the mandatory check 24 | w_2.
+    w2 = 2
+    details = ["2"]
     # candidate prime powers: the maximal real cyclotomic subfield
     # Q(zeta_m)^+ has degree phi(m)/2 (m>2); need phi(m)/2 | d
     for p in prime_range(2, 200):
@@ -68,10 +71,19 @@ print("Denominator bound for Re[Delta R]/pi^2")
 print("="*64)
 Q = lcm(wa, wb)
 print("  the difference of two torsion classes has order dividing lcm:")
-print("  Q = lcm(%d, %d) = %d" % (wa, wb, Q))
+print("  Q_0 = lcm(%d, %d) = %d" % (wa, wb, Q))
+print("  sanity check 24 | w_2 :", wa % 24 == 0, wb % 24 == 0)
 print()
-err = RealField(60)("1.6332113e-301")
-print("  measured error |value - (-4/85)| =", err)
+print("  the flattening ambiguity contributes a further factor 2 (all four")
+print("  endpoint shapes are real; see flattening_ambiguity.py), so")
+Q = 2*Q
+print("  Q = 2 * Q_0 =", Q)
+print()
+# The residual is numerical noise at the working precision, not a quantity:
+# the value IS -4/85.  Two independent runs at 1000 bits give 1.11e-301 and
+# 1.63e-301.  We use the larger as an upper bound.
+err = RealField(60)("2e-301")
+print("  residual bound |value - (-4/85)| <", err, "(at 1000 bits of precision)")
 print("  reconstruction is unique when err < 1/(2 Q^2):")
 print("     1/(2 Q^2) =", RealField(60)(1)/(2*Q^2))
 print("     err       =", err)

@@ -14,9 +14,10 @@ Kb.<bb>=NumberField(fb,embedding=RealField(400)("0.4068130813367900"))
 a=RRp(aa); b=RRp(bb)
 D=(sum(Rh(t) for t in sh(b,b))-sum(Rh(t) for t in sh(a^2,a))).real()
 q=RRp(D/CCp.pi()^2)
-Q=1020
+Q=4080
 print("value      =", q.n(60))
-print("bound Q    =", Q, "  (= lcm(w2(F_alpha), w2(F_beta)) = lcm(60,204))")
+print("bound Q    =", Q, "  (= 2*lcm(w2(F_alpha), w2(F_beta)) = 2*lcm(120,408);")
+print("             the factor 2 is the flattening ambiguity, see flattening_ambiguity.py)")
 print("1/(2Q^2)   =", (RRp(1)/(2*Q^2)).n(30))
 print()
 # unique rational with denominator <= Q within err

@@ -100,7 +100,7 @@ polynomial multiplication.
 **"The passage `torsion of order m ⟹ Rogers value in (1/m)π²ℤ` carries
 convention-dependent factors 6, 12, 24; your `Q = 2040` may be wrong."**
 `regulator_quotient_eq_robust` shows the conclusion holds for **any** bound
-`85 ≤ Q ≤ 10¹⁵⁰`.  The numerical certificate has error `1.63·10⁻³⁰¹` while the
+`85 ≤ Q ≤ 10¹⁵⁰`.  The numerical certificate has error below `2·10⁻³⁰¹` (at 1000 bits) while the
 separation of rationals of denominator `≤ Q` is `1/Q²`, so there are ~146 orders
 of magnitude of slack.  A stray factor of 6 or 24 — or of `10¹⁴⁶` — changes
 nothing.  The normalization question therefore does not have to be settled for

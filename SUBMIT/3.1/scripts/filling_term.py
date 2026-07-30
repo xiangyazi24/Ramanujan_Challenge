@@ -1,4 +1,22 @@
 #!/usr/bin/env python3
+"""SUPERSEDED -- kept only as a record of an argument that turned out to be wrong.
+
+This script supported the claim that the Dehn-filling correction makes no
+contribution because lambda_core is purely imaginary, hence lambda_core^2 is
+real.  That reasoning is INVALID: Neumann's correction is LINEAR in lambda_core,
+not quadratic (the quadratic lambda^2/4 belongs to the Neumann-Zagier deformation
+asymptotics, not the exact surgery formula).  For lambda_core = i*theta the
+correction is -theta*pi/2, which is real and not in general a rational multiple
+of pi^2.
+
+The claim it was meant to support is now established a different way, and the
+correct script is  flattening_ambiguity.py :  at both endpoints all four shapes
+are REAL, so ANY flattening change moves Re[Delta R]/pi^2 by a half-integer.  The
+denominator bound therefore only doubles, and no flattening has to be exhibited.
+
+Original docstring follows.
+"""
+
 """Does the Dehn-filling correction contribute to Bloch-Wigner at conjugate
 embeddings?
 
