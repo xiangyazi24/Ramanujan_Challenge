@@ -1,0 +1,41 @@
+name: Q5711 temporary first-cell audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/q5711-main-audit.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch isolated Q5711 audit
+        shell: bash
+        run: |
+          git fetch origin chatgpt-drop
+          git show origin/chatgpt-drop:problems/3.2/research/scripts/q5711_first_cell_audit.py > /tmp/q5711_audit.py
+      - name: Run exact standard-library audit
+        shell: bash
+        run: |
+          set +e
+          python3 /tmp/q5711_audit.py > q5711-audit.out 2>&1
+          echo $? > q5711-audit.status
+          exit 0
+      - name: Persist output on chatgpt-drop
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout chatgpt-drop
+          cp q5711-audit.out q5711-audit.status ./
+          git add q5711-audit.out q5711-audit.status
+          git commit -m 'Record Q5711 first-cell audit output' || exit 0
+          git push origin HEAD:chatgpt-drop
