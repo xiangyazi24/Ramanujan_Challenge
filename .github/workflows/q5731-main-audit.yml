@@ -1,10 +1,6 @@
 name: Q5731 exact first-digit audit
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/q5731-main-audit.yml'
   pull_request:
     branches: [main]
     paths:
@@ -15,7 +11,7 @@ permissions:
 
 jobs:
   audit:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
