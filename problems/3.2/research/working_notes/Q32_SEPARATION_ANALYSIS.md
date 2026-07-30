@@ -531,6 +531,76 @@ pointwise theorem.
     below the sufficient threshold
     \(o(N^2/\log^2N)\), but remains finite evidence.
 
+45. Kummer-only factorial carriers are now closed in a precise sense.
+    For \(p=n-r>n/2\),
+    \[
+      v_p\binom nk={\bf1}_{\{r<k<p\}}.
+    \]
+    More generally the top-half valuations of an integral signed
+    factorial ratio are an explicit nonnegative linear combination of
+    floor functions.  Any integer universally containing all primes in
+    a positive-width band \((\alpha n,\beta n]\) has logarithmic height
+    at least \((\beta-\alpha)n+o(n)\), irrespective of signed
+    cancellation.  Conversely,
+    \[
+      n-r=(r+1)\frac{\binom n{r+1}}{\binom nr}
+    \]
+    isolates the individual top-half coordinate \(p=n-r\).  Thus the
+    broad signed class realizes every nonnegative target pattern; its
+    target-adaptive optimum is exactly the unknown radical.  A useful
+    factorial carrier must therefore import a new Apéry-specific
+    support theorem, not a better Kummer window.
+
+46. The pair-energy audit gives genuine but nonterminal savings.  For
+    the top-half prime set
+    \({\cal T}_n=\{p:n/2<p\le n,\ p\mid b_n\}\) and
+    \(H_2(N)=\sum_{N<n\le2N}|{\cal T}_n|(|{\cal T}_n|-1)\),
+    \[
+    \begin{aligned}
+      H_2(N)&\ll N^{8/3}/\log^2N,\\
+      H_{2,\le H}(N)&\ll HN^{5/3}/\log^2N,\\
+      H_{2,\le H}^{\rm deg}(N)&\ll NH^2/\log^2N.
+    \end{aligned}
+    \]
+    If \(d_{p,n}=(p-1)/\gcd(p-1,n-1)\), the sector with at least one
+    \(d_{p,n}\le D\) is
+    \(O(DM_NN^{5/3}/\log N)\), where
+    \(M_N=\max_{m\le2N}\tau(m)=N^{o(1)}\).  One must take an explicit
+    cutoff such as
+    \(D_N=N^{1/3}/(M_N\log^2N)\); the phrase
+    \(N^{1/3-o(1)}\) is not uniform enough by itself.  Long-gap
+    degenerate pairs remain in the full energy, so the full residual
+    cannot be called pure cross.  Under a hypothetical pointwise spike,
+    however, adjacent-gap pigeonholing rigorously leaves
+    \(\gg N/\log N\) high-order pure-cross pairs of gap \(O(\log N)\).
+    No current estimate contradicts that sparse-column configuration.
+
+47. The proposed adjacent-denominator stability lemma is equivalent to,
+    rather than stronger evidence for, the missing channel.  If
+    \(a_n=A_n/C_n\) is reduced and
+    \[
+      T_n^{\rm den}=
+      \frac{\operatorname {lcm}(C_n,C_{n+1})}
+           {\gcd(C_n,C_{n+1})},
+    \]
+    then the adjacent Casoratian gives exact directional divisibilities
+    and
+    \[
+      T_n^{\rm den}\mid(n+1)^3b_nb_{n+1}.
+    \]
+    Moreover the hole carrier in item 39 satisfies
+    \[
+      \kappa_n=
+      \gcd\!\left(
+       \frac{C_{n-1}}{\gcd(C_{n-1},C_n)},
+       \frac{C_{n+1}}{\gcd(C_n,C_{n+1})}\right)
+      \mid\gcd(T_{n-1}^{\rm den},T_n^{\rm den}).
+    \]
+    After the proved small-prime, outer-coordinate, and boundary
+    errors, \(\log T_n^{\rm den}=o(n)\) is equivalent to the channel-\(B\)
+    bound at \(n\) and \(n+1\).  It is a useful exact diagnostic but
+    supplies no independent anti-spike input.
+
 Thus Routes A and B are closed **as presently formulated**. This is not a
 disproof of `log G_n=o(n)`. It identifies the exact missing ingredient:
 cross-prime, Apéry-specific Archimedean/p-adic coupling not already contained
@@ -7880,3 +7950,271 @@ This proves a rigid coverage-height tradeoff for the whole plain-window
 family.  It does not exclude signed factorial ratios or an
 Apéry-dependent multiscale carrier, but any such construction must leave
 this one-parameter family.
+
+## 29. Exact saturation of Kummer and factorial-ratio carriers
+
+Let \(p>n/2\) and write \(n=p+r\).  Since \(p\le n<2p\),
+Legendre's formula gives the exact step vector
+\[
+ v_p\binom nk
+ =1-{\bf1}_{\{k\ge p\}}-{\bf1}_{\{k\le r\}}
+ ={\bf1}_{\{r<k<p\}}.
+\tag{29.1}
+\]
+Consequently every signed product
+\[
+ F_n=\prod_j\binom n{k_j}^{c_j}\in\mathbb Z\setminus\{0\}
+\tag{29.2}
+\]
+has a top-half valuation vector which is an integral linear
+combination of nested step functions.  More generally, for
+\[
+ F_n=\prod_i M_i(n)!^{e_i}\in\mathbb Z\setminus\{0\},
+ \qquad M_i(n)=O(n),
+\tag{29.3}
+\]
+one has, for all sufficiently large \(n\) and \(p>n/2\),
+\[
+ v_p(F_n)=\sum_i e_i\left\lfloor\frac{M_i(n)}p\right\rfloor.
+\tag{29.4}
+\]
+Exact division changes the presentation but not the nonnegative
+valuation of the final integer.
+
+It follows without any assumption on the representation that if \(F_n\)
+contains every prime in a fixed band \((\alpha n,\beta n]\), then
+\[
+ \log|F_n|
+ \ge\vartheta(\beta n)-\vartheta(\alpha n)
+ =(\beta-\alpha)n+o(n).
+\tag{29.5}
+\]
+Partitioning the band or multiplying signed multiscale ratios merely
+redistributes this Chebyshev cost.
+
+There is also an exact converse saturation.  For \(0\le r<n/2\), put
+\[
+ L_{n,r}:=(r+1)\frac{\binom n{r+1}}{\binom nr}=n-r.
+\tag{29.6}
+\]
+For a top-half prime \(q\),
+\[
+ v_q(L_{n,r})={\bf1}_{\{q=n-r\}}.
+\tag{29.7}
+\]
+Thus integral signed factorial ratios project onto the full nonnegative
+orthant of top-half prime valuations.  If the target set is already
+known, the optimal carrier in this class is
+\[
+ \prod_{p\in{\cal T}_n}L_{n,n-p}
+ =\prod_{p\in{\cal T}_n}p.
+\tag{29.8}
+\]
+Likewise taking a gcd with a candidate primorial performs the exact
+Boolean target selection and returns the desired radical.  These
+constructions are circular, not contradictory to (29.5).
+
+The reason is visible in the distinguished Apéry sum.  For \(r<p\),
+every summand surviving in \(b_r\bmod p\) is a \(p\)-adic unit; targetness
+is additive cancellation among those units.  It is invisible to the
+factorial valuation vector.  Hence this route can reopen only after a new
+Apéry congruence places every target in a deterministic support of
+sublinear Chebyshev weight, or after an initial-state-specific additive
+identity produces a nonzero carrier of sublinear height.
+
+## 30. Pair energy: proved sectors and the exact pointwise residual
+
+For this section use the common-coefficient target set
+\[
+ {\cal T}_n=\{p:n/2<p\le n,\ p\mid b_n\},
+ \qquad K_n=|{\cal T}_n|,
+\tag{30.1}
+\]
+which suffices by Section 26, and put
+\[
+ H_2(N)=\sum_{N<n\le2N}K_n(K_n-1).
+\tag{30.2}
+\]
+If \(p<\ell\) are two targets, set
+\[
+ h=\ell-p,\qquad s=n-\ell.
+\tag{30.3}
+\]
+Then the collision is exactly
+\[
+ \ell\mid b_s,\qquad p\mid b_{s+h},
+ \qquad0\le s<s+h<p<\ell.
+\tag{30.4}
+\]
+The two zero conditions live in different characteristics.
+
+The incidence count and \(|Z_p|\ll p^{2/3}\) give
+\[
+ \sum_{N<n\le2N}K_n\ll N^{5/3}/\log N,
+\qquad
+ H_2(N)\ll N^{8/3}/\log^2N.
+\tag{30.5}
+\]
+For a fixed gap \(h\), Selberg's upper-bound sieve gives
+\[
+ \#\{p\asymp N:p,\ p+h\ {\rm prime}\}
+ \ll{\mathfrak S}(h)N/\log^2N,
+\tag{30.6}
+\]
+and \(\sum_{h\le H}{\mathfrak S}(h)\ll H\).  Hence
+\[
+ H_{2,\le H}(N)\ll HN^{5/3}/\log^2N.
+\tag{30.7}
+\]
+
+Call (30.4) degenerate if one characteristic also sees the opposite
+endpoint as a zero.  The gap continuant
+\[
+ N_0(X)=0,\quad N_1(X)=1,\quad
+ N_{h+1}(X)=P(X+h)N_h(X)-(X+h)^6N_{h-1}(X)
+\tag{30.8}
+\]
+then vanishes modulo \(p\) or \(\ell\) at \(s\).  For \(h<p\), the
+proved content lemma says that \(N_h\) is nonzero modulo both
+characteristics and has degree \(3(h-1)\).  Thus a fixed prime pair has
+at most \(6(h-1)\) degenerate indices.  Combining this root count with
+(30.6) gives the sharper shell estimate
+\[
+ \boxed{
+ H_{2,\le H}^{\rm deg}(N)\ll NH^2/\log^2N.}
+\tag{30.9}
+\]
+It makes every degenerate range \(H=o(\sqrt N)\) negligible for the
+desired second-moment scale, but does not control longer gaps.
+
+There is a separate divisor-theoretic pruning.  Put
+\[
+ d_{p,n}=\frac{p-1}{\gcd(p-1,n-1)},\qquad
+ M_N=\max_{m\le2N}\tau(m).
+\tag{30.10}
+\]
+Writing \(m=n-1\), \(g=\gcd(p-1,m)\), and \(j=m/g\) gives
+\[
+ p-1=d_{p,n}\frac mj,\qquad
+ j\mid m,\quad(d_{p,n},j)=1,\quad d_{p,n}\le j\le2d_{p,n}.
+\tag{30.11}
+\]
+Therefore the number of candidates with \(d_{p,n}\le D\) is at most
+\(D\tau(n-1)\), and
+\[
+\begin{aligned}
+ H_2^{LL}(N;D)&\ll ND^2\log(2D)+D^4,\\
+ H_2^{L*}(N;D)&\ll DM_NN^{5/3}/\log N.
+\end{aligned}
+\tag{30.12}
+\]
+A valid nearly-primitive cutoff is
+\[
+ D_N=\frac{N^{1/3}}{M_N\log^2N}=N^{1/3-o(1)}.
+\tag{30.13}
+\]
+The quantifier matters: (30.12) does not justify every cutoff described
+informally as \(N^{1/3-o(1)}\).
+
+Equations (30.7), (30.9), and (30.12) do not reduce the entire energy to
+pure-cross collisions, because long-gap degenerate pairs remain.  They
+do give a clean pointwise reductio.  If one \(n\in(N,2N]\) had
+\(K_n\ge\varepsilon N/\log N\), removing the low-order targets in
+(30.13) leaves the same order of magnitude.  Ordering the remaining
+primes and pigeonholing their adjacent gaps produces
+\(\gg_\varepsilon N/\log N\) gaps of size \(O_\varepsilon(\log N)\);
+only \(O_\varepsilon(\log^2N)\) can be degenerate by the continuant
+carrier.  Thus a forbidden spike forces
+\[
+ \gg_\varepsilon N/\log N
+\tag{30.14}
+\]
+high-order pure-cross adjacent pairs at that same column.  The shell
+bound (30.7) is still large enough to accommodate \(O(N^{2/3})\) such
+columns.  A pointwise batch relation for (30.14), not another
+one-characteristic row estimate, is the remaining pair-energy theorem.
+
+## 31. Adjacent denominator variation is equivalent to channel \(B\)
+
+Write \(a_n=A_n/C_n\) in lowest terms and set
+\[
+ g_n=\gcd(C_n,C_{n+1}),\qquad
+ U_n=C_n/g_n,\qquad V_n=C_{n+1}/g_n,
+\tag{31.1}
+\]
+so that
+\[
+ T_n^{\rm den}=U_nV_n
+ =\frac{\operatorname {lcm}(C_n,C_{n+1})}
+        {\gcd(C_n,C_{n+1})}.
+\tag{31.2}
+\]
+The adjacent Casoratian
+\[
+ a_{n+1}b_n-a_nb_{n+1}=\frac6{(n+1)^3}
+\tag{31.3}
+\]
+gives, after clearing the coprime denominator directions,
+\[
+ U_n\mid(n+1)^3b_{n+1},\qquad
+ V_n\mid(n+1)^3b_n,
+\tag{31.4}
+\]
+and hence
+\[
+ T_n^{\rm den}\mid(n+1)^3b_nb_{n+1}.
+\tag{31.5}
+\]
+These statements remain valid when one reduced denominator has
+\(p\)-adic exponent zero.
+
+Primewise, if
+\[
+ c=v_p(C_n),\quad d=v_p(C_{n+1}),\quad
+ e=v_p(b_n),\quad f=v_p(b_{n+1}),
+\tag{31.6}
+\]
+then
+\[
+\begin{aligned}
+ (d-c)_+&\le3v_p(n+1)+e,\\
+ (c-d)_+&\le3v_p(n+1)+f.
+\end{aligned}
+\tag{31.7}
+\]
+When \(p\nmid n+1\), a denominator rise is charged to \(b_n\) and a
+drop is charged to \(b_{n+1}\).
+
+The strict-hole carrier in Section 25 has the sharper exact identity
+\[
+ \kappa_n=
+ \gcd(U_{n-1},V_n)
+ \mid\gcd(T_{n-1}^{\rm den},T_n^{\rm den}),
+\tag{31.8}
+\]
+which also reproves \(\kappa_n\mid b_n\).
+
+The contribution of \(p\le\sqrt n\) to
+\(\log T_n^{\rm den}\) is \(O(\sqrt n)\).  For \(p>\sqrt n\), remove
+the already controlled outer-coordinate primes, of total weight
+\(O(n^{2/3})\), and the quotient boundary \(p\mid n+1\).  The block law
+and nonconsecutivity then show that \(p\mid T_n^{\rm den}\) exactly when
+the lower digit at \(n\) or \(n+1\) is a channel-\(B\) zero.  Consequently
+\[
+\begin{aligned}
+ B_B(n)&\le\log T_n^{\rm den}+O(n^{2/3}),\\
+ \log T_n^{\rm den}
+ &\le3B_B(n)+3B_B(n+1)+O(n^{2/3}).
+\end{aligned}
+\tag{31.9}
+\]
+Thus
+\[
+ \boxed{
+ \log T_n^{\rm den}=o(n)\ {\rm for\ all}\ n
+ \quad\Longleftrightarrow\quad
+ B_B(n)=o(n)\ {\rm for\ all}\ n.}
+\tag{31.10}
+\]
+The adjacent-stability formulation is exact and useful for diagnostics,
+but it does not weaken the horizontal anti-spike problem.
