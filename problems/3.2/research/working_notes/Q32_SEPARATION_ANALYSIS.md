@@ -4724,3 +4724,144 @@ pay the moving folded determinant.  Clearing those determinants
 simultaneously restores a linear-height Kummer product.  Reopening this
 route requires an identity outside that transfer module which couples
 folded edges in different characteristics.
+
+## 15. Correction to the short endpoint-transfer audit
+
+A proposed follow-up attempted to combine the two precision-eight target
+laws by transporting the recurrence state from \(2p-1\) to \(2q-1\),
+where \(p<q=p+h<2p\).  Its main local calculation was not correct.
+
+Put
+\[
+ S_k=
+ \begin{pmatrix}
+  P(k)/(k+1)^3&-k^3/(k+1)^3\\
+  1&0
+ \end{pmatrix},
+ \qquad
+ T_{p,q}=S_{2q-2}\cdots S_{2p-1}.
+\tag{15.1}
+\]
+Then
+\[
+ y_{2q-1}=T_{p,q}y_{2p-1},
+ \qquad
+ \det T_{p,q}=\left(\frac{2p-1}{2q-1}\right)^3.
+\tag{15.2}
+\]
+In the short-gap range \(0<h<p/2\), the index interval in (15.1)
+contains the two \(p\)-singular steps \(2p-1,2p\), but it contains no
+\(q\)-singular step.  The singular pair has integral numerator
+\[
+ M_{2p}M_{2p-1}\equiv
+ \begin{pmatrix}-25&5\\-5&1\end{pmatrix}\pmod p.
+\tag{15.3}
+\]
+It has rank one and a unit entry, while its determinant has valuation
+six and the transfer denominator has valuation three.  Hence
+\[
+ \operatorname{SmithExp}_p(T_{p,q})=(-3,3).
+\tag{15.4}
+\]
+
+At \(q\), every \(k\) and \(k+1\) occurring in (15.1) is a \(q\)-unit:
+for \(h\le p-2\),
+\[
+ q<2p-1\le k<k+1\le2q-1<2q.
+\]
+Consequently every individual \(S_k\) belongs to
+\(\operatorname{GL}_2(\mathbb Z_q)\), and so do their product and its
+inverse:
+\[
+ \boxed{\operatorname{SmithExp}_q(T_{p,q})=(0,0).}
+\tag{15.5}
+\]
+In particular, the symmetric claim
+\[
+ \operatorname{SmithExp}_q(T_{p,q}^{-1})=(-3,3)
+\]
+is false: reversing the same transfer does not introduce the absent
+steps \(2q-1,2q\).
+
+There are two full-range endpoint effects which are irrelevant to a
+logarithmic prime gap but useful for auditing the indices.  Exact
+fraction arithmetic for every checked pair \(5\le p<100\) gives
+\[
+\begin{array}{c|c|c}
+\text{condition}&\operatorname{SmithExp}_p(T_{p,q})
+ &\operatorname{SmithExp}_q(T_{p,q})\\ \hline
+2h=p+1&(-3,0)&(0,0),\\
+h=p-1&(-3,3)&(0,3),\\
+\text{otherwise}&(-3,3)&(0,0).
+\end{array}
+\tag{15.6}
+\]
+The short row (15.4)--(15.5) is proved above.  Table (15.6) is recorded
+as an exact finite audit, not as a proved all-\(p\) classification of the
+additional \(p\)-singular block.
+The last \(q\)-endpoint case cannot be an actual top-half target pair
+for \(q>5\): it gives \(q=2p-1\), and \(q\le n<2p\) then forces
+\(q=n\), whereas \(b_q\equiv b_1=5\pmod q\).
+The exact reproducer checks all \(212\) prime pairs with
+\(5\le p<100\), including \(104\) short-gap pairs:
+
+```text
+../scripts/q32_endpoint_transfer_smith_audit.py
+```
+
+This correction invalidates the claimed two-sided Smith/Fitting proof of
+a no-go theorem.  It does **not** by itself produce a positive carrier.
+On the corrected lattice, the \(q\)-transport is unimodular and the only
+moving denominator clearer comes from \(p\).  Thus any elimination that
+uses that clearer obtains its \(p\)-factor from a coefficient, not from
+the target condition.  A rigorous conclusion about the primitive scalar
+elimination ideal still requires the actual presentation of all local
+target coordinates; the schematic two-row argument does not supply it.
+
+### 15.1 Corrected nested-reflection check
+
+The related nested-Casoratian proposal also needs its endpoints oriented
+correctly.  For the three-target example \(n=321\),
+\[
+ 321=193+128=179+142,
+\]
+and reflection gives
+\[
+ 128\longleftrightarrow64\pmod {193},
+ \qquad
+ 142\longleftrightarrow36\pmod {179}.
+\]
+The actual nested intervals are therefore
+\[
+ [64,128]\subset[36,142],
+\tag{15.7}
+\]
+not the intervals used in the proposed numerical check.
+
+For the four ordered endpoints \(36,64,128,142\), the Plücker identity is
+\[
+\begin{aligned}
+ &K(36,64)K(128,142)
+ -K(36,128)K(64,142)\\
+ &\hspace{31mm}
+ +K(36,142)K(64,128)=0.
+\end{aligned}
+\tag{15.8}
+\]
+The first product has total boundary gap \(28+14=42=3h\).
+The last product contains the two target reflection determinants and is
+divisible by \(179\cdot193\) after denominator clearing.  But the middle
+product still contains gaps \(92\) and \(78\), and each of its two factors
+is a unit in both relevant characteristics.  Exact continuant evaluation
+confirms all four unit statements.
+
+There is a more basic selectivity obstruction.  The prime factor in each
+reflection continuant is the universal factor
+\(2x+d+1\) imposed by reflection of the recurrence; it is present whether
+or not the distinguished Apéry solution vanishes at the endpoints.
+After this universal factor is removed, the reflection determinant has
+no remaining target-prime divisibility in the example.  Hence nested
+Plücker condensation of the ordinary Casoratians cannot be the missing
+pure-cross carrier.  A viable nested construction would have to use a
+divided target quotient or another observable beyond the universal
+reflection transfer.
