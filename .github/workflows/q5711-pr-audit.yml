@@ -1,0 +1,17 @@
+name: Q5711 PR audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'problems/3.2/research/scripts/q5711_first_cell_audit.py'
+      - '.github/workflows/q5711-pr-audit.yml'
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact audit
+        run: python3 problems/3.2/research/scripts/q5711_first_cell_audit.py
