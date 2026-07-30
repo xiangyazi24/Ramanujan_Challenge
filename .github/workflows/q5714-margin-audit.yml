@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'problems/3.2/research/scripts/q5714_margin_audit.py'
+      - 'problems/3.2/research/scripts/q5714_margin_audit_trigger.py'
 
 permissions:
   contents: write
