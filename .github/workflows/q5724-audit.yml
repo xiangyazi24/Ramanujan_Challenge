@@ -12,6 +12,9 @@ on:
       - '.github/workflows/q5724-audit.yml'
 permissions:
   contents: read
+concurrency:
+  group: q5724-minimal-recurrence
+  cancel-in-progress: true
 jobs:
   audit:
     runs-on: ubuntu-latest
