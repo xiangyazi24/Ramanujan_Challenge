@@ -13343,3 +13343,230 @@ continuation must supply one of two inputs not present here:
 2. a nonlinear cross-characteristic identity for the distinguished
    coefficient array whose interval-prime radical has sublinear total
    height.
+
+## 68. The shortest divided Newton jet and a doubled-period coordinate
+
+The first alternative at the end of Section 67 can be tested with the
+shortest possible common-node stencil.  The result is unusually explicit:
+after the universal node factor is divided out, the new coordinate is a
+fixed doubled-period sequence.  It is not forced to vanish on the target
+locus.
+
+### 68.1 An exact second-layer scalar
+
+Let \(Y_d=C_M(d)\), and let \(p-1\) be the common node of the two
+length-one carriers.  Directly from the Newton weights,
+\[
+ \begin{aligned}
+ G_{p-2,1}&=pY_{p-2}-(p-1)Y_{p-1},\\
+ G_{p-1,1}&=(p+1)Y_{p-1}-pY_p.
+ \end{aligned}
+\tag{68.1}
+\]
+Consequently
+\[
+ \boxed{\quad
+ G_{p-2,1}-G_{p-1,1}
+ =p\{Y_{p-2}-2Y_{p-1}+Y_p\}.
+ \quad}
+\tag{68.2}
+\]
+If \(p\mid Y_{p-1}\), write \(Y_{p-1}=pz\).  Then
+\[
+ \begin{aligned}
+ G_{p-2,1}/p&\equiv Y_{p-2}+z\pmod p,\\
+ G_{p-1,1}/p&\equiv z-Y_p\pmod p,
+ \end{aligned}
+\tag{68.3}
+\]
+and the unknown first shell digit cancels:
+\[
+ \boxed{\qquad
+ \frac{G_{p-2,1}-G_{p-1,1}}p
+ \equiv Y_{p-2}+Y_p\pmod p.
+ \qquad}
+\tag{68.4}
+\]
+
+For a top-half target put
+\[
+ n=p+r,\qquad s=r-1,\qquad M=n-1=p+s.
+\tag{68.5}
+\]
+The Cartier identity (49.6), summed over its complete coefficient
+packet, gives
+\[
+ C_{p+s}(p)\equiv
+ b_s\sum_{\kappa}c_1(\kappa)
+ =40b_s\pmod p.
+\tag{68.6}
+\]
+There is also an exact characteristic-zero sequence behind the other
+shell.  Define
+\[
+ \begin{aligned}
+ h_s
+ &=
+ \sum_{\kappa\in\operatorname {Supp}\Lambda}
+ c_1(\kappa)c_s(-2\kappa)\\
+ &=\operatorname {CT}\{\Lambda(X)^s\Lambda(X^2)\},
+ \qquad
+ J_s=h_s+40b_s.
+ \end{aligned}
+\tag{68.7}
+\]
+
+Suppose \(s\le p-5\).  Then
+\[
+ p+s<2(p-2),
+\tag{68.8}
+\]
+so \(C_{p+s}(p-2)\) is in the strict first cell and its shell labels
+\(\kappa\) lie in \(P\cap\mathbb Z^3\).  Freshman's dream writes a
+contributing exponent as
+\[
+ p\alpha+\beta=(p-2)\kappa,\qquad
+ \alpha\in P,\quad\beta\in sP.
+\tag{68.9}
+\]
+If \(\alpha\ne\kappa\), some coordinate of their difference has absolute
+value at least one.  Since every coordinate of \(\kappa\) has absolute
+value at most one, the corresponding coordinate of
+\[
+ \beta=p(\kappa-\alpha)-2\kappa
+\tag{68.10}
+\]
+has absolute value at least \(p-2>s\), contrary to
+\(sP\subset[-s,s]^3\).  Hence \(\alpha=\kappa\) and
+\(\beta=-2\kappa\), proving
+\[
+ \boxed{\qquad
+ C_{p+s}(p-2)\equiv h_s\pmod p
+ \qquad(s\le p-5).
+ \qquad}
+\tag{68.11}
+\]
+
+For \(p>5\), reflection excludes the residue \(r=p-2\), because it is
+paired with \(1\) and \(b_1=5\).  The next boundary \(r=p-3\) can be a
+target only when \(p\mid b_2=73\), giving the single pair
+\((p,r)=(73,70)\).  Thus every other top-half target satisfies the
+hypothesis of (68.11).  Combining (68.4), (68.6), and (68.11) gives
+the exact shortest-jet law
+\[
+ \boxed{\qquad
+ \frac{G_{p-2,1}-G_{p-1,1}}p
+ \equiv J_{r-1}\pmod p.
+ \qquad}
+\tag{68.12}
+\]
+The boundary target \((73,70)\) is handled directly; its divided
+difference is \(64\pmod {73}\).
+
+Equation (68.12) is the first fully explicit Apéry-specific coordinate
+after division by universal Newton content.  It is not a second target
+zero.  The dependency-free exact scan through \(n\le10000\) found \(824\)
+top-half targets with \(p>5\), and only
+\[
+ \begin{array}{c|c|c|c}
+ n&p&r=s+1&J_s\bmod p\\ \hline
+ 117&61&56&0\\
+ 216&139&77&0\\
+ 2539&1847&692&0
+ \end{array}
+\tag{68.13}
+\]
+had a vanishing divided difference.  The corresponding exact common
+divisors are
+\[
+ \begin{aligned}
+ \gcd(b_{56},J_{55})&=57035=5\cdot11\cdot17\cdot61,\\
+ \gcd(b_{77},J_{76})&=695=5\cdot139,\\
+ \gcd(b_{692},J_{691})
+ &=15745675=5^2\cdot11\cdot31\cdot1847.
+ \end{aligned}
+\tag{68.14}
+\]
+These identities explain the three exceptions but do not bound their
+future number.
+
+The larger hostile blocks give the same verdict away from the shortest
+stencil.  Let
+\[
+ B=\binom{D+N}{N},\qquad
+ \delta=\Delta^{N+1}C_{n-1}(D-1).
+\tag{68.15}
+\]
+For all eleven targets in the five blocks of (56.12), \(v_p(B)=1\),
+and exact computation gives
+\[
+ \begin{array}{c|c|c|c}
+ n&p&\delta\bmod p&
+ (G_{D-1,N}-G_{D,N})/p\bmod p\\ \hline
+ 200&139&22&13\\
+ 200&181&37&130\\
+ 272&191&52&63\\
+ 272&233&83&30\\
+ 300&191&43&117\\
+ 300&227&128&31\\
+ 321&179&159&40\\
+ 321&193&150&104\\
+ 321&211&197&55\\
+ 755&593&174&145\\
+ 755&733&639&77
+ \end{array}
+\tag{68.16}
+\]
+Thus every displayed adjacent difference has exactly one copy of its
+target prime, namely the universal copy in \(B\).  The target condition
+does not supply a second copy.
+
+### 68.2 A low-order recurrence is strongly indicated, but not certified
+
+The doubled-period coordinate in (68.7) is much smaller algebraically
+than the complete first-cell shell.  Its initial values are
+\[
+ h_s=
+ 5,25,545,14917,429029,12570545,372777785,11164475165,\ldots.
+\tag{68.17}
+\]
+An exact rational-nullspace computation on \(126\) independently
+generated terms found a unique candidate
+\[
+ \sum_{j=0}^3P_j(s)J_{s+j}=0,
+ \qquad \deg P_j\le21.
+\tag{68.18}
+\]
+The first \(100\) recurrence positions reconstructed the
+one-dimensional kernel, and all \(23\) held-out positions vanished
+exactly over \(\mathbb Z\).  A separate computation modulo
+\(1000000007\), using \(260\) terms and \(30\) held-out positions, found
+no operator of order one or two through coefficient degree \(30\), and
+found the same order-three, degree-\(21\) operator.
+
+This is a recurrence **guess**, not a theorem.  No Griffiths--Dwork or
+creative-telescoping certificate for (68.18) has yet been produced.
+The script `q32_doubled_period_recurrence_guess.py` stores the primitive
+integer operator and independently verifies all \(123\) exact
+recurrence positions.  It deliberately labels the result as uncertified.
+
+Even a proof of (68.18) would not by itself prove the required
+little-oh estimate.  The scalar \(J_s\) is usually a unit at a target,
+not another vanishing observation, and fixed-order recurrences do not
+bound a moving-prime radical without an additional horizontal theorem.
+The precise conclusion of this section is narrower:
+
+* the first divided Newton layer is a concrete doubled period, rather
+  than an unspecified free jet;
+* that period is not target-forced, both formally and in the actual
+  data;
+* the straightforward \(p^2\) continuation of the beta--Padé/Newton
+  route is therefore blocked;
+* any use of the apparent order-three module must exploit
+  cross-characteristic transversality, not promote \(J_s\) to a second
+  target equation.
+
+The script `q32_newton_second_layer_audit.py` independently verifies the
+shell formula by Lucas binomial arithmetic, checks \(411\) small exact
+shells against direct integer evaluation, and reproduces all \(824\)
+targets and the three exceptions in (68.13).
