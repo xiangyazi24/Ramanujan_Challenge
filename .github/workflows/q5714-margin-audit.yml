@@ -6,9 +6,10 @@ on:
     paths:
       - 'problems/3.2/research/scripts/q5714_margin_audit.py'
       - 'problems/3.2/research/scripts/q5714_margin_audit_trigger.py'
+      - 'problems/3.2/research/scripts/q5714_margin_audit_trigger2.py'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   audit:
@@ -16,9 +17,6 @@ jobs:
     timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-          fetch-depth: 0
       - name: Run exact standard-library audit
         shell: bash
         run: |
@@ -26,11 +24,12 @@ jobs:
           python3 problems/3.2/research/scripts/q5714_margin_audit.py > q5714-audit.out 2>&1
           echo $? > q5714-audit.status
           exit 0
-      - name: Persist exact output
-        shell: bash
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add q5714-audit.out q5714-audit.status
-          git commit -m 'Record Q5714 margin audit output' || exit 0
-          git push origin HEAD:${{ github.head_ref }}
+      - name: Upload exact output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q5714-audit-output
+          path: |
+            q5714-audit.out
+            q5714-audit.status
+          if-no-files-found: error
