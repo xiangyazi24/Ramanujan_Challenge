@@ -653,6 +653,24 @@ pointwise theorem.
     equations.  Any useful higher jet must escape this coboundary rather
     than count it as a second independent defect coordinate.
 
+52. The latest companion-block calculation supplies exact regularized
+    jets through \(q^3\), but its strongest projective statement remains
+    conjectural.  At an actual lower digit \(q\mid b_j\), both divided
+    coordinates are multiples of the same scalar
+    \[
+      \omega_{q,k,j}=b_j/q+kW_j\pmod q.
+    \]
+    Hence the first divided Apéry and companion columns remain
+    projectively rank one.  The stronger congruence
+    \[
+      q^3a_{kq+j}b_k\equiv a_kb_{kq+j}\pmod {q^3}
+    \]
+    passes \(383498\) exact tests in the enlarged audit but has no
+    symbolic proof yet; it must not be cited as a theorem.  Even if
+    proved, it propagates one anchor projective relation through a block
+    and creates no second target equation except possibly on the
+    further locus \(\omega_{q,k,j}=0\).
+
 Thus Routes A and B are closed **as presently formulated**. This is not a
 disproof of `log G_n=o(n)`. It identifies the exact missing ingredient:
 cross-prime, Apéry-specific Archimedean/p-adic coupling not already contained
@@ -8764,3 +8782,81 @@ Eliminating it leaves only universal boundary divisibility.  The
 statement is scoped to bounded-order cutoff relations: it does not
 exclude an identity using a growing prefix together with a new
 Apéry-initial-state cancellation.
+
+## 37. Companion Frobenius jets: proved transport and conjectural projectivity
+
+The latest `uisai2/family` block audit separates a proved regularized
+transport from a stronger statement which is still only computational.
+Let \(q\ge5\) be prime, \(0\le j<q\), and define the shifted regular
+solution by
+\[
+\begin{split}
+ F_0(x)&=1,\qquad F_1(x)=P(x)/(x+1)^3,\\
+ (x+j+1)^3F_{j+1}(x)
+ &=P(x+j)F_j(x)-(x+j)^3F_{j-1}(x).
+\end{split}
+\tag{37.1}
+\]
+Write
+\[
+ F_j(x)=b_j+xW_j+x^2H_j+O(x^3).
+\tag{37.2}
+\]
+Taylor expansion of (37.1) gives closed inhomogeneous Apéry
+recurrences for \(W_j,H_j\); in particular \(W_0=0,W_1=12\) and
+\(H_0=H_1=0\).
+
+Choose \(q\)-integral anchor digits \(\eta_{q,k},\theta_{q,k}\) by
+\[
+ q^3a_{kq}\equiv
+ a_k+q\eta_{q,k}+q^2\theta_{q,k}\pmod {q^3}.
+\tag{37.3}
+\]
+Induction through the regular block, together with the endpoint
+supercongruence for \(b_{kq}\), gives
+\[
+\begin{split}
+ q^3a_{kq+j}\equiv{}&
+ a_kb_j+
+ q(\eta b_j+ka_kW_j)\\
+ &+q^2(\theta b_j+k\eta W_j+k^2a_kH_j)
+ \pmod {q^3},\\
+ b_{kq+j}\equiv{}&
+ b_k(b_j+kqW_j+k^2q^2H_j)\pmod {q^3}.
+\end{split}
+\tag{37.4}
+\]
+The previous-block term is multiplied by \((kq)^3\), so it first
+enters beyond the displayed regularized order.
+
+If \(1\le j\le q-2\) and \(q\mid b_j\), put
+\[
+ \omega_{q,k,j}=b_j/q+kW_j\pmod q.
+\tag{37.5}
+\]
+Dividing one target copy out of (37.4) proves
+\[
+ q^3a_{kq+j}/q\equiv a_k\omega_{q,k,j},\qquad
+ b_{kq+j}/q\equiv b_k\omega_{q,k,j}\pmod q.
+\tag{37.6}
+\]
+Thus the divided target column is still a single projective direction.
+The anchor digit \(\eta\) disappears because its coefficient is
+\(b_j\).  A second extension coordinate can occur only on the thinner
+locus \(\omega_{q,k,j}=0\).
+
+The attractive stronger congruence
+\[
+ \boxed{
+ q^3a_{kq+j}b_k\equiv a_kb_{kq+j}\pmod {q^3}}
+\tag{37.7}
+\]
+has not been proved.  The exact audit passes all \(383498\) tested
+quadruples with \(q<500\), \(k<q\), and \(kq+j\le5000\), including
+\(2098\) divided target cases.  Its first failure at the next modulus
+\(q^4\) is \((q,k,j)=(5,1,0)\), with valuation exactly three.
+These data justify trying to prove (37.7), but not using it as input.
+Moreover (37.4)--(37.6) show the tactical limitation in advance:
+(37.7) would propagate an anchor projective relation, not supply
+horizontal separation, unless its first \(q^3\)-defect becomes
+selective precisely on the locus (37.5).
