@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import math
+from fractions import Fraction
 
 
 def primes_upto(limit: int) -> list[int]:
@@ -96,6 +97,7 @@ def main() -> None:
     max_bits = (0, 0)
     max_rate = (0.0, 0)
     comparison_count = 0
+    recurrence_count = 0
     for n in range(1, limit + 1):
         neighbor_gcd = math.gcd(denominators[n - 1], denominators[n + 1])
         defect[n] = neighbor_gcd // math.gcd(neighbor_gcd, denominators[n])
@@ -107,6 +109,24 @@ def main() -> None:
         apery_central_gcd = math.gcd(values[n], central[n])
         assert (apery_central_gcd * universal_factor) % defect[n] == 0
         comparison_count += 1
+        y_previous = Fraction(values[n - 1], central[n - 1])
+        y_current = Fraction(values[n], central[n])
+        y_next = Fraction(values[n + 1], central[n + 1])
+        polynomial = 34 * n**3 + 51 * n**2 + 27 * n + 5
+        if n % 2 == 0:
+            left = 4 * (n + 1) ** 4 * y_next
+            right = (
+                2 * (n + 2) * polynomial * y_current
+                - n**3 * (n + 2) * y_previous
+            )
+        else:
+            left = 4 * (n + 1) ** 3 * y_next
+            right = (
+                2 * polynomial * y_current
+                - n**2 * (n + 1) * y_previous
+            )
+        assert left == right
+        recurrence_count += 1
         if n >= 11:
             max_bits = max(max_bits, (defect[n].bit_length(), n))
             rate = math.log(defect[n]) / n if defect[n] > 1 else 0.0
@@ -122,6 +142,16 @@ def main() -> None:
             if p > n:
                 break
             incidence_count += 1
+            residue = n - p
+            if 1 <= residue <= p - 3:
+                if n % 2 == 0:
+                    polar_left = 4 * (n + 1) ** 4
+                    polar_right = n**3 * (n + 2)
+                else:
+                    polar_left = 4 * (n + 1) ** 3
+                    polar_right = n**2 * (n + 1)
+                assert polar_left % p
+                assert polar_right % p
             target = values[n] % p == 0
             in_defect = defect[n] % p == 0
             assert in_defect == target, (n, p, target, defect[n] % p)
@@ -140,6 +170,7 @@ def main() -> None:
         "PASS: "
         f"{comparison_count} exact carrier-to-Apery-gcd comparisons"
     )
+    print(f"PASS: {recurrence_count} normalized recurrence identities")
     print(
         "PASS: "
         f"{incidence_count} top-half incidences, {target_count} exact holes"

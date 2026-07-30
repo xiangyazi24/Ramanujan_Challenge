@@ -5156,6 +5156,76 @@ the exact local curvature interpretation, but its observed small height
 is still evidence about the original Apéry gcd rather than an independent
 proved compression.
 
+### 16.4 The normalized recurrence permits arbitrary simultaneous holes
+
+The recurrence itself cannot prove a height bound for \(\mathfrak d_n\).
+This can be made exact rather than inferred from the isolated-zero
+pattern.  Put
+\[
+ y_n=\frac{b_n}{C_n}.
+\]
+The adjacent central-binomial ratios give the parity-dependent recurrence
+\[
+\begin{array}{ll}
+ 4(n+1)^4y_{n+1}
+ =2(n+2)P(n)y_n-n^3(n+2)y_{n-1},
+ &n\ {\rm even},\\[2mm]
+ 4(n+1)^3y_{n+1}
+ =2P(n)y_n-n^2(n+1)y_{n-1},
+ &n\ {\rm odd}.
+\end{array}
+\tag{16.26}
+\]
+Take an interior top-half candidate \(p\), so that
+\[
+ n=p+r,\qquad1\le r\le p-3,\qquad p\ge7.
+\]
+The coefficients of \(y_{n+1}\) and \(y_{n-1}\) in (16.26) are
+\(p\)-units.  Therefore, if
+\[
+ v_p(y_n)\ge0,\qquad v_p(y_{n-1})=-1,
+\]
+the recurrence forces \(v_p(y_{n+1})=-1\).  For the actual Apéry
+solution, writing
+\[
+ Y_\pm=p\,y_{n\pm1}\pmod p
+\]
+gives only the automatic polar cancellation
+\[
+\begin{array}{ll}
+ 4(n+1)^4Y_+
+ =-n^3(n+2)Y_-,
+ &n\ {\rm even},\\[1mm]
+ 4(n+1)^3Y_+
+ =-n^2(n+1)Y_-,
+ &n\ {\rm odd},
+\end{array}
+\qquad\pmod p.
+\tag{16.27}
+\]
+No singular coefficient or second zero condition occurs.
+
+More strongly, let \(R\) be any squarefree product of interior candidate
+primes at the same \(n\).  Prescribe a rational solution of (16.26) by
+\[
+ y_{n-1}=R^{-1},\qquad y_n=0.
+\tag{16.28}
+\]
+For every \(p\mid R\), (16.26) gives
+\[
+ v_p(y_{n-1},y_n,y_{n+1})=(-1,+\infty,-1).
+\tag{16.29}
+\]
+The two adjacent values determine a unique global rational solution in
+both directions.  Its reduced-denominator curvature at \(n\) is divisible
+by the arbitrarily prescribed product \(R\).
+
+Thus even simultaneous holes at all candidate primes are compatible with
+the exact normalized operator.  Any proof of (16.22) must use the
+distinguished initial state \((b_0,b_1)=(1,5)\), or an arithmetic property
+equivalent in strength; it cannot be a theorem about the recurrence,
+its \(G\)-function class, or its local denominator propagation alone.
+
 The recurrence permits the two polar terms of valuation \(-1\) to
 cancel and produce a \(p\)-integral middle term; after primitive
 numerator-denominator clearing this is again the congruence
