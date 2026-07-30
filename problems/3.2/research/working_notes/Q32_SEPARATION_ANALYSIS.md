@@ -10105,3 +10105,147 @@ Both require a relation between different residue characteristics, or
 new distinguished-state arithmetic.  Neither follows from growing
 Casoratians, shifted lcms, reflection, Lucas lifting, or the present
 same-prime continuants.
+
+## 48. A fixed-moment torus reformulation inside every quotient block
+
+The correct constant-term model from Section 27 gives a new
+characteristic-zero synchronization which is not contained in the finite
+recurrence-module no-go of Sections 44--47.  Put
+\[
+ \Lambda(x,y,z)=
+ \frac{(1+x)(1+y)(1+z)\{(1+y)(1+z)+xyz\}}{xyz}.
+\tag{48.1}
+\]
+Its coefficients are nonnegative integers, its Newton box is contained in
+\([-1,1]^3\), and
+\[
+ \operatorname {CT}\Lambda^m=b_m,\qquad
+ \Lambda(1,1,1)=40.
+\tag{48.2}
+\]
+
+Fix \(n\), a quotient \(a\ge1\), and a prime \(q\) such that
+\[
+ n=aq+r,\qquad 1\le r\le q-2.
+\tag{48.3}
+\]
+The exponent
+\[
+ M=n-a=a(q-1)+r
+\tag{48.4}
+\]
+is independent of \(q\) as \(q\) varies through this fixed quotient
+slice.  The following identity is exact.
+\[
+ \boxed{
+ b_r\equiv
+ -\sum_{(x,y,z)\in(\mathbb F_q^\times)^3}
+       \Lambda(x,y,z)^M
+ \pmod q.}
+\tag{48.5}
+\]
+
+Indeed, \(M\equiv r\pmod {q-1}\).  At a nonzero value of \(\Lambda\),
+Fermat's theorem gives \(\Lambda^M=\Lambda^r\); at a zero value both
+powers vanish because \(M,r>0\).  On the other hand, every exponent of
+\(\Lambda^r\) lies in \([-r,r]^3\).  Since \(r<q-1\), the only exponent
+vector whose three coordinates are divisible by \(q-1\) is the zero
+vector.  Finally,
+\[
+ \sum_{t\in\mathbb F_q^\times}t^e
+ =
+ \begin{cases}
+  q-1\equiv-1\pmod q,&q-1\mid e,\\
+ 0\pmod q,&q-1\nmid e,
+ \end{cases}
+\tag{48.6}
+\]
+also for negative \(e\).  Three torus coordinates therefore contribute
+the sign \((-1)^3=-1\), proving (48.5).
+
+There is an equivalent integral coefficient-shell formulation.  Write
+\[
+ \Lambda^M=\sum_{\nu\in\mathbb Z^3}c_M(\nu)x^{\nu_1}y^{\nu_2}z^{\nu_3},
+\qquad
+ C_M(d)=\sum_{\nu\in d\mathbb Z^3}c_M(\nu).
+\tag{48.7}
+\]
+Applying (48.6) directly to \(\Lambda^M\) and comparing with (48.5)
+gives
+\[
+ \boxed{C_M(q-1)\equiv b_r\pmod q.}
+\tag{48.8}
+\]
+Moreover \(M=a(q-1)+r<(a+1)(q-1)\), so the Newton-box bound makes the
+shell finite with rank depending only on the quotient:
+\[
+ C_M(q-1)=
+ \sum_{\kappa\in\{-a,\ldots,a\}^3}
+ c_M((q-1)\kappa).
+\tag{48.9}
+\]
+Consequently the target condition in a fixed quotient block is
+\[
+ \boxed{
+ q\mid b_{n-aq}
+ \quad\Longleftrightarrow\quad
+ q\mid C_{n-a}(q-1)}
+\tag{48.10}
+\]
+for every interior residue.
+
+The excluded boundary residues cause no loss.  Reflection gives
+\(b_0\equiv b_{q-1}\equiv1\pmod q\), so neither can be a target.
+Formula (48.5) itself must not be extended to them: for \(r=0\), zero
+values of \(\Lambda\) distinguish the positive power \(M\) from the
+zeroth power; for \(r=q-1\), torus summation of \(\Lambda^{q-1}\)
+selects nonconstant exponent shells as well.
+
+This is a genuine improvement in organization.  For close primes
+\(\ell=q+h\) in one quotient block, both target conditions now concern
+one fixed integer coefficient array:
+\[
+ q\mid C_M(q-1),\qquad
+ \ell\mid C_M(\ell-1),\qquad M=n-a.
+\tag{48.11}
+\]
+Thus the moving lower index and the varying finite-hypergeometric
+character have disappeared from the exponent.  The construction uses
+the full distinguished Apéry Laurent polynomial and is therefore
+outside the finite transfer/continuant saturation theorem of `Q5688`.
+
+It is not yet a short carrier.  Positivity gives only
+\[
+ 0<C_M(d)\le\sum_\nu c_M(\nu)=40^M,
+\qquad
+ \log C_M(d)\le M\log40=\Theta(n).
+\tag{48.12}
+\]
+For fixed \(a\), (48.9) contains at most \((2a+1)^3\) coefficients, but
+the individual coefficients can still have exponential height.  In the
+full mesoscopic range \(a\le H=n^{1/3}\), even the packet dimension is
+not bounded.  Likewise, viewing (48.5) as a finite-field moment does not
+by itself give a bounded-conductor compatible system: the degree \(M\)
+grows with \(n\), while reducing \(M\) modulo \(q-1\) reintroduces
+dependence on \(q\).
+
+The precise reopening problem is now:
+
+> For \(M=n-a\), \(d=q-1\), and \(1\le h\le A\log n\), exploit the common
+> coefficient array \(c_M(\nu)\) to compress the simultaneous
+> divisibilities
+> \[
+>  d+1\mid C_M(d),\qquad
+>  d+h+1\mid C_M(d+h)
+> \]
+> into block carriers whose total logarithmic height over
+> \(h\le A\log n\) is \(o(H)\).
+
+Such a carrier would prove the adjacent-collision lemma (46.12).  No
+recurrence of the shell function \(d\mapsto C_M(d)\), nor a suitable
+height bound for its resultants, is presently proved.
+
+The dependency-free script
+`q32_fixed_moment_torus_audit.py` checks the constant-term identity
+through exponent \(8\) and (48.5) in \(1265\) cases
+\(q\le43,\ 1\le a\le5\), with no disagreement.
