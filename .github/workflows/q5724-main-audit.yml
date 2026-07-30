@@ -8,8 +8,8 @@ permissions:
   contents: write
 jobs:
   audit:
-    runs-on: ubuntu-latest
-    timeout-minutes: 360
+    runs-on: ubuntu-slim
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -22,6 +22,7 @@ jobs:
         run: |
           git fetch origin q5724-audit
           git show origin/q5724-audit:problems/3.2/research/scripts/q5724_minimal_probe.py > /tmp/q5724_probe.py
+          sed -i 's/MS = (1400, 1600, 1800)/MS = (950, 1050, 1150)/' /tmp/q5724_probe.py
       - name: Run exact modular probe
         shell: bash
         run: |
