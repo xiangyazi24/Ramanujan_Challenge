@@ -1,0 +1,20 @@
+name: Q5729 diagonal audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'problems/3.2/research/scripts/q5729_diagonal_audit.py'
+      - '.github/workflows/q5729-diagonal-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact dependency-free audit
+        run: python3 problems/3.2/research/scripts/q5729_diagonal_audit.py
