@@ -128,11 +128,37 @@ def audit_index(
     adjacent_top_part = prod(
         prime ** valuation(adjacent_gcd, prime) for prime in candidate_primes
     )
-    lower_candidates = prod(
-        prime for prime in candidate_primes if prime <= 2 * height + 1
+    term_double_candidates = prod(
+        prime
+        for prime in candidate_primes
+        if max(
+            index - prime,
+            prime - 1 - (index - prime),
+        )
+        <= height
     )
-    smith_cap = top_primorial = prod(candidate_primes)
-    smith_cap = smith_cap**2 * lower_candidates**2
+    determinant_double_candidates = prod(
+        prime
+        for prime in candidate_primes
+        if max(
+            index - prime,
+            prime - 1 - (index - prime),
+        )
+        <= height + 1
+    )
+    top_primorial = prod(candidate_primes)
+    term_cap = top_primorial**2 * term_double_candidates**2
+    smith_cap = (
+        top_primorial**2 * determinant_double_candidates**2
+    )
+    tail_term_gcd = 0
+    for summand in summands[height + 1 : midpoint + 1]:
+        tail_term_gcd = gcd(tail_term_gcd, summand)
+    tail_term_top_part = prod(
+        prime ** valuation(tail_term_gcd, prime)
+        for prime in candidate_primes
+    )
+    assert tail_term_top_part == term_cap
     if index >= 60:
         assert adjacent_top_part == gcd(prefixes[height], smith_cap)
 

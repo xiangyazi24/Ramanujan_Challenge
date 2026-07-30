@@ -4160,17 +4160,34 @@ not growing codimension: the block differs only by universally
 
 ### 12.1 Exact Smith saturation
 
-Let
+For a candidate prime put
 \[
- V_n=\prod_{\substack{n/2<p\le n\\p\le2H+1}}p.
+ r_p=n-p,\qquad s_p=2p-n-1,\qquad
+ M_p=\max(r_p,s_p),
+\]
+and define
+\[
+ E_n^{(0)}
+ =\prod_{\substack{n/2<p\le n\\M_p\le H}}p,\qquad
+ E_n^{(1)}
+ =\prod_{\substack{n/2<p\le n\\M_p\le H+1}}p.
 \]
 Equation (12.1) gives the exact top-prime part
 
 \[
  \left(\gcd_{H<k\le L}t_k(n)\right)_{\{n/2<p\le n\}}
- =U_n^2V_n^2.
+ =U_n^2\left(E_n^{(0)}\right)^2.
 \tag{12.4}
 \]
+
+This corrects the earlier coarse condition \(p\le2H+1\), which is
+false.  For example, at \(n=30,p=17\) one has
+\[
+ H=10,\quad (r_p,s_p)=(13,3),\quad
+ v_{17}(t_{11})=2,
+\]
+although \(17\le2H+1\).  The second Kummer root contributes to the
+term gcd exactly when \(M_p\le H\), not on the coarse interval.
 
 After dividing the tail differences by their maximal universal
 top-prime content while retaining one copy of each candidate prime, the
@@ -4269,7 +4286,7 @@ The family gcd
 is a sharper exact interface.  Its complete top-prime Smith ideal can in
 fact be computed.  Put
 \[
- Q_n=U_n^2V_n^2,\qquad
+ Q_n=U_n^2\left(E_n^{(1)}\right)^2,\qquad
  {\cal O}_n=\mathbf Z[a^{-1}:\gcd(a,U_n)=1].
 \]
 For \(n\ge60\),
@@ -4313,7 +4330,8 @@ For adjacent rows this factors as \(t_{k+1}\) times a ratio-difference
 coefficient.  After writing \(N=n(n+1)\), \(x=k+1\), the numerator of that
 coefficient is a nonzero polynomial of degree six in \(x\).  There are at
 least seven adjacent positions when \(n\ge60\), so at every candidate
-prime one determinant attains the exact universal valuation in (12.4).
+prime one determinant attains the exact universal valuation recorded in
+\(Q_n\).
 The first coefficient column is locally primitive by the analogous
 degree-three calculation.  The two Smith invariants are therefore
 \[
@@ -4325,9 +4343,16 @@ In particular, for \(p\in(n/2,n]\),
 \[
  v_p(G_n^{\rm adj})
  =\min\left(v_p(S_H),
- 2+2{\bf1}_{p\le2H+1}\right).
+ 2+2{\bf1}_{M_p\le H+1}\right).
 \tag{12.11d}
 \]
+
+The shift from \(H\) in (12.4) to \(H+1\) here is real: the
+coefficient determinants acquire their second Kummer factor when the
+outer folded root is at the first carrier row.  The set
+\(\{p:M_p\le H+1\}\) contains at most two candidate moduli for each
+\(n\).  This correction changes the higher-power Smith ledger but not
+the radical or the linear-height obstruction.
 The radical of its candidate-prime part is exactly the target radical,
 but its higher powers are merely capped powers of the same prefix
 coordinate.  Hence
@@ -4417,3 +4442,234 @@ into a proof one needs a higher corrected carrier which gains \(p^j\)
 only on the target locus while keeping height \(O(n)\) with a constant
 not growing linearly in \(j\).  No such global correction is presently
 proved.
+
+## 13. Precision eight: the target Casoratian continues
+
+The first grade not visible in Section 11 is effective weight seven.
+It contains new complete-block and depth finite-harmonic coordinates, so
+the order-seven square law is not an induction step.  Nevertheless, the
+direct/reflected target rows themselves can be extended unconditionally
+one more digit.
+
+For \(p\ge11,\ p\ne769\), put
+\[
+\begin{aligned}
+ \Delta_p&=b_{p-1}-1,\\
+ H_p&=b_p-5+7\Delta_p,\\
+ w_p&=\frac{b_{2p}-73+824\Delta_p-(752/5)H_p}{p^6},\\
+ v_p&=\frac{b_{2p-1}-5-8\Delta_p-(336/5)H_p
+        +(103/769)p^6w_p}{p^7}.
+\end{aligned}
+\tag{13.1}
+\]
+The proved precision-seven endpoint laws imply
+\(w_p,v_p\in\mathbf Z_{(p)}\).
+
+Let \(p\mid b_r\), set \(s=p-1-r\), and write
+\(x=b_{p+r}/p\).  Extending the shifted fundamental solution
+\({\cal U}\) through degree eight and the companion
+\({\cal J}\) through degree five gives rows \(D_8,Z_8\) satisfying
+\[
+\begin{aligned}
+ D_8&\equiv
+ x\left(1-\frac15H_p\right)
+ -\frac15p^2H_p{\cal J}_r(0),\\
+ Z_8&\equiv
+ x\left(1-\frac{336}{25}H_p
+ +\frac{103}{5\cdot769}p^6w_p-\frac15p^7v_p\right)
+ +\frac{166144}{25}p^2H_p{\cal J}_s(0)
+ \pmod {p^8}.
+\end{aligned}
+\tag{13.2}
+\]
+
+The companion values coincide at a reflected zero:
+\[
+ {\cal J}_s(0)\equiv{\cal J}_r(0)\pmod p.
+\tag{13.3}
+\]
+Indeed, for the standard solution \(U_j(0)=b_j\) and the companion
+\(V_0=0,V_1=1\),
+\[
+ U_kV_{k+1}-U_{k+1}V_k=\frac1{(k+1)^3}.
+\]
+At \(U_r=U_s=0\), this identity, the Apéry recurrence at \(r\), and
+reflection identify \(V_r\) with \(V_s\).  Since
+\({\cal J}_j(0)=V_j\), (13.3) follows.
+
+The fixed combination
+\[
+\boxed{
+\left(166144+33296H_p-\frac{103}{769}p^6w_p+p^7v_p\right)D_8
++5Z_8
+\equiv166149\,x\pmod {p^8}.
+}
+\tag{13.4}
+\]
+therefore cancels the new target-dependent companion coordinate.
+Here
+\[
+ 166149=3^2\cdot18461,
+\]
+so the right coefficient is a fixed unit outside \(p=18461\) in the
+stated range.  Exact symbolic reduction and all \(161\) target rows at
+primes through \(1000\) pass independently.
+
+The proof and reproducer are
+
+```text
+Q32_ORDER_EIGHT_TARGET_CASORATIAN_2026-07-29.md
+../scripts/q32_order_eight_target_audit.py
+```
+
+### 13.1 A conjectural all-\(m\) endpoint law
+
+There is also a strong new computational pattern.  After retaining the
+full next digit of \(w_p\), every endpoint residual through
+\(p\le1000,\ m\le20\) is a fixed multiple of the single anchor \(v_p\).
+Define
+\[
+\begin{aligned}
+ P_0(m)&=3845m^4-29268m^3+36974m^2-9112,\\
+ Q_0(m)&=45371m^4-58102m^2+536,\\
+ N_8&=305911296=2^9\,3^3\,22129,\\
+ C_m&=-\frac{m^3(P_0(m)b_m+Q_0(m)b_{m-1})}{N_8},\\
+ D_m&=\frac{m^3(Q_0(m)b_m+P_0(-m)b_{m-1})}{N_8}.
+\end{aligned}
+\tag{13.5}
+\]
+With the proved lower carriers \(E_m,F_m,P_m,Q_m,R_m,S_m\), the
+observed law is
+\[
+\begin{aligned}
+ b_{mp}-b_m
+ &\equiv E_m\Delta_p+P_mH_p+p^6R_mw_p+p^7C_mv_p,\\
+ b_{mp-1}-b_{m-1}
+ &\equiv F_m\Delta_p+Q_mH_p+p^6S_mw_p+p^7D_mv_p
+ \pmod {p^8}.
+\end{aligned}
+\tag{13.6}
+\]
+The normalization has
+\[
+ C_1=D_1=C_2=0,\qquad D_2=1.
+\]
+
+This was rationally reconstructed through \(p\le400\) and then checked
+on disjoint larger primes through \(1000\), with \(6520\) exact
+residual-divisibility checks and no failure.  It is not yet a theorem.
+One part of the missing block reduction can now be proved.  For
+\[
+ \xi=\frac{H(6)}p,\quad \eta=\frac{H(2,4)}p,\quad
+ A=H(2,2,3),\quad B=H(2,5)\pmod p,
+\]
+the exact relations
+\[
+ 3\eta=2\xi,\qquad 3A=14\xi,\qquad 2B=-7\xi
+\tag{13.6a}
+\]
+show that the effective weight-seven finite-MHS quotient is
+one-dimensional.  The first identity uses the necessary lifted
+reversal correction
+\[
+ H(2,4)-H(4,2)
+ \equiv p\{2H(4,3)+4H(5,2)\}\pmod {p^2}.
+\]
+Thus ordinary reversal is no longer a gap.  What remains is the full
+change from the block basis to \((\Delta_p,H_p,w_p,v_p)\), including
+lifted lower-coordinate terms, followed by the termwise
+identity/Gosper certificate.  Projecting only the primitive MHS vector
+does not retain those lower lifts.
+
+The precise conjecture and audit are
+
+```text
+Q32_WEIGHT_EIGHT_ENDPOINT_RANK_ONE_2026-07-29.md
+Q32_WEIGHT_SEVEN_MHS_RANK_ONE_2026-07-29.md
+../scripts/q32_weight_eight_endpoint_rank_audit.py
+../scripts/q32_weight_seven_mhs_rank_one_audit.py
+```
+
+### 13.2 Why this is still local reconstruction
+
+Equation (13.4) determines \(x=b_n/p\pmod {p^8}\), hence
+\(b_n\pmod {p^9}\), for each target prime outside a fixed set.  Across
+all such primes with radical \(R\), the unique CRT carrier is
+\[
+ b_n-(b_n\bmod R^9)
+ =R^9\left\lfloor\frac{b_n}{R^9}\right\rfloor.
+\tag{13.7}
+\]
+It is positive only while \(R^9\le b_n\), where it gives a fixed-order
+linear bound; once \(R^9>b_n\), it is zero because the local data have
+reconstructed the actual diagonal integer.
+
+The same saturation already occurs at order seven, with \(R^8\).
+Pairing target primes merely factors the same remainder into pairwise
+CRT coordinates and increases height faster than selective exponent.
+Thus the new local digit is genuine progress on the endpoint algebra,
+but it does not supply the independent nonzero lift required for
+\(\log R_n=o(n)\).
+
+## 14. The fixed boundary does not rescue the long-prefix route
+
+The additive-shift countermodel in Section 12 does not by itself use the
+distinguished value \(S_0=1\).  The actual boundary can be propagated
+exactly, but the propagation stops at the same folded Kummer edge.
+
+For the reduced ratio \(t_{k+1}/t_k=a_k/b_k\), the prefix recurrence is
+\[
+ b_kS_{k+1}-(a_k+b_k)S_k+a_kS_{k-1}=0.
+\tag{14.1}
+\]
+With \(C_k=b_kS_k-a_kS_{k-1}\), repeated Euclidean substitution gives
+\[
+\left(\prod_{i=1}^Ka_i\right)S_0
+=\left(\prod_{i=1}^Kb_i\right)S_K
+-\sum_{j=1}^K
+ \left(\prod_{i=1}^{j-1}b_i\right)
+ \left(\prod_{i=j+1}^Ka_i\right)C_j.
+\tag{14.2}
+\]
+
+For a target \(p=n-r\), put
+\[
+ m=\min(r,p-1-r).
+\]
+The exact Kummer support law gives
+\[
+ S_k\equiv C_k\equiv0\pmod p\quad(k\ge m),
+\qquad
+ S_{m-1},C_{m-1}\not\equiv0\pmod p.
+\tag{14.3}
+\]
+The transition coefficient at the fold satisfies
+\[
+ v_p(a_m)=
+ \begin{cases}
+ 2,&r\ne p-1-r,\\
+ 4,&r=p-1-r.
+ \end{cases}
+\tag{14.4}
+\]
+All terms in (14.2) which reach below the fold contain this missing
+factor.  Thus \(S_0=1\) is remembered only after paying \(p^2\), or
+\(p^4\) centrally.  In DVR language the folded transfer has Smith form
+\(\operatorname{diag}(1,p^2)\), respectively
+\(\operatorname{diag}(1,p^4)\); unit transfers on either side cannot
+remove that invariant factor.
+
+Reflection exchanges the two Kummer roots and fixes \(m\).  The high
+suffix is a scalar copy of the same folded prefix modulo \(p\), and a
+different cutoff detects the target only if it remains on the far side
+of \(m\).  For two different target characteristics the two folded DVR
+modules form a direct CRT product; the pure-cross continuant is a unit
+in both and does not couple their singular factors.
+
+Therefore the distinguished boundary closes the formal
+additive-constant objection but yields a sharper route-specific no-go:
+every identity generated by the one-dimensional summand transfer must
+pay the moving folded determinant.  Clearing those determinants
+simultaneously restores a linear-height Kummer product.  Reopening this
+route requires an identity outside that transfer module which couples
+folded edges in different characteristics.
