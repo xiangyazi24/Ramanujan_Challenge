@@ -1,0 +1,30 @@
+name: Q5724 slim recurrence audit
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-slim
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch dependency-free recurrence probe
+        shell: bash
+        run: |
+          git fetch origin q5723-audit
+          git show origin/q5723-audit:problems/3.2/research/scripts/q5723_state_order_audit.py > /tmp/q5724_probe.py
+          sed -i 's/MODS=(1000000007,1000000009)/MODS=(1000000007,)/' /tmp/q5724_probe.py
+          sed -i 's/for M in (754,1200,1500):/for M in (754,900,1050):/' /tmp/q5724_probe.py
+      - name: Run exact modular recurrence probe
+        shell: bash
+        run: python /tmp/q5724_probe.py | tee q5724-slim.out
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q5724-slim-output
+          path: q5724-slim.out
+          if-no-files-found: error
