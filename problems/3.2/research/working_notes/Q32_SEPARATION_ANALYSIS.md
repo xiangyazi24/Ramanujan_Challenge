@@ -4865,3 +4865,183 @@ Plücker condensation of the ordinary Casoratians cannot be the missing
 pure-cross carrier.  A viable nested construction would have to use a
 divided target quotient or another observable beyond the universal
 reflection transfer.
+
+## 16. Path D as a coefficientwise inverse-denominator problem
+
+The fixed factorial-ratio carriers admit a useful characteristic-zero
+reformulation which is stronger than merely observing that both factors are
+holonomic.  Fix \(d\ge2\), put
+\[
+ B_{n,d}=\binom n{\lfloor n/d\rfloor},
+ \qquad
+ q_{n,d}=\frac{B_{n,d}}{\gcd(b_n,B_{n,d})}.
+\tag{16.1}
+\]
+Thus \(q_{n,d}\) is the reduced denominator of the rational number
+\(b_n/B_{n,d}\).  The sufficient gcd theorem (HD.4) is equivalently a
+pointwise **near-maximal denominator** theorem:
+\[
+ \log q_{n,d}
+ =\log B_{n,d}-o_d(n)
+ =n\,h(1/d)+o_d(n).
+\tag{16.2}
+\]
+This reverses the direction of the usual denominator theorems for
+\(G\)-functions, which give a common upper denominator for a prefix.
+
+For \(0\le a<d\), define
+\[
+\begin{aligned}
+ A_{d,a}(x)&=\sum_{m\ge0}b_{dm+a}x^m,\\
+ R_{d,a}(x)&=\sum_{m\ge0}\binom{dm+a}{m}^{-1}x^m,\\
+ H_{d,a}(x)&=A_{d,a}\mathbin{\star}R_{d,a}
+ =\sum_{m\ge0}\frac{b_{dm+a}}{\binom{dm+a}{m}}x^m ,
+\end{aligned}
+\tag{16.3}
+\]
+where \(\star\) denotes Hadamard product.  The coefficient ratio in the
+second line is
+\[
+ \frac{[x^{m+1}]R_{d,a}}{[x^m]R_{d,a}}
+ =
+ \frac{(m+1)\prod_{i=1}^{d-1}((d-1)m+a+i)}
+      {\prod_{i=1}^{d}(dm+a+i)}.
+\tag{16.4}
+\]
+Hence \(R_{d,a}\) is hypergeometric.  The exact row-lcm identity
+\[
+ \operatorname {lcm}_{0\le k\le n}\binom nk
+ =\frac{\operatorname {lcm}(1,\ldots,n+1)}{n+1}
+\tag{16.5}
+\]
+shows that the common denominator of its first \(M+1\) coefficients is
+\(\exp(O_d(M))\).  Therefore \(R_{d,a}\) is a \(G\)-function directly
+from the definition.  Sections and Hadamard products preserve
+\(G\)-functions, so \(H_{d,a}\) is a \(G\)-function whose \(m\)-th reduced
+coefficient denominator is exactly
+\[
+ q_{dm+a,d}.
+\tag{16.6}
+\]
+For \(d=2\), the reciprocal factors are explicitly
+\[
+ R_{2,0}(x)={}_2F_1(1,1;1/2;x/4),
+ \qquad
+ R_{2,1}(x)={}_2F_1(1,2;3/2;x/4).
+\tag{16.7}
+\]
+Thus even the clean central case asks for a lower denominator theorem for
+the individual coefficients of an explicit Hadamard \(G\)-function, not
+an upper denominator theorem.
+
+### 16.1 Every residue section has asymptotically maximal prefix lcm
+
+There is an unconditional theorem at the prefix level, and it holds
+separately in every residue section.  Put
+\[
+ Q_{d,a}(M)=
+ \operatorname {lcm}_{0\le m\le M}q_{dm+a,d}.
+\tag{16.8}
+\]
+Then, for every fixed \(d\ge2\) and \(0\le a<d\),
+\[
+ \boxed{\log Q_{d,a}(M)=dM+o_d(M).}
+\tag{16.9}
+\]
+
+For the upper bound, (16.5) gives
+\[
+ q_{dm+a,d}\mid B_{dm+a,d}
+ \mid\operatorname {lcm}(1,\ldots,dm+a+1),
+\]
+and hence
+\[
+ Q_{d,a}(M)\mid\operatorname {lcm}(1,\ldots,dM+a+1).
+\tag{16.10}
+\]
+The prime number theorem gives
+\(\log Q_{d,a}(M)\le dM+o_d(M)\).
+
+For the matching lower bound, let \(p\) be a sufficiently large prime and
+choose the unique \(c\in\{0,\ldots,d-1\}\) with
+\[
+ p+c\equiv a\pmod d.
+\]
+Set \(n=p+c=dm+a\).  Once \(p\) exceeds a constant depending only on
+\((d,a)\), one has \(c<m<p\).  The numerator of
+\(\binom{p+c}{m}\) contains \(p\) once and neither denominator factorial
+contains \(p\), so
+\[
+ v_p(B_{n,d})=1.
+\tag{16.11}
+\]
+Gessel--Lucas gives
+\[
+ b_{p+c}\equiv b_1b_c=5b_c\not\equiv0\pmod p
+\tag{16.12}
+\]
+after enlarging the same fixed threshold.  Consequently
+\(p\mid q_{dm+a,d}\).  Every sufficiently large prime
+\[
+ p\le dM+a-(d-1)
+\]
+is obtained in this way with \(m\le M\), and therefore divides
+\(Q_{d,a}(M)\).  The lower bound in (16.9) follows from
+\(\vartheta(dM-O_d(1))=dM+o_d(M)\).
+
+This strengthens the parity-section observation: generic \(G\)-function
+prefix denominator bounds are already saturated inside each fixed
+section, not only after mixing residue classes.  It is nevertheless not
+the desired pointwise theorem.  The lower bound is supplied by the sparse
+indices \(n=p+c\); it is compatible with arbitrarily small denominators at
+other individual indices.
+
+### 16.2 A target is an isolated denominator hole
+
+The inverse-denominator formulation has one further exact local feature.
+Take \(d=2\), write
+\[
+ C_n=\binom n{\lfloor n/2\rfloor},
+ \qquad q_n=q_{n,2},
+\]
+and let \(p\in(n/2,n]\), \(p\ge7\), be a target.  Write \(n=p+r\).
+The endpoint congruences \(b_0=1\) and
+\(b_{p-2}\equiv b_1=5\pmod p\) show that
+\[
+ 1\le r\le p-3.
+\tag{16.13}
+\]
+The central carry law gives
+\[
+ v_p(C_{n-1})=v_p(C_n)=v_p(C_{n+1})=1.
+\tag{16.14}
+\]
+On the other hand, Lucas and nonconsecutivity of the Apéry zero set give
+\[
+\begin{aligned}
+ b_n&\equiv5b_r\equiv0\pmod p,\\
+ b_{n-1}&\equiv5b_{r-1}\not\equiv0\pmod p,\\
+ b_{n+1}&\equiv5b_{r+1}\not\equiv0\pmod p.
+\end{aligned}
+\tag{16.15}
+\]
+It follows that the reduced coefficient denominators have the exact
+valuation pattern
+\[
+ \boxed{
+ (v_p(q_{n-1}),v_p(q_n),v_p(q_{n+1}))=(1,0,1).
+ }
+\tag{16.16}
+\]
+Thus a top-half target is not merely a common divisor in (HD.1): it is an
+isolated missing prime in the denominator sequence of the central
+Hadamard \(G\)-function.
+
+This is genuine additional organization, but not yet horizontal
+separation.  Reduced denominators depend nonlinearly on the coefficient
+recurrence, and the order-two recurrence over \(\mathbb F_p\) permits an
+isolated zero with two nonzero neighbors.  Different target primes again
+live in a direct CRT product.  To turn (16.16) into P3.2 one would need a
+new theorem excluding linearly many simultaneous large-prime holes at one
+coefficient index; neither prefix maximality (16.9) nor a standard
+\(G\)-function denominator bound supplies that pointwise assertion.
