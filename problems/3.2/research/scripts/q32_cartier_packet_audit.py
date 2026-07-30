@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Exact audits for the fixed-moment Cartier-packet reformulation.
 
-The script checks the claims used in Sections 48--50 of
+The script checks the claims used in Sections 48--53 of
 Q32_SEPARATION_ANALYSIS.md:
 
 * the Newton polytope and its Ehrhart polynomial;
@@ -10,7 +10,8 @@ Q32_SEPARATION_ANALYSIS.md:
 * the Cartier packet congruence
       c_{ap+r}(p mu) = b_r c_a(mu) (mod p);
 * the prime-square affine shell law in the quotient parameter;
-* the fact that the first p-adic shell jet is not target-selective.
+* the fact that the first p-adic shell jet is not target-selective;
+* the exact multi-carrier valuation law and overlapping-Newton collapse.
 
 Only Python's standard library is used.
 """
@@ -127,12 +128,60 @@ def shell_fast(M, d, modulus=None):
     return out if modulus is None else out % modulus
 
 
+def shell_batch(M, nodes, modulus=None):
+    """Return ``C_M(d)`` for several nodes with shared binomial rows.
+
+    This is algebraically identical to :func:`shell_fast`.  It generates
+    each row ``binom(2*M-t, k)`` once, which matters for exact audits that
+    need dozens of adjacent shells at the same moment.
+    """
+
+    nodes = tuple(dict.fromkeys(nodes))
+    assert all(1 <= d <= M for d in nodes)
+
+    def binomial_row(n):
+        row = [1]
+        for k in range(n):
+            row.append(row[-1] * (n - k) // (k + 1))
+        if modulus:
+            row = [entry % modulus for entry in row]
+        return row
+
+    moment_row = binomial_row(M)
+    quotients = {d: M // d for d in nodes}
+    out = {d: 0 for d in nodes}
+    for t in range(M + 1):
+        upper_row = binomial_row(2 * M - t)
+        base = M - t
+        outer = moment_row[t]
+        for d in nodes:
+            quotient = quotients[d]
+            x_packet = sum(
+                moment_row[index]
+                for u in range(-quotient, quotient + 1)
+                if 0 <= (index := base + d * u) <= M
+            )
+            yz_packet = sum(
+                upper_row[index]
+                for v in range(-quotient, quotient + 1)
+                if 0 <= (index := base + d * v) < len(upper_row)
+            )
+            out[d] += outer * x_packet * yz_packet**2
+            if modulus:
+                out[d] %= modulus
+    return out
+
+
 def primes_up_to(limit):
     return [
         p
         for p in range(2, limit + 1)
         if all(p % d for d in range(2, int(p**0.5) + 1))
     ]
+
+
+def primes_in_interval(lower, upper):
+    return [p for p in primes_up_to(upper) if p >= lower]
 
 
 def valuation(n, p):
@@ -264,13 +313,26 @@ def newton_weight(d0, L, i):
     return (-1) ** i * C(d0 + i, i) * C(d0 + L + 1, L - i)
 
 
+def newton_carrier(M, d0, L, values=None):
+    """Return the primitive length-L Newton carrier at the node -1."""
+
+    if values is None:
+        values = {d: shell_fast(M, d) for d in range(d0, d0 + L + 1)}
+    return sum(
+        newton_weight(d0, L, i) * values[d0 + i]
+        for i in range(L + 1)
+    )
+
+
 def audit_newton_carrier():
     # The hostile n=321 row has targets 179, 193, 211 in its a=1
     # quotient cell.  Interpolate the fixed M=320 shell on d=161,...,211.
     M, d0, L = 320, 161, 50
-    values = [shell_fast(M, d0 + i) for i in range(L + 1)]
+    values = {
+        d: shell_fast(M, d) for d in range(d0, d0 + L + 1)
+    }
     weights = [newton_weight(d0, L, i) for i in range(L + 1)]
-    carrier = sum(weight * value for weight, value in zip(weights, values))
+    carrier = newton_carrier(M, d0, L, values)
 
     assert sum(weights) == 1
     content = 0
@@ -286,12 +348,94 @@ def audit_newton_carrier():
     return len(str(abs(carrier))), log(abs(carrier)) / M
 
 
+def twisted_block_gcd(n, lower, upper):
+    """Return the smallest universal linear carrier for a prime block.
+
+    If Q is the set of candidate primes and P=prod(Q), the generators
+    (P/q) C_{n-1}(q-1) are all divisible by every target prime in Q.
+    """
+
+    candidates = primes_in_interval(lower, upper)
+    product = 1
+    for q in candidates:
+        product *= q
+
+    carrier = 0
+    common_shell_gcd = 0
+    targets = []
+    for q in candidates:
+        value = shell_fast(n - 1, q - 1)
+        carrier = gcd(carrier, (product // q) * value)
+        common_shell_gcd = gcd(common_shell_gcd, value)
+        if value % q == 0:
+            targets.append(q)
+    return carrier, common_shell_gcd, targets
+
+
+def audit_multi_carrier_gcd():
+    rows = (
+        (200, 129, 191, (139, 181), 1),
+        (272, 181, 243, (191, 233), 5),
+        (300, 181, 237, (191, 227), 1),
+        (321, 169, 221, (179, 193, 211), 1),
+        (755, 583, 743, (593, 733), 5),
+    )
+    for n, lower, upper, expected_targets, nuisance in rows:
+        carrier, common_shell_gcd, targets = twisted_block_gcd(
+            n, lower, upper
+        )
+        target_product = 1
+        for q in targets:
+            target_product *= q
+        assert tuple(targets) == expected_targets
+        assert carrier == nuisance * target_product
+        assert carrier // target_product <= common_shell_gcd
+
+    # Six overlapping Newton carriers in the hostile row each have about
+    # 529 decimal digits, but their gcd has no nuisance factor.  In fact
+    # the first two carriers already have this gcd.
+    M, L = 320, 50
+    values = {
+        d: shell_fast(M, d) for d in range(161, 217)
+    }
+    carriers = [
+        newton_carrier(M, d0, L, values) for d0 in range(161, 167)
+    ]
+    target_product = 179 * 193 * 211
+    assert gcd(abs(carriers[0]), abs(carriers[1])) == target_product
+    carrier_gcd = 0
+    for carrier in carriers:
+        carrier_gcd = gcd(carrier_gcd, abs(carrier))
+    assert carrier_gcd == target_product
+
+    # Consecutive interpolation windows satisfy an exact high-difference
+    # law.  This is checked without any modular reduction.
+    for offset, d0 in enumerate(range(161, 166)):
+        differences = [
+            values[d] for d in range(d0, d0 + L + 2)
+        ]
+        for _ in range(L + 1):
+            differences = [
+                differences[i + 1] - differences[i]
+                for i in range(len(differences) - 1)
+            ]
+        right = (
+            (-1) ** (L + 1)
+            * C(d0 + L + 1, L)
+            * differences[0]
+        )
+        assert carriers[offset] - carriers[offset + 1] == right
+
+    return carrier_gcd
+
+
 def main():
     audit_polytope_and_coefficients()
     packet_checks = audit_cartier_packets()
     lift_checks = audit_shell_lifts()
     grid_checks = audit_grid_disjointness()
     carrier_digits, carrier_rate = audit_newton_carrier()
+    multi_carrier = audit_multi_carrier_gcd()
     print(
         "PASS:",
         "Newton/IDP/coefficient formula;",
@@ -299,7 +443,8 @@ def main():
         f"{lift_checks} shell-lift rows;",
         f"{grid_checks} disjoint-grid rows;",
         f"n=321 Newton carrier has {carrier_digits} digits",
-        f"(log-height/M={carrier_rate:.6f})",
+        f"(log-height/M={carrier_rate:.6f});",
+        f"multi-carrier gcd={multi_carrier}",
     )
 
 

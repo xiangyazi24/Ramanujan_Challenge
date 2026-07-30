@@ -10282,7 +10282,8 @@ Moreover
  \operatorname {Supp}\Lambda^a=aP\cap\mathbb Z^3
 \tag{49.3}
 \]
-for every \(a\ge0\).  Here is an elementary integer-decomposition
+for every \(a\ge0\), as an equality over \(\mathbb Z\).  Here is an
+elementary integer-decomposition
 proof.  Given \((x,y,z)\in aP\cap\mathbb Z^3\), represent \(x\) using
 \(\max(x,0)\) entries \(1\), \(\max(-x,0)\) entries \(-1\), and zeros.
 Represent \(y\) and \(z\) similarly.  A negative \(y\)-entry or
@@ -10290,7 +10291,10 @@ Represent \(y\) and \(z\) similarly.  A negative \(y\)-entry or
 inequalities \(x-y\le a\) and \(x-z\le a\) say exactly that there are
 enough such positions.  The resulting \(a\) triples are lattice points
 of \(P\).  Positivity of the coefficients of \(\Lambda\) then gives
-(49.3).  In particular
+(49.3).  Reduction modulo a prime can delete interior support points,
+so (49.3) must not be read as a support equality over every finite
+field.  The vertex coefficients are \(1\), however, so the reduced
+Newton polytope remains \(aP\).  In particular
 \[
  N_a:=\#(aP\cap\mathbb Z^3)
  =\frac{38a^3+57a^2+31a+6}{6}.
@@ -10327,6 +10331,12 @@ one scalar condition:
 \tag{49.7}
 \]
 It is not \(N_a\) independent target equations.
+Equivalently, the integral packet ideal has the exact reduction
+\[
+ \bigl(q,\{c_n(q\mu):\mu\in aP\cap\mathbb Z^3\}\bigr)
+ =(q,b_r).
+\tag{49.7a}
+\]
 
 The coefficient PDE gives the same exact rank count.  Reducing
 \[
@@ -10347,6 +10357,18 @@ The common kernel of the three torus derivations is
 \(\mathbb F_q(x^q,y^q,z^q)\).  A denominator in that field occurs with
 multiplicity divisible by \(q\), so it cannot be cancelled by the
 multiplicity \(r<q\) of a nonmonomial factor of \(\Lambda^r\).
+Here Laurent monomials are units and the relevant nonmonomial
+factorization is
+\[
+ (1+x)(1+y)(1+z)
+ \bigl((1+y)(1+z)+xyz\bigr).
+\]
+These four factors are squarefree and pairwise coprime for \(q\ge5\):
+the last is primitive and linear in \(x\), with coprime leading and
+constant coefficients \(yz\) and \((1+y)(1+z)\), and substitution
+shows that none of the first three divides it.  Thus every
+nonmonomial factor available in \(\Lambda^r\) has multiplicity exactly
+\(r<q\).
 Thus the quotient is a Laurent polynomial in \(X^q\).  Newton support
 functions then give \(\operatorname {Newt}(H)\subseteq aP\).
 Consequently the Frobenius defect dimension is exactly \(N_a\).
@@ -10612,3 +10634,1333 @@ integer-decomposition claims through \(a=6\), \(8052\) Cartier packet
 coordinates, the finite-difference congruences through \(p^3\), the
 grid-disjointness lemma in \(1143\) rows, the \(p=17\) lift
 counterexample, and the 529-digit Newton carrier (51.9).
+
+## 53. The exact multi-carrier ideal
+
+Several exponentially tall carriers can have a very small gcd.  There
+is an exact algebraic formulation of this observation which is useful
+even though it is not yet a height bound.
+
+Let \({\cal Q}\) be a finite set of distinct candidate primes in one
+fixed quotient block, put
+\[
+ P_{\cal Q}=\prod_{q\in{\cal Q}}q,\qquad
+ Y_q=C_M(q-1),
+\tag{53.1}
+\]
+and define
+\[
+ D_{\cal Q}
+ =\gcd_{q\in{\cal Q}}\left\{
+       \frac{P_{\cal Q}}qY_q\right\}.
+\tag{53.2}
+\]
+The target set and its radical are
+\[
+ {\cal T}=\{q\in{\cal Q}:q\mid Y_q\},\qquad
+ R_{\cal T}=\prod_{q\in{\cal T}}q.
+\tag{53.3}
+\]
+By (48.10), this is exactly the Apéry target set in the block.
+
+The valuation of (53.2) is completely explicit.  If
+\(\pi\notin{\cal Q}\), then
+\[
+ v_\pi(D_{\cal Q})=\min_{q\in{\cal Q}}v_\pi(Y_q).
+\tag{53.4}
+\]
+For \(p\in{\cal Q}\),
+\[
+ \boxed{\;
+ v_p(D_{\cal Q})
+ =\min\left\{
+ v_p(Y_p),\
+ 1+\min_{\substack{q\in{\cal Q}\\q\ne p}}v_p(Y_q)
+ \right\}. \;}
+\tag{53.5}
+\]
+Indeed, the \(p\)-matched generator in (53.2) has valuation
+\(v_p(Y_p)\), while every other generator has valuation
+\(1+v_p(Y_q)\).  It follows at once that
+\[
+ \boxed{\quad
+ D_{\cal Q}=R_{\cal T}E_{\cal Q},\qquad
+ E_{\cal Q}\mid\gcd_{q\in{\cal Q}}Y_q.
+ \quad}
+\tag{53.6}
+\]
+Thus a non-target candidate prime never pollutes \(D_{\cal Q}\).
+There are only two nuisance sources: a common shell divisor outside
+the candidate set, and excess \(p\)-depth which occurs simultaneously
+in the matched shell and all the other shells.
+
+This gcd is also the exact minimal universal linear carrier.  Treat
+the \(Y_q\)'s as independent integer coordinates, subject only to
+\(q\mid Y_q\) at a target.  A linear form
+\(\sum_q c_qY_q\) is guaranteed to be divisible by every target prime
+in \({\cal Q}\) if and only if
+\[
+ c_q\in\frac{P_{\cal Q}}q\mathbb Z
+ \qquad(q\in{\cal Q}).
+\tag{53.7}
+\]
+For modulo \(p\), every coefficient except the \(p\)-matched one must
+vanish; applying this for all \(p\) proves necessity, and sufficiency
+is immediate.  Hence the universal coefficient module is
+\[
+ \bigoplus_{q\in{\cal Q}}
+ \frac{P_{\cal Q}}q\mathbb Z\,e_q,
+\tag{53.8}
+\]
+and its evaluated image ideal is precisely
+\((D_{\cal Q})\).
+
+The exact small computations are striking:
+\[
+\begin{array}{c|c|c|c}
+n&{\cal Q}\text{ interval}&{\cal T}&E_{\cal Q}\\ \hline
+200&[129,191]&(139,181)&1\\
+272&[181,243]&(191,233)&5\\
+300&[181,237]&(191,227)&1\\
+321&[169,221]&(179,193,211)&1\\
+755&[583,743]&(593,733)&5
+\end{array}
+\tag{53.9}
+\]
+In particular,
+\[
+ D_{\cal Q}=179\cdot193\cdot211=7\,289\,417
+\tag{53.10}
+\]
+on the hostile \(n=321\) row.  This does not by itself prove a height
+bound: (53.6) identifies \(D_{\cal Q}\) with the unknown target
+radical up to a small-looking nuisance, but the radical is the object
+which must be bounded.  What (53.6)--(53.8) accomplish is to remove
+all ambiguity about the carrier lattice and isolate the only possible
+arithmetic gain in the gcd of actual distinguished shell values.
+
+There is a useful general comparison with any further carrier family.
+If \(z\in\mathbb Z^m\), \(D=\gcd(z_1,\ldots,z_m)\), and
+\(A\in M_{r\times m}(\mathbb Z)\) has rank \(m\), put
+\[
+ K_A=\gcd\bigl((Az)_1,\ldots,(Az)_r\bigr),\qquad
+ \delta_m(A)=\gcd\{\det A_J:|J|=m\}.
+\tag{53.11}
+\]
+Then
+\[
+ D\mid K_A,\qquad \frac{K_A}{D}\mid\delta_m(A).
+\tag{53.12}
+\]
+For the second assertion write \(z=Dz'\), with \(z'\) primitive.
+If \(g=K_A/D\), then \(g\mid A_Jz'\) for every square row minor.
+Multiplication by \(\operatorname {adj}(A_J)\), followed by a Bezout
+combination of the coordinates of \(z'\), gives
+\(g\mid\det A_J\).  Thus a carrier transform with primitive maximal
+minor content recovers the same gcd exactly.  Standard Newton
+transforms can acquire node-gap content, so this saturation must be
+checked rather than assumed.
+
+## 54. Adjacent Newton carriers and the exact difference residual
+
+The multi-carrier collapse has a second exact form.  For an arbitrary
+integer sequence \(Y_d\), define
+\[
+ G_{d,L}
+ =\sum_{i=0}^L(-1)^i
+ \binom{d+i}{i}\binom{d+L+1}{L-i}Y_{d+i}.
+\tag{54.1}
+\]
+This is evaluation at \(-1\) of the degree-\(L\) interpolant on
+\(d,d+1,\ldots,d+L\).  The weights are primitive and sum to \(1\).
+They also give the normalized finite-difference identity
+\[
+ \boxed{\;
+ G_{d,L}
+ =(-1)^L(d+1)\binom{d+L+1}{L}
+ \Delta^L\!\left(\frac{Y_d}{d+1}\right). \;}
+\tag{54.2}
+\]
+Indeed,
+\[
+ \frac{\binom{d+i}{i}\binom{d+L+1}{L-i}}
+      {\binom{d+L+1}{L}}
+ =\binom Li\frac{d+1}{d+i+1}.
+\]
+
+Interpolation on nested and shifted windows gives three further exact
+identities:
+\[
+\begin{aligned}
+ G_{d,L}-G_{d,L-1}
+ &=(-1)^L\binom{d+L}{L}\Delta^LY_d,\\
+ G_{d,L}-G_{d+1,L-1}
+ &=(-1)^L\binom{d+L+1}{L}\Delta^LY_d,\\
+ G_{d,L}-G_{d+1,L}
+ &=(-1)^{L+1}\binom{d+L+1}{L}
+   \Delta^{L+1}Y_d.
+\end{aligned}
+\tag{54.3}
+\]
+For example, the difference of two adjacent degree-\(L\)
+interpolants vanishes at their \(L\) common nodes.  Evaluating the
+remaining multiple of
+\(\prod_{j=1}^L(X-d-j)\) at \(X=-1\) proves the last line.
+Eliminating \(\Delta^LY_d\) from the first two lines gives the exact
+two-parameter Pascal law
+\[
+ \boxed{\;
+ L G_{d,L}
+ =(d+L+1)G_{d,L-1}-(d+1)G_{d+1,L-1}. \;}
+\tag{54.4}
+\]
+
+If \(q=d+i+1\) is prime and \(q>L\), the Lagrange weights give
+\[
+ G_{d,L}\equiv Y_{q-1}\pmod q.
+\tag{54.5}
+\]
+Consequently every target node common to two adjacent windows divides
+both carriers.  Put
+\[
+ B_{d,L}=\binom{d+L+1}{L}.
+\tag{54.6}
+\]
+Then
+\[
+ \boxed{\;
+ \gcd(G_{d,L},G_{d+1,L})
+ =\gcd\bigl(G_{d,L},
+ B_{d,L}\Delta^{L+1}Y_d\bigr). \;}
+\tag{54.7}
+\]
+This is the precise difference-divisibility problem opened by the
+new identity.
+
+There is an important saturation warning.  If a prime node \(q\) is
+in the common interior of the two stencils, then
+\[
+ q\mid B_{d,L},
+\tag{54.8}
+\]
+because \(q\) occurs once in the numerator product
+\((d+2)\cdots(d+L+1)\) and \(q>L\).  Thus targetness does **not**
+force \(q\mid\Delta^{L+1}Y_d\): its copy in (54.7) may be entirely
+the universal node factor (54.8).  This is the finite-difference
+version of the rank-one obstruction, and it prevents us from calling
+(54.3) a second target equation.
+
+Nevertheless, the evaluated gcd can be far smaller than either
+carrier.  For \(M=320,L=50\), the six integers
+\[
+ G_{161,50},G_{162,50},\ldots,G_{166,50}
+\tag{54.9}
+\]
+have \(528\) or \(529\) decimal digits, while already
+\[
+ \gcd(G_{161,50},G_{162,50})
+ =\gcd_{161\le d\le166}G_{d,50}
+ =179\cdot193\cdot211.
+\tag{54.10}
+\]
+The exact adjacent identity in (54.3) holds for all five differences.
+
+Minimal two-window stencils show why one example is not yet a theorem.
+Let \(R_{\cal T}\) be the product of the displayed targets and put
+\[
+ {\cal R}_{M,d,L}
+ =\gcd(G_{d,L},\Delta^{L+1}Y_d).
+\tag{54.11}
+\]
+Exact computation gives
+\[
+\begin{array}{c|c|c|c}
+n&L&
+\gcd(G_{d,L},G_{d+1,L})/R_{\cal T}
+&{\cal R}_{M,d,L}\\ \hline
+200&43&11&11\\
+272&43&5&1\\
+300&37&15&15\\
+321&33&111&111\\
+755&141&20075&5
+\end{array}
+\tag{54.12}
+\]
+Additional shifts can remove these nuisances, as (54.10) demonstrates,
+but no uniform rate is proved.
+
+The correct block-wide sufficient statement must include a total
+height ledger.  Let the short-adjacency graph be the path whose edges
+are the consecutive target pairs of gap at most \(A\log n\).  A
+matching contains at least half its edges.  Suppose a target-blind
+family of overlapping stencil systems covers every such matching edge
+with bounded multiplicity, and let \(K_\alpha\) be the gcd of the
+carrier values in system \(\alpha\).  If
+\[
+ \sum_\alpha\log|K_\alpha|=o_A(H),
+\tag{54.13}
+\]
+then the product of the disjoint target pairs divides
+\(\prod_\alpha K_\alpha\), and \(\log q\asymp\log n\) gives
+\[
+ C_A(n,I)=o_A(H/\log n).
+\tag{54.14}
+\]
+This proves (46.12).  A separate \(O((\log n)^2)\)-height integer for
+each pair is not enough; (54.13), or an equivalent reusable Fitting
+bound, is load-bearing.
+
+Equations (54.7)--(54.8) show that the node-binomial content alone has
+linear block-scale height and cannot prove (54.13).  The genuine new
+problem is therefore:
+
+> Prove a total sub-\(H\) gcd bound for a bounded-multiplicity family
+> of the actual Apéry shell carriers \(G_{d,L}\), after exact
+> node-gap Smith content is recorded, or construct a short Bezout
+> family for their distinguished evaluations.
+
+This is narrower than horizontal decorrelation stated directly in
+terms of the zero fibers: it is an explicit characteristic-zero gcd
+problem for a fixed coefficient array.  It is not solved by the
+universal interpolation identities, but (54.1)--(54.13) identify the
+precise arithmetic residual on which the observed 529-digit collapse
+depends.
+
+The dependency-free script `q32_newton_gcd_audit.py` verifies all
+identities in (54.2)--(54.4), the exact collapse (54.10), and, with
+the `--extended` flag, every row of (54.12).
+
+## 55. Two-parameter Newton saturation and the distinguished residual
+
+Varying the stencil length as well as its left endpoint gives a complete
+two-parameter calculus.  Besides the horizontal identity in (54.3), one
+has
+\[
+ G_{d,L+1}-G_{d,L}
+ =(-1)^{L+1}\binom{d+L+1}{L+1}\Delta^{L+1}Y_d.
+\tag{55.1}
+\]
+Consequently, if
+\[
+ H_{d,L}=G_{d,L}-G_{d+1,L},\qquad
+ V_{d,L}=G_{d,L+1}-G_{d,L},
+\]
+then
+\[
+ \boxed{\;(d+1)H_{d,L}=(L+1)V_{d,L}.\;}
+\tag{55.2}
+\]
+Put
+\[
+ g=\gcd(d+1,L+1),\qquad
+ \alpha=(d+1)/g,\qquad \beta=(L+1)/g.
+\]
+Since \(\gcd(\alpha,\beta)=1\), there is an integer \(K_{d,L}\) with
+\[
+ H_{d,L}=\beta K_{d,L},\qquad
+ V_{d,L}=\alpha K_{d,L}.
+\tag{55.3}
+\]
+This is the primitive Euclidean saturation of one Pascal diamond.  It
+removes the common factor caused by the ratio of the two adjacent
+binomial coefficients, but it does not remove an interior prime node.
+
+Here is the exact rectangle version.  Consider
+\[
+ {\cal G}_{D,R,A,B}
+ =\{G_{d,L}:D\le d\le D+R,\ A\le L\le B\},
+\qquad R\le A.
+\tag{55.4}
+\]
+All stencils in the rectangle contain precisely the common node
+interval
+\[
+ J=[D+R,D+A].
+\tag{55.5}
+\]
+The Pascal diamonds have rational rank \(R(B-A)\), so the rectangle
+values have rank
+\[
+ k=R+B-A+1.
+\tag{55.6}
+\]
+One independent boundary is
+\[
+ G_{D,A},G_{D+1,A},\ldots,G_{D+R,A},
+ G_{D+R,A+1},\ldots,G_{D+R,B}.
+\tag{55.7}
+\]
+
+Let \(q>B\) be prime and suppose \(q-1\in J\).  Modulo \(q\), every
+boundary coefficient row in (55.7) is the same coordinate projection
+\[
+ Y\longmapsto Y_{q-1}.
+\tag{55.8}
+\]
+Replace the boundary rows after the first by successive horizontal and
+vertical differences, and divide each difference by its single forced
+factor \(q\).  The resulting \(k\) rows have full rank modulo \(q\):
+the horizontal rows introduce successive left endpoints and the
+vertical rows introduce successive right endpoints.  It follows that
+the exact \(q\)-local Smith form of the boundary coefficient matrix is
+\[
+ \boxed{\quad
+ \operatorname {diag}(1,\underbrace{q,\ldots,q}_{k-1}).
+ \quad}
+\tag{55.9}
+\]
+Thus two-parameter variation removes the \(k-1\) duplicate presentation
+factors after Fitting saturation, but exactly one marked scalar remains.
+It vanishes modulo \(q\) precisely when \(q\mid Y_{q-1}\).  Enlarging
+the rectangle either preserves the common node and its last factor, or
+removes the node from \(J\) and loses the target divisibility.  There is
+no formal intermediate regime which keeps the target but strips its
+last factor.
+
+The smallest four-value square makes the same obstruction explicit.
+Put
+\[
+ A=\binom{d+L}{L},\qquad
+ C=\binom{d+L}{L-1},\qquad
+ B=A+C=\binom{d+L+1}{L},\qquad g=\gcd(A,C).
+\tag{55.9a}
+\]
+The evaluation matrix of
+\[
+ G_{d,L-1},\ G_{d+1,L-1},\ G_{d,L},\ G_{d+1,L}
+\]
+in the primitive coordinates
+\[
+ X=G_{d,L-1},\qquad
+ U=\Delta^LY_d,\qquad V=\Delta^LY_{d+1}
+\]
+has nonzero Smith invariants
+\[
+ \boxed{1,g,B.}
+\tag{55.9b}
+\]
+If the endpoint nodes are the primes
+\[
+ q=d+1,\qquad \ell=d+L+1=q+L,
+\]
+then
+\[
+ A=qg,\qquad C=Lg,\qquad B=\ell g,
+\tag{55.9c}
+\]
+and the primitive Pascal relation is
+\[
+ L G_{d,L}+qG_{d+1,L-1}=\ell G_{d,L-1}.
+\tag{55.9d}
+\]
+Removing \(g\) is target-safe, but removing the last Smith invariant
+removes \(\ell\).  Moreover, unimodular row operations reduce the four
+evaluated values to
+\[
+ X,\quad gU,\quad BV,\quad0.
+\tag{55.9e}
+\]
+Thus the four-value square reorganizes the distinguished scalar but
+does not supply a target-preserving unit pivot.
+
+The same calculation isolates the non-presentation residual.  Define
+\[
+\begin{aligned}
+ P_{\rm edge}
+ &=
+ \prod_{t=0}^{R-1}\binom{D+t+A+1}{A}
+ \prod_{j=A+1}^{B}\binom{D+R+j}{j},\\
+ E_{\rm rect}
+ &=\gcd\Bigl(
+ G_{D,A},\
+ \{\Delta^{A+1}Y_{D+t}:0\le t<R\},\
+ \{\Delta^jY_{D+R}:A+1\le j\le B\}
+ \Bigr).
+\end{aligned}
+\tag{55.10}
+\]
+For every prime \(\ell>B\) with \(\ell\nmid P_{\rm edge}\), successive
+edge subtraction and division by the unit prefactors give the exact
+valuation identity
+\[
+ v_\ell\!\left(\gcd{\cal G}_{D,R,A,B}\right)
+ =v_\ell(E_{\rm rect}).
+\tag{55.11}
+\]
+The exclusion \(\ell\nmid P_{\rm edge}\) is load-bearing.  Every common
+interior node prime divides the appropriate edge prefactors, so
+(55.11) does not turn the high difference into a second target
+equation.
+
+For the actual shell, the first quotient cell has an explicit
+three-term form.  If \(d>M/2\) and \(h=M-d\), then
+\[
+\boxed{\begin{aligned}
+ C_M(d)
+ =\sum_{t=0}^{M}\binom Mt&
+ \left\{\binom M{t-d}+\binom Mt+\binom M{t+d}\right\}\\
+ {}\times&
+ \left\{\binom{2M-t}{h}
+       +\binom{2M-t}{M}
+       +\binom{2M-t}{2M-h}\right\}^{\!2}.
+\end{aligned}}
+\tag{55.12}
+\]
+The \(b_M\) summand is the product of the central terms
+\(\binom Mt\), \(\binom{2M-t}{M}\), and
+\(\binom{2M-t}{M}\).  Hence every positive-order difference cancels
+that common origin coefficient exactly.  The remaining full-range
+term \(\binom{2M-t}{h}\), however, is not boundary-supported; (55.12)
+does not by itself give a short boundary value.
+
+The rectangle theorem is therefore a genuine sharpening, but not the
+desired estimate.  It proves that all universal Pascal/Smith content
+has been accounted for and reduces any further progress to the
+distinguished arithmetic of (55.10) for \(Y_d=C_M(d)\).  The script
+`q32_newton_gcd_audit.py` verifies (55.1)--(55.3), the local Smith
+profile (55.9) at both target and non-target nodes of the \(n=321\)
+rectangle, and the exact shell gcd computations in Section 54.
+
+## 56. The optimal two-carrier block reduction
+
+The total-height ledger becomes much cleaner if one asks directly for
+the target radical of a whole node block.  Let
+\[
+ I=[D,D+N-1]
+\tag{56.1}
+\]
+be \(N\) consecutive candidate nodes and put
+\[
+ G_I^-=G_{D-1,N},\qquad G_I^+=G_{D,N},\qquad
+ {\cal D}_I=\gcd(G_I^-,G_I^+).
+\tag{56.2}
+\]
+The two interpolation intervals are
+\[
+ [D-1,D+N-1],\qquad[D,D+N],
+\]
+so their common nodes are exactly \(I\).  Provided every candidate
+prime \(q\) in the block satisfies \(q>N\), (54.5) gives
+\[
+ \boxed{\quad R_I\mid{\cal D}_I,\quad}
+\tag{56.3}
+\]
+where
+\[
+ R_I=\prod_{\substack{q\ {\rm prime}\\q-1\in I\\q\mid Y_{q-1}}}q.
+\tag{56.4}
+\]
+Thus two evaluated integers, rather than one carrier for every target
+pair, suffice for a complete block.
+
+This cover is optimal at the formal interval level.  If every pair of
+positions at distance at most \(B\) in an \(N\)-node block is covered
+with multiplicity \(m\) by intervals of edge lengths \(L_J\), then
+double counting the pairs gives
+\[
+ \sum_J(L_J+1)
+ \ge m\left(N+1-\frac{B+1}{2}\right).
+\tag{56.5}
+\]
+Two adjacent near-full intervals attain this order for \(m=2\).
+Dyadic or multiscale interval covers cannot improve the linear total
+span.
+
+The coefficient module is also exact.  For two adjacent length-\(L\)
+rows, the nonzero Smith invariants are
+\[
+ \boxed{\quad
+ 1,\ \binom{d+L+1}{L}.
+ \quad}
+\tag{56.6}
+\]
+Indeed, subtracting the rows gives the last identity in (54.3).  After
+division by the binomial factor, the second row is the primitive
+coefficient vector of \(\Delta^{L+1}\).  The primitive carrier row and
+this difference row have maximal-minor content one: modulo any prime,
+dependence would force the carrier row to vanish because its final
+coordinate is zero while the final difference coordinate is a unit,
+contradicting the carrier coefficient sum \(1\).
+
+More generally, \(m\) consecutive translates of one length-\(L\)
+stencil have top determinantal divisor
+\[
+ \prod_{t=0}^{m-2}\binom{d+t+L+1}{L}.
+\tag{56.7}
+\]
+At a prime node common to all translates, the local Smith valuations
+are
+\[
+ (0,1,\ldots,1).
+\tag{56.8}
+\]
+Thus the \(m-1\) additional copies are overlap presentation content;
+after saturation there is still only one target-selective scalar.
+The primitive difference rows have total logarithmic coefficient
+height at least
+\[
+ (\log2+o(1))\sum_J L_J=\Omega(N)
+\tag{56.9}
+\]
+for every such interval cover.  Hence formal interval/Newton
+presentation alone cannot give the required \(o(N)\) height.
+
+For (56.2), the exact adjacent identity is
+\[
+ {\cal D}_I
+ =\gcd\left(
+ G_{D-1,N},
+ \binom{D+N}{N}\Delta^{N+1}Y_{D-1}
+ \right).
+\tag{56.10}
+\]
+The binomial contains every common prime node, so it cannot be divided
+away target-safely.  The distinguished-shell input now has a particularly
+short sufficient formulation.  Let \(P^+(m)\) denote the largest prime
+factor of \(m\), with \(P^+(1)=1\).  If uniformly for every mesoscopic
+block one has \({\cal D}_I\ne0\) and
+\[
+ \boxed{\quad
+ \log\frac{\operatorname {rad}|{\cal D}_I|}
+               {P^+(|{\cal D}_I|)}
+ =o(N),
+ \quad}
+\tag{56.11}
+\]
+then \(\log R_I=o(N)\).  Indeed, deleting \(P^+({\cal D}_I)\) removes
+at most one target prime, whose logarithm is \(O(\log n)=o(N)\).
+This single block-gcd theorem is stronger and cleaner than assigning a
+separate certificate to every adjacent pair.
+
+Exact computations for the same five hostile rows as (53.9) give:
+\[
+\begin{array}{c|c|c|c|c}
+n&I=[D,D+N-1]&N&R_I&{\cal D}_I/R_I\\ \hline
+200 &[128,190]&63&139\cdot181&47\\
+272 &[180,242]&63&191\cdot233&1\\
+300 &[180,236]&57&191\cdot227&1\\
+321 &[168,220]&53&179\cdot193\cdot211&43\\
+755 &[582,742]&161&593\cdot733&275
+\end{array}
+\tag{56.12}
+\]
+The carriers have respectively about \(337,452,497,530,1244\)
+decimal digits.  In two rows their gcd is exactly the target radical;
+in the other three the entire nuisance is \(47\), \(43\), or
+\(275=5^2\cdot11\).  The earlier \(n=321\) placement
+\[
+ G_{161,50},G_{162,50}
+\tag{56.13}
+\]
+has nuisance \(1\), whereas the shifted block in (56.12) has nuisance
+\(43\).  Therefore nuisance removal is arithmetic and placement
+sensitive.  A promising target-blind refinement is to take gcds of
+several overlapping core pairs: every target in the core intersections
+survives, while the observed outside-block nuisances need not align.
+No uniform radical bound for that refinement is yet proved.
+
+## 57. Exact first-cell decomposition and the surviving long core
+
+Formula (55.12) can be separated much more sharply.  Write
+\[
+ d=M-r,\qquad0\le r<d,
+\tag{57.1}
+\]
+and, for \(0\le t\le M\), put
+\[
+\begin{gathered}
+ A_t=\binom Mt,\qquad B_t=\binom{2M-t}{M},\qquad
+ P_t=\binom{2M-t}{r},\\
+ Q_t=\binom{2M-t}{r-t},\qquad
+ U_t=\binom M{r-t}.
+\end{gathered}
+\tag{57.2}
+\]
+Then
+\[
+ \boxed{\quad
+ C_M(M-r)=b_M+{\cal K}_M(r)+{\cal L}_M(r)+{\cal H}_M(r),
+ \quad}
+\tag{57.3}
+\]
+where
+\[
+ {\cal K}_M(r)
+ =\sum_{t=0}^M A_t^2(2B_tP_t+P_t^2),
+\tag{57.4}
+\]
+\[
+ {\cal L}_M(r)
+ =\sum_{t=0}^r A_t
+ \left[
+ A_t\{2(B_t+P_t)Q_t+Q_t^2\}
+ +U_t(B_t+P_t+Q_t)^2
+ \right],
+\tag{57.5}
+\]
+and
+\[
+ {\cal H}_M(r)
+ =\sum_{k=0}^r
+ \binom Mk\binom M{r-k}
+ \left\{\binom{M+k}{k}+\binom{M+k}{r}\right\}^{\!2}.
+\tag{57.6}
+\]
+To prove this, first retain the globally present \(P_t\) term in the
+second cyclic packet.  This gives \(b_M+{\cal K}_M(r)\).  On
+\(0\le t\le r\), the two additional terms are \(Q_t\) and \(U_t\),
+which give (57.5).  On \(M-r\le t\le M\), only the first packet has
+one additional term; substituting \(k=M-t\) gives (57.6).  The two
+boundary ranges are disjoint because \(r<d\).
+
+At the endpoint \(d=M\), this becomes a concrete identity involving
+the Apéry \(\zeta(2)\) sequence
+\[
+ u_M=\sum_{k=0}^M\binom Mk^2\binom{M+k}{k}:
+\]
+\[
+ \boxed{\quad
+ C_M(M)
+ =b_M+2u_M+\binom{2M}{M}^{\!2}
+       +7\binom{2M}{M}+11.
+ \quad}
+\tag{57.7}
+\]
+Thus even the endpoint shell contains a second genuine holonomic core;
+it is not a fixed collection of elementary binomial boundary terms.
+
+The long part in (57.4) nevertheless has an exact polynomial
+representation.  Define
+\[
+ U_M(z)=\sum_{k=0}^M
+ \binom Mk^2\binom{M+k}{k}z^k,\qquad
+ J_n(z)=\sum_{j=0}^n\binom nj^2z^j.
+\tag{57.8}
+\]
+Then
+\[
+ \boxed{\quad
+ \sum_{r\ge0}{\cal K}_M(r)z^r
+ =2(1+z)^M U_M(1+z)
+  +\sum_{k=0}^M\binom Mk^2J_{M+k}(z).
+ \quad}
+\tag{57.9}
+\]
+If \(\nabla f(r)=f(r)-f(r-1)\), increasing \(d\) decreases \(r\);
+hence, for \(F_M(r)=C_M(M-r)-b_M\),
+\[
+ \Delta_d^jC_M(d)=(-1)^j\nabla_r^jF_M(r).
+\tag{57.10}
+\]
+In particular,
+\[
+\begin{aligned}
+ \Delta_d^jC_M(d)=(-1)^j\Bigl\{
+ &[z^r](1-z)^j
+ \left[
+ 2(1+z)^MU_M(1+z)
+ +\sum_{k=0}^M\binom Mk^2J_{M+k}(z)
+ \right]\\
+ &+\nabla^j{\cal L}_M(r)+\nabla^j{\cal H}_M(r)
+ \Bigr\}.
+\end{aligned}
+\tag{57.11}
+\]
+This is an exact coefficient-extraction target for creative
+telescoping.  It inserts the desired high-difference factor
+\((1-z)^j\), but it leaves two full-support holonomic polynomial
+families.
+
+There is already a rigorous obstruction to the simplest collapse.  If
+\[
+ h_M(k)=\binom Mk^2\binom{M+k}{k},
+\]
+then
+\[
+ \frac{h_M(k+1)}{h_M(k)}
+ =\frac{(M-k)^2(M+k+1)}{(k+1)^3}.
+\tag{57.12}
+\]
+Gosper's denominator lemma has dispersion zero for this ratio.  A
+rational antidifference would therefore have a polynomial certificate;
+degree comparison reduces it to degree at most one, and the resulting
+coefficient equations are inconsistent over \(\mathbb Q(M)\).
+Consequently \(u_M\) has no one-term rational Gosper boundary
+certificate.  Higher-order telescopers and cancellation among all
+three terms in (57.3) remain open.
+
+The exact decomposition is compatible with a stronger numerical fact.
+For the natural first-cell placement
+\[
+ d=\lfloor M/2\rfloor+1,\qquad
+ L=\max({\cal T})-1-d,
+\]
+the primitive residual
+\[
+ \rho_{M,d,L}
+ =\gcd(G_{d,L},\Delta^{L+1}C_M(d))
+\]
+is exactly \(1\) in all five hostile rows:
+\[
+\begin{array}{c|c|c|c|c}
+n&(d,L)&{\cal T}&\rho_{M,d,L}&
+\gcd(G_{d,L},G_{d+1,L})/R_{\cal T}\\ \hline
+200&(100,80)&(139,181)&1&5\\
+272&(136,96)&(191,233)&1&385\\
+300&(150,76)&(191,227)&1&1\\
+321&(161,49)&(179,193,211)&1&1\\
+755&(378,354)&(593,733)&1&85
+\end{array}
+\tag{57.13}
+\]
+Thus every nuisance in these placements lies in the explicit binomial
+prefactor of (54.7); none comes from the distinguished high-difference
+residual.  This does not prove a uniform unit-residual theorem, and the
+displayed stencils are much wider than the final mesoscopic blocks.
+It does identify the next concrete problem: control the primes which
+simultaneously divide an actual Newton carrier and the consecutive
+binomial prefactors, using (57.3)--(57.11).
+
+The standard-library script `q32_first_cell_audit.py` verifies
+(57.3)--(57.11) for all first-cell nodes through \(M=34\), selected
+nodes at \(M=199,271,299,320,754\), forty deterministic random cases,
+and, with `--rows`, every exact gcd in (57.13).
+
+## 58. Pair-preserving margins and the exact two-dimensional normal form
+
+The four-value square in Section 55 loses an endpoint when its shorter
+stencils are used.  There is a target-preserving replacement.  Put
+\[
+ q=d+1,\qquad \ell=d+L+1,
+\tag{58.1}
+\]
+and define
+\[
+ \boxed{\qquad
+ H_{s,t}=G_{d-s,L+s+t},\qquad s,t\ge0.
+ \qquad}
+\tag{58.2}
+\]
+Every stencil in (58.2) contains the fixed core
+\([d,d+L]\), including the endpoint nodes \(q-1\) and \(\ell-1\).
+Write \(m=L+s+t\).  The two identities in (54.3) give
+\[
+\begin{aligned}
+ H_{s,t}-H_{s-1,t}
+ &=(-1)^m\binom{\ell+t}{m}\Delta^mY_{d-s},
+ &&s\ge1,\\
+ H_{s,t}-H_{s,t-1}
+ &=(-1)^m\binom{\ell+t-1}{m}\Delta^mY_{d-s},
+ &&t\ge1.
+\end{aligned}
+\tag{58.3}
+\]
+Since the ratio of the two binomial prefactors is
+\((\ell+t)/(q-s)\), their primitive cell relation is
+\[
+ \boxed{\quad
+ \frac m cH_{s,t}+\frac{q-s}{c}H_{s-1,t}
+ =\frac{\ell+t}{c}H_{s,t-1},
+ \qquad c=\gcd(m,q-s).
+ \quad}
+\tag{58.4}
+\]
+These are exact integer identities for an arbitrary sequence \(Y\).
+
+For the rectangle \(0\le s\le S,\ 0\le t\le T\), a convenient
+independent boundary is
+\[
+ H_{0,0},\quad H_{1,0},\ldots,H_{S,0},\quad
+ H_{0,1},\ldots,H_{0,T}.
+\tag{58.5}
+\]
+Successive boundary subtraction puts its coefficient matrix into one
+primitive carrier row followed by the diagonally scaled high-difference
+rows with factors
+\[
+ A_s=\binom{\ell}{L+s}\quad(1\le s\le S),\qquad
+ B_t=\binom{\ell+t-1}{L+t}\quad(1\le t\le T).
+\tag{58.6}
+\]
+The primitive rows have unit maximal-minor content: ordered by their
+new left or right boundary coordinate, they are triangular with unit
+diagonal.  Thus the rational rank is exactly
+\[
+ S+T+1.
+\tag{58.7}
+\]
+
+Assume \(L+S+T<q\), and let \(p\) be any prime in the fixed core
+\([q,\ell]\).  Every stencil has distinct nodes modulo \(p\), contains
+\(p-1\), and hence reduces to the same coordinate projection
+\[
+ H_{s,t}\equiv Y_{p-1}\pmod p.
+\tag{58.8}
+\]
+Moreover every factor in (58.6) contains \(p\) exactly once.  After
+primitive saturation, the exact \(p\)-local Smith form is therefore
+\[
+ \boxed{\quad
+ \operatorname {diag}
+ (1,\underbrace{p,\ldots,p}_{S+T}).
+ \quad}
+\tag{58.9}
+\]
+This repairs endpoint preservation, but it does not create a second
+target equation: the last marked scalar remains.
+
+Exact computation shows that margins do remove the *evaluated*
+nuisance rapidly.  For the first three hostile pairs, the smallest
+square margin \(s=t=k\) whose rectangle gcd is exactly the target
+product is respectively
+\[
+\begin{array}{c|c|c|c}
+n&(q,\ell)&k&
+\gcd_{0\le s,t\le k}H_{s,t}\\ \hline
+200&(139,181)&6&139\cdot181\\
+272&(191,233)&4&191\cdot233\\
+300&(191,227)&7&191\cdot227.
+\end{array}
+\tag{58.10}
+\]
+The one-margin nuisances in these rows are \(11,5,5\), respectively.
+The full seven-interval table, including both adjacent pairs and the
+three-target cover at \(n=321\), is generated by
+`q32_pair_margin_audit.py`.  With \(0\le s,t\le10\), its complete
+result is
+\[
+\begin{array}{c|c|c|c}
+n&(q,\ell;\ {\cal T})&
+\text{first }(s,t)\text{ with unit nuisance}&
+\text{nuisance at }(10,10)\\ \hline
+200&(139,181;\ 139,181)&(0,6)&1\\
+272&(191,233;\ 191,233)&(1,7)&1\\
+300&(191,227;\ 191,227)&(4,10)&1\\
+321&(179,193;\ 179,193)&\text{none}&37\\
+321&(193,211;\ 193,211)&(0,5)&1\\
+321&(179,211;\ 179,193,211)&(0,5)&1\\
+755&(593,733;\ 593,733)&\text{none}&275.
+\end{array}
+\tag{58.11}
+\]
+Thus finite margins do not uniformly kill the nuisance: \(37\) and
+\(275=5^2\cdot11\) persist throughout the displayed rectangles.  The
+data do not supply the uniform total height estimate (54.13); they show
+that the target-preserving family is arithmetically nontrivial and
+identify the exact family on which such an estimate should be sought.
+
+## 59. Translated stacks and the exact common-prefactor classification
+
+There is a complementary one-parameter family for a whole core
+\[
+ I=[D,D+N-1].
+\tag{59.1}
+\]
+For \(m\ge2\), put
+\[
+ d_0=D-m+1,\qquad L=N+m-2,
+\tag{59.2}
+\]
+and
+\[
+ K_m(I)=\gcd_{0\le t<m}G_{d_0+t,L}.
+\tag{59.3}
+\]
+All \(m\) stencils contain \(I\).  Consecutive subtraction gives the
+exact Euclidean normal form
+\[
+\boxed{\begin{aligned}
+ K_m(I)=\gcd\biggl(
+ &G_{d_0,L},\\
+ &\left\{
+ \binom{D+N+t}{L}\Delta^{L+1}Y_{d_0+t}:
+ 0\le t<m-1
+ \right\}\biggr).
+\end{aligned}}
+\tag{59.4}
+\]
+Signs have been suppressed inside the gcd.
+
+Let
+\[
+ B_t=\binom{D+N+t}{L}.
+\tag{59.5}
+\]
+After subtracting adjacent carrier rows and dividing by \(B_t\), the
+primitive difference rows have distinct final pivots, while the first
+carrier row has coefficient sum one.  Hence their row lattice is
+primitive.  Equivalently, for every prime \(p\), the local Smith
+valuations of the unsaturated stack are the sorted list
+\[
+ \boxed{\quad
+ 0,\ v_p(B_0),\ldots,v_p(B_{m-2}).
+ \quad}
+\tag{59.6}
+\]
+
+The common prefactor itself has an exact Pascal normal form:
+\[
+\boxed{\quad
+ \gcd_{0\le t<m-1}\binom{D+N+t}{L}
+ =
+ \gcd_{0\le j<m-1}\binom{D+N}{L-j}.
+ \quad}
+\tag{59.7}
+\]
+Indeed, Vandermonde expansion relates the two lists by the lower
+unitriangular matrix \((\binom tj)\).
+
+For a prime \(p>L\), the denominator \(L!\) is a unit.  The numerator
+intervals of all the \(B_t\)'s have common intersection
+\[
+ [D+1,D+N].
+\tag{59.8}
+\]
+Its length is less than \(p\), so it contains at most one multiple of
+\(p\).  Thus
+\[
+ \boxed{\quad
+ p\mid\gcd_tB_t
+ \quad\Longleftrightarrow\quad
+ kp\in[D+1,D+N]\text{ for one }k\ge1.
+ \quad}
+\tag{59.9}
+\]
+The case \(k=1\) is a candidate prime node.  The cases \(k\ge2\) are
+the exact common-ghost nuisances.  Primes \(p\le L\) can be deleted to
+full multiplicity without losing any target, provided all candidate
+primes exceed \(L\).
+
+The exact hostile-block histories are:
+\[
+\begin{array}{c|c|c|c}
+n&(D,N)&K_2/R_I&
+\text{history through the first-cell margin cap}\\ \hline
+200&(128,63)&47&47\text{ for }2\le m\le10\\
+272&(180,63)&1&1\text{ for }2\le m\le12\\
+300&(180,57)&1&1,\ldots,1,11,1,1\ (2\le m\le12)\\
+321&(168,53)&43&43\text{ for }2\le m\le8\\
+755&(582,161)&275&
+275\ (2\le m\le6),\ 55\ (7\le m\le12).
+\end{array}
+\tag{59.10}
+\]
+Here \(R_I\) is the target product.  Every nuisance displayed in
+(59.10) is at most \(L\).  All of them divide the common prefactor
+except the transient prime \(11\) at \(n=300,m=10\); there it is an
+actual high-difference coincidence and the prefactor gcd is a
+\(11\)-unit.  Hence, after target-safe deletion of primes at most
+\(L\), the reduced stack gcd equals the target product in every
+displayed case and every displayed \(m\).  Notice also that the raw
+gcd family is not nested: this high-difference prime \(11\) appears
+only at \(m=10\) in the \(n=300\) row.
+
+This is a clean structural reduction, not a bound for \(R_I\).  The
+remaining large primes outside the common prefactor force consecutive
+zeros of the high-difference sequence in (59.4), while the target
+primes remain in the one unsaturated marked scalar.  The script
+`q32_translated_stack_audit.py` verifies (59.4), (59.7), (59.9), and
+every entry of (59.10).
+
+## 60. Fixed-order telescopers for every first-cell Newton ray
+
+The apparent growing-order obstruction in the Legendre-mode expansion
+of (57.9) is not intrinsic.  It disappears if creative telescoping is
+performed on each Newton ray *before* separating its \(M+1\) Legendre
+modes.
+
+For \(\kappa=(u,v,w)\in P\cap\mathbb Z^3\), define
+\[
+ R_\kappa(M,r)
+ =c_M((M-r)u,(M-r)v,(M-r)w).
+\tag{60.1}
+\]
+The one-fold formula (49.1) makes this a proper hypergeometric sum in
+\(t\).  Put
+\[
+\begin{gathered}
+ d=M-r,\quad K_x=t-ud,\quad N_t=2M-t,\\
+ K_y=M-vd,\qquad K_z=M-wd,
+\end{gathered}
+\tag{60.2}
+\]
+and define
+\[
+ \phi_\epsilon(N,K)=
+ \begin{cases}
+ (N-K)/(K+1),&\epsilon=1,\\
+ 1,&\epsilon=0,\\
+ K/(N-K+1),&\epsilon=-1.
+ \end{cases}
+\tag{60.3}
+\]
+If \(h_\kappa(M,r,t)\) is the summand, its two exact ratios are
+\[
+ \frac{h(r,t+1)}{h(r,t)}
+ =
+ \frac{(M-t)(M-K_x)(N_t-K_y)(N_t-K_z)}
+ {(t+1)(K_x+1)N_t^2},
+\tag{60.4}
+\]
+\[
+ \frac{h(r+1,t)}{h(r,t)}
+ =
+ \phi_u(M,K_x)\phi_v(N_t,K_y)\phi_w(N_t,K_z).
+\tag{60.5}
+\]
+Ore creative telescoping of (60.4)--(60.5) gives the following exact
+orders.  The middle column is the multiplicity under \(y,z\)
+interchange:
+\[
+\begin{array}{c|c|c@{\qquad}c|c|c}
+\kappa&\text{mult.}&\text{ord.}&\kappa&\text{mult.}&\text{ord.}\\ \hline
+(-1,-1,-1)&1&3&(0,-1,-1)&1&3\\
+(-1,-1,0)&2&3&(0,-1,0)&2&3\\
+(-1,-1,1)&2&2&(0,-1,1)&2&2\\
+(-1,0,0)&1&2&(0,0,1)&2&3\\
+(-1,0,1)&2&3&(0,1,1)&1&3\\
+(-1,1,1)&1&3&(1,0,0)&1&2\\
+&&&(1,0,1)&2&3\\
+&&&(1,1,1)&1&3.
+\end{array}
+\tag{60.6}
+\]
+The multiplicities sum to the \(21\) nonzero lattice points of \(P\).
+The sum of the fourteen orders is
+\[
+ \boxed{\qquad
+ \operatorname {ord}_r\{C_M(M-r)-b_M\}\le38.
+ \qquad}
+\tag{60.7}
+\]
+This is a genuine uniform bound, independent of \(M\).
+
+The two full-support rays in (57.9) already illustrate the compression.
+Put
+\[
+\begin{aligned}
+ A_M(r)&=\sum_t\binom Mt^2
+ \binom{2M-t}{M}\binom{2M-t}{r},\\
+ B_M(r)&=\sum_t\binom Mt^2\binom{2M-t}{r}^2.
+\end{aligned}
+\tag{60.8}
+\]
+Both have exact order-three recurrences.  For \(A_M\), if
+\(\sum_{j=0}^3a_j(M,r)A_M(r+j)=0\), then
+\[
+\begin{aligned}
+a_0={}&-(r+1)(r-2M)^2,\\
+a_1={}&-(r-M+1)
+ (-M^2-6Mr+3r^2-10M+6r+3),\\
+a_2={}&-(r+2)
+ (M^2-6Mr+3r^2-11M+9r+7),\\
+a_3={}&-(r-M+2)(r+2)(r+3).
+\end{aligned}
+\tag{60.9}
+\]
+The order-three operator for \(B_M\) has coefficient degree eight; its
+fully factored leading and trailing coefficients and its exact
+certificate are printed by the audit script.  Hence the long core
+\(2A_M+B_M\) has order at most six.
+
+This invalidates a proposed use of the \(M+1\) separate Legendre modes
+as a lower bound for the scalar recurrence order.  Those modes are
+independent when eliminated componentwise, but their weighted sum has
+the fixed order-three telescoper above.  Thus a growing-mode
+Casoratian is a presentation barrier, not a no-go theorem for the
+first-cell shell.
+
+Two cautions remain load-bearing.
+
+1. A fixed-order recurrence alone does not bound the gcd of evaluated
+   carriers: a primitive-state or observability determinant is still
+   needed, and the local Smith law (58.9) shows that all target rows
+   coincide modulo the marked prime before saturation.
+2. Conjugating the recurrence by high finite differences preserves
+   bounded order, but one must prove that the resulting singular-factor
+   and primitive-state height meets the *total* block ledger (54.13).
+
+The scripts `q32_long_core_telescoper.sage` and
+`q32_first_cell_ray_telescopers.sage` derive the operators and
+certificates exactly, verify them at all small moments through the
+specified ranges and at held-out moments \(37,50,52,73\), and verify
+the complete \(21\)-ray reconstruction of the first-cell shell.
+
+## 61. Cartier zero segments in the actual recurrence state
+
+The primitive-state issue in Section 60 is not a generic recurrence
+countermodel.  It occurs in the distinguished Apéry ray state, and a
+freshman-dream calculation describes a large exact part of it.
+
+First, cyclic rotation of words gives a useful characteristic-zero
+divisibility.  If \(P(X)\) is any integral Laurent polynomial, then
+\[
+ \boxed{\quad
+ \frac{M}{\gcd(M,\nu_1,\nu_2,\nu_3)}
+ \mid [X^\nu]P(X)^M.
+ \quad}
+\tag{61.1}
+\]
+Indeed, a word with repetition number \(c\) has \(c\mid M\) and
+\(c\mid\nu_i\) for every \(i\); its cyclic orbit has size \(M/c\),
+which is a multiple of the left side of (61.1).  For every primitive
+nonzero first-cell ray \(\kappa\), this specializes to
+\[
+ \frac{M}{\gcd(M,r)}
+ \mid c_M((M-r)\kappa).
+\tag{61.2}
+\]
+
+There is a strictly stronger modular zero-segment theorem.  Let \(p\)
+be prime and write
+\[
+ M=ap+s,\qquad 0\le s<p.
+\tag{61.3}
+\]
+If
+\[
+ 2s<r<p,\qquad M-r>M/2,
+\tag{61.4}
+\]
+then, for every nonzero lattice point
+\(\kappa\in P\cap\mathbb Z^3\),
+\[
+ \boxed{\quad
+ c_M((M-r)\kappa)\equiv0\pmod p.
+ \quad}
+\tag{61.5}
+\]
+To prove this, use
+\[
+ \Lambda^M\equiv\Lambda^a(X^p)\Lambda^s(X)\pmod p.
+\tag{61.6}
+\]
+A contribution to the coefficient in (61.5) would give
+\[
+ p\mu+\nu=(ap+s-r)\kappa,
+\qquad \mu\in aP,\quad\nu\in sP.
+\tag{61.7}
+\]
+Equivalently,
+\[
+ p(\mu-a\kappa)=(s-r)\kappa-\nu.
+\tag{61.8}
+\]
+The absolute value of every coordinate on the right is at most
+\((r-s)+s=r<p\).  Hence \(\mu=a\kappa\) and
+\(\nu=(s-r)\kappa\).  Some coordinate of the nonzero lattice point
+\(\kappa\) has absolute value one, while \(r-s>s\); therefore
+\(\nu\notin sP\).  This proves (61.5).
+
+Apéry--Lucas gives
+\[
+ b_M\equiv b_ab_s\pmod p.
+\tag{61.9}
+\]
+Since the first-cell shell is its origin coefficient plus the \(21\)
+nonzero rays, (61.5) yields
+\[
+ \boxed{\quad
+ p\mid b_ab_s
+ \quad\Longrightarrow\quad
+ C_M(M-r)\equiv0\pmod p
+ \quad(2s<r<\min(p,M/2)).
+ \quad}
+\tag{61.10}
+\]
+
+This exactly explains the large factors found in the augmented-state
+scan:
+\[
+\begin{array}{c|c|c|c|c}
+M&p&(a,s)&\text{predicted first }r&
+\gcd(b_M,F_M(r),\ldots,F_M(r+37))\\ \hline
+146&73&(2,0)&1&73\\
+147&73&(2,1)&3&73\\
+148&73&(2,2)&5&73\\
+149&73&(2,3)&7&73\\
+150&73&(2,4)&9&365\\
+126&61&(2,4)&9&305.
+\end{array}
+\tag{61.11}
+\]
+Here \(73\mid b_2\) and \(61\mid b_4\).  Thus the case \(p\mid M\)
+from (61.2) is only the \(s=0\) edge of a larger Cartier phenomenon.
+
+The consequence for the recurrence route is sharp.  A full-rank
+coefficient/observability determinant cannot by itself bound the gcd
+of actual carrier values: the distinguished state can vanish on an
+arbitrarily long first-cell interval even when the prime is not a
+common interpolation node.  Moreover the primes in (61.10) satisfy
+\[
+ p\mid b_a\quad\text{or}\quad p\mid b_s,
+\tag{61.12}
+\]
+so bounding their collective radical is another horizontal
+prime-factor problem, not a formal fixed-rank theorem.  When \(p\) is
+large compared with a fixed outer digit \(a\), the first alternative
+is impossible and the obstruction descends to the smaller residue
+\(s<r/2\).  Whether this geometric descent can be iterated without
+losing the block-height budget is open.
+
+The standard-library script `q32_cartier_zero_segment_audit.py`
+checks (61.5) in \(18816\) ray coordinates, (61.10) in \(179\) shell
+positions, and every exact gcd in (61.11).
+
+## 62. What the fixed-order recurrence now proves, and what it does not
+
+The fourteen exact operators in Section 60 have pairwise unit greatest
+common right divisor:
+\[
+ \operatorname {gcrd}(L_\kappa,L_{\kappa'})=1
+ \qquad(\kappa\ne\kappa')
+\tag{62.1}
+\]
+in all \(91\) class pairs.  In particular, the two long-ray operators
+have lclm order exactly six.  For all fourteen rays, (62.1) rules out a
+literal common scalar solution, but it does not rule out rational
+gauge intertwiners or a special relation among the fourteen
+distinguished solutions.  Thus the rigorously established statement
+remains
+\[
+ \operatorname {ord}F_M\le38,
+\tag{62.2}
+\]
+not equality.
+
+Adjoining the constant coordinate \(b_M\) gives an augmented rank at
+most \(39\).  A pair-preserving margin rectangle with at least that
+many independent boundary rows can be stacked with shifted recurrence
+rows.  After exact Smith saturation, a prime common to all evaluated
+margins must fall into one of four classes:
+\[
+\boxed{\begin{array}{l}
+\text{a common node or higher-multiple alias},\\
+\text{a recurrence leading/trailing singularity},\\
+\text{a primitive margin/recurrence determinant},\\
+\text{the content of the actual augmented Apéry state}.
+\end{array}}
+\tag{62.3}
+\]
+For a short core \(L=O(\log M)\), the first three classes have local
+logarithmic height \(O((\log M)^2)\).  Equation (61.10) proves that the
+fourth class is real and can contain primes not dividing \(M\).
+
+This also locates the error in a recurrence-only closure argument.
+Polynomial recurrence coefficients control propagation of a
+*primitive* state; they do not make the distinguished state primitive.
+Conversely, the old claim that the squared-binomial long core has
+growing scalar order is false: its exact order-three operator is
+already verified in Section 60.  The correct unresolved invariant is
+the determinantal divisor of the propagated margin-observability
+matrix together with the primitive quotient of the actual state
+content.
+
+Finally, locality is load-bearing.  Multiplying one
+\(O((\log M)^2)\)-height determinant for each of
+\(\asymp M^{1/3}/\log M\) short cores costs at least
+\(M^{1/3}\log M\), while transporting one fixed-size state through a
+whole \(M^{1/3}\)-block produces the same transfer-matrix ledger.
+Therefore fixed order is a genuine structural breakthrough, but a
+block-level common-divisor or descent theorem is still required to
+obtain the \(o(M^{1/3})\) bound in (54.13).
