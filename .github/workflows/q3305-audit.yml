@@ -8,21 +8,36 @@ on:
       - '.github/workflows/q3305-audit.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  projective:
+  audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
-      - name: Independent recurrence audit through q <= 300
-        run: python3 problems/3.2/research/scripts/q3305_endpoint_wedge_audit.py --mode projective --q-limit 300
-
-  finite-sum:
-    runs-on: ubuntu-latest
-    timeout-minutes: 240
-    steps:
-      - uses: actions/checkout@v4
-      - name: Q3228 finite-sum audit through q <= 300
-        run: python3 problems/3.2/research/scripts/q3305_endpoint_wedge_audit.py --mode finite --q-limit 300
+        with:
+          ref: q3305-audit
+          fetch-depth: 0
+      - name: Run independent recurrence audit
+        shell: bash
+        run: |
+          set +e
+          python3 problems/3.2/research/scripts/q3305_endpoint_wedge_audit.py --mode projective --q-limit 300 > q3305-projective.out 2>&1
+          echo $? > q3305-projective.status
+          exit 0
+      - name: Run Q3228 finite-sum audit
+        shell: bash
+        run: |
+          set +e
+          python3 problems/3.2/research/scripts/q3305_endpoint_wedge_audit.py --mode finite --q-limit 300 > q3305-finite.out 2>&1
+          echo $? > q3305-finite.status
+          exit 0
+      - name: Persist outputs on audit branch
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add q3305-projective.out q3305-projective.status q3305-finite.out q3305-finite.status
+          git commit -m 'Record Q3305 audit output' || exit 0
+          git push origin HEAD:q3305-audit
