@@ -11,7 +11,7 @@ Contents:
 
 | path | what it is |
 |---|---|
-| `solution.pdf` / `solution.tex` | the write-up (7 pages) |
+| `solution.pdf` / `solution.tex` | the write-up (8 pages) |
 | `lean/` | a self-contained Lean 4 project checking the algebraic spine |
 | `scripts/` | 18 Sage/Python scripts reproducing every number in the paper |
 
@@ -29,8 +29,9 @@ Contents:
    palindromic; the trace polynomials are totally real with all but one/two roots
    in `[−2,2]`; hence every non-real embedding puts the eigenvalue on the unit
    circle, the chart parameter `u` is real, two shapes are real and the other two
-   cancel — so the Borel regulator vanishes at **every** embedding, both extended
-   Bloch classes are **torsion**, and `Re[ΔR] ∈ π²ℚ`.
+   cancel — so the Borel regulator vanishes at **every** embedding.  Torsion then
+   follows in two steps: the image in `B(F)` is torsion by Suslin, and the kernel
+   of `B̂(F) → B(F)` is a quotient of `ℚ/ℤ`, hence torsion.  So `Re[ΔR] ∈ π²ℚ`.
 5. **Denominator bound.** Merkurjev–Suslin: `|K₃^ind(F)_tors| = w₂(F)`.
    `w₂(F_α) = 120`, `w₂(F_β) = 408`, `Q₀ = lcm = 2040`; the flattening ambiguity
    contributes a further factor 2, so `Q = 4080`.  (Only the *existence* of a

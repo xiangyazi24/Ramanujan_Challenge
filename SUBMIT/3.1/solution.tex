@@ -295,6 +295,13 @@ an integer multiple of $\pi^2/2$, and so does the sum over the four tetrahedra
 and the difference between the endpoints. Verified numerically to $60$ digits
 over a range of flattening shifts in \texttt{scripts/flattening\_ambiguity.py}
 (worst deviation from a half-integer: $3\times10^{-61}$).
+
+We stress that this is \emph{not} a general statement about flattening
+ambiguities: it uses the reality of the four shapes, which holds at our two
+endpoints and nowhere else on the arc. Only the endpoints enter
+$\Delta\mathcal R$, so no flattening lift along the interior of the arc is
+needed --- the arc is used only to identify the two endpoint representations and
+to fix the sign convention for the integral.
 \end{proof}
 
 \begin{remark}
@@ -315,7 +322,7 @@ $-\tfrac\pi2(\theta_\alpha-\theta_\beta)$ been silently omitted, the computed
 value could not have reconstructed to a rational at all.
 \end{remark}
 
-\begin{lemma}[Orientation signs]\label{lem:signs}
+\begin{lemma}[Calibration and orientation signs]\label{lem:signs}
 For the $7_2$ triangulation used here, $\varepsilon_j=+1$ for all four
 tetrahedra. In particular $\varepsilon_V=\varepsilon_W$, and the regulator is the
 \emph{unsigned} sum $\sum_j D(\sigma(z_j))$.
@@ -342,6 +349,15 @@ $\sum_j D(z_j)=2.582170632117\ldots$ against
 $\Vol(S^3_{-1/2}(7_2))=2.582170632120\ldots$, agreeing to $3\times10^{-12}$. A
 single sign flip would change the all-plus sum by $2D(z_j)\ge0.79$, so no
 $\varepsilon_j$ can be $-1$. See \texttt{scripts/orient\_signs.py}.
+
+The same computation is our sign calibration. Evaluated at the complete
+hyperbolic structure it gives
+$\mathrm{Im}\,\widehat{\mathcal R}=\Vol>0$ with the all-plus convention, which
+fixes simultaneously (i) the tetrahedron signs, (ii) the sign of the Rogers
+regulator, and (iii) the normalisation
+$\GV(\rho)=4\,\mathrm{Re}\,\widehat{\mathcal R}(\xi_\rho)$ relating the regulator
+to the Godbillon--Vey invariant. Every later sign in this paper inherits that one
+calibration; we do not insert sign corrections anywhere else.
 \end{proof}
 
 \begin{remark}
@@ -354,27 +370,65 @@ not a dilogarithm identity.
 \end{remark}
 
 \begin{theorem}[Torsion]\label{thm:torsion}
-The extended Bloch classes $\xi_\alpha$ and $\xi_\beta$ of the two endpoint
-representations are torsion. Consequently
+The extended Bloch classes $\xi_\alpha,\xi_\beta\in\widehat{\mathcal B}(F)$ of the
+two endpoint representations are torsion, of order dividing $w_2(F)$.
+Consequently
 \[
 \mathrm{Re}\,[\Delta\mathcal R]\in\pi^2\QQ .
 \]
 \end{theorem}
 
 \begin{proof}
-Let $\sigma$ be an embedding of the endpoint field. If $\sigma$ is real, all four
-shapes are real and $D_\sigma=0$ by \eqref{eq:Dsym}. If $\sigma$ is non-real,
-then $|\sigma(a)|=1$ by Lemma~\ref{lem:circle}, so by
-Lemmas~\ref{lem:TU}--\ref{lem:signs},
+By Lemma~\ref{lem:shapefield} all four shapes lie in the endpoint field $F$
+itself, so $\xi$ is defined over $F$ and its embeddings are exactly the
+embeddings of $F$; there are no further complex places to control.
+
+\emph{Step 1: the Borel regulator vanishes at every embedding.}
+Let $\sigma$ be an embedding of $F$. If $\sigma$ is real, all four shapes are
+real and $D_\sigma=0$ by \eqref{eq:Dsym}. If $\sigma$ is non-real, then
+$|\sigma(a)|=1$ by Lemma~\ref{lem:circle}, so by
+Lemmas~\ref{lem:ureal}--\ref{lem:VW}, and using $\varepsilon_j=+1$
+(Lemma~\ref{lem:signs}),
 \[
-D_\sigma(\xi)=D(T)+D(U)+D(V)+D(W)=0+0+D(V)-D(V)=0,
+D_\sigma(\xi)=D(T)+D(U)+D(V)+D(W)=0+0+D(V)-D(V)=0 .
 \]
-and by Lemma~\ref{lem:fill} the passage from the relative class to the closed
-class adds nothing to the Bloch--Wigner value. Thus the Borel regulator of
-$\xi$ vanishes at every complex embedding, and a Bloch element whose Borel
-regulator vanishes at all complex embeddings is torsion. The Rogers regulator of
-a torsion class lies in $\pi^2\QQ$.
+
+\emph{Step 2: the image in $\mathcal B(F)$ is torsion.}
+Let $\pi\colon\widehat{\mathcal B}(F)\to\mathcal B(F)$ be the map forgetting the
+flattenings. The Borel regulator of $\pi(\xi)$ at $\sigma$ is $D_\sigma(\xi)$, and
+by Suslin's theorem \cite{Suslin} the regulator map
+$\mathcal B(F)\otimes\QQ\to\RR^{r_2}$ is injective. Step~1 therefore gives
+$\pi(\xi)\otimes 1=0$, i.e.\ $\pi(\xi)$ is torsion.
+
+\emph{Step 3: the flattening component is torsion.}
+$\ker\pi$ is the group of flattening changes, which is a quotient of $\QQ/\ZZ$
+(\cite{Neumann}, Thm.~2.1: $0\to\QQ/\ZZ\to\widehat{\mathcal B}(\CC)\to\mathcal B(\CC)\to0$),
+hence torsion. An extension of a torsion group by a torsion group is torsion, so
+$\xi$ is torsion.
+
+\emph{Step 4: the order.}
+By Zickert's identification $\widehat{\mathcal B}(F)\cong K_3^{\mathrm{ind}}(F)$
+\cite{Zickert} and the Merkurjev--Suslin formula \cite{MS}
+$|K_3^{\mathrm{ind}}(F)_{\mathrm{tors}}|=w_2(F)$, the order of $\xi$ divides
+$w_2(F)$. The Rogers regulator of a class of order $m$ lies in
+$\tfrac1m\pi^2\ZZ$.
 \end{proof}
+
+\begin{remark}
+Steps 2--4 are spelled out because the compressed form ``the Borel regulator
+vanishes, hence the extended class is torsion'' is not a correct citation:
+the regulator-kernel-is-torsion statement is a theorem about the \emph{ordinary}
+Bloch group $\mathcal B(F)$, and the extended group carries the extra flattening
+data. The two-step passage is what makes the compressed statement legitimate, and
+it also explains why the order bound is $w_2(F)$ --- that is the torsion order of
+$K_3^{\mathrm{ind}}$, i.e.\ of the \emph{extended} group, not of
+$\mathcal B(F)$.
+
+Step~1 also uses Lemma~\ref{lem:shapefield} in an essential way. Without it the
+class would be defined over the shape field $E\supseteq F$, and vanishing of the
+regulator at the embeddings of $F$ would say nothing about the extra complex
+places of $E$ above them.
+\end{remark}
 
 \begin{remark}
 Numerically, $|D_\sigma|<10^{-60}$ at each of the five conjugate pairs of
@@ -528,7 +582,11 @@ over the $A$-polynomial curves}, Acta Math.\ Vietnam.\ \textbf{33} (2008),
 Duke Math.\ J.\ \textbf{51} (1984), 529--545.
 \bibitem{Neumann} W.~D.~Neumann, \emph{Extended Bloch group and the
 Cheeger--Chern--Simons class}, Geom.\ Topol.\ \textbf{8} (2004), 413--474;
-Theorems 12.1 and 14.5.
+Theorems 2.1, 12.1 and 14.5.
+\bibitem{Suslin} A.~A.~Suslin, \emph{$K_3$ of a field and the Bloch group},
+Proc.\ Steklov Inst.\ Math.\ \textbf{183} (1991), 217--239.
+\bibitem{MS} A.~S.~Merkurjev and A.~A.~Suslin, \emph{The group $K_3$ for a
+field}, Izv.\ Akad.\ Nauk SSSR Ser.\ Mat.\ \textbf{54} (1990), 522--545.
 \bibitem{Zickert} C.~K.~Zickert, \emph{The extended Bloch group and algebraic
 $K$-theory}, J.\ reine angew.\ Math.\ \textbf{704} (2015), 21--54; Theorem~1.1.
 \bibitem{Franc} S.~Francaviglia, \emph{Hyperbolic volume of representations of
