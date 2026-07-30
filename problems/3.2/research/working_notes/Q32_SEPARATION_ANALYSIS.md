@@ -638,6 +638,21 @@ pointwise theorem.
     that quotient to vanish.  Thus the natural cutoff-contiguous
     comparison saturates at the same height/selectivity tradeoff.
 
+51. The formerly empirical order-two reflection seam is now an exact
+    all-prime identity.  If
+    \(F_p(Z)=H_p(Z(Z+1))\), then, in \(\mathbb F_p[Z]\),
+    \[
+      (Z+1)^3F_p(Z+1)-P(Z)F_p(Z)+Z^3F_p(Z-1)
+      =-16(2Z+1)(Z^p-Z)^2.
+    \]
+    A one-line hypergeometric certificate proves it; the complete
+    reflection calculation independently factors its second-jet scalar
+    through \(2Z+d+1\), which vanishes at the reflected gap
+    \(d=p-1-2Z\).  Hence value and first-jet compatibility at every
+    field node are universal finite-field seams, not target-selective
+    equations.  Any useful higher jet must escape this coboundary rather
+    than count it as a second independent defect coordinate.
+
 Thus Routes A and B are closed **as presently formulated**. This is not a
 disproof of `log G_n=o(n)`. It identifies the exact missing ingredient:
 cross-prime, Apéry-specific Archimedean/p-adic coupling not already contained
@@ -8395,7 +8410,7 @@ polynomial has the generating-function variable \(t\);
 lattice.  Thus \(X\) is a folded coefficient index, not the usual
 Picard--Fuchs base parameter.
 
-## 33. Corrected reflection jets through order six: finite audit
+## 33. Exact order-two seam and corrected reflection jets through order six
 
 The corrected finite-Racah transport was independently checked against
 the actual polynomial rather than only against its own derived formulas.
@@ -8429,10 +8444,59 @@ triangular-affine transport formula.
 
 The coefficient elimination has an alternating shape: odd orders solve
 for the next odd coefficient of \(u\), while even orders give a
-compatibility scalar.  The order-two scalar vanished at all \(2128\)
-regular nodes in the earlier \(p\le220\) audit, but a symbolic all-prime
-proof has not yet been obtained.  Higher finite data show why that
-vanishing must not be extrapolated into a target selector.
+compatibility scalar.  The order-two scalar is not merely a finite
+coincidence.  Put
+\[
+ c_m(Z)=
+ \left(\frac{(-Z)_m(Z+1)_m}{(m!)^2}\right)^2,\qquad
+ P(Z)=34Z^3+51Z^2+27Z+5.
+\tag{33.4}
+\]
+Direct rational simplification gives the WZ certificate
+\[
+\begin{split}
+ &(Z+1)^3c_m(Z+1)-P(Z)c_m(Z)+Z^3c_m(Z-1)\\
+ &\hspace{25mm}=G_{m+1}(Z)-G_m(Z),\\
+ G_m(Z)&=
+ \frac{-4m^4(2Z+1)
+   \{4Z(Z+1)+3m-2m^2\}}
+ {(Z-m+1)^2(Z+m)^2}\,c_m(Z).
+\end{split}
+\tag{33.5}
+\]
+The apparent poles cancel in the hypergeometric products, and the
+identity can equivalently be checked after clearing the displayed
+denominators.  Let \(M=(p-1)/2\).  Summing (33.5) for
+\(0\le m\le M\) leaves \(G_{M+1}\), since \(G_0=0\).  In
+\(\mathbb F_p[Z]\),
+\[
+ (-Z)_{M+1}(Z+1)_{M+1}
+ =(-1)^{M+1}(Z^p-Z)(Z-M).
+\tag{33.6}
+\]
+Wilson's theorem gives
+\[
+ ((M+1)!)^4=\frac1{16},
+\tag{33.7}
+\]
+and substituting \(M+1=1/2\) into the rational prefactor in
+(33.5) yields the exact polynomial seam
+\[
+ \boxed{
+ (Z+1)^3F_p(Z+1)-P(Z)F_p(Z)+Z^3F_p(Z-1)
+ =-16(2Z+1)(Z^p-Z)^2.}
+\tag{33.8}
+\]
+Thus both the recurrence value and its first derivative agree at every
+\(\mathbb F_p\)-node.  This is a universal double seam, not a condition
+distinguishing nodes with \(F_p(Z)=0\).  The complete-reflection
+second-jet calculation gives the same verdict in continuant form: its
+remaining scalar contains
+\[
+ N_d(Z+1)+P(Z)N_{d-1}(Z)
+   =(2Z+d+1)\Theta_d(Z),
+\]
+which vanishes identically at the reflected gap \(d=p-1-2Z\).
 
 At order four and \(p\le80\), the scalar was independent of the free
 second coefficient.  It vanished at \(36\) of \(354\) regular nodes,
@@ -8452,7 +8516,7 @@ second coefficient left
 \text{false positive passes}&35\\
 \text{actual zeros missed}&0.
 \end{array}
-\tag{33.4}
+\tag{33.9}
 \]
 Some passing nodes admitted every value of the free coordinate and some
 admitted a unique value.  The actual polynomial's coordinate was always
