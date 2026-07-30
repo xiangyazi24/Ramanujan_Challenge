@@ -1,0 +1,46 @@
+name: Q5719 common ghost audit runner
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/q5719-run-audit.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch isolated audit script
+        shell: bash
+        run: |
+          git fetch origin q5719-audit
+          git show origin/q5719-audit:problems/3.2/research/scripts/q5719_common_ghost_audit.py > /tmp/q5719_common_ghost_audit.py
+      - name: Run geometry audit
+        run: python3 /tmp/q5719_common_ghost_audit.py --limit 2000 > /tmp/q5719-geometry.out
+      - name: Run exact modular audit
+        shell: bash
+        run: |
+          set +e
+          python3 /tmp/q5719_common_ghost_audit.py --limit 2000 --evaluate > /tmp/q5719-evaluate.out 2>&1
+          echo $? > /tmp/q5719-evaluate.status
+          exit 0
+      - name: Persist outputs on audit branch
+        if: always()
+        shell: bash
+        run: |
+          git checkout -B q5719-audit origin/q5719-audit
+          cp /tmp/q5719-geometry.out q5719-geometry.out || true
+          cp /tmp/q5719-evaluate.out q5719-evaluate.out || true
+          cp /tmp/q5719-evaluate.status q5719-evaluate.status || true
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add q5719-geometry.out q5719-evaluate.out q5719-evaluate.status
+          git commit -m 'Record Q5719 common-ghost audit outputs' || exit 0
+          git push origin HEAD:q5719-audit
