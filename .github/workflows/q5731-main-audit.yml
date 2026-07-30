@@ -1,0 +1,42 @@
+name: Q5731 exact first-digit audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/q5731-main-audit.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch isolated Q5731 audit
+        shell: bash
+        run: |
+          git fetch origin q5731-audit-54375de0
+          git show origin/q5731-audit-54375de0:problems/3.2/research/scripts/q5731_cartier_first_digit_audit.py > /tmp/q5731.py
+      - name: Run exact dependency-free scan
+        shell: bash
+        run: |
+          set +e
+          python3 /tmp/q5731.py > /tmp/q5731-audit.out 2>&1
+          echo $? > /tmp/q5731-audit.status
+          exit 0
+      - name: Persist output on audit branch
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout q5731-audit-54375de0
+          cp /tmp/q5731-audit.out q5731-audit.out
+          cp /tmp/q5731-audit.status q5731-audit.status
+          git add q5731-audit.out q5731-audit.status
+          git commit -m 'Record Q5731 exact audit output' || exit 0
+          git push origin HEAD:q5731-audit-54375de0
