@@ -11817,6 +11817,24 @@ be prime and write
  M=ap+s,\qquad 0\le s<p.
 \tag{61.3}
 \]
+There is an exact digit factorization before the zero range is imposed.
+If \(r<p\), \(M-r>M/2\), and
+\(\kappa\in P\cap\mathbb Z^3\), then
+\[
+ \boxed{\quad
+ c_M((M-r)\kappa)
+ \equiv
+ c_a(a\kappa)c_s((s-r)\kappa)\pmod p.
+ \quad}
+\tag{61.3a}
+\]
+Consequently the whole first-cell shell satisfies
+\[
+ C_M(M-r)\equiv
+ \sum_{\kappa\in P\cap\mathbb Z^3}
+ c_a(a\kappa)c_s((s-r)\kappa)\pmod p.
+\tag{61.3b}
+\]
 If
 \[
  2s<r<p,\qquad M-r>M/2,
@@ -11848,7 +11866,8 @@ Equivalently,
 \]
 The absolute value of every coordinate on the right is at most
 \((r-s)+s=r<p\).  Hence \(\mu=a\kappa\) and
-\(\nu=(s-r)\kappa\).  Some coordinate of the nonzero lattice point
+\(\nu=(s-r)\kappa\), proving (61.3a).  Some coordinate of the nonzero
+lattice point
 \(\kappa\) has absolute value one, while \(r-s>s\); therefore
 \(\nu\notin sP\).  This proves (61.5).
 
@@ -11903,9 +11922,39 @@ is impossible and the obstruction descends to the smaller residue
 \(s<r/2\).  Whether this geometric descent can be iterated without
 losing the block-height budget is open.
 
+For the actual top-half target primes, however, the state obstruction
+and the marked target scalar are disjoint.  Put \(M=n-1=p+s\), so
+the node \(p-1\) in (48.10) is a target exactly when
+\[
+ p\mid b_{n-p}=b_{s+1}.
+\tag{61.13}
+\]
+For \(p>5\), Apéry--Lucas gives
+\[
+ b_M=b_{p+s}\equiv b_1b_s=5b_s\pmod p.
+\tag{61.14}
+\]
+Two consecutive Apéry numbers below \(p\) cannot both vanish modulo
+\(p\): the recurrence propagates such a pair backwards to
+\(b_0\equiv0\), contrary to \(b_0=1\).  Hence
+\[
+ \boxed{\quad
+ p\mid C_M(p-1)\quad\Longrightarrow\quad p\nmid b_M
+ \qquad(p>5,\ (M+1)/2<p\le M).
+ \quad}
+\tag{61.15}
+\]
+Thus the long state factors in (61.11), which occur at or below the
+halfway boundary, are genuine nuisances for a recurrence gcd, but the
+same prime cannot be both that nuisance and a top-half target.  This
+removes a possible overlap; it does not remove the one-dimensional
+target alias in (58.9).
+
 The standard-library script `q32_cartier_zero_segment_audit.py`
-checks (61.5) in \(18816\) ray coordinates, (61.10) in \(179\) shell
-positions, and every exact gcd in (61.11).
+checks (61.3a) in \(93390\) coordinates, checks (61.5) in \(18816\)
+ray coordinates, checks (61.10) in \(179\) shell positions, checks
+(61.15) over all targets in its prime range, and verifies every exact
+gcd in (61.11).
 
 ## 62. What the fixed-order recurrence now proves, and what it does not
 
@@ -11945,6 +11994,9 @@ margins must fall into one of four classes:
 For a short core \(L=O(\log M)\), the first three classes have local
 logarithmic height \(O((\log M)^2)\).  Equation (61.10) proves that the
 fourth class is real and can contain primes not dividing \(M\).
+Equation (61.15) proves at the same time that, in the top quotient
+cell, the fourth class cannot contain the marked target prime itself.
+All top-half targets remain in the first, universal-alias class.
 
 This also locates the error in a recurrence-only closure argument.
 Polynomial recurrence coefficients control propagation of a
