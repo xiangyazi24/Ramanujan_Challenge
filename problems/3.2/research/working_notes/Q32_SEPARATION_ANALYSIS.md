@@ -13651,3 +13651,126 @@ The script `q32_newton_second_layer_audit.py` independently verifies the
 shell formula by Lucas binomial arithmetic, checks \(411\) small exact
 shells against direct integer evaluation, and reproduces all \(824\)
 targets and the three exceptions in (68.13).
+
+### 68.3 The rational right factor is an extension, not a target equation
+
+The certified operator in (68.23) is reducible.  Exact Ore division gives
+\[
+ \mathcal P=\mathcal L\mathcal R,\qquad
+ \operatorname {ord}\mathcal L=2,\quad
+ \operatorname {ord}\mathcal R=1,
+\tag{68.28}
+\]
+where
+\[
+ \mathcal R=A(s)S_s-B(s)
+\tag{68.29}
+\]
+and
+\[
+ \begin{aligned}
+ A(s)
+ &=(s-\tfrac12)(s+\tfrac32)(s+3)(s^2-s+6),\\
+ B(s)
+ &=(s+\tfrac12)(s+1)(s+\tfrac52)(s^2+s+6).
+ \end{aligned}
+\tag{68.30}
+\]
+Equivalently,
+\[
+ \begin{aligned}
+ 4A(s)&=4s^5+12s^4+17s^3+78s^2+63s-54,\\
+ 4B(s)&=4s^5+20s^4+57s^3+118s^2+107s+30.
+ \end{aligned}
+\tag{68.31}
+\]
+The kernel of \(\mathcal R\) is elementary.  With \(y_0=1\), telescoping
+the ratio \(y_{s+1}/y_s=B(s)/A(s)\) gives
+\[
+ \boxed{\qquad
+ y_s=
+ \frac{(1-2s)(2s+3)(s^2-s+6)}
+ {9(s+1)(s+2)}.
+ \qquad}
+\tag{68.32}
+\]
+
+Put
+\[
+ K_s=A(s)J_{s+1}-B(s)J_s.
+\tag{68.33}
+\]
+Then \(\mathcal L K=0\).  On writing \(J_s=y_sz_s\), equation
+\(A(s)y_{s+1}=B(s)y_s\) gives the exact first-order extension law
+\[
+ K_s=B(s)y_s(z_{s+1}-z_s),
+\tag{68.34}
+\]
+and hence
+\[
+ J_s=y_s\left\{
+ J_0+\sum_{m=0}^{s-1}\frac{K_m}{B(m)y_m}
+ \right\}.
+\tag{68.35}
+\]
+Thus the factorization does not decompose \(J\) into a hypergeometric
+solution plus an order-two solution.  It expresses \(J\) as an
+indefinite sum over the order-two sequence \(K\).
+
+There is no literal common scalar solution with the Apéry module.  If
+\(\mathcal A\) is the shifted order-two Apéry operator annihilating
+\(b_s\), exact Ore arithmetic gives
+\[
+ \operatorname {gcrd}(\mathcal P,\mathcal A)
+ =
+ \operatorname {gcrd}(\mathcal L,\mathcal A)
+ =1.
+\tag{68.36}
+\]
+This does not exclude a rational gauge intertwiner between
+\(\mathcal L\) and \(\mathcal A\), so a bounded search was also made
+against the distinguished solutions.  Define the integral transform
+\[
+ \widetilde K_s=4A(s)J_{s+1}-4B(s)J_s.
+\tag{68.37}
+\]
+There are no polynomials \(U,V\in\mathbb Q[s]\), both of degree at most
+30, for which
+\[
+ \widetilde K_s=U(s)b_s+V(s)b_{s+1}
+\tag{68.38}
+\]
+holds identically.  This finite claim has a short exact certificate:
+form the \(63\)-by-\(63\) matrix, for \(0\le s\le62\), whose columns are
+\[
+ s^j b_s,\quad s^j b_{s+1}\quad(0\le j\le30),
+ \qquad \widetilde K_s.
+\tag{68.39}
+\]
+Its determinant modulo \(1000000007\) is
+\[
+ 380490076\ne0.
+\tag{68.40}
+\]
+Therefore the corresponding integral determinant is nonzero, proving
+the asserted linear independence over \(\mathbb Q\).  This is only a
+degree-30 exclusion; it is not a theorem against arbitrary rational
+gauges.
+
+Most importantly, (68.28) is vertical.  At a target,
+\(b_r\equiv0\pmod p\), while the new coordinate
+\(J_{r-1}\) is generally a unit.  Neither the rational kernel (68.32)
+nor the extension law (68.35) turns that one zero into a second
+target-preserving equation.  A mixed Casoratian can control primes
+dividing both an Apéry coordinate and an order-two \(K\)-coordinate;
+it does not contain every prime dividing \(b_r\).  Consequently the
+right factor, by itself, cannot supply the missing horizontal radical
+bound.  A positive continuation would have to produce an additional
+identity whose integer value:
+
+1. is divisible by every moving target prime, not merely the
+   simultaneous-zero subfamily; and
+2. has logarithmic height \(o(n)\).
+
+The exact audit `q32_doubled_period_factor_audit.sage` verifies
+(68.28)--(68.36) and the determinant certificate (68.40).
