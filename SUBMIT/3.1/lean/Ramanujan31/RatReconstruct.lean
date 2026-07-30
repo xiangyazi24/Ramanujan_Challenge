@@ -120,3 +120,54 @@ theorem regulator_quotient_eq
     x = ((-4 : ℚ) / 85 : ℚ) := by
   refine rat_reconstruct_half (by norm_num) ?_ hx happrox
   norm_num
+
+/-!
+## Robustness of the reconstruction
+
+A referee objection: the passage "the extended Bloch class is torsion of order
+dividing `m`" ⟹ "the Rogers value lies in `(1/m)π²ℤ`" carries convention-dependent
+factors — 6, 12, 24 — so the bound `Q = 2040` might really be `6·2040` or
+`24·2040`.
+
+**In this instance the objection is harmless, and the theorem below says exactly
+why.**  The numerical certificate has error `1.1·10⁻³⁰¹`, while the separation of
+rationals with denominator `≤ Q` is `1/Q²`.  So the reconstruction survives *any*
+denominator bound up to about `1.7·10¹⁵⁰`; a stray factor of 6 or 24, or even of
+`10¹⁴⁶`, changes nothing.
+
+The theorem is stated with the generous ceiling `Q ≤ 10¹⁵⁰` so that no
+normalization question has to be settled to believe the conclusion.
+-/
+
+/-- **The reconstruction is insensitive to the normalization of the denominator
+bound.**  For *any* `Q` with `85 ≤ Q ≤ 10¹⁵⁰`, a quantity known to be rational
+with denominator at most `Q`, and known to agree with `-4/85` to `301` digits,
+equals `-4/85`. -/
+theorem regulator_quotient_eq_robust {x : ℝ} {Q : ℕ}
+    (hQ : 85 ≤ Q) (hQle : Q ≤ 10 ^ 150)
+    (hx : ∃ r : ℚ, r.den ≤ Q ∧ x = (r : ℝ))
+    (happrox : |x - ((-4 : ℚ) / 85 : ℚ)| < 1 / (10 : ℝ) ^ 301) :
+    x = ((-4 : ℚ) / 85 : ℚ) := by
+  have hQpos : 0 < Q := lt_of_lt_of_le (by norm_num) hQ
+  have hQr : (0 : ℝ) < (Q : ℝ) := by exact_mod_cast hQpos
+  refine rat_reconstruct hQpos ?_ hx (lt_of_lt_of_le happrox ?_)
+  · rw [show ((-4 : ℚ) / 85).den = 85 from by norm_num]
+    exact hQ
+  · have h1 : (Q : ℝ) ≤ (10 : ℝ) ^ 150 := by exact_mod_cast hQle
+    have hmul : (Q : ℝ) * (Q : ℝ) ≤ (10 : ℝ) ^ 150 * (10 : ℝ) ^ 150 :=
+      mul_self_le_mul_self hQr.le h1
+    have h2 : (Q : ℝ) ^ 2 ≤ (10 : ℝ) ^ 301 := by
+      calc (Q : ℝ) ^ 2 = (Q : ℝ) * (Q : ℝ) := by ring
+        _ ≤ (10 : ℝ) ^ 150 * (10 : ℝ) ^ 150 := hmul
+        _ = (10 : ℝ) ^ 300 := by rw [← pow_add]
+        _ ≤ (10 : ℝ) ^ 301 := pow_le_pow_right₀ (by norm_num) (by norm_num)
+    exact one_div_le_one_div_of_le (pow_pos hQr 2) h2
+
+/-- The concrete instance with the *stated* bound `Q = 2040`, and with the bound
+inflated by the largest conventional factor anyone might insist on (`24`), both
+give the same answer. -/
+example {x : ℝ}
+    (hx : ∃ r : ℚ, r.den ≤ 24 * 2040 ∧ x = (r : ℝ))
+    (happrox : |x - ((-4 : ℚ) / 85 : ℚ)| < 1 / (10 : ℝ) ^ 301) :
+    x = ((-4 : ℚ) / 85 : ℚ) :=
+  regulator_quotient_eq_robust (by norm_num) (by norm_num) hx happrox

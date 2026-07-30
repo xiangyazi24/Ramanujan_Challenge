@@ -9,6 +9,9 @@ others and documents exactly which inputs remain external.
                                      bound (the final step, Thm 5.2)
   Ramanujan31/ChartSymmetry.lean     u(1/a) = u(a); the palindromic
                                      decompositions f = a^d g(a + 1/a)
+  Ramanujan31/ShapeField.lean        algebraic certificate that 1 + 4u^2 is a
+                                     SQUARE in the endpoint field, so the shapes
+                                     are defined over F (no quadratic extension)
   Ramanujan31/TraceRoots.lean        the trace polynomials are totally real,
                                      with EXACT root counts in (-2,2)
   Ramanujan31/UnitCircle.lean        real trace in [-2,2]  <=>  |a| = 1
@@ -20,6 +23,7 @@ No `sorry`, no `native_decide`.  Every theorem depends only on
 -/
 import Ramanujan31.RatReconstruct
 import Ramanujan31.ChartSymmetry
+import Ramanujan31.ShapeField
 import Ramanujan31.TraceRoots
 import Ramanujan31.UnitCircle
 import Ramanujan31.ShapeCancellation

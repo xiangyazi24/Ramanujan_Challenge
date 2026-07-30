@@ -49,9 +49,10 @@ lake build
 ```
 
 * **Toolchain** `leanprover/lean4:v4.29.0`; **Mathlib** pinned to `v4.29.0`.
-* Verified build: `Build completed successfully (3294 jobs)`, zero errors.
-* **No `sorry`. No `native_decide`.**  All 30 audited declarations depend only on
-  `[propext, Classical.choice, Quot.sound]`.
+* Verified build: `Build completed successfully (3295 jobs)`, zero errors.
+* **No `sorry`. No `native_decide`.**  All 37 audited declarations depend only on
+  `[propext, Classical.choice, Quot.sound]` — the four `ShapeField` certificates
+  need only `[propext, Quot.sound]`.
 
 ### Module map
 
@@ -59,6 +60,7 @@ lake build
 |---|---|
 | `Ramanujan31/RatReconstruct.lean` | rational reconstruction from a denominator bound — step 6 |
 | `Ramanujan31/ChartSymmetry.lean` | `u(1/a) = u(a)`; the palindromic decompositions `f = a^d·g(a+1/a)` for both endpoints |
+| `Ramanujan31/ShapeField.lean` | algebraic certificate that `1 + 4u²` is a **square in the endpoint field** — so the shapes are defined over `F`, not a quadratic extension |
 | `Ramanujan31/TraceRoots.lean` | the trace polynomials are totally real, with **exact** root counts in `(−2,2)` |
 | `Ramanujan31/UnitCircle.lean` | real trace in `[−2,2]` **⟺** `‖a‖ = 1` |
 | `Ramanujan31/ShapeCancellation.lean` | the Bloch–Wigner four-shape cancellation |
@@ -81,6 +83,27 @@ lake build
   clause** (`∀ x, eval x = 0 → x = r₁ ∨ …`), so the counts are exact, not lower
   bounds — that is what rules out a non-real embedding escaping the unit circle.
 
+### Two referee objections, answered inside Lean
+
+**"The shapes involve `√(1+4u²)`, so they live in a quadratic extension of `F`;
+your torsion argument only controls the embeddings of `F`."**
+`ShapeField.sPolyAlpha_sq` / `sPolyBeta_sq` exhibit an explicit integer
+polynomial `s` with `s(a)² = 1 + 4u(a)²` modulo the minimal polynomial — proved
+by `linear_combination c(a)·hf` with an explicit cofactor, over an arbitrary
+commutative ring.  So `√(1+4u²) ∈ F`, the shape field `E` equals `F`, and the
+statement transports under every embedding at once.  This replaces the earlier
+numerical `is_square()` check with a certificate a reader can verify by one
+polynomial multiplication.
+
+**"The passage `torsion of order m ⟹ Rogers value in (1/m)π²ℤ` carries
+convention-dependent factors 6, 12, 24; your `Q = 2040` may be wrong."**
+`regulator_quotient_eq_robust` shows the conclusion holds for **any** bound
+`85 ≤ Q ≤ 10¹⁵⁰`.  The numerical certificate has error `1.1·10⁻³⁰¹` while the
+separation of rationals of denominator `≤ Q` is `1/Q²`, so there are ~146 orders
+of magnitude of slack.  A stray factor of 6 or 24 — or of `10¹⁴⁶` — changes
+nothing.  The normalization question therefore does not have to be settled for
+the conclusion to stand.
+
 ### What is *not* machine-checked
 
 Stated as explicit hypotheses in Lean, and cited in the write-up:
@@ -90,7 +113,9 @@ Stated as explicit hypotheses in Lean, and cited in the write-up:
    Standard — Zagier, *The dilogarithm function*, §I.2.  Constructing `D` inside
    Lean is a separate infrastructure project.
 2. **Torsion ⇒ rational with denominator dividing 2040** — Merkurjev–Suslin plus
-   Zickert Thm 1.1.  Enters `regulator_value` as the hypothesis `torsion`.
+   Zickert Thm 1.1.  Enters `regulator_value` as the hypothesis `torsion`.  See
+   the robustness theorem above: only the *existence* of a bound below `10¹⁵⁰`
+   matters, not its exact value.
 3. **The 301-digit numerical evaluation.**  Certified evaluation of Rogers
    dilogarithms to that precision inside Lean is not attempted; the bound enters
    `regulator_value` as the hypothesis `numeric`.  It is reproduced by
