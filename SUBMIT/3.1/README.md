@@ -11,9 +11,9 @@ Contents:
 
 | path | what it is |
 |---|---|
-| `solution.pdf` / `solution.tex` | the write-up (5 pages) |
+| `solution.pdf` / `solution.tex` | the write-up (7 pages) |
 | `lean/` | a self-contained Lean 4 project checking the algebraic spine |
-| `scripts/` | 15 Sage/Python scripts reproducing every number in the paper |
+| `scripts/` | 16 Sage/Python scripts reproducing every number in the paper |
 
 ---
 
@@ -32,7 +32,8 @@ Contents:
    cancel — so the Borel regulator vanishes at **every** embedding, both extended
    Bloch classes are **torsion**, and `Re[ΔR] ∈ π²ℚ`.
 5. **Denominator bound.** Merkurjev–Suslin: `|K₃^ind(F)_tors| = w₂(F)`.
-   `w₂(F_α) = 120`, `w₂(F_β) = 408`, `Q = lcm = 2040`.
+   `w₂(F_α) = 120`, `w₂(F_β) = 408`, `Q = lcm = 2040`.  (Only the *existence* of a
+   bound below `10¹⁵⁰` is used — see the robustness theorem.)
 6. **Pin it.** `Re[ΔR]/π² = −4/85` to 301 digits; two distinct rationals of
    denominator `≤ 2040` differ by at least `1/2040² ≈ 2.4·10⁻⁷`.  Note `85 ∣ 2040`.
 

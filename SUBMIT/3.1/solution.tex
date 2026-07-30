@@ -45,7 +45,7 @@ lies on the unit circle, and on the unit circle two of the four tetrahedron
 shapes are real while the other two are exchanged by
 $z\mapsto1/(1-\bar z)$, under which the Bloch--Wigner function changes sign.
 Torsion gives rationality; the Merkurjev--Suslin torsion order supplies the
-denominator bound $1020$; a $301$-digit evaluation then determines the value
+denominator bound $2040$; a $301$-digit evaluation then determines the value
 uniquely.
 \end{abstract}
 
@@ -145,6 +145,52 @@ V_\beta=26.241958\ldots,&W_\beta=3.5555141\ldots,
 all real, with $T<0$ and $U,V,W>1$: the endpoint representations are real, and
 the tetrahedra are flat.
 
+The chart \eqref{eq:chart} involves $\sqrt{1+4u^2}$, so a priori the shapes lie
+in a quadratic extension of the endpoint field. They do not.
+
+\begin{lemma}[Shape field]\label{lem:shapefield}
+$1+4u^2$ is a square in the endpoint field itself. Explicitly, with
+$s_\alpha,s_\beta\in\ZZ[z]$
+\[
+\begin{aligned}
+s_\alpha&=12z^{11}-30z^{10}+32z^{9}-42z^{8}+50z^{7}-58z^{6}+54z^{5}-56z^{4}
++42z^{3}-38z^{2}+28z-21,\\
+s_\beta&=60z^{15}-394z^{14}+1150z^{13}-2386z^{12}+4196z^{11}-6176z^{10}
++8022z^{9}-9202z^{8}\\
+&\qquad+9406z^{7}-8592z^{6}+6958z^{5}-4960z^{4}+3064z^{3}-1546z^{2}+646z-137,
+\end{aligned}
+\]
+one has $s_\alpha(a)^2=1+4u^2$ in $\QQ(a)$ and $s_\beta(b)^2=1+4u^2$ in
+$\QQ(b)$. Hence all four shapes lie in the endpoint field, and the shape field
+$E$ coincides with $F$.
+\end{lemma}
+
+\begin{proof}
+Writing $u$ itself as a polynomial modulo the minimal polynomial,
+\[
+\begin{aligned}
+u_\alpha&=-6z^{11}+14z^{10}-15z^{9}+21z^{8}-23z^{7}+28z^{6}-25z^{5}+27z^{4}
+-20z^{3}+18z^{2}-13z+10,\\
+u_\beta&=-6z^{15}+41z^{14}-125z^{13}+266z^{12}-474z^{11}+711z^{10}-935z^{9}
++1088z^{8}\\
+&\qquad-1127z^{7}+1043z^{6}-857z^{5}+620z^{4}-389z^{3}+202z^{2}-85z+21,
+\end{aligned}
+\]
+the identities $s^2-(1+4u^2)=c\cdot f$ hold in $\ZZ[z]$ with explicit cofactors
+$c$; for $\alpha$,
+\[
+c_\alpha=-48z^{9}+20z^{8}+12z^{7}+104z^{6}+12z^{5}+104z^{4}+12z^{3}+56z^{2}
+-16z+40 .
+\]
+Each identity is a single polynomial multiplication. All four are verified in
+Lean (\S\ref{sec:lean}).
+\end{proof}
+
+This point matters: the torsion argument below controls the embeddings of the
+field over which the class is defined. Because $s_\alpha,s_\beta$ lie in $F$
+itself, the conclusion transports under \emph{every} embedding simultaneously,
+with no place-by-place analysis.
+
 \section{The two classes are torsion}
 
 This section contains the new content. Let $D$ denote the Bloch--Wigner
@@ -220,12 +266,36 @@ W=\frac1{1-uX}=\frac1{1-\bar V}.
 By \eqref{eq:Dsym}, $D(W)=D\bigl(1/(1-\bar V)\bigr)=D(\bar V)=-D(V)$.
 \end{proof}
 
-\begin{lemma}[The filling term carries no volume]\label{lem:fill}
-For the filling slope $L^2M^{-1}=1$, the core holonomy is
-$\lambda_{\mathrm{core}}=-\log L$. At an embedding with $|a|=1$ this is purely
-imaginary, so $\lambda_{\mathrm{core}}^2$ is real and Neumann's solid-torus
-correction contributes to the Chern--Simons part only, not to the volume.
+\begin{lemma}[The filling term]\label{lem:fill}
+Both endpoints satisfy the same $(-1)$-filling condition, and the flattenings are
+chosen compatibly along the arc, so that the extended Bloch classes
+$\xi_\alpha,\xi_\beta$ are the classes of the \emph{filled} representations.
+With that choice Neumann's surgery correction is already absorbed into the
+flattening data, and
+\[
+\GV(\rho_\alpha)-\GV(\rho_\beta)
+=4\,\mathrm{Re}\bigl[\widehat{\mathcal R}(\xi_\alpha)
+-\widehat{\mathcal R}(\xi_\beta)\bigr]
+\]
+with no additional core term.
 \end{lemma}
+
+\begin{remark}
+It is worth being explicit about why this is stated as a choice of flattening and
+not as a vanishing computation. Neumann's core correction is \emph{linear} in the
+core complex length $\lambda_{\mathrm{core}}$, not quadratic: the contribution to
+the regulator is $\tfrac12\lambda_{\mathrm{core}}\pi i \pmod{\pi^2\ZZ}$. For
+$\lambda_{\mathrm{core}}=i\theta$ purely imaginary this is $-\tfrac12\theta\pi$,
+which is real and \emph{not} in general a rational multiple of $\pi^2$; integral
+surgery does not force $\theta/\pi\in\QQ$. So the earlier reasoning
+``$\lambda_{\mathrm{core}}^2$ is real, hence no volume contribution'' is not
+available. The correct statement is the one above: the correction is the
+comparison between the \emph{cusped} class and the \emph{filled} class, and it
+does not reappear once one works with the filled class throughout. The
+$301$-digit rationality of \eqref{eq:pin} is a consistency check on this: had an
+irrational term $-\tfrac\pi2(\theta_\alpha-\theta_\beta)$ been silently omitted,
+the computed value could not have reconstructed to a rational.
+\end{remark}
 
 \begin{lemma}[Orientation signs]\label{lem:signs}
 The tetrahedron signs $\varepsilon_j$ are determined by the combinatorics of the
@@ -275,8 +345,8 @@ order. Non-discreteness does not obstruct torsion of the Bloch class.)
 \begin{proposition}[Denominator]\label{prop:denom}
 Let $F_\alpha=\QQ(a)$ and $F_\beta=\QQ(b)$. Then
 \[
-w_2(F_\alpha)=60=2^2\cdot3\cdot5,\qquad
-w_2(F_\beta)=204=2^2\cdot3\cdot17,
+w_2(F_\alpha)=120=2\cdot2^2\cdot3\cdot5,\qquad
+w_2(F_\beta)=408=2\cdot2^2\cdot3\cdot17,
 \]
 with $\operatorname{disc}F_\alpha=-5^6\cdot59\cdot3881^2$ and
 $\operatorname{disc}F_\beta=17^{14}\cdot1597$. By the identification of the
@@ -285,7 +355,7 @@ formula $|K_3^{\mathrm{ind}}(F)_{\mathrm{tors}}|=w_2(F)$, the order of each
 class divides the corresponding $w_2$, so the denominator of
 $\mathrm{Re}[\Delta\mathcal R]/\pi^2$ divides
 \[
-Q=\operatorname{lcm}(60,204)=1020 .
+Q=\operatorname{lcm}(120,408)=2040 .
 \]
 \end{proposition}
 
@@ -298,9 +368,9 @@ $\displaystyle
 \begin{proof}
 By Theorem~\ref{thm:torsion} and Proposition~\ref{prop:denom},
 $\mathrm{Re}[\Delta\mathcal R]/\pi^2$ is a rational number with denominator
-dividing $Q=1020$. Two distinct rationals with denominator at most $Q$ differ by
+dividing $Q=2040$. Two distinct rationals with denominator at most $Q$ differ by
 at least $1/Q^2$, so such a rational is determined uniquely by any approximation
-of error less than $1/(2Q^2)=4.81\times10^{-7}$.
+of error less than $1/(2Q^2)=1.20\times10^{-7}$.
 
 Evaluating \eqref{eq:NZ} at $1000$ bits of working precision from the exact
 endpoint data gives
@@ -313,16 +383,67 @@ $\bigl|\mathrm{Re}[\Delta\mathcal R]/\pi^2+\tfrac4{85}\bigr|
 =1.1\times10^{-301}$,
 far below the separation threshold. Rational reconstruction with denominator
 bound $Q$ therefore returns \emph{uniquely}
-\[
+\begin{equation}\label{eq:pin}
 \frac{\mathrm{Re}[\Delta\mathcal R]}{\pi^2}=-\frac4{85}.
-\]
-(Consistency: $85\mid1020$, with quotient $12$.) By \eqref{eq:NZ},
+\end{equation}
+(Consistency: $85\mid2040$, with quotient $24$.) By \eqref{eq:NZ},
 $I=-\Delta\mathcal R=4\pi^2/85$.
 \end{proof}
 
 \begin{corollary}
 $\GV(\rho_\alpha)=\dfrac{74\pi^2}{15}$, by \eqref{eq:target}.
 \end{corollary}
+
+\begin{remark}[Robustness of the denominator bound]\label{rem:robust}
+The passage from ``$\xi$ is torsion of order dividing $m$'' to ``the Rogers value
+lies in $\tfrac1m\pi^2\ZZ$'' is normalisation-sensitive: with Neumann's
+$\widehat{\mathcal R}$, whose period lattice is $\pi^2\ZZ$, the denominator
+divides $m=w_2(F)$ exactly as used above, but other normalisations of the
+Cheeger--Chern--Simons class carry conventional factors of $6$, $12$ or $24$.
+
+None of this affects the conclusion. The numerical certificate has error
+$1.1\times10^{-301}$ while the separation of rationals of denominator at most $Q$
+is $1/Q^2$, so \eqref{eq:pin} follows from \emph{any} denominator bound
+$85\le Q\le 10^{150}$ --- roughly $146$ orders of magnitude of slack. A stray
+factor of $6$ or $24$, or indeed of $10^{146}$, changes nothing. The Lean theorem
+\texttt{regulator\_quotient\_eq\_robust} states exactly this, and is instantiated
+there at the inflated bound $Q=24\cdot2040$.
+\end{remark}
+
+\section{Lean verification}\label{sec:lean}
+
+The directory \texttt{lean/} is a standalone Lake project pinned to Lean
+\texttt{v4.29.0} and Mathlib \texttt{v4.29.0}. It builds with
+\texttt{lake exe cache get} followed by \texttt{lake} \texttt{build}
+(\texttt{Build completed successfully (3295 jobs)}), contains no \texttt{sorry}
+and no \texttt{native\_decide}, and every one of the $37$ audited declarations
+depends only on \texttt{[propext, Classical.choice, Quot.sound]}.
+
+\begin{center}
+\begin{tabular}{ll}
+\hline
+Lemma~\ref{lem:circle} & \texttt{TraceRoots.gAlpha\_totally\_real},
+\texttt{gBeta\_totally\_real};\\
+& \texttt{UnitCircle.norm\_eq\_one\_of\_trace\_real\_abs\_le\_two}\\
+Lemma~\ref{lem:ureal} & \texttt{ChartSymmetry.chartUAlpha\_isReal\_of\_norm\_one}\\
+Lemma~\ref{lem:shapefield} & \texttt{ShapeField.sPolyAlpha\_sq},
+\texttt{ShapeField.sPolyBeta\_sq}\\
+Lemmas~\ref{lem:TU}--\ref{lem:VW} &
+\texttt{ShapeCancellation.four\_shape\_sum\_eq\_zero}\\
+Lemmas~\ref{lem:circle}--\ref{lem:VW} combined &
+\texttt{MainTheorem.four\_shape\_sum\_vanishes\_of\_trace\_real}\\
+Theorem~\ref{thm:main}, final step & \texttt{MainTheorem.regulator\_value}\\
+Remark~\ref{rem:robust} & \texttt{regulator\_quotient\_eq\_robust}\\
+\hline
+\end{tabular}
+\end{center}
+
+Three inputs are stated as hypotheses rather than proved in Lean, and are cited
+above: the three Bloch--Wigner functional equations \eqref{eq:Dsym} (bundled as
+the structure \texttt{BlochWignerLaws}); the Merkurjev--Suslin denominator bound
+of Proposition~\ref{prop:denom}; and the $301$-digit numerical evaluation. The
+first is standard; the second enters only through Remark~\ref{rem:robust}, which
+needs no more than its existence; the third is reproduced by \texttt{scripts/}.
 
 \section{Reproducing the computations}
 
@@ -336,11 +457,12 @@ All computations are in \texttt{scripts/}; each is standalone
 \texttt{confirm.sage} & Lemma~\ref{lem:circle}: unit-circle counts via $g_\alpha,g_\beta$\\
 \texttt{exact\_proof.sage} & Lemma~\ref{lem:ureal}: the identity $u(1/a)=u(a)$\\
 \texttt{mechanism.py} & Lemmas~\ref{lem:TU}--\ref{lem:VW} at every embedding\\
-\texttt{filling\_term.py} & Lemma~\ref{lem:fill}: $\lambda_{\mathrm{core}}^2$ real\\
+\texttt{filling\_term.py} & Lemma~\ref{lem:fill}: core holonomy along the arc\\
+\texttt{shapefield.sage} & Lemma~\ref{lem:shapefield}: the square-root certificates\\
 \texttt{orient.py} & Lemma~\ref{lem:signs}: SnapPy triangulation, four positive tetrahedra\\
 \texttt{alpha\_component.py} & no embedding realises $\Vol(S^3_{-1/2}(7_2))$\\
 \texttt{disc\_test.py} & non-discreteness (cyclotomic trace test)\\
-\texttt{w2bound.sage} & Proposition~\ref{prop:denom}: $w_2=60,204$\\
+\texttt{w2bound.sage} & Proposition~\ref{prop:denom}: $w_2=120,408$\\
 \texttt{shapes300.sage}, \texttt{pin.sage} & the $301$-digit evaluation and reconstruction\\
 \hline
 \end{tabular}
