@@ -54,10 +54,13 @@ pointwise theorem.
    multiples. Conjecture 2.4 of arXiv:2409.06544 predicts a modulo-`p^5`
    formula at multiplicative indices, but it is unproved and contains one
    fixed combination of `B_{2p-4}` and `B_{p-3}`, not the claimed sequence
-   `B_{p-3},B_{p-5},...`. Thus the unconditional dimensions at
-   `p^5,p^7,p^9` are unknown. The temporary dimension script is a speculative
-   free-polynomial model, not a computation of an Apéry defect module. It is
-   internally inconsistent even as a speculative model.
+   `B_{p-3},B_{p-5},...`. Thus those papers do not define the asserted
+   dimensions at `p^5,p^7,p^9`. The temporary dimension script is a
+   speculative free-polynomial model, not a computation of an Apéry defect
+   module, and it is internally inconsistent even as a speculative model.
+   A later independent block calculation, synchronized and audited in
+   Section 11 below, does prove concrete target carriers through `p^7`;
+   this is new input, not support for the proposed dimension table.
 
 5. The inverse-limit formulation is backwards. If each finite congruence
    really computes the residue of the fixed integer `A_n` modulo `R_n^k`,
@@ -168,6 +171,16 @@ pointwise theorem.
     \(O(\tau(n-q)\log^2n)=n^{o(1)}\). This yields the structured
     same-kernel criterion (SK.5), complementary to the adjacent-gap
     criterion (PC.15).
+
+19. There is now a genuine positive local extension of the quotient tower.
+    Endpoint block identities give the common cofactor modulo
+    `R,R^2,...,R^7`; at the seventh grade the apparent new scalar satisfies
+    an unconditional quadratic H6 relation and can be removed by a fixed
+    nonlinear direct/reflected combination. This repairs the former
+    order-seven barrier. It still does not prove the pointwise theorem:
+    one fixed level changes only a linear reconstruction threshold, while
+    even an arbitrary compatible tower needs an independent small-lift or
+    non-stabilization theorem to constrain the diagonal integer cofactor.
 
 Thus Routes A and B are closed **as presently formulated**. This is not a
 disproof of `log G_n=o(n)`. It identifies the exact missing ingredient:
@@ -724,6 +737,13 @@ defect module. Even assuming (B.2) would specify only one
 `p`-adic digit beyond (B.1)—not the free Bernoulli algebra used by the
 temporary script. Turning that combination into an `F_p`-dimension statement
 would itself require its Kummer and higher-digit relations.
+
+**Later update.** Section 11 records unconditional in-house endpoint and
+target identities through \(p^7\), proved after this source audit.  They do
+not retroactively validate the table proposed in the source note: the new
+coordinates satisfy rank-one and nonlinear relations rather than forming
+the free Bernoulli polynomial algebra assumed by
+`defect_dimension_count.py`.
 
 ### 5.3 Internal errors in `defect_dimension_count.py`
 
@@ -3787,3 +3807,613 @@ The unconditional density theorem and the proved local
 \(|Z_p|\ll p^{2/3}\) bound are not affected by these corrections. What is
 removed is only the unsupported passage from vertical sparsity to a
 pointwise horizontal bound.
+
+## 11. Recovered endpoint tower: an unconditional fixed law through order seven
+
+The source audit in Section 5 remains correct about the cited Liu and Sun
+papers: those papers do not supply the proposed free Bernoulli defect
+dimensions.  Subsequent work in a separate UIS research tree did, however,
+produce a different and mathematically substantive result.  The complete
+dependency chain has now been synchronized into this repository:
+
+```text
+Q32_TARGET_CUBIC_BLOCK_LAW_2026-07-28.md
+Q32_ENDPOINT_BERNOULLI_RANK_ONE_2026-07-29.md
+Q32_HARMONIC_LEMMA_PROOF_2026-07-29.md
+Q32_QUARTIC_TARGET_BERNOULLI_ELIMINATION_2026-07-29.md
+Q32_WEIGHT_FIVE_ENDPOINT_AND_SEXTIC_TARGET_2026-07-29.md
+Q32_H6_STAR_PROOF_2026-07-29.md
+Q32_WEIGHT_SEVEN_ENDPOINT_RANK_ONE_2026-07-29.md
+Q32_ORDER_SEVEN_TARGET_FIXED_LAW_2026-07-29.md
+```
+
+The associated independent audit scripts are in `../scripts/` with the
+prefix `q32_`.  They have been rerun through prime \(1000\); the cubic,
+quartic/quintic, sextic, seventh-endpoint, H6, and final nonlinear target
+checks all report zero failures.  This computation checks the displayed
+identities but is not used in place of the proofs.
+
+### 11.1 The exact chain of common quotient digits
+
+Let \(p\ge7\), \(0\le r<p\), \(p\mid b_r\), and put
+
+\[
+ n=p+r,\qquad s=p-1-r,\qquad x_p=\frac{b_n}{p}.
+\]
+
+The shifted Apéry recurrence has exact rational fundamental solutions
+\({\cal U}_r(X),{\cal V}_r(X)\).  Truncating their Taylor series at a fixed
+order is legitimate because every denominator occurring for \(r<p\) is a
+\(p\)-unit.  The direct and reflected decompositions are
+
+\[
+\begin{aligned}
+ b_{p+r}
+ &=b_p{\cal U}_r(p)-p^3b_{p-1}{\cal J}_r(p),\\
+ b_{2p-1-s}
+ &=b_{2p-1}{\cal U}_s(-2p)+8p^3b_{2p}{\cal J}_s(-2p),
+\end{aligned}
+\tag{11.1}
+\]
+
+where \({\cal J}_r(X)={\cal V}_r(X)/(1+X)^3\).  The endpoint defects in
+\(b_p,b_{p-1},b_{2p},b_{2p-1}\) are then removed by fixed direct/reflected
+combinations.
+
+The resulting progression is:
+
+| local precision for \(x_p\) | input |
+|---|---|
+| \(p,p^2,p^3\) | Gessel--Lucas and the universal quadratic/cubic shifted jets |
+| \(p^4,p^5\) | the rank-one endpoint coordinate \(\Delta_p=b_{p-1}-1\), eliminated with weights \(8,7\) |
+| \(p^6\) | the weight-five coordinate \(h_p=(b_p-5+7\Delta_p)/p^5\), eliminated with weights \(336,-5\) |
+| \(p^7\) | the weight-seven endpoint scalar, reduced by H6 to a quadratic in \(\Delta_p\) and eliminated nonlinearly |
+
+Thus, for a fixed set \(S\) of top-half target primes and
+\[
+ R_*=\prod_{p\in S\setminus\{7,331,769\}}p,\qquad
+ A_*=\frac{b_n}{R_*},
+\]
+the local laws determine \(A_*\) modulo \(p^j\) for every \(p\mid R_*\)
+and every \(1\le j\le7\), hence determine one compatible class modulo
+\(R_*^7\).
+
+This is not the speculative free defect algebra of Section 5.  At each
+grade the endpoint calculation begins with concrete finite multiple
+harmonic sums, and the direct/reflected rows remove the surviving
+prime-dependent scalar.
+
+### 11.2 The H6 identity is now proved
+
+For \(p\ge11\), write
+
+\[
+ S_j=\sum_{k=1}^{p-1}k^{-j},\qquad
+ D=\sum_{k=1}^{p-1}\frac{H_k^{(2)}}{k^3}.
+\]
+
+The missing finite-harmonic relation is
+
+\[
+ \boxed{S_2^2-5S_4-2pD\equiv0\pmod {p^3}.}
+\tag{H6}
+\]
+
+The proof in `Q32_H6_STAR_PROOF_2026-07-29.md` has three independent
+pieces.
+
+First, Zhao's length-three formula and Proposition 3.13 give
+
+\[
+ H(1,4,1)\equiv\frac13B_{p-3}^2\pmod p.
+\tag{11.2}
+\]
+
+A strict stuffle identity then yields
+
+\[
+ \sum_{k=1}^{p-1}\frac{H_k(1,1)}{k^4}
+ \equiv-\frac16B_{p-3}^2\pmod p.
+\tag{11.3}
+\]
+
+Second, an exact partial fraction on the additive triangle
+\(u,v\ge1,\ u+v\le p-1\), evaluated both directly and after
+\(v\mapsto p-v\), gives
+
+\[
+ D\equiv S_5-2H(1,4)\pmod {p^2}.
+\tag{11.4}
+\]
+
+Third, the exact star-binomial identity
+
+\[
+ \sum_{k=1}^{p-1}\frac{(-1)^{k-1}\binom{p-1}{k}}{k^4}
+ =H^\star(\{1\}^4;p-1)
+\]
+
+compares two expansions modulo \(p^3\).  Sun's second-order Kummer
+congruence then supplies the required coordinate
+
+\[
+ \frac{S_4}{p}
+ \equiv
+ -8\frac{B_{p-5}}{p-5}
+ +4\frac{B_{2p-6}}{2p-6}\pmod {p^2}.
+\tag{11.5}
+\]
+
+Substitution proves H6.
+
+The two non-elementary inputs have been checked against the primary
+sources, not merely against later summaries.  Zhao's arXiv v6 source
+prints the length-three display used in the proof of Proposition 3.13
+and the specialization (11.2).  Sun's equation (1.1), with \(b=p-5\),
+is exactly the affine second-order Kummer law used in (11.5).  The
+remaining steps are explicit stuffle, partial-fraction, binomial, and
+Faulhaber calculations.  See [Zhao](https://arxiv.org/abs/math/0301252)
+and [Sun](https://doi.org/10.1016/S0166-218X(00)00184-0).
+
+### 11.3 The apparent seventh coordinate is not free
+
+Put
+
+\[
+ X=p^2S_2,\qquad Y=p^4S_4,\qquad Z=p^5D.
+\]
+
+The seventh endpoint block calculation gives
+
+\[
+\begin{aligned}
+ \Delta_p&\equiv X+5Y-X^2+4Z,\\
+ E_p&:=b_{2p}-73+824\Delta_p-\frac{752}{5}
+       (b_p-5+7\Delta_p)\\
+ &\equiv\frac{24}{5}(935X^2-830Y-332Z)
+ \pmod {p^7}.
+\end{aligned}
+\tag{11.6}
+\]
+
+Let \(W_p=E_p/p^6\bmod p\).  H6 is
+\[
+ X^2-5Y-2Z\equiv0\pmod {p^7},
+\]
+so (11.6) collapses to
+
+\[
+ \boxed{
+ p^6W_p\equiv\frac{24\cdot769}{5}\Delta_p^2\pmod {p^7}.
+ }
+\tag{11.7}
+\]
+
+Thus \(W_p\) is not an independent defect digit.  If \(D_7(p,r)\) and
+\(Z_7(p,s)\) denote the explicit direct and reflected degree-seven
+recurrence-jet residues, their two rows are
+
+\[
+\begin{aligned}
+ D_7(p,r)&\equiv x_p\left(1-\frac15H_p\right),\\
+ Z_7(p,s)&\equiv x_p\left(
+ 1-\frac{336}{25}H_p+\frac{103}{5\cdot769}p^6W_p
+ \right)\pmod {p^7},
+\end{aligned}
+\tag{11.8}
+\]
+
+where \(H_p=b_p-5+7\Delta_p\).  Multiplying the first row by
+\(\Delta_p^2\) and using (11.7) removes the nonlinear term:
+
+\[
+ \boxed{
+ (1680+2472\Delta_p^2)D_7(p,r)-25Z_7(p,s)
+ \equiv1655\,\frac{b_n}{p}\pmod {p^7}.
+ }
+\tag{11.9}
+\]
+
+The fixed exceptions are \(7\) (H6 range), \(331\) (right-hand unit), and
+\(769\) (endpoint normalization).  Their total logarithmic cost is
+\(O(1)\).  There is no hidden exponential coefficient in
+\(\Delta_p^2\bmod p^7\): writing
+\(\delta_p=(\Delta_p/p^3)\bmod p\) gives the representative
+\[
+ \Delta_p^2\equiv p^6\delta_p^2\pmod {p^7},
+\]
+of polynomial height for this fixed grade.
+
+This is a genuine correction to the retracted linear-rank conclusion in
+`Q32_ORDER_SEVEN_TARGET_BARRIER_2026-07-29.md`.
+
+### 11.4 Exact global value and exact global limitation
+
+Since \(\log b_n=cn+o(n)\), \(c=\log(17+12\sqrt2)\), the order-seven
+modulus first crosses the top-half information threshold:
+
+\[
+ A_*<R_*^7
+ \quad\Longleftrightarrow\quad
+ \log R_*>\frac c8n+o(n)
+ =0.440686\ldots n+o(n).
+\tag{11.10}
+\]
+
+In that range, the CRT class supplied by (11.9) has least representative
+equal to the actual integer \(A_*\).  This is exact reconstruction, but
+not a contradiction.  It sharpens the local tower while leaving the
+inverse-limit obstruction of Section 5.6 intact: all compatible residues
+are residues of the diagonal integer \(A_*\), and their canonical
+representatives must eventually stabilize to it.
+
+Consequently two logically distinct inputs are still missing:
+
+1. a local theorem extending the fixed elimination to every prescribed
+   grade, or a proof identifying the first genuine obstruction; and
+2. a global theorem producing a nonzero lift of sublinear height, or
+   otherwise proving that the reconstructed diagonal value cannot
+   stabilize in the forbidden large-radical regime.
+
+The first input alone does not prove \(\log R_n=o(n)\).  Conversely, one
+global small-lift theorem at arbitrary fixed grades would turn the local
+tower into a pointwise argument.  The order-seven result therefore reopens
+the endpoint-filtration problem, but it does not reopen Route B's
+free-dimension count and does not repair Route A's tautological
+Casoratian.
+
+### 11.5 Source-safe geometric status
+
+The finite Mellin identity in Section 10.6 is unconditional:
+\[
+ b_r=-\sum_{t\in\mathbf F_p^\times}{\cal A}_p(t)t^{-r}.
+\]
+For an integral Laurent-polynomial constant-term model \(\Phi\), there is
+also an exact raw toric Kummer alternating trace
+\[
+ S_{p,r}=\sum_{x\in(\mathbf F_p^\times)^3}\omega_p^r(\Phi(x))
+ \equiv-b_r\pmod{\mathfrak p_{p,r}}.
+\tag{11.11}
+\]
+
+The stronger rank-two Frobenius package suggested by a K3/Mellin analogy
+is not yet source-backed.  Peters proves over \(\mathbf C\) that the
+rank-three Apéry variation is a symmetric square; the two finite
+conifolds have rank-two exponents \(0,\tfrac12\), hence rank-three
+semisimple reflection monodromy and middle-extension drop one.  If an
+arithmetic rank-three companion with these tame local types is constructed,
+Katz's Euler formula would give two-dimensional, pure weight-three Mellin
+cohomology for a clean nontrivial character.
+
+What is still missing is an arithmetic inversion self-duality with its
+sign, the determinant/epsilon factor, and a trace comparison including
+the conifold stalks.  Katz's dimension-two theorem assumes arithmetic
+self-duality; his \(\operatorname{Sym}^2(\mathrm{Leg})\) theorem is a
+specific example with that arithmetic input, not a general transfer
+principle.  Therefore none of
+
+```text
+det(Frob)=p^3,
+G_geom=G_arith=SL_2,
+primitive Mellin trace == b_r,
+b_r==0 iff the rank-two fibre is nonordinary
+```
+
+is used unconditionally here.  Even if all were later proved, first trace
+divisibility would not imply torsion: reduction in the same characteristic
+also kills a determinant of valuation three.  A horizontal argument would
+still need a divided trace or another independent Frobenius-jet scalar.
+
+## 12. Long-prefix saturation and the adjacent-minor family
+
+There is one further exact reformulation worth recording because it
+initially looks like a many-equation escape from Route A.
+
+Put
+
+\[
+ t_k(n)=\binom nk^2\binom{n+k}k^2,\qquad
+ S_K(n)=\sum_{k=0}^Kt_k(n),
+\]
+
+\[
+ H=\left\lfloor\frac n3\right\rfloor,\qquad
+ L=\left\lfloor\frac n2\right\rfloor,\qquad
+ U_n=\prod_{n/2<p\le n}p.
+\]
+
+For \(p\in(n/2,n]\), write \(n=p+r\).  Since \(k<p\) for
+\(k\le L\), exact valuation of the square root of the summand gives
+
+\[
+ \boxed{
+ v_p(t_k(n))
+ =2{\bf1}_{k>r}+2{\bf1}_{k>p-1-r}.
+ }
+\tag{12.1}
+\]
+
+The folded index
+\[
+ m_p=\min(r,p-1-r)
+\]
+always satisfies \(m_p\le H\).  Consequently
+
+\[
+ U_n^2\mid t_k(n)\quad(H<k\le L)
+\tag{12.2}
+\]
+
+and all long prefixes have one common residue:
+
+\[
+ \boxed{
+ S_K(n)\equiv S_H(n)\equiv b_{n-p}\pmod p
+ \quad(H\le K\le L).
+ }
+\tag{12.3}
+\]
+
+Thus every target prime divides every prefix in the long block.  This is
+not growing codimension: the block differs only by universally
+\(U_n^2\)-divisible increments.
+
+### 12.1 Exact Smith saturation
+
+Let
+\[
+ V_n=\prod_{\substack{n/2<p\le n\\p\le2H+1}}p.
+\]
+Equation (12.1) gives the exact top-prime part
+
+\[
+ \left(\gcd_{H<k\le L}t_k(n)\right)_{\{n/2<p\le n\}}
+ =U_n^2V_n^2.
+\tag{12.4}
+\]
+
+After dividing the tail differences by their maximal universal
+top-prime content while retaining one copy of each candidate prime, the
+tail ideal in the semilocal ring at \(p\in(n/2,n]\) is exactly
+\((U_n)\).  Adding the prefix coordinate gives
+
+\[
+ (S_H,\hbox{ saturated tail differences})
+ =(S_H,U_n).
+\tag{12.5}
+\]
+
+Its one Smith invariant is therefore
+
+\[
+ \prod_{\substack{n/2<p\le n\\p\mid b_{n-p}}}p.
+\tag{12.6}
+\]
+
+There is no second selective elementary divisor.  Finite differences,
+higher exterior powers, and Bézout combinations of the tail rows cannot
+change this: after saturation the entire target condition is one additive
+prefix coordinate.
+
+The obstruction can also be realized exactly.  The prefix sequence obeys
+
+\[
+ (k+1)^4S_{k+1}
+ -\bigl((n-k)^2(n+k+1)^2+(k+1)^4\bigr)S_k
+ +(n-k)^2(n+k+1)^2S_{k-1}=0.
+\tag{12.7}
+\]
+
+Its coefficient sum is zero, so \(S_k\mapsto S_k+C\) preserves the
+recurrence and every tail difference.  CRT can choose the additive
+constant so that an arbitrary subset of the candidate primes divides all
+long prefixes, while retaining the actual \(t_k(n)\), all valuations, and
+positivity.  Hence the tail package alone admits worst-case horizontal
+alignment.
+
+### 12.2 A genuine family of positive selective minors
+
+Write the summand ratio in lowest terms:
+
+\[
+ \frac{t_{k+1}}{t_k}=\frac{a_k}{b_k},\qquad
+ a_k=\frac{(n-k)^2(n+k+1)^2}{d_k},\quad
+ b_k=\frac{(k+1)^4}{d_k},
+\]
+
+\[
+ d_k=\gcd\bigl((n-k)^2(n+k+1)^2,(k+1)^4\bigr).
+\]
+
+For \(H<k<L\), define the normalized adjacent Hankel minor
+
+\[
+\begin{aligned}
+ C_{n,k}
+ &:=-\frac{S_{k-1}S_{k+1}-S_k^2}
+          {\gcd(t_k,t_{k+1})}\\
+ &=b_kS_k-a_kS_{k-1}.
+\end{aligned}
+\tag{12.8}
+\]
+
+The second expression proves integrality.  Strict decrease of the
+positive ratios \(t_{k+1}/t_k\) proves \(C_{n,k}>0\).  At a target prime,
+the prefix has one selective factor \(p\), while both adjacent summands
+have at least \(p^2\); therefore
+
+\[
+ \boxed{R_n^{\rm top}\mid C_{n,k}\quad(H<k<L).}
+\tag{12.9}
+\]
+
+For the first admissible \(k\),
+
+\[
+ \log C_{n,k}=n\log16+O(\log n).
+\tag{12.10}
+\]
+
+Thus a single minor is a real characteristic-zero carrier, but it has
+linear height.  Larger Hankel/Dodgson minors do not increase the selective
+rank: writing \(S_{H+j}=X+U_n^2Y_j\), every normalized determinant is
+linear in \(X=S_H\) after the universal factor is removed.
+
+The family gcd
+
+\[
+ G_n^{\rm adj}=\gcd_{H<k<L}C_{n,k}
+\tag{12.11}
+\]
+
+is a sharper exact interface.  Its complete top-prime Smith ideal can in
+fact be computed.  Put
+\[
+ Q_n=U_n^2V_n^2,\qquad
+ {\cal O}_n=\mathbf Z[a^{-1}:\gcd(a,U_n)=1].
+\]
+For \(n\ge60\),
+\[
+ \boxed{
+ (C_{n,H+1},\ldots,C_{n,L-1}){\cal O}_n
+ =(S_H,Q_n){\cal O}_n.
+ }
+\tag{12.11a}
+\]
+Equivalently,
+\[
+ \boxed{
+ (G_n^{\rm adj})_{\{n/2<p\le n\}}
+ =\gcd(S_H,Q_n).
+ }
+\tag{12.11b}
+\]
+
+Here is the essential determinant calculation.  Write
+\[
+ \delta_k=a_k-b_k,\qquad
+ T_{k-1}=S_{k-1}-S_H,
+\]
+so
+\[
+ C_{n,k}=-\delta_kS_H+\gamma_k,\qquad
+ \gamma_k=b_kt_k-\delta_kT_{k-1}.
+\]
+Then
+\[
+ \det
+ \begin{pmatrix}
+  -\delta_k&\gamma_k\\
+  -\delta_\ell&\gamma_\ell
+ \end{pmatrix}
+ =\delta_\ell b_kt_k-\delta_kb_\ell t_\ell.
+\tag{12.11c}
+\]
+For adjacent rows this factors as \(t_{k+1}\) times a ratio-difference
+coefficient.  After writing \(N=n(n+1)\), \(x=k+1\), the numerator of that
+coefficient is a nonzero polynomial of degree six in \(x\).  There are at
+least seven adjacent positions when \(n\ge60\), so at every candidate
+prime one determinant attains the exact universal valuation in (12.4).
+The first coefficient column is locally primitive by the analogous
+degree-three calculation.  The two Smith invariants are therefore
+\[
+ 1,\quad Q_n,
+\]
+which proves (12.11a).
+
+In particular, for \(p\in(n/2,n]\),
+\[
+ v_p(G_n^{\rm adj})
+ =\min\left(v_p(S_H),
+ 2+2{\bf1}_{p\le2H+1}\right).
+\tag{12.11d}
+\]
+The radical of its candidate-prime part is exactly the target radical,
+but its higher powers are merely capped powers of the same prefix
+coordinate.  Hence
+\[
+ \log R_n^{\rm top}
+ \le\log (G_n^{\rm adj})_{\{n/2<p\le n\}}
+ \le4\log R_n^{\rm top}.
+\tag{12.11e}
+\]
+Sublinear height for this Smith generator is quantitatively equivalent to
+the original target-radical theorem; the many-minor gcd has not created a
+new transverse condition.
+
+The ordinary integer gcd is nevertheless numerically small.  An
+independent exact computation through \(n=1000\) gives the dyadic maxima
+
+| interval | \(\max \log G_n^{\rm adj}/n\) |
+|---:|---:|
+| \((100,200]\) | \(0.0987381\) |
+| \((200,400]\) | \(0.0507389\) |
+| \((400,600]\) | \(0.0328444\) |
+| \((600,800]\) | \(0.0315821\) |
+| \((800,1000]\) | \(0.0168826\) |
+
+This is strong evidence for the conjecture, not a new proof mechanism.  It
+is on the same scale as the
+earlier two-truncation gcd in
+`Q32_CODEX_RESUME_2026-07-23.md`, Sections 42 and 46.  The additive-shift
+countermodel is exact at every valuation allowed by (12.11d): CRT can
+prescribe independently, for every candidate prime, any exponent between
+zero and its Smith cap while retaining the actual tail differences,
+recurrence, determinant data, and positivity.  Therefore no Smith,
+finite-difference, or tail-only argument can prove that (12.11) has
+sublinear height.
+
+The one possible reopening is to exploit the distinguished boundary
+\(S_0=1\).  Backward propagation from the long block to that boundary
+must cross the \(p\)-singular folded index \(m_p\), which depends on the
+candidate prime.  A useful theorem would have to bypass or jointly control
+these moving singular steps; otherwise their product restores the
+top-half primorial and linear height.
+
+The exact reproducer is
+`../scripts/q32_adjacent_minor_gcd.py`; it also checks the normalized
+Hankel identity, positivity, target divisibility, both square-primorial
+truncation congruences, and the gcd obtained by intersecting the adjacent
+and two-truncation carrier families.
+
+### 12.3 A first quotient bridge, and why it is still universal
+
+Let
+\[
+ J=\left\lfloor\frac{n-1}{3}\right\rfloor,\qquad
+ L_n=S_J(n),\qquad
+ H_n^{\rm upper}=\sum_{k=\lceil n/2\rceil}^nt_k(n).
+\]
+The exact two-truncation calculation gives
+
+\[
+ U_n^2\mid H_n^{\rm upper}-4L_n.
+\tag{12.12}
+\]
+
+Together with (12.2), this implies, with the floor adjustment at
+\(3\mid n\) handled by its single boundary term,
+
+\[
+ b_n\equiv5L_n\pmod {U_n^2}.
+\tag{12.13}
+\]
+
+At a target prime, division of (12.13) identifies the first quotient digit
+\[
+ \frac{b_n}{p}\equiv5\frac{L_n}{p}\pmod p.
+\]
+Likewise (12.8) identifies \(C_{n,k}/p\) with a fixed coefficient times
+the same divided prefix digit.  This is a genuine bridge to the endpoint
+quotient tower of Section 11.
+
+However, the immediate cancellation
+\[
+ 5C_{n,k}+(a_k-b_k)b_n
+\]
+lies in the universal \(U_n^2\)-tail ideal: it gains the second power for
+every candidate prime, not selectively for targets.  To turn the bridge
+into a proof one needs a higher corrected carrier which gains \(p^j\)
+only on the target locus while keeping height \(O(n)\) with a constant
+not growing linearly in \(j\).  No such global correction is presently
+proved.
