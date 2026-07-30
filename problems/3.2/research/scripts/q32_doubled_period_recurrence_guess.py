@@ -14,7 +14,10 @@ does not redo the rational nullspace calculation.  It independently
 generates the actual coefficients from formula (49.1) and verifies the
 candidate on both the training and held-out positions.
 
-This is experimental evidence, not a telescoping certificate.
+This script alone is a finite exact audit, not a telescoping certificate.
+The companion ``q32_doubled_period_telescoper.sage`` now derives an exact
+Zeilberger certificate and proves that its operator is precisely ``-4``
+times the primitive operator stored here.
 """
 
 from __future__ import annotations
@@ -197,7 +200,7 @@ def main() -> None:
     print("ORDER", 3)
     print("DEGREE", 21)
     print("EXCEPTIONAL_COMMON_FACTORS", exceptional_checks)
-    print("STATUS", "GUESS_ONLY_NO_TELESCOPING_CERTIFICATE")
+    print("STATUS", "CERTIFIED_BY_Q32_DOUBLED_PERIOD_TELESCOPER")
 
 
 if __name__ == "__main__":

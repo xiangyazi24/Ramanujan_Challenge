@@ -13521,7 +13521,7 @@ Thus every displayed adjacent difference has exactly one copy of its
 target prime, namely the universal copy in \(B\).  The target condition
 does not supply a second copy.
 
-### 68.2 A low-order recurrence is strongly indicated, but not certified
+### 68.2 An exact order-three creative-telescoping certificate
 
 The doubled-period coordinate in (68.7) is much smaller algebraically
 than the complete first-cell shell.  Its initial values are
@@ -13530,27 +13530,108 @@ than the complete first-cell shell.  Its initial values are
  5,25,545,14917,429029,12570545,372777785,11164475165,\ldots.
 \tag{68.17}
 \]
-An exact rational-nullspace computation on \(126\) independently
-generated terms found a unique candidate
+The previously guessed recurrence can in fact be certified.  Put
 \[
- \sum_{j=0}^3P_j(s)J_{s+j}=0,
- \qquad \deg P_j\le21.
+ T(s,k)=\binom{s}{k}^{2}\binom{2s-k}{s}^{2}.
 \tag{68.18}
 \]
-The first \(100\) recurrence positions reconstructed the
-one-dimensional kernel, and all \(23\) held-out positions vanished
-exactly over \(\mathbb Z\).  A separate computation modulo
-\(1000000007\), using \(260\) terms and \(30\) held-out positions, found
-no operator of order one or two through coefficient degree \(30\), and
-found the same order-three, degree-\(21\) operator.
+For \(\epsilon\in\{-1,0,1\}\), define the shifted-binomial ratios
+\[
+ \begin{aligned}
+ R_{1}(N,K)&=
+ \frac{(N-K)(N-K-1)}{(K+1)(K+2)},\\
+ R_{0}(N,K)&=1,\\
+ R_{-1}(N,K)&=
+ \frac{K(K-1)}{(N-K+1)(N-K+2)}.
+ \end{aligned}
+\tag{68.19}
+\]
+The coefficient formula (49.1), applied to every monomial of
+\(\Lambda(X^2)\), gives the single proper-hypergeometric sum
+\[
+ J_s=\sum_{k\in\mathbb Z}T(s,k)Q(s,k),
+\tag{68.20}
+\]
+where
+\[
+ Q(s,k)=40+
+ \sum_{(u,v,w)\in P\cap\mathbb Z^3}
+ c_1(u,v,w)R_u(s,k)
+ R_v(2s-k,s)R_w(2s-k,s).
+\tag{68.21}
+\]
+Here \(T(s,k)=0\) outside \(0\le k\le s\).  Exact simplification gives a
+91-term numerator and the denominator
+\[
+ (k+1)(k+2)(s+1)^2(s+2)^2
+ (k-s-2)^3(k-s-1)^3.
+\tag{68.22}
+\]
 
-This is a recurrence **guess**, not a theorem.  No Griffiths--Dwork or
-creative-telescoping certificate for (68.18) has yet been produced.
-The script `q32_doubled_period_recurrence_guess.py` stores the primitive
-integer operator and independently verifies all \(123\) exact
-recurrence positions.  It deliberately labels the result as uncertified.
+Let \(S_s,S_k\) denote the forward shifts.  Exact creative telescoping
+over \(\mathbb Q(s,k)\) produces a scalar certificate \(\mathcal C(s,k)\)
+and an operator
+\[
+ \mathcal P=\sum_{j=0}^3P_j(s)S_s^j,
+ \qquad \deg P_j=21,
+\tag{68.23}
+\]
+such that
+\[
+ \boxed{\qquad
+ \mathcal P-(S_k-1)\mathcal C
+ \ \in\operatorname {Ann}\{T(s,k)Q(s,k)\}.
+ \qquad}
+\tag{68.24}
+\]
+The certificate has shift degree zero.  If its rational scalar is
+\(C(s,k)\), the denominator of the antidifference multiplier \(CQ\) is
+exactly
+\[
+ \begin{aligned}
+ &(k+1)s(s+1)(s+2)(s+4)(s+3)^2\\
+ &\quad{}\cdot
+ (k-s-5)^3(k-s-4)^3
+ (k-s-3)^4(k-s-2)^4(k-s-1)^4.
+ \end{aligned}
+\tag{68.25}
+\]
+Its numerator has bidegree \((45,24)\) in \((s,k)\) and is divisible by
+\(k\).  These facts also close the summation boundary.  Indeed, use the
+reciprocal-factorial continuation
+\[
+ T(s,k)=
+ \frac{\Gamma(2s-k+1)^2}
+ {\Gamma(k+1)^2\Gamma(s-k+1)^4}.
+\tag{68.26}
+\]
+For fixed integral \(s\ge5\), it vanishes to order two at negative
+integers, to order four at \(s<k\le2s\), and to order two at
+\(k>2s\).  Equation (68.25) therefore leaves finite possible ghost
+values only at \(k=s+1,s+2,s+3\), and the antidifference vanishes in both
+tails.  Summing (68.24) over all integral \(k\) proves
+\[
+ \boxed{\qquad
+ \sum_{j=0}^3P_j(s)J_{s+j}=0.
+ \qquad}
+\tag{68.27}
+\]
+The five cases \(0\le s<5\) are checked directly.
 
-Even a proof of (68.18) would not by itself prove the required
+The resulting operator is exactly \(-4\) times the primitive integer
+operator reconstructed from the first 126 terms.  Thus the stored
+coefficients in `q32_doubled_period_recurrence_guess.py` are now
+theorem-level data, rather than an interpolation.  The independent
+modular search still supplies only evidence, not proof, that no
+lower-order operator exists.
+
+The Sage script `q32_doubled_period_telescoper.sage` reconstructs
+\(Q\), derives the certificate, verifies the Ore-ideal membership in
+(68.24), audits the boundary denominator (68.25), checks the five
+initial cases, and proves exact equality with the stored operator.  No
+guessed recurrence is used in the certification step.
+
+This theorem still does not by itself prove the required
 little-oh estimate.  The scalar \(J_s\) is usually a unit at a target,
 not another vanishing observation, and fixed-order recurrences do not
 bound a moving-prime radical without an additional horizontal theorem.
@@ -13562,7 +13643,7 @@ The precise conclusion of this section is narrower:
   data;
 * the straightforward \(p^2\) continuation of the beta--Padé/Newton
   route is therefore blocked;
-* any use of the apparent order-three module must exploit
+* any use of the certified order-three annihilator must exploit
   cross-characteristic transversality, not promote \(J_s\) to a second
   target equation.
 
