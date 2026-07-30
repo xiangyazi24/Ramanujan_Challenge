@@ -62,13 +62,14 @@ def binomial_row_mod(n: int, modulus: int) -> list[int]:
 
 
 def first_cell_shell_mod_p2(M: int, p: int) -> int:
-    """Return C_M(p-1) modulo p^2, for p <= M < 2p-1.
+    """Return C_M(p-1) modulo p^2 in the strict first cell.
 
-    This is the exact cyclic-packet formula, evaluated in O(M) binomial
-    recurrences rather than by repeated calls to comb.
+    The required range is p <= M <= 2p-3.  The excluded boundary
+    M=2p-2 corresponds to n=2p-1 and cannot be a target because
+    b_{p-1}=1 (mod p).
     """
     d = p - 1
-    assert p <= M < 2 * p - 1
+    assert p <= M <= 2 * p - 3
     s = M - p
     modulus = p * p
     row = binomial_row_mod(M, modulus)
@@ -97,7 +98,7 @@ def first_cell_shell_mod_p2(M: int, p: int) -> int:
         km = s + 1 - t
         z0 = z0 * k0 // N
         zp = zp * kp // N
-        zm = z0 * 0 if km <= 0 else zm * km // N
+        zm = 0 if km <= 0 else zm * km // N
 
     return out
 
@@ -105,9 +106,9 @@ def first_cell_shell_mod_p2(M: int, p: int) -> int:
 def self_test_shell() -> None:
     checks = 0
     for p in primes_upto(31):
-        if p < 3:
+        if p < 5:
             continue
-        for s in range(0, p - 1):
+        for s in range(0, p - 2):
             M = p + s
             fast = first_cell_shell_mod_p2(M, p)
             slow = direct_shell_mod(M, p - 1, p * p)
@@ -122,6 +123,8 @@ def top_half_targets(b: list[int]) -> list[tuple[int, int, int, int]]:
         upper_r = min(p - 1, LIMIT - p)
         for r in range(1, upper_r + 1):
             if b[r] % p == 0:
+                # The boundary r=p-1 is never a target: b_{p-1}=1 mod p.
+                assert r <= p - 2
                 n = p + r
                 out.append((n, p, r, r - 1))
     return out
@@ -180,10 +183,11 @@ def main() -> None:
             apery_depth_two.append(rec)
 
     # The classical p=17, n=20 target is already a sharp counterexample:
-    # 17^2 | b_3 but v_17(C_19(16)) = 1.
+    # 17^2 | b_3 but C_19(16)/17 = 7 (mod 17).
     counter = [rec for rec in records if rec[0] == 20 and rec[1] == 17]
     assert len(counter) == 1
-    assert counter[0][4] == 0 and counter[0][3] != 0 and counter[0][5] != 0
+    assert counter[0][3] == 7
+    assert counter[0][4] == 0 and counter[0][5] == 7
 
     print("LIMIT", LIMIT)
     print("TOP_HALF_TARGETS_ALL", len(targets))
