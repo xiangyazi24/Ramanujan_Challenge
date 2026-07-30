@@ -601,6 +601,43 @@ pointwise theorem.
     bound at \(n\) and \(n+1\).  It is a useful exact diagnostic but
     supplies no independent anti-spike input.
 
+48. The finite-Racah polynomial has a useful common spectral argument
+    \(n(n+1)\), but it is not a new fixed geometric fibre.  For fixed
+    \(n_0\) it stabilizes to
+    \(H_p(n_0(n_0+1))\equiv b_{n_0}\pmod p\) once \(p>2n_0+1\).
+    This rules out its being, up to a fixed unit, the Hasse invariant of
+    an elliptic family or elliptic symmetric-square K3 family: a good
+    rational specialization would then have only finitely many
+    supersingular primes, contradicting Elkies.  The genuine Apéry K3
+    Hasse polynomial uses the generating-function variable; the Racah
+    polynomial interpolates its coefficients in a spectral index.
+
+49. The proposed finite-hypergeometric trace has now been normalized
+    exactly.  It is McCarthy's starred
+    \({}_4F_3(A,A,\bar A,\bar A;\epsilon,\epsilon,\epsilon;1)\), reduces
+    to \(b_r\) at the compatible Teichmüller prime, and is
+    \(-p^3\) times Greene's normalization.  It is well-poised only for
+    the central quadratic character.  Thus the elementary
+    low-projective-order pruning is valid, while the earlier claim that
+    every residual trace belongs to a bounded well-poised family is
+    false.
+
+50. For adjacent top-half targets \(p<\ell=p+2d\), the common Racah
+    prefixes satisfy a sharp saturation law.  If
+    \(M=(p-1)/2\), \(L=(\ell-1)/2\), and
+    \(S_K=\sum_{m\le K}
+      \binom nm^2\binom{n+m}m^2\), then
+    \[
+      p\mid S_M,\qquad \ell\mid S_L,\qquad
+      p^2\mid S_L-S_M,
+    \]
+    and hence \(p\ell\mid S_L\).  This is a genuine two-target common
+    carrier, but \(\log S_L\gg n\).  Factoring the short boundary leaves
+    a quotient of height \(O((\ell-p)\log n)\), but the
+    \(\ell\)-target constrains the discarded prefix rather than forcing
+    that quotient to vanish.  Thus the natural cutoff-contiguous
+    comparison saturates at the same height/selectivity tradeoff.
+
 Thus Routes A and B are closed **as presently formulated**. This is not a
 disproof of `log G_n=o(n)`. It identifies the exact missing ingredient:
 cross-prime, Apéry-specific Archimedean/p-adic coupling not already contained
@@ -8218,3 +8255,448 @@ Thus
 \]
 The adjacent-stability formulation is exact and useful for diagnostics,
 but it does not weaken the horizontal anti-spike problem.
+
+## 32. A fixed spectral parameter for all candidate characteristics
+
+The finite Racah interpolation gives a more coherent formulation of the
+horizontal problem.  For an odd prime \(q=2h+1\), put
+\[
+ \lambda_j=j(j+1),\qquad
+ \phi_m(X)=\frac{\prod_{0\le j<m}(X-\lambda_j)}{(m!)^2},
+\qquad
+ H_q(X)=\sum_{0\le m\le h}\phi_m(X)^2
+ \in\mathbb F_q[X].
+\tag{32.1}
+\]
+At every folded node \(0\le s\le h\),
+\[
+ H_q(\lambda_s)=b_s\pmod q.
+\tag{32.2}
+\]
+If \(n=aq+r\), \(0\le r<q\), and
+\[
+ {\cal N}=n(n+1),
+\tag{32.3}
+\]
+then
+\[
+ {\cal N}\equiv r(r+1)\pmod q.
+\tag{32.4}
+\]
+Reflection therefore gives the exact same-parameter identity
+\[
+ \boxed{H_q({\cal N})\equiv b_r\pmod q.}
+\tag{32.5}
+\]
+Thus, for one fixed outer \(n\), the varying candidate characteristics
+do not evaluate their folded polynomials at unrelated points: they all
+evaluate at the same characteristic-zero integer \({\cal N}\).
+
+The node polynomial also has the sparse form in \(\mathbb F_q[X]\):
+\[
+ 4^{h+1}\prod_{0\le s\le h}(X-s(s+1))
+ =Y(Y^h-1),\qquad Y=4X+1.
+\tag{32.6}
+\]
+At \(X={\cal N}\), \(Y=(2n+1)^2\), so the right side vanishes for every
+candidate prime.  This is universal candidate content, not target
+content.
+
+Define the folded zero divisor
+\[
+ {\cal G}_q(X)=
+ \gcd\!\left(
+ H_q(X),\prod_{0\le s\le h}(X-s(s+1))
+ \right).
+\tag{32.7}
+\]
+The node polynomial is squarefree, and hence
+\[
+ {\cal G}_q(X)=
+ \prod_{\substack{0\le s\le h\\q\mid b_s}}
+ (X-s(s+1)).
+\tag{32.8}
+\]
+In particular,
+\[
+ q\mid b_r\quad\Longleftrightarrow\quad
+ {\cal G}_q({\cal N})=0\pmod q.
+\tag{32.9}
+\]
+Choosing centered integer lifts of the coefficients gives, with
+\(m_q=\deg{\cal G}_q\), a nonzero integer value at
+\({\cal N}>q\) and
+\[
+ \log|\widetilde{\cal G}_q({\cal N})|
+ \le m_q\log({\cal N}+1)+O(\log q).
+\tag{32.10}
+\]
+On the remaining range \(q>\sqrt n\), the proved
+\(m_q=O(q^{2/3})\) therefore gives a genuine \(o(q)\) lift for each
+separate characteristic.  It is not a common integer:
+the coefficient vector of \({\cal G}_q\) varies with \(q\), and no
+horizontal relation among those vectors is known.
+
+There is a decisive test against overinterpreting the fixed integer
+\({\cal N}\).  For every fixed \(n_0\) and every prime
+\(q>2n_0+1\),
+\[
+ H_q(n_0(n_0+1))\equiv b_{n_0}\pmod q.
+\tag{32.10a}
+\]
+Indeed
+\(\phi_m(n_0(n_0+1))=
+\binom{n_0}{m}\binom{n_0+m}{m}\) for \(m\le n_0\), and it vanishes for
+\(m>n_0\).  Thus the spectral truncation has stabilized to the fixed
+integer \(b_{n_0}\).  In particular \(H_q(X)\), up to any fixed rational
+unit, cannot be the Hasse invariant of an elliptic family over
+\(\mathbb Q(X)\): specializing at any good \(X=n_0(n_0+1)\) would give
+a fixed elliptic curve with only finitely many supersingular primes,
+contradicting Elkies's theorem.  The same argument excludes an
+elliptic symmetric-square K3 interpretation.  It does not exclude an
+as-yet-unconstructed unrelated K3 family, because no corresponding
+infinitude theorem is known for arbitrary fixed K3 surfaces.
+
+There is one exact elementary pruning in this language.  Put
+\[
+ M=n-a,\qquad
+ \Delta_q=\frac{q-1}{\gcd(q-1,2M)}.
+\tag{32.11}
+\]
+Since \(M\equiv r\pmod {q-1}\), \(\Delta_q\) is the projective order
+in the finite-hypergeometric representation proved in Section 35.
+Independently of that representation, for every \(T\ge1\),
+\[
+ \#\left\{
+ q\in\left(\frac n{a+1},\frac na\right]:
+ \Delta_q\le T
+ \right\}
+ \le T\,\tau(2M).
+\tag{32.12}
+\]
+Indeed \(q-1=dg\), where \(d=\Delta_q\le T\) and \(g\mid2M\), and the
+pair \((d,g)\) determines \(q\).  Taking \(T=\sqrt n/a\) and summing
+over \(a<n^{1/3}\), the total logarithmic weight of this low-\(\Delta_q\)
+locus is \(O_\epsilon(n^{1/2+\epsilon}\log n)=o(n)\).  The remaining
+\(\Delta_q\) grow with \(q\).
+
+The synchronized `uisai2` audit script does not evaluate its claimed
+Gauss-sum formula: it verifies only (32.5), (32.6), a prefix recurrence,
+and (32.12).  Section 35 supplies the missing independent normalization
+from McCarthy and Gross--Koblitz.  The stronger associated
+bounded-transformation no-go remains unproved.  Likewise, the word
+``Hasse'' in (32.1)
+does not identify \(H_q(X)\) with the Hasse invariant of a fixed
+characteristic-zero elliptic or K3 family in the spectral parameter
+\(X\).  Equation (32.10a) rules out the natural elliptic and
+elliptic-symmetric-square possibilities.  The actual Apéry K3 Hasse
+polynomial has the generating-function variable \(t\);
+\(H_q(X)\) interpolates its coefficients on the quadratic spectral
+lattice.  Thus \(X\) is a folded coefficient index, not the usual
+Picard--Fuchs base parameter.
+
+## 33. Corrected reflection jets through order six: finite audit
+
+The corrected finite-Racah transport was independently checked against
+the actual polynomial rather than only against its own derived formulas.
+For a regular lower node \(x\), set
+\[
+ y=p-1-x,\qquad
+ u(T)=\frac{F_p(x+T)}{F_p(x+1+T)}.
+\tag{33.1}
+\]
+The inhomogeneous gap continuants give the transported series
+\[
+ \frac{F_p(y+T)}{F_p(y+1+T)}
+\tag{33.2}
+\]
+as a Möbius function of \(u(T)\), including the complete gap residual.
+Reflection and the exact seam defect give a second Möbius expression
+for the same series.  Direct expansion through \(T^8\), for every
+regular lower node at every prime \(p\le200\), gave
+\[
+\begin{array}{c|r}
+\text{regular nodes}&2008\\
+\text{actual lower zero nodes}&20\\
+\text{transport/direct matches}&2008\\
+\text{reflection/direct matches}&2008\\
+\text{actual-zero jet reconstructions}&20.
+\end{array}
+\tag{33.3}
+\]
+This validates the implementation and corrects the earlier false
+triangular-affine transport formula.
+
+The coefficient elimination has an alternating shape: odd orders solve
+for the next odd coefficient of \(u\), while even orders give a
+compatibility scalar.  The order-two scalar vanished at all \(2128\)
+regular nodes in the earlier \(p\le220\) audit, but a symbolic all-prime
+proof has not yet been obtained.  Higher finite data show why that
+vanishing must not be extrapolated into a target selector.
+
+At order four and \(p\le80\), the scalar was independent of the free
+second coefficient.  It vanished at \(36\) of \(354\) regular nodes,
+including all \(9\) actual lower zeros but also \(27\) false positives.
+For primes without skipped singular nodes, interpolation of this scalar
+in either \(x\) or \(x(x+1)\) had the maximal possible degree; for
+example the degree was \(84\) on \(85\) nodes at \(p=173\).
+
+At order six and \(p\le120\), existential elimination of the free
+second coefficient left
+\[
+\begin{array}{c|r}
+\text{regular nodes}&742\\
+\text{order-four passes}&53\\
+\text{actual lower zeros}&10\\
+\text{order-six existential passes}&45\\
+\text{false positive passes}&35\\
+\text{actual zeros missed}&0.
+\end{array}
+\tag{33.4}
+\]
+Some passing nodes admitted every value of the free coordinate and some
+admitted a unique value.  The actual polynomial's coordinate was always
+among the roots.
+
+These are finite computations, not an all-prime no-go theorem.  Their
+rigorous implication is limited: no bounded-degree target selector has
+been found through sixth order, and the first nontrivial even scalar
+already has characteristic-dependent full interpolation complexity.
+Continuing to higher fixed order currently reconstructs further local
+ratio coordinates rather than producing horizontal compression.
+
+## 34. Holonomic gcd literature and the exact denominator barrier
+
+The standard gcd theorems for recurrences do not presently close the
+remaining radical estimate.  The strongest checked results concern
+constant-coefficient generalized power sums, evaluations of fixed
+polynomials on a fixed finite-rank torus, or fixed-\(S\) units.  The
+Apéry recurrence is nonautonomous and has a singular crossing in every
+residue characteristic.  Ore GCRDs control common operator factors,
+not numerical gcds of two selected solution values.
+
+There is an exact reason why uniformly clearing the recurrence prefix
+cannot help.  In normalized form the upper-right transfer entry at
+\(m=q-1\) is
+\[
+ -\frac{(q-1)^3}{q^3},
+\tag{34.1}
+\]
+whose reduced denominator is \(q^3\).  Hence any integer \(D_N\) which
+clears every one-step matrix through \(m<N\) satisfies
+\[
+ \operatorname {lcm}(1,\ldots,N)^3\mid D_N,
+\qquad
+ \log D_N\ge3N+o(N).
+\tag{34.2}
+\]
+This is a proof of saturation for the universal prefix-clearing method,
+not a proof that no initial-state-specific cancellation exists.
+
+The classical irrationality proofs bypass the reduced gcd.  Van der
+Poorten works with the unreduced integers obtained after multiplying
+the companion by \(2\operatorname {lcm}(1,\ldots,n)^3\); Beukers uses
+integral representations with the same lcm-denominator arithmetic;
+Zudilin's hypergeometric constructions likewise control denominators of
+linear forms.  None of the checked sources states
+\[
+ \log\gcd(d_n^3a_n,d_n^3b_n)=o(n).
+\tag{34.3}
+\]
+Thus (34.3) is not a standard hidden lemma of Apéry's proof.  A literature
+search cannot establish nonexistence of an unknown theorem, but every
+located applicable theorem stops at the linear-height barrier (34.2) or
+has hypotheses absent from the Apéry coefficient sequence.
+
+## 35. Exact finite-hypergeometric normalization
+
+The Gauss-sum representation reported by the synchronized `uisai2` note
+is valid after correcting its terminology.  Let \(q\) be an odd prime,
+let \(\omega\) generate the character group of
+\(\mathbb F_q^\times\), and take \(0<r<q-1\).  With
+\[
+ g(k)=\sum_{x\in\mathbb F_q}\omega^k(x)\zeta_q^x,
+ \qquad g(0)=-1,
+\tag{35.1}
+\]
+put
+\[
+ {\cal T}_{q,r}=
+ -\frac{1}{(q-1)g(-r)^2g(r)^2}
+ \sum_{\nu=0}^{q-2}
+ g(\nu-r)^2g(\nu+r)^2g(-\nu)^4.
+\tag{35.2}
+\]
+Direct substitution in McCarthy's definition gives
+\[
+ \boxed{
+ {\cal T}_{q,r}=
+ {}_4F_3^\star\!\left(
+ \begin{matrix}
+  A,A,\bar A,\bar A\\
+  \epsilon,\epsilon,\epsilon
+ \end{matrix}\Bigm|1\right)_q,\qquad A=\omega^r.}
+\tag{35.3}
+\]
+There is no omitted exceptional-character correction.  The three
+trivial lower characters supply the minus sign, and
+\[
+ g(r)^2g(-r)^2=q^2.
+\tag{35.4}
+\]
+
+At the prime of \(\mathbb Q(\zeta_{q-1})\) characterized by
+\(\omega(x)\equiv x\pmod{\mathfrak p}\), Gross--Koblitz gives local
+integrality and
+\[
+ \boxed{{\cal T}_{q,r}\equiv b_r\pmod{\mathfrak p}.}
+\tag{35.5}
+\]
+Indeed, if \(m=\min(r,q-1-r)\), only \(0\le\nu\le m\) survive after
+division by \(q^2\), and their reductions are
+\[
+ \frac{1}
+ {(r-\nu)!^2(q-1-r-\nu)!^2(\nu!)^4}
+ \equiv
+ \binom r\nu^2\binom{r+\nu}\nu^2\pmod q.
+\tag{35.6}
+\]
+For \(r>(q-1)/2\), the omitted Apéry summands already vanish modulo
+\(q\).  This proves (35.5), including the reflected range.
+
+Two corrections are load-bearing.  First, (35.3) is well-poised in
+McCarthy's sense only when \(A^2=\epsilon\), equivalently
+\(r=(q-1)/2\).  Second,
+\[
+ {\cal T}_{q,r}=-q^3\,{}_4F_3^G
+\tag{35.7}
+\]
+in Greene's normalization.  Thus the earlier description as a general
+well-poised or unscaled Greene trace was false.
+
+For a fixed quotient slice \(n=aq+r\), put \(M=n-a\).  Then
+\[
+ M=a(q-1)+r,
+\tag{35.8}
+\]
+so (35.2) uses the reduction modulo \(q-1\) of one fixed exponent
+\(M\) throughout that slice.  Consequently the exact divisor count in
+(32.12), with
+\[
+ \Delta_q=\operatorname {ord}((\omega^M)^2),
+\tag{35.9}
+\]
+is now source-backed rather than provisional.  What it removes is only
+the low-\(\Delta_q\) locus.  For the remaining primes the character
+order, cyclotomic field, and Teichmüller prime all vary with \(q\);
+(35.5) does not turn the problem into a fixed compatible system.
+
+The primary formulas checked here are McCarthy, Definition 1.4,
+Proposition 2.5, and the Gauss product formula in
+*Transformations of Well-Poised Hypergeometric Functions over Finite
+Fields*, together with Gross--Koblitz, Theorem 1.7.  No claimed
+bounded-transformation or horizontal large-sieve theorem follows from
+those normalization identities.
+
+## 36. Adjacent Racah cutoffs: a positive carrier with exact saturation
+
+The common spectral parameter in Section 32 gives one clean
+two-characteristic comparison.  Let \(p<\ell\) be adjacent odd
+top-half target primes for the same \(n\), write
+\[
+ \ell=p+h,\qquad h=2d,\qquad
+ M=\frac{p-1}{2},\quad L=\frac{\ell-1}{2}=M+d,
+\tag{36.1}
+\]
+and define the honest integer terms and prefixes
+\[
+ u_m=\binom nm^2\binom{n+m}m^2,\qquad
+ S_K=\sum_{m=0}^Ku_m.
+\tag{36.2}
+\]
+The two target conditions are exactly
+\[
+ p\mid S_M,\qquad\ell\mid S_L.
+\tag{36.3}
+\]
+
+The cutoff difference has a stronger universal divisibility:
+\[
+ E:=S_L-S_M=\sum_{i=1}^du_{M+i},
+\qquad p^2\mid E.
+\tag{36.4}
+\]
+To see this, set \(Y=4n(n+1)+1=(2n+1)^2\).  Over
+\(\mathbb F_p\),
+\[
+ \phi_{M+1}(n(n+1))
+ =0,
+\tag{36.5}
+\]
+because the product through the nonzero quadratic residues contains
+\(Y^M-1\), with one extra \(Y\) in the exceptional case \(Y=0\).
+Every later \(\phi_{M+i}\) contains this factor, and \(L<p\) keeps all
+factorial denominators \(p\)-adic units.  Squaring proves (36.4).
+
+Equations (36.3)--(36.4) have the exact lattice parametrization
+\[
+ \boxed{
+ S_M=p\ell t-p^2c,\qquad
+ E=p^2c,\qquad
+ S_L=p\ell t}
+\tag{36.6}
+\]
+for some integers \(c,t\).  In particular,
+\[
+ \boxed{p\ell\mid S_L.}
+\tag{36.7}
+\]
+Thus the two target characteristics really do meet in one
+characteristic-zero integer; the comparison is not merely a CRT
+rephrasing.
+
+The carrier is nevertheless too large.  Since
+\(M\ge(n-1)/4\) and \(M\le n/2\),
+\[
+ \binom nM\ge2^M,\qquad
+ \binom{n+M}M\ge3^M,
+\]
+and hence
+\[
+ \log S_L\ge M\log36
+ \ge\frac{n-1}{4}\log36.
+\tag{36.8}
+\]
+
+The short part can be factored as
+\[
+ E=\phi_{M+1}(n(n+1))^2Q_d(n(n+1)),
+\tag{36.9}
+\]
+where
+\[
+ Q_d(X)=1+\sum_{i=2}^d
+ \prod_{t=1}^{i-1}
+ \frac{(X-(M+t)(M+t+1))^2}{(M+t+1)^4}.
+\tag{36.10}
+\]
+Its reduced rational height is
+\[
+ h(Q_d(n(n+1)))=O(d\log n)=O(h\log n).
+\tag{36.11}
+\]
+But the \(p\)-factor in (36.9) is universal cutoff vanishing, while the
+\(\ell\)-target says
+\[
+ S_M+\phi_{M+1}^2Q_d=0\pmod\ell;
+\tag{36.12}
+\]
+it does not force \(Q_d=0\pmod\ell\).
+
+This is the exact height/selectivity tradeoff for the natural
+cutoff-contiguous module.  Retaining the integration constant \(S_M\)
+gives the selective \(p\ell\)-carrier (36.7) at exponential height.
+Eliminating it leaves only universal boundary divisibility.  The
+statement is scoped to bounded-order cutoff relations: it does not
+exclude an identity using a growing prefix together with a new
+Apéry-initial-state cancellation.
