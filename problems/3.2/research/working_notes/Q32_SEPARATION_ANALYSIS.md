@@ -12322,3 +12322,248 @@ Thus further progress must be genuinely horizontal: a second
 distinguished-state congruence, a target-forced extra \(p\)-adic digit,
 or a global many-prime identity whose height is sublinear after all
 endpoint factors are counted.
+
+## 64. Unconditional pruning to unique low-label folded nodes
+
+The fixed-moment carrier analysis is local.  A complementary pointwise
+sieve removes two large global sectors without using any Apéry zero
+statistics.  This result was obtained in the `uisai2/dm` audit and is
+included here after an independent check of its branch, CRT, and local
+density formulas.
+
+Recall the moving radical from (40.2):
+\[
+ {\cal M}_n=
+ \prod_{\substack{\sqrt n<p\le n\\p\mid b_{n\bmod p}}}p.
+\tag{64.1}
+\]
+For one of its candidate primes, write
+\[
+ n=ap+r,\qquad
+ j=\min(r,p-1-r).
+\tag{64.2}
+\]
+There are two branch descriptions:
+\[
+\begin{array}{lll}
+\text{direct:}&
+ p=(n-j)/a,&
+ (2a+1)j\le n-a,\\[2mm]
+\text{reflected:}&
+ p=(n+1+j)/B,&
+ (2B-1)j\le n-B+1,
+\end{array}
+\tag{64.3}
+\]
+where \(B=a+1\) on the reflected branch.  The inequalities are exactly
+the fold condition \(2j\le p-1\).  The additional condition
+\(p>\sqrt n\) gives
+\[
+ j<n-a\sqrt n
+ \quad\text{or}\quad
+ j>B\sqrt n-n-1,
+\tag{64.4}
+\]
+respectively.
+
+For fixed \((n,j)\), each branch contains at most one prime.  On the
+direct branch, two distinct primes above \(\sqrt n\) cannot both divide
+\(n-j<n\).  The reflected proof is only slightly less immediate.  If
+\(p<q\) were two such divisors of \(n+1+j\), their product would have to
+equal \(n+1+j\); the fold inequality for the smaller prime would then
+give \(n>p^2\), contradicting \(p>\sqrt n\).  Thus a multiply
+represented noncentral node has exactly one direct and one reflected
+assignment.
+
+### 64.1 Two-form parametrization of repeated nodes
+
+Fix direct label \(a\) and reflected label \(B\), and put
+\[
+ g=\gcd(a,B),\qquad
+ u=a/g,\qquad v=B/g,\qquad
+ T=(2n+1)/g.
+\tag{64.5}
+\]
+The two parity-refined congruences for \(j\) are compatible exactly
+when
+\[
+ g\mid2n+1,\qquad a+B\equiv1\pmod2.
+\tag{64.6}
+\]
+Their common modulus is
+\[
+ Q_{a,B}=\operatorname {lcm}(2a,2B)=2aB/g.
+\tag{64.7}
+\]
+Writing \(j=j_0+Q_{a,B}t\), the two candidate primes become
+\[
+ P(t)=P_0-2vt,\qquad
+ Q(t)=Q_0+2ut,
+\qquad
+ uP(t)+vQ(t)=T.
+\tag{64.8}
+\]
+
+Whenever this class contains an actual prime pair above \(\sqrt n\),
+both affine forms are primitive.  A prime dividing the content would
+divide \(u\) or \(v\), hence be below \(\sqrt n\), but would also divide
+the corresponding actual prime value.  For an odd sieve prime
+\(\ell\), the number of roots of \(P(t)Q(t)\) is therefore
+\[
+ \omega(\ell)=
+ \begin{cases}
+ 1,&\ell\mid uvT,\\
+ 2,&\ell\nmid uvT.
+ \end{cases}
+\qquad \omega(2)=0.
+\tag{64.9}
+\]
+The two ordinary roots coincide exactly when \(\ell\mid T\); if
+\(\ell\mid u\) or \(v\), one form becomes a nonzero constant and the
+other contributes the single root.
+
+Let \(N_{a,B}\) be the number of parameter values allowed by the fold
+interval.  Its exact length gives
+\[
+ N_{a,B}
+ \le
+ \frac{n\gcd(a,B)}
+ {2aB\max(a,B)}+1.
+\tag{64.10}
+\]
+Moreover
+\[
+ \sum_{a,B\ge1}
+ \frac{\gcd(a,B)}{aB\max(a,B)}<8.
+\tag{64.11}
+\]
+For example, expand the gcd with Euler's totient and sum after writing
+\(a=dx,B=dy\); the remaining series is dominated by
+\(\sum d^{-2}\sum (xy\max(x,y))^{-1}\).
+
+Apply the dimension-two Selberg upper-bound sieve to (64.8).  The local
+factor from (64.9) is
+\[
+ \prod_{\substack{\ell\mid uvT\\\ell>2}}
+ \frac{\ell-1}{\ell-2}
+ \ll\log\log(3nY^2)
+\tag{64.12}
+\]
+when \(a,B\le Y\).  The interval remainder for a squarefree sieve
+modulus is bounded by the product of the local root counts.  Standard
+Selberg weights therefore give
+\[
+ \#\{t:P(t),Q(t)\text{ prime}\}
+ \ll
+ \frac{N_{a,B}}{\log^2(N_{a,B}+2)}
+ \prod_{\substack{\ell\mid uvT\\\ell>2}}
+ \frac{\ell-1}{\ell-2}.
+\tag{64.13}
+\]
+
+Take
+\[
+ Y=\lfloor\log^2(3n)\rfloor.
+\tag{64.14}
+\]
+For \(n\) sufficiently large, every nonempty compatible class with
+\(a,B\le Y\) contains at least \(n/(16Y^3)\) parameter positions:
+the common fold interval has length at least \(n/(4Y)\), while the
+modulus (64.7) is at most \(2Y^2\).  Thus
+\(\log(N_{a,B}+2)\asymp\log n\) uniformly.  Summing (64.13) with
+(64.10)--(64.12) yields
+\[
+ \#\{\text{low-label multiply represented nodes}\}
+ \ll\frac{n\log\log n}{\log^2n}.
+\tag{64.15}
+\]
+
+If \(\max(a,B)>Y\), either inequality in (64.3) puts the folded node in
+\[
+ 0\le j<\frac{n}{2Y-1}.
+\tag{64.16}
+\]
+Branch uniqueness makes the high-label multiply represented nodes
+inject into this interval.  Consequently the product of every prime
+above \(\sqrt n\) assigned to a multiply represented node satisfies
+\[
+ \boxed{\quad
+ \log R_{\rm mult}(n)
+ \ll\frac{n\log\log n}{\log n}=o(n).
+ \quad}
+\tag{64.17}
+\]
+No Apéry target-density input was used: the actual target radical is a
+subproduct of this ambient prime-pair product.
+
+Central folds are harmless separately.  If \(p=2j+1\) is central in
+direct quotient \(a\), then
+\[
+ (2a+1)p=2n+1,
+\tag{64.18}
+\]
+so the product of all central candidate primes divides \(2n+1\).
+
+### 64.2 Large labels and the canonical residual sector
+
+The large-label cutoff does not require a repeated node.  Direct
+branch uniqueness and (64.3) give
+\[
+ \#\{\text{direct assignments}:a>Y\}
+ \le \frac{n}{2Y+1}+1.
+\tag{64.19}
+\]
+Similarly,
+\[
+ \#\{\text{reflected assignments}:B>Y\}
+ \le \frac{n}{2Y-1}+1.
+\tag{64.20}
+\]
+Their complete logarithmic weight is \(O(n/\log n)=o(n)\).
+
+Define \({\cal R}_{\rm low,uniq}(n)\) to be the subproduct of
+\({\cal M}_n\) whose folded node is noncentral and represented by only
+one branch, and whose surviving direct label \(a\) or reflected label
+\(B\) is at most \(Y\).  Equations
+(64.17)--(64.20) and the central bound give
+\[
+ 0\le
+ \log{\cal M}_n-\log{\cal R}_{\rm low,uniq}(n)
+ \ll\frac{n\log\log n}{\log n}.
+\tag{64.21}
+\]
+Combining this with the prime-free reduction (40.6) gives
+\[
+ \boxed{\quad
+ \log{\cal R}_n
+ =
+ \log{\cal R}_{\rm low,uniq}(n)
+ +O\!\left(
+ \frac{n\log\log n}{\log n}+n^{2/3}
+ \right).
+ \quad}
+\tag{64.22}
+\]
+Therefore P3.2 is equivalent to
+\[
+ \boxed{\qquad
+ \log{\cal R}_{\rm low,uniq}(n)=o(n).
+ \qquad}
+\tag{64.23}
+\]
+
+This is real progress but not the final estimate.  The quotient-one
+fixed-point family in (63.24) lies inside the low-label sector, and a
+unique folded node still carries exactly the single target scalar from
+(63.3).  The theorem removes multiplicity and large quotient entropy;
+it does not create horizontal cancellation among the surviving unique
+nodes.
+
+The dependency-free script `q32_folded_multiplicity_audit.py` verifies
+the two branch formulas, branch uniqueness, the CRT parametrization,
+the local root counts, and the high-label cutoff through \(n=5000\).
+It checks \(1727476\) mesoscopic assignments, \(280905\)
+direct/reflected branch pairs, \(70000\) local-density instances, and
+\(113571\) high-label cutoff instances.  The finite scan is a
+regression audit only; the little-oh estimate is the Selberg argument
+above.
