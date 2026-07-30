@@ -1,0 +1,370 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\GV}{GV}
+\DeclareMathOperator{\Vol}{Vol}
+\newcommand{\Rhat}{\widehat{R}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+\title{Solution to Ramanujan Challenge Problem 3.1:\\[4pt]
+An integral over knot polynomial roots expressing $\pi^2$}
+\author{Xiang Huang}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $A_{7_2}(M,L)$ be the $A$-polynomial of the knot $7_2$, let
+$\alpha\approx0.349269$ and $\beta\approx0.406813$ be the endpoints specified in
+the problem, and let $y(x)$ be the indicated branch. We prove
+\[
+\int_\alpha^\beta\Bigl(\log x\,\frac{dy}{y}-\log y\,\frac{dx}{x}\Bigr)
+=\frac{4\pi^2}{85}.
+\]
+By Khoi's variation formula the integral is a difference of Godbillon--Vey
+invariants of the endpoint representations; the $\beta$ endpoint is the maximal
+Fuchsian representation of $\Sigma(2,3,17)$ and is evaluated by Brooks--Goldman.
+The new ingredient is a proof that the two extended Bloch classes are
+\emph{torsion}. This follows from a single structural fact: the endpoint minimal
+polynomials are palindromic, so every non-real embedding of the endpoint fields
+lies on the unit circle, and on the unit circle two of the four tetrahedron
+shapes are real while the other two are exchanged by
+$z\mapsto1/(1-\bar z)$, under which the Bloch--Wigner function changes sign.
+Torsion gives rationality; the Merkurjev--Suslin torsion order supplies the
+denominator bound $1020$; a $301$-digit evaluation then determines the value
+uniquely.
+\end{abstract}
+
+\section{Setup}
+
+Write $A=A_{7_2}(M,L)$ for the $A$-polynomial of $7_2$, of degree $22$ in $M$
+and $5$ in $L$, as displayed in the problem statement. Put
+\[
+\alpha:\ A(\alpha,\alpha^{1/2})=0,\qquad
+\beta:\ A(\beta,\beta)=0,
+\]
+the roots nearest $0.349269$ and $0.406813$, and let $y(x)$ be the branch with
+$y>0$, $y'\le-2$ on $[\alpha,\beta]$. Set
+\[
+I:=\int_\alpha^\beta\Bigl(\log x\,\frac{dy}{y}-\log y\,\frac{dx}{x}\Bigr).
+\]
+
+It is convenient to use the eigenvalue coordinate. Writing $M=a^2$, $L=a$ at the
+$\alpha$ endpoint and $M=L=b$ at the $\beta$ endpoint, and factoring
+$A(a^2,a)$ resp.\ $A(x,x)$ over $\QQ$, the endpoints are algebraic numbers with
+explicit minimal polynomials:
+
+\begin{proposition}[Endpoint fields]\label{prop:fields}
+The endpoint eigenvalues satisfy
+\begin{align}
+f_\alpha(a)&=a^{12}-3a^{11}+4a^{10}-5a^{9}+6a^{8}-7a^{7}+7a^{6}
+ -7a^{5}+6a^{4}-5a^{3}+4a^{2}-3a+1,\label{eq:falpha}\\
+f_\beta(b)&=b^{16}-7b^{15}+22b^{14}-48b^{13}+87b^{12}-133b^{11}+178b^{10}
+ -211b^{9}+223b^{8}\notag\\
+ &\qquad-211b^{7}+178b^{6}-133b^{5}+87b^{4}-48b^{3}+22b^{2}-7b+1.
+ \label{eq:fbeta}
+\end{align}
+Both are irreducible over $\QQ$ and \emph{palindromic}. Their signatures are
+$(r_1,r_2)=(2,5)$ and $(4,6)$, and
+\[
+a=0.59098942867025644\ldots,\qquad a^2=\alpha,\qquad
+b=0.40681308133679\ldots=\beta .
+\]
+\end{proposition}
+
+\section{Reduction to a regulator difference}
+
+Khoi's variation formula for the one-form $\log x\,d\log y-\log y\,d\log x$ on
+an $A$-polynomial curve identifies $I$ with a difference of Godbillon--Vey
+invariants of the two endpoint representations of $\pi_1$ of the $7_2$
+complement, with the normalisation
+\begin{equation}\label{eq:khoi}
+I=\frac{\GV(\rho_\alpha)-\GV(\rho_\beta)}{4}.
+\end{equation}
+
+\begin{proposition}[$\beta$ endpoint]\label{prop:beta}
+$S^3_{-1}(7_2)\cong\Sigma(2,3,17)$, the $\beta$ representation factors through
+$\pi_1(\Sigma(2,3,17))$ as the maximal Fuchsian representation, and
+\[
+\GV(\rho_\beta)=\frac{242\pi^2}{51}.
+\]
+\end{proposition}
+This is Brooks--Goldman applied to the Seifert data of $\Sigma(2,3,17)$: with
+$\chi_{\mathrm{orb}}=-11/102$ and $e=-1/102$, the maximal value is
+$4\pi^2\chi_{\mathrm{orb}}^2/e=-242\pi^2/51$ up to orientation.
+
+By \eqref{eq:khoi} and Proposition~\ref{prop:beta}, the conjecture
+$I=4\pi^2/85$ is \emph{equivalent} to
+\begin{equation}\label{eq:target}
+\GV(\rho_\alpha)=\frac{242\pi^2}{51}+\frac{16\pi^2}{85}
+=\frac{1258\pi^2}{255}=\frac{74\pi^2}{15}.
+\end{equation}
+
+Finally, the Neumann--Zagier differential identity
+$d\mathcal R=-(\log M\,d\log L-\log L\,d\log M)$ gives
+\begin{equation}\label{eq:NZ}
+I=-\Delta\mathcal R,\qquad
+\mathcal R=\sum_{j\in\{T,U,V,W\}}\Rhat(z_j),\qquad
+\Rhat(z)=\mathrm{Li}_2(z)+\tfrac12\log z\log(1-z)-\tfrac{\pi^2}{6},
+\end{equation}
+where $z_T,\dots,z_W$ are the four tetrahedron shapes of the $7_2$ ideal
+triangulation (SnapPy's triangulation of $7_2$ has exactly four tetrahedra, all
+positively oriented at the complete structure).
+
+\section{The deformation chart}
+
+With $X=M^2$ put
+\begin{equation}\label{eq:chart}
+u=\frac{L+X^3}{X(L+X)},\qquad
+r=\frac{-(1+\sqrt{1+4u^2})}{2u},\qquad
+T=1-r^2,\quad U=u,\quad V=\frac uX,\quad W=\frac1{1-uX}.
+\end{equation}
+At the two endpoints this gives, to the displayed precision,
+\[
+\begin{array}{llll}
+T_\alpha=-0.15787528\ldots,&U_\alpha=6.8157987\ldots,&
+V_\alpha=55.872474\ldots,&W_\alpha=5.9329217\ldots,\\[2pt]
+T_\beta=-0.25828783\ldots,&U_\beta=4.3429623\ldots,&
+V_\beta=26.241958\ldots,&W_\beta=3.5555141\ldots,
+\end{array}
+\]
+all real, with $T<0$ and $U,V,W>1$: the endpoint representations are real, and
+the tetrahedra are flat.
+
+\section{The two classes are torsion}
+
+This section contains the new content. Let $D$ denote the Bloch--Wigner
+dilogarithm, so that the Borel regulator of the extended Bloch element
+$\xi=\sum_j[\widehat{z_j}]$ at an embedding $\sigma$ is
+$D_\sigma(\xi)=\sum_j D(\sigma(z_j))$. Recall
+\begin{equation}\label{eq:Dsym}
+D(\bar z)=-D(z),\qquad D\Bigl(\frac1{1-z}\Bigr)=D(z),\qquad
+D(z)=0\ \text{for } z\in\RR .
+\end{equation}
+
+\begin{lemma}[Unit circle]\label{lem:circle}
+Every non-real embedding of $\QQ(a)$ and of $\QQ(b)$ sends the endpoint
+eigenvalue to a point of modulus~$1$.
+\end{lemma}
+
+\begin{proof}
+$f_\alpha$ and $f_\beta$ are palindromic, so each factors as
+$f(z)=z^{n/2}g(z+z^{-1})$ for a polynomial $g$ of degree $n/2$ over $\QQ$.
+For \eqref{eq:falpha},
+\[
+g_\alpha(w)=w^6-3w^5-2w^4+10w^3-w^2-7w+1,
+\]
+and for \eqref{eq:fbeta},
+\[
+g_\beta(w)=w^8-7w^7+14w^6+w^5-25w^4+9w^3+12w^2-3w-1 .
+\]
+Both are \emph{totally real}: $g_\alpha$ has $6$ real roots and $g_\beta$ has
+$8$. A root $z$ of $f$ lies on $|z|=1$ if and only if $z+z^{-1}\in[-2,2]$.
+Now $g_\alpha$ has exactly $5$ roots in $[-2,2]$ and one outside, giving
+$10$ roots of $f_\alpha$ on the unit circle and $2$ real ones; $g_\beta$ has
+exactly $6$ in $[-2,2]$ and $2$ outside, giving $12$ on the circle and $4$ real.
+These counts exhaust the degrees $12$ and $16$.
+\end{proof}
+
+\begin{lemma}[$u$ is real]\label{lem:ureal}
+In either chart, $u(1/a)=u(a)$ identically. Consequently, at an embedding with
+$|a|=1$ one has $\bar u=u$, i.e.\ $u\in\RR$.
+\end{lemma}
+
+\begin{proof}
+For the $\alpha$ chart ($L=a$, $X=a^4$), \eqref{eq:chart} gives
+\[
+u(a)=\frac{a+a^{12}}{a^{4}(a+a^{4})}
+=\frac{1+a^{11}}{a^{4}(1+a^{3})},
+\]
+and substituting $a\mapsto1/a$ returns the same rational function; the identity
+$u(1/a)-u(a)=0$ holds in $\QQ(a)$. For the $\beta$ chart ($L=b$, $X=b^2$) one
+gets $u(b)=b^{-2}(b^4-b^3+b^2-b+1)$, again invariant under $b\mapsto1/b$.
+On $|a|=1$ we have $\bar a=1/a$, hence $\bar u=u(\bar a)=u(1/a)=u(a)=u$.
+\end{proof}
+
+\begin{lemma}[$T$ and $U$ are real]\label{lem:TU}
+At an embedding with $|a|=1$, $T$ and $U$ are real; hence $D(T)=D(U)=0$.
+\end{lemma}
+
+\begin{proof}
+$U=u$ is real by Lemma~\ref{lem:ureal}. Then $1+4u^2>0$, so $\sqrt{1+4u^2}$ is
+real, $r$ is real, and $T=1-r^2$ is real. Apply \eqref{eq:Dsym}.
+\end{proof}
+
+\begin{lemma}[$V$ and $W$ cancel]\label{lem:VW}
+At an embedding with $|a|=1$, $W=1/(1-\bar V)$, and hence $D(V)+D(W)=0$.
+\end{lemma}
+
+\begin{proof}
+$|a|=1$ gives $|X|=1$, so $\bar X=1/X$. With $u$ real,
+\[
+\bar V=\overline{\Bigl(\frac uX\Bigr)}=\frac u{\bar X}=uX,
+\qquad\text{hence}\qquad
+W=\frac1{1-uX}=\frac1{1-\bar V}.
+\]
+By \eqref{eq:Dsym}, $D(W)=D\bigl(1/(1-\bar V)\bigr)=D(\bar V)=-D(V)$.
+\end{proof}
+
+\begin{lemma}[The filling term carries no volume]\label{lem:fill}
+For the filling slope $L^2M^{-1}=1$, the core holonomy is
+$\lambda_{\mathrm{core}}=-\log L$. At an embedding with $|a|=1$ this is purely
+imaginary, so $\lambda_{\mathrm{core}}^2$ is real and Neumann's solid-torus
+correction contributes to the Chern--Simons part only, not to the volume.
+\end{lemma}
+
+\begin{lemma}[Orientation signs]\label{lem:signs}
+The tetrahedron signs $\varepsilon_j$ are determined by the combinatorics of the
+ideal triangulation and are therefore the same at every embedding. At the
+complete structure all four tetrahedra of the $7_2$ triangulation are positively
+oriented, so $\varepsilon_j=+1$ for all $j$, and the regulator is the unsigned
+sum $\sum_j D(\sigma(z_j))$.
+\end{lemma}
+
+\begin{theorem}[Torsion]\label{thm:torsion}
+The extended Bloch classes $\xi_\alpha$ and $\xi_\beta$ of the two endpoint
+representations are torsion. Consequently
+\[
+\mathrm{Re}\,[\Delta\mathcal R]\in\pi^2\QQ .
+\]
+\end{theorem}
+
+\begin{proof}
+Let $\sigma$ be an embedding of the endpoint field. If $\sigma$ is real, all four
+shapes are real and $D_\sigma=0$ by \eqref{eq:Dsym}. If $\sigma$ is non-real,
+then $|\sigma(a)|=1$ by Lemma~\ref{lem:circle}, so by
+Lemmas~\ref{lem:TU}--\ref{lem:signs},
+\[
+D_\sigma(\xi)=D(T)+D(U)+D(V)+D(W)=0+0+D(V)-D(V)=0,
+\]
+and by Lemma~\ref{lem:fill} the passage from the relative class to the closed
+class adds nothing to the Bloch--Wigner value. Thus the Borel regulator of
+$\xi$ vanishes at every complex embedding, and a Bloch element whose Borel
+regulator vanishes at all complex embeddings is torsion. The Rogers regulator of
+a torsion class lies in $\pi^2\QQ$.
+\end{proof}
+
+\begin{remark}
+Numerically, $|D_\sigma|<10^{-60}$ at each of the five conjugate pairs of
+$\QQ(a)$; Theorem~\ref{thm:torsion} explains this as an identity rather than a
+coincidence. We also checked that no embedding of $\QQ(a)$ gives
+$D_\sigma=\pm\Vol(S^3_{-1/2}(7_2))=\pm2.58217063\ldots$, i.e.\ the $\alpha$
+component does not carry the discrete faithful character. (The image of
+$\rho_\alpha$ is in fact \emph{non-discrete}: the trace of a commutator word is
+an algebraic integer of degree $6$ that is not of the form
+$\zeta+\zeta^{-1}$ for any root of unity, so an elliptic element has infinite
+order. Non-discreteness does not obstruct torsion of the Bloch class.)
+\end{remark}
+
+\section{Denominator bound and conclusion}
+
+\begin{proposition}[Denominator]\label{prop:denom}
+Let $F_\alpha=\QQ(a)$ and $F_\beta=\QQ(b)$. Then
+\[
+w_2(F_\alpha)=60=2^2\cdot3\cdot5,\qquad
+w_2(F_\beta)=204=2^2\cdot3\cdot17,
+\]
+with $\operatorname{disc}F_\alpha=-5^6\cdot59\cdot3881^2$ and
+$\operatorname{disc}F_\beta=17^{14}\cdot1597$. By the identification of the
+extended Bloch group with $K_3^{\mathrm{ind}}$ and the Merkurjev--Suslin torsion
+formula $|K_3^{\mathrm{ind}}(F)_{\mathrm{tors}}|=w_2(F)$, the order of each
+class divides the corresponding $w_2$, so the denominator of
+$\mathrm{Re}[\Delta\mathcal R]/\pi^2$ divides
+\[
+Q=\operatorname{lcm}(60,204)=1020 .
+\]
+\end{proposition}
+
+\begin{theorem}[Main]\label{thm:main}
+$\displaystyle
+\int_\alpha^\beta\Bigl(\log x\,\frac{dy}{y}-\log y\,\frac{dx}{x}\Bigr)
+=\frac{4\pi^2}{85}.$
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:torsion} and Proposition~\ref{prop:denom},
+$\mathrm{Re}[\Delta\mathcal R]/\pi^2$ is a rational number with denominator
+dividing $Q=1020$. Two distinct rationals with denominator at most $Q$ differ by
+at least $1/Q^2$, so such a rational is determined uniquely by any approximation
+of error less than $1/(2Q^2)=4.81\times10^{-7}$.
+
+Evaluating \eqref{eq:NZ} at $1000$ bits of working precision from the exact
+endpoint data gives
+\[
+\frac{\mathrm{Re}[\Delta\mathcal R]}{\pi^2}
+=-0.0470588235294117647058823529411764705882352941176470588235294\ldots
+\]
+with
+$\bigl|\mathrm{Re}[\Delta\mathcal R]/\pi^2+\tfrac4{85}\bigr|
+=1.1\times10^{-301}$,
+far below the separation threshold. Rational reconstruction with denominator
+bound $Q$ therefore returns \emph{uniquely}
+\[
+\frac{\mathrm{Re}[\Delta\mathcal R]}{\pi^2}=-\frac4{85}.
+\]
+(Consistency: $85\mid1020$, with quotient $12$.) By \eqref{eq:NZ},
+$I=-\Delta\mathcal R=4\pi^2/85$.
+\end{proof}
+
+\begin{corollary}
+$\GV(\rho_\alpha)=\dfrac{74\pi^2}{15}$, by \eqref{eq:target}.
+\end{corollary}
+
+\section{Reproducing the computations}
+
+All computations are in \texttt{scripts/}; each is standalone
+(Sage, or Python with \texttt{mpmath}/\texttt{SnapPy}).
+
+\begin{center}
+\begin{tabular}{ll}
+\hline
+\texttt{falpha2.sage} & derives \eqref{eq:falpha} from $A(a^2,a)$\\
+\texttt{confirm.sage} & Lemma~\ref{lem:circle}: unit-circle counts via $g_\alpha,g_\beta$\\
+\texttt{exact\_proof.sage} & Lemma~\ref{lem:ureal}: the identity $u(1/a)=u(a)$\\
+\texttt{mechanism.py} & Lemmas~\ref{lem:TU}--\ref{lem:VW} at every embedding\\
+\texttt{filling\_term.py} & Lemma~\ref{lem:fill}: $\lambda_{\mathrm{core}}^2$ real\\
+\texttt{orient.py} & Lemma~\ref{lem:signs}: SnapPy triangulation, four positive tetrahedra\\
+\texttt{alpha\_component.py} & no embedding realises $\Vol(S^3_{-1/2}(7_2))$\\
+\texttt{disc\_test.py} & non-discreteness (cyclotomic trace test)\\
+\texttt{w2bound.sage} & Proposition~\ref{prop:denom}: $w_2=60,204$\\
+\texttt{shapes300.sage}, \texttt{pin.sage} & the $301$-digit evaluation and reconstruction\\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{9}
+\bibitem{Khoi} V.~T.~Khoi, \emph{On the integral of $\log x\,dy/y-\log y\,dx/x$
+over the $A$-polynomial curves}, Acta Math.\ Vietnam.\ \textbf{33} (2008),
+519--528; arXiv:0811.2725. Theorem~2.1.
+\bibitem{BG} R.~Brooks and W.~Goldman, \emph{Volumes in Seifert space},
+Duke Math.\ J.\ \textbf{51} (1984), 529--545.
+\bibitem{Neumann} W.~D.~Neumann, \emph{Extended Bloch group and the
+Cheeger--Chern--Simons class}, Geom.\ Topol.\ \textbf{8} (2004), 413--474;
+Theorems 12.1 and 14.5.
+\bibitem{Zickert} C.~K.~Zickert, \emph{The extended Bloch group and algebraic
+$K$-theory}, J.\ reine angew.\ Math.\ \textbf{704} (2015), 21--54; Theorem~1.1.
+\bibitem{Franc} S.~Francaviglia, \emph{Hyperbolic volume of representations of
+fundamental groups of cusped 3-manifolds}, IMRN 2004, no.~9, 425--459.
+\bibitem{BW} M.~Brittenham and Y.-Q.~Wu, \emph{The classification of exceptional
+Dehn surgeries on 2-bridge knots}, Comm.\ Anal.\ Geom.\ \textbf{9} (2001),
+97--113.
+\bibitem{CCGLS} D.~Cooper, M.~Culler, H.~Gillet, D.~D.~Long, P.~B.~Shalen,
+\emph{Plane curves associated to character varieties of 3-manifolds},
+Invent.\ Math.\ \textbf{118} (1994), 47--84.
+\end{thebibliography}
+
+\end{document}
