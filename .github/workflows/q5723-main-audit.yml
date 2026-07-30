@@ -1,0 +1,39 @@
+name: Q5723 temporary main audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/q5723-main-audit.yml'
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch isolated Q5723 audit
+        shell: bash
+        run: |
+          git fetch origin q5723-audit
+          git show origin/q5723-audit:problems/3.2/research/scripts/q5723_state_order_audit.py > /tmp/q5723.py
+      - name: Run audit
+        shell: bash
+        run: |
+          set +e
+          python3 /tmp/q5723.py > /tmp/q5723-audit.out 2>&1
+          echo $? > /tmp/q5723-audit.status
+          exit 0
+      - name: Persist output on audit branch
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout q5723-audit
+          cp /tmp/q5723-audit.out q5723-audit.out
+          cp /tmp/q5723-audit.status q5723-audit.status
+          git add q5723-audit.out q5723-audit.status
+          git commit -m 'Record Q5723 state/order audit output' || exit 0
+          git push origin HEAD:q5723-audit
