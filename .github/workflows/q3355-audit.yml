@@ -8,26 +8,19 @@ on:
       - '.github/workflows/q3355-audit.yml'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   audit:
-    runs-on: ubuntu-latest
-    timeout-minutes: 360
+    runs-on: ubuntu-slim
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: q3355-audit
-          fetch-depth: 0
       - name: Run corrected audit
         shell: bash
         run: |
           python3 problems/3.2/research/scripts/q3355_projective_digit_audit.py | tee q3355-audit.out
-      - name: Persist output
-        shell: bash
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add q3355-audit.out
-          git commit -m 'Record Q3355 audit output' || exit 0
-          git push origin HEAD:q3355-audit
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q3355-audit-output
+          path: q3355-audit.out
