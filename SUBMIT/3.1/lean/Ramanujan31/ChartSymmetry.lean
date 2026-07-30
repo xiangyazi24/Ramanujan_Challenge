@@ -112,4 +112,25 @@ theorem fAlpha_eq_pow_mul_g {K : Type*} [Field K] (a : K) (ha : a ≠ 0) :
   field_simp
   ring
 
+/-- **The palindromic decomposition for `fBeta`.**
+
+For `b ≠ 0`, `fBeta b = b ^ 8 * gBeta (b + b⁻¹)` where
+
+  `gBeta w = w^8 - 7w^7 + 14w^6 + w^5 - 25w^4 + 9w^3 + 12w^2 - 3w - 1`.
+
+`gBeta` is totally real with six roots in `[-2,2]` (machine-checked in
+`TraceRoots.gBeta_totally_real`), so twelve of the sixteen roots of `fBeta` lie
+on the unit circle. -/
+theorem fBeta_eq_pow_mul_g {K : Type*} [Field K] (b : K) (hb : b ≠ 0) :
+    (b ^ 16 - 7 * b ^ 15 + 22 * b ^ 14 - 48 * b ^ 13 + 87 * b ^ 12
+      - 133 * b ^ 11 + 178 * b ^ 10 - 211 * b ^ 9 + 223 * b ^ 8 - 211 * b ^ 7
+      + 178 * b ^ 6 - 133 * b ^ 5 + 87 * b ^ 4 - 48 * b ^ 3 + 22 * b ^ 2
+      - 7 * b + 1)
+    = b ^ 8 * (let w := b + b⁻¹
+               w ^ 8 - 7 * w ^ 7 + 14 * w ^ 6 + w ^ 5 - 25 * w ^ 4 + 9 * w ^ 3
+                 + 12 * w ^ 2 - 3 * w - 1) := by
+  simp only
+  field_simp
+  ring
+
 end Palindromic
