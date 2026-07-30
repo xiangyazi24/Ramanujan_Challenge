@@ -1,57 +1,46 @@
 name: Q5719 common ghost audit runner
 
 on:
-  push:
+  pull_request:
     branches: [main]
     paths:
-      - '.github/workflows/q5719-run-audit.yml'
+      - 'problems/3.2/research/scripts/q5719_common_ghost_audit.py'
+      - '.github/workflows/q5719-common-ghost-audit.yml'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  audit:
+  geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run geometry audit
+        run: python3 problems/3.2/research/scripts/q5719_common_ghost_audit.py --limit 2000 > q5719-geometry.out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q5719-geometry-output
+          path: q5719-geometry.out
+          if-no-files-found: error
+
+  evaluate:
     runs-on: ubuntu-latest
     timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Fetch isolated audit script
-        shell: bash
-        run: |
-          git fetch origin q5719-audit
-          git show origin/q5719-audit:problems/3.2/research/scripts/q5719_common_ghost_audit.py > /tmp/q5719_common_ghost_audit.py
-      - name: Run geometry audit
-        run: python3 /tmp/q5719_common_ghost_audit.py --limit 2000 > /tmp/q5719-geometry.out
-      - name: Persist geometry on audit branch
-        shell: bash
-        run: |
-          git checkout -B q5719-audit origin/q5719-audit
-          cp /tmp/q5719-geometry.out q5719-geometry.out
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add q5719-geometry.out
-          git commit -m 'Record Q5719 geometry audit output' || true
-          git push origin HEAD:q5719-audit
-          git checkout main
       - name: Run exact modular audit
         shell: bash
         run: |
           set +e
-          python3 /tmp/q5719_common_ghost_audit.py --limit 2000 --evaluate > /tmp/q5719-evaluate.out 2>&1
-          echo $? > /tmp/q5719-evaluate.status
+          python3 problems/3.2/research/scripts/q5719_common_ghost_audit.py --limit 2000 --evaluate > q5719-evaluate.out 2>&1
+          echo $? > q5719-evaluate.status
           exit 0
-      - name: Persist modular output on audit branch
+      - uses: actions/upload-artifact@v4
         if: always()
-        shell: bash
-        run: |
-          git fetch origin q5719-audit
-          git checkout -B q5719-audit origin/q5719-audit
-          cp /tmp/q5719-evaluate.out q5719-evaluate.out || true
-          cp /tmp/q5719-evaluate.status q5719-evaluate.status || true
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add q5719-evaluate.out q5719-evaluate.status
-          git commit -m 'Record Q5719 modular audit output' || exit 0
-          git push origin HEAD:q5719-audit
+        with:
+          name: q5719-evaluate-output
+          path: |
+            q5719-evaluate.out
+            q5719-evaluate.status
+          if-no-files-found: error
