@@ -186,55 +186,77 @@ def audit_split_difference(M: int, d: int, order: int) -> None:
     assert M // 2 < d and d + order <= M
     direct = delta(M, d, order)
     rows = [first_cell_parts(M, d + i) for i in range(order + 1)]
-    # b_M is constant and disappears; the other three pieces split exactly.
     split = sum(delta_values([row[j] for row in rows]) for j in (1, 2, 3))
     assert direct == split
 
 
-def audit_pair(n: int, q: int, ell: int, a: int) -> None:
+def analyze_covering_row(n: int) -> None:
+    """Cover all a=1 targets by one first-cell stencil and audit saturation."""
+    M = n - 1
+    qs = sorted(q for q, a, _ in targets(n) if a == 1)
+    print("ROW", n, "a1_targets=", qs)
+    if len(qs) < 2:
+        return
+    d = M // 2 + 1
+    L = qs[-1] - 1 - d
+    assert L >= 1 and d + L <= M
+    gd = G(M, d, L)
+    g1 = G(M, d + 1, L)
+    high = delta(M, d, L + 1)
+    B = C(d + L + 1, L)
+    assert gd - g1 == (-1) ** (L + 1) * B * high
+
+    target_product = 1
+    for q in qs:
+        if d <= q - 1 <= d + L:
+            assert gd % q == 0
+            target_product *= q
+    R = gcd(abs(gd), abs(high))
+    GG = gcd(abs(gd), abs(g1))
+    assert GG == R * gcd(abs(gd // R), B)
+
+    width = min(5, M - (d + L))
+    carriers = [G(M, d + s, L) for s in range(width + 1)]
+    carrier_gcd = 0
+    for x in carriers:
+        carrier_gcd = gcd(carrier_gcd, abs(x))
+
+    boundary = carriers + [delta(M, d + s, L + 1) for s in range(width + 1)]
+    boundary_gcd = 0
+    for x in boundary:
+        boundary_gcd = gcd(boundary_gcd, abs(x))
+
+    print("  cover", f"M={M}", f"d={d}", f"L={L}", f"width={width}")
+    print("  digits(G,high,R,GG,carrier_gcd,boundary_gcd)=", tuple(
+        len(str(abs(x))) for x in (gd, high, R, GG, carrier_gcd, boundary_gcd)
+    ))
+    print("  B factor=", fmt_factor(B))
+    print("  residual R=", R, "factor=", fmt_factor(R))
+    print("  adjacent gcd=", GG, "factor=", fmt_factor(GG))
+    print("  shifted-carrier gcd=", carrier_gcd, "factor=", fmt_factor(carrier_gcd),
+          "quotient_by_targets=", carrier_gcd // target_product if carrier_gcd % target_product == 0 else "NONDIV")
+    print("  full-boundary gcd=", boundary_gcd, "factor=", fmt_factor(boundary_gcd))
+
+
+def analyze_adjacent_pair(n: int, q: int, ell: int, a: int) -> None:
     M = n - a
     d = q - 1
     L = ell - q
-    assert a == 1, (n, q, ell, a)
+    if a != 1:
+        return
     gd = G(M, d, L)
     high = delta(M, d, L + 1)
     g1 = G(M, d + 1, L)
     B = C(d + L + 1, L)
     assert gd - g1 == (-1) ** (L + 1) * B * high
-
-    node_targets = []
-    for i in range(L + 1):
-        p = d + i + 1
-        if p in primes_upto(d + L + 1) and p > L and apery_mod(n - p, p) == 0:
-            node_targets.append(p)
-    target_product = 1
-    for p in node_targets:
-        target_product *= p
     R = gcd(abs(gd), abs(high))
-    assert R % target_product == 0
-
-    width = min(5, M - (d + L))
-    boundary = [G(M, d + s, L) for s in range(width + 1)]
-    boundary += [delta(M, d + s, L + 1) for s in range(width + 1)]
-    RG = 0
-    for x in boundary:
-        RG = gcd(RG, abs(x))
-
-    print(
-        "PAIR",
-        f"n={n}", f"M={M}", f"q={q}", f"ell={ell}", f"d={d}", f"L={L}",
-        f"targets={node_targets}",
-    )
-    print(
-        "  digits(G,high,R,rectangle)=",
-        (len(str(abs(gd))), len(str(abs(high))), len(str(R)), len(str(RG))),
-    )
-    print("  R=", R, "factor=", fmt_factor(R), "R/targets=", R // target_product)
-    print("  rectangle=", RG, "factor=", fmt_factor(RG), "rectangle/targets=", RG // target_product)
+    GG = gcd(abs(gd), abs(g1))
+    assert GG == R * gcd(abs(gd // R), B)
+    print("  ADJACENT", f"q={q}", f"ell={ell}", f"d={d}", f"L={L}",
+          "R=", fmt_factor(R), "GG=", fmt_factor(GG), "B=", fmt_factor(B))
 
 
 def main() -> None:
-    # Full small audit.
     for M in range(1, 35):
         assert shell(M, M) == endpoint_formula(M)
         for d in range(M // 2 + 1, M + 1):
@@ -243,7 +265,6 @@ def main() -> None:
             for order in range(1, max_order + 1):
                 audit_split_difference(M, d, order)
 
-    # Requested large M values: hostile points throughout the first cell.
     for M in (199, 271, 299, 320, 754):
         ds = sorted({M // 2 + 1, M // 2 + 2, (3 * M) // 4, M - 7, M - 1, M})
         for d in ds:
@@ -255,7 +276,6 @@ def main() -> None:
                 audit_split_difference(M, d, 4)
         print("FORMULA_PASS", M, "sample_d=", ds)
 
-    # Deterministic hostile random checks.
     rng = Random(5711)
     random_rows = []
     for _ in range(40):
@@ -268,13 +288,13 @@ def main() -> None:
         random_rows.append((M, d, order))
     print("RANDOM_PASS", random_rows)
 
-    # Requested rows M=n-1.
     for n in (200, 272, 300, 321, 755):
         ts = targets(n)
         ps = adjacent_pairs(n)
-        print("ROW", n, "targets=", ts, "pairs=", ps)
+        print("TARGETS", n, ts, "pairs=", ps)
+        analyze_covering_row(n)
         for q, ell, a in ps:
-            audit_pair(n, q, ell, a)
+            analyze_adjacent_pair(n, q, ell, a)
 
     print("ALL_Q5711_CHECKS_PASS")
 
