@@ -1,0 +1,17 @@
+name: Q5723 state/order audit
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'problems/3.2/research/scripts/q5723_state_order_audit.py'
+      - '.github/workflows/q5723-audit.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact and modular audit
+        run: python3 problems/3.2/research/scripts/q5723_state_order_audit.py
