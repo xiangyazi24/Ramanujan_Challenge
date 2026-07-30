@@ -218,3 +218,12 @@
   proven to fail (quantifier reversal, coefficient-vs-eval zeros, growing complexity).
 - fixed 4 paper items (2 from A, CFVZ caveat + two-loci from B); corrected my
   spec's pencil error. paper 88→100 pp clean. all verified independently.
+
+## Run 2026-07-30 14:05 (automode, P3.1)
+- doctrine: problems/3.1/DOCTRINE_31.md
+- starting avenue: (a) explicit Merkurjev-Suslin denominator bound
+- state: torsion mechanism PROVED this session (palindromic => unit circle =>
+  u real => T,U real and D(V)+D(W)=0; filling term real; signs +1).
+  Re[Delta R]/pi^2 = -4/85 to 301 digits.
+- end:
+- final result:
