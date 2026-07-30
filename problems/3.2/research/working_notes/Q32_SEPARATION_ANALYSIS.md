@@ -277,6 +277,150 @@ pointwise theorem.
     \(O_A(n)\), not \(o(n)\).  Any Apéry-specific saving factor tending to
     infinity over this ambient sieve scale would complete (PC.21).
 
+26. The later \(S(p)\)/Katz handoff does not close the problem.  Its
+    multiplier set describes the companion \(a_q\) channel, which is
+    already pointwise \(O(n^{2/3})\), while omitting the lower \(b_r\)
+    channel.  The exact counterexample is \(n=16,p=11,r=5\).  Moreover a
+    bounded row set cannot control a fixed column, and the variable-length
+    recurrence prefix product is not a Frobenius statistic of the
+    Beukers--Peters K3 sheaf.  Ordinary square-root character sums would
+    give \(1+O(\sqrt p)\) zeros, not \(O(1)\).
+
+27. Universal direct carriers are now saturated in every degree.  The
+    intersection of the moving target ideals evaluates exactly to the
+    unknown radical \(R_n\mathbb Z\), even after imposing the full
+    recurrence.  Signed Newton carriers cannot cancel the central \(4^k\)
+    alias at subexponential cost: exact cancellation forces full candidate
+    primorial content, and all-degree alias saturation changes \(R_n\) by
+    at most a fixed factor \(24\).
+
+28. Neither the standard irrationality proof nor a factorial-gcd
+    reformulation supplies the missing estimate.  Van der Poorten,
+    Beukers, and Zudilin use unreduced lcm-cleared linear forms, integrals,
+    or hypergeometric denominator estimates and do not prove a
+    subexponential common divisor.  The full \(\gcd(b_n,n!)\) statement is
+    stronger because Lucas congruences do not control small-prime
+    valuation depth.
+
+29. The first \(p\)-adic lift gives no second target equation.  With the
+    harmonic derivative \(D_r\),
+    \[
+      b_{p+r}\equiv5(b_r+pD_r),\qquad
+      p^3a_{p+r}\equiv6(b_r+pD_r)\pmod {p^2}.
+    \]
+    On the target locus the two divided coordinates remain proportional to
+    \((5,6)\).  The example \(p=73,r=2\) has valuation exactly one, so the
+    residual scalar is not forced to vanish.
+
+30. The two sharp positive interfaces are now explicit.  One is the
+    shell-uniform fixed-\(q\) pair energy
+    \(o_q(N^2/\log^2N)\); the other is a pointwise
+    two-characteristic dispersion estimate over prime gaps
+    \(h\le A\log N\).  Standard \(L^2\) large sieves are critical even for
+    bounded rows, and reflected two-point masks have optimal individual
+    Fourier bounds while still violating the pointwise estimate.  A proof
+    must therefore introduce actual-Apéry cross-prime cancellation, not a
+    stronger one-characteristic estimate.
+
+31. The two exceptional targets detected by the recurrence factor
+    \(2n+1\) have an exact modular explanation.  For \(n=p+r\),
+    \[
+      p\mid2n+1\quad\Longleftrightarrow\quad
+      r=(p-1)/2,\qquad n=(3p-1)/2.
+    \]
+    Beukers' congruence identifies this central zero with
+    \(p\mid a_p(\eta(2z)^4\eta(4z)^4)\).  This classifies the factor-covered
+    targets, but it does **not** obstruct a pointwise bound
+    \(z_p=O(1)\): such a bound may allow the one optional central zero.
+    The modularity observation rules out eventual central nonvanishing,
+    not every pointwise zero-fibre estimate.
+
+32. Lifting the full \(2\times2\) transfer frame to \(p^2\) does not by
+    itself add a selective equation.  The integral crossing block at
+    \(p-1\) has rank one modulo \(p\), the two divided endpoint columns are
+    proportional to \((5,6)\), and every nonsingular neighboring row
+    propagates the same free scalar.  A local frame deformation preserves
+    the recurrence, determinant, and zeroth layer while varying that
+    scalar.  Since it need not preserve the distinguished initial frame,
+    this is a no-go for the proposed **local** matrix argument, not a
+    theorem excluding new global connection data.
+
+33. The latest uisai2 `dm` and `family` computations sharpen both sides of
+    the saturation ledger.  A half-prefix has a universal third layer
+    \(p^3\) on \(n/2<p\le(3n+1)/4\), but the divided carrier still has
+    positive linear height and an actual target has no fourth layer.
+    Two Laurent models have cross-model Smith form
+    \({\rm diag}(1,U_n)\); their primitive mutation commutator is not
+    target-divisible.  The second selected Kummer-trace digit is a free
+    Witt coordinate.  These are genuine structural refinements, but none
+    supplies horizontal separation.
+
+34. There is a new experimental Route A reformulation.  Writing the
+    rational companion in lowest terms as \(a_n=A_n/C_n\), exact
+    computation through \(n=10000\) found
+    \(\gcd(A_n,b_n)=1\), which would imply
+    \[
+      G_n=\frac{d_n^3}{C_n}.
+    \]
+    The two adjacent reduced Wronskians only give
+    \[
+      \gcd(A_n,b_n)\mid
+      \gcd\!\left(
+        b_n,\frac{6C_{n-1}C_n}{n^3},
+        \frac{6C_nC_{n+1}}{(n+1)^3}\right).
+    \]
+    This carrier is usually nontrivial: it exceeds one for 1952 of
+    \(1\le n<2000\), including a residual factor \(17\) at \(n=20\).
+    Thus the coprimality pattern is promising finite evidence, not a
+    consequence of two neighboring Casoratians.
+
+35. The zero-fibre parity is now an unconditional two-line theorem:
+    \[
+      z_p\equiv{\bf1}_{p\mid a_p(f)}\pmod2.
+    \]
+    Reflection pairs every noncentral zero, and (21.2) identifies the
+    fixed point.  The scan through \(p\le200000\) found mean \(z_p=1.00801\),
+    maximum \(12\), and only the two odd fibres \(11,3137\).  These are
+    strong data for (20.1), not a proof.
+
+36. The strongest present unconditional prime average obtained from the
+    continuant theorem is
+    \[
+      \sum_{p\le x}z_p\ll x^{5/3}/\log x.
+    \]
+    Averaging root counts of each fixed gap polynomial can improve this
+    exponent only with uniformity for a growing family; even \(O(1)\)
+    average roots for every gap through \(p^{1/2}\) yields only the
+    \(x^{3/2+o(1)}/\log x\) scale.  The conjectural bounded mean requires
+    compression of the whole fibre, not a refinement of the one-gap
+    ledger.
+
+37. The all-\(n\) ``L2 reduction'' is valid only after strengthening L2
+    from the top-half assertion \(K_1(n)=o(n/\log n)\) to the family
+    \[
+      K_q(n)=o_q(n/\log n)
+      \quad\text{for every fixed }q.
+    \]
+    The valuation cap makes the subsequent \(\eta\)-truncation uniform,
+    but it does not derive the \(q\ge2\) hypotheses from \(q=1\).
+    Consequently the quotientwise L2 family is a clean sufficient
+    interface, while Fable's original L2 alone is insufficient.
+
+38. The reduced denominator defect is itself an exact form of the hard
+    channel.  If \(D_n=d_n^3\), \(P_n=D_na_n\), and \(a_n=A_n/C_n\) is
+    reduced, then
+    \[
+      \frac{D_n}{C_n}=\gcd(D_n,P_n).
+    \]
+    For \(p>\sqrt n\), \(n=qp+r\),
+    \[
+      p\mid D_n/C_n\Longleftrightarrow p\mid a_qb_r,
+    \]
+    and in the top half this is equivalent to \(p\mid b_n\).  Thus even a
+    universal proof of \(\gcd(A_n,b_n)=1\) would only convert P3.2 into the
+    same unresolved pointwise denominator-defect estimate; it would not
+    remove the cross-prime obstruction.
+
 Thus Routes A and B are closed **as presently formulated**. This is not a
 disproof of `log G_n=o(n)`. It identifies the exact missing ingredient:
 cross-prime, Apéry-specific Archimedean/p-adic coupling not already contained
@@ -6682,3 +6826,552 @@ actual-state-specific: cancellation in (18.69)--(18.70) as both \(p\) and
 bounded-conductor sheaf; standard large sieves average the external
 integer \(n\).  Neither matches the supremum and moving-modulus structure
 of (18.66).
+
+## 19. Synchronization with the two uisai2 research sessions
+
+The two live P3.2 sessions on uisai2 were audited read-only on
+2026-07-30.  Both effective sessions, `zinan:0` (`dm`) and `zinan:3`
+(`family`), were running `gpt-5.6-sol max`.  The separate `dm-` Claude
+window had only repeated HTTP 529/500 failures and no usable new result.
+The uisai2 notes live in the separate `zinan-memory` repository, so the
+proof-relevant conclusions are recorded here rather than treating that
+repository as the canonical Ramanujan Challenge checkout.
+
+### 19.1 CFVZ, marked traces, and growing exterior systems
+
+The `dm` session gives a useful strengthening of the Route B no-go.  For
+the CFVZ factorization
+\[
+ A_p(t)=g_p(t)B_p(t)^2\quad\text{in }\mathbb F_p[t],
+\]
+the coefficient map from \(B_p\) to \(A_p\) is triangular with diagonal
+2.  After adjoining all formal Hensel grades, reflected quotient digits,
+differentiated recurrence rows, and the moving-prefix forcing row, the
+local target algebra still has the form
+\[
+ \mathcal A_{p,r}^{(Q,J)}
+ \simeq(\mathbb Z/p^Q\mathbb Z)[X],
+ \qquad
+ {\rm SNF}=\operatorname {diag}(1,\ldots,1,0).
+\tag{19.1}
+\]
+Here \(X=b_r/p\) is one cyclic nuisance coordinate.  The apparent new
+digits are its successive digits, not independent target equations.  The
+moving-prefix forcing coefficient is a unit; the actual target
+\((n,p,r)=(20,17,3)\) has nonzero forcing residue \(2\bmod17\).  Thus the
+entire adjacent CFVZ/Hensel tower remains a graph over one free coordinate.
+It cannot supply the growing defect codimension requested in Route B.
+
+A marked cyclotomic trace does produce, for each individual candidate
+prime, a rational integer \(G_{p,d,e}\) of height \(O(\log n)\) such that
+\[
+ p\mid G_{p,d,e}\quad\Longleftrightarrow\quad p\mid b_{n-p}.
+\tag{19.2}
+\]
+This is genuinely prime-selective locally.  It does not batch: retaining
+the marked prime above \(p\) makes the scalar depend on \(p\), and rational
+CRT recombination has full candidate-primorial cost.  After normalizing the
+first residual trace, its centered CRT batch is exactly the class
+\[
+ b_n\bmod \prod_{n/2<p<n}p,
+\tag{19.3}
+\]
+so its gcd with the candidate primorial is the original target radical.
+This is an especially clean instance of the Route B quantifier
+obstruction: a cheap private coordinate for every prime does not give one
+cheap common coordinate.
+
+The rank-12 exterior construction reaches the same boundary.  An
+uncrossed top prime sees the two-coordinate state
+\[
+ (b_r,\eta_r),\qquad
+ \eta_r=[z^r]\,B(z)\log(1+z),
+\tag{19.4}
+\]
+and targetness forces only \(b_r=0\).  A window
+\(h=o(n/\log n)\) either captures only the \(o(n)\)-weight boundary band
+or requires the false implication \(b_r=0\Rightarrow\eta_r=0\).  Reaching
+below every candidate needs a linear window, after which the full exterior
+Fitting ideal returns the original prime-free gcd.  Hence neither growing
+rank nor formal precision by itself escapes the Casoratian/defect
+saturation.
+
+### 19.2 A genuine universal second-layer congruence
+
+The `family` session proved the most substantial new positive identity.
+Set
+\[
+ \Theta_n=
+ \sum_{0\le k\le\lfloor(n-1)/3\rfloor}
+ \binom nk^2\binom{n+k}{k}^2
+\tag{19.5}
+\]
+and
+\[
+ U_n=\prod_{\substack{n/2<p\le n\\p\ge7}}p.
+\]
+For every such prime,
+\[
+ b_n\equiv5\Theta_n\pmod {p^2},
+\qquad\text{hence}\qquad
+ U_n^2\mid b_n-5\Theta_n.
+\tag{19.6}
+\]
+The congruence was independently rechecked locally through \(n=300\).
+It gives the exact top-half support identity
+\[
+ p\mid b_n\quad\Longleftrightarrow\quad p\mid\Theta_n
+ \qquad(n/2<p\le n),
+\tag{19.7}
+\]
+and therefore a new holonomic-gcd interface
+\[
+ \prod_{p\in T_n}p
+ =\operatorname {rad}_{(n/2,n]}
+   \gcd(b_n,\Theta_n).
+\tag{19.8}
+\]
+
+This does not yet give a subexponential carrier.  The congruence (19.6)
+holds for every candidate prime, not only for a target, and
+\[
+ \log\left|\frac{b_n-5\Theta_n}{U_n^2}\right|
+ =\bigl(\log(17+12\sqrt2)-1+o(1)\bigr)n.
+\tag{19.9}
+\]
+The divided value is not target-divisible: at
+\((n,p,r)=(20,17,3)\),
+\[
+ \frac{b_n-5\Theta_n}{p^2}\equiv3\pmod p.
+\tag{19.10}
+\]
+Fixed-order neighboring determinants retain the same universal
+candidate-square content and lose the target factor after saturation.
+The session is testing a growing collection of third divided digits; the
+natural cutoffs already have many target counterexamples, so no theorem
+has emerged from that experiment.
+
+The same session also supplied a corrected proof of
+\(|Z_p|=O(p^{2/3})\) using nonzero gap continuants.  This agrees with
+Section 10 and remains a one-characteristic row bound; it does not control
+the moving column at a fixed \(n\).
+
+### 19.3 Net effect on the live frontier
+
+The uisai2 work is useful, but it does not close P3.2:
+
+1. (19.1)--(19.4) close broad CFVZ, marked-trace, Hensel-jet, and growing
+   exterior variants of Route B unless an identity outside their proved
+   graph modules is found.
+2. (19.6) is a real new second-layer congruence and (19.8) is a clean new
+   exact carrier, but its known height remains linear.
+3. Neither session proves the fixed-\(q\) pair energy (18.19c) or the
+   two-characteristic dispersion estimate (18.66).  Those remain the two
+   honest positive interfaces.
+
+## 20. Audit of the proposed \(L^1+L^2\) decomposition
+
+A subsequent handoff proposed splitting the top-half problem into
+\[
+ {\rm (L1)}\qquad
+ \sum_{p\le x}z_p\ll\pi(x)
+\tag{20.1}
+\]
+and
+\[
+ {\rm (L2)}\qquad
+ K_n=o(n/\log n)\quad\text{pointwise},
+\tag{20.2}
+\]
+where \(z_p=|Z_p|\) and \(K_n=|T_n|\).  This is useful bookkeeping, but
+not a new reduction of the hard pointwise assertion.
+
+Indeed,
+\[
+ \sum_{N<n\le2N}K_n
+ \le\sum_{p\le2N}z_p.
+\tag{20.3}
+\]
+Thus (20.1) gives a shell first moment \(O(N/\log N)\), average
+\(O(1/\log N)\), and
+\[
+ \#\{N<n\le2N:K_n\ge\varepsilon N/\log N\}
+ =O(1/\varepsilon).
+\tag{20.4}
+\]
+The missing step that this finite exceptional set is empty is exactly
+(20.2), hence exactly the top-half pointwise theorem.
+
+There is a sharp abstract obstruction.  Choose rapidly increasing \(N_j\)
+whose intervals \((N_j/2,N_j]\) are disjoint.  For every prime \(p\) in
+that interval, put \(N_j-p\) and its reflected mate into \(Z_p\), with no
+other optional zeros.  Then \(z_p\le2\), so (20.1) holds even pointwise,
+but
+\[
+ K_{N_j}=\pi(N_j)-\pi(N_j/2)
+ \sim\frac{N_j}{2\log N_j}.
+\tag{20.5}
+\]
+The spikes have disjoint prime support.  Therefore a statement about
+shared primes or spacing between two spikes cannot exclude one sparse
+spike in every dyadic shell.
+
+The proposed Hasse--Witt Mellin formula also requires calibration.  If
+\[
+ A_p(t)=\sum_{0\le j<p}b_jt^j,
+\]
+then for \(1\le r\le p-2\),
+\[
+ b_r\equiv-\sum_{t\in\mathbb F_p^\times}A_p(t)t^{-r}\pmod p
+\tag{20.6}
+\]
+is the elementary power-sum coefficient-extraction identity.  Identifying
+\(A_p\) with a Hasse--Witt polynomial supplies geometric meaning, but not
+an estimate for how many coefficient-extraction sums vanish modulo their
+varying characteristic.  To prove (20.1) from (20.6) one still needs a
+precise integral or \(p\)-adic trace object, an average-over-\(p\) moment
+theorem, and a valid passage from that moment to divisibility by \(p\).
+Ordinary \(\ell\)-adic equidistribution of fiber traces does not supply
+these steps.
+
+Finally, a \(p^2\) congruence for a full transfer matrix is not, merely by
+being matrix-valued, the two-characteristic relation in (18.66).  The
+determinant is prescribed, the columns obey the same order-two recurrence,
+and the all-grade CFVZ calculation (19.1) leaves one cyclic target
+coordinate.  Higher precision within one characteristic must first
+produce an explicit second target-selective invariant; even then it must
+be batched across primes at sublinear height.  No such invariant is
+currently known.  Similarly, geometric \(\mathrm{SL}_2\) monodromy of the
+Picard--Fuchs family does not imply Haar equidistribution for the
+variable-length coefficient-index walk
+\(\Phi_r=M_r\cdots M_1\).
+
+The honest value of (20.1) is therefore as a potentially strong average
+theorem.  It would reduce possible counterexamples to \(O_\varepsilon(1)\)
+per shell, but it does not replace either the fixed-\(q\) pair-energy
+target or the pointwise two-characteristic dispersion target.
+
+The computation through all \(17982\) primes \(p\le200000\) gives
+\[
+ \frac1{\pi(200000)}\sum_{p\le200000}z_p=1.00801,
+ \qquad\max z_p=12.
+\tag{20.7}
+\]
+The dyadic means show no visible upward drift.  This is unusually clean
+evidence for (20.1), but the proved continuant bound gives only
+\[
+ \sum_{p\le x}z_p\ll\frac{x^{5/3}}{\log x}.
+\tag{20.8}
+\]
+Indeed, if \(\rho_h(p)\) denotes the number of roots modulo \(p\) of the
+gap continuant \(N_h\), the packing proof gives
+\[
+ z_p\le1+\frac pH+\sum_{2\le h\le H}\rho_h(p).
+\tag{20.9}
+\]
+The known degree estimate sums to \(O(H^2)\), optimized at
+\(H=p^{1/3}\).  A uniform growing-family estimate with \(O(1)\) average
+roots per \(h\le p^{1/2}\) improves (20.8) only to the \(x^{3/2+o(1)}/
+\log x\) scale.  Reaching (20.1) requires a global constraint on an
+entire zero fibre, not separate Chebotarev estimates for each gap.
+
+## 21. The modular central zero: exact structure and exact logical scope
+
+Let \(n=p+r\) with \(0\le r<p\).  The fixed recurrence factor satisfies
+\[
+ p\mid 2n+1
+ \quad\Longleftrightarrow\quad
+ p\mid 2r+1
+ \quad\Longleftrightarrow\quad
+ r=\frac{p-1}{2}.
+\tag{21.1}
+\]
+In the last case \(n=(3p-1)/2\).  Beukers' congruence, subsequently placed
+in the hypergeometric modular framework of Ahlgren--Ono, is
+\[
+ b_{(p-1)/2}\equiv a_p(f)\pmod p,
+ \qquad
+ f(z)=\eta(2z)^4\eta(4z)^4.
+\tag{21.2}
+\]
+Consequently the targets caught by the factor \(2n+1\) are exactly the
+central nonordinary targets.  The two scan rows
+\[
+ (n,p,r)=(16,11,5),\qquad(4705,3137,1568)
+\tag{21.3}
+\]
+match the two primes \(11,3137\) for which the modular coefficient was
+found divisible by \(p\) in the stated finite range.  This is an exact
+explanation of the coincidence, not a proof that these are the only such
+primes.
+
+The same two inputs give the exact parity identity
+\[
+ z_p\equiv{\bf1}_{p\mid a_p(f)}\pmod2.
+\tag{21.4}
+\]
+This is unconditional for the primes in the congruence range; the finite
+scan merely checks it.
+
+The consequence drawn in the handoff must nevertheless be weakened.
+Writing
+\[
+ z_p=|Z_p|
+ =2\,\#\{\text{noncentral reflected zero pairs}\}
+  +{\bf1}_{p\mid a_p(f)},
+\tag{21.5}
+\]
+a bound \(z_p\le C\) is compatible with an arbitrary set of nonordinary
+primes: it simply allows the last summand to be zero or one.  Similarly,
+\[
+ \sum_{p\le x}{\bf1}_{p\mid a_p(f)}\le\pi(x)
+\tag{21.6}
+\]
+is already enough for its contribution to (20.1).  Neither a
+classification nor a density theorem for nonordinary primes is needed for
+these upper bounds.
+
+Thus (21.2) rules out any argument asserting eventual central
+nonvanishing, any claim that the factor \(2n+1\) covers all targets, and
+any exact classification of empty zero fibres which ignores the modular
+event.  It does not rule out a constant bound for the noncentral pairs,
+and it does not make an average route logically unique.  In particular,
+the statement that Hypothesis \(z_p=O(1)\) ``contains the nonordinary-prime
+problem as a special case'' confuses an upper bound with an exact
+classification.
+
+References for (21.2) are F. Beukers, *Another congruence for the Apéry
+numbers*, J. Number Theory 25 (1987), 201--210, and S. Ahlgren--K. Ono,
+*A Gaussian hypergeometric series evaluation and Apéry number
+congruences*, J. reine angew. Math. 518 (2000), 187--212.
+
+## 22. Latest uisai2 file-channel results
+
+Only the `dm` and `family` session files were synchronized for this
+update.
+
+### 22.1 Two Laurent models remain selectively rank one
+
+The `dm` session compares two primitive Laurent periods
+\(\Lambda_1,\Lambda_2\), both with
+\(\operatorname {CT}\Lambda_i^m=b_m\).  Their natural fixed-\(n\)
+prefixes \(S_n,D_n\) satisfy, for every top candidate,
+\[
+ S_n\equiv D_n\equiv b_{n-p}\pmod p,
+ \qquad b_n\equiv5S_n\equiv5D_n\pmod p,
+\tag{22.1}
+\]
+and
+\[
+ U_n\mid D_n-S_n,\qquad
+ {\rm SNF}(S_n,D_n)={\rm diag}(1,U_n)
+\tag{22.2}
+\]
+in the indicated cross-model basis.  The primitive quotient has
+\[
+ \log\frac{D_n-S_n}{U_n}
+   =(\log16-\tfrac12+o(1))n.
+\tag{22.3}
+\]
+The explicit birational mutation commutator adds a nonzero row but its
+last primitive invariant is a unit at the target
+\((20,17,3)\).  Hence the second model produces full-candidate content,
+not a second target coordinate.
+
+The same session corrected the selected Kummer-trace lift.  After the
+necessary normalization, its second digit is related to the first Witt
+coordinates by an invertible coordinate change (determinant \(-10\) for
+\(p>5\)).  The target rows at \(p=17,r=3\) and the central
+\(p=11,r=5\) have nonzero divided defects.  Thus the first divided marked
+trace remains a free coordinate rather than a target zero.
+
+### 22.2 A universal third layer on one quarter of the top band
+
+The `family` session gives a genuine new congruence.  Put
+\[
+ T_n=\sum_{0\le k\le\lfloor(n-1)/2\rfloor}
+       \binom nk^2\binom{n+k}k^2.
+\tag{22.4}
+\]
+For every prime \(p\ge7\) in the top half,
+\[
+ b_n\equiv5T_n\pmod {p^2},
+\tag{22.5}
+\]
+and, in the lower subband,
+\[
+ b_n\equiv5T_n\pmod {p^3}
+ \qquad
+ \left(\frac n2<p\le\frac{3n+1}{4}\right).
+\tag{22.6}
+\]
+If \(U_n\) is the full top candidate product and \(V_n\) the subband
+product, then
+\[
+ U_n^2V_n\mid b_n-5T_n.
+\tag{22.7}
+\]
+The proof uses the complete low block and the Apéry WZ certificate; the
+cutoff beyond both Kummer thresholds contributes \(p^4\).  This harvests
+one extra quarter-unit of universal prime-number-theorem content.
+
+It remains nonselective.  The residual height bound is
+\[
+ \log\left|\frac{b_n-5T_n}{U_n^2V_n}\right|
+ \le\bigl(\log(17+12\sqrt2)-\tfrac54+o(1)\bigr)n,
+\tag{22.8}
+\]
+and the actual central target \((16,11,5)\) has a nonzero fourth divided
+digit.  Thus (22.6) is positive filtration progress but not a proof of
+the target radical bound.
+
+## 23. Full transfer frames and the remaining local scalar
+
+For
+\[
+ M_k=
+ \begin{pmatrix}
+ c_k/(k+1)^3&-k^3/(k+1)^3\\
+ 1&0
+ \end{pmatrix},
+ \qquad
+ c_k=(2k+1)(17k^2+17k+5),
+\tag{23.1}
+\]
+one has \(\det M_k=k^3/(k+1)^3\).  The integral block
+\[
+ L_k=(k+1)^3M_k
+\tag{23.2}
+\]
+at the singular crossing is
+\[
+ L_{p-1}\equiv
+ \begin{pmatrix}-5&1\\0&0\end{pmatrix}\pmod p.
+\tag{23.3}
+\]
+It therefore has rank one.  This is the matrix form of the scalar Lucas
+collapse.
+
+More precisely,
+\[
+ \Theta_r=\Phi_{p+r}\Phi_p^{-1}
+ \quad\Longrightarrow\quad
+ \det\Theta_r=\frac{p^3}{(p+r)^3}.
+\tag{23.4}
+\]
+At a target, the first column is primitive because consecutive Apéry
+zeros are excluded.  The local Smith valuations are therefore exactly
+\((0,3)\).  It follows that the frame is cyclic modulo \(p^s\) for
+\(s\le3\).
+
+On \(p\mid b_r\), write
+\[
+ \xi_r=\frac{b_r}{p}+D_r\pmod p.
+\]
+The verified scalar lift gives
+\[
+ \frac{b_{p+r}}p\equiv5\xi_r,\qquad
+ \frac{p^3a_{p+r}}p\equiv6\xi_r\pmod p.
+\tag{23.5}
+\]
+Every subsequent step before the next singular row is invertible modulo
+\(p\), so neighboring first-layer coordinates are affine functions of
+the same \(\xi_r\).  The Wronskian is the determinant of the same transfer
+product, not another independent row.
+
+There is also a precise limitation on this no-go.  Right-multiplying a
+local fundamental frame by \(I+ptE_{21}\) preserves its recurrence,
+determinant, and reduction modulo \(p\), while varying a divided
+coordinate.  This proves that the listed **local** identities cannot fix
+\(\xi_r\).  The deformation changes the distinguished initial frame, so
+it does not prove that the actual Apéry connection data can never supply
+a new equation.  In fact the second Smith direction first becomes visible
+modulo \(p^4\), where it is represented by the companion column
+\[
+ -p^3\begin{pmatrix}a_r/6\\a_{r-1}/6\end{pmatrix}\pmod {p^4}.
+\tag{23.6}
+\]
+Thus the determinant argument closes precisions at most three, not every
+finite lift.  The new fourth-grade direction is one-characteristic
+companion data; it still needs both a target-selective implication and a
+cross-characteristic batching mechanism to address (18.66).
+
+## 24. Reduced companion numerators and the double-Casoratian test
+
+Write
+\[
+ a_n=\frac{A_n}{C_n},\qquad
+ \gcd(A_n,C_n)=1,\quad C_n>0.
+\tag{24.1}
+\]
+The identity
+\[
+ G_n=\frac{d_n^3}{C_n}\gcd(A_n,b_n)
+\tag{24.2}
+\]
+is immediate.  Exact recurrence computation found
+\[
+ \gcd(A_n,b_n)=1\qquad(0\le n\le10000).
+\tag{24.3}
+\]
+If (24.3) held for all \(n\), P3.2 would become the lower-denominator
+statement
+\[
+ \log(d_n^3/C_n)=o(n).
+\tag{24.4}
+\]
+Neither assertion is presently proved.
+
+There is an exact denominator identity which shows that this reformulation
+does not simplify the hard support.  Put \(D_n=d_n^3\) and
+\(P_n=D_na_n\).  Since \(C_n\mid D_n\),
+\[
+ \frac{D_n}{C_n}=\gcd(D_n,P_n),
+\qquad
+ v_p(C_n)=3\lfloor\log_pn\rfloor
+  -\min\{3\lfloor\log_pn\rfloor,v_p(P_n)\}.
+\tag{24.5}
+\]
+For \(p>\sqrt n\), write \(n=qp+r\).  The block law gives
+\[
+ p\mid D_n/C_n
+ \quad\Longleftrightarrow\quad
+ p\mid a_qb_r.
+\tag{24.6}
+\]
+In particular, for \(n/2<p\le n\) and \(p\ge7\),
+\[
+ p\mid D_n/C_n
+ \quad\Longleftrightarrow\quad
+ p\mid b_{n-p}
+ \quad\Longleftrightarrow\quad
+ p\mid b_n.
+\tag{24.7}
+\]
+Hence (24.4) already contains the top-half radical theorem.  Proving
+coprimality in (24.3) would identify \(G_n\) with this denominator defect,
+but would not prove that the defect is subexponential.
+
+The adjacent Casoratians give a tempting necessary condition.  Clearing
+the reduced denominators in
+\[
+ a_nb_{n-1}-a_{n-1}b_n=\frac6{n^3}
+\]
+shows that \(g_n=\gcd(A_n,b_n)\) divides both
+\[
+ \Delta_n=\frac{6C_{n-1}C_n}{n^3},
+ \qquad
+ \Delta_{n+1}=\frac{6C_nC_{n+1}}{(n+1)^3}.
+\tag{24.8}
+\]
+Hence
+\[
+ g_n\mid\gcd(b_n,\Delta_n,\Delta_{n+1}).
+\tag{24.9}
+\]
+The right side is far from one.  An exact scan for \(1\le n<2000\)
+found 1952 nontrivial values; at \(n=20\) it retains the prime \(17\).
+Thus two neighboring determinants do not explain (24.3).  A proof would
+have to use how the distinguished companion numerator selects a primitive
+line inside this much larger denominator-supported carrier, rather than
+another rank-two determinant alone.
