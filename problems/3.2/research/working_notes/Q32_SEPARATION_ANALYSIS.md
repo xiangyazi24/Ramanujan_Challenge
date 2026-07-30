@@ -2822,6 +2822,27 @@ standard maximal-order and mean estimates are
  \sum_{\substack{h\le H\\2\mid h}}{\mathfrak S}(h)\ll H.
 \tag{PC.13}
 \]
+For completeness, the local sieve density at an odd prime \(q\) is
+\(\nu_q=1\) when \(q\mid h\) and \(\nu_q=2\) otherwise.  Thus
+\[
+ \prod_{q\le z}\left(1-\frac{\nu_q}{q}\right)
+ \asymp
+ \frac{{\mathfrak S}(h)}{\log^2z}.
+\]
+The interval remainder for a squarefree sieve modulus is
+\(O(\prod_{q\mid d}\nu_q)\), so the standard Selberg weights with
+\(z=n^{1/4}(\log n)^{-B}\) give (PC.12), uniformly in the stated
+logarithmic range.  The maximal-order estimate in (PC.13) follows by
+putting the smallest possible primes into
+\[
+ {\mathfrak S}(h)=
+ \prod_{\substack{q\mid h\\q>2}}
+ \left(1+\frac1{q-2}\right).
+\]
+For the mean estimate, expand this product over squarefree divisors of
+\(h\); after summing multiples of each divisor, the remaining Euler
+product converges because its \(q\)-factor differs from one by
+\(O(q^{-2})\).
 
 This estimate has an exact integer-certificate interpretation.  Define
 \[
