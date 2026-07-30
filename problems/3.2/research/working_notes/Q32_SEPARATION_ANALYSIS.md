@@ -5045,3 +5045,217 @@ live in a direct CRT product.  To turn (16.16) into P3.2 one would need a
 new theorem excluding linearly many simultaneous large-prime holes at one
 coefficient index; neither prefix maximality (16.9) nor a standard
 \(G\)-function denominator bound supplies that pointwise assertion.
+
+### 16.3 The three-coefficient hole carrier
+
+The pattern (16.16) can be packaged as one integer which cancels the
+denominator support common to all three coefficients.  Define
+\[
+ \mathfrak d_n=
+ \frac{\gcd(q_{n-1},q_{n+1})}
+      {\gcd(q_{n-1},q_n,q_{n+1})}.
+\tag{16.17}
+\]
+Equivalently, for every prime \(\ell\),
+\[
+ v_\ell(\mathfrak d_n)=
+ \max\{0,\min(v_\ell(q_{n-1}),v_\ell(q_{n+1}))
+                   -v_\ell(q_n)\}.
+\tag{16.18}
+\]
+Thus \(\mathfrak d_n\) is the positive local denominator curvature at
+the middle coefficient.
+
+For \(n>10\), it has the exact top-half support
+\[
+ \boxed{
+ \operatorname {rad}_{(n/2,n]}\mathfrak d_n
+ =\prod_{p\in T_n}p.
+ }
+\tag{16.19}
+\]
+Indeed, write \(n=p+r\).  The three central binomial coefficients all
+contain \(p\) exactly once precisely in the interior range
+\(1\le r\le p-3\).  On this range Lucas gives
+\[
+ v_p(q_{n+j})=
+ \begin{cases}
+ 0,&p\mid b_{r+j},\\
+ 1,&p\nmid b_{r+j},
+ \end{cases}
+ \qquad j=-1,0,1.
+\tag{16.20}
+\]
+If \(p\mid b_r\), nonconsecutivity gives the pattern \(1,0,1\), hence
+\(p\mid\mathfrak d_n\).  Conversely, (16.18) can be positive only for
+that pattern, and therefore forces \(p\mid b_r\).  The three excluded
+endpoint residues are nontargets, so no boundary exception remains.
+
+This is a more selective characteristic-zero carrier than \(C_n\):
+candidate primes which occur in all three reduced denominators cancel
+from (16.17).  Its exact values are strikingly small.  Through
+\(n=10{,}000\), its largest bit length is \(45\), at \(n=6792\);
+on \(5001\le n<10{,}000\),
+\[
+ \max\frac{\log\mathfrak d_n}{n}
+ =0.0045749844\ldots .
+\tag{16.21}
+\]
+This is finite evidence only.  Formula (16.19) means that a proof of
+\[
+ \log\mathfrak d_n=o(n)
+\tag{16.22}
+\]
+would settle the top-half branch, but no denominator-curvature theorem
+for rational \(G\)-function coefficients currently gives (16.22).
+The recurrence permits the two polar terms of valuation \(-1\) to
+cancel and produce a \(p\)-integral middle term; after primitive
+numerator-denominator clearing this is again the congruence
+\(p\mid b_r\), not a polynomial singular-factor condition.
+
+The exact reproducer checks the hypergeometric coefficient ratio, the
+residue-section prime anchors, and (16.19):
+
+```text
+../scripts/q32_inverse_denominator_audit.py --limit 2500
+```
+
+Its default audit passes 219,903 candidate incidences and finds 248
+exact holes.
+
+## 17. Higher tensor contraction: an exact bounded-class no-go
+
+There is a precise algebraic conservation law behind the failure of
+higher Casoratian and Plücker forms on a pure-cross pair.  It is useful
+because it closes all bounded-degree constructions whose smallness is
+forced only by the universal dominant rank-one limit.
+
+Use the top-half notation (PC.1): \(p<\ell=p+h\),
+\[
+ p\mid b_{s+h},\qquad \ell\mid b_s,
+\]
+and put
+\[
+ (A,B)=(a_s,b_s),\qquad(C,D)=(a_{s+h},b_{s+h}),
+ \qquad\Delta=AD-BC.
+\tag{17.1}
+\]
+On the pure-cross locus,
+\[
+\begin{array}{c|c|c}
+ &\bmod\ell&\bmod p\\ \hline
+ B&0&\ne0\\
+ D&\ne0&0\\
+ \Delta&AD\ne0&-BC\ne0.
+\end{array}
+\tag{17.2}
+\]
+After the standard gap-continuant denominator clearing, an integral
+multiple \(\delta_{s,h}\) of \(\Delta\) has
+\[
+ \log|\delta_{s,h}|=O(h\log n),
+\tag{17.3}
+\]
+but (17.2) says that it is a unit in both target characteristics.
+
+The first primitive cross-divisible contraction occurs in degree three:
+\[
+ \boxed{
+ F_3=\delta_{s,h}\{pB-\ell D\},\qquad p\ell\mid F_3.
+ }
+\tag{17.4}
+\]
+Writing \(B=\ell\beta\), \(D=p\gamma\) proves the divisibility.  The
+coefficient pair \((p,-\ell)\) is primitive, so the factor \(p\ell\)
+has not simply been inserted into every coefficient.  Nevertheless
+\(F_3\) is exponentially large in the base index.  The elementary
+monotonic estimate \(b_{k+1}\ge5b_k\) gives
+\[
+ |pB-\ell D|
+ =\ell D-pB
+ \ge(\ell5^h-p)B,
+\tag{17.5}
+\]
+so one dominant Apéry slot remains after the single determinant
+contraction.  For completeness, the estimate follows inductively from
+\(b_k\ge b_{k-1}\) and
+\[
+ P(k)-k^3-5(k+1)^3
+ =28k^3+36k^2+12k\ge0.
+\]
+
+The algebraic reason persists in every degree.  Work in
+\[
+ R=\mathbb Z[A,B,C,D].
+\]
+Formal divisibility under the two pure-cross specializations is the
+ideal
+\[
+ {\cal C}_{p,\ell}
+ =(\ell,B)\cap(p,D)
+ =(\ell,B)(p,D).
+\tag{17.6}
+\]
+Universal dominant-diagonal cancellation is divisibility by
+\[
+ \Delta=AD-BC,
+\]
+the defining equation of the rank-one \(2\times2\) matrix locus.
+Modulo \((\ell,B)\), \(\Delta\) becomes \(AD\); modulo \((p,D)\), it
+becomes \(-BC\).  Each is a non-zero-divisor in the corresponding
+polynomial domain.  Therefore, for every \(m\ge0\),
+\[
+ \boxed{
+ ({\cal C}_{p,\ell}:\Delta^m)={\cal C}_{p,\ell}.
+ }
+\tag{17.7}
+\]
+
+Suppose a homogeneous tensor form has been reduced to the two endpoint
+states, all recurrence-only Smith content has been saturated, and the
+largest completely contracted factor is \(\Delta^m\):
+\[
+ F=\Delta^mG.
+\tag{17.8}
+\]
+Equation (17.7) says that pure-cross divisibility must still be carried
+by \(G\).  If \(\deg G>0\), at least one unpaired dominant slot remains.
+If \(\deg G=0\), then
+\[
+ {\cal C}_{p,\ell}\cap\mathbb Z=p\ell\,\mathbb Z,
+\tag{17.9}
+\]
+so the fully contracted coefficient already has content \(p\ell\).
+For example,
+\[
+ \Delta BD
+\tag{17.10}
+\]
+is a primitive cross-divisible quartic but retains two dominant slots,
+whereas the completely contracted quartic \(\Delta^2\) is a unit modulo
+both primes; its cross-divisible line is only
+\[
+ p\ell\,\mathbb Z\Delta^2.
+\tag{17.11}
+\]
+
+Nearby states and additional Plücker brackets do not enlarge the
+completely contracted algebra.  Regular recurrence transport reduces
+every nearby state to the same two endpoint states, and every bracket
+is a recurrence scalar times \(\Delta\).  Plücker relations only relate
+those scalars.  Singular-step factors must first be divided out when
+they occur for every initial state; after this primitive saturation they
+do not become target-selective.
+
+Hence bounded-degree higher tensors obey the exact conservation law:
+
+> Primitive pure-cross selectivity leaves a dominant tensor slot;
+> complete universal dominant cancellation leaves coefficient content
+> \(p\ell\).
+
+This no-go has a deliberate scope boundary.  It does not cover an
+identity whose leading cancellation uses the distinguished Apéry initial
+state in a way not valid on the full rank-one diagonal, a genuinely new
+opposite-quotient equation, or a nonlocal arithmetic relation.  It does
+close the proposal that degree three, degree four, or further universal
+symmetric-power/Plücker contractions alone will repair Route A.
