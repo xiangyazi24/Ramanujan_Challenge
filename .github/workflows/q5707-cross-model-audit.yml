@@ -23,6 +23,8 @@ jobs:
         run: |
           set +e
           mkdir -p drops
+          sed -i 's/from math import comb, gcd, log, log10/from math import comb, gcd, isqrt, log, log10/' problems/3.2/research/scripts/q5707_cross_model_shell.py
+          sed -i 's/int(n\*\*0.5)/isqrt(n)/g' problems/3.2/research/scripts/q5707_cross_model_shell.py
           python3 problems/3.2/research/scripts/q5707_cross_model_shell.py > drops/Q5707-audit-29a6d969.txt 2>&1
           echo $? > drops/Q5707-audit-29a6d969.status
           exit 0
