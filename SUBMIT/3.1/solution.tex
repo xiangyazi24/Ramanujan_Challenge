@@ -298,12 +298,42 @@ the computed value could not have reconstructed to a rational.
 \end{remark}
 
 \begin{lemma}[Orientation signs]\label{lem:signs}
-The tetrahedron signs $\varepsilon_j$ are determined by the combinatorics of the
-ideal triangulation and are therefore the same at every embedding. At the
-complete structure all four tetrahedra of the $7_2$ triangulation are positively
-oriented, so $\varepsilon_j=+1$ for all $j$, and the regulator is the unsigned
-sum $\sum_j D(\sigma(z_j))$.
+For the $7_2$ triangulation used here, $\varepsilon_j=+1$ for all four
+tetrahedra. In particular $\varepsilon_V=\varepsilon_W$, and the regulator is the
+\emph{unsigned} sum $\sum_j D(\sigma(z_j))$.
 \end{lemma}
+
+\begin{proof}
+The sign $\varepsilon_j$ is the orientation of tetrahedron $j$ relative to the
+orientation of the manifold. It is combinatorial data fixed by the oriented
+triangulation, and it does \emph{not} change along the deformation arc --- in
+particular it must not be read off the sign of $\mathrm{Im}\,z_j$, which
+degenerates exactly where the tetrahedra become flat, which is where our
+endpoints sit.
+
+SnapPy produces oriented ideal triangulations for orientable manifolds, so
+$\varepsilon_j=+1$ uniformly. This is confirmed by the volume identity
+$\Vol(M)=\sum_j\varepsilon_j D(z_j)$ at the complete structure: the
+\emph{all-plus} sum reproduces the volume,
+\[
+\sum_{j=1}^{4}D(z_j)=3.331744231641\ldots,\qquad
+\Vol(7_2)=3.331744231600\ldots,
+\]
+agreeing to $4\times10^{-11}$, and likewise for the $(-1/2)$-filling,
+$\sum_j D(z_j)=2.582170632117\ldots$ against
+$\Vol(S^3_{-1/2}(7_2))=2.582170632120\ldots$, agreeing to $3\times10^{-12}$. A
+single sign flip would change the all-plus sum by $2D(z_j)\ge0.79$, so no
+$\varepsilon_j$ can be $-1$. See \texttt{scripts/orient\_signs.py}.
+\end{proof}
+
+\begin{remark}
+This step is worth isolating because it is the one place where the shape identity
+$W=1/(1-\bar V)$ is \emph{not} enough. That identity gives $D(V)+D(W)=0$ for the
+unsigned values; in the signed sum one gets
+$(\varepsilon_V-\varepsilon_W)D(V)$, so the cancellation genuinely requires
+$\varepsilon_V=\varepsilon_W$ --- a combinatorial fact about the triangulation,
+not a dilogarithm identity.
+\end{remark}
 
 \begin{theorem}[Torsion]\label{thm:torsion}
 The extended Bloch classes $\xi_\alpha$ and $\xi_\beta$ of the two endpoint
@@ -459,7 +489,7 @@ All computations are in \texttt{scripts/}; each is standalone
 \texttt{mechanism.py} & Lemmas~\ref{lem:TU}--\ref{lem:VW} at every embedding\\
 \texttt{filling\_term.py} & Lemma~\ref{lem:fill}: core holonomy along the arc\\
 \texttt{shapefield.sage} & Lemma~\ref{lem:shapefield}: the square-root certificates\\
-\texttt{orient.py} & Lemma~\ref{lem:signs}: SnapPy triangulation, four positive tetrahedra\\
+\texttt{orient\_signs.py} & Lemma~\ref{lem:signs}: all-plus sum reproduces the volume\\
 \texttt{alpha\_component.py} & no embedding realises $\Vol(S^3_{-1/2}(7_2))$\\
 \texttt{disc\_test.py} & non-discreteness (cyclotomic trace test)\\
 \texttt{w2bound.sage} & Proposition~\ref{prop:denom}: $w_2=120,408$\\
