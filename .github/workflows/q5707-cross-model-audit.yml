@@ -1,4 +1,4 @@
-# Trigger file for the main-branch Q5707 PR audit.
+# Trigger file for the main-branch Q5707 PR audit (macOS retry).
 name: Q5707 cross-model shell audit
 
 on:
