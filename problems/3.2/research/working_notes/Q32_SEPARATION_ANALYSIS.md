@@ -12598,13 +12598,18 @@ Consequently
 \[
  \boxed{\quad
  {\cal T}^{(1)}_M(Y)
- =\operatorname {rad}_{[M-Y,M]}(b_M),
+ =\operatorname {rad}_{[M-Y,M]}(b_M)
+ =\operatorname {rad}_{[M-Y,M]}
+   \gcd\!\left(b_M,\binom M{Y+1}\right),
  \quad}
 \tag{65.3}
 \]
-apart from the fixed prime \(5\).  Thus the fixed point in (63.23) is
-not a new cross-index gcd: it is exactly the part of one integer
-\(b_M\) supported on the complementary prime interval.
+apart from the fixed prime \(5\), provided \(M-Y>Y+1\).  For the second
+equality, every prime in \([M-Y,M]\) occurs exactly once in the
+numerator interval of \(\binom M{Y+1}\), and none occurs in
+\((Y+1)!\).  Thus the fixed point in (63.23) is not a new cross-index
+gcd: it is exactly the part of one integer \(b_M\) supported on the
+complementary prime interval.
 
 There is an exact primitive Newton carrier for (65.1).  If
 \(\Delta^j b_0\) denotes the head of the \(j\)-th forward-difference
@@ -12911,10 +12916,430 @@ wrong height scale.  The best live route is therefore:
 > \(e^{o(N)}\) interval-prime radical.
 
 The new script `q32_block_pascal_gcd_audit.py` independently verifies
-(65.18) on \(2607\) arbitrary-sequence blocks and on \(506\)
-fixed-moment Apéry shell blocks.  It also checks \(345\) shell/Lucas
-target equivalences and \(30\) nontrivial shell targets.  The scripts
+the principal and folded forms of the Newton--Pascal identity in
+\(5214\) arbitrary-sequence tests and in \(506\) fixed-moment Apéry
+shell blocks.  It also checks \(345\) shell/Lucas target equivalences
+and \(30\) nontrivial shell targets.  The scripts
 `q5729_diagonal_audit.py` and
-`q5731_cartier_first_digit_audit.py` verify (65.7)--(65.14) and the
-first-digit obstruction respectively.  These computations certify the
-exact reductions; they are not evidence for the open little-oh bound.
+`q5731_cartier_first_digit_audit.py` verify (65.7)--(65.13) and the
+first-digit obstruction respectively.  No quotient-two row through
+\(M=5000\) contained two hits, so (65.14) is certified by its direct
+two-congruence proof rather than by that scan.  These computations
+certify the exact reductions; they are not evidence for the open
+little-oh bound.
+
+## 66. Every large Pascal factor selects one folded Newton node
+
+Lemma 65.1 has an exact extension which accounts for all large prime
+factors of the Pascal coordinate, not only the desired prime interval.
+This extension is useful both as a possible interface to the folded-node
+pruning and as a warning against dropping the restricted-radical
+condition in (65.23).
+
+Let \(P_{D,N}(X)\) be the degree-at-most-\(N\) polynomial interpolating
+\[
+ P_{D,N}(x)=Y_x,\qquad
+ D-1\le x\le D+N-1.
+\tag{66.1}
+\]
+By construction,
+\[
+ P_{D,N}(-1)=G_{D-1,N}(Y)=A_{D,N}.
+\tag{66.2}
+\]
+
+**Lemma 66.1 (folded-node selector).**
+Let \(q>N\) be prime.  Then
+\[
+ q\mid B_{D,N}=\binom{D+N}{N}
+\tag{66.3}
+\]
+if and only if the interval \((D,D+N]\) contains a multiple
+\(m_q=k_qq\).  This multiple is unique, and
+\[
+ \boxed{\qquad
+ A_{D,N}\equiv Y_{m_q-1}
+             =Y_{k_qq-1}\pmod q.
+ \qquad}
+\tag{66.4}
+\]
+
+The denominator \(N!\) is a \(q\)-unit, so (66.3) is equivalent to the
+existence of a numerator multiple.  Since the numerator interval has
+length \(N<q\), that multiple is unique.  The \(N+1\) interpolation
+nodes are also distinct modulo \(q\).  The node \(m_q-1\) is congruent
+to \(-1\), and evaluation of the reduced interpolant at these two equal
+field elements proves (66.4).
+
+Put
+\[
+ Q^{>N}_{D,N}
+ =\prod_{\substack{q>N\\q\mid B_{D,N}}}q.
+\tag{66.5}
+\]
+It follows that
+\[
+ \boxed{\quad
+ \gcd(A_{D,N},Q^{>N}_{D,N})
+ =
+ \prod_{\substack{q>N,\ q\mid B_{D,N}\\
+                   q\mid Y_{k_qq-1}}}q.
+ \quad}
+\tag{66.6}
+\]
+The desired targets are exactly the principal branch \(k_q=1\), or
+equivalently \(q>D\).  All \(k_q\ge2\) terms are formal folded aliases
+of the same Newton evaluation.
+
+The valuation of \(B_{D,N}\) need not be one on a general folded
+branch: its unique numerator multiple \(k_qq\) can itself be divisible
+by \(q^2\).  It is one whenever \(k_q<q\), in particular throughout
+the low-label regime once \(q\) is larger than the polylogarithmic
+label cutoff.  Equation (66.6) is deliberately radical, so it needs no
+such valuation assumption.
+
+For the five hostile blocks in (56.12), exact evaluation gives
+\[
+\begin{array}{c|c}
+n&
+\gcd(A_{D,N},B_{D,N})/R_I\\ \hline
+200&47\\
+272&1\\
+300&1\\
+321&43\\
+755&55
+\end{array}
+\tag{66.7}
+\]
+and every displayed nuisance prime is at most \(N\).  This initially
+suggests replacing the restricted gcd in (65.23) by the full gcd.
+That replacement is false as a formal simplification: the independent
+fixed-moment audit through \(M=24\) already finds \(77\) instances of a
+nonprincipal prime \(q>N\) satisfying
+\[
+ q\mid B_{D,N},\qquad q\mid C_M(k_qq-1).
+\tag{66.8}
+\]
+Thus large folded aliases genuinely occur.  The clean collapse in
+(66.7) is useful data, not a theorem.
+
+There is also an exact actual-state witness at a much larger moment.
+Take
+\[
+ M=146,\qquad D=141,\qquad N=5,\qquad q=73.
+\tag{66.9}
+\]
+Then \(q>N\), the unique multiple of \(q\) in \((D,D+N]\) is
+\(2q=146\), and the selected node is \(145=2q-1\).  Direct evaluation
+from the one-fold coefficient formula gives
+\[
+ 73\mid C_{146}(145),\qquad
+ 73\mid G_{140,5}(C_{146}),\qquad
+ v_{73}\binom{146}{5}=1.
+\tag{66.10}
+\]
+This is not a principal interval target, since \(73\notin(141,146]\).
+It is a genuine higher-multiple Cartier ghost in the distinguished
+Apéry state.  Thus neither positivity nor the actual initial state
+removes the nonprincipal branch in (66.6).
+
+Lemma 66.1 gives the exact next possibility for the global route:
+combine the unconditional high-label and repeated-fold pruning of
+Section 64 with (66.6), then seek a primitive-content estimate only for
+the remaining low-label unique principal branch.  It does not itself
+bound that branch; \(k_q=1\) is precisely the hard target family.
+
+## 67. The beta--Padé packet identity and exact same-radius saturation
+
+The Newton row in Lemma 65.1 has an exact incomplete-beta kernel.  It
+produces a useful characteristic-zero identity, but a careful index
+audit shows that its most tempting common-packet cancellation is
+universal node content rather than a second target equation.
+
+### 67.1 The integer beta polynomial and its Bézout partner
+
+Put
+\[
+ w_i=(-1)^i
+ \binom{D-1+i}{i}\binom{D+N}{N-i},
+ \qquad
+ Q_{D,N}(T)=\sum_{i=0}^Nw_iT^i,
+\tag{67.1}
+\]
+and \(B=\binom{D+N}{N}\).  The factorial identity
+\[
+ \frac{w_i}{B}
+ =(-1)^i\binom Ni\frac D{D+i}
+\tag{67.2}
+\]
+gives the exact polynomial formula
+\[
+ Q_{D,N}(T)
+ =BD\int_0^1t^{D-1}(1-Tt)^N\,dt
+ =B\,{}_2F_1(-N,D;D+1;T).
+\tag{67.3}
+\]
+The integral is only compact notation for an integer polynomial:
+the denominators \(D+i\) in its expansion are cleared exactly by
+(67.2).
+
+Define
+\[
+ R_{D,N}(T)=
+ \sum_{r=0}^{D-1}\binom{D+N}{r}
+ T^r(1-T)^{D-1-r}.
+\tag{67.4}
+\]
+Splitting the binomial expansion at \(r=D\), or integrating (67.3)
+from \(0\) to \(T\), proves the primitive Bézout identity
+\[
+ \boxed{\quad
+ T^DQ_{D,N}(T)
+ +(1-T)^{N+1}R_{D,N}(T)=1.
+ \quad}
+\tag{67.5}
+\]
+In particular
+\[
+ Q_{D,N}(0)=B,\qquad Q_{D,N}(1)=1.
+\tag{67.6}
+\]
+Thus the two endpoint resultants are respectively the complete Pascal
+mask \(B\) and a unit.  There is no unremoved endpoint content hidden
+in this normalization.
+
+### 67.2 Exact insertion into the fixed-moment shell
+
+Write
+\[
+ \Lambda^M=\sum_{\nu\in\mathbb Z^3}c_M(\nu)X^\nu,\qquad
+ K=\left\lfloor\frac{M}{D-1}\right\rfloor,\qquad
+ T_\kappa=X^{-\kappa}.
+\tag{67.7}
+\]
+The Newton-box support makes all of the following sums finite.  Direct
+coefficient extraction gives
+\[
+ \begin{aligned}
+ A_{D,N}
+ &=G_{D-1,N}(C_M)\\
+ &=\operatorname {CT}\Lambda^M
+   \sum_{\|\kappa\|_\infty\le K}
+   T_\kappa^{D-1}Q_{D,N}(T_\kappa).
+ \end{aligned}
+\tag{67.8}
+\]
+Multiplying (67.5) by \(T^{-1}\), inserting (67.8), and taking
+constant terms yields
+\[
+ \boxed{\quad
+ A_{D,N}+{\cal H}_{M,D,N}={\cal S}_{M,K},
+ \quad}
+\tag{67.9}
+\]
+where
+\[
+ {\cal H}_{M,D,N}
+ =
+ \operatorname {CT}\Lambda^M
+ \sum_{\|\kappa\|_\infty\le K}
+ T_\kappa^{-1}(1-T_\kappa)^{N+1}
+ R_{D,N}(T_\kappa)
+\tag{67.10}
+\]
+and
+\[
+ \boxed{\qquad
+ {\cal S}_{M,K}
+ =\sum_{\|\kappa\|_\infty\le K}c_M(-\kappa).
+ \qquad}
+\tag{67.11}
+\]
+
+The right side is a near-origin coefficient cube.  It is **not** the
+shell \(C_M(D-1)\).  The smallest audited example already gives
+\[
+ M=4,\quad D=3,\quad N=2,\quad K=2,
+\qquad
+ {\cal S}_{4,2}=1826539,\quad C_4(2)=320000.
+\tag{67.12}
+\]
+Two further tempting simplifications are also false.  If \(K\ge M\),
+then (67.11) contains every coefficient of \(\Lambda^M\), so it equals
+\(\Lambda(1,1,1)^M=40^M\), not \(b_M\).  Moreover the actual Laurent
+array is not centrally symmetric:
+\[
+ c_1(1,0,0)=1,\quad c_1(-1,0,0)=4,\qquad
+ c_1(0,1,0)=3,\quad c_1(0,-1,0)=2.
+\tag{67.13}
+\]
+No coefficient pairing or scalar Cartier product may therefore be
+inserted into (67.11) without a separate proof.
+
+### 67.3 The interval-prime monomial collapse
+
+Let \(q=D+j\) be prime with \(1\le j\le N\).  Inspection of the two
+binomial factors in \(w_i\) gives
+\[
+ \boxed{\qquad Q_{D,N}(T)\equiv T^j\pmod q.\qquad}
+\tag{67.14}
+\]
+Indeed, \(q\) divides \(w_i\) for \(i\ne j\), while \(w_j\equiv1\).
+Consequently
+\[
+ A_{D,N}\equiv C_M(q-1)\pmod q.
+\tag{67.15}
+\]
+This recovers Lemma 65.1 in one line.  The companion polynomial
+collapses simultaneously:
+\[
+ R_{D,N}(T)\equiv(1-T)^{q-N-1}\pmod q,
+\tag{67.16}
+\]
+which follows by substituting (67.14) into (67.5) and using
+\((1-T)^q\equiv1-T^q\).
+
+The first divided digit is explicit.  Since
+\[
+ H_q(T)=\frac{Q_{D,N}(T)-T^j}{q}\in\mathbb Z[T],
+\tag{67.17}
+\]
+one has
+\[
+ A_{D,N}=C_M(q-1)+qE_q
+\tag{67.18}
+\]
+with \(E_q\) obtained by replacing \(Q\) by \(H_q\) in (67.8).
+But \(H_q(0)=B/q\) is a \(q\)-unit.  Thus targetness supplies no
+second digit universally, in agreement with the actual counterexample
+in (65.28)--(65.32).
+
+### 67.4 The whole shifted packet family
+
+Multiplication of (67.5) by \(T^{-h}\), for any integer \(h\ge0\),
+gives the exact family
+\[
+ {\cal A}^{(h)}_{M,D,N}
+ +{\cal H}^{(h)}_{M,D,N}
+ ={\cal S}^{(h)}_{M,K},
+\tag{67.19}
+\]
+where
+\[
+ \begin{aligned}
+ {\cal A}^{(h)}_{M,D,N}
+ &=
+ \operatorname {CT}\Lambda^M
+ \sum_{\|\kappa\|_\infty\le K}
+ T_\kappa^{D-h}Q_{D,N}(T_\kappa),\\
+ {\cal H}^{(h)}_{M,D,N}
+ &=
+ \operatorname {CT}\Lambda^M
+ \sum_{\|\kappa\|_\infty\le K}
+ T_\kappa^{-h}(1-T_\kappa)^{N+1}
+ R_{D,N}(T_\kappa),\\
+ {\cal S}^{(h)}_{M,K}
+ &=\sum_{\|\kappa\|_\infty\le K}c_M(-h\kappa).
+ \end{aligned}
+\tag{67.20}
+\]
+For \(h=1\), the first line is exactly the target carrier
+\(A_{D,N}\).  For \(h=0\),
+\[
+ {\cal S}^{(0)}_{M,K}=(2K+1)^3b_M.
+\tag{67.21}
+\]
+Modulo an interval prime \(q=D+j\),
+\[
+ {\cal A}^{(h)}_{M,D,N}
+ \equiv
+ \sum_{\|\kappa\|_\infty\le K}
+ c_M((q-h)\kappa)\pmod q.
+\tag{67.22}
+\]
+Only \(h=1\) is automatically the marked shell \(C_M(q-1)\).  The
+other shifts observe different, and sometimes truncated, lattices.
+The target equation \(q\mid C_M(q-1)\) imposes no vanishing on them.
+Thus (67.19) is a useful exact family but not a family of second
+target-preserving equations.
+
+### 67.5 Same-\(K\) cancellation is universal node content
+
+The right side of (67.9) is identical for every pair \((D_\alpha,
+N_\alpha)\) having the same \(K\).  This looks stronger than the
+ordinary adjacent-carrier identity.  The following exact local ledger
+shows its limit.
+
+Let \(A_\alpha\) be any finite family of Newton carriers, and suppose a
+prime \(q\) belongs to every one of their interval masks.  For an
+arbitrary stencil sequence \(Y\),
+\[
+ A_\alpha(Y)\equiv Y_{q-1}\pmod q
+\tag{67.23}
+\]
+for every \(\alpha\).  Hence, for integers \(\lambda_\alpha\) and
+\(L=\sum_\alpha\lambda_\alpha\),
+\[
+ \boxed{\qquad
+ \sum_\alpha\lambda_\alpha A_\alpha(Y)
+ \equiv L\,Y_{q-1}\pmod q.
+ \qquad}
+\tag{67.24}
+\]
+On the other hand, summing their packet identities gives
+\[
+ \sum_\alpha\lambda_\alpha A_\alpha
+ +\sum_\alpha\lambda_\alpha{\cal H}_\alpha
+ =L{\cal S}_{M,K}.
+\tag{67.25}
+\]
+
+There is therefore a sharp dichotomy.
+
+* If \(L\not\equiv0\pmod q\), (67.24) retains the marked target scalar,
+  but the common packet in (67.25) has not been cancelled.
+* If \(L=0\), the common packet cancels exactly, but (67.24) is zero
+  for **every** sequence \(Y\).  The resulting \(q\)-factor is
+  coefficientwise presentation content, independent of targetness.
+* If \(q\mid L\), the same universal divisibility occurs locally.
+
+Thus a same-radius difference such as
+\[
+ A_1-A_2={\cal H}_2-{\cal H}_1
+\tag{67.26}
+\]
+preserves only common nodes, and its guaranteed copy of each common
+node prime is precisely the Smith factor already found in Sections
+55--56.  Dividing this forced copy may reveal a second digit for a
+special distinguished state, but neither (67.5) nor targetness forces
+such a digit.
+
+For a prime lying in only one of several masks, the other carrier
+values are unrestricted modulo that prime.  The elementary way to
+make them vanish is to multiply them by the missing interval
+primorials; this restores the union of targets but also restores the
+full linear Chebyshev height of the node masks.  Consequently the
+common-packet observation gives no target-safe sublinear union carrier
+by itself.
+
+### 67.6 Verified verdict
+
+The dependency-free audit `q32_beta_pade_packet_audit.py` independently
+encodes the coefficient formula (49.1), the polynomial pair
+(67.1)--(67.5), and the constant-term pairing.  It verifies \(114\)
+polynomial Bézout identities, \(114\) exact packet identities, \(456\)
+members of the shifted family, and \(6584\) common-prime same-radius
+pairs.  In all \(6584\) pairs, the packet-cancelling difference row is
+coefficientwise divisible by the common node prime.  The separate
+block audit verifies (66.9)--(66.10) directly.
+
+The beta--Padé identity is therefore a genuine exact addition to the
+carrier calculus, but it does not prove (65.23).  Its same-\(K\)
+cancellation is completely saturated at first order.  A successful
+continuation must supply one of two inputs not present here:
+
+1. an Apéry-specific congruence surviving after division by the
+   universal node factor; or
+2. a nonlinear cross-characteristic identity for the distinguished
+   coefficient array whose interval-prime radical has sublinear total
+   height.

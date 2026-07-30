@@ -101,6 +101,43 @@ def interval_radical_identity(
     return target_radical, interval_modulus
 
 
+def all_large_pascal_primes_identity(
+    values: list[int],
+    d_start: int,
+    length: int,
+    is_prime: bytearray,
+) -> tuple[int, int]:
+    """Audit every prime q>L in the Pascal coefficient.
+
+    Such a prime sees the unique multiple k*q in (D,D+N] and therefore
+    selects the folded Newton node k*q-1, not necessarily the principal
+    node q-1.
+    """
+    assert d_start > length >= 1
+    carrier = newton_carrier(values, d_start - 1, length)
+    pascal = comb(d_start + length, length)
+    folded_radical = 1
+    large_pascal_radical = 1
+
+    for q in range(length + 1, d_start + length + 1):
+        if not is_prime[q] or pascal % q:
+            continue
+        multiples = [
+            m
+            for m in range(d_start + 1, d_start + length + 1)
+            if m % q == 0
+        ]
+        assert len(multiples) == 1
+        node = multiples[0] - 1
+        assert carrier % q == values[node] % q
+        large_pascal_radical *= q
+        if values[node] % q == 0:
+            folded_radical *= q
+
+    assert gcd(carrier, large_pascal_radical) == folded_radical
+    return folded_radical, large_pascal_radical
+
+
 def comb_zero(n: int, k: int) -> int:
     return comb(n, k) if 0 <= k <= n else 0
 
@@ -144,17 +181,21 @@ def generic_sequence_audit() -> int:
         for d_start in range(3, 80):
             for length in range(1, min(d_start - 1, 12) + 1):
                 interval_radical_identity(values, d_start, length, is_prime)
-                checks += 1
+                all_large_pascal_primes_identity(
+                    values, d_start, length, is_prime
+                )
+                checks += 2
     return checks
 
 
-def fixed_moment_shell_audit() -> tuple[int, int, int]:
+def fixed_moment_shell_audit() -> tuple[int, int, int, int]:
     max_m = 24
     is_prime = prime_flags(max_m + 3)
     apery = apery_values(max_m)
     shell_lucas_checks = 0
     block_checks = 0
     nontrivial_targets = 0
+    nonprincipal_folded_primes: set[tuple[int, int, int, int]] = set()
 
     for m in range(6, max_m + 1):
         # The constant shell is the Apéry number itself.
@@ -178,6 +219,9 @@ def fixed_moment_shell_audit() -> tuple[int, int, int]:
                 radical, _ = interval_radical_identity(
                     values, d_start, length, is_prime
                 )
+                folded_radical, _ = all_large_pascal_primes_identity(
+                    values, d_start, length, is_prime
+                )
                 direct_radical = 1
                 for d, residue in zip(nodes, residues):
                     q = d + 1
@@ -191,19 +235,61 @@ def fixed_moment_shell_audit() -> tuple[int, int, int]:
                         direct_radical *= q
                         nontrivial_targets += 1
                 assert radical == direct_radical
+                extra = folded_radical // gcd(folded_radical, radical)
+                for q in range(length + 1, d_start + length + 1):
+                    if is_prime[q] and extra % q == 0:
+                        nonprincipal_folded_primes.add(
+                            (m, d_start, length, q)
+                        )
                 block_checks += 1
 
-    return shell_lucas_checks, block_checks, nontrivial_targets
+    return (
+        shell_lucas_checks,
+        block_checks,
+        nontrivial_targets,
+        len(nonprincipal_folded_primes),
+    )
+
+
+def explicit_complementary_ghost_audit() -> int:
+    """Verify the actual folded factor (M,D,N,q)=(146,141,5,73)."""
+    moment = 146
+    d_start = 141
+    length = 5
+    q = 73
+    nodes = [
+        apery_shell(moment, d)
+        for d in range(d_start - 1, d_start + length)
+    ]
+    carrier = sum(
+        (-1) ** i
+        * comb(d_start - 1 + i, i)
+        * comb(d_start + length, length - i)
+        * nodes[i]
+        for i in range(length + 1)
+    )
+    pascal = comb(d_start + length, length)
+
+    assert q > length
+    assert 2 * q == d_start + length
+    assert nodes[-1] % q == 0
+    assert carrier % q == 0
+    assert pascal % q == 0
+    assert (pascal // q) % q != 0
+    return 6
 
 
 def main() -> None:
     generic_checks = generic_sequence_audit()
-    shell_lucas, shell_blocks, targets = fixed_moment_shell_audit()
+    shell_lucas, shell_blocks, targets, folded = fixed_moment_shell_audit()
+    explicit_ghost = explicit_complementary_ghost_audit()
     print("Q32_BLOCK_PASCAL_GCD_AUDIT=PASS")
     print("GENERIC_BLOCK_CHECKS", generic_checks)
     print("SHELL_LUCAS_CHECKS", shell_lucas)
     print("FIXED_MOMENT_BLOCK_CHECKS", shell_blocks)
     print("NONTRIVIAL_SHELL_TARGETS", targets)
+    print("NONPRINCIPAL_LARGE_FOLDED_FACTORS", folded)
+    print("EXPLICIT_M146_GHOST_CHECKS", explicit_ghost)
 
 
 if __name__ == "__main__":
