@@ -4451,19 +4451,22 @@ the order-seven square law is not an induction step.  Nevertheless, the
 direct/reflected target rows themselves can be extended unconditionally
 one more digit.
 
-For \(p\ge11,\ p\ne769\), put
+For \(p\ge11\), put
 \[
 \begin{aligned}
  \Delta_p&=b_{p-1}-1,\\
  H_p&=b_p-5+7\Delta_p,\\
- w_p&=\frac{b_{2p}-73+824\Delta_p-(752/5)H_p}{p^6},\\
- v_p&=\frac{b_{2p-1}-5-8\Delta_p-(336/5)H_p
-        +(103/769)p^6w_p}{p^7}.
+ {\cal E}_p&=b_{2p}-73+824\Delta_p-\frac{752}{5}H_p,\\
+ {\cal F}_p&=b_{2p-1}-5-8\Delta_p-\frac{336}{5}H_p.
 \end{aligned}
 \tag{13.1}
 \]
-The proved precision-seven endpoint laws imply
-\(w_p,v_p\in\mathbf Z_{(p)}\).
+The proved raw endpoint laws and \(H6\) identity imply
+\[
+ {\cal E}_p,{\cal F}_p\in p^6\mathbf Z_{(p)},\qquad
+ 769{\cal F}_p+103{\cal E}_p\in p^7\mathbf Z_{(p)}.
+\tag{13.1a}
+\]
 
 Let \(p\mid b_r\), set \(s=p-1-r\), and write
 \(x=b_{p+r}/p\).  Extending the shifted fundamental solution
@@ -4475,8 +4478,7 @@ Let \(p\mid b_r\), set \(s=p-1-r\), and write
  x\left(1-\frac15H_p\right)
  -\frac15p^2H_p{\cal J}_r(0),\\
  Z_8&\equiv
- x\left(1-\frac{336}{25}H_p
- +\frac{103}{5\cdot769}p^6w_p-\frac15p^7v_p\right)
+ x\left(1-\frac{336}{25}H_p-\frac15{\cal F}_p\right)
  +\frac{166144}{25}p^2H_p{\cal J}_s(0)
  \pmod {p^8}.
 \end{aligned}
@@ -4500,7 +4502,7 @@ reflection identify \(V_r\) with \(V_s\).  Since
 The fixed combination
 \[
 \boxed{
-\left(166144+33296H_p-\frac{103}{769}p^6w_p+p^7v_p\right)D_8
+\left(166144+33296H_p+{\cal F}_p\right)D_8
 +5Z_8
 \equiv166149\,x\pmod {p^8}.
 }
@@ -4512,8 +4514,27 @@ Here
  166149=3^2\cdot18461,
 \]
 so the right coefficient is a fixed unit outside \(p=18461\) in the
-stated range.  Exact symbolic reduction and all \(161\) target rows at
-primes through \(1000\) pass independently.
+stated range.  Exact symbolic reduction and all \(163\) target rows at
+primes through \(1000\) pass independently, including both target rows
+at \(p=769\).
+
+This formulation is valid at \(p=769\).  Its integer-coefficient form is
+\[
+\begin{aligned}
+ &[5b_{2p-1}+830695-40\Delta_p+166144H_p]D_8+25Z_8\\
+ &\hspace{38mm}\equiv830745\,x\pmod {p^8}.
+\end{aligned}
+\tag{13.4a}
+\]
+For \(p\ne769\), the split coordinates
+\[
+ w_p=\frac{{\cal E}_p}{p^6},\qquad
+ v_p=\frac{{\cal F}_p+(103/769){\cal E}_p}{p^7}
+\tag{13.4b}
+\]
+are integral and recover the earlier \(w_p,v_p\) version of (13.4).
+Thus \(769\) is only an artificial exception to that normalization;
+the sole fixed inversion exception of the target law is \(18461\).
 
 The proof and reproducer are
 
@@ -4527,6 +4548,8 @@ Q32_ORDER_EIGHT_TARGET_CASORATIAN_2026-07-29.md
 There is also a strong new computational pattern.  After retaining the
 full next digit of \(w_p\), every endpoint residual through
 \(p\le1000,\ m\le20\) is a fixed multiple of the single anchor \(v_p\).
+Here \(w_p,v_p\) have the split normalization (13.4b), so this separate
+all-\(m\) conjecture still excludes \(p=769\).
 Define
 \[
 \begin{aligned}

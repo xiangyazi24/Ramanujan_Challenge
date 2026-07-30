@@ -9,23 +9,40 @@ The new target-dependent jet is not arbitrary: it is the same
 companion value on the two reflected zero rows, and a fixed combination
 cancels it.
 
-Let `p>=11`, `p!=769`, and put
+Let `p>=11`, and put
 
 ```text
 Delta=b_(p-1)-1,
 H=b_p-5+7Delta,
 
-w=[b_(2p)-73+824Delta-(752/5)H]/p^6,
-
-v=[b_(2p-1)-5-8Delta-(336/5)H
-   +(103/769)p^6w]/p^7.
+E=b_(2p)-73+824Delta-(752/5)H,
+F=b_(2p-1)-5-8Delta-(336/5)H.
 ```
 
-The already-proved precision-seven endpoint laws imply
+The proved raw endpoint laws and `H6` identity imply
 
 ```text
-w,v in Z_(p).
+E,F in p^6 Z_(p),                 769F+103E in p^7 Z_(p).
 ```
+
+Indeed, if `delta_0=Delta/p^3 mod p`, their first normalized digits are
+
+```text
+E/p^6 == (24*769/5)delta_0^2,
+F/p^6 ==-(24*103/5)delta_0^2                    (mod p),
+```
+
+so the displayed linear combination cancels without dividing by
+`769`.
+
+Thus `w=E/p^6` is integral for every `p>=11`.  When `p!=769`,
+
+```text
+v=[F+(103/769)E]/p^7
+```
+
+is also integral, but this split normalization is not needed in the
+theorem.
 
 Suppose `p|b_r`, and set
 
@@ -61,7 +78,7 @@ D_8
  ==x(1-H/5)-(p^2H/5)J_r(0)                           (mod p^8), (0.1)
 
 Z_8
- ==x(1-336H/25+(103/(5*769))p^6w-(p^7/5)v)
+ ==x(1-336H/25-F/5)
    +(166144/25)p^2H J_s(0)                            (mod p^8). (0.2)
 ```
 
@@ -75,7 +92,7 @@ Consequently the companion coordinate cancels:
 
 ```text
 166144D_8+5Z_8
- ==x(166149-33296H+(103/769)p^6w-p^7v)                (mod p^8).
+ ==x(166149-33296H-F)                                 (mod p^8).
                                                                   (0.4)
 ```
 
@@ -83,9 +100,26 @@ Since the correction in parentheses after `166149` has valuation at
 least five and `D_8==x (mod p^5)`, it can be moved to the left:
 
 ```text
-[166144+33296H-(103/769)p^6w+p^7v]D_8+5Z_8
+[166144+33296H+F]D_8+5Z_8
  ==166149x                                             (mod p^8). (0.5)
 ```
+
+This is denominator-free at the exceptional normalization prime
+`p=769`.  Clearing the harmless denominator `5` in `F` gives the
+ordinary integer-coefficient form
+
+```text
+[5b_(2p-1)+830695-40Delta+166144H]D_8+25Z_8
+ ==830745x                                             (mod p^8). (0.6)
+```
+
+For `p!=769`, substituting
+
+```text
+F=-(103/769)p^6w+p^7v
+```
+
+recovers the original normalized `w,v` form exactly.
 
 Here
 
@@ -94,17 +128,18 @@ Here
 ```
 
 Thus the right coefficient is a fixed unit outside `p=18461` in the
-stated range.  The endpoint normalization already omits `p=769`.
+stated range.  The congruence itself remains valid at `p=18461`; only
+its inversion fails there.
 
 Equation `(0.5)` is an unconditional local quotient law, not a global
-separation theorem.  It imports the new endpoint digit `v_p`; the
-small representatives
+separation theorem.  Its new endpoint datum is the two-digit residue
 
 ```text
-w mod p^2,                 v mod p
+F/p^6 mod p^2.
 ```
 
-suffice locally, but they vary with `p` and do not constitute one
+Its first digit is fixed by `H6`, while its second digit is new.  These
+residues vary with `p` and do not constitute one
 characteristic-zero carrier for all target primes.
 
 ## 1. Exact shifted decompositions
@@ -146,15 +181,15 @@ q==x/5+(p^2/5)J_r(0)                                  (mod p^3).
 
 Substitution in `(1.3)` proves `(0.1)`.
 
-For the reflected row, the definitions of `w,v` are the exact
-endpoint expansions
+For the reflected row, the definitions of `E,F` are the exact endpoint
+expansions
 
 ```text
 b_(2p)
- =73-824Delta+(752/5)H+p^6w,
+ =73-824Delta+(752/5)H+E,
 
 b_(2p-1)
- =5+8Delta+(336/5)H-(103/769)p^6w+p^7v.               (1.4)
+ =5+8Delta+(336/5)H+F.                                (1.4)
 ```
 
 After division of `(1.2)` by `p`,
@@ -172,9 +207,8 @@ q'==x/5-(584/5)p^2J_s(0)                              (mod p^3). (1.5)
 In the endpoint corrections:
 
 - the `H` coefficient needs `(1.5)` modulo `p^3`;
-- the `p^6w` coefficient needs only `q'==x/5 (mod p^2)`;
-- the `p^7v` coefficient needs only `q'==x/5 (mod p)`;
-- the `p^6w` correction in `b_(2p)` is multiplied by `p^2`
+- the `F` coefficient needs only `q'==x/5 (mod p^2)`;
+- the `E` correction in `b_(2p)` is multiplied by `p^2`
   and vanishes modulo `p^8`.
 
 The companion coefficient is
@@ -244,14 +278,16 @@ Since `J_j(0)=V_j(0)`, this proves `(0.3)`.  The central case
 The new coordinate ledger is
 
 ```text
-endpoint coordinate:       p^7 v_p,
+endpoint coordinate:       F_p/p^6 mod p^2,
 target companion:          p^2H_p J_r(0).
 ```
 
 Reflection kills the second coordinate with fixed coefficients.  The
-first is absorbed by multiplying the direct row by an endpoint
-correction.  This proves local recovery of `x mod p^8` away from the
-fixed right-coefficient exception.
+first is absorbed by adding `F_p` to the coefficient of the direct
+row.  This proves local recovery of `x mod p^8` away from the fixed
+right-coefficient exception.  The pair `w_p,v_p` is only a split
+normalization of this single residual, and its failure at `p=769` is
+artificial.
 
 It does not give a global nonzero integer of sublinear height.  Across
 all target primes the laws still recover the actual common integer
@@ -278,21 +314,22 @@ The independent reproducer is
 For all target rows at primes through `1000`, it reports
 
 ```text
-companion reflection checks              161
-direct equation checks                    161
-reflected equation checks                 161
-fixed target-law checks                   161
-small-representative checks               161
-endpoint integrality checks               326
-symbolic eliminations                       2
-failures                                    0
+all target rows                            163
+target rows at p=769                         2
+direct/reflected equation checks       163+163
+fixed and integer target-law checks    163+163
+exact shifted decompositions               326
+endpoint integrality checks                 492
+universal companion-reflection checks     76110
+symbolic eliminations                         3
+failures                                      0
 ```
 
-The fixed exceptions relevant to `(0.5)` are
+The only fixed inversion exception relevant to `(0.5)` is
 
 ```text
-769, 18461
+18461.
 ```
 
-in the range `p>=11`; the factors `3` and `5` are already outside the
-stated range.
+The `w,v` rewrite alone excludes `769`; the denominator-free law does
+not.
