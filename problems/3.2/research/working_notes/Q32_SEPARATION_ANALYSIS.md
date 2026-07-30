@@ -9745,3 +9745,363 @@ they cannot compress a central block.  Any further progress must use
 the distinguished Apéry initial state to prove (43.11), or an equivalent
 cross-characteristic cancellation theorem; reflection and a vertical
 bound for \(|Z_q|\) are insufficient.
+
+## 44. Growing Route A is exactly saturated
+
+`Q5684` settles the natural attempt to let the number of Casoratians grow
+with \(n\).  Put
+\[
+ P_m=d_m^3a_m,\qquad Q_m=d_m^3b_m,\qquad
+ R_m=P_m/6.
+\tag{44.1}
+\]
+The standard denominator theorem gives \(R_m\in\mathbb Z\).  Define the
+integral recurrence state
+\[
+ W_m=(R_m,Q_m)^t
+\tag{44.2}
+\]
+and the divided cross-Casoratian
+\[
+ C_{n,m}=\det(W_n,W_m)
+ =\frac{P_nQ_m-Q_nP_m}{6}.
+\tag{44.3}
+\]
+The first two states are
+\[
+ W_0=(0,1)^t,\qquad W_1=(1,5)^t,
+\qquad \det(W_0,W_1)=-1.
+\tag{44.4}
+\]
+They are therefore a unimodular basis of \(\mathbb Z^2\).  It follows
+immediately that
+\[
+ \boxed{
+ \gcd_{m\ge0} C_{n,m}
+ =\gcd(C_{n,0},C_{n,1})
+ =\gcd(R_n,Q_n).}
+\tag{44.5}
+\]
+Moreover,
+\[
+ \gcd(R_n,Q_n)\mid G_n\mid6\gcd(R_n,Q_n),
+\tag{44.6}
+\]
+so the two gcds have identical valuations at every prime at least five.
+Thus complete integral saturation of *all* cross-Casoratians returns
+P3.2 itself, up to the fixed primes two and three.
+
+There is an equally sharp obstruction before saturation.  Let
+\[
+ M_{n,H}=\{n-H,\ldots,n-1\},\qquad H<n/2.
+\tag{44.7}
+\]
+The exact general-gap determinant identity gives, for
+\(n/2<p\le n\),
+\[
+ v_p(C_{n,m})=
+ \begin{cases}
+  v_p(N_{n-m}(m)),&m<p,\\
+  6+v_p(N_{n-m}(m)),&m\ge p,
+ \end{cases}
+\tag{44.8}
+\]
+where \(N_h\) is the integral Apéry gap continuant.  Hence
+\[
+ \prod_{n/2<p\le n-H}p^6
+ \mid \gcd_{m\in M_{n,H}}C_{n,m},
+\tag{44.9}
+\]
+and the prime number theorem gives
+\[
+ \log\gcd_{m\in M_{n,H}}|C_{n,m}|
+ \ge 6\{\vartheta(n-H)-\vartheta(n/2)\}
+ =3n-6H+o(n).
+\tag{44.10}
+\]
+Every terminal window of width \(o(n)\) therefore contains a universal
+linear-height sixth-power primorial, independently of targetness.
+Dividing this layer out loses the only target factor guaranteed by the
+safe bound \(v_p(G_n)\le6\).
+
+More generally, a finite family of recurrence states spans a rank-two
+sub\-lattice of \(\mathbb Z^2\).  Smith reduction can remove only its
+lattice-index contamination; once the lattice is saturated, its
+distinguished-state determinant ideal is (44.5).  Since
+\(\bigwedge^k\mathbb Z^2=0\) for \(k\ge3\), increasing the number of
+rows creates no new exterior defect dimension.
+
+This gives a complete scoped verdict for Route A:
+\[
+ \boxed{\text{before saturation it has universal linear height;
+ after saturation it is exactly the original gcd.}}
+\tag{44.11}
+\]
+Nonlinear Apéry-specific identities are not excluded, but they cannot be
+consequences merely of adding more rank-two recurrence states,
+Casoratians, or Fitting minors.
+
+## 45. The shifted-lcm formulation is also rank one
+
+There is a prime-free “denominator hole” version of Section 40.  Define
+\[
+ {\cal L}_n=
+ \operatorname {lcm}_{1\le k\le n}
+ \frac{k}{\gcd(k,b_{n-k})},
+ \qquad
+ {\cal J}_n=\frac{d_n}{{\cal L}_n}.
+\tag{45.1}
+\]
+Fix a prime \(p\), put
+\[
+ \alpha=\lfloor\log_p n\rfloor,\qquad
+ \rho=n\bmod p^\alpha,
+\tag{45.2}
+\]
+and, for \(0\le s\le\alpha\), let
+\[
+ \mu_s=\min_{\substack{1\le k\le n\\v_p(k)=s}}
+ v_p(b_{n-k}).
+\tag{45.3}
+\]
+Taking the \(p\)-adic valuation of the lcm gives the exact formula
+\[
+ \boxed{
+ v_p({\cal J}_n)=
+ \min_{0\le s\le\alpha}
+ \{\alpha-s+\min(s,\mu_s)\}.}
+\tag{45.4}
+\]
+
+The first missing layer has a particularly simple description.  Write
+\[
+ n=ap^\alpha+\rho,\qquad1\le a<p.
+\tag{45.5}
+\]
+The indices with top valuation are \(k=tp^\alpha\),
+\(1\le t\le a\), and Apéry--Lucas gives
+\[
+ b_{n-tp^\alpha}
+ \equiv b_{a-t}b_\rho\pmod p.
+\tag{45.6}
+\]
+The last coefficient is \(b_0=1\).  Consequently
+\[
+ \boxed{p\mid{\cal J}_n\quad\Longleftrightarrow\quad p\mid b_\rho.}
+\tag{45.7}
+\]
+The complete top shell is therefore one replicated target equation,
+not \(a\) independent opportunities to fill the denominator.
+
+All higher missing powers have sublinear total height:
+\[
+ 0\le\log{\cal J}_n-\log\operatorname {rad}({\cal J}_n)
+ \le\sum_{m\ge2}\vartheta(n^{1/m})
+ =O(\sqrt n).
+\tag{45.8}
+\]
+For \(p>\sqrt n\), (45.7) is precisely
+\[
+ p\mid{\cal J}_n\Longleftrightarrow
+ p\mid b_{n\bmod p}.
+\tag{45.9}
+\]
+The difference between this radical and
+\(\operatorname {rad}\gcd(b_n,d_n)\) consists of outer-digit zeros.
+Exactly as in (40.5), primes at most \(n^{2/3}\) cost
+\(O(n^{2/3})\), while above that threshold their outer digit is less
+than \(n^{1/3}\) and their product divides
+\(\prod_{a<n^{1/3}}b_a\).  Thus
+\[
+ \log\operatorname {rad}\gcd(b_n,d_n)-O(n^{2/3})
+ \le\log{\cal J}_n
+ \le\log\operatorname {rad}\gcd(b_n,d_n)+O(\sqrt n).
+\tag{45.10}
+\]
+
+Hence proving \(\log{\cal L}_n=n+o(n)\) is another exact formulation of
+the same first-layer horizontal problem.  Products, exterior powers, or
+Fitting ideals made from all top-valuation multiples only repeat the
+rank-one vector in (45.6); primitive saturation returns \(b_\rho\).
+
+## 46. Mesoscopic localization and the adjacent-collision lemma
+
+Take the block length
+\[
+ H=n^{1/3}
+\tag{46.1}
+\]
+from (43.11), and let \(I\) be a length-\(H\) prime interval on which
+the outer quotient \(a=\lfloor n/q\rfloor\) and folded branch are fixed.
+The quotient interval has length \(n/(a(a+1))\), so
+\[
+ a(a+1)\le n/H=H^2,\qquad a\le H,
+\tag{46.2}
+\]
+and every \(q\in I\) satisfies
+\[
+ q>\frac n{a+1}\ge(1-o(1))H^2.
+\tag{46.3}
+\]
+The folded index is affine:
+\[
+ j(q)=n-aq
+\quad\hbox{or}\quad
+ j(q)=(a+1)q-n-1.
+\tag{46.4}
+\]
+If
+\[
+ T(n,I)=\{q\in I\cap\mathbb P:q\mid b_{j(q)}\},
+\tag{46.5}
+\]
+then \(\log q\asymp\log n\) throughout the block.  Therefore (43.11)
+is equivalent to
+\[
+ |T(n,I)|=o(H/\log n).
+\tag{46.6}
+\]
+
+Apéry--Lucas and reflection do give one fixed carrier:
+\[
+ q\mid b_{j(q)}
+ \quad\Longrightarrow\quad
+ b_n\equiv b_ab_{j(q)}\equiv0\pmod q.
+\tag{46.7}
+\]
+Thus the whole target product divides \(b_n\), but
+\(\log b_n\sim n\log(17+12\sqrt2)\), which is critical on the global
+scale and much too large on an \(H\)-block.
+
+The arbitrary-rank Racah-cutoff calculation in `Q5681` makes the same
+obstruction exact.  Order the block targets
+\(q_1<\cdots<q_k\), put
+\[
+ M_i=(q_i-1)/2,\qquad P_i=q_1\cdots q_i,
+\tag{46.8}
+\]
+and let \(S_{M_i}(n)\) be the corresponding characteristic-zero Racah
+prefix.  Targetness and the nested node squares give
+\[
+ q_i\mid S_{M_i}(n),\qquad
+ P_i^2\mid S_{M_{i+1}}(n)-S_{M_i}(n).
+\tag{46.9}
+\]
+The exact prefix lattice has Smith form
+\[
+ \operatorname {diag}
+ (q_1,P_1^2q_2,\ldots,P_{k-1}^2q_k).
+\tag{46.10}
+\]
+After the universal node squares and long prefix coordinate are removed,
+the primitive boundary presentation has unit maximal Fitting ideal.
+Keeping the long coordinate retains the targets but already one boundary
+square has logarithmic height \(\gg q\gg H^2\).  Hence growing linear
+cutoff elimination has the same height/selectivity dichotomy as
+Section 44.
+
+There is, however, a smaller sufficient horizontal statement.  For
+fixed \(A>0\), define the number of short adjacent target pairs
+\[
+ C_A(n,I)=
+ \#\left\{
+ \begin{array}{l}
+ q<\ell\text{ consecutive in the ordered set }T(n,I),\\
+ \ell-q\le A\log n
+ \end{array}\right\}.
+\tag{46.11}
+\]
+The following uniform estimate would suffice:
+\[
+ \boxed{
+ C_A(n,I)=o_A(H/\log n)
+ \quad\text{for every fixed }A.}
+\tag{46.12}
+\]
+Indeed, if \(K=|T(n,I)|\), at most \(H/(A\log n)\) adjacent gaps exceed
+\(A\log n\), and hence
+\[
+ K-1\le\frac{H}{A\log n}+C_A(n,I).
+\tag{46.13}
+\]
+First let \(n\) tend to infinity with \(A\) fixed, and then let
+\(A\) tend to infinity.  This proves (46.6).
+
+For a pair \(\ell=q+h\), the corresponding folded indices differ by
+\(ah\) or \((a+1)h\).  This small index gap has not yet produced a
+carrier: the known continuant applies when *one modulus* annihilates
+both endpoint states, whereas (46.11) gives the pure-cross conditions
+\[
+ q\mid b_{j(q)},\qquad
+ q+h\mid b_{j(q+h)}.
+\tag{46.14}
+\]
+Thus (46.12) is a precise two-characteristic target, strictly smaller
+than full block compression but still unproved.
+
+## 47. Lucas/reflection cannot transport an isolated spike
+
+`Q5683` gives a sharp explanation of why the sparse exceptional-set
+theorem (42.14) cannot be upgraded by the known symmetries.  Fix an
+index \(n\) and a target prime \(p\).  Repeated use of Apéry--Lucas and
+reflection forces targetness at another index \(m\) only in the two
+classes
+\[
+ m\equiv n\pmod p,\qquad
+ m\equiv-n-1\pmod p.
+\tag{47.1}
+\]
+These operations create no third residue class.
+
+Consequently, if a set \(S\) of target primes is transported to one
+nontrivial index \(m\) using only these operations, then
+\[
+ \boxed{
+ \prod_{p\in S}p\mid(m-n)(m+n+1).}
+\tag{47.2}
+\]
+For \(m=O(n)\), the transported logarithmic weight is only
+\(O(\log n)\).  This remains true if \(m\) is chosen after the spike and
+its slacks are known.  A subproduct of logarithmic weight
+\(\eta n\) needs a nontrivial common symmetry lift of exponential size.
+
+The nearby reflected representative does not evade (47.2).  Its
+displacement is \(\pm(c_p-1)\), and a fixed reflected image \(m\)
+satisfies
+\[
+ \prod_{\rho_p(n)=m}p\mid m+n+1.
+\tag{47.3}
+\]
+Thus its fibers have \(O(\log n)\) total weight; in the top half they
+contain at most one target prime.  Reflection fragments a spike into
+essentially one image per prime rather than producing a second spike.
+
+There is also a useful exact budget for any future transport theorem.
+Let \({\cal H}\) be a finite set of nonzero shifts in a comparable
+dyadic range, and let \(T_{\cal H}(n)\) be the primes which are targets
+at both \(n\) and at least one \(n+h\), \(h\in{\cal H}\).  The codegree
+bound (42.7) gives
+\[
+ \sum_{p\in T_{\cal H}(n)}\log p
+ \ll\log n\sum_{h\in{\cal H}}|h|.
+\tag{47.4}
+\]
+Therefore a positive fraction of a linear-weight spike would be
+impossible if it could be transported through common shifts satisfying
+\[
+ \sum_{h\in{\cal H}}|h|=o(n/\log n).
+\tag{47.5}
+\]
+The forced reflected shifts in the unresolved core have distinct large
+slacks and are far outside this budget.
+
+Sections 44--47 leave two equivalent ways forward:
+
+1. prove the block collision estimate (46.12), or a stronger block
+   carrier such as (43.11);
+2. prove a coherent third-zero/batch-transport law meeting (47.5).
+
+Both require a relation between different residue characteristics, or
+new distinguished-state arithmetic.  Neither follows from growing
+Casoratians, shifted lcms, reflection, Lucas lifting, or the present
+same-prime continuants.
