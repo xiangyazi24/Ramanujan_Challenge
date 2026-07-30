@@ -114,7 +114,7 @@ theorem four_shape_sum_vanishes_of_root_mem
 * `torsion` — `x` is rational with denominator dividing `2040 = lcm(120, 408)`,
   the two `w₂` values coming from Merkurjev–Suslin;
 * `numeric` — `x` agrees with `−4/85` to well within `1/(2·2040²) ≈ 1.2·10⁻⁷`
-  (the computation gives `1.1·10⁻³⁰¹`).
+  (the computation gives `1.63·10⁻³⁰¹`).
 
 Given those, `x = −4/85` exactly.  Note `85 ∣ 2040`, a consistency check that the
 answer is compatible with the bound. -/
@@ -127,7 +127,7 @@ theorem regulator_value {x : ℝ}
   norm_num
 
 /-- Sanity check on the arithmetic of the bound: `85 ∣ 2040`, and the numerical
-margin `1.1e-301` is far below the separation `1/(2·2040²)`. -/
+margin `1.63e-301` is far below the separation `1/(2·2040²)`. -/
 example : (2040 : ℕ) % 85 = 0 := by norm_num
 
 example : (1 : ℝ) / (2 * (2040 : ℝ) ^ 2) > 1 / (10 : ℝ) ^ 8 := by norm_num

@@ -130,7 +130,7 @@ factors — 6, 12, 24 — so the bound `Q = 2040` might really be `6·2040` or
 `24·2040`.
 
 **In this instance the objection is harmless, and the theorem below says exactly
-why.**  The numerical certificate has error `1.1·10⁻³⁰¹`, while the separation of
+why.**  The numerical certificate has error `1.63·10⁻³⁰¹`, while the separation of
 rationals with denominator `≤ Q` is `1/Q²`.  So the reconstruction survives *any*
 denominator bound up to about `1.7·10¹⁵⁰`; a stray factor of 6 or 24, or even of
 `10¹⁴⁶`, changes nothing.
