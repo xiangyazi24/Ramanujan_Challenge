@@ -5,9 +5,13 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/q5721-main-audit.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'problems/3.2/research/scripts/q5721_B_recurrence_audit.py'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   audit:
@@ -15,30 +19,8 @@ jobs:
     timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Fetch isolated audit
-        shell: bash
-        run: |
-          git fetch origin q5721-audit-de91974f
-          git show origin/q5721-audit-de91974f:problems/3.2/research/scripts/q5721_B_recurrence_audit.py > /tmp/q5721.py
       - name: Install exact symbolic dependency
         run: python3 -m pip install --quiet sympy
       - name: Run exact audit
         shell: bash
-        run: |
-          set +e
-          python3 /tmp/q5721.py > /tmp/q5721-audit.out 2>&1
-          echo $? > /tmp/q5721-audit.status
-          exit 0
-      - name: Persist output on audit branch
-        shell: bash
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git checkout q5721-audit-de91974f
-          cp /tmp/q5721-audit.out q5721-audit.out
-          cp /tmp/q5721-audit.status q5721-audit.status
-          git add q5721-audit.out q5721-audit.status
-          git commit -m 'Record Q5721 exact audit output' || exit 0
-          git push origin HEAD:q5721-audit-de91974f
+        run: python3 problems/3.2/research/scripts/q5721_B_recurrence_audit.py
