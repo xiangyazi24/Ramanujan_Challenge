@@ -24,6 +24,17 @@ jobs:
           git show origin/q5719-audit:problems/3.2/research/scripts/q5719_common_ghost_audit.py > /tmp/q5719_common_ghost_audit.py
       - name: Run geometry audit
         run: python3 /tmp/q5719_common_ghost_audit.py --limit 2000 > /tmp/q5719-geometry.out
+      - name: Persist geometry on audit branch
+        shell: bash
+        run: |
+          git checkout -B q5719-audit origin/q5719-audit
+          cp /tmp/q5719-geometry.out q5719-geometry.out
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add q5719-geometry.out
+          git commit -m 'Record Q5719 geometry audit output' || true
+          git push origin HEAD:q5719-audit
+          git checkout main
       - name: Run exact modular audit
         shell: bash
         run: |
@@ -31,16 +42,16 @@ jobs:
           python3 /tmp/q5719_common_ghost_audit.py --limit 2000 --evaluate > /tmp/q5719-evaluate.out 2>&1
           echo $? > /tmp/q5719-evaluate.status
           exit 0
-      - name: Persist outputs on audit branch
+      - name: Persist modular output on audit branch
         if: always()
         shell: bash
         run: |
+          git fetch origin q5719-audit
           git checkout -B q5719-audit origin/q5719-audit
-          cp /tmp/q5719-geometry.out q5719-geometry.out || true
           cp /tmp/q5719-evaluate.out q5719-evaluate.out || true
           cp /tmp/q5719-evaluate.status q5719-evaluate.status || true
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add q5719-geometry.out q5719-evaluate.out q5719-evaluate.status
-          git commit -m 'Record Q5719 common-ghost audit outputs' || exit 0
+          git add q5719-evaluate.out q5719-evaluate.status
+          git commit -m 'Record Q5719 modular audit output' || exit 0
           git push origin HEAD:q5719-audit
