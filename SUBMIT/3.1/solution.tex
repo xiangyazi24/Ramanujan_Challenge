@@ -45,7 +45,7 @@ lies on the unit circle, and on the unit circle two of the four tetrahedron
 shapes are real while the other two are exchanged by
 $z\mapsto1/(1-\bar z)$, under which the Bloch--Wigner function changes sign.
 Torsion gives rationality; the Merkurjev--Suslin torsion order supplies the
-denominator bound $2040$; a $301$-digit evaluation then determines the value
+denominator bound $4080$; a $301$-digit evaluation then determines the value
 uniquely.
 \end{abstract}
 
@@ -266,35 +266,53 @@ W=\frac1{1-uX}=\frac1{1-\bar V}.
 By \eqref{eq:Dsym}, $D(W)=D\bigl(1/(1-\bar V)\bigr)=D(\bar V)=-D(V)$.
 \end{proof}
 
-\begin{lemma}[The filling term]\label{lem:fill}
-Both endpoints satisfy the same $(-1)$-filling condition, and the flattenings are
-chosen compatibly along the arc, so that the extended Bloch classes
-$\xi_\alpha,\xi_\beta$ are the classes of the \emph{filled} representations.
-With that choice Neumann's surgery correction is already absorbed into the
-flattening data, and
-\[
-\GV(\rho_\alpha)-\GV(\rho_\beta)
-=4\,\mathrm{Re}\bigl[\widehat{\mathcal R}(\xi_\alpha)
--\widehat{\mathcal R}(\xi_\beta)\bigr]
-\]
-with no additional core term.
+\begin{lemma}[Flattening ambiguity]\label{lem:fill}
+Choose flattenings $[z_j;p_j,q_j]$ satisfying Neumann's edge and parity
+conditions together with the $(-1)$-filling peripheral condition, so that
+$\xi_\alpha,\xi_\beta$ represent the filled representations. At both endpoints
+all four shapes are \emph{real}, and then \emph{any} change of the flattening
+integers alters $\mathrm{Re}[\Delta\mathcal R]/\pi^2$ by a
+\textbf{half-integer}. Consequently no flattening has to be exhibited: whatever
+the choice, the denominator of $\mathrm{Re}[\Delta\mathcal R]/\pi^2$ divides
+$2Q=4080$.
 \end{lemma}
 
+\begin{proof}
+The $(p,q)$-dependent part of Neumann's
+$\widehat{\mathcal R}([z;p,q])
+=\operatorname{Li}_2(z)+\tfrac12\log z\log(1-z)+\tfrac{\pi i}2\bigl(q\log z+p\log(1-z)\bigr)
+-\tfrac{\pi^2}6$
+is $\tfrac{\pi i}2(q\log z+p\log(1-z))$. Writing the principal branches as
+$\log z=A+i\theta_1$ and $\log(1-z)=B+i\theta_2$ with $A,B$ real and
+$\theta_k\in(-\pi,\pi]$, that part equals
+$\tfrac{\pi i}2(qA+pB)-\tfrac\pi2(q\theta_1+p\theta_2)$, so its real part is
+$-\tfrac\pi2(q\theta_1+p\theta_2)$.
+
+At both endpoints every shape is real, so each $\theta_k$ is $0$ or $\pi$:
+for $z<0$ (our $T$) one has $\theta_1=\pi,\ \theta_2=0$, and for $z>1$ (our
+$U,V,W$) one has $\theta_1=0,\ \theta_2=\pi$. Hence each tetrahedron contributes
+an integer multiple of $\pi^2/2$, and so does the sum over the four tetrahedra
+and the difference between the endpoints. Verified numerically to $60$ digits
+over a range of flattening shifts in \texttt{scripts/flattening\_ambiguity.py}
+(worst deviation from a half-integer: $3\times10^{-61}$).
+\end{proof}
+
 \begin{remark}
-It is worth being explicit about why this is stated as a choice of flattening and
-not as a vanishing computation. Neumann's core correction is \emph{linear} in the
-core complex length $\lambda_{\mathrm{core}}$, not quadratic: the contribution to
-the regulator is $\tfrac12\lambda_{\mathrm{core}}\pi i \pmod{\pi^2\ZZ}$. For
-$\lambda_{\mathrm{core}}=i\theta$ purely imaginary this is $-\tfrac12\theta\pi$,
+This replaces a weaker earlier argument. Neumann's Dehn-filling core correction
+is \emph{linear} in the core complex length $\lambda_{\mathrm{core}}$, not
+quadratic --- the contribution to the regulator is
+$\tfrac12\lambda_{\mathrm{core}}\pi i \pmod{\pi^2\ZZ}$ --- so for
+$\lambda_{\mathrm{core}}=i\theta$ purely imaginary it is $-\tfrac12\theta\pi$,
 which is real and \emph{not} in general a rational multiple of $\pi^2$; integral
-surgery does not force $\theta/\pi\in\QQ$. So the earlier reasoning
-``$\lambda_{\mathrm{core}}^2$ is real, hence no volume contribution'' is not
-available. The correct statement is the one above: the correction is the
-comparison between the \emph{cusped} class and the \emph{filled} class, and it
-does not reappear once one works with the filled class throughout. The
-$301$-digit rationality of \eqref{eq:pin} is a consistency check on this: had an
-irrational term $-\tfrac\pi2(\theta_\alpha-\theta_\beta)$ been silently omitted,
-the computed value could not have reconstructed to a rational.
+surgery does not force $\theta/\pi\in\QQ$. The reasoning
+``$\lambda_{\mathrm{core}}^2$ is real, hence no volume contribution'' is
+therefore unavailable, and so is the stronger claim that the correction is
+``absorbed'' into the flattening --- that would require constructing the filled
+flattening explicitly. Lemma~\ref{lem:fill} avoids both: it needs only that the
+ambiguity is bounded, which the reality of the shapes supplies. The $301$-digit
+rationality of \eqref{eq:pin} is a further consistency check: had an irrational
+$-\tfrac\pi2(\theta_\alpha-\theta_\beta)$ been silently omitted, the computed
+value could not have reconstructed to a rational at all.
 \end{remark}
 
 \begin{lemma}[Orientation signs]\label{lem:signs}
@@ -382,10 +400,11 @@ with $\operatorname{disc}F_\alpha=-5^6\cdot59\cdot3881^2$ and
 $\operatorname{disc}F_\beta=17^{14}\cdot1597$. By the identification of the
 extended Bloch group with $K_3^{\mathrm{ind}}$ and the Merkurjev--Suslin torsion
 formula $|K_3^{\mathrm{ind}}(F)_{\mathrm{tors}}|=w_2(F)$, the order of each
-class divides the corresponding $w_2$, so the denominator of
+class divides the corresponding $w_2$; together with the factor $2$ from
+Lemma~\ref{lem:fill} the denominator of
 $\mathrm{Re}[\Delta\mathcal R]/\pi^2$ divides
 \[
-Q=\operatorname{lcm}(120,408)=2040 .
+Q_0=\operatorname{lcm}(120,408)=2040,\qquad Q=2Q_0=4080,
 \]
 \end{proposition}
 
@@ -398,9 +417,9 @@ $\displaystyle
 \begin{proof}
 By Theorem~\ref{thm:torsion} and Proposition~\ref{prop:denom},
 $\mathrm{Re}[\Delta\mathcal R]/\pi^2$ is a rational number with denominator
-dividing $Q=2040$. Two distinct rationals with denominator at most $Q$ differ by
+dividing $Q=4080$. Two distinct rationals with denominator at most $Q$ differ by
 at least $1/Q^2$, so such a rational is determined uniquely by any approximation
-of error less than $1/(2Q^2)=1.20\times10^{-7}$.
+of error less than $1/(2Q^2)=3.00\times10^{-8}$.
 
 Evaluating \eqref{eq:NZ} at $1000$ bits of working precision from the exact
 endpoint data gives
@@ -416,7 +435,7 @@ bound $Q$ therefore returns \emph{uniquely}
 \begin{equation}\label{eq:pin}
 \frac{\mathrm{Re}[\Delta\mathcal R]}{\pi^2}=-\frac4{85}.
 \end{equation}
-(Consistency: $85\mid2040$, with quotient $24$.) By \eqref{eq:NZ},
+(Consistency: $85\mid4080$, with quotient $48$.) By \eqref{eq:NZ},
 $I=-\Delta\mathcal R=4\pi^2/85$.
 \end{proof}
 
@@ -437,7 +456,7 @@ is $1/Q^2$, so \eqref{eq:pin} follows from \emph{any} denominator bound
 $85\le Q\le 10^{150}$ (the sharp ceiling is $\sqrt{1/(2\varepsilon)}=1.75\times10^{150}$) --- roughly $146$ orders of magnitude of slack. A stray
 factor of $6$ or $24$, or indeed of $10^{146}$, changes nothing. The Lean theorem
 \texttt{regulator\_quotient\_eq\_robust} states exactly this, and is instantiated
-there at the inflated bound $Q=24\cdot2040$.
+there at the inflated bound $Q=24\cdot2040$, comfortably above the $4080$ used here.
 \end{remark}
 
 \section{Lean verification}\label{sec:lean}
@@ -487,7 +506,7 @@ All computations are in \texttt{scripts/}; each is standalone
 \texttt{confirm.sage} & Lemma~\ref{lem:circle}: unit-circle counts via $g_\alpha,g_\beta$\\
 \texttt{exact\_proof.sage} & Lemma~\ref{lem:ureal}: the identity $u(1/a)=u(a)$\\
 \texttt{mechanism.py} & Lemmas~\ref{lem:TU}--\ref{lem:VW} at every embedding\\
-\texttt{filling\_term.py} & Lemma~\ref{lem:fill}: core holonomy along the arc\\
+\texttt{flattening\_ambiguity.py} & Lemma~\ref{lem:fill}: the ambiguity is a half-integer\\
 \texttt{shapefield.sage} & Lemma~\ref{lem:shapefield}: the square-root certificates\\
 \texttt{orient\_signs.py} & Lemma~\ref{lem:signs}: all-plus sum reproduces the volume\\
 \texttt{alpha\_component.py} & no embedding realises $\Vol(S^3_{-1/2}(7_2))$\\
