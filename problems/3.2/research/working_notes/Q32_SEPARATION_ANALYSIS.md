@@ -9427,3 +9427,226 @@ because any future proof may now work with one positive integer
 \(b_n\), without zero fibers, quotient slices, or filter coordinates.
 The exact first-digit audit is
 `../scripts/q32_mesoscopic_radical_audit.py`.
+
+## 41. Global folded-boundary carriers
+
+The fixed-slack calculation in `uisai2/Q3268` was stated only for the
+first folded shell.  Its useful pointwise part has a simpler global form
+which does not use the Racah recurrence.
+
+Let \(q>\sqrt n\) occur in the moving radical (40.2), put
+\[
+ r=n\bmod q,\qquad
+ j=\min(r,q-1-r),\qquad
+ c=q-2j.
+\tag{41.1}
+\]
+Thus \(c\) is a positive odd integer.  Reflection gives
+\[
+ q\mid b_j.
+\tag{41.2}
+\]
+There are exactly two branches.  If \(r=j\), then
+\[
+ q\mid n-j,\qquad
+ 2n+c=2(n-j)+q,
+\tag{41.3}
+\]
+and hence \(q\mid2n+c\).  If \(r=q-1-j\), then
+\[
+ q\mid n+j+1,\qquad
+ 2n+2-c=2(n+j+1)-q,
+\tag{41.4}
+\]
+and hence \(q\mid2n+2-c\).  Therefore every folded target satisfies
+\[
+ \boxed{q\mid(2n+c)(2n+2-c).}
+\tag{41.5}
+\]
+Similarly, before introducing \(c\), the two branches give
+\[
+ \boxed{q\mid(n-j)(n+j+1).}
+\tag{41.6}
+\]
+
+These identities simultaneously carry all targets near either boundary.
+For \(C,J<n/2\), let \({\cal M}_{c\le C}(n)\) and
+\({\cal M}_{j\le J}(n)\) denote the corresponding squarefree subproducts
+of \({\cal M}_n\).  Since a prime has a unique pair \((j,c)\),
+\[
+\begin{split}
+ {\cal M}_{c\le C}(n)
+ &\mid
+ \prod_{\substack{1\le c\le C\\c\ {\rm odd}}}
+ (2n+c)(2n+2-c),\\
+ {\cal M}_{j\le J}(n)
+ &\mid
+ \prod_{0\le j\le J}(n-j)(n+j+1).
+\end{split}
+\tag{41.7}
+\]
+Consequently
+\[
+\begin{split}
+ \log{\cal M}_{c\le C}(n)&=O(C\log n),\\
+ \log{\cal M}_{j\le J}(n)&=O(J\log n).
+\end{split}
+\tag{41.8}
+\]
+This is pointwise, requires no estimate for \(|Z_q|\), and applies across
+all quotient arcs.
+
+Taking
+\[
+ H=\frac{n}{(\log n)^2}
+\tag{41.9}
+\]
+shows that the two folded boundary regions together contribute
+\[
+ O(n/\log n)=o(n).
+\tag{41.10}
+\]
+Every target left in the unresolved core has
+\[
+ j>H,\qquad c>H,\qquad
+ q=2j+c>3H,
+\tag{41.11}
+\]
+and hence
+\[
+ \left\lfloor\frac nq\right\rfloor
+ <\frac{(\log n)^2}{3}.
+\tag{41.12}
+\]
+Thus, without prime counting or averaging, the problem localizes to
+polylogarithmically many outer quotient digits and to folded zeros away
+from both endpoints.
+
+This does not close the problem.  The middle region still contains a
+linear number of possible slack values, and (41.5) supplies only one
+linear-height factor for each value.  Summing those factors reproduces a
+\(\Theta(n\log n)\) carrier.  The centered fixed-slack recurrence in
+`Q3268`,
+\[
+ ((2d-1)!!)^3b_{(q-1)/2-d}
+ \equiv A_db_{(q-1)/2}+B_db_{(q-3)/2}\pmod q,
+\tag{41.13}
+\]
+is an exact two-coordinate classification, but it leaves the second
+central coordinate and gives no additional target-selective factor.
+The finite audit of (41.1)--(41.7) is
+`../scripts/q32_folded_boundary_carrier_audit.py`.
+
+## 42. A corrected polylogarithmic exceptional-set theorem
+
+Although the pointwise theorem remains open, the gap continuants prove a
+strong all-but-sparse statement.  This argument appeared in an older
+draft with the unsafe bound \(v_p(G_n)\le3\).  Replacing it by the safe
+bound \(6\), and using the direct/companion decomposition rather than the
+old leading-digit assertion, repairs the proof without changing its
+order of magnitude.
+
+Put
+\[
+ K(n)=\#\{p>\sqrt n:p\le n,\ p\mid b_{n\bmod p}\}.
+\tag{42.1}
+\]
+The small-prime and companion channels already proved above give
+\[
+ \log G_n\le 6K(n)\log n+O(n^{2/3}).
+\tag{42.2}
+\]
+
+The key deterministic input is a codegree bound.  If
+\(m<n\) lie in \((N,2N]\), \(h=n-m\), and \(p>\sqrt N\)
+is counted by both \(K(m)\) and \(K(n)\), then there are two cases.
+If \(p>h\) and no residue wrap occurs, the two zero digits are separated
+by \(h\), so the gap-continuant implication gives
+\[
+ p\mid N_h(m),
+\tag{42.3}
+\]
+where \(N_h(X)\in\mathbb Z[X]\) has degree \(3(h-1)\).
+Uniformly for \(m,n\in(N,2N]\),
+\[
+ 0<N_h(m),\qquad \log N_h(m)=O(h\log N).
+\tag{42.4}
+\]
+For completeness, positivity follows by starting the shifted recurrence
+with \(u_m=0,u_{m+1}=1\): if \(u_k>u_{k-1}\ge0\), then
+\[
+ u_{k+1}>
+ \frac{P(k)-k^3}{(k+1)^3}u_k>u_k.
+\tag{42.5}
+\]
+The height bound follows directly from the continuant recurrence while
+\(m+h\le2N\).
+
+If a wrap occurs, write \(m\bmod p=p-s\), \(1\le s\le h\).
+Then \(p\mid m+s\), so all wrapped common primes divide
+\[
+ \prod_{s=1}^h(m+s).
+\tag{42.6}
+\]
+Primes \(\sqrt N<p\le h\) are counted trivially.  Equations
+(42.3)--(42.6) therefore prove
+\[
+ \boxed{
+ \#\{p>\sqrt N:p\text{ is counted by both }K(m),K(n)\}
+ =O(h).}
+\tag{42.7}
+\]
+
+Now fix \(\varepsilon>0\).  For sufficiently large \(N\), (42.2) shows
+that every \(n\in(N,2N]\) with
+\(\log G_n>\varepsilon n\) satisfies
+\[
+ K(n)\ge c\varepsilon N/\log N
+\tag{42.8}
+\]
+for an absolute \(c>0\).  Partition \((N,2N]\) into intervals of
+length
+\[
+ Y=c_0\varepsilon^2N/\log N,
+\tag{42.9}
+\]
+with \(c_0\) sufficiently small.  Let \(E\) be the exceptional set in
+one such interval, \(M=|E|\), and let \(d_p\) count the members of \(E\)
+for which \(p\) occurs in (42.1).  Then
+\[
+ I:=\sum_pd_p\gg\varepsilon NM/\log N.
+\tag{42.10}
+\]
+The prime universe has size \(L\ll N/\log N\).  Cauchy--Schwarz gives
+\[
+ \sum_p\binom{d_p}{2}
+ \ge\frac12\left(\frac{I^2}{L}-I\right).
+\tag{42.11}
+\]
+On the other hand, (42.7) and \(|m-n|\le Y\) give
+\[
+ \sum_p\binom{d_p}{2}
+ \ll YM^2.
+\tag{42.12}
+\]
+After \(c_0\) is chosen small, comparison of the quadratic terms in
+(42.11)--(42.12), followed by \(I\le LM\), yields
+\[
+ M=O(\varepsilon^{-2}).
+\tag{42.13}
+\]
+There are \(O(\varepsilon^{-2}\log N)\) intervals in the dyadic shell.
+Summing over the \(O(\log N)\) shells below \(N\) proves
+\[
+ \boxed{
+ \#\{n\le N:\log G_n>\varepsilon n\}
+ =O_\varepsilon((\log N)^2).}
+\tag{42.14}
+\]
+
+This theorem is genuinely unconditional and pointwise at the level of
+each short interval, but it does not imply P3.2.  It permits isolated
+exceptional indices, and neither reflection nor Lucas lifting transports
+a positive proportion of a spike to another index of comparable size.
+The remaining theorem is therefore an exclusion of isolated horizontal
+conspiracies, not merely a density-one estimate.
