@@ -1,5 +1,6 @@
 name: Q5708 chatgpt-drop audit
 
+# This branch workflow is retained with the delivered reproducer.
 on:
   push:
     branches: [chatgpt-drop]
