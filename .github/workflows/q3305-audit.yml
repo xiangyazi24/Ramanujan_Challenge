@@ -1,0 +1,28 @@
+name: Q3305 endpoint and wedge audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'problems/3.2/research/scripts/q3305_endpoint_wedge_audit.py'
+      - '.github/workflows/q3305-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  projective:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Independent recurrence audit through q <= 300
+        run: python3 problems/3.2/research/scripts/q3305_endpoint_wedge_audit.py --mode projective --q-limit 300
+
+  finite-sum:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - name: Q3228 finite-sum audit through q <= 300
+        run: python3 problems/3.2/research/scripts/q3305_endpoint_wedge_audit.py --mode finite --q-limit 300
