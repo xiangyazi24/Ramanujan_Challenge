@@ -1,3 +1,4 @@
+# Trigger file for the main-branch Q5707 PR audit.
 name: Q5707 cross-model shell audit
 
 on:
