@@ -5,6 +5,11 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/q5708-main-audit.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'problems/3.2/research/scripts/q5708_newton_residual_audit.py'
+      - '.github/workflows/q5708-chatgpt-drop-audit.yml'
 
 permissions:
   contents: write
@@ -31,7 +36,7 @@ jobs:
         shell: bash
         run: |
           git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.email '4189828+github-actions[bot]@users.noreply.github.com'
           git add q5708-audit.out q5708-audit.status
           git commit -m 'Record Q5708 Newton residual audit' || exit 0
           git push origin HEAD:chatgpt-drop
