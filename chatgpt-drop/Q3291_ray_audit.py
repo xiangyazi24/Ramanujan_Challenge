@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+# Triggered by the temporary Q3291 GitHub Actions runner.
 import hashlib
 import sys
 from collections import defaultdict
@@ -16,38 +17,32 @@ def P(n: int) -> int:
 
 
 def main() -> None:
-    # Factorial-cleared rational companion: Y_n=(n!)^3 a_n.
-    # Y_{n+1}=P(n)Y_n-n^6Y_{n-1}; E_n=(n!)^3/gcd((n!)^3,Y_n).
     E = [0] * (NMAX + 2)
     b = [0] * (NMAX + 2)
     b[0], b[1] = 1, 5
 
     Y_prev, Y_cur = 0, 6
-    F = 1  # (1!)^3
+    F = 1
     E[0] = 1
     E[1] = F // gcd(F, Y_cur)
 
     for n in range(1, NMAX + 1):
         if n >= 2:
-            # F was (n-1)!^3 at loop entry.
             F *= n**3
             E[n] = F // gcd(F, Y_cur)
 
-        if n <= NMAX:
-            den = (n + 1)**3
-            nb = P(n)*b[n] - n**3*b[n-1]
-            assert nb % den == 0
-            b[n+1] = nb // den
+        den = (n + 1)**3
+        nb = P(n)*b[n] - n**3*b[n-1]
+        assert nb % den == 0
+        b[n+1] = nb // den
 
-            Y_next = P(n)*Y_cur - n**6*Y_prev
-            Y_prev, Y_cur = Y_cur, Y_next
+        Y_next = P(n)*Y_cur - n**6*Y_prev
+        Y_prev, Y_cur = Y_cur, Y_next
 
-    # At loop exit Y_cur=Y_{NMAX+1}; extend the factorial cube once.
     F *= (NMAX + 1)**3
     E[NMAX + 1] = F // gcd(F, Y_cur)
 
     groups: dict[tuple[int, int], list[tuple[int, int]]] = defaultdict(list)
-    records: list[tuple[int, tuple[int, int], int]] = []
     digest = hashlib.sha256()
 
     for n in range(1, NMAX + 1):
@@ -59,15 +54,12 @@ def main() -> None:
         mup = gcd(6*Tp, (n+1)**3)
         Xm = 6*Tm // mum
         Xp = 6*Tp // mup
-        assert Xm > 0 and Xp > 0
         W = gcd(Xm, Xp)
         ray = (Xm // W, Xp // W)
         assert gcd(*ray) == 1
         assert Xm == ray[0]*W and Xp == ray[1]*W
-        # Exact Casoratian consequence used in Q3159/Q3273.
         assert (6*b[n]) % W == 0
         groups[ray].append((n, W))
-        records.append((n, ray, W))
         digest.update(f"{n}:{ray[0]}:{ray[1]}:{W}\n".encode())
 
     repeated = [(ray, occ) for ray, occ in groups.items() if len(occ) >= 2]
