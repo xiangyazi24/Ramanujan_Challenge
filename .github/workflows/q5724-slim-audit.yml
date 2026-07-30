@@ -4,21 +4,24 @@ on:
     branches: [main]
 permissions:
   contents: read
+concurrency:
+  group: q5724-slim-recurrence
+  cancel-in-progress: true
 jobs:
   audit:
     runs-on: ubuntu-slim
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          fetch-depth: 0
-      - name: Fetch dependency-free recurrence probe
+          python-version: '3.12'
+      - name: Prepare vectorized exact probe
         shell: bash
         run: |
-          git fetch origin q5723-audit
-          git show origin/q5723-audit:problems/3.2/research/scripts/q5723_state_order_audit.py > /tmp/q5724_probe.py
-          sed -i 's/MODS=(1000000007,1000000009)/MODS=(1000000007,)/' /tmp/q5724_probe.py
-          sed -i 's/for M in (754,1200,1500):/for M in (754,900,1050):/' /tmp/q5724_probe.py
+          cp problems/3.2/research/scripts/q5724_minimal_probe.py /tmp/q5724_probe.py
+          sed -i 's/MS = (1400, 1600, 1800)/MS = (1050, 1150)/' /tmp/q5724_probe.py
+          python -m pip install numpy sympy
       - name: Run exact modular recurrence probe
         shell: bash
         run: python /tmp/q5724_probe.py | tee q5724-slim.out
