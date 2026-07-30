@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Platform-independent modular probe for Q5724.
 
-Uses the exact first-cell shell formula, dense modular RREF, monotone binary
-search in Ore order/degree, held-out verification, SymPy endpoint factoring,
-and exact augmented-state gcd scans.  No numerical floating point is used.
+Uses the exact first-cell shell formula, vectorized finite-field RREF,
+monotone binary search in Ore order/degree, held-out verification, SymPy
+endpoint factoring, and exact augmented-state gcd scans. No floating-point
+arithmetic enters the recurrence calculation.
 """
 from __future__ import annotations
 from math import comb, gcd
-from typing import Optional
+import numpy as np
 
 P = 1000003
 MAX_ORDER = 38
@@ -46,57 +47,50 @@ def F_sequence_mod(M: int, p: int) -> list[int]:
     return out
 
 
-def make_matrix(seq: list[int], order: int, degree: int, row_ids) -> list[list[int]]:
-    p=P; A=[]
+def make_matrix(seq: list[int], order: int, degree: int, row_ids) -> np.ndarray:
+    rows=[]
     for r in row_ids:
         pw=[1]
-        for _ in range(degree):pw.append(pw[-1]*r%p)
+        for _ in range(degree):pw.append(pw[-1]*r%P)
         row=[]
         for i in range(order+1):
             y=seq[r+i]
-            row.extend(y*z%p for z in pw)
-        A.append(row)
-    return A
+            row.extend(y*z%P for z in pw)
+        rows.append(row)
+    return np.asarray(rows,dtype=np.int64)
 
 
-def rref_nullity(A: list[list[int]], p: int, need_vector=False):
-    if not A:return 0,None
-    a=[row[:] for row in A]
-    m=len(a); n=len(a[0]); piv=[]; rr=0
+def rref_nullity(A: np.ndarray, p: int, need_vector=False):
+    if A.size==0:return 0,None
+    a=A.copy()%p
+    m,n=a.shape;piv=[];rr=0
     for c in range(n):
-        pivot=None
-        for i in range(rr,m):
-            if a[i][c]%p:
-                pivot=i;break
-        if pivot is None:continue
-        a[rr],a[pivot]=a[pivot],a[rr]
-        inv=pow(a[rr][c],p-2,p)
-        ar=a[rr]
-        for j in range(c,n):ar[j]=ar[j]*inv%p
-        for i in range(m):
-            if i==rr:continue
-            z=a[i][c]%p
-            if z:
-                ai=a[i]
-                for j in range(c,n):ai[j]=(ai[j]-z*ar[j])%p
+        nz=np.flatnonzero(a[rr:,c])
+        if nz.size==0:continue
+        pivot=rr+int(nz[0])
+        if pivot!=rr:a[[rr,pivot]]=a[[pivot,rr]]
+        inv=pow(int(a[rr,c]),p-2,p)
+        ar=(a[rr,c:]*inv)%p
+        a[rr,c:]=ar
+        factors=a[:,c].copy();factors[rr]=0
+        if np.any(factors):
+            a[:,c:] = (a[:,c:] - factors[:,None]*ar[None,:]) % p
         piv.append(c);rr+=1
         if rr==m:break
     nullity=n-rr
     if not need_vector or nullity==0:return nullity,None
-    free=next(c for c in range(n) if c not in set(piv))
-    v=[0]*n;v[free]=1
-    for i in range(rr-1,-1,-1):
-        c=piv[i]
-        v[c]=(-sum(a[i][j]*v[j] for j in range(c+1,n)))%p
-    return nullity,v
+    pset=set(piv);free=next(c for c in range(n) if c not in pset)
+    v=np.zeros(n,dtype=np.int64);v[free]=1
+    # Matrix is in reduced form, so one free variable suffices.
+    for i,c in enumerate(piv):v[c]=(-a[i,free])%p
+    return nullity,[int(x) for x in v]
 
 
 def has_recurrence(seq,order,degree):
     cols=(order+1)*(degree+1); neq=len(seq)-order
     if neq<cols+16:return False
     train=min(neq-16,cols+20)
-    A=make_matrix(seq,order,degree,range(train))
-    return rref_nullity(A,P)[0]>0
+    return rref_nullity(make_matrix(seq,order,degree,range(train)),P)[0]>0
 
 
 def first_true(lo,hi,pred):
@@ -109,14 +103,13 @@ def first_true(lo,hi,pred):
 
 
 def verify(seq,order,degree,v,start=0):
-    p=P
     for r in range(start,len(seq)-order):
         pw=[1]
-        for _ in range(degree):pw.append(pw[-1]*r%p)
+        for _ in range(degree):pw.append(pw[-1]*r%P)
         z=0;c=0
         for i in range(order+1):
             for k in range(degree+1):
-                z=(z+v[c]*pw[k]%p*seq[r+i])%p;c+=1
+                z=(z+v[c]*pw[k]%P*seq[r+i])%P;c+=1
         if z:return False,r,z
     return True,None,None
 
@@ -127,17 +120,13 @@ def solve_minimal(seq):
     degree=first_true(0,MAX_DEGREE,lambda d:has_recurrence(seq,order,d))
     cols=(order+1)*(degree+1); neq=len(seq)-order
     train=min(neq-24,cols+30)
-    A=make_matrix(seq,order,degree,range(train))
-    nul,v=rref_nullity(A,P,True)
+    nul,v=rref_nullity(make_matrix(seq,order,degree,range(train)),P,True)
     if nul!=1:return ('NONCYCLIC',order,degree,nul)
     assert verify(seq,order,degree,v,train)[0]
-    Afull=make_matrix(seq,order,degree,range(neq))
-    nul2,v2=rref_nullity(Afull,P,True)
+    nul2,v2=rref_nullity(make_matrix(seq,order,degree,range(neq)),P,True)
     assert nul2==1 and verify(seq,order,degree,v2)[0]
-    # normalize highest nonzero coefficient to 1
-    q=next(x for x in reversed(v2) if x)
-    iq=pow(q,P-2,P);v2=[x*iq%P for x in v2]
-    return order,degree,v2
+    q=next(x for x in reversed(v2) if x);iq=pow(q,P-2,P)
+    return order,degree,[x*iq%P for x in v2]
 
 
 def poly_coeff(v,i,d):return [v[i*(d+1)+k] for k in range(d+1)]
@@ -151,12 +140,10 @@ def factor_endpoint(coeff):
 
 
 def probe(M):
-    seq=F_sequence_mod(M,P)
-    ans=solve_minimal(seq)
+    seq=F_sequence_mod(M,P);ans=solve_minimal(seq)
     print('PROBE',M,P,'terms',len(seq),'ans',None if ans is None else ans[:2],flush=True)
     if ans is None or ans[0]=='NONCYCLIC':return ans
-    o,d,v=ans
-    c0=poly_coeff(v,0,d);co=poly_coeff(v,o,d)
+    o,d,v=ans;c0=poly_coeff(v,0,d);co=poly_coeff(v,o,d)
     print('TRAIL',factor_endpoint(c0),flush=True)
     print('LEAD',factor_endpoint(co),flush=True)
     print('HELD',verify(seq,o,d,v,max(0,len(seq)-o-60)),flush=True)
@@ -174,8 +161,7 @@ def F_exact(M):
         d=M-r;total=0
         for t in range(M+1):
             A=C(M,t);X=C(M,t-d)+A+C(M,t+d);N=2*M-t
-            Z=C(N,M-d)+C(N,M)+C(N,M+d)
-            total+=A*X*Z*Z
+            Z=C(N,M-d)+C(N,M)+C(N,M+d);total+=A*X*Z*Z
         out.append(total-b)
     return b,out
 
