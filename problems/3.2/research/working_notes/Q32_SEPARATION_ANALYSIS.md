@@ -690,6 +690,44 @@ pointwise theorem.
     precise two-target no-go; a growing multi-target or new
     initial-state identity is outside its scope.
 
+54. The cutoff saturation extends to an arbitrary number of target
+    characteristics.  If \(p_1<\cdots<p_k\), \(P_i=p_1\cdots p_i\), and
+    \(S_i\) is the Racah prefix at \((p_i-1)/2\), then the exact prefix
+    lattice has Smith form
+    \[
+      \operatorname {diag}
+      (p_1,P_1^2p_2,\ldots,P_{k-1}^2p_k).
+    \]
+    After the long prefix and the universal node squares are removed,
+    its boundary Smith form is the identity.  Restoring the actual
+    rank-two cutoff graph gives a target presentation with unit maximal
+    Fitting ideal; the target product occurs only as the index
+    \(\operatorname {diag}(1,P_k)\) of the two long coordinates.  At
+    the genuine triple \(n=321\), \(p_i=179,193,211\), the last fully
+    divided boundary quotient is \(4\bmod211\), so no third-target
+    factor survives.  The original Q5677 attachment incorrectly treated
+    a localized rational cofactor as an integer divisor; the corrected
+    exact audit uses `Fraction` and still proves the saturation theorem.
+
+55. The conjectural companion projectivity in item 52 has an exact
+    endpoint reduction.  For every block position \(j<q\),
+    \[
+      \Delta_j=q^3a_{kq+j}b_k-a_kb_{kq+j}
+      =F_j(kq)\Delta_0+G_j(kq)E_0,
+    \]
+    where \(G_j(kq)=(kq)^3R_j(kq)\) and \(E_0\) is \(q\)-integral.
+    Hence \(q^3\mid\Delta_j\) for all \(j\) if and only if
+    \(q^3\mid\Delta_0\).  The endpoint is proved when \(q\) has no
+    Apéry zero digit, but remains unproved at primes possessing a lower
+    zero.  Conditional only on that endpoint,
+    \[
+      \Delta_j/q^3\equiv\kappa_{q,k}b_j+a_j\pmod q.
+    \]
+    Thus at every actual zero digit \(q\mid b_j\), the first projective
+    defect is the unit \(a_j\), and the projective valuation is exactly
+    three.  Proving the missing endpoint would therefore close a local
+    congruence, not create a fourth-order target carrier.
+
 Thus Routes A and B are closed **as presently formulated**. This is not a
 disproof of `log G_n=o(n)`. It identifies the exact missing ingredient:
 cross-prime, Apéry-specific Archimedean/p-adic coupling not already contained
@@ -8942,3 +8980,271 @@ Moreover (37.4)--(37.6) show the tactical limitation in advance:
 (37.7) would propagate an anchor projective relation, not supply
 horizontal separation, unless its first \(q^3\)-defect becomes
 selective precisely on the locus (37.5).
+
+## 38. Multi-target Racah cutoffs are also primitively saturated
+
+The two-target calculation of Section 36 does not acquire a new primitive
+factor when three or more target cutoffs are placed in the same rank-two
+graph.  Let
+\[
+ p_1<\cdots<p_k,\qquad
+ P_i=\prod_{a\le i}p_a,\qquad
+ M_i=(p_i-1)/2,
+\tag{38.1}
+\]
+and let \(S_i\) be the prefix (36.2) through \(M_i\).  Since
+\(M_k<p_1\), every cutoff denominator is a unit at every target
+characteristic.  The target and boundary conditions are
+\[
+ p_i\mid S_i,\qquad
+ P_i^2\mid S_{i+1}-S_i.
+\tag{38.2}
+\]
+
+These conditions have the exact integral parametrization
+\[
+ \boxed{
+ S_i=P_kt-\sum_{h=i}^{k-1}P_h^2c_h
+ }\qquad(t,c_1,\ldots,c_{k-1}\in\mathbb Z).
+\tag{38.3}
+\]
+Indeed \(P_i\mid S_i\) propagates inductively through the squared
+differences, and the new condition \(p_{i+1}\mid S_{i+1}\) gives
+\(P_{i+1}\mid S_{i+1}\).  Starting with \(S_k=P_kt\) and subtracting
+the consecutive differences proves (38.3).
+
+The unimodular coordinate change
+\[
+ (S_1,\ldots,S_k)\longmapsto
+ (S_k,S_k-S_{k-1},\ldots,S_2-S_1)
+\tag{38.4}
+\]
+turns this lattice into
+\[
+ P_k\mathbb Z\oplus P_{k-1}^2\mathbb Z
+ \oplus\cdots\oplus P_1^2\mathbb Z.
+\tag{38.5}
+\]
+Sorting the valuations of each \(p_i\) gives
+\[
+ \boxed{
+ \operatorname {SNF}=
+ \operatorname {diag}
+ (p_1,P_1^2p_2,P_2^2p_3,\ldots,P_{k-1}^2p_k).
+ }
+\tag{38.6}
+\]
+After the \(P_k(1,\ldots,1)\) direction is removed, all remaining
+content consists of the universal squares \(P_i^2\).  Dividing those
+squares leaves the identity Smith form.
+
+The actual cutoff graph is smaller but even more clearly saturated.
+Localize \(\mathbb Z\) at the cutoff denominators and write
+\[
+ S_i=s+Wq_i,\qquad q_1=0,
+\tag{38.7}
+\]
+where
+\[
+ W=\left(
+   \frac{\binom n{M_1+1}\binom{n+M_1+1}{M_1+1}}{p_1}
+   \right)^2.
+\tag{38.8}
+\]
+The target equations, with their divided quotients retained, are
+\[
+ s+Wq_i=p_it_i.
+\tag{38.9}
+\]
+Their presentation matrix has rows
+\[
+ (1,q_i,0,\ldots,-p_i,\ldots,0).
+\tag{38.10}
+\]
+A maximal minor using the \(s\)-column and all quotient columns except
+the \(i\)-th is \(P_k/p_i\).  Since
+\[
+ \gcd_i(P_k/p_i)=1,
+\tag{38.11}
+\]
+the gcd of the maximal minors is one and the presentation has unit
+Smith form.
+
+The location of the target product can be stated exactly.  Choose CRT
+idempotents \(e_i\) modulo \(P_k\), put
+\[
+ \sigma=-\sum_i e_iq_i,
+\tag{38.12}
+\]
+and use two free coordinates \(A,B\).  Every solution of (38.9) is
+\[
+\begin{split}
+ s&=P_kA+\sigma B,\qquad W=B,\\
+ t_i&=(P_k/p_i)A+(\sigma+q_i)B/p_i.
+\end{split}
+\tag{38.13}
+\]
+Thus the projection of the solution lattice onto \((s,W)\) has Smith
+form
+\[
+ \operatorname {diag}(1,P_k).
+\tag{38.14}
+\]
+All target content is attached to the two long coordinates; it is not
+torsion in the primitive equation module.
+
+For the divided boundary variables
+\[
+ c_i=\frac{S_{i+1}-S_i}{P_i^2},
+\tag{38.15}
+\]
+the rank-two graph gives, in the localized ring,
+\[
+ c_i=WR_i.
+\tag{38.16}
+\]
+The boundary presentation contains an identity block in the \(c_i\)
+columns.  Eliminating \(W\) gives only the identically vanishing minors
+\[
+ R_jc_i-R_ic_j=0.
+\tag{38.17}
+\]
+This is where the original Q5677 reproducer required correction:
+(38.16) is an equality in the localization, not the integer
+divisibility \(W\mid c_i\).  Both integer divisibility assertions in
+that attachment fail at the triple below.  Treating \(R_i=c_i/W\) as
+exact rational numbers repairs every residue and determinant check.
+
+For
+\[
+ (n;p_1,p_2,p_3)=(321;179,193,211),
+\tag{38.18}
+\]
+the cutoffs are \(89,96,105\).  Exact integer arithmetic gives
+\[
+\begin{split}
+ \frac{S_2-S_1}{179^2}&\equiv107\pmod {211},\\
+ \frac{S_3-S_2}{(179\cdot193)^2}&\equiv4\pmod {211},\\
+ W&\equiv66\pmod {211},\\
+ (R_1,R_2)&\equiv(24,64)\pmod {211}.
+\end{split}
+\tag{38.19}
+\]
+In particular the last divided boundary is a \(211\)-unit, while
+\[
+ R_2c_1-R_1c_2=0
+\tag{38.20}
+\]
+holds exactly.  The third target is additive cancellation with the
+long prefix, not boundary vanishing.
+
+Therefore a growing number of target cutoffs does not escape the
+height/selectivity tradeoff within the finite linear cutoff module.
+Determinants, primitive Fitting minors, ordinary linear resultants, and
+operandwise-certified gcds either retain \(s\) or \(W\), retain
+coefficient content, or reduce to (38.17).  This statement does not
+exclude a new nonlinear identity using the distinguished Apéry initial
+state outside the cutoff graph.  The dependency-free exact audit is
+`../scripts/q32_multitarget_cutoff_saturation.py`.
+
+## 39. Exact endpoint reduction for companion projectivity
+
+The computational congruence (37.7) has a rigorous within-block reduction.
+Let \(1\le k<q\), put \(x=kq\), and define the exact transfer coefficients
+\[
+\begin{split}
+ F_0(x)&=1,&F_1(x)&=P(x)/(x+1)^3,\\
+ G_0(x)&=0,&G_1(x)&=-x^3/(x+1)^3.
+\end{split}
+\tag{39.1}
+\]
+Continuing both pairs through the shifted Apéry recurrence gives, for
+every solution \(y\),
+\[
+ y_{x+j}=F_j(x)y_x+G_j(x)y_{x-1}.
+\tag{39.2}
+\]
+Induction also gives
+\[
+ G_j(x)=x^3R_j(x),
+\tag{39.3}
+\]
+where \(F_j(kq)\) and \(R_j(kq)\) are \(q\)-integral for \(j<q\).
+
+Put
+\[
+\begin{split}
+ \Delta_j&=q^3a_{kq+j}b_k-a_kb_{kq+j},\\
+ E_0&=q^3a_{kq-1}b_k-a_kb_{kq-1}.
+\end{split}
+\tag{39.4}
+\]
+Applying (39.2) to both distinguished solutions proves the exact identity
+\[
+ \boxed{
+ \Delta_j=F_j(kq)\Delta_0+G_j(kq)E_0.
+ }
+\tag{39.5}
+\]
+The first-digit companion congruence at
+\((kq-1)=(k-1)q+(q-1)\), together with Apéry--Lucas, gives
+\[
+ E_0\equiv
+ a_{k-1}b_k-a_kb_{k-1}
+ \equiv-\frac6{k^3}\pmod q.
+\tag{39.6}
+\]
+In particular \(E_0\) is \(q\)-integral.  Equations (39.3)--(39.5)
+therefore prove
+\[
+ \boxed{
+ q^3\mid\Delta_j\text{ for every }0\le j<q
+ \quad\Longleftrightarrow\quad
+ q^3\mid\Delta_0.
+ }
+\tag{39.7}
+\]
+
+This isolates the unproved statement precisely:
+\[
+ q^3\mid q^3a_{kq}b_k-a_kb_{kq}.
+\tag{39.8}
+\]
+If \(q\) has no zero digit \(b_j\equiv0\pmod q\), the Casoratian
+cocycle may be summed blockwise without singular nonseam terms.
+The seam terms and the endpoint supercongruences then prove (39.8).
+This proof does not extend merely by assuming \(q\nmid b_k\): any
+lower zero digit creates singular terms in the block.  Thus (39.8)
+remains open exactly at primes possessing at least one Apéry zero
+digit.
+
+The first omitted digit is nevertheless determined once (39.8) is
+assumed.  Write
+\[
+ \kappa_{q,k}=\Delta_0/q^3\pmod q.
+\tag{39.9}
+\]
+Since
+\[
+ F_j(kq)\equiv b_j,\qquad
+ R_j(0)=-a_j/6\pmod q,
+\tag{39.10}
+\]
+dividing (39.5) by \(q^3\) and using (39.6) yields
+\[
+ \boxed{
+ \Delta_j/q^3\equiv\kappa_{q,k}b_j+a_j\pmod q.
+ }
+\tag{39.11}
+\]
+At an interior zero digit \(q\mid b_j\), the Casoratian makes \(a_j\)
+a \(q\)-unit.  Consequently
+\[
+ v_q(\Delta_j)=3
+\tag{39.12}
+\]
+at every target, conditional only on the endpoint (39.8).  This includes
+the thinner locus \(\omega_{q,k,j}=0\) from (37.5).  Thus the missing
+endpoint theorem is worth proving as a clean companion supercongruence,
+but its first defect rules out the hoped-for fourth projective copy on
+the target locus.
