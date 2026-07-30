@@ -5770,3 +5770,915 @@ statement for \(\zeta(3)\); at growing degree it confronts an unknown
 polynomial-approximation measure.  An escape which avoids both must obtain
 smallness from a new arithmetic mechanism rather than from cancellation of
 the dominant Apéry line alone.
+
+## 18. Audit of the \(S(p)\)/Katz handoff (2026-07-30)
+
+The six-page handoff `P32_proof_v7.tex` proposes to finish Part B from a
+uniform bound on
+\[
+ {\cal S}_a(p)=
+ \{1\le m<p:\ p\mid P_{mp},\ p\nmid b_{mp}\}.
+\tag{18.1}
+\]
+Its matrix statistic is
+\[
+ \Phi_m=M_{m-1}\cdots M_1,\qquad
+ a_m\equiv6(\Phi_m)_{11}\pmod p.
+\tag{18.2}
+\]
+Computation through \(p<10^5\) gives a maximum of \(11\) for this set and a
+clean paired-Poisson histogram.  None of this closes the pointwise problem.
+There are three independent fatal gaps.
+
+### 18.1 The proposed multiplier set omits the lower Apéry channel
+
+For \(\sqrt n<p\le n\), write
+\[
+ n=qp+r,\qquad0\le r<p.
+\]
+The audited block identity is
+\[
+ p^3a_{qp+r}\equiv a_qb_r\pmod p,
+\tag{18.3}
+\]
+and hence, apart from the already separated harmless small primes,
+\[
+ p\mid G_n
+ \quad\Longleftrightarrow\quad
+ a_qb_r\equiv0\pmod p.
+\tag{18.4}
+\]
+Thus there are two channels:
+\[
+ p\mid a_q
+ \qquad\hbox{or}\qquad
+ p\mid b_r.
+\tag{18.5}
+\]
+The first is the companion channel.  The height/short-interval split at
+\(q=n^{1/3}\) already proves that its total logarithmic weight is
+\(O(n^{2/3})\).  Indeed, for small \(q\) use
+\(\log|\operatorname {num}(a_q)|=O(q)\); for large \(q\), every relevant
+prime is at most \(n^{2/3}\), so Chebyshev gives \(O(n^{2/3})\).
+
+The statistic (18.1)--(18.2) concerns precisely this already controlled
+companion channel.  It says nothing about the second channel in (18.5),
+which is the actual obstruction.
+
+There is a minimal exact counterexample to the v7 Part-B classification:
+\[
+ n=16,\qquad p=11,\qquad q=1,\qquad r=5.
+\]
+Here
+\[
+ b_5=819005\equiv0\pmod {11},
+\]
+and exact recurrence arithmetic gives
+\[
+ P_{16}\equiv Q_{16}\equiv0\pmod {11},
+ \qquad v_{11}(G_{16})=1.
+\tag{18.6}
+\]
+On the other hand,
+\[
+ P_{11}\equiv6\pmod {11},\qquad
+ b_{11}\equiv5\pmod {11},
+\tag{18.7}
+\]
+so \(1=\lfloor16/11\rfloor\notin{\cal S}_a(11)\).
+Consequently a Part-B prime occurs outside the proposed bad-multiplier
+streaks.  This refutes the Part-B proposition before one asks how large
+\({\cal S}_a(p)\) is.
+
+For \(p>n/2\), (18.4) has \(q=1\) and \(a_1=6\), so the exact remaining
+support is instead
+\[
+ p\mid b_{n-p}.
+\tag{18.8}
+\]
+Lucas gives, away from the small exceptional characteristic,
+\[
+ \{p\in(n/2,n]:p\mid G_n\}
+ =
+ \{p\in(n/2,n]:p\mid b_n\}.
+\tag{18.9}
+\]
+This is the top-half large-prime radical problem isolated earlier.
+
+### 18.2 Even an absolute row bound does not imply a pointwise column bound
+
+Suppose, contrary to the preceding channel mismatch, that one had found
+sets \(S(p)\) which really parametrized all bad residues and had proved
+\(|S(p)|\le C\) for every prime.  The v7 proof still replaces a
+deterministic count at a fixed \(n\) by the expectation
+\(\sum_p(C-1)/p\).  This is invalid.
+
+For a clean abstract countermodel, choose a rapidly increasing sequence
+\(N_j\) such that the intervals \((N_j/2,N_j]\) are disjoint.  For each
+prime in the \(j\)-th interval put
+\[
+ S(p)=\{1,p-2,p-1\}.
+\tag{18.10}
+\]
+This has constant size, contains the claimed forced endpoint, and respects
+the reflection pair \(1\leftrightarrow p-2\).  Yet at \(n=N_j\),
+\(\lfloor n/p\rfloor=1\) for every prime in the top half, so
+\[
+ \sum_{\substack{n/2<p\le n\\
+                  \lfloor n/p\rfloor\in S(p)}}\log p
+ =\vartheta(n)-\vartheta(n/2)
+ \sim\frac n2.
+\tag{18.11}
+\]
+The actual Apéry sets have extra arithmetic constraints, but using them
+requires a cross-prime theorem.  A one-prime cardinality estimate, even an
+absolute one, cannot supply that theorem.
+
+The reported Poisson\((1/2)\) fit points in the same direction.  It predicts
+bounded mean and excellent tails for an individual prime, but the maximum
+over the primes up to \(x\) grows slowly, on the scale
+\[
+ \frac{\log\pi(x)}{\log\log\pi(x)},
+\tag{18.12}
+\]
+and is therefore unbounded.  A maximum of \(11\) below \(10^5\) is
+compatible with this model; it is not evidence for a universal constant.
+
+### 18.3 The claimed Katz theorem has the wrong object and the wrong output
+
+The Beukers--Peters monodromy describes the K3 Picard--Fuchs local system as
+its geometric base parameter varies.  In contrast, \(\Phi_m\) in (18.2) is
+a variable-length prefix product in the coefficient index of one
+recurrence solution.  It is not a Frobenius conjugacy class of that K3
+sheaf at the base point \(m\).
+
+No bounded-conductor lisse sheaf representing
+\[
+ m\longmapsto\Phi_m
+\tag{18.13}
+\]
+has been constructed.  In fact \((\Phi_m)_{11}=a_m/6\), and direct
+interpolation over \(\mathbb F_p\) has degree of order \(p\).  This is
+exactly the growing-complexity behavior excluded by the claimed
+bounded-monodromy application.
+
+There is also a quantitative error.  Even if one independently proved,
+for all nontrivial additive characters,
+\[
+ \left|\sum_{m\in\mathbb F_p}
+   \psi\big((\Phi_m)_{11}\big)\right|
+ \le C\sqrt p,
+\tag{18.14}
+\]
+Fourier inversion would give only
+\[
+ \#\{m:(\Phi_m)_{11}=0\}=1+O(\sqrt p),
+\tag{18.15}
+\]
+not \(O(1)\).  A genuinely bounded-degree algebraic map would have \(O(1)\)
+zeros for the elementary reason that a nonzero bounded-degree function has
+only boundedly many roots; the measured degree \(\asymp p\) is precisely
+why that argument is unavailable.
+
+Accordingly, the phrase “Katz equidistribution for products of
+algebraically varying matrices” is not a citable proof.  It would require
+an exact theorem, an actual construction matching (18.13), a conductor
+bound uniform in \(p\), and then a separate cross-prime argument.  The
+usual Deligne/Katz square-root theorem supplies none of the last two
+steps merely from the Picard--Fuchs monodromy group.
+
+### 18.4 The self-similarity congruence is proved elsewhere, but not by v7
+
+Small-prime exact computation supports
+\[
+ p^3\frac{a_{mp}}{b_{mp}}
+ \equiv\frac{a_m}{b_m}\pmod p
+\tag{18.16}
+\]
+when the displayed ratios are \(p\)-integral after the indicated scaling.
+The canonical `Q3.2_density_theorem.md` in fact proves it.  Its explicit
+companion formula, together with the two Kummer valuation tables, proves
+\[
+ p^3a_{mp}\equiv a_m\pmod p.
+\tag{18.16a}
+\]
+Gessel--Lucas gives \(b_{mp}\equiv b_m\pmod p\), so division by the latter
+unit gives (18.16).  The same argument followed by recurrence propagation
+in \(r\) proves the complete block law (18.3).
+
+The v7 telescoping proof is nevertheless invalid as written.  Terms for
+which an intermediate \(b_j\) vanishes have more negative \(p\)-adic
+valuation, not less; saying they are “dominated” by the generic valuation
+reverses the valuation comparison.  The asserted integrality of the
+complementary block sum is not proved either.
+
+There is a second overstatement: congruence (18.16) is not formally
+equivalent to exact equality of valuations when its right-hand side
+vanishes modulo \(p\).  What follows rigorously is the mod-\(p\) set
+identity needed to recognize the companion channel.  This correction still
+cannot rescue v7, because Sections 18.1 and 18.2 refute its claimed Part-B
+consequence independently.
+
+### 18.5 Correct surviving target
+
+Put
+\[
+ T_n=\{p\in(n/2,n]:p\mid b_n\},\qquad K_n=|T_n|.
+\tag{18.17}
+\]
+A genuine sufficient theorem is the shell-uniform pair-energy estimate
+\[
+ H_2(N):=
+ \sum_{N<n\le2N}(K_n)_2
+ =o\!\left(\frac{N^2}{\log^2N}\right).
+\tag{18.18}
+\]
+Indeed,
+\[
+ \max_{N<n\le2N}K_n
+ \le1+\sqrt{H_2(N)}
+ =o(N/\log N),
+\tag{18.19}
+\]
+so every top-half logarithmic radical is \(o(n)\).  The dyadic-shell
+quantifier in (18.18) is essential; a cumulative estimate along a sparse
+sequence of endpoints need not control every shell.
+
+For the full lower channel, the sharp formulation is quotientwise.  For a
+fixed \(q\ge1\), put
+\[
+ K_q(n)=
+ \#\left\{p:
+   \frac n{q+1}<p\le\frac nq,\quad
+   p\mid b_{n-qp}\right\},
+\tag{18.19a}
+\]
+and
+\[
+ H_{2,q}(N)=\sum_{N<n\le2N}(K_q(n))_2.
+\tag{18.19b}
+\]
+It is sufficient to prove, separately for every fixed \(q\),
+\[
+ H_{2,q}(N)=o_q\!\left(\frac{N^2}{\log^2N}\right).
+\tag{18.19c}
+\]
+No uniformity in growing \(q\) is needed.  Indeed, first discard
+\(p\le\eta n\), whose total logarithmic mass is \(O(\eta n)\).  The
+remaining primes have \(q<1/\eta\), only finitely many quotient classes.
+For each of them, nonnegativity and (18.19c) give
+\[
+ \max_{N<n\le2N}K_q(n)=o_q(N/\log N).
+\]
+Sum over the finite set of \(q\), then let \(\eta\downarrow0\).  Together
+with the \(O(n^{2/3})\) companion channel and the small-prime estimate, this
+proves the full \(\log G_n=o(n)\).
+
+The fixed-gap Selberg carriers prove sublinear height for each fixed gap,
+but charging all \(h\le A\log n\) separately has total height \(O(n)\).
+Radicalizing, harmonic formal exponents, or dyadic bookkeeping cannot
+remove this cost: every target prime incident to a short edge must still
+occur with an integer exponent somewhere.  A positive continuation needs
+an Apéry-specific inverse-gap saving or a common horizontal rank condition,
+not another local equidistribution claim.
+
+### 18.6 Irrationality measures cannot remove the denominator-clearing rate
+
+There is also no escape through the real quality of the Apéry
+approximants.  Put
+\[
+ \lambda=17+12\sqrt2,\qquad L=\log\lambda.
+\]
+The standard asymptotics give
+\[
+ \log Q_n=(3+L)n+o(n),\qquad
+ \left|\zeta(3)-\frac{P_n}{Q_n}\right|
+ =\exp\{-2Ln+o(n)\}.
+\tag{18.20}
+\]
+If \(\mu_0\) is any proved finite upper bound for the irrationality
+exponent of \(\zeta(3)\), apply the corresponding lower bound to the
+reduced denominator \(q_n=Q_n/G_n\).  One obtains exactly
+\[
+ \log G_n
+ \le
+ \left(3+L-\frac{2L}{\mu_0}\right)n+o(n).
+\tag{18.21}
+\]
+With the Rhin--Viola value
+\(\mu_0=5.51389062\ldots\), the coefficient in (18.21) is
+\[
+ 5.2467260\ldots.
+\tag{18.22}
+\]
+Even the conjecturally optimal value \(\mu_0=2\) leaves
+\[
+ \log G_n\le3n+o(n).
+\tag{18.23}
+\]
+The irreducible loss is exactly the \(d_n^3\) denominator-clearing factor.
+Thus no improvement of the irrationality exponent alone can yield
+subexponential content.
+
+The adjacent Casoratian gives the complementary pair budget
+\[
+ \log G_n+\log G_{n-1}\le6n+o(n),
+\tag{18.24}
+\]
+but permits alternating exponential contents and gives no pointwise
+estimate.  This limitation is formal: multiply the numerator and
+denominator of the Fibonacci convergents by \(M^n\).  The rational
+approximants remain exponentially accurate and satisfy a second-order
+Poincaré recurrence; their adjacent determinants remain explicit and
+supported on the fixed primes dividing \(M\), while their content is
+\(M^n\).  Approximation quality plus a smooth nonzero Casoratian therefore
+cannot control content without a separate primitive-lattice theorem.
+
+The unconditional frontier is therefore the fixed-\(q\) family (18.19c);
+(18.18) is its necessary \(q=1\) core.  Equivalently, one needs a
+cross-prime large-radical theorem for the selected residues.  The
+\(S(p)\)/Katz handoff does not advance that frontier.
+
+### 18.7 All-degree saturation of the direct moving-zero carrier
+
+There is an exact algebraic reason why repeated attempts to manufacture a
+small integer directly from the individual target congruences return the
+unknown radical itself.
+
+Fix \(n>10\), and put
+\[
+ {\cal P}_n=\{p\text{ prime}:n/2<p\le n\},\qquad
+ r_p=n-p,\qquad
+ R_n=\prod_{\substack{p\in{\cal P}_n\\p\mid b_{r_p}}}p.
+\tag{18.25}
+\]
+In
+\[
+ {\cal R}_n=\mathbb Z[X_0,\ldots,X_{\lfloor(n-1)/2\rfloor}]
+\]
+consider the moving-zero ideals
+\[
+ {\mathfrak j}_p=(p,X_{r_p}),\qquad
+ {\mathfrak I}_n=\bigcap_{p\in{\cal P}_n}{\mathfrak j}_p.
+\tag{18.26}
+\]
+The ideals \({\mathfrak j}_p\) are pairwise comaximal, since distinct
+candidate primes generate the unit ideal in \(\mathbb Z\).  Consequently
+\[
+ {\mathfrak I}_n=\prod_{p\in{\cal P}_n}{\mathfrak j}_p.
+\tag{18.27}
+\]
+Under evaluation \(X_j\mapsto b_j\), one has
+\[
+ \operatorname {ev}_b({\mathfrak j}_p)
+   =(p,b_{r_p})
+   =
+   \begin{cases}
+      p\mathbb Z,&p\mid b_{r_p},\\
+      \mathbb Z,&p\nmid b_{r_p}.
+   \end{cases}
+\tag{18.28}
+\]
+Evaluation commutes with products of ideals, and hence
+\[
+ \boxed{\operatorname {ev}_b({\mathfrak I}_n)=R_n\mathbb Z.}
+\tag{18.29}
+\]
+There is no degree restriction in (18.29).  Thus arbitrary polynomial
+combinations, determinants, resultants, Smith or Fitting ideals, and
+growing tensor or exterior powers cannot produce an independent small
+multiple of \(R_n\) when their divisibility proof uses only the separate
+formal implications
+\[
+ p\mid b_{r_p}.
+\]
+After complete saturation, the evaluation ideal is exactly the radical one
+is trying to bound.
+
+The same obstruction is visible without polynomial language.  If
+\[
+ \Pi_n=\prod_{p\in{\cal P}_n}p,
+\]
+then
+\[
+ \boxed{
+ R_n=
+ \gcd\!\left(
+ \Pi_n,\
+ \left\{\frac{\Pi_n}{p}\,b_{n-p}:p\in{\cal P}_n\right\}
+ \right).}
+\tag{18.30}
+\]
+Indeed, for a candidate \(\ell\), every entry except the one indexed by
+\(\ell\) already contains \(\ell\), while the exceptional entry contains
+\(\ell\) exactly when \(\ell\mid b_{n-\ell}\).  Formula (18.30) is an exact
+universal carrier, but every input has logarithmic height
+\(\Theta(n)\), and its saturated gcd is precisely \(R_n\).  It therefore
+does not prove \(o(n)\).
+
+One can also quotient a finite recurrence window by all universal Apéry
+recurrence relations, reducing it to the two initial-state coordinates.
+The evaluation image remains (18.29): recurrence identities merely change
+the presentation of the same local target ideal.  This extends the earlier
+bounded-template no-go to arbitrary degree and arbitrary recurrence
+window.  Its scope must nevertheless be stated accurately.  It does not
+exclude a second target-selective congruence special to the distinguished
+Apéry initial vector, nor an independently proved Archimedean
+near-cancellation.
+
+### 18.8 Signed Newton carriers and exact central-alias cancellation
+
+The constant-term model gives a particularly tempting way to seek such a
+cancellation.  Write
+\[
+ d_k=\Delta^k b_0=\operatorname {CT}(\Lambda-1)^k,\qquad
+ b_r=\sum_{k=0}^r\binom rk d_k.
+\tag{18.31}
+\]
+The constant monomial of \(\Lambda-1\) is \(4\).  Set
+\[
+ m=\left\lfloor\frac{n-1}{2}\right\rfloor,\qquad
+ Z_4(c)=\sum_{k=0}^m c_k4^k.
+\]
+Suppose a rational linear carrier, after clearing a denominator prime to
+every \(p\in{\cal P}_n\), has coefficient vector \(c=(c_0,\ldots,c_m)\)
+and its modular proof is the formal implication
+\[
+ \sum_{k=0}^{r_p}\binom{r_p}{k}d_k=0
+ \quad\Longrightarrow\quad
+ \sum_{k=0}^m c_kd_k=0
+ \pmod p.
+\tag{18.32}
+\]
+The kernel of the first nonzero linear form in (18.32) has codimension
+one.  Therefore the second form must be a scalar multiple of it, giving
+\[
+ c_k\equiv c_0\binom{r_p}{k}
+      \equiv c_0\binom nk\pmod p
+\quad(0\le k\le m).
+\tag{18.33}
+\]
+Chinese remaindering over all candidates yields
+\[
+ c_k=c_0\binom nk+\Pi_nt_k,\qquad t_k\in\mathbb Z.
+\tag{18.34}
+\]
+Moreover,
+\[
+ Z_4(c)\equiv
+ c_0\sum_{k=0}^{r_p}\binom{r_p}{k}4^k
+ =c_0\,5^{r_p}\pmod p.
+\tag{18.35}
+\]
+All asymptotically relevant candidates are at least \(7\).  Hence exact
+central-alias cancellation \(Z_4(c)=0\) forces \(p\mid c_0\) for every
+candidate \(p\), and then (18.33) forces
+\[
+ \Pi_n\mid c_k\qquad(0\le k\le m).
+\tag{18.36}
+\]
+Every nonzero integer supplied by such a \(p\)-safe linear carrier
+therefore has
+\[
+ \log|C|\ge\log\Pi_n
+ =\vartheta(n)-\vartheta(n/2)
+ =\left(\frac12+o(1)\right)n.
+\tag{18.37}
+\]
+Signed coefficients do not remove the linear height.
+
+There is an all-degree version of the same transversality.  Replace
+\({\mathfrak j}_p\) in (18.26) by
+\[
+ {\mathfrak J}_p=
+ \left(p,\sum_{k=0}^{r_p}\binom{r_p}{k}X_k\right),
+\qquad
+ {\mathfrak I}^{N}_n=\bigcap_p{\mathfrak J}_p,
+\tag{18.38}
+\]
+and let \({\mathfrak M}_4\) be the kernel of \(X_k\mapsto4^k\).
+Since the Newton form evaluates at this alias to
+\[
+ \sum_{k=0}^{r_p}\binom{r_p}{k}4^k=5^{r_p}\not\equiv0\pmod p,
+\]
+one has
+\[
+ {\mathfrak I}^{N}_n+{\mathfrak M}_4=(1),\qquad
+ {\mathfrak I}^{N}_n\cap{\mathfrak M}_4
+   ={\mathfrak I}^{N}_n{\mathfrak M}_4.
+\tag{18.39}
+\]
+After evaluation \(X_k\mapsto d_k\),
+\[
+ \operatorname {ev}_d(
+ {\mathfrak I}^{N}_n\cap{\mathfrak M}_4)
+ =R_n g_m\mathbb Z,\qquad
+ g_m=\gcd_{0\le k\le m}(d_k-4^k).
+\tag{18.40}
+\]
+For \(m\ge3\),
+\[
+ d_2-4^2=48,\qquad d_3-4^3=1176,
+\]
+so \(g_m\mid24\).  Exact central-alias cancellation changes the unknown
+radical by at most this fixed factor; it gives no independent height
+contraction.  A positive toric route must use a quantitative
+near-cancellation among the actual Apéry aliases, or a genuinely second
+congruence, rather than an exact formal alias identity.
+
+### 18.9 The factorial-gcd reformulation is stronger, not standard
+
+A natural reformulation is
+\[
+ \gcd(b_n,n!).
+\tag{18.41}
+\]
+For squarefree support, this adds no help.  Every prime \(p\le\sqrt n\)
+has total logarithmic weight \(O(\sqrt n)\), while for \(p>\sqrt n\)
+membership in the radical of (18.41) is exactly the same moving
+large-prime support already isolated above.  The central-binomial
+restricted radical is therefore the cleaner interface.
+
+The full gcd in (18.41) is substantially harder because it retains
+\[
+ \min\{v_p(b_n),v_p(n!)\}
+\]
+at small primes.  The \(p\)-Lucas law controls only support modulo \(p\).
+Lifting from \(p\) to \(p^2\) introduces a new derivative or jet
+coordinate, and higher powers introduce further data.  A sufficient local
+estimate such as
+\[
+ v_p(b_n)=O(\log_p n)
+\tag{18.42}
+\]
+uniformly in \(p,n\) would make the small-prime valuation contribution
+\(O(\sqrt n)\), but no result audited here proves (18.42).  Known
+factorial-ratio valuation theorems generally certify divisibility rather
+than upper-bound these singular depths.
+
+Nor is the desired content estimate a hidden step in the standard proofs
+of Apéry's theorem.  Van der Poorten's exposition clears denominators with
+\(d_n^3\), estimates the resulting integral numerator and denominator, and
+applies the elementary irrationality criterion to those unreduced
+integers.  Beukers replaces the recurrence construction by a triple
+integral with the same lcm-denominator arithmetic.  Zudilin's
+hypergeometric approach controls denominators of linear forms.  None of
+these arguments needs the fraction to be in lowest terms, and the sources
+audited here do not state a subexponential bound for
+\[
+ \gcd(d_n^3a_n,d_n^3b_n).
+\tag{18.43}
+\]
+Thus there is no standard integral-, congruence-, or
+hypergeometric proof of (18.43) available to import.  More cautiously:
+the literature search performed for this audit located no published
+standalone theorem proving it.  The pointwise cross-prime estimate
+(18.19c), not a conventional denominator lemma, remains the missing
+input.
+
+### 18.10 Why the observed bound \(K_n\le3\) is not a credible lemma
+
+The scan through \(n\le2\cdot10^6\) finds no top-half column with four
+targets.  This is useful experimental information, but the proved local
+package has no finite-multiplicity content.
+
+Indeed, fix \(K\).  For arbitrarily large \(n\), choose \(K\) distinct
+primes \(p_i\in(n/2,n]\), put \(r_i=n-p_i\), and prescribe the abstract
+reflected doublets
+\[
+ Z_{p_i}=\{r_i,p_i-1-r_i\}.
+\tag{18.44}
+\]
+The primes can be chosen greedily to avoid:
+
+1. the three exceptional relations
+   \(2r_i=p_i-2,p_i-1,p_i\), which make the reflected points consecutive
+   or equal; and
+2. for every earlier \(p_j\), the two relations
+   \[
+   p_i=2n+1-2p_j,\qquad p_j=2n+1-2p_i,
+   \tag{18.45}
+   \]
+   which make a cross-pair degenerate.
+
+Only finitely many candidates are excluded at each step, whereas the top
+half contains arbitrarily many primes.  The resulting data satisfy:
+
+- exact reflection and two zeros per active row;
+- nonconsecutivity and every currently proved vertical zero bound;
+- the target condition \(r_i\in Z_{p_i}\) for all \(i\);
+- pure-cross status for every distinct pair; and
+- only the universal reflected same-row continuant factor.
+
+This is not a construction of Apéry zero sets.  It is a logical model of
+all presently used local predicates, and it shows that those predicates
+alone are compatible with arbitrary fixed \(K\).  Any theorem
+\(K_n=O(1)\), if true for the actual Apéry sequence, must use new
+cross-characteristic information about the distinguished initial state.
+The natural candidates are divided quotient jets, a bounded global
+eliminant, or a pointwise old-prime theorem; none is currently available.
+
+The theorem actually needed is much weaker:
+\[
+ K_n=o(n/\log n).
+\tag{18.46}
+\]
+The pure-cross amplification in PC.20--PC.21 is calibrated to (18.46).
+A forbidden spike forces many adjacent pairs with gaps
+\(h\ll\log n\).  The fixed-\(h\) Selberg estimate has the needed saving,
+but summing over this logarithmic range loses it.  An averaged
+Apéry-specific depletion over \(h\), rather than a universal bound of
+three, is therefore the sharper positive target.
+
+### 18.11 Exact mixed-characteristic dispersion barrier
+
+The fixed-\(q\) criterion (18.19c) can be written without any probabilistic
+language.  Let
+\[
+ z_p(x)=1_{\{b_x\equiv0\pmod p\}},\qquad 0\le x<p,
+\]
+and extend \(z_p\) periodically only for the purpose of Fourier expansion.
+For an ordered collision \(p<\ell\), put
+\[
+ h=\ell-p,\qquad s=n-q\ell.
+\]
+Then the two lower digits are \(s\) and \(s+qh\), and the exact target
+conditions are
+\[
+ z_\ell(s)z_p(s+qh)=1.
+\tag{18.47}
+\]
+Consequently
+\[
+ H_{2,q}(N)
+ =2\sum_{p<\ell}
+   \sum_{\substack{s:\ N<q\ell+s\le2N\\
+                   0\le s<\ell\\
+                   0\le s+q(\ell-p)<p}}
+ z_\ell(s)z_p\!\left(s+q(\ell-p)\right).
+\tag{18.48}
+\]
+All primes in (18.48) lie in a \(q\)-dependent compact multiple of \(N\).
+This is the correct bilinear incidence form; the two factors live in
+different residue characteristics.
+
+Put
+\[
+ \widehat z_p(a)=
+ \sum_{x\bmod p}z_p(x)e_p(-ax).
+\tag{18.49}
+\]
+Parseval gives
+\[
+ \sum_{a\bmod p}|\widehat z_p(a)|^2=p|Z_p|.
+\tag{18.50}
+\]
+Substituting (18.49) in (18.48) produces a double prime-modulus Fourier
+kernel.  A standard \(L^2\) large sieve can use only the row masses
+(18.50).  With the proved \(|Z_p|\ll p^{2/3}\), its resulting scale is
+\[
+ O_q\!\left(\frac{N^{8/3}}{\log^2N}\right),
+\tag{18.51}
+\]
+far above (18.19c).  More decisively, even the hypothetical local bound
+\(|Z_p|\le C\) yields only
+\[
+ O_q\!\left(\frac{N^2}{\log^2N}\right),
+\tag{18.52}
+\]
+the critical scale rather than little-\(o\).  The reflected-star model of
+Section 18.10 saturates this use of row norms, so (18.52) is not repaired
+by sharpening constants or by ordinary Parseval bookkeeping.
+
+What would suffice is a genuinely Apéry-specific estimate
+\[
+ \sum_{p<\ell}\sum_s
+ z_\ell(s)z_p(s+q(\ell-p))
+ =o_q\!\left(\frac{N^2}{\log^2N}\right)
+\tag{18.53}
+\]
+with precisely the arc and shell restrictions in (18.48), or a
+power-saving smoothed version.  This is a mixed-characteristic local-limit
+dispersion theorem, not a classical Barban--Davenport--Halberstam
+statement: the tested sequence changes with the modulus.
+
+Nor is \(z_p\) a known bounded-conductor trace function.  Detecting exact
+vanishing uses
+\[
+ z_p(x)=\frac1p\sum_{u\bmod p}e_p(ub_x),
+\tag{18.54}
+\]
+and the interpolation degree of \(x\mapsto b_x\) is of order \(p\).
+The corresponding Artin--Schreier pullback therefore has growing
+complexity.  Mellin descriptions of the underlying K3 trace do not fix
+this: in the surviving nearly primitive sector the Kummer character order
+also grows like \(p\).  Existing fixed-field bounded-conductor bilinear
+trace estimates and large sieves for a fixed compatible family do not
+apply to (18.53).
+
+Thus (18.53) is a precise new theorem interface, not a theorem presently
+available from Katz, BDH, or the standard prime-moduli large sieve.  Any
+analytic claim closing P3.2 must exhibit cancellation among the actual
+coefficients \(\widehat z_p(a)\) as the characteristic varies; cardinality
+bounds for \(Z_p\) cannot substitute for it.
+
+### 18.12 Fixed recurrence polynomials do not explain the targets
+
+The validated binary scan through \(n\le2\cdot10^6\) contains \(106039\)
+top-half incidences.  An exact parse tested divisibility of the natural
+recurrence factors
+\[
+ n,\quad n+1,\quad 2n+1,\quad 17n^2+17n+5
+\tag{18.55}
+\]
+at every target prime.  The first, second, and fourth factors cover no
+target at all.  The factor \(2n+1\) covers only
+\[
+ (n,p,r)=(16,11,5),\qquad(4705,3137,1568),
+\tag{18.56}
+\]
+the two exceptional self-reflected fibers \(r=(p-1)/2\).  In particular,
+none of the \(159\) incidences in the \(53\) triple columns divides any
+product of the factors in (18.55).
+
+This is only a finite exclusion, not a theorem about arbitrary
+polynomials.  It nevertheless rules out the most immediate conjecture
+that the observed polynomial-size radicals are forced by a singular factor
+of the recurrence.  The generic target support is invisible to all of
+(18.55).
+
+### 18.13 The first \(p\)-adic lift is still rank one
+
+The most natural source of a second target equation is the first lift of
+the two normalized gcd coordinates.  It does not work.  For a prime
+\(p\ge5\) and \(0\le r<p\), define
+\[
+ D_r=
+ 2\sum_{k=0}^r
+ \binom rk^2\binom{r+k}k^2
+ \bigl(H_{r+k}-H_{r-k}\bigr).
+\tag{18.57}
+\]
+Every term in (18.57) is \(p\)-integral.  If \(r+k\ge p\), the squared
+binomial supplies \(p^2\), while the harmonic difference loses at most one
+factor \(p\).
+
+Gessel's shifted congruence, specialized to outer digit one, is
+\[
+ \boxed{b_{p+r}\equiv5(b_r+pD_r)\pmod {p^2}.}
+\tag{18.58}
+\]
+The companion coordinate satisfies the parallel formula
+\[
+ \boxed{p^3a_{p+r}\equiv6(b_r+pD_r)\pmod {p^2}.}
+\tag{18.59}
+\]
+Formula (18.59) can be proved without a new supercongruence.  The
+differentiated Apéry recurrence shows that
+\(X_r=b_r+pD_r\) satisfies the recurrence shifted by \(p\), modulo
+\(p^2\).  The exact Wronskian gives
+\[
+ p^3a_p\equiv6\pmod {p^2},
+\]
+and the recurrence at \(p\) gives
+\[
+ p^3a_{p+1}\equiv6(5+12p)\pmod {p^2}.
+\]
+These two initial values propagate (18.59) throughout \(0\le r<p\),
+because the relevant leading coefficients are \(p\)-units.
+
+On a target write
+\[
+ b_r=pq_{p,r},\qquad
+ \xi_{p,r}=q_{p,r}+D_r\pmod p.
+\tag{18.60}
+\]
+Dividing (18.58)--(18.59) by \(p\) gives
+\[
+ \boxed{
+ \left(\frac{b_{p+r}}p,\frac{p^3a_{p+r}}p\right)
+ \equiv \xi_{p,r}(5,6)\pmod p.}
+\tag{18.61}
+\]
+Thus the first lift has only the universal relation
+\[
+ 6b_{p+r}-5p^3a_{p+r}\equiv0\pmod {p^2};
+\tag{18.62}
+\]
+it supplies no second target-selective equation.  Formally, the map
+\[
+ \mathbb F_p[X,Y]\longrightarrow\mathbb F_p[\xi],
+ \qquad X\mapsto5\xi,\quad Y\mapsto6\xi
+\]
+has kernel \((6X-5Y)\).  This is an arbitrary-degree rank-one statement,
+not merely a failure of one proposed linear combination.
+
+The remaining scalar is genuinely unconstrained by targetness.  Take
+\[
+ p=73,\qquad r=2,\qquad b_2=73,\qquad D_2=210.
+\]
+Then
+\[
+ \xi_{73,2}=1+210\equiv65\not\equiv0\pmod {73}.
+\tag{18.63}
+\]
+Consequently \(73\) is a target at \(n=75\), but
+\[
+ v_{73}(G_{75})=1.
+\tag{18.64}
+\]
+The first lift detects only the deeper event:
+\[
+ v_p(G_{p+r})\ge2
+ \quad\Longleftrightarrow\quad
+ \xi_{p,r}=0
+ \quad\Longleftrightarrow\quad
+ p^2\mid b_{p+r}.
+\tag{18.65}
+\]
+A positive jet route must therefore discover a new relation between the
+actual values \(b_r/p\) and \(D_r\), or a genuinely independent higher
+coordinate.  Neither the support condition, the recurrence, the
+Wronskian, nor the first Gessel lift provides it.
+
+### 18.14 Pointwise short-gap dispersion: the exact analytic target
+
+Section 18.11 records the shell pair-energy formulation.  The
+pure-cross amplification gives a weaker, but more sharply pointwise,
+interface.  Put
+\[
+ f_p(x)=1_{\{b_{x\bmod p}\equiv0\pmod p\}},\qquad z_p=|Z_p|,
+\]
+and for fixed \(A>0\), \(H=A\log N\).  A sufficient theorem is
+\[
+ \sup_{N<n\le2N}
+ \left|
+ \sum_{\substack{2\le h\le H\\2\mid h}}
+ \sum_{\substack{n/2<p\le n-h\\p,\ p+h\ {\rm prime}}}
+ \left(
+ f_p(n)f_{p+h}(n)-\frac{z_pz_{p+h}}{p(p+h)}
+ \right)
+ \right|
+ =o_A(N/\log N).
+\tag{18.66}
+\]
+The mean term in (18.66) is already harmless.  The Selberg prime-pair
+bound gives \(O_A(N/\log N)\) candidate pairs, and
+\(z_pz_{p+h}/(p(p+h))=O(N^{-2/3})\), so their total is
+\[
+ O_A(N^{1/3}/\log N).
+\tag{18.67}
+\]
+After subtracting the \(O_A(\log^2N)\) degenerate pairs, (18.66) implies
+that the number of pure-cross pairs of gap at most \(A\log N\) is
+\(o_A(N/\log N)\), uniformly in \(n\).
+
+If \(K_n\ge\varepsilon N/\log N\), order the target primes.  Their total
+span is at most \(N\), so at most \(N/(A\log N)\) adjacent gaps exceed
+\(A\log N\).  Taking \(A>4/\varepsilon\) leaves
+\(\gg_\varepsilon N/\log N\) short adjacent pure-cross pairs, contradicting
+(18.66).  Thus (18.66) proves the top-half theorem.
+
+Fourier inversion makes the missing cancellation explicit:
+\[
+ f_p(n)=\frac{z_p}{p}
+ +\frac1p\sum_{a\ne0}\widehat f_p(a)e_p(an).
+\tag{18.68}
+\]
+For \(\ell=p+h\), the centered product is the sum of
+\[
+ \frac{z_\ell}{p\ell}
+ \sum_{a\ne0}\widehat f_p(a)e_p(an),
+\qquad
+ \frac{z_p}{p\ell}
+ \sum_{b\ne0}\widehat f_\ell(b)e_\ell(bn),
+\tag{18.69}
+\]
+and
+\[
+ \frac1{p\ell}
+ \sum_{\substack{a\ne0\\b\ne0}}
+ \widehat f_p(a)\widehat f_\ell(b)
+ e_p(an)e_\ell(bn).
+\tag{18.70}
+\]
+All three terms must cancel after summing nearby prime pairs, uniformly at
+one fixed \(n\).
+
+No collection of one-row Fourier estimates can prove this.  The reflected
+two-point adversary has
+\[
+ |\widehat f_p(a)|\le2
+\]
+at every nonzero frequency, yet one can select a positive proportion of
+the top-half primes through one column, discard the finite-degree
+degeneracy graph, and retain \(\gg_A N/\log N\) adjacent pure-cross gaps
+below \(A\log N\).  It satisfies stronger individual Fourier bounds than
+Deligne would provide while violating (18.66).
+
+The missing theorem is therefore genuinely two-characteristic and
+actual-state-specific: cancellation in (18.69)--(18.70) as both \(p\) and
+\(p+h\) vary.  Standard trace-function theorems fix one finite field and a
+bounded-conductor sheaf; standard large sieves average the external
+integer \(n\).  Neither matches the supremum and moving-modulus structure
+of (18.66).
