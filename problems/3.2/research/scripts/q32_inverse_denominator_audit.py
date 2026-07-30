@@ -95,9 +95,18 @@ def main() -> None:
     defect = [1] * (limit + 1)
     max_bits = (0, 0)
     max_rate = (0.0, 0)
+    comparison_count = 0
     for n in range(1, limit + 1):
         neighbor_gcd = math.gcd(denominators[n - 1], denominators[n + 1])
         defect[n] = neighbor_gcd // math.gcd(neighbor_gcd, denominators[n])
+        central_neighbor_gcd = math.gcd(central[n - 1], central[n + 1])
+        central_triple_gcd = math.gcd(central_neighbor_gcd, central[n])
+        universal_factor = central_neighbor_gcd // central_triple_gcd
+        expected_factor = 1 if n % 2 == 0 else math.gcd(n // 2 + 1, 2)
+        assert universal_factor == expected_factor
+        apery_central_gcd = math.gcd(values[n], central[n])
+        assert (apery_central_gcd * universal_factor) % defect[n] == 0
+        comparison_count += 1
         if n >= 11:
             max_bits = max(max_bits, (defect[n].bit_length(), n))
             rate = math.log(defect[n]) / n if defect[n] > 1 else 0.0
@@ -127,6 +136,10 @@ def main() -> None:
 
     print(f"PASS: {ratio_count} hypergeometric coefficient ratios")
     print(f"PASS: {anchor_count} residue-section prime anchors")
+    print(
+        "PASS: "
+        f"{comparison_count} exact carrier-to-Apery-gcd comparisons"
+    )
     print(
         "PASS: "
         f"{incidence_count} top-half incidences, {target_count} exact holes"

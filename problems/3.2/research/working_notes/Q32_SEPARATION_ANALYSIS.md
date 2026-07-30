@@ -5108,6 +5108,54 @@ This is finite evidence only.  Formula (16.19) means that a proof of
 \]
 would settle the top-half branch, but no denominator-curvature theorem
 for rational \(G\)-function coefficients currently gives (16.22).
+
+There is an exact comparison which prevents overinterpreting the small
+data.  Put \(g_n=\gcd(b_n,C_n)\) and
+\[
+ U_n=
+ \frac{\gcd(C_{n-1},C_{n+1})}
+      {\gcd(C_{n-1},C_n,C_{n+1})}.
+\tag{16.23}
+\]
+Prime by prime, writing
+\[
+ c_j=v_\ell(C_{n+j}),\qquad
+ e_j=v_\ell(\gcd(b_{n+j},C_{n+j})),
+\]
+formula (16.18) gives
+\[
+\begin{aligned}
+ v_\ell(\mathfrak d_n)
+ &=
+ \max\{0,\min(c_{-1}-e_{-1},c_1-e_1)
+                  -(c_0-e_0)\}\\
+ &\le e_0+\max\{0,\min(c_{-1},c_1)-c_0\}.
+\end{aligned}
+\]
+Consequently
+\[
+ \mathfrak d_n\mid g_nU_n.
+\tag{16.24}
+\]
+The adjacent central coefficients make \(U_n\) explicit.  If \(n=2m\),
+then \(C_{n-1}=C_n/2\), so \(U_n=1\).  If \(n=2m+1\), write
+\[
+ C_{2m}=(m+1)K,\quad
+ C_{2m+1}=(2m+1)K,\quad
+ C_{2m+2}=2(2m+1)K;
+\]
+then \(U_n=\gcd(m+1,2)\).  Hence
+\[
+ \boxed{\mathfrak d_n\mid2\gcd(b_n,C_n),}
+\qquad
+ \mathfrak d_n\mid\gcd(b_n,C_n)\quad(n\ {\rm even}).
+\tag{16.25}
+\]
+The hole carrier therefore removes irrelevant common support and gives
+the exact local curvature interpretation, but its observed small height
+is still evidence about the original Apéry gcd rather than an independent
+proved compression.
+
 The recurrence permits the two polar terms of valuation \(-1\) to
 cancel and produce a \(p\)-integral middle term; after primitive
 numerator-denominator clearing this is again the congruence
