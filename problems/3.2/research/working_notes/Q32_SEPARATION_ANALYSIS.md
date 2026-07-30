@@ -122,7 +122,7 @@ pointwise theorem.
     adjacent pure-cross target pairs of gap \(O(\log n)\) must be
     \(o(n/\log n)\). Replacing the index gap \(h\) by \(qh\) extends the
     argument to every fixed quotient \(q\); after the Kummer pruning,
-    (PC.15) is one minimal all-middle obstruction.
+    (PC.21) is one minimal all-middle obstruction.
 
 13. The CFVZ square-root structure does not yield a hidden low-order
     Casoratian. The reversed convolution \(b_r=\sum_i s_i s_{r-i}\) admits
@@ -170,7 +170,7 @@ pointwise theorem.
     with a common kernel and gap
     \(O(\tau(n-q)\log^2n)=n^{o(1)}\). This yields the structured
     same-kernel criterion (SK.5), complementary to the adjacent-gap
-    criterion (PC.15).
+    criterion (PC.21).
 
 19. There is now a genuine positive local extension of the quotient tower.
     Endpoint block identities give the common cofactor modulo
@@ -209,6 +209,67 @@ pointwise theorem.
     lifted lower-coordinate change and a Gosper certificate.  Even that
     proof would not supply horizontal separation, because all fixed-order
     local quotient rows reconstruct the same diagonal integer.
+
+22. Path D can be stated exactly as a lower-denominator problem for an
+    explicit Hadamard \(G\)-function.  Every fixed residue section already
+    has asymptotically maximal prefix denominator lcm:
+    \[
+      \log\operatorname {lcm}_{m\le M}q_{dm+a,d}=dM+o_d(M).
+    \]
+    This does not control one coefficient.  In the central case a target is
+    precisely an isolated denominator hole with valuation pattern
+    \((1,0,1)\), and the integer
+    \[
+      \mathfrak d_n=
+      \frac{\gcd(q_{n-1},q_{n+1})}
+           {\gcd(q_{n-1},q_n,q_{n+1})}
+    \]
+    has exact top-half radical \(\prod_{p\in T_n}p\).
+
+23. The hole carrier is selective but not yet a height compression.  It
+    satisfies
+    \[
+      \mathfrak d_n\mid2\gcd\!\left(
+        b_n,\binom n{\lfloor n/2\rfloor}\right),
+    \]
+    with no factor \(2\) for even \(n\).  Moreover the exact normalized
+    recurrence admits a rational solution with an arbitrary prescribed
+    squarefree product of simultaneous \((1,0,1)\) holes.  Consequently no
+    initial-state-uniform theorem based only on the recurrence, generic
+    \(G\)-function axioms, or local denominator propagation can prove
+    \(\log\mathfrak d_n=o(n)\).  A theorem for the one distinguished Apéry
+    initial state is not excluded.
+
+24. Higher universal tensors satisfy an exact conservation law.  On a
+    pure-cross pair, if \({\cal C}_{p,\ell}\) is the formal cross-divisibility
+    ideal and \(\Delta\) is the endpoint determinant, then
+    \[
+      ({\cal C}_{p,\ell}:\Delta^m)={\cal C}_{p,\ell}.
+    \]
+    Thus primitive selectivity leaves an exponential slot, while complete
+    contraction leaves coefficient content \(p\ell\).  The only fixed-order
+    escape is an initial-state-specific leading cancellation.  Its leading
+    symbol would give a nonzero polynomial over
+    \(\mathbb Q(\sqrt2)\) vanishing at \(\zeta(3)\); growing templates require
+    a corresponding quantitative algebraic-approximation measure.  Neither
+    input is currently known.
+
+25. There is one unconditional pointwise gain on the horizontal side.
+    For each fixed even gap \(h\le A\log n\), the classical
+    dimension-two Selberg sieve gives
+    \[
+      M_h^\times(n)
+      \ll {\mathfrak S}(h)\frac n{\log^2n},
+      \qquad
+      {\mathfrak S}(h)\ll\log\log(3h).
+    \]
+    Hence the product of all ambient prime pairs \(p(p+h)\) at that exact
+    gap is an \(o(n)\)-height integer containing every pure-cross target
+    pair of gap \(h\).  The mean law
+    \(\sum_{h\le H}{\mathfrak S}(h)\ll H\) shows the precise stopping
+    point: multiplying these carriers over \(h\le A\log n\) costs
+    \(O_A(n)\), not \(o(n)\).  Any Apéry-specific saving factor tending to
+    infinity over this ambient sieve scale would complete (PC.21).
 
 Thus Routes A and B are closed **as presently formulated**. This is not a
 disproof of `log G_n=o(n)`. It identifies the exact missing ingredient:
@@ -2735,6 +2796,67 @@ the observed rare event.  The unconditional bound (PC.3) is not being
 mistaken for an explanation of the existing double and triple columns:
 every one of them lies in the different-characteristic residual.
 
+There is also an unconditional pointwise theorem for each **fixed exact
+gap**.  Let
+\[
+ {\mathfrak S}(h)=
+ \prod_{\substack{q\mid h\\q>2}}\frac{q-1}{q-2}
+\tag{PC.11}
+\]
+with the empty product equal to one; an absolute twin-prime constant is
+absorbed in the implied constants.  The Selberg upper-bound sieve applied
+to \(m(m+h)\) gives, uniformly for even
+\(1\le h\le A\log n\),
+\[
+ M_h^\times(n)
+ \le
+ \#\{n/2<p\le n-h:p,\ p+h\ {\rm prime}\}
+ \ll_A {\mathfrak S}(h)\frac n{\log^2n}.
+\tag{PC.12}
+\]
+For odd \(h\), the set is empty once both primes exceed \(2\).  The
+standard maximal-order and mean estimates are
+\[
+ {\mathfrak S}(h)\ll\log\log(3h),
+ \qquad
+ \sum_{\substack{h\le H\\2\mid h}}{\mathfrak S}(h)\ll H.
+\tag{PC.13}
+\]
+
+This estimate has an exact integer-certificate interpretation.  Define
+\[
+ D^{\rm pp}_{n,h}=
+ \prod_{\substack{n/2<p\le n-h\\p,\ p+h\ {\rm prime}}}p(p+h).
+\tag{PC.14}
+\]
+Every pure-cross target pair of exact gap \(h\) has
+\(p(p+h)\mid D^{\rm pp}_{n,h}\), and
+\[
+ \log D^{\rm pp}_{n,h}
+ \ll_A {\mathfrak S}(h)\frac n{\log n}
+ \ll_A\frac{n\log\log\log n}{\log n}
+ =o_A(n).
+\tag{PC.15}
+\]
+Thus a location-independent sublinear-height carrier already exists for
+each exact logarithmic gap.  It is an ambient prime-pair carrier, not an
+Apéry compression identity.
+
+The obstruction occurs only when the gaps are combined.  From the mean
+bound in (PC.13),
+\[
+ \sum_{\substack{h\le A\log n\\2\mid h}}
+       \log D^{\rm pp}_{n,h}
+ \ll_A n.
+\tag{PC.16}
+\]
+This exactly recovers the scale of the adjacent-pair criterion and gives
+no little-oh.  It would suffice to improve (PC.12), after summing the
+relevant gaps, by any factor \(L(n)\to\infty\) coming from the Apéry
+conditions.  The missing horizontal theorem is therefore not a
+fixed-gap prime-pair estimate; it is an Apéry-specific saving over the
+ambient sieve **across the full logarithmic gap range**.
+
 The same reduction extends without loss to every fixed quotient \(q\).
 Define
 
@@ -2742,7 +2864,7 @@ Define
  T_{n,q}=
  \left\{p:\frac{n}{q+1}<p\le\frac nq,\quad
               p\mid b_{n-qp}\right\}.
-\tag{PC.11}
+ \tag{PC.17}
 \]
 
 For \(p<\ell=p+h\) in \(T_{n,q}\), put \(s=n-q\ell\).  The two
@@ -2750,7 +2872,7 @@ conditions become
 
 \[
  p\mid b_{s+qh},\qquad \ell\mid b_s.
-\tag{PC.12}
+ \tag{PC.18}
 \]
 
 Declare the pair degenerate if \(p\mid b_s\) or
@@ -2774,7 +2896,7 @@ Both primes are \(\asymp_q n\), and a prime determines its mate once
 \[
  M_{q,h}^{\rm deg}(n)\ll_q h,\qquad
  \sum_{h\le H}M_{q,h}^{\rm deg}(n)\ll_q H^2.
-\tag{PC.13}
+ \tag{PC.19}
 \]
 
 On the complementary pure-cross locus, \(N_{qh}(s)\) is a unit modulo
@@ -2792,7 +2914,7 @@ little-oh:
  \sup_{N<n\le2N}A_{q,A\log N}^{\times}(n)
  =o_{q,A}(N/\log N).
  }
-\tag{PC.14}
+ \tag{PC.20}
 \]
 
 Indeed, a failure of the desired logarithmic-weight estimate first
@@ -2805,8 +2927,8 @@ arc is at most
 \]
 
 Choosing \(A\) sufficiently large leaves
-\(\gg n/\log n\) adjacent gaps at most \(A\log n\); (PC.13) makes only
-\(O_{q,A}(\log^2n)\) of them degenerate, contradicting (PC.14).
+\(\gg n/\log n\) adjacent gaps at most \(A\log n\); (PC.19) makes only
+\(O_{q,A}(\log^2n)\) of them degenerate, contradicting (PC.20).
 The order pruning can be incorporated before taking adjacency. Fix any
 subpolynomial \(F(n)\to\infty\), let
 
@@ -2825,12 +2947,12 @@ pairs in this smaller ordered set. By (KO.6), the still weaker family
  \sup_{N<n\le2N}A_{q,A\log N}^{{\rm np},\times}(n;F)
  =o_{q,A}(N/\log N)
  }
-\tag{PC.15}
+ \tag{PC.21}
 \]
 
 also suffices. A forbidden spike retains linearly many vertices after the
 pointwise pruning, and the identical span and degeneracy argument applies
-inside the residual set. Thus (PC.15) is one of the two most focused
+inside the residual set. Thus (PC.21) is one of the two most focused
 all-middle horizontal theorems isolated in this audit. It is strictly weaker than
 the shell pair-energy condition (10.35): it asks only for short adjacent
 pairs, after all non-nearly-primitive vertices have already been discarded.
@@ -2883,7 +3005,7 @@ pairs among all gaps \(h\le\Delta_{n,q}\) number only
  \ll_q\Delta_{n,q}^2=n^{o(1)}
 \]
 
-by (PC.13).  Hence a forbidden spike actually forces
+by (PC.19).  Hence a forbidden spike actually forces
 \(\Omega_{c,q}(n)\) **pure-cross, same-kernel** pairs.
 
 Their arithmetic normal form is explicit.  If
@@ -2914,7 +3036,7 @@ The following is consequently another sufficient all-middle theorem:
 
 uniformly for \(N<n\le2N\), for each fixed \(q,c>0\).
 One may omit \(c\) by requiring the statement for every fixed constant
-in the definition of \(\Delta_{n,q}\).  Conditions (PC.15) and (SK.5)
+in the definition of \(\Delta_{n,q}\).  Conditions (PC.21) and (SK.5)
 are not ordered by logical strength.  The former counts only adjacent
 \(O(\log n)\)-gap pairs and asks for \(o(n/\log n)\); the latter counts
 all same-kernel \(n^{o(1)}\)-gap pairs and asks for \(o(n)\).  The common
@@ -3668,7 +3790,7 @@ This fourth-moment route is stronger than the fixed-\(q\) criteria.  From
 weakest to strongest, the clean sufficient hypotheses isolated above are:
 
 1. nearly primitive, adjacent pure-cross logarithmic-gap depletion
-   (PC.15);
+   (PC.21);
 2. nearly primitive fixed-\(q\) pair energy (KO.16);
 3. full fixed-\(q\) pair energy (10.35);
 4. with only \(|Z_p|\ll p^{2/3}\), the relative fourth moment (10.36).
@@ -3678,7 +3800,7 @@ weakest to strongest, the clean sufficient hypotheses isolated above are:
 The two most focused genuinely live horizontal formulations exposed by the
 computation are:
 
-1. for every fixed quotient \(q\), prove (PC.15): after the pointwise
+1. for every fixed quotient \(q\), prove (PC.21): after the pointwise
    Kummer-order pruning, the number of adjacent pure-cross target primes
    with prime gap \(O(\log n)\) is \(o(n/\log n)\);
 2. exploit the extra common divisor in (SK.4) and prove (SK.5):
@@ -3744,7 +3866,7 @@ The revised assessment is therefore:
    are in the complementary pure-cross locus, where the continuant is a
    unit in both characteristics.
 9. The exact remaining theorem can be weakened from global pair energy to
-   either (PC.15), an adjacent logarithmic-gap statement inside the nearly
+   either (PC.21), an adjacent logarithmic-gap statement inside the nearly
    primitive residual, or the structured same-kernel statement (SK.5).
    The prime-center reflection star (KO.17) shows that all currently known
    local constraints remain compatible with worst-case alignment there.
@@ -3758,7 +3880,7 @@ The revised assessment is therefore:
 
 This is a negative answer to the proposed shortcut, but a positive
 sharpening of the frontier: the missing theorem is now the explicit
-pure-cross estimate (PC.15) or (SK.5), or a new selective
+pure-cross estimate (PC.21) or (SK.5), or a new selective
 holonomic-gcd mechanism such as (HD.4), not a vertical zero-fiber bound.
 
 ### 10.10 Sources checked for the geometry and congruences
@@ -5221,10 +5343,49 @@ both directions.  Its reduced-denominator curvature at \(n\) is divisible
 by the arbitrarily prescribed product \(R\).
 
 Thus even simultaneous holes at all candidate primes are compatible with
-the exact normalized operator.  Any proof of (16.22) must use the
-distinguished initial state \((b_0,b_1)=(1,5)\), or an arithmetic property
-equivalent in strength; it cannot be a theorem about the recurrence,
-its \(G\)-function class, or its local denominator propagation alone.
+the exact normalized operator.  The solution in (16.28), however, depends
+on \(n\) and \(R\).  The construction rules out a local estimate uniform
+over rational initial states; it does **not** rule out a global theorem
+whose constants or proof use the one fixed initial state
+\((b_0,b_1)=(1,5)\).
+
+There is a separate exact warning against invoking only the abstract
+\(G\)-function class.  Define
+\[
+ h_k=
+ \begin{cases}
+  1,&k\ \text{even},\\
+  2^{-k},&k\ \text{odd}.
+ \end{cases}
+\]
+Its generating series is rational:
+\[
+ \sum_{k\ge0}h_kx^k
+ =\frac1{1-x^2}+\frac{x/2}{1-x^2/4}.
+\tag{16.30}
+\]
+If \(Q_k\) is the reduced denominator of \(h_k\), then at \(k=2m\)
+\[
+ (Q_{k-1},Q_k,Q_{k+1})
+ =(2^{2m-1},1,2^{2m+1}),
+\]
+so
+\[
+ \frac{\gcd(Q_{k-1},Q_{k+1})}
+      {\gcd(Q_{k-1},Q_k,Q_{k+1})}
+ =2^{2m-1}.
+\tag{16.31}
+\]
+Even a rational \(G\)-function can therefore have exponential local
+denominator curvature at infinitely many indices.  This example is
+reducible and does not share the Apéry operator; its role is only to show
+that a class-level denominator theorem needs substantial extra hypotheses.
+
+Any proof of (16.22) must consequently use the distinguished initial state
+or an arithmetic property equivalent in strength.  The normalized
+recurrence and local denominator propagation alone do not suffice, while a
+global theorem specific to the explicit Hadamard \(G\)-function remains a
+logically valid opening.
 
 The recurrence permits the two polar terms of valuation \(-1\) to
 cancel and produce a \(p\)-integral middle term; after primitive
@@ -5377,3 +5538,106 @@ state in a way not valid on the full rank-one diagonal, a genuinely new
 opposite-quotient equation, or a nonlocal arithmetic relation.  It does
 close the proposal that degree three, degree four, or further universal
 symmetric-power/Plücker contractions alone will repair Route A.
+
+### 17.1 What an initial-state-specific bounded tensor would have to prove
+
+The preceding scope boundary can be made arithmetic rather than left as a
+formal exception.  Put
+\[
+ \lambda=17+12\sqrt2.
+\]
+For each fixed shift \(j\), the two distinguished solutions have the
+Poincaré asymptotics
+\[
+\begin{aligned}
+ b_{s+j}
+   &=\kappa\,\lambda^{s+j}s^{-3/2}
+       \{1+O_j(s^{-1})\},\\
+ a_{s+j}
+   &=\zeta(3)b_{s+j}
+       +O_j(\lambda^{-s}s^{-3/2}),
+\end{aligned}
+\tag{17.12}
+\]
+with analogous full inverse-power expansions.  The same conclusion holds
+uniformly for \(j=O(\log s)\), after allowing subexponential coefficient
+height.
+
+Consider a fixed-degree homogeneous tensor expression in finitely many
+shifted endpoint states, with rational recurrence coefficients, after all
+universal determinant factors have been removed.  Before specializing the
+relative endpoint scales, its restriction to collinear state vectors is a
+polynomial
+\[
+ {\cal P}(X;t_1,\ldots,t_e),
+\tag{17.13}
+\]
+where \(X\) is the common projective direction and the \(t_i\) are scalar
+ratios between endpoint magnitudes.  Substitute the dominant part
+\[
+ (a_{s+j},b_{s+j})
+ \rightsquigarrow
+ (\zeta(3),1)\,\kappa\lambda^{s+j}s^{-3/2}
+\tag{17.14}
+\]
+and divide by the common exponential and power of \(s\).  Its first
+nonzero asymptotic symbol has the form
+\[
+ P_h(\zeta(3)),
+ \qquad
+ P_h(X)\in\mathbb Q(\sqrt2)[X],
+ \qquad
+ \deg P_h\le d,
+\tag{17.15}
+\]
+where \(d\) is the tensor degree and \(h\) denotes the finitely many
+endpoint gaps.  The quadratic coefficient field occurs because every
+\(\lambda^h\) lies in \(\mathbb Q(\sqrt2)\); explicitly,
+\[
+ P_h(X)={\cal P}(X;\lambda^{h_1},\ldots,\lambda^{h_e}).
+\]
+
+If \({\cal P}(X;t_1,\ldots,t_e)\) vanishes identically before the
+\(t_i\) are specialized, the cancellation holds on the entire rank-one
+matrix locus.  Algebraically it is therefore in the determinantal ideal
+already saturated in (17.7).  If only \(P_h(X)\) vanishes identically,
+the cancellation may instead use the characteristic root
+\(\lambda\).  A bounded template then removes only finitely many terms of
+the inverse-power asymptotic expansion and leaves the same exponential
+slot.  Eliminating that slot to every order would require either an exact
+recurrence identity, whose universal transfer factors must again be
+saturated, or a growing-order construction.
+
+If \(P_h\) is nonzero but the distinguished leading term vanishes, then
+\[
+ P_h(\zeta(3))=0.
+\tag{17.16}
+\]
+Such a bounded tensor would consequently prove that \(\zeta(3)\) is
+algebraic over \(\mathbb Q(\sqrt2)\), of degree at most \(d\).  Already the
+linear case would prove
+\(\zeta(3)\in\mathbb Q(\sqrt2)\), which is not excluded by Apéry's
+rational irrationality theorem.  For \(d\ge2\), no algebraicity result of
+the required kind is known either.
+
+There is a second possibility when the tensor degree, the gaps, or the
+coefficient template grows with \(s\): the polynomials \(P_s\) may vary and
+\(P_s(\zeta(3))\) may be very small without being zero.  To turn such a
+construction into a subexponential-height contraction one needs a lower
+bound of the shape
+\[
+ |P(\zeta(3))|
+ \ge \exp\{-o(s)\}
+\tag{17.17}
+\]
+for the particular polynomials of degree and height produced by the
+template.  The known rational irrationality measures concern degree-one
+polynomials over \(\mathbb Q\); they do not give (17.17) over
+\(\mathbb Q(\sqrt2)\), much less at growing degree.
+
+Thus “use the distinguished initial state” is not a routine loose end in
+the tensor route.  At bounded degree it confronts an unknown algebraicity
+statement for \(\zeta(3)\); at growing degree it confronts an unknown
+polynomial-approximation measure.  An escape which avoids both must obtain
+smallness from a new arithmetic mechanism rather than from cancellation of
+the dominant Apéry line alone.
