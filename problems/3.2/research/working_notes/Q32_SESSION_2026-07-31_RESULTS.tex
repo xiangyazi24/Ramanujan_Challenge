@@ -553,7 +553,21 @@ $H(n_0)\ll N^2$; and within a window of length $H_0<p$ the residues $m\bmod p$ a
 each bad prime for $n_0$ is bad for at most $O(1)$ nearby $m$, and no contradiction with a large
 $H(n_0)$ arises.  In graph terms: bounded codegree limits how many vertices can have large
 degree — which is exactly the exceptional-set theorem — but never excludes a single
-high-degree vertex.
+high-degree vertex.  Indeed the incidence graph is $K_{2,2}$-free on the prime side (two primes
+$p,p'$ share a common level only if $n$ solves a CRT system modulo $pp'\asymp N^2>N$, so at most
+one), and a star is $K_{2,2}$-free; no purely combinatorial argument can therefore exclude one
+bad $n$.
+
+The codegree lemma itself was audited numerically here.  Over all pairs $(m,m+h)$ with
+$h\le8$ and $m\le200\,000$ (top window), the maximum number of common bad primes is
+\[
+\begin{array}{c|cccccccc}
+ h&1&2&3&4&5&6&7&8\\ \hline
+ \max\operatorname{codeg}&0&1&0&1&1&0&1&1
+\end{array}
+\]
+comfortably inside the proved $O(h)$, and the value $0$ at $h=1$ is the no-two-consecutive-zeros
+theorem appearing independently.
 
 \subsection{The obstruction, stated precisely}
 

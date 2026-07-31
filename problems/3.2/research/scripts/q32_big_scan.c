@@ -150,6 +150,12 @@ int main(int argc, char **argv) {
            zeros_total, nprimes, (double)zeros_total / nprimes);
     printf("max |Z_p| = %llu at p = %llu\n", maxZ, maxZ_p);
 
+    /* optional dump of (p,r) pairs */
+    { const char *dp = getenv("DUMP_PAIRS");
+      if (dp) { FILE *f = fopen(dp, "w");
+        for (size_t i = 0; i < npairs; i++) fprintf(f, "%u %u\n", pairs[i].p, pairs[i].r);
+        fclose(f); fprintf(stderr, "dumped %zu pairs to %s\n", npairs, dp); } }
+
     /* phase 2: accumulate R(n), K(n) */
     float *R = calloc((size_t)NMAX + 1, sizeof(float));
     unsigned char *K = calloc((size_t)NMAX + 1, 1);
