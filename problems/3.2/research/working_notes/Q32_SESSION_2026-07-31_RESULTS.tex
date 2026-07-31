@@ -191,6 +191,23 @@ and adding gives the classical $b_n\equiv5b_r$.
 \]
 \end{proof}
 
+\medskip
+\noindent\textbf{General form.}  The same argument with $n=qp+r$, $1\le q<p$, $0\le r<p$ gives
+the full statement
+\[
+  \boxed{\;\bigl(p^3a_{qp+r},\ b_{qp+r}\bigr)\;\equiv\;b_r\cdot(a_q,b_q)\pmod p.\;}
+\]
+Only Step~1 changes: the multiples of $p$ in $[1,n]$ are now $p,2p,\dots,qp$, so
+$H^{(3)}_n=p^{-3}H^{(3)}_q+(p\text{-integral})$ and $p^3H^{(3)}_n\equiv H^{(3)}_q$, which is
+precisely where $a_q$ enters.  Verified on $9837$ checks per coordinate over all
+$7\le p<80$, $1\le q<p$, $0\le r<p$ with $qp+r<700$: no violations.
+
+This unifies the trichotomy used in the draft.  Modulo $p$ the pair at index $n$ is $b_r$ times
+the pair at index $q$, so the right-hand side can vanish in exactly three ways —
+$p\mid b_r$ (lower-digit bad), $p\mid b_q$ (leading-digit), and $p\mid$ numerator of $a_q$
+(companion-block) — and for the top window $q=1$, where $a_1=6$ and $b_1=5$, only the first
+survives for $p\ge7$.  That is the structural reason the top-window analysis is clean.
+
 All five steps were also checked numerically with no exceptions: the three Lucas evaluations of
 Step~3--4 over every $(p,r)$ with $7\le p<60$, $r<p$, $p+r\le150$; and the conclusion on all
 $3305$ pairs $(n,p)$ with $7\le p$, $n/2<p\le n$, $20\le n<260$ — including all $28$ pairs with
