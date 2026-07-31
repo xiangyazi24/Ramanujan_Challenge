@@ -13652,7 +13652,7 @@ shell formula by Lucas binomial arithmetic, checks \(411\) small exact
 shells against direct integer evaluation, and reproduces all \(824\)
 targets and the three exceptions in (68.13).
 
-### 68.3 The rational right factor is an extension, not a target equation
+### 68.3 The rational right factor is a nonsplit Apéry extension
 
 The certified operator in (68.23) is reducible.  Exact Ore division gives
 \[
@@ -13727,50 +13727,1070 @@ There is no literal common scalar solution with the Apéry module.  If
  =1.
 \tag{68.36}
 \]
-This does not exclude a rational gauge intertwiner between
-\(\mathcal L\) and \(\mathcal A\), so a bounded search was also made
-against the distinguished solutions.  Define the integral transform
+This does not exclude a rational gauge intertwiner.  In fact such an
+intertwiner exists.  Let \(M_{\mathcal A},M_{\mathcal L}\) be the
+companion matrices.  Exact uncoupling over \(\mathbb Q(s)\) produces a
+matrix \(G(s)\) such that
 \[
- \widetilde K_s=4A(s)J_{s+1}-4B(s)J_s.
+ \boxed{\qquad
+ G(s+1)M_{\mathcal A}(s)=M_{\mathcal L}(s)G(s),
+ \qquad \det G(s)\ne0.
+ \qquad}
 \tag{68.37}
 \]
-There are no polynomials \(U,V\in\mathbb Q[s]\), both of degree at most
-30, for which
+For the distinguished solutions it has the particularly simple
+normalization
 \[
- \widetilde K_s=U(s)b_s+V(s)b_{s+1}
+ \boxed{\qquad
+ G(s)^{-1}
+ \binom{K_s}{K_{s+1}}
+ =-10080\binom{b_s}{b_{s+1}}.
+ \qquad}
 \tag{68.38}
 \]
-holds identically.  This finite claim has a short exact certificate:
-form the \(63\)-by-\(63\) matrix, for \(0\le s\le62\), whose columns are
+
+There is a compact scalar certificate for (68.38).  Define
 \[
- s^j b_s,\quad s^j b_{s+1}\quad(0\le j\le30),
- \qquad \widetilde K_s.
+ \widetilde K_s=4A(s)J_{s+1}-4B(s)J_s.
 \tag{68.39}
 \]
-Its determinant modulo \(1000000007\) is
+Put
 \[
- 380490076\ne0.
+ D(s)=(s-1)^2s^2(s+2)^3(s+3)^2
 \tag{68.40}
 \]
-Therefore the corresponding integral determinant is nonzero, proving
-the asserted linear independence over \(\mathbb Q\).  This is only a
-degree-30 exclusion; it is not a theorem against arbitrary rational
-gauges.
+and
+\[
+\begin{aligned}
+P_0(s)={}&-2136s^{14}-35956s^{13}-275781s^{12}
+-1295151s^{11}\\
+&-4204216s^{10}-9914534s^9-16999496s^8
+-20566704s^7\\
+&-16905458s^6-9365542s^5-3782083s^4
+-1149761s^3\\
+&-184974s^2-56736s-30240,\\
+P_1(s)={}&984s^{14}+10292s^{13}+50517s^{12}
++159519s^{11}\\
+&+394364s^{10}+806062s^9+1086736s^8+510804s^7\\
+&-210002s^6+898742s^5+2061155s^4+572629s^3\\
+&-538602s^2-3168s+6048.
+\end{aligned}
+\tag{68.41}
+\]
+Then direct expansion of the first row of (68.38) gives
+\[
+ \boxed{\qquad
+ 3D(s)\widetilde K_s
+ =P_0(s)b_s+P_1(s)b_{s+1}.
+ \qquad}
+\tag{68.42}
+\]
 
-Most importantly, (68.28) is vertical.  At a target,
-\(b_r\equiv0\pmod p\), while the new coordinate
-\(J_{r-1}\) is generally a unit.  Neither the rational kernel (68.32)
-nor the extension law (68.35) turns that one zero into a second
-target-preserving equation.  A mixed Casoratian can control primes
-dividing both an Apéry coordinate and an order-two \(K\)-coordinate;
-it does not contain every prime dividing \(b_r\).  Consequently the
-right factor, by itself, cannot supply the missing horizontal radical
-bound.  A positive continuation would have to produce an additional
-identity whose integer value:
+This corrects the bounded polynomial test formerly used here.  That
+test proved only that \(\widetilde K_s\) has no representation
+\(U(s)b_s+V(s)b_{s+1}\) with polynomial \(U,V\) of degree at most
+thirty.  The rational coefficients in (68.38) have nonconstant
+denominators, so there is no contradiction.
 
-1. is divisible by every moving target prime, not merely the
-   simultaneous-zero subfamily; and
-2. has logarithmic height \(o(n)\).
+The extension itself does not split over \(\mathbb Q(s)\).  Writing a
+putative splitting as an order-one map \(V=v_0+v_1S_s\), reducing
+\(\mathcal RV-U\) modulo \(\mathcal A\), and uncoupling the resulting
+inhomogeneous \(3\)-by-\(3\) system gives an order-three scalar
+operator with no rational solutions.  Hence
+\[
+ 0\longrightarrow\operatorname {Sol}(\mathcal R)
+ \longrightarrow\operatorname {Sol}(\mathcal P)
+ \longrightarrow\operatorname {Sol}(\mathcal A)
+ \longrightarrow0
+\tag{68.43}
+\]
+is a nonsplit extension: the quotient is the Apéry module, while the
+kernel is the elementary hypergeometric solution (68.32).
 
-The exact audit `q32_doubled_period_factor_audit.sage` verifies
-(68.28)--(68.36) and the determinant certificate (68.40).
+### 68.4 Ore--CRT origin cancellation is universally aliased
+
+The gauge allows the strongest possible linear continuation to be
+constructed exactly.  The unnormalized pullback operator \(T_0\) has
+order two and maps \(J\) to \(b\).  Add an order-one left multiple of
+\(\mathcal P\), chosen by a \(2\)-by-\(2\) Ore--CRT system, so that the
+result also vanishes modulo \(\mathcal A\).  After clearing
+denominators one obtains
+\[
+ {\cal U}=\sum_{j=0}^4u_j(s)S_s^j,\qquad u_j\in\mathbb Z[s],
+\tag{68.44}
+\]
+with
+\[
+ \boxed{\qquad
+ {\cal U}(J)_s=M(s)b_s,\qquad
+ {\cal U}(b)_s=0.
+ \qquad}
+\tag{68.45}
+\]
+All five \(u_j\) have degree \(32\), \(M\) has degree \(30\), the
+integer content is one, and
+\(\gcd_{\mathbb Q[s]}(u_0,\ldots,u_4)=1\).  No interpolation or
+numerical guessing enters this construction.
+
+For a fixed global index \(n\), define the origin-cancelled shell
+\[
+ Z_n(d)=
+ \sum_{j=0}^4u_j(n)
+ \{C_{n+j}(d-1)+C_{n+j}(d+1)\}.
+\tag{68.46}
+\]
+Let \(p\) be a top-half candidate, put \(r=n-p\), and suppose
+\(r+4\le p-5\).  Applying (68.6) and (68.11) at each shifted moment
+gives
+\[
+ C_{n+j}(p-2)+C_{n+j}(p)\equiv J_{r+j}\pmod p.
+\tag{68.47}
+\]
+Since integer polynomials take the same value at \(n\) and \(r\)
+modulo \(p\), (68.45) yields
+\[
+ \boxed{\qquad
+ Z_n(p-1)\equiv M(r)b_r
+ \equiv M(n)C_{n-1}(p-1)\pmod p.
+ \qquad}
+\tag{68.48}
+\]
+The crucial point is that (68.48) holds for **every candidate prime**,
+not merely when \(p\mid b_r\).  The new shell is therefore another
+integral lift of the same marked scalar, not a second target equation.
+The finitely many omitted boundary residues reduce by reflection to
+prime divisors of fixed small Apéry numbers and are harmless for the
+asymptotic ledger.
+
+This universal alias persists after Newton projection.  For a block
+\((D,D+N]\), put
+\[
+\begin{aligned}
+ A_I&=G_{D-1,N}\{d\mapsto C_{n-1}(d)\},\\
+ B_I&=G_{D-1,N}\{d\mapsto Z_n(d)\},\\
+ Q_I&=\prod_{\substack{D<p\le D+N\\p\ {\rm prime}}}p .
+\end{aligned}
+\tag{68.49}
+\]
+Lagrange reduction at every prime node in the block gives the exact
+integer divisibility
+\[
+ \boxed{\qquad Q_I\mid B_I-M(n)A_I.\qquad}
+\tag{68.50}
+\]
+Writing \(B_I-M(n)A_I=Q_IH_I\), one has
+\[
+ \gcd(A_I,B_I)=\gcd(A_I,Q_IH_I).
+\tag{68.51}
+\]
+The desired interval target radical is still precisely
+\(\gcd(A_I,Q_I)\).  Thus (68.50) can remove primes of \(A_I\) outside
+the candidate interval, but it places no new restriction on which
+prime factors of \(Q_I\) divide \(A_I\).
+
+The four hostile blocks make this distinction exact:
+\[
+\begin{array}{c|c|c|c|c}
+n&(D,N)&\text{targets}&
+(H_I\bmod p)_{p\ {\rm target}}&
+\gcd(A_I,B_I)\\ \hline
+200&(128,63)&139,181&(63,140)&25159\\
+272&(180,63)&191,233&(26,14)&44503\\
+300&(180,57)&191,227&(151,195)&43357\\
+321&(168,53)&179,193,211&(118,136,53)&7289417.
+\end{array}
+\tag{68.52}
+\]
+In every row \(\gcd(A_I,H_I)=1\), so the displayed gcd is exactly the
+target radical.  At the same time every displayed divided residue is
+nonzero: after the universal prime-node factor is removed, targetness
+does not supply another \(p\)-adic digit.
+
+The exact audit `q32_doubled_period_gauge_audit.sage` constructs the
+gauge and Ore--CRT operator, proves (68.37)--(68.48), verifies the
+nonsplitting computation, and with `--blocks` reproduces
+(68.50)--(68.52).  The older
+`q32_doubled_period_factor_audit.sage` remains a valid bounded
+polynomial-independence test, but not evidence against rational gauge
+equivalence.
+
+The net verdict is sharp.  The doubled-period identity completely
+identifies the order-two quotient and produces a global
+origin-cancelled carrier, but its local defect dimension remains one.
+Any positive continuation must use a nonlinear cross-characteristic
+relation or an independent arithmetic bound for
+\(\gcd(A_I,Q_I)\); adding further linear Ore--CRT lifts only changes
+the quotient \(H_I\) in (68.50).
+
+### 68.5 A primitive nonlinear cross-minor
+
+There is a target-sensitive second layer after the universal factor in
+(68.48) is removed.  For an integer sequence \(F\), retain the notation
+\[
+ G_{d,L}(F)=
+ \sum_{i=0}^{L}(-1)^i
+ \binom{d+i}{i}\binom{d+L+1}{L-i}F_{d+i}.
+\tag{68.53}
+\]
+Put
+\[
+ Y_d=C_{n-1}(d),\qquad Z_d=Z_n(d),
+\tag{68.54}
+\]
+and define the normalized adjacent cross-minor
+\[
+ \boxed{\qquad
+ E_{d,L}=
+ \frac{
+ G_{d,L}(Y)G_{d+1,L}(Z)
+ -G_{d+1,L}(Y)G_{d,L}(Z)}
+ {\binom{d+L+1}{L}}.
+ \qquad}
+\tag{68.55}
+\]
+The numerator in (68.55) has the displayed binomial divisor for
+arbitrary integer sequences \(Y,Z\).  Indeed, adjacent Newton
+subtraction gives
+\[
+ G_{d,L}(F)-G_{d+1,L}(F)
+ =(-1)^{L+1}\binom{d+L+1}{L}\Delta^{L+1}F_d,
+\tag{68.56}
+\]
+and therefore
+\[
+ \boxed{\qquad
+ E_{d,L}=(-1)^{L+1}
+ \left\{
+ \Delta^{L+1}Y_d\,G_{d,L}(Z)
+ -\Delta^{L+1}Z_d\,G_{d,L}(Y)
+ \right\}\in\mathbb Z.
+ \qquad}
+\tag{68.57}
+\]
+
+Let
+\[
+ W_d=Z_d-M(n)Y_d.
+\tag{68.58}
+\]
+The determinant is unchanged when \(Z\) is replaced by \(W\).
+Suppose that \(p-1\) belongs to both adjacent stencils, \(L<p\), and
+the boundary exclusions following (68.48) do not occur.  Newton
+reduction and (68.48) give
+\[
+ G_{d,L}(Y)\equiv b_{n-p},\qquad
+ G_{d,L}(W)\equiv0\pmod p.
+\tag{68.59}
+\]
+Reducing the integral identity (68.57), rather than cancelling a
+nonunit binomial modulo \(p\), gives
+\[
+ \boxed{\qquad
+ E_{d,L}\equiv
+ (-1)^L b_{n-p}\Delta^{L+1}W_d\pmod p.
+ \qquad}
+\tag{68.60}
+\]
+Consequently every target prime in the common stencil divides
+\(E_{d,L}\).
+
+The valuation interpretation is useful.  At an interior prime node,
+\[
+ v_p\binom{d+L+1}{L}=1.
+\tag{68.61}
+\]
+For a non-target candidate, proportionality of the two carrier
+columns supplies the one universal copy of \(p\) in the unnormalized
+determinant.  At a target, all four carrier entries are divisible by
+\(p\), so the determinant contains \(p^2\); normalization removes
+only the universal copy.  Thus (68.55) is a divided second
+\(p\)-adic layer.  It is not another linear lift of the marked scalar.
+
+There is also no hidden coefficient content in a fixed translated
+family of the \(E_{d,L}\).  Write
+\[
+ X_{ij}=Y_iZ_j-Y_jZ_i.
+\tag{68.62}
+\]
+Then each \(E_{d,L}\) is an integral linear form in the Pluecker
+coordinates \(X_{ij}\).  For fixed \(L\), the rows
+\[
+ E_{d,L},E_{d+1,L},\ldots,E_{d+m-2,L}
+\tag{68.63}
+\]
+span a primitive row lattice: all their nonzero Smith invariants are
+one.  To see this modulo an arbitrary prime, take the first row with a
+nonzero coefficient in a putative dependence.  Its left endpoint
+occurs in no later row.  The coefficients of the \(X_{d,j}\) involving
+that endpoint are precisely the Newton weights of
+\(G_{d+1,L}\), whose sum is one.  They cannot all vanish modulo the
+prime, a contradiction.  Induction removes all rows.
+
+Thus any common divisor of the evaluated integers (68.63), after the
+single normalization in (68.55), is distinguished arithmetic of the
+Apéry shell pair.  It is not a Pascal presentation factor.  This is
+exactly why the universal bounded-degree no-go in Section 63 does not
+directly dispose of (68.55): the construction first divides the
+prime-dependent Smith factor in characteristic zero and then detects
+the extra target copy.
+
+### 68.6 Full-margin saturation: evidence and exact remaining lemma
+
+For a fixed node core
+\[
+ I=[D,D+N-1],
+\tag{68.64}
+\]
+put, for \(m\ge2\),
+\[
+ d_0=D-m+1,\qquad L=N+m-2.
+\tag{68.65}
+\]
+The \(m-1\) adjacent cross-minors
+\[
+ E_{d_0,L},E_{d_0+1,L},\ldots,E_{d_0+m-2,L}
+\tag{68.66}
+\]
+all retain every target in \(I\).  Indeed, the intersection of their
+adjacent-stencil node intervals is exactly \(I\).  The natural
+first-cell maximum is
+\[
+ m_{\max}=
+ \min\left\{
+ D-\left\lfloor\frac{n-1}{2}\right\rfloor,\,
+ (n-1)-D-N+2
+ \right\}.
+\tag{68.67}
+\]
+
+A fixed small rectangle is not enough.  An exact scan for every
+\(50\le n\le400\), using only three translations and five neighboring
+lengths, leaves a moving Kummer tail.  For example the residual
+contains
+\[
+\begin{array}{c|c}
+n&\text{new moving factor}\\ \hline
+236&223=n-13\\
+272&257=n-15\\
+300&283=n-17\\
+311&293=n-18\\
+350&331=n-19\\
+400&379=n-21.
+\end{array}
+\tag{68.68}
+\]
+Hence the tempting fixed polynomial window suggested by the
+\(n\le220\) data is false.
+
+In contrast, saturation to (68.67) removes the whole moving tail in
+all tested blocks.  Let \(R_I\) be the target radical in \(I\), and
+let \({\cal E}_{n,D,N}\) denote the gcd in (68.66) at
+\(m=m_{\max}\).  Exact hostile-block calculations give
+\[
+\begin{array}{c|c|c|c|c}
+n&(D,N)&m_{\max}&
+\log_2({\cal E}_{n,D,N}/R_I)&
+{\cal E}_{n,D,N}/R_I\\ \hline
+200&(128,63)&10&50&
+2^{16}3^7 5^3\cdot17\cdot29\cdot101\\
+272&(180,63)&30&34&
+2^{15}3^7\cdot137\\
+300&(180,57)&31&42&
+2^{16}3^8 5^3\cdot61\\
+321&(168,53)&8&35&
+2^{16}3^7 5^3.
+\end{array}
+\tag{68.69}
+\]
+For example, the cumulative nuisance at \(n=300\) decreases from
+\(3407\) bits at \(m=2\) to \(108\) bits at \(m=3\), \(86\) bits at
+\(m=15\), \(70\) bits at \(m=25\), and \(42\) bits at \(m=30\).
+
+The placement effect is equally favorable.  For the central blocks
+\[
+ D=\lfloor13n/20\rfloor,\qquad N=\lfloor n/5\rfloor,
+\tag{68.70}
+\]
+all eighteen even values \(60\le n\le400\) have nuisance height
+between \(31\) and \(46\) bits after maximal-width saturation.
+Thirty further blocks at \(n=300,400\), with lengths \(10\) through
+\(60\) and placements near both first-cell boundaries and in the
+middle, have nuisance height between \(31\) and \(59\) bits whenever
+the available margin is comparable with the core length.  Their
+additional primes are boundary factors such as
+\[
+101\mid n+3,\quad151\mid n+2,\quad
+13\mid n+3,\quad67\mid n+2,
+\tag{68.71}
+\]
+or a prime endpoint of the chosen core.  These statements are exact
+finite computations, not asymptotic bounds.
+
+The data isolates a precise unconditional proof target.
+
+> **Full-margin exterior-content lemma.**  For every admissible
+> first-cell core with \(m_{\max}\ge cN\), the nonzero integer
+> \({\cal E}_{n,D,N}\) divides an explicit integer
+> \(R(n,D,N)\) of fixed polynomial height:
+> \[
+> \log |R(n,D,N)|=O(\log n),
+> \tag{68.72}
+> \]
+> uniformly in the placement.
+
+The whole gcd, not merely the quotient by the unknown target radical,
+must be bounded in (68.72).  Since
+\[
+ R_I\mid{\cal E}_{n,D,N},
+\tag{68.73}
+\]
+the lemma would give \(\log R_I=O(\log n)\) for one block.
+Dyadic first-cell cores with margins comparable to their lengths cover
+all but two boundary strips of width \(H\) using \(O(\log n)\) blocks.
+The strips cost at most \(O(H\log n)\) by the trivial integer count,
+while (68.72) costs \(O((\log n)^2)\) on the dyadic cores.  Taking, for
+example, \(H=\lfloor\sqrt n\rfloor\) would give \(o(n)\) for the full
+top-half target radical.
+
+What remains missing is a characteristic-zero endpoint Bezout
+identity or saturated Fitting computation proving (68.72).  Fixed
+state dimension alone is insufficient: long transition products may
+have exponential height.  The relevant extra facts are that the
+fixed-\(m\) Pluecker coefficient lattice is primitive and that maximal
+translation reaches a first-cell boundary.  A proof must use the
+specific shell decomposition (57.3)--(57.11), or an equivalent
+integral endpoint reduction, to show that the evaluated exterior
+content has only the observed boundary factors.
+
+The flags `--cross-minors` and `--scan-cross` in
+`q32_doubled_period_gauge_audit.sage` reproduce the initial hostile
+and generic exact cross-minor data.  The fixed-rectangle scan is
+diagnostic only; (68.68) records its rigorous failure as a uniform
+bound.
+
+### 68.7 The moving tail is an exact Kummer flat cell
+
+The moving factors in (68.68) are not accidental cancellations.
+They have a termwise Lucas explanation.  Let \(q\ge5\) be prime and
+write
+\[
+ M=\alpha q+r,\qquad
+ e=(\alpha-1)q+\sigma,\qquad
+ 0\le r<q,\quad0<\sigma<q.
+\tag{68.74}
+\]
+Assume that \(M/2<e\le M\), so that the two packets in the one-fold
+shell formula contain only their central term and the two shifts by
+\(\pm e\).  Then
+\[
+ \boxed{\qquad
+ r<\sigma<q-r
+ \quad\Longrightarrow\quad
+ C_M(e)\equiv b_\alpha b_r\pmod q .
+ \qquad}
+\tag{68.75}
+\]
+More strongly, every noncentral binomial in every summand vanishes
+separately modulo \(q\).
+
+Here is the complete digit proof.  If
+\(\binom Mt\not\equiv0\pmod q\), write \(t=bq+c\); Lucas gives
+\(0\le c\le r\).  The low digits of the two shifted binomials in the
+first packet are
+\[
+ c+\sigma,\qquad c-\sigma+q.
+\tag{68.76}
+\]
+They both exceed \(r\), by the two strict inequalities in (68.75).
+The upper low digit in the second packet is \(2r-c\); the two shifted
+lower digits are
+\[
+ r-c+\sigma,\qquad q+r-c-\sigma,
+\tag{68.77}
+\]
+and both exceed \(2r-c\).  Notice that (68.75) implies \(2r<q\), so
+no omitted carry occurs in (68.77).  Only the central packets remain,
+and their Lucas factorization is precisely \(b_\alpha b_r\).
+
+The inequalities are also necessary for this *termwise* mechanism.
+If \(\sigma\le r\), the choice \(t=0\) leaves
+\(\binom Me\) as a \(q\)-unit.  If \(q-\sigma\le r\), the choice
+\(t=\alpha q\) leaves \(\binom M{\alpha q-e}\) as a \(q\)-unit.
+Failure of (68.75) does not prove that an evaluated shell or minor is
+nonzero: a distinguished arithmetic cancellation may remain.
+
+For a general rectangle
+\[
+ E_{d+s,L+t},\qquad
+ s_-\le s\le s_+,\quad t_-\le t\le t_+,
+\tag{68.78}
+\]
+the shell moments are \(n-1,\ldots,n+4\), and the exact extreme shell
+nodes, including the \(\pm1\) shifts in \(Z\), are
+\[
+ e_-=d+s_--1,\qquad
+ e_+=d+s_++L+t_++2.
+\tag{68.79}
+\]
+Suppose all six moments have leading \(q\)-digit \(\alpha\), all
+nodes lie in the cell
+\(((\alpha-1)q,\alpha q)\), and the rectangle is strictly in the
+first shell cell.  Put \(r_*=n+4-\alpha q\).  Applying (68.75) at
+the two extreme nodes shows that the entire rectangle is termwise
+flat if and only if
+\[
+ r_*<e_--(\alpha-1)q,\qquad
+ e_+-(\alpha-1)q<q-r_*.
+\tag{68.80}
+\]
+Equivalently,
+\[
+ \boxed{\qquad
+ q>n+4-e_-,\qquad
+ 2\alpha q>n+4+e_+.
+ \qquad}
+\tag{68.81}
+\]
+
+In the quotient-one branch write \(q=n-k\).  The exact integer offset
+bound is
+\[
+ k\le
+ \min\left\{
+ e_--5,\,
+ \left\lfloor\frac{n-e_+-5}{2}\right\rfloor
+ \right\}.
+\tag{68.82}
+\]
+In the quotient-two branch write \(2q=n-k\); the corresponding bound
+is
+\[
+ k\le
+ \min\left\{
+ 2e_--n-10,\,
+ \left\lfloor\frac{n-e_+-5}{2}\right\rfloor
+ \right\}.
+\tag{68.83}
+\]
+For the fixed \(3\)-by-\(5\) rectangle in (68.68),
+\[
+ d=\lfloor13n/20\rfloor-2,\quad
+ L=\lfloor n/5\rfloor+1,\quad
+ (s_-,s_+)=(0,2),\quad(t_-,t_+)=(-2,2),
+\tag{68.84}
+\]
+the two bounds agree.  They give respectively
+\[
+\begin{array}{c|rrrrrr}
+n&236&272&300&311&350&400\\ \hline
+K(n)&13&16&17&18&21&25\\
+n-K(n)&223&256&283&293&329&375.
+\end{array}
+\tag{68.85}
+\]
+Thus every prime \(n-k\) with \(1\le k\le K(n)\), and every prime
+\((n-k)/2\) in the stable quotient-two range, divides every minor in
+the fixed rectangle.  The primes displayed in (68.68) are simply the
+first available primes at these exact integer endpoints.
+
+For the full-margin family (68.65)--(68.66), the extreme nodes are
+\[
+ e_-=D-m,\qquad e_+=D+N+m-1.
+\tag{68.86}
+\]
+At \(m=m_{\max}\) one of the hypotheses behind (68.80) necessarily
+breaks.  If the left margin is active, then
+\[
+ e_-=\left\lfloor\frac{n-1}{2}\right\rfloor,
+\tag{68.87}
+\]
+so the largest moments have left the strict first cell.  If the right
+margin is active, then \(e_+=n\), which is beyond the moment \(n-1\).
+This gives a rigorous explanation for the disappearance of the common
+moving tail under maximal saturation.  It does not bound the
+remaining distinguished exterior gcd.
+
+The pure-Python audit `q32_kummer_flat_cell_audit.py` checks 512 flat
+shells and 448 sharp failure witnesses, verifies every shell node in
+all six rows of (68.85), and checks the two possible boundary exits in
+the four hostile full-margin blocks.
+
+### 68.8 Candidate separation after maximal saturation
+
+The height of the entire exterior gcd and its candidate-prime part
+must be kept distinct.  For a candidate prime \(q\) whose node belongs
+to the fixed core, (68.60) gives, for every translated minor,
+\[
+ E_{d,L}\equiv
+ (-1)^L b_{n-q}\Delta^{L+1}W_d\pmod q.
+\tag{68.88}
+\]
+Consequently, if \(q\nmid b_{n-q}\), then \(q\) divides all the
+full-margin minors if and only if the displayed consecutive high
+differences of \(W\) all vanish modulo \(q\).  This is an exact
+candidate-restricted separation problem, not a heuristic comparison
+of integer heights.
+
+The new exact scan uses the central blocks (68.70) for every integer
+\(60\le n\le200\), together with the hostile blocks at
+\(n=200,272,300,321\).  It evaluates all shells in characteristic
+zero, forms \(W\), computes the entire high-difference list, and
+independently verifies (68.88) for each minor.  The totals are
+\[
+\begin{array}{c|r}
+\text{candidate prime incidences}&756\\
+\text{target incidences}&11\\
+\text{non-target primes dividing every minor}&0\\
+\text{non-target primes missed by the left endpoint alone}&11\\
+\text{non-target primes missed by the right endpoint alone}&4\\
+\text{non-target primes missed by both endpoints}&0.
+\end{array}
+\tag{68.89}
+\]
+Thus the two extreme minors already give exact candidate separation in
+all tested blocks, while either extreme alone is insufficient.
+
+There is also a sharp characteristic-zero pattern.  Let
+\[
+ c(n)=\gcd\{M(n),u_0(n),\ldots,u_4(n)\},
+\tag{68.90}
+\]
+where the \(u_j\) and \(M\) are from (68.44)--(68.45).  The certified
+polynomials \(u_0,\ldots,u_4\) have greatest common divisor one over
+\(\mathbb Q[n]\).  Hence there is a fixed nonzero integer \(C\) such
+that
+\[
+ c(n)\mid C
+\tag{68.91}
+\]
+for every integer \(n\).  This explains the large but harmless
+small-prime content common to the evaluated minors.
+
+Let \({\cal E}\) be either the gcd of all maximal-width minors or the
+gcd of just the two extreme minors.  In every one of the 145 blocks
+used for (68.89), exact factorization verifies
+\[
+ \boxed{\qquad
+ \operatorname {rad}
+ \left(
+ \frac{{\cal E}}{c(n)R_I}
+ \right)
+ \mid
+ \prod_{j=-6}^{6}|n+j|.
+ \qquad}
+\tag{68.92}
+\]
+For instance the hostile factors \(101,29,17\) at \(n=200\) divide
+\(n+2,n+3,n+4\); \(137\) at \(n=272\) divides \(n+2\); and \(61\)
+at \(n=300\) divides \(n+5\).  Equation (68.92) is computational
+evidence, not yet a symbolic divisibility theorem.
+
+Most importantly, (68.92) does **not** by itself bound \(R_I\): the
+unknown target radical is still the other factor of \({\cal E}\).
+The computation has removed the deterministic Kummer and
+presentation nuisances and reduced the desired theorem to a
+two-endpoint Apéry exterior-gcd estimate, but it has not supplied that
+estimate.  A valid completion must prove
+\[
+ \log\gcd\left(
+ E_{D-m+1,L},E_{D-1,L}
+ \right)=o(N)
+\tag{68.93}
+\]
+on a block ledger, or exhibit an integer endpoint identity of
+subexponential height which contains the target factor as well.
+Merely proving the residual divisibility (68.92) would be circular.
+
+The flag `--candidate-dense` in
+`q32_doubled_period_gauge_audit.sage` reproduces (68.89)--(68.92).
+
+### 68.9 The exact curvature obstruction to universal endpoint collapse
+
+The two-endpoint target (68.93) cannot follow from the
+Newton--Pascal kernel alone.  There is an exact obstruction which is
+already present for two arbitrary integer arrays.
+
+Fix \(L\), and write
+\[
+ A_d(F)=G_{d,L}(F),\qquad
+ J_d(F)=\sum_{q=0}^{L+1}(-1)^q
+ \binom{L+1}{q}F_{d+q},\qquad
+ P_d=\binom{d+L+1}{L}.
+\tag{68.94}
+\]
+The complementary beta--Padé identity gives the integral difference
+law
+\[
+ A_d(F)-A_{d+1}(F)=P_dJ_d(F).
+\tag{68.95}
+\]
+For two arrays \(Y,Z\), put
+\[
+ a_d=(A_d(Y),A_d(Z)),\qquad
+ j_d=(J_d(Y),J_d(Z)).
+\tag{68.96}
+\]
+For \(d_s=d_0+s\), \(0\le s\le r\), abbreviate
+\[
+ a_s=a_{d_s},\quad j_s=j_{d_s},\quad
+ P_s=P_{d_s},\quad E_s=E_{d_s,L}.
+\tag{68.97}
+\]
+Then every normalized adjacent minor is integral, with the exact
+forms
+\[
+ E_s=\frac{\det(a_s,a_{s+1})}{P_s}
+     =\det(j_s,a_s)=\det(j_s,a_{s+1}).
+\tag{68.98}
+\]
+Iterating (68.95) and eliminating
+\(\det(j_s,a_0)\) gives the whole-family identity
+\[
+ \boxed{\quad
+ \det(a_0,a_r)
+  =\sum_{s=0}^{r-1}P_sE_s+
+   \sum_{0\le t<s\le r-1}
+     P_tP_s\det(j_s,j_t).
+ \quad}
+\tag{68.99}
+\]
+The second term is the interior curvature
+\[
+ {\cal C}_r=
+ \sum_{0\le t<s\le r-1}P_tP_s\det(j_s,j_t).
+\tag{68.100}
+\]
+It is not an artifact of the chosen presentation.  If
+\(u_s=P_sj_s\), its skew coefficient matrix is
+\[
+ S_{s,t}=
+ \begin{cases}
+ 1,&s>t,\\
+ -1,&s<t,\\
+ 0,&s=t.
+ \end{cases}
+\tag{68.101}
+\]
+This matrix has rank \(r\) for even \(r\), and \(r-1\) for odd
+\(r\).  Hence expressing (68.100) as a sum of determinants of linear
+packet aggregates requires at least \(\lfloor r/2\rfloor\)
+determinants.  In particular, no fixed number of universal boundary
+packets can absorb the curvature as the margin grows.
+
+There is also an integral zero-separator counterexample.  The data
+\[
+ A_{d_0}(F),\quad
+ J_{d_0}(F),\ldots,J_{d_0+r-1}(F)
+\tag{68.102}
+\]
+can be prescribed arbitrarily over \(\mathbb Z\): choose the final
+entry of each successive \((L+1)\)-st difference recursively (its
+coefficient is \(\pm1\)), then add a constant to the whole block.
+The differences are unchanged and the initial carrier changes by
+that constant, because its coefficient sum is one.
+
+Now take any prime \(p\nmid P_0P_1\), choose
+\[
+ P_0u\equiv P_1v\equiv1\pmod p,
+\tag{68.103}
+\]
+and prescribe
+\[
+\begin{aligned}
+ a_1&=(p,p),&
+ j_0&=(u,0),&
+ a_0&=(p+P_0u,p),\\
+ j_1&=(0,-v),&
+ a_2&=(p,p+P_1v),&
+ j_s&=0\quad(s\ge2).
+\end{aligned}
+\tag{68.104}
+\]
+The realization above produces actual integer arrays.  They satisfy
+\[
+ E_0=pu,\qquad E_1=pv,\qquad E_s=0\ (s\ge2),
+\tag{68.105}
+\]
+whereas
+\[
+ \det(a_0,a_r)\equiv1\pmod p.
+\tag{68.106}
+\]
+Thus even radical divisibility of the endpoint determinant is false
+for universal Newton carriers, for arbitrarily large \(p\).
+
+The strongest generic bridge is instead the saturated Plücker
+identity.  If
+\[
+ c_i=\gcd\{(a_i)_1,(a_i)_2\},
+\tag{68.107}
+\]
+then there are integers \(U_s\) for which
+\[
+ \left(\prod_{i=1}^{r-1}c_i\right)\det(a_0,a_r)
+  =\sum_{s=0}^{r-1}U_sP_sE_s.
+\tag{68.108}
+\]
+Its multiplier has logarithmic height potentially
+\(\Theta(rn)=\Theta(n^2)\) in the full-margin regime, so it cannot
+prove the desired subexponential estimate.
+
+Therefore (68.93) was too optimistic as a *universal* endpoint
+theorem.  The remaining exact target must use the Apéry shell.  A
+sufficient form is a curvature telescoper
+\[
+ {\cal C}_r-B_{\rm bdry}=\sum_sU_sE_s,
+\tag{68.109}
+\]
+where \(B_{\rm bdry}\) uses only bounded-width shell packets and all
+denominators and primitive values have logarithmic height \(o(n)\).
+Equivalently, one may seek a local WZ/Lagrange law
+\[
+ P_s\det\left(j_s,\sum_{t<s}P_tj_t\right)
+ =B_{s+1}-B_s+\sum_{|q|\le R}u_{s,q}E_{s+q},
+\qquad R=O(1).
+\tag{68.110}
+\]
+This is the precise point at which the known fixed-order ray
+telescopers must enter; a recurrence for each scalar packet alone
+does not control the bilinear curvature.
+
+The independent standard-library audit
+`q32_cross_curvature_audit.py` checks (68.95)--(68.100) on 1568
+random integer-array instances, realizes three prime
+zero-separator counterexamples, and verifies the rank in (68.101)
+for \(1\le r\le24\).
+
+### 68.10 The primitive endpoint determinant is still exponentially tall
+
+There is one target-sensitive normalization of the endpoint term in
+(68.99) which survives the universal no-go.  Put
+\[
+ g_P=\gcd\{P_0,\ldots,P_{r-1}\},\qquad
+ {\cal D}_{\rm end}=\frac{\det(a_0,a_r)}{g_P}.
+\tag{68.111}
+\]
+Equation (68.95) gives
+\[
+ \det(a_0,a_r)=
+ \sum_{s=0}^{r-1}P_s\det(j_s,a_0),
+\tag{68.112}
+\]
+so \({\cal D}_{\rm end}\) is an integer for arbitrary arrays.
+
+For a target prime \(p\) in the common core, under the same
+interior-node and \(L<p\) hypotheses used in (68.59), every coordinate
+of every \(a_s\) is zero modulo \(p\).  Hence
+\[
+ p^2\mid\det(a_0,a_r).
+\tag{68.113}
+\]
+At the same time \(p>L\), and the common-node Kummer calculation gives
+\[
+ v_p(P_s)=1\quad(0\le s<r),\qquad v_p(g_P)=1.
+\tag{68.114}
+\]
+Consequently the block target radical satisfies the exact divisibility
+\[
+ R_I\mid{\cal D}_{\rm end}.
+\tag{68.115}
+\]
+This is a genuine primitive common carrier, and the arbitrary-prime
+counterexample (68.103)--(68.106) does not apply to it: that
+counterexample deliberately takes \(p\nmid P_0P_1\).
+
+Unfortunately, the new carrier does not have small height.  Write
+\(\operatorname {bits}(x)=\lfloor\log_2|x|\rfloor+1\) for
+\(x\ne0\).  The exact curvature audit gives:
+\[
+\begin{array}{c|c|c|c|c}
+n&(D,N)&m&L&
+(\operatorname {bits}\det(a_0,a_r),\operatorname {bits}g_P,
+ \operatorname {bits}{\cal D}_{\rm end})\\ \hline
+80 &(52,16)&13&27&(1130,36,1095)\\
+120&(78,24)&19&41&(1603,48,1555)\\
+160&(104,32)&25&55&(2078,61,2018)\\
+200&(130,40)&31&69&(2544,89,2456)\\
+200&(128,63)&10&71&(2551,141,2411)\\
+272&(180,63)&30&91&(3379,144,3235)\\
+300&(180,57)&31&86&(3677,123,3554)\\
+321&(168,53)&8&59&(3847,148,3700).
+\end{array}
+\tag{68.116}
+\]
+These finite values are not an asymptotic lower-bound proof, but they
+decisively refute the hoped-for *visible* endpoint collapse: after the
+entire universal \(g_P\) normalization, the carrier remains on the same
+linear-in-\(n\) bit scale as the individual minors.
+
+There is a formally bounded-width-looking curvature telescoper
+\[
+ {\cal C}_s=
+ \{\det(a_0,a_{s+1})-\det(a_0,a_s)\}-P_sE_s,
+\tag{68.117}
+\]
+but its boundary state is the global column \(a_0\), and summing
+(68.117) returns exactly (68.99).  Thus it merely renames the tall
+endpoint carrier (68.111).  A useful Apéry telescoper must replace
+this global state by a genuinely local shell boundary packet and prove
+a new height cancellation; fixed-width syntax alone is not sufficient.
+
+The flag `--curvature-scan` in
+`q32_doubled_period_gauge_audit.sage` verifies
+(68.99), (68.111)--(68.115), and the table (68.116).
+
+### 68.11 Diagonal-margin endpoints: an exact two-carrier target
+
+The tall endpoint in Section 68.10 becomes much more rigid when the
+margin and the Newton length are varied together while the retained
+prime core is kept fixed.  For
+\[
+ I=[D,D+N-1],\qquad
+ d_m=D-m+1,\qquad L_m=N+m-2,
+\tag{68.118}
+\]
+put
+\[
+\begin{aligned}
+ U_m&=\bigl(G_{d_m,L_m}(Y),G_{d_m,L_m}(W)\bigr),\\
+ V_m&=\bigl(G_{D,L_m}(Y),G_{D,L_m}(W)\bigr),\\
+ g_m&=\gcd_{0\le s<m-1}
+ \binom{d_m+s+L_m+1}{L_m},\\
+ H_m&=\frac{\det(U_m,V_m)}{g_m}.
+\end{aligned}
+\tag{68.119}
+\]
+Here \(U_m\) is the Newton window obtained by extending \(I\) to the
+left, while \(V_m\) is the window obtained by extending it equally
+far to the right.
+
+The integer \(H_m\) is well defined for arbitrary integer arrays.
+Indeed, at fixed \(L_m\), repeated use of (68.95) gives
+\[
+ U_m-V_m=\sum_{s=0}^{m-2}P_{m,s}j_{m,s},\qquad
+ P_{m,s}=\binom{d_m+s+L_m+1}{L_m}.
+\tag{68.120}
+\]
+Taking the determinant with either endpoint vector proves
+\[
+ g_m\mid\det(U_m,V_m).
+\tag{68.121}
+\]
+
+This normalization retains exactly one forced target digit.  If \(p\)
+is a target prime with \(p-1\in I\), and the usual interior and
+\(L_m<p\) hypotheses hold, all four coordinates in \(U_m,V_m\)
+vanish modulo \(p\).  Therefore
+\[
+ v_p\bigl(\det(U_m,V_m)\bigr)\ge2.
+\tag{68.122}
+\]
+The common-node Kummer calculation gives
+\[
+ v_p(P_{m,s})=1\quad(0\le s<m-1),\qquad v_p(g_m)=1,
+\tag{68.123}
+\]
+and hence
+\[
+ \boxed{\qquad R_I\mid H_m\quad\text{for every admissible }m.\qquad}
+\tag{68.124}
+\]
+Equations (68.121)--(68.124), including the valuation ledger, are
+theorem-level facts.
+
+The distinguished Apéry-shell specialization exhibits a sharp
+additional collapse.  Let
+\[
+ m_*=\min\left\{
+ D-\left\lfloor\frac{n-1}{2}\right\rfloor,\,
+ (n-1)-D-N+2
+ \right\}.
+\tag{68.125}
+\]
+For the hostile blocks, exact characteristic-zero computation gives:
+\[
+\begin{array}{c|c|c|c|c|c}
+n&(D,N)&m_*&R_I&
+\operatorname{bits}\gcd(H_{m_*-1},H_{m_*})&
+\operatorname{bits}\gcd_{2\le m\le m_*}H_m\\ \hline
+200&(128,63)&10&139\cdot181&74&65\\
+272&(180,63)&30&191\cdot233&60&50\\
+300&(180,57)&31&191\cdot227&64&58\\
+321&(168,53)&8&179\cdot193\cdot211&62&57.
+\end{array}
+\tag{68.126}
+\]
+In comparison, the individual \(H_{m_*}\) have respectively
+\(2411,3235,3554,3700\) bits.
+
+The fixed origin content
+\[
+ c(n)=\gcd\{M(n),u_0(n),\ldots,u_4(n)\}
+\tag{68.127}
+\]
+divides both last-margin endpoints in every audited row.  After
+removing it, the exact
+two-margin gcds in the same four rows are
+\[
+\begin{array}{c|l}
+n&\gcd(H_{m_*-1},H_{m_*})/c(n)\\ \hline
+200&2\cdot3\cdot5\cdot7^2\cdot17\cdot29\cdot101
+       \cdot139\cdot181\\
+272&2^3\cdot5^2\cdot11\cdot137\cdot191\cdot233\\
+300&2\cdot3\cdot11\cdot61\cdot191\cdot227\\
+321&2^3\cdot3\cdot5\cdot179\cdot193\cdot211.
+\end{array}
+\tag{68.128}
+\]
+Thus the last row is exactly \(120R_I\).
+
+A dense central scan
+\[
+ D=\lfloor13n/20\rfloor,\qquad N=\lfloor n/5\rfloor,
+\qquad 60\le n\le500,\quad20\mid n,
+\tag{68.129}
+\]
+together with the hostile rows, gives two-margin gcds of only
+\(34\)--\(74\) bits.  The full diagonal-margin gcds have only
+\(30\)--\(65\) bits.  In every target row (68.124) is verified
+valuation by valuation: the raw determinant has valuation at least
+two, \(g_m\) has valuation one, and \(H_m\) retains the remaining
+copy.  The largest individual carrier in the scan has \(5830\) bits.
+
+This is substantially cleaner than the single endpoint of Section
+68.10, but it is not yet a height theorem.  A random pair of large
+integers with the forced factor \(c(n)R_I\) would exhibit the same
+small residual gcd.  In particular, (68.126)--(68.129) must not be
+promoted to a proof merely from the observed bit lengths.
+
+The exact new proof target is the following two-boundary certificate.
+Find integers \(A_{n,D,N},B_{n,D,N}\) and a nonzero integer
+\(Q_{n,D,N}\) such that
+\[
+ A_{n,D,N}H_{m_*}
+ +B_{n,D,N}H_{m_*-1}=Q_{n,D,N},
+\qquad
+\log|Q_{n,D,N}|=O(\log n).
+\tag{68.130}
+\]
+The coefficients on the left may be large; only the certified
+nonzero right side needs small height.  Maximality makes (68.130) a
+genuine boundary problem: either
+\[
+ d_{m_*}-1=\left\lfloor\frac{n-1}{2}\right\rfloor
+\quad\text{or}\quad
+ D+L_{m_*}=n-1.
+\tag{68.131}
+\]
+Thus a plausible certificate must combine the two-parameter Pascal
+law (54.4) with an actual quotient-two or terminal first-cell shell
+identity.  Universal Pascal algebra alone cannot make the boundary
+value small; the Apéry moment coupling in \(W\) is load-bearing.
+
+The flag `--multi-margin-scan` checks (68.118)--(68.128).  The
+optimized flag `--multi-margin-dense` computes each maximal shell grid
+once and reproduces (68.129), including forward and reverse running
+gcds.  It also records the precise warning suggested by the data:
+obtaining the *final* all-margin gcd can require a number of margins
+growing with \(n\), even though the last two already have
+polynomial-looking height.
