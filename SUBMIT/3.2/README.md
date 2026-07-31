@@ -53,7 +53,8 @@ Rowland–Yassawi–Krattenthaler 2021; Straub 2024) found no numerator counterp
 made here is "apparently new in this normalisation", not absolute novelty.
 
 *Consequence.* If p ∤ b_n then p^3 a_n is a p-unit, so v_p(D_n) = 3 and p does not divide
-G_n. Hence **only primes dividing b_n contribute to G_n**, and the top-window step of the
+G_n. (Strictly, v_p(G_n) = e_p(n) + min(v_p(A_n), v_p(b_n)); in the top window with
+v_p(b_n) ≤ 2 the second term vanishes because v_p(a_n) < 0.) Hence **only primes dividing b_n contribute to G_n**, and the top-window step of the
 reduction is unconditional. It also unifies the trichotomy of lower-digit / leading-digit /
 companion-block primes: modulo p the pair at index n is b_r times the pair at index q (a
 Cartier/Frobenius block law — the action is b_r·I, so rank two, not a rank-one collapse), and

@@ -367,8 +367,29 @@ and hence, for \emph{all} $t$,
 \[
   \boxed{\;v_p(D_n)=3-\min(t,3),\qquad e_p(n)=\min\bigl(v_p(b_n),3\bigr).\;}
 \]
-The cap is simply $v_p(d_n)=3$.  So the denominator-defect law is now completely proved, and the
-top-window contribution to $\log G_n$ equals $\sum_p\min(v_p(b_n),3)\log p$ exactly.  What is not
+The cap is simply $v_p(d_n)=3$.
+
+\emph{Two bookkeeping points.}  First, $v_p(G_n)=e_p(n)+\min\bigl(v_p(A_n),v_p(b_n)\bigr)$, so
+$G_n=\prod_pp^{e_p(n)}$ presumes coprimality; in the top window with $t\le2$ the two agree, since
+$v_p(a_n)=t-3<0$ forces $v_p(A_n)=0$, but that is an argument rather than a definition, and at
+$t=3$ it is exactly the open point.  Second, the companion channel in the middle range is
+$p\mid A_q$, not $p\mid b_q$: for $p>q$ the denominator $D_q$ is a $p$-unit, so the block law gives
+$p\mid G_n\iff p\mid A_qb_r$.  Since $\log|A_q|=O(q)$, the combined carrier still satisfies
+$\sum_{q\le\log n}\log\operatorname{rad}(A_qb_q)=O(\log^2n)$.
+
+So the denominator-defect law is completely proved, and the top-window contribution to
+$\log G_n$ equals $\sum_p\min(v_p(b_n),3)\log p$ exactly.  \emph{But the top window alone is not
+the whole story}: the justified decomposition is
+\[
+  \log G_n=\sum_{n/2<p\le n}\min\bigl(v_p(b_n),3\bigr)\log p
+  \;+\;M_n\;+\;O\!\left(\frac n{\log n}+\log^2n\right),
+  \qquad
+  M_n=\!\!\sum_{\substack{n/\log n<p\le n/2\\ p\,\mid\,b_{n\bmod p}}}\!\!v_p(G_n)\log p,
+\]
+and from $p\mid b_n$ alone the middle range admits only the bound $O(\log b_n)=O(n)$.  Hence the
+conjecture is equivalent to the \emph{full} large-prime condition
+$\sum_{n/\log n<p\le n}\min(v_p(b_n),3)\log p=o(n)$; the top-window sum alone suffices only once
+$M_n=o(n)$ is proved separately.  What is not
 settled is the value $\alpha=0$ at $t=3$ — equivalently, excluding a common $p$-factor of the
 reduced numerator and $b_n$ — which bears on the primitive coprimality conjecture but not on
 $G_n$; no $t\ge3$ occurs in the tested range: computing $v_p(b_n)$ \emph{directly} from the exact
