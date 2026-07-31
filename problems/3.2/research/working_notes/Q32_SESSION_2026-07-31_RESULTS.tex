@@ -58,6 +58,26 @@ unique zero equals $(p-1)/2$.
 $b_{p-1-r}/b_r$ is identically $1$, not merely $\pm1$), and the involution verified on all
 $548$ primes $5\le p<4000$ without exception.
 
+\subsection{Parity of $|Z_p|$ is governed by ordinarity}
+
+Combining Proposition~\ref{prop:palindrome} with the Beukers/Ahlgren--Ono supercongruence
+$b_{(p-1)/2}\equiv a_p\pmod{p^2}$ for the newform $8.4.a.a$ gives
+
+\begin{proposition}\label{prop:parity-ordinary}
+$|Z_p|$ is odd if and only if $p$ is non-ordinary for $8.4.a.a$, i.e.\ $p\mid a_p$.
+\end{proposition}
+
+\begin{proof}
+By Proposition~\ref{prop:palindrome}, $Z_p$ is stable under $r\mapsto p-1-r$, whose unique
+fixed point is $(p-1)/2$; hence $|Z_p|$ is odd exactly when $(p-1)/2\in Z_p$, i.e.\ when
+$p\mid b_{(p-1)/2}$, which by the supercongruence is equivalent to $p\mid a_p$.
+\end{proof}
+
+Verified over all $2260$ primes $5\le p\le20\,000$: $|Z_p|$ is odd exactly at $p=11$ and
+$p=3137$, and these are exactly the primes with $p\mid a_p$ — no mismatches.  Since
+non-ordinary primes have density zero, $|Z_p|$ is even for almost all $p$; this is the
+structural reason the Poisson law of the ledger is stated for the pair count $|Z_p|/2$.
+
 \subsection{Where $G_n$ actually lives}
 
 The factorisation below is already recorded in \texttt{DOCTRINE.md} (Q5386); what is added
@@ -235,11 +255,18 @@ the Lucas digit criterion) gives
  \text{Ap\'ery }\zeta(2)&0.042&8\\
  \text{Franel}&0.036&9\\
  \text{Domb}&0.036&8\\
- \text{Almkvist--Zudilin}&0.031&5\\ \hline
- \binom{2n}n\ \text{(control)}&0.420&124
+ \text{Almkvist--Zudilin}&0.031&4\\ \hline
+ \text{Cooper }s_7&0.301&70\\
+ \text{Cooper }s_{10}&0.227&53\\
+ \text{Cooper }s_{18}&0.225&52\\
+ \binom{2n}n\ \text{(control)}&0.420&101
 \end{array}
 \]
-the first five decaying with $n$, the control not.  For factorial ratios there is a sharp
+a sharp dichotomy: the first five decay with $n$, the last four do not.  The three Cooper
+sequences were checked directly here — their recurrences reproduce
+$s_{10}(n)=\sum_k\binom nk^4$ exactly, and their zero sets have
+$|Z_p|\approx26\%$--$35\%$ of $p$ (against $|Z_p|\approx1$ for Ap\'ery), with the
+Malik--Straub terminal intervals verified to be contained in $Z_p$ at $p=23,31,43$.  For factorial ratios there is a sharp
 theorem: with $\Delta(x)=\sum_i\lfloor a_ix\rfloor-\sum_j\lfloor b_jx\rfloor$,
 \[
   \log\operatorname{rad}_{p\le n}(F_n)=\kappa_\Delta n+o(n),

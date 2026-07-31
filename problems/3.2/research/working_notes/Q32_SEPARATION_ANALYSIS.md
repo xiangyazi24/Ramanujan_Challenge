@@ -753,6 +753,43 @@ pointwise theorem.
     the single integer \(b_n\) has sublinear logarithmic height.  It is
     a genuine simplification, not a standard smooth-part theorem.
 
+57. The terminal Newton family gives a new, almost full-range
+    target-preserving gcd, but its complete scalar elimination is still
+    rank one.  With \(M=n-1\),
+    \[
+      f_L=G_{M-L,L}(C_M),\qquad F_j=f_{L_0-j},
+      \qquad L_0=M-\bigl(\lfloor M/2\rfloor+1\bigr),
+    \]
+    define
+    \[
+      {\cal E}_j=
+      \frac{F_{j-1}F_{j+1}-F_j^2}
+      {\gcd\{\binom n{L_0-j},\binom n{L_0-j+1}\}}.
+    \]
+    This is an integer, and every top-half target
+    \(p>\lfloor M/2\rfloor+4\) divides both
+    \({\cal E}_1,{\cal E}_2\).  Thus only a fixed three-integer strip is
+    omitted.  Exact hostile examples have
+    \[
+    \begin{array}{c|c}
+    n&\gcd({\cal E}_1,{\cal E}_2)\\ \hline
+    200&2^2\cdot5\cdot139\cdot181\\
+    272&2\cdot191\cdot233\\
+    300&11^2\cdot191\cdot227\\
+    321&179\cdot193\cdot211.
+    \end{array}
+    \]
+    Nevertheless all adjacent scalar Turán eliminations obey the exact
+    rank-one identity (68.233) below.  Eliminating the marked scalar
+    restores one universal copy of every candidate prime and hence the
+    full linear-height Pascal tail.  Larger Hankel determinants reduce
+    to the same singular quotient by Desnanot--Jacobi.  Consequently
+    this is a sharp new characteristic-zero carrier and a useful
+    numerical interface, but a proof of
+    \(\log\gcd({\cal E}_1,{\cal E}_2)=o(n)\) must use the distinguished
+    Laurent coefficient coupling across \(M\), not scalar
+    Pascal--Hankel algebra.
+
 Thus Routes A and B are closed **as presently formulated**. This is not a
 disproof of `log G_n=o(n)`. It identifies the exact missing ingredient:
 cross-prime, Apéry-specific Archimedean/p-adic coupling not already contained
@@ -15607,3 +15644,536 @@ exhaustively for all odd primes below \(102\), verifies both
 specializations for every core prime in the four hostile blocks,
 checks the actual target increments there, and independently verifies
 (68.187)--(68.189).
+
+### 68.19 Corrected higher Cartier is a one-step alias, not a descent
+
+The higher-Cartier shell formula has a clean corrected form.  Write
+\[
+ M=ap+s,\qquad d=qp-v,\qquad
+ t=\left\lfloor\frac Md\right\rfloor,\qquad
+ m=\left\lfloor\frac aq\right\rfloor,
+\tag{68.190}
+\]
+where \(0\le s<p\), \(1\le d\le M\).  If
+\[
+ s+vt<p,
+\tag{68.191}
+\]
+then Freshman's dream and the support bound \(sP\subset[-s,s]^3\)
+give
+\[
+ \boxed{\qquad
+ C_M(qp-v)\equiv
+ \sum_{\kappa\in mP\cap\mathbb Z^3}
+ c_a(q\kappa)c_s(-v\kappa)\pmod p.
+ \qquad}
+\tag{68.192}
+\]
+Indeed, writing a contributing exponent as
+\[
+ p\mu+\beta=(qp-v)\kappa,\qquad
+ \delta=q\kappa-\mu,
+\]
+gives \(\beta=p\delta-v\kappa\).  If \(\delta\ne0\), some
+coordinate has absolute value at least
+\(p-vt>s\), a contradiction.
+
+The safety condition also determines the quotient exactly:
+\[
+ \boxed{\qquad q\le a,\qquad t=m=\lfloor a/q\rfloor.\qquad}
+\tag{68.193}
+\]
+For if \(a=mq+e\), \(0\le e<q\), and \(t\ge m+1\), then
+\[
+ (q-e)p\le s+(m+1)v\le s+tv<p.
+\]
+The case \(q>a\) is excluded similarly from \(d\le M\).
+
+For the actual target shell, let \(n=Ap+r\), put
+\[
+ M=n-A=A(p-1)+r,\qquad d=p-1.
+\tag{68.194}
+\]
+Outside the harmless borrow strip \(r<A\), equations
+(68.190)--(68.193) have
+\[
+ a=A,\quad s=r-A,\quad q=v=1,\quad t=m=A,
+\]
+and therefore
+\[
+ \boxed{\qquad
+ C_M(p-1)\equiv
+ \sum_{\kappa\in AP}c_A(\kappa)c_{r-A}(-\kappa)
+ =b_r\pmod p.
+ \qquad}
+\tag{68.195}
+\]
+Thus the lower packet recombines to the original moving Apéry
+scalar.  Re-embedding \(p\mid b_r\) at the row \(p+r\) returns the
+same quotient-one triple, so the same-prime descent graph has depth at
+most one and then a fixed point.
+
+There is an actual full-margin obstruction, not only a formal one.
+For every prime \(p>73\), \(M=2p\), and \(1\le v<p\), (68.192)
+gives
+\[
+ C_{2p}(2p-v)\equiv b_2\equiv b_{2p}\equiv73\pmod p.
+\tag{68.196}
+\]
+Hence the origin-cancelled first-cell state has a zero segment of
+length \(p-1\), while its lower Cartier descendant is identically
+\(73-73=0\).  It cannot be charged to a prime divisor of a nonzero
+lower packet.
+
+The corrected formula is therefore useful bookkeeping but not a
+pointwise descent.  The script `q32_higher_cartier_audit.py` checks
+the support domain in \(1{,}930{,}500\) cases, compares five
+unrestricted convolutions directly, verifies \(1{,}286\) safe packets,
+and records the unsafe counterexample
+\[
+ (p,a,q,s,v,M,d)=(5,1,1,2,2,7,3).
+\tag{68.197}
+\]
+
+### 68.20 The terminal Newton family and its boundary-blind obstruction
+
+Put
+\[
+ d_0=\lfloor M/2\rfloor+1,\qquad L_0=M-d_0,\qquad
+ f_L=G_{M-L,L}(C_M).
+\tag{68.198}
+\]
+The terminal carriers are \(F_j=f_{L_0-j}\).  Define
+\[
+ B_L=\sum_{\kappa\in P\cap\mathbb Z^3}
+ \sum_{r=0}^L(-1)^r\binom Lr c_M((M-r)\kappa).
+\tag{68.199}
+\]
+Then
+\[
+ B_L=\Delta^LC_M(M-L),\qquad
+ \boxed{\quad
+ f_L-f_{L-1}=(-1)^L\binom{M+1}{L}B_L.
+ \quad}
+\tag{68.200}
+\]
+For a fixed ray, if
+\[
+ A_{\kappa,M}(u)=\sum_{r\ge0}c_M((M-r)\kappa)u^r,
+\]
+its signed binomial transform has the exact generating functions
+\[
+ \sum_{L\ge0}B_{\kappa,L}z^L
+ =\frac1{1-z}A_{\kappa,M}\!\left(\frac{-z}{1-z}\right),
+\tag{68.201}
+\]
+\[
+ \sum_{L\ge0}B_{\kappa,L}\frac{z^L}{L!}
+ =e^z\sum_{r\ge0}c_M((M-r)\kappa)\frac{(-z)^r}{r!}.
+\tag{68.202}
+\]
+Equivalently,
+\[
+ \sum_{L\ge0}B_Lz^L
+ =\sum_\kappa\operatorname {CT}
+ \frac{\Lambda^MX^{-M\kappa}}
+      {1-z+zX^\kappa}.
+\tag{68.203}
+\]
+
+There is an exact selector theorem.  For \(1\le J\le L_0\),
+\[
+ Q_J=\prod_{\substack{d_0+J<p\le M+1\\p\ {\rm prime}}}p
+\tag{68.204}
+\]
+divides every \(F_j-F_{j+1}\), \(0\le j<J\), and
+\[
+ \boxed{\quad
+ \operatorname {rad}_{(d_0+J,M+1]}
+ \gcd(F_0,\ldots,F_J)
+ =
+ \prod_{\substack{d_0+J<p\le M+1\\
+                   p\mid C_M(p-1)}}p.
+ \quad}
+\tag{68.205}
+\]
+This explains the numerical gcd collapse exactly, but
+\[
+ \log Q_J=M/2-J+o(M)
+\tag{68.206}
+\]
+for \(J=o(M)\), so it is not a height bound.
+
+The fixed-ray extension exposes the precise linear obstruction.  Put
+\[
+ S_q^\sharp=\sum_{\kappa\ne0}c_M((M-q)\kappa)
+\]
+and define \(E_r^\sharp\) by
+\[
+ E_r^\sharp=
+ \sum_{q=0}^r(-1)^{r-q}
+ \binom{M-q}{r-q}\binom{M+1}{q}S_q^\sharp.
+\tag{68.207}
+\]
+In the first cell, \(f_r=b_M+E_r^\sharp\).  If
+\[
+ {\cal E}_M(z)=\sum_{r=0}^ME_r^\sharp z^r,
+\]
+then exact coefficient extraction gives
+\[
+ (1-z){\cal E}_M(z)=N_M(z)-A_Mz^{M+1},
+\tag{68.208}
+\]
+where
+\[
+ \begin{aligned}
+ N_M(z)&=\sum_{\kappa\ne0}\operatorname {CT}\!
+ \left[\Lambda^MX^{-M\kappa}
+       (1-z+zX^\kappa)^{M+1}\right],\\
+ A_M&=\sum_{\kappa\ne0}c_M(-\kappa)>0.
+ \end{aligned}
+\tag{68.209}
+\]
+The uncancelled series \(N_M(z)/(1-z)\) has the constant tail
+\[
+ \widehat E_r=A_M\qquad(r\ge M+1).
+\tag{68.210}
+\]
+Consequently every global Ore operator
+\[
+ P=\sum_i a_i(M,r)S_r^i
+\]
+obtained from the boundary-blind fixed-ray module satisfies
+\[
+ P(1)=\sum_i a_i(M,r)=0,\qquad
+ P=Q(S_r-1).
+\tag{68.211}
+\]
+It cannot furnish a nonzero origin source by Ore Bézout elimination.
+The missing correction in (68.208) lies
+\[
+ M+1-\lfloor(M-1)/2\rfloor=\lfloor M/2\rfloor+2
+\tag{68.212}
+\]
+steps beyond the terminal packet.  Thus any successful continuation
+must import an actual boundary packet or the origin-cancelled \(W\)
+coordinate; a bounded boundary-blind recurrence cannot do so.
+
+The exact audits `q32_terminal_family_audit.py` and
+`q32_terminal_bernstein_audit.py` check (68.198)--(68.211), including
+the hostile \(J=38\) gcds.  This is a route-specific obstruction, not
+a proof that a boundary-sensitive or nonlinear identity cannot exist.
+
+### 68.21 Reflection--Casoratian is universally saturated
+
+Let
+\[
+ P(k)=(2k+1)(17k^2+17k+5)
+\]
+and define
+\[
+ N_0(X)=0,\quad N_1(X)=1,\quad
+ N_{j+1}(X)=P(X+j)N_j(X)-(X+j)^6N_{j-1}(X).
+\tag{68.213}
+\]
+For \(0\le u<v\), \(h=v-u\), the separated Casoratian is
+\[
+ \boxed{\quad
+ a_vb_u-a_ub_v
+ =\frac{6N_h(u)}{\prod_{j=1}^h(u+j)^3}.
+ \quad}
+\tag{68.214}
+\]
+Telescoping adjacent Casoratians also gives
+\[
+ N_h(u)=
+ \left\{\prod_{j=1}^h(u+j)^3\right\}b_ub_v
+ \sum_{j=u}^{v-1}
+ \frac1{(j+1)^3b_jb_{j+1}}.
+\tag{68.215}
+\]
+Since \(b_{k+1}>5b_k\),
+\[
+ \prod_{j=u+2}^{v}j^3\,\frac{b_v}{b_{u+1}}
+ \le N_h(u)\le
+ \frac{25}{24}
+ \prod_{j=u+2}^{v}j^3\,\frac{b_v}{b_{u+1}}.
+\tag{68.216}
+\]
+Thus this continuant has its full factorial and exponential height;
+the estimate is sharp.
+
+At a reflected top-half pair,
+\[
+ u+v=p-1,\qquad h=v-u\ \text{even},\qquad p=2u+h+1.
+\]
+Reversal of the tridiagonal determinant gives
+\[
+ N_h(-X-h-1)=(-1)^{h-1}N_h(X),
+\]
+and hence
+\[
+ \boxed{\qquad
+ N_h(X)=(2X+h+1)C_h(X),\qquad C_h\in\mathbb Z[X].
+ \qquad}
+\tag{68.217}
+\]
+Therefore \(p\mid N_h(u)\) for every reflected interval, before any
+Apéry zero condition is imposed.  There is no forced second copy:
+\[
+ (p,u,h)=(17,3,10),\qquad
+ N_{10}(3)\equiv34\pmod {17^2},\quad
+ C_{10}(3)\equiv2\pmod {17},
+\tag{68.218}
+\]
+while \(17\mid b_3,b_{13}\).
+
+For two distinct targets \(p>q\), the cross integer
+\[
+ E_{p,q}=b_{n-p}\,b_{q-1-(n-q)}
+          -b_{n-q}\,b_{p-1-(n-p)}
+\tag{68.219}
+\]
+is divisible by \(pq\), but
+\[
+ \log|E_{p,q}|=\Theta(n).
+\tag{68.220}
+\]
+Thus reflection supplies either a universal \(p\)-factor or a
+linear-height two-target carrier.  Partitions merely redistribute
+these factors; they do not yield \(o(n)\).
+
+### 68.22 The explicit companion has a rank-one first divided layer
+
+For \(p\ge7\), \(n=p+r\), define
+\[
+ D_r=
+ 2\sum_{k=0}^r
+ \binom rk^2\binom{r+k}k^2
+ (H_{r+k}-H_{r-k}).
+\tag{68.221}
+\]
+Differentiating the Apéry recurrence in its index and checking the two
+initial values from the explicit harmonic-sum formula for \(a_n\)
+gives
+\[
+ \boxed{\quad
+ b_{p+r}\equiv5(b_r+pD_r),\qquad
+ p^3a_{p+r}\equiv6(b_r+pD_r)\pmod {p^2}.
+ \quad}
+\tag{68.222}
+\]
+On the target locus write
+\[
+ \xi_{p,r}=b_r/p+D_r\pmod p.
+\]
+Then the complete first divided coordinate is
+\[
+ \boxed{\qquad
+ \left(\frac{b_{p+r}}p,\frac{p^3a_{p+r}}p\right)
+ \equiv\xi_{p,r}(5,6)\pmod p.
+ \qquad}
+\tag{68.223}
+\]
+Its relation ideal is exactly
+\[
+ (6X-5Y)\subset\mathbb F_p[X,Y].
+\tag{68.224}
+\]
+There is no target-selective second equation at this depth.  The
+example
+\[
+ (p,r)=(73,2),\qquad b_2=73,\quad D_2=210,\quad
+ \xi_{73,2}=65
+\tag{68.225}
+\]
+has \(v_{73}(G_{75})=1\).  Exact computation checks (68.222) for all
+\(0\le r<p\), \(7\le p\le199\), a total of \(4{,}217\) block
+congruences.  A continuation of this route must constrain the new
+scalar \(b_r/p+D_r\); the harmonic formula and first Gessel lift do
+not.
+
+### 68.23 Terminal Turán carriers and their exact rank-one alias
+
+The terminal scalar family in Section 68.20 admits a nonlinear
+normalization which removes one universal Pascal copy while retaining
+one target copy.  Put
+\[
+ n=M+1,\qquad d_0=\lfloor M/2\rfloor+1,\qquad
+ L_0=M-d_0,
+\]
+\[
+ f_L=G_{M-L,L}(C_M),\qquad F_j=f_{L_0-j},
+ \qquad c_L=(-1)^L\binom nL .
+\tag{68.226}
+\]
+For \(1\le j<L_0\), write \(L=L_0-j\) and define
+\[
+ \boxed{\quad
+ {\cal E}_j=
+ \frac{F_{j-1}F_{j+1}-F_j^2}
+ {\gcd\{\binom nL,\binom n{L+1}\}}.
+ \quad}
+\tag{68.227}
+\]
+This is an integer.  Indeed, the terminal difference law (68.200)
+gives
+\[
+ f_{L+1}f_{L-1}-f_L^2
+ =c_{L+1}B_{L+1}f_{L-1}-c_LB_Lf_L.
+\tag{68.228}
+\]
+
+Let \(p=n-r\) be a top-half target.  If
+\[
+ p>d_0+K+1,
+\tag{68.229}
+\]
+then the selector theorem (68.205) gives
+\[
+ p\mid F_0,\ldots,F_{K+1}.
+\tag{68.230}
+\]
+For \(1\le j\le K\), the corresponding index satisfies
+\[
+ r<L<L+1<p.
+\]
+Kummer's one-carry calculation therefore gives valuation one to both
+binomial coefficients in the denominator of (68.227).  The numerator
+has valuation at least two, and hence
+\[
+ \boxed{\qquad
+ p\mid\gcd({\cal E}_1,\ldots,{\cal E}_K).
+ \qquad}
+\tag{68.231}
+\]
+In particular \(K=2\) misses only the fixed three-integer strip just
+above the half boundary.
+
+The construction has an exact rank-one saturation law.  Put
+\[
+ a_j=F_{j-1}-F_j,\qquad
+ A_j=F_{j-1}F_{j+1}-F_j^2,
+\]
+and let \(q_j\) be the denominator in (68.227), so
+\(A_j=q_j{\cal E}_j\).  Direct expansion gives
+\[
+ A_j=F_j(a_j-a_{j+1})-a_ja_{j+1},
+\tag{68.232}
+\]
+and elimination of \(F_j\) between two adjacent rows gives
+\[
+ \boxed{\quad
+ (a_{j+1}-a_{j+2})A_j
+ -(a_j-a_{j+1})A_{j+1}
+ =a_{j+1}(a_ja_{j+2}-a_{j+1}^2).
+ \quad}
+\tag{68.233}
+\]
+
+At every candidate prime in the common selector interval, not only at
+a target, write
+\[
+ a_j=p\alpha_j,\qquad q_j=pu_j,
+\]
+with \(u_j\) a \(p\)-unit.  All the \(F_j\)'s have the same residue
+\(F_0=C_M(p-1)\pmod p\), and (68.232) gives
+\[
+ \boxed{\quad
+ {\cal E}_j\equiv
+ F_0\,\frac{\alpha_j-\alpha_{j+1}}{u_j}\pmod p.
+ \quad}
+\tag{68.234}
+\]
+Thus the complete normalized Turán family is still a rank-one alias
+of the single marked scalar.  A target-blind linear syzygy which
+eliminates \(F_0\) in (68.234) vanishes for every candidate prime.
+Its characteristic-zero right side therefore reacquires the common
+candidate primorial, of logarithmic height
+\[
+ M/2-K+o(M).
+\tag{68.235}
+\]
+Equation (68.233) displays this phenomenon integrally: after division
+by \(q_jq_{j+1}\), its right side retains one universal candidate
+copy.
+
+The moving onset of the zero block identifies the surviving quotient
+more precisely.  In the unreversed indexing put
+\[
+ \widetilde{\cal E}_L=
+ \frac{f_{L-1}f_{L+1}-f_L^2}
+      {\gcd(c_L,c_{L+1})}.
+\]
+At \(L=r\), assuming \(r+1<p\), \(c_r\) is a \(p\)-unit whereas
+\(v_p(c_{r+1})=1\).  If \(x_{r+1}=f_{r+1}/p\), direct division of
+(68.228) and the two adjacent difference laws gives
+\[
+ \boxed{\quad
+ \frac{\widetilde{\cal E}_r}{p}
+ \equiv(-1)^{r+1}(r+1)B_r x_{r+1}\pmod p.
+ \quad}
+\tag{68.235a}
+\]
+Thus the unique scalar crossing the Pascal singularity is the actual
+first Newton--Cartier/Fermat-ghost digit \(f_{r+1}/p\), not a fixed
+polynomial in \(n,p,r\).  At \((n,p,r)=(75,73,2)\), the three factors
+in (68.235a) give
+\[
+ \widetilde{\cal E}_r/p\equiv63,\qquad
+ B_r\equiv63,\qquad x_{r+1}\equiv24\pmod {73},
+\]
+which verifies the formula and shows that only one target copy
+survives.
+
+Larger Hankel determinants do not create a second scalar condition.
+If
+\[
+ D_k=\det(F_{i+j})_{0\le i,j<k},
+\]
+successive row and column differences give an explicit Pascal divisor
+\(U_k\mid D_k\), with
+\[
+ v_p(U_k)=k-1,\qquad p^k\mid D_k
+\]
+at a target in the common mask.  Hence \(p\mid D_k/U_k\), but for
+\[
+ A_i=F_iF_{i+2}-F_{i+1}^2
+\]
+Desnanot--Jacobi gives
+\[
+ F_2D_3=A_0A_2-A_1^2.
+\tag{68.236}
+\]
+The only place where this fails to eliminate the \(3\)-by-\(3\)
+carrier is exactly the middle Pascal singularity which already
+retains the target.
+
+The numerical collapse is nevertheless striking:
+\[
+\begin{array}{c|c}
+n&\gcd({\cal E}_1,{\cal E}_2)\\ \hline
+200&2^2\cdot5\cdot139\cdot181\\
+272&2\cdot191\cdot233\\
+300&11^2\cdot191\cdot227\\
+321&179\cdot193\cdot211.
+\end{array}
+\tag{68.237}
+\]
+The individual carriers have \(2112\)--\(3411\) bits in these rows.
+Thus
+\[
+ \log\gcd({\cal E}_1,{\cal E}_2)=o(n)
+\tag{68.238}
+\]
+would close the top-half channel up to a fixed boundary strip.
+Equations (68.233)--(68.235) prove that (68.238) cannot follow from
+scalar Pascal--Hankel elimination alone.  It remains a concrete
+Apéry-specific gcd theorem, requiring the common Laurent coefficient
+coupling of \(C_M\) across \(M\), a boundary-sensitive nonlinear
+identity, or an arithmetic theorem for this distinguished pair of
+holonomic sequences.
+
+The exact audit is
+`q32_terminal_turan_hankel_audit.py`; the standalone derivation is
+`Q32_TERMINAL_TURAN_HANKEL.md`.

@@ -29,6 +29,15 @@ SEQS = {
     "almkvist_zudilin": (lambda n: (n + 1) ** 3,
                          lambda n: (2 * n + 1) * (3 * n ** 2 + 3 * n + 1),
                          lambda n: -27 * n ** 3, 1, -3),
+    "cooper_s7": (lambda n: (n + 1) ** 3,
+                  lambda n: 26 * n ** 3 + 39 * n ** 2 + 21 * n + 4,
+                  lambda n: -27 * n ** 3 + 3 * n, 1, 4),
+    "cooper_s10": (lambda n: (n + 1) ** 3,
+                   lambda n: 12 * n ** 3 + 18 * n ** 2 + 10 * n + 2,
+                   lambda n: -64 * n ** 3 + 4 * n, 1, 2),
+    "cooper_s18": (lambda n: (n + 1) ** 3,
+                   lambda n: 28 * n ** 3 + 42 * n ** 2 + 26 * n + 6,
+                   lambda n: 192 * n ** 3 - 12 * n, 1, 6),
 }
 
 
