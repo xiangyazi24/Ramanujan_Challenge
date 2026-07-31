@@ -86,6 +86,30 @@ the Franel/rank-two source, prove cancellation class-by-class.
   {p|b_{s+q−p}, q|b_s, N<q+s≤2N}. Cross-characteristic anti-alignment; not
   implied by any local property; random model predicts N/log²N (way smaller).
 
+## 4.6 Q6130: the mod-24 square's real use (rank-lowering), and the gate test
+- The bare square factorization is ANALYTICALLY INERT for S_h(n): coefficient-
+  étaleness means "being a square" is just a change of coordinates; the marked
+  coefficient b_{s_p} can be arbitrary while A_p stays square (triangular with
+  diagonal 2, étale for p odd). No oscillation is imposed.
+- Poisson summation on the raw convolution FAILS (exponentiation kills the
+  linearity). Fourier-diagonalisation of the quadratic form introduces one dual
+  variable per rank (R ≍ r) — no averaging over a single recurrence orbit.
+- **The genuine gain = rank-lowering**: the convolution factors of b_r lie on a
+  fixed rank-two Franel orbit (Caruso et al. proof via the Franel pullback; the
+  square-root coefficients are reductions of two fixed characteristic-zero
+  P-recursive sequences, branches (2+) and (2−)). b_{s_p} = Σ_i g_ε(i)g_ε(r−i)
+  sits in a tensor product of two rank-two difference modules.
+- **GATE TEST (falsifiable, exact)**: prove a uniform *order-zero*
+  Christoffel–Darboux coboundary: ∃ rational ρ_ε(r), matrix M_ε with
+  V_{r-i} ⊗ ... coboundary collapsing the length-r convolution to finitely many
+  rank-two boundary pairings, denominators p-units. "No rational solution" for
+  both branches ⇒ square structure analytically exhausted for S_h.
+  Implementable in Sage ore_algebra / Mathematica (Koutschan creative
+  telescoping; order-zero certificate, not the Apery recurrence itself).
+- Ranking: Franel transfer (d) first (only dimension-lowering), Gauss/quadratic
+  (c) second, Stepanov (b) third, raw Poisson (a) last. Mod-24 class controls
+  discriminant/Gauss root, NOT a 5th-root character.
+
 ## 5. Recommended next moves (for Claude4.6 + DS to pick up)
 1. (Highest value) Prove / attack `S_h(n) = o(P_n)` for fixed h using the
    mod-24 square structure: write `S_h(n) = Σ_{a mod 24} Σ_{p≡a} e(h b_{n−p}/p)`,
