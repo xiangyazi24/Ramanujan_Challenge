@@ -281,6 +281,55 @@ this and validates the scanner:
 \end{array}
 \]
 
+\subsection{An invalid step in the conditional theorem, and its repair}
+\label{subsec:audit}
+
+The draft deduces the pointwise bound $\log G_n=O(\sqrt n)$ for \emph{all} $n$ from
+Hypothesis~$\bar Z$ ($\sum_{p\le x}Z(p)\ll\pi(x)$).  That implication is \textbf{invalid}.
+
+Double counting gives
+\[
+  \sum_{m\le N}\ \sum_{p\in P}\mathbf 1_{\,m\bmod p\in Z_p}
+  \;=\;\sum_{p\in P}Z(p)\Bigl(\frac Np+O(1)\Bigr),
+\]
+so $\bar Z$ controls the \emph{mean} diagonal incidence over $m$, and Markov yields a
+density-one conclusion.  Passing from that mean to a bound for every individual $n$ is the
+invalid step.
+
+\begin{proposition}[the structural properties do not suffice]
+There exist sets $S_p\subseteq[0,p)$ with $|S_p|\le2$, stable under $r\mapsto p-1-r$, with no
+two consecutive elements and with $\sum_{p\le x}|S_p|\ll\pi(x)$, for which
+$T(N)\asymp N$.
+\end{proposition}
+
+\begin{proof}
+Fix $N$ and set $S_p=\{N-p,\ p-1-(N-p)\}$ for $p\in(N/2,N]$ and $S_p=\varnothing$ otherwise.
+Then $N\bmod p=N-p\in S_p$ for every $p$ in the window.
+\end{proof}
+
+Verified numerically at $N=20\,000$: $\max_p|S_p|=2$, no reflection violation, no consecutive
+pair, $\sum_p|S_p|/\pi(N)=0.913$ — so $\bar Z$ holds with constant below $1$ — and yet
+$T(N)/N=0.4955$.  Hence \emph{every} structural property proved so far about $Z_p$
+(size, reflection symmetry, no consecutive zeros) is consistent with total alignment at a
+single $n$.  The obstruction is alignment, not size.
+
+The repair is a uniform diagonal-discrepancy hypothesis:
+\[
+  \textbf{(DA)}\qquad
+  \sup_n\Bigl|\sum_{n/2<p\le n}
+   \Bigl(\mathbf 1_{\,n-p\in Z_p}-\frac{Z(p)}p\Bigr)\Bigr|
+  \;\ll\;\frac{\sqrt n}{\log n}.
+\]
+By partial summation $\bar Z$ gives $\sum_{n/2<p\le n}Z(p)/p\ll1/\log n$, so
+$\bar Z$ together with (DA) yields $T(n)=O(\sqrt n)$ and closes the conjecture.  The theorem
+should therefore be stated as ``$\bar Z$ and (DA) imply $\log G_n=O(\sqrt n)$ for all $n$'';
+$\bar Z$ alone gives the density-one theorem, which is what is actually proved.
+
+Note also that Hypothesis~Z in its pointwise form ($Z(p)\le C$) is expected to be
+\emph{false}: extreme-value theory for the $2\cdot\mathrm{Poisson}(1/2)$ law predicts
+$\max_{p\le N}Z(p)\sim2\log\log N$, matching the observed record progression
+$2,4,6,8,10,12$ with $Z(p)=12$ first at $p=159\,977$.
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes
