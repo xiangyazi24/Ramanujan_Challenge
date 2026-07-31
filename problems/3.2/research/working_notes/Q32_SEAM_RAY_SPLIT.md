@@ -98,10 +98,9 @@ The remaining goal is
 \[
  \log\operatorname{rad}\gcd(b_r,S_r)=o(r),
 \]
-with the empirical input that for \(1\le r\le100\) the exact gcd has no prime
-factor outside \(\{5,11,19\}\) and never exceeds \(55\) (independently
-recomputed here for \(r\le34\): the gcd is \(1\) except \(5\) at
-\(r=1,15,28,29,31,33\) and \(25\) at \(r=8,11\)).
+with the empirical input that the exact gcd is uniformly tiny.  **Caution:** the
+recorded claim that its prime support is \(\{5,11,19\}\) holds only for
+\(r\le100\); see the correction in \S3b, where the support is shown to grow.
 
 Two consequences of (3):
 
@@ -116,9 +115,10 @@ Two consequences of (3):
    with \(L_S\) of unknown huge order, but \(L_b\) against the 21 small
    operators \(L_{U_\kappa}\).  Each \(G_\kappa=\Lambda(1-X^{-\kappa})\) is a
    concrete Laurent polynomial whose period sequence is Apéry-like; its
-   singularities and its local exponents are computable, and the exceptional
-   primes \(\{5,11,19\}\) should be visible in the discriminants/resultants of
-   that finite family.  This is the computation to do next.
+   singularities and its local exponents are computable.  (The original motivation —
+   that \(\{5,11,19\}\) would show up as a discriminant/resultant of that finite
+   family — has since been refuted: see \S3b for the growing support and the absence
+   of any corresponding rank drop.)
 
 ## 3b. The raywise Smith content is trivial: it is exactly the \(y\leftrightarrow z\) symmetry
 
