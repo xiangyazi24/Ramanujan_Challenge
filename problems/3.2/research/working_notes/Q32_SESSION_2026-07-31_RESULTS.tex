@@ -929,6 +929,31 @@ data do not prove the conjecture — but a counterexample with $H(n)\gg n^\varep
 cross-characteristic resonance for which there is at present neither an algebraic mechanism nor a
 numerical hint.
 
+\subsection{The strongest currently provable statement is localized}
+
+The exceptional-set theorem can be upgraded, with no new input, from a global count to a
+\emph{local} one.  The codegree argument in fact yields $O_\varepsilon(1)$ exceptional levels in
+every interval of length $c_\varepsilon N/\log N$ (one may take $c_\varepsilon\asymp\varepsilon^2$),
+whence:
+
+\begin{proposition}[localized exceptional set]
+For every $\varepsilon>0$ there is $C_\varepsilon$ such that, for all large $N$ and \emph{every}
+interval $I\subseteq(N,2N]$,
+\[
+  \#\{m\in I:\ \log G_m>\varepsilon m\}\;\le\;C_\varepsilon\Bigl(1+\frac{|I|\log N}N\Bigr).
+\]
+\end{proposition}
+
+Summing over a shell gives $O_\varepsilon(\log N)$ and cumulatively $O_\varepsilon((\log X)^2)$,
+recovering the stated theorem; but the local form is strictly stronger, since it forbids
+exceptional levels from clustering anywhere.
+
+This is also the natural stopping point for the pairwise method: a configuration with one dense
+exceptional row every $\asymp N/\log N$ is compatible with the codegree bound
+$|P(m)\cap P(n)|\ll|m-n|$, so no more efficient pairwise K\H ov\'ari--S\'os--Tur\'an argument can
+improve the exponent.  Only a triple-codegree bound $\Delta_3(N)$ — for which
+\S\ref{subsec:codegree} supplies the resultant certificate — can go further.
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes
