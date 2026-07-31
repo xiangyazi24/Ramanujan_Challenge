@@ -97,8 +97,8 @@ barrier, abc points the wrong way, and only the first moment is supported by the
 
 ## Why the conjecture is nevertheless true
 
-* `K(n) = #{p ∈ (n/2,n] : p | b_n} ≤ 3` for **all n ≤ 500000** (extended from 200000).
-* `log rad_{p≤n}(b_n)/n` ≤ 0.109, 0.025, 0.0041 on [10²,10³], [10³,10⁴], [10⁴,10⁵];
+* `K(n) = #{p ∈ (n/2,n] : p | b_n} ≤ 3` for **all n ≤ 1,000,000**.
+* `log rad_{p≤n}(b_n)/n` ≤ 0.109, 0.025, 0.0041, 0.00059 on [10²,10³], [10³,10⁴], [10⁴,10⁵], [10⁵,10⁶];
   the data fit `O(log n log log n)` against a required o(n).
 * ω(b_n) ∈ {3,…,7} for n ≤ 26 — b_n barely has prime factors, and they are huge.
 * The conjecture **fails** for Cooper's sporadic sequences s7, s10, s18 and for C(2n,n),
