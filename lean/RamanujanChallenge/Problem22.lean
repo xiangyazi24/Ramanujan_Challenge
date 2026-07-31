@@ -97,22 +97,22 @@ when the limit involves γ = -Γ'(1).
 theorem gauge_degree : (3 : ℕ) = 5 - 2 ∧ (5 : ℕ) = 7 - 2 ∧ (7 : ℕ) = 9 - 2 := by
   omega
 
-/-! ## Main Theorem -/
+/-! ## Status of the main statement
 
--- Euler-Mascheroni constant (defined via the limit of H_n - log n)
--- Mathlib does not have a dedicated `γ` constant, so we state the theorem
--- in terms of the sequence's limit existing and equaling the appropriate value.
+**There is deliberately no formal statement of the limit in this file.**
 
-theorem problem22_limit_exists :
-    ∃ (p q : ℕ → ℝ) (L : ℝ),
-      p 0 = 0 ∧ p 1 = 7 ∧ p 2 = 179 ∧
-      q 0 = 1 ∧ q 1 = 12 ∧ q 2 = 306 ∧
-      Filter.Tendsto (fun m => p m / q m) Filter.atTop (nhds L) := by
-  refine ⟨fun m => if m = 0 then 0 else if m = 1 then 7 else 179,
-          fun m => if m = 0 then 1 else if m = 1 then 12 else 306,
-          179 / 306, by simp, by simp, by simp, by simp, by simp, by simp, ?_⟩
-  rw [Metric.tendsto_atTop]
-  intro ε hε
-  exact ⟨2, fun m hm => by simp [show m ≠ 0 from by omega, show m ≠ 1 from by omega]; linarith⟩
+An earlier version of this file carried a theorem of the shape
+
+```
+theorem ..._identity : ∃ (p q : ℕ → ℝ), Tendsto (fun n => p n / q n) atTop (𝓝 L) :=
+  ⟨fun _ => L, fun _ => 1, by simp⟩
+```
+
+which is vacuous: it is witnessed by constant sequences and says nothing about
+the challenge recurrence.  It has been removed rather than shipped.  What
+remains below/above is the content that is actually proved.  See the
+accompanying write-up for the mathematical argument and for exactly which
+steps are formalized.
+-/
 
 end

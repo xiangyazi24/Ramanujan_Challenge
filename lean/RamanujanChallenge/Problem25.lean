@@ -34,11 +34,22 @@ The recurrence coefficients come from the differential module of
 K(k) (complete elliptic integral of the first kind).
 -/
 
-/-! ## Main theorem -/
+/-! ## Status of the main statement
 
-theorem problem25_identity :
-    ∃ (p q : ℕ → ℝ),
-      Tendsto (fun n => p n / q n) atTop (nhds catalanConstant) := by
-  exact ⟨fun _ => catalanConstant, fun _ => 1, by simp [div_one]⟩
+**There is deliberately no formal statement of the limit in this file.**
+
+An earlier version of this file carried a theorem of the shape
+
+```
+theorem ..._identity : ∃ (p q : ℕ → ℝ), Tendsto (fun n => p n / q n) atTop (𝓝 L) :=
+  ⟨fun _ => L, fun _ => 1, by simp⟩
+```
+
+which is vacuous: it is witnessed by constant sequences and says nothing about
+the challenge recurrence.  It has been removed rather than shipped.  What
+remains below/above is the content that is actually proved.  See the
+accompanying write-up for the mathematical argument and for exactly which
+steps are formalized.
+-/
 
 end

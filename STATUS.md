@@ -1,23 +1,48 @@
-# Ramanujan Challenge — Status (2026-07-14)
+# Ramanujan Challenge — Status (audited 2026-07-30)
 
-## Score: 10/10 addressed (9 unconditional + 1 partial: density-1 unconditional, all-n conditional)
+**Deadline:** August 1, 2026, 23:59 UTC
 
-**Deadline:** August 1, 2026
-**Total pages:** 55 (all compile clean)
+## ⚠️ The old ✅ column was not accurate
 
-## SOLVED (9 problems, unconditional proofs)
+Until 2026-07-30 this file marked 2.1–2.8 and 3.1 all "✅ unconditional".
+Auditing the actual `.tex` files showed that several "complete proofs" contain
+asserted steps. Two examples that were caught by reading the source:
 
-| Problem | Topic | Method | Pages | Status |
-|---------|-------|--------|-------|--------|
-| 2.1 | PCF → π | Q(√5) gauge, Poincaré roots | 4 | ✅ |
-| 2.2 | γ Apéry | Aptekarev recurrence (index shift m=n+3) | 3 | ✅ |
-| 2.3 | π+e | Lambert × derangement series | 2 | ✅ |
-| 2.4 | harmonic+polylog | Weight-4 HPL symbolic summation | 3 | ✅ |
-| 2.5 | Catalan CMF | Delannoy decomposition + k-recurrence | 10 | ✅ |
-| 2.6 | ζ(2)+ζ(3) | GF ODE connection formula | 3 | ✅ |
-| 2.7 | 4-term ζ(2)+ζ(3) | Adjoint certificate + coboundary + Whipple structure | 9 | ✅ |
-| 2.8 | √10005/π | Chudnovsky formula in CMF disguise | 4 | ✅ |
-| 3.1 | knot π² | A-polynomial / Mahler measure | 7 | ✅ |
+- **2.2** — the decisive step, that the shifted operator equals Aptekarev's
+  published operator, was written as *"can be checked by comparing sufficiently
+  many evaluations"*. It was not done. Convergence was likewise asserted "by
+  Poincaré–Perron theory adapted to the resonant case".
+- **2.6** — the write-up itself says the identity is *"verified numerically to
+  39 digits"*, and the "complete algebraic proof" is a sketch ending in
+  *"reduces to a sum that decomposes as V + W"*.
+
+The Lean side had the same problem in worse form; see `lean/UNDERSTANDING.md`.
+
+The column below now records what has been **verified this session** versus what
+is inherited and **not re-audited**. Nothing is marked done on the strength of an
+earlier session's claim.
+
+| Problem | Topic | Method | Audited? | State |
+|---------|-------|--------|----------|-------|
+| 2.1 | PCF → π | sign-flip of Cohen's CF tail | not re-audited | inherited claim |
+| 2.2 | γ Apéry | Aptekarev recurrence (index shift m=n+3) | ✅ audited | **gap: operator identity asserted, not proved** |
+| 2.3 | π+e | tensor product: Lambert ⊗ derangement | ✅ audited | **DONE — packaged in `SUBMIT/2.3/`** |
+| 2.4 | harmonic+polylog | weight-4 HPL symbolic summation | not re-audited | inherited claim |
+| 2.5 | Catalan CMF | Delannoy decomposition + k-recurrence | not re-audited | inherited claim |
+| 2.6 | ζ(2)+ζ(3) | GF ODE connection formula | ✅ audited | **gap: numerical + proof sketch** |
+| 2.7 | 4-term ζ(2)+ζ(3) | rational gauge transfer from Zudilin | not re-audited | inherited claim |
+| 2.8 | √10005/π | Chudnovsky in CMF disguise | ✅ (earlier) | **DONE — packaged in `SUBMIT/2.8/`** |
+| 3.1 | knot π² | A-polynomial / Mahler measure | ✅ (earlier) | **DONE — packaged in `SUBMIT/3.1/`** |
+
+### 2.3 — what closed it
+
+Order 4 = 2 × 2. The challenge operator annihilates every product
+`X_{n+2} Y_{n+3}` of a Lambert-recurrence solution with a derangement-recurrence
+solution; `m!` satisfies the *same* recurrence as `D_m`, which is why π and e
+appear together and additively. Hence the **exact** splitting
+`p_n/q_n = 4·B_{n+2}/A_{n+2} + (n+3)!/D_{n+3}`. Lean: 0 sorry, standard axioms
+only, no `native_decide`; the sole cited input (Lambert's CF value π/4) is an
+explicit hypothesis of the theorem statement.
 
 ## P3.2 — gcd(d_n a_n, d_n b_n) = e^{o(n)} for Apéry sequences
 

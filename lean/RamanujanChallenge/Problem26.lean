@@ -88,9 +88,7 @@ theorem recessiveRatio_limit :
 u₁ = -93/4480, u₂ = -117/14000
 -/
 
--- The initial values as rationals
-theorem u1_value : (-93 : ℚ) / 4480 = -93 / 4480 := rfl
-theorem u2_value : (-117 : ℚ) / 14000 = -117 / 14000 := rfl
+-- (u₁ = -93/4480 and u₂ = -117/14000 are the challenge's initial values.)
 
 /-! ## Main Theorem
 
@@ -109,10 +107,21 @@ theorem zeta2_eq : ∑' n : ℕ, (1 : ℝ) / (↑n + 1) ^ 2 = Real.pi ^ 2 / 6 :=
 
 def zeta3 : ℝ := ∑' n : ℕ, (1 : ℝ) / (↑n + 1) ^ 3
 
-theorem problem26_identity :
-    ∃ (p q : ℕ → ℝ),
-      Filter.Tendsto (fun n => p n / q n) Filter.atTop (nhds ((Real.pi ^ 2 / 6) + zeta3)) := by
-  exact ⟨fun _ => (Real.pi ^ 2 / 6) + zeta3, fun _ => 1,
-    by simp only [div_one]; exact tendsto_const_nhds⟩
+/-! ## Status of the main statement
+
+**There is deliberately no formal statement of the limit in this file.**
+
+An earlier version carried a theorem of the shape
+
+```
+theorem problem26_identity : ∃ (p q : ℕ → ℝ), Tendsto (fun n => p n / q n) atTop (𝓝 L) :=
+  ⟨fun _ => L, fun _ => 1, by simp⟩
+```
+
+which is vacuous: it is witnessed by constant sequences and says nothing about
+the challenge recurrence.  It has been removed rather than shipped.  What is
+proved above — the recessive ratio limit and ζ(2) = π²/6 — is real content;
+the identity itself is not yet formalized.
+-/
 
 end

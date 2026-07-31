@@ -59,13 +59,6 @@ has convergents P̃_n = (−1)^{n+1} P_n and Q̃_n = (−1)^n Q_n.
 In particular, S̃ = −S.
 -/
 
-theorem sign_flip_P (c d P : ℕ → ℝ) (P_neg1 : ℝ)
-    (hP_init : P_neg1 = 1)
-    (hP_0 : P 0 = c 0)
-    (hP_rec : ∀ n, P (n + 1) = c (n + 1) * P n + d (n + 1) * (if n = 0 then P_neg1 else P (n - 1)))
-    (n : ℕ) :
-    True := trivial
-
 /-! ## Initial values
 
 a_0 = −42
@@ -88,19 +81,22 @@ Numerically: 6/(3 − π) ≈ −42.39...
 theorem pi_gt_three' : (3 : ℝ) < Real.pi := by
   exact pi_gt_three
 
-/-! ## Main theorem
+/-! ## Status of the main statement
 
-The challenge PCF converges to 6/(3 − π).
+**There is deliberately no formal statement of the limit in this file.**
 
-Proof via RemainderCertificate:
-Define the convergent sequences p_n, q_n using the recurrence,
-the remainder r_n = q_n · (6/(3−π)) − p_n,
-and show r_n → 0 via geometric bound.
+An earlier version of this file carried a theorem of the shape
+
+```
+theorem ..._identity : ∃ (p q : ℕ → ℝ), Tendsto (fun n => p n / q n) atTop (𝓝 L) :=
+  ⟨fun _ => L, fun _ => 1, by simp⟩
+```
+
+which is vacuous: it is witnessed by constant sequences and says nothing about
+the challenge recurrence.  It has been removed rather than shipped.  What
+remains below/above is the content that is actually proved.  See the
+accompanying write-up for the mathematical argument and for exactly which
+steps are formalized.
 -/
-
-theorem problem21_identity :
-    ∃ (p q : ℕ → ℝ),
-      Tendsto (fun n => p n / q n) atTop (nhds (6 / (3 - Real.pi))) := by
-  exact ⟨fun _ => 6 / (3 - Real.pi), fun _ => 1, by simp [div_one]⟩
 
 end
