@@ -237,17 +237,36 @@ position~$1$, occurring iff $m_1+q\ge p$.  Hence $v_p\binom{qp+m}m\le1$.
 \end{itemize}
 (Both statements verified on $34\,578$ pairs with no violation.)  A term
 with $m=tp$ has $v_p(m^3)=3$ and $\binom{qp}{tp}\binom{qp+tp}{tp}\equiv\binom qt\binom{q+t}t$ by
-Lucas, while $(-1)^{tp-1}=(-1)^{t-1}$ for odd $p$; hence $p^3c_{qp,k_1p}\equiv c_{q,k_1}$.
-Combining, and using $v_p(\beta_{qp,k})\ge2$ to kill every $p\nmid k$ term,
+Lucas, while $(-1)^{tp-1}=(-1)^{t-1}$ for odd $p$.
+
+The $c$-summands must be weighed \emph{together with} the outer factor, not termwise.  Write
+$k=\ell p+s$ and $m=tp+u$ with $0\le s,u<p$; the exact Kummer formulas are
 \[
-  p^3a_{qp}\equiv\sum_{k_1}\beta_{q,k_1}\bigl(H^{(3)}_q+c_{q,k_1}\bigr)=a_q\pmod p.
+  v_p\binom{qp}m=\mathbf 1_{u>0},\qquad
+  v_p\binom{qp+m}m=\mathbf 1_{q+t\ge p},\qquad
+  v_p(\beta_{qp,k})=2\cdot\mathbf 1_{s>0}+2\cdot\mathbf 1_{q+\ell\ge p}
+\]
+(for the second, use $\binom{qp+m}m=\binom{qp+m}{qp}$: adding $(t,u)_p$ to $(q,0)_p$ has no units
+carry and at most the single tens carry $q+t\ge p$).  Hence for $p\nmid m$ the denominator
+valuation is $1+\mathbf 1_{q+t\ge p}\le2$ and valuation~$3$ is impossible, so after multiplying by
+$p^3\beta_{qp,k}$ such a summand still has valuation $\ge1$ and vanishes.  For $u=0$ the summand's
+total valuation is $v_p(\beta_{qp,k})-\mathbf 1_{q+t\ge p}$, so a nonzero contribution requires
+$s=0$ \emph{and} $q+\ell<p$; then $t\le\ell$ forces $q+t<p$, every relevant binomial is a unit,
+and Lucas returns exactly the $(q,\ell,t)$ summand of $a_q$.  If $q+\ell\ge p$ then
+$v_p(\beta_{qp,k})=2$ while the bracket has valuation $\ge-1$, so the term vanishes on both sides.
+Summing,
+\[
+  p^3a_{qp}\equiv\sum_{\ell}\beta_{q,\ell}\bigl(H^{(3)}_q+c_{q,\ell}\bigr)=a_q\pmod p.
 \]
 
 \emph{(B) Propagation, $r\ge1$.}  For $n=qp+r$ one has $n\equiv r\pmod p$, so modulo $p$ the
 recurrence reads $(r+1)^3u_{n+1}\equiv P(r)u_n-r^3u_{n-1}$ — \emph{exactly} the $b$-recurrence in
 the variable $r$, and $(r+1)^3$ is invertible since $r+1\le p-1$.  At the left edge, $P(0)=5$ and
 $(qp)^3\equiv0$ give $u_{qp+1}\equiv5\,u_{qp}$, matching $b_1=5$.  So both coordinates satisfy the
-same recurrence with initial data proportional to $(1,5)$, whence $u_{qp+r}\equiv u_{qp}\,b_r$.
+same recurrence with initial data proportional to $(1,5)$, whence $u_{qp+r}\equiv u_{qp}\,b_r$;
+here $r=0$ is the base value, the recurrence at $n=qp$ supplies $r=1$, and the induction runs for
+$1\le r\le p-2$, so one never divides by $p^3$ at $r=p-1$.  Note $p^3a_j$ is $p$-integral because
+$j<p^2$: the hypothesis $q<p$ is essential to the normalisation, not cosmetic.
 
 Applying (B) to each coordinate and inserting (A) and $b_{qp}\equiv b_q$ gives the theorem.
 \end{proof}
