@@ -1014,6 +1014,30 @@ reach $(1/2-\delta)n/\log n$ one needs precisely an Ap\'ery-specific statement o
 occupancy strictly below one along the moving diagonal $p=n-r$ — which is the missing theorem
 itself.
 
+\subsection{The matching map, and what it does and does not give}
+
+There is an exact reformulation of the middle range worth recording.  For $p\in(n/(q+1),n/q]$ put
+\[
+  m=p+(n\bmod p)=n-(q-1)p,\qquad\text{so}\qquad \tfrac nq\le m<\tfrac{2n}{q+1}.
+\]
+A middle-range hit at level $n$ with quotient $q$ is exactly a \emph{top-window} hit at the level
+$m$, and distinct $p$ give distinct $m$.  So a spike at one level $n$ corresponds to a
+\emph{matching} — one hit each at many different levels — rather than to a spike anywhere.
+
+Two corrections to the naive count.  The interval swept has length
+$|I_q|=n(q-1)/(q(q+1))\asymp n/q$, \emph{not} $n/q^2$; what has size $\asymp n/q^2$ is the number
+of sample points, since the mapped levels satisfy $m\equiv n\pmod{q-1}$ and are spaced $q-1$
+apart.  Using the sample count, and writing $W(I)$ for the number of top-window hits with level in
+$I$, one gets $M_{n,q}\ll(n/q^2)$ under the heuristic $W\asymp|I|/\log N$ — and therefore
+\[
+  M_n\ll n\sum_{q\ge2}q^{-2}=0.645\,n,
+\]
+which is $\Theta(n)$, not $o(n)$.  So even a perfect short-interval hit-count bound would not
+close the middle range.  Empirically $W(I)$ does behave that way: the maximum over intervals of
+length $L=100,\,1000,\,10^4$ is $21,\,116,\,826$ against $L/\log N=8.2,\,82,\,820$ — a ratio
+falling to $1.0$.  And the matching is precisely the configuration that codegree and KST bounds
+cannot see, since it places one hit at each of many levels rather than many at one.
+
 \subsection{A direct cross-characteristic attempt, and why it fails}
 
 The gap machinery works because two zeros of \emph{one} prime at distance $h$ force
