@@ -952,6 +952,29 @@ interval $I\subseteq(N,2N]$,
 \]
 \end{proposition}
 
+\begin{proof}
+Let $K$ be the codegree constant and $A$ absolute with $\pi(2N)\le AN/\log N$.  Put
+$d:=\varepsilon N/(4\log 2N)\ge\varepsilon N/(8\log N)$, so every exceptional $m$ has
+$|P(m)|\ge d$, and let $Q\le\pi(2N)\le AN/\log N$ be the number of available primes.  For an
+interval $I$ of length $L$ set $E=\{m\in I:|P(m)|\ge d\}$, $M=|E|$, and
+$\nu_p=\#\{m\in E:p\in P(m)\}$, $S=\sum_p\nu_p$.  Then $S\ge Md$ and, by Cauchy--Schwarz and the
+codegree bound $|P(m)\cap P(n)|\le K|m-n|\le KL$,
+\[
+  (Md)^2\le S^2\le Q\sum_p\nu_p^2
+  =Q\Bigl(S+2\!\!\sum_{\substack{m<n\\ m,n\in E}}\!\!|P(m)\cap P(n)|\Bigr)
+  \le Q\bigl(MQ+KLM^2\bigr),
+\]
+whence $M\bigl(d^2-KQL\bigr)\le Q^2$.  Choosing
+$L_0:=c_\varepsilon N/\log N$ with $c_\varepsilon:=\varepsilon^2/(128AK)$ gives
+$KQL\le\varepsilon^2N^2/(128\log^2N)\le d^2/2$ for $L\le L_0$, hence
+\[
+  M\le2\Bigl(\frac Qd\Bigr)^2\le\frac{128A^2}{\varepsilon^2}=O_\varepsilon(1).
+\]
+The admissible length is $d^2/(KQ)\asymp\varepsilon^2N/\log N$, which is where the
+$\varepsilon^2$ comes from.  For arbitrary $I$, partition it into at most $1+L/L_0$ subintervals
+and sum.
+\end{proof}
+
 Summing over a shell gives $O_\varepsilon(\log N)$ and cumulatively $O_\varepsilon((\log X)^2)$,
 recovering the stated theorem; but the local form is strictly stronger, since it forbids
 exceptional levels from clustering anywhere.
