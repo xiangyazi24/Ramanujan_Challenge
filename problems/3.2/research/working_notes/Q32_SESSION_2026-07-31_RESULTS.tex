@@ -444,6 +444,44 @@ data by factors of $10^1$--$10^4$ — but the absence of any method that control
 this is the statement that the incidence set $I$, of size $\approx N/\log N$ inside a box with
 $N$ diagonals, does not concentrate a positive proportion of its points on one diagonal.
 
+\subsection{Why only the first moment is accessible}
+\label{subsec:firstmoment}
+
+The $k$-th moment of the target count factors as
+\[
+  \sum_{n\le N}H(n)^k
+  =\sum_{p_1,\dots,p_k}\#\bigl\{n\le N:\ n\bmod p_i\in Z_{p_i}\ (1\le i\le k)\bigr\},
+\]
+because for $p$ in the top window the quotient $\lfloor n/p\rfloor$ is $1$ and the bad
+condition is a pure congruence modulo $p$.  The inner count is governed by the modulus
+$p_1\cdots p_k\asymp N^k$:
+
+\begin{itemize}
+\item $k=1$: the modulus is $p\asymp N$, the range $n\le N$ contains $N/p+O(1)=O(1)$ complete
+residue classes, and one gets the honest main term $\sum_p Z(p)(N/p+O(1))$.  This is exactly
+the input for the density-one theorem.
+\item $k\ge2$: the modulus $N^k$ exceeds the length of the range, so each tuple contributes
+$0$ or $1$ and no CRT/equidistribution gain is available.
+\end{itemize}
+
+So the first moment is the only one the range can support, and Markov applied to it yields a
+density-one statement and nothing stronger.  This is the same $Q^2$ obstruction as in the large
+sieve and in the energy formulation of \S\ref{subsec:energy} — three faces of "one degree of
+freedom per prime".  It explains, rather than merely reports, why the exceptional set of the
+conditional theorem stalls at a power of $\log N$.
+
+The data are consistent with all moments being of the same size: at $N=60\,000$,
+\[
+\begin{array}{c|cccc}
+ k&1&2&3&4\\ \hline
+ \sum_{n\le N}H(n)^k&4398&4714&5388&6862
+\end{array}
+\qquad N/\log N=5454,
+\]
+i.e.\ every moment is $\asymp N/\log N$, as a Poisson law with mean $\asymp1/\log N$ predicts.
+A proof of even the second moment at that strength would immediately give
+$\max_nH(n)\ll\sqrt{N/\log N}=o(N/\log N)$ and close the conjecture.
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes
