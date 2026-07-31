@@ -1,0 +1,21 @@
+name: Q5938 exact Newton conjugation audit
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/q5938-audit.yml'
+      - 'problems/3.2/research/scripts/q5938_newton_conjugation_audit.sage'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    container:
+      image: sagemath/sagemath:latest
+      options: --user root
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact Q5938 audit
+        shell: bash
+        run: sage problems/3.2/research/scripts/q5938_newton_conjugation_audit.sage
