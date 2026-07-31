@@ -816,7 +816,17 @@ $H(n_0)\ll N^2$; and within a window of length $H_0<p$ the residues $m\bmod p$ a
 each bad prime for $n_0$ is bad for at most $O(1)$ nearby $m$, and no contradiction with a large
 $H(n_0)$ arises.  In graph terms: bounded codegree limits how many vertices can have large
 degree — which is exactly the exceptional-set theorem — but never excludes a single
-high-degree vertex.  Indeed the incidence graph is $K_{2,2}$-free on the prime side (two primes
+high-degree vertex.
+
+The incidence structure is entirely explicit: a prime $p$ is bad for exactly $|Z_p|$ levels,
+namely $n=p+z$ with $z\in Z_p$, and reflection pairs these into
+$\{p+z,\;p+(p-1-z)\}$, two levels summing to $3p-1$ — so the levels served by $p$ are symmetric
+about $(3p-1)/2$.  Triples of levels sharing a bad prime therefore occur exactly when $|Z_p|\ge3$;
+the smallest instance in range is $Z_{181}=\{19,47,133,161\}$ (two reflection pairs), which makes
+$181$ bad for the four levels $200,228,314,342$.  Consequently the summed triple codegree is
+$\sum_p\binom{|Z_p|}3$, which the Poisson law makes $O(\pi(N))$ — the right shape for a
+hypergraph refinement of the K\H ov\'ari--S\'os--Tur\'an argument, though the pointwise obstruction
+is untouched by it.  Indeed the incidence graph is $K_{2,2}$-free on the prime side (two primes
 $p,p'$ share a common level only if $n$ solves a CRT system modulo $pp'\asymp N^2>N$, so at most
 one), and a star is $K_{2,2}$-free; no purely combinatorial argument can therefore exclude one
 bad $n$.
