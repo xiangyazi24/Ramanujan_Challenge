@@ -371,7 +371,12 @@ The cap is simply $v_p(d_n)=3$.  So the denominator-defect law is now completely
 top-window contribution to $\log G_n$ equals $\sum_p\min(v_p(b_n),3)\log p$ exactly.  What is not
 settled is the value $\alpha=0$ at $t=3$ — equivalently, excluding a common $p$-factor of the
 reduced numerator and $b_n$ — which bears on the primitive coprimality conjecture but not on
-$G_n$; no $t\ge3$ occurs in the tested range, where the largest multiplicity is $2$.
+$G_n$; no $t\ge3$ occurs in the tested range.  Indeed, computing $v_p(b_r)$ for every zero pair
+$(p,r)$ with $p\le200\,000$ and $r\le4000$ — $2074$ pairs — gives multiplicity~$1$ in $2072$
+cases and multiplicity~$2$ in exactly~$2$; multiplicity $\ge3$ never occurs, so in practice
+$e_p(n)=v_p(b_n)$ with no cap.  (The other neighbour gives no more: the Casoratian
+$a_{n-1}b_n-a_nb_{n-1}=-6/n^3$ also has $v_p=0$, and $p\nmid b_{n-1}$, so it yields the same
+constraint $\min(\alpha,t-3)=0$ and likewise stalls at $t\ge3$.)
 
 The three ingredients were checked independently: the Casoratian has $v_p=0$ in all $4282$
 applicable pairs, no two consecutive zeros occur in any of them, and $v_p(a_{n+1})=-3$ in all
