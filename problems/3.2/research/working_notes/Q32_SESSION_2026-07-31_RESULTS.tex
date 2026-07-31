@@ -200,26 +200,50 @@ and adding gives the classical $b_n\equiv5b_r$.
 \end{proof}
 
 \medskip
-\noindent\textbf{General form.}  The same argument with $n=qp+r$, $1\le q<p$, $0\le r<p$ gives
-the full statement
+\noindent\textbf{General form.}  The statement extends to all digits:
 \[
-  \boxed{\;\bigl(p^3a_{qp+r},\ b_{qp+r}\bigr)\;\equiv\;b_r\cdot(a_q,b_q)\pmod p.\;}
+  \boxed{\;\bigl(p^3a_{qp+r},\ b_{qp+r}\bigr)\;\equiv\;b_r\cdot(a_q,b_q)\pmod p,
+  \qquad 1\le q<p,\ 0\le r<p.\;}
 \]
-Only Step~1 changes: the multiples of $p$ in $[1,n]$ are now $p,2p,\dots,qp$, so
-$H^{(3)}_n=p^{-3}H^{(3)}_q+(p\text{-integral})$ and $p^3H^{(3)}_n\equiv H^{(3)}_q$, which is
-precisely where $a_q$ enters.  Verified on $9837$ checks per coordinate over all
-$7\le p<80$, $1\le q<p$, $0\le r<p$ with $qp+r<700$: no violations.
+Verified on $9837$ checks per coordinate over all $7\le p<80$, $1\le q<p$, $0\le r<p$ with
+$qp+r<700$: no violations.
+
+\emph{Caution on the proof for $q\ge2$.}  The argument above does \emph{not} extend verbatim.
+Step~2 used that $m\le n<2p$ forces $m=p$; for $q\ge2$ every $m=tp$ with $1\le t\le q$ has
+$v_p(m^3)=3$, and the binomial denominators can add valuation, so the outer $\beta_{n,k}$
+valuations are essential.  The correct route is two-stage: first establish the boundary
+congruence $p^3a_{qp}\equiv a_q\pmod p$ by full Kummer digit bookkeeping, and then propagate in
+$r$ — at $n=qp$ the backward coefficient $(qp)^3$ vanishes modulo $p$, and inside the block the
+reduced recurrence is exactly the $b$-recurrence, giving $p^3a_{qp+r}\equiv a_qb_r$, with
+$b_{qp+r}\equiv b_qb_r$ supplied by Gessel.  The $q=1$ case proved above — which is the one the
+reduction uses — is unaffected.
+
+\emph{On terminology.}  Calling this a ``rank-one collapse'' is inaccurate: when $b_r\ne0$ the
+displayed action is $b_r\cdot I$, which has rank two.  It is better described as a
+\emph{Cartier/Frobenius block law}: the pair at index $qp+r$ is a scalar multiple of the pair at
+index $q$, the scalar being the low digit's $b$-value.
 
 \medskip
-\noindent\textbf{It is a property of Ap\'ery-like pairs, not of $\zeta(3)$.}  The same statement
+\noindent\textbf{Novelty.}  A literature check against Gessel (1982), Beukers (1985, 1987),
+Coster, Malik--Straub (2016), Delaygue (2018), Rowland--Yassawi--Krattenthaler (2021) and
+Straub (2024) found no companion/numerator statement: those works give Lucas and Dwork
+congruences for the distinguished \emph{integral} sequence, not for the rational second solution
+after pole-clearing by $p^3$.  The defensible claim is therefore ``apparently new in this
+normalisation'', not absolute novelty.
+
+\medskip
+\noindent\textbf{A property of Ap\'ery-like pairs, not of $\zeta(3)$ (empirically).}  The same statement
 holds for the $\zeta(2)$ pair, with the exponent tracking the order of the leading coefficient
 $(n+1)^\kappa$ of the recurrence.  For
 $(n+1)^2u_{n+1}=(11n^2+11n+3)u_n+n^2u_{n-1}$ with $(a_1,b_1)=(5,3)$,
 \[
   \bigl(p^2a_{qp+r},\ b_{qp+r}\bigr)\equiv b_r\cdot(a_q,b_q)\pmod p,
 \]
-verified on $3198$ checks per coordinate with no violations.  The proof is the same: $\kappa$
-copies of $p$ are cleared from $H^{(\kappa)}_n$, and Lucas handles the binomial sums.
+verified on $3198$ checks per coordinate with no violations.  The $r$-propagation is formal for
+a weight-$\kappa$ recurrence once $p^\kappa A_n$ is $p$-integral, but the boundary identity
+$p^\kappa A_{qp}\equiv A_q$ is separate arithmetic input for each family — Lucas for the integral
+solution does not imply it — so each sporadic pair must be checked individually.  For the two
+Ap\'ery pairs it is confirmed numerically here.
 
 This unifies the trichotomy used in the draft.  Modulo $p$ the pair at index $n$ is $b_r$ times
 the pair at index $q$, so the right-hand side can vanish in exactly three ways —
