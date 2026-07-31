@@ -168,6 +168,65 @@ exactly \(\{5,11,19\}\) with maximum \(55\) (independent recomputation, extendin
 \(r\le100\) datum), and — the point that matters for the application, where the relevant
 prime satisfies \(p>r\) — **no prime factor exceeding \(r\) has ever occurred**.
 
+## 3c. The marked scalar is a moment of point counts
+
+The one mod-\(p\) scalar that the whole terminal programme keeps aliasing has an exact
+exponential-sum form.  For every prime \(p\ge5\) and every moment \(M\),
+\[
+ \boxed{\quad
+ C_M(p-1)\equiv-\sum_{x,y,z\in\mathbb F_p^\times}\Lambda(x,y,z)^M\pmod p.
+ \quad}
+\]
+Equivalently, with \(N_p(t)=\#\{(x,y,z)\in(\mathbb F_p^\times)^3:\Lambda=t\}\) and
+\(r=M\bmod(p-1)\),
+\[
+ C_M(p-1)\equiv-\sum_{t\in\mathbb F_p^\times}t^{\,r}N_p(t)\pmod p,
+\]
+so that, with \(n=p+r\) (whence \(M=n-1\equiv r\bmod p-1\)), **the target condition
+\(p\mid F_0\) is precisely the vanishing modulo \(p\) of the \(r\)-th moment of the
+point-count function of the Apéry family**, in agreement with Apéry--Lucas
+(\(p\mid b_n\iff p\mid b_r\)).
+
+Audited by `problems/3.2/research/scripts/q32_marked_scalar_character_sum.py`:
+95 shell-vs-exponential-sum checks, 95 shell-vs-moment checks and 44
+shell-vs-Apéry checks, all exact.
+
+Two things this buys.
+
+1. **It explains the rank-one wall structurally.**  Modulo \(p\) the only surviving datum
+   of the family is the one-dimensional unit-root/Hasse--Witt invariant; every mod-\(p\)
+   observable built from the coefficient array is therefore a multiple of that single
+   scalar.  This is why no linear elimination inside any terminal family produced a second
+   condition, and it predicts that a genuinely independent condition needs the mod-\(p^2\)
+   datum, where the full Frobenius matrix and not just its unit root appears.
+2. **It puts the target condition in standard language.**  The column problem becomes:
+   for fixed \(n\), bound
+   \(\#\{p\in(n/2,n]:\sum_{t}t^{\,n-p}N_p(t)\equiv0\ (p)\}\).
+   The family is the modular one (weight-4 level-8 newform 8.4.a.a), so this is where
+   Hasse--Witt/unit-root and Lang--Trotter-type technology, rather than Pascal elimination,
+   would have to act.
+
+## 3d. The M-direction Casoratian route fails on height
+
+With the Pascal-normalised carrier
+\(\widetilde{\cal E}_j(M)=(k+1)\bigl(F_{j-1}F_{j+1}-F_j^2\bigr)/\binom nk\),
+\(k=L_0-j\) (integrality confirmed at every tested level), the \(2\times2\) step-two
+Casoratian
+\[
+ W(M)=\widetilde{\cal E}_1(M)\widetilde{\cal E}_2(M+2)
+      -\widetilde{\cal E}_1(M+2)\widetilde{\cal E}_2(M)
+\]
+is a genuine carrier: every base-level target divides it (verified at the only levels with
+targets in the scanned window, \(n=54,56,68\)).  But
+\[
+ \log_2|W(M)|\approx21\,n,
+\]
+i.e. the height is \(\Theta(n)\), and \(W\) admits **no** first-order rational ratio
+\(Q(M)W(M+2)=P(M)W(M)\) with \(\deg\le12\) on either parity class.  So \(W\) is not
+hypergeometric and no "balanced ratio" (equal degrees and equal leading absolute values,
+which would have given \(\log|W|=O(\log M)\)) can exist.  The route is closed at the
+\(2\times2\) level, and larger \(K\times K\) Casoratians only increase the height.
+
 ## 4. Reproducibility
 
 - `problems/3.2/research/scripts/q32_seam_ray_split_audit.py` — the exact
