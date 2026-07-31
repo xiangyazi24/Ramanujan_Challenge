@@ -28,6 +28,14 @@ h=3 (0.97–1.01, 0.83–0.95) — R₄ = O(1) for all h, the moment criterion h
 0.022 (N=200,300,500) ≈ 1/√N (independence prediction 0.071, 0.058, 0.045); joint 4th moment
 J/E[|S₁|²|S₂|²] = 1.0–1.3 (independent prediction 1.0). ⟹ S₁,S₂ behave like INDEPENDENT
 complex Gaussian random walks. The phase family is indistinguishable from i.i.d. uniform.
+**GUMBEL check (Q6213's pointwise-tail probe, DS measured)**: max_{n∈(N,2N]}|S₁(n)|²/Q_n =
+4.72, 4.98, 4.98 (N=200,300,500) vs Gumbel prediction log N = 5.30, 5.70, 6.21 — extreme-value
+scale matches (max of ~N Exp(1) variables). Pointwise max behavior confirmed.
+**Q6221 correction**: the unrestricted pair-Gram spectral norm (Q6211's proposal) is FORCED to
+diverge by dimension (≍N²/log²N pair columns in N-dim row space ⟹ norm ≫ N/log²N even for
+random phases) — WRONG target. The corrected target is a weighted Λ(4)/2→4 inequality on
+decomposable pair coefficients (c⊗c) — essentially the 4th-moment bound itself; the
+4-distinct-prime correlation is genuinely new content.
 **The phase family {b_{n−p}/p} behaves exactly like independent uniform random variables
 (Gaussian moments through 6th order).**
 
