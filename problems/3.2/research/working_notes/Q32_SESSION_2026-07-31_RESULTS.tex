@@ -220,8 +220,16 @@ forces a units-digit carry, while for $k_0=0$ the top digits add to $q<p$ withou
 $v_p(\beta_{qp,k})\ge2$ for $p\nmid k$, and for $k=k_1p$ Lucas gives
 $\beta_{qp,k_1p}\equiv\beta_{q,k_1}$.
 In $c_{qp,k}$, a term with $p\nmid m$ has $v_p(m^3)=0$ and
-$v_p\bigl(\binom{qp}m\binom{qp+m}m\bigr)\le2$ (checked over $7148$ triples: the maximum is
-exactly $2$), so its denominator has $v_p\le2$ and it dies after multiplication by $p^3$.  A term
+$v_p\bigl(\binom{qp}m\binom{qp+m}m\bigr)\le2$, so its denominator has $v_p\le2$ and it dies after
+multiplication by $p^3$.  The bound is exact, by Kummer: writing $m=m_1p+m_0$ with $m_0\ne0$,
+\begin{itemize}
+\item adding $m$ and $qp-m$ in base $p$, the units digits are $m_0$ and $p-m_0$, which sum to
+exactly $p$ — so there is always a carry at position~$0$; and no carry can leave position~$1$
+because $qp<p^2$.  Hence $v_p\binom{qp}m=1$ exactly.
+\item adding $m$ and $qp$, the units digit is $m_0+0<p$, so the only possible carry is at
+position~$1$, occurring iff $m_1+q\ge p$.  Hence $v_p\binom{qp+m}m\le1$.
+\end{itemize}
+(Both statements verified on $34\,578$ pairs with no violation.)  A term
 with $m=tp$ has $v_p(m^3)=3$ and $\binom{qp}{tp}\binom{qp+tp}{tp}\equiv\binom qt\binom{q+t}t$ by
 Lucas, while $(-1)^{tp-1}=(-1)^{t-1}$ for odd $p$; hence $p^3c_{qp,k_1p}\equiv c_{q,k_1}$.
 Combining, and using $v_p(\beta_{qp,k})\ge2$ to kill every $p\nmid k$ term,
