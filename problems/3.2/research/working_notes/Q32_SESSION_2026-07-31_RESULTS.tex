@@ -203,6 +203,23 @@ while the conjecture asks only for $o(n)$ — the gap between what is true and w
 proved is enormous, and the entire difficulty is that no unconditional argument controls the
 prime factors of one specific value $b_n$.
 
+A complementary datum explains \emph{why} the count is so small: $b_n$ has very few prime
+factors, and they are huge.  Complete factorisations give
+\[
+\begin{array}{c|cccccccc}
+ n&5&8&11&14&17&20&23&26\\ \hline
+ \omega(b_n)&3&4&3&3&4&4&7&3\\
+ \Omega(b_n)&3&5&6&3&4&4&7&4\\
+ \text{bits of }b_n&20&34&49&64&79&94&108&123\\
+ \text{bits of largest }p\mid b_n&14&21&22&42&63&48&23&60
+\end{array}
+\]
+so $\omega(b_n)$ stays near $\log n$ while $\log b_n\sim3.53n$, and a single prime factor
+carries a constant fraction of the size.  Since $H(n)\le\omega(b_n)$, the conjecture would
+follow from $\omega(b_n)=o(n/\log n)$ — much weaker than the observed $\omega(b_n)\approx\log n$
+— but that is not provable either: splitting at any $Y$ gives only
+$\omega(b_n)\le\pi(Y)+\log b_n/\log Y$, which is $\gg n/\log n$ for every choice of $Y$.
+
 \subsection{What is load-bearing: the conjecture is FALSE inside the same family}
 \label{subsec:load-bearing}
 
