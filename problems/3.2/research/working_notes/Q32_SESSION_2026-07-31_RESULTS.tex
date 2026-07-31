@@ -1024,7 +1024,8 @@ $(y,2y]$ gives $m\le(2y)^k$ with exactly those $k$ prime divisors.  Hence no bou
 Nor does divisor theory supply a substitute: Ford's theorems on $H(x,y,z)$ and $H_r(x,y,z)$
 describe how \emph{typical} integers $m\le x$ distribute their divisors, and give no pointwise
 statement for one prescribed integer.  The same applies in the other direction:
-Luca--Shparlinski's results on $\omega(b_r)$ and on the largest prime factor of $b_r$ are
+Luca--Shparlinski's results on $\omega(b_r)$ and the largest prime factor of $b_r$
+($P(b_r)>c\sqrt{\log r\log\log r}$ for density-one $r$, \emph{JLMS} 78 (2008)) are
 density-one \emph{lower} bounds.
 
 Consequently the dyadic split $\sum_{r\le R}+\sum_{r>R}$ cannot produce a constant saving: the
@@ -1205,6 +1206,28 @@ without changing the qualitative problem.  Since $|Z_p|=2\cdot\#\{\text{zeros of
 bound on $B_p$'s zeros would transfer, but the mechanism needed is the same
 orbit-return/cocycle-transversality theorem for a degree-$2$ polynomial-coefficient Möbius
 cocycle.
+
+\subsection{The decisive gate: a fourth-moment criterion}
+\label{subsec:fourthmoment}
+
+The sharpest sufficient condition for the full conjecture is a \emph{fourth moment} at the
+random scale (identified independently by the DS agent, Q6206):
+
+\begin{proposition}[moment criterion]
+If for each fixed $h\ne0$,
+\[
+  \sum_{N<n\le2N}|S_h(n)|^4\le C\,\frac{N^3}{\log^2N}
+\]
+uniformly in dyadic $N$, then
+$\max_{N<n\le2N}|S_h(n)|\le C^{1/4}\,N^{3/4}/\!\sqrt{\log N}=o(n/\log n)$
+(trivial $L^4\hookrightarrow L^\infty$ on the shell of length $N$), and the Fej\'er kernel
+closes $H(n)=o(P_n)$ for every $n$.
+\end{proposition}
+
+The second moment ($k=1$) fails by a $\sqrt{\log}$ factor; the fourth ($k=2$) is the first
+rung that works.  Empirically the fourth-moment ratio $R_4\approx0.95$, the second-moment ratio
+$R_2\to1$, and the joint $(S_1,S_2)$ are approximately independent with correlation
+$\rho\sim1/\sqrt{N}$, all consistent with the random model (Q6206, DS verification).
 
 \subsection{The obstruction, stated precisely}
 
