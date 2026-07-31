@@ -7,6 +7,7 @@ on:
       - 'problems/3.2/research/scripts/q5938_newton_conjugation_audit.sage'
 permissions:
   contents: write
+  actions: read
 jobs:
   audit:
     runs-on: ubuntu-latest
@@ -20,22 +21,33 @@ jobs:
         shell: bash
         run: |
           set +e
-          docker run --rm \
-            -v "$PWD:/repo" -w /repo \
-            sagemath/sagemath:latest \
-            sage problems/3.2/research/scripts/q5938_newton_conjugation_audit.sage \
-            > /tmp/q5938-audit.out 2>&1
+          {
+            docker --version
+            docker pull sagemath/sagemath:latest
+            docker run --rm \
+              -v "$PWD:/repo" -w /repo \
+              sagemath/sagemath:latest \
+              sage problems/3.2/research/scripts/q5938_newton_conjugation_audit.sage
+          } > /tmp/q5938-audit.out 2>&1
           echo $? > /tmp/q5938-audit.status
           exit 0
+      - name: Upload exact output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q5938-audit-output
+          path: |
+            /tmp/q5938-audit.out
+            /tmp/q5938-audit.status
       - name: Persist exact output
         if: always()
         shell: bash
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          cp /tmp/q5938-audit.out problems/3.2/research/scripts/q5938_newton_conjugation_audit.out
-          cp /tmp/q5938-audit.status problems/3.2/research/scripts/q5938_newton_conjugation_audit.status
+          cp /tmp/q5938-audit.out problems/3.2/research/scripts/q5938_newton_conjugation_audit.out || true
+          cp /tmp/q5938-audit.status problems/3.2/research/scripts/q5938_newton_conjugation_audit.status || true
           git add problems/3.2/research/scripts/q5938_newton_conjugation_audit.out \
-                  problems/3.2/research/scripts/q5938_newton_conjugation_audit.status
+                  problems/3.2/research/scripts/q5938_newton_conjugation_audit.status || true
           git commit -m 'Record Q5938 exact Newton conjugation audit output' || exit 0
           git push origin HEAD:q5938-audit
