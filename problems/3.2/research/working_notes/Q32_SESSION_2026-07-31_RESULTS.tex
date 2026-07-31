@@ -1154,6 +1154,22 @@ gaps}\}$.  The Poisson model predicts the latter is $O(1)$, so the entire conjec
 follow from one purely local statement: \emph{the gap polynomial, at an actually occurring gap,
 has a unique root in the half-interval}.
 
+\textbf{However, uniform CT is expected false.}  An independent check shows:
+$R_h\le2(h-1)$ (tight from the reflection structure), and whenever $N_h$ is squarefree (which it
+is for odd $h$ through $h=18$), Chebotarev supplies arbitrarily large completely split primes $p$,
+at which reflection forces at least $h-1$ of $N_h$'s roots into the half-interval.  Hence an
+absolute constant $C$ independent of $h$ is incompatible with growing squarefree degree: \emph{for
+any fixed $h$, there exist primes $p$ with $R_h\ge h-1$, so (CT) fails at those primes.}  The
+$p\le400$ test range was simply too small to see such primes.
+
+The best achievable from the gap-polynomial route alone is therefore $R_h\le2(h-1)$, giving
+\[
+  |Z_p|\ll p/K+\sum_{h\le K}2h\ll p/K+K^2,
+\]
+optimised at $K\sim p^{1/3}$: $|Z_p|\ll p^{2/3}$, recovering the existing bound with a sharp
+constant.  Improving below $p^{2/3}$ by this method requires $R_h\ll h^{1-\delta}$ for some
+$\delta>0$, which the Chebotarev argument shows cannot hold uniformly in $p$.
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes
