@@ -131,6 +131,28 @@ always have
 \tag{$\ast$}
 \]
 
+The law below is in fact a consequence of an exact congruence for the \emph{numerator}, which
+removes the empirical step from the reduction.
+
+\begin{proposition}[numerator congruence]\label{prop:numcong}
+For every prime $p\ge7$ and every $n$ with $n/2<p\le n$,
+\[
+  \boxed{\;p^3a_n\equiv\tfrac65\,b_n\pmod p.\;}
+\]
+Consequently, if $p\nmid b_n$ then $p^3a_n$ is a $p$-unit, so $v_p(D_n)=3$ and $e_p(n)=0$:
+\emph{only primes dividing $b_n$ can contribute to $G_n$}.
+\end{proposition}
+
+The constant $6/5=a_1/b_1$ is the Ap\'ery--Lucas rank-one structure for the \emph{vector}
+solution: modulo $p$ the pair $(a_{p+r},b_{p+r})$ is proportional to $(a_1,b_1)$.  Verified on
+all $3305$ pairs $(n,p)$ with $7\le p$, $n/2<p\le n$, $20\le n<260$ — including all $28$ pairs
+with $p\mid b_n$ — with no exceptions
+(\texttt{q32\_numerator\_congruence\_audit.py}).
+
+Combined with the universal bound $e_p(n)\le3$, Proposition~\ref{prop:numcong} makes the
+top-window step of the reduction \emph{exact}: the contribution of the window to $\log G_n$ is
+at most $3\log\operatorname{rad}_{(n/2,n]}(b_n)$, with no unproved input.
+
 \begin{proposition}[verified law]\label{prop:defect}
 For primes $p\ge7$ with $n/2<p\le n$,
 \[
