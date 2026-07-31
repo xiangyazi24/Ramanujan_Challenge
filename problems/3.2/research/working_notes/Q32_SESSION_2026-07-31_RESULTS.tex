@@ -1,0 +1,134 @@
+% Standalone section for problems/3.2/proof.tex — \input this file.
+% Written 2026-07-31 (dm window).  Every statement here has a runnable audit in
+% problems/3.2/research/scripts/; the audit is named at the end of each item.
+% NOTE: this is a NEW file, not an edit of proof.tex, so that the paper keeps a single writer.
+
+\section{Structure of the marked scalar, and the exact location of the obstruction}
+\label{sec:marked-scalar-structure}
+
+Throughout, $\Lambda(x,y,z)=\dfrac{(1+x)(1+y)(1+z)\bigl((1+y)(1+z)+xyz\bigr)}{xyz}
+=\sum_{\kappa\in P}\lambda_\kappa X^\kappa$ is the Ap\'ery Laurent polynomial,
+$b_r=\operatorname{CT}\Lambda^r$, and $C_M(d)$ denotes the $d$-section of the coefficient
+array of $\Lambda^M$.
+
+\subsection{The marked scalar is a moment of point counts}
+
+\begin{proposition}\label{prop:moment}
+For every prime $p\ge5$ and every $M$,
+\[
+  C_M(p-1)\;\equiv\;-\sum_{x,y,z\in\mathbb F_p^\times}\Lambda(x,y,z)^M
+  \;\equiv\;-\sum_{t\in\mathbb F_p^\times}t^{\,r}N_p(t)\pmod p,
+  \qquad r=M\bmod(p-1),
+\]
+where $N_p(t)=\#\{(x,y,z)\in(\mathbb F_p^\times)^3:\Lambda(x,y,z)=t\}$.
+Consequently, writing $n=p+r$, the target condition $p\mid b_n$ is exactly the vanishing
+modulo $p$ of the $r$-th moment of the point-count function of the Ap\'ery family.
+\end{proposition}
+
+\noindent
+\emph{Audit:} \texttt{q32\_marked\_scalar\_character\_sum.py} — $95$ shell-versus-exponential-sum
+checks, $95$ shell-versus-moment checks, $44$ shell-versus-Ap\'ery checks.
+
+\subsection{The reflection law, and the parity of $|Z_p|$}
+
+Proposition~\ref{prop:moment} converts a geometric symmetry into an arithmetic one.
+
+\begin{proposition}\label{prop:palindrome}
+$N_p(t)=N_p(t^{-1})$ for every $t\in\mathbb F_p^\times$; hence
+\[
+  b_{\,p-1-r}\equiv b_r\pmod p\qquad(0\le r<p-1),
+\]
+so $Z_p=\{r<p:\ p\mid b_r\}$ is stable under the involution $r\mapsto p-1-r$, and
+$|Z_p|$ is even unless the fixed point $\tfrac{p-1}2$ lies in $Z_p$.
+\end{proposition}
+
+This explains two facts previously recorded only empirically: that the Poisson law is
+obeyed by the \emph{pair} count $|Z_p|/2$ rather than by $|Z_p|$, and that the
+``central exceptions'' to evenness are exactly the fixed-point primes.  For $p<4000$ these
+are $p=11$ with $Z_{11}=\{5\}$ and $p=3137$ with $Z_{3137}=\{1568\}$, and in both cases the
+unique zero equals $(p-1)/2$.
+
+\noindent
+\emph{Audit:} same script — $420$ inversion checks, $420$ palindromy checks (the ratio
+$b_{p-1-r}/b_r$ is identically $1$, not merely $\pm1$), and the involution verified on all
+$548$ primes $5\le p<4000$ without exception.
+
+\subsection{Where $G_n$ actually lives}
+
+\begin{proposition}\label{prop:Gn}
+Write $a_n=A_n/D_n$ in lowest terms, so $D_n\mid d_n$.  Then
+$G_n=\gcd(d_na_n,d_nb_n)=(d_n/D_n)\cdot\gcd(A_n,b_n)$, and for every $n\le330$:
+\[
+  \gcd(A_n,b_n)=1,
+\]
+so $G_n=d_n/D_n$ exactly.  Moreover the large prime factors of $G_n$ are precisely the
+targets $p\in(n/2,n]$ with $p\mid b_n$; e.g.
+\[
+  G_{200}=2\cdot3^3\cdot5\cdot17\cdot19\cdot\mathbf{139}\cdot\mathbf{181},\qquad
+  G_{321}=2\cdot3\cdot5\cdot7^2\cdot\mathbf{179}\cdot\mathbf{193}\cdot\mathbf{211},
+\]
+and $G_n$ never exceeds $34$ bits on that range.
+\end{proposition}
+
+So the conjecture is equivalent to the statement that Ap\'ery's classical denominator
+$d_n=\operatorname{lcm}(1,\dots,n)^3$ is optimal up to $e^{o(n)}$, the only losses coming from
+top-window primes dividing $b_n$.
+
+\noindent\emph{Audit:} \texttt{q32\_actual\_Gn\_audit.py}.
+
+\subsection{The target count}
+
+\begin{proposition}\label{prop:K}
+Let $K(n)=\#\{p\in(n/2,n]:p\mid b_n\}$, so that the quantity to be bounded is
+$T(n)=\sum_{p}\log p\le K(n)\log n$.  Then
+\[
+  K(n)\le3\qquad\text{for every }n\le200\,000,
+\]
+with $412$ indices having $K\ge2$, exactly $12$ having $K=3$, and none $K\ge4$; the running
+maximum increases only at $n=6,200,321$.  The mean of $K$ is $\approx0.073$, matching the
+Mertens prediction $\log2/\log n$.  The same computation gives
+$\sum_{p\le200\,000}|Z_p|=18\,126$ (mean $1.016$) and $\max|Z_p|=12$ at $p=159\,977$.
+\end{proposition}
+
+\noindent\emph{Audit:} \texttt{q32\_k\_scan.c}, validated against the independent Python
+implementation \texttt{q32\_top\_window\_target\_counts.py} on $n\le20\,000$.
+
+\subsection{The obstruction, stated precisely}
+
+The results above localise the difficulty completely: $G_n$ is a handful of small primes
+times the $K(n)\le3$ targets, and every route we have tried terminates in the same place —
+bounding the number of prime factors of the \emph{single} integer $b_n$ inside the short
+window $(n/2,n]$.  Three separate barriers are now identified, each with a reason.
+
+\begin{enumerate}
+\item \textbf{Rank one is forced, not accidental.}  The Newton polytope of $\Lambda$ has a
+unique interior lattice point (the origin), so by Beukers--Vlasenko \emph{Dwork Crystals I}
+(IMRN 2021, Thm.~11) the Cartier-stable quotient has rank $1$; equivalently, for the K3
+fibre $h^{0,2}=1$, so the Hasse--Witt operator is $1\times1$ (Katz, \emph{Une formule de
+congruence pour la fonction z\^eta}, SGA 7 II, Exp.~XXII).  Hence \emph{every} mod-$p$
+observable built from the coefficient array is a multiple of the single marked scalar of
+Proposition~\ref{prop:moment}, and any elimination of it reacquires the candidate primorial,
+of logarithmic height $\sim n/2$.  This is the structural reason behind every rank-one alias
+encountered in the terminal, Turán, Hankel, Newton-jet and cross-index families.
+
+\item \textbf{The second $p$-adic digit is not a second selective condition.}  Modulo $p^2$
+one does obtain a genuinely new coordinate, namely $D_{p,r}=R_{p-1}(\Lambda^{r-1}\Phi_p)$
+with $\Phi_p=(\Lambda^p-\Lambda(X^p))/p$; but it is not target-selective.  Direct computation
+gives $D_{19,10}=D_{31,8}=0$ at genuine targets, and also $D_{19,9}=0$ at a non-target.  No
+codimension-two statement is available.
+
+\item \textbf{The vertical average is equally out of reach.}  The pointwise problem would
+follow from Hypothesis~Z, $\sum_{p\le P}|Z_p|=O(P/\log P)$.  The best unconditional aggregate
+implied by $|Z_p|=O(p^{2/3})$ is $O(P^{5/3}/\log P)$, and no improvement is available — not to
+$P^{1+\varepsilon}/\log P$, and not even $|Z_p|=O(1)$ on a positive-density set of primes.
+Katz's finite-field Mellin equidistribution (\emph{Convolution and Equidistribution},
+Ann.\ of Math.\ Studies 180, 2012) controls archimedean distributions of normalised traces,
+not exact vanishing modulo $p$; and Serre's bound
+$\#\{p\le X:a_p(E)=0\}\ll X/(\log X)^{3/2-\varepsilon}$
+(Publ.\ Math.\ IHES 54 (1981)) is one trace test per prime, whereas $|Z_p|$ involves $p$
+character-indexed tests inside each prime.
+\end{enumerate}
+
+Accordingly the unconditional pointwise statement appears to require genuinely new
+technology — a characteristic-varying local-limit or large-sieve theorem for the
+two-variable Mellin sheaf — rather than a refinement of the arguments used here.
