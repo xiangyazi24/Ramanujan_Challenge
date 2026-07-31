@@ -335,6 +335,55 @@ Note also that Hypothesis~Z in its pointwise form ($Z(p)\le C$) is expected to b
 $\max_{p\le N}Z(p)\sim2\log\log N$, matching the observed record progression
 $2,4,6,8,10,12$ with $Z(p)=12$ first at $p=159\,977$.
 
+\subsection{A $p$-independent criterion and an explicit shift operator}
+\label{subsec:shift}
+
+Two exact facts, both audited in \texttt{q32\_shift\_operator\_audit.py} ($12$ criterion
+checks, $96$ operator checks).
+
+\paragraph{The 27-term criterion.}  Since $p\equiv1\pmod{p-1}$ we have
+$n-p\equiv n-1\pmod{p-1}$, so $t^{\,n-p}=t^{\,n-1}$ on $\mathbb F_p^\times$ and the exponent
+in the criterion is \emph{independent of $p$}.  With $m=n-1$ and $p\in(n/2,n]$,
+\[
+  p\mid b_n
+  \iff \sum_{x,y,z\in\mathbb F_p^\times}\Lambda(x,y,z)^m\equiv0\ (p)
+  \iff p\mid V(n,p-1),\qquad
+  V(n,s)=\!\!\sum_{\varepsilon\in\{-1,0,1\}^3}\!\! c_m(\varepsilon_1s,\varepsilon_2s,\varepsilon_3s),
+\]
+the $27$ terms being the only lattice points of $mP$ in the sublattice $s\mathbb Z^3$ once
+$s>m/2$.  Verified at all four known bad primes ($n=200$: $p=139,181$; $n=321$:
+$p=179,193,211$) and at non-bad primes.
+
+\paragraph{The shift operator.}  The coefficient family $C(s)=c_m(s,0,0)$ is $P$-recursive in
+the \emph{shift} variable $s$, of order~$2$ and degree~$3$:
+\[
+  \boxed{\;q_2(s)C(s+2)+q_1(s)C(s+1)+q_0(s)C(s)=0,\;}
+\]
+\[
+\begin{aligned}
+ q_0(s)&=(s-m)^3,\\
+ q_1(s)&=2s^3-4(m-1)s^2+(m^2-7m+3)s+(2m^3+4m^2-2m+1),\\
+ q_2(s)&=s^3-(m-4)s^2-(m+5)(m-1)s+(m-1)^2(m+2).
+\end{aligned}
+\]
+The coefficients are polynomial in $m$ as well, and $q_0$ vanishes to order~$3$ at $s=m$, the
+edge of the support ($C(s)=0$ for $s>m$).
+
+\paragraph{Why this is the natural home for a certificate.}  The criterion evaluates $C$ at
+$s=p-1\equiv-1\pmod p$.  A certificate — an integer $C_n\ne0$ divisible by every bad prime with
+$\log|C_n|=o(n)$ — would close the conjecture, since then
+$\#\text{bad}\le\log|C_n|/\log(n/2)$.  Two routes are now concrete rather than speculative:
+\begin{enumerate}
+\item If $V(n,\cdot)$ agreed with a polynomial $Q_n\in\mathbb Z[s]$ of degree $D$ and height
+$H$ on the relevant range, then $V(n,p-1)\equiv Q_n(-1)$ and $C_n=Q_n(-1)$ would work.
+\emph{This fails}: eleven finite differences of $V(120,s)$ reduce the size only from $611$ to
+$593$ bits, so $V$ is not polynomial of any low degree.
+\item The transfer-matrix product $\prod_{s}M(s)\bmod p$ of the operator above over a full
+period is exactly the $p$-curvature object of a Picard--Fuchs-type operator, which is
+\emph{nilpotent} for globally nilpotent operators (Katz).  This is the remaining concrete
+mechanism by which $C(p-1)\bmod p$ could be expressed through data of size $O(\log n)$.
+\end{enumerate}
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes
