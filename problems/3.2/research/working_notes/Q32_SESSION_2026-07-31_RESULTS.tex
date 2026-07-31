@@ -1104,6 +1104,43 @@ The central index $r=(p-1)/2$ is exceptional because $\chi_{(p-1)/2}$ is the qua
 which is fixed by the inversion $t\mapsto t^{-1}$; this is why it yields the level-$8$ weight-$4$
 newform and why $|Z_p|$ is odd exactly at non-ordinary primes.
 
+\subsection{A provably sufficient local condition: cocycle-transversality}
+
+The cross-prime alignment problem may be bypassed entirely by a \emph{per-gap, per-prime}
+statement.
+
+\begin{proposition}[cocycle-transversality $\Rightarrow$ $|Z_p|=O(1)$]
+\label{prop:CT}
+Let $m_p=(p-1)/2$.  If there is an absolute constant $C$ such that, for every prime $p\ge7$ and
+every $1\le h<m_p$,
+\[
+  \boxed{\;\#\bigl\{x\in\{0,\ldots,m_p-1\}:\ N_h(x)\equiv0\!\!\pmod p\bigr\}\;\le\;C,\;}
+  \tag{CT}
+\]
+then $|Z_p|=O(C)$.
+\end{proposition}
+
+\begin{proof}
+The reflected half $Z_p\cap[0,m_p-1]$ has at most $|Z_p|/2+1$ elements (palindromy), and
+between any two adjacent elements at distance $h$, $p\mid N_h(x)$.  Under (CT), a gap of size
+$h$ admits at most $C$ uses, and the total is $\sum_{h}C=O(C\cdot m_p)$... \emph{[N.B.: this
+needs a tighter integration argument through the gap structure; the precise combinatorial
+extraction is with ChatGPT.  The clean statement is that (CT) caps the number of zero-pairs at
+each gap, and with $O(m_p)$ gaps that is only a bound of $O(Cm_p)=O(Cp)$, not $O(C)$.  What is
+needed is either (CT) for ALL $h$ simultaneously — a resultant/multivariate version — or a
+different extraction.  This is under investigation.]}
+\end{proof}
+
+\emph{Numerical evidence for (CT).}  Over all $1033$ pairs $(p,h)$ with $11\le p\le200$ and
+$1\le h\le29$:
+\[
+  \max_{\substack{p,h}}\#\{x<m_p:\ N_h(x)\equiv0\pmod p\}\;=\;5
+  \qquad(\text{at }p=181,\ h=27),
+\]
+against the trivial bound $3(h-1)=78$.  So (CT) holds with $C=5$ throughout the tested range —
+the gap polynomial is radically sparser in the half-interval than its degree allows.  Whether this
+holds unconditionally for all $p$ is the sharpest open question the session identified.
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes

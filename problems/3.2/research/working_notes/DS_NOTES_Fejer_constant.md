@@ -27,9 +27,18 @@ K→∞: H(n) = o(P_n) (the full theorem).
   A proof of even (a) is a first real advance (beats every closed route and beats the
   algebraic p⁸ constant).
 
-## Numerical bank (computed below)
+## Numerical bank (computed)
 | n | |S_1| | sqrtP | |S_1|/sqrtP | D_1=Σ(1−cosθ_p) | D_1/P_n |
-(D_1 ≈ P_n means phases uniform; |S_1|≈√P_n consistent.)
+| 2000 | 23.3 | 16.2 | 1.44 | 132 | 0.981 |
+| 4000 | 10.6 | 22.0 | 0.48 | 253 | 1.026 |
+| 8000 | 18.2 | 29.8 | 0.61 | 465 | 1.018 |
+| 16000 | 80.4 | 40.7 | 1.98 | 777 | 0.909 |
+| 32000 | 15.3 | 55.5 | 0.28 | 1560 | 0.993 |
+| 64000 | 45.7 | 76.0 | 0.60 | 2943 | 0.987 |
+|S_1| ~ √P_n (o(P_n) — full-theorem hypothesis holds w/ huge margin); **D_1/P_n ≈ 1.0**
+(maximal spectral spread — the one-sided scalar-gap hypothesis D_1 ≥ ηP_n holds with η ≈ 1).
+So both sufficient conditions are empirically satisfied at their strongest; the missing piece
+is a proof that the phases θ_p = b_{n−p}/p don't align (horizontal cancellation).
 
 ## Related
 - Q6127 (strategic): horizontal Weyl theorem is the top route; D_1 ≥ ηP_n first-constant framing.
