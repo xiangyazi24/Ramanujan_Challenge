@@ -155,9 +155,46 @@ precisely because the leading coefficient $(n+1)^3$ of the recurrence vanishes a
 modulo $p$ the solution vector collapses onto the line spanned by the initial vector
 $(a_1,b_1)$, which is exactly why a prime can contribute to $G_n$ only through $b_n$.
 
-Verified with no exceptions on all $3305$ pairs $(n,p)$ with $7\le p$, $n/2<p\le n$,
-$20\le n<260$ — including all $28$ pairs with $p\mid b_n$ — and, in the $(p,r)$ form, on
-$3320$ checks per coordinate
+\begin{proof}
+Write $n=p+r$ with $0\le r<p$, and recall Ap\'ery's formula
+$a_n=\sum_k\beta_{n,k}\bigl(H^{(3)}_n+c_{n,k}\bigr)$ with
+$\beta_{n,k}=\binom nk^2\binom{n+k}k^2$ and
+$c_{n,k}=\sum_{m\le k}\frac{(-1)^{m-1}}{2m^3\binom nm\binom{n+m}m}$.
+
+\emph{Step 1.}  Since $n<2p$, the only multiple of $p$ in $[1,n]$ is $p$ itself, so
+$H^{(3)}_n=p^{-3}+h$ with $h$ $p$-integral, whence $p^3H^{(3)}_n\equiv1\pmod p$.
+
+\emph{Step 2.}  In $c_{n,k}$ the denominator $2m^3\binom nm\binom{n+m}m$ has $v_p=3$ only for
+$m=p$.  Indeed $v_p(m^3)=3$ forces $m=p$ because $m\le n<2p$; and
+$v_p\bigl(\binom nm\binom{n+m}m\bigr)\le2$, since $n,n+m<p^2$ gives $v_p\le1$ for each binomial
+by Kummer.  Every term with $v_p\le2$ contributes $p^{3-v_p}\equiv0\pmod p$ after multiplication
+by $p^3$.  The surviving $m=p$ term occurs exactly for $k\ge p$.
+
+\emph{Step 3.}  By Lucas, $\binom np=\binom{p+r}p\equiv1$ and
+$\binom{n+p}p=\binom{2p+r}p\equiv2\pmod p$, so the $m=p$ term contributes
+$p^3\cdot\frac{(-1)^{p-1}}{2p^3\binom np\binom{n+p}p}\equiv\frac14\pmod p$.
+
+\emph{Step 4.}  Again by Lucas, for $k<p$ one has $\binom nk\equiv\binom rk$ and
+$\binom{n+k}k\equiv\binom{r+k}k$, while for $k=p+k_0$ with $k_0\le r$ one has
+$\binom nk\equiv\binom r{k_0}$ and $\binom{n+k}k\equiv2\binom{r+k_0}{k_0}$.  Hence
+\[
+  \sum_{k<p}\beta_{n,k}\equiv b_r,\qquad
+  \sum_{k\ge p}\beta_{n,k}\equiv4b_r\pmod p,
+\]
+and adding gives the classical $b_n\equiv5b_r$.
+
+\emph{Step 5.}  Combining,
+\[
+  p^3a_n=\sum_k\beta_{n,k}\bigl(p^3H^{(3)}_n+p^3c_{n,k}\bigr)
+  \equiv\sum_k\beta_{n,k}+\tfrac14\sum_{k\ge p}\beta_{n,k}
+  \equiv5b_r+\tfrac14\cdot4b_r=6b_r\pmod p. \qedhere
+\]
+\end{proof}
+
+All five steps were also checked numerically with no exceptions: the three Lucas evaluations of
+Step~3--4 over every $(p,r)$ with $7\le p<60$, $r<p$, $p+r\le150$; and the conclusion on all
+$3305$ pairs $(n,p)$ with $7\le p$, $n/2<p\le n$, $20\le n<260$ — including all $28$ pairs with
+$p\mid b_n$ — and on $3320$ checks per coordinate in the $(p,r)$ form
 (\texttt{q32\_numerator\_congruence\_audit.py}).
 
 Combined with the universal bound $e_p(n)\le3$, Proposition~\ref{prop:numcong} makes the
