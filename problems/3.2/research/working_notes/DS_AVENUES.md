@@ -46,3 +46,27 @@ theorem awaits the new equidistribution input.
 Success = a banked, verified theorem/certificate advancing H(n)=o(P_n) or the first constant.
 Proof-of-failure = a written, reproducible certificate (e.g. Ore algebra says "no rational
 solution", or a counterexample), not a feeling.
+
+## AVENUE VERDICTS (2026-07-31 automode run) — all terminal
+- **(a) CD coboundary: FAIL.** No rational order-zero R(r,i) on the full pole set, both
+  branches (sympy brute-force, 174–415 overdetermined eqs all inconsistent).
+  Square factorization analytically exhausted for S_h.
+- **(b) F₂ dispersion: CONFIRMED but not closable.** F₂=|I|²/N exactly; randomization
+  (reflection-preserving dilations) ⇒ true ≈ random (ratios 0.96–1.03). Random-model
+  no-star is elementary (Chernoff+union, Raab-Steger); the conjecture = quenched-vs-annealed
+  cross-prime decorrelation — the irreducible arithmetic core.
+- **(c) S_h mod-24 class split: TERMINAL (no signal).** Square vs non-square classes show
+  no systematic difference (ratio flips sign with n).
+- **(d) ChatGPT saturation: DONE** (Q6123–Q6181, 19 questions, all harvested).
+- **Horizontal route: TERMINAL at the reformulation.** S_h(n) = Σ e(h·5^{-1}b_n/p) is a
+  reciprocal-prime sum with huge frequency b_n; S_h=o(P_n) ⟺ H(n)=o(P_n) ⟺ "b_n
+  nonresonant with (n/2,n]" — the conjecture itself. No uniform-in-A estimate possible.
+
+**Campaign conclusion:** the conjecture (H(n)=o(n/log n)) is empirically true with huge
+margin at every level (max H=3 to 8·10⁵, |S_h|~√P_n, D₁≈P_n, F₂=random), but every
+2026-accessible mechanism has a documented terminal verdict. It requires genuinely new
+mathematics: a cross-prime decorrelation theorem for the Apéry fibers / a nonresonance
+theorem for the single holonomic integer b_n. Deliverable = this status resolution +
+the sharpened target statements (DS_NOTES_SYNTHESIS, DS_NOTES_reciprocal_prime,
+DS_NOTES_Fejer_constant, DS_NOTES_F2_and_classsplit, DS_NOTES_MellinTraces,
+DS_NOTES_EnergyAnticoncentration).

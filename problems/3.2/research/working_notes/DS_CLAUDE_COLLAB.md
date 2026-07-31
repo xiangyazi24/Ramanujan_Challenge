@@ -101,8 +101,24 @@ Plus occupancy-one barrier (Q=x, one candidate per modulus, no balanced factoris
 | Q6153 | ds3 (3rd) | DS | DGK Test B recipe | ✅ 16:40 — executable: Beukers–Vlasenko **Prop 3.3** rational-form Cartier (NOT Thm 4.3 unit-root), Griffiths–Dwork reduction; N=2 plumbing then N=4; don't fit literal Frobenius (forces equal traces) |
 | Q6154 | ds5 (2nd) | DS | two-poly inverse theorem | ✅ 16:40 — **ROUTE DEAD**: factorization is in t-variable not coefficient index; star has degree-2 annihilator (F_*, X·F_*), gcd contains X−n₀ ⇒ detects but doesn't eliminate |
 | Q6155 | ds4 (2nd) | DS | Fejér suff condition | ✅ 16:40 — normalized Fejér kernel Φ_K extremal (const coeff 1/K); **single-mode |S_1|≤c·P_n gives const < 1/2 iff c<1/2** (trivial |S_1|≤(1/2)P_n); cheapest = one-sided scalar gap D₁≥ηP_n; full o(P_n) needs every fixed mode |
+| Q6173 | ds1 (4th) | DS | randomization typicality theorem | ✅ — random-model no-star is ELEMENTARY (Chernoff+union, Raab-Steger occupancy); conjecture = quenched-vs-annealed cross-prime decorrelation; no-consecutive irrelevant (countermodel) |
+| Q6174 | ds2 (4th) | DS | DGK Test B p=11 concrete | ✅ — honest no-fabrication: exact p=11 input + finite Cartier calc; 3×3/2×2 matrices need explicit Griffiths-Dwork + parabolic reductions (not yet executed); not a quick grind |
+| Q6176 | ds3 (4th) | DS | Weyl second-moment variance | ✅ — correct normalization R₂,h(N)=Σ_n\|S_h(n)\|²/D(N), D(N)≈(3/4)N²/log N, random pred →1 (diagonal p=p' dominates); **Λ_h = ‖D^{−1/2}G_hD^{−1/2}‖_op is the concrete next computation**; bounded 4th moment ⇒ pointwise; F₂ gives no fixed-h control |
+| Q6177 | ds5 (3rd) | DS | first-constant spectral gap | ✅ — **SG1: D₁(n)≥ηX_n gives H ≤ (1/2−η/2+o(1))X_n** (K=2 Fejér exact: H ≤ m_n−D₁/2); SG1 = minimal assertion a compensated star violates; D₁≈X_n empirically (η≈1) |
 
-## 6. How to reach the other agent
+## 6. Claude4.6's recent finds (for coordination)
+Claude's dm Q6170–Q6179 (his ChatGPT): reciprocal-prime reformulation (verified by DS),
+gap-singleton property, route audit. **Two NEW avenues from Q6179** (not in DS synthesis):
+- **(U) Uniform U_p-spectral theory** on X₀(6) for the growing-pole meromorphic family
+  F_n = E·Z·t^{-n}, n ≍ p (Bordignon arXiv:2601.12157; Bringmann et al. arXiv:2606.14020 handle
+  fixed poles, not growing) — compress the constant-term functional after U_p-projection.
+- **(E) Hecke-congruence / Euler-system packaging**: construct a global cohomology class /
+  Hecke congruence module C_n with p|C_n ⟺ p|b_{n−p}; Fitting ideals/norm relations couple
+  primes before CRT. No such bridge known, but not covered by the listed closures.
+Q6179 also reclassifies the grade route: missing step is GLOBAL (subexponential lift of
+A=b_n/R mod R^K, or a nonzero high base-R CRT digit), not a local p⁸ congruence.
+
+## 7. How to reach the other agent
 
 - **To Claude4.6:** short `tmux send-keys -t zinan:4` pointer message → then Claude reads this file.
 - **To DS:** `tmux send-keys -t zinan:ds` pointer message, or append to this file + ping

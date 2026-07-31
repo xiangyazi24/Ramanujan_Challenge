@@ -1170,6 +1170,22 @@ optimised at $K\sim p^{1/3}$: $|Z_p|\ll p^{2/3}$, recovering the existing bound 
 constant.  Improving below $p^{2/3}$ by this method requires $R_h\ll h^{1-\delta}$ for some
 $\delta>0$, which the Chebotarev argument shows cannot hold uniformly in $p$.
 
+\subsection{The CFVMZ square root: same structure, half the degree}
+
+Computing $B_p=\sqrt{A_p}$ in $\mathbb F_p[T]$ (verified: $B_p^2=A_p$ for
+$p=17,29,31$) and searching for a recurrence in its coefficients $c_j$: the
+sequence $(c_j)$ satisfies an order-$2$, degree-$2$ recurrence
+$C_2(j)c_{j+2}+C_1(j)c_{j+1}+C_0(j)c_j=0$ with leading coefficient
+$C_2(j)=(j+2)^2$, vanishing only at $j=p-2$.  So $B_p$ has the same qualitative
+recurrence structure as $b_r$ itself — order $2$, polynomial coefficients, singular exactly at
+the boundary — and the zero-count question for $B_p$ is isomorphic to the original.
+
+The CFVMZ factorisation therefore halves the polynomial degree (from $p-1$ to $(p-1)/2$)
+without changing the qualitative problem.  Since $|Z_p|=2\cdot\#\{\text{zeros of }B_p\}$, any
+bound on $B_p$'s zeros would transfer, but the mechanism needed is the same
+orbit-return/cocycle-transversality theorem for a degree-$2$ polynomial-coefficient Möbius
+cocycle.
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes

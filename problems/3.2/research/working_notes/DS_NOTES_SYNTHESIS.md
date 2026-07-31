@@ -110,6 +110,34 @@ the Franel/rank-two source, prove cancellation class-by-class.
   (c) second, Stepanov (b) third, raw Poisson (a) last. Mod-24 class controls
   discriminant/Gauss root, NOT a 5th-root character.
 
+## 4.7 The horizontal route IS the conjecture (reciprocal-prime form)
+Claude4.6's dm Q6170 (his ChatGPT) + DS verification: `b_{n-p} ≡ 5^{-1} b_n (mod p)`
+(Gessel-Lucas block law, verified 37/37), so
+`S_h(n) = Σ_{n/2<p≤n} e(h·5^{-1}·b_n/p)` — a RECIPROCAL-PRIME sum with the single
+huge frequency b_n. NO estimate o(P_n) holds uniformly in the frequency (A divisible
+by all window primes ⇒ all phases 1). Vaughan fails (no composite-q division-free
+recurrence). ⟹ **S_h = o(P_n) ⟺ H(n)=o(P_n) ⟺ "b_n is nonresonant with (n/2,n]"**
+— the horizontal route IS the conjecture, confirming the terminus.
+
+## 4.8 CD coboundary gate: TERMINAL-FAIL (rational order-zero coboundary absent)
+sympy brute-force over the FULL pole set (factors (1+i),(2+i),(2i±1),(r−i),(2r−2i∓3/1),
+exponents ≤2, numerators total-deg ≤4, both branches): NO rational R(r,i) exists.
+Systems heavily overdetermined (174–399 eqs vs 24–60 unknowns), all inconsistent.
+⟹ the rank-two Franel convolution does NOT collapse via an order-zero rational
+coboundary; the square factorization is analytically exhausted for S_h. (Caveat:
+the full Abramov decision needs ore_algebra with a compatible version; strong
+evidence, not a formal impossibility proof.)
+
+## 4.9 Randomization typicality (Q6173): the conjecture = quenched-vs-annealed
+- The random-model no-star theorem is ELEMENTARY: independent reflection-symmetric
+  fibers (or random dilations) have max H(n) = O(log N/log log N) w.h.p., by Chernoff
+  + union bound (occupancy; Raab-Steger "balls into bins", RANDOM 1998). LLL unnecessary.
+- The conjecture is exactly the QUENCHED-vs-ANNEALED comparison: prove the deterministic
+  Apéry fibers behave like the product/random model across distinct primes
+  (e.g. F₂(N) = o((N/log N)²), or an o(1) proportion of aligned prime pairs).
+- no-consecutive zeros is IRRELEVANT to star prevention (explicit reflection-pair
+  countermodel achieves a maximal star); star prevention is purely cross-prime.
+
 ## 5. Recommended next moves (for Claude4.6 + DS to pick up)
 1. (Highest value) Prove / attack `S_h(n) = o(P_n)` for fixed h using the
    mod-24 square structure: write `S_h(n) = Σ_{a mod 24} Σ_{p≡a} e(h b_{n−p}/p)`,
