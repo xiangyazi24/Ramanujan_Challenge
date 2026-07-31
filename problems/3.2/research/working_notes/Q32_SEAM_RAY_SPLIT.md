@@ -284,6 +284,41 @@ entirely that the trivial bound \(K(n)\le\log b_n/\log(n/2)=O(n/\log n)\) is the
 provable unconditionally.  Script:
 `problems/3.2/research/scripts/q32_top_window_target_counts.py`.
 
+## 3f. Empirical audit of the reduction chain: where \(G_n\) actually lives
+
+Computing the headline quantity directly (rational Apéry recursion, \(d_n=\mathrm{lcm}(1..n)^3\),
+`q32_actual_Gn_audit.py`) for \(n\le330\), and splitting
+\[
+ G_n=\gcd(d_na_n,d_nb_n)=\frac{d_n}{D_n}\cdot\gcd(A_n,b_n),
+ \qquad a_n=\frac{A_n}{D_n}\ \text{in lowest terms},
+\]
+gives two facts worth recording.
+
+1. **The intrinsic numerator gcd is trivial**:
+   \[
+    \gcd(A_n,b_n)=1\quad\text{for every }n\le330 .
+   \]
+   So all of \(G_n\) is the over-clearance factor \(d_n/D_n\); the classical denominator
+   envelope \(d_n\) is *not* wasteful in the direction that would break the reduction.
+2. **The top-window targets are exactly the large primes of \(G_n\)**.  At the two indices
+   in range with more than one target,
+   \[
+   \begin{aligned}
+    G_{200}&=2\cdot3^3\cdot5\cdot17\cdot19\cdot\mathbf{139}\cdot\mathbf{181}
+      &&(32\text{ bits}),\\
+    G_{321}&=2\cdot3\cdot5\cdot7^2\cdot\mathbf{179}\cdot\mathbf{193}\cdot\mathbf{211}
+      &&(34\text{ bits}),
+   \end{aligned}
+   \]
+   and the bold primes are precisely the targets \(p\in(n/2,n]\) with \(p\mid b_n\).
+   Every one of them divides \(G_n\).
+
+This is an independent confirmation that the chain
+"\(G_n\rightarrow\) top-window radical of \(b_n\)" is attacking the right object, and it
+localises the difficulty sharply: over the whole tested range \(G_n\) never exceeds
+\(34\) bits, its large part is exactly the \(K(n)\le3\) targets, and its small part is
+a handful of tiny primes.
+
 ## 4. Reproducibility
 
 - `problems/3.2/research/scripts/q32_seam_ray_split_audit.py` — the exact
