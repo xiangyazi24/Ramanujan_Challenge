@@ -36,6 +36,26 @@ diverge by dimension (≍N²/log²N pair columns in N-dim row space ⟹ norm ≫
 random phases) — WRONG target. The corrected target is a weighted Λ(4)/2→4 inequality on
 decomposable pair coefficients (c⊗c) — essentially the 4th-moment bound itself; the
 4-distinct-prime correlation is genuinely new content.
+
+## Q6244 — the cleanest frontier statement: the "Apéry large sieve"
+The exact first estimate to prove (closes the 4th-moment route):
+```
+Σ_{N<n≤2N} |T_h(n)|² ≪_h N³/log²N,   T_h(n) = |S_h(n)|² − Q_n
+  = Σ_{n/2<p,q≤n, p≠q} e_{pq}(h·5̄_pq·(q−p)·b_n)   [pair phase, modulus pq ≍ N²].
+```
+Expanding the square: identical pairs (unavoidable diagonal ≍N³/log²N), pairs sharing one
+prime (3-prime collision), disjoint pairs (4-distinct correlation, modulus p₁p₂p₃p₄ ≍ N⁴).
+- The n-interval is length N = M^{1/4} — an EXTREMELY SHORT sum of a holonomic sequence mod a
+  varying squarefree modulus. No classical completion/Weil/Deligne applies (b_n mod M is not
+  a bounded-conductor trace function; the recurrence is singular at indices divisible by p|M).
+- CRT gives compatible prime-local automata (each prime its own base-p expansion), NOT a new
+  block law mod pq; but for a fixed tuple B_M(n) ≡ 5b_{n−p_i} mod p_i packages the locals.
+- Absolute summation of per-tuple bounds CANNOT work ((N/logN)⁴ tuples, allowed avg per tuple
+  log²N/N < 1) — cancellation across tuples is essential.
+- **The theorem: the pair vectors n↦(e_{pq}(h5̄_pq(q−p)b_n))_{p≠q} are almost orthogonal on
+  (N,2N], total Gram mass at the diagonal scale** — an "Apéry large sieve" coupling 2-4 prime
+  coordinates by CRT. This + the SG1 product-level anti-concentration (Q6241) are the two
+  cleanest statements of the frontier.
 **The phase family {b_{n−p}/p} behaves exactly like independent uniform random variables
 (Gaussian moments through 6th order).**
 

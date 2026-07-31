@@ -62,12 +62,27 @@ hypothesis empirically strongest; only the proof missing.
 - Most plausible input: constant-defect cross-prime dispersion / inverse theorem for near-maximal S₁.
 
 ## SG1 quantification verified (DS, 2026-07-31)
-Since 1−cos(2πx) = 2sin²(πx) ≥ 4x² (|x|≤1/2) and θ_p = {5^{-1}b_n/p}, with A=5^{-1}b_n:
-D₁(n) ≥ 4·Σ_p ‖A/p‖² (‖·‖ = distance to nearest integer). Measured:
+Since 1−cos(2πx) = 2sin²(πx) ≥ 8x² (sin(πx) ≥ 2x on [0,1/2], Q6241 corrects my 4 to 8) and
+θ_p = {5^{-1}b_n/p}, A=5^{-1}b_n: D₁(n) ≥ 8·Σ_p ‖A/p‖². Measured:
 Σ_p ‖5^{-1}b_n/p‖² = 11.35, 21.49 (n=2000,4000) vs (1/12)·P_n = 11.25, 20.58 (ratio 1.009, 1.044).
-⟹ the phases are exactly uniform (E[‖x‖²]=1/12); D₁ ≥ (1/3+o(1))P_n from the 4x² bound alone
-(actual D₁ ≈ P_n). SG1 needs: Σ_p‖A/p‖² = (1/12+o(1))P_n for the specific holonomic A=5^{-1}b_n,
-i.e. no concentration of {A/p} near integers — a nonresonance statement.
+⟹ phases exactly uniform (E[‖x‖²]=1/12); true D₁ ≈ P_n (uniform mean of 1−cos = 1).
+
+## Q6241 — the sharp SG1 target (product-level anti-concentration)
+- Minimal statement (small-ball): ∃ fixed ε,δ>0 with #{p : ‖A/p‖ ≥ ε} ≥ δ·m_n ⟹
+  D₁ ≥ δ·m_n·(1−cos 2πε) ⟹ constant < 1/2. A small-ball anti-concentration theorem.
+- Elementary divisibility bound (‖A/p‖ ≥ 1/p for p∤A) is intrinsically too weak
+  (gives ~1/(n log n), factor n² too small) — must show residues have size ~p, not just ≥1.
+- **The exact obstruction**: ‖A/p‖ < ε ⟺ centered residue ⟨A⟩_p ∈ (−εp, εp) — an ARCHIMEDEAN
+  statement; p-adic info controls 0-vs-nonzero but not 1-vs-0.4p. CRT: no theorem holds for
+  arbitrary A (prescribe A≡0 mod all p). Must use the specific A=5^{-1}b_n.
+- **Clean Fourier mechanism**: SG1 ⟺ Re S₁(n) ≤ m_n − c·m_n (no higher modes needed);
+  a Selberg/Fejér majorant of the small ball ⟹ finite reciprocal-prime cancellation ⟹
+  quantitative anti-concentration. H fixed suffices for SG1; H→∞ gives the 1/12 law.
+- **THE single most plausible input (Q6241)**: a squarefree-modulus large-sieve/inverse
+  theorem for the holonomic orbit: "if b_n has centered residue o(p) for too many primes
+  p∈(n/2,n], the simultaneous short-residue conditions force an EXCEPTIONAL GLOBAL
+  CONGRUENCE modulo their product; the Apéry recurrence + global boundary data rules it out."
+  = the missing coupling between analytic short-residue detection and the global recurrence.
 
 ## Related
 - Q6127 (strategic): horizontal Weyl theorem is the top route; D_1 ≥ ηP_n first-constant framing.
