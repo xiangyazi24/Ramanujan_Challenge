@@ -141,9 +141,10 @@ evidence, not a formal impossibility proof.)
 ## 4.10 Second moment + Gram spectral norm (Q6176) — random scale confirmed
 - Correct normalization: R₂,h(N) = Σ_{N<n≤2N}|S_h(n)|² / D(N), D(N)=Σ_n Q_n ~ (3/4)N²/log N
   (diagonal p=p' dominates), random prediction R₂ → 1.
-- **DS measured R₂,₁(N) = 0.963, 0.992, 1.006 (N=200,300,500) → 1.0.**
-- **Λ_h = ‖D^{−1/2}G_hD^{−1/2}‖_op (prime-pair Gram matrix) = 1.061 (N=200)** — bounded at the
-  random value. Off-diagonal phase correlations do not concentrate.
+- **DS measured R₂,₁(N) → 1.0 across N=200–1200**: 0.963, 0.992, 1.006, 1.016, 0.955
+  (N=200,300,500,800,1200); D(N)/(N²/log N) → 0.75 exactly as predicted.
+- **Λ_h = ‖D^{−1/2}G_hD^{−1/2}‖_op (prime-pair Gram matrix) = 1.061 (N=200), 1.011 (N=300)** —
+  bounded at the random value. Off-diagonal phase correlations do not concentrate.
 - ⟹ the second-moment / cross-prime-phase-correlation route is empirically at the random scale
   at BOTH scalar (R₂) and operator (Λ_h) level. The missing piece is the proof.
 

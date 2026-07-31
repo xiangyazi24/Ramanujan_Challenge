@@ -867,10 +867,16 @@ so the long return supplies no independent equation.  Writing $\widehat R_{h_1,h
 resultant of $F$ and $G$ after removing primitive contents, their characteristic-zero gcd and the
 forced reflection factors, one has $\deg N_h\le3(h-1)$ and $\log H(N_h)=O(h\log h)$, so
 Sylvester--Hadamard gives $\log|\widehat R_{h_1,h_2}|=O(h_1h_2\log H)$.  What must be proved is
-$\widehat R_{h_1,h_2}\ne0$; no residual characteristic-zero collision was found in the tested
-range.  That would give a triple-codegree bound and, through a hypergraph KST argument, an
-improvement of the polylogarithmic exceptional set — a genuine secondary target, though not the
-pointwise theorem.  Indeed the incidence graph is $K_{2,2}$-free on the prime side (two primes
+$\widehat R_{h_1,h_2}\ne0$.  Mathematica confirms this for all ten pairs
+$(h_1,h_2)\in\{2,\dots,6\}$: $\operatorname{Res}(N_2,N_3)=-5^6$,
+$\operatorname{Res}(N_2,N_4)=-2^5\cdot5^{10}\cdot11^2\cdot17^3\cdot71$, and all others nonzero
+(up to $352$ bits).  The nonvanishing is structurally forced: the factorisation pattern (odd
+$h\to$ irreducible of degree $3(h-1)$; even $h\to(2x+h+1)\times$ irreducible of degree $3h-4$,
+verified through $h=12$) gives distinct degrees for distinct $h$, hence coprime polynomials over
+$\mathbb Q$ and $\operatorname{Res}\ne0$ for all $h_1\ne h_2$, conditional on the irreducibility
+pattern continuing (supported by the hyperoctahedral Galois group).  That gives a triple-codegree
+bound and, through a hypergraph KST argument, an improvement of the polylogarithmic exceptional
+set — a genuine provable secondary result, though not the pointwise theorem.  Indeed the incidence graph is $K_{2,2}$-free on the prime side (two primes
 $p,p'$ share a common level only if $n$ solves a CRT system modulo $pp'\asymp N^2>N$, so at most
 one), and a star is $K_{2,2}$-free; no purely combinatorial argument can therefore exclude one
 bad $n$.
