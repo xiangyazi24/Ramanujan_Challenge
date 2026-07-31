@@ -8,6 +8,7 @@ __pycache__/
 # Lean build products and local scratch files.  Commit Lean sources,
 # manifests, and specifications, but never the generated dependency tree.
 lean/.lake/
+SUBMIT/*/lean/.lake/
 lean/.rogers-scratch/
 *.olean
 *.ilean
