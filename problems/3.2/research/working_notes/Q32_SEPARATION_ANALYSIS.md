@@ -15070,3 +15070,381 @@ fixed-length exterior rows have the same saturated rational span is
 incompatible with the exact rank computation (68.134): their
 intersection is zero in every audited symbolic case.  No explicit
 transport matrix was supplied there, so that claim is rejected.
+
+### 68.15 A cross-family hybrid carrier
+
+The boundary and common-annihilator families can be intersected before
+trying to bound either one separately.  This gives a new exact
+target-blind integer, although its height is not yet controlled.
+
+For a diagonal margin \(m\), the two Newton masks of \(U_m\) and \(V_m\)
+are
+\[
+ \begin{aligned}
+  {\cal I}_m^-&=[d_m+1,d_m+L_m+1],\\
+  {\cal I}_m^+&=[D+1,D+L_m+1].
+ \end{aligned}
+\tag{68.153}
+\]
+Their intersection is the retained core \([D+1,D+N]\), while their
+union is
+\[
+ {\cal J}_m=[D-m+2,D+N+m-1].
+\tag{68.154}
+\]
+Let \(p\) be a top-half target in \({\cal J}_m\), and impose the safe
+boundary inequality
+\[
+ n-p+9\le p-5.
+\tag{68.155}
+\]
+Then \(p\mid H_m\) and \(p\mid T_{k,m}\) for every \(0\le k\le4\).
+There are two cases.  If \(p\) belongs to both masks, all four
+coordinates in the boundary determinant vanish modulo \(p\), the
+normalizer has valuation one, and the common candidate factor removed
+from the ghost rows has valuation one.  If \(p\) belongs to only one
+mask, both coordinates of that one endpoint vanish modulo \(p\), while
+neither normalizer removes \(p\).  In both cases one target copy
+survives.  This extends the retained-core proof of
+(68.124) and (68.149) to the union of the two endpoint masks.
+
+Put
+\[
+ c_{\rm safe}(n,I)
+ =\text{the largest divisor of \(c(n)\) coprime to the core
+ candidate primorial}
+\]
+and, for the last two admissible margins, define
+\[
+ \begin{aligned}
+ B_{\rm bdry}(n,I)
+ &=\frac{\gcd(H_{m_*-1},H_{m_*})}{c_{\rm safe}(n,I)},\\
+ B_{\rm ghost}(n,I)
+ &=\gcd_{\substack{0\le k\le4\\
+                    m\in\{m_*-1,m_*\}}}T_{k,m},\\
+ K_{\rm hyb}(n,I)
+ &=\gcd(B_{\rm bdry}(n,I),B_{\rm ghost}(n,I)).
+ \end{aligned}
+\tag{68.156}
+\]
+Every safe target in
+\({\cal J}_{m_*-1}\cap{\cal J}_{m_*}\) divides \(K_{\rm hyb}\).
+
+The first exact cross-family audit gives
+\[
+\begin{array}{c|c|c|c}
+n&(D,N)&\text{targets carried}&
+ K_{\rm hyb}/\prod p\\ \hline
+80 &(52,16)&\varnothing&8\\
+120&(78,24)&\varnothing&8\\
+160&(104,32)&\varnothing&150\\
+200&(130,40)&139,181&10\\
+200&(128,63)&139,181&30\\
+272&(180,63)&191,233&200\\
+300&(180,57)&191,227&66\\
+321&(168,53)&179,193,211&120.
+\end{array}
+\tag{68.157}
+\]
+In the central \(n=200\) row, the prime \(181\) lies outside the
+retained core but inside the maximal right mask.  Its occurrence in
+both constituent gcds is therefore another target copy, not
+characteristic-zero nuisance.
+
+For the central choice
+\[
+ D=\left\lfloor\frac{13n}{20}\right\rfloor,\qquad
+ N=\left\lfloor\frac n5\right\rfloor,
+\tag{68.158}
+\]
+direct floor arithmetic shows that
+\({\cal J}_{m_*-1}\cap{\cal J}_{m_*}={\cal J}_{m_*-1}\) misses at
+most two integers immediately above \(n/2\) and at most the last three
+integers below \(n\).  Together with (68.155), only an
+absolute-width strip is omitted, of logarithmic total prime weight.
+Consequently the single estimate
+\[
+ \boxed{\qquad
+ \log|K_{\rm hyb}(n,I)|=o(n)
+ \quad\text{for the central choice (68.158)}
+ \qquad}
+\tag{68.159}
+\]
+would close the top-half channel and hence Problem 3.2.
+
+Equation (68.157) is stronger finite evidence than either family
+alone, but it is not a height theorem.  The two constituent integers
+are gcds of exponentially tall evaluated carriers, and a small
+observed cross-family gcd does not supply a Bézout certificate.  The
+new exact target is to construct a nonzero relation among the boundary
+and ghost carriers whose right-hand side has subexponential height.
+Linear rank alone cannot do this: (68.152) still leaves the
+distinguished scalar Newton content.  Any proof of (68.159) must use
+the special Ore relation between the origin-cancelled coordinate and
+the common annihilator, or the terminal constant-term geometry in
+(68.141).
+
+The extended script `q32_ghost_quotient_audit.sage` constructs
+\(K_{\rm hyb}\), verifies the one-sided and two-sided target ledgers
+over the integers, and reproduces (68.157).
+
+A denser central audit, with \(60\le n\le500\) and \(20\mid n\),
+has \(4\)--\(21\) bits for \(K_{\rm hyb}\).  The six rows containing
+top-half targets are
+\[
+ \begin{array}{c|c|c}
+ n&\text{complete top-half target set}&
+ \operatorname {bits}K_{\rm hyb}\\ \hline
+ 200&139,181&18\\
+ 300&191,227&20\\
+ 340&293&21\\
+ 380&227&17\\
+ 440&331&12\\
+ 500&271&11.
+ \end{array}
+\tag{68.160}
+\]
+Every prime factor of \(K_{\rm hyb}\) exceeding \(\sqrt n\) in this
+scan is one of the displayed targets.  This is useful calibration,
+not a bound: even an exact classification of the nuisance primes
+would not bound the product of the target primes without a height
+estimate for the carrier itself.
+
+### 68.16 The exact Ore syzygy and time Casoratians
+
+There is an exact relation between the two families in Section 68.15.
+Write
+\[
+ {\cal A}=\sum_{j=0}^2a_j(s)S_s^j
+\]
+for the Apéry operator, and twist it by the multiplier in (68.45):
+\[
+ {\cal A}_M
+ =\sum_{j=0}^2\frac{a_j(s)}{M(s+j)}S_s^j.
+\tag{68.161}
+\]
+Then \({\cal A}_M\{M(s)b_s\}=0\).  Exact right division in the Ore
+ring gives
+\[
+ \boxed{\qquad
+ {\cal A}_M{\cal U}={\cal Q}{\cal L},
+ \qquad \operatorname {ord}{\cal Q}=1.
+ \qquad}
+\tag{68.162}
+\]
+The remainder is identically zero, not merely zero on the
+distinguished solutions.  After primitive denominator clearing, the
+two coefficients of \({\cal Q}\) have degree \(55\), and the common
+denominator has degree \(85\).  Their nonconstant factor-degree
+patterns are
+\[
+ \begin{aligned}
+ q_0 &: 1,1,25,27,\\
+ q_1 &: 1,24,27,\\
+ D_Q &: 1,1,1,1,27,27,27,
+ \end{aligned}
+\tag{68.163}
+\]
+with the repeated linear factor in \(q_0\) having multiplicity two
+and that in \(q_1\) multiplicity four.  Thus all singular primes
+introduced by (68.162) divide values of fixed polynomials and have
+only \(O(\log n)\) total logarithmic weight.
+
+To transport (68.162) to the carrier, put
+\[
+ S_s(d)=C_s(d-1)+C_s(d+1),\qquad
+ Z_s(d)=({\cal U}S_\bullet(d))_s.
+\tag{68.164}
+\]
+For each retained margin let \(y_m\) be the two endpoint projections
+of \(Y(d)=C_{n-1}(d)\), let \(z_{k,m}\) be the corresponding endpoint
+projections of \(Z_{n+k}\), and define
+\[
+ h_{k,m}=\frac{\det(y_m,z_{k,m})}{g_m}.
+\tag{68.165}
+\]
+The same universal subtraction proof as (68.121) makes every
+\(h_{k,m}\) integral, and \(h_{0,m}=H_m\).  Because the Newton
+functionals act in \(d\), whereas (68.162) acts in \(s\), the two
+operations commute exactly.  Therefore
+\[
+ \sum_{j=0}^2
+ \frac{a_j(n+k)}{M(n+k+j)}h_{k+j,m}
+ =
+ \sum_{j=0}^1q_j(n+k)T_{k+j,m}.
+\tag{68.166}
+\]
+The audit verifies (68.166) as an equality in \(\mathbb Q\), for
+both margins and \(0\le k\le3\), rather than only modulo the target
+primes.
+
+Let \(m_0=m_*-1,m_1=m_*\), and form the time Casoratians
+\[
+ {\cal C}_{i,j}
+ =h_{i,m_0}h_{j,m_1}-h_{j,m_0}h_{i,m_1},
+ \qquad 1\le i<j\le5.
+\tag{68.167}
+\]
+Outside the fixed singular factors in (68.163), a safe target makes
+the right side of (68.166) zero and makes \(h_{0,m_0}=h_{0,m_1}=0\).
+Both rows \((h_{k,m_\nu})_k\) consequently lie in the same
+one-dimensional solution line of the homogeneous order-two
+recurrence.  Hence
+\[
+ p\mid{\cal C}_{i,j}\qquad(1\le i<j\le5).
+\tag{68.168}
+\]
+This proves a second cross-family target carrier without any
+equidistribution input.
+
+It does not yet give the missing height bound.  The individual
+\({\cal C}_{i,j}\)'s have \(4825\)--\(7441\) bits in the four hostile
+blocks.  Their ten-fold gcds have respectively \(95,141,129,98\)
+bits, with factorizations
+\[
+\begin{array}{c|l}
+200&2^{32}3^{14}5^6\cdot7\cdot11\cdot47\cdot139\cdot181\\
+272&2^{35}3^{14}5^6\cdot23\cdot31\cdot53\cdot67\cdot
+     191\cdot233\cdot263\cdot269\cdot271\cdot277\\
+300&2^{37}3^{15}5^6\cdot11^3\cdot13\cdot19\cdot23\cdot29
+     \cdot31\cdot53\cdot191\cdot227\\
+321&2^{34}3^{15}5^5\cdot43\cdot179\cdot193\cdot211.
+\end{array}
+\tag{68.169}
+\]
+Intersecting (68.169) with \(K_{\rm hyb}\) leaves \(K_{\rm hyb}\)
+unchanged in all four rows.  Thus (68.162) supplies a rigorous
+time-Casoratian explanation and another exact carrier, but not the
+needed characteristic-zero height collapse.  The remaining positive
+task is now particularly sharp: combine the first-order evolution of
+(68.167) with the adjacent-margin boundary law (68.140), and obtain a
+subexponential terminal packet.  Without that boundary input, an
+order-two recurrence can carry an arbitrarily large common scalar in
+its one-dimensional solution line.
+
+The exact script `q32_operator_syzygy_audit.sage` proves
+(68.162)--(68.163).  The extended
+`q32_ghost_quotient_audit.sage` verifies (68.165)--(68.169).
+
+### 68.17 The six-column Smith obstruction
+
+There is a second exact way to combine the boundary and ghost
+families.  At a fixed margin \(m\), divide the origin-cancelled
+endpoint column by the complete core primorial:
+\[
+ R_{-1,m}
+ =\frac1{Q_I}
+ \bigl(G_{d_m,L_m}(W),G_{D,L_m}(W)\bigr).
+\tag{68.170}
+\]
+This is integral by (68.50).  Together with the five quotient ghost
+columns in (68.148), form
+\[
+ {\cal R}_m=(R_{-1,m},R_{0,m},\ldots,R_{4,m})
+ \in M_{2,6}(\mathbb Z),
+\qquad
+ \delta_m=\gcd_{-1\le i<j\le4}\det(R_{i,m},R_{j,m}).
+\tag{68.171}
+\]
+Put
+\[
+ \gamma_m=\gcd(A_m^-,A_m^+),\qquad
+ \kappa_m=\gcd(H_m,T_{0,m},\ldots,T_{4,m}),\qquad
+ c_m=g_m/Q_I.
+\]
+The boundary carrier is literally the sixth normalized wedge:
+\[
+ H_m=\frac{\det(A_m,R_{-1,m})}{c_m}.
+\tag{68.172}
+\]
+Consequently the two-row Smith lemma gives
+\[
+ \boxed{\qquad c_m\kappa_m\mid\gamma_m\delta_m.\qquad}
+\tag{68.173}
+\]
+Indeed, after a unimodular map sends the primitive part of \(A_m\)
+to \((1,0)\), the six determinants are \(\gamma_m\) times the six
+second coordinates.  Their gcd divides every minor of
+\({\cal R}_m\).
+
+The last two margins can be joined without a heuristic.  Write
+\[
+ d=D-m_*+1,\qquad L=N+m_*-2
+\]
+and define
+\[
+ \begin{aligned}
+ \rho_-&=\binom{D+N}{L},&
+ B_-&=\Delta^L Y_d,\\
+ \rho_+&=\binom{D+L}{L},&
+ B_+&=\Delta^L Y_D.
+ \end{aligned}
+\tag{68.174}
+\]
+The first two identities in (54.3) give
+\[
+ A_{m_*}^- -A_{m_*-1}^-=(-1)^L\rho_-B_-,
+ \qquad
+ A_{m_*}^+ -A_{m_*-1}^+=(-1)^L\rho_+B_+.
+\tag{68.175}
+\]
+Applying (68.173) at both margins, prime by prime, proves the
+coefficient-level support certificate
+\[
+ \boxed{
+ \operatorname {rad}K_{\rm hyb}
+ \mid
+ \operatorname {rad}\!\left(
+ c_{\rm safe}c_{m_*-1}c_{m_*}
+ \delta_{m_*-1}\delta_{m_*}
+ \rho_-\rho_+\gcd(B_-,B_+)
+ \right).
+ }
+\tag{68.176}
+\]
+Here every juxtaposition on the right denotes multiplication.  If a
+prime avoids the
+first three groups, (68.173) forces it to divide both coordinates of
+both \(A\)-vectors; (68.175) then forces it into the Pascal group or
+both boundary packets.
+
+The exact hostile-block ledger is
+\[
+\begin{array}{c|c|c|c}
+n&
+(\operatorname {bits}\delta_{m_*-1},
+ \operatorname {bits}\delta_{m_*})&
+(\operatorname {bits}B_-,\operatorname {bits}B_+,
+ \operatorname {bits}\gcd(B_-,B_+))&
+\operatorname {bits}\text{ of the product in (68.176)}
+\\ \hline
+200&(168,167)&(950,944,2)&841\\
+272&(211,207)&(1310,1286,3)&1021\\
+300&(210,211)&(1462,1444,26)&1030\\
+321&(186,184)&(1586,1583,77)&1022.
+\end{array}
+\tag{68.177}
+\]
+Every divisibility in (68.172)--(68.176), including the two Pascal
+boundary identities, is checked over the integers.
+
+This identifies the obstruction but does not estimate the target
+radical.  In all eight hostile margin records,
+\[
+ \gcd(\delta_m,Q_I)=1.
+\tag{68.178}
+\]
+In particular, every actual target prime enters (68.176) through
+\(\rho_-\rho_+\), and through no other displayed group.  Thus the
+Kummer singularity of the interpolation row is
+exactly where the distinguished target scalar survives.  The Smith
+and boundary factors remove or classify nuisance, but the two
+binomial coefficients contain the entire ambient candidate interval
+and have linear logarithmic height.  Replacing (68.176) by the
+statement that only its *target-selected* part survives would be
+equivalent to the original separation problem, not a proof of it.
+
+This is the present endpoint of pure Route B.  The remaining theorem
+must use the actual Laurent coefficients to distinguish target primes
+inside the Pascal support.  Neither fixed-dimensional Smith
+elimination nor the Ore identity alone sees that distinction.
