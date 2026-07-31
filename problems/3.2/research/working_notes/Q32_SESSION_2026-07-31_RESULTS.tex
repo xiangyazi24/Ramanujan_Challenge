@@ -421,7 +421,10 @@ and
   \sum_{j\le\log n}\log\operatorname{rad}(b_j)\le\sum_{j\le\log n}\log b_j=O(\log^2n),
 \]
 since $\log b_j\sim3.4j$ (checked: $\log\operatorname{rad}(b_j)$ equals $\log b_j$ to within a
-few percent for $j\le14$).  Hence, granting Proposition~\ref{prop:defect},
+few percent for $j\le14$).  The block law shows this covers the \emph{companion} primes too:
+$p^3a_n\equiv a_qb_r$, so $e_p(n)>0$ forces $p\mid b_r$ (hence $p\mid b_n$), or $p\mid b_q$, or
+$p$ divides the numerator of $a_q$; and since $q\le\log n$, the last two together contribute at
+most $\sum_{q\le\log n}\bigl(\log b_q+\log|{\rm num}\,a_q|\bigr)=O(\log^2n)$.  Hence
 \[
   \boxed{\;\log G_n\;=\;O\!\left(\frac n{\log n}\right)+O(\log^2n)
    +3\!\!\sum_{\substack{n/\log n<p\le n\\ (n\bmod p)\in Z_p}}\!\!\log p\;}
