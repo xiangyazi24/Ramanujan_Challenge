@@ -404,9 +404,13 @@ the additive energy of $I$ along the diagonal.  Since $\max_nH(n)^2\le E$,
   \boxed{\;E=o\!\left(\frac{N^2}{\log^2N}\right)\ \Longrightarrow\
   \max_nH(n)=o\!\left(\frac N{\log N}\right),\;}
 \]
-which closes the conjecture.  The trivial bound is
-$E\le(\max H)(\sum H)\le(N/\log N)^2$, so \emph{any} saving over trivial suffices — square-root
-cancellation is not needed.
+which closes the conjecture.  \emph{This is an equivalence, not a weakening}: since
+$E\le(\max_nH)\sum_nH=|I|\max_nH\ll(N/\log N)\max_nH$ under $\bar Z$, one also has
+$\max_nH=o(N/\log N)\Rightarrow E=o(N^2/\log^2N)$.  In particular a constant-factor saving in
+$E$ buys only a constant-factor saving in $\max_nH$.  What the reformulation provides is a
+different \emph{shape} — an additive-energy statement about the incidence set, for which the
+available tools (Cauchy--Schwarz, sieve upper bounds for prime pairs, CRT independence) are at
+least standard — not a lower bar.
 
 How much slack is there?  Measured at $N=60\,000$ (from the exact $Z_p$ data):
 \[
@@ -424,6 +428,15 @@ The companion discrepancy target of \S\ref{subsec:audit} is equally comfortable:
 \]
 against the $\sqrt n/\log n=20.3$ that (DA) demands there; the observed discrepancy looks
 bounded rather than growing.
+
+One further structural point, which explains why the energy formulation meets the same wall.
+For $p$ in the top window the quotient $\lfloor n/p\rfloor$ equals $1$, so the bad condition
+is a \emph{pure congruence} $n\bmod p\in Z_p$.  Hence for distinct $p,p'$ the joint condition
+is a congruence modulo $pp'$, and by CRT its density is exactly
+$|Z_p||Z_{p'}|/(pp')$ — which correctly predicts the observed off-diagonal $|I|^2/N$.  But
+$pp'\asymp N^2$ exceeds the length $N$ of the range of $n$, so each pair contributes $0$ or
+$1$ and the CRT main term is swamped by the error.  This is precisely the large-sieve $Q^2$
+barrier in another guise: the problem carries one degree of freedom per prime.
 
 So the remaining gap is not quantitative delicacy — both sufficient hypotheses hold in the
 data by factors of $10^1$--$10^4$ — but the absence of any method that controls the
