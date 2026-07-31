@@ -217,8 +217,14 @@ instead into a boundary computation and a propagation.
 $H^{(3)}_{qp}=p^{-3}H^{(3)}_q+(p\text{-integral})$ and $p^3H^{(3)}_{qp}\equiv H^{(3)}_q$.
 By Kummer, $v_p\binom{qp}k=0$ exactly when $p\mid k$: writing $k=k_1p+k_0$, a nonzero $k_0$
 forces a units-digit carry, while for $k_0=0$ the top digits add to $q<p$ without carry.  Hence
-$v_p(\beta_{qp,k})\ge2$ for $p\nmid k$, and for $k=k_1p$ Lucas gives
-$\beta_{qp,k_1p}\equiv\beta_{q,k_1}$.
+$v_p(\beta_{qp,k})\ge2$ for $p\nmid k$, and for $k=k_1p$ one has
+$\beta_{qp,k_1p}\equiv\beta_{q,k_1}$.  The last step is cleanest in the relative form: for
+$A\ge B\ge0$ put $U_p(A,B)=\binom{Ap}{Bp}/\binom AB$; deleting the multiples of $p$ from the
+three factorials shows $U_p(A,B)$ is a $p$-adic unit, and each remaining block
+$\prod_{r=1}^{p-1}(ip+r)\equiv(p-1)!$ gives $U_p(A,B)\equiv1\pmod p$.  Then
+$\beta_{qp,jp}=\beta_{q,j}\,U_p(q,j)^2U_p(q+j,j)^2\equiv\beta_{q,j}$, which stays valid even when
+$\binom qj$ is itself divisible by $p$ (both sides then vanish).  Only $p$ odd and $1\le q<p$ are
+needed.
 In $c_{qp,k}$, a term with $p\nmid m$ has $v_p(m^3)=0$ and
 $v_p\bigl(\binom{qp}m\binom{qp+m}m\bigr)\le2$, so its denominator has $v_p\le2$ and it dies after
 multiplication by $p^3$.  The bound is exact, by Kummer: writing $m=m_1p+m_0$ with $m_0\ne0$,
