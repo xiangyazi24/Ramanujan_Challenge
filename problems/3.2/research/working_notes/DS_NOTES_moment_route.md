@@ -24,6 +24,10 @@ Full moment bank: R₂→1 (N=200–1200: 0.963,0.992,1.006,1.016,0.955), R₄�
 Λ_h≈1.01–1.06 (Gram spectral norm), D₁≈X_n, phases uniform. max|S₁|² = 137,214,304 — no heavy tail.
 **All fixed h** (R₂,R₄ at N=200,300): h=1 (0.96–0.99, 0.87–0.98), h=2 (1.07–1.08, 1.15–1.19),
 h=3 (0.97–1.01, 0.83–0.95) — R₄ = O(1) for all h, the moment criterion holds.
+**JOINT test (Q6213's decisive probe, DS measured)**: cross-correlation ρ(S₁,S₂) = 0.091, 0.031,
+0.022 (N=200,300,500) ≈ 1/√N (independence prediction 0.071, 0.058, 0.045); joint 4th moment
+J/E[|S₁|²|S₂|²] = 1.0–1.3 (independent prediction 1.0). ⟹ S₁,S₂ behave like INDEPENDENT
+complex Gaussian random walks. The phase family is indistinguishable from i.i.d. uniform.
 **The phase family {b_{n−p}/p} behaves exactly like independent uniform random variables
 (Gaussian moments through 6th order).**
 
