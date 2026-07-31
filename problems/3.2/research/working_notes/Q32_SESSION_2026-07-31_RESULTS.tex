@@ -722,6 +722,31 @@ $h\le8$ and $m\le200\,000$ (top window), the maximum number of common bad primes
 comfortably inside the proved $O(h)$, and the value $0$ at $h=1$ is the no-two-consecutive-zeros
 theorem appearing independently.
 
+\subsection{Provenance, and a separate coprimality conjecture}
+
+A literature search located no pre-2026 statement of this problem.  Its provenance is the
+challenge itself: M.~Shalyt et al., \emph{The Ramanujan Challenge for AI},
+arXiv:2607.09721v1 (27 June 2026), \S3.2, contributed by Shachar Weinbaum, whose \S3 states
+that its open problems are ``presented here for the first time''.  The obvious predecessor
+chain — Ap\'ery (1979); Beukers (1979); Hata (1990, 2000); Rhin--Viola (2001); Fischler
+(Ast\'erisque 294, 2004); Zudilin (2004); Krattenthaler--Rivoal (Mem.\ AMS 186, 2007) — does not
+contain it; in particular the Krattenthaler--Rivoal ``denominator conjecture'' concerns common
+denominators of engineered multi-zeta forms, not the exact content of Ap\'ery's own pair.
+
+The title is explained by the following computation.  With $\alpha=17+12\sqrt2$,
+$Q=3+\log\alpha$ and $E=\log\alpha-3$, Ap\'ery's own pair yields the irrationality-measure bound
+$1+Q/E=13.4178\ldots$; if $\log G_n=cn+o(n)$ then primitive reduction improves this to
+$1+(Q-c)/(E+c)$.  Since $\mu(\zeta(3))\ge2$ always, $c\le(Q-E)/2=3$ unconditionally — so the
+conjecture asserts that Ap\'ery's bound is exactly what his construction gives, with no
+cancellation to exploit.  (This also shows the irrationality-measure lever is weak here: it
+yields only $c\le3$, whereas prime counting already gives $\log G_n\le(3/2+o(1))n$.)
+
+Separately, our computation $\gcd(A_n,b_n)=1$ for all $n\le330$ is, as far as could be
+determined, unrecorded.  Since
+$G_n=(d_n/D_n)\gcd(A_n,b_n)$, coprimality is \emph{not} needed for the subexponential-content
+conjecture; it is a strictly stronger statement, and deserves to be stated separately as a
+\emph{primitive Ap\'ery coprimality conjecture}.
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes
