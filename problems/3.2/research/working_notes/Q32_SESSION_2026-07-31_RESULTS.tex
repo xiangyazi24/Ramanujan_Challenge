@@ -719,6 +719,21 @@ congruence as the prime modulus varies.  What those all require is a factorable 
 fixed low-complexity algebraic kernel; ours is a prime modulus with a holonomic zero indicator,
 and we verified in \S\ref{subsec:generic} that the residues are statistically generic.
 
+There is an equivalent and perhaps cleaner way to say what is missing.  Identify
+$\mathbb Z/M$, $M=\prod_{p\in P}p$, with $\prod_{p\in P}\mathbb F_p$; then $B_p$ is the cylinder
+$x_p\in Z_p$, and
+\[
+  \bigcap_{p\in P}B_p\;=\;\prod_{p\in P}Z_p
+\]
+is \emph{automatically nonempty}: it consists of $\prod_p|Z_p|$ residue classes modulo $M$, each
+of multiplicity $|P|$.  So a totally aligned $n$ always exists modulo $M$; the entire question is
+whether one of those CRT representatives happens to lie in the short interval $(N,2N]$, where
+$N\ll M$.  Covering-system technology (Filaseta--Ford--Konyagin--Pomerance--Yu, JAMS 20 (2007);
+Hough, Ann.\ of Math.\ 181 (2015); Balister--Bollob\'as--Morris--Sahasrabudhe--Tiba, Invent.\
+Math.\ 228 (2022)) controls the \emph{measure} of a union and deliberately tolerates microscopic
+hot spots, so it says nothing here; a natural descriptive name is \emph{short-interval CRT
+discrepancy}, or microscopic non-clustering of CRT representatives.
+
 The precise statement needed may therefore be named \emph{microscopic moving-target
 equidistribution for Ap\'ery zero residues}.  It is strictly stronger than ordinary
 prime-modulus root equidistribution (Hooley; Duke--Friedlander--Iwaniec), because the target
