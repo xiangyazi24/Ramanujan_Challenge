@@ -1,0 +1,46 @@
+name: Q5938 temporary exact Newton conjugation audit
+on:
+  push:
+    branches: [chatgpt-drop]
+    paths:
+      - '.github/workflows/_q5938-audit.yml'
+      - 'drops/_q5938_audit.sage'
+permissions:
+  contents: write
+concurrency:
+  group: q5938-temporary-audit
+  cancel-in-progress: true
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    container:
+      image: sagemath/sagemath:latest
+      options: --user root
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Fetch temporary audit script
+        shell: bash
+        run: |
+          git fetch origin chatgpt-drop
+          git show origin/chatgpt-drop:drops/_q5938_audit.sage > /tmp/q5938_audit.sage
+      - name: Run exact Sage audit
+        shell: bash
+        run: |
+          set -o pipefail
+          sage /tmp/q5938_audit.sage | tee /tmp/q5938-audit.out
+      - name: Persist output on delivery branch
+        if: always()
+        shell: bash
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout chatgpt-drop
+          cp /tmp/q5938-audit.out drops/_q5938_audit.out || true
+          git add drops/_q5938_audit.out
+          git commit -m 'Record Q5938 exact Newton conjugation audit output' || exit 0
+          git push origin HEAD:chatgpt-drop
