@@ -22,3 +22,17 @@
 - **FINAL EMPIRICAL BANK**: max H=3 (n≤8·10⁵), |S_h|~√P_n (n≤6.4·10⁴), D₁≈X_n, phases exactly uniform (proximity≈2δ), F₂=|I|²/N, randomization ≈ random (0.96–1.03), R₂→1. Every sufficient condition holds at its strongest.
 - end: 2026-07-31 17:15 — all DS avenues terminal with documented verdicts; campaign frontier = cross-prime decorrelation / nonresonance of b_n (genuinely new math).
 - final result: complete status resolution banked (DS_AVENUES, DS_NOTES_SYNTHESIS + 6 notes, DS_CLAUDE_COLLAB ledger); conjecture empirically true at maximal margin; new-math frontier precisely characterized (SG1 first-constant; μ_n no-atom-at-0; cross-prime quenched-vs-annealed). Claude4.6 continues his parallel track (grade/U_p-spectral/Euler-system).
+
+## Continuation 17:30–18:00 (Xiang: "可以 commit 但是你要继续磨")
+- **THE headline target found**: moment route (Q6206 exact conversion). If
+  Σ|S_h(n)|⁴ = O(N³/log²N) for fixed h, then max|S_h| = O(N^{3/4}/√log) = o(P_n) uniformly
+  ⟹ conjecture closes (trivial L⁴⊂L^∞ + Fejér). Any random-scale moment k≥2 suffices.
+- Empirically R₄ = 0.87–0.98 (h=1), 1.15–1.19 (h=2), 0.83–0.95 (h=3); R₆ = 0.73–0.93;
+  off-diagonal 4th-moment excess slightly NEGATIVE (−1.6% to −13%). Hypothesis holds, all h.
+- Q6211 decomposition: 4th moment = 2nd moment + 3-prime corr + 4-distinct corr, packaged by
+  bounded pair-Gram spectral norm (concrete next target).
+- Q6207: no theorem gives SG1 (2D₁=Σ|e(θ_p)−1|²); DFI closest geometry, Apéry lacks
+  bounded-complexity parametrization. Q6208: Euler-system reduces to certificate problem.
+- Committed 41e073f (moment route + ledger). Q6213 (Gaussian) + pair-Gram dispatch cooking.
+- Claude surfaced from 84k-token generation, agrees ("no proof mechanism can reach a single
+  vertex"), back to dispatching dm questions.

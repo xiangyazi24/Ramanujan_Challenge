@@ -495,6 +495,20 @@ while the conjecture asks only for $o(n)$ — the gap between what is true and w
 proved is enormous, and the entire difficulty is that no unconditional argument controls the
 prime factors of one specific value $b_n$.
 
+\medskip
+\noindent\textbf{The Lucas collapse and the reciprocal-prime sum.}  After applying
+$b_n\equiv5b_{n-p}\pmod p$, the Weyl sum becomes
+\[
+  S_h(n)=\sum_{n/2<p\le n}e\!\left(\frac{h\bar5_p\,b_n}p\right),
+\]
+a \emph{reciprocal-prime exponential sum with one fixed frequency $c=\bar5_pb_n$}.  For
+$c\gg X^2$ the phases oscillate wildly and one observes
+$|S_h|\approx\sqrt{P_n}$; however no uniform power saving holds: with
+$c=\prod_{X<p\le2X}p+1$ one has $e(c/p)=e(1/p)=1+O(1/X)$, so the sum is $(1+o(1))P_n$.
+Thus the \emph{special-numerator assertion} that $b_n$ avoids such CRT resonance across primes
+$p\sim n$ is equivalent to the conjecture itself — the Lucas collapse is the sharpest
+reformulation, not a simplification.
+
 A complementary datum explains \emph{why} the count is so small: $b_n$ has very few prime
 factors, and they are huge.  Complete factorisations give
 \[

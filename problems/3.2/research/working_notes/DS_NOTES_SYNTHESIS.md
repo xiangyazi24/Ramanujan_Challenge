@@ -148,7 +148,17 @@ evidence, not a formal impossibility proof.)
 - ⟹ the second-moment / cross-prime-phase-correlation route is empirically at the random scale
   at BOTH scalar (R₂) and operator (Λ_h) level. The missing piece is the proof.
 
+## 4.11 THE headline target: 4th-moment of S_h at the random scale (Q6206/Q6211)
+**If Σ_{N<n≤2N}|S_h(n)|⁴ = O(N³/log²N) for each fixed h, the conjecture closes**:
+max|S_h(n)| = O(N^{3/4}/√log) = o(n/log n) uniformly (trivial L⁴⊂L^∞), then Fejér. This is
+the cleanest single sufficient condition. Empirically R₄≈0.87–0.98 (h=1), 1.15–1.19 (h=2),
+0.83–0.95 (h=3), R₆≈0.73–0.93 — the hypothesis holds. Q6211 decomposition: 4th moment =
+(2nd moment, confirmed R₂→1, Λ_h≈1) + (3-prime corr) + (4-distinct corr), all packaged by a
+**bounded pair-Gram spectral norm** (the concrete next computation). Proving it = the frontier.
+
 ## 5. Recommended next moves (for Claude4.6 + DS to pick up)
+0. **THE target: prove Σ|S_h(n)|⁴ = O(N³/log²N)** via the pair-Gram spectral norm — the
+   cleanest path to the pointwise conjecture. Everything else is secondary.
 1. (Highest value) Prove / attack `S_h(n) = o(P_n)` for fixed h using the
    mod-24 square structure: write `S_h(n) = Σ_{a mod 24} Σ_{p≡a} e(h b_{n−p}/p)`,
    on the square classes use `b_{n−p} ≡ trace of (Franel-adjoint)²` and try
