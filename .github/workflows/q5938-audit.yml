@@ -6,16 +6,36 @@ on:
       - '.github/workflows/q5938-audit.yml'
       - 'problems/3.2/research/scripts/q5938_newton_conjugation_audit.sage'
 permissions:
-  contents: read
+  contents: write
 jobs:
   audit:
     runs-on: ubuntu-latest
     timeout-minutes: 45
-    container:
-      image: sagemath/sagemath:latest
-      options: --user root
     steps:
       - uses: actions/checkout@v4
-      - name: Run exact Q5938 audit
+        with:
+          ref: q5938-audit
+          fetch-depth: 0
+      - name: Run exact Q5938 audit in Sage image
         shell: bash
-        run: sage problems/3.2/research/scripts/q5938_newton_conjugation_audit.sage
+        run: |
+          set +e
+          docker run --rm \
+            -v "$PWD:/repo" -w /repo \
+            sagemath/sagemath:latest \
+            sage problems/3.2/research/scripts/q5938_newton_conjugation_audit.sage \
+            > /tmp/q5938-audit.out 2>&1
+          echo $? > /tmp/q5938-audit.status
+          exit 0
+      - name: Persist exact output
+        if: always()
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          cp /tmp/q5938-audit.out problems/3.2/research/scripts/q5938_newton_conjugation_audit.out
+          cp /tmp/q5938-audit.status problems/3.2/research/scripts/q5938_newton_conjugation_audit.status
+          git add problems/3.2/research/scripts/q5938_newton_conjugation_audit.out \
+                  problems/3.2/research/scripts/q5938_newton_conjugation_audit.status
+          git commit -m 'Record Q5938 exact Newton conjugation audit output' || exit 0
+          git push origin HEAD:q5938-audit
