@@ -90,9 +90,63 @@ def audit(prime_bound=23):
     return shell_checks, moment_checks, apery_checks
 
 
+def apery_mod_sequence(prime):
+    """b_0..b_{prime-1} mod prime by the Apery recurrence."""
+    inverses = [0, 1] + [0] * (prime - 2)
+    for k in range(2, prime):
+        inverses[k] = (prime - (prime // k) * inverses[prime % k] % prime) % prime
+    values = [1 % prime, 5 % prime]
+    for index in range(1, prime - 1):
+        inverse = inverses[index + 1]
+        lead = inverse * inverse % prime * inverse % prime
+        values.append(
+            ((34 * index ** 3 + 51 * index ** 2 + 27 * index + 5) % prime
+             * values[index]
+             - index ** 3 % prime * values[index - 1]) % prime * lead % prime
+        )
+    return values
+
+
+def audit_reflection(prime_bound=60):
+    """The reflection law, derived rather than observed.
+
+    N_p(t) = N_p(1/t) for every t, hence sum_t t^r N_p(t) = sum_t t^{-r} N_p(t),
+    hence b_{p-1-r} = b_r (mod p), hence Z_p is stable under r -> p-1-r and |Z_p|
+    is even unless the fixed point (p-1)/2 lies in Z_p.
+    """
+    inversion_checks = 0
+    palindrome_checks = 0
+    involution_checks = 0
+    odd_primes = []
+    for prime in primes_up_to(prime_bound):
+        if prime < 5:
+            continue
+        counts = point_counts(prime)
+        for t in range(1, prime):
+            assert counts[t] == counts[pow(t, prime - 2, prime)]
+            inversion_checks += 1
+        values = apery_mod_sequence(prime)
+        for residue in range(prime - 1):
+            assert values[prime - 1 - residue] == values[residue]
+            palindrome_checks += 1
+        zeros = {r for r in range(prime - 1) if values[r] == 0}
+        for r in zeros:
+            assert prime - 1 - r in zeros
+            involution_checks += 1
+        if len(zeros) % 2:
+            assert (prime - 1) % 2 == 0 and (prime - 1) // 2 in zeros
+            odd_primes.append(prime)
+    return inversion_checks, palindrome_checks, involution_checks, odd_primes
+
+
 if __name__ == "__main__":
     shell_checks, moment_checks, apery_checks = audit()
     print("SHELL_VS_EXPONENTIAL_SUM", shell_checks)
     print("SHELL_VS_POINT_COUNT_MOMENT", moment_checks)
     print("SHELL_VS_APERY", apery_checks)
+    inv_c, pal_c, invol_c, odd_p = audit_reflection()
+    print("POINT_COUNT_INVERSION_SYMMETRY", inv_c)
+    print("APERY_PALINDROME_MOD_P", pal_c)
+    print("ZERO_SET_INVOLUTION", invol_c)
+    print("PRIMES_WITH_ODD_ZERO_COUNT", odd_p)
     print("Q32_MARKED_SCALAR_CHARACTER_SUM=PASS")

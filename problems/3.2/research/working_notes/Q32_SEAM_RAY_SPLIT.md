@@ -319,6 +319,41 @@ localises the difficulty sharply: over the whole tested range \(G_n\) never exce
 \(34\) bits, its large part is exactly the \(K(n)\le3\) targets, and its small part is
 a handful of tiny primes.
 
+## 3g. The reflection law and the parity of \(|Z_p|\), derived
+
+The moment identity of \S3c explains, rather than observes, the reflection phenomenon the
+notes had recorded empirically.
+
+**Step 1 (geometry).**  The point count is inversion-symmetric:
+\[
+ N_p(t)=N_p(t^{-1})\qquad\text{for every }t\in\mathbb F_p^\times
+\]
+(verified for all \(p\le23\): 420 checks, no failures).
+
+**Step 2 (moments).**  Hence
+\(\sum_t t^{\,r}N_p(t)=\sum_t t^{-r}N_p(t)\), and since \(t^{-r}=t^{\,p-1-r}\),
+\S3c gives the **palindromy congruence**
+\[
+ \boxed{\;b_{\,p-1-r}\equiv b_r\pmod p\quad\text{for all }0\le r<p-1.\;}
+\]
+Verified exactly (ratio \(b_{p-1-r}/b_r\equiv1\), never merely \(\pm1\)) for every
+\(p\le23\) — 420 checks — and spot-checked at \(p=101,211\).
+
+**Step 3 (zero sets).**  Therefore \(Z_p\) is stable under the involution
+\(r\mapsto p-1-r\).  Checked on **all 548 primes \(5\le p<4000\)**: no failure.
+Consequently
+\[
+ |Z_p|\ \text{is even, unless the fixed point }\tfrac{p-1}2\in Z_p .
+\]
+Over \(p<4000\) exactly two primes have odd \(|Z_p|\), namely \(p=11\) with
+\(Z_{11}=\{5\}\) and \(p=3137\) with \(Z_{3137}=\{1568\}\) — in both cases the zero **is**
+the fixed point \((p-1)/2\).  This identifies the "central exceptions \(p=11,3137\)"
+recorded in the executive ledger as exactly the fixed-point case, and it explains why the
+pair count \(|Z_p|/2\) — not \(|Z_p|\) — is the quantity that follows a Poisson law.
+
+Audit: `q32_marked_scalar_character_sum.py` (420 inversion checks, 420 palindromy checks,
+zero-set involution checks, and the odd-count classification).
+
 ## 4. Reproducibility
 
 - `problems/3.2/research/scripts/q32_seam_ray_split_audit.py` — the exact
