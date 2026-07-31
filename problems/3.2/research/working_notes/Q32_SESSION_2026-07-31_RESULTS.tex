@@ -202,6 +202,17 @@ $H^{(3)}_n=p^{-3}H^{(3)}_q+(p\text{-integral})$ and $p^3H^{(3)}_n\equiv H^{(3)}_
 precisely where $a_q$ enters.  Verified on $9837$ checks per coordinate over all
 $7\le p<80$, $1\le q<p$, $0\le r<p$ with $qp+r<700$: no violations.
 
+\medskip
+\noindent\textbf{It is a property of Ap\'ery-like pairs, not of $\zeta(3)$.}  The same statement
+holds for the $\zeta(2)$ pair, with the exponent tracking the order of the leading coefficient
+$(n+1)^\kappa$ of the recurrence.  For
+$(n+1)^2u_{n+1}=(11n^2+11n+3)u_n+n^2u_{n-1}$ with $(a_1,b_1)=(5,3)$,
+\[
+  \bigl(p^2a_{qp+r},\ b_{qp+r}\bigr)\equiv b_r\cdot(a_q,b_q)\pmod p,
+\]
+verified on $3198$ checks per coordinate with no violations.  The proof is the same: $\kappa$
+copies of $p$ are cleared from $H^{(\kappa)}_n$, and Lucas handles the binomial sums.
+
 This unifies the trichotomy used in the draft.  Modulo $p$ the pair at index $n$ is $b_r$ times
 the pair at index $q$, so the right-hand side can vanish in exactly three ways —
 $p\mid b_r$ (lower-digit bad), $p\mid b_q$ (leading-digit), and $p\mid$ numerator of $a_q$
