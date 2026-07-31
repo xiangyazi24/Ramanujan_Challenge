@@ -61,6 +61,14 @@ hypothesis empirically strongest; only the proof missing.
 - Empirically D₁ ≈ X_n (η ≈ 1, maximal), phases exactly uniform (proximity test ≈ 2δ). 
 - Most plausible input: constant-defect cross-prime dispersion / inverse theorem for near-maximal S₁.
 
+## SG1 quantification verified (DS, 2026-07-31)
+Since 1−cos(2πx) = 2sin²(πx) ≥ 4x² (|x|≤1/2) and θ_p = {5^{-1}b_n/p}, with A=5^{-1}b_n:
+D₁(n) ≥ 4·Σ_p ‖A/p‖² (‖·‖ = distance to nearest integer). Measured:
+Σ_p ‖5^{-1}b_n/p‖² = 11.35, 21.49 (n=2000,4000) vs (1/12)·P_n = 11.25, 20.58 (ratio 1.009, 1.044).
+⟹ the phases are exactly uniform (E[‖x‖²]=1/12); D₁ ≥ (1/3+o(1))P_n from the 4x² bound alone
+(actual D₁ ≈ P_n). SG1 needs: Σ_p‖A/p‖² = (1/12+o(1))P_n for the specific holonomic A=5^{-1}b_n,
+i.e. no concentration of {A/p} near integers — a nonresonance statement.
+
 ## Related
 - Q6127 (strategic): horizontal Weyl theorem is the top route; D_1 ≥ ηP_n first-constant framing.
 - Q6129 (calibration): p⁸ carrier gives 0.44069 (algebraic route, Claude owns).
