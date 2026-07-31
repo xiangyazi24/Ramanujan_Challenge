@@ -359,11 +359,23 @@ gives $b_{p-1}\equiv b_0=1\pmod p$, so $p\nmid b_n$, $t=0$, and the law holds tr
 (verified: no prime $p<400$ has $p\mid b_{p-1}$).
 \end{proof}
 
+The same argument in fact covers every multiplicity, giving the saturated law
+\[
+  \alpha=t-3\ (t<3),\qquad \alpha\ge0\ (t=3),\qquad \alpha=0\ (t>3),
+\]
+and hence, for \emph{all} $t$,
+\[
+  \boxed{\;v_p(D_n)=3-\min(t,3),\qquad e_p(n)=\min\bigl(v_p(b_n),3\bigr).\;}
+\]
+The cap is simply $v_p(d_n)=3$.  So the denominator-defect law is now completely proved, and the
+top-window contribution to $\log G_n$ equals $\sum_p\min(v_p(b_n),3)\log p$ exactly.  What is not
+settled is the value $\alpha=0$ at $t=3$ — equivalently, excluding a common $p$-factor of the
+reduced numerator and $b_n$ — which bears on the primitive coprimality conjecture but not on
+$G_n$; no $t\ge3$ occurs in the tested range, where the largest multiplicity is $2$.
+
 The three ingredients were checked independently: the Casoratian has $v_p=0$ in all $4282$
 applicable pairs, no two consecutive zeros occur in any of them, and $v_p(a_{n+1})=-3$ in all
-$4251$ pairs where it applies — no violations.  For $t\ge3$ the argument gives only
-$\alpha\ge0$ or $-3+t\ge0$ and does not pin $\alpha$ down; no such $t$ occurs in the tested
-range, where the largest multiplicity is $2$.
+$4251$ pairs where it applies — no violations.
 
 The mod-$p^2$ route, by contrast, does not help: the corrections vanish at $r=0$ (Beukers'
 $b_p\equiv5\bmod p^3$) but are irregular for $r\ge1$.
