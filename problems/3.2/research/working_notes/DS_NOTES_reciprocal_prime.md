@@ -21,5 +21,11 @@ S_h(n) = Σ_{n/2<p≤n} e(h·b_{n−p}/p) = Σ_{n/2<p≤n} e(h·5^{-1}·b_n/p).
 - Empirically TRUE (|S_h|~√P_n, D_1≈P_n) — b_n IS nonresonant.
 - Coordinates with Claude4.6 (he found it via dm Q6170); the four classes mod 5 (from 5^{-1}) split the sum.
 
+## Q6181 precision (reciprocal-prime literature): S_1=o(P_n) is STRONGER than H=o(P_n)
+- **Correction to Q6170's "equivalence"**: few primes dividing b_n ⟺ ONE reciprocal Weyl sum S_1=o(P_n) is FALSE. Exact divisors are only the phase-1 atom; a number can have no prime divisor in the window while all phases are still close to 1. The Fejér direction (all fixed modes S_h=o(P_n) ⟹ H=o(P_n)) holds; the converse for a single mode fails.
+- Correct hierarchy: conjecture ⟺ empirical phase measure μ_n has NO atom at 0 (μ_n({0})→0, Portmanteau). Full S_h=o(P_n) for all h ⟺ μ_n→uniform — STRONGER than needed. SG1 (spectral gap) is the first-constant step.
+- **Saffari-Vaughan Thm 10** (On the fractional parts of x/n... II): prime equidistribution of {X/p} when prime cutoff Y > X^{6/11+ε} (polynomial range). For Apéry X=b_n, Y=n=X^{o(1)} — misses by an exponential factor. No size-only theorem can work at the logarithmic scale (p≍log X, CRT permits arbitrary phase patterns).
+- Mod-5 split (from 5^{-1}) gives the precise "one huge frequency" form: class weights = fifth roots of unity.
+
 ## Status
-Horizontal route (S_h = o(P_n)): TERMINAL at the reformulation — it IS the conjecture. The reciprocal-prime form is the best statement of what must be proved, and the new-math frontier is a "nonresonance of a holonomic integer" theorem.
+Horizontal route (S_h = o(P_n)): the reciprocal-prime form is the best statement. The conjecture is precisely "the phase measure μ_n has no atom at 0", i.e. a "nonresonance of the holonomic integer b_n" theorem. New-math frontier confirmed; Saffari-Vaughan regime inapplicable.
