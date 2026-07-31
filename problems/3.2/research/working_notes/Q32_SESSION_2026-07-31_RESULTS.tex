@@ -334,10 +334,34 @@ $3$, and multiplicities rather than radicals;
 and the largest multiplicity observed in the window is $2$).  So the primitive coprimality
 conjecture reduces, in this range, to a multiplicity bound.
 \end{itemize}
-Proving the exact valuation needs a $p$-adic refinement of the block law — the mod-$p$ statement
-alone gives only $e_p\ge1$ — and the mod-$p^2$ corrections do not follow a simple pattern
-(computed: they vanish at $r=0$, which is Beukers' $b_p\equiv5\bmod p^3$, but are irregular for
-$r\ge1$).
+\begin{proof}[Proof of the valuation law when $v_p(b_n)\le2$]
+Let $p\ge7$ lie in the top window and put $t=v_p(b_n)$, $\alpha=v_p(a_n)$.
+
+First suppose $p\nmid n+1$.  The exact Casoratian
+$a_nb_{n+1}-a_{n+1}b_n=-6/(n+1)^3$ then has $v_p=0$, since $p\ge7$ gives $p\nmid6$.  By the
+no-two-consecutive-zeros theorem $p\nmid b_{n+1}$, so Proposition~\ref{prop:numcong} applied at
+$n+1$ makes $p^3a_{n+1}$ a $p$-unit, i.e.\ $v_p(a_{n+1})=-3$ exactly.  The two products therefore
+have valuations
+\[
+  v_p\bigl(a_nb_{n+1}\bigr)=\alpha,\qquad
+  v_p\bigl(a_{n+1}b_n\bigr)=-3+t .
+\]
+If $\alpha\ne-3+t$ the difference would have valuation $\min(\alpha,-3+t)=0$, forcing
+$-3+t\ge0$; this is impossible for $t\le2$.  Hence $\alpha=-3+t$, i.e.\ $e_p(n)=v_p(b_n)$.
+
+The excluded case $p\mid n+1$ means $n+1=2p$, i.e.\ $n=2p-1$ and $r=p-1$.  There palindromy
+gives $b_{p-1}\equiv b_0=1\pmod p$, so $p\nmid b_n$, $t=0$, and the law holds trivially
+(verified: no prime $p<400$ has $p\mid b_{p-1}$).
+\end{proof}
+
+The three ingredients were checked independently: the Casoratian has $v_p=0$ in all $4282$
+applicable pairs, no two consecutive zeros occur in any of them, and $v_p(a_{n+1})=-3$ in all
+$4251$ pairs where it applies — no violations.  For $t\ge3$ the argument gives only
+$\alpha\ge0$ or $-3+t\ge0$ and does not pin $\alpha$ down; no such $t$ occurs in the tested
+range, where the largest multiplicity is $2$.
+
+The mod-$p^2$ route, by contrast, does not help: the corrections vanish at $r=0$ (Beukers'
+$b_p\equiv5\bmod p^3$) but are irregular for $r\ge1$.
 
 \begin{proposition}[verified law]\label{prop:defect}
 For primes $p\ge7$ with $n/2<p\le n$,
