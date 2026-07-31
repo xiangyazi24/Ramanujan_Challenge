@@ -42,8 +42,13 @@ so $Z_p=\{r<p:\ p\mid b_r\}$ is stable under the involution $r\mapsto p-1-r$, an
 $|Z_p|$ is even unless the fixed point $\tfrac{p-1}2$ lies in $Z_p$.
 \end{proposition}
 
-This explains two facts previously recorded only empirically: that the Poisson law is
-obeyed by the \emph{pair} count $|Z_p|/2$ rather than by $|Z_p|$, and that the
+Inversion-invariance is not new to the project: it is the hypothesis defining the space
+$V_p^+$ in the random model recorded in \texttt{DOCTRINE.md} (Q5387), which yields
+$K\sim\mathrm{Bin}((p-3)/2,1/p)\to\mathrm{Poisson}(1/2)$.  What
+Proposition~\ref{prop:palindrome} adds is that the invariance is a \emph{theorem} for the
+actual sequence, derived from the geometry through Proposition~\ref{prop:moment}, together
+with the exact classification of the exceptions: the Poisson law is obeyed by the
+\emph{pair} count $|Z_p|/2$ because the involution forces the pairing, and the
 ``central exceptions'' to evenness are exactly the fixed-point primes.  For $p<4000$ these
 are $p=11$ with $Z_{11}=\{5\}$ and $p=3137$ with $Z_{3137}=\{1568\}$, and in both cases the
 unique zero equals $(p-1)/2$.
@@ -54,6 +59,9 @@ $b_{p-1-r}/b_r$ is identically $1$, not merely $\pm1$), and the involution verif
 $548$ primes $5\le p<4000$ without exception.
 
 \subsection{Where $G_n$ actually lives}
+
+The factorisation below is already recorded in \texttt{DOCTRINE.md} (Q5386); what is added
+here is the direct computation of both factors.
 
 \begin{proposition}\label{prop:Gn}
 Write $a_n=A_n/D_n$ in lowest terms, so $D_n\mid d_n$.  Then
