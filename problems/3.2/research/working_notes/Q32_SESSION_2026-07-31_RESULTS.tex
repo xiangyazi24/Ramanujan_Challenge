@@ -512,6 +512,32 @@ for $R<2/\lambda=0.567$, i.e.\ never for a growing range; the genuinely free pre
 $r\le\lambda^{-1}\log n$ (where $b_r<n/2$, so no hit is possible) removes only $O(\log n)$
 residues.
 
+\subsection{The certificate exists for codegree, not for degree}
+\label{subsec:codegree}
+
+It is worth recording precisely which certificate the paper already has, since it delimits the
+gap.  Lemma~\ref{lem:codegree} proves that for $m,n\in(N,2N]$ with $h=n-m$, the number of
+primes $p>P_0$ simultaneously lower-digit bad for $m$ and for $n$ is
+$O\bigl(h\log N/\log P_0\bigr)$, hence $O(h)$ for $P_0=N^\delta$.  Its proof is exactly a
+certificate argument:
+\begin{itemize}
+\item \emph{no wrap}: the two zeros lie at distance $h$, so $p\mid N_h(m\bmod p)\equiv N_h(m)$,
+and every such prime divides the \emph{fixed integer} $N_h(m)$, of height $\le3h\log(CN)$;
+\item \emph{wrap}: $p\mid\prod_{j\le h}(m+j)$, of height $h\log 3N$.
+\end{itemize}
+So a low-height certificate \emph{does} exist for a \emph{pair} of indices, and it is what
+powers the polylogarithmic exceptional set via a K\H ov\'ari--S\'os--Tur\'an argument — the
+exceptional-set theorem is not a Markov bound on a first moment.
+
+What is missing is the same statement for a \emph{single} index: a certificate divisible by all
+primes bad for one $n$.  The codegree bound cannot be promoted to a degree bound.  Summing
+$\operatorname{codeg}(m,n_0)\le C|n_0-m|$ over all $m\in(N,2N]$ gives only
+$H(n_0)\ll N^2$; and within a window of length $H_0<p$ the residues $m\bmod p$ are distinct, so
+each bad prime for $n_0$ is bad for at most $O(1)$ nearby $m$, and no contradiction with a large
+$H(n_0)$ arises.  In graph terms: bounded codegree limits how many vertices can have large
+degree — which is exactly the exceptional-set theorem — but never excludes a single
+high-degree vertex.
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes
