@@ -163,10 +163,35 @@ computation:
   \(|R_r|\approx|b_r|\cdot e^{0.19r}\) with large prime factors, so applying \(L_b\) to
   \(S\) does not produce a hypergeometric right-hand side.
 
-Extended exact data: for \(1\le r\le170\) the gcd \(\gcd(b_r,S_r)\) still has prime support
-exactly \(\{5,11,19\}\) with maximum \(55\) (independent recomputation, extending the
-\(r\le100\) datum), and — the point that matters for the application, where the relevant
-prime satisfies \(p>r\) — **no prime factor exceeding \(r\) has ever occurred**.
+### Correction to the recorded \(\gcd(b_r,S_r)\) data
+
+The statement "for \(1\le r\le100\), \(\gcd(b_r,S_r)\) has no prime factor outside
+\(\{5,11,19\}\), maximum \(55\)" is **an artifact of the range**.  An independent exact
+recomputation through \(r=300\) (78 nontrivial values) gives
+
+\[
+\begin{array}{c|l}
+ r\text{-window}&\text{primes occurring in }\gcd(b_r,S_r)\\ \hline
+ [1,100)&5,\ 11,\ 19\\
+ [100,200)&5,\ 19\\
+ [200,300)&5,\ 11,\ 17,\ 19,\ 31,\ 37,\ 61
+\end{array}
+\]
+
+with maximum \(\gcd=305=5\cdot61\) at \(r=257\) (and \(125\) at \(r=171,286\)).  So the
+support is **not** a fixed finite set, and the "fixed resultant / fixed discriminant"
+reading of the \(\{5,11,19\}\) data is not supported.  Together with §3b (no rank drop at
+\(5,11,19\)), the fixed-content hypothesis should be considered dead.
+
+What does survive, and is the statement the application actually needs (there the relevant
+prime satisfies \(p>r\)):
+
+> Over \(1\le r\le300\), **every** prime factor of \(\gcd(b_r,S_r)\) is \(<r\), the only
+> exception being the trivial \(r=1\).  The gcd itself never exceeds \(305\).
+
+So the empirical picture is a slowly growing support with uniformly tiny total size —
+consistent with \(\log\gcd(b_r,S_r)=O(\log r)\), but with no fixed-resultant mechanism
+behind it.
 
 ## 3c. The marked scalar is a moment of point counts
 
