@@ -143,10 +143,21 @@ Consequently, if $p\nmid b_n$ then $p^3a_n$ is a $p$-unit, so $v_p(D_n)=3$ and $
 \emph{only primes dividing $b_n$ can contribute to $G_n$}.
 \end{proposition}
 
-The constant $6/5=a_1/b_1$ is the Ap\'ery--Lucas rank-one structure for the \emph{vector}
-solution: modulo $p$ the pair $(a_{p+r},b_{p+r})$ is proportional to $(a_1,b_1)$.  Verified on
-all $3305$ pairs $(n,p)$ with $7\le p$, $n/2<p\le n$, $20\le n<260$ — including all $28$ pairs
-with $p\mid b_n$ — with no exceptions
+Writing $n=p+r$ with $0\le r<p$, the statement takes its natural form as a \emph{vector}
+Lucas property:
+\[
+  \boxed{\;\bigl(p^3a_{p+r},\ b_{p+r}\bigr)\;\equiv\;b_r\cdot(a_1,b_1)\;=\;b_r\cdot(6,5)
+  \pmod p.\;}
+\]
+The second coordinate is the classical Ap\'ery--Lucas congruence $b_{p+r}\equiv5\,b_r$; the
+first, $p^3a_{p+r}\equiv6\,b_r$, is its numerator counterpart, the factor $p^3$ appearing
+precisely because the leading coefficient $(n+1)^3$ of the recurrence vanishes at $n=p-1$.  So
+modulo $p$ the solution vector collapses onto the line spanned by the initial vector
+$(a_1,b_1)$, which is exactly why a prime can contribute to $G_n$ only through $b_n$.
+
+Verified with no exceptions on all $3305$ pairs $(n,p)$ with $7\le p$, $n/2<p\le n$,
+$20\le n<260$ — including all $28$ pairs with $p\mid b_n$ — and, in the $(p,r)$ form, on
+$3320$ checks per coordinate
 (\texttt{q32\_numerator\_congruence\_audit.py}).
 
 Combined with the universal bound $e_p(n)\le3$, Proposition~\ref{prop:numcong} makes the
