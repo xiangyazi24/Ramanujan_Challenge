@@ -371,10 +371,16 @@ The cap is simply $v_p(d_n)=3$.  So the denominator-defect law is now completely
 top-window contribution to $\log G_n$ equals $\sum_p\min(v_p(b_n),3)\log p$ exactly.  What is not
 settled is the value $\alpha=0$ at $t=3$ — equivalently, excluding a common $p$-factor of the
 reduced numerator and $b_n$ — which bears on the primitive coprimality conjecture but not on
-$G_n$; no $t\ge3$ occurs in the tested range.  Indeed, computing $v_p(b_r)$ for every zero pair
-$(p,r)$ with $p\le200\,000$ and $r\le4000$ — $2074$ pairs — gives multiplicity~$1$ in $2072$
-cases and multiplicity~$2$ in exactly~$2$; multiplicity $\ge3$ never occurs, so in practice
-$e_p(n)=v_p(b_n)$ with no cap.  (The other neighbour gives no more: the Casoratian
+$G_n$; no $t\ge3$ occurs in the tested range: computing $v_p(b_n)$ \emph{directly} from the exact
+integer $b_n$ for every bad pair with $n<300$ gives maximum multiplicity~$2$.
+
+\emph{A caution.}  One cannot substitute $v_p(b_r)$ for $v_p(b_n)$ here.  The first-block
+expansion reads $b_{p+r}\equiv5\bigl(b_r+pG_r+p^2H_r\bigr)\pmod{p^3}$, so $p^3\mid b_{p+r}$ is a
+condition on that whole combination, not on $b_r$ alone — higher block digits can cancel the
+vertical digits of $b_r$.  Concretely $b_3=5\cdot17^2$ has $v_{17}(b_3)=2$, yet the corrected
+first quotient digit is a unit, so $v_{17}(b_{20})=2$ rather than~$3$.  A survey of $v_p(b_r)$
+over the zero pairs (multiplicity $1$ in $2072$ of $2074$ cases, $2$ in the remaining two) is
+therefore evidence about $b_r$, not about $b_n$, and does not extend the multiplicity claim.  (The other neighbour gives no more: the Casoratian
 $a_{n-1}b_n-a_nb_{n-1}=-6/n^3$ also has $v_p=0$, and $p\nmid b_{n-1}$, so it yields the same
 constraint $\min(\alpha,t-3)=0$ and likewise stalls at $t\ge3$.)
 
