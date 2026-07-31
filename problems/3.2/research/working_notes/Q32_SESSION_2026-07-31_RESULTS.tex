@@ -1014,6 +1014,22 @@ reach $(1/2-\delta)n/\log n$ one needs precisely an Ap\'ery-specific statement o
 occupancy strictly below one along the moving diagonal $p=n-r$ — which is the missing theorem
 itself.
 
+\subsection{A direct cross-characteristic attempt, and why it fails}
+
+The gap machinery works because two zeros of \emph{one} prime at distance $h$ force
+$p\mid N_h(z)$, an integer of height $O(h\log n)$.  The natural attack on a single level $n$ is to
+try the same across characteristics: two bad primes $p,p'$ at level $n$ have zeros
+$r=n-p$, $r'=n-p'$ with $r-r'=p'-p=:k$, so the two zeros \emph{are} at distance $k$ — but in
+different characteristics.
+
+Tested directly at $n=321$, whose bad primes are $179,193,211$ with zeros at $r=142,128,110$:
+the tridiagonal continuant over the index range between each pair of zeros — the integer that
+would play the role of $N_k$ — is divisible by \emph{neither} prime in all three cases
+(the continuants have $369$, $464$ and $833$ bits).  So no single integer of controlled height
+sees both divisibilities, and the gap-polynomial mechanism does not transfer across
+characteristics.  This is the concrete form of the ``horizontal versus vertical'' obstruction:
+every certificate we possess is built inside one residue field.
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes
