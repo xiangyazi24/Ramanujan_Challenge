@@ -784,5 +784,20 @@ window has length~$1$ — relative scale $1/p$ — rather than fixed positive re
 calibration, even the cubic analogue $x^3\equiv2\pmod p$ lacks comparable prime-modulus
 machinery, so a holonomic zero set at scale $1/p$ is well beyond current reach.
 
+\medskip
+\noindent\textbf{What the multiplicative case has and we do not.}  For $u_n=a^n-1$ a nontrivial
+pointwise bound \emph{is} available: partition the primes $p\mid a^n-1$ by $d=\operatorname{ord}_p(a)$,
+so that $d\mid n$, $p\equiv1\pmod d$ and $p\mid\Phi_d(a)$; then the count $T_d$ of such $p$ in
+$(n/2,n]$ obeys both $T_d\ll n/d$ (candidates $p=1+kd$) and
+$T_d\le\varphi(d)\log(|a|+1)/\log(n/2)$ (size of $\Phi_d(a)$), and splitting the divisor sum at
+$d=\sqrt{n\log n}$ gives a genuine saving.  The rigid invariant there is the multiplicative
+order.  Our zero set $Z_p$ carries no group structure, and there is no analogue.
+
+Conversely, $D$-finiteness by itself supplies nothing: for fixed $K\ge2$ the factorial ratios
+$U^{(K)}_n$ are hypergeometric, hence $P$-recursive, with $\log U^{(K)}_n\asymp n$, and Legendre's
+formula telescopes to give $p\mid U^{(K)}_n$ exactly for $p\le Kn/(K+1)$ — a positive proportion
+of the window.  So no theorem of the form ``$P$-recursive $\Rightarrow$ few prime factors in a
+short window'' can exist, and the Ap\'ery case must be decided by the arithmetic of $Z_p$ itself.
+
 Accordingly the unconditional pointwise statement appears to require genuinely new
 technology rather than a refinement of the arguments used here.
