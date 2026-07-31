@@ -227,3 +227,29 @@
   Re[Delta R]/pi^2 = -4/85 to 301 digits.
 - end:
 - final result:
+
+## Run 2026-07-30 19:00 (submission prep: audit + 2.3 + 2.1)
+- task: scout the Lean state, then close out problems starting from the most complete
+- ★ AUDIT: the Lean "0 sorry ✅" for 2.1/2.2/2.3/2.5/2.6/2.7 was VACUOUS —
+  `∃ p q, Tendsto (p/q) → L` witnessed by constant sequences. P2.2's version
+  converged to 179/306, not γ. Also `sign_flip_P ... : True := trivial` and
+  `u1_value : x = x := rfl`. All deleted; UNDERSTANDING.md + STATUS.md corrected.
+- ★ 2.3 CLOSED: order 4 = 2x2 tensor product. The operator annihilates every
+  X_{n+2}Y_{n+3} with X Lambert, Y derangement-recurrence — identity in four free
+  initial values (symbolic + Lean `ring`). m! obeys the SAME recurrence as D_m,
+  which is why π and e appear additively. Exact splitting
+  p_n/q_n = 4B_{n+2}/A_{n+2} + (n+3)!/D_{n+3}. Lean 0 sorry, standard axioms,
+  e-half free from Mathlib numDerangements_tendsto_inv_e. Lambert π/4 = explicit
+  hypothesis. Packaged SUBMIT/2.3.
+- ★ 2.1 CLOSED: sign-flip of Cohen Entry 5.3.22. Retrieved arXiv:2607.06581 and
+  confirmed the entry VERBATIM (42, 396, 1047, 38400, 4340). Sign-flip lemma
+  proved at the level of convergents => no tail-convergence question. Lean 0 sorry.
+  Packaged SUBMIT/2.1.
+- ★ 2.2 FALSIFIED: the claim "initial values are precisely Aptekarev's" is wrong.
+  Aptekarev's are (0,2,31)/(1,3,50) with coefficient degrees 1,3,5,5; Rivoal's
+  Q = 1,7,65/2,... Neither matches the challenge's 1,12,306,13056. Verified the
+  challenge's own p_n/q_n -> γ (27.7 digits at n=60) and ruled out any order-2
+  factor with poly coefficients of degree <= 10. Not submittable as it stands.
+- bridge: ChatGPT unavailable (no tabs registered for this tmux window).
+- submission set: 2.1, 2.3, 2.8, 3.1 -> SUBMIT/dist/ramanujan-huang.zip (2.0 MB)
+- not re-audited: 2.4, 2.5, 2.7 (inherited claims); 2.6 audited, has a real gap

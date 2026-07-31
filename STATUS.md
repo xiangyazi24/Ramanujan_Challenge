@@ -2,6 +2,9 @@
 
 **Deadline:** August 1, 2026, 23:59 UTC
 
+**Submission set as of this audit:** 2.1, 2.3, 2.8, 3.1 — packaged under
+`SUBMIT/`, combined archive `SUBMIT/dist/ramanujan-huang.zip` (2.0 MB).
+
 ## ⚠️ The old ✅ column was not accurate
 
 Until 2026-07-30 this file marked 2.1–2.8 and 3.1 all "✅ unconditional".
@@ -24,8 +27,8 @@ earlier session's claim.
 
 | Problem | Topic | Method | Audited? | State |
 |---------|-------|--------|----------|-------|
-| 2.1 | PCF → π | sign-flip of Cohen's CF tail | not re-audited | inherited claim |
-| 2.2 | γ Apéry | Aptekarev recurrence (index shift m=n+3) | ✅ audited | **gap: operator identity asserted, not proved** |
+| 2.1 | PCF → π | sign-flip of Cohen's Entry 5.3.22 | ✅ audited | **DONE — packaged in `SUBMIT/2.1/`** |
+| 2.2 | γ Apéry | claimed = Aptekarev after shift m=n+3 | ✅ audited | **the identification is FALSE — see below** |
 | 2.3 | π+e | tensor product: Lambert ⊗ derangement | ✅ audited | **DONE — packaged in `SUBMIT/2.3/`** |
 | 2.4 | harmonic+polylog | weight-4 HPL symbolic summation | not re-audited | inherited claim |
 | 2.5 | Catalan CMF | Delannoy decomposition + k-recurrence | not re-audited | inherited claim |
@@ -33,6 +36,35 @@ earlier session's claim.
 | 2.7 | 4-term ζ(2)+ζ(3) | rational gauge transfer from Zudilin | not re-audited | inherited claim |
 | 2.8 | √10005/π | Chudnovsky in CMF disguise | ✅ (earlier) | **DONE — packaged in `SUBMIT/2.8/`** |
 | 3.1 | knot π² | A-polynomial / Mahler measure | ✅ (earlier) | **DONE — packaged in `SUBMIT/3.1/`** |
+
+### 2.2 — the identification is wrong
+
+The write-up asserted that the challenge's initial values `(0,7,179)`/`(1,12,306)`
+"are precisely the initial values of the Aptekarev rational approximants". They
+are not. Aptekarev's published values (Hessami Pilehrood & Hessami Pilehrood,
+arXiv:1010.1420, eq. (3)) are `p̃ = (0,2,31)`, `q̃ = (1,3,50)`, and his recurrence
+is `(16n-15)y_{n+1} = (128n³+40n²-82n-45)y_n - n²(256n³-240n²+64n-7)y_{n-1} +
+n²(n-1)²(16n+1)y_{n-2}` — coefficient degrees 1,3,5,5, not the challenge's
+3,5,7,9. Rivoal's order-3 γ-recurrence (2009) does not match either: its
+sequences are `Q = 1, 7, 65/2, 727/6, …` against the challenge's
+`1, 12, 306, 13056, …`.
+
+What *is* verified: the challenge's own sequences are integral and `p_n/q_n → γ`
+(27.7 digits at n=60, subexponential — the Aptekarev-type signature). Also
+checked and ruled out: neither `p` nor `q` satisfies any order-2 recurrence with
+polynomial coefficients of degree ≤ 10, so the order-3 operator does not factor
+the way 2.3's did. The right reference is probably Aptekarev–Tulyakov,
+*Four-term recurrence relations for γ-forms*, which we have not obtained.
+**2.2 is not submittable as it stands.**
+
+### 2.1 — what closed it
+
+The challenge PCF is the sign-flip of the tail of Cohen's Entry 5.3.22
+(arXiv:2607.06581), which we retrieved and confirmed **verbatim**, including its
+displayed quotients 42, 396, 1047, 38400, 4340. Two elementary proved steps: the
+index shift `a_n = -α(n+1)`, `b_n = β(n)`, and a sign-flip lemma proved *at the
+level of convergents* (`P̃_n = (-1)^{n+1}P_n`, `Q̃_n = (-1)^n Q_n`) so that no
+tail-convergence question arises. Lean: 0 sorry, standard axioms only.
 
 ### 2.3 — what closed it
 
