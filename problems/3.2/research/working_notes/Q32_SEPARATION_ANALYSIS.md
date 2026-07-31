@@ -15448,3 +15448,162 @@ This is the present endpoint of pure Route B.  The remaining theorem
 must use the actual Laurent coefficients to distinguish target primes
 inside the Pascal support.  Neither fixed-dimensional Smith
 elimination nor the Ore identity alone sees that distinction.
+
+### 68.18 The first Pascal quotient is exactly saturated
+
+The two Pascal factors in (68.174) admit a closed first-\(p\)-adic
+formula.  This makes it possible to decide, rather than guess, whether
+division by their forced prime exposes a second target equation.
+
+Let \(p\) be an odd prime and suppose
+\[
+ 0\le s<L<p,\qquad t=L-s.
+\]
+There is exactly one factor \(p\) in \(\binom{p+s}{L}\), and direct
+separation of the numerator factors gives the identity in
+\(\mathbb Z_{(p)}\)
+\[
+\begin{aligned}
+ \frac1p\binom{p+s}{L}
+ &=
+ \frac{\prod_{j=1}^{s}(p+j)
+       \prod_{j=1}^{t-1}(p-j)}{L!}\\
+ &=
+ \frac{(-1)^{t-1}}{t\binom Lt}
+ \prod_{j=1}^{s}\left(1+\frac pj\right)
+ \prod_{j=1}^{t-1}\left(1-\frac pj\right).
+\end{aligned}
+\tag{68.179}
+\]
+Consequently
+\[
+ \boxed{\quad
+ \frac1p\binom{p+s}{L}
+ \equiv
+ \frac{(-1)^{t-1}}{t\binom Lt}
+ \{1+p(H_s-H_{t-1})\}\pmod {p^2}.
+ \quad}
+\tag{68.180}
+\]
+All denominators in (68.179)--(68.180) are \(p\)-units.
+
+For the terminal diagonal margin, put
+\[
+ d=D-m_*+1,\qquad L=N+m_*-2.
+\]
+For a common candidate prime the substitutions in (68.180) are
+\[
+\begin{array}{c|c|c}
+ &s&t\\ \hline
+ \rho_-=\binom{D+N}{L}
+   &D+N-p&p-d-1\\
+ \rho_+=\binom{D+L}{L}
+   &D+L-p&p-D.
+\end{array}
+\tag{68.181}
+\]
+In particular \(v_p(\rho_-)=v_p(\rho_+)=1\), and
+\[
+ \frac{\rho_-/p}{\rho_+/p}
+ \equiv
+ (-1)^{m_*}
+ \frac{(p-D)\binom L{p-D}}
+ {(p-d-1)\binom L{p-d-1}}
+ \pmod p.
+\tag{68.182}
+\]
+This ratio is entirely Pascal data.
+
+The more important calculation concerns the adjacent increments
+\[
+\begin{aligned}
+ E_-&=\frac{A_{m_*}^- -A_{m_*-1}^-}{p}
+ =(-1)^L\frac{\rho_-}{p}\Delta^LY_d,\\
+ E_+&=\frac{A_{m_*}^+ -A_{m_*-1}^+}{p}
+ =(-1)^L\frac{\rho_+}{p}\Delta^LY_D.
+\end{aligned}
+\tag{68.183}
+\]
+The coefficient of the marked value \(Y_{p-1}\) in these two
+functionals is respectively
+\[
+ \boxed{\qquad
+ -\frac1{p-d-1},\qquad
+ \frac1{D+L+1-p}
+ \qquad}\pmod p.
+\tag{68.184}
+\]
+For example, on the left the marked position is
+\(i=p-1-d=t\); multiplying its finite-difference coefficient
+\((-1)^{L-i}\binom Li\) by (68.179) gives the first expression in
+(68.184).  On the right the marked position is \(i=p-1-D=t-1\),
+which gives the second.
+
+Thus targetness makes the displayed marked terms vanish rather than
+making \(E_-\) or \(E_+\) vanish.  At the next digit the failure is
+even more transparent.  If
+\[
+ Y_{p-1}=pu\pmod {p^2},
+\]
+then every Newton row containing \(p-1\) contains the same \(u\) in
+its once-divided value, because its Lagrange weight is \(1\bmod p\).
+Adjacent subtraction cancels this common \(u\) exactly.
+
+This is a formal saturation theorem, not only a feature of the Apéry
+specialization.  Over \(\mathbb F_p\), consider the three coefficient
+rows
+\[
+ e_{p-1},\qquad
+ \Delta^L|_{[d,d+L]},\qquad
+ \Delta^L|_{[D,D+L]}.
+\tag{68.185}
+\]
+They are linearly independent.  The left difference row has the
+exclusive node \(d\), the right row has the exclusive node \(D+L\),
+and the marked node belongs to their common core; the two exclusive
+coefficients are units.  Hence
+\[
+ Y\longmapsto(Y_{p-1},E_-,E_+)
+\tag{68.186}
+\]
+is surjective onto \(\mathbb F_p^3\).  Even after imposing
+\(Y_{p-1}=0\), the two divided increments can be prescribed
+arbitrarily.  No first-quotient consequence of Pascal interpolation
+can therefore be the missing second target equation.  Any relation
+among the actual values in (68.183) must use the distinguished Apéry
+shell.
+
+There is also an exact warning for any converse that tries to
+classify all prime factors of the hybrid carrier above \(\sqrt n\).
+At
+\[
+ (n,p,D,N,m_*)=(147,73,95,29,22)
+\tag{68.187}
+\]
+one has \(p\mid b_2\) and
+\[
+ C_{146}(d)\equiv0\pmod {73}
+ \qquad(74\le d\le145).
+\tag{68.188}
+\]
+Both last-margin endpoint vectors therefore vanish modulo \(73\),
+although \(73<147/2\).  The two left/right supports are
+\[
+\begin{array}{c|c|c}
+m&\text{left}&\text{right}\\ \hline
+21&[75,123]&[95,143]\\
+22&[74,123]&[95,144].
+\end{array}
+\tag{68.189}
+\]
+This is a genuine Cartier zero-segment exception, not a factorization
+accident.  It lies one half-unit below \(n/2\), so it does not refute a
+threshold theorem with an absolute-width boundary strip, but it proves
+that such a strip cannot simply be omitted.
+
+The dependency-free script
+`q32_pascal_first_quotient_audit.py` checks (68.179)--(68.180)
+exhaustively for all odd primes below \(102\), verifies both
+specializations for every core prime in the four hostile blocks,
+checks the actual target increments there, and independently verifies
+(68.187)--(68.189).
