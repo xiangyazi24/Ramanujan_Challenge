@@ -979,6 +979,16 @@ calibration, even the cubic analogue $x^3\equiv2\pmod p$ lacks comparable prime-
 machinery, so a holonomic zero set at scale $1/p$ is well beyond current reach.
 
 \medskip
+\noindent\textbf{Size arguments are vacuous here, quantitatively.}  If $H(n)=cn/\log n$ then the
+product of the bad primes has logarithm $\sim cn$ and divides $b_n$, giving $c\le\log\alpha=3.5255$
+with $\alpha=17+12\sqrt2$.  But prime counting already gives $c\le1/2$, since
+$\theta(n)-\theta(n/2)\sim n/2$.  So the size bound is worse than the trivial one by a factor
+seven, and no renormalisation helps: for a size argument to yield $o(n)$ one would need
+$\log b_n=o(n)$, i.e.\ $b_n$ subexponential, or a known divisor capturing all but $o(n)$ of
+$\log b_n$ — impossible since $b_n$ is rough (only $0$--$15\%$ of $\log b_n$ comes from primes
+$\le n^2$).
+
+\medskip
 \noindent\textbf{What the multiplicative case has and we do not.}  For $u_n=a^n-1$ a nontrivial
 pointwise bound \emph{is} available: partition the primes $p\mid a^n-1$ by $d=\operatorname{ord}_p(a)$,
 so that $d\mid n$, $p\equiv1\pmod d$ and $p\mid\Phi_d(a)$; then the count $T_d$ of such $p$ in
