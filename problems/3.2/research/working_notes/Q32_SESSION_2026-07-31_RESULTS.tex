@@ -284,8 +284,12 @@ this and validates the scanner:
 \subsection{An invalid step in the conditional theorem, and its repair}
 \label{subsec:audit}
 
-The draft deduces the pointwise bound $\log G_n=O(\sqrt n)$ for \emph{all} $n$ from
-Hypothesis~$\bar Z$ ($\sum_{p\le x}Z(p)\ll\pi(x)$).  That implication is \textbf{invalid}.
+\emph{Correction of a status claim, not of the paper.}  Theorem~\ref{thm:main} of
+\texttt{proof.tex} states its conclusion for a set of $n$ of natural density~$1$, and its
+Markov argument is correct.  It was \texttt{STATUS.md} (and the handoff prose derived from it)
+that recorded the conclusion as holding ``for ALL $n$''.  That upgrade is \textbf{invalid},
+and cannot be repaired from Hypothesis~$\bar Z$ ($\sum_{p\le x}Z(p)\ll\pi(x)$) together with
+the structure of $Z_p$ proved so far.
 
 Double counting gives
 \[
@@ -313,7 +317,8 @@ $T(N)/N=0.4955$.  Hence \emph{every} structural property proved so far about $Z_
 (size, reflection symmetry, no consecutive zeros) is consistent with total alignment at a
 single $n$.  The obstruction is alignment, not size.
 
-The repair is a uniform diagonal-discrepancy hypothesis:
+So the density-one theorem is exactly what the present hypotheses give.  To reach every $n$
+one needs a uniform diagonal-discrepancy hypothesis:
 \[
   \textbf{(DA)}\qquad
   \sup_n\Bigl|\sum_{n/2<p\le n}
@@ -321,9 +326,9 @@ The repair is a uniform diagonal-discrepancy hypothesis:
   \;\ll\;\frac{\sqrt n}{\log n}.
 \]
 By partial summation $\bar Z$ gives $\sum_{n/2<p\le n}Z(p)/p\ll1/\log n$, so
-$\bar Z$ together with (DA) yields $T(n)=O(\sqrt n)$ and closes the conjecture.  The theorem
-should therefore be stated as ``$\bar Z$ and (DA) imply $\log G_n=O(\sqrt n)$ for all $n$'';
-$\bar Z$ alone gives the density-one theorem, which is what is actually proved.
+$\bar Z$ together with (DA) yields $T(n)=O(\sqrt n)$ and closes the conjecture.  The all-$n$ theorem should therefore be stated as ``$\bar Z$ and (DA) imply
+$\log G_n=O(\sqrt n)$ for all $n$''; $\bar Z$ alone gives the density-one theorem, which is
+what \texttt{proof.tex} correctly proves.
 
 Note also that Hypothesis~Z in its pointwise form ($Z(p)\le C$) is expected to be
 \emph{false}: extreme-value theory for the $2\cdot\mathrm{Poisson}(1/2)$ law predicts

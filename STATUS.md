@@ -98,7 +98,14 @@ explicit hypothesis of the theorem statement.
    - First-moment argument over dyadic intervals using Z(p) = o(p)
 
 ### Conditional result (under Hypothesis Z)
-5. Hypothesis Z (average Z(p) = O(1)): B(n) = O(1) → log G_n = O(√n) for ALL n
+5. Hypothesis Z-bar (average Z(p) = O(1)): log G_n = O(√n) for a set of n of natural
+   density 1 (Theorem thm:main).  NOTE (2026-07-31): this is a density-1 statement, NOT a
+   bound for all n; the earlier "for ALL n" phrasing here was wrong.  No upgrade to all n can
+   follow from Z-bar plus the proved structure of Z_p: sets with |S_p| <= 2, reflection
+   symmetry, no consecutive elements and bounded average can align at a single N and give
+   T(N) ≍ N (explicit example S_p = {N-p, p-1-(N-p)}, verified at N = 20000).  The missing
+   input is the uniform diagonal-discrepancy bound (DA); see
+   research/working_notes/Q32_SESSION_2026-07-31_RESULTS.tex.
 
 ### Computational evidence (p ≤ 10^5, 9590 primes)
 - Z(p) ∈ {0, 1, 2, 4, 6, 8, 10}, max = 10, mean ≈ 0.990
