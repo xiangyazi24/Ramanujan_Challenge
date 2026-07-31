@@ -384,6 +384,53 @@ period is exactly the $p$-curvature object of a Picard--Fuchs-type operator, whi
 mechanism by which $C(p-1)\bmod p$ could be expressed through data of size $O(\log n)$.
 \end{enumerate}
 
+\subsection{A second-moment target with large slack}
+\label{subsec:energy}
+
+The pointwise statement follows from a \emph{second moment}, and with an enormous margin.
+Let
+\[
+  I=\{(r,p):p\ \text{prime},\ r<p,\ p\mid b_r\},\qquad
+  H(n)=\#\{(r,p)\in I:\ r+p=n\},
+\]
+so $H(n)$ is exactly the number of bad primes at level $n$ (Ap\'ery--Lucas).  Restrict to
+$N<n\le2N$ and set
+\[
+  E=\sum_{N<n\le2N}H(n)^2
+  =\#\bigl\{\bigl((r,p),(r',p')\bigr)\in I^2:\ r+p=r'+p'\bigr\},
+\]
+the additive energy of $I$ along the diagonal.  Since $\max_nH(n)^2\le E$,
+\[
+  \boxed{\;E=o\!\left(\frac{N^2}{\log^2N}\right)\ \Longrightarrow\
+  \max_nH(n)=o\!\left(\frac N{\log N}\right),\;}
+\]
+which closes the conjecture.  The trivial bound is
+$E\le(\max H)(\sum H)\le(N/\log N)^2$, so \emph{any} saving over trivial suffices — square-root
+cancellation is not needed.
+
+How much slack is there?  Measured at $N=60\,000$ (from the exact $Z_p$ data):
+\[
+  |I|=\sum_nH(n)=4398,\qquad E=\sum_nH(n)^2=4714,\qquad E/|I|=1.072,
+\]
+against a requirement of $E=o(2.97\cdot10^7)$ — the truth is smaller by a factor $6309$, and
+the gap grows with $N$.  Moreover the random model predicts $|I|+|I|^2/N=4720$ against the
+observed $4714$: agreement to $0.1\%$, i.e.\ the energy is entirely diagonal, with the
+off-diagonal contributing the predicted $|I|^2/N$ and nothing more.
+
+The companion discrepancy target of \S\ref{subsec:audit} is equally comfortable:
+\[
+  \max_{1000\le n\le60\,000}\Bigl|\sum_{n/2<p\le n}
+   \Bigl(\mathbf 1_{n-p\in Z_p}-\frac{Z(p)}p\Bigr)\Bigr| = 2.933\ \ (n=47\,859),
+\]
+against the $\sqrt n/\log n=20.3$ that (DA) demands there; the observed discrepancy looks
+bounded rather than growing.
+
+So the remaining gap is not quantitative delicacy — both sufficient hypotheses hold in the
+data by factors of $10^1$--$10^4$ — but the absence of any method that controls the
+\emph{alignment} of the sets $Z_p$ along a single diagonal $r+p=n$.  In the energy formulation
+this is the statement that the incidence set $I$, of size $\approx N/\log N$ inside a box with
+$N$ diagonals, does not concentrate a positive proportion of its points on one diagonal.
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes
