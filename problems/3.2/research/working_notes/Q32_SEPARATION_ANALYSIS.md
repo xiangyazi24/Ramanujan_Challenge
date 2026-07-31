@@ -14794,3 +14794,79 @@ gcds.  It also records the precise warning suggested by the data:
 obtaining the *final* all-margin gcd can require a number of margins
 growing with \(n\), even though the last two already have
 polynomial-looking height.
+
+### 68.12 Characteristic-zero growth versus the local star defect
+
+The diagonal-margin family is not merely an evident rational change
+of basis of the fixed-length family.  Expand every normalized minor
+in the Pluecker coordinates
+\[
+ X_{ij}=Y_iW_j-Y_jW_i
+\tag{68.132}
+\]
+on the maximal node interval.  In the exact universal coefficient
+audit, both families have \(m_*-1\) independent rows.  For
+\[
+ (D,N,m_*)=(8,3,3),(10,4,4),(13,5,5),(17,6,6),(19,7,7),
+\tag{68.133}
+\]
+the combined ranks are respectively
+\[
+ 4,6,8,10,12,
+\tag{68.134}
+\]
+and the two rational row spaces have zero intersection in every
+case.  Thus diagonal variation supplies genuinely new
+characteristic-zero exterior functionals.
+
+There is nevertheless an exact local saturation which prevents a
+naive defect-dimension conclusion.  Let \(c_\alpha,c_\beta\) be two
+integer Newton coefficient rows whose stencils contain the node
+\(j=p-1\), with all lengths below \(p\).  Lagrange reduction gives
+\[
+ c_\alpha\equiv c_\beta\equiv e_j\pmod p.
+\tag{68.135}
+\]
+Write, modulo \(p^2\),
+\[
+ c_\alpha=e_j+p u,\qquad c_\beta=e_j+p v.
+\tag{68.136}
+\]
+If their exterior row has exactly one universal node factor, then
+\[
+ \boxed{\qquad
+ \frac{c_\alpha\wedge c_\beta}{p}
+ \equiv e_j\wedge(v-u)\pmod p.
+ \qquad}
+\tag{68.137}
+\]
+Consequently every once-divided target-preserving minor, regardless
+of how its two stencils are moved, lies in the marked-node star
+\[
+ e_j\wedge\mathbb F_p^{\,{\cal N}}.
+\tag{68.138}
+\]
+
+At a target, the two distinguished marked entries satisfy
+\[
+ (Y_j,W_j)\equiv(0,0)\pmod p.
+\tag{68.139}
+\]
+All Pluecker coordinates \(X_{j,k}\) in the star therefore vanish.
+Hence the many independent characteristic-zero rows in
+(68.134) are, \(p\)-locally, different projections of the same
+rank-zero marked vector.  Their number does not by itself create new
+target digits.
+
+This is the precise Route-B ledger.  More translated or
+variable-length minors can reduce the evaluated characteristic-zero
+gcd, and the two families in fact occupy disjoint rational directions,
+but local dimension counting alone remains saturated by (68.137).
+A completion still needs either the small boundary certificate
+(68.130) or a cross-characteristic height theorem for the evaluated
+star projections.
+
+The exact script `q32_margin_lattice_audit.sage` constructs both
+coefficient matrices, verifies (68.134), and checks that every
+normalized row has zero coefficients off the marked star modulo each
+eligible core prime.
