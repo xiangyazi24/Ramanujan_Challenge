@@ -120,6 +120,54 @@ Two consequences of (3):
    primes \(\{5,11,19\}\) should be visible in the discriminants/resultants of
    that finite family.  This is the computation to do next.
 
+## 3b. The raywise Smith content is trivial: it is exactly the \(y\leftrightarrow z\) symmetry
+
+Form the integer matrix whose rows are consecutive \(r\) and whose \(22\) columns are the
+\(21\) pieces \(U_\kappa(r)\) together with \(b_r\).  For a \(26\times22\) window starting at
+\(r=2\):
+\[
+ \operatorname{rank}_{\mathbb F_q}=15\quad\text{for every prime }5\le q\le113,
+\]
+with the only smaller values at \(q=2\) (rank \(3\)) and \(q=3\) (rank \(14\)).  The
+deficiency \(22-15=7\) is therefore a **characteristic-zero** deficiency, not a
+prime-specific one, and it is completely explained:
+
+\(\Lambda\) is invariant under \(\sigma:y\leftrightarrow z\) (checked: \(\lambda_{\sigma\kappa}
+=\lambda_\kappa\) for every lattice point), hence
+\[
+ \boxed{\;U_{\sigma\kappa}(r)=U_\kappa(r)\quad\text{for all }r.\;}
+\]
+Of the \(21\) nonzero rays, exactly \(7\) are \(\sigma\)-fixed and \(7\) form swapped pairs;
+the pair identities were verified at \(r=5,9,13\) with no violation.  So the rank is
+\(22-7=15\) on the nose.
+
+Two consequences.
+
+1. **No hidden content.**  The exceptional primes \(\{5,11,19\}\) of \(\gcd(b_r,S_r)\) are
+   *not* elementary divisors of the raywise value matrix — there is no rank drop at
+   \(5,11,19\) beyond the universal one.  The "fixed resultant/Smith content" guess has to
+   be tested on the operators, not on the values.
+2. **The family halves.**  Only \(14\) distinct pieces occur (\(7\) fixed rays and \(7\)
+   pair representatives with doubled weight), which halves every subsequent raywise
+   computation.
+
+Separately, two mechanisms that would have been convenient are ruled out by exact
+computation:
+
+- the Casoratian-style determinant \(W_r=b_rS_{r+1}-b_{r+1}S_r\) has **no** small
+  factorisation — for \(r\le16\) it carries big prime factors
+  (\(9.5\cdot10^7\), \(6.6\cdot10^{12}\), \(1.06\cdot10^{19}\), \(3.6\cdot10^{45}\), …), so
+  \((b,S)\) is not a pair with an explicit hypergeometric Casoratian;
+- the Apéry-operator residual
+  \(R_r=(r+1)^3S_{r+1}-(34r^3+51r^2+27r+5)S_r+r^3S_{r-1}\) is likewise not simple:
+  \(|R_r|\approx|b_r|\cdot e^{0.19r}\) with large prime factors, so applying \(L_b\) to
+  \(S\) does not produce a hypergeometric right-hand side.
+
+Extended exact data: for \(1\le r\le170\) the gcd \(\gcd(b_r,S_r)\) still has prime support
+exactly \(\{5,11,19\}\) with maximum \(55\) (independent recomputation, extending the
+\(r\le100\) datum), and — the point that matters for the application, where the relevant
+prime satisfies \(p>r\) — **no prime factor exceeding \(r\) has ever occurred**.
+
 ## 4. Reproducibility
 
 - `problems/3.2/research/scripts/q32_seam_ray_split_audit.py` — the exact
