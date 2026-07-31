@@ -253,3 +253,51 @@
 - bridge: ChatGPT unavailable (no tabs registered for this tmux window).
 - submission set: 2.1, 2.3, 2.8, 3.1 -> SUBMIT/dist/ramanujan-huang.zip (2.0 MB)
 - not re-audited: 2.4, 2.5, 2.7 (inherited claims); 2.6 audited, has a real gap
+
+## Run 2026-07-31 (dm window, P3.2 takeover from life)
+
+Goal: fully unconditional proof of 3.2. Not achieved; the crux is isolated and everything
+around it is now airtight. 30+ commits, all with runnable audits; paper 124 pp, clean build.
+
+**New mathematics**
+- Moment identity: C_M(p-1) = -sum_t t^r N_p(t) (mod p) -- the marked scalar is a moment of the
+  point count of the Apery family (95+95+44 checks).
+- Palindromy b_{p-1-r} = b_r (mod p) re-derived from N_p(t)=N_p(1/t) [published: Malik-Straub
+  Lemma 6.2]; NEW corollary: |Z_p| is ODD iff p is non-ordinary for 8.4.a.a (via Ahlgren-Ono
+  Thm 5).  Verified over all 2260 primes p <= 20000: odd exactly at p = 11, 3137, which are
+  exactly the non-ordinary primes.  Apparently unrecorded.
+- Denominator-defect law: for p >= 7 in the top window, v_p(D_n) = v_p(d_n) - 1 iff p | b_n
+  (3121/3124; the 3 exceptions are p=5).  For sqrt n < p <= n/2 the defect residues are exactly Z_p.
+- Unconditional lemma: e_p(n) <= 3 floor(log_p n) gives sum_{p <= n/log n} e_p log p = O(n/log n),
+  so ALL primes below n/log n are harmless by Chebyshev alone; the q-digit part is O(log^2 n).
+- p-independent 27-term criterion: p | b_n iff p | V(n,p-1), V(n,s) = sum_{eps in {-1,0,1}^3} c_{n-1}(eps s).
+- Explicit order-2 shift operator for c_m(s,0,0): q0=(s-m)^3, q1, q2 cubic in s and m (96 checks).
+- Seam ray split: S_r = b_r - sum_kappa lambda_kappa CT[G_kappa^{r-1}(X^kappa-1)] (14 orbits).
+
+**Corrections made**
+- STATUS.md said the conditional theorem gives O(sqrt n) "for ALL n"; proof.tex correctly says
+  density 1.  Fixed.  No all-n upgrade can follow from Zbar plus the proved structure: explicit
+  aligned counterexample S_p = {N-p, p-1-(N-p)} has |S_p| <= 2, reflection symmetry, no
+  consecutive elements, sum|S_p|/pi(N) = 0.913, yet T(N)/N = 0.4955.
+- gcd(b_r,S_r) support {5,11,19} was an artifact of r <= 100 (17,31,37,61 appear by r < 300).
+- The trivial bound is the PRIME COUNT (1/2+o(1))n/log n, not the height bound 3.53.
+  First Apery-specific progress = any constant below 1/2.
+- The M-direction Casoratian carrier is closed on height (log2|W| ~ 21n, no rational ratio).
+
+**Scale**
+- K(n) = #{p in (n/2,n] : p | b_n} <= 3 for ALL n <= 200000 (C scanner, validated).
+- R(n) = log rad_{p<=n}(b_n): max R/n = 0.109, 0.025, 0.0041 on [1e2,1e3], [1e3,1e4], [1e4,1e5];
+  consistent with R(n) = O(log n loglog n).  Max #{p<=n : p|b_n} = 14 for n <= 1e5.
+- Family dichotomy: Apery zeta(3)/zeta(2)/Franel/Domb/Almkvist-Zudilin all decay (0.031-0.042);
+  Cooper s7/s10/s18 and C(2n,n) do NOT (0.225-0.420).  So the conjecture is FALSE inside the
+  sporadic family, and no proof can run on D-finiteness/modularity/Lucas/polytope reflexivity.
+  Factorial-ratio constant 2log2-1 = 0.386294 verified numerically to 0.38573 at n = 1e6.
+- Zeros are statistically generic: z mod 2,3,4,8 uniform; Legendre (z|p) = 50.3/49.7; z/p uniform.
+
+**Where the wall is**
+The certificate exists for CODEGREE (lem:codegree: common bad primes of m,n divide the fixed
+integer N_h(m), height O(h log N)) and powers the polylog exceptional set via Kovari-Sos-Turan.
+It does not exist for DEGREE (one index).  Equivalent faces of the same barrier: large-sieve Q^2,
+the k>=2 moments (modulus p_1...p_k ~ N^k exceeds the range), and the additive energy.  Note
+E = o(N^2/log^2 N) is EQUIVALENT to the goal, not weaker.  The incidence graph is K_{2,2}-free on
+the prime side, and a star is K_{2,2}-free, so no combinatorial argument can exclude one bad n.
