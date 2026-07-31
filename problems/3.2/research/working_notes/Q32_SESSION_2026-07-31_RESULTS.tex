@@ -601,6 +601,29 @@ $\#\{p\le X:a_p(E)=0\}\ll X/(\log X)^{3/2-\varepsilon}$
 character-indexed tests inside each prime.
 \end{enumerate}
 
+\medskip
+\noindent\textbf{Naming the obstruction.}  It is worth separating our barrier from the one that
+modern sieve technology does break.  Bombieri--Friedlander--Iwaniec, Fouvry--Iwaniec and Zhang
+cross the \emph{level-of-distribution} barrier $Q=x^{1/2}$: at $q=x^{1/2+\delta}$ each
+progression still contains $x^{1/2-\delta}$ candidates, and dispersion plus a factorisation
+$q=q_1q_2$ creates genuine bilinear boxes with Kloosterman input.  Our barrier is the
+\emph{occupancy-one} barrier $Q=x$: with $p\asymp N$ and $n$ ranging over an interval of length
+$N$, each modulus contains exactly one candidate, and $p$ is simultaneously the prime variable
+and the modulus, so it admits no balanced factorisation.
+
+Varying residues are \emph{not} the obstacle — Zhang handles all roots of a fixed $f$ modulo
+smooth $q$, Maynard's uniform-residue theorem takes a supremum over arbitrary $a_q$ when $q$ has
+a conveniently sized factor, and Duke--Friedlander--Iwaniec handle roots of a fixed quadratic
+congruence as the prime modulus varies.  What those all require is a factorable modulus or a
+fixed low-complexity algebraic kernel; ours is a prime modulus with a holonomic zero indicator,
+and we verified in \S\ref{subsec:generic} that the residues are statistically generic.
+
+The precise statement needed may therefore be named \emph{microscopic moving-target
+equidistribution for Ap\'ery zero residues}.  It is strictly stronger than ordinary
+prime-modulus root equidistribution (Hooley; Duke--Friedlander--Iwaniec), because the target
+window has length~$1$ — relative scale $1/p$ — rather than fixed positive relative length.  For
+calibration, even the cubic analogue $x^3\equiv2\pmod p$ lacks comparable prime-modulus
+machinery, so a holonomic zero set at scale $1/p$ is well beyond current reach.
+
 Accordingly the unconditional pointwise statement appears to require genuinely new
-technology — a characteristic-varying local-limit or large-sieve theorem for the
-two-variable Mellin sheaf — rather than a refinement of the arguments used here.
+technology rather than a refinement of the arguments used here.
