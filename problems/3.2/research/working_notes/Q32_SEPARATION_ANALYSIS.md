@@ -14870,3 +14870,203 @@ The exact script `q32_margin_lattice_audit.sage` constructs both
 coefficient matrices, verifies (68.134), and checks that every
 normalized row has zero coefficients off the marked star modulo each
 eligible core prime.
+
+### 68.13 Maximal boundary increments and the terminal constant term
+
+There is an exact boundary representation which is stronger than the
+formal \(5\)-by-\(5\) matrix packaging of two consecutive margins.  For
+an arbitrary array \(F\), put
+\[
+ {\cal R}_{D,L}(F)=G_{D,L}(F)-G_{D,L-1}(F).
+\]
+The first identity in (54.3) gives
+\[
+ \boxed{\qquad
+ {\cal R}_{D,L}(F)
+ =(-1)^L\binom{D+L}{L}\Delta^L F_D.
+ \qquad}
+\tag{68.140}
+\]
+At a right-active maximal margin \(D+L=n-1\), the \(Y\)-coordinate
+has a further Laurent constant-term form.  For \(M=n-1=D+L\),
+\[
+\begin{aligned}
+ \Delta^L C_M(D)
+ &=
+ \sum_{\kappa\in P\cap\mathbb Z^3}
+ \sum_{i=0}^L(-1)^{L-i}\binom Li
+ c_M((D+i)\kappa)\\
+ &=
+ \sum_{\kappa\in P\cap\mathbb Z^3}
+ \operatorname {CT}\left\{
+ \Lambda(X)^M X^{-D\kappa}
+ (X^{-\kappa}-1)^L
+ \right\}.
+\end{aligned}
+\tag{68.141}
+\]
+Thus the active boundary is not an unspecified long Newton row: it is
+a fixed-polytope constant term with zero surplus \(M-(D+L)\).
+Every moment occurring in the \(W\)-coordinate has only bounded
+surplus.  This is the correct input for any future boundary WZ
+calculation.
+
+The first exact audit also gives a useful calibration.  For the four
+hostile blocks, the bit lengths of the two coordinates of the
+*primitive* active high-difference vector and their integer content
+are
+\[
+\begin{array}{c|c|c|c}
+n&\text{active side}&
+(\operatorname {bits}\Delta^LY,\operatorname {bits}\Delta^LW)&
+\gcd(\Delta^LY,\Delta^LW)\\ \hline
+200&\text{right}&(944,1238)&30\\
+272&\text{right}&(1286,1596)&30\\
+300&\text{left}&(1462,1775)&90\\
+321&\text{left}&(1586,1901)&16.
+\end{array}
+\tag{68.142}
+\]
+The small content is genuine, but it is not itself a target carrier.
+The candidate prime occurs in the binomial multiplier in (68.140);
+after that multiplier is removed, targetness does not force the
+primitive vector to vanish.  Moreover the Euclidean algorithms for
+the last two \(H_m\)'s have no bounded first collapse: their remainders
+stay on the full exponential bit scale for many steps.  Hence the
+fixed \(5\)-by-\(5\) boundary matrix proposed in Q5814 is only the
+tautology
+\[
+ g_mH_m-g_{m-1}H_{m-1}
+ =\det(U_m,V_m)-\det(U_{m-1},V_{m-1});
+\tag{68.143}
+\]
+its entries still have exponential height.
+
+The script `q32_boundary_increment_audit.sage` verifies (68.140) and
+(68.141) independently, computes (68.142), and records the exact
+Euclidean remainder profiles.  Equation (68.141), not an endpoint-only
+finite-difference assertion, is the remaining positive boundary
+interface.  In particular, Q5812's claim that the full finite
+difference becomes a sum of endpoint values is false.
+
+### 68.14 Common-annihilator ghosts: a new Route-B family and its saturation
+
+The doubled-period lift can be enlarged without guessing another
+congruence.  Let \({\cal P}\) be the certified order-three annihilator
+of \(J\), and let \({\cal A}\) be the order-two Apéry operator.  Their
+least common left multiple
+\[
+ {\cal L}=\operatorname {lclm}({\cal P},{\cal A})
+ =\sum_{j=0}^5\lambda_j(s)S_s^j
+\tag{68.144}
+\]
+has order five.  After primitive integral normalization, every
+\(\lambda_j\) has degree \(35\), and
+\[
+ {\cal L}(J)={\cal L}(b)=0.
+\tag{68.145}
+\]
+For \(k\ge0\), define the shifted horizontal ghost
+\[
+ X_n^{(k)}(d)=
+ \sum_{j=0}^5\lambda_j(n+k)
+ \{C_{n+k+j}(d-1)+C_{n+k+j}(d+1)\}.
+\tag{68.146}
+\]
+Let \(p\) be a candidate prime, \(r=n-p\), and impose the same safe
+boundary inequalities as in (68.47), now through shift \(k+5\).
+Then polynomial reduction \(n\equiv r\pmod p\), followed by (68.47),
+gives the theorem
+\[
+ \boxed{\qquad X_n^{(k)}(p-1)\equiv{\cal L}(J)_{r+k}=0\pmod p.\qquad}
+\tag{68.147}
+\]
+
+For a core \(I\), let \(Q_I\) be its complete candidate primorial.
+Every Newton projection of (68.146) over a stencil containing \(I\)
+is divisible by \(Q_I\).  Write
+\[
+\begin{aligned}
+ A_m^-&=G_{d_m,L_m}(Y),&
+ A_m^+&=G_{D,L_m}(Y),\\
+ R_{k,m}^-&=G_{d_m,L_m}(X^{(k)})/Q_I,&
+ R_{k,m}^+&=G_{D,L_m}(X^{(k)})/Q_I,\\
+ c_m&=g_m/Q_I.
+\end{aligned}
+\tag{68.148}
+\]
+The new normalized exterior carrier is
+\[
+ \boxed{\qquad
+ T_{k,m}=
+ \frac{A_m^-R_{k,m}^+-A_m^+R_{k,m}^-}{c_m}\in\mathbb Z,
+ \qquad R_I\mid T_{k,m}.
+ \qquad}
+\tag{68.149}
+\]
+Integrality follows by applying (68.121) before cancelling \(Q_I\);
+target divisibility follows because both \(A_m^\pm\) vanish at a
+target.
+
+This is a genuinely different certified Route-B family.  With five
+shifts \(0\le k\le4\) and the last two margins, exact hostile-block
+computations give
+\[
+\begin{array}{c|c|l}
+n&\operatorname {bits}\gcd_{k,m}T_{k,m}&
+\gcd_{k,m}T_{k,m}/R_I\\ \hline
+200&45&2^{16}3^6 5^2\\
+272&75&2^{17}3^7 5^3\cdot263\cdot269\cdot271\\
+300&51&2^{16}3^7 5^2\cdot11\\
+321&54&2^{16}3^8 5.
+\end{array}
+\tag{68.150}
+\]
+The factors \(263,269,271\) are \(n-9,n-3,n-1\).  Adding the first
+three ghosts strictly decreases the gcd in every row; later shifts
+usually stabilize.
+
+There is also an exact saturation theorem explaining the limit of
+this gain.  Fix \(m\), put
+\[
+ A=(A_m^-,A_m^+),\qquad
+ R_k=(R_{k,m}^-,R_{k,m}^+),
+\]
+and let
+\[
+ \Delta_R=\gcd_{i<j}\det(R_i,R_j).
+\tag{68.151}
+\]
+If the \(R_k\)'s have rank two, the elementary Smith argument gives
+\[
+ \boxed{\qquad
+ c_m\gcd_kT_{k,m}
+ \mid \gcd(A_m^-,A_m^+)\,\Delta_R.
+ \qquad}
+\tag{68.152}
+\]
+Indeed, a unimodular change sends the primitive part of \(A\) to
+\((1,0)\); the gcd of the resulting second coordinates of the \(R_k\)
+divides every \(2\)-by-\(2\) minor.  Thus a full-rank ghost quotient
+lattice reduces the nonlinear family back to the original scalar
+Newton gcd, up to its lattice index.  It cannot by linear algebra
+alone bound the target part of \(\gcd(A_m^-,A_m^+)\).
+
+This gives a sharper Route-B verdict than the local star calculation
+alone.  Independent common-annihilator ghosts do remove real
+characteristic-zero nuisance, and (68.149) is a new exact family, but
+once their quotient columns reach rank two their contribution
+saturates as (68.152).  A completion still needs either a
+subexponential bound for the distinguished scalar gcd or a nonlinear
+identity not contained in this ghost lattice.
+
+The script `q32_ghost_quotient_audit.sage` constructs (68.144) by
+exact Ore lclm, verifies (68.145), checks (68.147) node by node, proves
+the valuation and integrality ledger in (68.148)--(68.149), reproduces
+(68.150), and verifies (68.152) over the integers.
+
+Finally, Q5815's claim that the diagonal-margin rows and the
+fixed-length exterior rows have the same saturated rational span is
+incompatible with the exact rank computation (68.134): their
+intersection is zero in every audited symbolic case.  No explicit
+transport matrix was supplied there, so that claim is rejected.
