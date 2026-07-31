@@ -34,7 +34,22 @@ $\#\{n \le N : \log G_n > \varepsilon\,n\}
 for every $\varepsilon > 0$; in particular, the
 exceptional set has upper Banach density zero
 and finite harmonic weight.
-The key ingredient is a new bound $Z(p) = O(p^{2/3})$ on the
+We further prove a \emph{Cartier--Frobenius block law} for the
+Ap\'ery \emph{pair}: for $p\ge7$, $1\le q<p$ and $0\le r<p$,
+\[
+\bigl(p^3a_{qp+r},\,b_{qp+r}\bigr)\equiv b_r\,(a_q,b_q)\pmod p,
+\]
+whose second coordinate is the classical Ap\'ery--Lucas congruence and
+whose numerator coordinate appears to be unrecorded; the same law
+holds for the $\zeta(2)$ pair with $p^2$.  Combining it with Ap\'ery's
+Casoratian and the no-two-consecutive-zeros theorem gives the exact
+valuation law $v_p(a_n)=-3+v_p(b_n)$, i.e.\ $e_p(n)=v_p(b_n)$, for
+every $p\ge7$ in the top window with $v_p(b_n)\le2$.  Consequently the
+top-window contribution to $\log G_n$ is \emph{exactly} the logarithm
+of the $(n/2,n]$-part of $b_n$, and, since all primes below
+$n/\log n$ contribute $O(n/\log n)$ by Chebyshev alone, the conjecture
+is equivalent to the statement that this part of $b_n$ is subexponential.
+The key ingredient of the density-one theorem is a bound $Z(p) = O(p^{2/3})$ on the
 zero-count function $Z(p) = \#\{j < p : p \mid b_j\}$,
 derived from the Ap\'ery recurrence via a gap polynomial argument.
 A companion centered-coefficient analysis of the bordered
