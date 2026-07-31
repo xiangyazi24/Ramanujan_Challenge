@@ -1020,6 +1020,16 @@ $\chi^2/p\approx1.6$--$2.1$), and the zero count is $0$ or $2$, consistent with 
 So the Ap\'ery sequence at first-block indices is, modulo $p$, as uniform as a random permutation.
 The problem is not anomalous concentration; it is proving what the data show.
 
+\medskip
+\noindent\textbf{The exact boundary.}  The half-sequence collision energy
+$S=\sum_a\#\{r<(p-1)/2:b_r\equiv a\}^2$ is $O(m)$ empirically ($S/m\approx1.3$--$1.5$,
+$\max_aM_a\le4$ for $p\le997$) and would give $|Z_p|=O(\sqrt p)$ via $|Z_p|^2\le S$.  But
+proving it requires a bounded-complexity geometric realisation of the nonlinear event
+$b_r\equiv b_s\pmod p$ — which no existing technique provides, because $\psi(\text{trace})$ is
+nonlinear and the fibre product has degree $\sim p$.  The statement $S=O(p)$ is therefore an
+\emph{averaged local-limit theorem for the Beukers--Peters Mellin family}, not a formal
+consequence of Deligne or Sato--Tate.
+
 The \emph{Fourier core} makes this quantitative.  Define the Weyl sum
 \[
   S_h(n)=\sum_{\substack{n/2<p\le n\\ p\ge7}}e\!\left(\frac{h\,b_{n-p}}p\right),
