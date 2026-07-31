@@ -40,10 +40,12 @@ For a prime p ≥ 7 and n = qp + r with 1 ≤ q < p, 0 ≤ r < p,
 The second coordinate is the classical Apéry–Lucas congruence `b_{qp+r} ≡ b_q b_r`
 (Gessel 1982; Malik–Straub 2016). The first coordinate is the numerator counterpart; the
 factor p^3 appears because the leading coefficient (n+1)^3 of the recurrence vanishes at
-n = p−1. A five-step proof of the case q = 1 — the case the reduction uses — is given in the paper.
-For q ≥ 2 the same statement is verified (9837 checks per coordinate, no violations) but the
-proof requires a two-stage argument: a boundary congruence `p^3 a_{qp} ≡ a_q` by Kummer digit
-bookkeeping, then propagation in r, since for q ≥ 2 every m = tp with t ≤ q contributes.
+n = p−1. Both cases are proved in the paper. For q = 1 there is a direct five-step argument; for
+general q the proof splits into a boundary computation `p^3 a_{qp} ≡ a_q (mod p)` (Kummer:
+v_p(C(qp,k)) = 0 exactly when p | k, and the correction terms with p ∤ m have denominator
+valuation ≤ 2, so only m = tp survives) and a propagation step (modulo p the recurrence in
+r is exactly the b-recurrence, with u_{qp+1} ≡ 5u_{qp} since P(0) = 5), giving
+u_{qp+r} ≡ u_{qp}·b_r for both coordinates.
 The ζ(2) Apéry pair satisfies the same law with p^2 (3198 checks); the r-propagation is formal
 once p^κ A_n is p-integral, but the boundary identity is separate input for each family.
 A literature check (Gessel 1982; Beukers 1985, 1987; Coster; Malik–Straub 2016; Delaygue 2018;

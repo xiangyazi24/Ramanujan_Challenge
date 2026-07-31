@@ -208,15 +208,38 @@ and adding gives the classical $b_n\equiv5b_r$.
 Verified on $9837$ checks per coordinate over all $7\le p<80$, $1\le q<p$, $0\le r<p$ with
 $qp+r<700$: no violations.
 
-\emph{Caution on the proof for $q\ge2$.}  The argument above does \emph{not} extend verbatim.
-Step~2 used that $m\le n<2p$ forces $m=p$; for $q\ge2$ every $m=tp$ with $1\le t\le q$ has
-$v_p(m^3)=3$, and the binomial denominators can add valuation, so the outer $\beta_{n,k}$
-valuations are essential.  The correct route is two-stage: first establish the boundary
-congruence $p^3a_{qp}\equiv a_q\pmod p$ by full Kummer digit bookkeeping, and then propagate in
-$r$ — at $n=qp$ the backward coefficient $(qp)^3$ vanishes modulo $p$, and inside the block the
-reduced recurrence is exactly the $b$-recurrence, giving $p^3a_{qp+r}\equiv a_qb_r$, with
-$b_{qp+r}\equiv b_qb_r$ supplied by Gessel.  The $q=1$ case proved above — which is the one the
-reduction uses — is unaffected.
+The proof for $q\ge2$ does not extend the $q=1$ argument verbatim (Step~2 there used
+$m\le n<2p$, whereas for $q\ge2$ every $m=tp$ with $t\le q$ has $v_p(m^3)=3$).  It splits
+instead into a boundary computation and a propagation.
+
+\begin{proof}[Proof of the general form]
+\emph{(A) Boundary, $n=qp$.}  The multiples of $p$ in $[1,qp]$ are $p,2p,\dots,qp$, so
+$H^{(3)}_{qp}=p^{-3}H^{(3)}_q+(p\text{-integral})$ and $p^3H^{(3)}_{qp}\equiv H^{(3)}_q$.
+By Kummer, $v_p\binom{qp}k=0$ exactly when $p\mid k$: writing $k=k_1p+k_0$, a nonzero $k_0$
+forces a units-digit carry, while for $k_0=0$ the top digits add to $q<p$ without carry.  Hence
+$v_p(\beta_{qp,k})\ge2$ for $p\nmid k$, and for $k=k_1p$ Lucas gives
+$\beta_{qp,k_1p}\equiv\beta_{q,k_1}$.
+In $c_{qp,k}$, a term with $p\nmid m$ has $v_p(m^3)=0$ and
+$v_p\bigl(\binom{qp}m\binom{qp+m}m\bigr)\le2$ (checked over $7148$ triples: the maximum is
+exactly $2$), so its denominator has $v_p\le2$ and it dies after multiplication by $p^3$.  A term
+with $m=tp$ has $v_p(m^3)=3$ and $\binom{qp}{tp}\binom{qp+tp}{tp}\equiv\binom qt\binom{q+t}t$ by
+Lucas, while $(-1)^{tp-1}=(-1)^{t-1}$ for odd $p$; hence $p^3c_{qp,k_1p}\equiv c_{q,k_1}$.
+Combining, and using $v_p(\beta_{qp,k})\ge2$ to kill every $p\nmid k$ term,
+\[
+  p^3a_{qp}\equiv\sum_{k_1}\beta_{q,k_1}\bigl(H^{(3)}_q+c_{q,k_1}\bigr)=a_q\pmod p.
+\]
+
+\emph{(B) Propagation, $r\ge1$.}  For $n=qp+r$ one has $n\equiv r\pmod p$, so modulo $p$ the
+recurrence reads $(r+1)^3u_{n+1}\equiv P(r)u_n-r^3u_{n-1}$ — \emph{exactly} the $b$-recurrence in
+the variable $r$, and $(r+1)^3$ is invertible since $r+1\le p-1$.  At the left edge, $P(0)=5$ and
+$(qp)^3\equiv0$ give $u_{qp+1}\equiv5\,u_{qp}$, matching $b_1=5$.  So both coordinates satisfy the
+same recurrence with initial data proportional to $(1,5)$, whence $u_{qp+r}\equiv u_{qp}\,b_r$.
+
+Applying (B) to each coordinate and inserting (A) and $b_{qp}\equiv b_q$ gives the theorem.
+\end{proof}
+
+The two ingredients were also verified numerically: the boundary congruence in $110$ cases and
+the propagation in $2339$ cases, with no violations.
 
 \emph{On terminology.}  Calling this a ``rank-one collapse'' is inaccurate: when $b_r\ne0$ the
 displayed action is $b_r\cdot I$, which has rank two.  It is better described as a
