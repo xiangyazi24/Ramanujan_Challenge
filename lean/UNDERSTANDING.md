@@ -28,6 +28,8 @@ P2.3 has been **rebuilt with real content** — see below.
 - **Genuinely proved**: P2.3 (full chain modulo one cited classical input), plus
   real auxiliary content in P2.1/2.2/2.6 and the P3.1 and P3.2 layers.
 - **Not formalized**: the main limits of P2.1, P2.2, P2.5, P2.6, P2.7.
+  P2.5 now has a substantial exact algebraic layer, but the Catalan connection
+  coefficient is still missing.
 
 Build: 3427 jobs, 0 errors; warnings are exactly the five `sorry` declarations.
 All non-`sorry` theorems axiom-clean: {propext, Classical.choice, Quot.sound}.
@@ -47,7 +49,7 @@ All non-`sorry` theorems axiom-clean: {propext, Classical.choice, Quot.sound}.
 | P2.2 | Problem22.lean | 0 | the four shift identities `c̃_j(m) = c_j(m−3)` (`ring`). **Limit not formalized.** |
 | P2.3 | Problem23.lean | 0 ✅ | **full chain**: tensor-annihilation theorem for arbitrary solutions, closed forms solve the recurrence, all 8 initial values, `c₀ ≠ 0` + uniqueness, exact ratio splitting, `m!/D_m → e` from Mathlib, main theorem — conditional only on Lambert's CF value, which is an explicit hypothesis |
 | P2.4 | Problem24.lean | 1 ⚠️ | strong form (polylogarithm identity) left as `sorry` |
-| P2.5 | Problem25.lean | 0 | only the definition of Catalan's constant. **Nothing substantive.** |
+| P2.5 | Problem25.lean | 0 | exact CMF transcription and row recurrences; first product; determinant and nonsingularity; Pochhammer gauge identity; Poincaré cubic; sign conjugation to a strictly positive cocycle; nonvanishing of every finite denominator; exact positive-weight/convex-hull nesting of all three finite ratios; exact Catalan-error recurrence; rigorous rational bounds on `G` and the three initial transformed-error signs. **Main limit not formalized:** the exact dominant connection coefficient is still missing. |
 | P2.6 | Problem26.lean | 0 | `recessiveRatio_limit` (ratio → 1/4) and `zeta2_eq` (ζ(2) = π²/6). **Identity not formalized.** |
 | P2.7 | Problem27.lean | 0 | nothing beyond documentation. **Nothing substantive.** |
 | P2.8 | Problem28.lean | 1 ⚠️ | strong form (Chudnovsky series) left as `sorry`; the *submitted* 2.8 package uses the separate Ripple extraction, which is far stronger |
@@ -98,3 +100,32 @@ lake env lean -c '#print axioms problem22_limit_exists'
 ```
 
 Last verified: 2026-07-22 (Wronskian layer complete, no_consecutive_zeros proved)
+
+## P2.5 AZ-certificate audit (2026-07-30)
+
+The polynomial certificate produced by `scripts/p25_az_correct.py` does verify
+the cleared differential identity
+
+```text
+Phi P_(n+1) - P_n M_H = D_u A + D_v B + D_t C.
+```
+
+It does **not** yield the Delannoy-square period claimed in the exploratory
+notes.  The covariant derivatives are divergence terms for the ordinary form
+`du dv dt`.  After the factor `u v (1+t^2)` in `P` cancels the carrier
+denominator, small `u`- and `v`-contours extract the coefficient of
+`u^-1 v^-1`, not the constant term.  Replacing these by logarithmic measures
+`du/u` and `dv/v` changes the functional and invalidates the integration-by-
+parts step.  At `eps = 0` the remaining `t`-integrand is constant, so its
+ordinary closed-contour integral is zero.
+
+There is also a direct exact recurrence countercheck: the proposed carrier row
+`r_0 = [1, 1, 1/4]` gives
+
+```text
+r_0 M_H(0) = [15/8, -11/8, 1/4],
+```
+
+not `[81/4, 27/2, 9/4]`.  Therefore this certificate must not be cited as an
+exact connection coefficient or a proof of the Catalan limit.  The same warning
+is recorded at the top of `scripts/p25_az_verify.py`.

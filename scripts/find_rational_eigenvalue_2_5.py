@@ -5,7 +5,7 @@ The Poincaré polynomial (c+16)(c²+544c+256) has rational root c=-16.
 This means M(n) has an eigenvalue lambda_3(n) that is a rational function
 of n, with lambda_3(n) ~ -16 n^7 for large n.
 
-If the char poly of M(n) factors over Q(n) as
+If the char poly of M(n) factors over Q(n) as 
   (lambda - lambda_3(n))(quadratic) = 0,
 then lambda_3(n) is the gauge: h(n) = product_{k=0}^{n-1} lambda_3(k).
 """
@@ -102,7 +102,7 @@ print(f"\n  Degree-21 balance: (-16)^3 + 560*256 + 8960*(-16) + 4096 = {(-16)**3
 
 # For lam = -16n^7 + a*n^6:
 # lam^3 at n^20: 3*(-16)^2*a = 768a
-# p(n)*lam^2 at n^20: p has degree 7, lam^2 has degree 14.
+# p(n)*lam^2 at n^20: p has degree 7, lam^2 has degree 14. 
 #   p at n^7: LC = -560. p at n^6: next coeff.
 #   lam^2 at n^14: (-16)^2 = 256. lam^2 at n^13: 2*(-16)*a = -32a.
 #   (p*lam^2) at n^20: (-560)(n^7)(256 n^14) → n^21 (already counted)

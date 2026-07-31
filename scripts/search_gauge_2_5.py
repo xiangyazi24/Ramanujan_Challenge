@@ -7,7 +7,7 @@ from fractions import Fraction
 from mpmath import mp, mpf, nstr, matrix as mp_matrix, lu_solve
 mp.dps = 150
 
-# Rebuild exact recurrence
+# Rebuild exact recurrence 
 def M_mat_qq(n):
     n = Fraction(n)
     m11 = (-2*n-5)*(n+3)**2 * (136*n**4 + 1424*n**3 + 5548*n**2 + 9551*n + 6141)
@@ -119,34 +119,34 @@ for Q_name, Q_roots in Q_candidates:
     dQ = len(Q_roots)
     dP = dQ + 7
     n_params = dP  # P is monic of degree dP, so dP free coefficients
-
+    
     # Use n_params evaluation points
     eval_points = list(range(n_params + 5))  # overdetermined
-
+    
     def F_val(n_val, sigma):
         P_val = mpf(1)
         nv = mpf(n_val)
         for i in range(dP):
             P_val = P_val * nv + sigma[i]
-
+        
         Q_val = eval_Q(Q_roots, nv)
         Q_val1 = eval_Q(Q_roots, nv+1)
         Q_val2 = eval_Q(Q_roots, nv+2)
-
+        
         r0 = mpf(-16) * P_val / Q_val if Q_val != 0 else mpf('inf')
-
+        
         P_val1 = mpf(1)
         for i in range(dP):
             P_val1 = P_val1 * (nv+1) + sigma[i]
         P_val2 = mpf(1)
         for i in range(dP):
             P_val2 = P_val2 * (nv+2) + sigma[i]
-
+        
         r1 = mpf(-16) * P_val1 / Q_val1 if Q_val1 != 0 else mpf('inf')
         r2 = mpf(-16) * P_val2 / Q_val2 if Q_val2 != 0 else mpf('inf')
-
+        
         return c_j(3, nv)*r0*r1*r2 + c_j(2, nv)*r0*r1 + c_j(1, nv)*r0 + c_j(0, nv)
-
+    
     # Use half-integer initial guess: roots spread around 1,...,dP/2
     sigma0 = [mpf(0)] * dP
     # Start with simple guess: P(n) = (n+1)(n+3/2)(n+2)(n+5/2)(n+3)(n+7/2)(n+4)... extended
@@ -159,7 +159,7 @@ for Q_name, Q_roots in Q_candidates:
         guess_roots = [1, 1.5, 2, 2.5, 3, 3.5, 4][:dP]
     else:
         guess_roots = [0.5 + k*0.5 for k in range(dP)]
-
+    
     # Compute sigma from roots
     def roots_to_sigma(roots):
         n = len(roots)
@@ -173,9 +173,9 @@ for Q_name, Q_roots in Q_candidates:
                 s += prod
             sigma.append(s)
         return sigma
-
+    
     sigma = roots_to_sigma(guess_roots)
-
+    
     # Skip Q candidates that cause division by zero in eval points
     skip = False
     for n_val in eval_points[:n_params]:
@@ -186,7 +186,7 @@ for Q_name, Q_roots in Q_candidates:
     if skip:
         # Shift evaluation points
         eval_points = [n + 10 for n in eval_points]
-
+    
     # Newton iteration
     converged = False
     for iteration in range(50):
@@ -200,12 +200,12 @@ for Q_name, Q_roots in Q_candidates:
                 break
         if len(F_vals) < n_params:
             break
-
+        
         max_res = max(abs(fv) for fv in F_vals)
         if max_res < mpf('1e-100'):
             converged = True
             break
-
+        
         # Jacobian
         eps = mpf('1e-50')
         J = mp_matrix(n_params, n_params)
@@ -216,17 +216,17 @@ for Q_name, Q_roots in Q_candidates:
                 fp = F_val(eval_points[i_row], sp)
                 fm = F_val(eval_points[i_row], sm)
                 J[i_row, j_col] = (fp - fm) / (2*eps)
-
+        
         b = mp_matrix(n_params, 1)
         for i in range(n_params):
             b[i, 0] = -F_vals[i]
-
+        
         try:
             delta = lu_solve(J, b)
             sigma = [sigma[j] + delta[j, 0] for j in range(n_params)]
         except:
             break
-
+    
     if converged:
         # Verify at MORE points
         max_verify = mpf(0)
@@ -236,13 +236,13 @@ for Q_name, Q_roots in Q_candidates:
                 fv = abs(F_val(n_val, sigma))
                 if fv > max_verify:
                     max_verify = fv
-
+        
         if max_verify < mpf('1e-50'):
             print(f"\n✓✓✓ FOUND GAUGE with Q = {Q_name} ✓✓✓")
             print(f"  P coefficients (below leading n^{dP}):")
             for i, s in enumerate(sigma):
                 print(f"    σ_{i+1} = {nstr(s, 30)}")
-
+            
             # Find roots of P
             import numpy as np
             coeffs_np = [1.0] + [float(s) for s in sigma]
@@ -262,7 +262,7 @@ for Q_name, Q_roots in Q_candidates:
                     print(f"    a_{i+1} = {x:.12f}  ≈ {best_frac} (err {best_err:.2e})")
                 else:
                     print(f"    a_{i+1} = {r.real:.12f} + {r.imag:.12f}i  (COMPLEX)")
-
+            
             # Print r(n) formula
             print(f"\n  r(n) = -16 * P(n) / ({Q_name})")
             break

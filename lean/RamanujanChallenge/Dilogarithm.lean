@@ -74,9 +74,9 @@ def rogersExtended (z : ℝ) (p q : ℤ) : ℝ :=
 
 /-! ## Key functional equations -/
 
-private theorem dilog_hasDerivAt {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+theorem dilog_hasDerivAt_of_abs_lt_one {x : ℝ}
+    (hx : |x| < 1) (hxne : x ≠ 0) :
     HasDerivAt dilog (-(Real.log (1 - x)) / x) x := by
-  have hx : |x| < 1 := by rw [abs_of_pos hx0]; exact hx1
   let r : ℝ := (|x| + 1) / 2
   have hr0 : 0 ≤ r := by dsimp [r]; positivity
   have hrpos : 0 < r := by dsimp [r]; positivity
@@ -117,7 +117,6 @@ private theorem dilog_hasDerivAt {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
   rw [show dilog = (fun y : ℝ => ∑' n : ℕ,
       y ^ (n + 1) / (↑(n + 1) : ℝ) ^ 2) from rfl]
   convert hd using 1
-  have hxne : x ≠ 0 := ne_of_gt hx0
   have hsum := Real.hasSum_pow_div_log_of_abs_lt_one hx
   have hsum' := hsum.mul_left (1 / x)
   have hsum'' : HasSum (fun n : ℕ => x ^ n / (↑(n + 1) : ℝ))
@@ -129,7 +128,12 @@ private theorem dilog_hasDerivAt {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
     · field_simp
   exact hsum''.tsum_eq.symm
 
-private theorem dilog_continuousOn_unit :
+theorem dilog_hasDerivAt {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt dilog (-(Real.log (1 - x)) / x) x :=
+  dilog_hasDerivAt_of_abs_lt_one
+    (by rw [abs_of_pos hx0]; exact hx1) (ne_of_gt hx0)
+
+theorem dilog_continuousOn_unit :
     ContinuousOn dilog (Icc (-1 : ℝ) 1) := by
   unfold dilog
   refine continuousOn_tsum (u := fun n : ℕ => (1 : ℝ) / (↑(n + 1) : ℝ) ^ 2)
@@ -157,8 +161,8 @@ private theorem log_mul_log_one_sub_continuousAt_one :
       simp
     · rw [dslope_of_ne Real.log hx]
       rw [slope_def_field, Real.log_one]
-      field_simp
-      ring_nf
+      field_simp [sub_ne_zero.mpr hx]
+      ring
   rw [heq]
   apply ContinuousAt.mul
   · exact (continuousAt_dslope_same.mpr

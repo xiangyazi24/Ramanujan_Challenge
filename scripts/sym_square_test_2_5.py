@@ -44,9 +44,9 @@ def sym_kronecker(M_np):
     # (M^T J M)_{ij} = sum_{k,l} M_{ki} J_{kl} M_{lj}
     # For symmetric J, we use basis {E11, E12+E21, E13+E31, E22, E23+E32, E33}
     # Indices: 0=(1,1), 1=(1,2), 2=(1,3), 3=(2,2), 4=(2,3), 5=(3,3)
-
+    
     idx_to_ij = [(0,0), (0,1), (0,2), (1,1), (1,2), (2,2)]
-
+    
     K = np.zeros((6, 6))
     for a, (i, j) in enumerate(idx_to_ij):
         for b, (k, l) in enumerate(idx_to_ij):
@@ -58,11 +58,11 @@ def sym_kronecker(M_np):
                 val = M_np[k, i] * M_np[k, j]
             else:
                 val = M_np[k, i] * M_np[l, j] + M_np[l, i] * M_np[k, j]
-
+            
             # Adjust for the normalization of the off-diagonal basis elements
             # We're using J_{kl} as coefficient (not 2*J_{kl}), so:
             K[a, b] = val
-
+    
     return K
 
 # Test for several values of n
@@ -80,12 +80,12 @@ for n_val in [0, 1, 2, 5, 10, 20]:
     det_M = np.linalg.det(M_np)
     print(f"n={n_val}: det(M)={det_M:.6e}")
     print(f"  K eigenvalues: {[f'{e:.6e}' for e in eigvals_sorted]}")
-
+    
     # For a symmetric square M = Sym²(N), the eigenvalues of K are:
     # lambda_i * lambda_j for i <= j where lambda_i are eigenvalues of N⊗N|_sym
     # Actually, for Sym²(N), the eigenvalue of the Kronecker product on symmetric
     # matrices is det(N)^2, and the eigenvalue ratios should be specific.
-
+    
     # More useful: check if there's a common eigenvector J across different n values.
     # The INVARIANT CONIC test: if J is n-independent, all n-values share the same eigenvector.
 

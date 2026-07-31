@@ -18,18 +18,18 @@ def Q_rs(r, s):
     N = r + s
     if N == _sage_const_0 :
         return R(_sage_const_1 )
-
+    
     M = matrix(QQ, N, N + _sage_const_1 )
-    row = _sage_const_0
+    row = _sage_const_0 
     for k in range(r):
         for m in range(N + _sage_const_1 ):
             M[row, m] = QQ(_sage_const_1 ) / QQ((k + m + _sage_const_1 )**_sage_const_2 )
-        row += _sage_const_1
+        row += _sage_const_1 
     for k in range(s):
         for m in range(N + _sage_const_1 ):
             M[row, m] = QQ(_sage_const_1 ) / QQ((k + m + _sage_const_1 )**_sage_const_3 )
-        row += _sage_const_1
-
+        row += _sage_const_1 
+    
     ker = M.right_kernel().basis()
     if len(ker) != _sage_const_1 :
         print(f"  WARNING: kernel dim = {len(ker)} at (r,s)=({r},{s})")
@@ -63,7 +63,7 @@ print("\nChecking for 4-term recurrence in q_n = Q_step(n)(1)...")
 # etc. - very large coefficients
 
 # Let's check ratios instead
-# The recurrence for P2.7 has Poincaré roots that are
+# The recurrence for P2.7 has Poincaré roots that are 
 # squared Cooper level-11 roots
 
 # First check if q_n has a 3-term pattern (order 2) or 4-term (order 3)
@@ -81,10 +81,10 @@ for max_deg in range(_sage_const_1 , _sage_const_8 ):
     # total unknowns = 4*(max_deg+1) - 1 = 4*max_deg + 3
     n_unk = _sage_const_4 *(max_deg + _sage_const_1 )
     n_eqs = min(len(q_values) - _sage_const_3 , n_unk + _sage_const_2 )
-
+    
     if n_eqs < n_unk:
         continue
-
+    
     mat = matrix(QQ, n_eqs, n_unk)
     for n_idx in range(n_eqs):
         for j in range(max_deg + _sage_const_1 ):
@@ -96,7 +96,7 @@ for max_deg in range(_sage_const_1 , _sage_const_8 ):
                 mat[n_idx, _sage_const_2 *(max_deg + _sage_const_1 ) + j] = QQ(n_idx)**j * q_values[n_idx + _sage_const_1 ]
             if q_values[n_idx] is not None:
                 mat[n_idx, _sage_const_3 *(max_deg + _sage_const_1 ) + j] = QQ(n_idx)**j * q_values[n_idx]
-
+    
     ker = mat.right_kernel()
     if ker.dimension() > _sage_const_0 :
         print(f"  deg={max_deg}: kernel dim = {ker.dimension()}")
@@ -162,12 +162,12 @@ lc_A = _sage_const_1024   # leading term ~n^12
 lc_D = _sage_const_1      # leading term ~n^12
 # Poincaré polynomial from recurrence A*u_{n+1} = B*u_n - C*u_{n-1} + D*u_{n-2}
 # is determined by leading coefficients at each shift
-# Actually the Poincaré polynomial for the 4-term recurrence uses the
+# Actually the Poincaré polynomial for the 4-term recurrence uses the 
 # leading coefficients of A, B, C, D evaluated at n→∞
 
 # Leading terms:
 # A_n ~ 1024 * 2^4 * 2^3 * 2^3 * 946 * n^(2+4+3+3) = 1024*16*8*8*946 * n^12
-# B_n ~ 128 * 2^3 * 2^3 * 104060 * n^(3+3+6) = 128*8*8*104060 * n^12
+# B_n ~ 128 * 2^3 * 2^3 * 104060 * n^(3+3+6) = 128*8*8*104060 * n^12  
 # C_n ~ 16 * 1 * 2^3 * 3784 * n^(4+3+5) = 16*8*3784 * n^12
 # D_n ~ 1 * 1 * 946 * n^(4+6+2) = 946 * n^12
 
@@ -179,10 +179,10 @@ lc_D = _sage_const_1      # leading term ~n^12
 # Poincaré poly: A_∞ ξ - B_∞ + C_∞/ξ - D_∞/ξ² = 0
 # Multiply by ξ²: A_∞ ξ³ - B_∞ ξ² + C_∞ ξ - D_∞ = 0
 
-lc_A_full = _sage_const_1024  * _sage_const_16  * _sage_const_8  * _sage_const_8  * _sage_const_946
-lc_B_full = _sage_const_128  * _sage_const_8  * _sage_const_8  * _sage_const_104060
-lc_C_full = _sage_const_16  * _sage_const_8  * _sage_const_3784
-lc_D_full = _sage_const_946
+lc_A_full = _sage_const_1024  * _sage_const_16  * _sage_const_8  * _sage_const_8  * _sage_const_946 
+lc_B_full = _sage_const_128  * _sage_const_8  * _sage_const_8  * _sage_const_104060 
+lc_C_full = _sage_const_16  * _sage_const_8  * _sage_const_3784 
+lc_D_full = _sage_const_946 
 
 print(f"\nPoincaré coefficients (leading):")
 print(f"  A_∞ = {lc_A_full}")
@@ -198,3 +198,4 @@ roots = solve(poincare == _sage_const_0 , x)
 print(f"Roots: {[r.rhs().n() for r in roots]}")
 
 print("\nDone.")
+

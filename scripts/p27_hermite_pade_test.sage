@@ -12,7 +12,7 @@ def Q_rs(r, s):
     N = r + s
     if N == 0:
         return R(1)
-
+    
     M = matrix(QQ, N, N + 1)
     row = 0
     for k in range(r):
@@ -23,7 +23,7 @@ def Q_rs(r, s):
         for m in range(N + 1):
             M[row, m] = QQ(1) / QQ((k + m + 1)^3)
         row += 1
-
+    
     ker = M.right_kernel().basis()
     if len(ker) != 1:
         print(f"  WARNING: kernel dim = {len(ker)} at (r,s)=({r},{s})")
@@ -57,7 +57,7 @@ print("\nChecking for 4-term recurrence in q_n = Q_step(n)(1)...")
 # etc. - very large coefficients
 
 # Let's check ratios instead
-# The recurrence for P2.7 has Poincaré roots that are
+# The recurrence for P2.7 has Poincaré roots that are 
 # squared Cooper level-11 roots
 
 # First check if q_n has a 3-term pattern (order 2) or 4-term (order 3)
@@ -75,10 +75,10 @@ for max_deg in range(1, 8):
     # total unknowns = 4*(max_deg+1) - 1 = 4*max_deg + 3
     n_unk = 4*(max_deg + 1)
     n_eqs = min(len(q_values) - 3, n_unk + 2)
-
+    
     if n_eqs < n_unk:
         continue
-
+    
     mat = matrix(QQ, n_eqs, n_unk)
     for n_idx in range(n_eqs):
         for j in range(max_deg + 1):
@@ -90,7 +90,7 @@ for max_deg in range(1, 8):
                 mat[n_idx, 2*(max_deg + 1) + j] = QQ(n_idx)^j * q_values[n_idx + 1]
             if q_values[n_idx] is not None:
                 mat[n_idx, 3*(max_deg + 1) + j] = QQ(n_idx)^j * q_values[n_idx]
-
+    
     ker = mat.right_kernel()
     if ker.dimension() > 0:
         print(f"  deg={max_deg}: kernel dim = {ker.dimension()}")
@@ -156,12 +156,12 @@ lc_A = 1024  # leading term ~n^12
 lc_D = 1     # leading term ~n^12
 # Poincaré polynomial from recurrence A*u_{n+1} = B*u_n - C*u_{n-1} + D*u_{n-2}
 # is determined by leading coefficients at each shift
-# Actually the Poincaré polynomial for the 4-term recurrence uses the
+# Actually the Poincaré polynomial for the 4-term recurrence uses the 
 # leading coefficients of A, B, C, D evaluated at n→∞
 
 # Leading terms:
 # A_n ~ 1024 * 2^4 * 2^3 * 2^3 * 946 * n^(2+4+3+3) = 1024*16*8*8*946 * n^12
-# B_n ~ 128 * 2^3 * 2^3 * 104060 * n^(3+3+6) = 128*8*8*104060 * n^12
+# B_n ~ 128 * 2^3 * 2^3 * 104060 * n^(3+3+6) = 128*8*8*104060 * n^12  
 # C_n ~ 16 * 1 * 2^3 * 3784 * n^(4+3+5) = 16*8*3784 * n^12
 # D_n ~ 1 * 1 * 946 * n^(4+6+2) = 946 * n^12
 

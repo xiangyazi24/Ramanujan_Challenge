@@ -23,9 +23,23 @@ No `sorry`, no `native_decide`.  Every theorem depends only on
 -/
 import Ramanujan31.Dilog.Basic
 import Ramanujan31.Dilog.RealBounds
+import Ramanujan31.Dilog.Rogers
+import Ramanujan31.Dilog.FiveTerm
+import Ramanujan31.Dilog.SpecialValues
+import Ramanujan31.Dilog.EndpointTransform
+import Ramanujan31.Dilog.CyclicRogers
+import Ramanujan31.Dilog.IdealPolygon
+import Ramanujan31.Dilog.Regular17
+import Ramanujan31.Dilog.Fan17
 import Ramanujan31.Dilog.Certify
 import Ramanujan31.Dilog.BlochWigner
 import Ramanujan31.Dilog.Instance
+import Ramanujan31.APolynomial
+import Ramanujan31.Elimination
+import Ramanujan31.ReverseElimination
+import Ramanujan31.RegulatorDifferential
+import Ramanujan31.SubresultantSign
+import Ramanujan31.ShapeChamber
 import Ramanujan31.RatReconstruct
 import Ramanujan31.ChartSymmetry
 import Ramanujan31.ShapeField

@@ -19,7 +19,7 @@ def C(n): return _sage_const_16 *(n+_sage_const_3 )**_sage_const_4 *(_sage_const
 def D(n): return (n+_sage_const_3 )**_sage_const_4 *(n+_sage_const_4 )**_sage_const_6 *(_sage_const_946 *n**_sage_const_2 +_sage_const_4515 *n+_sage_const_5399 )
 
 # Compute q_n exactly using QQ arithmetic
-NMAX = _sage_const_300
+NMAX = _sage_const_300 
 q = [QQ(_sage_const_0 )] * (NMAX+_sage_const_1 )
 q[_sage_const_0 ] = QQ(-_sage_const_215040420000 )
 q[_sage_const_1 ] = QQ(-_sage_const_167282265043404 ) / QQ(_sage_const_905 )
@@ -90,7 +90,7 @@ poincare_coeffs = []
 max_deg = max(L[i].degree() for i in range(L.order()+_sage_const_1 ))
 for i in range(L.order()+_sage_const_1 ):
     c = L[i]
-    lc = c.leading_coefficient() if c.degree() == max_deg else _sage_const_0
+    lc = c.leading_coefficient() if c.degree() == max_deg else _sage_const_0 
     poincare_coeffs.append(lc)
     print("  L[%d]: degree %d, leading coeff = %s" % (i, c.degree(), lc))
 
@@ -178,3 +178,4 @@ if ok:
 print("\n=== Summary ===" , flush=True)
 print("Operator L: order %d, degree %d" % (L.order(), L.degree()))
 print("Total time: %.1fs" % (time.time()-t0))
+

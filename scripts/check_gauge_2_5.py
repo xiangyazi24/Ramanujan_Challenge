@@ -139,7 +139,7 @@ for n in range(5):
     d0 = eval_cj(0,n)
     val = d3*(n+3)**7*(n+2)**7*(n+1)**7 + d2*(n+2)**7*(n+1)**7 + d1*(n+1)**7 + d0
     print(f"  n={n}: {val}")
-
+    
 # Check more general (a)_n^7 with a = 1
 # v(n) = ((1)_n)^7 = (n!)^7, same as above
 

@@ -53,11 +53,11 @@ def find_recurrence(order, max_deg, Q, verbose=True):
         if verbose:
             print(f"  Not enough data: {num_equations} equations < {num_unknowns} unknowns")
         return None
-
+    
     # Build matrix: row for each n, columns for coefficients a_{s,k} where c_s(n) = Σ a_{s,k} n^k
     # Equation: Σ_{s=0}^{order} c_s(n) Q[n+s] = 0
     # i.e., Σ_{s=0}^{order} Σ_{k=0}^{max_deg} a_{s,k} n^k Q[n+s] = 0
-
+    
     rows = []
     for n in range(min(num_equations, num_unknowns + 10)):
         row = []
@@ -67,15 +67,15 @@ def find_recurrence(order, max_deg, Q, verbose=True):
             # end k
         # end s
         rows.append(row)
-
+    
     actual_eqs = len(rows)
     nc = num_unknowns
-
+    
     # Gaussian elimination over Q
     mat = [row[:] for row in rows]
     nr = len(mat)
     pivots = []
-
+    
     for c in range(nc):
         # Find nonzero pivot
         piv = -1
@@ -95,28 +95,28 @@ def find_recurrence(order, max_deg, Q, verbose=True):
                 for j in range(nc):
                     mat[i][j] -= f * mat[piv_row][j]
         pivots.append(c)
-
+    
     rank = len(pivots)
     null_dim = nc - rank
-
+    
     if verbose:
         print(f"  Order {order}, degree {max_deg}: {nc} unknowns, {actual_eqs} equations, rank={rank}, null_dim={null_dim}")
-
+    
     if null_dim == 0:
         return None
-
+    
     # Extract null vector
     free_cols = [c for c in range(nc) if c not in pivots]
     x = [Fraction(0)] * nc
     fc = free_cols[0]
     x[fc] = Fraction(1)
-
+    
     # Back-substitute
     for pr_idx in range(len(pivots)-1, -1, -1):
         pc = pivots[pr_idx]
         s = sum(mat[pr_idx][j] * x[j] for j in range(pc+1, nc))
         x[pc] = -s / mat[pr_idx][pc]
-
+    
     # Verify on ALL available data
     max_n_verify = len(Q) - order
     bad = False
@@ -132,7 +132,7 @@ def find_recurrence(order, max_deg, Q, verbose=True):
                 print(f"  FAILED verification at n={n}: residual != 0")
             bad = True
             break
-
+    
     if not bad:
         if verbose:
             print(f"  VERIFIED on n=0..{max_n_verify-1}")
@@ -147,7 +147,7 @@ for order in [1, 2, 3]:
         if result is not None:
             x, max_deg, ord_ = result
             print(f"\n*** FOUND: order={ord_}, degree={max_deg} ***")
-
+            
             # Extract and print coefficients
             for s in range(ord_ + 1):
                 coeffs = []
@@ -168,19 +168,19 @@ for order in [1, 2, 3]:
                     if g > 0:
                         int_coeffs = [ic // g for ic in int_coeffs]
                     print(f"  c_{s}(n) = {int_coeffs} (coefficients of 1, n, n^2, ...)")
-
+            
             # Print leading coefficients
             print("\nLeading coefficients (degree-{} terms):".format(max_deg))
             for s in range(ord_ + 1):
                 lc = x[s*(max_deg+1) + max_deg]
                 print(f"  lc(c_{s}) = {lc}")
-
+            
             # Poincaré polynomial
             lcs = [x[s*(max_deg+1) + max_deg] for s in range(ord_ + 1)]
             print(f"\nPoincaré polynomial: {lcs[0]} + {lcs[1]}ξ + {lcs[2]}ξ² + {lcs[3] if ord_>=3 else ''}ξ³")
-
+            
             sys.exit(0)
-
+        
         if (order+1)*(deg+1) > 60:
             print(f"  Too many unknowns ({(order+1)*(deg+1)}), stopping degree search for order={order}")
             break

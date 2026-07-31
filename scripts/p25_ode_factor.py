@@ -60,7 +60,7 @@ print(f"  Done. Q[0]={Q[0]}, Q[1]={Q[1]}", flush=True)
 #  degree pattern (28,21,14,7)..."
 # This means c₃(n) has degree 7, c₂(n) has degree 14, c₁(n) has degree 21, c₀(n) has degree 28?
 # Or c₃ has 28, c₂ has 21, c₁ has 14, c₀ has 7?
-#
+# 
 # The proof also says "Newton polygon has constant slope -7". With 4 terms at shifts
 # n+3, n+2, n+1, n, the Newton polygon has points (0, deg c₃), (1, deg c₂), (2, deg c₁), (3, deg c₀).
 # Constant slope -7 means deg c_k = 28 - 7k: c₃ at k=0 is 28, c₂ at k=1 is 21, c₁ at k=2 is 14, c₀ at k=3 is 7.
@@ -118,12 +118,12 @@ for col in range(nc):
             break
     if found == -1:
         continue
-
+    
     # Swap
     mat[len(pivot_cols)], mat[found] = mat[found], mat[len(pivot_cols)]
     pivot_row = len(pivot_cols)
     pivot_cols.append(col)
-
+    
     # Eliminate
     pivot_val = mat[pivot_row][col]
     for r in range(m):
@@ -131,7 +131,7 @@ for col in range(nc):
             factor = mat[r][col] / pivot_val
             for c2 in range(nc):
                 mat[r][c2] -= factor * mat[pivot_row][c2]
-
+    
     if len(pivot_cols) % 10 == 0:
         print(f"    {len(pivot_cols)}/{nc} pivots...", flush=True)
 
@@ -198,14 +198,14 @@ if lc3 != 0:
     # Check
     print(f"  Ratios: {float(a)/560:.10f}, {float(b)/8960:.10f}, {float(c)/4096:.10f}")
 
-# Also check if c₃ factors: the leading coeff of c₃(n) at n^28
+# Also check if c₃ factors: the leading coeff of c₃(n) at n^28 
 # and the trailing coeff of c₀(n) at n^7
 # should give the Poincaré roots
 print(f"\n  lc₃ (n^28 coeff) = {float(lc3):.6e}")
 print(f"  lc₀ (n^7 coeff)  = {float(lc0):.6e}")
 
 # Print degree structure
-for name, coeffs, deg in [("c₃", c3_coeffs, deg3), ("c₂", c2_coeffs, deg2),
+for name, coeffs, deg in [("c₃", c3_coeffs, deg3), ("c₂", c2_coeffs, deg2), 
                            ("c₁", c1_coeffs, deg1), ("c₀", c0_coeffs, deg0)]:
     # Find actual degree
     actual_deg = deg
@@ -251,7 +251,7 @@ print(f"  At z={z0}: f = {mp.nstr(f0, 20)}")
 k_z = 4*sqrt(2*z0)/(1-z0)
 # dk/dz = 2√2(1+z)/(√z·(1-z)²)
 dk_dz = 2*sqrt(2)*(1+z0)/(sqrt(z0)*(1-z0)**2)
-# d²k/dz²
+# d²k/dz² 
 # k = 4√2 · z^{1/2} · (1-z)^{-1}
 # dk/dz = 4√2 · [(1/2)z^{-1/2}(1-z)^{-1} + z^{1/2}(1-z)^{-2}]
 #        = 4√2 · z^{-1/2}(1-z)^{-2} · [(1-z)/2 + z]
@@ -263,7 +263,7 @@ Y_k1 = f1 / dk_dz
 
 # For the ODE check, I need dY/dk, d²Y/dk², d³Y/dk³
 # dY/dk = (dY/dz)/(dk/dz)
-# d²Y/dk² = d/dk[dY/dk] = (1/(dk/dz)) · d/dz[f'/dk']
+# d²Y/dk² = d/dk[dY/dk] = (1/(dk/dz)) · d/dz[f'/dk'] 
 # This gets complex. Let me use the chain rule properly.
 
 # Let θ = z·d/dz and Θ = k·d/dk
@@ -303,11 +303,11 @@ for z0 in z_vals:
     f1_val = sum(mpf(int(Q[n].numerator))/mpf(int(Q[n].denominator)) * n * z0**(n-1) for n in range(1, NTERMS))
     f2_val = sum(mpf(int(Q[n].numerator))/mpf(int(Q[n].denominator)) * n*(n-1) * z0**(n-2) for n in range(2, NTERMS))
     f3_val = sum(mpf(int(Q[n].numerator))/mpf(int(Q[n].denominator)) * n*(n-1)*(n-2) * z0**(n-3) for n in range(3, NTERMS))
-
+    
     k0 = k_of_z(z0)
     dk = dk_of_z(z0)
     d2k = d2k_of_z(z0)
-
+    
     # Y' = f'/dk
     Y1 = f1_val / dk
     # Y'' = (f'' - Y'·d2k) / dk²
@@ -316,27 +316,27 @@ for z0 in z_vals:
     h = z0 * mpf('1e-12')
     z_p = z0 + h
     z_m = z0 - h
-
+    
     f1_p = sum(mpf(int(Q[n].numerator))/mpf(int(Q[n].denominator)) * n * z_p**(n-1) for n in range(1, NTERMS))
     f2_p = sum(mpf(int(Q[n].numerator))/mpf(int(Q[n].denominator)) * n*(n-1) * z_p**(n-2) for n in range(2, NTERMS))
     dk_p = dk_of_z(z_p)
     d2k_p = d2k_of_z(z_p)
     Y1_p = f1_p / dk_p
     Y2_p = (f2_p - Y1_p * d2k_p) / dk_p**2
-
+    
     f1_m = sum(mpf(int(Q[n].numerator))/mpf(int(Q[n].denominator)) * n * z_m**(n-1) for n in range(1, NTERMS))
     f2_m = sum(mpf(int(Q[n].numerator))/mpf(int(Q[n].denominator)) * n*(n-1) * z_m**(n-2) for n in range(2, NTERMS))
     dk_m = dk_of_z(z_m)
     d2k_m = d2k_of_z(z_m)
     Y1_m = f1_m / dk_m
     Y2_m = (f2_m - Y1_m * d2k_m) / dk_m**2
-
+    
     Y3 = (Y2_p - Y2_m) / (2*h) / dk
-
+    
     # ODE: k(1-k²)Y''' + (1-3k²)Y'' - kY' = 0
     residual = k0*(1-k0**2)*Y3 + (1-3*k0**2)*Y2 - k0*Y1
     relative = residual / (abs(k0*Y1) + 1)
-
+    
     print(f"  z={mp.nstr(z0,4)}: k={mp.nstr(k0,8)}, "
           f"|residual| = {mp.nstr(abs(residual), 8)}, "
           f"|relative| = {mp.nstr(abs(relative), 8)}")

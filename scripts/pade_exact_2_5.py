@@ -99,7 +99,7 @@ for k in range(20):
     # i.e., s*q*val = s*p + r*q*sqrt2
     # Use integer relation: find integers m1, m2, m3 such that
     # m1 + m2*val + m3*sqrt2 ≈ 0, i.e. val ≈ -m1/m2 - (m3/m2)*sqrt2
-
+    
     # Use PSLQ on [1, val, sqrt2]
     from mpmath import pslq
     rel = pslq([1, val, sqrt2], maxcoeff=10**30, tol=mpf('1e-500'))
@@ -167,3 +167,4 @@ for n_test in [0, 1, 5, 10, 20, 50, 70, 120, 140, 150]:
     rel = abs((r_rat - r_int[n_test]) / r_int[n_test])
     logr = float(mp.log10(rel)) if rel > 0 else -9999
     print(f"  n={n_test:>3}: log10(rel_diff) = {logr:.1f}")
+

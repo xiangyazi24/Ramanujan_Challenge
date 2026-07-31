@@ -46,12 +46,12 @@ for N in range(N_max + 5):
     # v_new = M * v
     def mat_vec(M, v):
         return [sum(M[i][j]*v[j] for j in range(3)) for i in range(3)]
-
+    
     v1 = mat_vec(M, v1)
     v2 = mat_vec(M, v2)
     u1_vals.append(v1[0])
     u2_vals.append(v2[0])
-
+    
     if N % 20 == 0:
         elapsed = time.time() - t0
         ndig = len(str(abs(int(v1[0])))) if abs(v1[0]) > 1 else 0
@@ -100,15 +100,15 @@ print("\n\nRational reconstruction from n=130..160 data:")
 for dQ in range(0, 15):
     dP = dQ + 7
     n_unk = dP + dQ
-
+    
     data_points = list(range(130, min(130 + n_unk + 5, 162)))
     n_eq = len(data_points)
     if n_unk >= n_eq:
         continue
-
+    
     mat = mp_matrix(n_eq, n_unk)
     rhs = mp_matrix(n_eq, 1)
-
+    
     for idx, n_val in enumerate(data_points):
         if n_val not in r_int:
             continue
@@ -122,7 +122,7 @@ for dQ in range(0, 15):
             mat[idx, col] = rv * nv**j
             col += 1
         rhs[idx, 0] = -rv * nv**dQ - mpf(16) * nv**dP
-
+    
     try:
         ATA = mat.T * mat
         ATb = mat.T * rhs
@@ -132,7 +132,7 @@ for dQ in range(0, 15):
         max_rhs = max(abs(rhs[i, 0]) for i in range(n_eq))
         rel_res = max_res / max_rhs if max_rhs > 0 else max_res
         logr = float(mp.log10(rel_res)) if rel_res > 0 else -999
-
+        
         if logr < -100:
             verdict = "★★★ RATIONAL"
         elif logr < -50:
@@ -141,7 +141,8 @@ for dQ in range(0, 15):
             verdict = "close"
         else:
             verdict = "no"
-
+        
         print(f"  dP={dP:>3}, dQ={dQ:>3}: log10(resid) = {logr:>8.1f}  [{verdict}]")
     except Exception as e:
         print(f"  dP={dP:>3}, dQ={dQ:>3}: FAIL ({e})")
+

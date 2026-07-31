@@ -48,15 +48,15 @@ for dQ in range(0, 16):
     n_unk = dP + dQ
     if n_unk == 0:
         n_unk = 7
-
+    
     data_points = list(range(min(n_unk + 10, 44)))
     n_eq = len(data_points)
     if n_unk >= n_eq:
         break
-
+    
     mat = mp_matrix(n_eq, n_unk)
     rhs = mp_matrix(n_eq, 1)
-
+    
     for idx, n_val in enumerate(data_points):
         if n_val not in r_int_vals:
             continue
@@ -70,7 +70,7 @@ for dQ in range(0, 16):
             mat[idx, col] = rv * nv**j
             col += 1
         rhs[idx, 0] = -rv * nv**dQ - mpf(16) * nv**dP
-
+    
     try:
         ATA = mat.T * mat
         ATb = mat.T * rhs
@@ -80,14 +80,14 @@ for dQ in range(0, 16):
         max_rhs = max(abs(rhs[i, 0]) for i in range(n_eq))
         rel_res = max_res / max_rhs if max_rhs > 0 else max_res
         logr = float(mp.log10(rel_res)) if rel_res > 0 else -999
-
+        
         if logr < -50:
             verdict = "RATIONAL?"
         elif logr < -10:
             verdict = "close"
         else:
             verdict = "no"
-
+        
         print(f"{dQ:>4} {dP:>4} {n_unk:>6} {logr:>14.1f} {verdict:>10}")
     except:
         print(f"{dQ:>4} {dP:>4} {n_unk:>6} {'FAIL':>14}")
@@ -106,10 +106,10 @@ for dQ in range(0, 12):
     n_eq = len(data_points)
     if n_unk >= n_eq:
         break
-
+    
     mat = mp_matrix(n_eq, n_unk)
     rhs = mp_matrix(n_eq, 1)
-
+    
     for idx, n_val in enumerate(data_points):
         if n_val not in r_int_vals:
             continue
@@ -123,7 +123,7 @@ for dQ in range(0, 12):
             mat[idx, col] = rv * nv**j
             col += 1
         rhs[idx, 0] = -rv * nv**dQ - mpf(16) * nv**dP
-
+    
     try:
         ATA = mat.T * mat
         ATb = mat.T * rhs
@@ -133,14 +133,15 @@ for dQ in range(0, 12):
         max_rhs = max(abs(rhs[i, 0]) for i in range(n_eq))
         rel_res = max_res / max_rhs if max_rhs > 0 else max_res
         logr = float(mp.log10(rel_res)) if rel_res > 0 else -999
-
+        
         if logr < -50:
             verdict = "RATIONAL?"
         elif logr < -10:
             verdict = "close"
         else:
             verdict = "no"
-
+        
         print(f"  dQ={dQ}, dP={dP}: log10(resid) = {logr:.1f}  [{verdict}]")
     except:
         print(f"  dQ={dQ}, dP={dP}: FAIL")
+

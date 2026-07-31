@@ -41,14 +41,14 @@ for N in [1, 2, 3, 5, 10, 15, 20, 30, 40, 50]:
         digits = -float(mp.log10(err))
     else:
         digits = 120
-
+    
     rate = ""
     if prev_err is not None and err > 0 and prev_err[1] > 0:
         dN = N - prev_err[0]
         log_ratio = mp.log(err / prev_err[1]) / dN
         eff_rho = mp.exp(log_ratio)
         rate = f"  rho_eff = {mp.nstr(abs(eff_rho), 6)}"
-
+    
     print(f"  N={N:3d}: |P/Q - G| = {mp.nstr(err, 8):>15s}  ({digits:.1f} digits){rate}")
     prev_err = (N, err)
 

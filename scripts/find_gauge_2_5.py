@@ -173,7 +173,7 @@ for n in range(7):
 def newton_step(sigma):
     """One Newton step. Returns new sigma and max residual."""
     residuals = [F_val(n, sigma) for n in range(7)]
-
+    
     # Jacobian by central differences
     eps = mpf('1e-40')
     J = mp_matrix(7, 7)
@@ -186,14 +186,14 @@ def newton_step(sigma):
             fp = F_val(i, sigma_plus)
             fm = F_val(i, sigma_minus)
             J[i, j] = (fp - fm) / (2 * eps)
-
+    
     # Solve J · delta = -residuals
     b = mp_matrix(7, 1)
     for i in range(7):
         b[i, 0] = -residuals[i]
-
+    
     delta = lu_solve(J, b)
-
+    
     new_sigma = [sigma[j] + delta[j, 0] for j in range(7)]
     max_res = max(abs(r) for r in residuals)
     return new_sigma, max_res
@@ -242,3 +242,4 @@ for n in range(31):
     if abs(f) > max_res:
         max_res = abs(f)
 print(f"  Max |F| over n=0..30: {nstr(max_res, 5)}")
+

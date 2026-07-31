@@ -26,11 +26,11 @@ def A27(n):
     return _sage_const_1024 *(_sage_const_2 *n+_sage_const_5 )**_sage_const_4 *(_sage_const_2 *n+_sage_const_7 )**_sage_const_3 *(_sage_const_2 *n+_sage_const_9 )**_sage_const_3 *(_sage_const_946 *n**_sage_const_2 +_sage_const_6407 *n+_sage_const_10860 )
 
 def B27(n):
-    P6 = _sage_const_104060 *n**_sage_const_6 +_sage_const_1745370 *n**_sage_const_5 +_sage_const_12145238 *n**_sage_const_4 +_sage_const_44886481 *n**_sage_const_3 +_sage_const_92943995 *n**_sage_const_2 +_sage_const_102256019 *n+_sage_const_46709052
+    P6 = _sage_const_104060 *n**_sage_const_6 +_sage_const_1745370 *n**_sage_const_5 +_sage_const_12145238 *n**_sage_const_4 +_sage_const_44886481 *n**_sage_const_3 +_sage_const_92943995 *n**_sage_const_2 +_sage_const_102256019 *n+_sage_const_46709052 
     return _sage_const_128 *(_sage_const_2 *n+_sage_const_7 )**_sage_const_3 *(_sage_const_2 *n+_sage_const_9 )**_sage_const_3 *P6
 
 def C27(n):
-    P5 = _sage_const_3784 *n**_sage_const_5 +_sage_const_57792 *n**_sage_const_4 +_sage_const_351019 *n**_sage_const_3 +_sage_const_1059230 *n**_sage_const_2 +_sage_const_1587211 *n+_sage_const_944620
+    P5 = _sage_const_3784 *n**_sage_const_5 +_sage_const_57792 *n**_sage_const_4 +_sage_const_351019 *n**_sage_const_3 +_sage_const_1059230 *n**_sage_const_2 +_sage_const_1587211 *n+_sage_const_944620 
     return _sage_const_16 *(n+_sage_const_3 )**_sage_const_4 *(_sage_const_2 *n+_sage_const_9 )**_sage_const_3 *P5
 
 def D27(n):
@@ -38,7 +38,7 @@ def D27(n):
 
 # Cooper's level-11 recurrence
 def Ac(k):
-    return (k+_sage_const_1 )**_sage_const_3
+    return (k+_sage_const_1 )**_sage_const_3 
 
 def Bc(k):
     return _sage_const_2 *(_sage_const_2 *k+_sage_const_1 )*(_sage_const_5 *k**_sage_const_2 +_sage_const_5 *k+_sage_const_2 )
@@ -56,7 +56,7 @@ T = [QQ(_sage_const_1 )]
 T.append(QQ(_sage_const_4 ))
 # k=1: 8*T_2 = 2*3*12*T_1 - 8*1*8*T_0 = 288 - 64 = 224. T_2 = 28
 T.append(QQ(_sage_const_28 ))
-KMAX = _sage_const_250
+KMAX = _sage_const_250 
 for k in range(_sage_const_2 , KMAX):
     t_next = (Bc(k)*T[k] + Cc(k)*T[k-_sage_const_1 ] + Dc(k)*T[k-_sage_const_2 ]) / Ac(k)
     T.append(t_next)
@@ -64,7 +64,7 @@ print(f"  T_0..T_5 = {T[:_sage_const_6 ]}")
 
 # Compute W_n via binomial transform
 print("Computing W_n...", flush=True)
-NMAX = _sage_const_60
+NMAX = _sage_const_60 
 W = []
 for n in range(NMAX):
     val = QQ(_sage_const_0 )
@@ -196,7 +196,7 @@ for d in range(_sage_const_1 , _sage_const_10 ):
     # Verify on holdout
     ok = True
     for i in range(n_pts, min(n_pts+_sage_const_5 , len(rr))):
-        n = i + _sage_const_1
+        n = i + _sage_const_1 
         P_val = sum(sol[k] * QQ(n)**k for k in range(d+_sage_const_1 ))
         Q_val = QQ(n)**d + sum(sol[d+_sage_const_1 +k] * QQ(n)**k for k in range(d))
         if Q_val == _sage_const_0  or P_val/Q_val != rr[i+_sage_const_1 ]:
@@ -216,7 +216,7 @@ for d in range(_sage_const_1 , _sage_const_10 ):
         # Extended verification
         all_ok = True
         for i in range(len(rr)):
-            n = i + _sage_const_1
+            n = i + _sage_const_1 
             P_val = P_poly(n)
             Q_val = Q_poly(n)
             if Q_val == _sage_const_0  or P_val/Q_val != rr[i+_sage_const_1 ]:
@@ -236,3 +236,4 @@ for d in range(_sage_const_1 , _sage_const_10 ):
         break
 
 print("\nDone.")
+

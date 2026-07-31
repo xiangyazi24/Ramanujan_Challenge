@@ -66,7 +66,7 @@ u = [[] for _ in range(3)]  # u[i][n] = T_n[i][0]
 for N in range(N_max + 3):
     for i in range(3):
         u[i].append(T[i][0])
-
+    
     if N < N_max + 2:
         M = M_mat(N)
         T_new = [[mpf(0)]*3 for _ in range(3)]
@@ -75,7 +75,7 @@ for N in range(N_max + 3):
                 for k in range(3):
                     T_new[i][j] += T[i][k] * M[k][j]
         T = T_new
-
+    
     if N % 10 == 0:
         print(f"  N={N} done, |u0|={nstr(abs(u[0][-1]),5)}")
 
@@ -151,3 +151,4 @@ for n in range(41):
     if abs(w[n]) > mpf('1e-500'):
         r_int = w[n+1] / w[n]
         print(f"  r_int({n}) = {nstr(r_int, 60)}")
+

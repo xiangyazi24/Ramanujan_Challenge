@@ -44,10 +44,10 @@ def find_recurrence(Q, degs, verbose=True):
     d3, d2, d1, d0 = degs
     total_unk = (d3+1) + (d2+1) + (d1+1) + (d0+1)
     neqs = total_unk + 5
-
+    
     if len(Q) < neqs + 3:
         return None
-
+    
     rows = []
     for n in range(neqs):
         row = []
@@ -60,11 +60,11 @@ def find_recurrence(Q, degs, verbose=True):
         for j in range(d0+1):
             row.append(Fraction(n)**j * Q[n])
         rows.append(row)
-
+    
     m = len(rows)
     nc = total_unk
     mat = [list(row) for row in rows]
-
+    
     pivot_cols = []
     for col in range(nc):
         found = -1
@@ -83,16 +83,16 @@ def find_recurrence(Q, degs, verbose=True):
                 factor = mat[r][col] / pivot_val
                 for c2 in range(nc):
                     mat[r][c2] -= factor * mat[pivot_row][c2]
-
+    
     rank = len(pivot_cols)
     nullity = nc - rank
-
+    
     if verbose:
         print(f"  degs=({d3},{d2},{d1},{d0}), unk={total_unk}, rank={rank}, null={nullity}")
-
+    
     if nullity != 1:
         return None
-
+    
     # Extract kernel
     free_col = list(set(range(nc)) - set(pivot_cols))[0]
     kernel = [Fraction(0)] * nc
@@ -101,24 +101,24 @@ def find_recurrence(Q, degs, verbose=True):
         pc = pivot_cols[i]
         val = sum(mat[i][c2] * kernel[c2] for c2 in range(nc) if c2 != pc)
         kernel[pc] = -val / mat[i][pc]
-
+    
     # Parse coefficients
     c3 = kernel[:d3+1]
     c2 = kernel[d3+1:d3+1+d2+1]
     c1 = kernel[d3+1+d2+1:d3+1+d2+1+d1+1]
     c0 = kernel[d3+1+d2+1+d1+1:]
-
+    
     # Verify
     def peval(coeffs, n):
         return sum(c * Fraction(n)**k for k, c in enumerate(coeffs))
-
+    
     for n in range(neqs, min(neqs+20, len(Q)-3)):
         val = peval(c3,n)*Q[n+3] + peval(c2,n)*Q[n+2] + peval(c1,n)*Q[n+1] + peval(c0,n)*Q[n]
         if val != 0:
             if verbose:
                 print(f"    VERIFY FAIL at n={n}")
             return None
-
+    
     if verbose:
         print(f"    VERIFIED for 20 extra equations!")
     return (c3, c2, c1, c0)
@@ -232,7 +232,7 @@ f3 = eval_gf(Q, z_test, 3)
 
 # k(z) = 4√(2z)/(1-z)
 k = 4*msqrt(2*z_test)/(1-z_test)
-# dk/dz = 2√2(1+z)/(√z·(1-z)²)
+# dk/dz = 2√2(1+z)/(√z·(1-z)²)  
 dk = 2*msqrt(2)*(1+z_test)/(msqrt(z_test)*(1-z_test)**2)
 
 # Y = f(z), dY/dk = f'(z) / dk/dz
@@ -325,7 +325,7 @@ for z_test2 in [mpf('0.001'), mpf('0.01'), mpf('0.02')]:
     d2kp = (dkpp-dkpm)/(2*hp)
     Y1p = f1p/dkp
     Y2p = (f2p - Y1p*d2kp)/dkp**2
-
+    
     f1m = eval_gf(Q, z_test2-delta, 1)
     f2m = eval_gf(Q, z_test2-delta, 2)
     dkm = 2*msqrt(2)*(1+z_test2-delta)/(msqrt(z_test2-delta)*(1-z_test2+delta)**2)
@@ -335,9 +335,9 @@ for z_test2 in [mpf('0.001'), mpf('0.01'), mpf('0.02')]:
     d2km = (dkmp-dkmm)/(2*hm)
     Y1m = f1m/dkm
     Y2m = (f2m - Y1m*d2km)/dkm**2
-
+    
     Y3 = (Y2p - Y2m)/(2*delta)/dk
-
+    
     ode_val = k*(1-k**2)*Y3 + (1-3*k**2)*Y2 - k*Y1
     scale = abs(k*Y1) + abs(k*(1-k**2)*Y3) + 1
     print(f"  z={mp.nstr(z_test2,4)}: |ODE|/scale = {mp.nstr(abs(ode_val/scale), 6)}")

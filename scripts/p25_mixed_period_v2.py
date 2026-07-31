@@ -74,7 +74,7 @@ print("="*60)
 for deg in range(10):
     total_unknowns = 9 * (deg + 1)
     num_eq = total_unknowns + 20
-
+    
     rows = []
     for eq_n in range(num_eq):
         n = eq_n
@@ -93,10 +93,10 @@ for deg in range(10):
                 break
         if ok:
             rows.append(row)
-
+    
     actual_eqs = len(rows)
     nc = total_unknowns
-
+    
     # Gaussian elimination
     mat = [row[:] for row in rows[:nc + 10]]
     nr = len(mat)
@@ -120,14 +120,14 @@ for deg in range(10):
                 for j2 in range(nc):
                     mat[i][j2] -= f * mat[rank][j2]
         rank += 1
-
+    
     null_dim = nc - rank
     trivial_dim = deg + 1  # Wronskian
     effective = null_dim - trivial_dim
-
+    
     print(f"\nDegree {deg}: {nc} unknowns, {actual_eqs} eqs, rank={rank}, null_dim={null_dim}, "
           f"trivial={trivial_dim}, effective={effective}")
-
+    
     if effective > 0:
         print(f"\n*** NONTRIVIAL SOLUTION AT DEGREE {deg}! ***")
         # Extract null vectors
@@ -154,10 +154,10 @@ for deg in range(10):
                     for j2 in range(nc):
                         mat2[i][j2] -= f * mat2[r2][j2]
             r2 += 1
-
+        
         free_cols = [c for c in range(nc) if c not in pivot_cols]
         print(f"  Free columns: {free_cols}")
-
+        
         # Extract ALL null vectors
         for fidx, fc in enumerate(free_cols):
             x = [mpf(0)] * nc
@@ -166,14 +166,14 @@ for deg in range(10):
                 pc = pivot_cols[pr_idx]
                 s = sum(mat2[pr_idx][j2] * x[j2] for j2 in range(pc+1, nc))
                 x[pc] = -s
-
+            
             # Check if this is a Wronskian-trivial solution
             # Wronskian gives r_{ij} = f(n)(δ_{i<j} - δ_{i>j})/(n+j-n-i) type
             is_trivial = True
             for i in range(3):
                 if abs(x[0*9 + i*3 + i]) > mpf('1e-100'):  # diagonal must be 0
                     is_trivial = False
-
+            
             # Verify residual
             max_res = mpf(0)
             for eq_n in range(min(actual_eqs, 100)):
@@ -187,10 +187,10 @@ for deg in range(10):
                             if lb is not None:
                                 val += x[col] * (mpf(n) ** d) * lb
                 max_res = max(max_res, abs(val))
-
+            
             label = "TRIVIAL" if is_trivial else "NONTRIVIAL"
             print(f"\n  Null vector {fidx} ({label}), residual: {nstr(max_res, 6)}")
-
+            
             if not is_trivial:
                 print("  r_{ij} coefficients:")
                 for i in range(3):
@@ -209,7 +209,8 @@ for deg in range(10):
                                         terms.append(f"{cf:.10g}·n^{d}")
                             print(f"    r_{{{i},{j}}}(n) = {' + '.join(terms)}")
         break
-
+    
     if null_dim == 0 and nc > 100:
         print("  Too many unknowns, stopping")
         break
+

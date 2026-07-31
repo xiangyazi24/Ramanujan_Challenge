@@ -102,7 +102,7 @@ for N in range(3, 40):
 # The ai and bi should be half-integers or integers matching the recurrence structure.
 
 # Check: is r(N)/(-16) close to a simple product of shifted factorials?
-# From the recurrence, we expect parameters like (1/2, 1, 3/2, 2, 5/2, 3, 7/2)
+# From the recurrence, we expect parameters like (1/2, 1, 3/2, 2, 5/2, 3, 7/2) 
 # or similar _7F_6 parameters.
 
 # Let's try to find zeros of r(N) (where h(N+1) = 0 → r(N) = 0 → N = -ai):

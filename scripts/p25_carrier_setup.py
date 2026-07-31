@@ -3,13 +3,13 @@
 
 Key representation:
   D_n = P_n(3) = [w^n] h(w)^n  where h(w) = (w+2)(w+4)/2
-
+  
 Proof: Via Schlafli's integral P_n(x) = (1/2pi i) oint (z^2-1)^n / [2^n (z-x)^{n+1}] dz
   With x=3, z=3+w: D_n = [w^n] ((8+6w+w^2)/2)^n = [w^n] ((w+2)(w+4)/2)^n
 
 Therefore:
   D_n^2 = [u^n v^n] [h(u)h(v)]^n
-
+  
 Phase: phi(u,v) = h(u)h(v)/(uv) = [(u+2)(u+4)/(2u)] * [(v+2)(v+4)/(2v)]
 Critical points: u = ±2sqrt(2), v = ±2sqrt(2)
 Critical values: phi(2√2,2√2) = (3+2√2)^2 = 17+12√2  [dominant]

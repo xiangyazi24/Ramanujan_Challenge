@@ -33,8 +33,8 @@ t0 = time.time()
 
 q = [QQ(_sage_const_0 )]*(NMAX+_sage_const_1 )
 q[_sage_const_0 ] = QQ(-_sage_const_215040420000 )
-q[_sage_const_1 ] = QQ(-_sage_const_167282265043404 )/_sage_const_905
-q[_sage_const_2 ] = QQ(-_sage_const_964185327658080 )/_sage_const_6071
+q[_sage_const_1 ] = QQ(-_sage_const_167282265043404 )/_sage_const_905 
+q[_sage_const_2 ] = QQ(-_sage_const_964185327658080 )/_sage_const_6071 
 
 for n in range(_sage_const_2 , NMAX):
     # u_{n+1} = (B_n/A_n) u_n - (C_{n-1}/A_{n-1}) u_{n-1} + (D_{n-2}/A_{n-2}) u_{n-2}
@@ -164,7 +164,7 @@ for label, Phi in BASES:
         # fallback: if inversion is dragging, stop at 200
         if k == _sage_const_200  and time.time()-t0 > _sage_const_240 :
             print("  inversion slow; falling back to 200 terms")
-            kmax = _sage_const_200
+            kmax = _sage_const_200 
             break
     if not ok:
         summary.append((label, "not invertible", None, None, None))
@@ -194,3 +194,4 @@ for label, status, order, deg, pp in summary:
         print("    order = %d, max coeff degree = %d" % (order, deg))
         print("    Poincare poly: %s  = %s" % (pp, factor(pp)))
 print("\nDone.")
+

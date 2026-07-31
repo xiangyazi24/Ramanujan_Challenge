@@ -120,12 +120,12 @@ for col in range(n_cols):
             break
     if pivot_row is None:
         continue
-
+    
     # Swap
     mat[pivot_row], mat[len(pivot_cols)] = mat[len(pivot_cols)], mat[pivot_row]
     pivot_row = len(pivot_cols)
     pivot_cols.append(col)
-
+    
     # Eliminate
     piv = mat[pivot_row][col]
     for row in range(n_rows):
@@ -135,7 +135,7 @@ for col in range(n_cols):
             factor = mat[row][col] / piv
             for c in range(n_cols):
                 mat[row][c] -= factor * mat[pivot_row][c]
-
+    
     if len(pivot_cols) % 10 == 0:
         print(f"  {len(pivot_cols)} pivots found...", flush=True)
 
@@ -205,3 +205,4 @@ else:
     print(f"  c₀+c₁+c₂+c₃ ≠ 0 ({len(nonzero)} nonzero coefficients)")
     print(f"  First few: {nonzero[:5]}")
     has_factor = False
+

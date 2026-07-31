@@ -42,7 +42,7 @@ for jj in [1, 2]:
     f = {}
     for N in range(55, 76):
         f[N] = s[jj][N] / s[0][N]
-
+    
     # Aitken Delta^2: R = f(N) - (f(N+1)-f(N))^2 / (f(N+2)-2f(N+1)+f(N))
     R_vals = {}
     for N in range(55, 73):
@@ -50,14 +50,14 @@ for jj in [1, 2]:
         d2 = f[N+2] - 2*f[N+1] + f[N]
         if abs(d2) > 0:
             R_vals[N] = f[N] - d1**2 / d2
-
+    
     # Check stability of Richardson estimates
     Ns = sorted(R_vals.keys())
     print(f"\n  s_{jj}/s_0 Richardson estimates:")
     for N in [55, 60, 65, 70]:
         if N in R_vals:
             print(f"    N={N}: {nstr(R_vals[N], 40)}")
-
+    
     # Check convergence by looking at differences between successive Richardson estimates
     if len(Ns) >= 2:
         for i in range(max(0, len(Ns)-3), len(Ns)-1):
@@ -127,5 +127,6 @@ for d in range(1, 10):
         max_val = max(abs(x) for x in new_diff)
         ref = max(abs(x) for x in diffs[0])
         ratio = float(max_val / ref) if ref != 0 else float(max_val)
-        print(f"  Diff order {d}: max |Δ^{d}| / |r/16| = {ratio:.3e}",
+        print(f"  Diff order {d}: max |Δ^{d}| / |r/16| = {ratio:.3e}", 
               "← ZERO!" if ratio < 1e-100 else "")
+

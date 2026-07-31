@@ -33,52 +33,52 @@ def M_mat(n):
 
 # Let me recompute c_i(N) for each N directly from the matrix.
 def get_recurrence_coeffs(N):
-    """Compute c_0(N), c_1(N), c_2(N) such that
+    """Compute c_0(N), c_1(N), c_2(N) such that 
     q_{N+3} = c_2(N) q_{N+2} + c_1(N) q_{N+1} + c_0(N) q_N.
     Uses Cramer's rule on the 3-step matrix relation."""
     M_N = M_mat(N)
     M_N1 = M_mat(N+1)
     M_N2 = M_mat(N+2)
-
+    
     m00 = M_N[0,0]; m01 = M_N[0,1]; m02 = M_N[0,2]
     m10 = M_N[1,0]; m11 = M_N[1,1]; m12 = M_N[1,2]
     m20 = M_N[2,0]; m21 = M_N[2,1]; m22 = M_N[2,2]
     m00p = M_N1[0,0]; m10p = M_N1[1,0]; m20p = M_N1[2,0]
     m01p = M_N1[0,1]; m11p = M_N1[1,1]; m21p = M_N1[2,1]
     m02p = M_N1[0,2]; m12p = M_N1[1,2]; m22p = M_N1[2,2]
-
+    
     A11 = m10; A12 = m20
     A21 = m11*m10p + m12*m20p
     A22 = m21*m10p + m22*m20p
     det_A = A11*A22 - A12*A21
-
+    
     pN_q0 = (-m00*A22 - (-m01*m10p-m02*m20p)*A12) / det_A
     pN_q1 = (A22 - (-m00p)*A12) / det_A
     pN_q2 = (-A12) / det_A
     rN_q0 = (A11*(-m01*m10p-m02*m20p) - A21*(-m00)) / det_A
     rN_q1 = (A11*(-m00p) - A21) / det_A
     rN_q2 = A11 / det_A
-
+    
     pN1_q0 = m01 + pN_q0*m11 + rN_q0*m21
     pN1_q1 = pN_q1*m11 + rN_q1*m21
     pN1_q2 = pN_q2*m11 + rN_q2*m21
     rN1_q0 = m02 + pN_q0*m12 + rN_q0*m22
     rN1_q1 = pN_q1*m12 + rN_q1*m22
     rN1_q2 = pN_q2*m12 + rN_q2*m22
-
+    
     pN2_q0 = pN1_q0*m11p + rN1_q0*m21p
     pN2_q1 = m01p + pN1_q1*m11p + rN1_q1*m21p
     pN2_q2 = pN1_q2*m11p + rN1_q2*m21p
     rN2_q0 = pN1_q0*m12p + rN1_q0*m22p
     rN2_q1 = m02p + pN1_q1*m12p + rN1_q1*m22p
     rN2_q2 = pN1_q2*m12p + rN1_q2*m22p
-
+    
     m10pp = M_N2[1,0]; m20pp = M_N2[2,0]; m00pp = M_N2[0,0]
-
+    
     c0 = m10pp*pN2_q0 + m20pp*rN2_q0
     c1 = m10pp*pN2_q1 + m20pp*rN2_q1
     c2 = m00pp + m10pp*pN2_q2 + m20pp*rN2_q2
-
+    
     return c0, c1, c2
 
 # Backward recursion from N_max:

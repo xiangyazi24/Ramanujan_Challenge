@@ -11,11 +11,11 @@ def A27(n):
     return _sage_const_1024 *(_sage_const_2 *n+_sage_const_5 )**_sage_const_4 *(_sage_const_2 *n+_sage_const_7 )**_sage_const_3 *(_sage_const_2 *n+_sage_const_9 )**_sage_const_3 *(_sage_const_946 *n**_sage_const_2 +_sage_const_6407 *n+_sage_const_10860 )
 
 def B27(n):
-    P6 = _sage_const_104060 *n**_sage_const_6 +_sage_const_1745370 *n**_sage_const_5 +_sage_const_12145238 *n**_sage_const_4 +_sage_const_44886481 *n**_sage_const_3 +_sage_const_92943995 *n**_sage_const_2 +_sage_const_102256019 *n+_sage_const_46709052
+    P6 = _sage_const_104060 *n**_sage_const_6 +_sage_const_1745370 *n**_sage_const_5 +_sage_const_12145238 *n**_sage_const_4 +_sage_const_44886481 *n**_sage_const_3 +_sage_const_92943995 *n**_sage_const_2 +_sage_const_102256019 *n+_sage_const_46709052 
     return _sage_const_128 *(_sage_const_2 *n+_sage_const_7 )**_sage_const_3 *(_sage_const_2 *n+_sage_const_9 )**_sage_const_3 *P6
 
 def C27(n):
-    P5 = _sage_const_3784 *n**_sage_const_5 +_sage_const_57792 *n**_sage_const_4 +_sage_const_351019 *n**_sage_const_3 +_sage_const_1059230 *n**_sage_const_2 +_sage_const_1587211 *n+_sage_const_944620
+    P5 = _sage_const_3784 *n**_sage_const_5 +_sage_const_57792 *n**_sage_const_4 +_sage_const_351019 *n**_sage_const_3 +_sage_const_1059230 *n**_sage_const_2 +_sage_const_1587211 *n+_sage_const_944620 
     return _sage_const_16 *(n+_sage_const_3 )**_sage_const_4 *(_sage_const_2 *n+_sage_const_9 )**_sage_const_3 *P5
 
 def D27(n):
@@ -24,11 +24,11 @@ def D27(n):
 # Cooper T_k
 T = [QQ(_sage_const_1 ), QQ(_sage_const_4 ), QQ(_sage_const_28 )]
 for k in range(_sage_const_2 , _sage_const_250 ):
-    t = (_sage_const_2 *(_sage_const_2 *k+_sage_const_1 )*(_sage_const_5 *k**_sage_const_2 +_sage_const_5 *k+_sage_const_2 )*T[k] - _sage_const_8 *k*(_sage_const_7 *k**_sage_const_2 +_sage_const_1 )*T[k-_sage_const_1 ] + _sage_const_22 *k*(_sage_const_2 *k-_sage_const_1 )*(k-_sage_const_1 )*T[k-_sage_const_2 ]) / (k+_sage_const_1 )**_sage_const_3
+    t = (_sage_const_2 *(_sage_const_2 *k+_sage_const_1 )*(_sage_const_5 *k**_sage_const_2 +_sage_const_5 *k+_sage_const_2 )*T[k] - _sage_const_8 *k*(_sage_const_7 *k**_sage_const_2 +_sage_const_1 )*T[k-_sage_const_1 ] + _sage_const_22 *k*(_sage_const_2 *k-_sage_const_1 )*(k-_sage_const_1 )*T[k-_sage_const_2 ]) / (k+_sage_const_1 )**_sage_const_3 
     T.append(t)
 
 # W_n
-NMAX = _sage_const_60
+NMAX = _sage_const_60 
 W = []
 for n in range(NMAX):
     val = QQ(_sage_const_0 )
@@ -56,7 +56,7 @@ for n in range(min(_sage_const_20 , len(rr))):
 R_poly = PolynomialRing(QQ, names=('x',)); (x,) = R_poly._first_ngens(1)
 
 for d in range(_sage_const_1 , _sage_const_12 ):
-    n_unk = _sage_const_2 *d + _sage_const_1
+    n_unk = _sage_const_2 *d + _sage_const_1 
     n_pts = min(n_unk + _sage_const_5 , len(rr) - _sage_const_2 )
     if n_pts < n_unk:
         print(f"  d={d}: not enough data"); break
@@ -114,7 +114,7 @@ for d in range(_sage_const_1 , _sage_const_12 ):
 # Also try: is r_n itself a polynomial/rational function of n?
 print("\n=== Is r_n = P(n)/Q(n)? ===")
 for d in range(_sage_const_1 , _sage_const_8 ):
-    n_unk = _sage_const_2 *d + _sage_const_1
+    n_unk = _sage_const_2 *d + _sage_const_1 
     n_pts = min(n_unk + _sage_const_5 , len(r) - _sage_const_2 )
     if n_pts < n_unk: break
 
@@ -176,3 +176,4 @@ for n in range(_sage_const_1 , min(_sage_const_8 , len(rh))):
     print(f"    Δ(n={n}) = {float(rh[n]-rh[n-_sage_const_1 ]):.10f}")
 
 print("\nDone.")
+

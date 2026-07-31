@@ -3,10 +3,16 @@ import RamanujanChallenge.Dilogarithm
 import RamanujanChallenge.KnotShapes
 import RamanujanChallenge.Problem21
 import RamanujanChallenge.Problem22
+import RamanujanChallenge.Problem22Concentration
 import RamanujanChallenge.Problem23
 import RamanujanChallenge.Problem24
 import RamanujanChallenge.Problem25
+import RamanujanChallenge.Problem25Connection
 import RamanujanChallenge.Problem26
+import RamanujanChallenge.Problem26Generating
+import RamanujanChallenge.Problem26Nested
+import RamanujanChallenge.Problem26WeightThree
+import RamanujanChallenge.Problem26Assembly
 import RamanujanChallenge.Problem27
 import RamanujanChallenge.Problem28
 import RamanujanChallenge.Problem31

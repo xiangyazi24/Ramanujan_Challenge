@@ -124,7 +124,7 @@ for e in expected:
 # The sub-leading correction: q_n ~ prod_{k} (c * k^7 + d * k^6 + ...)
 # After removing the leading c*k^7, what's the sub-leading?
 
-# Actually, let me just try: gauge q_n by h(n) where
+# Actually, let me just try: gauge q_n by h(n) where 
 # h(n+1)/h(n) = -16 * ((n+2)*(n+3))^2 * (2*n+5)*(2*n+7)^2 / something
 # (reading off from det(M) / (product of other eigenvalues))
 
@@ -138,7 +138,7 @@ for e in expected:
 
 # The third eigenvalue lambda_3(n) satisfies:
 # lambda_1(n) * lambda_2(n) * lambda_3(n) = det M(n)
-# lambda_1(n) + lambda_2(n) + lambda_3(n) = trace M(n)
+# lambda_1(n) + lambda_2(n) + lambda_3(n) = trace M(n) 
 # etc.
 
 # For large n:

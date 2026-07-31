@@ -36,7 +36,7 @@ for n in range(1, 61):
     q_new = an * q_curr + bn * q_prev
     p_prev, p_curr = p_curr, p_new
     q_prev, q_curr = q_curr, q_new
-
+    
     conv = p_curr / q_curr
     err = abs(conv - target)
     if n <= 10 or n % 10 == 0:
@@ -70,10 +70,10 @@ for num in [1, 2, 3, 6, 7, 14, 21, 42]:
             if val == 0:
                 print(f"  n = {r} is a root!")
 
-# Also try: -1/n factors
+# Also try: -1/n factors  
 # 220 = 4*5*11, 42 = 2*3*7
 # Try n = -1/4, -1/5, -3/4, -7/20, -2/5, -3/10, -7/10, -7/4, -7/20, -21/20
-for r in [Fraction(-1,4), Fraction(-1,5), Fraction(-3,4), Fraction(-7,20),
+for r in [Fraction(-1,4), Fraction(-1,5), Fraction(-3,4), Fraction(-7,20), 
           Fraction(-2,5), Fraction(-3,10), Fraction(-7,10), Fraction(-7,4),
           Fraction(-7,20), Fraction(-21,20), Fraction(-1,11), Fraction(-2,11),
           Fraction(-3,11), Fraction(-6,11), Fraction(-7,11), Fraction(-14,11),
@@ -83,3 +83,4 @@ for r in [Fraction(-1,4), Fraction(-1,5), Fraction(-3,4), Fraction(-7,20),
     val = 220*r**3 + 484*r**2 + 301*r + 42
     if val == 0:
         print(f"  n = {r} is a root!")
+

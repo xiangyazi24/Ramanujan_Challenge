@@ -20,7 +20,7 @@ T[_sage_const_0 ] = QQ(_sage_const_1 ); T[_sage_const_1 ] = QQ(_sage_const_4 ); 
 for j in range(_sage_const_2 , TMAX):
     # (j+1)^3 T_{j+1} = 2(2j+1)(5j^2+5j+2) T_j - 8j(7j^2+1) T_{j-1} + 22j(2j-1)(j-1) T_{j-2}
     rhs = _sage_const_2 *(_sage_const_2 *j+_sage_const_1 )*(_sage_const_5 *j**_sage_const_2 +_sage_const_5 *j+_sage_const_2 )*T[j] - _sage_const_8 *j*(_sage_const_7 *j**_sage_const_2 +_sage_const_1 )*T[j-_sage_const_1 ] + _sage_const_22 *j*(_sage_const_2 *j-_sage_const_1 )*(j-_sage_const_1 )*T[j-_sage_const_2 ]
-    T[j+_sage_const_1 ] = rhs / (j+_sage_const_1 )**_sage_const_3
+    T[j+_sage_const_1 ] = rhs / (j+_sage_const_1 )**_sage_const_3 
 
 print("T_0..T_9:", [T[j] for j in range(_sage_const_10 )])
 assert T[_sage_const_3 ] == _sage_const_268 , "T_3 check failed: got %s" % T[_sage_const_3 ]
@@ -99,7 +99,7 @@ for k in [_sage_const_10 , _sage_const_50 , _sage_const_100 , _sage_const_200 , 
 sys.stdout.flush()
 
 # ---------- 6. guess recurrence for f_k ----------
-messy = nonints and max(f[k].denominator() for k in range(min(_sage_const_50 ,NMAX+_sage_const_1 ))) > _sage_const_10 **_sage_const_6
+messy = nonints and max(f[k].denominator() for k in range(min(_sage_const_50 ,NMAX+_sage_const_1 ))) > _sage_const_10 **_sage_const_6 
 if not messy:
     print("\n=== Step 6: ore_algebra.guess on f_k ===")
     from ore_algebra import OreAlgebra, guess
@@ -168,3 +168,4 @@ for k in range(_sage_const_21 ):
     else:
         print("k=%d: f_k = 0, g_k = %s" % (k, g[k]))
 print("\nDONE")
+

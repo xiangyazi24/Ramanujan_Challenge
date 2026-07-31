@@ -5,7 +5,7 @@ Key realization: r(n) = -16 * (n+a1)...(n+a7) is a polynomial × (-16),
 since the Poincaré root c=-16 with denominator = 1.
 
 Strategy:
-1. Compute matrix product to N=30 with mp.dps=1500 (entries are ~10^225,
+1. Compute matrix product to N=30 with mp.dps=1500 (entries are ~10^225, 
    giving ~1275 digits of relative precision)
 2. Cancel dominant mode using Richardson extrapolation
 3. Extract r(n) values for n=5..25 (~20 values, overdetermined for 7 params)

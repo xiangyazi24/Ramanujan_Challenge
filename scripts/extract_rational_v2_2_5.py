@@ -122,3 +122,4 @@ for n_test in [0, 1, 5, 10, 20, 50, 80, 100, 130, 150]:
     rel_diff = abs((r_rat - r_int[n_test]) / r_int[n_test])
     log_rd = float(mp.log10(rel_diff)) if rel_diff > 0 else -9999
     print(f"  n={n_test:>3}: log10(rel_diff) = {log_rd:.1f}")
+

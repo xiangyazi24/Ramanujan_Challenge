@@ -130,11 +130,11 @@ for dQ in range(0, 8):
             # Print the coefficients
             P_coeffs = [sol[k, 0] for k in range(dP)] + [mpf(1)]  # p_0,...,p_{dP-1}, 1
             Q_coeffs = [sol[dP + j, 0] for j in range(dQ)] + [mpf(1)] if dQ > 0 else [mpf(1)]
-
+            
             print(f"  P(n) = n^{dP} + {' + '.join(nstr(P_coeffs[k],15) + '*n^' + str(k) for k in range(dP-1,-1,-1))}")
             if dQ > 0:
                 print(f"  Q(n) = n^{dQ} + {' + '.join(nstr(Q_coeffs[j],15) + '*n^' + str(j) for j in range(dQ-1,-1,-1))}")
-
+            
             # Check if coefficients are close to simple rationals
             print(f"  P coefficients (checking for half-integers):")
             for k in range(dP):
@@ -144,7 +144,8 @@ for dQ in range(0, 8):
                 nearest_int = round(float(val2))
                 err = abs(val2 - nearest_int)
                 print(f"    p_{k} = {nstr(val, 20)}  2*p_{k} ≈ {nearest_int} (err {nstr(err, 5)})")
-
+            
             break
     except Exception as e:
         print(f"dP={dP}, dQ={dQ}: solve failed ({e})")
+

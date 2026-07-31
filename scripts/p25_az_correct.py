@@ -144,7 +144,8 @@ def make_sup(umin, umax, vmin, vmax, cmin, cmax):
                       for c in range(cmin, cmax+1)]
 
 
-def build_terms(dP, dC, eps_mode, eps_val, supP, supA, supB, supC):
+def build_terms(dP, dC, eps_mode, eps_val, supP, supA, supB, supC,
+                uv_exp=-1):
     """Return (unknowns, terms) with SEPARATE supports for each block.
 
     supP, supA, supB, supC: lists of (a,b,c) tuples.
@@ -166,15 +167,19 @@ def build_terms(dP, dC, eps_mode, eps_val, supP, supA, supB, supC):
                         for j in range(3):
                             tl.append((('m', k, i, j), tag(Gs, j)))
                     elif blk == 'A':
-                        # D_u cleared: GVGT * [GU * d_u(A) + (n*U2M2 - U1U2)*A]
+                        # D_u cleared:
+                        # GVGT * [GU*d_u(A) + (n*U2M2 + uv_exp*U1U2)*A].
+                        # The historical carrier has uv_exp=-1.  The value -2
+                        # is the ordinary-form carrier whose P-period extracts
+                        # the Delannoy constant term when P contains a factor uv.
                         # GU * d_u(u^a) = a * u(u+1)(u+2) * u^{a-1}
                         base = ladd(lscale(lshift(GU, (a-1, b, c)), a),
-                                    lscale(lshift(U1U2, m), -1))
+                                    lscale(lshift(U1U2, m), uv_exp))
                         tl.append((('c0', k), tag(lmul(GVGT, base), i)))
                         tl.append((('c1', k), tag(lmul(GVGT, lshift(U2M2, m)), i)))
                     elif blk == 'B':
                         base = ladd(lscale(lshift(GV, (a, b-1, c)), b),
-                                    lscale(lshift(V1V2, m), -1))
+                                    lscale(lshift(V1V2, m), uv_exp))
                         tl.append((('c0', k), tag(lmul(GUGT, base), i)))
                         tl.append((('c1', k), tag(lmul(GUGT, lshift(V2M2, m)), i)))
                     elif blk == 'C':
@@ -322,6 +327,7 @@ def solve_config(dP, dC, eps_mode, p, seed=0,
                  Au=None, Av=None, At=None,
                  Bu=None, Bv=None, Bt=None,
                  Cu=None, Cv=None, Ct=None,
+                 uv_exp=-1,
                  verbose=True):
     """
     Solve the AZ linear system mod p.
@@ -354,7 +360,8 @@ def solve_config(dP, dC, eps_mode, p, seed=0,
     supB = make_sup(*Bu, *Bv, *Bt)
     supC = make_sup(*Cu, *Cv, *Ct)
 
-    unknowns, terms = build_terms(dP, dC, eps_mode, eps_val, supP, supA, supB, supC)
+    unknowns, terms = build_terms(
+        dP, dC, eps_mode, eps_val, supP, supA, supB, supC, uv_exp=uv_exp)
     N = len(unknowns)
     maxk = max(dP, dC)
 
@@ -577,6 +584,8 @@ def main():
     ap.add_argument('--pu', type=str, default='-2,2', help='P u-range')
     ap.add_argument('--pv', type=str, default='-2,2', help='P v-range')
     ap.add_argument('--pt', type=str, default='0,2', help='P t-range')
+    ap.add_argument('--uv-exp', type=int, default=-1,
+                    help='u and v monomial exponents in the ordinary-form carrier')
     args = ap.parse_args()
 
     if args.selftest:
@@ -592,6 +601,7 @@ def main():
     print("=" * 78)
     print("P2.5 AZ certificate search (v2: correct certificate support widths)")
     print(f"  Phase: Phi(u,v) = phi(u)*phi(v),  phi(u) = (1+u)(u+2)/u")
+    print(f"  Ordinary-form carrier exponents: u^{args.uv_exp} v^{args.uv_exp}")
     print(f"  P support: u in {Pu}, v in {Pv}, t in {Pt}")
     print(f"  A support: u in ({Pu[0]},{Pu[1]+2}), v in {Pv}, t in {Pt}")
     print(f"  B support: u in {Pu}, v in ({Pv[0]},{Pv[1]+2}), t in {Pt}")
@@ -606,17 +616,17 @@ def main():
         sys.stdout.flush()
         for em in eps_modes:
             res = solve_config(dP, dC, em, PRIME1, seed=args.seed,
-                               Pu=Pu, Pv=Pv, Pt=Pt)
+                               Pu=Pu, Pv=Pv, Pt=Pt, uv_exp=args.uv_exp)
             if not res['verify_ok']:
                 print("    WARNING: compressed nullspace failed full verification; "
                       "retrying with new seed")
                 sys.stdout.flush()
                 res = solve_config(dP, dC, em, PRIME1, seed=args.seed + 1000,
-                                   Pu=Pu, Pv=Pv, Pt=Pt)
+                                   Pu=Pu, Pv=Pv, Pt=Pt, uv_exp=args.uv_exp)
             if res['Pdim'] > 0:
                 # confirm with second prime
                 res2 = solve_config(dP, dC, em, PRIME2, seed=args.seed,
-                                    Pu=Pu, Pv=Pv, Pt=Pt)
+                                    Pu=Pu, Pv=Pv, Pt=Pt, uv_exp=args.uv_exp)
                 agree = (res2['Pdim'] == res['Pdim']
                          and res2['nullity'] == res['nullity'])
                 print(f"    >>> HIT: P-dim={res['Pdim']} (eps mode {em}); "

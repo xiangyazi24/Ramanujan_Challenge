@@ -191,7 +191,7 @@ disc = 18*1*(-560)*(-8960)*(-4096) - 4*(-560)**3*(-4096) + (-560)**2*(-8960)**2 
 print(f"\n  Discriminant = {disc}")
 print(f"  Is perfect square? {int(disc**0.5)**2 == disc if disc > 0 else 'negative'}")
 
-# If disc > 0 and is NOT a perfect square, the Galois group is S_3 and the
+# If disc > 0 and is NOT a perfect square, the Galois group is S_3 and the 
 # splitting field is degree 6 over Q — not contained in Q(sqrt(2)).
 # If disc > 0 and IS a perfect square, the Galois group is A_3 (cyclic),
 # and the splitting field is a cubic extension.

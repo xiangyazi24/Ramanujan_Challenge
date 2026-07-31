@@ -46,7 +46,7 @@ for N in range(NMAX):
     M = M_entries(N)
     product = product * M
     AM = A * product
-
+    
     for j in range(3):
         P_j = AM[0, j]
         Q_j = AM[1, j]
@@ -56,7 +56,7 @@ for N in range(NMAX):
             if j == 0:
                 ratios.append(ratio)
                 errors.append(err)
-
+    
     if (N+1) % 20 == 0:
         digits = -log10(errors[-1]) if errors[-1] > 0 else mp.dps
         print(f"  N={N+1}: {mp.nstr(digits, 6)} digits match G", flush=True)

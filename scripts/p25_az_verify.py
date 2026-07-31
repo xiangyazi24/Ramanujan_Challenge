@@ -2,6 +2,27 @@
 """
 P2.5: Extract and verify the AZ certificate found by p25_az_correct.py.
 
+AUDIT NOTE (2026-07-30)
+-----------------------
+This program verifies only the cleared differential identity
+
+    Phi P_(n+1) - P_n M_H = D_u A + D_v B + D_t C.
+
+It does *not* turn that identity into a Delannoy constant-term period.  The
+covariant derivatives in p25_az_correct.py are integrated against the ordinary
+form ``du dv dt``.  After the factor ``u v (1+t^2)`` in P cancels the carrier
+denominator, small u- and v-contours extract the coefficient of
+``u^-1 v^-1`` rather than the constant term.  At eps=0 the remaining t
+integrand is constant, so its ordinary closed-contour integral is zero.  Thus
+the previously proposed logarithmic-measure interpretation (``du/u``,
+``dv/v``) changes the functional and is invalid.
+
+An independent exact recurrence check also rules out the claimed carrier row:
+the proposed r_0 = [1, 1, 1/4] gives
+r_0 M_H(0) = [15/8, -11/8, 1/4], not
+[81/4, 27/2, 9/4].  Do not cite this certificate as a connection coefficient
+or a proof of the Catalan limit.
+
 The search found P_n = (1/4) * uv * (1+t^2) * [(n+2)^2, 2(n+2), 1]
 at n-degree 2, P support [0,2]^3, for ALL values of eps.
 

@@ -2,7 +2,7 @@
 """Problem 2.5: Test gauge transforms to find (S-1) factor.
 
 Key insight from Q4735: The limiting matrix C_∞ has eigenvalues
-17+12√2, 17-12√2, and 1. The eigenvalue-1 mode corresponds to a
+17+12√2, 17-12√2, and 1. The eigenvalue-1 mode corresponds to a 
 solution with only polynomial (not exponential) growth.
 
 We need to find h(N) such that q̃_N = q_N / h(N) satisfies an order-3
@@ -102,7 +102,7 @@ for N in [20, 30, 50]:
 # where λ₁ ~ -16(17+12√2)N^7, λ₂ ~ -16(17-12√2)N^7, λ₃ ~ -16*N^7
 # (using the det LC = -4096 = (-16)^3 implies each eigenvalue ~ -16 * n^7 * poincare_root)
 
-# 6. The "eigenvalue 1 mode" solution has growth q_N ~ C * (-16)^N * N^{7N} * ...
+# 6. The "eigenvalue 1 mode" solution has growth q_N ~ C * (-16)^N * N^{7N} * ... 
 # which is superexponential. The gauge h(N) should absorb this.
 # Natural candidate: h(N) = (-16)^N * prod_{k=0}^{N-1} k^7 = (-16)^N * (N-1)!^7
 # But this is too crude. Let's look at exact eigenvalue at finite N.

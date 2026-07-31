@@ -12,11 +12,11 @@ _sage_const_400 = Integer(400); _sage_const_2 = Integer(2); _sage_const_5 = Inte
 import sys, time
 from ore_algebra import OreAlgebra, guess
 
-KMAX = _sage_const_400
+KMAX = _sage_const_400 
 
 def M_entries(n):
     m11 = (-_sage_const_2 *n-_sage_const_5 )*(n+_sage_const_3 )**_sage_const_2 *(_sage_const_136 *n**_sage_const_4 +_sage_const_1424 *n**_sage_const_3 +_sage_const_5548 *n**_sage_const_2 +_sage_const_9551 *n+_sage_const_6141 )
-    m12 = _sage_const_384 *n**_sage_const_6 +_sage_const_6384 *n**_sage_const_5 +_sage_const_44168 *n**_sage_const_4 +_sage_const_162698 *n**_sage_const_3 +_sage_const_336377 *n**_sage_const_2 +_sage_const_369933 *n+_sage_const_169011
+    m12 = _sage_const_384 *n**_sage_const_6 +_sage_const_6384 *n**_sage_const_5 +_sage_const_44168 *n**_sage_const_4 +_sage_const_162698 *n**_sage_const_3 +_sage_const_336377 *n**_sage_const_2 +_sage_const_369933 *n+_sage_const_169011 
     m13 = -(_sage_const_480 *n**_sage_const_4 +_sage_const_4980 *n**_sage_const_3 +_sage_const_19210 *n**_sage_const_2 +_sage_const_32690 *n+_sage_const_20730 )
     m21 = (n+_sage_const_2 )**_sage_const_2 *(n+_sage_const_3 )**_sage_const_2 *(_sage_const_4 *n+_sage_const_10 )*(_sage_const_48 *n**_sage_const_3 +_sage_const_386 *n**_sage_const_2 +_sage_const_1017 *n+_sage_const_879 )
     m22 = (n+_sage_const_2 )**_sage_const_2 *(-_sage_const_272 *n**_sage_const_5 -_sage_const_3848 *n**_sage_const_4 -_sage_const_21732 *n**_sage_const_3 -_sage_const_61184 *n**_sage_const_2 -_sage_const_85761 *n-_sage_const_47808 )
@@ -27,7 +27,7 @@ def M_entries(n):
     return [[m11,m12,m13],[m21,m22,m23],[m31,m32,m33]]
 
 def delta_H(n):
-    return -_sage_const_2 *(n+_sage_const_2 )**_sage_const_2 *(n+_sage_const_3 )**_sage_const_2 *(_sage_const_2 *n+_sage_const_5 )*(_sage_const_2 *n+_sage_const_7 )**_sage_const_2
+    return -_sage_const_2 *(n+_sage_const_2 )**_sage_const_2 *(n+_sage_const_3 )**_sage_const_2 *(_sage_const_2 *n+_sage_const_5 )*(_sage_const_2 *n+_sage_const_7 )**_sage_const_2 
 
 t0 = time.time()
 E = [vector(QQ,[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ]), vector(QQ,[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ]), vector(QQ,[_sage_const_0 ,_sage_const_0 ,_sage_const_1 ])]
@@ -89,7 +89,7 @@ sys.stdout.flush()
 
 # eps_k decay rate, high precision
 from mpmath import mp, mpf, catalan
-mp.dps = _sage_const_400
+mp.dps = _sage_const_400 
 G = catalan
 print("\neps_k = g_p(k)/f_q(k) - G, ratios eps_{k+1}/eps_k:")
 eps = []
@@ -103,3 +103,4 @@ for k in [_sage_const_10 , _sage_const_20 , _sage_const_40 , _sage_const_60 , _s
     print("  k=%3d: eps=%.3e  ratio=%.12f" % (k, float(eps[k]), float(r)))
 print("  -1/8 = -0.125;  17-12*sqrt(2) = %.12f" % (_sage_const_17 -_sage_const_12 *math.sqrt(_sage_const_2 )))
 print("total %.1fs" % (time.time()-t0))
+
