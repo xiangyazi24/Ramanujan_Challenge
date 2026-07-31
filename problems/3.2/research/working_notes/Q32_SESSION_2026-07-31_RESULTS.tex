@@ -482,6 +482,36 @@ i.e.\ every moment is $\asymp N/\log N$, as a Poisson law with mean $\asymp1/\lo
 A proof of even the second moment at that strength would immediately give
 $\max_nH(n)\ll\sqrt{N/\log N}=o(N/\log N)$ and close the conjecture.
 
+\subsection{No second relation: the zeros are statistically generic}
+\label{subsec:generic}
+
+Beating the trivial constant $1/2$ would follow from a ``non-forced second relation''
+excluding a positive proportion of the candidate primes.  No such relation exists at the level
+of congruences or quadratic characters.  Over the $950$ pairs $(p,z)$ with $z\in Z_p$,
+$5\le p<8000$:
+\[
+\begin{array}{l|l}
+ z\bmod2&47.5\%,\ 52.5\%\\
+ z\bmod3&31.3\%,\ 33.5\%,\ 35.3\%\\
+ z\bmod4&23.6\%,\ 26.7\%,\ 23.9\%,\ 25.8\%\\
+ z\bmod8&\text{all eight classes }11.2\%\text{--}13.9\%\\
+ \left(\tfrac zp\right)&+1:\ 50.3\%,\quad -1:\ 49.7\%
+\end{array}
+\]
+and the normalised zeros $z/p$ are uniform in $[0,1]$ (ten bins, $69$--$81$ against $72.4$
+expected).  Note that reflection preserves parity, since $p-1$ is even, so a parity bias was
+\emph{a priori} possible; there is none.
+
+Two structural remarks close the remaining elementary routes.  First, the reflection partner of
+a hit at level $n$ is a hit at $n^*=3p-1-n$, a \emph{different} level, so reflection injects
+hits into other diagonals and yields no pointwise saving.  Second, the gap continuant $N_h$ has
+the forced factor $2X+h+1$; at $X=z$ and $h=p-1-2z$ this equals $p$, so $N_h(z)\equiv0\pmod p$
+is tautological rather than a second condition.  Finally, the factor-count bound
+$H_R(n)\le(\lambda/2+o(1))R^2/\log n$, $\lambda=\log(17+12\sqrt2)$, beats prime counting only
+for $R<2/\lambda=0.567$, i.e.\ never for a growing range; the genuinely free prefix
+$r\le\lambda^{-1}\log n$ (where $b_r<n/2$, so no hit is possible) removes only $O(\log n)$
+residues.
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes
