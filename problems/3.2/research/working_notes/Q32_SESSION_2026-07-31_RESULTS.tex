@@ -389,7 +389,15 @@ the whole story}: the justified decomposition is
 and from $p\mid b_n$ alone the middle range admits only the bound $O(\log b_n)=O(n)$.  Hence the
 conjecture is equivalent to the \emph{full} large-prime condition
 $\sum_{n/\log n<p\le n}\min(v_p(b_n),3)\log p=o(n)$; the top-window sum alone suffices only once
-$M_n=o(n)$ is proved separately.  What is not
+$M_n=o(n)$ is proved separately.  This is not a formality: the two ranges contribute comparably in
+practice.  For instance the top-window and middle-range sums are $5.60$ and $5.19$ at $n=500$, and
+$0$ and $12.23$ at $n=2500$ — the middle range carries roughly half the mass and sometimes all of
+it.
+
+One structural remark in its favour: the occupancy-one barrier is specific to $p\asymp n$.  For
+$p\asymp n/\log n$ an interval of length $n$ contains $\asymp\log n$ representatives of each
+residue class, so the large-sieve obstruction is weaker there — though for a \emph{single} $n$
+this still only helps on average.  What is not
 settled is the value $\alpha=0$ at $t=3$ — equivalently, excluding a common $p$-factor of the
 reduced numerator and $b_n$ — which bears on the primitive coprimality conjecture but not on
 $G_n$; no $t\ge3$ occurs in the tested range: computing $v_p(b_n)$ \emph{directly} from the exact
