@@ -867,6 +867,32 @@ $G_n=(d_n/D_n)\gcd(A_n,b_n)$, coprimality is \emph{not} needed for the subexpone
 conjecture; it is a strictly stronger statement, and deserves to be stated separately as a
 \emph{primitive Ap\'ery coprimality conjecture}.
 
+\subsection{Is the conjecture safe?}
+
+No positive heuristic or structural mechanism for failure could be identified.  Three specific
+worries can be dismissed.
+
+\emph{Arithmetic of $n$.}  For a top prime, $p\mid b_n$ is the single-block condition
+$n-p\in Z_p$; divisibility of $n$ by many small integers does not enter.  Likewise a
+``supersingular parameter'' intuition is misleading: $r=n-p$ is a coefficient index that changes
+with $p$, not one geometric parameter reduced modulo many primes.
+
+\emph{Short progressions inside one $Z_p$.}  Harmless: each zero $z$ contributes to a
+\emph{different} level $p+z$, so an arithmetic progression of zeros merely spreads one prime's few
+contributions across several $n$.  The Cooper-type failure needs a macroscopic, systematically
+positioned block, which Apéry excludes by reflection, nonzero endpoints, and no consecutive zeros.
+
+\emph{The record $|Z_p|=12$ at $p=159\,977$.}  That is six reflection pairs.  With Poisson mean
+$\lambda\approx0.504$ over the $\approx17\,982$ primes below $2\cdot10^5$, the expected number with
+at least six pairs is $\approx0.27$, so observing one has probability $\approx23\%$: entirely
+ordinary, not a heavy tail.
+
+What remains is a purely logical vulnerability: one can adversarially plant a diagonal while
+preserving Poisson cardinalities and near-uniform positions for every individual prime.  So the
+data do not prove the conjecture — but a counterexample with $H(n)\gg n^\varepsilon$ would need a
+cross-characteristic resonance for which there is at present neither an algebraic mechanism nor a
+numerical hint.
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes
