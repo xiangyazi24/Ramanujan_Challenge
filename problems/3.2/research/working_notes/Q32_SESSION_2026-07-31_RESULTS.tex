@@ -164,15 +164,24 @@ range.  For $n\le20\,000$:
 \[
 \begin{array}{c|c}
  \text{range}&\max R(n)/n\\ \hline
- 100\le n\le1000&0.109\ (n=200)\\
- 1000\le n\le10\,000&0.0251\ (n=1041)
+ 100\le n\le1000&0.1091\ (n=200)\\
+ 1000\le n\le10\,000&0.0251\ (n=1041)\\
+ 10\,000\le n\le100\,000&0.0041\ (n=11\,181)
 \end{array}
 \qquad
-\max_{n\le20\,000}\#\{p\le n:p\mid b_n\}=11 .
+\max_{n\le10^5}\#\{p\le n:p\mid b_n\}=14 .
 \]
-Thus $R(n)$ itself grows extremely slowly — the data are consistent with
-$R(n)=O(\log n\log\log n)$, which is the heuristic prediction from
-$\Pr[p\mid b_n]\approx|Z_p|\log_pn/p$ — while the conjecture only asks for $o(n)$.
+Thus $R(n)$ itself grows extremely slowly.  Quantitatively, $R(200)\approx21.8$ and
+$R(11\,181)\approx45.5$: the value not quite doubles while $n$ grows by a factor $56$.  The
+heuristic prediction from $\Pr[p\mid b_n]\approx|Z_p|\log_pn/p$ is
+$R(n)\asymp\log n\log\log n$, which predicts a ratio $2.4$ over that range against the
+observed $2.1$.  So the truth appears to be
+\[
+  R(n)=O(\log n\log\log n),
+\]
+while the conjecture asks only for $o(n)$ — the gap between what is true and what must be
+proved is enormous, and the entire difficulty is that no unconditional argument controls the
+prime factors of one specific value $b_n$.
 
 \subsection{The obstruction, stated precisely}
 
