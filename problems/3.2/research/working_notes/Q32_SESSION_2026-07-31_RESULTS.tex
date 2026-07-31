@@ -101,6 +101,79 @@ $\sum_{p\le200\,000}|Z_p|=18\,126$ (mean $1.016$) and $\max|Z_p|=12$ at $p=159\,
 \noindent\emph{Audit:} \texttt{q32\_k\_scan.c}, validated against the independent Python
 implementation \texttt{q32\_top\_window\_target\_counts.py} on $n\le20\,000$.
 
+\subsection{The denominator-defect law, and what it discharges unconditionally}
+\label{subsec:defect-law}
+
+Write $G_n=\prod_p p^{e_p(n)}$ with $e_p(n)=v_p(d_n)-v_p(D_n)\ge0$; since $D_n\mid d_n$ we
+always have
+\[
+  0\le e_p(n)\le v_p(d_n)=3\lfloor\log_p n\rfloor .
+\tag{$\ast$}
+\]
+
+\begin{proposition}[verified law]\label{prop:defect}
+For primes $p\ge7$ with $n/2<p\le n$,
+\[
+  e_p(n)>0\iff p\mid b_n ,
+\]
+and then $e_p(n)=1$.  Verified for all such pairs with $n\le250$: $3121$ of $3124$ cases,
+the three exceptions being $p=5$ at $n=5,7,9$ — exactly the prime dividing $b_1=5$, which is
+the same exception carried by the Ap\'ery--Lucas step.  For $\sqrt n<p\le n/2$ the defect
+takes values in $\{1,2,3\}$ and occurs precisely when a base-$p$ digit of $n$ lies in
+$Z_p$; e.g.\ the defect residues are $\{5\}$ for $p=11$, $\{3,13\}$ for $p=17$,
+$\{8,10\}$ for $p=19$, $\{8,22\}$ for $p=31$, $\{17,19\}$ for $p=37$, $\{10,30\}$ for
+$p=41$, $\{9,49\}$ for $p=59$ — in each case exactly $Z_p$, and each pair summing to $p-1$
+as Proposition~\ref{prop:palindrome} requires.
+\end{proposition}
+
+Two consequences, the first of which needs no hypothesis at all.
+
+\begin{lemma}[unconditional]\label{lem:small-primes}
+$\displaystyle\sum_{p\le n/\log n}e_p(n)\log p\;\le\;3\,\pi\!\left(\frac n{\log n}\right)\log n
+ \;=\;O\!\left(\frac n{\log n}\right)\;=\;o(n).$
+\end{lemma}
+
+\begin{proof}
+By $(\ast)$, $e_p(n)\log p\le3\lfloor\log_p n\rfloor\log p\le3\log n$; sum over the
+$\pi(n/\log n)\sim n/\log^2n$ primes involved.
+\end{proof}
+
+So \emph{every prime below $n/\log n$ is already harmless}, whatever the arithmetic of $b_n$.
+For $p>n/\log n$ (hence $p>\sqrt n$ for large $n$) the base-$p$ expansion of $n$ has exactly
+two digits, $n=qp+k$ with $1\le q<\log n$, and Ap\'ery--Lucas gives $b_n\equiv b_qb_k\pmod p$.
+The digit $q$ can only contribute primes dividing one of $b_1,\dots,b_{\lfloor\log n\rfloor}$,
+and
+\[
+  \sum_{j\le\log n}\log\operatorname{rad}(b_j)\le\sum_{j\le\log n}\log b_j=O(\log^2n),
+\]
+since $\log b_j\sim3.4j$ (checked: $\log\operatorname{rad}(b_j)$ equals $\log b_j$ to within a
+few percent for $j\le14$).  Hence, granting Proposition~\ref{prop:defect},
+\[
+  \boxed{\;\log G_n\;=\;O\!\left(\frac n{\log n}\right)+O(\log^2n)
+   +3\!\!\sum_{\substack{n/\log n<p\le n\\ (n\bmod p)\in Z_p}}\!\!\log p\;}
+\]
+and the conjecture is \emph{equivalent} to the last sum being $o(n)$.  This is a sharper
+localisation than the top-half reduction: the entire range $p\le n/\log n$ and the whole
+$q$-digit contribution are discharged with Chebyshev's bound alone.
+
+\subsection{How large the remaining sum actually is}
+
+Using the Lucas criterion ($p\mid b_n$ iff some base-$p$ digit of $n$ lies in $Z_p$) one can
+compute the full quantity $R(n)=\log\operatorname{rad}_{p\le n}(b_n)$ for every $n$ in a
+range.  For $n\le20\,000$:
+\[
+\begin{array}{c|c}
+ \text{range}&\max R(n)/n\\ \hline
+ 100\le n\le1000&0.109\ (n=200)\\
+ 1000\le n\le10\,000&0.0251\ (n=1041)
+\end{array}
+\qquad
+\max_{n\le20\,000}\#\{p\le n:p\mid b_n\}=11 .
+\]
+Thus $R(n)$ itself grows extremely slowly — the data are consistent with
+$R(n)=O(\log n\log\log n)$, which is the heuristic prediction from
+$\Pr[p\mid b_n]\approx|Z_p|\log_pn/p$ — while the conjecture only asks for $o(n)$.
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes
