@@ -449,7 +449,17 @@ $N$ diagonals, does not concentrate a positive proportion of its points on one d
 The results above localise the difficulty completely: $G_n$ is a handful of small primes
 times the $K(n)\le3$ targets, and every route we have tried terminates in the same place —
 bounding the number of prime factors of the \emph{single} integer $b_n$ inside the short
-window $(n/2,n]$.  Three separate barriers are now identified, each with a reason.
+window $(n/2,n]$.  The correct trivial bound here is the ambient prime count,
+\[
+  H(n)\le\pi(n)-\pi(n/2)=\Bigl(\tfrac12+o(1)\Bigr)\frac n{\log n},
+\]
+which is stronger than the height bound $\log b_n/\log(n/2)\sim2L$ with
+$L=\log(17+12\sqrt2)=3.5255$.  \textbf{The first Ap\'ery-specific unconditional progress would
+therefore be any constant below $1/2$}, or any $o(n/\log n)$.  Known divisors do not help:
+Delaygue (Compos.\ Math.\ 154 (2018)) proves $5^{\alpha_5(n)}11^{\alpha_{11}(n)}\mid b_n$ with
+$\alpha_5$ counting base-$5$ digits in $\{1,3\}$ and $\alpha_{11}$ counting base-$11$ digits
+equal to $5$, but both are $O(\log n)$; and $2,3,7\nmid b_n$ for every $n$, so no
+$\mathrm{lcm}$-type divisor exists.  Three separate barriers are now identified, each with a reason.
 
 \begin{enumerate}
 \item \textbf{Rank one is forced, not accidental.}  The Newton polytope of $\Lambda$ has a
