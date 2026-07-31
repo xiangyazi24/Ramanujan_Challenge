@@ -1054,6 +1054,20 @@ sees both divisibilities, and the gap-polynomial mechanism does not transfer acr
 characteristics.  This is the concrete form of the ``horizontal versus vertical'' obstruction:
 every certificate we possess is built inside one residue field.
 
+\subsection{The geometric interpretation: Mellin traces, not supersingular fibres}
+
+Each $r\in Z_p$ is a \emph{vanishing Mellin trace}: $b_r\equiv0\pmod p$ means the mod-$p$ Frobenius
+trace of the Kummer-character-twisted middle cohomology
+$H^1_{\mathrm{mid}}(\mathbb G_m,\,\mathcal T\otimes\mathcal L_{\chi_r})$,
+$\chi_r=\omega^r$, vanishes.  It is \emph{not} a supersingular fibre parameter of the
+Beukers--Peters pencil $1-t\Lambda=0$.  Coefficient sparsity is not coordinate-invariant:
+$t^{p-1}-1$ is sparse while $(t+1)^{p-1}-1$ has essentially every coefficient nonzero, so no
+Hasse--Witt mass formula or Deuring-type count can bound $|Z_p|$ directly.
+
+The central index $r=(p-1)/2$ is exceptional because $\chi_{(p-1)/2}$ is the quadratic character,
+which is fixed by the inversion $t\mapsto t^{-1}$; this is why it yields the level-$8$ weight-$4$
+newform and why $|Z_p|$ is odd exactly at non-ordinary primes.
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes
