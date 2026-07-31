@@ -989,6 +989,31 @@ $|P(m)\cap P(n)|\ll|m-n|$, so no more efficient pairwise K\H ov\'ari--S\'os--Tur
 improve the exponent.  Only a triple-codegree bound $\Delta_3(N)$ — for which
 \S\ref{subsec:codegree} supplies the resultant certificate — can go further.
 
+\subsection{Why no general method can work: the trivial bound is extremal}
+
+It is worth recording that the elementary bound cannot be improved for a general integer, so any
+proof must be Ap\'ery-specific.  For an integer $m$ and $y\ge2$,
+\[
+  k:=\#\{p\in(y,2y]:p\mid m\}\quad\text{satisfies}\quad y^k\le|m|,
+  \qquad\text{so}\qquad k\le\frac{\log|m|}{\log y},
+\]
+and this is \emph{extremally sharp}: taking $m$ to be a product of $k$ distinct primes from
+$(y,2y]$ gives $m\le(2y)^k$ with exactly those $k$ prime divisors.  Hence no bound of the form
+``an integer of size $e^{cn}$ has $o(n/\log n)$ prime divisors in $(n/2,n]$'' can hold in general.
+
+Nor does divisor theory supply a substitute: Ford's theorems on $H(x,y,z)$ and $H_r(x,y,z)$
+describe how \emph{typical} integers $m\le x$ distribute their divisors, and give no pointwise
+statement for one prescribed integer.  The same applies in the other direction:
+Luca--Shparlinski's results on $\omega(b_r)$ and on the largest prime factor of $b_r$ are
+density-one \emph{lower} bounds.
+
+Consequently the dyadic split $\sum_{r\le R}+\sum_{r>R}$ cannot produce a constant saving: the
+first sum is bounded by $\sum_{r\le R}\min\bigl(1,\lambda r/\log n\bigr)$ and the second by the
+prime count of the remaining window, and optimising leaves only a constant cutoff $R=O(1)$.  To
+reach $(1/2-\delta)n/\log n$ one needs precisely an Ap\'ery-specific statement of average
+occupancy strictly below one along the moving diagonal $p=n-r$ — which is the missing theorem
+itself.
+
 \subsection{The obstruction, stated precisely}
 
 The results above localise the difficulty completely: $G_n$ is a handful of small primes
