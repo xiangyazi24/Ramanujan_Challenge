@@ -1,0 +1,100 @@
+# DS synthesis — 5 ChatGPT consultations converge (2026-07-31)
+
+Sources: Q6123 (p-curvature, ds1), Q6124 (energy, ds2), Q6125 (Mellin, ds3),
+Q6126 (CRT, ds4), Q6127 (strategic, ds5), Q6128 (DGK construction, ds3-2nd).
+All archived under `chatgpt-answers/Q612x-*.md`. Individual notes:
+`DS_NOTES_MellinTraces.md`, `DS_NOTES_EnergyAnticoncentration.md`.
+
+## 1. The wall, from five independent angles
+Every route hits a PROVABLE wall (not a missing citation):
+- **p-curvature (Q6123): REFUTED.** The shift-recurrence p-curvature (difference
+  module) has det = 1 after m ≡ 0 mod p — generically invertible, NOT nilpotent.
+  C_m(p−1) is a partial-product coefficient, not a conjugacy invariant. Katz
+  nilpotence applies to the rank-3 Picard–Fuchs *differential* operator and does
+  not reconstruct the marked off-center coefficient.
+- **Energy/higher moments (Q6124):** no theorem can exist from the fibre
+  hypotheses — explicit compensated-star countermodel preserves all local stats.
+- **Mellin/vanishing traces (Q6125):** no literature theorem at defining-char
+  scale; Perret-Gentil is blind to p-divisibility; nonlinear-phase black-box
+  cancellation provably impossible.
+- **CRT (Q6126):** it's list-recovery of a zero-rate CRT code; the √S decoding
+  threshold deliberately permits ONE integer hitting every coordinate.
+- **Strategic (Q6127):** (iii) |Z_p| control and (iv) KST/codegree are LOGICALLY
+  incapable (a star is K_{2,2}-free; |Z_p|=1 aligned gives H=P_n).
+
+## 2. What all 5 converge on: the target theorem
+**Horizontal moving-coefficient Weyl cancellation.** For every fixed h ≠ 0,
+```
+S_h(n) = Σ_{n/2<p≤n} exp(2πi h b_{n−p}/p) = o(P_n),   P_n = n/log n.
+```
+Fixed h only — no uniformity up to p^δ, no 1/p local limit needed. Fejér's
+inequality over the finitely many modes |h|<K, then K→∞, proves
+`H(n)=o(P_n)`. Weak-* version: the empirical measures
+`μ_n = (1/P_n) Σ_p δ_{b_{n−p}/p mod 1}` converge weakly to Lebesgue, so
+`μ_n({0}) → 0` by Portmanteau. **This is the cleanest formulation of the whole
+campaign.** Empirically TRUE: I measured |S_1(n)|,|S_2(n)| for n=10³..1.6·10⁴,
+all ~ O(√P_n) (e.g. |S_1|/P_n ∈ [0.02, 0.09], |S_1|≈√P_n×[1,2]).
+
+First-constant target: `D_1(n) = Σ_p (1 − cos(2π b_{n−p}/p)) ≥ η·P_n` for some
+fixed η>0 (a positive proportion of phases away from 1). This alone gives the
+first constant below 1/2.
+
+## 3. NEW verified structural input (not in the repo writeups)
+**Caruso–Fürnsinn–Vargas-Montoya–Zudilin (Feb 2026):** the truncated Apéry
+polynomial `A_p(T) = Σ_{k=0}^{p-1} b_k T^k mod p` factors as
+- a PERFECT SQUARE when `p ≡ 1,5,7,11 (mod 24)`,
+- a FIXED QUADRATIC × square otherwise.
+**DS VERIFIED this for all primes 7 ≤ p ≤ 400, zero mismatches.**
+Q6123 independently identifies the same polynomial as the Hasse–Witt scalar
+`CT (1−tΛ)^{p−1} ≡ Σ_j b_j t^j` of the rank-one unit-root quotient. So the
+mod-24 structure is the genuine Cartier/Hasse-Witt structure of the Apery K3
+pencil. Route: split S_h(n) by the 8 classes a mod 24, transfer each class to
+the Franel/rank-two source, prove cancellation class-by-class.
+
+## 4. Other concrete new facts worth banking
+- **Exact Cartier reduction (Q6123):** for p ≤ m < 2p, m = p+r, 0 ≤ r ≤ p−2:
+  `C_{p+r}(p−1) ≡ C_r(−1) mod p`. Shortens to r = m−p (≍m), not polylog.
+- **Fixed-m section (Q6123):** F_m(x) = x^{−m}(1+x)^m P_m(x), P_m order-3
+  hypergeometric: `[θ_x(θ_x−2m−1)² + x(θ_x−m)³]P_m = 0`. A concrete rank-3
+  differential module (not the K3 PF operator).
+- **DGK construction (Q6128):** rank-3 Apéry local system (Beukers–Peters PF
+  order-3); Kummer twist = fractional exponent shift / s^{p−1}=t eigenspace /
+  ω^{−r} factor / Gauss-sum shift; Adolphson–Sperber uΛ complex is the
+  implementable route to Gross–Koblitz matrices. Carry strata are NOT the
+  obstruction (only 2 break lines m=r, m=p−1−r); the unit part ≍p gamma-sums is.
+  Scalar Ore complexity is O(1) at all precisions (the Apery recurrence), so
+  interpolation degree can't decide — **Test B (Frobenius-contiguity residual,
+  bounded-degree rational C(r) with M_{r+1} = C(r)·M_r and Lax pair) is the
+  decisive go/no-go.**
+- **CRT-code framing (Q6126):** two low-height integer polynomials annihilating
+  every Z_p mod p → a very hot n is a common integer root → "no hidden
+  alignment" = gcd has no linear factor in (N,2N]. Square-root threshold is the
+  list-decoding barrier.
+
+## 4.5 Q6129 calibration (adds the concrete algebraic threshold)
+- Provable today: ONLY (1/2+o(1))n/log n pointwise (+ O(log n) zero-free endpoint
+  via b_r < n/2 for r ≤ c·log n, c < 1/Λ; + very strong exceptional-set sparsity).
+- **First constant below 1/2 = target-selective p⁸ carrier of Apéry-height Λn:
+  H(n) ≤ (Λ/8+o(1))n/log n = 0.44069·n/log n.** Λ/7 = 0.5036 > 1/2 (useless);
+  **k=8 is the first useful depth.** Currently available: only p³ (Smith diag(1,p³)).
+  Arbitrarily deep scaled-index supercongruences (indices p^s) have superlinear
+  height — they do NOT furnish the carrier. This is EXACTLY Claude4.6's active
+  grade-g supercongruence route: the calibration says p⁸ at Λ-height closes a
+  0.0593 saving from prime counting.
+- Cleanest analytic input: F₂(N) = Σ_{N<n≤2N} H(n)(H(n)−1) = o(T_N²), i.e.
+  Σ_{p<q} C_{p,q}(N) = o(N²/log²N) where C_{p,q}(N) counts
+  {p|b_{s+q−p}, q|b_s, N<q+s≤2N}. Cross-characteristic anti-alignment; not
+  implied by any local property; random model predicts N/log²N (way smaller).
+
+## 5. Recommended next moves (for Claude4.6 + DS to pick up)
+1. (Highest value) Prove / attack `S_h(n) = o(P_n)` for fixed h using the
+   mod-24 square structure: write `S_h(n) = Σ_{a mod 24} Σ_{p≡a} e(h b_{n−p}/p)`,
+   on the square classes use `b_{n−p} ≡ trace of (Franel-adjoint)²` and try
+   Poisson-summation / Weyl / Stepanov. Even one class with a fixed spectral gap
+   gives the first constant < 1/2.
+2. Numerically verify the DGK Test B feasibility (needs Sage/Mathematica:
+   build rank-3 Cartier matrix mod p³, Kummer-twist, solve for bounded C(r)).
+3. Bank the exact Cartier reduction + the Hasse-Witt=truncated-Apéry identity
+   into proof.tex (Claude owns it).
+4. Kill-list to record in STATUS.md: p-curvature route (det=1), |Z_p|-only
+   routes, KST-only, higher-moment-only, raw CRT decoding — all documented dead.

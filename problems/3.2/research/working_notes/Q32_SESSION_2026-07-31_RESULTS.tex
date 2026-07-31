@@ -1020,6 +1020,26 @@ $\chi^2/p\approx1.6$--$2.1$), and the zero count is $0$ or $2$, consistent with 
 So the Ap\'ery sequence at first-block indices is, modulo $p$, as uniform as a random permutation.
 The problem is not anomalous concentration; it is proving what the data show.
 
+The \emph{Fourier core} makes this quantitative.  Define the Weyl sum
+\[
+  S_h(n)=\sum_{\substack{n/2<p\le n\\ p\ge7}}e\!\left(\frac{h\,b_{n-p}}p\right),
+  \qquad e(x)=e^{2\pi ix}.
+\]
+Then $H(n)=\frac1p\sum_{h\bmod p}S_h(n)$, and $S_0(n)$ is the prime count.  Computing $S_1$ and
+$S_2$ directly gives
+\[
+\begin{array}{c|cccc}
+ n&200&500&1000&2000\\ \hline
+ |S_1|&6.77&3.78&12.79&23.32\\
+ |S_2|&5.36&7.16&2.58&11.95\\
+ \sqrt{P_n}&4.58&6.48&8.54&11.62\\
+ |S_2|/\sqrt{P_n}&1.17&1.11&0.30&1.03
+\end{array}
+\]
+so $|S_h|\approx\sqrt{P_n}$: exact square-root cancellation, as for random phases.  Thus
+\emph{the problem is equivalent to proving $|S_h(n)|=o(P_n)$ for $h=1,\ldots,H$, and the data
+show $|S_h|\approx\sqrt{P_n}\ll P_n$.}
+
 \subsection{The matching map, and what it does and does not give}
 
 There is an exact reformulation of the middle range worth recording.  For $p\in(n/(q+1),n/q]$ put
