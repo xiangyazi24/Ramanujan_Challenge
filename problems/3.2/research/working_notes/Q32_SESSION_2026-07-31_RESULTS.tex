@@ -337,10 +337,15 @@ conjecture reduces, in this range, to a multiplicity bound.
 \begin{proof}[Proof of the valuation law when $v_p(b_n)\le2$]
 Let $p\ge7$ lie in the top window and put $t=v_p(b_n)$, $\alpha=v_p(a_n)$.
 
-First suppose $p\nmid n+1$.  The exact Casoratian
-$a_nb_{n+1}-a_{n+1}b_n=-6/(n+1)^3$ then has $v_p=0$, since $p\ge7$ gives $p\nmid6$.  By the
-no-two-consecutive-zeros theorem $p\nmid b_{n+1}$, so Proposition~\ref{prop:numcong} applied at
-$n+1$ makes $p^3a_{n+1}$ a $p$-unit, i.e.\ $v_p(a_{n+1})=-3$ exactly.  The two products therefore
+If $t=0$ there is nothing to do: writing $n=p+r$, the block law gives $p^3a_n\equiv6b_r$ with
+$b_r$ a unit, so $v_p(a_n)=-3$ as claimed.  (The no-two-consecutive-zeros lemma is silent when
+$t=0$, so this case must be handled separately rather than through the Casoratian.)
+
+Now let $t\in\{1,2\}$ and suppose first $p\nmid n+1$.  The exact Casoratian
+$a_nb_{n+1}-a_{n+1}b_n=-6/(n+1)^3$ has $v_p=0$, since $p\ge7$ gives $p\nmid6$.  Here $b_r\equiv0$
+and $r+1\le p-1$, so there is no wraparound and the no-two-consecutive-zeros lemma does apply,
+giving $b_{r+1}\not\equiv0$; the block law at $n+1=p+(r+1)$ then yields $v_p(b_{n+1})=0$ and
+$v_p(a_{n+1})=-3$ exactly.  The two products therefore
 have valuations
 \[
   v_p\bigl(a_nb_{n+1}\bigr)=\alpha,\qquad
