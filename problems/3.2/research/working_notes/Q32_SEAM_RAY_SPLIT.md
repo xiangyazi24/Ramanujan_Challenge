@@ -262,15 +262,16 @@ The reduction ends at the top-half sum
 \]
 (using Apéry--Lucas, \(p\mid b_n\iff p\mid b_{n-p}\)), and the open statement is
 \(T(n)=o(n)\).  Computing \(Z_p\) for every prime \(p\le N\) by iterating the recurrence
-modulo \(p\) and assembling gives, for \(N=20\,000\):
+modulo \(p\) and assembling gives, for \(N=60\,000\):
 
 \[
-\boxed{\;K(n)\le3\ \text{ for every }n\le20\,000.\;}
+\boxed{\;K(n)\le3\ \text{ for every }n\le60\,000.\;}
 \]
-The running maximum increases only three times: \(K=1\) first at \(n=6\), \(K=2\) first at
-\(n=200\), \(K=3\) first at \(n=321\), and never \(4\).  The mean is
+The running maximum increases only three times over the whole range: \(K=1\) first at
+\(n=6\), \(K=2\) first at \(n=200\), \(K=3\) first at \(n=321\), and never \(4\).
+Exactly \(144\) indices have \(K\ge2\) and exactly \(7\) have \(K=3\).  The mean is
 \[
- \overline{K}=0.0789,
+ \overline{K}=0.0733,
 \]
 against the Mertens/Poisson prediction
 \(\sum_{n/2<p\le n}p^{-1}\cdot\mathbb E|Z_p|\approx\log2/\log n=0.075\) at this scale —
