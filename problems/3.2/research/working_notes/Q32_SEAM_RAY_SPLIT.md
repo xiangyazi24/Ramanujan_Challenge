@@ -262,16 +262,20 @@ The reduction ends at the top-half sum
 \]
 (using Apéry--Lucas, \(p\mid b_n\iff p\mid b_{n-p}\)), and the open statement is
 \(T(n)=o(n)\).  Computing \(Z_p\) for every prime \(p\le N\) by iterating the recurrence
-modulo \(p\) and assembling gives, for \(N=60\,000\):
+modulo \(p\) and assembling gives, for \(N=200\,000\) (C implementation
+`q32_k_scan.c`, validated against the Python version exactly on \(n\le20\,000\)):
 
 \[
-\boxed{\;K(n)\le3\ \text{ for every }n\le60\,000.\;}
+\boxed{\;K(n)\le3\ \text{ for every }n\le200\,000.\;}
 \]
 The running maximum increases only three times over the whole range: \(K=1\) first at
 \(n=6\), \(K=2\) first at \(n=200\), \(K=3\) first at \(n=321\), and never \(4\).
-Exactly \(144\) indices have \(K\ge2\) and exactly \(7\) have \(K=3\).  The mean is
+Over \(n\le200\,000\): exactly \(412\) indices have \(K\ge2\), exactly \(12\) have
+\(K=3\), and none has \(K\ge4\).  The same run gives
+\(\sum_{p\le200\,000}|Z_p|=18\,126\), i.e. mean \(|Z_p|=1.016\), with
+\(\max|Z_p|=12\) at \(p=159\,977\).  The mean of \(K\) is
 \[
- \overline{K}=0.0733,
+ \overline{K}\approx0.073,
 \]
 against the Mertens/Poisson prediction
 \(\sum_{n/2<p\le n}p^{-1}\cdot\mathbb E|Z_p|\approx\log2/\log n=0.075\) at this scale —
