@@ -317,6 +317,28 @@ Combined with the universal bound $e_p(n)\le3$, Proposition~\ref{prop:numcong} m
 top-window step of the reduction \emph{exact}: the contribution of the window to $\log G_n$ is
 at most $3\log\operatorname{rad}_{(n/2,n]}(b_n)$, with no unproved input.
 
+\medskip
+\noindent\textbf{A sharper valuation law (verified, proof of the exact valuation still open).}
+The mod-$p$ congruence gives $e_p(n)\ge1$ when $p\mid b_n$; the data say much more.  For every
+$p\ge7$ in the top window,
+\[
+  \boxed{\;v_p(a_n)=-3+v_p(b_n),\qquad\text{equivalently}\qquad e_p(n)=v_p(b_n).\;}
+\]
+Verified on all $4340$ pairs $(n,p)$ with $7\le p$, $n/2<p\le n$, $20\le n<300$: no violations.
+Two consequences, both sharper than the bound above:
+\begin{itemize}
+\item the top-window part of $G_n$ \emph{equals} the top-window part of $b_n$ exactly, so the
+conjecture is precisely the statement that the $(n/2,n]$-part of $b_n$ is $e^{o(n)}$ — no factor
+$3$, and multiplicities rather than radicals;
+\item $\gcd(A_n,b_n)$ is coprime at such $p$ \emph{iff} $v_p(b_n)\le3$ (checked: no violations,
+and the largest multiplicity observed in the window is $2$).  So the primitive coprimality
+conjecture reduces, in this range, to a multiplicity bound.
+\end{itemize}
+Proving the exact valuation needs a $p$-adic refinement of the block law — the mod-$p$ statement
+alone gives only $e_p\ge1$ — and the mod-$p^2$ corrections do not follow a simple pattern
+(computed: they vanish at $r=0$, which is Beukers' $b_p\equiv5\bmod p^3$, but are irregular for
+$r\ge1$).
+
 \begin{proposition}[verified law]\label{prop:defect}
 For primes $p\ge7$ with $n/2<p\le n$,
 \[
