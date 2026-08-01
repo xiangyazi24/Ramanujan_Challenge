@@ -92,6 +92,16 @@ Patches from self-audit (2026-07-31, later same session):
 - Boundary: transfers must not cross the singular index m = p−1; restrict the
   counting to r + d₂ ≤ p−2 and absorb the ≤ D tail elements into the O(1)/N-4
   slack (harmless in both regimes).
+- SECOND closed form (verified d = 2..15): a_d := lim (r+d)³A_d(r) = **−d³·b_d**.
+  Together with c_d = d³·b_{d−1}: the order-3 polar part of the transfer matrix
+  T_d(r) at r = −d is RANK ONE: d³·(1,0)ᵀ⊗(−b_d, b_{d−1}) — equivalently the
+  identity (−5, 1)·T_{d−1}(−d) = d³·(−b_d, b_{d−1}), provable by induction
+  (the pole sits in the last factor M(r+d−1) ~ (r+d)^{−3}(1,0)ᵀ(−5,1)).
+  This makes the SECOND Laurent criterion (at r = −d₂, for pairs whose δ is
+  exceptional) fully explicit:
+  pole-3 coeff of Ψ at −d₂ = d₂³·[(1−A_{d₁}(−d₂))·b_{d₂−1} + b_{d₂}·B_{d₁}(−d₂)]
+  (sign convention to pin in the writeup) — an independent nonvanishing
+  condition, so escaping BOTH criteria needs two simultaneous p-divisibilities.
 
 ## 5. The counting (Markov/gap), candidate exponents
 
