@@ -998,3 +998,20 @@ double-certified.
 - 新四连发 (life池): qA=[GAP-CARTIER]构造(喂入 2A·U_p), qB=weight-3/2 Shimura lift +
   U_p 闭形式候选×3, qC=Stickelberger/Ax–Katz p-adic 计数, qD=self-twist order|4 定理。
 - codex-max (hgk) 仍在磨 step 3, 不打断。
+
+## §44 (08-01) Franel–Mellin 回马枪: [GAP-BGK] 对象层绕开 (cron+life 双向互证)
+
+- 逐点恒等式 A_p(φ(x)) = H_p(x)² (x≠−1; Fermat 杀分母) — 我 4/4 素数全绿
+  (franel_pointwise_test.py), cron 逐系数版独立全绿。cron K.1 的失败根因 =
+  纤维数 ν(t)=1+χ₂(q(t)) 非常数, 不是恒等式的错。
+- 纤维判别式 = q(t) = t²−34t+1 (Apéry 家族自己的二次式) — 结构性巧合。
+- **精确分解** (franel_mellin_mult_test.py, p=13/29/37 逐 r 零修正):
+  b_r ≡ −Σ_x H_p(x)²φ(x)^{−r} + Σ_t χ₂(q(t))A_p(t)t^{−r} (mod p), 1≤r≤p−2。
+  M(r) = Σ_t A_p t^{−r} ≡ −b_r 精确。
+- 后果: p|b_r ⟺ 固定层对 (Franel², 二次扭伴随) 的 Mellin 值消失; r 纯字符化;
+  [GAP-BGK] 的项数爆炸整个绕开; [GAP-CARTIER] 获得具体有界对象。
+- 剩余唯一靶: {r : Mellin 值 = 0 in F_p} 的零密度 — defining characteristic
+  caveat (整除≠复消) 是关键难点。
+- 部署: codex-fm 双开 (spec=CODEX_SPEC_franel_mellin.md; high=规范化,
+  max=单值性+Katz F_p-Mellin 适用范围); qA–qD 四问在飞; codex-hgk max 仍在磨;
+  U_p 阶散布否定纯 ζ₂₄ 拟合 (up_cyclotomic_test.py) 已通报 cron。
