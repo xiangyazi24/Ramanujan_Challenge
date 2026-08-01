@@ -63,7 +63,34 @@ theorem verticalIntegral_eq_of_horizontal_tendsto
           Complex.I * (∫ y in -T..T, F (verticalPoint b y)) -
           Complex.I * (∫ y in -T..T, F (verticalPoint a y)) = 0 := by
       simpa [z, w, verticalPoint, smul_eq_mul] using hrect
-    linear_combination Complex.I * hrect'
+    have hIR :
+        Complex.I *
+            ((∫ y in -T..T, F (verticalPoint b y)) -
+              (∫ y in -T..T, F (verticalPoint a y))) =
+          (∫ x in a..b,
+              F ((x : ℂ) + (T : ℂ) * Complex.I)) -
+            (∫ x in a..b,
+              F ((x : ℂ) - (T : ℂ) * Complex.I)) := by
+      linear_combination hrect'
+    calc
+      (∫ y in -T..T, F (verticalPoint a y)) -
+          (∫ y in -T..T, F (verticalPoint b y)) =
+          -((∫ y in -T..T, F (verticalPoint b y)) -
+            (∫ y in -T..T, F (verticalPoint a y))) := by ring
+      _ = Complex.I ^ 2 *
+          ((∫ y in -T..T, F (verticalPoint b y)) -
+            (∫ y in -T..T, F (verticalPoint a y))) := by
+        rw [Complex.I_sq]
+        ring
+      _ = Complex.I *
+          (Complex.I *
+            ((∫ y in -T..T, F (verticalPoint b y)) -
+              (∫ y in -T..T, F (verticalPoint a y)))) := by ring
+      _ = Complex.I *
+          ((∫ x in a..b,
+              F ((x : ℂ) + (T : ℂ) * Complex.I)) -
+            (∫ x in a..b,
+              F ((x : ℂ) - (T : ℂ) * Complex.I))) := by rw [hIR]
 
   have hleft_lim : Tendsto
       (fun T : ℝ => ∫ y in -T..T, F (verticalPoint a y))
@@ -93,7 +120,7 @@ theorem verticalIntegral_eq_of_horizontal_tendsto
         ((∫ x in a..b,
             F ((x : ℂ) + (T : ℂ) * Complex.I)) -
          (∫ x in a..b,
-            F ((x : ℂ) - (T : ℂ) * Complex.I)))
+            F ((x : ℂ) - (T : ℂ) * Complex.I))))
       atTop (𝓝 0) := by
     simpa using tendsto_const_nhds.mul (htop.sub hbottom)
   have hlhs_zero := hrhs.congr' hfinite_eventually.symm
@@ -138,7 +165,9 @@ private theorem sineSlope_at_int_ne_zero (m : ℤ) :
       deriv sinePi (m : ℂ) =
         (Real.pi : ℂ) *
           Complex.cos ((Real.pi : ℂ) * (m : ℂ)) := by
-    simpa [sinePi, mul_comm] using
+    change deriv (fun z : ℂ => Complex.sin ((Real.pi : ℂ) * z)) (m : ℂ) =
+      (Real.pi : ℂ) * Complex.cos ((Real.pi : ℂ) * (m : ℂ))
+    simpa only [id_eq, mul_comm] using
       (((hasDerivAt_id (m : ℂ)).const_mul (Real.pi : ℂ)).csin.deriv)
   have harg :
       (Real.pi : ℂ) * (m : ℂ) =
@@ -149,8 +178,16 @@ private theorem sineSlope_at_int_ne_zero (m : ℤ) :
       Complex.cos ((Real.pi : ℂ) * (m : ℂ)) =
         ((((-1 : ℝ) ^ m : ℝ)) : ℂ) := by
     rw [harg, ← Complex.ofReal_cos, Real.cos_int_mul_pi]
-  rw [sineSlope, dslope_same, hderiv, hcos]
-  exact mul_ne_zero (Complex.ofReal_ne_zero.mpr Real.pi_ne_zero) (by simp)
+  have hpow : ((-1 : ℝ) ^ m) ≠ 0 := by
+    intro hzero
+    have habs := Real.abs_cos_int_mul_pi m
+    rw [Real.cos_int_mul_pi, hzero, abs_zero] at habs
+    norm_num at habs
+  have hcos0 : Complex.cos ((Real.pi : ℂ) * (m : ℂ)) ≠ 0 := by
+    rw [hcos]
+    exact Complex.ofReal_ne_zero.mpr hpow
+  rw [sineSlope, dslope_same, hderiv]
+  exact mul_ne_zero (Complex.ofReal_ne_zero.mpr Real.pi_ne_zero) hcos0
 
 private def halfIntegerStrip (m : ℤ) : Set ℂ :=
   {z | (m : ℝ) - 1 / 2 ≤ z.re ∧ z.re ≤ (m : ℝ) + 1 / 2}
@@ -211,14 +248,15 @@ private theorem barnesRaw_eq_extension_of_mem_strip_of_ne
   rw [barnesRaw, barnesExtension, hfactor,
     sinePi_eq_sub_mul_sineSlope m z]
   field_simp [sub_ne_zero.mpr hzm, hslope]
-  <;> ring
 
 private theorem barnesExtension_differentiableOn
     {κ : ℂ} {P : ℂ → ℂ} (m : ℤ)
     (hP : DifferentiableOn ℂ P (halfIntegerStrip m)) :
     DifferentiableOn ℂ (barnesExtension κ m P) (halfIntegerStrip m) := by
+  have hconst : DifferentiableOn ℂ (fun _ : ℂ => κ) (halfIntegerStrip m) :=
+    differentiableOn_const
   have hnum : DifferentiableOn ℂ (fun z => κ * P z) (halfIntegerStrip m) :=
-    differentiableOn_const.mul hP
+    hconst.mul hP
   have hden : DifferentiableOn ℂ (fun z => sineSlope m z ^ 2)
       (halfIntegerStrip m) :=
     (sineSlope_differentiable m).differentiableOn.pow 2
@@ -266,7 +304,7 @@ theorem barnes_one_strip_shift
     funext y
     symm
     apply barnesRaw_eq_extension_of_mem_strip_of_ne m hfactor
-    · simp [halfIntegerStrip, verticalPoint, a]
+    · simp [halfIntegerStrip, verticalPoint, a] <;> linarith
     · intro h
       have hre := congrArg Complex.re h
       simp [verticalPoint, a] at hre
@@ -276,7 +314,7 @@ theorem barnes_one_strip_shift
     funext y
     symm
     apply barnesRaw_eq_extension_of_mem_strip_of_ne m hfactor
-    · simp [halfIntegerStrip, verticalPoint, b]
+    · simp [halfIntegerStrip, verticalPoint, b] <;> linarith
     · intro h
       have hre := congrArg Complex.re h
       simp [verticalPoint, b] at hre
