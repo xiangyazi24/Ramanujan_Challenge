@@ -789,3 +789,27 @@ the rank-2 quarter points. The apparition program's remaining hope: the
 rank-2 law's convolution shadow must be statistical (affecting Z_p's
 DISTRIBUTION, not membership) — or the pointwise conjecture needs the
 Diophantine/lattice routes after all.
+
+## 34. STRATEGIC RESTRUCTURE (cron Q6325): the character-order counting lemma
+
+- **Counting lemma (verified derivation)**: for window primes, r = n−p ≡ n−1
+  (mod p−1), so the Mellin character is the GLOBAL exponent specialization
+  ω_p^{n−1}, of order (p−1)/gcd(p−1, n−1); divisor stratification gives
+  #{window p: order ≤ T} ≤ T·τ(n−1)/2-ish. CONSEQUENCE: all low-order
+  structure — every CM/motivic law, including our quarter-point law (order 4)
+  — is confined to ≤ T·τ(n−1) primes: **apparition-type laws can never build
+  a bad column**. The pointwise hard core lives in the HIGH-order character
+  region, where (per our Kummer experiment: no small-order spike concentration)
+  pseudo-randomness reigns and no apparition law can exist in principle.
+- Literature vacuum confirmed (no published unconditional pointwise theorem in
+  the Apéry region; Bober 2009 refines the trichotomy for factorial ratios).
+- Needed theorem shapes: (a) e^{o(n)} global certificate; **(b) bad-diagonal
+  INVERSE theorem: excess zeros in a column ⟹ bounded-complexity structure ⟹
+  low character order ⟹ killed by the counting lemma** (the
+  structure-vs-randomness dichotomy in Mellin/Frobenius form); (c) growing
+  factorial moments k ~ log X.
+- Division of labor: Codex pair → P² product monodromy + self-twist
+  classification (geometric prerequisite for (b), refining our R7/Kummer
+  results); life/ChatGPT → formalize (b); cron → continues GPT rounds.
+  The three-line map updates: apparition line RESOLVED-as-harmless (its
+  ceiling is known); weight shifts to inverse-theorem (b).
