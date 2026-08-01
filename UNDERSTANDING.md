@@ -69,3 +69,73 @@ found in a single session — a continuity obligation that followed in five line
 from a lemma proved fifteen minutes earlier, and a Landen identity that already
 existed in `Problem26WeightThree` while a hundred lines were spent re-deriving
 it. Assume more exist. Grep by statement shape, not just by name.
+
+## `lake env lean` is not a gate on a large file — use `lake build`
+
+On `Problem24QuadraticAlt.lean` this bit four separate times in one session:
+`lake env lean <file>` reported 0 errors while `lake build <Module>` reported
+real ones — forward references (a lemma used ~500 lines above its definition),
+an `Unknown identifier` after a block was moved, and `open`-scope differences
+when a block written in a scratch file was pasted in. It appears to be reusing a
+stale `.olean` rather than elaborating from scratch.
+
+Use `lake env lean` for fast iteration on a *scratch* file only. The gate is
+
+```
+/Users/huangx/.elan/toolchains/leanprover--lean4---v4.29.0/bin/lake build \
+  RamanujanChallenge.<Module>
+```
+
+Corollary: a block that compiled in a scratch file is **not** verified for the
+main file. Scratch files usually have different `open`s (the main file opens only
+`Filter Set Topology`), and their declaration order differs.
+
+## Endpoint singularities: reach for the tendsto-FTC, not continuity
+
+`intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le` wants `ContinuousOn f` on
+the CLOSED interval. When the antiderivative only has *limits* at the endpoints —
+which is the usual situation here, since Lean's junk conventions (`log 0 = 0`,
+`0/0 = 0`) tend to make the endpoint value equal the limit by accident — use
+
+```
+intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+```
+
+instead. It takes the two one-sided limits in place of closed-interval
+continuity. Two `sorry`s in this file were deleted outright this way rather than
+discharged: proving the limit needs only first-order information, while proving
+continuity at the endpoint needs second-order.
+
+For integrability with an endpoint singularity, the corresponding move is
+`intervalIntegrable_iff_integrableOn_Ioo_of_le` (drops both endpoints) plus a
+*local* majorant. A single global majorant usually does not exist: near `t = 1`,
+`W0 = o(1-t)` does not bound `W0 · H1/(1-t)` by `C(1 + log² t)`, but it does give
+`|W0| ≤ 1-t` and hence domination by `H1`, which is integrable.
+
+## Numerical verification: substitute before trusting PSLQ
+
+Direct quadrature of `∫₀¹ W0(t) H(t)/t dt` stalls near 14 digits at the `log²`
+endpoint. At that precision PSLQ reports "no integer relation" for `I10` — which
+reads as "this constant is not in the weight-4 basis" and is simply false. The
+substitution `t = e^{-u}` (resp. `1-t = e^{-u}` for the `1/(1-t)` rows) restores
+full precision and PSLQ converges immediately.
+
+Rule: before concluding that a constant is *not* expressible in a basis, check
+that the quadrature is actually converged — substitute away the endpoint
+singularity and re-run.
+
+## Talking to the ChatGPT bridge from a background job
+
+`ask-gpt.py` routes by the tmux window name it reads from `$TMUX_PANE`. A
+background job has no stable pane, so the window resolves inconsistently (`rc`,
+`dm`, `ds` on three consecutive calls) and questions land in whatever channel
+group that resolves to — one of ours ended up in `life2`. Pin it:
+
+```
+TMUX_PANE=%7 python3 scripts/ask-gpt.py "<question>"
+```
+
+where `%7` is the pane of the `ccdex` window (`tmux list-panes -a -F '#{pane_id} #W'`).
+
+`⚡ ALL CONNECTORS FAILED` is a delivery/polling timeout, not a failure — the tab
+is still working. Do not resend.
