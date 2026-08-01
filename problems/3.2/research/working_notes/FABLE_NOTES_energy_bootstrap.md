@@ -480,3 +480,28 @@ Average roots per mixed-determinant triple (h,u,t): 2.92–3.02, CONSTANT in H
 flat constant; the degree-bound saturation R9 feared does not occur. Status:
 all three sufficient statements (RES)/(MIX)/(SG) measured TRUE with stable
 constants (0.72 / 3.0 / σ₁²≈7). ONE proof of ONE average-root law = E ≪ p^{3/2}.
+
+## 20. R11 harvest — recursion judged, forced-root census complete, [GAP-PAIR] is THE gap
+
+- Self-similar recursion DOES NOT close (accepted, proof-level): factorial-moment
+  mismatch — second-level determination converts triples to level-2 pairs, but
+  the pair energy is carried by DOUBLETONS (one-factorization countermodel:
+  all constraints compatible with ρ=3). LEDGER CONFIRMS: doubleton share of R₂
+  = 96.7% (p=1009) / 100% (p=4001); R₃/R₂ ≈ H/3p as predicted
+  (factorial_ledger.py). The recursion attacks a negligible tail.
+- COMPLETE forced-root census (all corollaries of the strong reflection thm):
+  (i) universal even-lag type-II centers: A_d(−(d+1)/2) = 1, B_d(−(d+1)/2) = 0
+  for even d (VERIFIED 20/20) — every pair containing an even lag has a forced
+  root; count e(H−1) ≈ H²/2; (ii) middle-reflection (= our mirror) roots ≈ H²/4.
+  Predictions: R_raw/H² → 5/4; R_typeI/H² → 3/4 (our measured 0.70–0.75 ✓ —
+  bookkeeping fully reconciled); R_primitive/H² → 1/2.
+- EXACT fixed-δ identity: Ψ_{h,h+δ} = B_h − B_{h+δ} + q_h·B_δ(r+h),
+  q_h = r³/(r+h)³. For δ=1: Ψ_{h,h+1} = 0 ⟺ B_{h+1} − B_h + r³/(r+h+1)³ = 0 —
+  fully explicit family; the signed h-sum telescopes into a truncated CUBIC
+  HARMONIC sum (Green/variation-of-parameters structure; the Casoratian product
+  law is obstructed by the explicit forcing f(x) = −4(2x+1)³/(x+1)³ — the
+  reflection factor again).
+- GAP LIST: [GAP-PAIR] primitive doubleton support R^prim ≪ H^{2+o(1)} (THE
+  gap); [GAP-RAD] radical of the fixed-δ product; [GAP-TII] non-type-I
+  bookkeeping (mild); [GAP-SIGNED-TO-ROOT]. The countermodel is combinatorial —
+  the actual transfer family may forbid it; that is where the proof must live.
