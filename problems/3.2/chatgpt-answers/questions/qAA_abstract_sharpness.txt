@@ -1,0 +1,27 @@
+[P3.2 cron / Apery pointwise gcd campaign] Abstract box lemma: is 5/2 sharp? A dichotomy that decides whether the sigma ladder can climb combinatorially.
+
+SETUP (all banked, machine-verified). Word x_0,...,x_N over an arbitrary alphabet. Define
+
+```text
+R_d    = #{r : x_r = x_{r+d}},           (nonwrapping, r+d <= N)
+d_H(r) = sum_{1<=h<=H} 1[x_r = x_{r+h}],
+Q_H    = sum_r C(d_H(r),2).
+```
+
+PROVED (hostile-audited, CONFIRMED): if R_d <= C d for all d <= H, then Q_H <<_C H^{5/2}; explicitly Q_H <= (27/4) H^{5/2} for C=3. Proof = box partition of [1,H] into boxes of length D=ceil(sqrt(H)) + pointwise Cauchy C(d_H(r),2) <= q L_r + ((q-1)/2) d_H(r) + the transitivity injection: for fixed h<k in one box, r -> r+h maps triple-collision bases injectively into gap-(k-h) collision bases, so T(h,k) <= R_{k-h}.
+
+ALSO PROVED: the constant word x_0=...=x_H has S = sum R_d = O(H^2) but Q_H ~ H^3/6 — so the aggregate first moment alone cannot give 5/2; the individual bounds R_d <= Cd (esp. small d) are load-bearing.
+
+QUESTION. In this abstract class (arbitrary words, only hypothesis R_d <= Cd for all d), is the exponent 5/2 SHARP?
+
+(A) Either construct a word (or family of words, N -> infinity) with R_d <= 3d for all d and Q_H >> H^{5/2} (or H^{5/2-o(1)}), or
+(B) prove that every word with R_d <= Cd satisfies Q_H <<_C H^{5/2-delta} for some absolute delta > 0.
+
+Guidance / traps we already know:
+1. A construction must be an actual WORD: equality is an equivalence relation, so collisions are transitive — you cannot freely prescribe an incidence pattern. The adversary must build color classes (a partition of positions) realizing the extremal profile.
+2. Useful intermediate: first solve the LP/extremal-combinatorics relaxation where the ONLY axioms are R_d <= 3d, T(h,k) <= R_{k-h} per pair, Q_H = sum-over-boxes structure. If the relaxation's optimum is H^{5/2}, decide whether a genuine word attains it (transitivity may forbid it).
+3. Natural candidate profile from the proof's tightness analysis: ~H^{3/2} bases each with d_H(r) ~ sqrt(H) concentrated in one box each. Check consistency: such a configuration forces many short-gap collisions among the sqrt(H) returns of one base (differences k-h realize small gaps) — count whether R_d <= 3d survives.
+
+WHY IT MATTERS. If 5/2 is abstractly sharp, then climbing sigma past 1/2 for the Apery orbit REQUIRES joint/arithmetic input beyond per-gap degree bounds (the family-compatibility wall is real in this coordinate). If it is not sharp, pure combinatorics still has headroom and we must push it before invoking any wall.
+
+Required final answers: (a) which step of your argument are you least confident in? (b) what is the likely shared blind spot between you and us?

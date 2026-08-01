@@ -50,3 +50,19 @@
   就是纯 Poisson(1/2), mean 13.50 vs 预言 14, m=18 出现次数 0.5 期望 vs 实测 1,
   指数分辨不再重要】。(b) 盲点 = 所有实验都在 (b,c) 坐标下,
   若 crystal 参数化正确, 现有统计要在新坐标重测一遍(可能有隐藏结构被 n-参数化抹平)。
+- segment 4 start: 2026-08-01 12:3x (handoff 接续; 防劫持检查过: capture-pane 实证本 session
+  即 cron pane 显示内容; TMUX_PANE 环境变量为空属后台 job 正常)。
+  接续动作: codex watcher×2 重装(lowrank=44477/radon2=55297 均活, 免重派);
+  Q6576 查重发现已入账 AS.8(防双写 gate 工作); 四件 LaTeX 成品自查(→AT.3:
+  Q6533 τ=1 边界修 M₀=6p^{(τ−1)/2}; Q6564 标签修; Q6542/Q6555 公式脱落→重发)。
+- segment 4 收割(至 13:0x): **Q6577 σ½ 敌意审计 CONFIRMED**(AT.1: 显式常数 27/4、
+  (q−1)/2 锐化、抽象盒引理、master 不等式 8.1 可复用接口; 盲点=joint 定理入口)→
+  解锁 life 并卷; **Q6567 MESO-PAIR 正攻**(AT.2: axis-strip 归约新引理、
+  [MESO-BALANCED-PAIR]/[MESO-SHIFTED-GCD]/[MESO-SHIFTED-VALUATION] 定格、
+  raw bad-pair 判死 cut-edge 污染、A_m 精确公式、排序 T3-2MINUS 升 #1);
+  Q6573 [WALL] 主墙章落地(研读中); life 战果指针收到(加法律 36/36 机验等, 直接取用)。
+- segment 4 派发: 6 tab 铺满(qAA 抽象锐性→cron3, qAB balanced carrier→cron4[含 life
+  加法律], qAC FAV lift→cron6, qAD T3 LP→cron8, qAE ASCII 重发→cron9, qAF 超临界
+  null 预言表→cron10); codex max×3(mesopair 五量表诊断/qdsup 超临界分层/ghirred
+  G_h 绝对不可约 h≤40)。cron6/8/9 数分钟即返(Q6594/6595/6596)——tab 明显非 SOL 档,
+  按滑步规则暂不入账, 重推/自验后处理(Q6595 的 LP 判定自跑 Python 独立验证)。
