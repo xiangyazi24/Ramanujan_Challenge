@@ -985,6 +985,41 @@ def factorial_moment_gate(b: list[int]) -> None:
     print("FACTORIAL-MOMENT-CRT", records, "constant=4")
 
 
+def zero_set_statistics_gate() -> None:
+    """Independent modular recurrence for the quoted p<4000 statistics."""
+    prime_count = 0
+    zero_mass = 0
+    weighted_mass = 0.0
+    for p in primes_upto(3999):
+        if p < 5:
+            continue
+        inverses = [0] * p
+        inverses[1] = 1
+        for value in range(2, p):
+            inverses[value] = (-(p // value) * inverses[p % value]) % p
+        previous, current = 1, 5 % p
+        zeros = int(previous == 0) + int(current == 0)
+        for n in range(1, p - 1):
+            following = (
+                (apery_coefficient(n) * current - n**3 * previous)
+                * inverses[n + 1] ** 3
+            ) % p
+            zeros += int(following == 0)
+            previous, current = current, following
+        prime_count += 1
+        zero_mass += zeros
+        weighted_mass += math.log(p) * zeros
+    check((prime_count, zero_mass) == (548, 500),
+          "p<4000 zero-set count")
+    check(abs(weighted_mass - 3548.3281607529757) < 1e-9,
+          "p<4000 weighted zero-set count")
+    print(
+        "ZERO-SET-STATS",
+        f"primes={prime_count} mass={zero_mass} mean={zero_mass/prime_count:.9f}",
+        f"weighted/X={weighted_mass/4000:.9f}",
+    )
+
+
 def exponent_budget_gate() -> None:
     from fractions import Fraction as Q
 
@@ -1026,6 +1061,7 @@ def main() -> None:
     hyperbola_clock_gate()
     master_digit_and_average_gate(b, a, d)
     factorial_moment_gate(b)
+    zero_set_statistics_gate()
     exponent_budget_gate()
 
 

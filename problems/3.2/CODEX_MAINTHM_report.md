@@ -596,7 +596,18 @@ up to the finite-prime convention. Therefore
 
 This is mean top-hit count tending to zero, not “the average version of the main theorem” without qualification. It does not imply the every-\(n\) maximum in (4.3): sparse spikes can total \(o(X)\). Conversely \(\mathrm{TOP}(n)=1\) at every \(n\) satisfies the pointwise main-theorem scale but sums to \(\asymp X\). The two norms are incomparable, and (4.8) sees no \(q\ge2\).
 
-The measured \(S(600)=109=\pi(600)\) and mean \(|Z_p|=0.912\) below \(4000\) support \(S(X)\asymp X/\log X\), but are not theorems. Unconditionally,
+The measured \(S(600)=109=\pi(600)\) and mean \(|Z_p|=0.912408759\)
+over the 548 primes \(5\le p<4000\) support
+\(S(X)\asymp X/\log X\), but are not theorems. In the same range,
+
+\[
+\sum_{5\le p<4000}\log p\,|Z_p|
+=3548.32816075=0.887082040\cdot4000.
+\]
+
+Thus the tempting condition
+\(\sum_{p\le X}\log p\,|Z_p|=o(X)\) is empirically false and must not be
+substituted for the sparse aligned master sum. Unconditionally,
 
 \[
 S(X)\ll\frac{X^{5/3}}{\log X}. \tag{4.9}
@@ -639,8 +650,9 @@ ordered-orbit cancellation. The finite verifier checks the per-cell injection,
 the gap-polynomial certificate for every actual close pair, and (4.10) at four
 independent scales.
 
-The degree estimate \(\rho_h(p)\le3(h-1)\), with the finitely many
-degenerate small characteristics separated, gives
+The banked content lemma says \(N_h\not\equiv0\pmod p\) for \(h<p\).
+Together with \(\deg N_h=3(h-1)\), this gives
+\(\rho_h(p)\le3(h-1)\) throughout \(h<H\le P<p\), and hence
 
 \[
 \mathcal R(P,H)\ll {PH^2\over\log P}.
