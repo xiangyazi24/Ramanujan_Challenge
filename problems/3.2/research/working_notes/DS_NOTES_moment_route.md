@@ -61,9 +61,9 @@ prime (3-prime collision), disjoint pairs (4-distinct correlation, modulus p₁p
   exactly the target. The pair vectors ARE almost orthogonal (off-diagonal at the diagonal
   scale).
 - **DS measured the SG1 small-ball hypothesis**: #{p : ‖5^{-1}b_n/p‖ ≥ ε} ≈ (1−2ε)·m_n
-  (ε=0.1: 0.793/0.830 vs 0.80; ε=0.2: 0.548/0.587 vs 0.60; ε=0.4: 0.230/0.231 vs 0.20 at
-  n=2000,4000) — phases EXACTLY uniform. For ε=0.4, δ≈0.23 primes far from 0 ⟹
-  D₁ ≥ 0.23·m_n·(1−cos 0.8π) ≈ 0.35·m_n — a strong constant.
+  (ε=0.1: 0.793/0.830/0.812 vs 0.80; ε=0.2: 0.548/0.587/0.604 vs 0.60;
+  ε=0.4: 0.230/0.231/0.204 vs 0.20 at n=2000,4000,8000) — phases EXACTLY uniform. For ε=0.4,
+  δ≈0.23 primes far from 0 ⟹ D₁ ≥ 0.23·m_n·(1−cos 0.8π) ≈ 0.35·m_n — a strong constant.
 **The phase family {b_{n−p}/p} behaves exactly like independent uniform random variables
 (Gaussian moments through 6th order).**
 
