@@ -95,8 +95,12 @@ theorem integral_pow_mul_exp_neg_mul
   · apply integral_congr_ae
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
     rw [show (n : ℝ) + 1 - 1 = n by ring, Real.rpow_natCast]
-  · rw [show (n : ℝ) + 1 = ((n + 1 : ℕ) : ℝ) by push_cast; ring,
-      Real.rpow_natCast, Real.Gamma_nat_eq_factorial]
+  · have hGamma :
+        Real.Gamma (((n + 1 : ℕ) : ℝ)) = (n.factorial : ℝ) := by
+        simpa only [Nat.cast_add, Nat.cast_one] using
+          Real.Gamma_nat_eq_factorial n
+    rw [show (n : ℝ) + 1 = ((n + 1 : ℕ) : ℝ) by push_cast; ring,
+      Real.rpow_natCast, hGamma]
     field_simp [ha.ne']
 
 theorem integrableOn_boseTerm (m k : ℕ) :
@@ -179,7 +183,6 @@ theorem hasSum_boseTerm {m : ℕ} {t : ℝ} (ht : 0 < t) :
     unfold boseTerm
     dsimp only [A, q]
     rw [← Real.exp_nat_mul, hexp]
-    ring
   · simp [A, q, boseKernel, div_eq_mul_inv]
 
 theorem summable_integral_norm_boseTerm (m : ℕ) :
@@ -200,7 +203,9 @@ theorem summable_integral_norm_boseTerm (m : ℕ) :
         rw [Complex.norm_real, Real.norm_eq_abs]
         apply abs_of_nonneg
         unfold boseTerm
-        exact mul_nonneg (by positivity) (Real.exp_pos _).le]
+        have hpoly : 0 ≤ t + t ^ 2 / 2 :=
+          add_nonneg ht.le (div_nonneg (sq_nonneg t) (by norm_num))
+        exact mul_nonneg hpoly (Real.exp_pos _).le]
   rw [integral_boseTerm]
   push_cast
   ring
@@ -221,14 +226,15 @@ theorem integral_boseKernel_eq_tsum (m : ℕ) :
         ∫ t : ℝ in Ioi 0, ∑' k : ℕ, F k t := by
           apply integral_congr_ae
           filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-          exact_mod_cast (hasSum_boseTerm (m := m) ht).tsum_eq
+          exact_mod_cast (hasSum_boseTerm (m := m) ht).tsum_eq.symm
     _ = ∑' k : ℕ, ∫ t : ℝ in Ioi 0, F k t := hswap.symm
     _ = ∑' k : ℕ,
         ((1 / (m + k + 1 : ℝ) ^ 2 +
           1 / (m + k + 1 : ℝ) ^ 3 : ℝ) : ℂ) := by
           apply tsum_congr
           intro k
-          rw [← integral_ofReal, integral_boseTerm]
+          change (∫ t : ℝ in Ioi 0, (boseTerm m k t : ℂ)) = _
+          rw [integral_ofReal, integral_boseTerm]
 
 #print axioms integral_boseKernel_eq_tsum
 
