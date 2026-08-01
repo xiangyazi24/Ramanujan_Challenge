@@ -2,6 +2,7 @@ import RamanujanChallenge.Problem27BarnesNormalization
 import Mathlib.Analysis.Calculus.ParametricIntegral
 import Mathlib.Analysis.PSeries
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Analysis.SpecialFunctions.PolynomialExp
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.MeasureTheory.Integral.ExpDecay
 import Mathlib.MeasureTheory.Integral.Prod
@@ -14,39 +15,142 @@ noncomputable section
 
 namespace RamanujanChallenge.P27
 
--- Q6383 exact API probe, compiled by the isolated branch workflow.
-#check MeasureTheory.integral_integral_swap
-#check MeasureTheory.integral_tsum_of_summable_integral_norm
-#check MeasureTheory.hasSum_integral_of_summable_integral_norm
-#check MeasureTheory.Integrable.mul_prod
-#check MeasureTheory.Integrable.smul_prod
-#check MeasureTheory.Integrable.mono'
-#check integrableOn_exp_mul_complex_Ioi
-#check integral_exp_mul_complex_Ioi
-#check MeasureTheory.integral_Ioi_of_hasDerivAt_of_tendsto
-#check MeasureTheory.integral_Ioi_mul_deriv_eq_deriv_mul
-#check Real.GammaIntegral_convergent
-#check Real.integral_rpow_mul_exp_neg_mul_Ioi
-#check Real.Gamma_nat_eq_factorial
-#check hasSum_geometric_of_norm_lt_one
-#check summable_geometric_of_norm_lt_one
-#check Summable.sum_add_tsum_nat_add
-#check sum_add_tsum_nat_add
-#check hasSum_nat_add_iff'
-#check summable_nat_add_iff
-#check hasSum_zeta_two
-#check MeasureTheory.integral_const_mul
-#check MeasureTheory.integral_mul_const
-#check MeasureTheory.integral_smul
-#check MeasureTheory.integral_indicator
-#check MeasureTheory.IntegrableOn
-#check MeasureTheory.integrableOn_Ioi_iff_integrableOn_Ici
-#check integrableOn_Ici_iff_integrableOn_Ioi
-#check Real.norm_exp
-#check Complex.norm_exp
-#check Complex.norm_real
-#check Complex.exp_add
-#check Complex.exp_mul_I
-#check Complex.exp_neg_mul_I
+private theorem integrableOn_pow_mul_exp_neg_mul27
+    (n : ℕ) {a : ℝ} (ha : 0 < a) :
+    IntegrableOn (fun t : ℝ => t ^ n * Real.exp (-(a * t))) (Ioi 0) := by
+  have hbase :
+      IntegrableOn (fun x : ℝ => Real.exp (-x) * x ^ n) (Ioi 0) := by
+    convert Real.GammaIntegral_convergent
+      (s := (n : ℝ) + 1) (by positivity) using 1
+    ext x
+    rw [show (n : ℝ) + 1 - 1 = n by ring, Real.rpow_natCast]
+  have hscaled :
+      IntegrableOn
+        (fun t : ℝ => Real.exp (-(a * t)) * (a * t) ^ n) (Ioi 0) := by
+    simpa using
+      ((integrableOn_Ioi_comp_mul_left_iff
+        (fun x : ℝ => Real.exp (-x) * x ^ n) 0 ha).2 hbase)
+  have hc := hscaled.const_mul ((a ^ n)⁻¹)
+  refine hc.congr ?_
+  filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+  dsimp
+  rw [mul_pow]
+  field_simp [ha.ne']
+  ring
+
+private theorem integrableOn_cpow_mul_cexp_neg_mul27
+    (n : ℕ) {z : ℂ} (hz : 0 < z.re) :
+    IntegrableOn
+      (fun t : ℝ => (t : ℂ) ^ n * Complex.exp (-z * (t : ℂ)))
+      (Ioi 0) := by
+  have hreal := integrableOn_pow_mul_exp_neg_mul27 n hz
+  apply hreal.mono'
+  · apply Continuous.aestronglyMeasurable
+    fun_prop
+  · filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+    rw [norm_mul, norm_pow, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_pos ht, Complex.norm_exp]
+    simp
+
+private theorem integral_cexp_neg_mul_Ioi27
+    {z : ℂ} (hz : 0 < z.re) :
+    (∫ t : ℝ in Ioi 0, Complex.exp (-z * (t : ℂ))) = z⁻¹ := by
+  have h := integral_exp_mul_complex_Ioi (a := -z) (by simpa using hz) 0
+  simpa [div_eq_mul_inv] using h
+
+private theorem tendsto_self_mul_exp_neg_mul27
+    {a : ℝ} (ha : 0 < a) :
+    Tendsto (fun t : ℝ => t * Real.exp (-(a * t))) atTop (𝓝 0) := by
+  have h := (tendsto_pow_mul_exp_neg_atTop_nhds_zero 1).comp
+    (tendsto_id.const_mul_atTop' ha)
+  have hc := h.const_mul a⁻¹
+  convert hc using 1
+  · funext t
+    field_simp [ha.ne']
+  · simp
+
+private theorem integral_self_mul_cexp_neg_mul_Ioi27
+    {z : ℂ} (hz : 0 < z.re) :
+    (∫ t : ℝ in Ioi 0, (t : ℂ) * Complex.exp (-z * (t : ℂ))) =
+      (z ^ 2)⁻¹ := by
+  have hz0 : z ≠ 0 := by
+    intro h
+    rw [h] at hz
+    norm_num at hz
+  let u : ℝ → ℂ := fun t => t
+  let v : ℝ → ℂ := fun t => -Complex.exp (-z * (t : ℂ)) / z
+  let u' : ℝ → ℂ := fun _ => 1
+  let v' : ℝ → ℂ := fun t => Complex.exp (-z * (t : ℂ))
+  have hu (t : ℝ) : HasDerivAt u 1 t := by
+    exact (hasDerivAt_id t).ofReal_comp
+  have hv (t : ℝ) : HasDerivAt v (Complex.exp (-z * (t : ℂ))) t := by
+    have hlin :
+        HasDerivAt (fun x : ℝ => -z * (x : ℂ)) (-z) t := by
+      convert (hasDerivAt_id t).ofReal_comp.const_mul (-z) using 1 <;> ring
+    convert hlin.cexp.neg.div_const z using 1
+    field_simp [hz0]
+    ring
+  have huv' : IntegrableOn (u * v') (Ioi 0) := by
+    simpa [u, v'] using integrableOn_cpow_mul_cexp_neg_mul27 1 hz
+  have hu'v : IntegrableOn (u' * v) (Ioi 0) := by
+    have h := (integrableOn_cpow_mul_cexp_neg_mul27 0 hz).neg.div_const z
+    simpa [u', v] using h
+  have hzero : Tendsto (u * v) (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    have hc : ContinuousAt (u * v) 0 := by
+      dsimp [u, v]
+      fun_prop
+    simpa [u, v] using hc.continuousWithinAt.tendsto
+  have hinfty : Tendsto (u * v) atTop (𝓝 0) := by
+    rw [tendsto_zero_iff_norm_tendsto_zero]
+    have hreal := (tendsto_self_mul_exp_neg_mul27 hz).div_const ‖z‖
+    refine hreal.congr' ?_
+    filter_upwards [eventually_ge_atTop (0 : ℝ)] with t ht
+    dsimp [u, v]
+    rw [norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg ht,
+      norm_div, norm_neg, Complex.norm_exp]
+    simp
+  have hibp := MeasureTheory.integral_Ioi_mul_deriv_eq_deriv_mul
+    (a := (0 : ℝ)) (u := u) (v := v) (u' := u') (v' := v')
+    (fun t _ => hu t) (fun t _ => hv t) huv' hu'v hzero hinfty
+  have hvint :
+      (∫ t : ℝ in Ioi 0, v t) = -(z⁻¹ * z⁻¹) := by
+    calc
+      (∫ t : ℝ in Ioi 0, v t) =
+          (-z⁻¹) * ∫ t : ℝ in Ioi 0, Complex.exp (-z * (t : ℂ)) := by
+            rw [← MeasureTheory.integral_const_mul]
+            apply integral_congr_ae
+            filter_upwards with t
+            simp [v, div_eq_mul_inv]
+      _ = -(z⁻¹ * z⁻¹) := by rw [integral_cexp_neg_mul_Ioi27 hz]; ring
+  rw [hvint] at hibp
+  simpa [u, v', u', v, pow_two] using hibp
+
+private theorem integral_laplace_poleBlock27
+    {z : ℂ} (hz : 0 < z.re) :
+    (∫ t : ℝ in Ioi 0,
+      ((1 + t / 2 : ℝ) : ℂ) * Complex.exp (-z * (t : ℂ))) =
+      z⁻¹ + (z ^ 2)⁻¹ / 2 := by
+  have h0 := integrableOn_cpow_mul_cexp_neg_mul27 0 hz
+  have h1 := integrableOn_cpow_mul_cexp_neg_mul27 1 hz
+  calc
+    (∫ t : ℝ in Ioi 0,
+        ((1 + t / 2 : ℝ) : ℂ) * Complex.exp (-z * (t : ℂ))) =
+      (∫ t : ℝ in Ioi 0, Complex.exp (-z * (t : ℂ))) +
+        (1 / 2 : ℂ) *
+          ∫ t : ℝ in Ioi 0, (t : ℂ) * Complex.exp (-z * (t : ℂ)) := by
+            rw [← MeasureTheory.integral_const_mul]
+            rw [← integral_add]
+            · apply integral_congr_ae
+              filter_upwards with t
+              push_cast
+              ring
+            · simpa using h0
+            · exact h1.const_mul (1 / 2 : ℂ)
+    _ = z⁻¹ + (z ^ 2)⁻¹ / 2 := by
+      rw [integral_cexp_neg_mul_Ioi27 hz,
+        integral_self_mul_cexp_neg_mul_Ioi27 hz]
+      ring
+
+#print axioms integral_laplace_poleBlock27
 
 end RamanujanChallenge.P27
