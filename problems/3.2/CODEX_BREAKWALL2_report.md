@@ -272,8 +272,8 @@ An empty maximum or sum is zero.
 > \boxed{\mathcal W_D^\mu H_D\ll N.}                         \tag{4.2}
 > \]
 
-The harmonic factor is necessary at weak-\(L^1\) exponent one.  This is not
-an \(L^2\) condition.
+When only the weak-\(L^1\) supremum in (4.1) is used, the harmonic factor is
+the sharp generic layer-cake cost.  This is not an \(L^2\) condition.
 
 ### Theorem 4.1 (weak-\(L^1\) bridge)
 
@@ -631,16 +631,17 @@ with `[ZERO-TAIL-2]`.  Resultant height does not prove it.
 
 ### Theorem 7.1 (two-sided restart identities)
 
-Assume \(N_h(r)=0\) at a physical base.  Then
+Assume \(N_h(r)\equiv0\pmod p\) at a physical base.  Then, in
+\(\mathbf F_p\),
 
 \[
- N_{h-1}(r)N_{h+1}(r)\ne0                                   \tag{7.1}
+ N_{h-1}(r)N_{h+1}(r)\not\equiv0\pmod p                      \tag{7.1}
 \]
 
 and, for every \(g\ge1\),
 
 \[
- \boxed{N_{h+g}(r)=N_{h+1}(r)N_g(r+h).}                      \tag{7.2}
+ \boxed{N_{h+g}(r)\equiv N_{h+1}(r)N_g(r+h)\pmod p.}         \tag{7.2}
 \]
 
 For \(1\le g<h\), put
@@ -658,12 +659,14 @@ Then the polynomial identity
   -N_h(X)N_{g-1}(X+h-g)}                                    \tag{7.3}
 \]
 
-holds.  At the root \(r\), it gives the equivalences
+holds.  At the root \(r\), reduction modulo \(p\) gives the equivalences
 
 \[
  \begin{aligned}
- N_{h+g}(r)=0&\Longleftrightarrow N_g(r+h)=0,\\
- N_{h-g}(r)=0&\Longleftrightarrow N_g(r+h-g)=0.               \tag{7.4}
+ N_{h+g}(r)\equiv0\pmod p
+ &\Longleftrightarrow N_g(r+h)\equiv0\pmod p,\\
+ N_{h-g}(r)\equiv0\pmod p
+ &\Longleftrightarrow N_g(r+h-g)\equiv0\pmod p.               \tag{7.4}
  \end{aligned}
 \]
 
@@ -672,13 +675,14 @@ holds.  At the root \(r\), it gives the equivalences
 Equation (6.1) at a root gives
 
 \[
- N_{h+1}(r)=-(r+h)^6N_{h-1}(r).
+ N_{h+1}(r)\equiv-(r+h)^6N_{h-1}(r)\pmod p.
 \]
 
 All physical factors \(r+j\) are units.  If either adjacent numerator
-vanished, backward recurrence would force \(N_1(r)=0\), proving (7.1).
-Equation (7.2) is (6.2) with \(a=h,d=g\), after the term containing
-\(N_h(r)\) vanishes.
+vanished modulo \(p\), backward recurrence would force
+\(N_1(r)\equiv0\pmod p\), proving (7.1).  Equation (7.2) is (6.2) with
+\(a=h,d=g\), reduced modulo \(p\) after the term containing \(N_h(r)\)
+vanishes.
 
 For (7.3), fix \(h\) and view both sides as sequences in \(g\).  The bottom
 recurrence shows that both satisfy
@@ -695,10 +699,11 @@ At \(g=1\), both equal \(N_{h-1}\).  At \(g=2\), both equal
 \]
 
 Induction proves (7.3).  At a physical root, the carrier \(D_{h,g}(r)\)
-and \(N_{h-1}(r)\) are nonzero, giving (7.4). \(\square\)
+and \(N_{h-1}(r)\) are nonzero modulo \(p\), giving (7.4). \(\square\)
 
-The theorem is a detector, not a pump: a longer collision occurs exactly
-when a shifted subinterval was already a collision.  In root-set notation,
+The theorem is a detector, not a pump: whenever \(r+h+g\le N-1\), a longer
+physical collision occurs exactly when a shifted subinterval was already a
+physical collision.  In root-set notation,
 
 \[
  |Z_h\cap Z_{h+g}|
@@ -719,8 +724,11 @@ but no \(r\in Z_{44}\) has \(r+44\in Z_{44}\), and
  R_{43}=R_{45}=0,\qquad R_{88}=1=\kappa_{88}.                 \tag{7.6}
 \]
 
-Thus same-lag continuation, neighboring-lag propagation, and every inequality
-\(R_{2h}-\kappa_{2h}\ge c(R_h-\kappa_h)\) with fixed \(c>0\) are false.
+Thus same-lag continuation, neighboring-lag propagation, and every exact
+universal inequality
+\(R_{2h}-\kappa_{2h}\ge c(R_h-\kappa_h)\) with fixed \(c>0\), no error
+term, and no exceptional pair \((p,h)\), are false.  This finite example by
+itself makes no claim about a suitably qualified eventual asymptotic version.
 Even a hypothetical bound \(R_{2h}\ge\eta R_h\), \(\eta\le1\), would not
 bootstrap: the degree allowance grows from \(3h\) to \(6h\), while the
 propagated mass does not grow.  A successful pump would require a genuinely
@@ -834,9 +842,11 @@ Equivalently, if
  \sup_t t^{3/2}A_D(t)\ll\frac{N^{3/2}}{\sqrt D},              \tag{8.8}
 \]
 
-then W1 holds.  The elementary pointwise corollary
-\(\max_hR_h\ll N/D\) may be viewed as a critical, nonuniform extension of
-the proposed `[PT-ANTICONC]` face; (8.8) permits sparse larger spikes.
+then W1 holds.  An independent pointwise sufficient condition is
+\(\max_hR_h\ll N/D\): it implies (8.8) because
+\(t^{3/2}A_D(t)\le(\max_hR_h)^{3/2}D\).  This is a critical pointwise
+relaxation of the proposed `[PT-ANTICONC]` face, while the full condition
+(8.8) is its nonuniform extension and permits sparse larger spikes.
 
 ## 9. Exact machine verification
 
@@ -847,7 +857,9 @@ following exact gates.
    checking 20 continuant renewal identities, 33 physical-gauge renewal
    identities, 28 backward restart identities, reflection/center/pole laws,
    33 shifted gcds, 36 same-base gcds, and 15 nonzero resultants.
-2. It verifies the \(p=17\) cut-pole/resultant warnings.
+2. It verifies the \(p=17\) cut-pole warning for \(4\le h\le8\) and the
+   \(N_2,N_4\) resultant warning.  The all-height cut-pole statement follows
+   from the proved pole formula, not from finite enumeration.
 3. It exhaustively checks (8.6) on 19,530 small lag profiles.
 4. It materializes the full reflection word of Proposition 5.1, checking
    degree bounds, \(Q_D=0\), energy, stripped variance, both strictness
@@ -855,10 +867,10 @@ following exact gates.
 5. It checks the \(p=461,h=44\) restart counterexample.
 6. It extracts only `orbit(p)` by AST from `CRON_b1_crosscorr.py`.  At
    \(p\in\{1009,3001,10007\}\), with
-   \(L=\lceil\log\log p\rceil\), it computes every physical \(R_h\), checks
-   (3.1) root by root, verifies all residual inequalities exactly, and checks
-   the abstract strictness profiles.  Decimal displays are not used by any
-   assertion.
+   \(L=\lceil\log\log p\rceil\), it computes every physical \(R_h\) for
+   \(h\le D\), checks (3.1) root by root, verifies the displayed new
+   residuals and bridge inequalities exactly, and checks the abstract
+   strictness profiles.  Decimal displays are not used by any assertion.
 
 Reproduction:
 
