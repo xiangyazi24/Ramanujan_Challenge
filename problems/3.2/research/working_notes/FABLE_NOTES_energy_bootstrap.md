@@ -381,3 +381,15 @@ The amplification question (multiplicity on the Ψ family) is with R5.
   γ_δ(x) (the forward-δ-return germs) — self-similar to the original problem;
   the circle must be broken by an actual counting theorem (R11 grinding the
   telescoping-product and recursion routes; R9 two-base; R10 spectral).
+
+## 16b. Extended rho measurement + 10^7 scan cross-reference
+
+- p = 100003, H up to 128: R_H/H² = 0.67, 0.71, 0.75, 0.75 — ρ=2 flat across
+  two more octaves (mild upward drift at H ≥ 64: possibly a log factor or the
+  reflection tail; still unambiguously ρ=2). Note: random-polynomial root
+  statistics give EXACTLY average 1 root per polynomial — ρ=2 is precisely
+  "the Ψ family has random-model root statistics" (an equidistribution-type
+  statement about an explicit polynomial family).
+- dm's 10⁷ scan (bn_bigscan_10M_report.md, d89add8): K(n) ≤ 4 all n ≤ 10⁷;
+  mean |Z_p| = 1.0014 over 664579 primes, max |Z_p| = 12 — consistent with the
+  Poisson vertical picture underlying all session theorems.
