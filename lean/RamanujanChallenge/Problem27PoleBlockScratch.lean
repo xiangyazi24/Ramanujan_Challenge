@@ -69,7 +69,6 @@ private theorem tendsto_self_mul_exp_neg_mul27
   · funext t
     simp only [Function.comp_apply, id_eq, pow_one]
     field_simp [ha.ne']
-    ring
   · simp
 
 private theorem integral_self_mul_cexp_neg_mul_Ioi27
@@ -96,7 +95,9 @@ private theorem integral_self_mul_cexp_neg_mul_Ioi27
     simpa [u, v'] using integrableOn_cpow_mul_cexp_neg_mul27 1 hz
   have hu'v : IntegrableOn (u' * v) (Ioi 0) := by
     have h := (integrableOn_cpow_mul_cexp_neg_mul27 0 hz).neg.div_const z
-    simpa [u', v] using h
+    refine h.congr ?_
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+    simp [u', v]
   have hzero : Tendsto (u * v) (𝓝[>] (0 : ℝ)) (𝓝 0) := by
     have hc : ContinuousAt (u * v) 0 := by
       dsimp [u, v]
@@ -114,6 +115,7 @@ private theorem integral_self_mul_cexp_neg_mul_Ioi27
     rw [norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg ht,
       norm_div, norm_neg, Complex.norm_exp]
     simp
+    ring
   have hibp := MeasureTheory.integral_Ioi_mul_deriv_eq_deriv_mul
     (a := (0 : ℝ)) (u := u) (v := v) (u' := u') (v' := v')
     (fun t _ => hu t) (fun t _ => hv t) huv' hu'v hzero hinfty
@@ -121,18 +123,26 @@ private theorem integral_self_mul_cexp_neg_mul_Ioi27
       (∫ t : ℝ in Ioi 0, v t) = -(z⁻¹ * z⁻¹) := by
     calc
       (∫ t : ℝ in Ioi 0, v t) =
-          (-z⁻¹) * ∫ t : ℝ in Ioi 0, Complex.exp (-z * (t : ℂ)) := by
-            change (∫ t : ℝ, v t ∂(volume.restrict (Ioi 0))) =
-              (-z⁻¹) * ∫ t : ℝ,
-                Complex.exp (-z * (t : ℂ)) ∂(volume.restrict (Ioi 0))
-            rw [← MeasureTheory.integral_const_mul]
-            apply integral_congr_ae
-            filter_upwards with t
-            simp [v, div_eq_mul_inv]
+          ∫ t : ℝ in Ioi 0,
+            (-z⁻¹) * Complex.exp (-z * (t : ℂ)) := by
+              apply integral_congr_ae
+              filter_upwards with t
+              simp [v, div_eq_mul_inv]
+      _ = (-z⁻¹) * ∫ t : ℝ in Ioi 0,
+            Complex.exp (-z * (t : ℂ)) := by
+              exact MeasureTheory.integral_const_mul _ _
       _ = -(z⁻¹ * z⁻¹) := by rw [integral_cexp_neg_mul_Ioi27 hz]; ring
-  simp only [u', Pi.mul_apply, one_mul] at hibp
-  rw [hvint] at hibp
-  simpa [u, v', pow_two] using hibp
+  have hibp' :
+      (∫ t : ℝ in Ioi 0,
+        (t : ℂ) * Complex.exp (-z * (t : ℂ))) =
+        -(∫ t : ℝ in Ioi 0, v t) := by
+    simpa [u, v', u'] using hibp
+  calc
+    (∫ t : ℝ in Ioi 0,
+        (t : ℂ) * Complex.exp (-z * (t : ℂ))) =
+        -(∫ t : ℝ in Ioi 0, v t) := hibp'
+    _ = -(-(z⁻¹ * z⁻¹)) := by rw [hvint]
+    _ = (z ^ 2)⁻¹ := by field_simp [hz0]; ring
 
 private theorem integral_laplace_poleBlock27
     {z : ℂ} (hz : 0 < z.re) :
@@ -163,13 +173,7 @@ private theorem integral_laplace_poleBlock27
         (1 / 2 : ℂ) *
           ∫ t : ℝ in Ioi 0, (t : ℂ) * Complex.exp (-z * (t : ℂ)) := by
             congr 1
-            change (∫ t : ℝ,
-              (1 / 2 : ℂ) * ((t : ℂ) * Complex.exp (-z * (t : ℂ)))
-                ∂(volume.restrict (Ioi 0))) =
-              (1 / 2 : ℂ) * ∫ t : ℝ,
-                (t : ℂ) * Complex.exp (-z * (t : ℂ))
-                  ∂(volume.restrict (Ioi 0))
-            rw [MeasureTheory.integral_const_mul]
+            exact MeasureTheory.integral_const_mul _ _
     _ = z⁻¹ + (z ^ 2)⁻¹ / 2 := by
       rw [integral_cexp_neg_mul_Ioi27 hz,
         integral_self_mul_cexp_neg_mul_Ioi27 hz]
