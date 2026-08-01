@@ -165,13 +165,13 @@ only if p divides both (b_δ−1)·d₁³·b_{d₁−1} and K(d₁,d₂). Two re
 (b_δ ≥ 5 for δ ≥ 1). Hence **Ψ_{d₁,d₂} ≢ 0 over Q for every pair** — mod-p
 degeneracy can only come from p dividing explicit nonzero integers.
 
-(b) When p | b_δ−1: expand b_{d₂} = A_{d₁}(δ)b_δ + B_{d₁}(δ)b_{δ−1} and
-b_{d₂−1} = A_{d₁−1}(δ)b_δ + B_{d₁−1}(δ)b_{δ−1} mod p; then
-K ≡ d₂³(α(d₁,δ) + β(d₁,δ)·b_{δ−1}) mod p with α, β fixed rationals. So a
-double escape forces p | G(d₁,δ) := gcd(b_δ−1, num(α+β·b_{δ−1})) — a FIXED
-integer of log-size O(d₂ log d₂). (If G = 0, i.e. K = 0 over Q, the pair's bad
-primes are the ω(b_δ−1) = O(δ) divisors of b_δ−1 — same budget.) The case
-p | b_{d₁−1} instead uses G₂ = gcd(b_{d₁−1}, num K) symmetrically.
+(b) The second-pole coefficient has the CLOSED FORM (verified 145/145 pairs,
+symbolic Laurent cross-check): K₀(d₁,d₂) = d₂³·(b_{d₂−1} − b_{δ−1}). So a
+double escape forces p | G(d₁,d₂) := gcd(b_δ − 1, b_{d₂−1} − b_{δ−1}) — a
+fixed integer of log-size O(d₂). (Over Q, b_{d₂−1} > b_{δ−1} strictly since
+d₂−1 > δ−1 and b is strictly increasing, so K₀ ≠ 0 always — the K=0 fallback
+is vacuous.) The case p | b_{d₁−1} uses G₂ = gcd(b_{d₁−1}, b_{d₂−1} − b_{δ−1})
+symmetrically. Further interior-pole witnesses exist at x = −j, d₁ < j < d₂.
 
 Exceptional-prime count: q bad ⟹ ∃ pair with d₂ ≤ q^{1/4} and q | G-type
 integer; Σ_{d₁<d₂≤X^{1/4}} ω(G) ≪ X^{1/2}·max ω ≪ X^{3/4+o(1)}. For p ∉ 𝔈 no

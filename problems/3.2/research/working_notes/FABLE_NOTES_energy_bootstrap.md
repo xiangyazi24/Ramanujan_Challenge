@@ -99,8 +99,9 @@ Patches from self-audit (2026-07-31, later same session):
   (the pole sits in the last factor M(r+d−1) ~ (r+d)^{−3}(1,0)ᵀ(−5,1)).
   This makes the SECOND Laurent criterion (at r = −d₂, for pairs whose δ is
   exceptional) fully explicit:
-  pole-3 coeff of Ψ at −d₂ = d₂³·[(1−A_{d₁}(−d₂))·b_{d₂−1} + b_{d₂}·B_{d₁}(−d₂)]
-  (sign convention to pin in the writeup) — an independent nonvanishing
+  pole-3 coeff of Ψ at −d₂ = d₂³·[(1−A_{d₁}(−d₂))·b_{d₂−1} − b_{d₂}·B_{d₁}(−d₂)]
+  = d₂³·(b_{d₂−1} − b_{δ−1})  [closed form via the reflected scalar identity;
+  sign fixed and verified 145/145 in §11] — an independent nonvanishing
   condition, so escaping BOTH criteria needs two simultaneous p-divisibilities.
 
 ## 5. The counting (Markov/gap), candidate exponents
