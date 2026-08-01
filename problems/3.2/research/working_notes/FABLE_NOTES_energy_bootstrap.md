@@ -917,3 +917,29 @@ ONE canonical statement, three sufficient realizations, precise monodromy
 prerequisite, all standard tools audited dead with proofs. ~65 commits, every
 claim machine-verified, four fabrications caught, zero unverified claims
 banked.
+
+## 40. ★ THE APPARITION THEOREM — CHAIN CLOSED (2026-08-01) ★
+
+R18 (Q6342) delivered the complete, gap-free proof of the endpoint lemma via
+the Franel pullback: A_p(φ(u)) = H_p(u)²/(1+u)^{2e} with φ = u(1−8u)/(1+u);
+leading-term comparison at u = ∞ gives lc = (−8)^{−e} = (−2|p) in BOTH
+branches (χ=−1 via q(φ(u)) = ((1−16u−8u²)/(1+u))²). Dependency audit clean;
+our machine-check of every ingredient: pullback identity to O(u¹⁵) ✓,
+q-pullback exact ✓, H_p monic (f_{p−1} ≡ 1) ✓, endpoint 165/165 ✓
+(r18_proof_check.py).
+
+**THEOREM (Apéry apparition law — fully proved):** Let p ≥ 7, e = (p−1)/2.
+(i) [endpoint] lc of the truncated square-root branch ≡ (−2|p);
+(ii) [branch reflection] a_{D−j} ≡ (−2|p)·a_j on the branch polynomial;
+(iii) [quarter-point law] the central coefficient vanishes iff (−2|p) = −1
+with integral center: τ_{(p−1)/4} ≡ 0 ⟺ p ≡ 5 (mod 24);
+σ_{(p−3)/4} ≡ 0 ⟺ p ≡ 23 (mod 24) — and in no other class.
+Proof chain: strong reflection → palindromy → CFVZ factor = fixed-branch
+truncation (unit argument) → Franel-pullback endpoint sign → UFD reciprocal
+⟹ (ii) → central forcing ⟹ (iii). ∎
+
+Discovery credits: quarter-point law (cron-Fable), branch reflection law
+(codex-high), reduction chain (cron-Fable), endpoint proof (ChatGPT R18),
+independent verification at every step (life-Fable). A genuinely new,
+fully-proved arithmetic law for the Apéry numbers — found, decoded, and
+proved in one night by the joint machine.

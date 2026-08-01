@@ -18,7 +18,7 @@ and choose the formal branches
  \sigma(t)=\sqrt{F(t)/q(t)}=\sum_{n\geq0}\sigma_nt^n
 \]
 
-with constant coefficient one.  For an odd prime (p), put
+with constant coefficient one.  For an odd prime $p$, put
 
 \[
  A_p(t)=\sum_{n=0}^{p-1}b_nt^n,
@@ -36,9 +36,9 @@ The outcome of this investigation is as follows.
    \]
 
    Consequently the selected floor-quarter coefficient vanishes exactly for
-   (p\equiv5,23\pmod {24}): it is
-   \(\tau_{(p-1)/4}\) in class (5), and \(\sigma_{(p-3)/4}\) in class
-   (23).  The selected coefficients (or the middle pair when the degree is
+   $p\equiv5,23\pmod {24}$: it is
+   \(\tau_{(p-1)/4}\) in class $5$, and \(\sigma_{(p-3)/4}\) in class
+   $23$.  The selected coefficients (or the middle pair when the degree is
    odd) are nonzero in the other six classes.  This closes `[GAP-BR]` from the
    working notes; no endpoint Gauss-sum evaluation is needed.
 
@@ -46,28 +46,28 @@ The outcome of this investigation is as follows.
    pullbacks of one classical \({}_2F_1\), displayed in Section 1.  Exact
    finite coefficient formulae follow from Lagrange inversion.
 
-3. **[DISPROVED] The proposed discriminant (-24) parametrization of both
-   vanishing classes.**  The form (2x^2+3y^2) represents primes
-   (p\equiv5,11\pmod {24}), not (p\equiv23\pmod {24}).  Primes in class
-   (23) are inert in \(\mathbf Q(\sqrt{-6})\) and have no representation by
-   either reduced form of discriminant (-24).  The quarter law is governed
+3. **[DISPROVED] The proposed discriminant $-24$ parametrization of both
+   vanishing classes.**  The form $2x^2+3y^2$ represents primes
+   $p\equiv5,11\pmod {24}$, not $p\equiv23\pmod {24}$.  Primes in class
+   $23$ are inert in \(\mathbf Q(\sqrt{-6})\) and have no representation by
+   either reduced form of discriminant $-24$.  The quarter law is governed
    by the branch character \((-6/p)\), degree parity, and the reversal
    character \((-2/p)\), rather than by one pair \((x,y)\).
 
-4. **[PROVED] Convolution shadow.**  Membership in (Z_p) is an explicit
+4. **[PROVED] Convolution shadow.**  Membership in $Z_p$ is an explicit
    quadratic convolution condition on the complete values of \(\tau\) or
    \(\sigma\).  **[DISPROVED]** It is not determined by their zero supports.
-   No lattice-point membership law for (Z_p) follows from the quarter zero.
+   No lattice-point membership law for $Z_p$ follows from the quarter zero.
 
-5. **[PROVED] Bernoulli formula.**  For every prime (p\geq5),
+5. **[PROVED] Bernoulli formula.**  For every prime $p\geq5$,
 
    \[
    b_p\equiv5-\frac{14}{3}p^3B_{p-3}\pmod {p^4},\qquad
    \beta_p:=\frac{b_p-5}{p^3}\equiv-\frac{14}{3}B_{p-3}\pmod p.
    \]
 
-   This is the (p)-adic, order-three lift of the same convolution, but it is
-   a Bernoulli--Wolstenholme invariant rather than a discriminant-(-24)
+   This is the $p$-adic, order-three lift of the same convolution, but it is
+   a Bernoulli--Wolstenholme invariant rather than a discriminant-$-24$
    coordinate.  A direct Gross--Koblitz/Jacobi-sum reformulation remains
    `[GAP-GK]`.
 
@@ -102,8 +102,8 @@ with \(\sigma_0=1,\sigma_1=39/2\).  The first equation and recurrence appear
 explicitly in Frits Beukers, *Consequences of Apéry's work on \(\zeta(3)\)*,
 pp. 1--2; the sigma equation follows by substituting
 \(\tau=q^{1/2}\sigma\).  Beukers also records that the singularities of the
-rank-two equation are (0,(1\pm\sqrt2)^4,\infty).  Thus this is a Heun-type
-equation in (t), not a Gauss equation in the coefficient variable.
+rank-two equation are $0,(1\pm\sqrt2)^4,\infty$.  Thus this is a Heun-type
+equation in $t$, not a Gauss equation in the coefficient variable.
 
 ### 1.2 Franel/\({}_2F_1\) pullback
 
@@ -156,7 +156,7 @@ than a fitted recurrence identity.
 
 ### 1.3 Exact coefficient formulae
 
-Let (x=x(t)) be the inverse series.  It satisfies
+Let $x=x(t)$ be the inverse series.  It satisfies
 
 \[
  x=t\phi(x),\qquad \phi(x)=\frac{1+x}{1-8x}.
@@ -169,7 +169,7 @@ Put
  G_\sigma(x)=\frac{(1+x)^{3/2}}{1-16x-8x^2}h(x).
 \]
 
-Lagrange--Bürmann inversion gives, for (n\geq1),
+Lagrange--Bürmann inversion gives, for $n\geq1$,
 
 \[
  \boxed{\quad
@@ -191,7 +191,7 @@ and
 
 \[
  g_m^{(\tau)}=[x^m]G_\tau(x)
- =\sum_{k=0}m f_k\binom{1/2}{m-k}.
+ =\sum_{k=0}^m f_k\binom{1/2}{m-k}.
 \]
 
 Then
@@ -200,7 +200,7 @@ Then
  \tau_n=\frac1n\sum_{m=1}^n m g_m^{(\tau)}\Phi_{n,n-m}.
 \]
 
-For sigma, let (r_0=1,r_1=16) and
+For sigma, let $r_0=1,r_1=16$ and
 \(r_j=16r_{j-1}+8r_{j-2}\).  Then
 
 \[
@@ -210,7 +210,7 @@ For sigma, let (r_0=1,r_1=16) and
  \sigma_n=\frac1n\sum_{m=1}^n m g_m^{(\sigma)}\Phi_{n,n-m}.
 \]
 
-The script verifies both formulae exactly through (n=39).
+The script verifies both formulae exactly through $n=39$.
 
 ### 1.4 What the half-integer recurrence does *not* imply
 
@@ -227,8 +227,8 @@ Its consecutive ratio must be
  =\lambda\frac{n^2+(A+B)n+AB}{(n+C)(n+1)}.
 \]
 
-Solving the four resulting linear equations from (n=0,1,2,3) and testing
-(n=4) gives exact contradictions:
+Solving the four resulting linear equations from $n=0,1,2,3$ and testing
+$n=4$ gives exact contradictions:
 
 \[
  \begin{array}{c|c|c}
@@ -244,7 +244,7 @@ algebraic reversion.  **[GAP-HYP2]** A publication-grade exclusion of every
 possible fixed two-term Pochhammer combination would require a difference
 operator certificate; it is not needed for the positive closed forms above.
 
-Most importantly, a quarter coefficient in the (t)-coordinate is not one
+Most importantly, a quarter coefficient in the $t$-coordinate is not one
 truncated \({}_2F_1\) value.  Applying a named Greene/Jacobsthal evaluation to
 it without first handling the Lagrange reversion would be invalid.
 
@@ -253,7 +253,7 @@ it without first handling the Lagrange reversion would be invalid.
 ### 2.1 Two input theorems
 
 Caruso--Fürnsinn--Vargas-Montoya--Zudilin prove that a normalized polynomial
-(B_p\in\mathbf F_p[t]) exists with
+$B_p\in\mathbf F_p[t]$ exists with
 
 \[
  A_p=B_p^2\quad(p\equiv1,5,7,11\bmod24),
@@ -273,7 +273,7 @@ uniqueness identifies
  B_p=[\sigma]_{\leq(p-3)/2}\quad(\chi_p=-1).
 \]
 
-The degrees follow because (b_{p-1}\equiv b_0=1\pmod p).
+The degrees follow because $b_{p-1}\equiv b_0=1\pmod p$.
 
 The second input is Zhi-Wei Sun's Corollary 1.2:
 
@@ -287,30 +287,30 @@ The second input is Zhi-Wei Sun's Corollary 1.2:
  \pmod p.
 \]
 
-In the first case (x\not\equiv0\pmod p), so this says exactly
+In the first case $x\not\equiv0\pmod p$, so this says exactly
 
 \[
  A_p(1)=0\quad\Longleftrightarrow\quad
  \left(\frac{-2}{p}\right)=-1.
 \]
 
-### 2.2 Reciprocity and the exact multiplicity at (t=1)
+### 2.2 Reciprocity and the exact multiplicity at $t=1$
 
-For (0\leq n,k<p),
+For $0\leq n,k<p$,
 
 \[
  \binom{p-1-n}{k}\equiv(-1)^k\binom{n+k}{k},\qquad
  \binom{p-1-n+k}{k}\equiv(-1)^k\binom nk\pmod p.
 \]
 
-Terms with (k>n) vanish in the second congruence.  Hence
+Terms with $k>n$ vanish in the second congruence.  Hence
 
 \[
  b_{p-1-n}\equiv b_n\pmod p,
  \qquad t^{p-1}A_p(1/t)=A_p(t).
 \]
 
-Differentiating at (t=1) shows that (A_p(1)=0\) implies (A_p'(1)=0).
+Differentiating at $t=1$ shows that $A_p(1)=0$ implies $A_p'(1)=0$.
 The Apéry series satisfies the third-order equation
 
 \[
@@ -318,10 +318,10 @@ The Apéry series satisfies the third-order equation
  +(7t^2-112t+1)y'+(t-5)y=0.
 \]
 
-In characteristic (p), (F=A_pF^p), so (A_p) satisfies the same
-differential equation.  The point (t=1) is ordinary because the leading
-coefficient is (-32\ne0\pmod p).  If (A_p''(1)) also vanished, uniqueness
-for this third-order equation would force (A_p=0), contradicting its
+In characteristic $p$, $F=A_pF^p$, so $A_p$ satisfies the same
+differential equation.  The point $t=1$ is ordinary because the leading
+coefficient is $-32\ne0\pmod p$.  If $A_p''(1)$ also vanished, uniqueness
+for this third-order equation would force $A_p=0$, contradicting its
 constant coefficient.  Therefore
 
 \[
@@ -334,19 +334,19 @@ constant coefficient.  Therefore
 
 ### 2.3 The branch reversal sign
 
-Let (s_p=B_p), (d=\deg s_p), and
-(s_p^*(t)=t^ds_p(1/t)).  Both (1) and (q) are reciprocal factors, so
+Let $s_p=B_p$, $d=\deg s_p$, and
+$s_p^*(t)=t^ds_p(1/t)$.  Both $1$ and $q$ are reciprocal factors, so
 
 \[
  (s_p^*)^2=s_p^2.
 \]
 
-Since \(\mathbf F_p[t]\) is a domain and (p) is odd,
-(s_p^*=\varepsilon_ps_p\) with \(\varepsilon_p\in\{\pm1\}\).
+Since \(\mathbf F_p[t]\) is a domain and $p$ is odd,
+\(s_p^*=\varepsilon_ps_p\) with \(\varepsilon_p\in\{\pm1\}\).
 
-If (A_p(1)\ne0), then (s_p(1)\ne0), and evaluation at one gives
-\(\varepsilon_p=1\).  If (A_p(1)=0), the exact multiplicity result shows
-that (s_p) has a simple zero at one.  Differentiating the reversal identity
+If $A_p(1)\ne0$, then $s_p(1)\ne0$, and evaluation at one gives
+\(\varepsilon_p=1\).  If $A_p(1)=0$, the exact multiplicity result shows
+that $s_p$ has a simple zero at one.  Differentiating the reversal identity
 at one gives
 
 \[
@@ -361,32 +361,32 @@ so \(\varepsilon_p=-1\).  Thus
 \]
 
 This proves the previously missing leading-coefficient atom as well:
-\(s_{p,d}=(-2/p)\), because (s_{p,0}=1).
+\(s_{p,d}=(-2/p)\), because $s_{p,0}=1$.
 
 ### 2.4 Forced zeros and exclusion of accidental central zeros
 
-If (d) is odd, reversal pairs the two middle coefficients.  If either one
+If $d$ is odd, reversal pairs the two middle coefficients.  If either one
 were zero, both would be zero; the second-order recurrence then propagates
-two consecutive zeros back to (s_{p,0}=0), a contradiction.
+two consecutive zeros back to $s_{p,0}=0$, a contradiction.
 
-Suppose the tau degree is even.  Write (p=4J+1), so
-(d=(p-1)/2=2J).  When the reversal sign is (+1),
-\(\tau_{J+1}=\tau_{J-1}\).  If \(\tau_J=0\), the recurrence at (J) gives
+Suppose the tau degree is even.  Write $p=4J+1$, so
+$d=(p-1)/2=2J$.  When the reversal sign is $+1$,
+\(\tau_{J+1}=\tau_{J-1}\).  If \(\tau_J=0\), the recurrence at $J$ gives
 
 \[
  \{4(J+1)^2+(2J-1)^2\}\tau_{J-1}=0.
 \]
 
-The brace is (9/2\pmod p\), hence is nonzero for (p>3).  This again gives
-two consecutive zeros, impossible.  The sigma case has (p=4J+3),
-(d=(p-3)/2=2J), and the corresponding brace is
+The brace is $9/2\pmod p$, hence is nonzero for $p>3$.  This again gives
+two consecutive zeros, impossible.  The sigma case has $p=4J+3$,
+$d=(p-3)/2=2J$, and the corresponding brace is
 
 \[
  4(J+1)^2+(2J+1)^2\equiv1/2\pmod p.
 \]
 
 It is also nonzero.  Therefore an even-degree middle coefficient vanishes
-*if and only if* the reversal sign is (-1).
+*if and only if* the reversal sign is $-1$.
 
 ### 2.5 Complete table
 
@@ -406,7 +406,7 @@ p\bmod24&\text{selected branch}&d&(-2/p)&\text{middle result}\\ \hline
 
 This is the exact relevant-branch interpretation of the eight-class law.
 A stronger statement obtained by applying floor indices to *both raw series*
-in every class is false: at (p=71\), both the selected
+in every class is false: at $p=71$, both the selected
 \(\sigma_{17}\) and the nonselected raw \(\tau_{17}\) vanish.
 
 ## 3. Zero sets and the failure of the proposed Jacobsthal parametrization
@@ -423,19 +423,19 @@ The reversal theorem proves the exact symmetry
  j\in Y_p\quad\Longleftrightarrow\quad d-j\in Y_p.
 \]
 
-It also proves the central member in class (5) and class (23), and proves
+It also proves the central member in class $5$ and class $23$, and proves
 the absence of a central member in the other six classes.  It does not
 determine the remaining symmetric pairs.
 
-### 3.1 Discriminant (-24): the necessary correction
+### 3.1 Discriminant $-24$: the necessary correction
 
-The reduced positive forms of discriminant (-24) are
+The reduced positive forms of discriminant $-24$ are
 
 \[
  x^2+6y^2,\qquad 2x^2+3y^2.
 \]
 
-For primes (p>3), genus theory gives
+For primes $p>3$, genus theory gives
 
 \[
  p=x^2+6y^2\Longleftrightarrow p\equiv1,7\pmod {24},
@@ -446,11 +446,11 @@ For primes (p>3), genus theory gives
 \]
 
 These four classes are exactly \((-6/p)=1\), the primes split in
-\(\mathbf Q(\sqrt{-6})\).  Classes (13,17,19,23) are inert.  In particular,
-the sigma-vanishing class (23) cannot possibly be parametrized by
-(p=2x^2+3y^2\).  This is a logical obstruction, not merely a failed fit.
+\(\mathbf Q(\sqrt{-6})\).  Classes $13,17,19,23$ are inert.  In particular,
+the sigma-vanishing class $23$ cannot possibly be parametrized by
+$p=2x^2+3y^2$.  This is a logical obstruction, not merely a failed fit.
 
-Only the tau class (5) belongs to the nonprincipal-form family.  The true
+Only the tau class $5$ belongs to the nonprincipal-form family.  The true
 uniform law uses
 
 \[
@@ -461,7 +461,7 @@ uniform law uses
 ### 3.2 Complete zero census below 3000
 
 The full relevant-branch zero-count distributions for every prime below
-(3000) are:
+$3000$ are:
 
 \[
 \begin{array}{c|c|l}
@@ -477,8 +477,8 @@ p\bmod24&\text{branch}&\#Y_p:\text{ number of primes}\\ \hline
 \end{array}
 \]
 
-Thus even class (5) is not exhausted by the forced quarter zero.  The ten
-primes below (3000) with one additional pair are
+Thus even class $5$ is not exhausted by the forced quarter zero.  The ten
+primes below $3000$ with one additional pair are
 
 \[
 101,701,1061,1181,1277,1373,1493,1949,2621,2789.
@@ -487,11 +487,11 @@ primes below (3000) with one additional pair are
 For example,
 
 \[
- p=101=2\cdot7^2+3\cdot1^2,qquad
+ p=101=2\cdot7^2+3\cdot1^2,\qquad
  Y_{101}=\{6,25,44\},
 \]
 
-where only (25=(p-1)/4) is forced by the theorem.
+where only $25=(p-1)/4$ is forced by the theorem.
 
 There is a stronger **verified but unproved** eighth-point skeleton:
 
@@ -504,17 +504,17 @@ There is a stronger **verified but unproved** eighth-point skeleton:
  \end{aligned}
 \]
 
-It holds for every prime below (3000).  It is marked `[GAP-EIGHTH]`; the
-present reversal proof gives the symmetry and the class-(23) middle member,
+It holds for every prime below $3000$.  It is marked `[GAP-EIGHTH]`; the
+present reversal proof gives the symmetry and the class-$23$ middle member,
 but not the outer eighth-point pair.
 
 **[GAP-ZEROSET]** No formula for all additional pairs has been found.  The
 data disprove the proposed simple linear-position/neighbor-constant laws,
-and the class-(23) inertness disproves the advertised uniform \((x,y)\)
+and the class-$23$ inertness disproves the advertised uniform \((x,y)\)
 coordinate.  What is proved is the character-forced skeleton plus reflection;
 the rest is the zero set of an explicit Heun truncation.
 
-## 4. The convolution shadow for (Z_p)
+## 4. The convolution shadow for $Z_p$
 
 Over \(\mathbf Q\), without truncation,
 
@@ -528,13 +528,13 @@ If
  c_r=\sum_{i=0}^r\sigma_i\sigma_{r-i},\qquad c_{-1}=c_{-2}=0,
 \]
 
-then (F=q\sigma^2\) gives
+then $F=q\sigma^2$ gives
 
 \[
  \boxed{\quad b_r=c_r-34c_{r-1}+c_{r-2}.\quad}
 \]
 
-Consequently, for (0\leq r<p),
+Consequently, for $0\leq r<p$,
 
 \[
  r\in Z_p
@@ -554,7 +554,7 @@ and
 
 This is the exact convolution shadow.  Substituting the coefficient formulae
 of Section 1 turns it into an explicit finite multiple hypergeometric sum.
-It does **not** turn it into a condition on the support (Y_p).
+It does **not** turn it into a condition on the support $Y_p$.
 
 Indeed, over \(\mathbf F_5\) the sequences
 
@@ -572,7 +572,7 @@ have the same empty zero support, but
 
 Convolution vanishing depends on phases/values of all terms, not on which
 terms vanish.  In particular the quarter zero deletes only one summand (two
-away from the central convolution index); it does not force a zero of (b_r).
+away from the central convolution index); it does not force a zero of $b_r$.
 
 Therefore
 
@@ -582,21 +582,21 @@ Therefore
 
 becomes a moving quadratic-form condition in the complete universal branch
 values.  **[GAP-CONV]** Without a value/phase law for those coefficients,
-this is not a lattice-point count in the discriminant-(-24) coordinates.
-The negative support example shows that a parametrization of (Y_p), even if
+this is not a lattice-point count in the discriminant-$-24$ coordinates.
+The negative support example shows that a parametrization of $Y_p$, even if
 one existed, would still be insufficient.
 
 ## 5. The Bernoulli--Wolstenholme defect
 
 ### 5.1 A direct proof
 
-Separate the (k=0,p) endpoints in
+Separate the $k=0,p$ endpoints in
 
 \[
  b_p=\sum_{k=0}^p\binom pk^2\binom{p+k}k^2.
 \]
 
-For (1\leq k\leq p-1), cancellation of the first-order harmonic factors
+For $1\leq k\leq p-1$, cancellation of the first-order harmonic factors
 gives
 
 \[
@@ -611,7 +611,7 @@ Hence the interior is
  p^2H_{p-1}^{(2)}+2p^3H_{p-1}^{(3)}\pmod {p^4}.
 \]
 
-The classical Glaisher congruences, valid for (p\geq5), are
+The classical Glaisher congruences, valid for $p\geq5$, are
 
 \[
  H_{p-1}^{(1)}\equiv-\frac{p^2}{3}B_{p-3}\pmod {p^3},
@@ -619,14 +619,14 @@ The classical Glaisher congruences, valid for (p\geq5), are
  H_{p-1}^{(2)}\equiv\frac{2p}{3}B_{p-3}\pmod {p^2},
 \]
 
-and pairing (k) with (p-k) gives
-(H_{p-1}^{(3)}\equiv0\pmod p\).  Thus the interior contributes
+and pairing $k$ with $p-k$ gives
+$H_{p-1}^{(3)}\equiv0\pmod p$.  Thus the interior contributes
 
 \[
  \frac23p^3B_{p-3}\pmod {p^4}.
 \]
 
-The (k=0) endpoint is (1).  Expanding
+The $k=0$ endpoint is $1$.  Expanding
 
 \[
  \binom{2p-1}{p-1}=\prod_{k=1}^{p-1}\left(1+\frac pk\right)
@@ -639,7 +639,7 @@ and inserting the same harmonic congruences yields Glaisher's refinement
  \equiv1-\frac23p^3B_{p-3}\pmod {p^4}.
 \]
 
-The (k=p) endpoint is therefore
+The $k=p$ endpoint is therefore
 
 \[
  \binom{2p}{p}^2
@@ -653,25 +653,25 @@ Adding the three pieces proves
  \boxed{\quad b_p\equiv5-\frac{14}{3}p^3B_{p-3}\pmod {p^4}.\quad}
 \]
 
-The machine check covers all (93) primes (5\leq p<500), rather than only
-the previously recorded (27/27).
+The machine check covers all $93$ primes $5\leq p<500$, rather than only
+the previously recorded $27/27$.
 
-For (p\ne7), \(\beta_p=0\) is equivalent to
-(p\mid\operatorname{num}(B_{p-3})\), the Wolstenholme-prime criterion.  The
-prime (p=7) is an extra coefficient-degeneracy case because (14=0\pmod7);
+For $p\ne7$, \(\beta_p=0\) is equivalent to
+$p\mid\operatorname{num}(B_{p-3})$, the Wolstenholme-prime criterion.  The
+prime $p=7$ is an extra coefficient-degeneracy case because $14=0\pmod7$;
 it is not a Wolstenholme prime.  This exception must be retained in any
 iff statement.
 
 ### 5.2 Relation to the rank-two framework
 
-The exact identities give the taut but useful (p)-adic rank-two expressions
+The exact identities give the taut but useful $p$-adic rank-two expressions
 
 \[
  \beta_p\equiv
  \frac{\sum_{i=0}^p\tau_i\tau_{p-i}-5}{p^3}\pmod p,
 \]
 
-and, with (c_r=(\sigma*\sigma)_r\),
+and, with $c_r=(\sigma*\sigma)_r$,
 
 \[
  \beta_p\equiv
@@ -679,13 +679,13 @@ and, with (c_r=(\sigma*\sigma)_r\),
 \]
 
 Thus \(\beta_p\) is in the same square-root/convolution framework, but one
-level higher (p)-adically.  Its closed evaluation is controlled by harmonic
-sums and (B_{p-3}), i.e. the Wolstenholme/(p)-adic-zeta class.  The
-discriminant-(-24) coordinates only record the mod-(p) branch; they cannot
+level higher $p$-adically.  Its closed evaluation is controlled by harmonic
+sums and $B_{p-3}$, i.e. the Wolstenholme/$p$-adic-zeta class.  The
+discriminant-$-24$ coordinates only record the mod-$p$ branch; they cannot
 recover this order-three lift.
 
-**[GAP-GK]** A Gross--Koblitz expression would have to retain (p)-adic
-derivatives (the harmonic terms above), not just a mod-(p) Jacobi sum.  No
+**[GAP-GK]** A Gross--Koblitz expression would have to retain $p$-adic
+derivatives (the harmonic terms above), not just a mod-$p$ Jacobi sum.  No
 verified identity reducing those derivatives to the proposed \((x,y)\) data
 was found.  Calling the displayed algebraic pullback a direct rank-two
 Gross--Koblitz formula would overstate the result.
@@ -703,15 +703,15 @@ python3 research/scripts/codex_max_convolution_beta.py
 The checks are:
 
 - `codex_max_hypergeom_quarter.py`: exact rational recurrence, square-root,
-  Franel \({}_2F_1\) pullback, (q)-pullback, and Lagrange formula through
-  (n=39); exact one-Pochhammer contradictions.
-- `codex_max_zero_sets.py`: every relevant prime (p<3000); factor-branch
+  Franel \({}_2F_1\) pullback, $q$-pullback, and Lagrange formula through
+  $n=39$; exact one-Pochhammer contradictions.
+- `codex_max_zero_sets.py`: every relevant prime $p<3000$; factor-branch
   recurrence, reversal sign, exact eight-class quarter table, full zero-set
-  census, discriminant-(-24) representations, the verified eighth skeleton,
-  and the (p=71) counterexample to the stronger raw-both-branches reading.
+  census, discriminant-$-24$ representations, the verified eighth skeleton,
+  and the $p=71$ counterexample to the stronger raw-both-branches reading.
 - `codex_max_convolution_beta.py`: both convolution identities through
-  (n=59); the beta formula for (93) primes below (500); (279) harmonic
-  congruences; (1032) individual interior summand expansions; explicit
+  $n=59$; the beta formula for $93$ primes below $500$; $279$ harmonic
+  congruences; $1032$ individual interior summand expansions; explicit
   support-only counterexample.
 
 ## 7. Precise references
@@ -729,10 +729,10 @@ The checks are:
 3. Z.-W. Sun, [*On sums of Apéry polynomials and related
    congruences*](https://arxiv.org/abs/1101.1946), J. Number Theory 132
    (2012), 2673--2699.  Corollary 1.2, equation (1.9), is the exact
-   (A_p(1)) evaluation used here.
+   $A_p(1)$ evaluation used here.
 4. B. K. Spearman and K. S. Williams,
    [*Representing primes by binary quadratic forms*](https://people.math.carleton.ca/~williams/papers/pdf/172.pdf),
-   Amer. Math. Monthly 99 (1992), 423--426, for the discriminant-(-24)
+   Amer. Math. Monthly 99 (1992), 423--426, for the discriminant-$-24$
    representation criteria.
 5. S. Hong, [*Notes on Glaisher's
    Congruences*](https://doi.org/10.1007/BF02731955), Chinese Ann. Math. Ser. B
@@ -743,14 +743,14 @@ The checks are:
 
 - `[GAP-HYP2]`: exclude every possible fixed two-term Pochhammer
   representation by a formal difference-operator certificate.
-- `[GAP-EIGHTH]`: prove the class (13/23) outer eighth-point zero pairs.
+- `[GAP-EIGHTH]`: prove the class $13/23$ outer eighth-point zero pairs.
 - `[GAP-ZEROSET]`: determine the remaining symmetric zero pairs of the Heun
-  truncations.  A uniform (p=2x^2+3y^2) parametrization is impossible as
+  truncations.  A uniform $p=2x^2+3y^2$ parametrization is impossible as
   stated.
 - `[GAP-CONV]`: find a complete value/phase law strong enough to simplify the
-  quadratic convolution defining (Z_p).  Zero support alone cannot do so.
+  quadratic convolution defining $Z_p$.  Zero support alone cannot do so.
 - `[GAP-GK]`: express the order-three Bernoulli defect via verified
-  (p)-adic gamma derivatives, if a useful Gross--Koblitz form exists.
+  $p$-adic gamma derivatives, if a useful Gross--Koblitz form exists.
 
 The requested quarter theorem, hypergeometric pullbacks, exact convolution
 shadow, and beta formula are closed.  The remaining items are genuine gaps,
