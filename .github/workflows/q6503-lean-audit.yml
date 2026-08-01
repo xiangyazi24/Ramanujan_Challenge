@@ -1,0 +1,28 @@
+name: Q6503 Lean 4.29 audit
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean toolchain
+        shell: bash
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch Mathlib cache
+        shell: bash
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          cd lean
+          lake exe cache get
+      - name: Compile finite-moment closure
+        shell: bash
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          cd lean
+          lake build RamanujanChallenge.Problem22ConcentrationFinite
