@@ -684,3 +684,27 @@ continuity-on-the-open-interval + integrable-majorant glue lemma, both already i
 the file, but it is real added work rather than a sign change.
 
 Do not brief an agent on this task with "mirror the alternating chain" alone.
+
+## Six of seven, kernel-confirmed (2026-08-01)
+
+The composition check passes with zero errors:
+
+```lean
+example (hQuadratic : HasSum quadraticEulerTerm24 quadraticEulerValue24) :
+    problem24Statement :=
+  problem24_of_euler_and_classical hQuadratic
+    P24QuadAlt.alternatingQuadraticEulerTerm24_hasSum
+    cubicLinearEulerTerm24_hasSum alternatingCubicLinearEulerTerm24_hasSum
+    shiftedLinearEulerTerm24_hasSum
+    leshchinerWeightFourTerm24_hasSum bbbWeightFourTerm24_hasSum
+```
+
+So `problem24Statement` now rests on exactly ONE hypothesis, and the other six
+are real axiom-clean theorems rather than carried assumptions.  There is no
+hidden eighth obligation — the kernel says so, not a reading of the statements.
+
+Still open, and it is the whole remainder: `quadraticEulerTerm24`.  See the
+section above for why it is not the alternating chain with a sign flipped.
+
+`problem24Statement` itself is NOT proved: `exact?` cannot close it, and all
+three theorems concluding it are conditional.  It does not belong in `SUBMIT/`.
