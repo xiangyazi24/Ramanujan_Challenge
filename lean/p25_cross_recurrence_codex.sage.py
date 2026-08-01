@@ -71,6 +71,14 @@ for N in range(COUNT):
     q *= transition
 print("cross terms", COUNT, "seconds", time.time() - t0, flush=True)
 print("initial signs", [[x.sign() for x in seq[:12]] for seq in cross], flush=True)
+for column, sequence in enumerate(cross):
+    print("column", column, "first", [float(value) for value in sequence[:6]], flush=True)
+    print("column", column, "tail ratios",
+          [float(sequence[index+1] / sequence[index])
+           for index in range(max(0, COUNT-8), COUNT-1)], flush=True)
+
+if len(sys.argv) > 2 and sys.argv[2] == "noguess":
+    sys.exit(0)
 
 R = PolynomialRing(QQ, "n")
 n = R.gen()

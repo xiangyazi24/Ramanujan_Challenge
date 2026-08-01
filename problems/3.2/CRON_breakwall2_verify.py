@@ -259,7 +259,7 @@ def finite_field_gates() -> None:
     print(
         "FINITE_FIELD_GATES\n"
         "p N L D T0 S maxR W2 Z2 E E^2*T0/N^2 W32sq "
-        "D*W32sq/N^3 eps spike_old/excess/lorentz "
+        "D*W32sq/N^3 maxR*D/N eps spike_old/excess/lorentz "
         "W1model_S/fails_excess/fails_lorentz"
     )
     for prime in (1009, 3001, 10007):
