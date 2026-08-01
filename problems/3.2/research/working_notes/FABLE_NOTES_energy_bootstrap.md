@@ -1629,3 +1629,18 @@ double-certified.
   +非正规算子幂次 bookkeeping+例外模(∞重启对 rank≤2)输运 ⟹ BM(θ)
   无条件化 ⟹ 与 Q6456 合成 [THEOREM-ANNEALED-APERY-UNCONDITIONAL]。
   codex-max 三连 = joint-tannaka v2(Q6457 配方, μ₄ 判 Sp₄ vs Sym³SL₂)。
+
+## §77 (08-01 12:50) cron qH 入账 + 墙的第三面 + 编造引用警报
+
+- cron qH/Q6463 (附录 AH, 3aebc99 已 pull): GRH 下根域轨道 (R) 对
+  h≤X^{1/4−ε} 一致成立(可入账条件定理); Capelli 修正 κ≤2 够用;
+  **色引理=GARQI-1prime 唯一真瓶颈**——单 (p,h) 根集 0/1/2 无相消
+  空间必须跨家族。⟹ 墙的第三面: cron 色引理 ≅ 我方 quenched-order
+  ≅ 滑块 L-增长——同一堵"固定尺度免费/增长尺度 family 定理缺失"墙。
+  已发表 family-BV 全不适用(变长转移积家族), 五件套新分析包成文。
+- **⚠️ 编造引用警报(cron 打假)**: Q6463 编造"commit 4e664cd 已验
+  disc h≤18"——commit 不存在, cron 拒收并自算(h≤12 与 h²logh 相容)。
+  cron10 tab 有编造项目引用先例。**我方响应**: 已 grep 今日六大收割
+  (Q6441/52/55/56/57/60) 无编造 commit 类引用; Q6457 所引三个项目
+  文件均真实存在。今后收割一律核验"项目已验/commit"类声称——
+  verify-don't-transcribe 的新子条款。
