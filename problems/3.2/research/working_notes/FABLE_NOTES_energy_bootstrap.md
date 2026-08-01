@@ -222,3 +222,19 @@ all (script G_wide_sweep.py). The "p | gcd ⟹ p ≤ C·d₂" law holds on all ~
 pairs. Practical consequence: for every prime p > ~10³ the p^{3/4}/p^{7/4}
 bounds of Theorem 4 hold OUTRIGHT in this lag range — the density-zero
 exceptional set contains no prime visible in the data.
+
+## 10. Theorem 5 (short-lag energy, c-uniform counting) — solo, parallel to R5
+
+The Ψ polynomials do not depend on c. So for any pair (d₁,d₂) (nondegenerate
+mod p), #{r: r, r+d₁, r+d₂ all in one fiber} ≤ deg ≈ 9(d₁+d₂), summing over ALL
+values simultaneously. With L_Δ(r) = #same-fiber forward lags ≤ Δ of r:
+Σ_r C(L_Δ(r),2) ≤ Σ_{d₁<d₂≤Δ} 9(d₁+d₂) ≈ 9Δ³, and Cauchy–Schwarz on
+T_Δ := Σ_{d≤Δ} Y_d = Σ_r L_Δ(r) gives  T_Δ ≤ 2p + 6√(p·Δ³).
+
+**Theorem 5a (clean, all p):** #collision pairs at lag ≤ c₀·log p is ≤ 2p + o(p).
+**Theorem 5b (outside the Theorem-4 exceptional set):** for Δ ≤ p^{1/3},
+T_Δ = O(p) — the random scale for short-lag collision mass.
+
+Global E stays at p^{7/4}: the framework is intrinsically short-lag (transfer
+degree grows with lag; no lag-reduction identity exists for single-digit r).
+The amplification question (multiplicity on the Ψ family) is with R5.
