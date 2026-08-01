@@ -328,3 +328,52 @@ the Python used a different branch, normalisation or endpoint convention, every
 digit could still have matched while the Lean statement said something else. It
 did not — the 25-to-60-digit agreements above are agreements about the Lean
 objects.
+
+---
+
+## Layer E status after the 2026-08-01 build-out
+
+**Discharged.** `hK` is gone: `quadAltK_eq` proves
+`K = (1/5) ζ₂² − 2·Tminus − 2·Tplus`, axiom-clean.  The route was not the
+planned one.  `K`'s termwise step (`quadAltK_hasSum`) came from
+`harmonicNumber_generating_hasSum`, which the repo already had — at `x = −t` it
+IS the generating function of the `K` integrand.  Then `K`'s value came from two
+more theorems the repo already had, buried as private steps inside the
+cubic-linear constants: with `a n = (−1)^{n+1}H_{n+1}/(n+1)³` and
+`b n = (−1)^{n+1}/(n+1)⁴`, the `K` summand is exactly `2(a(n+1) − b(n+1))`, and
+`(a−b)(0) = 0` so the shift is free.  Two of the three ingredients were already
+in the repo; both were found by grepping, not by deriving.
+
+**Definition audit, complete and clean.** Checked character by character against
+the numerics: `dilog z = Σ z^{n+1}/(n+1)²` (= Li₂, not Rogers),
+`polylog4 z = Σ z^{n+1}/(n+1)⁴`, `W0 t = π²/6 − 2·dilog(t/2) − log(t/2)²`,
+`H1 = −log(1−t)`, `H2 = −log(1−t/2)`, the six `I_ab`, and `quadAltK`.  All match.
+
+**The frontier statement is true, and the sharp test is at index 2.** An
+adversarial audit flagged that `parityRemainder24 n = H_n − 2A_n`, not the
+alternating partial sum `A_n`.  It is not a defect: `parityRemainder24` is an
+internal reduction object, not a problem-statement object (the competition asks
+about `ΣΣ C(m,k)²H_k²/((m+1)²C(2m,m))`).  Decided numerically —
+repo definition gives `tsum = −0.06236615…` against the target `−0.06236610…`,
+the alternative gives `−0.23638…`.  The cheap discriminator the audit itself
+proposed also lands on the repo: `alternatingQuadraticEulerTerm24 2 = 4/27`, not
+`2/27`.  Indices 0 and 1 cannot tell the two apart — only index 2 and beyond can.
+
+**Negative result worth knowing before formalizing I11.**  `H1(t)/(1−t) = Σ H_m tᵐ`
+makes `I11 = Σ_m H_m ∫₀¹ W0(t) tᵐ dt` the natural series.  It is NOT termwise
+equal to `Σ P_m/m³`:
+
+```
+m         H_m·∫₀¹W0·tᵐ        P_m/m³
+1         -0.38629436         -1.0
+2         -0.18172581          0.0625
+3         -0.09709522          0.00617284
+```
+
+Both partial sums converge to `Tplus = −0.886852…`, so the identity is real, but
+it needs an actual rearrangement — `congr_fun` against the repo's
+`cubicLinearEulerTerm24_hasSum` will not close it.  Nor do the repo's `Tplus`
+kernels help directly: they are trilogarithm-based
+(`(ζ₃ − Li₃(x))/(1−x)` and `(ζ₃ − Li₃(−x))/(1+x)`), not `W0`-based.
+
+**Remaining.** Six hypotheses, the rows `I10 … I22`.
