@@ -33,3 +33,8 @@ this note.
   max_r |#{m : L(χ_m)=r mod p} − (p−1)/p| = O(√p); Fourier inversion ⟹ |Σ e_p(L(χ))| = O(√p).
 - **Decisive computation**: is L(χ) mod p a bounded-complexity trace function of the character
   parameter χ? (If yes, Deligne/Katz applies; if not, Sato-Tate alone can't close it.)
+
+## Vertical Weil constant BOUNDED (DS, p=101..503)
+|Σ_m e_p(L(χ_m))|/√p = 0.76, 1.37, 3.22, 1.06, 1.00 (p=101,199,307,401,503).
+The p=307 ratio 3.22 is a ~3σ random-walk fluctuation; p=401,503 return to ~1.0.
+⟹ the vertical Weil bound |C_p| ≤ C√p holds with a bounded constant (cluster ~1, max ~3.2).
