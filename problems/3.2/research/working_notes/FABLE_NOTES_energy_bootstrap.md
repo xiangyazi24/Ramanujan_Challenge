@@ -1162,3 +1162,24 @@ double-certified.
   零密度(codex-lt 双雄攻坚中)。
 - fm 双雄全部收官(4 commits 全收割验证)。在场: codex-lt×2 + cron 双雄 +
   十路 tab。
+
+## §54 (08-01) qI/Q6405: LT-Mellin 完整审计 — 轨道乘积判死, Fricke 结构宝石
+
+- **[PROVED] Fricke 发现**: φ = Beauville-IV 模 pencil 的 Fricke w₆ 商——
+  二次映射两叶 6-同源同迹, Parseval/二阶矩常数 = 4 (非 naive 2); 精确有限 p
+  上同调四阶矩恒等式到手。
+- **[NEGATIVE-NORM] 轨道乘积武器判死**(修正后有效但无力): Galois 共轭移动
+  𝔭 本身; 同-𝔭 零点⟹范数 p^k 整除成立, 但 |S_r|≪p^{3/2} 给的界弱于平凡轨道
+  尺寸界——阈值错配(整除价 p vs 共轭尺寸 p^{3/2}), Parseval 不改此指数。
+  与我预判的 3/2 vacuous 一致, 现在是定理级死刑。[GAP-ORBIT-NORM] 存档。
+- **[NEGATIVE-KATZ-LOCAL]**: Katz 对特征零归一迹完全适用(需插入已证单值性
+  假设)但不给 F_p 归约等分布; 即使假设性的单条平方根消去也只给 O(p^{1/2})。
+  ⟹ 现实的下一里程碑 = p^{2/3}→p^{1/2}, 条件 = 特定混合加法 Fourier 和的
+  平方根消去(§7 square-root barrier)。
+- **[GAP-LT-MELLIN] 精化分裂**: o(p) 版 vs [GAP-LT-MELLIN+] 一致 O(1) 版——
+  后者是"额外算术刚性"而非 LT 随机性(Poisson 模型预测 max over p 缓慢无界)。
+  纠正我们"truth is O(1)"的口径: 应为"均值 1, 逐素数有界矩, sup 缓慢增长"。
+- Route A(T-adic/F-isocrystal 字符族) 遭第二票怀疑(least-confident: μ_{p−1}
+  度数随 p 增长; 即使建成仍需超越 p-adic Weil II 的局部极限定理)——与 Q6393
+  零维字符概形障碍同形。等 codex-lt-max 文献判决作第三票。
+- 记录不变: 3p^{2/3} (递归/continuant 论证)。

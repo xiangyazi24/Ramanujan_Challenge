@@ -53,6 +53,7 @@
 #define MIDPOINT_LIMIT 1000000U
 #define TARGET_COUNT 9U
 #define RANDOM_CHECK_COUNT 20U
+#define DIRECT_CHECK_COUNT (RANDOM_CHECK_COUNT + 1U)
 
 typedef struct {
     uint32_t p;
@@ -489,8 +490,8 @@ static int u32_compare(const void *left, const void *right) {
 
 static int random_direct_gate(const uint32_t *primes, size_t nprimes,
                               Target *target) {
-    uint32_t samples[RANDOM_CHECK_COUNT];
-    uint32_t direct[RANDOM_CHECK_COUNT] = {0};
+    uint32_t samples[DIRECT_CHECK_COUNT];
+    uint32_t direct[DIRECT_CHECK_COUNT] = {0};
     uint64_t rng = UINT64_C(0x47524151492d3230);
     size_t sample_count = 0;
     while (sample_count < RANDOM_CHECK_COUNT) {
@@ -504,6 +505,7 @@ static int random_direct_gate(const uint32_t *primes, size_t nprimes,
             samples[sample_count++] = n;
     }
     qsort(samples, RANDOM_CHECK_COUNT, sizeof(*samples), u32_compare);
+    samples[RANDOM_CHECK_COUNT] = target->first_argmax;
 
     uint32_t *inverse =
         (uint32_t *)malloc((target->X + 1U) * sizeof(*inverse));
@@ -520,7 +522,7 @@ static int random_direct_gate(const uint32_t *primes, size_t nprimes,
         uint32_t p = primes[prime_index];
         uint32_t max_r = 0;
         int used = 0;
-        for (size_t i = 0; i < RANDOM_CHECK_COUNT; ++i) {
+        for (size_t i = 0; i < DIRECT_CHECK_COUNT; ++i) {
             uint32_t n = samples[i];
             if (2ULL * p > n && p <= n) {
                 uint32_t r = n - p;
@@ -562,7 +564,7 @@ static int random_direct_gate(const uint32_t *primes, size_t nprimes,
             brow[n + 1U] =
                 (uint32_t)((uint64_t)numerator * inv_cube % p);
         }
-        for (size_t i = 0; i < RANDOM_CHECK_COUNT; ++i) {
+        for (size_t i = 0; i < DIRECT_CHECK_COUNT; ++i) {
             uint32_t n = samples[i];
             if (2ULL * p > n && p <= n) {
                 uint32_t r = n - p;
@@ -589,6 +591,22 @@ static int random_direct_gate(const uint32_t *primes, size_t nprimes,
         }
     }
     printf("SANITY X=8192 random direct checks: PASS (20/20)\n");
+    {
+        size_t i = RANDOM_CHECK_COUNT;
+        uint32_t n = samples[i];
+        uint32_t row = target->hits[n - target->X - 1U];
+        printf("SANITY X=8192 positive control: n=%" PRIu32
+               " row_H=%" PRIu32 " direct_H=%" PRIu32 " %s\n",
+               n, row, direct[i], row == direct[i] ? "PASS" : "MISMATCH");
+        if (row != direct[i] || row == 0U) {
+            fprintf(stderr,
+                    "SANITY ABORT: positive direct control failed at n=%"
+                    PRIu32 "\n", n);
+            free(inverse);
+            free(brow);
+            return 0;
+        }
+    }
     free(inverse);
     free(brow);
     return 1;
@@ -596,17 +614,20 @@ static int random_direct_gate(const uint32_t *primes, size_t nprimes,
 
 static void print_midpoint_primes(const ZeroPair *pairs, size_t npairs) {
     size_t count = 0;
+    size_t zero_count = 0;
     printf("MIDPOINT_ZERO_PRIMES_BELOW_1000000:");
     for (size_t i = 0; i < npairs; ++i) {
         uint32_t p = pairs[i].p;
         if (p >= MIDPOINT_LIMIT)
             break;
+        ++zero_count;
         if (pairs[i].z == (p - 1U) / 2U) {
             printf(" %" PRIu32, p);
             ++count;
         }
     }
     printf("\nMIDPOINT_ZERO_COUNT=%zu\n", count);
+    printf("ZERO_PAIRS_BELOW_1000000=%zu\n", zero_count);
 }
 
 static void print_results(const Target targets[TARGET_COUNT]) {
