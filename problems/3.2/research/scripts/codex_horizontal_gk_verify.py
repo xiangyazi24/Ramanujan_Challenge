@@ -67,9 +67,9 @@ def jacobi_binomial(top: int, lower: int, prime: int) -> int:
     binom(top,lower) = (-1)^(lower+1) Jbar_p(lower,top) modulo p.
     """
 
-    assert 0 <= lower <= top < prime - 1
-    if top == 0:
-        # Avoid the convention-dependent J(epsilon,epsilon) endpoint.
+    assert 0 <= lower <= top <= prime - 1
+    if (top, lower) in ((0, 0), (prime - 1, 0), (prime - 1, prime - 1)):
+        # Avoid convention-dependent trivial-character endpoints.
         return 1
     jacobi = sum(
         pow(x, prime - 1 - lower, prime) * pow((1 - x) % prime, top, prime)
@@ -86,7 +86,7 @@ def gross_koblitz_binomial(top: int, lower: int, prime: int) -> int:
     J(omega^(-lower), omega^top) gives the displayed three-Gamma quotient.
     """
 
-    assert 0 <= lower <= top < prime - 1
+    assert 0 <= lower <= top <= prime - 1
     if lower in (0, top):
         return 1
     sign = -1 if lower & 1 else 1
@@ -107,7 +107,7 @@ class CarryFreeAtoms:
     @lru_cache(maxsize=None)
     def choose(self, alpha: Q, lower: int) -> int:
         top = fraction_residue(alpha, self.prime)
-        assert lower <= top < self.prime - 1
+        assert lower <= top <= self.prime - 1
         gamma_value = gamma_binomial(alpha, lower, self.prime)
         jacobi_value = jacobi_binomial(top, lower, self.prime)
         gross_koblitz_value = gross_koblitz_binomial(top, lower, self.prime)
@@ -195,6 +195,41 @@ def lagrange_branch(branch: str, degree: int, prime: int, atoms: CarryFreeAtoms)
     return values
 
 
+def integrated_branch(branch: str, degree: int, prime: int, atoms: CarryFreeAtoms) -> list[int]:
+    """Use integration by parts to cancel the derivative and sigma denominator."""
+
+    choose = atoms.choose
+    franel = [
+        sum(pow(choose(Q(index), lower), 3, prime) for lower in range(index + 1))
+        % prime
+        for index in range(degree + 1)
+    ]
+
+    def kernel(index: int, alpha: Q, power_index: int) -> int:
+        if power_index < 0:
+            return 0
+        return sum(
+            choose(alpha, numerator_index)
+            * choose(Q(index + power_index - numerator_index), power_index - numerator_index)
+            * pow(8, power_index - numerator_index, prime)
+            for numerator_index in range(power_index + 1)
+        ) % prime
+
+    values = []
+    for index in range(degree + 1):
+        value = 0
+        alpha = Q(index) + (Q(1, 2) if branch == "sigma" else Q(-1, 2))
+        for franel_index in range(index + 1):
+            remainder = index - franel_index
+            contribution = kernel(index, alpha, remainder)
+            if branch == "tau":
+                contribution -= 16 * kernel(index, alpha, remainder - 1)
+                contribution -= 8 * kernel(index, alpha, remainder - 2)
+            value += franel[franel_index] * contribution
+        values.append(value % prime)
+    return values
+
+
 def apery_mod(index: int, prime: int) -> int:
     return sum(
         comb(index, lower) ** 2 * comb(index + lower, lower) ** 2
@@ -210,6 +245,15 @@ def convolution(values: list[int], index: int, prime: int) -> int:
     ) % prime
 
 
+def expanded_lagrange_terms(branch: str, index: int) -> int:
+    """Count monomials in the integration-by-parts formula before collection."""
+
+    tetrahedral = lambda argument: comb(argument + 3, 3) if argument >= 0 else 0
+    if branch == "sigma":
+        return tetrahedral(index)
+    return tetrahedral(index) + tetrahedral(index - 1) + tetrahedral(index - 2)
+
+
 def check_prime(prime: int) -> None:
     character = legendre(-6, prime)
     branch = "tau" if character == 1 else "sigma"
@@ -219,6 +263,8 @@ def check_prime(prime: int) -> None:
     direct = direct_branch(branch, degree, prime)
     reconstructed = lagrange_branch(branch, degree, prime, atoms)
     assert reconstructed == direct
+    integrated = integrated_branch(branch, degree, prime, atoms)
+    assert integrated == reconstructed
 
     branch_square = [convolution(reconstructed, index, prime) for index in range(prime)]
     recovered_apery = []
@@ -239,6 +285,10 @@ def check_prime(prime: int) -> None:
     )
     print(f"  branch residues: {reconstructed}")
     print(f"  distinct carry-free Gamma/Jacobi atoms checked: {len(atoms.checked)}")
+    print(
+        "  fully expanded top-coefficient Jacobi monomials: "
+        f"{expanded_lagrange_terms(branch, degree)}"
+    )
 
 
 def main() -> None:
