@@ -315,3 +315,13 @@ N³ 因子 = 全部刚性机制。端点数据仅需 b_p ≡ 5 mod p³（Coster�
 
 **K.3 GK 卷积公式独立确认（Q6356 + 我方独立实现验证 p=13,17 全中）**：
 b_r ≡ −(1/N)·Σ_{t=0}^{N−1} J(φψ^{t+r}, ψ^{N/2−t})²·J(φψ^{t−r}, ψ^{N/2−t})² (mod 𝔭_ψ)，N=p−1，φ=二次字符（Greene 规范；端点 r∈{0,N} 需 −13 修正；亦有 4F3^G 形式 b_r ≡ −p³·₄F₃(A_r,A_r,A_r⁻¹,A_r⁻¹;ε,ε,ε|1) 与 Γ_p 形式）。与 life 侧 codex-high 公式构成双源互验（待 life 对表）。注意此路线项数 O(p)（[GAP-BGK] 所指），而 K.2 的 Franel-Mellin 对是有界复杂度替身——两种坐标并存，各有用途：卷积式适合 Γ_p/Stickelberger 逐点分析（qC），Mellin 对适合单值性/FFK（q15/codex-fm）。全文 /tmp/gpt/cron/Q6356.md 已归档 chatgpt-answers/。
+
+---
+
+## 附录 L（Q6324 收获）：迹公式判决——四条 motivic 射线 + 两处概念勘误
+
+1. **全序列无固定 CM 迹公式**（文献评估非 no-go）；Faber/Hecke 有限递归存在但耦合全部低阶项（无 apparition），Poincaré 展开解析无穷、mod-p 不透明。
+2. **四条 motivic 射线**（LTYZ 刚性 CY 超同余 + 完成引理，m=2,3,4,6）：b_{⌊p/m⌋} ≡ a_p(f_N) mod p（权 4 刚性 CY newform）；p | b_{⌊p/m⌋} ⟺ f_N 在 p **非常规**（nonordinary，非"supersingular/零系数"）。与附录 E 的 b-层无类确定性消失一致（非常规素数 Lang–Trotter 稀疏）。
+3. **勘误 [F]**：中点同余的形式是 level-8 η(2τ)⁴η(4τ)⁴——属于特殊指标化简产生的**辅助 order-4 超几何母题**（刚性 CY 三维簇），不是 level-6 K3 在 CM 点的值。此前"midpoint = level-6 motivic"表述需修正。
+4. **概念精化**：任意固定有理比例都在素数级数上冻结为固定超几何数据；分母 2,3,4,6 特殊在 2cos(2πa/m) ∈ ℚ（有理 descent）+ 刚性 + 模性；其余分母给分圆域上的 Galois packet。真障碍链 = descent → rank-2 刚性 → 模性 → 精确非常规控制。无限制 r 才是真"vertical Mellin 区"。
+5. 文献锚：Long–Tu–Yui–Zudilin Adv.Math.393(2021); Beukers–Cohen–Mellit; Beukers–Tsai–Ye 2025; Fréchette–Ono–Papanikolas; Hoffman–Li–Long–Tu 2024; Grove 2026。
