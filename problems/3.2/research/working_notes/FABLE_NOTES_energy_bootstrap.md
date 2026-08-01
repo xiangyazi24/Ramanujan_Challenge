@@ -2080,3 +2080,21 @@ double-certified.
   fixed-L 滑块 Weil 不覆盖的二参数二阶矩; 结构充分版 Q2BF(带前缀
   权的对角线大筛)可移植退火 Chen–Stein。与 cron qN 三路对表。
 - qFS4 引用全真(nv_theorem.tex/proof.tex/Q646x 全在)。
+
+## §104 (08-02 01:00) GPRV 双向会师 + θ=0 经验定格 — 战役二/final strike 闭卷
+
+- cron qO/Q6516 (附录 AN): **四条 max-Weyl 路线独立审计全部落回 GPRV**
+  (变系数 cocycle 缺固定 conductor sheaf realization[定名]/digit 自动机
+  状态随 p 增长/低次曲线被仿射零超额反证/vdC 二阶差分恰落回)——与
+  qFS4 独立收敛同靶, 双向验证 GPRV 是真靶心非视角假象。
+- **GPRV 经验定格**: G/p = 1.069/1.087/1.093/1.082 @ p=3k..100k——
+  **θ=0, C≈1.08, 33× 无漂移**。E1 链条经验全封顶。
+- Fourier 字典成文: E^π=(1/p)Σ_方向Σ_s|T(su,sv)|²(每方向局部二阶矩)。
+- **盲点收录(总攻文档)**: n-参数化可能是错的坐标——真对象或为
+  F-crystal 族的有限域点(cron qM 在飞)。与 Q6452 Package A(BV crystal)
+  与 Q6506 'Frobenius-半线性伴随描述' [OPEN] 项共振——三处独立指向
+  crystal 坐标系。
+- **战役状态闭卷**: 唯一数学缺口 = 证 GPRV(任何 θ<1 即超 [THM-ENERGY-
+  3/2])。攻击资产: 三+四条路线(qN 结式塔/Stepanov/短区间Weyl + qO
+  审计判死三条留 vdC 变体)、Q2BF 结构版、全套代数引擎、crystal 坐标
+  候选。战役三=GPRV 单点总攻, 双 session 合卷立项。
