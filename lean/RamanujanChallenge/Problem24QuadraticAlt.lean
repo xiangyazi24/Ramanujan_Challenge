@@ -1215,6 +1215,7 @@ theorem quadAltM_hasSum_neg {y : ℝ} (hy0 : -1 < y) (hy1 : y < 0) :
             rw [Real.volume_Ioc]
             simp [ENNReal.toReal_ofReal, hy1.le]
           rw [hvol]
+          simp only [smul_eq_mul]
           ring
         _ ≤ 9 * (harmonicNumber (k + 1) : ℝ) * |y| ^ k := by
           -- −y ≤ 1（y > −1）
