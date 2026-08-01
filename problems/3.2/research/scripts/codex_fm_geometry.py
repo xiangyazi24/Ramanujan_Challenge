@@ -108,6 +108,61 @@ def check_cfvz_rational_pullback() -> None:
     )
 
 
+def check_explicit_elliptic_family() -> None:
+    """Check the Weierstrass Franel family and its Hasse congruence.
+
+    The family is E_u: y^2 + (1-2u)xy + u^2 y = x^3.  It is the
+    Tate-normal-form family with parameter z=27u^2/(1-2u)^3 after scaling.
+    Unlike that rational presentation, this model remains valid at u=1/2.
+    """
+    u, v = sp.symbols("u v")
+    a1 = 1 - 2 * u
+    a3 = u**2
+    b2 = a1**2
+    b4 = a1 * a3
+    b6 = a3**2
+    c4 = sp.expand(b2**2 - 24 * b4)
+    discriminant = sp.factor(-8 * b4**3 - 27 * b6**2 + 9 * b2 * b4 * b6)
+    assert discriminant == u**6 * (u + 1) ** 2 * (1 - 8 * u)
+    assert c4.subs(u, 0) != 0
+    assert c4.subs(u, -1) != 0
+    assert c4.subs(u, sp.Rational(1, 8)) != 0
+
+    # For x=v^-2 X and y=v^-3 Y at infinity, Delta and c4 acquire
+    # factors v^12 and v^4.  Their orders are 3 and 0, respectively.
+    delta_at_infinity = sp.factor(v**12 * discriminant.subs(u, 1 / v))
+    c4_at_infinity = sp.factor(v**4 * c4.subs(u, 1 / v))
+    assert sp.limit(delta_at_infinity / v**3, v, 0) != 0
+    assert sp.limit(c4_at_infinity, v, 0) != 0
+    print("VERIFIED Delta(E_u)=u^6(1+u)^2(1-8u) and fiber types I6,I2,I1,I3")
+
+    checked = 0
+    for prime in primes_up_to(101):
+        if prime < 5:
+            continue
+        hp = [franel(n) % prime for n in range(prime)]
+        singular = {0, prime - 1, pow(8, -1, prime)}
+        for parameter in range(prime):
+            if parameter in singular:
+                continue
+            local_a1 = (1 - 2 * parameter) % prime
+            local_a3 = parameter * parameter % prime
+            points = 1  # the section at infinity
+            for x_value in range(prime):
+                linear_y = (local_a1 * x_value + local_a3) % prime
+                quadratic_discriminant = (
+                    linear_y * linear_y + 4 * x_value**3
+                ) % prime
+                points += 1 + legendre(quadratic_discriminant, prime)
+            frobenius_trace = prime + 1 - points
+            assert frobenius_trace % prime == evaluate(hp, parameter, prime)
+            checked += 1
+    print(
+        "VERIFIED a_p(E_u)=H_p(u) mod p at every smooth u over all primes "
+        f"5<=p<=101 ({checked} fibers, including u=1/2)"
+    )
+
+
 def check_lucas_dwork() -> None:
     for prime in [5, 7, 11, 13, 17, 19, 29, 37]:
         coefficients = [franel(n) % prime for n in range(4 * prime)]
@@ -186,6 +241,7 @@ def main() -> None:
     check_apery_laurent_model()
     check_cover_discriminant()
     check_cfvz_rational_pullback()
+    check_explicit_elliptic_family()
     check_lucas_dwork()
     check_toric_hasse_point_count()
     check_pushforward_and_mellin()

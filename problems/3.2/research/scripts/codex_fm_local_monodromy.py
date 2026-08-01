@@ -174,15 +174,23 @@ def check_local_exponents_and_conductors() -> None:
 
     # cond = rank + sum_x(drop_x + Swan_x); all displayed monodromy is tame.
     pushforward_conductor = 6 + 4 + 4 + 3 + 3
+    tensor_square_pushforward_conductor = 8 + 4 + 4 + 4 + 4
     twisted_companion_conductor = 3 + 2 + 2 + 2 + 2
+    untwisted_apery_conductor = 3 + 2 + 1 + 1 + 2
     assert pushforward_conductor == 20
+    assert tensor_square_pushforward_conductor == 24
     assert twisted_companion_conductor == 11
+    assert untwisted_apery_conductor == 9
+    assert pushforward_conductor + twisted_companion_conductor == 31
+    assert tensor_square_pushforward_conductor + twisted_companion_conductor == 35
 
     print("VERIFIED Franel exponents: 0:(0,0), -1:(0,0), 1/8:(0,0), infinity:(1,1)")
     print("VERIFIED S_+ exponents: 0:(0,0), q-roots:(0,1/2), infinity:(1/2,1/2)")
     print("VERIFIED S_- exponents: 0:(0,0), q-roots:(0,-1/2), infinity:(3/2,3/2)")
     print("VERIFIED repeated exponents have logarithmic second solutions and nontrivial unipotent blocks")
     print("VERIFIED tame conductor bookkeeping: cond(phi_* Sym^2 F)=20, cond(K tensor L_chi(q))=11")
+    print("VERIFIED exact tensor-square bookkeeping: cond(phi_*(F tensor F))=24 and total C=35")
+    print("VERIFIED reduced virtual object has C=31 and surviving Apery object has conductor 9")
     print("VERIFIED local eigenvalue test at t=0 forces every Kummer self-twist scalar to be 1")
     print("VERIFIED ranks 6 and 3 rule out a mutual Kummer twist of the two displayed sheaves")
 

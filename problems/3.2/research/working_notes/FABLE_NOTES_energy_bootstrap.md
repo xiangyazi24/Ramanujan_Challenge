@@ -1101,3 +1101,17 @@ double-certified.
   caveat——等式是 mod 𝔭 归约、非复数等式, 即仍是 [GAP-1] 晶体比较。qF2(Q6394)
   返回后与此构造对表。
 - codex-fm high 退场(两 commit 全收割); fm-max 仍在磨任务 2-3。
+
+## §50 (08-01) Q6380: Franel = Beauville-IV 椭圆 pencil — 提升拼图落位
+
+- (cron 派) 一手文献审计定案: Franel 家族 = 平面三次 pencil = Beauville IV
+  (Γ₁(6)); **H_p = 椭圆 Hasse–Witt 标量**(residue-form 平凡化); H_p² = Sym²
+  椭圆变分顶 Hodge 线上的 Hasse 标量。正典 ℓ-adic 系统存在: a_{p,x}²
+  (椭圆迹平方) ≡ H_p(x)² mod p——**第一 summand 的 [GAP-1] 提升候选落位**。
+- 审计明确不证: Apéry 整体系统 = Sym²(Franel 椭圆) 的整/ℓ-adic 同构;
+  K3 Hasse 不变量字面等于裸 H_p²; gauge (1+x)^{p−1} 全局有意义(F_p 点上=1)。
+- 后果: b_r ≡ [真 ℓ-adic Mellin 值 M(r) 的 mod 𝔭 归约] − T(r) (T 亦有 𝒢_T
+  cond=11 实现, §49)。[GAP-DCM] 改写为 Lang–Trotter 型: #{r: 𝔭 | M(r)},
+  M(r) ∈ Z[ζ_{p−1}] 纯权重对象。type-mismatch 障碍对椭圆平方部分实质消解
+  (残余=账面比较+权重/gauge 簿记)。
+- 新一问 qI 派出: Lang–Trotter for Mellin values(见下)。
