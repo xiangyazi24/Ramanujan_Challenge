@@ -1,0 +1,27 @@
+[ask-gpt] context affinity: keeping follow-up on life8
+[ask-gpt] → life8 (window: life)
+[ask-gpt] github repo: xiangyazi24/Ramanujan_Challenge@chatgpt-drop (from config rule)
+[ask-gpt] delivery: GITHUB → xiangyazi24/Ramanujan_Challenge | rotation batch=7
+═══ BRIDGE Q6579 →life8 SUBMITTED via GITHUB (fallback: NOTION → DOM) | "CONTEXT (Apery mod-p collision project; everything below is machine-ve…" | task 8fc8f5f3 ═══
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +0s] dispatched, polling ALL channels (GITHUB primary)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +0s] SATURATION: ⚠️ 空闲 tab: life1, life2, life3, life5, life7 → 立刻补高价值问题填满（除非 ChatGPT 坏了）
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +21s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +42s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +63s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +86s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +107s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +128s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +149s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +170s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +191s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +213s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +234s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +255s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +277s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +298s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +320s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +341s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +362s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +383s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +405s] waiting (status=processing +GITHUB)
+[ask-gpt Q6579 life8 tid=8fc8f5f3 +426s] waiting (status=processing +GITHUB)
