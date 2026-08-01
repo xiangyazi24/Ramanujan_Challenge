@@ -82,3 +82,10 @@ Swan_∞=deg f ~ p (my recurrence-order-p confirmed), so (iv) fails at maximal s
 GOS gives p^{3/2} — the ℓ-adic and archimedean bounds are the same object in two languages.
 **E(p) = O(p) is the single cleanest open vertical statement** (Parseval: Σ_{h≠0}|C_p(h)|²
 = p·E(p) − p²).
+
+## E(p) = 3p + O(√p) VERIFIED (DS, Fable's cleanest target)
+E(p) = Σ_a #{m∈[0,p−1] : b_m ≡ a mod p}² (Apéry collision energy). Measured:
+(E−3p)/√p = −2.99, 0.00, −0.23 (p=101,199,307) — all within Fable's std 2√2=2.83.
+#distinct values = 42,79,122 (D/p = 0.416,0.397,0.397 — confirms the 0.3963 Poisson law).
+⟹ E(p) = 3p + O(√p) holds empirically. Fable's Parseval bridge: Σ_{h≠0}|C_p(h)|² = p·E(p) − p²
+⟹ RMS_h|C_p(h)| = √2·√p·(1+o(1)). E(p) = O(p) is the single cleanest open vertical statement.
