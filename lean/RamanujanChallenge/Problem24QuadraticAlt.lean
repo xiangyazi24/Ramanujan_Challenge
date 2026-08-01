@@ -38,6 +38,7 @@
 import RamanujanChallenge.Problem24
 import RamanujanChallenge.Problem24Euler
 import RamanujanChallenge.Dilogarithm
+import RamanujanChallenge.Problem26WeightThree
 
 noncomputable section
 
@@ -273,10 +274,18 @@ theorem quadAltMclosed_hasDerivAt {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
     · norm_num]
   ring_nf
 
-/-! ## Layer D: integration-by-parts objects (Q6047 §4-5)
+/-! ## Layer D: integration by parts + Möbius normalization (Q6047 §4-5)
 
 `W(x) = Z2 − 2 Li2(u) − log(u)²` with `u = x/(1+x)` (Landen form, (4.7));
 after the Möbius map `t = 2x/(1+x)` this becomes `W0(t)`. -/
+
+/-- `Dminus(x) = J'(−x)` (Q6047 (4.8)): the derivative of `J` at `−x`,
+with `a = log(1−x)`, `b = log(1+x)`. -/
+def quadAltDminus (x : ℝ) : ℝ :=
+  -(Real.log (1 + x) + 2 * Real.log (1 - x)) / (1 + x) +
+    2 * (Real.log (1 - x) + 2 * Real.log (1 + x)) / (1 - x) +
+    2 * (Real.log (1 - x) + Real.log (1 + x)) / x
+
 
 /-- `W0(t) = Z2 − 2 Li2(t/2) − log(t/2)²` (Q6047 (5.2)). -/
 def W0 (t : ℝ) : ℝ :=
@@ -287,6 +296,41 @@ def H1 (t : ℝ) : ℝ := -Real.log (1 - t)
 
 /-- `H2(t) = -log(1-t/2)`. -/
 def H2 (t : ℝ) : ℝ := -Real.log (1 - t / 2)
+
+/-- The Möbius identity (Q6047 (5.4)): `Dminus(t/(2−t))·2/(2−t)²`
+equals the `H1`/`H2` combination. -/
+theorem quadAltMobius_identity {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
+    quadAltDminus (t / (2 - t)) * 2 / (2 - t) ^ 2 =
+      H1 t * (-2 / t - 2 / (1 - t) + 2 / (2 - t)) +
+      H2 t * (4 / t + 6 / (1 - t) - 5 / (2 - t)) := by
+  have h2mt : 2 - t ≠ 0 := by linarith
+  have h1mt : 1 - t ≠ 0 := by linarith
+  have htm1 : t - 1 ≠ 0 := by linarith
+  unfold quadAltDminus H1 H2
+  have h1mx : 1 - t / (2 - t) = 2 * (1 - t) / (2 - t) := by
+    field_simp [h2mt]
+    ring
+  have h1px : 1 + t / (2 - t) = 2 / (2 - t) := by
+    field_simp [h2mt]
+    ring
+  have hlog1mx : Real.log (2 * (1 - t) / (2 - t)) = Real.log 2 + Real.log (1 - t) - Real.log (2 - t) := by
+    have h21 : 2 * (1 - t) ≠ 0 := by
+      exact mul_ne_zero (by norm_num) (ne_of_gt (by linarith : 0 < 1 - t))
+    have hdiv := Real.log_div h21 h2mt
+    have hmul := Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) h1mt
+    rw [hdiv, hmul]
+  have hlog1px : Real.log (2 / (2 - t)) = Real.log 2 - Real.log (2 - t) := by
+    have hdiv := Real.log_div (by norm_num : (2 : ℝ) ≠ 0) h2mt
+    rw [hdiv]
+  have hlog2mt : Real.log (2 - t) = Real.log 2 + Real.log (1 - t / 2) := by
+    have hdiv' : 2 - t = 2 * (1 - t / 2) := by ring
+    rw [hdiv']
+    rw [Real.log_mul]
+    · norm_num
+    · exact ne_of_gt (by linarith : 0 < 1 - t / 2)
+  rw [h1mx, h1px, hlog1mx, hlog1px, hlog2mt]
+  field_simp [h2mt, h1mt, ne_of_gt ht0, htm1]
+  ring
 
 /-- `I10 = ∫₀¹ W0(t)·H1(t)/t dt`. -/
 def I10 : ℝ := ∫ t in (0 : ℝ)..1, W0 t * H1 t / t
@@ -1378,7 +1422,6 @@ theorem quadAltIncrement_hasSum {y : ℝ} (hy : |y| < 1) (hyne : y ≠ 0) :
     (g := 2 * quadAltJclosed y / y) (1 : ℕ)).mp ?_
   simpa [h0] using hshift
 
-
 /-- `S`-series: `Σ_{n≥0} S_{n+1} y^n = Qclosed(y)/y` (Q6047 (2.10), Cauchy product
 of the increment series with the geometric series). -/
 theorem quadAltS_generating_hasSum {y : ℝ} (hy : |y| < 1) (hyne : y ≠ 0) :
@@ -1591,6 +1634,7 @@ theorem quadAlt_tsum_eq_coeff_integral :
 
 /-! ## Layer D bricks grafted from the sandbox agent (verified numerically) -/
 
+/-- `W0'(t) = −2·log(t/(2−t))/t` for `0 < t < 1` (Q6047 (5.3)). -/
 theorem quadAltW0_hasDerivAt {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
     HasDerivAt W0 (-2 * Real.log (t / (2 - t)) / t) t := by
   have hdlog : HasDerivAt (fun s : ℝ => dilog (s / 2)) (-Real.log (1 - t / 2) / (t / 2) * (1 / 2)) t := by
@@ -1721,49 +1765,439 @@ theorem quadAltV_hasDerivAt {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
   field_simp [hxne, ne_of_gt h1px]
   ring
 
-/-! ## Möbius bridge recovered from sandbox commit b766f72 (agent deleted it in 093d60c) -/
 
-def quadAltDminus (x : ℝ) : ℝ :=
-  -(Real.log (1 + x) + 2 * Real.log (1 - x)) / (1 + x) +
-    2 * (Real.log (1 - x) + 2 * Real.log (1 + x)) / (1 - x) +
-    2 * (Real.log (1 - x) + Real.log (1 + x)) / x
+/-- `d/dx J(−x) = −Dminus(x)` for `0 < x < 1` (Q6047 (4.8); note the
+chain-rule sign: `J'(−x) = Dminus`, so `(J∘neg)'(x) = −Dminus`). -/
+theorem quadAltJclosed_neg_hasDerivAt {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt (fun y : ℝ => quadAltJclosed (-y)) (-quadAltDminus x) x := by
+  have hM := quadAltMclosed_hasDerivAt' (x := -x) (by simpa [abs_neg, abs_of_pos hx0] using hx1)
+  -- hM : HasDerivAt (fun y => Mclosed y) (F(-x) − 2F(x)) (−x)
+  have hMneg : HasDerivAt (fun y : ℝ => quadAltMclosed (-y))
+      (-(quadAltFclosed (-x) - 2 * quadAltFclosed x)) x := by
+    have hneg : HasDerivAt (fun y : ℝ => -y) (-1) x := by
+      simpa using (hasDerivAt_id x).neg
+    have hcomp := HasDerivAt.comp (h := fun y : ℝ => -y) x hM hneg
+    convert hcomp using 1
+    ring
+  have ht2 : x ^ 2 < 1 := (sq_lt_one_iff_abs_lt_one x).mpr (by rw [abs_of_pos hx0]; exact hx1)
+  have hd : HasDerivAt (fun y : ℝ => dilog (y ^ 2)) (-2 * Real.log (1 - x ^ 2) / x) x := by
+    have hd2 := dilog_hasDerivAt (by positivity : 0 < x ^ 2) ht2
+    have hpow2 : HasDerivAt (fun y : ℝ => y ^ 2) (2 * x) x := by
+      simpa using (hasDerivAt_id x).pow 2
+    have hcomp := HasDerivAt.comp (h := fun y : ℝ => y ^ 2) x hd2 hpow2
+    convert hcomp using 1
+    field_simp
+  have hJ : HasDerivAt (fun y : ℝ => quadAltJclosed (-y))
+      (-(quadAltFclosed (-x) - 2 * quadAltFclosed x) + -2 * Real.log (1 - x ^ 2) / x) x := by
+    unfold quadAltJclosed
+    convert (hMneg.add hd) using 1
+    · funext y
+      simp
+  have hD' : -(quadAltFclosed (-x) - 2 * quadAltFclosed x) + -2 * Real.log (1 - x ^ 2) / x
+      = -quadAltDminus x := by
+    unfold quadAltDminus quadAltFclosed
+    have hlog : Real.log (1 - x ^ 2) = Real.log (1 - x) + Real.log (1 + x) := by
+      have hfac : 1 - x ^ 2 = (1 - x) * (1 + x) := by ring
+      rw [hfac]
+      rw [Real.log_mul]
+      · exact ne_of_gt (by linarith : 0 < 1 - x)
+      · exact ne_of_gt (by positivity : 0 < 1 + x)
+    rw [hlog]
+    rw [show 1 + -x = 1 - x by ring]
+    simp [sub_neg_eq_add]
+    rw [div_eq_mul_inv]
+    ring
+  exact hJ.congr_deriv hD'
 
-/-- The Möbius identity (Q6047 (5.4)): `Dminus(t/(2−t))·2/(2−t)²`
-equals the `H1`/`H2` combination.  Pure algebra once the logarithms are
-expanded; used to transport the coefficient integral to the six `I_ab`. -/
-theorem quadAltMobius_identity {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
-    quadAltDminus (t / (2 - t)) * 2 / (2 - t) ^ 2 =
-      H1 t * (-2 / t - 2 / (1 - t) + 2 / (2 - t)) +
-      H2 t * (4 / t + 6 / (1 - t) - 5 / (2 - t)) := by
-  have h2mt : 2 - t ≠ 0 := by linarith
-  have h1mt : 1 - t ≠ 0 := by linarith
-  have htm1 : t - 1 ≠ 0 := by linarith
-  unfold quadAltDminus H1 H2
-  -- x = t/(2−t)；1−x = 2(1−t)/(2−t)；1+x = 2/(2−t)
-  have h1mx : 1 - t / (2 - t) = 2 * (1 - t) / (2 - t) := by
-    field_simp [h2mt]
+
+/-- Pointwise bridge for (4.9): `(−log x)/x·Q(−x) = −2·V'(x)·J(−x)`
+(`Q(−x) = 2J(−x)/(1+x)` and `V' = log x/(x(1+x))`). -/
+theorem quadAltCoeffKernel_eq_VJ {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    (-Real.log x) / x * quadAltQclosed (-x) =
+      -2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x) := by
+  unfold quadAltQclosed
+  field_simp [ne_of_gt hx0, ne_of_gt (by positivity : 0 < 1 + x)]
+  ring
+
+
+/-- Integration by parts (Q6047 (4.9)): with `F = −2V·J(−x)`, `F(1)=F(0)=0`
+(`V(1)=0`, `J(0)=0`), so `∫₀¹ (−log x)/x·Q(−x) = ∫₀¹ (−2V(x))·Dminus(x)`. -/
+theorem quadAltCoeffIntegral_eq_neg2V_Dminus :
+    (∫ x : ℝ in (0 : ℝ)..1, (-Real.log x) / x * quadAltQclosed (-x)) =
+      ∫ x : ℝ in (0 : ℝ)..1, -2 * quadAltV x * quadAltDminus x := by
+  -- 1. kernel = −2·V'·J(−x)（逐点）
+  have hkernel : (∫ x : ℝ in (0 : ℝ)..1, (-Real.log x) / x * quadAltQclosed (-x))
+      = ∫ x : ℝ in (0 : ℝ)..1, -2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x) := by
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)] with x hxne hx
+    have hx0 : 0 < x := by simpa using hx.1
+    have hx1 : x < 1 := lt_of_le_of_ne (by simpa using hx.2) hxne
+    exact quadAltCoeffKernel_eq_VJ hx0 hx1
+  -- 2. 分部积分
+  let F : ℝ → ℝ := fun x => -2 * quadAltV x * quadAltJclosed (-x)
+  have hFderiv : ∀ x ∈ Set.Ioo (0 : ℝ) 1, HasDerivAt F
+      (-2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x) +
+        (-2 * quadAltV x) * (-quadAltDminus x)) x := by
+    intro x hx
+    have hx1 : x < 1 := hx.2
+    have hV' : HasDerivAt (fun y : ℝ => -2 * quadAltV y)
+        (-2 * (Real.log x / (x * (1 + x)))) x := by
+      convert (quadAltV_hasDerivAt hx.1 hx1).const_mul (-2) using 1
+    have hJ : HasDerivAt (fun y : ℝ => quadAltJclosed (-y)) (-quadAltDminus x) x :=
+      quadAltJclosed_neg_hasDerivAt hx.1 hx1
+    have hprod := hV'.mul hJ
+    unfold F
+    convert hprod using 1
+  have hFcont : ContinuousOn F (Set.Icc (0 : ℝ) 1) := by
+    sorry  -- TODO-stub: continuity of F (V and J∘neg continuous on [0,1])
+  have hFint : IntervalIntegrable
+      (fun x : ℝ => -2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x) +
+        (-2 * quadAltV x) * (-quadAltDminus x)) MeasureTheory.volume 0 1 := by
+    sorry  -- TODO-stub: integrability of F' on [0,1]
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+    (a := 0) (b := 1) (f := F)
+    (f' := fun x : ℝ => -2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x) +
+      (-2 * quadAltV x) * (-quadAltDminus x))
+    (by norm_num) hFcont hFderiv hFint
+  have hF1 : F 1 = 0 := by
+    unfold F
+    rw [quadAltV_one]
     ring
-  have h1px : 1 + t / (2 - t) = 2 / (2 - t) := by
-    field_simp [h2mt]
+  have hJ0 : quadAltJclosed 0 = 0 := by
+    unfold quadAltJclosed
+    rw [quadAltMclosed_zero]
+    simp [dilog_zero]
+  have hF0 : F 0 = 0 := by
+    unfold F
+    rw [neg_zero]
+    rw [hJ0]
     ring
-  -- 展开 log(1−x)、log(1+x) 的对数组合
-  have hlog1mx : Real.log (2 * (1 - t) / (2 - t)) = Real.log 2 + Real.log (1 - t) - Real.log (2 - t) := by
-    have h21 : 2 * (1 - t) ≠ 0 := by
-      exact mul_ne_zero (by norm_num) (ne_of_gt (by linarith : 0 < 1 - t))
-    have hdiv := Real.log_div h21 h2mt
-    have hmul := Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) h1mt
-    rw [hdiv, hmul]
-  have hlog1px : Real.log (2 / (2 - t)) = Real.log 2 - Real.log (2 - t) := by
-    have hdiv := Real.log_div (by norm_num : (2 : ℝ) ≠ 0) h2mt
-    rw [hdiv]
-  have hlog2mt : Real.log (2 - t) = Real.log 2 + Real.log (1 - t / 2) := by
-    have hdiv' : 2 - t = 2 * (1 - t / 2) := by ring
-    rw [hdiv']
-    rw [Real.log_mul]
+  rw [hF1, hF0] at hFTC
+  -- ∫₀¹ F' = 0 → ∫₀¹ (−2V')·J(−x) = −∫₀¹ (−2V)·(−Dminus) = ∫₀¹ (−2V)·Dminus
+  have hFTC' : (∫ x : ℝ in (0 : ℝ)..1,
+      -2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x)) =
+      -∫ x : ℝ in (0 : ℝ)..1, (-2 * quadAltV x) * (-quadAltDminus x) := by
+    have hsplit : (∫ x in (0 : ℝ)..1, -2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x) +
+          (-2 * quadAltV x) * (-quadAltDminus x)) = 0 := by
+      convert hFTC using 1
+      norm_num
+    have hA_int : IntervalIntegrable
+        (fun x : ℝ => -2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x))
+        MeasureTheory.volume 0 1 := by
+      sorry  -- TODO-stub: continuity of A on (0,1] + endpoint behaviour
+    have hB_int : IntervalIntegrable
+        (fun x : ℝ => (-2 * quadAltV x) * (-quadAltDminus x)) MeasureTheory.volume 0 1 := by
+      sorry  -- TODO-stub
+    have hsum := intervalIntegral.integral_add (μ := MeasureTheory.volume)
+      (a := (0 : ℝ)) (b := 1)
+      (f := fun x : ℝ => -2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x))
+      (g := fun x : ℝ => (-2 * quadAltV x) * (-quadAltDminus x))
+      (hf := hA_int) (hg := hB_int)
+    rw [hsum] at hsplit
+    linarith
+  have hval : -∫ x : ℝ in (0 : ℝ)..1, (-2 * quadAltV x) * (-quadAltDminus x)
+      = ∫ x : ℝ in (0 : ℝ)..1, -2 * quadAltV x * quadAltDminus x := by
+    rw [← intervalIntegral.integral_neg]
+    congr 1
+    funext x
+    ring
+  calc
+    (∫ x : ℝ in (0 : ℝ)..1, (-Real.log x) / x * quadAltQclosed (-x))
+        = ∫ x : ℝ in (0 : ℝ)..1, -2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x) := hkernel
+    _ = ∫ x : ℝ in (0 : ℝ)..1, -2 * quadAltV x * quadAltDminus x := by
+          rw [hFTC', hval]
+
+
+/-- Landen identity (Q6047 (4.5)): `Li2(−x) = −Li2(x/(1+x)) − log(1+x)²/2`
+for `0 < x < 1`. Proved via `g' = 0` on `(0,1)` and `g(0) = 0`. -/
+theorem quadAlt_dilog_landen {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    dilog (-x) = -dilog (x / (1 + x)) - Real.log (1 + x) ^ 2 / 2 := by
+  -- 不必自造：Problem26WeightThree.dilog_landen_half26 就是这条, 代 x/(1+x)
+  have h1px : (0:ℝ) < 1 + x := by linarith
+  have hu0 : 0 < x / (1 + x) := by positivity
+  have huhalf : x / (1 + x) ≤ 1 / 2 := by
+    rw [div_le_iff₀ h1px]; linarith
+  have h1u : 1 - x / (1 + x) = 1 / (1 + x) := by
+    field_simp
+    ring
+  have hkey := RamanujanChallenge.P26.dilog_landen_half26 hu0 huhalf
+  rw [h1u] at hkey
+  have harg : -(x / (1 + x)) / (1 / (1 + x)) = -x := by field_simp
+  rw [harg] at hkey
+  have hlog : Real.log (1 / (1 + x)) = -Real.log (1 + x) := by
+    rw [one_div, Real.log_inv]
+  rw [hlog] at hkey
+  rw [hkey]; ring
+
+/-- Bridge `−2V(x) = W0(2x/(1+x))` for `0 < x < 1` (Q6047 (4.6)-(4.7)+(5.2)):
+the Landen form `W` becomes `W0` under `t = 2x/(1+x)` (`u = t/2`). -/
+theorem quadAlt_neg2V_eq_W0 {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    -2 * quadAltV x = W0 (2 * x / (1 + x)) := by
+  unfold quadAltV W0
+  have hd := quadAlt_dilog_landen hx0 hx1
+  rw [hd]
+  have hlog : Real.log (2 * x / (1 + x) / 2) = Real.log (x / (1 + x)) := by
+    congr 1
+    ring
+  rw [hlog]
+  have hxlog : Real.log (x / (1 + x)) = Real.log x - Real.log (1 + x) := by
+    rw [Real.log_div (ne_of_gt hx0) (by positivity : (1 + x) ≠ 0)]
+  rw [hxlog]
+  ring
+
+
+/-- Möbius substitution (Q6047 (5.1)+(5.4)): `x = t/(2−t)` turns
+`∫₀¹ −2V(x)·Dminus(x) dx` into the `W0·(H1/H2)` combination. -/
+theorem quadAltMobiusSubst :
+    (∫ x : ℝ in (0 : ℝ)..1, -2 * quadAltV x * quadAltDminus x) =
+      ∫ t : ℝ in (0 : ℝ)..1,
+        W0 t * (H1 t * (-2 / t - 2 / (1 - t) + 2 / (2 - t)) +
+                H2 t * (4 / t + 6 / (1 - t) - 5 / (2 - t))) := by
+  let f : ℝ → ℝ := fun t => t / (2 - t)
+  let f' : ℝ → ℝ := fun t => 2 / (2 - t) ^ 2
+  let g : ℝ → ℝ := fun x => -2 * quadAltV x * quadAltDminus x
+  have hf : ContinuousOn f (Set.uIcc (0 : ℝ) 1) := by
+    unfold f
+    apply ContinuousOn.div
+    · exact continuousOn_id
+    · exact (continuousOn_const.sub continuousOn_id)
+    · intro t ht
+      have ht1 : t ≤ 1 := by
+        simpa [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using ht.2
+      linarith
+  have hff' : ∀ t ∈ Set.Ioo (0 : ℝ) 1, HasDerivAt f (f' t) t := by
+    intro t ht
+    have hden : HasDerivAt (fun u : ℝ => 2 - u) (-1) t := by
+      simpa using (hasDerivAt_const t (2 : ℝ)).sub (hasDerivAt_id t)
+    have h2mt : 2 - t ≠ 0 := by linarith [ht.2]
+    have hinv : HasDerivAt (fun u : ℝ => (2 - u)⁻¹) (1 / (2 - t) ^ 2) t := by
+      have hc := (hasDerivAt_inv (x := 2 - t) h2mt).comp t hden
+      convert hc using 1
+      field_simp [h2mt]
+    have hm : HasDerivAt (fun u : ℝ => u * (2 - u)⁻¹)
+        (1 * (2 - t)⁻¹ + t * (1 / (2 - t) ^ 2)) t :=
+      (hasDerivAt_id t).mul hinv
+    unfold f f'
+    have hval : 2 / (2 - t) ^ 2 = 1 * (2 - t)⁻¹ + t * (1 / (2 - t) ^ 2) := by
+      field_simp [h2mt]
+      ring
+    rw [hval]
+    simpa [div_eq_mul_inv] using hm
+  have hf' : ∀ t ∈ Set.Ioo (0 : ℝ) 1, 0 ≤ f' t := by
+    intro t ht
+    unfold f'
+    positivity
+  have hsubst := intervalIntegral.integral_comp_mul_deriv_of_deriv_nonneg
+    (a := (0 : ℝ)) (b := 1) (f := f) (f' := f') (g := g) hf (by simpa using hff') (by simpa using hf')
+  have hf01 : f 0 = 0 := by unfold f; ring
+  have hf11 : f 1 = 1 := by unfold f; ring
+  have hsubst' : (∫ x : ℝ in (0 : ℝ)..1, g x) = ∫ t : ℝ in (0 : ℝ)..1, (g ∘ f) t * f' t := by
+    rw [hf01, hf11] at hsubst
+    exact hsubst.symm
+  have hpoint' : ∀ t ∈ Set.Ioc (0 : ℝ) 1, t ≠ 1 →
+      (g ∘ f) t * f' t = W0 t * (H1 t * (-2 / t - 2 / (1 - t) + 2 / (2 - t)) +
+                H2 t * (4 / t + 6 / (1 - t) - 5 / (2 - t))) := by
+    intro t ht htne
+    have ht0 : 0 < t := ht.1
+    have ht1 : t < 1 := lt_of_le_of_ne ht.2 htne
+    have h2mt : 0 < 2 - t := by linarith
+    have hft0 : 0 < t / (2 - t) := by positivity
+    have hft1 : t / (2 - t) < 1 := by
+      rw [div_lt_one h2mt]
+      linarith
+    have hW := quadAlt_neg2V_eq_W0 hft0 hft1
+    have hmob := quadAltMobius_identity ht0 ht1
+    unfold g f f'
+    calc
+      -2 * quadAltV (t / (2 - t)) * quadAltDminus (t / (2 - t)) * (2 / (2 - t) ^ 2)
+          = W0 t * (quadAltDminus (t / (2 - t)) * (2 / (2 - t) ^ 2)) := by
+              have hnorm : 2 * (t / (2 - t)) / (1 + t / (2 - t)) = t := by
+                field_simp [h2mt.ne']
+                ring
+              rw [quadAlt_neg2V_eq_W0 hft0 hft1, hnorm]
+              ring
+      _ = W0 t * (H1 t * (-2 / t - 2 / (1 - t) + 2 / (2 - t)) +
+                  H2 t * (4 / t + 6 / (1 - t) - 5 / (2 - t))) := by
+            simpa [mul_div_assoc] using congrArg (fun z => W0 t * z) hmob
+  have hpoint : (∀ᵐ x ∂MeasureTheory.volume, x ∈ Set.uIoc (0 : ℝ) 1 →
+      (g ∘ f) x * f' x = W0 x * (H1 x * (-2 / x - 2 / (1 - x) + 2 / (2 - x)) +
+                H2 x * (4 / x + 6 / (1 - x) - 5 / (2 - x)))) := by
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)] with t htne ht
+    have htI : t ∈ Set.Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using ht
+    exact hpoint' t htI htne
+  rw [hsubst']
+  apply intervalIntegral.integral_congr_ae
+  exact hpoint
+
+
+/-- Six-integral reduction (Q6047 (5.6)): the `W0·(H1/H2)` integrand splits
+linearly into the six `I` integrals. -/
+theorem quadAltSixIntegralLinear :
+    (∫ t : ℝ in (0 : ℝ)..1, W0 t * (H1 t * (-2 / t - 2 / (1 - t) + 2 / (2 - t)) +
+        H2 t * (4 / t + 6 / (1 - t) - 5 / (2 - t)))) =
+      -2 * I10 - 2 * I11 + 2 * I12 + 4 * I20 + 6 * I21 - 5 * I22 := by
+  -- integrand 逐点展开为线性组合（ring）
+  have hpt : (∫ t : ℝ in (0 : ℝ)..1, W0 t * (H1 t * (-2 / t - 2 / (1 - t) + 2 / (2 - t)) +
+        H2 t * (4 / t + 6 / (1 - t) - 5 / (2 - t)))) =
+      ∫ t : ℝ in (0 : ℝ)..1,
+        (-2 * (W0 t * H1 t / t) - 2 * (W0 t * H1 t / (1 - t)) +
+          2 * (W0 t * H1 t / (2 - t)) + 4 * (W0 t * H2 t / t) +
+          6 * (W0 t * H2 t / (1 - t)) - 5 * (W0 t * H2 t / (2 - t))) := by
+    apply intervalIntegral.integral_congr
+    intro t ht
+    unfold W0 H1 H2
+    ring
+  -- 积分线性拆分（每项可积性 stub）
+  have hint : ∀ k : Fin 6, IntervalIntegrable
+      (fun t : ℝ => match k with
+        | 0 => -2 * (W0 t * H1 t / t)
+        | 1 => -2 * (W0 t * H1 t / (1 - t))
+        | 2 => 2 * (W0 t * H1 t / (2 - t))
+        | 3 => 4 * (W0 t * H2 t / t)
+        | 4 => 6 * (W0 t * H2 t / (1 - t))
+        | _ => -5 * (W0 t * H2 t / (2 - t)))
+      MeasureTheory.volume 0 1 := by
+    intro k
+    sorry  -- TODO-stub: integrability of the six kernels on [0,1]
+  rw [hpt]
+  -- 线性拆分：∫(Σ) = Σ∫（逐步 integral_add/sub/const_mul）
+  have hlin : (∫ t : ℝ in (0 : ℝ)..1,
+        (-2 * (W0 t * H1 t / t) - 2 * (W0 t * H1 t / (1 - t)) +
+          2 * (W0 t * H1 t / (2 - t)) + 4 * (W0 t * H2 t / t) +
+          6 * (W0 t * H2 t / (1 - t)) - 5 * (W0 t * H2 t / (2 - t)))) =
+      (∫ t : ℝ in (0 : ℝ)..1, -2 * (W0 t * H1 t / t)) +
+        (∫ t : ℝ in (0 : ℝ)..1, -2 * (W0 t * H1 t / (1 - t))) +
+        (∫ t : ℝ in (0 : ℝ)..1, 2 * (W0 t * H1 t / (2 - t))) +
+        (∫ t : ℝ in (0 : ℝ)..1, 4 * (W0 t * H2 t / t)) +
+        (∫ t : ℝ in (0 : ℝ)..1, 6 * (W0 t * H2 t / (1 - t))) -
+        (∫ t : ℝ in (0 : ℝ)..1, 5 * (W0 t * H2 t / (2 - t))) := by
+    sorry  -- TODO-stub: linearity of the integral on the six summands
+  rw [hlin]
+  -- 每项 → I（常数提取 + 定义）
+  simp [I10, I11, I12, I20, I21, I22,
+    intervalIntegral.integral_const_mul, intervalIntegral.integral_mul_const]
+  ring
+
+
+/-- Layer D assembled (Q6047 (4.9)+(5.1)+(5.4)+(5.6)):
+`∫₀¹ (−log x)/x·Q(−x) dx = −2I10 − 2I11 + 2I12 + 4I20 + 6I21 − 5I22`. -/
+theorem quadAltCoeffIntegral_eq_six :
+    (∫ x : ℝ in (0 : ℝ)..1, (-Real.log x) / x * quadAltQclosed (-x)) =
+      -2 * I10 - 2 * I11 + 2 * I12 + 4 * I20 + 6 * I21 - 5 * I22 := by
+  calc
+    (∫ x : ℝ in (0 : ℝ)..1, (-Real.log x) / x * quadAltQclosed (-x))
+        = ∫ x : ℝ in (0 : ℝ)..1, -2 * quadAltV x * quadAltDminus x := quadAltCoeffIntegral_eq_neg2V_Dminus
+    _ = ∫ t : ℝ in (0 : ℝ)..1,
+          W0 t * (H1 t * (-2 / t - 2 / (1 - t) + 2 / (2 - t)) +
+                  H2 t * (4 / t + 6 / (1 - t) - 5 / (2 - t))) := quadAltMobiusSubst
+    _ = -2 * I10 - 2 * I11 + 2 * I12 + 4 * I20 + 6 * I21 - 5 * I22 := quadAltSixIntegralLinear
+
+
+/-- `r(t) = log(t/(2−t))` (Q6047 §5). -/
+def quadAltR (t : ℝ) : ℝ := Real.log (t / (2 - t))
+
+/-- `I11` via the derivative certificate (Q6047 (6.6) with `g11 = H1²/2`):
+`I11 = ∫₀¹ r(t)·H1(t)²/t dt`. -/
+theorem quadAltI11_eq_integral :
+    I11 = ∫ t : ℝ in (0 : ℝ)..1, quadAltR t * H1 t ^ 2 / t := by
+  unfold I11
+  let g11 : ℝ → ℝ := fun t => H1 t ^ 2 / 2
+  have hg11' : ∀ t ∈ Set.Ioo (0 : ℝ) 1, HasDerivAt g11 (H1 t / (1 - t)) t := by
+    intro t ht
+    have h1mt : 1 - t ≠ 0 := by linarith [ht.2]
+    have hd : HasDerivAt (fun y : ℝ => Real.log (1 - y)) (-1 / (1 - t)) t := by
+      have hc : HasDerivAt (fun y : ℝ => 1 - y) (-1) t := by
+        simpa using (hasDerivAt_const t (1 : ℝ)).sub (hasDerivAt_id t)
+      have hlog := Real.hasDerivAt_log h1mt
+      have hcomp := HasDerivAt.comp (h := fun y : ℝ => 1 - y) t hlog hc
+      convert hcomp using 1
+      field_simp [h1mt]
+    have hH1' : HasDerivAt H1 (1 / (1 - t)) t := by
+      unfold H1
+      convert hd.neg using 1
+      field_simp [h1mt]
+    have hpow := hH1'.pow 2
+    unfold g11
+    convert hpow.div_const 2 using 1
+    field_simp [h1mt]
+    ring
+  have hg11_0 : g11 0 = 0 := by
+    unfold g11 H1
+    simp
+  have hg11_1 : g11 1 = 0 := by
+    unfold g11 H1
+    simp
+  have hprod' : ∀ t ∈ Set.Ioo (0 : ℝ) 1,
+      HasDerivAt (fun y : ℝ => W0 y * g11 y)
+        ((W0 t * (H1 t / (1 - t))) + (-2 * (quadAltR t / t) * g11 t)) t := by
+    intro t ht
+    have hW0' := quadAltW0_hasDerivAt ht.1 (by linarith [ht.2])
+    -- hW0' : HasDerivAt W0 (-2 * log(t/(2-t)) / t) t = -2·r/t
+    have hg := hg11' t ht
+    have hprod := hW0'.mul hg
+    unfold g11
+    convert hprod using 1
+    unfold quadAltR
+    ring
+  have hcont : ContinuousOn (fun y : ℝ => W0 y * g11 y) (Set.Icc (0 : ℝ) 1) := by
+    sorry  -- TODO-stub: continuity of W0·g11 on [0,1]
+  have hint : IntervalIntegrable
+      (fun y : ℝ => (W0 y * (H1 y / (1 - y))) + (-2 * (quadAltR y / y) * g11 y))
+      MeasureTheory.volume 0 1 := by
+    sorry  -- TODO-stub
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+    (a := 0) (b := 1)
+    (f := fun y : ℝ => W0 y * g11 y)
+    (f' := fun y : ℝ => (W0 y * (H1 y / (1 - y))) + (-2 * (quadAltR y / y) * g11 y))
+    (by norm_num) hcont hprod' hint
+  have h0 : (fun y : ℝ => W0 y * g11 y) 0 = 0 := by simp [hg11_0]
+  have h1 : (fun y : ℝ => W0 y * g11 y) 1 = 0 := by simp [hg11_1]
+  rw [h0, h1] at hFTC
+  -- ∫(W0·H1/(1−t)) + ∫(−2r/t·g11) = 0 → ∫W0·H1/(1−t) = ∫ 2r/t·g11 = ∫ r·H1²/t
+  have hsplit : (∫ y : ℝ in (0 : ℝ)..1, (W0 y * (H1 y / (1 - y))) + (-2 * (quadAltR y / y) * g11 y)) = 0 := by
+    convert hFTC using 1
+    norm_num
+  have hA : IntervalIntegrable (fun y : ℝ => W0 y * (H1 y / (1 - y))) MeasureTheory.volume 0 1 := by
+    sorry  -- TODO-stub
+  have hB : IntervalIntegrable (fun y : ℝ => -2 * (quadAltR y / y) * g11 y) MeasureTheory.volume 0 1 := by
+    sorry  -- TODO-stub
+  have hsum := intervalIntegral.integral_add (μ := MeasureTheory.volume)
+    (a := (0 : ℝ)) (b := 1)
+    (f := fun y : ℝ => W0 y * (H1 y / (1 - y)))
+    (g := fun y : ℝ => -2 * (quadAltR y / y) * g11 y)
+    (hf := hA) (hg := hB)
+  rw [hsum] at hsplit
+  have hmul : ∫ y : ℝ in (0 : ℝ)..1, -2 * (quadAltR y / y) * g11 y
+      = -(∫ y : ℝ in (0 : ℝ)..1, 2 * (quadAltR y / y) * g11 y) := by
+    rw [← intervalIntegral.integral_neg]
+    congr 1
+    funext y
+    ring
+  rw [hmul] at hsplit
+  have hmain : (∫ y : ℝ in (0 : ℝ)..1, W0 y * (H1 y / (1 - y)))
+      = ∫ y : ℝ in (0 : ℝ)..1, 2 * (quadAltR y / y) * g11 y := by
+    linarith
+  have hcongr : (∫ y : ℝ in (0 : ℝ)..1, 2 * (quadAltR y / y) * g11 y)
+      = ∫ y : ℝ in (0 : ℝ)..1, quadAltR y * H1 y ^ 2 / y := by
+    apply intervalIntegral.integral_congr
+    intro y hy
+    unfold g11
+    ring
+  simpa [mul_div_assoc] using (hmain.trans hcongr)
+
+
+/-- `W0(1) = 0` (double zero at `t=1`, needed for boundary terms). -/
+theorem quadAltW0_one : W0 1 = 0 := by
+  unfold W0
+  rw [quadAlt_dilog_half]
+  have hlog : Real.log (1 / 2) ^ 2 = Real.log 2 ^ 2 := by
+    rw [Real.log_div]
+    · rw [Real.log_one]
+      ring
     · norm_num
-    · exact ne_of_gt (by linarith : 0 < 1 - t / 2)
-  rw [h1mx, h1px, hlog1mx, hlog1px, hlog2mt]
-  field_simp [h2mt, h1mt, ne_of_gt ht0, htm1]
+    · norm_num
+  rw [hlog]
   ring
 
 end RamanujanChallenge.P24QuadAlt
