@@ -129,8 +129,8 @@ private theorem integral_self_mul_cexp_neg_mul_Ioi27
               filter_upwards with t
               simp [v, div_eq_mul_inv]
       _ = (-z⁻¹) * ∫ t : ℝ in Ioi 0,
-            Complex.exp (-z * (t : ℂ)) := by
-              exact MeasureTheory.integral_const_mul _ _
+            Complex.exp (-z * (t : ℂ)) :=
+        MeasureTheory.integral_const_mul _ _
       _ = -(z⁻¹ * z⁻¹) := by rw [integral_cexp_neg_mul_Ioi27 hz]; ring
   have hibp' :
       (∫ t : ℝ in Ioi 0,
