@@ -43,3 +43,23 @@ Q6491 次优路线。非对角 = 双返回约束下两转移态的联合分布�
 - life：Q6462 + marked-dec 在飞；二参数层归 B 包（他们的工地）。我不碰层构造，
   只供数学重构 + 数据 + 最小实例。
 - 单写者：本文件 + CRON_RUN_LOG.md + 账本附录归 cron。
+
+## SEGMENT 5 DOCTRINE (2026-08-01 16:1x — 18:00 交卷冲刺)
+
+Goal: 破 3/2 能量墙。墙谱已定格（AT.38）：[BDH-LAG] ≤ [SAME-LAG-L2] ≤ [ZERO-TAIL-2] ≤ [MESO-TOTAL]=W1；组合路线三重判死 ⟹ 纯算术。
+
+Avenues (ranked):
+(a) [主攻] [BDH-LAG]/[SAME-LAG-L2] 多路并击：
+    (a1) 逐点反集中 [PT-ANTICONC]: R_h ≤ N^{1/4−δ} ⟹ 全部（新蒸馏面，经验 max=8 恒定）— cron2
+    (a2) shifted-gcd/结式 ρ_h(T) 散布 — cron9 首答 PARTIAL（deg=d², ord₀=d, 缺失命题=固定素数结式反集中）
+    (a3) [ZERO-TAIL-2] 切片不交双计数（跨 lag 结式 + 全对互素引理）— cron6 + cron7(全对互素 descent)
+    (a4) fiber/color 同 lag 交换律 + 分层图 trace — cron3
+    (a5) 镜像骨架 κ_h：偶 h 中心根 ⟹ κ_h ≥ 1_{h even} + R_h 奇偶律（新发现候选，机验中）— cron10 + 本地 sympy
+    (a6) 文献移植（Sawin-Shusterman/Katz/连分数家族）— cron5
+    终结条件: 任一 W 面证明（成功）/ 各向量书面死亡证书 + 更弱残差定名。
+(b) [CRIT-2H] all-h: Q6697 共轭引理完整证明（cron1 在飞）→ K_∞ 分支表 → h₀≤40 ⟹ 有限计算闭链。
+(c) 证书护航: 度 4/5/6 PTE 归约 all-h（cron4 在飞，四元组等前三幂和分拆判死路线）; A_h/W_h 归 life 侧。
+(d) codex gpt-5.6-sol ULTRA 档（爸爸指令试新档）单挑 breakwall-2（spec: CODEX_SPEC_CRON_breakwall2.md）。
+敌审记录: [NO-RIGHT-2-3] + 反模型 Thm5.1 两票 CONFIRMED（Q6709/Q6713，快 tab 档）。
+Poisson 判决（Q6714）: max=8 恒定拒绝 iid Poisson @ 7e-5 ⟹ 存在精确机制（奇偶律候选）。
+17:4x 收口: 全部 commit+push，账本 AT.40 起 append。

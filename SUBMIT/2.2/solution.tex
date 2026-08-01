@@ -1,0 +1,290 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\newcommand{\E}{\mathbb E}
+
+\title{Solution to Ramanujan Challenge Problem 2.2:\\
+Euler's Constant $\gamma$ as an Ap\'ery Limit}
+\author{Xiang Huang}
+\date{August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We prove unconditionally that the quotient defined by the four-term recurrence
+in Problem~2.2 converges to Euler's constant.  The challenge recurrence is an
+exact first-order Ore transform of a recurrence with positive hypergeometric
+solutions.  For the latter, the quotient is a weighted average of harmonic
+numbers.  A finite birth--death (Stein) identity gives a quantitative second
+moment bound at the cubic saddle $k^3=(n-k)^2$; elementary harmonic-number
+bounds then imply convergence to $\gamma$.  Thus no asymptotic theorem for a
+resonant recurrence and no cited analytic limit is required.
+\end{abstract}
+
+\section{The challenge recurrence}
+
+After shifting the three negative initial indices, write the challenge
+solutions as $P_n=p_{n-3}$ and $Q_n=q_{n-3}$.  Thus
+\[
+ (P_0,P_1,P_2)=(0,7,179),\qquad
+ (Q_0,Q_1,Q_2)=(1,12,306).
+\]
+They satisfy
+\begin{equation}\label{eq:challenge}
+ c_0(n)U_{n+3}+c_1(n)U_{n+2}+c_2(n)U_{n+1}+c_3(n)U_n=0,
+\end{equation}
+where
+\begin{align*}
+c_0(n)&=-8n^3-51n^2-105n-68,\\
+c_1(n)&=24n^5+337n^4+1833n^3+4818n^2+6092n+2928,\\
+c_2(n)&=-(n+2)(n+3)
+ (24n^5+273n^4+1150n^3+2154n^2+1635n+268),\\
+c_3(n)&=(n+1)(n+2)^4(n+3)(8n^3+75n^2+231n+232).
+\end{align*}
+
+We will prove that $P_n/Q_n\to\gamma$.  Shifting the index back then gives
+the limit in the statement of the problem.
+
+\section{A positive hypergeometric model}
+
+Let $A_n,B_n$ be the two solutions of
+\begin{align}
+ &(n+3)^2(8n+11)(8n+19)R_{n+3}\nonumber\\
+ &\quad -(n+3)(8n+11)(24n^2+145n+215)R_{n+2}\nonumber\\
+ &\quad +(8n+27)(24n^3+105n^2+124n+25)R_{n+1}\nonumber\\
+ &\quad -(n+2)^2(8n+19)(8n+27)R_n=0,                 \label{eq:rivoal}
+\end{align}
+with
+\[
+ (A_0,A_1,A_2)=(-1,4,77/4),\qquad
+ (B_0,B_1,B_2)=(1,7,65/2).
+\]
+Put $H_m=\sum_{j=1}^m1/j$, with $H_0=0$, and
+\[
+ w_{n,k}=\frac{\binom nk^2}{k!}\quad(0\le k\le n).
+\]
+
+\begin{proposition}[finite-sum formulas]\label{prop:sums}
+For every $n\ge0$,
+\begin{align}
+B_n&=\sum_{k=0}^n(2n+k+1)w_{n,k},                                      \label{eq:Bsum}\\
+A_n&=\sum_{k=0}^n w_{n,k}
+ \bigl((2n+k+1)(3H_k-2H_{n-k})-1\bigr).                               \label{eq:Asum}
+\end{align}
+In particular, $B_n>0$.
+\end{proposition}
+
+\begin{proof}
+The adjacent quotient
+\[
+ \frac{w_{n,k+1}}{w_{n,k}}=\frac{(n-k)^2}{(k+1)^3}
+\]
+makes both summands hypergeometric (with the harmonic part handled by
+$H_{k+1}-H_k=1/(k+1)$).  Substitution in~\eqref{eq:rivoal}, followed by
+clearing denominators, is a telescoping identity in $k$; the boundary terms
+vanish at $k=0$ and $k=n+1$.  The resulting sums have the displayed initial
+triples, so uniqueness for~\eqref{eq:rivoal} proves the formulas.  This finite
+calculation, including the two telescoping certificates and their boundary
+terms, is checked symbolically and in Lean in
+\texttt{RamanujanChallenge/Problem22.lean}.
+\end{proof}
+
+Let $\widetilde A_n=(n!)^2A_n$ and $\widetilde B_n=(n!)^2B_n$.  Define the
+first-order operator
+\begin{equation}\label{eq:ore}
+ \mathcal O(T)_n=
+ \frac{T_{n+1}+(n+1)(3n+4)T_n}{8n+11}.
+\end{equation}
+
+\begin{proposition}[exact Ore transform]\label{prop:ore}
+The operator~\eqref{eq:ore} sends every factorial-scaled solution of
+\eqref{eq:rivoal} to a solution of~\eqref{eq:challenge}, and
+\[
+ P_n=\mathcal O(\widetilde A)_n,qquad
+ Q_n=\mathcal O(\widetilde B)_n.
+\]
+Moreover $Q_n>0$ for all $n$.
+\end{proposition}
+
+\begin{proof}
+Insert~\eqref{eq:ore} into the left side of~\eqref{eq:challenge}.  After
+clearing denominators, it is a polynomial linear combination of
+\eqref{eq:rivoal} at $n$ and at $n+1$.  The transformed initial triples are
+respectively $(0,7,179)$ and $(1,12,306)$, proving the identities by
+uniqueness.  Positivity follows from~\eqref{eq:Bsum}: both terms in the
+numerator of~\eqref{eq:ore} are positive.  The polynomial identity is also
+machine-checked in the Lean source cited above.
+\end{proof}
+
+It remains to prove $A_n/B_n\to\gamma$.  Indeed, if $a_n=(n+1)(3n+4)$, then
+\[
+ \frac{\mathcal O(\widetilde A)_n}{\mathcal O(\widetilde B)_n}
+ =\frac{\widetilde A_{n+1}+a_n\widetilde A_n}
+        {\widetilde B_{n+1}+a_n\widetilde B_n}.
+\]
+This is a positive weighted average of
+$\widetilde A_{n+1}/\widetilde B_{n+1}$ and
+$\widetilde A_n/\widetilde B_n$, so it has the same limit.
+
+\section{A finite Stein identity}
+
+Use the positive weights
+\[
+ W_{n,k}=(2n+k+1)w_{n,k},\qquad
+ Z_n=\sum_{k=0}^nW_{n,k}=B_n,
+\]
+and let $K$ be the random variable on $\{0,\ldots,n\}$ with
+$\Pr(K=k)=W_{n,k}/Z_n$.  Define
+\begin{align*}
+ b_n(k)&=(2n+k+2)(n-k)^2,\\
+ d_n(k)&=(2n+k)k^3,\\
+ G_n(k)&=k^3-(n-k)^2.
+\end{align*}
+The adjacent-weight identity is exactly
+\begin{equation}\label{eq:detailedbalance}
+ W_{n,k}b_n(k)=W_{n,k+1}d_n(k+1).
+\end{equation}
+Since $b_n(n)=d_n(0)=0$, reindexing the finite sum gives, for every function
+$f$,
+\begin{equation}\label{eq:stein}
+ \E\!\left[b_n(K)(f(K+1)-f(K))
+ +(b_n(K)-d_n(K))f(K)\right]=0.
+\end{equation}
+Two elementary polynomial identities drive the estimate:
+\begin{align}
+G_n(k+1)-G_n(k)&=3k^2+k+2n,                                      \label{eq:deltaG}\\
+b_n(k)-d_n(k)&=2(n-k)^2-(2n+k)G_n(k).                            \label{eq:bminusd}
+\end{align}
+
+\begin{lemma}[moment bounds]\label{lem:moments}
+For $n\ge1$,
+\begin{align}
+ \E[K^3]&\le \frac52n^2,                                        \label{eq:k3}\\
+ \E[K^2]&\le \frac72n\sqrt n,                                  \label{eq:k2}\\
+ \E[G_n(K)^2]&\le81n^3\sqrt n.                                 \label{eq:G2}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+Taking $f=1$ in~\eqref{eq:stein} gives $\E[b_n(K)]=\E[d_n(K)]$.
+On the support,
+\[
+ d_n(k)\ge2nk^3,qquad b_n(k)\le5n^3,
+\]
+which proves~\eqref{eq:k3}.  The interpolation inequality
+\[
+ x^2\le n+\frac{x^3}{\sqrt n}\qquad(x\ge0)
+\]
+then gives~\eqref{eq:k2}.
+
+Next take $f=G_n$ in~\eqref{eq:stein} and use
+\eqref{eq:deltaG}--\eqref{eq:bminusd}.  We obtain the exact identity
+\begin{align*}
+ \E[(2n+K)G_n(K)^2]
+  =\E\!\left[2(n-K)^2G_n(K)
+   +b_n(K)(3K^2+K+2n)\right].
+\end{align*}
+Young's inequality and the support bounds give
+\begin{align*}
+2(n-k)^2G_n(k)&\le nG_n(k)^2+n^3,\\
+b_n(k)(3k^2+k+2n)&\le20n^3k^2+10n^4.
+\end{align*}
+The left side is at least $2n\E[G_n(K)^2]$.  Hence
+\[
+ n\E[G_n(K)^2]
+ \le20n^3\E[K^2]+11n^4
+ \le81n^4\sqrt n,
+\]
+which proves~\eqref{eq:G2}.
+\end{proof}
+
+\section{From the cubic saddle to harmonic numbers}
+
+The quotient in Proposition~\ref{prop:sums} is
+\begin{equation}\label{eq:weightedaverage}
+ \frac{A_n}{B_n}
+ =\E\!\left[3H_K-2H_{n-K}-\frac1{2n+K+1}\right].
+\end{equation}
+We first omit the last, uniformly negligible, term.
+
+For $m\ge1$, the standard elementary bounds for harmonic numbers imply
+\begin{equation}\label{eq:harmonicremainder}
+ 0\le H_m-\log m-\gamma\le\frac1m.
+\end{equation}
+Fix $0<\delta\le1/16$ and call $k$ good when
+\[
+ |G_n(k)|\le\delta n^2.
+\]
+If $n\ge16$ and $k$ is good, direct comparison in
+$k^3=(n-k)^2+G_n(k)$ gives
+\begin{equation}\label{eq:geometry}
+ 1\le k<n,qquad k^3\ge\frac3{16}n^2,qquad n-k\ge\frac n2.
+\end{equation}
+Suppose also that $M\ge1$ and $16M^3\le3n^2$.  Then~\eqref{eq:geometry}
+implies $k\ge M$ and $n-k\ge M$.  Put
+\[
+ x=\frac{k^3}{(n-k)^2}.
+\]
+The last inequality in~\eqref{eq:geometry} gives
+\[
+ |x-1|=\frac{|G_n(k)|}{(n-k)^2}\le4\delta\le\frac14.
+\]
+Since $|\log x|\le2|x-1|$ in this range,~\eqref{eq:harmonicremainder}
+shows that every good $k$ satisfies
+\begin{equation}\label{eq:goodbound}
+ |3H_k-2H_{n-k}-\gamma|\le\frac5M+8\delta.
+\end{equation}
+
+On the bad set we use only the coarse estimate
+\begin{equation}\label{eq:envelope}
+ |3H_k-2H_{n-k}-\gamma|\le6+5\log n
+ \qquad(0\le k\le n),
+\end{equation}
+which follows from $0\le H_m\le1+\log n$ and $0<\gamma<1$.
+Badness also implies
+\[
+ 1\le\frac{G_n(k)^2}{\delta^2n^4}.
+\]
+Combining~\eqref{eq:G2}, \eqref{eq:goodbound}, and
+\eqref{eq:envelope} yields the quantitative estimate
+\begin{equation}\label{eq:mainbound}
+ \E\bigl[|3H_K-2H_{n-K}-\gamma|\bigr]
+ \le \frac5M+8\delta+
+ \frac{81(6+5\log n)}{\delta^2\sqrt n}.
+\end{equation}
+
+Given $\varepsilon>0$, first choose
+$0<\delta\le\min(1/16,\varepsilon/32)$, then choose
+$M>20/\varepsilon$.  For all sufficiently large $n$ the condition
+$16M^3\le3n^2$ holds and the last term of~\eqref{eq:mainbound} is less
+than $\varepsilon/2$.  Therefore the left side tends to zero.  Finally,
+\[
+ 0<\E\!\left[\frac1{2n+K+1}\right]\le\frac1{2n+1}\longrightarrow0.
+\]
+Equation~\eqref{eq:weightedaverage} now proves
+\begin{equation}\label{eq:rivoallimit}
+ \frac{A_n}{B_n}\longrightarrow\gamma.
+\end{equation}
+
+\section{Conclusion}
+
+By Proposition~\ref{prop:ore}, the challenge quotient is a positive weighted
+average of two adjacent quotients in~\eqref{eq:rivoallimit}.  Consequently
+\[
+ \boxed{\displaystyle\lim_{n\to\infty}\frac{p_n}{q_n}=\gamma}.
+\]
+
+The complete argument has been formalized in Lean~4, in namespace
+\texttt{RamanujanChallenge.P22}.  The public theorem is
+\texttt{problem22\_solved}.  Its axiom audit contains only the three standard
+Lean foundations \texttt{propext}, \texttt{Classical.choice}, and
+\texttt{Quot.sound}.  The proof contains no \texttt{sorry} declarations or
+problem-specific axioms.
+
+\end{document}

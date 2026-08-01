@@ -192,39 +192,46 @@ def recover(name, left, right):
         lambda row, column: flatten(left_inverse * basis[column] * right)[row],
     )
     print("transition", flush=True)
-    rows = [vector(K, [1] + [0]*8)]
-    for index in range(9):
-        rows.append(vector(K, [sigma(entry) for entry in rows[-1]]) * transition)
-        print("krylov", index + 1, flush=True)
-    krylov = matrix(K, rows[:9])
-    print("solve_relation", flush=True)
-    relation = krylov.transpose().solve_right(-rows[9])
-    operator = OAK(list(relation) + [1]).normalize()
-    print("operator", operator.order(), flush=True)
-    solutions = operator.rational_solutions()
-    print("solutions", solutions, flush=True)
-    if not solutions:
-        return None
-    scalar = solutions[0][0]
-    rhs = vector(K, [sigma(scalar, shift) for shift in range(9)])
-    gauge_vector = krylov.solve_right(rhs)
-    gauge = matrix(K, 3, 3, list(gauge_vector))
-    assert sigma_matrix(gauge) == left_inverse * gauge * right
-    assert gauge.det() != 0
-    print("gauge_det", gauge.det().factor(), flush=True)
-    for row in gauge.rows():
-        print([entry.factor() for entry in row], flush=True)
-    return gauge
+    for seed_index in range(9):
+        print("seed", seed_index, flush=True)
+        seed = [K.zero()] * 9
+        seed[seed_index] = K.one()
+        rows = [vector(K, seed)]
+        for index in range(9):
+            rows.append(vector(K, [sigma(entry) for entry in rows[-1]]) * transition)
+        krylov = matrix(K, rows[:9])
+        if krylov.det() == 0:
+            print("noncyclic", flush=True)
+            continue
+        relation = krylov.transpose().solve_right(-rows[9])
+        operator = OAK(list(relation) + [1]).normalize()
+        solutions = operator.rational_solutions()
+        print("solutions", len(solutions), flush=True)
+        for solution in solutions:
+            scalar = solution[0]
+            rhs = vector(K, [sigma(scalar, shift) for shift in range(9)])
+            gauge_vector = krylov.solve_right(rhs)
+            gauge = matrix(K, 3, 3, list(gauge_vector))
+            assert sigma_matrix(gauge) == left_inverse * gauge * right
+            print("gauge_rank", gauge.rank(), flush=True)
+            if gauge.det() == 0:
+                continue
+            print("gauge_det", gauge.det().factor(), flush=True)
+            for row in gauge.rows():
+                print([entry.factor() for entry in row], flush=True)
+            return gauge
+    return None
 
 
 if __name__ == "__main__":
     A = challenge_matrix()
     print("challenge det", A.det().factor(), flush=True)
-    for trajectory in [(-2, 2, 0, 0, 0), (2, -2, 0, 0, 0)]:
-        for offset in range(-4, 5):
-            B = direct_pfq_matrix(trajectory, offset)
-            print("pfq", trajectory, "offset", offset,
-                  "det", B.det().factor(), flush=True)
-            gauge = recover("challenge_to_pfq", A, B)
-            if gauge is not None:
-                raise SystemExit(0)
+    for trajectory in [
+        (-2, 2, 0, 0, 0), (2, -2, 0, 0, 0),
+        (0, 0, 0, -2, 2), (0, 0, 0, 2, -2),
+    ]:
+        B = direct_pfq_matrix(trajectory, 0)
+        print("pfq", trajectory, "det", B.det().factor(), flush=True)
+        gauge = recover("challenge_to_pfq", A, B)
+        if gauge is not None:
+            raise SystemExit(0)

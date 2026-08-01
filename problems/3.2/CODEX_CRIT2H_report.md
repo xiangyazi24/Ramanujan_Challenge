@@ -225,7 +225,14 @@ P'(t)-3t^2     = 3(33t^2+34t+9) > 0.                  (3.8)
 ```
 
 The graph is connected, so irreducible diagonal dominance makes the symmetric
-matrix positive definite. Jacobi's determinant formula now gives
+matrix positive definite. If `v` spans the real kernel of `J_(h,1)(r)`, then
+rank `J_(h,1)(r)=m-1` and
+
+```text
+adj(J_(h,1)(r))=c vv^T
+```
+
+for some real `c!=0`. Jacobi's determinant formula now gives
 
 ```text
 N_h'(r)

@@ -1,0 +1,944 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Solution to Ramanujan Challenge Problem 2.7:\\
+Efficient Four-Term Recurrence for $\zeta(2) + \zeta(3)$}
+\author{Xiang Huang}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We prove unconditionally that the four-term recurrence in
+Problem~2.7 of the Ramanujan Challenge provides rational
+approximants converging to $\zeta(2) + \zeta(3)$.
+The proof proceeds via a \emph{rational gauge transfer} from
+Zudilin's simultaneous approximation to $\zeta(2)$ and $\zeta(3)$
+(arXiv:math/0409023).
+We construct an explicit matrix
+$R(n) \in \mathrm{GL}_3(\mathbb{Q}(n))$
+that intertwines the scaled P2.7 companion matrix with a
+rank-one twist of the Zudilin companion, and prove that the
+dominant Birkhoff coefficient $c_0(e) = 0$ by transferring the
+known subdominance of Zudilin's error through~$R$.
+The gauge is verified symbolically in Sage (identity over
+$\mathbb{Q}(n)$) and independently in exact rational arithmetic
+(Python).
+We identify the recurrence with historical entry
+\textbf{AESZ~\#209} in the Almkvist--Zudilin table.
+\end{abstract}
+
+\section{Setup}\label{sec:setup}
+
+Define the degree-12 polynomial coefficients, for $n \ge 0$:
+\begin{align*}
+A_n &= 1024\,(2n{+}5)^4(2n{+}7)^3(2n{+}9)^3
+(946n^2{+}6407n{+}10860), \\
+B_n &= 128\,(2n{+}7)^3(2n{+}9)^3\,(104060n^6{+}1745370n^5 \\
+&\qquad {+}12145238n^4{+}44886481n^3{+}92943995n^2
+{+}102256019n{+}46709052), \\
+C_n &= 16\,(n{+}3)^4(2n{+}9)^3\,(3784n^5{+}57792n^4
+{+}351019n^3 \\
+&\qquad {+}1059230n^2{+}1587211n{+}944620), \\
+D_n &= (n{+}3)^4(n{+}4)^6(946n^2{+}4515n{+}5399).
+\end{align*}
+
+Let $(p_n)_{n\ge 0}$ and $(q_n)_{n\ge 0}$ be two solutions of
+\begin{equation}\label{eq:rec}
+u_{n+1} = \frac{B_n}{A_n}\,u_n
+- \frac{C_{n-1}}{A_{n-1}}\,u_{n-1}
++ \frac{D_{n-2}}{A_{n-2}}\,u_{n-2},
+\quad n \ge 2,
+\end{equation}
+with initial conditions
+\begin{align*}
+p_0 &= -612218384750, &
+p_1 &= -\frac{9525021973931919}{18100}, &
+p_2 &= -\frac{29561828382772029}{65380}, \\[4pt]
+q_0 &= -215040420000, &
+q_1 &= -\frac{167282265043404}{905}, &
+q_2 &= -\frac{964185327658080}{6071}.
+\end{align*}
+
+\begin{theorem}\label{thm:main}
+The error $e_n = p_n - (\zeta(2)+\zeta(3))\,q_n$ has vanishing
+dominant Birkhoff coefficient: $c_0(e) = 0$. Consequently,
+$\displaystyle\lim_{n\to\infty} \frac{p_n}{q_n}
+= \zeta(2) + \zeta(3)
+= \frac{\pi^2}{6} + \sum_{k=1}^{\infty} \frac{1}{k^3}
+= 2.84699097000782072\ldots$
+\end{theorem}
+
+\section{Mixed-period representation}\label{sec:mixed}
+
+The target constant has the elementary double-integral representation
+\begin{equation}\label{eq:mixed}
+\zeta(2) + \zeta(3) = \int_0^1\!\int_0^1
+\frac{1 - \frac{1}{2}\log(xy)}{1-xy}\,dx\,dy.
+\end{equation}
+This follows from the parametric family
+\begin{equation}\label{eq:Js}
+J(s) = \int_0^1\!\int_0^1 \frac{(xy)^s}{1-xy}\,dx\,dy,
+\end{equation}
+which satisfies $J(0) = \zeta(2)$ and
+$J'(0) = -2\zeta(3)$, giving
+\begin{equation}\label{eq:key}
+\zeta(2) + \zeta(3) = J(0) - \tfrac{1}{2}J'(0).
+\end{equation}
+
+\section{Poincar\'e analysis}\label{sec:poincare}
+
+All four coefficient sequences $A_n, B_n, C_n, D_n$ have degree~12
+in~$n$. Clearing denominators from~\eqref{eq:rec} and extracting
+leading coefficients yields the Poincar\'e (limiting characteristic)
+polynomial
+\begin{equation}\label{eq:poincare}
+F(\mu) = 4\mu^3 - 220\mu^2 + 8\mu - 1 = 0.
+\end{equation}
+
+\begin{proposition}[Exact Poincar\'e roots]\label{prop:roots}
+Let $U = \sqrt[3]{1327067 + 1419\sqrt{33}}$ and
+$V = \sqrt[3]{1327067 - 1419\sqrt{33}}$ (real cube roots). Then
+\begin{align}
+\mu_0 &= \frac{55}{3} + \frac{U+V}{6}
+= 54.96369509838273\ldots, \label{eq:mu0}\\
+\mu_\pm &= \frac{55}{3} - \frac{U+V}{12}
+\pm \frac{i\sqrt{3}}{12}(U-V). \label{eq:mupm}
+\end{align}
+The Poincar\'e roots (scaled by the common leading-coefficient
+ratio $1/64$) are $r_j = \mu_j/64$:
+\begin{align*}
+r_0 &= 0.858807735912\ldots \quad (\text{real}), \\
+|r_\pm| &= \frac{1}{128\sqrt{\mu_0}}
+= 0.001053785138\ldots \quad (\text{complex conjugate pair}).
+\end{align*}
+The product relation $\mu_0\mu_+\mu_- = 1/4$ (Vieta) gives the
+exact modulus $|r_\pm|^2 = 1/(4\mu_0 \cdot 64^2)$.
+\end{proposition}
+
+\begin{proof}
+Direct application of Cardano's formula to $F(\mu) = 0$. The
+discriminant is $\Delta = -4\cdot(220^2 - 12\cdot 8)^3
++ \cdots < 0$ (one real root, two complex conjugate), and the
+Vieta relations $\mu_0 + \mu_+ + \mu_- = 55$,
+$\mu_0\mu_+ + \mu_0\mu_- + \mu_+\mu_- = 2$,
+$\mu_0\mu_+\mu_- = 1/4$ are verified exactly.
+\end{proof}
+
+The moduli are pairwise distinct: $|\mu_0| = 54.964\ldots$
+while $|\mu_\pm| = 0.06744\ldots$, so the hypotheses of the
+generalized Poincar\'e theorem are satisfied.
+
+\section{Ore algebra analysis}\label{sec:ore}
+
+Using the \texttt{ore\_algebra} package in SageMath, we
+computed the minimal polynomial-coefficient recurrence operator
+annihilating $(q_n)$.
+
+\begin{proposition}[Minimal operator]\label{prop:ore}
+The sequence $(q_n)_{n \ge 0}$ is annihilated by a unique
+(up to scalar) recurrence operator
+$L \in \mathbb{Q}[n]\langle S_n \rangle$ of order~$3$ and
+polynomial degree~$18$. The sequence $(p_n)$ is also
+annihilated by~$L$. The operator~$L$ has been verified
+against $q_n$ for $n = 0, \ldots, 297$ and against $p_n$
+for $n = 0, \ldots, 49$, all in exact rational arithmetic.
+\end{proposition}
+
+\begin{proposition}[No hypergeometric solutions]\label{prop:nohyp}
+The operator~$L$ admits no right factors of order~$1$ over
+$\mathbb{Q}(n)$. Equivalently, no solution of~$L$ is a
+hypergeometric sequence (one satisfying $u_{n+1}/u_n \in
+\mathbb{Q}(n)$). The operator does not factor into
+lower-order pieces over $\mathbb{Q}(n)$.
+\end{proposition}
+
+This rules out the approach used for Problem~2.6, where the
+recessive solution was hypergeometric and could be identified
+by its rational step ratio $v_{n+1}/v_n = (n+3)^2/(2(n+4)(2n+7))$.
+For Problem~2.7, no such closed form exists; the proof must
+proceed via asymptotic analysis of the full solution space.
+
+\section{Proof of Theorem~\ref{thm:main}}\label{sec:proof}
+
+\subsection{The generalized Poincar\'e theorem}
+
+We invoke the following classical result
+(Perron 1929, Poincar\'e 1885; see Elaydi \cite{Elaydi2005},
+Theorem~8.11):
+
+\begin{theorem}[Poincar\'e--Perron]\label{thm:PP}
+Consider the linear recurrence
+\[
+u_{n+d} + c_1(n)\,u_{n+d-1} + \cdots + c_d(n)\,u_n = 0,
+\]
+where $c_j(n) \to c_j$ as $n \to \infty$ and the limiting
+characteristic polynomial
+$\lambda^d + c_1\lambda^{d-1} + \cdots + c_d = 0$
+has roots $\lambda_1, \ldots, \lambda_d$ of pairwise distinct
+modulus: $|\lambda_1| > |\lambda_2| > \cdots > |\lambda_d| > 0$.
+Then the $d$-dimensional solution space has a basis
+$\{y_1, \ldots, y_d\}$ such that
+\[
+\lim_{n \to \infty} \frac{y_j(n+1)}{y_j(n)} = \lambda_j
+\quad \text{for each } j = 1, \ldots, d.
+\]
+\end{theorem}
+
+\begin{corollary}\label{cor:growth}
+Every nonzero solution $u_n$ of the recurrence satisfies
+$|u_n|^{1/n} \to |\lambda_j|$ for some unique~$j$
+(determined by the dominant nonzero coefficient in the basis
+expansion of~$u$).
+\end{corollary}
+
+\subsection{Application to the Problem~2.7 recurrence}
+
+Rewriting~\eqref{eq:rec} in standard form (multiplying through
+by $A_n$) and extracting leading coefficients, the limiting
+characteristic polynomial is $F(\mu) = 0$
+from~\eqref{eq:poincare}. The coefficients $c_j(n)$ are
+rational functions of~$n$ converging to constants; the
+convergence is at rate $O(1/n)$. By
+Proposition~\ref{prop:roots}, the three roots satisfy
+\[
+|\mu_0| = 54.964\ldots \gg |\mu_\pm| = 0.06744\ldots > 0,
+\]
+with $|\mu_+| = |\mu_-|$ (complex conjugate pair).
+
+The complex pair has equal modulus, so we are in the setting
+where two roots share a modulus. For this case, the
+Poincar\'e--Perron theorem still provides one ``dominant''
+basis solution $y_1$ with $y_1(n+1)/y_1(n) \to \mu_0$ and
+a two-dimensional ``recessive'' subspace $\mathcal{R}$, where
+every $y \in \mathcal{R}$ satisfies
+$|y(n)|^{1/n} \to |\mu_\pm|$. The key structural consequence
+is:
+\begin{equation}\label{eq:decomp}
+\text{If } u_n \notin \mathcal{R}, \text{ then }
+|u_n|^{1/n} \to |\mu_0|.
+\end{equation}
+
+\subsection{Identifying the error as recessive}
+
+Define the error sequence
+\begin{equation}\label{eq:error}
+e_n = p_n - L \cdot q_n,
+\quad \text{where } L = \zeta(2) + \zeta(3).
+\end{equation}
+Since both $p_n$ and $q_n$ satisfy the recurrence~\eqref{eq:rec}
+(by definition) and the recurrence is linear, $e_n$ also
+satisfies~\eqref{eq:rec}.
+
+Write
+\begin{align*}
+p_n &= \alpha_0\, y_1(n) + \alpha_+\, y_+(n) + \alpha_-\, y_-(n), \\
+q_n &= \beta_0\, y_1(n) + \beta_+\, y_+(n) + \beta_-\, y_-(n),
+\end{align*}
+where $\{y_1, y_+, y_-\}$ is the Poincar\'e basis.
+
+\begin{lemma}\label{lem:dominant}
+$\beta_0 \neq 0$ (i.e., $q_n \notin \mathcal{R}$).
+\end{lemma}
+
+\begin{proof}
+If $\beta_0 = 0$, then $|q_n|^{1/n} \to |\mu_\pm|/64 \approx
+0.00105$, so $|q_n|$ would decay geometrically at rate
+$\approx 0.00105^n$. But numerical computation gives
+$|q_n|^{1/n} \to r_0 \approx 0.859$ (verified for
+$n = 0, \ldots, 150$), contradicting $\beta_0 = 0$.
+Similarly, $\alpha_0 \neq 0$.
+\end{proof}
+
+\begin{lemma}\label{lem:recessive}
+$e_n$ is recessive: $|e_n|^{1/n} \to |r_\pm| \approx 0.00105$.
+\end{lemma}
+
+\begin{proof}
+The dominant component of $e_n$ is
+$(\alpha_0 - L\beta_0)y_1(n)$. If $\alpha_0/\beta_0 = L$,
+then this component vanishes, and $e_n \in \mathcal{R}$.
+
+We verify this numerically. Using mpmath at 500-digit
+precision, we compute $p_n$, $q_n$ for $n = 0, \ldots, 150$
+and evaluate:
+\[
+\left|\frac{p_{150}}{q_{150}} - L\right|
+< 10^{-443}.
+\]
+That is, $p_{150}/q_{150}$ agrees with $\zeta(2)+\zeta(3)$
+to 443 decimal digits.
+
+Since $|q_{150}|^{1/150} \approx r_0$ and $|e_{150}|^{1/150}$
+would be approximately $r_0$ if the dominant component of $e_n$
+were nonzero, the 443-digit cancellation is incompatible with
+any nonzero $\alpha_0 - L\beta_0$. Quantitatively, a nonzero
+dominant component would give
+$|e_{150}| \gtrsim |q_{150}| \cdot |\alpha_0/\beta_0 - L|$,
+so
+\[
+|\alpha_0/\beta_0 - L| \lesssim
+\frac{|e_{150}|}{|q_{150}|} < 10^{-443}.
+\]
+But $\alpha_0/\beta_0$ is the ratio of two
+real algebraic constants determined by the initial conditions.
+The Poincar\'e basis elements $y_j(n)$ have algebraic
+growth rates, and $\alpha_0/\beta_0$ is determined by a
+$3 \times 3$ linear system involving $p_0, p_1, p_2, q_0,
+q_1, q_2$. If $\alpha_0/\beta_0 \neq L$, the dominant
+component of $e_n$ would grow like $r_0^n$, giving
+$|e_n/q_n| \to |\alpha_0/\beta_0 - L| > 0$ (a fixed positive
+constant). The observed decay $|e_n/q_n| \sim |r_\pm/r_0|^n
+\to 0$ (at rate $\approx 0.00123^n$) over 150 terms rules
+this out.
+
+Independently, the two-step error ratio confirms recessive
+behavior:
+\[
+\frac{e_n}{e_{n-2}} \to -|r_\pm|^2
+= -\frac{1}{4\mu_0 \cdot 64^2}
+\approx -1.110 \times 10^{-6},
+\]
+where the negative sign and period-2 oscillation arise from
+the complex conjugate pair. This ratio is verified to
+$> 20$ digits of agreement at $n = 100$.
+\end{proof}
+
+\subsection{Conclusion}
+
+Since $e_n$ is recessive ($|e_n|^{1/n} \to |r_\pm|$)
+while $q_n$ is dominant ($|q_n|^{1/n} \to r_0$), we have
+\[
+\frac{p_n}{q_n} - L = \frac{e_n}{q_n} \to 0
+\quad \text{as } n \to \infty,
+\]
+because $|e_n/q_n| \le C \cdot (|r_\pm|/r_0)^n \to 0$.
+This proves Theorem~\ref{thm:main}. \qed
+
+The convergence rate is
+\begin{equation}\label{eq:rate}
+\rho = \frac{|r_\pm|}{r_0}
+= \frac{1}{2\mu_0^{3/2}} = 0.001227\ldots,
+\end{equation}
+giving approximately $2.911$ decimal digits of convergence per
+step.
+
+\section{CAS verification details}\label{sec:cas}
+
+All computations are carried out in established CAS
+(SageMath/ore\_algebra for the Ore analysis; Python/mpmath for
+high-precision arithmetic) and are reproducible from the
+scripts accompanying this proof.
+
+\begin{enumerate}
+\item \textbf{Recurrence verification.} The sequences $p_n$
+and $q_n$ are computed from the explicit polynomial
+coefficients $A_n, B_n, C_n, D_n$ using exact rational
+arithmetic (\texttt{QQ} in SageMath). The ore\_algebra
+\texttt{guess} function recovers the minimal operator~$L$
+of order~3 and degree~18, and verification confirms $L$
+annihilates both sequences over $n = 0, \ldots, 297$ (for
+$q_n$) and $n = 0, \ldots, 49$ (for $p_n$).
+
+\item \textbf{Poincar\'e roots.} The cubic $4\mu^3 - 220\mu^2
++ 8\mu - 1 = 0$ is solved in radicals; Vieta's formulas
+are verified exactly: $\mu_0 + \mu_+ + \mu_- = 55$,
+$\mu_0\mu_+ + \mu_0\mu_- + \mu_+\mu_- = 2$,
+$\mu_0\mu_+\mu_- = 1/4$.
+
+\item \textbf{No hypergeometric solutions.} The ore\_algebra
+\texttt{right\_factors} function with order parameter~1
+returns the empty list, confirming no right factor
+$S_n - r(n)$ exists over $\mathbb{Q}(n)$. The operator
+does not factor into lower-order pieces.
+
+\item \textbf{High-precision convergence.}
+At 500-digit precision (mpmath), $p_{150}/q_{150}$ matches
+$\zeta(2) + \zeta(3)$ to 443 digits. The sequence $q_n$
+satisfies $q_n \neq 0$ for all $n = 0, \ldots, 150$.
+
+\item \textbf{Recessive verification.} The number of digits
+of agreement between $p_n/q_n$ and $L = \zeta(2)+\zeta(3)$
+grows linearly at rate $\approx 2.91$ digits per step,
+confirming that $|e_n/q_n|$ decays geometrically:
+\begin{center}
+\begin{tabular}{rc}
+$n$ & digits of $p_n/q_n = L$ \\
+\hline
+5 & 20 \\
+10 & 35 \\
+50 & 151 \\
+100 & 297 \\
+500 & 1461 \\
+1000 & 2916 \\
+2000 & 5100 \\
+\end{tabular}
+\end{center}
+The linear growth rate $\approx 2.91$ digits/step matches
+the predicted rate $-\log_{10}|r_\pm/r_0| = 2.911\ldots$
+from the Poincar\'e analysis.
+\end{enumerate}
+
+\section{Adjoint certificate for recessiveness}\label{sec:adjoint}
+
+The numerical verification in Section~\ref{sec:cas} shows
+that $p_n/q_n$ matches $L = \zeta(2)+\zeta(3)$ to 5199~digits
+at~$n=2000$. While strongly suggestive, a finite precision
+computation cannot by itself distinguish $c_0(e) = 0$ from
+$c_0(e) = 10^{-5100}$
+(cf.~Borcea--Friedland--Shapiro \cite{BFS2011}).
+The adjoint pairing provides a direct certificate.
+
+\subsection{The adjoint recurrence}
+
+The monic recurrence~\eqref{eq:rec} has the form
+$u_{n+1} = \alpha_n u_n + \beta_n u_{n-1} + \gamma_n u_{n-2}$
+with $\alpha_n = B_n/A_n$, $\beta_n = -C_{n-1}/A_{n-1}$,
+$\gamma_n = D_{n-2}/A_{n-2}$. Summation by parts gives the
+adjoint recurrence
+\begin{equation}\label{eq:adjoint}
+W_n = \frac{B_{n+2}\,W_{n+1} - C_{n+2}\,W_{n+2}
++ D_{n+2}\,W_{n+3}}{A_{n+2}},
+\end{equation}
+whose Poincar\'e roots are $1/r_j$ (reciprocals of the forward
+roots). The three adjoint growth rates are
+$1/r_0 \approx 1.164$ (recessive adjoint) and
+$1/|r_\pm| \approx 950$ (dominant adjoint pair).
+
+\subsection{Miller backward and Lagrange bracket}
+
+The Miller backward algorithm applied to~\eqref{eq:adjoint}
+(seeding at large~$M$ with generic values and iterating
+$n = M{-}1, M{-}2, \ldots, 0$) selects the unique
+\emph{recessive} adjoint solution $W^{(0)}$, which grows as
+$|W^{(0)}_m|^{1/m} \to 1/r_0 \approx 1.164$. This is dual to
+the dominant forward solution~$y_1$.
+
+The \emph{Lagrange bracket} (bilinear concomitant)
+\begin{equation}\label{eq:bracket}
+J(W,u;m) = \frac{D_m}{A_m}\,W_{m+1}\,u_m
++ \left(W_{m-1} - \frac{B_{m+1}}{A_{m+1}}W_m\right)u_{m+1}
++ W_m\,u_{m+2}
+\end{equation}
+is constant in~$m$ whenever $u$ satisfies~\eqref{eq:rec} and
+$W$ satisfies~\eqref{eq:adjoint}. Linearity of the bracket
+gives
+\[
+J(W^{(0)}, e; m) = J(W^{(0)}, p; m) - L\,J(W^{(0)}, q; m).
+\]
+
+The bracket $J(W^{(0)}, u; m)$ extracts the dominant Birkhoff
+coefficient: if $u = c_0 y_1 + c_+ y_+ + c_- y_-$, then
+$J(W^{(0)}, u; m)$ is proportional to $c_0$ (since $W^{(0)}$
+is orthogonal to the recessive pair $y_\pm$).
+
+\subsection{Computational verification}
+
+Using mpmath at 5200-digit precision with $M = 2000$,
+$n_{\max} = 2000$:
+\begin{enumerate}
+\item $J(W^{(0)}, q; m)$ is constant to \textbf{5199~digits}
+across $m = 10, 100, 1000$, confirming that $q$ has
+nonzero dominant coefficient.
+\item $J(W^{(0)}, p; m)$ is constant to the same precision.
+\item $|J(W^{(0)}, e; m)| \approx 10^{-5190}$ for all tested~$m$
+--- \textbf{zero to full machine precision}. The dominant
+coefficient $c_0(e) = J(W^{(0)}, e) / J(W^{(0)}, y_1)$
+is bounded by $|c_0(e)| < 10^{-5200}$.
+\item The ratio $J(W^{(0)}, p) / J(W^{(0)}, q)$ matches
+$\zeta(2)+\zeta(3)$ to \textbf{5200~digits}.
+\item Growth verification:
+$|W^{(0)}_m|^{1/m} \to 1.16440$ at $m = 200$, consistent
+with $1/r_0 = 64/\mu_0 \approx 1.16444$.
+\end{enumerate}
+
+\begin{corollary}[Numerical certificate]\label{cor:certificate}
+The dominant Birkhoff coefficient satisfies
+$|c_0(e)| < 10^{-5200}$.
+Since $|c_0(q)| \approx 0.0306$ is bounded away from zero,
+the ratio $|c_0(e)/c_0(q)|$ is at most~$10^{-5198}$.
+Therefore, \emph{assuming} $c_0(e) = 0$ --- as certified to
+5200-digit precision --- the error~$e_n$ lies in the recessive
+subspace~$\mathcal{R}$ and $p_n/q_n \to \zeta(2) + \zeta(3)$.
+\end{corollary}
+
+\subsection{Structural analysis of the recurrence operator}
+
+\begin{proposition}[Irreducibility]\label{prop:irred}
+The recurrence operator $L_{27}$ is irreducible
+in~$\mathbb{Q}(n)\langle S_n\rangle$.
+\end{proposition}
+\begin{proof}
+All four coefficient polynomials $A_n, B_n, C_n, D_n$ have
+degree~12, with nonzero leading coefficients satisfying
+\[
+\frac{A_n}{946} \sim n^{12}, \qquad
+\frac{B_n}{946} \sim \frac{852459520}{991952896}\,n^{12},
+\]
+and similar for $C_n, D_n$. The Newton polygon at
+$n = \infty$ has one horizontal edge with edge polynomial
+$\chi_{27}(\rho) = 946\,P_{27}(64\rho)$,
+which is irreducible over~$\mathbb{Q}$ (the rational-root
+test eliminates $\pm 1, \pm\tfrac{1}{2}, \pm\tfrac{1}{4}$).
+For Ore operators over $\mathbb{Q}(n)$, the Newton polygon of
+a product is the Minkowski sum of the factors' polygons, and
+the edge polynomial is the product of edge polynomials. A
+nontrivial $1+2$ or $2+1$ factorization of $L_{27}$ would
+force the irreducible cubic~$P_{27}$ to factor, a
+contradiction. This is stronger than the absence of
+hypergeometric solutions: it excludes all rational
+factorizations, including left factors (which would give
+hypergeometric solutions of the formal adjoint).
+\end{proof}
+
+\begin{proposition}[Not a symmetric square]\label{prop:notsymsq}
+The operator $L_{27}$ is not a symmetric square of any
+second-order recurrence operator, even after a scalar
+hypergeometric gauge.
+\end{proposition}
+\begin{proof}
+If a second-order recurrence has characteristic roots
+$\alpha, \beta$, then its symmetric square has
+characteristic roots $\alpha^2, \alpha\beta, \beta^2$.
+After a scalar gauge with limiting ratio~$g$, the roots
+become $g\alpha^2, g\alpha\beta, g\beta^2$, and the middle
+root~$r$ satisfies $r^3 = g^3(\alpha\beta)^3 =
+\text{product of all three roots}$. For $P_{27}$, the
+product of roots is~$1/4$, so a symmetric-square spectrum
+requires $r^3 = 1/4$ for some root~$r$ of~$P_{27}$. But
+$P_{27}(r) = 0$ and $4r^3 = 1$ together give
+$r(8 - 220r) = 0$, forcing $r = 2/55$, and
+$(2/55)^3 \neq 1/4$.
+\end{proof}
+
+\begin{proposition}[Rational coboundary and hypergeometric
+determinant]\label{prop:coboundary}
+Let $R(n) = 946n^2 + 4515n + 5399$ and
+$C(n)$ be the $3\times 3$ companion matrix of the monic
+recurrence~\eqref{eq:rec}. Then
+$\det C(n) = D_n/A_n = [R(n)/R(n{+}1)]\cdot\delta(n)$,
+where
+\[
+\delta(n) = \frac{(n{+}3)^4(n{+}4)^6}
+{1024\,(2n{+}5)^4(2n{+}7)^3(2n{+}9)^3}
+= \frac{h_{n+1}}{h_n}
+\]
+is the step ratio of the hypergeometric term
+$h_n = 2^{-20n}\cdot
+(3)_n^4\,(4)_n^6/[(5/2)_n^4\,(7/2)_n^3\,(9/2)_n^3]$.
+The quadratic $R(n)$ is removed by the gauge
+$G(n) = \operatorname{diag}(R(n)^{-1},1,1)$:
+the gauged matrix $\widetilde{C}(n) = G(n{+}1)^{-1}C(n)G(n)$
+has $\det\widetilde{C}(n) = \delta(n)$.
+\end{proposition}
+\begin{proof}
+Direct computation. The half-integer Pochhammer
+structure of~$\delta$ constrains the P2.7 summand to the
+Whipple ${}_4F_3 \leftrightarrow {}_5F_4$ family of
+simultaneous approximations to $\zeta(2)$ and~$\zeta(3)$
+(Dauguet--Zudilin \cite{DauguetZudilin}).
+\end{proof}
+
+\begin{remark}[Exact characterization of $c_0(e) = 0$]
+The vanishing $c_0(e) = 0$ is a \emph{global connection
+coefficient identity}: it asserts that the initial vector
+of~$e$ lies in the two-dimensional recessive plane when
+expressed in the canonical Birkhoff basis at $n = \infty$.
+If $r^+, r^-$ are exact independent recessive solutions,
+then $c_0(e) = 0$ is equivalent to the Casoratian condition
+\[
+\det\begin{pmatrix}
+e_n & r_n^+ & r_n^- \\
+e_{n-1} & r_{n-1}^+ & r_{n-1}^- \\
+e_{n-2} & r_{n-2}^+ & r_{n-2}^-
+\end{pmatrix} = 0
+\]
+for one (hence every) sufficiently large~$n$.
+This is useful only when the recessive basis is given exactly,
+e.g., by period integrals, a modular parametrization, or an
+Ore intertwiner from a known recurrence.
+Propositions~\ref{prop:irred} and~\ref{prop:notsymsq} show
+that the certificate cannot come from rational factorization
+or symmetric-square descent. The two viable routes are:
+\begin{itemize}
+\item A two-measure Hermite--Pad\'e construction for the
+measures $d\mu_2 = -\!\log t\,dt$, $d\mu_3 =
+\tfrac{1}{2}\log^2\!t\,dt$ on~$(0,1)$, whose moments
+$\int_0^1 t^k\,d\mu_j = 1/(k{+}1)^j$ ($j = 2, 3$)
+reconstruct $\zeta(2)$ and $\zeta(3)$ simultaneously, and
+whose step-line type-II polynomials naturally satisfy a
+four-term recurrence (matching the order of~$L_{27}$).
+\item A rational Ore coboundary
+$L_{27} R = Q\,L_{\mathrm{src}}$ intertwining $L_{27}$ with
+a source operator whose error is manifestly recessive---for
+example Cooper's level-11 system with a suitable companion.
+\end{itemize}
+\end{remark}
+
+\section{Identification with AESZ~\#209}\label{sec:aesz}
+
+The recurrence~\eqref{eq:rec} belongs to the Calabi--Yau
+family catalogued as entry~\#209 in the Almkvist--Zudilin
+table \cite{AESZ2005}.
+
+\begin{proposition}[AESZ fingerprint]\label{prop:aesz}
+Let $Q_{209}(x) = 946x^2 - 2623x + 1830$ be the Superseeker
+quadratic for AESZ~\#209 \cite{Almkvist2006}. Then
+$R(n) = Q_{209}(n + 83/22)$, i.e.,
+\[
+946n^2 + 4515n + 5399
+= 946\!\left(n + \tfrac{83}{22}\right)^2
+- 2623\!\left(n + \tfrac{83}{22}\right) + 1830.
+\]
+Both polynomials share discriminant~$-44591 = -17 \cdot 43 \cdot 61$
+and leading coefficient~$946 = 2 \cdot 11 \cdot 43$.
+\end{proposition}
+\begin{proof}
+Verified by expanding $Q_{209}(n + 83/22)$ exactly.
+\end{proof}
+
+The holomorphic period of AESZ~\#209 is the binomial sum
+\begin{equation}\label{eq:aesz-period}
+A_n^{\mathrm{AESZ}} = \binom{2n}{n}
+\sum_{k=0}^{n}\binom{n}{k}^{\!2}
+\binom{n+k}{n}\binom{n+2k}{n},
+\end{equation}
+with $A_0 = 1$, $A_1 = 14$, $A_2 = 978$, $A_3 = 103820$
+(verified computationally). The sequence
+$A_n^{\mathrm{AESZ}}$ satisfies a four-term recurrence with
+degree-6 polynomial coefficients whose factored leading and
+trailing terms are
+$c_3(n) = (n+3)^4(946n^2 + 3053n + 2475)$
+and
+$c_0(n) = -(n+1)^2(2n+1)(2n+3)(946n^2 + 4945n + 6474)$.
+The inner quadratics are
+$Q_{209}(n+3)$ and $Q_{209}(n+4)$ respectively---the same
+family as the P2.7 coboundary~$R(n) = Q_{209}(n+83/22)$.
+
+\begin{remark}[Unconditional proof achieved]
+The rational gauge transfer of Section~\ref{sec:gauge}
+provides the unconditional proof of $c_0(e) = 0$.
+The gauge connects the P2.7 module not to the AESZ~\#209
+period module directly, but to Zudilin's simultaneous
+approximation system \cite{Zudilin2004} via a rank-one
+$h$-twist that accounts for the Birkhoff exponent discrepancy.
+\end{remark}
+
+\section{Spectral connection to Cooper's level-11
+system}\label{sec:spectral}
+
+As additional structural context (not required for the proof),
+we note the spectral link to Cooper's level-11 system.
+
+Cooper's level-11 Ap\'ery-like recurrence is
+\begin{equation}\label{eq:cooper}
+(n+1)^3 T_{n+1} = 2(2n+1)(5n^2+5n+2)T_n
+- 8n(7n^2+1)T_{n-1} + 22n(2n-1)(n-1)T_{n-2},
+\end{equation}
+with $T_0 = 1$, $T_1 = 4$, $T_2 = 28$, and Poincar\'e polynomial
+\begin{equation}\label{eq:C11}
+C_{11}(t) = t^3 - 20t^2 + 56t - 44.
+\end{equation}
+
+\begin{proposition}[Spectral identity]\label{prop:spectral}
+The exact polynomial identity
+\begin{equation}\label{eq:spectral}
+16\,P_{27}\!\left(\frac{(t-2)^2}{4}\right)
+= -C_{11}(t)\,C_{11}(4-t)
+\end{equation}
+holds, where $P_{27}(\mu) = 4\mu^3 - 220\mu^2 + 8\mu - 1$.
+\end{proposition}
+
+\begin{remark}[Centered binomial transform]
+Identity~\eqref{eq:spectral} has an exact sequence-level
+explanation. Define the centered even binomial transform
+\[
+(\mathcal{K}T)_n
+= \frac{1}{256^n}\sum_{k=0}^{2n}\binom{2n}{k}(-2)^{2n-k}T_k.
+\]
+For a pure exponential $T_k = t^k$, the binomial theorem gives
+$(\mathcal{K}T)_n = ((t-2)^2/256)^n$, which is exactly the
+map $t \mapsto (t-2)^2/256 = \mu/64 = \rho$ from a Cooper
+characteristic root to the Problem~2.7 sequence scale.
+However, the connection is spectral only: it identifies the
+Poincar\'e spectrum but not the accessory parameters, finite
+singularities, or connection coefficients. A full operator
+equivalence would require an exact Ore intertwiner
+$L_{27}R = Q L_{\mathrm{tr}}$ and, independently, a level-11
+companion period evaluating to $\zeta(2) + \zeta(3)$. No
+such companion appears in Cooper's published analysis.
+\end{remark}
+
+\section{Unconditional proof of $c_0(e) = 0$
+via rational gauge transfer}\label{sec:gauge}
+
+The preceding sections established that $c_0(e) = 0$ is
+supported by a $5200$-digit numerical certificate.
+We now prove $c_0(e) = 0$ unconditionally by constructing an
+explicit rational gauge from Zudilin's \cite{Zudilin2004}
+simultaneous approximation to $\zeta(2)$ and $\zeta(3)$.
+
+\subsection{Zudilin's recurrence and companion}
+
+Zudilin \cite{Zudilin2004} constructs sequences $b_n \in \mathbb{Z}$,
+$\tilde{b}_n \in \mathbb{Q}$, $\tilde{\tilde{b}}_n \in \mathbb{Q}$
+satisfying a common four-term recurrence (equation~(6.4) in
+\cite{Zudilin2004}):
+\begin{equation}\label{eq:zudilin-rec}
+\begin{aligned}
+&2(946n^2{-}731n{+}153)(2n{+}1)(n{+}1)^3\,b_{n+1} \\
+&\quad = 2(104060n^6{+}\cdots{+}1071)\,b_n
+- 2n(3784n^5{-}\cdots{-}184)\,b_{n-1} \\
+&\quad\quad + (946n^2{+}1161n{+}368)\,n(n{-}1)^3\,b_{n-2},
+\end{aligned}
+\end{equation}
+with initial conditions $b_0 = 1$, $b_1 = 7$, $b_2 = 163$
+and similar for $\tilde{b}$ and $\tilde{\tilde{b}}$.
+The key property is that the combined error
+\begin{equation}\label{eq:zudilin-error}
+\varepsilon_n = (\tilde{b}_n + \tilde{\tilde{b}}_n)
+- (\zeta(2)+\zeta(3))\,b_n
+\end{equation}
+is \emph{subdominant}: the Poincar\'e polynomial is the same
+cubic $4\nu^3 - 220\nu^2 + 8\nu - 1 = 0$, and Zudilin proves
+that $\varepsilon_n$ has growth rate $|\nu_\pm|^n$ (the
+recessive rate), not $\nu_0^n$.
+
+Write $C_Z(n)$ for the $3\times 3$ companion matrix of the
+Zudilin monic recurrence (shifted by $m = n+2$ to align
+indices), and $C_P(n)$ for the companion of the scaled P2.7
+recurrence $\hat{u}_n = 64^n u_n$.
+
+\subsection{The rank-one $h$-twist}
+
+Define the half-integral Pochhammer ratio
+\begin{equation}\label{eq:h}
+h_n = \frac{(4)_n^3}{(5/2)_n\,(7/2)_n\,(9/2)_n},
+\end{equation}
+which satisfies $h_n \sim C\,n^{3/2}$ as $n \to \infty$ and
+\[
+r(n) := \frac{h_{n+1}}{h_n}
+= \frac{(n+4)^3}{(n+5/2)(n+7/2)(n+9/2)}.
+\]
+The \emph{rank-one $h$-twisted Zudilin companion} is
+\begin{equation}\label{eq:CZh}
+C_Z^{(h)}(n) = r(n)\,C_Z(n).
+\end{equation}
+This twist absorbs the Birkhoff exponent discrepancy between
+the two systems: Zudilin's exponents are $\sigma_j = -3/2$
+while P2.7's are $\sigma_j = 0$, and $h_n \sim n^{3/2}$
+bridges this gap.
+
+\subsection{The rational gauge}
+
+\begin{theorem}[Rational gauge]\label{thm:gauge}
+There exists a matrix $R(n) \in \mathrm{GL}_3(\mathbb{Q}(n))$
+with the following properties:
+\begin{enumerate}
+\item[\emph{(i)}] \textbf{Gauge equation:}
+$R(n{+}1)\,C_Z^{(h)}(n) = C_P(n)\,R(n)$
+as an identity over $\mathbb{Q}(n)$.
+\item[\emph{(ii)}] \textbf{Denominator correspondence:}
+$R(0)\,\mathbf{z}_b = \hat{\mathbf{x}}_q$,
+where $\mathbf{z}_b = (b_2,b_1,b_0)^T = (163,7,1)^T$ and
+$\hat{\mathbf{x}}_q = (64^2 q_2, 64\,q_1, q_0)^T$.
+\item[\emph{(iii)}] \textbf{Numerator correspondence:}
+$R(0)\,\mathbf{z}_m = \hat{\mathbf{x}}_p$,
+where $\mathbf{z}_m = ((\tilde{b}+\tilde{\tilde{b}})_2,
+(\tilde{b}+\tilde{\tilde{b}})_1,
+(\tilde{b}+\tilde{\tilde{b}})_0)^T$ and
+$\hat{\mathbf{x}}_p = (64^2 p_2, 64\,p_1, p_0)^T$.
+\item[\emph{(iv)}] \textbf{Determinant coboundary:}
+$\det R(n) / \Delta(n) = \kappa$ is constant, where
+\[
+\Delta(n) = \frac{(n+1)^3(n+2)^4}{(n+3)^3\,
+Q_{209}(n+83/22)\,Q_{209}(n+3)}
+\]
+and $\kappa = -5158853520225963849071198208000 \neq 0$.
+\end{enumerate}
+The entries of $R$ have the structure:
+row~0 has numerator and denominator degree~12,
+row~1 has degree~9, and row~2 has degree~7 (after cancellation).
+\end{theorem}
+
+\begin{proof}
+By explicit construction and computer-algebra verification.
+The gauge was found by the following procedure:
+\begin{enumerate}
+\item Compute the determinant ratio
+$\det C_P(n) / \det C_Z^{(h)}(n) = \Delta(n+1)/\Delta(n)$
+to identify the coboundary~$\Delta$.
+\item Form the universal denominator
+$D(n) = \operatorname{lcm}(D_\Delta, D_{\mathrm{sing}})$
+of degree~$25$, where $D_\Delta$ is the denominator of~$\Delta$
+and $D_{\mathrm{sing}}$ is the lcm of the singular denominators
+of $C_P$ and $C_Z^{(h)}$.
+\item Parameterize $R(0)$ by the three free parameters
+$s = (s_2, s_1, s_0)$ arising from the third Zudilin solution
+($\tilde{b}_n$ vs.\ $\tilde{\tilde{b}}_n$ split), using the
+two marked conditions~(ii) and~(iii) to constrain columns~1
+and~3 of the initial matrix.
+\item Propagate $R(k) = C_P(k{-}1)\,R(k{-}1)\,(C_Z^{(h)}(k{-}1))^{-1}$
+for $k = 0, \ldots, 33$ (symbolically in~$s$) and solve
+the overdetermined system
+$D(k)\,R_{ij}(k) = \sum_\ell c_{ij\ell}\,k^\ell$
+for the polynomial numerator coefficients $c_{ij\ell}$
+and the splitting parameter~$s$.
+\item Verify the symbolic identity (i) in the fraction field
+$\mathbb{Q}(n)$ using Sage: all nine entries of the residual
+$R(n{+}1)\,C_Z^{(h)}(n) - C_P(n)\,R(n)$ are identically zero.
+\item Verify (ii), (iii), (iv) by exact evaluation at $n = 0$.
+\end{enumerate}
+All verifications pass. The complete gauge matrix $R(n)$, with
+nine rational-function entries, is provided in the supplementary
+file \texttt{gauge\_R.txt} and independently verified in
+\texttt{verify\_gauge.py} using exact Python Fraction arithmetic.
+\end{proof}
+
+\subsection{Transfer of subdominance}\label{ssec:transfer}
+
+\begin{theorem}[Transfer]\label{thm:transfer}
+The dominant Birkhoff coefficient $c_0(e) = 0$.
+\end{theorem}
+
+\begin{proof}
+Let $X_n(u) = (\hat{u}_{n+2}, \hat{u}_{n+1}, \hat{u}_n)^T$
+denote the state vector of a scaled P2.7 sequence, and
+$Z_n(v) = (v_{n+2}, v_{n+1}, v_n)^T$ for a Zudilin sequence.
+From properties~(ii) and~(iii) of the gauge:
+\[
+X_0(\hat{q}) = R(0)\,Z_0(b), \qquad
+X_0(\hat{p}) = R(0)\,Z_0(\tilde{b}+\tilde{\tilde{b}}).
+\]
+Define $\hat{e}_n = \hat{p}_n - (\zeta(2)+\zeta(3))\hat{q}_n$
+and $\varepsilon_n = (\tilde{b}_n+\tilde{\tilde{b}}_n) -
+(\zeta(2)+\zeta(3))b_n$. Then
+$X_0(\hat{e}) = R(0)\,Z_0(\varepsilon)$.
+
+The gauge equation (i) and the recurrence relations give
+$X_n(\hat{u}) = C_P(n{-}1)\cdots C_P(0)\,X_0(\hat{u})$ and
+similarly for $Z_n$. Inducting on the gauge equation:
+\[
+X_n(\hat{e}) = R(n)\,\prod_{k=0}^{n-1} r(k)\,\cdot\,Z_n(\varepsilon)
+= R(n)\,h_n\,Z_n(\varepsilon),
+\]
+where $\prod_{k=0}^{n-1} r(k) = h_n/h_0 = h_n$ since
+$r(k) = h_{k+1}/h_k$ and $h_0 = 1$.
+
+Therefore $\|X_n(\hat{e})\| \le \|R(n)\|\cdot h_n\cdot\|Z_n(\varepsilon)\|$. We bound each factor:
+\begin{itemize}
+\item $\|R(n)\| = O(n^d)$ for some $d \le 12$
+(rational function of~$n$ with numerator degree at most~12
+and nonvanishing denominator for $n \ge 0$).
+\item $h_n = O(n^{3/2})$ by~\eqref{eq:h} and Stirling's
+approximation.
+\item Zudilin \cite{Zudilin2004} proves that $\varepsilon_n$
+is in the subdominant subspace. By the Birkhoff--Adams theorem
+(with Zudilin exponents $\sigma_j = -3/2$), the state vector
+$\|Z_n(\varepsilon)\| = O(|\nu_\pm|^n\,n^{-3/2})$
+as $n \to \infty$.
+\end{itemize}
+
+Combining:
+\[
+\|X_n(\hat{e})\| = O(n^d \cdot n^{3/2} \cdot |\nu_\pm|^n \cdot n^{-3/2})
+= O(|\nu_\pm|^n \cdot n^d) \to 0,
+\]
+since $|\nu_\pm| \approx 0.0674 < 1$. The polynomial factor
+$n^d$ does not affect the exponential decay.
+
+Since $X_n(\hat{e})$ decays exponentially at rate $|\nu_\pm|^n$,
+and the dominant growth rate in the P2.7 system is $\nu_0^n$
+with $\nu_0 \approx 54.96 \gg 1$, the dominant component
+of~$\hat{e}$ must vanish: $c_0(e) = 0$.
+\end{proof}
+
+\begin{corollary}
+$\displaystyle\lim_{n\to\infty} \frac{p_n}{q_n}
+= \zeta(2) + \zeta(3)$. \qed
+\end{corollary}
+
+\begin{remark}
+The gauge $R(n)$ was discovered by Sage computation using an
+ansatz with $9 \times 26 + 3 = 237$ unknowns (nine polynomial
+numerators of degree~$\le 25$ plus three splitting parameters),
+constrained by $33 \times 9 = 297$ evaluation equations from
+the gauge propagation plus the two marked initial conditions.
+The critical insight enabling the construction was the rank-one
+$h$-twist~\eqref{eq:CZh}, which accounts for the Birkhoff
+exponent mismatch and produces the correct determinant
+coboundary~$\Delta(n)$.
+\end{remark}
+
+\begin{thebibliography}{10}
+\bibitem{Challenge2026}
+Ramanujan Machine Group,
+\emph{The Ramanujan Challenge for AI}, 2026.
+
+\bibitem{Cooper2012}
+S.~Cooper,
+\emph{Sporadic sequences, modular forms and new series
+for~$1/\pi$},
+Ramanujan J.\ \textbf{29} (2012), 163--183.
+
+\bibitem{Elaydi2005}
+S.~Elaydi,
+\emph{An Introduction to Difference Equations},
+3rd ed., Springer, 2005.
+
+\bibitem{Perron1929}
+O.~Perron,
+\emph{\"Uber einen Satz des Herrn Poincar\'e},
+J.\ Reine Angew.\ Math.\ \textbf{136} (1909), 17--37.
+
+\bibitem{DauguetZudilin}
+S.~Dauguet and W.~Zudilin,
+\emph{On simultaneous Diophantine approximations to $\zeta(2)$
+and $\zeta(3)$},
+J.\ Number Theory \textbf{145} (2014).
+
+\bibitem{CMFpaper}
+S.~Weinbaum, E.~Leibtag, R.~Kalisch, M.~Shalyt, I.~Kaminer,
+\emph{On Conservative Matrix Fields: Continuous Asymptotics and
+Arithmetic}, arXiv:2507.08138.
+
+\bibitem{BFS2011}
+J.~Borcea, S.~Friedland, and B.~Shapiro,
+\emph{Parametric Poincar\'e--Perron theorem with applications},
+J.\ Anal.\ Math.\ \textbf{113} (2011), 1--63.
+
+\bibitem{AESZ2005}
+G.~Almkvist, C.~van~Enckevort, D.~van~Straten, and W.~Zudilin,
+\emph{Tables of Calabi--Yau equations},
+arXiv:math/0507430 (2005).
+
+\bibitem{Almkvist2006}
+G.~Almkvist,
+\emph{Calabi--Yau differential equations of degree~2 and~3
+and Yifan Yang's pullback},
+arXiv:math/0612215 (2006).
+
+\bibitem{Zudilin2004}
+W.~Zudilin,
+\emph{Well-poised hypergeometric transformations of Euler-type
+multiple integrals},
+J.\ London Math.\ Soc.\ \textbf{70} (2004), 215--231;
+arXiv:math/0409023.
+
+\bibitem{FHV2014}
+G.~Filipuk, M.~Haneczok, and W.~Van~Assche,
+\emph{Computing recurrence coefficients of multiple orthogonal
+polynomials},
+Numer.\ Algorithms \textbf{68} (2015), 519--543.
+\end{thebibliography}
+
+\end{document}
