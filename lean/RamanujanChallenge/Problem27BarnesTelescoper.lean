@@ -145,10 +145,10 @@ theorem ctAlphaC_eq27 (N : ℂ) :
 /-! ## Direct `t`-coordinate rational functions -/
 
 def ctNumerator27 (n : ℕ) (t : ℂ) : ℂ :=
-  ∏ r in Finset.range n, (t - (((r + 1 : ℕ) : ℂ))) ^ 3
+  ∏ r ∈ Finset.range n, (t - (((r + 1 : ℕ) : ℂ))) ^ 3
 
 def ctPoleProduct27 (m : ℕ) (t : ℂ) : ℂ :=
-  ∏ j in Finset.range m, (t + (j : ℂ))
+  ∏ j ∈ Finset.range m, (t + (j : ℂ))
 
 def ctR27 (n : ℕ) (t : ℂ) : ℂ :=
   ctNumerator27 n t /
