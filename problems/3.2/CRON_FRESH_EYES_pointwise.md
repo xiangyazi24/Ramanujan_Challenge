@@ -706,3 +706,35 @@ mean_max 单调增 ⟹ **极值律增长坐实，非有界**。life 单素数采
 **AN.4 共同盲点提示（值得单列）**："n 当离散时间"可能是错参数化——Apéry 递推来自 Picard–Fuchs，真对象或是 **F-crystal 族的有限域点**；找对参数空间后变系数矩阵乘积可能退化为普通 trace-function 问题。与在飞 qM（深度层 Dwork 半线性）正面共振——qM 落地后合并研判。文献四条核对全真（Iwaniec–Kowalski Ch.16 dispersion；BFI Acta Math 156；Shparlinski；Deligne Weil II——后者明确标注"当前不可直接引用，缺固定 conductor sheaf"）。归档 chatgpt-answers/Q6516.md。其 dispatch-priority #1（G/p 稳定性数值）已执行 → AN.5。
 
 **AN.5 GPRV θ=0 经验定格【全战役最强经验陈述】**（CRON_gprv_stability.py，四波段 3k/10k/30k/100k 各 8 素数，μ_h=奇偶类经验均值口径）：**G/p = 1.069 / 1.087 / 1.093 / 1.082——p 跨 33 倍，G/p 钉死 ≈1.08**。μ_even≈1.50、μ_odd≈0.50（与 AM.6 全谱结构一致）。**即 E1 的精确充分统计量 [GPRV] Σ_h(C_h−μ_h)² ≤ Cp 以 θ=0、C≈1.08 经验成立、跨 1.5 个数量级无漂移**——(E1) 链条上从假设到充分统计量的每一环（E^π=3p、谱形、三阶矩、P 部分、GPRV）现已全部经验封顶。剩余 = 唯一数学缺口：证明 GPRV（或任何 θ<1 版本，θ<1 即超越 THM-ENERGY-3/2）。
+
+---
+
+## 附录 AO（战役三续）：qL/Q6511 收获——主靶重组（TRIPLE > BDH-2 > 中心化）+ 指数机器 + RADIAL-BDH（Q6499 勘误）+ St⊠St 死亡证书 + 我方 B1 敌意审计接受
+
+**AO.1 主靶重组【逻辑判决】**：中心化协方差 Σ(J−R_hR_k/p) **不闭合**——恒等式 (10) 把未知一阶量 S²/N 带回主项；要闭合必须另给三选一输入，而其中两个自身已闭合。价值排序定格：**(TRIPLE) T3=Σ_v(m_v)₃ ≪ N ＞ (BDH-2) Σ_hR_h² ≪ N ＞ 中心化常数**。核心一行不等式（完整证明）：**E^π ≤ 2N + T3**（m=2 类贡献 ≤N；m≥3 类 (m)₂≤(m)₃）。命名靶 **[ATR]**：Σ_{h≠k}J(h,k) ≪ p ⟹ E^π≪p。我方 T3/p=3.974 数据 = [ATR] 的直接证据（非间接）。精确恒等式：非回绕有序口径 Σ_{h≠k}J = T3/3（每个同色三元组贡献 2 个有序 (h,k)）。
+
+**AO.2 指数机器【完整证明，定理接口】**：设 Q_p(Δ)=Σ_r C(d_Δ(r),2)（d_Δ(r)=#{h≤Δ: 碰撞}）。**(Q_σ) Q_p(Δ)≪Δ^{3−σ}p^ε ⟹ E^π ≪ p^{2−1/(3−σ)+ε}**（分块+Cauchy，(17)(18)(19)）。σ=0 恰好 p^{5/3}——**当前卡点的精确解释：逐对次数求和 J≪h+k 给 Q≪Δ³，瓶颈=需要 (h,k) 平均根数的任意幂节省**。σ=1→p^{3/2}（与 life 块分割定理异曲同工）；最现实第一档 Q_p(Δ)≪Δ^{2+o(1)}（平均共同根 p^{o(1)}）→ E^π≪p^{3/2+o(1)}。换序 (p,h) 平均版只给"几乎所有 p"。
+
+**AO.3 RADIAL-BDH + Q6499 勘误**：正确 Fourier 代理是**射线相关和** Σ_ℓ|Σ_{a≠0}T(aξ_ℓ)|² ≪ p³ ⟺ E^π≪p（精确恒等式 (22)(23)(24)，含 p=5 十行单元测试实例）。**普通 Σ|T|⁴/Parseval 是错对象**（计数仿射加法关系 v_a+v_b=v_c+v_d，非射影共线 v_n=λv_m）；**Q6499 归档中"控制 Σ|T|² 即可"为误——勘误挂牌**（AN.1 的按方向局部二阶矩口径与 RADIAL-BDH 一致，无冲突）。逐点 |T|≪√p 也不够：射线内 p−1 个频率可同相叠加到 p^{3/2}。
+
+**AO.4 谱路线死亡证书**：正确表示是 **St⊠St（维数~p²）非标准 2⊗2**（固定线命中=1/(p+1) 稀疏 delta，低维矩阵元解析不了）；需要归一化矩阵元误差 **O(p^{−2})**——常数谱隙/普通 p^{−1/2} 等分布/逐对平方根全不够；Bourgain–Gamburd（Ann. Math. 167 Thm 1）不可移植：字母 M_r 随时间变化+条件化在稀疏子集，无 μ_{h+k}≈μ_h*μ_k 卷积结构（假设它≈假设所求独立性）。FKM sums of products（Phil. Trans. A 373, Prop 1.1/Thm 1.5/Cor 1.6）最接近但需固定秩/导手 sheaf——h 到幂尺度时 continuant 次数增长，无现成定理。
+
+**AO.5 随机模型精确计算（模型内定理）**：Poisson(1/2)+镜像模型给 **E[E^π]=3p+O(1) 与 E[T3]=4p+O(1) 同源**（(2X)₃=8(X)₃+12(X)₂）——3.974 对 4.000 的吻合与 3p 来自同一模型，非独立巧合。极值 max m ≍ 2log p/loglog p（与 AM.2 定量 Poisson 核对一致）。
+
+**AO.6 我方 B1 敌意审计——接受全部三条**：(1) 脚本注释 "T3=Σ_{h1≠h2}J" 在非回绕口径**差因子 3**（正确：3·ΣJ_nonwrap=T3）；**数值 T3/p=3.974 不受影响**（直接由重数谱算得）——口径锁断言待加。(2) 随机基准镜像配对 p−2−n 差一格：不影响 T3、影响小样本 J。(3) h=1 是 Casoratian 结构性空事件，基准应硬编码禁配。J 稀疏数据只支持"无正相关"（与我方原口径一致，未过度声称）。**下一版实验六条清单**（口径锁/精确镜像基准/dyadic Q_p(H) 尺度曲线/A_p(H) 平坦性/异常分层/径向 Fourier 核对）→ 已列入执行队列。
+
+**AO.7 资源排序（采纳）**：深度层路线（qM）主攻最终点态/primitive support（二阶链对 singleton 首返回失明——引 69a16680 §99，验真）；qL 线主攻 [ATR] 与第一个指数改进；不优先精确中心化常数。**盲点（立项文档收录）**：薄而高影响的异常对应族（graph/self-twist 分量，特定 digit/Kummer 阶或 h±k 同余类）在总均值中密度为零——0.6% 吻合看不见它；**下一步实验必须按异常几何分层，证明必须先枚举剔除 graph components**。全部仓库锚点（3 commits + blob）git cat-file 验真；文献（BG/FKM/Katz Thm 7.2）真实。归档 chatgpt-answers/Q6511.md。
+
+---
+
+## 附录 AP（战役三续）：qM/Q6509 收获——**范畴修正（c=mixed extension，非 MUM log 解）**+ 跨块 digit 律与 κ_p=−(2/3)B_{p−3} 机验定理级 + 深度零秩一退化定理化 + 能量杠杆分叉实验立项
+
+**AP.1 范畴修正【勘误级，最重要】**：c 的生成函数满足 **LC = t（非齐次！）**——c 不在 Apéry 算子的三维 MUM 解空间里，不是"第二 Frobenius 解/MUM log 解的影子"（**AJ.3/AK.4 该用语勘误**）。正确对象 = **纯 K3 F-crystal 的 mixed extension / p-adic normal function / syntomic regulator 类**（秩四 mixed differential module：秩三 K3 ⊕ 源项秩一）。搜索方向修正："second solution Dwork congruence" 是错误范畴；正确 = "Frobenius on mixed/normal-function extension"（方法学先例：Asakura log-type p-adic hypergeometric + syntomic regulators；Asakura–Hagihara 2307.08940）。表面悖论解释：ζ_p(3) 不在纯阶三 K3 Frobenius 矩阵（α_3 属阶四 CY）——它从 mixed extension 第三深度出现。
+
+**AP.2 定理级机验（我方 CRON_qM_audit13.py，AUDIT-1/3 全过 177 组）**：(1) **跨块 digit 律 (A)：p³c_{ap+v} ≡ c_a·b_v (mod p)**（证明：Apéry numerator 有限和 + Lucas + 进位分析，n<p² 内完整；更深 digit 迭代需重新处理多重进位——不得声称全深度）。(2) **W 精确赋值律：v_p(W_{ap+v})=3(a−1) 泛型 + (−1)^a·W_a·(v!)³·b_v 剩余类；泛型 c_{ap+v} 恒为 p^{−3} 阶（不随块数加深）**；p|b_v 处 +1 凸起=金数据全解释。(3) **κ_p := (p³c_p−1)/p³ mod p ≡ −(2/3)·B_{p−3} (mod p)【Bernoulli 识别】**——κ_13=1, κ_17=3, κ_29=11 机验✓；W 侧 (W_p−((p−1)!)³)/p³≡−κ_p ✓；Kummer 分支规范下与 ζ_p(3) 剩余类相关（限口径：仅模 p，未声称 Z_p 精确恒等式）。
+
+**AP.3 深度零秩一退化定理化**：跨块归一化点全落同一射影线（Gessel + (A) ⟹ 秩一）——AK.4 观察到的 mod-p 图表退化是结构必然而非数值偶然。**首个新坐标是 jet D_v（D_1=6, D_2=105, D_3=2219），不是 c_v**；目前无恒等式从有限个 holomorphic jet 恢复 c_v/b_v（甚至未必为真——c 非齐次 vs jet 来自齐次 period）。
+
+**AP.4 能量杠杆分叉（AUDIT-4 立项）**：深度塔现状=解释赋值、不压缩碰撞。三条最小引理任一到手即变能量工具：(i) c_v ≡ R_m(b_v,D_v,E_v,…) 有界次数恢复；(ii) 碰撞自动强推非平凡 jet 条件；(iii) mixed Frobenius extension 给独立 affine cocycle 每碰撞加一新方程。AUDIT-4（jet 张成测试 + 低次关系搜索 + 碰撞对上 b_rD_s−b_sD_r 消失率）= 死亡证书或 O(p) 入口的分叉实验。可执行几何路线：建秩四 mixed connection、解半线性 Φ 到 p^4、查 extension entry 是否提升 κ_p。
+
+**AP.5 [F] 转存缺陷与文献**：bridge 剥离 display-math——(B0) 母递推、(C2)/(C3) 完整式、jet 定义不全，**AUDIT-2/4 待 ASCII 重发**（已派 cron2 短问）。文献包：Beukers–Vlasenko Dwork crystals I–III + "Frobenius structure and p-adic zeta values"（Adv. Math. 480 (2025), Prop 1.3）+ Asakura 系 + Rowland–Yassawi–Krattenthaler（entire interpolation, D_v 来源）+ Beukers p-linear schemes（Indag. 2024）——含其对 Krattenthaler–Müller 引用的自查纠正。仓库锚点 88504170 验真。Casoratian 索引规范差一位的 [F] 标注采纳。归档 chatgpt-answers/Q6509.md。**共同盲点两条（立项收录）**：(1) c 与纯 MUM log 解混同=范畴错；(2) "跨块压缩自动控第一块能量"是错觉（最低层秩一退化、深层先见 jet 非 c）。
