@@ -288,3 +288,17 @@ N³ 因子 = 全部刚性机制。端点数据仅需 b_p ≡ 5 mod p³（Coster�
 **I.3 Dwork 层判决**：已发表 Dwork 同余在 s≥2 对 t^{p+r} 系数**同义反复**（两侧同为 b_{p+r}+b₁b_r）——不能给出高层；U₁,U₂ 是 **index/contiguity（Kummer 指数）方向的 jet**，非 t-方向 Gauss–Manin 导数。晶体解释 = 新工作（对数 Kummer 扩张 + 整 contiguity 基 + 比较定理，Q6330 §10 九步骨架，[GAP] 明示）。**证明策略倒转**：先递推传输定理（无条件、有限、精确），晶体比较作为第二层解释——正合我们的形式化取向，Layer A–E 依赖图 Lean-ready。
 
 **I.4 文献链**：Straub 2301.12248; Mellit–Vlasenko 1306.5811; Beukers–Vlasenko Dwork crystals I–III (1903.11155, 1907.10390, 2105.14841; III§7.5 是猜想非定理); Samol–van Straten 0911.0797; Mao–Wang 2024 (b_{2p} 型 Bernoulli 修正近亲); Booker et al. 2101.11157 (Wolstenholme 素数)。
+
+---
+
+## 附录 J（2026-08-01 续）：Q6329 收获——四分点定律双向完整证明 + τ/σ 正典识别 + 值的 Gauss 分离
+
+**J.1 定律双向证明（第二独立证明 + 新的不消失方向）**：反商符号定理 ε_p = (−1)^{d_p}(−3|p)（与我们的 (−2|p) 表述在全部类上恒等，两种等价写法），经 CFVZ Franel 拉回 H(−1) = (−3|p)（终止 ₂F₁(1/3,2/3;1;1) + Chu–Vandermonde）证明——与 R18 同路线，独立复现=交叉验证。**新**：不消失方向也证了——反商恒等式在中点邻域给出传播恒等式 **τ_m ≡ 3τ_{m−1}（p≡1 mod 24）**、σ_{m−1} ≡ 3σ_m（p≡19），若中点为零则连续两零回传到 τ_0=1 矛盾。∎（传播恒等式已验证 12/12。）
+
+**J.2 正典识别**：τ, σ = Apéry Picard–Fuchs 系统的两支 **quarter-shifted rank-2 Heun 周期**（算子 L_{1/2}, L_{3/2}，单参族 L_α；中心化后统一为 (z±1/4)(z±3/4) 递推——"四分位移"解释挠点为何在四分点）。非 Zagier sporadic/AESZ；τ-递推 2023 年在 MathOverflow 以 "pre-Apéry" 出现（G. Edgar），无发表算术研究。**勘误 [F]**：√E 是**权 1 带乘子系统**（双覆盖），不是通常意义的半整权形式（修正附录 C 的表述）。σ 支四分点在 F_p 上无四次字符（4∤p−1）——统一机制是**中 Mellin 对称**，非四次字符（修正我的 Fourier 表述）。
+
+**J.3 值的分离（已验证 12/12）**：p ≡ 1 mod 24, m=(p−1)/4：**τ_m ≡ 2A·U_m (mod p)**，p = A²+B², A≡1 mod 4（Gauss 中心二项因子），U 满足 (n+1)(2n+1)U_{n+1} = (68n²+34n+5)U_n − n(2n−1)U_{n−1}, U_0=1, U_1=5（有理序列——答案称整数系过强，mod p 成立）。残差 U_m **不是** disc −24 CM 迹（数据证伪 ±2x 等）；预期需要**定向 order-24 分圆数据**（选定 p 上素理想），非 (x,y) 低次多项式。[OPEN] 保持。Lagrange 反演精确闭式 (5.5)/(5.6) 备档。
+
+**J.4 Y_p 结构判决**：Y_p = 挠部（仅中点零，(6.5)）⊔ 泛型部（高阶 Mellin 扭，Poisson 模型）；正确形式框架 = Forey–Fresán–Kowalski 算术 Fourier 变换（arXiv:2109.11961），需对本 Heun 层做单值性计算。与 Q6325 战局图完全一致。
+
+**J.5 传输诊断（系统性）**：Q6329 的 delivery note 揭示池 A 该 tab 的 GitHub/Notion connector **只读无写**——池 A 全部 ALL-CONNECTORS-FAILED 的根因。池 A 答案只能 in-chat/手贴回收。
