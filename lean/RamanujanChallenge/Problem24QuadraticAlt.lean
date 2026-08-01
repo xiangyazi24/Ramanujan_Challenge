@@ -1950,6 +1950,229 @@ theorem quadAltF_tendsto_zero_right :
   field_simp
 
 
+/-- Landen identity (Q6047 (4.5)): `Li2(−x) = −Li2(x/(1+x)) − log(1+x)²/2`
+for `0 < x < 1`. Proved via `g' = 0` on `(0,1)` and `g(0) = 0`. -/
+theorem quadAlt_dilog_landen {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    dilog (-x) = -dilog (x / (1 + x)) - Real.log (1 + x) ^ 2 / 2 := by
+  -- 不必自造：Problem26WeightThree.dilog_landen_half26 就是这条, 代 x/(1+x)
+  have h1px : (0:ℝ) < 1 + x := by linarith
+  have hu0 : 0 < x / (1 + x) := by positivity
+  have huhalf : x / (1 + x) ≤ 1 / 2 := by
+    rw [div_le_iff₀ h1px]; linarith
+  have h1u : 1 - x / (1 + x) = 1 / (1 + x) := by
+    field_simp
+    ring
+  have hkey := RamanujanChallenge.P26.dilog_landen_half26 hu0 huhalf
+  rw [h1u] at hkey
+  have harg : -(x / (1 + x)) / (1 / (1 + x)) = -x := by field_simp
+  rw [harg] at hkey
+  have hlog : Real.log (1 / (1 + x)) = -Real.log (1 + x) := by
+    rw [one_div, Real.log_inv]
+  rw [hlog] at hkey
+  rw [hkey]; ring
+
+/-- Bridge `−2V(x) = W0(2x/(1+x))` for `0 < x < 1` (Q6047 (4.6)-(4.7)+(5.2)):
+the Landen form `W` becomes `W0` under `t = 2x/(1+x)` (`u = t/2`). -/
+theorem quadAlt_neg2V_eq_W0 {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    -2 * quadAltV x = W0 (2 * x / (1 + x)) := by
+  unfold quadAltV W0
+  have hd := quadAlt_dilog_landen hx0 hx1
+  rw [hd]
+  have hlog : Real.log (2 * x / (1 + x) / 2) = Real.log (x / (1 + x)) := by
+    congr 1
+    ring
+  rw [hlog]
+  have hxlog : Real.log (x / (1 + x)) = Real.log x - Real.log (1 + x) := by
+    rw [Real.log_div (ne_of_gt hx0) (by positivity : (1 + x) ≠ 0)]
+  rw [hxlog]
+  ring
+
+/-- `W0(1) = 0` (double zero at `t=1`, needed for boundary terms). -/
+theorem quadAltW0_one : W0 1 = 0 := by
+  unfold W0
+  rw [quadAlt_dilog_half]
+  have hlog : Real.log (1 / 2) ^ 2 = Real.log 2 ^ 2 := by
+    rw [Real.log_div]
+    · rw [Real.log_one]
+      ring
+    · norm_num
+    · norm_num
+  rw [hlog]
+  ring
+
+/-- `W0` is differentiable at `1` with derivative `0` (the hypothesis of
+`quadAltW0_hasDerivAt` only ever needed `t < 2`, so `t = 1` is an interior point). -/
+theorem quadAltW0_hasDerivAt_one : HasDerivAt W0 0 1 := by
+  have h := quadAltW0_hasDerivAt (t := 1) (by norm_num) (by norm_num)
+  norm_num at h
+  exact h
+
+/-- `W0 t / (t - 1) → 0` as `t → 1`. -/
+theorem quadAltW0_slope_tendsto :
+    Tendsto (fun t : ℝ => W0 t / (t - 1)) (𝓝[≠] (1:ℝ)) (𝓝 0) :=
+  slope_tendsto_of_hasDerivAt_eq_zero W0 1 0 quadAltW0_hasDerivAt_one quadAltW0_one
+
+/-! ## Right-endpoint atoms: transport through `x ↦ 1-x`, and `V`'s double zero at 1
+
+`V 1 = 0` and `V' 1 = log 1/(1·2) = 0`, so `V` vanishes to second order at `1`.
+Proving that directly would want `dilog` differentiable at the boundary point
+`-1`; instead we go through `-2 V x = W0 (2x/(1+x))`, for which `1` is an
+interior point (`W0` only ever needed `t < 2`). -/
+
+theorem tendsto_one_sub_nhdsWithin :
+    Tendsto (fun x : ℝ => 1 - x) (𝓝[<] (1:ℝ)) (𝓝[>] (0:ℝ)) := by
+  rw [tendsto_nhdsWithin_iff]
+  constructor
+  · have hcont : Continuous (fun x : ℝ => 1 - x) := by fun_prop
+    have hc : Tendsto (fun x : ℝ => 1 - x) (𝓝 (1:ℝ)) (𝓝 0) := by
+      have h1 := hcont.tendsto (1:ℝ)
+      simpa using h1
+    exact hc.mono_left nhdsWithin_le_nhds
+  · filter_upwards [self_mem_nhdsWithin] with x hx
+    have hx1 : x < 1 := hx
+    simp only [Set.mem_Ioi]
+    linarith
+
+theorem oneSub_logSq_tendsto :
+    Tendsto (fun x : ℝ => Real.log (1-x) ^ 2 * (1-x)) (𝓝[<] (1:ℝ)) (𝓝 0) :=
+  logSq_mul_self_tendsto.comp tendsto_one_sub_nhdsWithin
+
+theorem oneSub_log_tendsto :
+    Tendsto (fun x : ℝ => Real.log (1-x) * (1-x)) (𝓝[<] (1:ℝ)) (𝓝 0) :=
+  log_mul_self_tendsto.comp tendsto_one_sub_nhdsWithin
+
+/-- The Möbius map `x ↦ 2x/(1+x)` sends `𝓝[<] 1` into `𝓝[≠] 1`. -/
+theorem tendsto_mobius_nhdsNe_one :
+    Tendsto (fun x : ℝ => 2 * x / (1 + x)) (𝓝[<] (1:ℝ)) (𝓝[≠] (1:ℝ)) := by
+  rw [tendsto_nhdsWithin_iff]
+  constructor
+  · have hc : ContinuousAt (fun x : ℝ => 2 * x / (1 + x)) 1 := by
+      apply ContinuousAt.div (by fun_prop) (by fun_prop)
+      norm_num
+    have h1 := hc.tendsto
+    norm_num at h1
+    exact h1.mono_left nhdsWithin_le_nhds
+  · filter_upwards [self_mem_nhdsWithin,
+      (eventually_gt_nhds (show (0:ℝ) < 1 by norm_num)).filter_mono
+        nhdsWithin_le_nhds] with x hx hxpos
+    have hx1 : x < 1 := hx
+    have h1x : (0:ℝ) < 1 + x := by linarith
+    simp only [Set.mem_compl_iff, Set.mem_singleton_iff]
+    intro hcon
+    rw [div_eq_one_iff_eq (ne_of_gt h1x)] at hcon
+    linarith
+
+/-- `V x / (x - 1) → 0` as `x → 1⁻`: `V` has a double zero at `1`, seen through
+`-2 V x = W0 (2x/(1+x))` where `1` is an interior point of `W0`'s good range. -/
+theorem quadAltV_slope_tendsto_one :
+    Tendsto (fun x : ℝ => quadAltV x / (x - 1)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+  have hcomp := quadAltW0_slope_tendsto.comp tendsto_mobius_nhdsNe_one
+  -- W0(t)/(t-1) = -2·V x·(1+x)/(x-1), so multiply by -1/(2(1+x)) → -1/4
+  have hg : Tendsto (fun x : ℝ => -1 / (2 * (1 + x))) (𝓝[<] (1:ℝ)) (𝓝 (-(1/4))) := by
+    have hc : ContinuousAt (fun x : ℝ => -1 / (2 * (1 + x))) 1 := by
+      apply ContinuousAt.div (by fun_prop) (by fun_prop)
+      norm_num
+    have h1 := hc.tendsto
+    norm_num at h1
+    exact h1.mono_left nhdsWithin_le_nhds
+  have hmul := hcomp.mul hg
+  simp only [zero_mul] at hmul
+  refine hmul.congr' ?_
+  filter_upwards [self_mem_nhdsWithin,
+    (eventually_gt_nhds (show (0:ℝ) < 1 by norm_num)).filter_mono
+      nhdsWithin_le_nhds] with x hx hxpos
+  have hx1 : x < 1 := hx
+  have h1x : (0:ℝ) < 1 + x := by linarith
+  have hxne : x - 1 ≠ 0 := by linarith
+  have hkey : 2 * x / (1 + x) - 1 = (x - 1) / (1 + x) := by field_simp; ring
+  rw [Function.comp_apply, hkey, ← quadAlt_neg2V_eq_W0 hxpos hx1]
+  field_simp
+
+/-- `(1-x) · J(-x) → 0` as `x → 1⁻`: `J(-x)` blows up only like `log(1-x)^2`,
+which the factor `(1-x)` kills. -/
+theorem oneSub_mul_quadAltJneg_tendsto :
+    Tendsto (fun x : ℝ => (1 - x) * quadAltJclosed (-x)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+  have hone : Tendsto (fun x : ℝ => 1 - x) (𝓝[<] (1:ℝ)) (𝓝 0) :=
+    tendsto_nhdsWithin_iff.mp tendsto_one_sub_nhdsWithin |>.1
+  -- bounded factors: log(1+x) → log 2
+  have hlog1p : Tendsto (fun x : ℝ => Real.log (1 + x)) (𝓝[<] (1:ℝ)) (𝓝 (Real.log 2)) := by
+    have hc : ContinuousAt (fun x : ℝ => Real.log (1 + x)) 1 := by
+      apply ContinuousAt.log (by fun_prop); norm_num
+    have h1 := hc.tendsto; norm_num at h1
+    exact h1.mono_left nhdsWithin_le_nhds
+  -- dilog((1-x)/2) → dilog 0 = 0
+  have hdil0 : Tendsto (fun x : ℝ => dilog ((1 - x)/2)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have hin : Tendsto (fun x : ℝ => (1 - x)/2) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+      simpa using hone.div_const 2
+    have hcd : ContinuousWithinAt dilog (Icc (-1:ℝ) 1) 0 :=
+      dilog_continuousOn_unit 0 (by norm_num)
+    have hev : ∀ᶠ x in 𝓝[<] (1:ℝ), (1 - x)/2 ∈ Icc (-1:ℝ) 1 := by
+      filter_upwards [self_mem_nhdsWithin,
+        (eventually_gt_nhds (show (-1:ℝ) < 1 by norm_num)).filter_mono
+          nhdsWithin_le_nhds] with x hx hxg
+      have hx1 : x < 1 := hx
+      constructor <;> [linarith; linarith]
+    have := hcd.tendsto.comp (tendsto_nhdsWithin_iff.mpr ⟨hin, hev⟩)
+    simpa [dilog_zero] using this
+  -- dilog(x²) → dilog 1
+  have hdil1 : Tendsto (fun x : ℝ => dilog (x^2)) (𝓝[<] (1:ℝ)) (𝓝 (Real.pi^2/6)) := by
+    have hin : Tendsto (fun x : ℝ => x^2) (𝓝[<] (1:ℝ)) (𝓝 1) := by
+      have hc : ContinuousAt (fun x : ℝ => x^2) 1 := by fun_prop
+      have h1 := hc.tendsto; norm_num at h1
+      exact h1.mono_left nhdsWithin_le_nhds
+    have hcd : ContinuousWithinAt dilog (Icc (-1:ℝ) 1) 1 :=
+      dilog_continuousOn_unit 1 (by norm_num)
+    have hev : ∀ᶠ x in 𝓝[<] (1:ℝ), x^2 ∈ Icc (-1:ℝ) 1 := by
+      filter_upwards [self_mem_nhdsWithin,
+        (eventually_gt_nhds (show (-1:ℝ) < 1 by norm_num)).filter_mono
+          nhdsWithin_le_nhds] with x hx hxg
+      have hx1 : x < 1 := hx
+      constructor
+      · nlinarith
+      · nlinarith
+    have := hcd.tendsto.comp (tendsto_nhdsWithin_iff.mpr ⟨hin, hev⟩)
+    simpa [dilog_one] using this
+  -- assemble the seven terms
+  have T1 : Tendsto (fun x : ℝ => (1-x) * (Real.log (1+x)^2/2)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have := hone.mul ((hlog1p.pow 2).div_const 2); simpa using this
+  have T2 : Tendsto (fun x : ℝ => (1-x) * Real.log (1-x)^2) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have := oneSub_logSq_tendsto; simpa [mul_comm] using this
+  have T3 : Tendsto (fun x : ℝ => (1-x) * (2 * Real.log (1+x) * Real.log (1-x)))
+      (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have h := (hlog1p.const_mul 2).mul oneSub_log_tendsto
+    simpa [mul_comm, mul_assoc, mul_left_comm] using h
+  have T4 : Tendsto (fun x : ℝ => (1-x) * (2 * Real.log 2 * Real.log (1-x)))
+      (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have h := oneSub_log_tendsto.const_mul (2 * Real.log 2)
+    simpa [mul_comm, mul_assoc, mul_left_comm] using h
+  have T5 : Tendsto (fun x : ℝ => (1-x) * (Real.pi^2/6 - Real.log 2^2))
+      (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have := hone.mul_const (Real.pi^2/6 - Real.log 2^2); simpa using this
+  have T6 : Tendsto (fun x : ℝ => (1-x) * (-2 * dilog ((1-x)/2))) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have := hone.mul (hdil0.const_mul (-2)); simpa using this
+  have T7 : Tendsto (fun x : ℝ => (1-x) * dilog (x^2)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have := hone.mul hdil1; simpa using this
+  have hsum := ((((((T1.add T2).add T3).add T4).add T5).add T6).add T7)
+  simp only [add_zero] at hsum
+  refine hsum.congr ?_
+  intro x
+  unfold quadAltJclosed quadAltMclosed
+  ring
+
+/-- `F x = -2 V x · J(-x) → 0` as `x → 1⁻`. -/
+theorem quadAltF_tendsto_zero_left :
+    Tendsto (fun x : ℝ => -2 * quadAltV x * quadAltJclosed (-x)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+  have hA := quadAltV_slope_tendsto_one
+  have hB := oneSub_mul_quadAltJneg_tendsto
+  have hprod := (hA.mul hB).const_mul (2:ℝ)
+  simp only [mul_zero] at hprod
+  refine hprod.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hx1 : x < 1 := hx
+  have hne : x - 1 ≠ 0 := by linarith
+  field_simp
+  ring
+
 /-- Integration by parts (Q6047 (4.9)): with `F = −2V·J(−x)`, `F(1)=F(0)=0`
 (`V(1)=0`, `J(0)=0`), so `∫₀¹ (−log x)/x·Q(−x) = ∫₀¹ (−2V(x))·Dminus(x)`. -/
 theorem quadAltCoeffIntegral_eq_neg2V_Dminus :
@@ -2023,44 +2246,6 @@ theorem quadAltCoeffIntegral_eq_neg2V_Dminus :
         = ∫ x : ℝ in (0 : ℝ)..1, -2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x) := hkernel
     _ = ∫ x : ℝ in (0 : ℝ)..1, -2 * quadAltV x * quadAltDminus x := by
           rw [hFTC', hval]
-
-
-/-- Landen identity (Q6047 (4.5)): `Li2(−x) = −Li2(x/(1+x)) − log(1+x)²/2`
-for `0 < x < 1`. Proved via `g' = 0` on `(0,1)` and `g(0) = 0`. -/
-theorem quadAlt_dilog_landen {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
-    dilog (-x) = -dilog (x / (1 + x)) - Real.log (1 + x) ^ 2 / 2 := by
-  -- 不必自造：Problem26WeightThree.dilog_landen_half26 就是这条, 代 x/(1+x)
-  have h1px : (0:ℝ) < 1 + x := by linarith
-  have hu0 : 0 < x / (1 + x) := by positivity
-  have huhalf : x / (1 + x) ≤ 1 / 2 := by
-    rw [div_le_iff₀ h1px]; linarith
-  have h1u : 1 - x / (1 + x) = 1 / (1 + x) := by
-    field_simp
-    ring
-  have hkey := RamanujanChallenge.P26.dilog_landen_half26 hu0 huhalf
-  rw [h1u] at hkey
-  have harg : -(x / (1 + x)) / (1 / (1 + x)) = -x := by field_simp
-  rw [harg] at hkey
-  have hlog : Real.log (1 / (1 + x)) = -Real.log (1 + x) := by
-    rw [one_div, Real.log_inv]
-  rw [hlog] at hkey
-  rw [hkey]; ring
-
-/-- Bridge `−2V(x) = W0(2x/(1+x))` for `0 < x < 1` (Q6047 (4.6)-(4.7)+(5.2)):
-the Landen form `W` becomes `W0` under `t = 2x/(1+x)` (`u = t/2`). -/
-theorem quadAlt_neg2V_eq_W0 {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
-    -2 * quadAltV x = W0 (2 * x / (1 + x)) := by
-  unfold quadAltV W0
-  have hd := quadAlt_dilog_landen hx0 hx1
-  rw [hd]
-  have hlog : Real.log (2 * x / (1 + x) / 2) = Real.log (x / (1 + x)) := by
-    congr 1
-    ring
-  rw [hlog]
-  have hxlog : Real.log (x / (1 + x)) = Real.log x - Real.log (1 + x) := by
-    rw [Real.log_div (ne_of_gt hx0) (by positivity : (1 + x) ≠ 0)]
-  rw [hxlog]
-  ring
 
 
 /-- Möbius substitution (Q6047 (5.1)+(5.4)): `x = t/(2−t)` turns
@@ -2303,192 +2488,6 @@ theorem quadAltI11_eq_integral :
     ring
   simpa [mul_div_assoc] using (hmain.trans hcongr)
 
-
-/-- `W0(1) = 0` (double zero at `t=1`, needed for boundary terms). -/
-theorem quadAltW0_one : W0 1 = 0 := by
-  unfold W0
-  rw [quadAlt_dilog_half]
-  have hlog : Real.log (1 / 2) ^ 2 = Real.log 2 ^ 2 := by
-    rw [Real.log_div]
-    · rw [Real.log_one]
-      ring
-    · norm_num
-    · norm_num
-  rw [hlog]
-  ring
-
-/-- `W0` is differentiable at `1` with derivative `0` (the hypothesis of
-`quadAltW0_hasDerivAt` only ever needed `t < 2`, so `t = 1` is an interior point). -/
-theorem quadAltW0_hasDerivAt_one : HasDerivAt W0 0 1 := by
-  have h := quadAltW0_hasDerivAt (t := 1) (by norm_num) (by norm_num)
-  norm_num at h
-  exact h
-
-/-- `W0 t / (t - 1) → 0` as `t → 1`. -/
-theorem quadAltW0_slope_tendsto :
-    Tendsto (fun t : ℝ => W0 t / (t - 1)) (𝓝[≠] (1:ℝ)) (𝓝 0) :=
-  slope_tendsto_of_hasDerivAt_eq_zero W0 1 0 quadAltW0_hasDerivAt_one quadAltW0_one
-
-/-! ## Right-endpoint atoms: transport through `x ↦ 1-x`, and `V`'s double zero at 1
-
-`V 1 = 0` and `V' 1 = log 1/(1·2) = 0`, so `V` vanishes to second order at `1`.
-Proving that directly would want `dilog` differentiable at the boundary point
-`-1`; instead we go through `-2 V x = W0 (2x/(1+x))`, for which `1` is an
-interior point (`W0` only ever needed `t < 2`). -/
-
-theorem tendsto_one_sub_nhdsWithin :
-    Tendsto (fun x : ℝ => 1 - x) (𝓝[<] (1:ℝ)) (𝓝[>] (0:ℝ)) := by
-  rw [tendsto_nhdsWithin_iff]
-  constructor
-  · have hcont : Continuous (fun x : ℝ => 1 - x) := by fun_prop
-    have hc : Tendsto (fun x : ℝ => 1 - x) (𝓝 (1:ℝ)) (𝓝 0) := by
-      have h1 := hcont.tendsto (1:ℝ)
-      simpa using h1
-    exact hc.mono_left nhdsWithin_le_nhds
-  · filter_upwards [self_mem_nhdsWithin] with x hx
-    have hx1 : x < 1 := hx
-    simp only [Set.mem_Ioi]
-    linarith
-
-theorem oneSub_logSq_tendsto :
-    Tendsto (fun x : ℝ => Real.log (1-x) ^ 2 * (1-x)) (𝓝[<] (1:ℝ)) (𝓝 0) :=
-  logSq_mul_self_tendsto.comp tendsto_one_sub_nhdsWithin
-
-theorem oneSub_log_tendsto :
-    Tendsto (fun x : ℝ => Real.log (1-x) * (1-x)) (𝓝[<] (1:ℝ)) (𝓝 0) :=
-  log_mul_self_tendsto.comp tendsto_one_sub_nhdsWithin
-
-/-- The Möbius map `x ↦ 2x/(1+x)` sends `𝓝[<] 1` into `𝓝[≠] 1`. -/
-theorem tendsto_mobius_nhdsNe_one :
-    Tendsto (fun x : ℝ => 2 * x / (1 + x)) (𝓝[<] (1:ℝ)) (𝓝[≠] (1:ℝ)) := by
-  rw [tendsto_nhdsWithin_iff]
-  constructor
-  · have hc : ContinuousAt (fun x : ℝ => 2 * x / (1 + x)) 1 := by
-      apply ContinuousAt.div (by fun_prop) (by fun_prop)
-      norm_num
-    have h1 := hc.tendsto
-    norm_num at h1
-    exact h1.mono_left nhdsWithin_le_nhds
-  · filter_upwards [self_mem_nhdsWithin,
-      (eventually_gt_nhds (show (0:ℝ) < 1 by norm_num)).filter_mono
-        nhdsWithin_le_nhds] with x hx hxpos
-    have hx1 : x < 1 := hx
-    have h1x : (0:ℝ) < 1 + x := by linarith
-    simp only [Set.mem_compl_iff, Set.mem_singleton_iff]
-    intro hcon
-    rw [div_eq_one_iff_eq (ne_of_gt h1x)] at hcon
-    linarith
-
-/-- `V x / (x - 1) → 0` as `x → 1⁻`: `V` has a double zero at `1`, seen through
-`-2 V x = W0 (2x/(1+x))` where `1` is an interior point of `W0`'s good range. -/
-theorem quadAltV_slope_tendsto_one :
-    Tendsto (fun x : ℝ => quadAltV x / (x - 1)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
-  have hcomp := quadAltW0_slope_tendsto.comp tendsto_mobius_nhdsNe_one
-  -- W0(t)/(t-1) = -2·V x·(1+x)/(x-1), so multiply by -1/(2(1+x)) → -1/4
-  have hg : Tendsto (fun x : ℝ => -1 / (2 * (1 + x))) (𝓝[<] (1:ℝ)) (𝓝 (-(1/4))) := by
-    have hc : ContinuousAt (fun x : ℝ => -1 / (2 * (1 + x))) 1 := by
-      apply ContinuousAt.div (by fun_prop) (by fun_prop)
-      norm_num
-    have h1 := hc.tendsto
-    norm_num at h1
-    exact h1.mono_left nhdsWithin_le_nhds
-  have hmul := hcomp.mul hg
-  simp only [zero_mul] at hmul
-  refine hmul.congr' ?_
-  filter_upwards [self_mem_nhdsWithin,
-    (eventually_gt_nhds (show (0:ℝ) < 1 by norm_num)).filter_mono
-      nhdsWithin_le_nhds] with x hx hxpos
-  have hx1 : x < 1 := hx
-  have h1x : (0:ℝ) < 1 + x := by linarith
-  have hxne : x - 1 ≠ 0 := by linarith
-  have hkey : 2 * x / (1 + x) - 1 = (x - 1) / (1 + x) := by field_simp; ring
-  rw [Function.comp_apply, hkey, ← quadAlt_neg2V_eq_W0 hxpos hx1]
-  field_simp
-
-/-- `(1-x) · J(-x) → 0` as `x → 1⁻`: `J(-x)` blows up only like `log(1-x)^2`,
-which the factor `(1-x)` kills. -/
-theorem oneSub_mul_quadAltJneg_tendsto :
-    Tendsto (fun x : ℝ => (1 - x) * quadAltJclosed (-x)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
-  have hone : Tendsto (fun x : ℝ => 1 - x) (𝓝[<] (1:ℝ)) (𝓝 0) :=
-    tendsto_nhdsWithin_iff.mp tendsto_one_sub_nhdsWithin |>.1
-  -- bounded factors: log(1+x) → log 2
-  have hlog1p : Tendsto (fun x : ℝ => Real.log (1 + x)) (𝓝[<] (1:ℝ)) (𝓝 (Real.log 2)) := by
-    have hc : ContinuousAt (fun x : ℝ => Real.log (1 + x)) 1 := by
-      apply ContinuousAt.log (by fun_prop); norm_num
-    have h1 := hc.tendsto; norm_num at h1
-    exact h1.mono_left nhdsWithin_le_nhds
-  -- dilog((1-x)/2) → dilog 0 = 0
-  have hdil0 : Tendsto (fun x : ℝ => dilog ((1 - x)/2)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
-    have hin : Tendsto (fun x : ℝ => (1 - x)/2) (𝓝[<] (1:ℝ)) (𝓝 0) := by
-      simpa using hone.div_const 2
-    have hcd : ContinuousWithinAt dilog (Icc (-1:ℝ) 1) 0 :=
-      dilog_continuousOn_unit 0 (by norm_num)
-    have hev : ∀ᶠ x in 𝓝[<] (1:ℝ), (1 - x)/2 ∈ Icc (-1:ℝ) 1 := by
-      filter_upwards [self_mem_nhdsWithin,
-        (eventually_gt_nhds (show (-1:ℝ) < 1 by norm_num)).filter_mono
-          nhdsWithin_le_nhds] with x hx hxg
-      have hx1 : x < 1 := hx
-      constructor <;> [linarith; linarith]
-    have := hcd.tendsto.comp (tendsto_nhdsWithin_iff.mpr ⟨hin, hev⟩)
-    simpa [dilog_zero] using this
-  -- dilog(x²) → dilog 1
-  have hdil1 : Tendsto (fun x : ℝ => dilog (x^2)) (𝓝[<] (1:ℝ)) (𝓝 (Real.pi^2/6)) := by
-    have hin : Tendsto (fun x : ℝ => x^2) (𝓝[<] (1:ℝ)) (𝓝 1) := by
-      have hc : ContinuousAt (fun x : ℝ => x^2) 1 := by fun_prop
-      have h1 := hc.tendsto; norm_num at h1
-      exact h1.mono_left nhdsWithin_le_nhds
-    have hcd : ContinuousWithinAt dilog (Icc (-1:ℝ) 1) 1 :=
-      dilog_continuousOn_unit 1 (by norm_num)
-    have hev : ∀ᶠ x in 𝓝[<] (1:ℝ), x^2 ∈ Icc (-1:ℝ) 1 := by
-      filter_upwards [self_mem_nhdsWithin,
-        (eventually_gt_nhds (show (-1:ℝ) < 1 by norm_num)).filter_mono
-          nhdsWithin_le_nhds] with x hx hxg
-      have hx1 : x < 1 := hx
-      constructor
-      · nlinarith
-      · nlinarith
-    have := hcd.tendsto.comp (tendsto_nhdsWithin_iff.mpr ⟨hin, hev⟩)
-    simpa [dilog_one] using this
-  -- assemble the seven terms
-  have T1 : Tendsto (fun x : ℝ => (1-x) * (Real.log (1+x)^2/2)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
-    have := hone.mul ((hlog1p.pow 2).div_const 2); simpa using this
-  have T2 : Tendsto (fun x : ℝ => (1-x) * Real.log (1-x)^2) (𝓝[<] (1:ℝ)) (𝓝 0) := by
-    have := oneSub_logSq_tendsto; simpa [mul_comm] using this
-  have T3 : Tendsto (fun x : ℝ => (1-x) * (2 * Real.log (1+x) * Real.log (1-x)))
-      (𝓝[<] (1:ℝ)) (𝓝 0) := by
-    have h := (hlog1p.const_mul 2).mul oneSub_log_tendsto
-    simpa [mul_comm, mul_assoc, mul_left_comm] using h
-  have T4 : Tendsto (fun x : ℝ => (1-x) * (2 * Real.log 2 * Real.log (1-x)))
-      (𝓝[<] (1:ℝ)) (𝓝 0) := by
-    have h := oneSub_log_tendsto.const_mul (2 * Real.log 2)
-    simpa [mul_comm, mul_assoc, mul_left_comm] using h
-  have T5 : Tendsto (fun x : ℝ => (1-x) * (Real.pi^2/6 - Real.log 2^2))
-      (𝓝[<] (1:ℝ)) (𝓝 0) := by
-    have := hone.mul_const (Real.pi^2/6 - Real.log 2^2); simpa using this
-  have T6 : Tendsto (fun x : ℝ => (1-x) * (-2 * dilog ((1-x)/2))) (𝓝[<] (1:ℝ)) (𝓝 0) := by
-    have := hone.mul (hdil0.const_mul (-2)); simpa using this
-  have T7 : Tendsto (fun x : ℝ => (1-x) * dilog (x^2)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
-    have := hone.mul hdil1; simpa using this
-  have hsum := ((((((T1.add T2).add T3).add T4).add T5).add T6).add T7)
-  simp only [add_zero] at hsum
-  refine hsum.congr ?_
-  intro x
-  unfold quadAltJclosed quadAltMclosed
-  ring
-
-/-- `F x = -2 V x · J(-x) → 0` as `x → 1⁻`. -/
-theorem quadAltF_tendsto_zero_left :
-    Tendsto (fun x : ℝ => -2 * quadAltV x * quadAltJclosed (-x)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
-  have hA := quadAltV_slope_tendsto_one
-  have hB := oneSub_mul_quadAltJneg_tendsto
-  have hprod := (hA.mul hB).const_mul (2:ℝ)
-  simp only [mul_zero] at hprod
-  refine hprod.congr' ?_
-  filter_upwards [self_mem_nhdsWithin] with x hx
-  have hx1 : x < 1 := hx
-  have hne : x - 1 ≠ 0 := by linarith
-  field_simp
-  ring
 
 end RamanujanChallenge.P24QuadAlt
 
