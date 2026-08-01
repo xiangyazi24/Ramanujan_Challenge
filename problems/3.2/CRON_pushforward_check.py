@@ -561,7 +561,9 @@ def print_summary(results: list[PrimeResult]) -> None:
             f"    TG sha={result.pushforward_digest}, Mellin sha={result.mellin_digest}, "
             f"sum={result.pushforward_sum}, energy={result.pushforward_energy}, "
             f"raw endpoint failures={list(result.raw_mellin_failures)}, "
-            f"Q6375-direct matches={result.direct_q6375_matches}/{result.prime}"
+            f"Q6375-direct matches={result.direct_q6375_matches}/{result.prime}, "
+            f"supp(G-Gq)={result.q_partner_difference_support}, "
+            f"chi(q(t))-multiplicative={result.q_twist_is_multiplicative}"
         )
     assert all(
         result.pushforward_self_twists == ("trivial",)

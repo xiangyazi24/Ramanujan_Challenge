@@ -4018,4 +4018,123 @@ theorem integral_pow_mul_logSq (n : ℕ) :
     rw [hval] at this
     exact this.mono_left nhdsWithin_le_nhds
 
+/-! ## Layer E, step 2: `K` as an alternating linear Euler series
+
+The repo already proves `harmonicNumber_generating_hasSum`, and at `x = -t` that
+IS the generating function of the `K` integrand:
+`log(1+t)/(1+t) = ∑_{n≥0} (-1)ⁿ H_{n+1} tⁿ⁺¹`.  Integrating termwise against
+`∫₀¹ x^{n+1} log²x = 2/(n+2)³` therefore gives `K` with no new machinery — the
+same `hasSum_integral_of_summable_integral_norm` template this development
+already uses three times. -/
+
+/-- The moment family whose termwise integral produces `K`. -/
+noncomputable def quadAltKMoment (n : ℕ) (x : ℝ) : ℝ :=
+  (-1 : ℝ) ^ n * harmonicNumber (n + 1) * (x ^ (n + 1) * Real.log x ^ 2)
+
+theorem quadAltKMoment_intervalIntegrable (n : ℕ) :
+    IntervalIntegrable (quadAltKMoment n) MeasureTheory.volume 0 1 := by
+  have h : IntervalIntegrable (fun x : ℝ => x ^ (n + 1) * Real.log x ^ 2)
+      MeasureTheory.volume 0 1 :=
+    intervalIntegrable_logSq.continuousOn_mul (continuousOn_pow (n + 1))
+  unfold quadAltKMoment
+  simpa [mul_assoc] using h.const_mul ((-1 : ℝ) ^ n * harmonicNumber (n + 1))
+
+theorem quadAltKMoment_integral (n : ℕ) :
+    (∫ x : ℝ in (0:ℝ)..1, quadAltKMoment n x)
+      = 2 * (-1 : ℝ) ^ n * harmonicNumber (n + 1) / ((n : ℝ) + 2) ^ 3 := by
+  have hm := integral_pow_mul_logSq (n + 1)
+  have hcast : ((n + 1 : ℕ) : ℝ) + 1 = (n : ℝ) + 2 := by push_cast; ring
+  rw [hcast] at hm
+  unfold quadAltKMoment
+  rw [intervalIntegral.integral_const_mul, hm]
+  ring
+
+theorem quadAltKMoment_hasSum_pointwise {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasSum (fun n : ℕ => quadAltKMoment n x)
+      (Real.log x ^ 2 * Real.log (1 + x) / (1 + x)) := by
+  have hx1p : (0:ℝ) < 1 + x := by linarith
+  have habs : |(-x)| < 1 := by rw [abs_neg, abs_of_pos hx0]; exact hx1
+  have hne : (-x) ≠ 0 := by simpa using ne_of_gt hx0
+  have hgen := harmonicNumber_generating_hasSum habs hne
+  have hmul := hgen.mul_left (x * Real.log x ^ 2)
+  have hval : (x * Real.log x ^ 2) *
+      (-Real.log (1 - -x) / ((-x) * (1 - -x)))
+      = Real.log x ^ 2 * Real.log (1 + x) / (1 + x) := by
+    rw [show (1 : ℝ) - -x = 1 + x by ring]
+    field_simp
+  rw [hval] at hmul
+  refine hmul.congr_fun ?_
+  intro n
+  unfold quadAltKMoment
+  rw [neg_pow]
+  ring
+
+theorem quadAltKMoment_integral_norm_summable :
+    Summable (fun n : ℕ => ∫ x : ℝ in (0:ℝ)..1, ‖quadAltKMoment n x‖) := by
+  have hval : ∀ n : ℕ, (∫ x : ℝ in (0:ℝ)..1, ‖quadAltKMoment n x‖)
+      = 2 * harmonicNumber (n + 1) / ((n : ℝ) + 2) ^ 3 := by
+    intro n
+    have hcongr : ∀ x ∈ Set.uIcc (0:ℝ) 1,
+        ‖quadAltKMoment n x‖ = harmonicNumber (n + 1) * (x ^ (n + 1) * Real.log x ^ 2) := by
+      intro x hx
+      rw [Set.uIcc_of_le (by norm_num : (0:ℝ) ≤ 1)] at hx
+      unfold quadAltKMoment
+      rw [Real.norm_eq_abs, abs_mul, abs_mul, abs_pow, abs_neg, abs_one, one_pow,
+        one_mul, abs_of_nonneg (harmonicNumber_nonneg (n + 1)),
+        abs_of_nonneg (mul_nonneg (pow_nonneg hx.1 (n + 1)) (sq_nonneg _))]
+    rw [intervalIntegral.integral_congr hcongr, intervalIntegral.integral_const_mul]
+    have hm := integral_pow_mul_logSq (n + 1)
+    have hcast : ((n + 1 : ℕ) : ℝ) + 1 = (n : ℝ) + 2 := by push_cast; ring
+    rw [hcast] at hm
+    rw [hm]; ring
+  refine Summable.congr ?_ (fun n => (hval n).symm)
+  have hbd : ∀ n : ℕ, ‖2 * harmonicNumber (n + 1) / ((n : ℝ) + 2) ^ 3‖
+      ≤ 2 * (harmonicNumber (n + 1) ^ 2 / ((n : ℝ) + 1) ^ 2) := by
+    intro n
+    have hH : 0 ≤ harmonicNumber (n + 1) := harmonicNumber_nonneg (n + 1)
+    have hHsq : harmonicNumber (n + 1) ≤ harmonicNumber (n + 1) ^ 2 :=
+      harmonicNumber_succ_le_sq n
+    rw [Real.norm_eq_abs, abs_of_nonneg (by positivity)]
+    rw [div_le_iff₀ (by positivity)]
+    have h1 : ((n : ℝ) + 1) ^ 2 ≤ ((n : ℝ) + 2) ^ 3 := by
+      nlinarith [Nat.cast_nonneg (α := ℝ) n]
+    have hq : (0:ℝ) ≤ 2 * (harmonicNumber (n + 1) ^ 2 / ((n : ℝ) + 1) ^ 2) := by
+      positivity
+    have step1 : 2 * (harmonicNumber (n + 1) ^ 2 / ((n : ℝ) + 1) ^ 2) * ((n : ℝ) + 1) ^ 2
+        ≤ 2 * (harmonicNumber (n + 1) ^ 2 / ((n : ℝ) + 1) ^ 2) * ((n : ℝ) + 2) ^ 3 :=
+      mul_le_mul_of_nonneg_left h1 hq
+    have step2 : 2 * (harmonicNumber (n + 1) ^ 2 / ((n : ℝ) + 1) ^ 2) * ((n : ℝ) + 1) ^ 2
+        = 2 * harmonicNumber (n + 1) ^ 2 := by
+      field_simp
+    linarith
+  exact (summable_harmonicNumber_succ_sq_div.mul_left 2).of_norm_bounded hbd
+
+/-- **The `K` series.**  `K = 2 ∑ (-1)ⁿ H_{n+1}/(n+2)³`. -/
+theorem quadAltK_hasSum :
+    HasSum (fun n : ℕ => 2 * (-1 : ℝ) ^ n * harmonicNumber (n + 1) / ((n : ℝ) + 2) ^ 3)
+      quadAltK := by
+  have hInt : ∀ n : ℕ, MeasureTheory.Integrable (quadAltKMoment n)
+      (MeasureTheory.volume.restrict (Set.Ioc (0:ℝ) 1)) :=
+    fun n => (quadAltKMoment_intervalIntegrable n).1
+  have hNorm : Summable (fun n : ℕ =>
+      ∫ x : ℝ in Set.Ioc (0:ℝ) 1, ‖quadAltKMoment n x‖) := by
+    simpa only [← intervalIntegral.integral_of_le (by norm_num : (0:ℝ) ≤ 1)] using
+      quadAltKMoment_integral_norm_summable
+  have h := MeasureTheory.hasSum_integral_of_summable_integral_norm
+    (μ := MeasureTheory.volume.restrict (Set.Ioc (0:ℝ) 1)) hInt hNorm
+  have h' : HasSum (fun n : ℕ =>
+      2 * (-1 : ℝ) ^ n * harmonicNumber (n + 1) / ((n : ℝ) + 2) ^ 3)
+      (∫ x : ℝ in Set.Ioc (0:ℝ) 1, ∑' n : ℕ, quadAltKMoment n x) := by
+    convert h using 1
+    funext n
+    rw [← intervalIntegral.integral_of_le (by norm_num : (0:ℝ) ≤ 1)]
+    exact (quadAltKMoment_integral n).symm
+  convert h' using 1
+  unfold quadAltK
+  rw [intervalIntegral.integral_of_le (by norm_num : (0:ℝ) ≤ 1)]
+  apply MeasureTheory.setIntegral_congr_ae measurableSet_Ioc
+  filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1:ℝ)] with x hxne hx
+  have hxlt : x < 1 := lt_of_le_of_ne hx.2 hxne
+  exact (quadAltKMoment_hasSum_pointwise hx.1 hxlt).tsum_eq.symm
+
 end RamanujanChallenge.P24QuadAlt
