@@ -15,11 +15,13 @@ P = s.Matrix([
      (n+2)**2*(192*n**6+2984*n**5+19116*n**4+64452*n**3+120256*n**2+117279*n+46476),
      (n+2)**2*(16*n**5+408*n**4+2912*n**3+8884*n**2+12254*n+6240)],
 ])
+PP = [[s.Poly(P[i, j], n, domain=s.QQ) for j in range(3)] for i in range(3)]
+SCALE = s.Poly((n + 2)**2, n, domain=s.QQ)
+NEXT_SCALE = s.Poly((n + 3)**2, n, domain=s.QQ)
 
 
 def eventually_nonnegative(poly, start=0):
-    poly = s.Poly(s.expand(poly), n)
-    shifted = s.Poly(poly.as_expr().subs(n, n + start), n)
+    shifted = poly.shift(start)
     return all(c >= 0 for c in shifted.all_coeffs())
 
 
@@ -27,18 +29,18 @@ def test_box(lx, ux, ly, uy, start=0, verbose=False):
     bounds = []
     for X in (lx, ux):
         for Y in (ly, uy):
-            d = (n+2)**2*P[0, 0]-X*P[1, 0]-Y*P[2, 0]
-            e1 = -(n+2)**2*P[0, 1]+X*P[1, 1]+Y*P[2, 1]
-            e2 = -(n+2)**2*P[0, 2]+X*P[1, 2]+Y*P[2, 2]
-            tests = [d, (n+3)**2*e1-lx*d, ux*d-(n+3)**2*e1,
-                     (n+3)**2*e2-ly*d, uy*d-(n+3)**2*e2]
+            d = SCALE*PP[0][0]-X*PP[1][0]-Y*PP[2][0]
+            e1 = -SCALE*PP[0][1]+X*PP[1][1]+Y*PP[2][1]
+            e2 = -SCALE*PP[0][2]+X*PP[1][2]+Y*PP[2][2]
+            tests = [d, NEXT_SCALE*e1-lx*d, ux*d-NEXT_SCALE*e1,
+                     NEXT_SCALE*e2-ly*d, uy*d-NEXT_SCALE*e2]
             flags = [eventually_nonnegative(t, start) for t in tests]
             bounds.append(flags)
             if verbose:
                 print(X, Y, flags)
                 for t, ok in zip(tests, flags):
                     if not ok:
-                        print(" bad", s.factor(s.together(t.subs(n, n+start))))
+                        print(" bad", s.factor(t.shift(start).as_expr()))
     return all(all(row) for row in bounds)
 
 

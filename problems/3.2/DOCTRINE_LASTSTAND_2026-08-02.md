@@ -35,7 +35,18 @@ dyadic 版 (4.13) |∪_{D/2<d≤D}Z_d|≪D^{2−η}); (2) 共存 P_{D,1}·Q_D≪
 - 终止 (成功): [FR_η] 任一 η>0 或 (7.1) 证明骨架。
 - 终止 (失败): 三条补审全不咬 + transpose 插值判死 (写明为何) ⟹ 转 LS-b 主攻。
 
-### LS-b: 转移积不动点/run 刚性 (cascade×AP 的算术版, handoff 活口1精确化)
+### LS-b: 【已判死 2026-08-02, 见 ERRATA】转移积不动点/run 刚性
+**整条 avenue 建立在 ξ_{r+1}=M_rξ_r 之上, 该式为假 (射影对象混淆, codex 活反例
+p=997/r=248/d=182)。** 正确重述: collision ⟺ (T_{r,d})₂₁=0 (轨道无关);
+2-run@d ⟺ p|Res_x(N_d(x),N_d(x+1))。终判: 此 avenue 关闭, 主攻转 LS-e。
+
+### LS-e: strip-分离 ⟹ 单变量 Weyl 幂省 (Heilbronn 类) 【§135, 现主攻】
+[FR_η] ⟸ |Σ_r e_p(t·φ_r+sr)| ≤ p^{1−δ} (φ=调和玩具 H_r 或 Apéry 卡 u_r)。
+玩具障碍: 标准 Stepanov 死于极点增长 (Q6761); 反制在飞: mod-p² 提升/Γ_p
+分布关系 (q75), Stepanov-on-coincidence-variety (q74, 需 addition law 低次
+闭包定理; exp3 已判碰撞簇无镜像线外低次分量)。codex ultra 班并行主攻。
+
+### (原 LS-b 正文, 已作废存档)
 自推链: r,r+1∈Z_d ⟺ ξ_{r+1+d}∥M_{r+d}ξ_r 且 ξ_{r+1}=M_rξ_r ⟺ ξ_r 是
 M_r^{−1}M_{r+d} 的特征向量 (M_s=显式 Apéry 转移阵)。⟹ Z_d 内长度-k run 强制
 特征向量链 = k 条有界次代数条件。padded word 的 Z_{d_j}∩block=**整区间** —
