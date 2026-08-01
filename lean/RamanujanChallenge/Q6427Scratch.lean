@@ -211,10 +211,10 @@ theorem sineSlope_ne_zero_on_strip (m : ℤ) {z : ℂ}
 /-! ## Direct t-coordinate rational function -/
 
 def ctNumerator27 (n : ℕ) (t : ℂ) : ℂ :=
-  ∏ r in Finset.range n, (t - (((r + 1 : ℕ) : ℂ))) ^ 3
+  (Finset.range n).prod (fun r => (t - (((r + 1 : ℕ) : ℂ))) ^ 3)
 
 def ctPoleProduct27 (q : ℕ) (t : ℂ) : ℂ :=
-  ∏ j in Finset.range q, (t + (j : ℂ))
+  (Finset.range q).prod (fun j => t + (j : ℂ))
 
 def ctR27 (n : ℕ) (t : ℂ) : ℂ :=
   ctNumerator27 n t /
@@ -227,8 +227,8 @@ def ctIntegrand27 (n : ℕ) (t : ℂ) : ℂ :=
   ctR27 n t * ctKernel27 t
 
 def ctNumeratorWithout27 (n m : ℕ) (t : ℂ) : ℂ :=
-  ∏ r in (Finset.range n).erase (m - 1),
-    (t - (((r + 1 : ℕ) : ℂ))) ^ 3
+  ((Finset.range n).erase (m - 1)).prod
+    (fun r => (t - (((r + 1 : ℕ) : ℂ))) ^ 3)
 
 def ctRemoved27 (n m : ℕ) (t : ℂ) : ℂ :=
   ctNumeratorWithout27 n m t /
@@ -270,13 +270,14 @@ theorem ctNumeratorWithout_differentiableAt27 (n m : ℕ) (t : ℂ) :
   unfold ctNumeratorWithout27
   exact DifferentiableAt.fun_finset_prod
     (u := (Finset.range n).erase (m - 1)) fun r _ =>
-      (differentiableAt_id.sub_const _).fun_pow 3
+      (differentiableAt_id.sub_const (((r + 1 : ℕ) : ℂ))).fun_pow 3
 
 theorem ctPoleProduct_differentiableAt27 (q : ℕ) (t : ℂ) :
     DifferentiableAt ℂ (ctPoleProduct27 q) t := by
   unfold ctPoleProduct27
   exact DifferentiableAt.fun_finset_prod
-    (u := Finset.range q) fun j _ => differentiableAt_id.add_const _
+    (u := Finset.range q) fun j _ =>
+      differentiableAt_id.add_const (j : ℂ)
 
 theorem ctRemoved_differentiableOn27 {n m : ℕ} (hm1 : 1 ≤ m) :
     DifferentiableOn ℂ (ctRemoved27 n m) (halfIntegerStrip (m : ℤ)) := by
@@ -312,6 +313,7 @@ theorem ctIntegrand_eq_extension27 {n m : ℕ} (hm1 : 1 ≤ m) (hmn : m ≤ n)
   rw [ctIntegrand27, ctR27, ctKernel27, ctNumerator_factor27 hm1 hmn,
     sinePi_eq_sub_mul_sineSlope (m : ℤ) t, ctExtension27, ctRemoved27]
   field_simp [sub_ne_zero.mpr htm, hs]
+  ring
 
 /-- Structural one-strip theorem. The two vertical integrability and two
 horizontal decay hypotheses will be discharged by the explicit estimates below. -/
