@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'lean/RamanujanChallenge/Q6502Transfer.lean'
+      - 'lean/RamanujanChallenge/Q6502Arithmetic.lean'
       - '.github/workflows/q6502-transfer.yml'
 
 permissions:
@@ -29,4 +30,4 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           cd lean
           lake exe cache get
-          lake build RamanujanChallenge.Q6502Transfer
+          lake build RamanujanChallenge.Q6502Arithmetic
