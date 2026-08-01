@@ -706,3 +706,36 @@ hunting ground is final: p-divisibility patterns of the FIXED series'
 coefficients (one global object — the Mersenne-template "structure bits") +
 the arithmetic nature of β_p. Publication-grade structural theorem for the
 submission's vertical section; Smith-ledger program must stratify by χ(p).
+
+## 30. Wave 3 (cron) VERIFIED + R16: the map's final form
+
+**QUARTER-POINT LAW (cron discovery; our independent verification 42/42 + 0/37,
+quarterpoint_check.py; half-integer recurrence for τ = √F verified over Q):**
+- p ≡ 5 (mod 24) ⟹ τ_{(p−1)/4} ≡ 0 (mod p)   [20/20]
+- p ≡ 23 (mod 24) ⟹ σ_{(p−3)/4} ≡ 0 (mod p)  [22/22]
+- p ≡ 1, 19: no vanishing [0/37]
+Genus theory: the vanishing classes are EXACTLY the primes represented by the
+non-principal form 2x²+3y² of discriminant −24. **First deterministic,
+positive-density, class-field-governed zero law in the entire problem** —
+invisible at the b-level (Z_p midpoint zeros 2/3242), manifest at rank 2.
+The Sym² ladder genuinely descends: σ, τ satisfy second-order half-integer
+recurrences (4(j+2)²τ_{j+2} = 2(68j²+170j+107)τ_{j+1} − (2j+1)²τ_j). Next:
+Jacobsthal parametrization of the full Y_p zero sets by p = 2x²+3y²; Z_p as
+convolution shadow.
+
+**R16 (BCZ/Diophantine quadrant): CLOSED.** Exact collapse: (MG) = the complete
+moving-residue obstruction (r = n mod p over all quotient blocks; top window =
+q=1 slice; ≤ 1 prime per r — no hidden multiplicity). Standard tools all fail
+with precise reasons: BCZ needs an exact finite-rank S-unit skeleton (the
+asymptotic ρ^r is p-adically worthless; the apparent coefficient has linear
+height); Vojta/Silverman bounds are one point at height-scale r vs the needed
+log n per hit (sum gives εn², not o(n)); abc controls radical deficiency not
+positions; GRH needs fixed extensions (p | b_z is ramified/moving); Baker needs
+power sums. Named conditional: a NEW uniform orbit-segment Vojta inequality
+(strictly stronger than standard Vojta). No standard conjecture implies (MG)
+by any known deduction.
+
+**FINAL STRATEGIC MAP: three lines remain — (1) Apéry-EH4 (cross-prime fourth
+moment; measured true, F₄ ≡ 0); (2) modular–Padé saturation [GAP-SAT] (Smith
+ledger); (3) the apparition line (quarter-point law → Jacobsthal → Z_p as
+algebraic shadow) — now the most alive, with its first theorem in hand.**

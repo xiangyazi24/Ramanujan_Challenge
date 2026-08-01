@@ -315,5 +315,22 @@ the prime side, and a star is K_{2,2}-free, so no combinatorial argument can exc
 - entry state: Problem25Moment.lean 164 lines, 0 sorry, moment identities proved
 - approach: prove integral identities + connection chain, sorry the two hard
   analytic inputs (Catalan integral representation, remainder Padé decay)
+- RESULTS:
+  - Problem25Integral.lean: 214 lines, 0 sorry, axiom-clean. Proves
+    catalanConstant = ∫₀¹(-log t)/(1+t²)dt via FTC antiderivative +
+    dominated convergence (Codex gpt-5.6-sol, 17min).
+  - Problem25Moment.lean extended to 226 lines: integral_neg_log_01 (proved),
+    full chain commonLimit_eq_catalanConstant → problem25_solved : Problem25Claim.
+  - Remaining: 1 sorry (catalanError_over_denominator_tendsto_zero).
+  - ANALYSIS of the sorry: equivalent to Perron coefficient of catalanError = 0.
+    Weighted average argument proves error ratios converge to L = G - commonLimit
+    but cannot prove L = 0 (convex hull containment not preserved in general).
+    Numerical verification (Python, exact Fraction arithmetic): sign pattern
+    (-, +, +) persists through N=14, ratios a=e1/(-e0)→0, b=e2/(-e0)→0.
+    Challenge ratios match G to 12+ digits at N=5.
+    Integral representation G·Q-P = ∫kernel·R is tautological (=definition).
+    The sorry requires Padé subdominance theory (not in project).
+  - Commits: 49533e1 (integral + chain), verified build 1 sorry only.
+- Codex dispatched: P2.5 decay (exploring matrix sign-preservation structure)
 - end: <open>
 - final result: <open>
