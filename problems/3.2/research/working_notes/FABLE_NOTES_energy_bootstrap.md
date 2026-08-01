@@ -2222,6 +2222,13 @@ CODEX_COINC_NUMERICS_report.md; campaign3_scripts/coinc_gonogo.py;
 DOCTRINE_SIGMA_STRIKE.md。
 **在飞**: life1–10 九发 (双审计/不可约/族平均/Dwork/换参/ATR/GPRV分层/退火);
 codex max 符号分解 (S1–S5, 含更新恒等式自相似 S4)。
+**审计判决 (Q6550/life8, 已回)**: D1–D4 独立证明成立; 非 alias, 旧仿射-Parseval
+死因不适用; 无逻辑循环。修正: (i) σ-machine 的 Q_p(Δ)=Σbinom(d,2) 是 triple-return,
+≠ΣC_h — 结论 p^{4/3} 走 block-energy 无损 (tex 本来就用 block); (ii) X_{h,h'} 泛型
+genus O(hh') 非 O(h+h'), per-pair 范围实为 p^{1/6} (低亏格坍缩定理若成立才到 p^{1/4});
+(iii) 直言状态: COINC 内嵌零纤维差额 (A−N/p)² 为非负坐标 ⟹ 是"最弱充分靶+拨盘"的
+重述, 不是难度削减。审计最不自信点 = continuant 结构是否强制低亏格坍缩 → 已派
+qLOWGENUS(life8); family 机制(非自治 Möbius 走动混合/block-glueing) → qFAMMECH(life1)。
 **风险登记 (两问)**: (a) 最没信心: [COINC] 与"仿射 Parseval"死亡证书的关系
 未对表原文 (q7/life8 在查); (b) 盲角: β∈(1/2,2/3) 是否存在比 2/3 更便宜的
 中间 rung 未系统扫描 (q1 第4问在查)。

@@ -46,3 +46,10 @@
 [ask-gpt Q6549 life7 tid=99d114cb +833s] waiting (status=processing +GITHUB)
 [ask-gpt Q6549 life7 tid=99d114cb +854s] waiting (status=processing +GITHUB)
 [ask-gpt Q6549 life7 tid=99d114cb +876s] waiting (status=processing +GITHUB)
+[ask-gpt Q6549 life7 tid=99d114cb +897s] waiting (status=processing +GITHUB)
+[ask-gpt Q6549 life7 tid=99d114cb +919s] waiting (status=processing +GITHUB)
+[ask-gpt Q6549 life7 tid=99d114cb +941s] waiting (status=processing +GITHUB)
+[ask-gpt Q6549 life7 tid=99d114cb +962s] waiting (status=processing +GITHUB)
+[ask-gpt Q6549 life7 tid=99d114cb +976s] terminal: status=failed
+═══ BRIDGE Q6549 →life7 ✗ ALL CONNECTORS FAILED — neither Notion nor GitHub delivered. | "CONTEXT (Apery mod-p collision project; everything below is machine-ve…" | task 99d114cb ═══
+[BRIDGE: ALL CONNECTORS FAILED — neither Notion page nor GitHub commit landed.]
