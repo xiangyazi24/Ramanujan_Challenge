@@ -1,0 +1,351 @@
+CONTEXT (Apery mod-p collision project; everything below is machine-verified and has written proofs unless explicitly marked OPEN; ASCII math only in your answer, no tables).
+
+P(u) = (2u+1)(17u^2+17u+5) = 34u^3+51u^2+27u+5.
+Apery recurrence: (n+1)^3 y_{n+1} = P(n) y_n - n^3 y_{n-1}.
+b: b_0=1, b_1=5 (Apery numbers A_n). c: companion, c_0=0, c_1=1.
+Casoratian (proved): W_n = b_n c_{n-1} - b_{n-1} c_n = -1/n^3 (inverses mod p; p >= 7 prime; regular window only).
+I_p = {1,...,p-2}, M = p-2. Projective orbit pi(n) = [b_n : c_n] in P^1(F_p).
+m_p(v) = #{n in I_p : pi(n) = v}. Energy F_p = sum_v m_p(v)^2.
+PROVED (ENERGY-3/2): F_p <= 2*sqrt(3)*p^{3/2}(1+o(1)). Goal: any exponent < 3/2 is a new theorem; F_p << p^{1+eps} ("E1") is the grand target.
+
+Gap polynomials (proved): N_1 = 1, N_2(r) = P(r+1), N_{h+1}(r) = P(r+h) N_h(r) - (r+h)^6 N_{h-1}(r). deg N_h = 3(h-1).
+U_m: U_{-1}=0, U_0=1, U_{m+1}(s) = P(s+m) U_m(s) - (s+m)^6 U_{m-1}(s). N_h(r) = U_{h-1}(r+1).
+On a nonwrapping window: pi(r) = pi(r+h) iff N_h(r) = 0 in F_p.
+C_h = #{1 <= r <= M-h : N_h(r) = 0 in F_p}. Trivial: C_h <= 3(h-1). Chebotarev average (fixed h, p -> infty, proved): avg C_h = kappa_h + (p-2-h-kappa_h)/(p+1) + o(1), kappa_h = 1 for h even (forced mirror collision from the proved reflection theorem y_{p-1-n} = y_n), 0 for h odd.
+Transfer matrices: M_u = [[0, (u+1)^6], [-1, P(u)]], G_m(s) = M_{s+m-1}...M_s = [[-(s+m)^6 U_{m-2}(s+1), (s+m)^6 U_{m-1}(s)], [-U_{m-1}(s+1), U_m(s)]], det G_m(s) = prod_{j=1}^{m} (s+j)^6.
+Adjacent coprimality (proved): gcd(N_h, N_{h+1}) = 1 as polynomials (over Q).
+Factorization law (proved): for h even, N_h = (2r+h+1) M_h with M_h the primitive factor; for h odd N_h is irreducible over Q for all h <= 14 (verified).
+h=2 splitting law (proved): full root count of N_2 = 1 + 2*[(-51/p) = 1]. Same field Q(sqrt(-51)) appears in the proved annealed two-step return probability (2 + (-51/p))/(p-1).
+
+NEW REDUCTION derived this session (AUDIT TARGET — treat as claims, not facts):
+v_n = (b_n, c_n), Delta_{r,h} = det(v_r, v_{r+h}) = b_r c_{r+h} - b_{r+h} c_r in F_p.
+(D1) CLAIM: Delta_{r,h} = N_h(r) / prod_{j=1}^{h} (r+j)^3. (Derivation: z_h = Delta_{r,h} solves the recurrence in n = r+h; z_0 = 0, z_1 = -W_{r+1} = 1/(r+1)^3; clearing cubes matches the U-recurrence.)
+For H <= p: index set S_H = {(r,h) : 1 <= h <= H, 1 <= r <= M-h}, #S_H = sum_{h<=H}(M-h).
+B_t(H) = sum_{(r,h) in S_H} e_p(t * Delta_{r,h}), e_p(x) = exp(2 pi i x / p).
+(D2) Orthogonality: sum_{h<=H} C_h = #S_H/p + (1/p) sum_{t != 0} B_t(H).
+(D3) Parseval: sum_{t != 0} |B_t(H)|^2 = p * N_coinc(H) - (#S_H)^2, where N_coinc(H) = #{((r,h),(r',h')) in S_H^2 : Delta_{r,h} = Delta_{r',h'} in F_p}.
+(D4) [COINC] hypothesis: N_coinc(H) <= (#S_H)^2/p + K * #S_H for an absolute K. Then Cauchy-Schwarz on (D2)+(D3): sum_{h<=H} C_h <= #S_H/p + sqrt(K * #S_H) << H + sqrt(K p H).
+(D5) Pair count: Q_p(D) := #{collision pairs at gap <= D} <= sum_{h<=D} C_h. sigma-ladder (proved in our paper): Q_p(D) <<_eps D^{3-sigma} p^eps for all D ==> F_p <<_eps p^{2-1/(3-sigma)+eps}. So [COINC] at H = p^{2/3} would give sum C_h << p^{5/6} <= (p^{2/3})^{3/2}, i.e. sigma = 3/2, F_p << p^{4/3}: NEW THEOREM.
+(D6) Difference curves: for a pair (h,h'), X_{h,h'} : Delta_{r,h} = Delta_{r',h'}, a plane curve in (r,r') of bidegree about (3h, 3h') (as rational functions; poles at r = -1..-h etc.). N_coinc(H) = sum over pairs (h,h') of #X_{h,h'}(F_p restricted to windows). Per-pair Weil gives error ~ (h+h') sqrt(p), total ~ H^3 sqrt(p): only useful for H <= p^{1/4}, but the trivial bound sum C_h <= 1.5 H^2 is better for H < p^{1/3}. So PER-PAIR WEIL NEVER BEATS TRIVIAL: the crux is family-averaged cancellation of the Weil error terms over the discrete growing-genus family {X_{h,h'} : h,h' <= H}.
+
+DEAD ENDS with written death certificates (do NOT revisit): Katz equidistribution for the fixed-h horizontal problem; T-adic/eigencurve; Stickelberger valuations; Galois orbit norms; HGM/Hasse degree; mass formula (Fourier-diagonal aliases of |Z_p|); black-box bounded-conductor detector (constant-sheaf counterexample); dispersion k=2; row-resultant sign factorization. Also: jet linear leverage, St box St, affine Parseval on the FIBER side, Stepanov=Bezout no-surplus, resultants only control Q.
+
+[qAUDIT-NWTEX — quick gate audit of the NEAR-WALL LaTeX block below before merge. life5]
+Verify: statements match the audited theorem (K_p(H,D) << H D^{11/7}, W-injection with one-based endpoint h <= u-1), proofs complete, constants explicit, no label collisions with prefixes oe-/sh-/coinc-/gram-/br-/zwin-. PROVED/FIXABLE/BROKEN + merge verdict. Source:
+
+% Ledger sources: Q6604 (original near-wall proof), Q6630 (hostile audit,
+% with the nu_D prose typo corrected), and Q6657 (independent audit in the
+% current one-based convention).  The only external inputs used below are
+% R_h<=3(h-1), Theorem~\ref{thm:sh-sigma-half}, and the previously proved
+% interval multiplicity estimate m_I(v)<=1+4|I|^{2/3}.
+
+\subsection{A near-wall estimate for close pairs of gaps}
+\label{sec:nw-near-wall}
+
+We retain the conventions of Sections~\ref{sec:orbit-energy}
+and~\ref{sec:sigma-half}: $p\ge7$ is prime,
+$I_p=\{1,\ldots,M\}$ with $M=p-2$, and
+$\pi(n)=[b_n:c_n]\in\mathbb P^1(\mathbb F_p)$.
+All counts below are nonwrapping.  Thus a condition involving
+$\pi(r+h)$ always includes $r+h\le M$.  For convenience set $R_h=0$
+when $h>M-1$.
+
+For $1\le a<b$ define
+\[
+ J_p(a,b)
+ =\#\{r\in I_p:r+b\le M,
+          \ \pi(r)=\pi(r+a)=\pi(r+b)\}.
+\]
+For integers $1\le D\le H$ put
+\begin{equation}\label{eq:nw-K-def}
+ K_p(H,D)
+ =\sum_{1\le d\le D}\ \sum_{H<h\le2H-d}J_p(h,h+d).
+\end{equation}
+Thus $K_p(H,D)$ counts same-base pairs of collision gaps whose smaller
+gap lies in $(H,2H]$ and whose separation is at most $D$.
+
+For $d\ge1$ and $u\in I_p$ define
+\[
+ Z_d=\{u\in I_p:u+d\le M,\ \pi(u)=\pi(u+d)\},
+\]
+\[
+ \nu_D(u)
+ =\#\{1\le d\le D:u\in Z_d\},
+ \qquad
+ S_1(D)=\sum_{1\le d\le D}R_d=\sum_{u\in I_p}\nu_D(u).
+\]
+The ordinary same-base pair count is
+\begin{equation}\label{eq:nw-Q-def}
+ Q_p(D)=\sum_{u\in I_p}\binom{\nu_D(u)}2.
+\end{equation}
+For the backward window define
+\[
+ W_{H,d}(u)
+ =\#\{h:H<h\le2H-d,\ h\le u-1,
+          \ \pi(u-h)=\pi(u)\},
+\]
+\begin{equation}\label{eq:nw-W-def}
+ W_H(u)
+ =\#\{h:H<h\le2H,\ h\le u-1,
+          \ \pi(u-h)=\pi(u)\}.
+\end{equation}
+The endpoint condition $h\le u-1$ is the one-based nonwrapping condition
+$u-h\ge1$.
+
+\begin{lemma}[forward-window second moment]
+\label{thm:nw-nu-identity}
+For every integer $D\ge1$,
+\begin{equation}\label{eq:nw-nu-identity}
+ \sum_{u\in I_p}\nu_D(u)^2=S_1(D)+2Q_p(D).
+\end{equation}
+Consequently,
+\begin{equation}\label{eq:nw-nu-L2}
+ \sum_{u\in I_p}\nu_D(u)^2\le15D^{5/2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The pointwise identity $x^2=x+2\binom x2$, summed over $u$, gives
+\eqref{eq:nw-nu-identity}.  Here an unordered pair $d_1<d_2$ counted by
+$\binom{\nu_D(u)}2$ is exactly the same-base collision pair
+\[
+ \pi(u)=\pi(u+d_1)=\pi(u+d_2)
+\]
+with gaps $d_1,d_2\le D$.  No shift of the base point is involved.
+
+By~\eqref{eq:sh-onegap},
+\[
+ S_1(D)\le3\sum_{d=1}^{D}(d-1)
+          =\frac32D(D-1)\le\frac32D^{5/2}.
+\]
+Theorem~\ref{thm:sh-sigma-half} gives
+$Q_p(D)\le\frac{27}{4}D^{5/2}$, since its truncated gap parameter is at
+most $D$.  Substitution in~\eqref{eq:nw-nu-identity} yields
+\[
+ \sum_u\nu_D(u)^2
+ \le\left(\frac32+\frac{27}{2}\right)D^{5/2}
+ =15D^{5/2}.
+\]
+\end{proof}
+
+\begin{lemma}[backward-window injection]
+\label{thm:nw-w-injection}
+For every integer $H\ge1$,
+\begin{equation}\label{eq:nw-w-injection}
+ \sum_{u\in I_p}\binom{W_H(u)}2\le Q_p(2H).
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:nw-W-L2}
+ \sum_{u\in I_p}W_H(u)^2
+ \le\left(\frac92+54\sqrt2\right)H^{5/2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+An object counted by $\binom{W_H(u)}2$ is a uniquely ordered pair
+\[
+ H<h_1<h_2\le2H,
+ \qquad h_2\le u-1,
+ \qquad
+ \pi(u-h_1)=\pi(u)=\pi(u-h_2).
+\]
+Set
+\[
+ r=u-h_2,
+ \qquad
+ g_1=h_2-h_1,
+ \qquad
+ g_2=h_2.
+\]
+Then
+\[
+ r\ge1,
+ \qquad
+ 1\le g_1\le H-1,
+ \qquad
+ H<g_2\le2H,
+ \qquad
+ g_1<g_2,
+ \qquad
+ r+g_2=u\le M.
+\]
+Furthermore
+\[
+ r+g_1=u-h_1,
+ \qquad
+ r+g_2=u,
+\]
+so
+\[
+ \pi(r)=\pi(r+g_1)=\pi(r+g_2).
+\]
+Thus $(r,g_1,g_2)$ is a valid object counted by $Q_p(2H)$.  The map is
+injective because its image recovers the source through
+\[
+ u=r+g_2,
+ \qquad
+ h_2=g_2,
+ \qquad
+ h_1=g_2-g_1.
+\]
+This proves~\eqref{eq:nw-w-injection}, including the ordered-pair and
+nonwrapping conventions.
+
+The first moment is
+\[
+ \sum_{u\in I_p}W_H(u)
+ =\sum_{H<h\le2H}R_h
+ \le3\sum_{h=H+1}^{2H}(h-1)
+ =\frac{9H^2-3H}{2}
+ \le\frac92H^2.
+\]
+Using $x^2=x+2\binom x2$, the injection, and
+Theorem~\ref{thm:sh-sigma-half},
+\begin{align*}
+ \sum_uW_H(u)^2
+ &\le \frac92H^2+2Q_p(2H)\\
+ &\le \frac92H^2
+      +2\cdot\frac{27}{4}(2H)^{5/2}\\
+ &=\frac92H^2+54\sqrt2\,H^{5/2}\\
+ &\le\left(\frac92+54\sqrt2\right)H^{5/2},
+\end{align*}
+which is~\eqref{eq:nw-W-L2}.
+\end{proof}
+
+\begin{theorem}[near-wall bound with $\eta=3/7$]
+\label{thm:nw-near-wall}
+For every prime $p\ge7$ and all integers $1\le D\le H$,
+\begin{equation}\label{eq:nw-main-explicit}
+ K_p(H,D)
+ \le C_{\rm nw}\,H D^{11/7},
+ \qquad
+ C_{\rm nw}
+ =\sqrt{15\left(\frac92+54\sqrt2\right)}.
+\end{equation}
+In particular,
+\[
+ K_p(H,D)\ll H D^{11/7}=H D^{2-3/7}
+\]
+uniformly in $p,H,D$, with no factor $p^\varepsilon$.
+\end{theorem}
+
+\begin{proof}
+We first rewrite the count at its midpoint.  A term of
+$K_p(H,D)$ consists of $(r,h,d)$ satisfying
+\[
+ 1\le d\le D,
+ \qquad
+ H<h\le2H-d,
+ \qquad
+ r+h+d\le M,
+\]
+and
+\[
+ \pi(r)=\pi(r+h)=\pi(r+h+d).
+\]
+Put $u=r+h$.  Then
+\[
+ r=u-h,
+ \qquad
+ r+h+d=u+d,
+\]
+and the event becomes
+\[
+ \pi(u-h)=\pi(u)=\pi(u+d).
+\]
+The boundary conditions become $u+d\le M$ and $h\le u-1$.  Conversely,
+these conditions recover the unique base $r=u-h$.  Hence
+\begin{equation}\label{eq:nw-midpoint-identity}
+ K_p(H,D)
+ =\sum_{1\le d\le D}\ \sum_{u\in Z_d}W_{H,d}(u).
+\end{equation}
+Since all summands are nonnegative and
+$W_{H,d}(u)\le W_H(u)$,
+\begin{equation}\label{eq:nw-midpoint-envelope}
+ K_p(H,D)\le\sum_{u\in I_p}\nu_D(u)W_H(u).
+\end{equation}
+
+Cauchy--Schwarz, Lemma~\ref{thm:nw-nu-identity}, and
+Lemma~\ref{thm:nw-w-injection} give
+\begin{align}
+ K_p(H,D)
+ &\le
+ \left(\sum_u\nu_D(u)^2\right)^{1/2}
+ \left(\sum_uW_H(u)^2\right)^{1/2}\notag\\
+ &\le
+ \sqrt{15\left(\frac92+54\sqrt2\right)}
+ H^{5/4}D^{5/4}\notag\\
+ &=C_{\rm nw}H^{5/4}D^{5/4}.
+ \label{eq:nw-cauchy-branch}
+\end{align}
+
+There is also a pointwise branch.  For fixed $u$, all positions counted by
+$W_H(u)$ lie in the interval
+\[
+ [\max(1,u-2H),\,u-H-1],
+\]
+which contains at most $H$ integers, all of projective color $\pi(u)$.
+The previously proved interval multiplicity estimate therefore gives
+\[
+ W_H(u)\le1+4H^{2/3}\le5H^{2/3}.
+\]
+Together with~\eqref{eq:nw-midpoint-envelope} and
+$S_1(D)\le\frac32D(D-1)$, this yields
+\begin{equation}\label{eq:nw-pointwise-branch}
+ K_p(H,D)
+ \le\left(1+4H^{2/3}\right)S_1(D)
+ \le\frac{15}{2}H^{2/3}D^2.
+\end{equation}
+
+The two powers cross at $D=H^{7/9}$.  If $D\le H^{7/9}$, then
+$D^{3/7}\le H^{1/3}$, and~\eqref{eq:nw-pointwise-branch} gives
+\[
+ K_p(H,D)
+ \le\frac{15}{2}H^{2/3}D^2
+ \le\frac{15}{2}H D^{11/7}.
+\]
+If $D\ge H^{7/9}$, then $D^{9/28}\ge H^{1/4}$, and
+\eqref{eq:nw-cauchy-branch} gives
+\[
+ K_p(H,D)
+ \le C_{\rm nw}H^{5/4}D^{5/4}
+ \le C_{\rm nw}H D^{11/7}.
+\]
+Since $C_{\rm nw}>15/2$, the two cases prove
+\eqref{eq:nw-main-explicit}.
+\end{proof}
+
+\begin{remark}[position on the wall map]
+\label{rem:nw-wall-map}
+The proof retains the sharper two-branch estimate
+\begin{equation}\label{eq:nw-sharp-min}
+ K_p(H,D)
+ \le\min\left\{
+ \frac{15}{2}H^{2/3}D^2,
+ \ C_{\rm nw}H^{5/4}D^{5/4}
+ \right\}.
+\end{equation}
+The theorem packages this minimum into the near-wall form
+$H D^{2-\eta}$ with the unconditional gain $\eta=3/7$.
+
+There are also the global containments
+\[
+ K_p(H,D)\le Q_p(2H)
+ \le\frac{27}{4}(2H)^{5/2}
+ =27\sqrt2\,H^{5/2},
+\]
+and, from the abstract $H^2\log H$ theorem with $R_d\le3d$,
+\[
+ K_p(H,D)\le Q_p(2H)
+ \le66(2H)^2\bigl(1+\log(2H)\bigr)
+ =264H^2\bigl(1+\log(2H)\bigr).
+\]
+Thus the near-wall theorem is a local strip estimate, not a replacement
+for the sharp global bound.  At the power scale $D=H^\alpha$, its exponent
+is $1+11\alpha/7$.  It improves on the $H^{5/2}$ global exponent for
+$\alpha<21/22$, and it gives a power saving over $H^2\log H$ for
+$\alpha<7/11$; at $\alpha=7/11$ it gives $O(H^2)$ and removes the global
+logarithm.  For larger $\alpha$, the $H^2\log H$ theorem is the stronger
+global estimate.  The new information is therefore concentrated exactly
+in the near-diagonal regime where two collision gaps are close.
+\end{remark}

@@ -2386,3 +2386,12 @@ staleness (我方 CTX 里的'3/4 纪录'陈旧) — 跨 session 定理台账必�
 全 h Morse 输入二选一: (a) A_h 本原+C_h sf; (b) W_h 不可约 (单件通吃)。
 证书协议 Protocol A (两素数: q0 不可约+q1 素数p>h−1 循环⟹本原); 警告:
 不可约≠本原/transposition 不够/sf disc 不够。我方 W_h codex=路线(b)。
+
+## §124 — CRIT-2H codex 收卷: 两个全 h 定理 (08-02 凌晨)
+
+CODEX_CRIT2H_report.md: **PROVED ∀h≥2: (1) N_h 在 Q 上 squarefree** (三对角 pencil
++标量局部化+实根单性+非实重根排除); **(2) C_h(0)≠0** (精确常数项恒等式)。
+VERIFIED-32: C_h squarefree+C_h(0)≠0 h≤32; gcd(C_h,C_k)=1 全 465 对。
+[CRIT-2H] 无界 h 仍 OPEN (反射商干净路线已列)。
+⟹ Morse/census/Goursat 塔无条件范围推至 **h≤32**; genus 命题的 squarefree 假设
+转正为定理。全 h 残余 = W_h 不可约 (codex 在跑) 或 A_h 本原 (Protocol A)。
