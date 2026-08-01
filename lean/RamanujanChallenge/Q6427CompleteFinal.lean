@@ -32,7 +32,6 @@ theorem integrableOn_pow_mul_exp_neg_mul27_final
   filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
   rw [mul_pow]
   field_simp [ha.ne']
-  ring
 
 theorem integrableOn_ctHorizontalMajorant27_final (n : ℕ) :
     IntegrableOn (ctHorizontalMajorant27Final n) (Ioi 0) := by
@@ -64,7 +63,8 @@ theorem integrable_ctAbsMajorant27_final (n : ℕ) :
   have hpos : IntegrableOn (ctAbsMajorant27Final n) (Ioi 0) := by
     refine hpos0.congr ?_
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with y hy
-    simp [ctAbsMajorant27Final, abs_of_pos hy]
+    have hy0 : 0 < y := hy
+    simp [ctAbsMajorant27Final, abs_of_pos hy0]
   have hneg : IntegrableOn (ctAbsMajorant27Final n) (Iic 0) := by
     rw [← Measure.map_neg_eq_self (volume : Measure ℝ)]
     let e : MeasurableEmbedding (fun x : ℝ => -x) :=
@@ -109,8 +109,8 @@ theorem continuous_ctExtension_vertical27_final
   intro y
   have ht : verticalPoint x y ∈ halfIntegerStrip (m : ℤ) := by
     simpa [verticalPoint, halfIntegerStrip] using hx
-  exact (ctExtension_differentiableAt27_final hm1 ht).continuousAt.comp y
-    (by fun_prop)
+  exact (ctExtension_differentiableAt27_final hm1 ht).continuousAt.comp
+    (by fun_prop : ContinuousAt (verticalPoint x) y)
 
 theorem integrable_ctExtension_vertical27_final
     {n m : ℕ} (hm1 : 1 ≤ m) (hmn : m ≤ n) {x : ℝ}
@@ -129,7 +129,9 @@ theorem integrable_ctExtension_vertical27_final
     apply hgpos.mono'
     · exact hfcont.aestronglyMeasurable.restrict
     · filter_upwards [ae_restrict_mem measurableSet_Ioi] with y hy
-      have hy1 : 1 ≤ y := le_of_lt hy
+      have hygt : 1 < y := hy
+      have hy1 : 1 ≤ y := hygt.le
+      have hy0 : 0 < y := zero_lt_one.trans hygt
       have hmem : verticalPoint x y ∈ halfIntegerStrip (m : ℤ) := by
         simpa [verticalPoint, halfIntegerStrip] using hx
       have hne : verticalPoint x y ≠ (m : ℂ) := by
@@ -142,12 +144,14 @@ theorem integrable_ctExtension_vertical27_final
         symm
         exact ctIntegrand_eq_extension27 hm1 hmn hmem hne]
       have hbound := norm_ctIntegrand_top_le_final hm1 hmn hx hy1
-      simpa [g, ctAbsMajorant27Final, verticalPoint, abs_of_pos hy] using hbound
+      simpa [g, ctAbsMajorant27Final, verticalPoint, abs_of_pos hy0] using hbound
   have hneg : IntegrableOn f (Iio (-1)) := by
     have hgneg : IntegrableOn g (Iio (-1)) := hg.integrableOn
     apply hgneg.mono'
     · exact hfcont.aestronglyMeasurable.restrict
     · filter_upwards [ae_restrict_mem measurableSet_Iio] with y hy
+      have hylt : y < -1 := hy
+      have hy0 : y < 0 := hylt.trans (by norm_num)
       have hT : 1 ≤ -y := by linarith
       have hmem : verticalPoint x y ∈ halfIntegerStrip (m : ℤ) := by
         simpa [verticalPoint, halfIntegerStrip] using hx
@@ -165,7 +169,7 @@ theorem integrable_ctExtension_vertical27_final
         apply Complex.ext <;> simp [verticalPoint]
       rw [hpoint]
       have hbound := norm_ctIntegrand_bottom_le_final hm1 hmn hx hT
-      simpa [g, ctAbsMajorant27Final, abs_of_neg hy] using hbound
+      simpa [g, ctAbsMajorant27Final, abs_of_neg hy0] using hbound
   have hall : IntegrableOn f
       (Iio (-1 : ℝ) ∪ Set.Icc (-1 : ℝ) 1 ∪ Ioi 1) :=
     (hneg.union hcentral).union hpos
@@ -173,7 +177,11 @@ theorem integrable_ctExtension_vertical27_final
     ext y
     simp only [Set.mem_union, Set.mem_Iio, Set.mem_Icc, Set.mem_Ioi,
       Set.mem_univ, iff_true]
-    linarith
+    by_cases hlow : y < -1
+    · exact Or.inl hlow
+    by_cases hhigh : 1 < y
+    · exact Or.inr (Or.inr hhigh)
+    · exact Or.inr (Or.inl ⟨le_of_not_gt hlow, le_of_not_gt hhigh⟩)
   rw [hcover] at hall
   simpa [IntegrableOn] using hall
 
@@ -230,10 +238,9 @@ theorem ctR_repeated_shift27_final
         _ = ctVerticalIntegral27Final n (((a + d + 1 : ℕ) : ℝ) + 1 / 2) := by
           have hone := ctR_one_strip_shift_complete27_final
             (n := n) (m := a + d + 1) (by omega) (by omega)
-          convert hone using 1 <;> push_cast <;> ring
+          convert hone using 1 <;> push_cast <;> ring_nf
         _ = ctVerticalIntegral27Final n (((a + (d + 1) : ℕ) : ℝ) + 1 / 2) := by
-          congr 2
-          omega
+          simp [Nat.add_assoc]
 
 theorem ctR_shift_to_native27_final
     {n a : ℕ} (ha : a ≤ n) :
