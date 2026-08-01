@@ -72,13 +72,13 @@ for name, sign, target in (("non-alternating  Q(+x)", 1, NONALT),
     print(f"   {'declared value':<44} {nstr(target, 18):>22}   diff {nstr(abs(got - target), 3)}")
 
 print("\n2. Behaviour of the non-alternating integrand at x = 1")
-print("   (should grow like log^2(1-x): doubling the exponent of the gap")
-print("    should roughly quadruple nothing, but add a fixed increment squared)")
-for e in (mpf(10) ** -6, mpf(10) ** -10, mpf(10) ** -14):
+print("   growth is log^2(1-x); the ratio below is the coefficient, and it")
+print("   creeps toward 1 rather than sitting at a round constant")
+for e in (mpf(10) ** -6, mpf(10) ** -10, mpf(10) ** -14, mpf(10) ** -20):
     x = 1 - e
     val = -log(x) / x * Qclosed(x)
-    ref = 2 * log(e) ** 2
+    ref = log(e) ** 2
     print(f"   x = 1 - 1e{int(log(e)/log(10)):<4} integrand {nstr(val, 12):>16}"
-          f"   2 log^2(1-x) = {nstr(ref, 12):>16}")
+          f"   log^2(1-x) = {nstr(ref, 12):>16}   ratio {nstr(val/ref, 6)}")
 print("\n   -> integrable log^2 singularity at x = 1; the alternating integrand"
       "\n      has none, since Q(-x) never approaches the pole.")
