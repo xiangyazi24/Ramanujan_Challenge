@@ -115,6 +115,15 @@ Plus occupancy-one barrier (Q=x, one candidate per modulus, no balanced factoris
 | Q6241 | ds2 (7th) | DS | deepen SG1 mechanism | ✅ — corrects constant (1−cos ≥ 8x²); minimal statement = small-ball anti-concentration #{p:‖A/p‖≥ε}≥δm_n; obstruction = ARCHIMEDEAN residue size (p-adic sees 0/nonzero only); **missing coupling = squarefree-modulus large-sieve/inverse theorem for the holonomic orbit** (short residues mod too many primes force an exceptional global congruence the recurrence rules out) |
 | Q6244 | ds1 (8th) | DS | composite-modulus estimate | ✅ — **cleanest frontier statement = "Apéry large sieve"**: Σ|T_h(n)|²≪N³/log²N, T_h=|S_h|²−Q_n=pair phase mod pq; n-interval length N=M^{1/4} (extremely short); CRT = compatible prime-local automata not a block law mod pq; per-tuple bounds can't sum (cancellation across tuples essential) |
 
+| Q6250 | dm1 | Claude4.6 | Bourgain-Gamburd expansion for Apéry walk | ✅ NO-GO — deterministic walk, not random; requires averaging over words |
+| Q6251 | dm1 | Claude4.6 | Burgess amplification via recurrence shifts | ✅ NO-GO — Burgess needs fixed-modulus automorphism; here modulus IS summation variable |
+| Q6252 | dm3 | Claude4.6 | Vaughan/Heath-Brown decomposition | ✅ NO-GO — creates composite moduli; Apéry has zero-divisor issues mod composites |
+| Q6254 | dm5 | Claude4.6 | Complete sum bounds / Korobov-Niederreiter for LRS | ✅ NO-GO — non-autonomous recurrence, not LRS over F_p |
+| Q6257 | dm3 | Claude4.6 | Mauduit-Rivat automatic sequence bounds | ✅ NO-GO — short sum (N ≈ p = base) → one digit → automatic structure trivial |
+| Q6258 | dm3 | Claude4.6 | Quadratic splitting / Q(√2) DL structure | ✅ NO-GO — varying modulus kills DL; Artin order conjecture insufficient |
+| Q6259 | dm3 | Claude4.6 | Smooth number prime-factor budget | ✅ NO-GO — no Erdős-Kac for holonomic; Lucas is mod-p not global factorization |
+| Q6260 | dm4 | Claude4.6 | Archimedean CRT constraint (geometry of numbers) | ✅ NO-GO — height Λn ≈ 3.5n ≫ modulus entropy δn ≈ 0.5n → no contradiction |
+
 ## 6. Claude4.6's recent finds (for coordination)
 Claude's dm Q6170–Q6179 (his ChatGPT): reciprocal-prime reformulation (verified by DS),
 gap-singleton property, route audit. **Two NEW avenues from Q6179** (not in DS synthesis):
@@ -134,3 +143,4 @@ A=b_n/R mod R^K, or a nonzero high base-R CRT digit), not a local p⁸ congruenc
   Xiang to nudge the ds window.
 
 _Last updated: 2026-07-31 by DS._
+_Appended: 2026-07-31 ~19:30 by Claude4.6 — 8-round attack synthesis (Q6250–Q6260, all NO-GO). See `CLAUDE_NOTES_8round_synthesis.md` for full analysis. Universal obstruction: modulus IS summation variable._
