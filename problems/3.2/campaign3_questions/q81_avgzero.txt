@@ -1,0 +1,30 @@
+[q81 LASTSTAND — [AVG-ZERO]: prove sum_{p<=X} |Z_p| = o(X). The cleanest target in the whole campaign. life3]
+
+DERIVED AND MACHINE-VERIFIED HERE TODAY (verify both steps yourself before working; they are short):
+
+1. DIGIT CRITERION. For p prime, Gessel/Lucas b_{mp+r} == b_m b_r (mod p) for 0 <= r < p, iterated over the base-p expansion, gives b_n == prod_i b_{d_i} (mod p); since p is prime,
+     p | b_n  <=>  some base-p digit of n lies in Z_p := {d < p : p | b_d}.
+   (Verified for all n in [40,140) against every prime in the top window.)
+2. EXACT AVERAGING IDENTITY. With TOP(n) := #{p in (n/2, n] : p | b_n} (the top-window prime-factor count of b_n, which is what the master sum of Problem 3.2 charges), writing n = p + r for p in (n/2,n] gives p|b_n <=> r in Z_p, and swapping the order of summation:
+     sum_{n <= X} TOP(n)  =  #{ (p,r) : r in Z_p, r >= 1, p + r <= X }   (about sum_{p <= X/2} |Z_p|).
+   (Machine-verified: both sides equal 82 at X = 600.)
+
+CONSEQUENCE. The average-over-n version of the main conjecture's top window is EXACTLY the single scalar statement
+     [AVG-ZERO]:  sum_{p <= X} |Z_p| = o(X).
+
+STATE OF [AVG-ZERO]:
+- TRUTH (measured): sum_{p<=X}|Z_p| = 109 = pi(X) exactly at X=600; mean |Z_p| = 0.912 over the 548 primes below 4000. The zero counts follow the Poisson random floor with mean of order 1, so the truth is ~ X/log X.
+- HEURISTIC, exact: sum_{r<X} sum_{p in (r,X]} 1/p = sum_{p<=X} p * (1/p) = pi(X). So the heuristic prediction is exactly pi(X), leaving a full log X of margin below the target o(X) — a bound as weak as << X/log log X suffices.
+- UNCONDITIONALLY PROVED: only |Z_p| <= 3 p^{2/3} per prime, which gives sum_{p<=X} 3p^{2/3} ~ X^{5/3}/log X. That is X^{2/3} ABOVE the target. Nothing between X^{5/3}/log X and X is proved. Note this also means the frequently-assumed "almost all n" version of the conjecture is NOT unconditionally known — any averaging argument needs exactly [AVG-ZERO] as input.
+
+EQUIVALENT ARITHMETIC FORM (this is what makes it attractive):
+     sum_{p <= X} |Z_p| = #{ (r,p) : r < p <= X, p | b_r } = sum_{r < X} #{ primes p in (r, X] dividing b_r }.
+So it asks: on average over r, how many prime factors in the range (r, X] does the Apery number b_r have? Trivially at most log(b_r)/log r ~ 3.5255 r / log r each, giving the useless X^2/log X. The target says: on average O(1/log)-ish, i.e. most b_r have NO prime factor in (r, X].
+
+WHY THIS TARGET IS WORTH YOUR FULL EFFORT: it is a scalar cross-prime counting statement — no mesoscopic scale, no strip, no cocycle, no monodromy. The entire multi-month campaign on this problem has worked at a FIXED prime (energy exponents, fibre multiplicities, gap polynomials, Weil bounds per height); this quantity has never been attacked. It is implied by the conjecture, it is the exact average version, and it has a log X of slack.
+
+YOUR TASK:
+(i) Verify the digit criterion and the identity. Then state [AVG-ZERO] with the exact constants and the exact relation to log G_n (including what the middle range sqrt(n) < p <= n/2 adds, where the analogous count carries the weight |R_p(n)| <= 1 + n/(2p)).
+(ii) ATTACK IT. Angles worth weighing, but find your own if better: (a) the counting form sum_{r<X} #{p in (r,X] : p | b_r} — bound the number of large prime factors of b_r using the explicit formula b_r = sum_k C(r,k)^2 C(r+k,k)^2 and known divisibility structure (Apery numbers have well-studied supercongruences: Beukers, Ahlgren-Ono, Stienstra-Beukers; the weight-4 level-8 newform eta(2z)^4 eta(4z)^4 gives b_{(p-1)/2} == a_p mod p^2 type results — do any of these constrain how OFTEN p | b_r as r varies?); (b) upper-bound |Z_p| on average over p via a second-moment/large-sieve argument: sum_p |Z_p|^2 counts pairs (r,r') with p | b_r and p | b_{r'}, i.e. p | gcd(b_r, b_{r'}) — and gcd(b_r,b_{r'}) is exactly the kind of object the main conjecture is about, so beware circularity, but a NON-circular version may exist if one uses only r,r' < p; (c) the resultant/discriminant route: p | b_r for r < p means p divides a specific integer; sum over r < p makes sum_{p<=X}|Z_p| = sum over r of the number of prime divisors in (r,X] of the single integer b_r, so a bound on the LARGE-prime-factor count of Apery numbers (an "almost all Apery numbers have no large prime factor in a short range" statement) suffices — is there any technology for large prime factors of a holonomic/hypergeometric sequence? (Compare: Luca-Shparlinski have results on the arithmetic of Apery numbers; check what they prove and whether it touches this.) (d) Is there a p-adic/Newton-polygon reason that p | b_r is rare for r < p (note b_r for r < p is a truncated hypergeometric sum; the Beukers/Dwork theory of such truncations gives p-adic unit-root information — does it give a nonvanishing criterion for most r?).
+(iii) Be adversarial: is there an obstruction showing [AVG-ZERO] cannot be proved without the full conjecture (i.e. is it secretly equivalent rather than weaker)? Give the honest verdict — that determines whether we invest here.
+(iv) Deliver the sharpest bound you can actually prove on sum_{p<=X}|Z_p|, even X^{5/3-delta}/log X (any power improvement over the trivial X^{5/3} would be the first ever movement on this quantity), with full proof.
