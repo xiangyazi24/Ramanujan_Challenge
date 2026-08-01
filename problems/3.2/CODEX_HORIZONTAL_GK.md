@@ -673,6 +673,11 @@ archimedean fiber estimate.
 
 The termwise bound for the left side is \(O(Lp^2q^2)\), so (5.12) saves a
 factor \(pq/g\); for \(p,q\asymp N\) this is at least one power of \(N\).
+Against the generic tensor-square Deligne bounds
+\(|\mathscr M_p(r)|\ll p^{3/2}\) and
+\(|\mathscr M_q(r)|\ll q^{3/2}\), the additional full-period gain is
+\(\sqrt{pq}/g\), hence is nontrivial for \(g=o(\sqrt{pq})\); determinant-line
+exceptional modes are the explicitly classified caveat above.
 This is the requested genuine two-prime power saving newly exposed by the
 rank-two Euler formula.  Its scope is exact but limited: it is a complete
 character-index period \(L\asymp N^2/g\), it concerns a complex split-cover
