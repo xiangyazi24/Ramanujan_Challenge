@@ -454,3 +454,28 @@ program after the quantifier and statistic corrections above; no proof at the
 (p^\epsilon) threshold; no numerical exact counterexample in this zoo; and a
 clear numerical refutation of treating either Kummer or Apéry graph relations
 as automatic sources of many literal same-character matches.
+
+---
+
+## Adjudication addendum (life session, 2026-08-01 09:40)
+
+Post-delivery cross-check against cron's Q6445 verdict (appendix AF, commit
+1d9ecee), which KILLED the original Q6339 route "positive density zeros =>
+O(1/delta) cosets => bounded self-twist" by an explicit dilation-family
+counterexample (coset covering lower bound >= q, exhaustively verified):
+
+1. The main formalization above, MI(c,epsilon,eta), is the Q6413 sec.II
+   shape and does NOT rely on the killed coset-covering step. It stands as
+   stated (still unproved; the incidence-to-invariant step remains the gap).
+2. Threshold-ledger row "positive density / [source-claimed candidate]" is
+   re-graded: the positive-density hypothesis is now known NOT to imply
+   bounded self-twist by the naive projector-covering argument. Its salvage
+   is cron's C0 unconditional theorem (zero set = union of complete
+   order-packets <=> Phi_d | A <=> projector = 0; all-but-K => difference =
+   <= K Ramanujan waves of order <= 2K^2) plus Prop 3 conditional theorem
+   (equidistribution + positive-density coincidence => joint-group component
+   trace identity => Goursat/Laurent/Mann). See cron appendix AF.
+3. The empirical matrices (sec. 3) are data and unaffected.
+4. Route consequence (cron concurring): the C-line's next step is B's three
+   inputs (joint group / component classification / horizontal
+   equidistribution), not another cyclotomic inverse theorem.
