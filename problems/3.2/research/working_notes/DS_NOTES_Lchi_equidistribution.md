@@ -22,3 +22,14 @@ what the character sum must explain.
 ## Files
 DS_NOTES_dwork_setup.md (Cartier matrix), CLAUDE_NOTES_two_prime_weil.md (Claude's Weil route),
 this note.
+
+## Katz discrepancy correction (Q6287 + DS empirical)
+- **Q6287 verdict**: Katz/Sato-Tate for L(χ)/p^{3/2} does NOT imply mod-p residue uniform, even
+  with O(1/√p) archimedean discrepancy. |L(χ)| ≤ Cp^{3/2} folds mod p only ~√p times; the
+  residue distribution is a LOCAL (mod-p) statement, not controlled by the archimedean law.
+- **DS empirical confirms**: |Σ_m e_p(L(χ_m))|/√p = 0.76, 1.37 (p=101,199) — O(1), vertical
+  Weil holds; #distinct L(χ) mod p = 41, 79 (~√p folding, NOT F_p-uniform).
+- **The correct target (Q6287)**: a LOCAL-LIMIT theorem
+  max_r |#{m : L(χ_m)=r mod p} − (p−1)/p| = O(√p); Fourier inversion ⟹ |Σ e_p(L(χ))| = O(√p).
+- **Decisive computation**: is L(χ) mod p a bounded-complexity trace function of the character
+  parameter χ? (If yes, Deligne/Katz applies; if not, Sato-Tate alone can't close it.)
