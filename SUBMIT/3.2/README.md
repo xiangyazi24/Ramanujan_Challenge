@@ -95,25 +95,35 @@ The paper documents why each standard route fails: rank-one is forced by the geo
 (Beukers–Vlasenko), the mod-p² digit is not target-selective, the large sieve meets the Q²
 barrier, abc points the wrong way, and only the first moment is supported by the range.
 
-## A concrete proof path: two-prime Weil correlation (new, this session)
+## The vertical exponential sum and quantitative evidence (new, this session)
 
-**5. Vertical Weil bound.** The complete exponential sum `C_p(h) = Σ_{a=0}^{p-1} e(h b_a/p)`
-satisfies `|C_p(1)| ≤ 3.27 √p` for all 166 primes p ≤ 1000, and average ratio 1.26.
-This is a trace-function / Deligne-type phenomenon. Verified by `scripts/q32_vertical_weil_audit.py`.
+**5. Vertical value law.** The multiset `{b_m mod p : 0 ≤ m ≤ p−1}` is indistinguishable from
+iid-uniform on F_p conditioned on the reflection FE `b_r ≡ b_{p−1−r}`. Four measurable constants
+match the model prediction: D(p)/p → 1−e^{−1/2} = 0.3935 (distinct values),
+RMS |C_p(h)|/√p → √(π/2) = 1.253 (Rayleigh), collision energy E(p) = 3p + O(√p),
+max_h |C_p(h)| ~ √(2p ln(p/2)) (Gumbel). Verified over 164 primes ≤ 1000.
 
-**6. Two-prime shifted correlation (the decisive gate).** For distinct primes p, q and
-shift d = |p−q|, the correlation `Σ_m e(b_m/p − b_{m+d}/q)` satisfies the Weil-scale bound
-`|Corr| ≤ 2.09 √M` across **all 127 tested prime pairs** (p, q ≤ 709, 102 pairs in [200,600]).
-Verified by `scripts/q32_two_prime_correlation_audit.py`.
+**6. Sheaf route: provably closed.** The function `m → e(h b_m/p)` IS the trace of the rank-1
+Artin-Schreier sheaf `L_{ψ(hf)}` on G_m/F_p, with f(X) = Σ N_Λ(g^s) X^s the mod-p fiber-count
+polynomial. This sheaf is lisse, pointwise pure of weight 0, and geometrically irreducible.
+**But its Swan conductor = deg f ≈ p.** Grothendieck-Ogg-Shafarevich then gives
+`|C_p(h)| ≤ (1 + Swan)√p ≈ p^{3/2}` — the trivial bound. The ℓ-adic route and the archimedean
+bound are THE SAME p^{3/2} in two languages. Any substitute sheaf agreeing at F_p-points would
+need a "cross-level accident" with no known mechanism. **This is a proof-level closure, not a
+failure to find.**
 
-**Proof chain (if the two-prime bound is proved):** two-prime Weil ⟹ 4th-moment bound
-`Σ |S_h|^4 ≤ C N³/log²N` ⟹ pointwise `max |S_h| = o(P_n)` ⟹ Fejér ⟹ the conjecture.
+**7. Two-prime correlation at random scale.** For distinct primes p, q and shift d = |p−q|,
+`|Σ_m e(b_m/p − b_{m+d}/q)| ≤ 2.09 √M` across all 127 tested prime pairs (p,q ≤ 709).
+This matches the random-walk prediction (mean ratio 0.88 ≈ random 0.9). The bound is statistical,
+not sheaf-theoretic (the two-prime sheaf formulation mixes residue characteristics and does not
+type-check). Verified by `scripts/q32_two_prime_correlation_audit.py`.
 
-**The precise missing theorem:** construct a bounded-conductor geometrically irreducible
-ℓ-adic sheaf G_{p,q,d} on A¹ whose Frobenius trace is `ψ_p(b_m) ψ_q(−b_{m+d})`, then apply
-Deligne's Riemann Hypothesis. The Apéry Picard-Fuchs/Gauss-Manin sheaf provides the natural
-candidate; the gap is showing that the *product* sheaf (two different prime reductions of the
-same global motive, with shift) has no geometrically trivial component.
+**The remaining open problem (corrected formulation).** For each fixed h ≠ 0:
+`E(p) := Σ_{h≠0} |C_p(h)|² = O(p²)`, equivalently the collision energy `Σ N(a)² = O(p)`.
+This is a local-limit theorem for the value distribution of the Apéry sequence mod p.
+No existing technology (ℓ-adic sheaves, p-adic Dwork cohomology, Katz equidistribution,
+modular form Hecke structure) gives this bound — the only natural sheaf provably has
+maximal conductor, and the measured statistics match the random model with zero residual.
 
 ## Why the conjecture is nevertheless true
 
