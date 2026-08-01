@@ -977,3 +977,24 @@ double-certified.
   formalization dependency graph Lean-ready (future formalization target).
 - **VERTICAL THEORY: FINAL.** Every theorem unconditionally proved, correctly
   attributed, machine-verified, and wired into proof.tex §15–16.
+
+## §43 (08-01) 横向 GK 收割 + [GAP-CARTIER] 三方收敛
+
+- **codex-high 终报落地** (commits a47a6cc, b7b4019; CODEX_HORIZONTAL_GK.md 394行):
+  [VERIFIED] carry-free Gamma/Jacobi 原子 + b_r = 二次 Jacobi 卷积 (p=13,29 全系数);
+  [GAP-BGK] 非有界长度 (顶系数 Jacobi 单项式 1695 个, 多项式增长);
+  [NEGATIVE-HORIZONTAL] 无有界导手 r-trace, 普通 Weil–Deligne 无新省;
+  终 gap 账本 4 项: BGK / **CARTIER** / INDEX-SHEAF / MIXED。
+- **我机复跑三脚本全绿**: codex_hgk_coefficients.py (2F1 pullback + Mellin 反演 + 卷积),
+  codex_hgk_horizontal.py (CRT 平均, 线性 Mellin 全周期, F_5 非线性反例, gcd 分层),
+  codex_horizontal_gk_verify.py (309 原子, 卷积↔直和一致)。
+- **Q6349 (ChatGPT 独立审计, 已 bank 1ab25d0)**: 同判 [GAP-BGK] (rank 2 控纤维不控
+  反演后 jet), 同标唯一活口 [GAP-CARTIER]: 四分点处字符降为低阶 Kummer ⇒ CM/Cartier
+  赋值 plausible, 缺的是"局部系数泛函 → 纤维迹/Cartier 矩阵元"的新恒等式。
+- **cron Q6329**: 四分点定律双向证明(不消失方向 τ_m≡3τ_{m−1} 传播); τ/σ = quarter-shifted
+  rank-2 Heun 周期(无发表算术); **值分离 τ_m ≡ 2A·U_p** (p=A²+B², 2A=Gauss 中心二项
+  = y²=x³−x 的 Hasse–Witt 元) ⇒ 四分点值已含一个 CM 因子, U_p 为待造对象另一半 [OPEN]。
+- **三方收敛结论**: 横向 GK 正面强攻死于 BGK; 全部火力转 [GAP-CARTIER]。
+- 新四连发 (life池): qA=[GAP-CARTIER]构造(喂入 2A·U_p), qB=weight-3/2 Shimura lift +
+  U_p 闭形式候选×3, qC=Stickelberger/Ax–Katz p-adic 计数, qD=self-twist order|4 定理。
+- codex-max (hgk) 仍在磨 step 3, 不打断。
