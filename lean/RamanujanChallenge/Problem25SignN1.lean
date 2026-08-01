@@ -79,21 +79,17 @@ Combined with the N=0 signs (already proved) and the contraction, this gives
 |G - commonLimit| < envelopeGap 1 ≈ 4.5e-6. -/
 theorem catalan_in_envelope_one :
     positiveRatio 1 2 < catalanConstant ∧ catalanConstant < positiveRatio 1 0 := by
+  have h0 := positiveCatalanError_one_zero_neg
+  have h2 := positiveCatalanError_one_two_pos
+  rw [positiveCatalanError_eq] at h0 h2
+  have hq0 : (0 : ℝ) < (positiveDenominator 1 0 : ℝ) := by
+    exact_mod_cast positiveDenominator_pos 1 0
+  have hq2 : (0 : ℝ) < (positiveDenominator 1 2 : ℝ) := by
+    exact_mod_cast positiveDenominator_pos 1 2
+  simp only [positiveRatio]
   constructor
-  · have h := positiveCatalanError_one_two_pos
-    rw [positiveCatalanError_eq] at h
-    have hq := positiveDenominator_pos 1 2
-    rw [positiveRatio]
-    rw [div_lt_iff (by exact_mod_cast hq)]
-    push_cast at h ⊢
-    linarith
-  · have h := positiveCatalanError_one_zero_neg
-    rw [positiveCatalanError_eq] at h
-    have hq := positiveDenominator_pos 1 0
-    rw [positiveRatio]
-    rw [lt_div_iff (by exact_mod_cast hq)]
-    push_cast at h ⊢
-    linarith
+  · rw [lt_div_iff₀ hq2]; linarith
+  · rw [div_lt_iff₀ hq0]; linarith
 
 end RamanujanChallenge.P25
 

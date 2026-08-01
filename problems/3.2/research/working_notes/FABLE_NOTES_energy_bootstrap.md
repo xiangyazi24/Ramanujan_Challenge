@@ -760,3 +760,20 @@ algebraic shadow) — now the most alive, with its first theorem in hand.**
 - Codex pair deployed on the apparition line (gpt-5.6-sol; high = fast recon,
   xhigh = deep proof program; first dispatch failed on model name 'gpt-5.6' —
   account requires gpt-5.6-sol, memory confirmed).
+
+## 32. Corrected quarter-point law + tower layer 4
+
+- CORRECTED LAW (cron accepted our 11/17 counterexamples): vanishing ⟺ the
+  relevant branch's quarter point is INTEGRAL ∧ (−3|p) = −1 ⟺ p ≡ 5, 23
+  (mod 24) — matches our full table exactly. The law belongs to B_p's own
+  square-root factor; no integral quartic position ⟹ no law (information in
+  itself: only the truncated object's quartic position carries CM structure).
+- TOWER LAYER 4 (cron, mod p⁵): x₄ ≡ 8 universal (a-pattern −6 → 8);
+  y₄ = SECOND true invariant (p < 110, 0 exceptions), no simple ratio to
+  B_{p−3}/B_{p−5} — candidate: next ζ_p(3) expansion slot (B_{2p−4}-type).
+  TARGET-LOCUS STRUCTURE: on p | b_r, both β·b and y₄·b self-cancel — the
+  only visible p-arithmetic on the bad locus is β_p·2D_r. The apparition
+  question sharpens to: correlation of r ∈ Z_p with D_r values (the universal
+  harmonic-weighted companion) — Z_p membership sees p only through β_p·D_r.
+- β_p ≡ −(14/3)B_{p−3}: our independent re-verification was already done
+  (31/31, commit cf74d18).
