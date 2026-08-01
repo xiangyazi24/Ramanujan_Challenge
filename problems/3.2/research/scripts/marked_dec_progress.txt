@@ -1,0 +1,1270 @@
+# q32 marked-dec scan; exact counts; sample=300 diagnostics=20 pairs=50 seed=3333824
+SCAN 1/300 p=1021 H=31 T=2 T_refl=0 nonrefl=2 norm=0.00208116545265
+SCAN 2/300 p=1049 H=32 T=2 T_refl=0 nonrefl=2 norm=0.001953125
+SCAN 3/300 p=1069 H=32 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 4/300 p=1097 H=33 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 5/300 p=1123 H=33 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 6/300 p=1151 H=33 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 7/300 p=1171 H=34 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 8/300 p=1193 H=34 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 9/300 p=1223 H=34 T=1 T_refl=1 nonrefl=0 norm=0
+SCAN 10/300 p=1231 H=35 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 11/300 p=1259 H=35 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 12/300 p=1289 H=35 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 13/300 p=1319 H=36 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 14/300 p=1361 H=36 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 15/300 p=1381 H=37 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 16/300 p=1409 H=37 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 17/300 p=1447 H=38 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 18/300 p=1481 H=38 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 19/300 p=1499 H=38 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 20/300 p=1553 H=39 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 21/300 p=1583 H=39 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 22/300 p=1627 H=40 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 23/300 p=1663 H=40 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 24/300 p=1699 H=41 T=4 T_refl=2 nonrefl=2 norm=0.00118976799524
+SCAN 25/300 p=1741 H=41 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 26/300 p=1783 H=42 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 27/300 p=1823 H=42 T=2 T_refl=0 nonrefl=2 norm=0.00113378684807
+SCAN 28/300 p=1867 H=43 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 29/300 p=1907 H=43 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 30/300 p=1951 H=44 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 31/300 p=1999 H=44 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 32/300 p=2053 H=45 T=2 T_refl=0 nonrefl=2 norm=0.000987654320988
+SCAN 33/300 p=2099 H=45 T=2 T_refl=0 nonrefl=2 norm=0.000987654320988
+SCAN 34/300 p=2143 H=46 T=4 T_refl=0 nonrefl=4 norm=0.00189035916824
+SCAN 35/300 p=2203 H=46 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 36/300 p=2243 H=47 T=4 T_refl=2 nonrefl=2 norm=0.000905387052965
+SCAN 37/300 p=2297 H=47 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 38/300 p=2351 H=48 T=8 T_refl=8 nonrefl=0 norm=0
+SCAN 39/300 p=2411 H=49 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 40/300 p=2459 H=49 T=4 T_refl=0 nonrefl=4 norm=0.00166597251145
+SCAN 41/300 p=2521 H=50 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 42/300 p=2579 H=50 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 43/300 p=2633 H=51 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 44/300 p=2699 H=51 T=2 T_refl=0 nonrefl=2 norm=0.00076893502499
+SCAN 45/300 p=2767 H=52 T=4 T_refl=0 nonrefl=4 norm=0.00147928994083
+SCAN 46/300 p=2833 H=53 T=2 T_refl=0 nonrefl=2 norm=0.000711997152011
+SCAN 47/300 p=2897 H=53 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 48/300 p=2963 H=54 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 49/300 p=3037 H=55 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 50/300 p=3109 H=55 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 51/300 p=3169 H=56 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 52/300 p=3251 H=57 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 53/300 p=3323 H=57 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 54/300 p=3407 H=58 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 55/300 p=3491 H=59 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 56/300 p=3559 H=59 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 57/300 p=3643 H=60 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 58/300 p=3733 H=61 T=2 T_refl=0 nonrefl=2 norm=0.000537489922064
+SCAN 59/300 p=3821 H=61 T=2 T_refl=0 nonrefl=2 norm=0.000537489922064
+SCAN 60/300 p=3907 H=62 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 61/300 p=4001 H=63 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 62/300 p=4093 H=63 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 63/300 p=4177 H=64 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 64/300 p=4289 H=65 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 65/300 p=4391 H=66 T=2 T_refl=0 nonrefl=2 norm=0.000459136822773
+SCAN 66/300 p=4493 H=67 T=2 T_refl=0 nonrefl=2 norm=0.000445533526398
+SCAN 67/300 p=4597 H=67 T=4 T_refl=0 nonrefl=4 norm=0.000891067052796
+SCAN 68/300 p=4703 H=68 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 69/300 p=4813 H=69 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 70/300 p=4919 H=70 T=2 T_refl=0 nonrefl=2 norm=0.000408163265306
+SCAN 71/300 p=5039 H=70 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 72/300 p=5153 H=71 T=6 T_refl=4 nonrefl=2 norm=0.000396746677247
+SCAN 73/300 p=5279 H=72 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 74/300 p=5399 H=73 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 75/300 p=5527 H=74 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 76/300 p=5657 H=75 T=6 T_refl=4 nonrefl=2 norm=0.000355555555556
+SCAN 77/300 p=5791 H=76 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 78/300 p=5923 H=76 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 79/300 p=6067 H=77 T=2 T_refl=0 nonrefl=2 norm=0.00033732501265
+SCAN 80/300 p=6203 H=78 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 81/300 p=6353 H=79 T=6 T_refl=4 nonrefl=2 norm=0.000320461464509
+SCAN 82/300 p=6491 H=80 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 83/300 p=6653 H=81 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 84/300 p=6803 H=82 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 85/300 p=6961 H=83 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 86/300 p=7127 H=84 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 87/300 p=7297 H=85 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 88/300 p=7459 H=86 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 89/300 p=7639 H=87 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 90/300 p=7817 H=88 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 91/300 p=7993 H=89 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 92/300 p=8191 H=90 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 93/300 p=8377 H=91 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 94/300 p=8573 H=92 T=4 T_refl=2 nonrefl=2 norm=0.00023629489603
+SCAN 95/300 p=8779 H=93 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 96/300 p=8971 H=94 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 97/300 p=9187 H=95 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 98/300 p=9403 H=96 T=4 T_refl=0 nonrefl=4 norm=0.000434027777778
+SCAN 99/300 p=9623 H=98 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 100/300 p=9851 H=99 T=1 T_refl=1 nonrefl=0 norm=0
+SCAN 101/300 p=10079 H=100 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 102/300 p=10313 H=101 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 103/300 p=10559 H=102 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 104/300 p=10799 H=103 T=2 T_refl=0 nonrefl=2 norm=0.000188519181827
+SCAN 105/300 p=11057 H=105 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 106/300 p=11311 H=106 T=4 T_refl=2 nonrefl=2 norm=0.000177999288003
+SCAN 107/300 p=11579 H=107 T=2 T_refl=0 nonrefl=2 norm=0.000174687745655
+SCAN 108/300 p=11839 H=108 T=2 T_refl=0 nonrefl=2 norm=0.00017146776406
+SCAN 109/300 p=12119 H=110 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 110/300 p=12409 H=111 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 111/300 p=12697 H=112 T=2 T_refl=0 nonrefl=2 norm=0.00015943877551
+SCAN 112/300 p=13001 H=114 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 113/300 p=13297 H=115 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 114/300 p=13613 H=116 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 115/300 p=13921 H=117 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 116/300 p=14251 H=119 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 117/300 p=14591 H=120 T=2 T_refl=0 nonrefl=2 norm=0.000138888888889
+SCAN 118/300 p=14923 H=122 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 119/300 p=15271 H=123 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 120/300 p=15629 H=125 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 121/300 p=16001 H=126 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 122/300 p=16369 H=127 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 123/300 p=16747 H=129 T=2 T_refl=0 nonrefl=2 norm=0.000120185085031
+SCAN 124/300 p=17137 H=130 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 125/300 p=17539 H=132 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 126/300 p=17957 H=134 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 127/300 p=18371 H=135 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 128/300 p=18803 H=137 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 129/300 p=19249 H=138 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 130/300 p=19697 H=140 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 131/300 p=20149 H=141 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 132/300 p=20627 H=143 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 133/300 p=21107 H=145 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 134/300 p=21599 H=146 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 135/300 p=22109 H=148 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 136/300 p=22621 H=150 T=2 T_refl=0 nonrefl=2 norm=8.88888888889e-05
+SCAN 137/300 p=23143 H=152 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 138/300 p=23689 H=153 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 139/300 p=24247 H=155 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 140/300 p=24809 H=157 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 141/300 p=25391 H=159 T=2 T_refl=0 nonrefl=2 norm=7.91107946679e-05
+SCAN 142/300 p=25981 H=161 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 143/300 p=26591 H=163 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 144/300 p=27211 H=164 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 145/300 p=27851 H=166 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 146/300 p=28499 H=168 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 147/300 p=29167 H=170 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 148/300 p=29851 H=172 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 149/300 p=30539 H=174 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 150/300 p=31259 H=176 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 151/300 p=31991 H=178 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 152/300 p=32749 H=180 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 153/300 p=33503 H=183 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 154/300 p=34283 H=185 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 155/300 p=35089 H=187 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 156/300 p=35911 H=189 T=2 T_refl=0 nonrefl=2 norm=5.59894739789e-05
+SCAN 157/300 p=36749 H=191 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 158/300 p=37607 H=193 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 159/300 p=38501 H=196 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 160/300 p=39383 H=198 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 161/300 p=40289 H=200 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 162/300 p=41243 H=203 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 163/300 p=42209 H=205 T=2 T_refl=0 nonrefl=2 norm=4.75907198096e-05
+SCAN 164/300 p=43201 H=207 T=4 T_refl=2 nonrefl=2 norm=4.66755350183e-05
+SCAN 165/300 p=44207 H=210 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 166/300 p=45233 H=212 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 167/300 p=46301 H=215 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 168/300 p=47381 H=217 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 169/300 p=48487 H=220 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 170/300 p=49613 H=222 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 171/300 p=50777 H=225 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 172/300 p=51971 H=227 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 173/300 p=53173 H=230 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 174/300 p=54421 H=233 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 175/300 p=55697 H=236 T=2 T_refl=0 nonrefl=2 norm=3.59092214881e-05
+SCAN 176/300 p=56999 H=238 T=4 T_refl=0 nonrefl=4 norm=7.06164818869e-05
+SCAN 177/300 p=58337 H=241 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 178/300 p=59693 H=244 T=10 T_refl=8 nonrefl=2 norm=3.3593120129e-05
+SCAN 179/300 p=61091 H=247 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 180/300 p=62507 H=250 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 181/300 p=63977 H=252 T=6 T_refl=4 nonrefl=2 norm=3.14940791131e-05
+SCAN 182/300 p=65479 H=255 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 183/300 p=67003 H=258 T=2 T_refl=0 nonrefl=2 norm=3.00462712577e-05
+SCAN 184/300 p=68567 H=261 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 185/300 p=70177 H=264 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 186/300 p=71809 H=267 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 187/300 p=73483 H=271 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 188/300 p=75209 H=274 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 189/300 p=76963 H=277 T=2 T_refl=0 nonrefl=2 norm=2.60657639224e-05
+SCAN 190/300 p=78779 H=280 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 191/300 p=80603 H=283 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 192/300 p=82487 H=287 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 193/300 p=84421 H=290 T=2 T_refl=0 nonrefl=2 norm=2.37812128419e-05
+SCAN 194/300 p=86389 H=293 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 195/300 p=88411 H=297 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 196/300 p=90473 H=300 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 197/300 p=92593 H=304 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 198/300 p=94747 H=307 T=2 T_refl=0 nonrefl=2 norm=2.12203843012e-05
+SCAN 199/300 p=96973 H=311 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 200/300 p=99233 H=315 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 201/300 p=101561 H=318 T=4 T_refl=2 nonrefl=2 norm=1.9777698667e-05
+SCAN 202/300 p=103919 H=322 T=12 T_refl=12 nonrefl=0 norm=0
+SCAN 203/300 p=106357 H=326 T=2 T_refl=0 nonrefl=2 norm=1.88189243103e-05
+SCAN 204/300 p=108827 H=329 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 205/300 p=111373 H=333 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 206/300 p=113989 H=337 T=2 T_refl=0 nonrefl=2 norm=1.76104394685e-05
+SCAN 207/300 p=116657 H=341 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 208/300 p=119389 H=345 T=4 T_refl=2 nonrefl=2 norm=1.68031926066e-05
+SCAN 209/300 p=122167 H=349 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 210/300 p=125029 H=353 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 211/300 p=127951 H=357 T=4 T_refl=2 nonrefl=2 norm=1.56925515304e-05
+SCAN 212/300 p=130927 H=361 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 213/300 p=133993 H=366 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 214/300 p=137131 H=370 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 215/300 p=140333 H=374 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 216/300 p=143609 H=378 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 217/300 p=146977 H=383 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 218/300 p=150401 H=387 T=2 T_refl=0 nonrefl=2 norm=1.33538983368e-05
+SCAN 219/300 p=153913 H=392 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 220/300 p=157513 H=396 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 221/300 p=161201 H=401 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 222/300 p=164963 H=406 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 223/300 p=168803 H=410 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 224/300 p=172759 H=415 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 225/300 p=176807 H=420 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 226/300 p=180949 H=425 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 227/300 p=185167 H=430 T=2 T_refl=0 nonrefl=2 norm=1.08166576528e-05
+SCAN 228/300 p=189493 H=435 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 229/300 p=193937 H=440 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 230/300 p=198461 H=445 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 231/300 p=203117 H=450 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 232/300 p=207833 H=455 T=4 T_refl=2 nonrefl=2 norm=9.66066900133e-06
+SCAN 233/300 p=212701 H=461 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 234/300 p=217667 H=466 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 235/300 p=222773 H=471 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 236/300 p=227951 H=477 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 237/300 p=233293 H=483 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 238/300 p=238747 H=488 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 239/300 p=244313 H=494 T=2 T_refl=0 nonrefl=2 norm=8.19551213755e-06
+SCAN 240/300 p=250031 H=500 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 241/300 p=255877 H=505 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 242/300 p=261847 H=511 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 243/300 p=267961 H=517 T=6 T_refl=4 nonrefl=2 norm=7.48253762781e-06
+SCAN 244/300 p=274237 H=523 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 245/300 p=280639 H=529 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 246/300 p=287219 H=535 T=2 T_refl=0 nonrefl=2 norm=6.98750982619e-06
+SCAN 247/300 p=293899 H=542 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 248/300 p=300787 H=548 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 249/300 p=307817 H=554 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 250/300 p=315013 H=561 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 251/300 p=322397 H=567 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 252/300 p=329899 H=574 T=6 T_refl=4 nonrefl=2 norm=6.07024487368e-06
+SCAN 253/300 p=337627 H=581 T=2 T_refl=0 nonrefl=2 norm=5.92485506323e-06
+SCAN 254/300 p=345511 H=587 T=2 T_refl=0 nonrefl=2 norm=5.80435268408e-06
+SCAN 255/300 p=353603 H=594 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 256/300 p=361843 H=601 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 257/300 p=370261 H=608 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 258/300 p=378967 H=615 T=2 T_refl=0 nonrefl=2 norm=5.28785775663e-06
+SCAN 259/300 p=387799 H=622 T=6 T_refl=4 nonrefl=2 norm=5.16950817299e-06
+SCAN 260/300 p=396883 H=629 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 261/300 p=406169 H=637 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 262/300 p=415651 H=644 T=4 T_refl=2 nonrefl=2 norm=4.82234481694e-06
+SCAN 263/300 p=425363 H=652 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 264/300 p=435307 H=659 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 265/300 p=445477 H=667 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 266/300 p=455899 H=675 T=4 T_refl=0 nonrefl=4 norm=8.77914951989e-06
+SCAN 267/300 p=466547 H=683 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 268/300 p=477461 H=690 T=2 T_refl=0 nonrefl=2 norm=4.20079815165e-06
+SCAN 269/300 p=488611 H=699 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 270/300 p=500029 H=707 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 271/300 p=511723 H=715 T=2 T_refl=0 nonrefl=2 norm=3.91217174434e-06
+SCAN 272/300 p=523681 H=723 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 273/300 p=535919 H=732 T=2 T_refl=0 nonrefl=2 norm=3.73256890322e-06
+SCAN 274/300 p=548441 H=740 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 275/300 p=561251 H=749 T=2 T_refl=0 nonrefl=2 norm=3.56505603377e-06
+SCAN 276/300 p=574373 H=757 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 277/300 p=587813 H=766 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 278/300 p=601541 H=775 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 279/300 p=615599 H=784 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 280/300 p=629987 H=793 T=2 T_refl=2 nonrefl=0 norm=0
+SCAN 281/300 p=644717 H=802 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 282/300 p=659783 H=812 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 283/300 p=675197 H=821 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 284/300 p=690997 H=831 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 285/300 p=707131 H=840 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 286/300 p=723661 H=850 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 287/300 p=740561 H=860 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 288/300 p=757879 H=870 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 289/300 p=775601 H=880 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 290/300 p=793717 H=890 T=4 T_refl=4 nonrefl=0 norm=0
+SCAN 291/300 p=812267 H=901 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 292/300 p=831253 H=911 T=4 T_refl=0 nonrefl=4 norm=4.81973585438e-06
+SCAN 293/300 p=850679 H=922 T=2 T_refl=0 nonrefl=2 norm=2.3527086735e-06
+SCAN 294/300 p=870547 H=933 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 295/300 p=890893 H=943 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 296/300 p=911723 H=954 T=2 T_refl=0 nonrefl=2 norm=2.19752207411e-06
+SCAN 297/300 p=933047 H=965 T=2 T_refl=0 nonrefl=2 norm=2.14770866332e-06
+SCAN 298/300 p=954847 H=977 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 299/300 p=977167 H=988 T=0 T_refl=0 nonrefl=0 norm=0
+SCAN 300/300 p=999983 H=999 T=4 T_refl=0 nonrefl=4 norm=4.00801201602e-06
+DIAG 1/20 pair=1/50 p=1021 H=31 h=1 k=3 actual=0 roots=5 degree=21/21 lead=99 claimed=987 row_formula=99 apparition=0
+DIAG 1/20 pair=2/50 p=1021 H=31 h=1 k=9 actual=0 roots=3 degree=39/39 lead=410 claimed=442 row_formula=410 apparition=0
+DIAG 1/20 pair=3/50 p=1021 H=31 h=1 k=10 actual=0 roots=3 degree=42/42 lead=439 claimed=31 row_formula=439 apparition=0
+DIAG 1/20 pair=4/50 p=1021 H=31 h=1 k=14 actual=0 roots=4 degree=54/54 lead=658 claimed=484 row_formula=658 apparition=0
+DIAG 1/20 pair=5/50 p=1021 H=31 h=2 k=3 actual=0 roots=6 degree=24/24 lead=99 claimed=1020 row_formula=99 apparition=0
+DIAG 1/20 pair=6/50 p=1021 H=31 h=2 k=6 actual=0 roots=7 degree=33/33 lead=572 claimed=583 row_formula=572 apparition=0
+DIAG 1/20 pair=7/50 p=1021 H=31 h=2 k=11 actual=0 roots=7 degree=48/48 lead=661 claimed=31 row_formula=661 apparition=0
+DIAG 1/20 pair=8/50 p=1021 H=31 h=2 k=18 actual=0 roots=7 degree=69/69 lead=44 claimed=934 row_formula=44 apparition=0
+DIAG 1/20 pair=9/50 p=1021 H=31 h=3 k=6 actual=0 roots=5 degree=36/36 lead=776 claimed=887 row_formula=776 apparition=0
+DIAG 1/20 pair=10/50 p=1021 H=31 h=3 k=11 actual=0 roots=6 degree=51/51 lead=972 claimed=442 row_formula=972 apparition=0
+DIAG 1/20 pair=11/50 p=1021 H=31 h=3 k=12 actual=0 roots=6 degree=54/54 lead=623 claimed=31 row_formula=623 apparition=0
+DIAG 1/20 pair=12/50 p=1021 H=31 h=3 k=16 actual=0 roots=7 degree=66/66 lead=437 claimed=484 row_formula=437 apparition=0
+DIAG 1/20 pair=13/50 p=1021 H=31 h=3 k=19 actual=0 roots=5 degree=75/75 lead=697 claimed=934 row_formula=697 apparition=0
+DIAG 1/20 pair=14/50 p=1021 H=31 h=4 k=10 actual=0 roots=10 degree=51/51 lead=969 claimed=998 row_formula=969 apparition=0
+DIAG 1/20 pair=15/50 p=1021 H=31 h=4 k=11 actual=0 roots=6 degree=54/54 lead=929 claimed=703 row_formula=929 apparition=0
+DIAG 1/20 pair=16/50 p=1021 H=31 h=4 k=23 actual=0 roots=7 degree=90/90 lead=81 claimed=103 row_formula=81 apparition=0
+DIAG 1/20 pair=17/50 p=1021 H=31 h=5 k=6 actual=0 roots=8 degree=42/42 lead=579 claimed=1020 row_formula=579 apparition=0
+DIAG 1/20 pair=18/50 p=1021 H=31 h=5 k=7 actual=0 roots=8 degree=45/45 lead=841 claimed=987 row_formula=841 apparition=0
+DIAG 1/20 pair=19/50 p=1021 H=31 h=5 k=9 actual=0 roots=10 degree=51/51 lead=88 claimed=583 row_formula=88 apparition=0
+DIAG 1/20 pair=20/50 p=1021 H=31 h=5 k=21 actual=0 roots=8 degree=87/87 lead=457 claimed=934 row_formula=457 apparition=0
+DIAG 1/20 pair=21/50 p=1021 H=31 h=6 k=8 actual=0 roots=11 degree=51/51 lead=522 claimed=987 row_formula=522 apparition=0
+DIAG 1/20 pair=22/50 p=1021 H=31 h=6 k=11 actual=0 roots=9 degree=60/60 lead=177 claimed=557 row_formula=177 apparition=0
+DIAG 1/20 pair=23/50 p=1021 H=31 h=6 k=16 actual=0 roots=12 degree=75/75 lead=676 claimed=612 row_formula=676 apparition=0
+DIAG 1/20 pair=24/50 p=1021 H=31 h=6 k=19 actual=0 roots=8 degree=84/84 lead=358 claimed=484 row_formula=358 apparition=0
+DIAG 1/20 pair=25/50 p=1021 H=31 h=7 k=8 actual=0 roots=12 degree=54/54 lead=260 claimed=1020 row_formula=260 apparition=0
+DIAG 1/20 pair=26/50 p=1021 H=31 h=7 k=9 actual=0 roots=10 degree=57/57 lead=638 claimed=987 row_formula=638 apparition=0
+DIAG 1/20 pair=27/50 p=1021 H=31 h=7 k=17 actual=0 roots=9 degree=81/81 lead=902 claimed=612 row_formula=902 apparition=0
+DIAG 1/20 pair=28/50 p=1021 H=31 h=7 k=21 actual=0 roots=11 degree=93/93 lead=515 claimed=846 row_formula=515 apparition=0
+DIAG 1/20 pair=29/50 p=1021 H=31 h=8 k=13 actual=0 roots=11 degree=72/72 lead=515 claimed=557 row_formula=515 apparition=0
+DIAG 1/20 pair=30/50 p=1021 H=31 h=9 k=18 actual=0 roots=11 degree=90/90 lead=227 claimed=31 row_formula=227 apparition=0
+DIAG 1/20 pair=31/50 p=1021 H=31 h=9 k=26 actual=0 roots=12 degree=114/114 lead=647 claimed=413 row_formula=647 apparition=0
+DIAG 1/20 pair=32/50 p=1021 H=31 h=10 k=15 actual=0 roots=13 degree=84/84 lead=456 claimed=557 row_formula=456 apparition=0
+DIAG 1/20 pair=33/50 p=1021 H=31 h=10 k=27 actual=0 roots=13 degree=120/120 lead=573 claimed=413 row_formula=573 apparition=0
+DIAG 1/20 pair=34/50 p=1021 H=31 h=10 k=28 actual=0 roots=14 degree=123/123 lead=191 claimed=856 row_formula=191 apparition=0
+DIAG 1/20 pair=35/50 p=1021 H=31 h=11 k=16 actual=0 roots=14 degree=90/90 lead=1001 claimed=557 row_formula=1001 apparition=0
+DIAG 1/20 pair=36/50 p=1021 H=31 h=11 k=24 actual=0 roots=14 degree=114/114 lead=529 claimed=484 row_formula=529 apparition=0
+DIAG 1/20 pair=37/50 p=1021 H=31 h=11 k=25 actual=0 roots=13 degree=117/117 lead=389 claimed=846 row_formula=389 apparition=0
+DIAG 1/20 pair=38/50 p=1021 H=31 h=12 k=17 actual=0 roots=14 degree=96/96 lead=439 claimed=557 row_formula=439 apparition=0
+DIAG 1/20 pair=39/50 p=1021 H=31 h=12 k=28 actual=0 roots=16 degree=129/129 lead=973 claimed=934 row_formula=973 apparition=0
+DIAG 1/20 pair=40/50 p=1021 H=31 h=14 k=16 actual=0 roots=20 degree=99/99 lead=899 claimed=987 row_formula=899 apparition=0
+DIAG 1/20 pair=41/50 p=1021 H=31 h=15 k=22 actual=0 roots=17 degree=120/120 lead=557 claimed=703 row_formula=557 apparition=0
+DIAG 1/20 pair=42/50 p=1021 H=31 h=18 k=26 actual=0 roots=24 degree=141/141 lead=480 claimed=442 row_formula=480 apparition=0
+DIAG 1/20 pair=43/50 p=1021 H=31 h=21 k=28 actual=0 roots=23 degree=156/156 lead=460 claimed=703 row_formula=460 apparition=0
+DIAG 1/20 pair=44/50 p=1021 H=31 h=22 k=29 actual=0 roots=26 degree=162/162 lead=457 claimed=703 row_formula=457 apparition=0
+DIAG 1/20 pair=45/50 p=1021 H=31 h=23 k=24 actual=0 roots=25 degree=150/150 lead=292 claimed=1020 row_formula=292 apparition=0
+DIAG 1/20 pair=46/50 p=1021 H=31 h=24 k=27 actual=0 roots=28 degree=162/162 lead=747 claimed=887 row_formula=747 apparition=0
+DIAG 1/20 pair=47/50 p=1021 H=31 h=24 k=29 actual=0 roots=27 degree=168/168 lead=785 claimed=557 row_formula=785 apparition=0
+DIAG 1/20 pair=48/50 p=1021 H=31 h=25 k=30 actual=0 roots=27 degree=174/174 lead=813 claimed=557 row_formula=813 apparition=0
+DIAG 1/20 pair=49/50 p=1021 H=31 h=28 k=31 actual=0 roots=32 degree=186/186 lead=633 claimed=887 row_formula=633 apparition=0
+DIAG 1/20 pair=50/50 p=1021 H=31 h=29 k=30 actual=0 roots=32 degree=186/186 lead=546 claimed=1020 row_formula=546 apparition=0
+ROWCHECK p=1021 passed=20/20
+DIAG 2/20 pair=1/50 p=1447 H=38 h=2 k=3 actual=0 roots=6 degree=24/24 lead=1120 claimed=1446 row_formula=1120 apparition=0
+DIAG 2/20 pair=2/50 p=1447 H=38 h=2 k=6 actual=0 roots=8 degree=33/33 lead=32 claimed=1280 row_formula=32 apparition=0
+DIAG 2/20 pair=3/50 p=1447 H=38 h=2 k=7 actual=0 roots=4 degree=36/36 lead=289 claimed=1265 row_formula=289 apparition=0
+DIAG 2/20 pair=4/50 p=1447 H=38 h=2 k=9 actual=0 roots=4 degree=42/42 lead=355 claimed=942 row_formula=355 apparition=0
+DIAG 2/20 pair=5/50 p=1447 H=38 h=2 k=11 actual=0 roots=6 degree=48/48 lead=1426 claimed=553 row_formula=1426 apparition=0
+DIAG 2/20 pair=6/50 p=1447 H=38 h=2 k=13 actual=0 roots=6 degree=54/54 lead=109 claimed=540 row_formula=109 apparition=0
+DIAG 2/20 pair=7/50 p=1447 H=38 h=2 k=38 actual=0 roots=7 degree=129/129 lead=444 claimed=44 row_formula=444 apparition=0
+DIAG 2/20 pair=8/50 p=1447 H=38 h=3 k=8 actual=0 roots=5 degree=42/42 lead=1130 claimed=1265 row_formula=1130 apparition=0
+DIAG 2/20 pair=9/50 p=1447 H=38 h=3 k=10 actual=0 roots=8 degree=48/48 lead=223 claimed=942 row_formula=223 apparition=0
+DIAG 2/20 pair=10/50 p=1447 H=38 h=3 k=11 actual=0 roots=5 degree=51/51 lead=179 claimed=427 row_formula=179 apparition=0
+DIAG 2/20 pair=11/50 p=1447 H=38 h=3 k=15 actual=0 roots=5 degree=63/63 lead=1378 claimed=1432 row_formula=1378 apparition=0
+DIAG 2/20 pair=12/50 p=1447 H=38 h=3 k=38 actual=0 roots=5 degree=132/132 lead=446 claimed=1167 row_formula=446 apparition=0
+DIAG 2/20 pair=13/50 p=1447 H=38 h=5 k=8 actual=0 roots=7 degree=48/48 lead=1130 claimed=292 row_formula=1130 apparition=0
+DIAG 2/20 pair=14/50 p=1447 H=38 h=5 k=12 actual=0 roots=8 degree=60/60 lead=775 claimed=942 row_formula=775 apparition=0
+DIAG 2/20 pair=15/50 p=1447 H=38 h=5 k=18 actual=0 roots=10 degree=78/78 lead=486 claimed=397 row_formula=486 apparition=0
+DIAG 2/20 pair=16/50 p=1447 H=38 h=6 k=9 actual=0 roots=10 degree=54/54 lead=953 claimed=292 row_formula=953 apparition=0
+DIAG 2/20 pair=17/50 p=1447 H=38 h=6 k=10 actual=0 roots=11 degree=57/57 lead=36 claimed=1280 row_formula=36 apparition=0
+DIAG 2/20 pair=18/50 p=1447 H=38 h=6 k=15 actual=0 roots=9 degree=72/72 lead=1421 claimed=553 row_formula=1421 apparition=0
+DIAG 2/20 pair=19/50 p=1447 H=38 h=6 k=18 actual=0 roots=10 degree=81/81 lead=23 claimed=1432 row_formula=23 apparition=0
+DIAG 2/20 pair=20/50 p=1447 H=38 h=6 k=21 actual=0 roots=8 degree=90/90 lead=327 claimed=346 row_formula=327 apparition=0
+DIAG 2/20 pair=21/50 p=1447 H=38 h=7 k=9 actual=0 roots=9 degree=57/57 lead=355 claimed=1413 row_formula=355 apparition=0
+DIAG 2/20 pair=22/50 p=1447 H=38 h=7 k=28 actual=0 roots=11 degree=114/114 lead=337 claimed=1233 row_formula=337 apparition=0
+DIAG 2/20 pair=23/50 p=1447 H=38 h=7 k=29 actual=0 roots=12 degree=117/117 lead=498 claimed=1286 row_formula=498 apparition=0
+DIAG 2/20 pair=24/50 p=1447 H=38 h=8 k=10 actual=0 roots=12 degree=63/63 lead=829 claimed=1413 row_formula=829 apparition=0
+DIAG 2/20 pair=25/50 p=1447 H=38 h=8 k=17 actual=0 roots=12 degree=84/84 lead=18 claimed=553 row_formula=18 apparition=0
+DIAG 2/20 pair=26/50 p=1447 H=38 h=9 k=10 actual=0 roots=12 degree=66/66 lead=988 claimed=1446 row_formula=988 apparition=0
+DIAG 2/20 pair=27/50 p=1447 H=38 h=9 k=28 actual=0 roots=12 degree=120/120 lead=115 claimed=1400 row_formula=115 apparition=0
+DIAG 2/20 pair=28/50 p=1447 H=38 h=10 k=15 actual=0 roots=12 degree=84/84 lead=483 claimed=1265 row_formula=483 apparition=0
+DIAG 2/20 pair=29/50 p=1447 H=38 h=10 k=17 actual=0 roots=12 degree=90/90 lead=991 claimed=942 row_formula=991 apparition=0
+DIAG 2/20 pair=30/50 p=1447 H=38 h=10 k=26 actual=0 roots=14 degree=117/117 lead=61 claimed=1145 row_formula=61 apparition=0
+DIAG 2/20 pair=31/50 p=1447 H=38 h=10 k=27 actual=0 roots=13 degree=120/120 lead=538 claimed=962 row_formula=538 apparition=0
+DIAG 2/20 pair=32/50 p=1447 H=38 h=11 k=16 actual=0 roots=13 degree=90/90 lead=660 claimed=1265 row_formula=660 apparition=0
+DIAG 2/20 pair=33/50 p=1447 H=38 h=11 k=26 actual=0 roots=16 degree=120/120 lead=238 claimed=346 row_formula=238 apparition=0
+DIAG 2/20 pair=34/50 p=1447 H=38 h=12 k=21 actual=0 roots=15 degree=108/108 lead=752 claimed=553 row_formula=752 apparition=0
+DIAG 2/20 pair=35/50 p=1447 H=38 h=12 k=26 actual=0 roots=17 degree=123/123 lead=1274 claimed=490 row_formula=1274 apparition=0
+DIAG 2/20 pair=36/50 p=1447 H=38 h=14 k=38 actual=0 roots=18 degree=165/165 lead=226 claimed=749 row_formula=226 apparition=0
+DIAG 2/20 pair=37/50 p=1447 H=38 h=16 k=22 actual=0 roots=22 degree=123/123 lead=1073 claimed=1214 row_formula=1073 apparition=0
+DIAG 2/20 pair=38/50 p=1447 H=38 h=18 k=32 actual=0 roots=24 degree=159/159 lead=850 claimed=490 row_formula=850 apparition=0
+DIAG 2/20 pair=39/50 p=1447 H=38 h=18 k=33 actual=0 roots=23 degree=162/162 lead=843 claimed=346 row_formula=843 apparition=0
+DIAG 2/20 pair=40/50 p=1447 H=38 h=19 k=29 actual=0 roots=21 degree=153/153 lead=681 claimed=1011 row_formula=681 apparition=0
+DIAG 2/20 pair=41/50 p=1447 H=38 h=19 k=34 actual=0 roots=22 degree=168/168 lead=1181 claimed=346 row_formula=1181 apparition=0
+DIAG 2/20 pair=42/50 p=1447 H=38 h=20 k=31 actual=0 roots=22 degree=162/162 lead=1088 claimed=540 row_formula=1088 apparition=0
+DIAG 2/20 pair=43/50 p=1447 H=38 h=22 k=35 actual=0 roots=24 degree=180/180 lead=516 claimed=397 row_formula=516 apparition=0
+DIAG 2/20 pair=44/50 p=1447 H=38 h=25 k=28 actual=0 roots=28 degree=168/168 lead=240 claimed=292 row_formula=240 apparition=0
+DIAG 2/20 pair=45/50 p=1447 H=38 h=26 k=31 actual=0 roots=29 degree=180/180 lead=894 claimed=1265 row_formula=894 apparition=0
+DIAG 2/20 pair=46/50 p=1447 H=38 h=27 k=29 actual=0 roots=29 degree=177/177 lead=1118 claimed=1413 row_formula=1118 apparition=0
+DIAG 2/20 pair=47/50 p=1447 H=38 h=30 k=31 actual=0 roots=32 degree=192/192 lead=976 claimed=1446 row_formula=976 apparition=0
+DIAG 2/20 pair=48/50 p=1447 H=38 h=31 k=35 actual=0 roots=34 degree=207/207 lead=1132 claimed=1280 row_formula=1132 apparition=0
+DIAG 2/20 pair=49/50 p=1447 H=38 h=31 k=37 actual=0 roots=33 degree=213/213 lead=457 claimed=1214 row_formula=457 apparition=0
+DIAG 2/20 pair=50/50 p=1447 H=38 h=34 k=37 actual=0 roots=38 degree=222/222 lead=528 claimed=292 row_formula=528 apparition=0
+ROWCHECK p=1447 passed=20/20
+DIAG 3/20 pair=1/50 p=2053 H=45 h=1 k=12 actual=0 roots=4 degree=48/48 lead=418 claimed=469 row_formula=418 apparition=0
+DIAG 3/20 pair=2/50 p=2053 H=45 h=2 k=20 actual=0 roots=6 degree=75/75 lead=1040 claimed=1520 row_formula=1040 apparition=0
+DIAG 3/20 pair=3/50 p=2053 H=45 h=3 k=11 actual=0 roots=6 degree=51/51 lead=808 claimed=379 row_formula=808 apparition=0
+DIAG 3/20 pair=4/50 p=2053 H=45 h=3 k=16 actual=0 roots=7 degree=66/66 lead=1757 claimed=1231 row_formula=1757 apparition=0
+DIAG 3/20 pair=5/50 p=2053 H=45 h=4 k=7 actual=0 roots=6 degree=42/42 lead=157 claimed=898 row_formula=157 apparition=0
+DIAG 3/20 pair=6/50 p=2053 H=45 h=4 k=10 actual=0 roots=9 degree=51/51 lead=904 claimed=605 row_formula=904 apparition=0
+DIAG 3/20 pair=7/50 p=2053 H=45 h=4 k=15 actual=0 roots=6 degree=66/66 lead=811 claimed=469 row_formula=811 apparition=0
+DIAG 3/20 pair=8/50 p=2053 H=45 h=4 k=16 actual=0 roots=9 degree=69/69 lead=1502 claimed=50 row_formula=1502 apparition=0
+DIAG 3/20 pair=9/50 p=2053 H=45 h=4 k=18 actual=0 roots=9 degree=75/75 lead=1048 claimed=744 row_formula=1048 apparition=0
+DIAG 3/20 pair=10/50 p=2053 H=45 h=5 k=7 actual=0 roots=7 degree=45/45 lead=1035 claimed=2019 row_formula=1035 apparition=0
+DIAG 3/20 pair=11/50 p=2053 H=45 h=5 k=8 actual=0 roots=9 degree=48/48 lead=47 claimed=898 row_formula=47 apparition=0
+DIAG 3/20 pair=12/50 p=2053 H=45 h=5 k=9 actual=0 roots=9 degree=51/51 lead=1296 claimed=1824 row_formula=1296 apparition=0
+DIAG 3/20 pair=13/50 p=2053 H=45 h=5 k=10 actual=0 roots=7 degree=54/54 lead=1637 claimed=1581 row_formula=1637 apparition=0
+DIAG 3/20 pair=14/50 p=2053 H=45 h=5 k=20 actual=0 roots=8 degree=84/84 lead=564 claimed=1482 row_formula=564 apparition=0
+DIAG 3/20 pair=15/50 p=2053 H=45 h=5 k=24 actual=0 roots=8 degree=96/96 lead=128 claimed=1507 row_formula=128 apparition=0
+DIAG 3/20 pair=16/50 p=2053 H=45 h=6 k=33 actual=0 roots=8 degree=126/126 lead=1659 claimed=1021 row_formula=1659 apparition=0
+DIAG 3/20 pair=17/50 p=2053 H=45 h=7 k=8 actual=0 roots=11 degree=54/54 lead=132 claimed=2052 row_formula=132 apparition=0
+DIAG 3/20 pair=18/50 p=2053 H=45 h=7 k=9 actual=0 roots=11 degree=57/57 lead=422 claimed=2019 row_formula=422 apparition=0
+DIAG 3/20 pair=19/50 p=2053 H=45 h=8 k=10 actual=0 roots=12 degree=63/63 lead=873 claimed=2019 row_formula=873 apparition=0
+DIAG 3/20 pair=20/50 p=2053 H=45 h=8 k=14 actual=0 roots=13 degree=75/75 lead=240 claimed=605 row_formula=240 apparition=0
+DIAG 3/20 pair=21/50 p=2053 H=45 h=8 k=30 actual=0 roots=12 degree=123/123 lead=1246 claimed=1967 row_formula=1246 apparition=0
+DIAG 3/20 pair=22/50 p=2053 H=45 h=9 k=35 actual=0 roots=12 degree=141/141 lead=1752 claimed=1787 row_formula=1752 apparition=0
+DIAG 3/20 pair=23/50 p=2053 H=45 h=10 k=13 actual=0 roots=16 degree=78/78 lead=1192 claimed=898 row_formula=1192 apparition=0
+DIAG 3/20 pair=24/50 p=2053 H=45 h=10 k=20 actual=0 roots=14 degree=99/99 lead=551 claimed=1525 row_formula=551 apparition=0
+DIAG 3/20 pair=25/50 p=2053 H=45 h=10 k=24 actual=0 roots=17 degree=111/111 lead=1362 claimed=744 row_formula=1362 apparition=0
+DIAG 3/20 pair=26/50 p=2053 H=45 h=11 k=21 actual=0 roots=14 degree=105/105 lead=655 claimed=1525 row_formula=655 apparition=0
+DIAG 3/20 pair=27/50 p=2053 H=45 h=11 k=26 actual=0 roots=14 degree=120/120 lead=164 claimed=1482 row_formula=164 apparition=0
+DIAG 3/20 pair=28/50 p=2053 H=45 h=12 k=20 actual=0 roots=16 degree=105/105 lead=2036 claimed=379 row_formula=2036 apparition=0
+DIAG 3/20 pair=29/50 p=2053 H=45 h=13 k=22 actual=0 roots=15 degree=114/114 lead=1373 claimed=56 row_formula=1373 apparition=0
+DIAG 3/20 pair=30/50 p=2053 H=45 h=14 k=15 actual=0 roots=18 degree=96/96 lead=1314 claimed=2052 row_formula=1314 apparition=0
+DIAG 3/20 pair=31/50 p=2053 H=45 h=14 k=25 actual=0 roots=16 degree=126/126 lead=1013 claimed=469 row_formula=1013 apparition=0
+DIAG 3/20 pair=32/50 p=2053 H=45 h=16 k=23 actual=0 roots=19 degree=126/126 lead=1041 claimed=512 row_formula=1041 apparition=0
+DIAG 3/20 pair=33/50 p=2053 H=45 h=16 k=45 actual=0 roots=19 degree=192/192 lead=813 claimed=1665 row_formula=813 apparition=0
+DIAG 3/20 pair=34/50 p=2053 H=45 h=17 k=45 actual=0 roots=19 degree=195/195 lead=1809 claimed=79 row_formula=1809 apparition=0
+DIAG 3/20 pair=35/50 p=2053 H=45 h=18 k=21 actual=0 roots=20 degree=126/126 lead=1079 claimed=898 row_formula=1079 apparition=0
+DIAG 3/20 pair=36/50 p=2053 H=45 h=18 k=25 actual=0 roots=21 degree=138/138 lead=1832 claimed=512 row_formula=1832 apparition=0
+DIAG 3/20 pair=37/50 p=2053 H=45 h=18 k=36 actual=0 roots=22 degree=171/171 lead=310 claimed=1520 row_formula=310 apparition=0
+DIAG 3/20 pair=38/50 p=2053 H=45 h=22 k=35 actual=0 roots=25 degree=180/180 lead=1054 claimed=1231 row_formula=1054 apparition=0
+DIAG 3/20 pair=39/50 p=2053 H=45 h=25 k=32 actual=0 roots=27 degree=180/180 lead=145 claimed=512 row_formula=145 apparition=0
+DIAG 3/20 pair=40/50 p=2053 H=45 h=26 k=43 actual=0 roots=29 degree=216/216 lead=1220 claimed=901 row_formula=1220 apparition=0
+DIAG 3/20 pair=41/50 p=2053 H=45 h=27 k=28 actual=0 roots=30 degree=174/174 lead=941 claimed=2052 row_formula=941 apparition=0
+DIAG 3/20 pair=42/50 p=2053 H=45 h=28 k=34 actual=0 roots=33 degree=195/195 lead=320 claimed=605 row_formula=320 apparition=0
+DIAG 3/20 pair=43/50 p=2053 H=45 h=28 k=39 actual=0 roots=30 degree=210/210 lead=1945 claimed=469 row_formula=1945 apparition=0
+DIAG 3/20 pair=44/50 p=2053 H=45 h=35 k=44 actual=0 roots=37 degree=246/246 lead=1517 claimed=56 row_formula=1517 apparition=0
+DIAG 3/20 pair=45/50 p=2053 H=45 h=36 k=45 actual=0 roots=38 degree=252/252 lead=1562 claimed=56 row_formula=1562 apparition=0
+DIAG 3/20 pair=46/50 p=2053 H=45 h=37 k=42 actual=0 roots=41 degree=246/246 lead=1968 claimed=1581 row_formula=1968 apparition=0
+DIAG 3/20 pair=47/50 p=2053 H=45 h=37 k=45 actual=0 roots=41 degree=255/255 lead=1552 claimed=379 row_formula=1552 apparition=0
+DIAG 3/20 pair=48/50 p=2053 H=45 h=40 k=42 actual=0 roots=44 degree=255/255 lead=1029 claimed=2019 row_formula=1029 apparition=0
+DIAG 3/20 pair=49/50 p=2053 H=45 h=40 k=44 actual=0 roots=45 degree=261/261 lead=108 claimed=1824 row_formula=108 apparition=0
+DIAG 3/20 pair=50/50 p=2053 H=45 h=41 k=42 actual=0 roots=45 degree=258/258 lead=1218 claimed=2052 row_formula=1218 apparition=0
+ROWCHECK p=2053 passed=20/20
+DIAG 4/20 pair=1/50 p=2963 H=54 h=1 k=18 actual=0 roots=3 degree=66/66 lead=2307 claimed=1939 row_formula=2307 apparition=0
+DIAG 4/20 pair=2/50 p=2963 H=54 h=1 k=23 actual=0 roots=3 degree=81/81 lead=2880 claimed=2056 row_formula=2880 apparition=0
+DIAG 4/20 pair=3/50 p=2963 H=54 h=1 k=34 actual=0 roots=3 degree=114/114 lead=2903 claimed=562 row_formula=2903 apparition=0
+DIAG 4/20 pair=4/50 p=2963 H=54 h=1 k=49 actual=0 roots=5 degree=159/159 lead=1631 claimed=421 row_formula=1631 apparition=0
+DIAG 4/20 pair=5/50 p=2963 H=54 h=2 k=23 actual=0 roots=5 degree=84/84 lead=408 claimed=2580 row_formula=408 apparition=0
+DIAG 4/20 pair=6/50 p=2963 H=54 h=2 k=32 actual=0 roots=8 degree=111/111 lead=1997 claimed=2740 row_formula=1997 apparition=0
+DIAG 4/20 pair=7/50 p=2963 H=54 h=2 k=34 actual=0 roots=7 degree=117/117 lead=54 claimed=709 row_formula=54 apparition=0
+DIAG 4/20 pair=8/50 p=2963 H=54 h=3 k=15 actual=0 roots=5 degree=63/63 lead=892 claimed=2258 row_formula=892 apparition=0
+DIAG 4/20 pair=9/50 p=2963 H=54 h=4 k=5 actual=0 roots=6 degree=36/36 lead=1764 claimed=2962 row_formula=1764 apparition=0
+DIAG 4/20 pair=10/50 p=2963 H=54 h=4 k=6 actual=0 roots=8 degree=39/39 lead=2919 claimed=2929 row_formula=2919 apparition=0
+DIAG 4/20 pair=11/50 p=2963 H=54 h=4 k=7 actual=0 roots=7 degree=42/42 lead=1906 claimed=1808 row_formula=1906 apparition=0
+DIAG 4/20 pair=12/50 p=2963 H=54 h=4 k=12 actual=0 roots=9 degree=57/57 lead=2615 claimed=2627 row_formula=2615 apparition=0
+DIAG 4/20 pair=13/50 p=2963 H=54 h=4 k=18 actual=0 roots=9 degree=75/75 lead=2754 claimed=139 row_formula=2754 apparition=0
+DIAG 4/20 pair=14/50 p=2963 H=54 h=4 k=24 actual=0 roots=9 degree=93/93 lead=2459 claimed=2700 row_formula=2459 apparition=0
+DIAG 4/20 pair=15/50 p=2963 H=54 h=5 k=37 actual=0 roots=8 degree=135/135 lead=596 claimed=709 row_formula=596 apparition=0
+DIAG 4/20 pair=16/50 p=2963 H=54 h=6 k=16 actual=0 roots=11 degree=75/75 lead=2263 claimed=1116 row_formula=2263 apparition=0
+DIAG 4/20 pair=17/50 p=2963 H=54 h=6 k=19 actual=0 roots=8 degree=84/84 lead=515 claimed=1552 row_formula=515 apparition=0
+DIAG 4/20 pair=18/50 p=2963 H=54 h=7 k=11 actual=0 roots=9 degree=63/63 lead=286 claimed=2246 row_formula=286 apparition=0
+DIAG 4/20 pair=19/50 p=2963 H=54 h=7 k=16 actual=0 roots=11 degree=78/78 lead=2282 claimed=1243 row_formula=2282 apparition=0
+DIAG 4/20 pair=20/50 p=2963 H=54 h=8 k=17 actual=0 roots=11 degree=84/84 lead=1931 claimed=1243 row_formula=1931 apparition=0
+DIAG 4/20 pair=21/50 p=2963 H=54 h=8 k=19 actual=0 roots=10 degree=90/90 lead=479 claimed=1145 row_formula=479 apparition=0
+DIAG 4/20 pair=22/50 p=2963 H=54 h=9 k=13 actual=0 roots=11 degree=75/75 lead=1937 claimed=2246 row_formula=1937 apparition=0
+DIAG 4/20 pair=23/50 p=2963 H=54 h=10 k=26 actual=0 roots=14 degree=117/117 lead=2467 claimed=1109 row_formula=2467 apparition=0
+DIAG 4/20 pair=24/50 p=2963 H=54 h=11 k=35 actual=0 roots=13 degree=147/147 lead=858 claimed=2487 row_formula=858 apparition=0
+DIAG 4/20 pair=25/50 p=2963 H=54 h=12 k=14 actual=0 roots=18 degree=87/87 lead=2085 claimed=2929 row_formula=2085 apparition=0
+DIAG 4/20 pair=26/50 p=2963 H=54 h=13 k=24 actual=0 roots=15 degree=120/120 lead=210 claimed=1145 row_formula=210 apparition=0
+DIAG 4/20 pair=27/50 p=2963 H=54 h=14 k=15 actual=0 roots=16 degree=96/96 lead=2890 claimed=2962 row_formula=2890 apparition=0
+DIAG 4/20 pair=28/50 p=2963 H=54 h=14 k=16 actual=0 roots=20 degree=99/99 lead=1959 claimed=2929 row_formula=1959 apparition=0
+DIAG 4/20 pair=29/50 p=2963 H=54 h=14 k=39 actual=0 roots=16 degree=168/168 lead=1346 claimed=2419 row_formula=1346 apparition=0
+DIAG 4/20 pair=30/50 p=2963 H=54 h=14 k=51 actual=0 roots=17 degree=204/204 lead=401 claimed=594 row_formula=401 apparition=0
+DIAG 4/20 pair=31/50 p=2963 H=54 h=15 k=25 actual=0 roots=20 degree=129/129 lead=1871 claimed=1116 row_formula=1871 apparition=0
+DIAG 4/20 pair=32/50 p=2963 H=54 h=16 k=24 actual=0 roots=21 degree=129/129 lead=1249 claimed=2627 row_formula=1249 apparition=0
+DIAG 4/20 pair=33/50 p=2963 H=54 h=16 k=39 actual=0 roots=19 degree=174/174 lead=2035 claimed=2138 row_formula=2035 apparition=0
+DIAG 4/20 pair=34/50 p=2963 H=54 h=18 k=29 actual=0 roots=20 degree=150/150 lead=2272 claimed=1145 row_formula=2272 apparition=0
+DIAG 4/20 pair=35/50 p=2963 H=54 h=19 k=22 actual=0 roots=23 degree=132/132 lead=82 claimed=1808 row_formula=82 apparition=0
+DIAG 4/20 pair=36/50 p=2963 H=54 h=20 k=44 actual=0 roots=25 degree=201/201 lead=150 claimed=2487 row_formula=150 apparition=0
+DIAG 4/20 pair=37/50 p=2963 H=54 h=24 k=42 actual=0 roots=32 degree=207/207 lead=2841 claimed=2594 row_formula=2841 apparition=0
+DIAG 4/20 pair=38/50 p=2963 H=54 h=25 k=26 actual=0 roots=27 degree=162/162 lead=2660 claimed=2962 row_formula=2660 apparition=0
+DIAG 4/20 pair=39/50 p=2963 H=54 h=26 k=37 actual=0 roots=29 degree=198/198 lead=309 claimed=1145 row_formula=309 apparition=0
+DIAG 4/20 pair=40/50 p=2963 H=54 h=26 k=40 actual=0 roots=33 degree=207/207 lead=747 claimed=139 row_formula=747 apparition=0
+DIAG 4/20 pair=41/50 p=2963 H=54 h=28 k=33 actual=0 roots=31 degree=192/192 lead=2612 claimed=481 row_formula=2612 apparition=0
+DIAG 4/20 pair=42/50 p=2963 H=54 h=31 k=49 actual=0 roots=35 degree=249/249 lead=682 claimed=2594 row_formula=682 apparition=0
+DIAG 4/20 pair=43/50 p=2963 H=54 h=31 k=52 actual=0 roots=33 degree=258/258 lead=2871 claimed=2580 row_formula=2871 apparition=0
+DIAG 4/20 pair=44/50 p=2963 H=54 h=34 k=46 actual=0 roots=39 degree=249/249 lead=2864 claimed=2258 row_formula=2864 apparition=0
+DIAG 4/20 pair=45/50 p=2963 H=54 h=38 k=47 actual=0 roots=41 degree=264/264 lead=1109 claimed=1243 row_formula=1109 apparition=0
+DIAG 4/20 pair=46/50 p=2963 H=54 h=41 k=46 actual=0 roots=45 degree=270/270 lead=2947 claimed=481 row_formula=2947 apparition=0
+DIAG 4/20 pair=47/50 p=2963 H=54 h=44 k=54 actual=0 roots=48 degree=303/303 lead=2043 claimed=1116 row_formula=2043 apparition=0
+DIAG 4/20 pair=48/50 p=2963 H=54 h=46 k=50 actual=0 roots=52 degree=297/297 lead=2374 claimed=2246 row_formula=2374 apparition=0
+DIAG 4/20 pair=49/50 p=2963 H=54 h=50 k=52 actual=0 roots=55 degree=315/315 lead=304 claimed=2929 row_formula=304 apparition=0
+DIAG 4/20 pair=50/50 p=2963 H=54 h=51 k=53 actual=0 roots=54 degree=321/321 lead=1149 claimed=2929 row_formula=1149 apparition=0
+ROWCHECK p=2963 passed=20/20
+DIAG 5/20 pair=1/50 p=4289 H=65 h=1 k=7 actual=0 roots=5 degree=33/33 lead=575 claimed=663 row_formula=575 apparition=0
+DIAG 5/20 pair=2/50 p=4289 H=65 h=1 k=13 actual=0 roots=3 degree=51/51 lead=4099 claimed=2911 row_formula=4099 apparition=0
+DIAG 5/20 pair=3/50 p=4289 H=65 h=2 k=8 actual=0 roots=7 degree=39/39 lead=2623 claimed=663 row_formula=2623 apparition=0
+DIAG 5/20 pair=4/50 p=4289 H=65 h=3 k=26 actual=0 roots=6 degree=96/96 lead=3232 claimed=495 row_formula=3232 apparition=0
+DIAG 5/20 pair=5/50 p=4289 H=65 h=4 k=9 actual=0 roots=6 degree=48/48 lead=3923 claimed=1010 row_formula=3923 apparition=0
+DIAG 5/20 pair=6/50 p=4289 H=65 h=4 k=16 actual=0 roots=8 degree=69/69 lead=2056 claimed=2911 row_formula=2056 apparition=0
+DIAG 5/20 pair=7/50 p=4289 H=65 h=4 k=27 actual=0 roots=6 degree=102/102 lead=4024 claimed=495 row_formula=4024 apparition=0
+DIAG 5/20 pair=8/50 p=4289 H=65 h=4 k=28 actual=0 roots=8 degree=105/105 lead=3741 claimed=3940 row_formula=3741 apparition=0
+DIAG 5/20 pair=9/50 p=4289 H=65 h=4 k=30 actual=0 roots=8 degree=111/111 lead=1490 claimed=397 row_formula=1490 apparition=0
+DIAG 5/20 pair=10/50 p=4289 H=65 h=5 k=6 actual=0 roots=8 degree=42/42 lead=346 claimed=4288 row_formula=346 apparition=0
+DIAG 5/20 pair=11/50 p=4289 H=65 h=5 k=14 actual=0 roots=8 degree=66/66 lead=2198 claimed=741 row_formula=2198 apparition=0
+DIAG 5/20 pair=12/50 p=4289 H=65 h=6 k=10 actual=0 roots=11 degree=57/57 lead=2863 claimed=3654 row_formula=2863 apparition=0
+DIAG 5/20 pair=13/50 p=4289 H=65 h=6 k=13 actual=0 roots=11 degree=66/66 lead=1939 claimed=87 row_formula=1939 apparition=0
+DIAG 5/20 pair=14/50 p=4289 H=65 h=6 k=26 actual=0 roots=11 degree=105/105 lead=1423 claimed=1157 row_formula=1423 apparition=0
+DIAG 5/20 pair=15/50 p=4289 H=65 h=7 k=32 actual=0 roots=9 degree=126/126 lead=4173 claimed=506 row_formula=4173 apparition=0
+DIAG 5/20 pair=16/50 p=4289 H=65 h=7 k=58 actual=0 roots=9 degree=204/204 lead=608 claimed=4069 row_formula=608 apparition=0
+DIAG 5/20 pair=17/50 p=4289 H=65 h=8 k=9 actual=0 roots=11 degree=60/60 lead=1553 claimed=4288 row_formula=1553 apparition=0
+DIAG 5/20 pair=18/50 p=4289 H=65 h=9 k=65 actual=0 roots=11 degree=231/231 lead=3480 claimed=2773 row_formula=3480 apparition=0
+DIAG 5/20 pair=19/50 p=4289 H=65 h=10 k=16 actual=0 roots=16 degree=87/87 lead=1897 claimed=663 row_formula=1897 apparition=0
+DIAG 5/20 pair=20/50 p=4289 H=65 h=11 k=17 actual=0 roots=16 degree=93/93 lead=2135 claimed=663 row_formula=2135 apparition=0
+DIAG 5/20 pair=21/50 p=4289 H=65 h=13 k=37 actual=0 roots=15 degree=159/159 lead=1023 claimed=3940 row_formula=1023 apparition=0
+DIAG 5/20 pair=22/50 p=4289 H=65 h=14 k=23 actual=0 roots=16 degree=120/120 lead=4088 claimed=741 row_formula=4088 apparition=0
+DIAG 5/20 pair=23/50 p=4289 H=65 h=15 k=16 actual=0 roots=18 degree=102/102 lead=2926 claimed=4288 row_formula=2926 apparition=0
+DIAG 5/20 pair=24/50 p=4289 H=65 h=15 k=35 actual=0 roots=17 degree=159/159 lead=724 claimed=1157 row_formula=724 apparition=0
+DIAG 5/20 pair=25/50 p=4289 H=65 h=15 k=58 actual=0 roots=19 degree=228/228 lead=4237 claimed=349 row_formula=4237 apparition=0
+DIAG 5/20 pair=26/50 p=4289 H=65 h=16 k=26 actual=0 roots=20 degree=135/135 lead=1277 claimed=1454 row_formula=1277 apparition=0
+DIAG 5/20 pair=27/50 p=4289 H=65 h=19 k=40 actual=0 roots=24 degree=186/186 lead=862 claimed=287 row_formula=862 apparition=0
+DIAG 5/20 pair=28/50 p=4289 H=65 h=21 k=31 actual=0 roots=25 degree=165/165 lead=2654 claimed=1454 row_formula=2654 apparition=0
+DIAG 5/20 pair=29/50 p=4289 H=65 h=21 k=35 actual=0 roots=24 degree=177/177 lead=549 claimed=3842 row_formula=549 apparition=0
+DIAG 5/20 pair=30/50 p=4289 H=65 h=21 k=39 actual=0 roots=23 degree=189/189 lead=1127 claimed=1276 row_formula=1127 apparition=0
+DIAG 5/20 pair=31/50 p=4289 H=65 h=21 k=61 actual=0 roots=24 degree=255/255 lead=825 claimed=4164 row_formula=825 apparition=0
+DIAG 5/20 pair=32/50 p=4289 H=65 h=22 k=28 actual=0 roots=27 degree=159/159 lead=1122 claimed=663 row_formula=1122 apparition=0
+DIAG 5/20 pair=33/50 p=4289 H=65 h=22 k=38 actual=0 roots=26 degree=189/189 lead=2450 claimed=220 row_formula=2450 apparition=0
+DIAG 5/20 pair=34/50 p=4289 H=65 h=23 k=24 actual=0 roots=28 degree=150/150 lead=843 claimed=4288 row_formula=843 apparition=0
+DIAG 5/20 pair=35/50 p=4289 H=65 h=25 k=34 actual=0 roots=28 degree=186/186 lead=532 claimed=741 row_formula=532 apparition=0
+DIAG 5/20 pair=36/50 p=4289 H=65 h=27 k=53 actual=0 roots=29 degree=249/249 lead=75 claimed=397 row_formula=75 apparition=0
+DIAG 5/20 pair=37/50 p=4289 H=65 h=28 k=29 actual=0 roots=31 degree=180/180 lead=1645 claimed=4288 row_formula=1645 apparition=0
+DIAG 5/20 pair=38/50 p=4289 H=65 h=29 k=36 actual=0 roots=31 degree=204/204 lead=1381 claimed=87 row_formula=1381 apparition=0
+DIAG 5/20 pair=39/50 p=4289 H=65 h=29 k=64 actual=0 roots=32 degree=288/288 lead=343 claimed=3580 row_formula=343 apparition=0
+DIAG 5/20 pair=40/50 p=4289 H=65 h=32 k=46 actual=0 roots=37 degree=243/243 lead=549 claimed=3842 row_formula=549 apparition=0
+DIAG 5/20 pair=41/50 p=4289 H=65 h=33 k=46 actual=0 roots=35 degree=246/246 lead=2672 claimed=3100 row_formula=2672 apparition=0
+DIAG 5/20 pair=42/50 p=4289 H=65 h=34 k=38 actual=0 roots=40 degree=225/225 lead=2287 claimed=3654 row_formula=2287 apparition=0
+DIAG 5/20 pair=43/50 p=4289 H=65 h=35 k=41 actual=0 roots=41 degree=237/237 lead=351 claimed=663 row_formula=351 apparition=0
+DIAG 5/20 pair=44/50 p=4289 H=65 h=41 k=65 actual=0 roots=44 degree=327/327 lead=3509 claimed=3940 row_formula=3509 apparition=0
+DIAG 5/20 pair=45/50 p=4289 H=65 h=44 k=55 actual=0 roots=46 degree=306/306 lead=3932 claimed=1516 row_formula=3932 apparition=0
+DIAG 5/20 pair=46/50 p=4289 H=65 h=50 k=58 actual=0 roots=58 degree=333/333 lead=2992 claimed=2295 row_formula=2992 apparition=0
+DIAG 5/20 pair=47/50 p=4289 H=65 h=59 k=64 actual=0 roots=65 degree=378/378 lead=1849 claimed=1010 row_formula=1849 apparition=0
+DIAG 5/20 pair=48/50 p=4289 H=65 h=60 k=64 actual=0 roots=64 degree=381/381 lead=2412 claimed=3654 row_formula=2412 apparition=0
+DIAG 5/20 pair=49/50 p=4289 H=65 h=63 k=64 actual=0 roots=67 degree=390/390 lead=3768 claimed=4288 row_formula=3768 apparition=0
+DIAG 5/20 pair=50/50 p=4289 H=65 h=64 k=65 actual=0 roots=68 degree=396/396 lead=1120 claimed=4288 row_formula=1120 apparition=0
+ROWCHECK p=4289 passed=20/20
+DIAG 6/20 pair=1/50 p=6203 H=78 h=1 k=10 actual=0 roots=4 degree=42/42 lead=6175 claimed=2671 row_formula=6175 apparition=0
+DIAG 6/20 pair=2/50 p=6203 H=78 h=1 k=20 actual=0 roots=3 degree=72/72 lead=200 claimed=3909 row_formula=200 apparition=0
+DIAG 6/20 pair=3/50 p=6203 H=78 h=1 k=72 actual=0 roots=4 degree=228/228 lead=1064 claimed=5873 row_formula=1064 apparition=0
+DIAG 6/20 pair=4/50 p=6203 H=78 h=2 k=6 actual=0 roots=6 degree=33/33 lead=561 claimed=4185 row_formula=561 apparition=0
+DIAG 6/20 pair=5/50 p=6203 H=78 h=2 k=12 actual=0 roots=8 degree=51/51 lead=4352 claimed=2698 row_formula=4352 apparition=0
+DIAG 6/20 pair=6/50 p=6203 H=78 h=2 k=14 actual=0 roots=8 degree=57/57 lead=1186 claimed=4515 row_formula=1186 apparition=0
+DIAG 6/20 pair=7/50 p=6203 H=78 h=2 k=20 actual=0 roots=6 degree=75/75 lead=1396 claimed=5138 row_formula=1396 apparition=0
+DIAG 6/20 pair=8/50 p=6203 H=78 h=2 k=41 actual=0 roots=5 degree=138/138 lead=2498 claimed=5079 row_formula=2498 apparition=0
+DIAG 6/20 pair=9/50 p=6203 H=78 h=3 k=8 actual=0 roots=5 degree=42/42 lead=4550 claimed=776 row_formula=4550 apparition=0
+DIAG 6/20 pair=10/50 p=6203 H=78 h=4 k=16 actual=0 roots=11 degree=69/69 lead=818 claimed=4515 row_formula=818 apparition=0
+DIAG 6/20 pair=11/50 p=6203 H=78 h=5 k=33 actual=0 roots=8 degree=123/123 lead=3610 claimed=1180 row_formula=3610 apparition=0
+DIAG 6/20 pair=12/50 p=6203 H=78 h=6 k=17 actual=0 roots=10 degree=78/78 lead=2507 claimed=2219 row_formula=2507 apparition=0
+DIAG 6/20 pair=13/50 p=6203 H=78 h=6 k=40 actual=0 roots=10 degree=147/147 lead=3660 claimed=4308 row_formula=3660 apparition=0
+DIAG 6/20 pair=14/50 p=6203 H=78 h=7 k=49 actual=0 roots=11 degree=177/177 lead=892 claimed=1721 row_formula=892 apparition=0
+DIAG 6/20 pair=15/50 p=6203 H=78 h=8 k=11 actual=0 roots=12 degree=66/66 lead=4103 claimed=5048 row_formula=4103 apparition=0
+DIAG 6/20 pair=16/50 p=6203 H=78 h=8 k=26 actual=0 roots=12 degree=111/111 lead=1657 claimed=5138 row_formula=1657 apparition=0
+DIAG 6/20 pair=17/50 p=6203 H=78 h=9 k=38 actual=0 roots=11 degree=150/150 lead=4249 claimed=2545 row_formula=4249 apparition=0
+DIAG 6/20 pair=18/50 p=6203 H=78 h=12 k=19 actual=0 roots=15 degree=102/102 lead=4033 claimed=3427 row_formula=4033 apparition=0
+DIAG 6/20 pair=19/50 p=6203 H=78 h=12 k=29 actual=0 roots=15 degree=132/132 lead=5272 claimed=3302 row_formula=5272 apparition=0
+DIAG 6/20 pair=20/50 p=6203 H=78 h=12 k=73 actual=0 roots=15 degree=264/264 lead=3818 claimed=1827 row_formula=3818 apparition=0
+DIAG 6/20 pair=21/50 p=6203 H=78 h=13 k=20 actual=0 roots=17 degree=108/108 lead=2138 claimed=3427 row_formula=2138 apparition=0
+DIAG 6/20 pair=22/50 p=6203 H=78 h=13 k=25 actual=0 roots=16 degree=123/123 lead=696 claimed=4515 row_formula=696 apparition=0
+DIAG 6/20 pair=23/50 p=6203 H=78 h=14 k=17 actual=0 roots=18 degree=102/102 lead=5041 claimed=5048 row_formula=5041 apparition=0
+DIAG 6/20 pair=24/50 p=6203 H=78 h=14 k=32 actual=0 roots=19 degree=147/147 lead=744 claimed=5138 row_formula=744 apparition=0
+DIAG 6/20 pair=25/50 p=6203 H=78 h=14 k=51 actual=0 roots=17 degree=204/204 lead=5147 claimed=2987 row_formula=5147 apparition=0
+DIAG 6/20 pair=26/50 p=6203 H=78 h=14 k=63 actual=0 roots=17 degree=240/240 lead=3916 claimed=4256 row_formula=3916 apparition=0
+DIAG 6/20 pair=27/50 p=6203 H=78 h=15 k=24 actual=0 roots=17 degree=126/126 lead=4193 claimed=2671 row_formula=4193 apparition=0
+DIAG 6/20 pair=28/50 p=6203 H=78 h=16 k=39 actual=0 roots=19 degree=174/174 lead=5618 claimed=2815 row_formula=5618 apparition=0
+DIAG 6/20 pair=29/50 p=6203 H=78 h=21 k=40 actual=0 roots=24 degree=192/192 lead=3977 claimed=3909 row_formula=3977 apparition=0
+DIAG 6/20 pair=30/50 p=6203 H=78 h=22 k=39 actual=0 roots=24 degree=192/192 lead=4453 claimed=3302 row_formula=4453 apparition=0
+DIAG 6/20 pair=31/50 p=6203 H=78 h=22 k=45 actual=0 roots=25 degree=210/210 lead=5107 claimed=2815 row_formula=5107 apparition=0
+DIAG 6/20 pair=32/50 p=6203 H=78 h=22 k=57 actual=0 roots=24 degree=246/246 lead=3649 claimed=5457 row_formula=3649 apparition=0
+DIAG 6/20 pair=33/50 p=6203 H=78 h=25 k=41 actual=0 roots=28 degree=207/207 lead=5370 claimed=1679 row_formula=5370 apparition=0
+DIAG 6/20 pair=34/50 p=6203 H=78 h=32 k=61 actual=0 roots=35 degree=288/288 lead=2204 claimed=2545 row_formula=2204 apparition=0
+DIAG 6/20 pair=35/50 p=6203 H=78 h=34 k=41 actual=0 roots=36 degree=234/234 lead=5188 claimed=3427 row_formula=5188 apparition=0
+DIAG 6/20 pair=36/50 p=6203 H=78 h=35 k=36 actual=0 roots=38 degree=222/222 lead=4113 claimed=6202 row_formula=4113 apparition=0
+DIAG 6/20 pair=37/50 p=6203 H=78 h=35 k=42 actual=0 roots=38 degree=240/240 lead=960 claimed=3427 row_formula=960 apparition=0
+DIAG 6/20 pair=38/50 p=6203 H=78 h=45 k=76 actual=0 roots=48 degree=372/372 lead=1075 claimed=2554 row_formula=1075 apparition=0
+DIAG 6/20 pair=39/50 p=6203 H=78 h=47 k=74 actual=0 roots=49 degree=372/372 lead=3704 claimed=357 row_formula=3704 apparition=0
+DIAG 6/20 pair=40/50 p=6203 H=78 h=49 k=62 actual=0 roots=53 degree=342/342 lead=1406 claimed=2419 row_formula=1406 apparition=0
+DIAG 6/20 pair=41/50 p=6203 H=78 h=55 k=68 actual=0 roots=59 degree=378/378 lead=451 claimed=2419 row_formula=451 apparition=0
+DIAG 6/20 pair=42/50 p=6203 H=78 h=57 k=68 actual=0 roots=61 degree=384/384 lead=1625 claimed=2219 row_formula=1625 apparition=0
+DIAG 6/20 pair=43/50 p=6203 H=78 h=59 k=75 actual=0 roots=63 degree=411/411 lead=5969 claimed=1679 row_formula=5969 apparition=0
+DIAG 6/20 pair=44/50 p=6203 H=78 h=60 k=76 actual=0 roots=66 degree=417/417 lead=3487 claimed=1679 row_formula=3487 apparition=0
+DIAG 6/20 pair=45/50 p=6203 H=78 h=61 k=69 actual=0 roots=63 degree=399/399 lead=1859 claimed=1274 row_formula=1859 apparition=0
+DIAG 6/20 pair=46/50 p=6203 H=78 h=67 k=78 actual=0 roots=71 degree=444/444 lead=4699 claimed=2219 row_formula=4699 apparition=0
+DIAG 6/20 pair=47/50 p=6203 H=78 h=69 k=70 actual=0 roots=72 degree=426/426 lead=4863 claimed=6202 row_formula=4863 apparition=0
+DIAG 6/20 pair=48/50 p=6203 H=78 h=69 k=72 actual=0 roots=71 degree=432/432 lead=1482 claimed=5048 row_formula=1482 apparition=0
+DIAG 6/20 pair=49/50 p=6203 H=78 h=69 k=76 actual=0 roots=73 degree=444/444 lead=5455 claimed=3427 row_formula=5455 apparition=0
+DIAG 6/20 pair=50/50 p=6203 H=78 h=72 k=73 actual=0 roots=75 degree=444/444 lead=2283 claimed=6202 row_formula=2283 apparition=0
+ROWCHECK p=6203 passed=20/20
+DIAG 7/20 pair=1/50 p=8779 H=93 h=1 k=15 actual=0 roots=3 degree=57/57 lead=1524 claimed=2681 row_formula=1524 apparition=0
+DIAG 7/20 pair=2/50 p=8779 H=93 h=1 k=39 actual=0 roots=4 degree=129/129 lead=1713 claimed=1750 row_formula=1713 apparition=0
+DIAG 7/20 pair=3/50 p=8779 H=93 h=5 k=26 actual=0 roots=8 degree=102/102 lead=5401 claimed=1335 row_formula=5401 apparition=0
+DIAG 7/20 pair=4/50 p=8779 H=93 h=6 k=13 actual=0 roots=10 degree=66/66 lead=5367 claimed=3803 row_formula=5367 apparition=0
+DIAG 7/20 pair=5/50 p=8779 H=93 h=7 k=32 actual=0 roots=10 degree=126/126 lead=5956 claimed=5492 row_formula=5956 apparition=0
+DIAG 7/20 pair=6/50 p=8779 H=93 h=8 k=36 actual=0 roots=12 degree=141/141 lead=4121 claimed=2353 row_formula=4121 apparition=0
+DIAG 7/20 pair=7/50 p=8779 H=93 h=8 k=37 actual=0 roots=11 degree=144/144 lead=445 claimed=4611 row_formula=445 apparition=0
+DIAG 7/20 pair=8/50 p=8779 H=93 h=10 k=27 actual=0 roots=13 degree=120/120 lead=5376 claimed=6187 row_formula=5376 apparition=0
+DIAG 7/20 pair=9/50 p=8779 H=93 h=10 k=61 actual=0 roots=13 degree=222/222 lead=1246 claimed=2803 row_formula=1246 apparition=0
+DIAG 7/20 pair=10/50 p=8779 H=93 h=11 k=14 actual=0 roots=13 degree=84/84 lead=5909 claimed=7624 row_formula=5909 apparition=0
+DIAG 7/20 pair=11/50 p=8779 H=93 h=11 k=69 actual=0 roots=14 degree=249/249 lead=1594 claimed=1961 row_formula=1594 apparition=0
+DIAG 7/20 pair=12/50 p=8779 H=93 h=12 k=32 actual=0 roots=17 degree=141/141 lead=1480 claimed=2660 row_formula=1480 apparition=0
+DIAG 7/20 pair=13/50 p=8779 H=93 h=13 k=23 actual=0 roots=15 degree=117/117 lead=3606 claimed=4348 row_formula=3606 apparition=0
+DIAG 7/20 pair=14/50 p=8779 H=93 h=14 k=56 actual=0 roots=18 degree=219/219 lead=747 claimed=5776 row_formula=747 apparition=0
+DIAG 7/20 pair=15/50 p=8779 H=93 h=15 k=27 actual=0 roots=17 degree=135/135 lead=6935 claimed=2159 row_formula=6935 apparition=0
+DIAG 7/20 pair=16/50 p=8779 H=93 h=15 k=45 actual=0 roots=19 degree=189/189 lead=3586 claimed=5178 row_formula=3586 apparition=0
+DIAG 7/20 pair=17/50 p=8779 H=93 h=15 k=48 actual=0 roots=19 degree=198/198 lead=1704 claimed=3538 row_formula=1704 apparition=0
+DIAG 7/20 pair=18/50 p=8779 H=93 h=16 k=17 actual=0 roots=18 degree=108/108 lead=4098 claimed=8778 row_formula=4098 apparition=0
+DIAG 7/20 pair=19/50 p=8779 H=93 h=16 k=28 actual=0 roots=20 degree=141/141 lead=1313 claimed=2159 row_formula=1313 apparition=0
+DIAG 7/20 pair=20/50 p=8779 H=93 h=16 k=48 actual=0 roots=22 degree=201/201 lead=1856 claimed=3339 row_formula=1856 apparition=0
+DIAG 7/20 pair=21/50 p=8779 H=93 h=17 k=43 actual=0 roots=19 degree=189/189 lead=52 claimed=6252 row_formula=52 apparition=0
+DIAG 7/20 pair=22/50 p=8779 H=93 h=18 k=24 actual=0 roots=22 degree=135/135 lead=5810 claimed=3772 row_formula=5810 apparition=0
+DIAG 7/20 pair=23/50 p=8779 H=93 h=19 k=66 actual=0 roots=21 degree=264/264 lead=1939 claimed=7144 row_formula=1939 apparition=0
+DIAG 7/20 pair=24/50 p=8779 H=93 h=20 k=39 actual=0 roots=23 degree=186/186 lead=3939 claimed=1315 row_formula=3939 apparition=0
+DIAG 7/20 pair=25/50 p=8779 H=93 h=21 k=25 actual=0 roots=25 degree=147/147 lead=502 claimed=4659 row_formula=502 apparition=0
+DIAG 7/20 pair=26/50 p=8779 H=93 h=22 k=24 actual=0 roots=26 degree=147/147 lead=2684 claimed=8745 row_formula=2684 apparition=0
+DIAG 7/20 pair=27/50 p=8779 H=93 h=22 k=32 actual=0 roots=30 degree=171/171 lead=8623 claimed=4348 row_formula=8623 apparition=0
+DIAG 7/20 pair=28/50 p=8779 H=93 h=22 k=91 actual=0 roots=24 degree=348/348 lead=473 claimed=1333 row_formula=473 apparition=0
+DIAG 7/20 pair=29/50 p=8779 H=93 h=23 k=37 actual=0 roots=29 degree=189/189 lead=7620 claimed=2681 row_formula=7620 apparition=0
+DIAG 7/20 pair=30/50 p=8779 H=93 h=23 k=64 actual=0 roots=25 degree=270/270 lead=1411 claimed=8417 row_formula=1411 apparition=0
+DIAG 7/20 pair=31/50 p=8779 H=93 h=23 k=80 actual=0 roots=25 degree=318/318 lead=79 claimed=7256 row_formula=79 apparition=0
+DIAG 7/20 pair=32/50 p=8779 H=93 h=32 k=36 actual=0 roots=39 degree=213/213 lead=7142 claimed=4659 row_formula=7142 apparition=0
+DIAG 7/20 pair=33/50 p=8779 H=93 h=32 k=53 actual=0 roots=35 degree=264/264 lead=7410 claimed=1335 row_formula=7410 apparition=0
+DIAG 7/20 pair=34/50 p=8779 H=93 h=32 k=75 actual=0 roots=36 degree=330/330 lead=5 claimed=3608 row_formula=5 apparition=0
+DIAG 7/20 pair=35/50 p=8779 H=93 h=34 k=42 actual=0 roots=38 degree=237/237 lead=8453 claimed=2624 row_formula=8453 apparition=0
+DIAG 7/20 pair=36/50 p=8779 H=93 h=36 k=39 actual=0 roots=41 degree=234/234 lead=8444 claimed=7624 row_formula=8444 apparition=0
+DIAG 7/20 pair=37/50 p=8779 H=93 h=40 k=46 actual=0 roots=45 degree=267/267 lead=373 claimed=3772 row_formula=373 apparition=0
+DIAG 7/20 pair=38/50 p=8779 H=93 h=42 k=53 actual=0 roots=44 degree=294/294 lead=699 claimed=966 row_formula=699 apparition=0
+DIAG 7/20 pair=39/50 p=8779 H=93 h=46 k=56 actual=0 roots=50 degree=315/315 lead=8290 claimed=4348 row_formula=8290 apparition=0
+DIAG 7/20 pair=40/50 p=8779 H=93 h=51 k=72 actual=0 roots=54 degree=378/378 lead=7000 claimed=1335 row_formula=7000 apparition=0
+DIAG 7/20 pair=41/50 p=8779 H=93 h=55 k=65 actual=0 roots=58 degree=369/369 lead=3640 claimed=4348 row_formula=3640 apparition=0
+DIAG 7/20 pair=42/50 p=8779 H=93 h=56 k=62 actual=0 roots=60 degree=363/363 lead=2931 claimed=3772 row_formula=2931 apparition=0
+DIAG 7/20 pair=43/50 p=8779 H=93 h=57 k=84 actual=0 roots=61 degree=432/432 lead=3608 claimed=5159 row_formula=3608 apparition=0
+DIAG 7/20 pair=44/50 p=8779 H=93 h=60 k=64 actual=0 roots=64 degree=381/381 lead=2563 claimed=4659 row_formula=2563 apparition=0
+DIAG 7/20 pair=45/50 p=8779 H=93 h=66 k=69 actual=0 roots=69 degree=414/414 lead=4032 claimed=7624 row_formula=4032 apparition=0
+DIAG 7/20 pair=46/50 p=8779 H=93 h=70 k=90 actual=0 roots=76 degree=489/489 lead=872 claimed=2660 row_formula=872 apparition=0
+DIAG 7/20 pair=47/50 p=8779 H=93 h=71 k=73 actual=0 roots=75 degree=441/441 lead=2211 claimed=8745 row_formula=2211 apparition=0
+DIAG 7/20 pair=48/50 p=8779 H=93 h=76 k=84 actual=0 roots=82 degree=489/489 lead=5562 claimed=2624 row_formula=5562 apparition=0
+DIAG 7/20 pair=49/50 p=8779 H=93 h=77 k=90 actual=0 roots=79 degree=510/510 lead=4405 claimed=2208 row_formula=4405 apparition=0
+DIAG 7/20 pair=50/50 p=8779 H=93 h=88 k=92 actual=0 roots=95 degree=549/549 lead=3617 claimed=4659 row_formula=3617 apparition=0
+ROWCHECK p=8779 passed=20/20
+DIAG 8/20 pair=1/50 p=12697 H=112 h=1 k=29 actual=0 roots=5 degree=99/99 lead=6589 claimed=5211 row_formula=6589 apparition=0
+DIAG 8/20 pair=2/50 p=12697 H=112 h=2 k=12 actual=0 roots=7 degree=51/51 lead=846 claimed=7781 row_formula=846 apparition=0
+DIAG 8/20 pair=3/50 p=12697 H=112 h=2 k=98 actual=0 roots=6 degree=309/309 lead=7724 claimed=12409 row_formula=7724 apparition=0
+DIAG 8/20 pair=4/50 p=12697 H=112 h=3 k=47 actual=0 roots=6 degree=159/159 lead=8248 claimed=6154 row_formula=8248 apparition=0
+DIAG 8/20 pair=5/50 p=12697 H=112 h=4 k=61 actual=0 roots=6 degree=204/204 lead=3403 claimed=11244 row_formula=3403 apparition=0
+DIAG 8/20 pair=6/50 p=12697 H=112 h=5 k=49 actual=0 roots=9 degree=171/171 lead=12512 claimed=6154 row_formula=12512 apparition=0
+DIAG 8/20 pair=7/50 p=12697 H=112 h=6 k=20 actual=0 roots=12 degree=87/87 lead=2428 claimed=7651 row_formula=2428 apparition=0
+DIAG 8/20 pair=8/50 p=12697 H=112 h=6 k=33 actual=0 roots=8 degree=126/126 lead=7623 claimed=795 row_formula=7623 apparition=0
+DIAG 8/20 pair=9/50 p=12697 H=112 h=7 k=30 actual=0 roots=9 degree=120/120 lead=2630 claimed=3715 row_formula=2630 apparition=0
+DIAG 8/20 pair=10/50 p=12697 H=112 h=8 k=42 actual=0 roots=14 degree=159/159 lead=12303 claimed=11867 row_formula=12303 apparition=0
+DIAG 8/20 pair=11/50 p=12697 H=112 h=9 k=50 actual=0 roots=13 degree=186/186 lead=11459 claimed=9357 row_formula=11459 apparition=0
+DIAG 8/20 pair=12/50 p=12697 H=112 h=9 k=71 actual=0 roots=13 degree=249/249 lead=9842 claimed=12059 row_formula=9842 apparition=0
+DIAG 8/20 pair=13/50 p=12697 H=112 h=12 k=20 actual=0 roots=18 degree=105/105 lead=10777 claimed=8291 row_formula=10777 apparition=0
+DIAG 8/20 pair=14/50 p=12697 H=112 h=13 k=21 actual=0 roots=15 degree=111/111 lead=5123 claimed=8291 row_formula=5123 apparition=0
+DIAG 8/20 pair=15/50 p=12697 H=112 h=13 k=27 actual=0 roots=16 degree=129/129 lead=7284 claimed=7651 row_formula=7284 apparition=0
+DIAG 8/20 pair=16/50 p=12697 H=112 h=13 k=28 actual=0 roots=15 degree=132/132 lead=983 claimed=5766 row_formula=983 apparition=0
+DIAG 8/20 pair=17/50 p=12697 H=112 h=15 k=17 actual=0 roots=19 degree=105/105 lead=5424 claimed=12663 row_formula=5424 apparition=0
+DIAG 8/20 pair=18/50 p=12697 H=112 h=17 k=27 actual=0 roots=20 degree=141/141 lead=7294 claimed=7781 row_formula=7294 apparition=0
+DIAG 8/20 pair=19/50 p=12697 H=112 h=18 k=57 actual=0 roots=22 degree=234/234 lead=3045 claimed=1755 row_formula=3045 apparition=0
+DIAG 8/20 pair=20/50 p=12697 H=112 h=19 k=90 actual=0 roots=22 degree=336/336 lead=3530 claimed=7171 row_formula=3530 apparition=0
+DIAG 8/20 pair=21/50 p=12697 H=112 h=21 k=84 actual=0 roots=24 degree=324/324 lead=6417 claimed=9703 row_formula=6417 apparition=0
+DIAG 8/20 pair=22/50 p=12697 H=112 h=22 k=23 actual=0 roots=25 degree=144/144 lead=12557 claimed=12696 row_formula=12557 apparition=0
+DIAG 8/20 pair=23/50 p=12697 H=112 h=22 k=30 actual=0 roots=27 degree=165/165 lead=479 claimed=8291 row_formula=479 apparition=0
+DIAG 8/20 pair=24/50 p=12697 H=112 h=23 k=24 actual=0 roots=25 degree=150/150 lead=7950 claimed=12696 row_formula=7950 apparition=0
+DIAG 8/20 pair=25/50 p=12697 H=112 h=29 k=74 actual=0 roots=33 degree=318/318 lead=2489 claimed=2311 row_formula=2489 apparition=0
+DIAG 8/20 pair=26/50 p=12697 H=112 h=32 k=43 actual=0 roots=34 degree=234/234 lead=9730 claimed=5660 row_formula=9730 apparition=0
+DIAG 8/20 pair=27/50 p=12697 H=112 h=33 k=37 actual=0 roots=37 degree=219/219 lead=6826 claimed=11552 row_formula=6826 apparition=0
+DIAG 8/20 pair=28/50 p=12697 H=112 h=34 k=59 actual=0 roots=38 degree=288/288 lead=6090 claimed=4625 row_formula=6090 apparition=0
+DIAG 8/20 pair=29/50 p=12697 H=112 h=34 k=67 actual=0 roots=37 degree=312/312 lead=3621 claimed=5061 row_formula=3621 apparition=0
+DIAG 8/20 pair=30/50 p=12697 H=112 h=38 k=68 actual=0 roots=42 degree=327/327 lead=7196 claimed=11388 row_formula=7196 apparition=0
+DIAG 8/20 pair=31/50 p=12697 H=112 h=41 k=52 actual=0 roots=44 degree=288/288 lead=7204 claimed=5660 row_formula=7204 apparition=0
+DIAG 8/20 pair=32/50 p=12697 H=112 h=41 k=81 actual=0 roots=44 degree=375/375 lead=5534 claimed=5555 row_formula=5534 apparition=0
+DIAG 8/20 pair=33/50 p=12697 H=112 h=41 k=85 actual=0 roots=43 degree=387/387 lead=11401 claimed=6154 row_formula=11401 apparition=0
+DIAG 8/20 pair=34/50 p=12697 H=112 h=42 k=44 actual=0 roots=46 degree=267/267 lead=1667 claimed=12663 row_formula=1667 apparition=0
+DIAG 8/20 pair=35/50 p=12697 H=112 h=51 k=52 actual=0 roots=53 degree=318/318 lead=6317 claimed=12696 row_formula=6317 apparition=0
+DIAG 8/20 pair=36/50 p=12697 H=112 h=54 k=58 actual=0 roots=59 degree=345/345 lead=11636 claimed=11552 row_formula=11636 apparition=0
+DIAG 8/20 pair=37/50 p=12697 H=112 h=54 k=92 actual=0 roots=59 degree=447/447 lead=6568 claimed=3327 row_formula=6568 apparition=0
+DIAG 8/20 pair=38/50 p=12697 H=112 h=56 k=94 actual=0 roots=61 degree=459/459 lead=501 claimed=3327 row_formula=501 apparition=0
+DIAG 8/20 pair=39/50 p=12697 H=112 h=57 k=111 actual=0 roots=60 degree=513/513 lead=10409 claimed=11177 row_formula=10409 apparition=0
+DIAG 8/20 pair=40/50 p=12697 H=112 h=64 k=103 actual=0 roots=67 degree=510/510 lead=11221 claimed=1755 row_formula=11221 apparition=0
+DIAG 8/20 pair=41/50 p=12697 H=112 h=69 k=92 actual=0 roots=72 degree=492/492 lead=9572 claimed=3715 row_formula=9572 apparition=0
+DIAG 8/20 pair=42/50 p=12697 H=112 h=83 k=90 actual=0 roots=86 degree=528/528 lead=1147 claimed=10303 row_formula=1147 apparition=0
+DIAG 8/20 pair=43/50 p=12697 H=112 h=83 k=92 actual=0 roots=85 degree=534/534 lead=11047 claimed=4954 row_formula=11047 apparition=0
+DIAG 8/20 pair=44/50 p=12697 H=112 h=86 k=104 actual=0 roots=92 degree=579/579 lead=4875 claimed=12534 row_formula=4875 apparition=0
+DIAG 8/20 pair=45/50 p=12697 H=112 h=87 k=100 actual=0 roots=90 degree=570/570 lead=9344 claimed=428 row_formula=9344 apparition=0
+DIAG 8/20 pair=46/50 p=12697 H=112 h=91 k=97 actual=0 roots=93 degree=573/573 lead=12676 claimed=11889 row_formula=12676 apparition=0
+DIAG 8/20 pair=47/50 p=12697 H=112 h=97 k=103 actual=0 roots=100 degree=609/609 lead=7248 claimed=11889 row_formula=7248 apparition=0
+DIAG 8/20 pair=48/50 p=12697 H=112 h=99 k=102 actual=0 roots=103 degree=612/612 lead=9361 claimed=11542 row_formula=9361 apparition=0
+DIAG 8/20 pair=49/50 p=12697 H=112 h=103 k=104 actual=0 roots=105 degree=630/630 lead=2798 claimed=12696 row_formula=2798 apparition=0
+DIAG 8/20 pair=50/50 p=12697 H=112 h=105 k=108 actual=0 roots=107 degree=648/648 lead=1457 claimed=11542 row_formula=1457 apparition=0
+ROWCHECK p=12697 passed=20/20
+DIAG 9/20 pair=1/50 p=18371 H=135 h=1 k=8 actual=0 roots=3 degree=36/36 lead=2300 claimed=675 row_formula=2300 apparition=0
+DIAG 9/20 pair=2/50 p=18371 H=135 h=1 k=23 actual=0 roots=4 degree=81/81 lead=2542 claimed=1280 row_formula=2542 apparition=0
+DIAG 9/20 pair=3/50 p=18371 H=135 h=1 k=37 actual=0 roots=4 degree=123/123 lead=3273 claimed=12056 row_formula=3273 apparition=0
+DIAG 9/20 pair=4/50 p=18371 H=135 h=1 k=45 actual=0 roots=3 degree=147/147 lead=16593 claimed=4712 row_formula=16593 apparition=0
+DIAG 9/20 pair=5/50 p=18371 H=135 h=4 k=25 actual=0 roots=9 degree=96/96 lead=1410 claimed=8041 row_formula=1410 apparition=0
+DIAG 9/20 pair=6/50 p=18371 H=135 h=4 k=26 actual=0 roots=8 degree=99/99 lead=15987 claimed=1280 row_formula=15987 apparition=0
+DIAG 9/20 pair=7/50 p=18371 H=135 h=4 k=29 actual=0 roots=7 degree=108/108 lead=6427 claimed=4137 row_formula=6427 apparition=0
+DIAG 9/20 pair=8/50 p=18371 H=135 h=4 k=99 actual=0 roots=6 degree=318/318 lead=17398 claimed=6872 row_formula=17398 apparition=0
+DIAG 9/20 pair=9/50 p=18371 H=135 h=5 k=124 actual=0 roots=9 degree=396/396 lead=5539 claimed=13788 row_formula=5539 apparition=0
+DIAG 9/20 pair=10/50 p=18371 H=135 h=8 k=25 actual=0 roots=10 degree=108/108 lead=11813 claimed=17576 row_formula=11813 apparition=0
+DIAG 9/20 pair=11/50 p=18371 H=135 h=10 k=34 actual=0 roots=15 degree=141/141 lead=7314 claimed=10891 row_formula=7314 apparition=0
+DIAG 9/20 pair=12/50 p=18371 H=135 h=10 k=110 actual=0 roots=15 degree=369/369 lead=4888 claimed=12884 row_formula=4888 apparition=0
+DIAG 9/20 pair=13/50 p=18371 H=135 h=11 k=42 actual=0 roots=15 degree=168/168 lead=2368 claimed=10034 row_formula=2368 apparition=0
+DIAG 9/20 pair=14/50 p=18371 H=135 h=11 k=96 actual=0 roots=13 degree=330/330 lead=1047 claimed=11881 row_formula=1047 apparition=0
+DIAG 9/20 pair=15/50 p=18371 H=135 h=13 k=38 actual=0 roots=15 degree=162/162 lead=11600 claimed=4137 row_formula=11600 apparition=0
+DIAG 9/20 pair=16/50 p=18371 H=135 h=14 k=68 actual=0 roots=18 degree=255/255 lead=5193 claimed=12602 row_formula=5193 apparition=0
+DIAG 9/20 pair=17/50 p=18371 H=135 h=17 k=48 actual=0 roots=20 degree=204/204 lead=15068 claimed=10034 row_formula=15068 apparition=0
+DIAG 9/20 pair=18/50 p=18371 H=135 h=17 k=80 actual=0 roots=19 degree=300/300 lead=5206 claimed=3235 row_formula=5206 apparition=0
+DIAG 9/20 pair=19/50 p=18371 H=135 h=18 k=29 actual=0 roots=20 degree=150/150 lead=4261 claimed=15075 row_formula=4261 apparition=0
+DIAG 9/20 pair=20/50 p=18371 H=135 h=18 k=32 actual=0 roots=23 degree=159/159 lead=10220 claimed=13448 row_formula=10220 apparition=0
+DIAG 9/20 pair=21/50 p=18371 H=135 h=19 k=114 actual=0 roots=23 degree=408/408 lead=5739 claimed=6872 row_formula=5739 apparition=0
+DIAG 9/20 pair=22/50 p=18371 H=135 h=21 k=45 actual=0 roots=27 degree=207/207 lead=12443 claimed=10891 row_formula=12443 apparition=0
+DIAG 9/20 pair=23/50 p=18371 H=135 h=24 k=60 actual=0 roots=28 degree=261/261 lead=7081 claimed=12056 row_formula=7081 apparition=0
+DIAG 9/20 pair=24/50 p=18371 H=135 h=25 k=29 actual=0 roots=28 degree=171/171 lead=6427 claimed=15877 row_formula=6427 apparition=0
+DIAG 9/20 pair=25/50 p=18371 H=135 h=25 k=33 actual=0 roots=29 degree=183/183 lead=10592 claimed=16745 row_formula=10592 apparition=0
+DIAG 9/20 pair=26/50 p=18371 H=135 h=27 k=48 actual=0 roots=31 degree=234/234 lead=12771 claimed=8041 row_formula=12771 apparition=0
+DIAG 9/20 pair=27/50 p=18371 H=135 h=34 k=77 actual=0 roots=36 degree=342/342 lead=9414 claimed=6751 row_formula=9414 apparition=0
+DIAG 9/20 pair=28/50 p=18371 H=135 h=36 k=129 actual=0 roots=39 degree=504/504 lead=584 claimed=1790 row_formula=584 apparition=0
+DIAG 9/20 pair=29/50 p=18371 H=135 h=38 k=64 actual=0 roots=43 degree=315/315 lead=5229 claimed=1170 row_formula=5229 apparition=0
+DIAG 9/20 pair=30/50 p=18371 H=135 h=40 k=90 actual=0 roots=44 degree=399/399 lead=1079 claimed=1658 row_formula=1079 apparition=0
+DIAG 9/20 pair=31/50 p=18371 H=135 h=42 k=86 actual=0 roots=46 degree=393/393 lead=3178 claimed=4712 row_formula=3178 apparition=0
+DIAG 9/20 pair=32/50 p=18371 H=135 h=42 k=108 actual=0 roots=46 degree=459/459 lead=15714 claimed=5962 row_formula=15714 apparition=0
+DIAG 9/20 pair=33/50 p=18371 H=135 h=46 k=73 actual=0 roots=49 degree=366/366 lead=645 claimed=17272 row_formula=645 apparition=0
+DIAG 9/20 pair=34/50 p=18371 H=135 h=47 k=70 actual=0 roots=50 degree=360/360 lead=6289 claimed=17108 row_formula=6289 apparition=0
+DIAG 9/20 pair=35/50 p=18371 H=135 h=49 k=69 actual=0 roots=51 degree=363/363 lead=11030 claimed=14920 row_formula=11030 apparition=0
+DIAG 9/20 pair=36/50 p=18371 H=135 h=49 k=89 actual=0 roots=52 degree=423/423 lead=12335 claimed=4614 row_formula=12335 apparition=0
+DIAG 9/20 pair=37/50 p=18371 H=135 h=52 k=58 actual=0 roots=56 degree=339/339 lead=14161 claimed=6205 row_formula=14161 apparition=0
+DIAG 9/20 pair=38/50 p=18371 H=135 h=62 k=132 actual=0 roots=67 degree=591/591 lead=2243 claimed=15377 row_formula=2243 apparition=0
+DIAG 9/20 pair=39/50 p=18371 H=135 h=74 k=127 actual=0 roots=78 degree=612/612 lead=5289 claimed=14131 row_formula=5289 apparition=0
+DIAG 9/20 pair=40/50 p=18371 H=135 h=76 k=80 actual=0 roots=81 degree=477/477 lead=17928 claimed=15877 row_formula=17928 apparition=0
+DIAG 9/20 pair=41/50 p=18371 H=135 h=76 k=99 actual=0 roots=78 degree=534/534 lead=11042 claimed=17108 row_formula=11042 apparition=0
+DIAG 9/20 pair=42/50 p=18371 H=135 h=76 k=100 actual=0 roots=81 degree=537/537 lead=15663 claimed=10891 row_formula=15663 apparition=0
+DIAG 9/20 pair=43/50 p=18371 H=135 h=78 k=127 actual=0 roots=80 degree=624/624 lead=7466 claimed=17708 row_formula=7466 apparition=0
+DIAG 9/20 pair=44/50 p=18371 H=135 h=79 k=99 actual=0 roots=84 degree=543/543 lead=2196 claimed=14920 row_formula=2196 apparition=0
+DIAG 9/20 pair=45/50 p=18371 H=135 h=79 k=100 actual=0 roots=81 degree=546/546 lead=6155 claimed=8041 row_formula=6155 apparition=0
+DIAG 9/20 pair=46/50 p=18371 H=135 h=84 k=91 actual=0 roots=86 degree=534/534 lead=11698 claimed=675 row_formula=11698 apparition=0
+DIAG 9/20 pair=47/50 p=18371 H=135 h=84 k=124 actual=0 roots=88 degree=633/633 lead=410 claimed=4614 row_formula=410 apparition=0
+DIAG 9/20 pair=48/50 p=18371 H=135 h=117 k=123 actual=0 roots=119 degree=729/729 lead=18226 claimed=6205 row_formula=18226 apparition=0
+DIAG 9/20 pair=49/50 p=18371 H=135 h=120 k=131 actual=0 roots=124 degree=762/762 lead=5298 claimed=15075 row_formula=5298 apparition=0
+DIAG 9/20 pair=50/50 p=18371 H=135 h=126 k=134 actual=0 roots=131 degree=789/789 lead=2729 claimed=16745 row_formula=2729 apparition=0
+ROWCHECK p=18371 passed=20/20
+DIAG 10/20 pair=1/50 p=26591 H=163 h=1 k=34 actual=0 roots=6 degree=114/114 lead=20731 claimed=22020 row_formula=20731 apparition=0
+DIAG 10/20 pair=2/50 p=26591 H=163 h=2 k=35 actual=0 roots=4 degree=120/120 lead=214 claimed=22020 row_formula=214 apparition=0
+DIAG 10/20 pair=3/50 p=26591 H=163 h=4 k=32 actual=0 roots=9 degree=117/117 lead=1994 claimed=17483 row_formula=1994 apparition=0
+DIAG 10/20 pair=4/50 p=26591 H=163 h=5 k=64 actual=0 roots=7 degree=216/216 lead=19016 claimed=15487 row_formula=19016 apparition=0
+DIAG 10/20 pair=5/50 p=26591 H=163 h=7 k=39 actual=0 roots=11 degree=147/147 lead=2524 claimed=2844 row_formula=2524 apparition=0
+DIAG 10/20 pair=6/50 p=26591 H=163 h=7 k=69 actual=0 roots=9 degree=237/237 lead=6263 claimed=7614 row_formula=6263 apparition=0
+DIAG 10/20 pair=7/50 p=26591 H=163 h=10 k=25 actual=0 roots=12 degree=114/114 lead=7945 claimed=10499 row_formula=7945 apparition=0
+DIAG 10/20 pair=8/50 p=26591 H=163 h=12 k=33 actual=0 roots=14 degree=144/144 lead=6425 claimed=3730 row_formula=6425 apparition=0
+DIAG 10/20 pair=9/50 p=26591 H=163 h=12 k=52 actual=0 roots=17 degree=201/201 lead=11212 claimed=3629 row_formula=11212 apparition=0
+DIAG 10/20 pair=10/50 p=26591 H=163 h=12 k=82 actual=0 roots=17 degree=291/291 lead=9047 claimed=23533 row_formula=9047 apparition=0
+DIAG 10/20 pair=11/50 p=26591 H=163 h=14 k=137 actual=0 roots=17 degree=462/462 lead=18587 claimed=26361 row_formula=18587 apparition=0
+DIAG 10/20 pair=12/50 p=26591 H=163 h=15 k=81 actual=0 roots=19 degree=297/297 lead=23592 claimed=13912 row_formula=23592 apparition=0
+DIAG 10/20 pair=13/50 p=26591 H=163 h=17 k=18 actual=0 roots=21 degree=114/114 lead=15832 claimed=26590 row_formula=15832 apparition=0
+DIAG 10/20 pair=14/50 p=26591 H=163 h=18 k=46 actual=0 roots=24 degree=201/201 lead=3303 claimed=17483 row_formula=3303 apparition=0
+DIAG 10/20 pair=15/50 p=26591 H=163 h=19 k=52 actual=0 roots=25 degree=222/222 lead=19544 claimed=22020 row_formula=19544 apparition=0
+DIAG 10/20 pair=16/50 p=26591 H=163 h=20 k=41 actual=0 roots=22 degree=192/192 lead=25242 claimed=3730 row_formula=25242 apparition=0
+DIAG 10/20 pair=17/50 p=26591 H=163 h=22 k=41 actual=0 roots=25 degree=198/198 lead=7053 claimed=14656 row_formula=7053 apparition=0
+DIAG 10/20 pair=18/50 p=26591 H=163 h=24 k=35 actual=0 roots=26 degree=186/186 lead=19251 claimed=23057 row_formula=19251 apparition=0
+DIAG 10/20 pair=19/50 p=26591 H=163 h=24 k=48 actual=0 roots=28 degree=225/225 lead=18186 claimed=17966 row_formula=18186 apparition=0
+DIAG 10/20 pair=20/50 p=26591 H=163 h=31 k=52 actual=0 roots=33 degree=258/258 lead=8092 claimed=3730 row_formula=8092 apparition=0
+DIAG 10/20 pair=21/50 p=26591 H=163 h=31 k=83 actual=0 roots=36 degree=351/351 lead=9570 claimed=17132 row_formula=9570 apparition=0
+DIAG 10/20 pair=22/50 p=26591 H=163 h=31 k=107 actual=0 roots=34 degree=423/423 lead=9058 claimed=6437 row_formula=9058 apparition=0
+DIAG 10/20 pair=23/50 p=26591 H=163 h=35 k=36 actual=0 roots=37 degree=222/222 lead=768 claimed=26590 row_formula=768 apparition=0
+DIAG 10/20 pair=24/50 p=26591 H=163 h=37 k=103 actual=0 roots=42 degree=429/429 lead=14299 claimed=13912 row_formula=14299 apparition=0
+DIAG 10/20 pair=25/50 p=26591 H=163 h=40 k=105 actual=0 roots=44 degree=444/444 lead=3294 claimed=11157 row_formula=3294 apparition=0
+DIAG 10/20 pair=26/50 p=26591 H=163 h=41 k=57 actual=0 roots=43 degree=303/303 lead=21759 claimed=10400 row_formula=21759 apparition=0
+DIAG 10/20 pair=27/50 p=26591 H=163 h=41 k=74 actual=0 roots=45 degree=354/354 lead=22263 claimed=22020 row_formula=22263 apparition=0
+DIAG 10/20 pair=28/50 p=26591 H=163 h=43 k=104 actual=0 roots=45 degree=450/450 lead=7128 claimed=24227 row_formula=7128 apparition=0
+DIAG 10/20 pair=29/50 p=26591 H=163 h=47 k=109 actual=0 roots=49 degree=477/477 lead=23565 claimed=7614 row_formula=23565 apparition=0
+DIAG 10/20 pair=30/50 p=26591 H=163 h=51 k=54 actual=0 roots=53 degree=324/324 lead=15536 claimed=25436 row_formula=15536 apparition=0
+DIAG 10/20 pair=31/50 p=26591 H=163 h=53 k=66 actual=0 roots=55 degree=366/366 lead=7831 claimed=19523 row_formula=7831 apparition=0
+DIAG 10/20 pair=32/50 p=26591 H=163 h=53 k=98 actual=0 roots=56 degree=462/462 lead=18379 claimed=9684 row_formula=18379 apparition=0
+DIAG 10/20 pair=33/50 p=26591 H=163 h=62 k=156 actual=0 roots=70 degree=663/663 lead=25223 claimed=282 row_formula=25223 apparition=0
+DIAG 10/20 pair=34/50 p=26591 H=163 h=68 k=114 actual=0 roots=73 degree=555/555 lead=15847 claimed=22356 row_formula=15847 apparition=0
+DIAG 10/20 pair=35/50 p=26591 H=163 h=72 k=129 actual=0 roots=75 degree=612/612 lead=3556 claimed=5210 row_formula=3556 apparition=0
+DIAG 10/20 pair=36/50 p=26591 H=163 h=74 k=82 actual=0 roots=79 degree=477/477 lead=2075 claimed=24950 row_formula=2075 apparition=0
+DIAG 10/20 pair=37/50 p=26591 H=163 h=74 k=88 actual=0 roots=79 degree=495/495 lead=23899 claimed=883 row_formula=23899 apparition=0
+DIAG 10/20 pair=38/50 p=26591 H=163 h=84 k=159 actual=0 roots=89 degree=738/738 lead=8936 claimed=13965 row_formula=8936 apparition=0
+DIAG 10/20 pair=39/50 p=26591 H=163 h=86 k=160 actual=0 roots=91 degree=747/747 lead=10537 claimed=16326 row_formula=10537 apparition=0
+DIAG 10/20 pair=40/50 p=26591 H=163 h=90 k=109 actual=0 roots=96 degree=606/606 lead=3274 claimed=14656 row_formula=3274 apparition=0
+DIAG 10/20 pair=41/50 p=26591 H=163 h=104 k=111 actual=0 roots=106 degree=654/654 lead=21657 claimed=133 row_formula=21657 apparition=0
+DIAG 10/20 pair=42/50 p=26591 H=163 h=106 k=158 actual=0 roots=112 degree=801/801 lead=23164 claimed=17132 row_formula=23164 apparition=0
+DIAG 10/20 pair=43/50 p=26591 H=163 h=122 k=123 actual=0 roots=127 degree=744/744 lead=11176 claimed=26590 row_formula=11176 apparition=0
+DIAG 10/20 pair=44/50 p=26591 H=163 h=126 k=157 actual=0 roots=128 degree=858/858 lead=10136 claimed=21494 row_formula=10136 apparition=0
+DIAG 10/20 pair=45/50 p=26591 H=163 h=132 k=161 actual=0 roots=134 degree=888/888 lead=5472 claimed=25835 row_formula=5472 apparition=0
+DIAG 10/20 pair=46/50 p=26591 H=163 h=134 k=159 actual=0 roots=137 degree=888/888 lead=17956 claimed=17229 row_formula=17956 apparition=0
+DIAG 10/20 pair=47/50 p=26591 H=163 h=138 k=145 actual=0 roots=142 degree=858/858 lead=15108 claimed=133 row_formula=15108 apparition=0
+DIAG 10/20 pair=48/50 p=26591 H=163 h=146 k=160 actual=0 roots=152 degree=927/927 lead=14494 claimed=883 row_formula=14494 apparition=0
+DIAG 10/20 pair=49/50 p=26591 H=163 h=152 k=162 actual=0 roots=156 degree=951/951 lead=23745 claimed=14675 row_formula=23745 apparition=0
+DIAG 10/20 pair=50/50 p=26591 H=163 h=155 k=159 actual=0 roots=157 degree=951/951 lead=25007 claimed=13946 row_formula=25007 apparition=0
+ROWCHECK p=26591 passed=20/20
+DIAG 11/20 pair=1/50 p=37607 H=193 h=2 k=40 actual=0 roots=6 degree=135/135 lead=693 claimed=29819 row_formula=693 apparition=0
+DIAG 11/20 pair=2/50 p=37607 H=193 h=4 k=48 actual=0 roots=9 degree=165/165 lead=28359 claimed=9550 row_formula=28359 apparition=0
+DIAG 11/20 pair=3/50 p=37607 H=193 h=6 k=78 actual=0 roots=10 degree=261/261 lead=4576 claimed=12728 row_formula=4576 apparition=0
+DIAG 11/20 pair=4/50 p=37607 H=193 h=8 k=130 actual=0 roots=13 degree=423/423 lead=14533 claimed=32696 row_formula=14533 apparition=0
+DIAG 11/20 pair=5/50 p=37607 H=193 h=8 k=185 actual=0 roots=11 degree=588/588 lead=11584 claimed=33599 row_formula=11584 apparition=0
+DIAG 11/20 pair=6/50 p=37607 H=193 h=10 k=43 actual=0 roots=13 degree=168/168 lead=34482 claimed=8759 row_formula=34482 apparition=0
+DIAG 11/20 pair=7/50 p=37607 H=193 h=10 k=180 actual=0 roots=14 degree=579/579 lead=19389 claimed=9551 row_formula=19389 apparition=0
+DIAG 11/20 pair=8/50 p=37607 H=193 h=13 k=20 actual=0 roots=16 degree=108/108 lead=2745 claimed=34236 row_formula=2745 apparition=0
+DIAG 11/20 pair=9/50 p=37607 H=193 h=14 k=41 actual=0 roots=16 degree=174/174 lead=14055 claimed=29065 row_formula=14055 apparition=0
+DIAG 11/20 pair=10/50 p=37607 H=193 h=14 k=59 actual=0 roots=16 degree=228/228 lead=29796 claimed=9275 row_formula=29796 apparition=0
+DIAG 11/20 pair=11/50 p=37607 H=193 h=14 k=185 actual=0 roots=17 degree=606/606 lead=22961 claimed=27046 row_formula=22961 apparition=0
+DIAG 11/20 pair=12/50 p=37607 H=193 h=16 k=18 actual=0 roots=21 degree=111/111 lead=10861 claimed=37573 row_formula=10861 apparition=0
+DIAG 11/20 pair=13/50 p=37607 H=193 h=16 k=23 actual=0 roots=18 degree=126/126 lead=9157 claimed=34236 row_formula=9157 apparition=0
+DIAG 11/20 pair=14/50 p=37607 H=193 h=16 k=28 actual=0 roots=21 degree=141/141 lead=4858 claimed=17027 row_formula=4858 apparition=0
+DIAG 11/20 pair=15/50 p=37607 H=193 h=19 k=65 actual=0 roots=22 degree=261/261 lead=13522 claimed=4944 row_formula=13522 apparition=0
+DIAG 11/20 pair=16/50 p=37607 H=193 h=24 k=30 actual=0 roots=31 degree=171/171 lead=9025 claimed=518 row_formula=9025 apparition=0
+DIAG 11/20 pair=17/50 p=37607 H=193 h=24 k=65 actual=0 roots=27 degree=276/276 lead=7839 claimed=30629 row_formula=7839 apparition=0
+DIAG 11/20 pair=18/50 p=37607 H=193 h=27 k=151 actual=0 roots=30 degree=543/543 lead=8056 claimed=1513 row_formula=8056 apparition=0
+DIAG 11/20 pair=19/50 p=37607 H=193 h=29 k=56 actual=0 roots=32 degree=264/264 lead=35717 claimed=29065 row_formula=35717 apparition=0
+DIAG 11/20 pair=20/50 p=37607 H=193 h=30 k=66 actual=0 roots=36 degree=297/297 lead=6260 claimed=9236 row_formula=6260 apparition=0
+DIAG 11/20 pair=21/50 p=37607 H=193 h=33 k=53 actual=0 roots=37 degree=267/267 lead=22943 claimed=30239 row_formula=22943 apparition=0
+DIAG 11/20 pair=22/50 p=37607 H=193 h=34 k=59 actual=0 roots=37 degree=288/288 lead=9002 claimed=18356 row_formula=9002 apparition=0
+DIAG 11/20 pair=23/50 p=37607 H=193 h=35 k=127 actual=0 roots=37 degree=495/495 lead=21671 claimed=35803 row_formula=21671 apparition=0
+DIAG 11/20 pair=24/50 p=37607 H=193 h=38 k=93 actual=0 roots=40 degree=402/402 lead=25606 claimed=27442 row_formula=25606 apparition=0
+DIAG 11/20 pair=25/50 p=37607 H=193 h=42 k=68 actual=0 roots=47 degree=339/339 lead=20183 claimed=4713 row_formula=20183 apparition=0
+DIAG 11/20 pair=26/50 p=37607 H=193 h=50 k=72 actual=0 roots=57 degree=375/375 lead=27931 claimed=13859 row_formula=27931 apparition=0
+DIAG 11/20 pair=27/50 p=37607 H=193 h=51 k=68 actual=0 roots=53 degree=366/366 lead=16355 claimed=406 row_formula=16355 apparition=0
+DIAG 11/20 pair=28/50 p=37607 H=193 h=51 k=102 actual=0 roots=55 degree=468/468 lead=16467 claimed=34991 row_formula=16467 apparition=0
+DIAG 11/20 pair=29/50 p=37607 H=193 h=52 k=191 actual=0 roots=55 degree=738/738 lead=4402 claimed=6923 row_formula=4402 apparition=0
+DIAG 11/20 pair=30/50 p=37607 H=193 h=61 k=154 actual=0 roots=64 degree=654/654 lead=16253 claimed=31655 row_formula=16253 apparition=0
+DIAG 11/20 pair=31/50 p=37607 H=193 h=62 k=76 actual=0 roots=66 degree=423/423 lead=13275 claimed=15619 row_formula=13275 apparition=0
+DIAG 11/20 pair=32/50 p=37607 H=193 h=62 k=88 actual=0 roots=67 degree=459/459 lead=23829 claimed=4713 row_formula=23829 apparition=0
+DIAG 11/20 pair=33/50 p=37607 H=193 h=64 k=173 actual=0 roots=67 degree=720/720 lead=4014 claimed=32117 row_formula=4014 apparition=0
+DIAG 11/20 pair=34/50 p=37607 H=193 h=72 k=155 actual=0 roots=75 degree=690/690 lead=2623 claimed=2179 row_formula=2623 apparition=0
+DIAG 11/20 pair=35/50 p=37607 H=193 h=73 k=118 actual=0 roots=75 degree=582/582 lead=31181 claimed=9275 row_formula=31181 apparition=0
+DIAG 11/20 pair=36/50 p=37607 H=193 h=74 k=86 actual=0 roots=78 degree=489/489 lead=26889 claimed=17027 row_formula=26889 apparition=0
+DIAG 11/20 pair=37/50 p=37607 H=193 h=81 k=97 actual=0 roots=86 degree=543/543 lead=35324 claimed=31153 row_formula=35324 apparition=0
+DIAG 11/20 pair=38/50 p=37607 H=193 h=81 k=186 actual=0 roots=85 degree=810/810 lead=26124 claimed=2493 row_formula=26124 apparition=0
+DIAG 11/20 pair=39/50 p=37607 H=193 h=82 k=99 actual=0 roots=86 degree=552/552 lead=2482 claimed=406 row_formula=2482 apparition=0
+DIAG 11/20 pair=40/50 p=37607 H=193 h=89 k=92 actual=0 roots=91 degree=552/552 lead=25365 claimed=36452 row_formula=25365 apparition=0
+DIAG 11/20 pair=41/50 p=37607 H=193 h=122 k=134 actual=0 roots=127 degree=777/777 lead=16159 claimed=17027 row_formula=16159 apparition=0
+DIAG 11/20 pair=42/50 p=37607 H=193 h=122 k=168 actual=0 roots=126 degree=879/879 lead=4475 claimed=4944 row_formula=4475 apparition=0
+DIAG 11/20 pair=43/50 p=37607 H=193 h=126 k=157 actual=0 roots=130 degree=858/858 lead=22558 claimed=33782 row_formula=22558 apparition=0
+DIAG 11/20 pair=44/50 p=37607 H=193 h=131 k=135 actual=0 roots=134 degree=807/807 lead=14170 claimed=35978 row_formula=14170 apparition=0
+DIAG 11/20 pair=45/50 p=37607 H=193 h=133 k=174 actual=0 roots=139 degree=930/930 lead=25522 claimed=30629 row_formula=25522 apparition=0
+DIAG 11/20 pair=46/50 p=37607 H=193 h=144 k=165 actual=0 roots=146 degree=936/936 lead=737 claimed=1297 row_formula=737 apparition=0
+DIAG 11/20 pair=47/50 p=37607 H=193 h=162 k=176 actual=0 roots=168 degree=1023/1023 lead=4394 claimed=15619 row_formula=4394 apparition=0
+DIAG 11/20 pair=48/50 p=37607 H=193 h=170 k=175 actual=0 roots=175 degree=1044/1044 lead=36403 claimed=20983 row_formula=36403 apparition=0
+DIAG 11/20 pair=49/50 p=37607 H=193 h=176 k=190 actual=0 roots=182 degree=1107/1107 lead=23592 claimed=15619 row_formula=23592 apparition=0
+DIAG 11/20 pair=50/50 p=37607 H=193 h=176 k=192 actual=0 roots=180 degree=1113/1113 lead=36267 claimed=31153 row_formula=36267 apparition=0
+ROWCHECK p=37607 passed=20/20
+DIAG 12/20 pair=1/50 p=54421 H=233 h=1 k=14 actual=0 roots=3 degree=54/54 lead=52527 claimed=43719 row_formula=52527 apparition=0
+DIAG 12/20 pair=2/50 p=54421 H=233 h=1 k=57 actual=0 roots=4 degree=183/183 lead=7440 claimed=16462 row_formula=7440 apparition=0
+DIAG 12/20 pair=3/50 p=54421 H=233 h=1 k=112 actual=0 roots=5 degree=348/348 lead=41652 claimed=12074 row_formula=41652 apparition=0
+DIAG 12/20 pair=4/50 p=54421 H=233 h=1 k=139 actual=0 roots=4 degree=429/429 lead=42938 claimed=28096 row_formula=42938 apparition=0
+DIAG 12/20 pair=5/50 p=54421 H=233 h=2 k=131 actual=0 roots=4 degree=408/408 lead=53312 claimed=26187 row_formula=53312 apparition=0
+DIAG 12/20 pair=6/50 p=54421 H=233 h=5 k=23 actual=0 roots=9 degree=93/93 lead=8351 claimed=24544 row_formula=8351 apparition=0
+DIAG 12/20 pair=7/50 p=54421 H=233 h=7 k=132 actual=0 roots=11 degree=426/426 lead=44750 claimed=40264 row_formula=44750 apparition=0
+DIAG 12/20 pair=8/50 p=54421 H=233 h=10 k=80 actual=0 roots=15 degree=279/279 lead=32497 claimed=50203 row_formula=32497 apparition=0
+DIAG 12/20 pair=9/50 p=54421 H=233 h=11 k=79 actual=0 roots=15 degree=279/279 lead=25997 claimed=21022 row_formula=25997 apparition=0
+DIAG 12/20 pair=10/50 p=54421 H=233 h=13 k=215 actual=0 roots=16 degree=693/693 lead=40604 claimed=38411 row_formula=40604 apparition=0
+DIAG 12/20 pair=11/50 p=54421 H=233 h=15 k=64 actual=0 roots=17 degree=246/246 lead=49477 claimed=43347 row_formula=49477 apparition=0
+DIAG 12/20 pair=12/50 p=54421 H=233 h=16 k=81 actual=0 roots=21 degree=300/300 lead=35163 claimed=39104 row_formula=35163 apparition=0
+DIAG 12/20 pair=13/50 p=54421 H=233 h=16 k=161 actual=0 roots=22 degree=540/540 lead=9429 claimed=53824 row_formula=9429 apparition=0
+DIAG 12/20 pair=14/50 p=54421 H=233 h=18 k=28 actual=0 roots=25 degree=147/147 lead=15758 claimed=6432 row_formula=15758 apparition=0
+DIAG 12/20 pair=15/50 p=54421 H=233 h=22 k=191 actual=0 roots=25 degree=648/648 lead=53026 claimed=38923 row_formula=53026 apparition=0
+DIAG 12/20 pair=16/50 p=54421 H=233 h=26 k=36 actual=0 roots=31 degree=195/195 lead=19197 claimed=6432 row_formula=19197 apparition=0
+DIAG 12/20 pair=17/50 p=54421 H=233 h=31 k=143 actual=0 roots=33 degree=531/531 lead=43021 claimed=24842 row_formula=43021 apparition=0
+DIAG 12/20 pair=18/50 p=54421 H=233 h=35 k=62 actual=0 roots=37 degree=300/300 lead=15444 claimed=36885 row_formula=15444 apparition=0
+DIAG 12/20 pair=19/50 p=54421 H=233 h=36 k=44 actual=0 roots=40 degree=249/249 lead=47966 claimed=49805 row_formula=47966 apparition=0
+DIAG 12/20 pair=20/50 p=54421 H=233 h=37 k=57 actual=0 roots=40 degree=291/291 lead=49917 claimed=39603 row_formula=49917 apparition=0
+DIAG 12/20 pair=21/50 p=54421 H=233 h=38 k=177 actual=0 roots=41 degree=654/654 lead=37476 claimed=39578 row_formula=37476 apparition=0
+DIAG 12/20 pair=22/50 p=54421 H=233 h=41 k=48 actual=0 roots=46 degree=276/276 lead=25152 claimed=25473 row_formula=25152 apparition=0
+DIAG 12/20 pair=23/50 p=54421 H=233 h=44 k=50 actual=0 roots=48 degree=291/291 lead=15218 claimed=54383 row_formula=15218 apparition=0
+DIAG 12/20 pair=24/50 p=54421 H=233 h=44 k=63 actual=0 roots=48 degree=330/330 lead=42750 claimed=13091 row_formula=42750 apparition=0
+DIAG 12/20 pair=25/50 p=54421 H=233 h=49 k=50 actual=0 roots=51 degree=306/306 lead=27918 claimed=54420 row_formula=27918 apparition=0
+DIAG 12/20 pair=26/50 p=54421 H=233 h=55 k=173 actual=0 roots=60 degree=693/693 lead=13015 claimed=38099 row_formula=13015 apparition=0
+DIAG 12/20 pair=27/50 p=54421 H=233 h=62 k=114 actual=0 roots=66 degree=537/537 lead=39426 claimed=19242 row_formula=39426 apparition=0
+DIAG 12/20 pair=28/50 p=54421 H=233 h=63 k=113 actual=0 roots=67 degree=537/537 lead=214 claimed=15428 row_formula=214 apparition=0
+DIAG 12/20 pair=29/50 p=54421 H=233 h=69 k=136 actual=0 roots=71 degree=624/624 lead=30859 claimed=9982 row_formula=30859 apparition=0
+DIAG 12/20 pair=30/50 p=54421 H=233 h=69 k=161 actual=0 roots=71 degree=699/699 lead=39497 claimed=17431 row_formula=39497 apparition=0
+DIAG 12/20 pair=31/50 p=54421 H=233 h=70 k=104 actual=0 roots=75 degree=531/531 lead=2409 claimed=5985 row_formula=2409 apparition=0
+DIAG 12/20 pair=32/50 p=54421 H=233 h=80 k=130 actual=0 roots=84 degree=639/639 lead=4381 claimed=15428 row_formula=4381 apparition=0
+DIAG 12/20 pair=33/50 p=54421 H=233 h=83 k=93 actual=0 roots=87 degree=537/537 lead=16520 claimed=6432 row_formula=16520 apparition=0
+DIAG 12/20 pair=34/50 p=54421 H=233 h=86 k=181 actual=0 roots=90 degree=810/810 lead=13295 claimed=1847 row_formula=13295 apparition=0
+DIAG 12/20 pair=35/50 p=54421 H=233 h=111 k=114 actual=0 roots=115 degree=684/684 lead=27845 claimed=53266 row_formula=27845 apparition=0
+DIAG 12/20 pair=36/50 p=54421 H=233 h=116 k=208 actual=0 roots=121 degree=981/981 lead=50483 claimed=17431 row_formula=50483 apparition=0
+DIAG 12/20 pair=37/50 p=54421 H=233 h=127 k=163 actual=0 roots=129 degree=879/879 lead=19058 claimed=28845 row_formula=19058 apparition=0
+DIAG 12/20 pair=38/50 p=54421 H=233 h=128 k=220 actual=0 roots=133 degree=1053/1053 lead=31801 claimed=17431 row_formula=31801 apparition=0
+DIAG 12/20 pair=39/50 p=54421 H=233 h=175 k=215 actual=0 roots=178 degree=1179/1179 lead=20952 claimed=43418 row_formula=20952 apparition=0
+DIAG 12/20 pair=40/50 p=54421 H=233 h=177 k=188 actual=0 roots=182 degree=1104/1104 lead=13764 claimed=20158 row_formula=13764 apparition=0
+DIAG 12/20 pair=41/50 p=54421 H=233 h=177 k=201 actual=0 roots=180 degree=1143/1143 lead=4154 claimed=3400 row_formula=4154 apparition=0
+DIAG 12/20 pair=42/50 p=54421 H=233 h=181 k=190 actual=0 roots=185 degree=1122/1122 lead=1274 claimed=35267 row_formula=1274 apparition=0
+DIAG 12/20 pair=43/50 p=54421 H=233 h=181 k=191 actual=0 roots=183 degree=1125/1125 lead=48270 claimed=6432 row_formula=48270 apparition=0
+DIAG 12/20 pair=44/50 p=54421 H=233 h=206 k=210 actual=0 roots=211 degree=1257/1257 lead=46102 claimed=15185 row_formula=46102 apparition=0
+DIAG 12/20 pair=45/50 p=54421 H=233 h=207 k=215 actual=0 roots=209 degree=1275/1275 lead=48396 claimed=49805 row_formula=48396 apparition=0
+DIAG 12/20 pair=46/50 p=54421 H=233 h=209 k=217 actual=0 roots=213 degree=1287/1287 lead=50453 claimed=49805 row_formula=50453 apparition=0
+DIAG 12/20 pair=47/50 p=54421 H=233 h=213 k=229 actual=0 roots=217 degree=1335/1335 lead=50770 claimed=39674 row_formula=50770 apparition=0
+DIAG 12/20 pair=48/50 p=54421 H=233 h=217 k=220 actual=0 roots=220 degree=1320/1320 lead=24121 claimed=53266 row_formula=24121 apparition=0
+DIAG 12/20 pair=49/50 p=54421 H=233 h=227 k=231 actual=0 roots=231 degree=1383/1383 lead=11893 claimed=15185 row_formula=11893 apparition=0
+DIAG 12/20 pair=50/50 p=54421 H=233 h=232 k=233 actual=0 roots=235 degree=1404/1404 lead=9244 claimed=54420 row_formula=9244 apparition=0
+ROWCHECK p=54421 passed=20/20
+DIAG 13/20 pair=1/50 p=78779 H=280 h=3 k=277 actual=0 roots=7 degree=849/849 lead=7546 claimed=44760 row_formula=7546 apparition=0
+DIAG 13/20 pair=2/50 p=78779 H=280 h=6 k=49 actual=0 roots=9 degree=174/174 lead=14809 claimed=6599 row_formula=14809 apparition=0
+DIAG 13/20 pair=3/50 p=78779 H=280 h=8 k=98 actual=0 roots=12 degree=327/327 lead=74640 claimed=29984 row_formula=74640 apparition=0
+DIAG 13/20 pair=4/50 p=78779 H=280 h=10 k=222 actual=0 roots=15 degree=705/705 lead=1013 claimed=21076 row_formula=1013 apparition=0
+DIAG 13/20 pair=5/50 p=78779 H=280 h=12 k=43 actual=0 roots=15 degree=174/174 lead=14788 claimed=43055 row_formula=14788 apparition=0
+DIAG 13/20 pair=6/50 p=78779 H=280 h=13 k=60 actual=0 roots=15 degree=228/228 lead=77030 claimed=124 row_formula=77030 apparition=0
+DIAG 13/20 pair=7/50 p=78779 H=280 h=15 k=16 actual=0 roots=18 degree=102/102 lead=57985 claimed=78778 row_formula=57985 apparition=0
+DIAG 13/20 pair=8/50 p=78779 H=280 h=18 k=104 actual=0 roots=22 degree=375/375 lead=16180 claimed=74330 row_formula=16180 apparition=0
+DIAG 13/20 pair=9/50 p=78779 H=280 h=19 k=34 actual=0 roots=21 degree=168/168 lead=66317 claimed=58455 row_formula=66317 apparition=0
+DIAG 13/20 pair=10/50 p=78779 H=280 h=20 k=25 actual=0 roots=22 degree=144/144 lead=24025 claimed=6374 row_formula=24025 apparition=0
+DIAG 13/20 pair=11/50 p=78779 H=280 h=26 k=230 actual=0 roots=31 degree=777/777 lead=49510 claimed=7784 row_formula=49510 apparition=0
+DIAG 13/20 pair=12/50 p=78779 H=280 h=29 k=51 actual=0 roots=32 degree=249/249 lead=61205 claimed=12903 row_formula=61205 apparition=0
+DIAG 13/20 pair=13/50 p=78779 H=280 h=29 k=85 actual=0 roots=31 degree=351/351 lead=40535 claimed=29119 row_formula=40535 apparition=0
+DIAG 13/20 pair=14/50 p=78779 H=280 h=31 k=47 actual=0 roots=34 degree=243/243 lead=43400 claimed=469 row_formula=43400 apparition=0
+DIAG 13/20 pair=15/50 p=78779 H=280 h=35 k=68 actual=0 roots=38 degree=318/318 lead=11359 claimed=1245 row_formula=11359 apparition=0
+DIAG 13/20 pair=16/50 p=78779 H=280 h=38 k=125 actual=0 roots=40 degree=498/498 lead=1746 claimed=43032 row_formula=1746 apparition=0
+DIAG 13/20 pair=17/50 p=78779 H=280 h=41 k=227 actual=0 roots=44 degree=813/813 lead=22076 claimed=30783 row_formula=22076 apparition=0
+DIAG 13/20 pair=18/50 p=78779 H=280 h=43 k=72 actual=0 roots=45 degree=354/354 lead=15773 claimed=53455 row_formula=15773 apparition=0
+DIAG 13/20 pair=19/50 p=78779 H=280 h=43 k=89 actual=0 roots=47 degree=405/405 lead=31308 claimed=10828 row_formula=31308 apparition=0
+DIAG 13/20 pair=20/50 p=78779 H=280 h=50 k=84 actual=0 roots=54 degree=411/411 lead=21127 claimed=36393 row_formula=21127 apparition=0
+DIAG 13/20 pair=21/50 p=78779 H=280 h=51 k=67 actual=0 roots=54 degree=363/363 lead=49078 claimed=469 row_formula=49078 apparition=0
+DIAG 13/20 pair=22/50 p=78779 H=280 h=51 k=78 actual=0 roots=53 degree=396/396 lead=6970 claimed=38837 row_formula=6970 apparition=0
+DIAG 13/20 pair=23/50 p=78779 H=280 h=51 k=152 actual=0 roots=56 degree=618/618 lead=13788 claimed=74725 row_formula=13788 apparition=0
+DIAG 13/20 pair=24/50 p=78779 H=280 h=51 k=196 actual=0 roots=55 degree=750/750 lead=71308 claimed=18833 row_formula=71308 apparition=0
+DIAG 13/20 pair=25/50 p=78779 H=280 h=52 k=155 actual=0 roots=54 degree=630/630 lead=15932 claimed=39360 row_formula=15932 apparition=0
+DIAG 13/20 pair=26/50 p=78779 H=280 h=61 k=277 actual=0 roots=64 degree=1023/1023 lead=60295 claimed=25410 row_formula=60295 apparition=0
+DIAG 13/20 pair=27/50 p=78779 H=280 h=69 k=197 actual=0 roots=72 degree=807/807 lead=67665 claimed=30696 row_formula=67665 apparition=0
+DIAG 13/20 pair=28/50 p=78779 H=280 h=71 k=177 actual=0 roots=74 degree=753/753 lead=48061 claimed=52883 row_formula=48061 apparition=0
+DIAG 13/20 pair=29/50 p=78779 H=280 h=76 k=107 actual=0 roots=80 degree=558/558 lead=62501 claimed=43055 row_formula=62501 apparition=0
+DIAG 13/20 pair=30/50 p=78779 H=280 h=83 k=149 actual=0 roots=85 degree=705/705 lead=60025 claimed=53758 row_formula=60025 apparition=0
+DIAG 13/20 pair=31/50 p=78779 H=280 h=89 k=173 actual=0 roots=92 degree=795/795 lead=34429 claimed=15753 row_formula=34429 apparition=0
+DIAG 13/20 pair=32/50 p=78779 H=280 h=100 k=159 actual=0 roots=105 degree=786/786 lead=36519 claimed=67375 row_formula=36519 apparition=0
+DIAG 13/20 pair=33/50 p=78779 H=280 h=102 k=113 actual=0 roots=105 degree=654/654 lead=8537 claimed=65102 row_formula=8537 apparition=0
+DIAG 13/20 pair=34/50 p=78779 H=280 h=127 k=128 actual=0 roots=129 degree=774/774 lead=75170 claimed=78778 row_formula=75170 apparition=0
+DIAG 13/20 pair=35/50 p=78779 H=280 h=127 k=153 actual=0 roots=130 degree=849/849 lead=17490 claimed=15573 row_formula=17490 apparition=0
+DIAG 13/20 pair=36/50 p=78779 H=280 h=129 k=278 actual=0 roots=132 degree=1230/1230 lead=67934 claimed=14622 row_formula=67934 apparition=0
+DIAG 13/20 pair=37/50 p=78779 H=280 h=138 k=187 actual=0 roots=141 degree=984/984 lead=77723 claimed=11405 row_formula=77723 apparition=0
+DIAG 13/20 pair=38/50 p=78779 H=280 h=138 k=257 actual=0 roots=142 degree=1194/1194 lead=696 claimed=50911 row_formula=696 apparition=0
+DIAG 13/20 pair=39/50 p=78779 H=280 h=146 k=175 actual=0 roots=148 degree=972/972 lead=4342 claimed=53455 row_formula=4342 apparition=0
+DIAG 13/20 pair=40/50 p=78779 H=280 h=154 k=273 actual=0 roots=157 degree=1290/1290 lead=22948 claimed=50911 row_formula=22948 apparition=0
+DIAG 13/20 pair=41/50 p=78779 H=280 h=168 k=268 actual=0 roots=175 degree=1317/1317 lead=67640 claimed=51122 row_formula=67640 apparition=0
+DIAG 13/20 pair=42/50 p=78779 H=280 h=176 k=223 actual=0 roots=179 degree=1206/1206 lead=34890 claimed=124 row_formula=34890 apparition=0
+DIAG 13/20 pair=43/50 p=78779 H=280 h=190 k=273 actual=0 roots=193 degree=1398/1398 lead=6881 claimed=20889 row_formula=6881 apparition=0
+DIAG 13/20 pair=44/50 p=78779 H=280 h=193 k=203 actual=0 roots=197 degree=1197/1197 lead=46842 claimed=29324 row_formula=46842 apparition=0
+DIAG 13/20 pair=45/50 p=78779 H=280 h=200 k=272 actual=0 roots=205 degree=1425/1425 lead=69439 claimed=44281 row_formula=69439 apparition=0
+DIAG 13/20 pair=46/50 p=78779 H=280 h=204 k=267 actual=0 roots=207 degree=1422/1422 lead=23147 claimed=29399 row_formula=23147 apparition=0
+DIAG 13/20 pair=47/50 p=78779 H=280 h=216 k=270 actual=0 roots=221 degree=1467/1467 lead=49966 claimed=25162 row_formula=49966 apparition=0
+DIAG 13/20 pair=48/50 p=78779 H=280 h=231 k=259 actual=0 roots=233 degree=1479/1479 lead=38600 claimed=44421 row_formula=38600 apparition=0
+DIAG 13/20 pair=49/50 p=78779 H=280 h=263 k=271 actual=0 roots=265 degree=1611/1611 lead=29380 claimed=65373 row_formula=29380 apparition=0
+DIAG 13/20 pair=50/50 p=78779 H=280 h=273 k=274 actual=0 roots=275 degree=1650/1650 lead=63915 claimed=78778 row_formula=63915 apparition=0
+ROWCHECK p=78779 passed=20/20
+DIAG 14/20 pair=1/50 p=113989 H=337 h=3 k=147 actual=0 roots=6 degree=459/459 lead=76214 claimed=31199 row_formula=76214 apparition=0
+DIAG 14/20 pair=2/50 p=113989 H=337 h=4 k=93 actual=0 roots=8 degree=300/300 lead=112514 claimed=30950 row_formula=112514 apparition=0
+DIAG 14/20 pair=3/50 p=113989 H=337 h=6 k=12 actual=0 roots=12 degree=63/63 lead=71146 claimed=89312 row_formula=71146 apparition=0
+DIAG 14/20 pair=4/50 p=113989 H=337 h=12 k=34 actual=0 roots=16 degree=147/147 lead=52013 claimed=6800 row_formula=52013 apparition=0
+DIAG 14/20 pair=5/50 p=113989 H=337 h=13 k=80 actual=0 roots=16 degree=288/288 lead=10688 claimed=97129 row_formula=10688 apparition=0
+DIAG 14/20 pair=6/50 p=113989 H=337 h=23 k=123 actual=0 roots=27 degree=447/447 lead=67711 claimed=103412 row_formula=67711 apparition=0
+DIAG 14/20 pair=7/50 p=113989 H=337 h=24 k=49 actual=0 roots=27 degree=228/228 lead=99427 claimed=32150 row_formula=99427 apparition=0
+DIAG 14/20 pair=8/50 p=113989 H=337 h=29 k=108 actual=0 roots=32 degree=420/420 lead=31676 claimed=47654 row_formula=31676 apparition=0
+DIAG 14/20 pair=9/50 p=113989 H=337 h=29 k=125 actual=0 roots=34 degree=471/471 lead=98462 claimed=17349 row_formula=98462 apparition=0
+DIAG 14/20 pair=10/50 p=113989 H=337 h=30 k=253 actual=0 roots=34 degree=858/858 lead=23549 claimed=18546 row_formula=23549 apparition=0
+DIAG 14/20 pair=11/50 p=113989 H=337 h=31 k=35 actual=0 roots=35 degree=207/207 lead=77272 claimed=74753 row_formula=77272 apparition=0
+DIAG 14/20 pair=12/50 p=113989 H=337 h=32 k=159 actual=0 roots=35 degree=582/582 lead=74635 claimed=40317 row_formula=74635 apparition=0
+DIAG 14/20 pair=13/50 p=113989 H=337 h=34 k=108 actual=0 roots=38 degree=435/435 lead=23543 claimed=113085 row_formula=23543 apparition=0
+DIAG 14/20 pair=14/50 p=113989 H=337 h=36 k=94 actual=0 roots=40 degree=399/399 lead=109159 claimed=54101 row_formula=109159 apparition=0
+DIAG 14/20 pair=15/50 p=113989 H=337 h=39 k=114 actual=0 roots=41 degree=468/468 lead=85512 claimed=5093 row_formula=85512 apparition=0
+DIAG 14/20 pair=16/50 p=113989 H=337 h=41 k=75 actual=0 roots=44 degree=357/357 lead=31849 claimed=62265 row_formula=31849 apparition=0
+DIAG 14/20 pair=17/50 p=113989 H=337 h=44 k=52 actual=0 roots=48 degree=297/297 lead=94931 claimed=59228 row_formula=94931 apparition=0
+DIAG 14/20 pair=18/50 p=113989 H=337 h=51 k=115 actual=0 roots=55 degree=507/507 lead=67289 claimed=18579 row_formula=67289 apparition=0
+DIAG 14/20 pair=19/50 p=113989 H=337 h=56 k=101 actual=0 roots=58 degree=480/480 lead=15909 claimed=3455 row_formula=15909 apparition=0
+DIAG 14/20 pair=20/50 p=113989 H=337 h=57 k=308 actual=0 roots=62 degree=1104/1104 lead=112579 claimed=77704 row_formula=112579 apparition=0
+DIAG 14/20 pair=21/50 p=113989 H=337 h=61 k=130 actual=0 roots=64 degree=582/582 lead=80983 claimed=4947 row_formula=80983 apparition=0
+DIAG 14/20 pair=22/50 p=113989 H=337 h=67 k=151 actual=0 roots=72 degree=663/663 lead=103566 claimed=57361 row_formula=103566 apparition=0
+DIAG 14/20 pair=23/50 p=113989 H=337 h=69 k=230 actual=0 roots=72 degree=906/906 lead=41514 claimed=81649 row_formula=41514 apparition=0
+DIAG 14/20 pair=24/50 p=113989 H=337 h=75 k=196 actual=0 roots=77 degree=822/822 lead=28124 claimed=113241 row_formula=28124 apparition=0
+DIAG 14/20 pair=25/50 p=113989 H=337 h=76 k=165 actual=0 roots=78 degree=732/732 lead=85166 claimed=30950 row_formula=85166 apparition=0
+DIAG 14/20 pair=26/50 p=113989 H=337 h=78 k=232 actual=0 roots=82 degree=939/939 lead=86362 claimed=86228 row_formula=86362 apparition=0
+DIAG 14/20 pair=27/50 p=113989 H=337 h=87 k=152 actual=0 roots=92 degree=726/726 lead=107556 claimed=30732 row_formula=107556 apparition=0
+DIAG 14/20 pair=28/50 p=113989 H=337 h=95 k=168 actual=0 roots=98 degree=798/798 lead=93061 claimed=78160 row_formula=93061 apparition=0
+DIAG 14/20 pair=29/50 p=113989 H=337 h=99 k=198 actual=0 roots=103 degree=900/900 lead=64954 claimed=63935 row_formula=64954 apparition=0
+DIAG 14/20 pair=30/50 p=113989 H=337 h=109 k=167 actual=0 roots=112 degree=837/837 lead=38934 claimed=54101 row_formula=38934 apparition=0
+DIAG 14/20 pair=31/50 p=113989 H=337 h=114 k=218 actual=0 roots=120 degree=1005/1005 lead=107116 claimed=64403 row_formula=107116 apparition=0
+DIAG 14/20 pair=32/50 p=113989 H=337 h=119 k=148 actual=0 roots=121 degree=810/810 lead=57467 claimed=21840 row_formula=57467 apparition=0
+DIAG 14/20 pair=33/50 p=113989 H=337 h=122 k=202 actual=0 roots=127 degree=981/981 lead=10717 claimed=113929 row_formula=10717 apparition=0
+DIAG 14/20 pair=34/50 p=113989 H=337 h=132 k=166 actual=0 roots=137 degree=903/903 lead=55107 claimed=62265 row_formula=55107 apparition=0
+DIAG 14/20 pair=35/50 p=113989 H=337 h=137 k=139 actual=0 roots=139 degree=837/837 lead=4544 claimed=113955 row_formula=4544 apparition=0
+DIAG 14/20 pair=36/50 p=113989 H=337 h=137 k=288 actual=0 roots=140 degree=1284/1284 lead=25654 claimed=50924 row_formula=25654 apparition=0
+DIAG 14/20 pair=37/50 p=113989 H=337 h=157 k=336 actual=0 roots=162 degree=1488/1488 lead=81618 claimed=109812 row_formula=81618 apparition=0
+DIAG 14/20 pair=38/50 p=113989 H=337 h=170 k=248 actual=0 roots=174 degree=1263/1263 lead=77000 claimed=24450 row_formula=77000 apparition=0
+DIAG 14/20 pair=39/50 p=113989 H=337 h=177 k=231 actual=0 roots=179 degree=1233/1233 lead=8703 claimed=73860 row_formula=8703 apparition=0
+DIAG 14/20 pair=40/50 p=113989 H=337 h=186 k=274 actual=0 roots=192 degree=1389/1389 lead=16478 claimed=86332 row_formula=16478 apparition=0
+DIAG 14/20 pair=41/50 p=113989 H=337 h=203 k=220 actual=0 roots=205 degree=1278/1278 lead=65081 claimed=30895 row_formula=65081 apparition=0
+DIAG 14/20 pair=42/50 p=113989 H=337 h=212 k=295 actual=0 roots=215 degree=1530/1530 lead=99379 claimed=55926 row_formula=99379 apparition=0
+DIAG 14/20 pair=43/50 p=113989 H=337 h=231 k=311 actual=0 roots=235 degree=1635/1635 lead=110769 claimed=113929 row_formula=110769 apparition=0
+DIAG 14/20 pair=44/50 p=113989 H=337 h=231 k=329 actual=0 roots=233 degree=1689/1689 lead=96367 claimed=18576 row_formula=96367 apparition=0
+DIAG 14/20 pair=45/50 p=113989 H=337 h=245 k=337 actual=0 roots=247 degree=1755/1755 lead=9668 claimed=56298 row_formula=9668 apparition=0
+DIAG 14/20 pair=46/50 p=113989 H=337 h=266 k=290 actual=0 roots=271 degree=1677/1677 lead=108766 claimed=112474 row_formula=108766 apparition=0
+DIAG 14/20 pair=47/50 p=113989 H=337 h=266 k=336 actual=0 roots=270 degree=1815/1815 lead=77712 claimed=57912 row_formula=77712 apparition=0
+DIAG 14/20 pair=48/50 p=113989 H=337 h=272 k=295 actual=0 roots=277 degree=1710/1710 lead=60614 claimed=30329 row_formula=60614 apparition=0
+DIAG 14/20 pair=49/50 p=113989 H=337 h=324 k=325 actual=0 roots=329 degree=1956/1956 lead=90762 claimed=113988 row_formula=90762 apparition=0
+DIAG 14/20 pair=50/50 p=113989 H=337 h=324 k=332 actual=0 roots=329 degree=1977/1977 lead=76840 claimed=59228 row_formula=76840 apparition=0
+ROWCHECK p=113989 passed=20/20
+DIAG 15/20 pair=1/50 p=161201 H=401 h=4 k=348 actual=0 roots=9 degree=1065/1065 lead=104953 claimed=93593 row_formula=104953 apparition=0
+DIAG 15/20 pair=2/50 p=161201 H=401 h=12 k=17 actual=0 roots=14 degree=96/96 lead=2735 claimed=117940 row_formula=2735 apparition=0
+DIAG 15/20 pair=3/50 p=161201 H=401 h=12 k=76 actual=0 roots=16 degree=273/273 lead=141965 claimed=25254 row_formula=141965 apparition=0
+DIAG 15/20 pair=4/50 p=161201 H=401 h=12 k=100 actual=0 roots=16 degree=345/345 lead=152064 claimed=104509 row_formula=152064 apparition=0
+DIAG 15/20 pair=5/50 p=161201 H=401 h=17 k=173 actual=0 roots=19 degree=579/579 lead=57622 claimed=113200 row_formula=57622 apparition=0
+DIAG 15/20 pair=6/50 p=161201 H=401 h=19 k=97 actual=0 roots=22 degree=357/357 lead=131666 claimed=116052 row_formula=131666 apparition=0
+DIAG 15/20 pair=7/50 p=161201 H=401 h=20 k=88 actual=0 roots=25 degree=333/333 lead=144429 claimed=37214 row_formula=144429 apparition=0
+DIAG 15/20 pair=8/50 p=161201 H=401 h=25 k=44 actual=0 roots=27 degree=216/216 lead=140006 claimed=68804 row_formula=140006 apparition=0
+DIAG 15/20 pair=9/50 p=161201 H=401 h=28 k=212 actual=0 roots=32 degree=729/729 lead=147539 claimed=147071 row_formula=147539 apparition=0
+DIAG 15/20 pair=10/50 p=161201 H=401 h=32 k=238 actual=0 roots=36 degree=819/819 lead=47867 claimed=64898 row_formula=47867 apparition=0
+DIAG 15/20 pair=11/50 p=161201 H=401 h=36 k=131 actual=0 roots=39 degree=510/510 lead=41638 claimed=58870 row_formula=41638 apparition=0
+DIAG 15/20 pair=12/50 p=161201 H=401 h=36 k=282 actual=0 roots=42 degree=963/963 lead=11366 claimed=114056 row_formula=11366 apparition=0
+DIAG 15/20 pair=13/50 p=161201 H=401 h=37 k=148 actual=0 roots=40 degree=564/564 lead=145377 claimed=121535 row_formula=145377 apparition=0
+DIAG 15/20 pair=14/50 p=161201 H=401 h=40 k=144 actual=0 roots=44 degree=561/561 lead=115016 claimed=29199 row_formula=115016 apparition=0
+DIAG 15/20 pair=15/50 p=161201 H=401 h=46 k=217 actual=0 roots=48 degree=798/798 lead=29484 claimed=91432 row_formula=29484 apparition=0
+DIAG 15/20 pair=16/50 p=161201 H=401 h=47 k=153 actual=0 roots=49 degree=609/609 lead=94603 claimed=138390 row_formula=94603 apparition=0
+DIAG 15/20 pair=17/50 p=161201 H=401 h=48 k=55 actual=0 roots=51 degree=318/318 lead=11521 claimed=50271 row_formula=11521 apparition=0
+DIAG 15/20 pair=18/50 p=161201 H=401 h=49 k=344 actual=0 roots=53 degree=1188/1188 lead=113812 claimed=70308 row_formula=113812 apparition=0
+DIAG 15/20 pair=19/50 p=161201 H=401 h=52 k=57 actual=0 roots=55 degree=336/336 lead=18657 claimed=117940 row_formula=18657 apparition=0
+DIAG 15/20 pair=20/50 p=161201 H=401 h=57 k=107 actual=0 roots=59 degree=501/501 lead=121495 claimed=12223 row_formula=121495 apparition=0
+DIAG 15/20 pair=21/50 p=161201 H=401 h=62 k=179 actual=0 roots=65 degree=732/732 lead=69803 claimed=65486 row_formula=69803 apparition=0
+DIAG 15/20 pair=22/50 p=161201 H=401 h=72 k=299 actual=0 roots=74 degree=1122/1122 lead=134278 claimed=42792 row_formula=134278 apparition=0
+DIAG 15/20 pair=23/50 p=161201 H=401 h=73 k=84 actual=0 roots=76 degree=480/480 lead=89339 claimed=142751 row_formula=89339 apparition=0
+DIAG 15/20 pair=24/50 p=161201 H=401 h=74 k=281 actual=0 roots=76 degree=1074/1074 lead=34429 claimed=134470 row_formula=34429 apparition=0
+DIAG 15/20 pair=25/50 p=161201 H=401 h=78 k=380 actual=0 roots=82 degree=1383/1383 lead=100615 claimed=25809 row_formula=100615 apparition=0
+DIAG 15/20 pair=26/50 p=161201 H=401 h=83 k=112 actual=0 roots=86 degree=594/594 lead=50257 claimed=100343 row_formula=50257 apparition=0
+DIAG 15/20 pair=27/50 p=161201 H=401 h=85 k=96 actual=0 roots=89 degree=552/552 lead=156601 claimed=142751 row_formula=156601 apparition=0
+DIAG 15/20 pair=28/50 p=161201 H=401 h=93 k=282 actual=0 roots=96 degree=1134/1134 lead=130848 claimed=153361 row_formula=130848 apparition=0
+DIAG 15/20 pair=29/50 p=161201 H=401 h=98 k=153 actual=0 roots=103 degree=762/762 lead=113066 claimed=12996 row_formula=113066 apparition=0
+DIAG 15/20 pair=30/50 p=161201 H=401 h=99 k=107 actual=0 roots=101 degree=627/627 lead=47423 claimed=78033 row_formula=47423 apparition=0
+DIAG 15/20 pair=31/50 p=161201 H=401 h=102 k=177 actual=0 roots=107 degree=846/846 lead=126221 claimed=132149 row_formula=126221 apparition=0
+DIAG 15/20 pair=32/50 p=161201 H=401 h=114 k=199 actual=0 roots=117 degree=948/948 lead=65197 claimed=111970 row_formula=65197 apparition=0
+DIAG 15/20 pair=33/50 p=161201 H=401 h=115 k=165 actual=0 roots=118 degree=849/849 lead=80718 claimed=12223 row_formula=80718 apparition=0
+DIAG 15/20 pair=34/50 p=161201 H=401 h=126 k=313 actual=0 roots=129 degree=1326/1326 lead=104383 claimed=90372 row_formula=104383 apparition=0
+DIAG 15/20 pair=35/50 p=161201 H=401 h=128 k=261 actual=0 roots=130 degree=1176/1176 lead=120861 claimed=112171 row_formula=120861 apparition=0
+DIAG 15/20 pair=36/50 p=161201 H=401 h=135 k=136 actual=0 roots=138 degree=822/822 lead=8974 claimed=161200 row_formula=8974 apparition=0
+DIAG 15/20 pair=37/50 p=161201 H=401 h=205 k=232 actual=0 roots=209 degree=1320/1320 lead=30294 claimed=148826 row_formula=30294 apparition=0
+DIAG 15/20 pair=38/50 p=161201 H=401 h=223 k=247 actual=0 roots=226 degree=1419/1419 lead=89771 claimed=151748 row_formula=89771 apparition=0
+DIAG 15/20 pair=39/50 p=161201 H=401 h=243 k=364 actual=0 roots=248 degree=1830/1830 lead=108813 claimed=18468 row_formula=108813 apparition=0
+DIAG 15/20 pair=40/50 p=161201 H=401 h=251 k=263 actual=0 roots=254 degree=1551/1551 lead=151399 claimed=97952 row_formula=151399 apparition=0
+DIAG 15/20 pair=41/50 p=161201 H=401 h=259 k=287 actual=0 roots=263 degree=1647/1647 lead=36815 claimed=87929 row_formula=36815 apparition=0
+DIAG 15/20 pair=42/50 p=161201 H=401 h=261 k=288 actual=0 roots=265 degree=1656/1656 lead=1451 claimed=148826 row_formula=1451 apparition=0
+DIAG 15/20 pair=43/50 p=161201 H=401 h=268 k=350 actual=0 roots=273 degree=1863/1863 lead=73361 claimed=1402 row_formula=73361 apparition=0
+DIAG 15/20 pair=44/50 p=161201 H=401 h=295 k=348 actual=0 roots=297 degree=1938/1938 lead=81904 claimed=122201 row_formula=81904 apparition=0
+DIAG 15/20 pair=45/50 p=161201 H=401 h=304 k=344 actual=0 roots=308 degree=1953/1953 lead=97589 claimed=147851 row_formula=97589 apparition=0
+DIAG 15/20 pair=46/50 p=161201 H=401 h=337 k=359 actual=0 roots=339 degree=2097/2097 lead=137119 claimed=77982 row_formula=137119 apparition=0
+DIAG 15/20 pair=47/50 p=161201 H=401 h=343 k=392 actual=0 roots=347 degree=2214/2214 lead=86055 claimed=137097 row_formula=86055 apparition=0
+DIAG 15/20 pair=48/50 p=161201 H=401 h=348 k=371 actual=0 roots=350 degree=2166/2166 lead=44135 claimed=35204 row_formula=44135 apparition=0
+DIAG 15/20 pair=49/50 p=161201 H=401 h=375 k=393 actual=0 roots=377 degree=2313/2313 lead=50622 claimed=31999 row_formula=50622 apparition=0
+DIAG 15/20 pair=50/50 p=161201 H=401 h=392 k=393 actual=0 roots=394 degree=2364/2364 lead=31328 claimed=161200 row_formula=31328 apparition=0
+ROWCHECK p=161201 passed=20/20
+DIAG 16/20 pair=1/50 p=233293 H=483 h=1 k=137 actual=0 roots=3 degree=423/423 lead=123545 claimed=118313 row_formula=123545 apparition=0
+DIAG 16/20 pair=2/50 p=233293 H=483 h=3 k=112 actual=0 roots=5 degree=354/354 lead=194087 claimed=92534 row_formula=194087 apparition=0
+DIAG 16/20 pair=3/50 p=233293 H=483 h=5 k=133 actual=0 roots=8 degree=423/423 lead=119657 claimed=96019 row_formula=119657 apparition=0
+DIAG 16/20 pair=4/50 p=233293 H=483 h=20 k=76 actual=0 roots=26 degree=297/297 lead=14732 claimed=205250 row_formula=14732 apparition=0
+DIAG 16/20 pair=5/50 p=233293 H=483 h=20 k=431 actual=0 roots=23 degree=1362/1362 lead=103409 claimed=132368 row_formula=103409 apparition=0
+DIAG 16/20 pair=6/50 p=233293 H=483 h=21 k=79 actual=0 roots=23 degree=309/309 lead=158701 claimed=92135 row_formula=158701 apparition=0
+DIAG 16/20 pair=7/50 p=233293 H=483 h=30 k=65 actual=0 roots=32 degree=294/294 lead=149265 claimed=103848 row_formula=149265 apparition=0
+DIAG 16/20 pair=8/50 p=233293 H=483 h=32 k=96 actual=0 roots=37 degree=393/393 lead=130253 claimed=121731 row_formula=130253 apparition=0
+DIAG 16/20 pair=9/50 p=233293 H=483 h=34 k=176 actual=0 roots=39 degree=639/639 lead=217711 claimed=146108 row_formula=217711 apparition=0
+DIAG 16/20 pair=10/50 p=233293 H=483 h=35 k=276 actual=0 roots=40 degree=942/942 lead=90711 claimed=55195 row_formula=90711 apparition=0
+DIAG 16/20 pair=11/50 p=233293 H=483 h=41 k=114 actual=0 roots=44 degree=474/474 lead=34791 claimed=174558 row_formula=34791 apparition=0
+DIAG 16/20 pair=12/50 p=233293 H=483 h=45 k=114 actual=0 roots=48 degree=486/486 lead=89906 claimed=50776 row_formula=89906 apparition=0
+DIAG 16/20 pair=13/50 p=233293 H=483 h=47 k=364 actual=0 roots=51 degree=1242/1242 lead=182 claimed=162090 row_formula=182 apparition=0
+DIAG 16/20 pair=14/50 p=233293 H=483 h=47 k=395 actual=0 roots=51 degree=1335/1335 lead=228630 claimed=59066 row_formula=228630 apparition=0
+DIAG 16/20 pair=15/50 p=233293 H=483 h=53 k=92 actual=0 roots=55 degree=444/444 lead=113133 claimed=56678 row_formula=113133 apparition=0
+DIAG 16/20 pair=16/50 p=233293 H=483 h=56 k=460 actual=0 roots=61 degree=1557/1557 lead=86690 claimed=223843 row_formula=86690 apparition=0
+DIAG 16/20 pair=17/50 p=233293 H=483 h=59 k=181 actual=0 roots=62 degree=729/729 lead=137078 claimed=113801 row_formula=137078 apparition=0
+DIAG 16/20 pair=18/50 p=233293 H=483 h=62 k=199 actual=0 roots=64 degree=792/792 lead=169907 claimed=228060 row_formula=169907 apparition=0
+DIAG 16/20 pair=19/50 p=233293 H=483 h=65 k=155 actual=0 roots=68 degree=669/669 lead=14464 claimed=70954 row_formula=14464 apparition=0
+DIAG 16/20 pair=20/50 p=233293 H=483 h=65 k=284 actual=0 roots=67 degree=1056/1056 lead=177207 claimed=14118 row_formula=177207 apparition=0
+DIAG 16/20 pair=21/50 p=233293 H=483 h=66 k=390 actual=0 roots=70 degree=1377/1377 lead=211383 claimed=58866 row_formula=211383 apparition=0
+DIAG 16/20 pair=22/50 p=233293 H=483 h=67 k=92 actual=0 roots=69 degree=486/486 lead=101614 claimed=67635 row_formula=101614 apparition=0
+DIAG 16/20 pair=23/50 p=233293 H=483 h=71 k=105 actual=0 roots=76 degree=537/537 lead=104621 claimed=183602 row_formula=104621 apparition=0
+DIAG 16/20 pair=24/50 p=233293 H=483 h=75 k=145 actual=0 roots=77 degree=669/669 lead=101974 claimed=59757 row_formula=101974 apparition=0
+DIAG 16/20 pair=25/50 p=233293 H=483 h=78 k=160 actual=0 roots=82 degree=723/723 lead=112400 claimed=121212 row_formula=112400 apparition=0
+DIAG 16/20 pair=26/50 p=233293 H=483 h=78 k=391 actual=0 roots=80 degree=1416/1416 lead=3364 claimed=98379 row_formula=3364 apparition=0
+DIAG 16/20 pair=27/50 p=233293 H=483 h=82 k=388 actual=0 roots=87 degree=1419/1419 lead=188044 claimed=115621 row_formula=188044 apparition=0
+DIAG 16/20 pair=28/50 p=233293 H=483 h=89 k=155 actual=0 roots=92 degree=741/741 lead=9496 claimed=193602 row_formula=9496 apparition=0
+DIAG 16/20 pair=29/50 p=233293 H=483 h=97 k=401 actual=0 roots=101 degree=1503/1503 lead=101811 claimed=114705 row_formula=101811 apparition=0
+DIAG 16/20 pair=30/50 p=233293 H=483 h=100 k=175 actual=0 roots=104 degree=834/834 lead=2907 claimed=226748 row_formula=2907 apparition=0
+DIAG 16/20 pair=31/50 p=233293 H=483 h=105 k=315 actual=0 roots=109 degree=1269/1269 lead=155477 claimed=202068 row_formula=155477 apparition=0
+DIAG 16/20 pair=32/50 p=233293 H=483 h=120 k=360 actual=0 roots=125 degree=1449/1449 lead=98534 claimed=24600 row_formula=98534 apparition=0
+DIAG 16/20 pair=33/50 p=233293 H=483 h=121 k=130 actual=0 roots=123 degree=762/762 lead=62405 claimed=151315 row_formula=62405 apparition=0
+DIAG 16/20 pair=34/50 p=233293 H=483 h=132 k=353 actual=0 roots=134 degree=1464/1464 lead=199026 claimed=36644 row_formula=199026 apparition=0
+DIAG 16/20 pair=35/50 p=233293 H=483 h=146 k=154 actual=0 roots=152 degree=909/909 lead=87030 claimed=202585 row_formula=87030 apparition=0
+DIAG 16/20 pair=36/50 p=233293 H=483 h=148 k=292 actual=0 roots=152 degree=1329/1329 lead=53872 claimed=137051 row_formula=53872 apparition=0
+DIAG 16/20 pair=37/50 p=233293 H=483 h=148 k=458 actual=0 roots=152 degree=1827/1827 lead=135045 claimed=47697 row_formula=135045 apparition=0
+DIAG 16/20 pair=38/50 p=233293 H=483 h=160 k=299 actual=0 roots=163 degree=1386/1386 lead=107939 claimed=198135 row_formula=107939 apparition=0
+DIAG 16/20 pair=39/50 p=233293 H=483 h=169 k=402 actual=0 roots=172 degree=1722/1722 lead=193493 claimed=88275 row_formula=193493 apparition=0
+DIAG 16/20 pair=40/50 p=233293 H=483 h=258 k=406 actual=0 roots=262 degree=2001/2001 lead=99665 claimed=122103 row_formula=99665 apparition=0
+DIAG 16/20 pair=41/50 p=233293 H=483 h=298 k=467 actual=0 roots=300 degree=2304/2304 lead=184331 claimed=74647 row_formula=184331 apparition=0
+DIAG 16/20 pair=42/50 p=233293 H=483 h=301 k=465 actual=0 roots=303 degree=2307/2307 lead=137529 claimed=129158 row_formula=137529 apparition=0
+DIAG 16/20 pair=43/50 p=233293 H=483 h=304 k=435 actual=0 roots=307 degree=2226/2226 lead=188498 claimed=158351 row_formula=188498 apparition=0
+DIAG 16/20 pair=44/50 p=233293 H=483 h=367 k=444 actual=0 roots=371 degree=2442/2442 lead=142421 claimed=204474 row_formula=142421 apparition=0
+DIAG 16/20 pair=45/50 p=233293 H=483 h=399 k=458 actual=0 roots=401 degree=2580/2580 lead=207247 claimed=221404 row_formula=207247 apparition=0
+DIAG 16/20 pair=46/50 p=233293 H=483 h=432 k=440 actual=0 roots=436 degree=2625/2625 lead=38153 claimed=202585 row_formula=38153 apparition=0
+DIAG 16/20 pair=47/50 p=233293 H=483 h=434 k=451 actual=0 roots=439 degree=2664/2664 lead=224206 claimed=89925 row_formula=224206 apparition=0
+DIAG 16/20 pair=48/50 p=233293 H=483 h=445 k=481 actual=0 roots=449 degree=2787/2787 lead=113633 claimed=81128 row_formula=113633 apparition=0
+DIAG 16/20 pair=49/50 p=233293 H=483 h=448 k=461 actual=0 roots=450 degree=2736/2736 lead=193578 claimed=8513 row_formula=193578 apparition=0
+DIAG 16/20 pair=50/50 p=233293 H=483 h=454 k=457 actual=0 roots=456 degree=2742/2742 lead=130412 claimed=232138 row_formula=130412 apparition=0
+ROWCHECK p=233293 passed=20/20
+DIAG 17/20 pair=1/50 p=337627 H=581 h=1 k=544 actual=0 roots=3 degree=1644/1644 lead=145137 claimed=260421 row_formula=145137 apparition=0
+DIAG 17/20 pair=2/50 p=337627 H=581 h=2 k=164 actual=0 roots=6 degree=507/507 lead=334051 claimed=284887 row_formula=334051 apparition=0
+DIAG 17/20 pair=3/50 p=337627 H=581 h=3 k=391 actual=0 roots=6 degree=1191/1191 lead=163464 claimed=15661 row_formula=163464 apparition=0
+DIAG 17/20 pair=4/50 p=337627 H=581 h=8 k=93 actual=0 roots=10 degree=312/312 lead=206281 claimed=158839 row_formula=206281 apparition=0
+DIAG 17/20 pair=5/50 p=337627 H=581 h=10 k=88 actual=0 roots=16 degree=303/303 lead=279980 claimed=320660 row_formula=279980 apparition=0
+DIAG 17/20 pair=6/50 p=337627 H=581 h=14 k=122 actual=0 roots=19 degree=417/417 lead=4388 claimed=144507 row_formula=4388 apparition=0
+DIAG 17/20 pair=7/50 p=337627 H=581 h=16 k=408 actual=0 roots=20 degree=1281/1281 lead=22868 claimed=210873 row_formula=22868 apparition=0
+DIAG 17/20 pair=8/50 p=337627 H=581 h=25 k=66 actual=0 roots=27 degree=282/282 lead=134846 claimed=14559 row_formula=134846 apparition=0
+DIAG 17/20 pair=9/50 p=337627 H=581 h=25 k=130 actual=0 roots=27 degree=474/474 lead=128780 claimed=324340 row_formula=128780 apparition=0
+DIAG 17/20 pair=10/50 p=337627 H=581 h=29 k=530 actual=0 roots=32 degree=1686/1686 lead=197231 claimed=256635 row_formula=197231 apparition=0
+DIAG 17/20 pair=11/50 p=337627 H=581 h=36 k=122 actual=0 roots=40 degree=483/483 lead=266330 claimed=146834 row_formula=266330 apparition=0
+DIAG 17/20 pair=12/50 p=337627 H=581 h=41 k=398 actual=0 roots=44 degree=1326/1326 lead=314895 claimed=213147 row_formula=314895 apparition=0
+DIAG 17/20 pair=13/50 p=337627 H=581 h=41 k=458 actual=0 roots=46 degree=1506/1506 lead=221627 claimed=69558 row_formula=221627 apparition=0
+DIAG 17/20 pair=14/50 p=337627 H=581 h=51 k=122 actual=0 roots=53 degree=528/528 lead=289465 claimed=77187 row_formula=289465 apparition=0
+DIAG 17/20 pair=15/50 p=337627 H=581 h=58 k=519 actual=0 roots=63 degree=1740/1740 lead=121435 claimed=3282 row_formula=121435 apparition=0
+DIAG 17/20 pair=16/50 p=337627 H=581 h=61 k=143 actual=0 roots=64 degree=621/621 lead=43743 claimed=183322 row_formula=43743 apparition=0
+DIAG 17/20 pair=17/50 p=337627 H=581 h=61 k=223 actual=0 roots=64 degree=861/861 lead=276833 claimed=284887 row_formula=276833 apparition=0
+DIAG 17/20 pair=18/50 p=337627 H=581 h=67 k=329 actual=0 roots=70 degree=1197/1197 lead=271937 claimed=294142 row_formula=271937 apparition=0
+DIAG 17/20 pair=19/50 p=337627 H=581 h=76 k=214 actual=0 roots=80 degree=879/879 lead=23042 claimed=194955 row_formula=23042 apparition=0
+DIAG 17/20 pair=20/50 p=337627 H=581 h=81 k=153 actual=0 roots=85 degree=711/711 lead=134655 claimed=55452 row_formula=134655 apparition=0
+DIAG 17/20 pair=21/50 p=337627 H=581 h=82 k=188 actual=0 roots=86 degree=819/819 lead=285694 claimed=18150 row_formula=285694 apparition=0
+DIAG 17/20 pair=22/50 p=337627 H=581 h=86 k=298 actual=0 roots=93 degree=1161/1161 lead=236242 claimed=223981 row_formula=236242 apparition=0
+DIAG 17/20 pair=23/50 p=337627 H=581 h=87 k=303 actual=0 roots=89 degree=1179/1179 lead=134247 claimed=271820 row_formula=134247 apparition=0
+DIAG 17/20 pair=24/50 p=337627 H=581 h=93 k=541 actual=0 roots=97 degree=1911/1911 lead=185541 claimed=301467 row_formula=185541 apparition=0
+DIAG 17/20 pair=25/50 p=337627 H=581 h=98 k=153 actual=0 roots=101 degree=762/762 lead=117191 claimed=9803 row_formula=117191 apparition=0
+DIAG 17/20 pair=26/50 p=337627 H=581 h=100 k=132 actual=0 roots=104 degree=705/705 lead=36084 claimed=105625 row_formula=36084 apparition=0
+DIAG 17/20 pair=27/50 p=337627 H=581 h=106 k=332 actual=0 roots=112 degree=1323/1323 lead=221230 claimed=319619 row_formula=221230 apparition=0
+DIAG 17/20 pair=28/50 p=337627 H=581 h=120 k=485 actual=0 roots=123 degree=1824/1824 lead=159809 claimed=99736 row_formula=159809 apparition=0
+DIAG 17/20 pair=29/50 p=337627 H=581 h=133 k=139 actual=0 roots=135 degree=825/825 lead=104364 claimed=301335 row_formula=104364 apparition=0
+DIAG 17/20 pair=30/50 p=337627 H=581 h=133 k=156 actual=0 roots=136 degree=876/876 lead=115023 claimed=106174 row_formula=115023 apparition=0
+DIAG 17/20 pair=31/50 p=337627 H=581 h=151 k=409 actual=0 roots=154 degree=1689/1689 lead=146999 claimed=292816 row_formula=146999 apparition=0
+DIAG 17/20 pair=32/50 p=337627 H=581 h=199 k=312 actual=0 roots=201 degree=1542/1542 lead=175254 claimed=76528 row_formula=175254 apparition=0
+DIAG 17/20 pair=33/50 p=337627 H=581 h=218 k=473 actual=0 roots=222 degree=2082/2082 lead=203497 claimed=167820 row_formula=203497 apparition=0
+DIAG 17/20 pair=34/50 p=337627 H=581 h=221 k=304 actual=0 roots=224 degree=1584/1584 lead=292181 claimed=199633 row_formula=292181 apparition=0
+DIAG 17/20 pair=35/50 p=337627 H=581 h=233 k=560 actual=0 roots=237 degree=2388/2388 lead=138048 claimed=43785 row_formula=138048 apparition=0
+DIAG 17/20 pair=36/50 p=337627 H=581 h=254 k=287 actual=0 roots=257 degree=1632/1632 lead=52693 claimed=88967 row_formula=52693 apparition=0
+DIAG 17/20 pair=37/50 p=337627 H=581 h=266 k=301 actual=0 roots=268 degree=1710/1710 lead=119172 claimed=240924 row_formula=119172 apparition=0
+DIAG 17/20 pair=38/50 p=337627 H=581 h=283 k=293 actual=0 roots=287 degree=1737/1737 lead=13840 claimed=65342 row_formula=13840 apparition=0
+DIAG 17/20 pair=39/50 p=337627 H=581 h=340 k=511 actual=0 roots=343 degree=2562/2562 lead=12005 claimed=274129 row_formula=12005 apparition=0
+DIAG 17/20 pair=40/50 p=337627 H=581 h=367 k=520 actual=0 roots=369 degree=2670/2670 lead=257054 claimed=214453 row_formula=257054 apparition=0
+DIAG 17/20 pair=41/50 p=337627 H=581 h=405 k=527 actual=0 roots=407 degree=2805/2805 lead=182133 claimed=88262 row_formula=182133 apparition=0
+DIAG 17/20 pair=42/50 p=337627 H=581 h=421 k=473 actual=0 roots=423 degree=2691/2691 lead=33461 claimed=209095 row_formula=33461 apparition=0
+DIAG 17/20 pair=43/50 p=337627 H=581 h=459 k=525 actual=0 roots=462 degree=2961/2961 lead=84011 claimed=329421 row_formula=84011 apparition=0
+DIAG 17/20 pair=44/50 p=337627 H=581 h=461 k=510 actual=0 roots=465 degree=2922/2922 lead=147321 claimed=24081 row_formula=147321 apparition=0
+DIAG 17/20 pair=45/50 p=337627 H=581 h=478 k=495 actual=0 roots=481 degree=2928/2928 lead=201667 claimed=138163 row_formula=201667 apparition=0
+DIAG 17/20 pair=46/50 p=337627 H=581 h=482 k=538 actual=0 roots=486 degree=3069/3069 lead=317002 claimed=321432 row_formula=317002 apparition=0
+DIAG 17/20 pair=47/50 p=337627 H=581 h=500 k=564 actual=0 roots=505 degree=3201/3201 lead=24271 claimed=224447 row_formula=24271 apparition=0
+DIAG 17/20 pair=48/50 p=337627 H=581 h=512 k=574 actual=0 roots=518 degree=3267/3267 lead=197469 claimed=60135 row_formula=197469 apparition=0
+DIAG 17/20 pair=49/50 p=337627 H=581 h=551 k=577 actual=0 roots=554 degree=3393/3393 lead=243997 claimed=199670 row_formula=243997 apparition=0
+DIAG 17/20 pair=50/50 p=337627 H=581 h=573 k=575 actual=0 roots=576 degree=3453/3453 lead=31137 claimed=337593 row_formula=31137 apparition=0
+ROWCHECK p=337627 passed=20/20
+DIAG 18/20 pair=1/50 p=488611 H=699 h=2 k=170 actual=0 roots=6 degree=525/525 lead=200840 claimed=121983 row_formula=200840 apparition=0
+DIAG 18/20 pair=2/50 p=488611 H=699 h=16 k=247 actual=0 roots=18 degree=798/798 lead=373647 claimed=190562 row_formula=373647 apparition=0
+DIAG 18/20 pair=3/50 p=488611 H=699 h=30 k=174 actual=0 roots=34 degree=621/621 lead=344097 claimed=90095 row_formula=344097 apparition=0
+DIAG 18/20 pair=4/50 p=488611 H=699 h=38 k=215 actual=0 roots=40 degree=768/768 lead=464487 claimed=178127 row_formula=464487 apparition=0
+DIAG 18/20 pair=5/50 p=488611 H=699 h=57 k=155 actual=0 roots=60 degree=645/645 lead=9236 claimed=260186 row_formula=9236 apparition=0
+DIAG 18/20 pair=6/50 p=488611 H=699 h=60 k=70 actual=0 roots=65 degree=399/399 lead=246916 claimed=367086 row_formula=246916 apparition=0
+DIAG 18/20 pair=7/50 p=488611 H=699 h=61 k=196 actual=0 roots=63 degree=780/780 lead=426197 claimed=325685 row_formula=426197 apparition=0
+DIAG 18/20 pair=8/50 p=488611 H=699 h=64 k=389 actual=0 roots=66 degree=1368/1368 lead=76286 claimed=485381 row_formula=76286 apparition=0
+DIAG 18/20 pair=9/50 p=488611 H=699 h=73 k=75 actual=0 roots=75 degree=453/453 lead=357425 claimed=488577 row_formula=357425 apparition=0
+DIAG 18/20 pair=10/50 p=488611 H=699 h=73 k=662 actual=0 roots=76 degree=2214/2214 lead=346137 claimed=120639 row_formula=346137 apparition=0
+DIAG 18/20 pair=11/50 p=488611 H=699 h=74 k=201 actual=0 roots=79 degree=834/834 lead=127015 claimed=331524 row_formula=127015 apparition=0
+DIAG 18/20 pair=12/50 p=488611 H=699 h=81 k=179 actual=0 roots=86 degree=789/789 lead=10291 claimed=260186 row_formula=10291 apparition=0
+DIAG 18/20 pair=13/50 p=488611 H=699 h=84 k=191 actual=0 roots=86 degree=834/834 lead=237513 claimed=30554 row_formula=237513 apparition=0
+DIAG 18/20 pair=14/50 p=488611 H=699 h=89 k=411 actual=0 roots=92 degree=1509/1509 lead=185725 claimed=226768 row_formula=185725 apparition=0
+DIAG 18/20 pair=15/50 p=488611 H=699 h=90 k=136 actual=0 roots=95 degree=687/687 lead=221510 claimed=461321 row_formula=221510 apparition=0
+DIAG 18/20 pair=16/50 p=488611 H=699 h=90 k=442 actual=0 roots=98 degree=1605/1605 lead=129237 claimed=7848 row_formula=129237 apparition=0
+DIAG 18/20 pair=17/50 p=488611 H=699 h=94 k=677 actual=0 roots=97 degree=2322/2322 lead=170873 claimed=431377 row_formula=170873 apparition=0
+DIAG 18/20 pair=18/50 p=488611 H=699 h=99 k=142 actual=0 roots=101 degree=732/732 lead=257774 claimed=120117 row_formula=257774 apparition=0
+DIAG 18/20 pair=19/50 p=488611 H=699 h=99 k=238 actual=0 roots=103 degree=1020/1020 lead=18861 claimed=7909 row_formula=18861 apparition=0
+DIAG 18/20 pair=20/50 p=488611 H=699 h=101 k=433 actual=0 roots=103 degree=1611/1611 lead=456893 claimed=87487 row_formula=456893 apparition=0
+DIAG 18/20 pair=21/50 p=488611 H=699 h=103 k=337 actual=0 roots=105 degree=1329/1329 lead=235614 claimed=6789 row_formula=235614 apparition=0
+DIAG 18/20 pair=22/50 p=488611 H=699 h=104 k=140 actual=0 roots=108 degree=741/741 lead=117875 claimed=447644 row_formula=117875 apparition=0
+DIAG 18/20 pair=23/50 p=488611 H=699 h=107 k=334 actual=0 roots=111 degree=1332/1332 lead=435892 claimed=337362 row_formula=435892 apparition=0
+DIAG 18/20 pair=24/50 p=488611 H=699 h=109 k=529 actual=0 roots=112 degree=1923/1923 lead=107036 claimed=9680 row_formula=107036 apparition=0
+DIAG 18/20 pair=25/50 p=488611 H=699 h=112 k=118 actual=0 roots=117 degree=699/699 lead=383966 claimed=162513 row_formula=383966 apparition=0
+DIAG 18/20 pair=26/50 p=488611 H=699 h=114 k=621 actual=0 roots=117 degree=2214/2214 lead=39210 claimed=69877 row_formula=39210 apparition=0
+DIAG 18/20 pair=27/50 p=488611 H=699 h=117 k=651 actual=0 roots=121 degree=2313/2313 lead=377440 claimed=52585 row_formula=377440 apparition=0
+DIAG 18/20 pair=28/50 p=488611 H=699 h=138 k=497 actual=0 roots=141 degree=1914/1914 lead=268701 claimed=298570 row_formula=268701 apparition=0
+DIAG 18/20 pair=29/50 p=488611 H=699 h=141 k=583 actual=0 roots=143 degree=2181/2181 lead=143969 claimed=370669 row_formula=143969 apparition=0
+DIAG 18/20 pair=30/50 p=488611 H=699 h=146 k=163 actual=0 roots=148 degree=936/936 lead=125282 claimed=451046 row_formula=125282 apparition=0
+DIAG 18/20 pair=31/50 p=488611 H=699 h=146 k=340 actual=0 roots=150 degree=1467/1467 lead=67767 claimed=154710 row_formula=67767 apparition=0
+DIAG 18/20 pair=32/50 p=488611 H=699 h=147 k=394 actual=0 roots=149 degree=1632/1632 lead=318998 claimed=473681 row_formula=318998 apparition=0
+DIAG 18/20 pair=33/50 p=488611 H=699 h=153 k=547 actual=0 roots=155 degree=2109/2109 lead=411932 claimed=173888 row_formula=411932 apparition=0
+DIAG 18/20 pair=34/50 p=488611 H=699 h=178 k=456 actual=0 roots=183 degree=1911/1911 lead=245027 claimed=426812 row_formula=245027 apparition=0
+DIAG 18/20 pair=35/50 p=488611 H=699 h=210 k=273 actual=0 roots=213 degree=1458/1458 lead=67864 claimed=161370 row_formula=67864 apparition=0
+DIAG 18/20 pair=36/50 p=488611 H=699 h=244 k=391 actual=0 roots=247 degree=1914/1914 lead=473889 claimed=19205 row_formula=473889 apparition=0
+DIAG 18/20 pair=37/50 p=488611 H=699 h=253 k=330 actual=0 roots=255 degree=1758/1758 lead=359651 claimed=252211 row_formula=359651 apparition=0
+DIAG 18/20 pair=38/50 p=488611 H=699 h=255 k=279 actual=0 roots=258 degree=1611/1611 lead=481159 claimed=469908 row_formula=481159 apparition=0
+DIAG 18/20 pair=39/50 p=488611 H=699 h=284 k=309 actual=0 roots=287 degree=1788/1788 lead=478610 claimed=404734 row_formula=478610 apparition=0
+DIAG 18/20 pair=40/50 p=488611 H=699 h=290 k=388 actual=0 roots=294 degree=2043/2043 lead=201619 claimed=260186 row_formula=201619 apparition=0
+DIAG 18/20 pair=41/50 p=488611 H=699 h=407 k=621 actual=0 roots=410 degree=3093/3093 lead=220933 claimed=245936 row_formula=220933 apparition=0
+DIAG 18/20 pair=42/50 p=488611 H=699 h=440 k=659 actual=0 roots=442 degree=3306/3306 lead=91226 claimed=63055 row_formula=91226 apparition=0
+DIAG 18/20 pair=43/50 p=488611 H=699 h=442 k=468 actual=0 roots=448 degree=2739/2739 lead=266470 claimed=98551 row_formula=266470 apparition=0
+DIAG 18/20 pair=44/50 p=488611 H=699 h=452 k=602 actual=0 roots=459 degree=3171/3171 lead=373087 claimed=323375 row_formula=373087 apparition=0
+DIAG 18/20 pair=45/50 p=488611 H=699 h=454 k=560 actual=0 roots=459 degree=3051/3051 lead=357593 claimed=436425 row_formula=357593 apparition=0
+DIAG 18/20 pair=46/50 p=488611 H=699 h=455 k=549 actual=0 roots=457 degree=3021/3021 lead=334678 claimed=382343 row_formula=334678 apparition=0
+DIAG 18/20 pair=47/50 p=488611 H=699 h=465 k=489 actual=0 roots=469 degree=2871/2871 lead=435671 claimed=469908 row_formula=435671 apparition=0
+DIAG 18/20 pair=48/50 p=488611 H=699 h=532 k=586 actual=0 roots=536 degree=3363/3363 lead=242925 claimed=21829 row_formula=242925 apparition=0
+DIAG 18/20 pair=49/50 p=488611 H=699 h=540 k=545 actual=0 roots=542 degree=3264/3264 lead=344345 claimed=132964 row_formula=344345 apparition=0
+DIAG 18/20 pair=50/50 p=488611 H=699 h=605 k=697 actual=0 roots=608 degree=3915/3915 lead=377065 claimed=178165 row_formula=377065 apparition=0
+ROWCHECK p=488611 passed=20/20
+DIAG 19/20 pair=1/50 p=690997 H=831 h=2 k=488 actual=0 roots=6 degree=1479/1479 lead=298523 claimed=541571 row_formula=298523 apparition=0
+DIAG 19/20 pair=2/50 p=690997 H=831 h=2 k=724 actual=0 roots=6 degree=2187/2187 lead=593151 claimed=155598 row_formula=593151 apparition=0
+DIAG 19/20 pair=3/50 p=690997 H=831 h=3 k=33 actual=0 roots=6 degree=117/117 lead=5721 claimed=94086 row_formula=5721 apparition=0
+DIAG 19/20 pair=4/50 p=690997 H=831 h=7 k=69 actual=0 roots=9 degree=237/237 lead=578156 claimed=551067 row_formula=578156 apparition=0
+DIAG 19/20 pair=5/50 p=690997 H=831 h=21 k=372 actual=0 roots=24 degree=1188/1188 lead=218312 claimed=171015 row_formula=218312 apparition=0
+DIAG 19/20 pair=6/50 p=690997 H=831 h=22 k=66 actual=0 roots=30 degree=273/273 lead=95907 claimed=567880 row_formula=95907 apparition=0
+DIAG 19/20 pair=7/50 p=690997 H=831 h=32 k=231 actual=0 roots=35 degree=798/798 lead=336611 claimed=643190 row_formula=336611 apparition=0
+DIAG 19/20 pair=8/50 p=690997 H=831 h=38 k=76 actual=0 roots=42 degree=351/351 lead=672573 claimed=278638 row_formula=672573 apparition=0
+DIAG 19/20 pair=9/50 p=690997 H=831 h=40 k=188 actual=0 roots=44 degree=693/693 lead=363255 claimed=401919 row_formula=363255 apparition=0
+DIAG 19/20 pair=10/50 p=690997 H=831 h=57 k=179 actual=0 roots=60 degree=717/717 lead=25019 claimed=103394 row_formula=25019 apparition=0
+DIAG 19/20 pair=11/50 p=690997 H=831 h=57 k=229 actual=0 roots=59 degree=867/867 lead=47198 claimed=490495 row_formula=47198 apparition=0
+DIAG 19/20 pair=12/50 p=690997 H=831 h=59 k=352 actual=0 roots=62 degree=1242/1242 lead=150039 claimed=464826 row_formula=150039 apparition=0
+DIAG 19/20 pair=13/50 p=690997 H=831 h=62 k=343 actual=0 roots=66 degree=1224/1224 lead=629321 claimed=199074 row_formula=629321 apparition=0
+DIAG 19/20 pair=14/50 p=690997 H=831 h=70 k=239 actual=0 roots=73 degree=936/936 lead=536069 claimed=583375 row_formula=536069 apparition=0
+DIAG 19/20 pair=15/50 p=690997 H=831 h=82 k=252 actual=0 roots=88 degree=1011/1011 lead=463377 claimed=212034 row_formula=463377 apparition=0
+DIAG 19/20 pair=16/50 p=690997 H=831 h=96 k=183 actual=0 roots=98 degree=846/846 lead=158854 claimed=540289 row_formula=158854 apparition=0
+DIAG 19/20 pair=17/50 p=690997 H=831 h=116 k=250 actual=0 roots=121 degree=1107/1107 lead=129803 claimed=68033 row_formula=129803 apparition=0
+DIAG 19/20 pair=18/50 p=690997 H=831 h=122 k=137 actual=0 roots=125 degree=786/786 lead=436723 claimed=112127 row_formula=436723 apparition=0
+DIAG 19/20 pair=19/50 p=690997 H=831 h=123 k=599 actual=0 roots=128 degree=2175/2175 lead=88116 claimed=440279 row_formula=88116 apparition=0
+DIAG 19/20 pair=20/50 p=690997 H=831 h=134 k=169 actual=0 roots=137 degree=918/918 lead=661660 claimed=486005 row_formula=661660 apparition=0
+DIAG 19/20 pair=21/50 p=690997 H=831 h=136 k=616 actual=0 roots=140 degree=2265/2265 lead=566612 claimed=470041 row_formula=566612 apparition=0
+DIAG 19/20 pair=22/50 p=690997 H=831 h=148 k=614 actual=0 roots=152 degree=2295/2295 lead=40167 claimed=523284 row_formula=40167 apparition=0
+DIAG 19/20 pair=23/50 p=690997 H=831 h=155 k=673 actual=0 roots=157 degree=2493/2493 lead=119203 claimed=327687 row_formula=119203 apparition=0
+DIAG 19/20 pair=24/50 p=690997 H=831 h=167 k=389 actual=0 roots=173 degree=1677/1677 lead=677223 claimed=550752 row_formula=677223 apparition=0
+DIAG 19/20 pair=25/50 p=690997 H=831 h=191 k=423 actual=0 roots=194 degree=1851/1851 lead=514735 claimed=481011 row_formula=514735 apparition=0
+DIAG 19/20 pair=26/50 p=690997 H=831 h=205 k=410 actual=0 roots=207 degree=1854/1854 lead=553999 claimed=191499 row_formula=553999 apparition=0
+DIAG 19/20 pair=27/50 p=690997 H=831 h=243 k=314 actual=0 roots=247 degree=1680/1680 lead=483524 claimed=534504 row_formula=483524 apparition=0
+DIAG 19/20 pair=28/50 p=690997 H=831 h=267 k=453 actual=0 roots=269 degree=2169/2169 lead=59609 claimed=617072 row_formula=59609 apparition=0
+DIAG 19/20 pair=29/50 p=690997 H=831 h=269 k=363 actual=0 roots=273 degree=1905/1905 lead=619767 claimed=25535 row_formula=619767 apparition=0
+DIAG 19/20 pair=30/50 p=690997 H=831 h=282 k=343 actual=0 roots=286 degree=1884/1884 lead=310390 claimed=365900 row_formula=310390 apparition=0
+DIAG 19/20 pair=31/50 p=690997 H=831 h=284 k=450 actual=0 roots=288 degree=2211/2211 lead=30331 claimed=430540 row_formula=30331 apparition=0
+DIAG 19/20 pair=32/50 p=690997 H=831 h=290 k=760 actual=0 roots=295 degree=3159/3159 lead=359012 claimed=216371 row_formula=359012 apparition=0
+DIAG 19/20 pair=33/50 p=690997 H=831 h=309 k=469 actual=0 roots=312 degree=2343/2343 lead=317383 claimed=669861 row_formula=317383 apparition=0
+DIAG 19/20 pair=34/50 p=690997 H=831 h=334 k=536 actual=0 roots=342 degree=2619/2619 lead=448929 claimed=426179 row_formula=448929 apparition=0
+DIAG 19/20 pair=35/50 p=690997 H=831 h=341 k=469 actual=0 roots=343 degree=2439/2439 lead=128751 claimed=540877 row_formula=128751 apparition=0
+DIAG 19/20 pair=36/50 p=690997 H=831 h=345 k=470 actual=0 roots=347 degree=2454/2454 lead=113289 claimed=214761 row_formula=113289 apparition=0
+DIAG 19/20 pair=37/50 p=690997 H=831 h=345 k=504 actual=0 roots=347 degree=2556/2556 lead=450448 claimed=19795 row_formula=450448 apparition=0
+DIAG 19/20 pair=38/50 p=690997 H=831 h=353 k=492 actual=0 roots=358 degree=2544/2544 lead=257232 claimed=501676 row_formula=257232 apparition=0
+DIAG 19/20 pair=39/50 p=690997 H=831 h=381 k=779 actual=0 roots=386 degree=3489/3489 lead=425878 claimed=83347 row_formula=425878 apparition=0
+DIAG 19/20 pair=40/50 p=690997 H=831 h=387 k=705 actual=0 roots=390 degree=3285/3285 lead=177330 claimed=183563 row_formula=177330 apparition=0
+DIAG 19/20 pair=41/50 p=690997 H=831 h=405 k=614 actual=0 roots=407 degree=3066/3066 lead=476787 claimed=504046 row_formula=476787 apparition=0
+DIAG 19/20 pair=42/50 p=690997 H=831 h=441 k=729 actual=0 roots=444 degree=3519/3519 lead=562669 claimed=624236 row_formula=562669 apparition=0
+DIAG 19/20 pair=43/50 p=690997 H=831 h=447 k=475 actual=0 roots=449 degree=2775/2775 lead=226238 claimed=168627 row_formula=226238 apparition=0
+DIAG 19/20 pair=44/50 p=690997 H=831 h=488 k=641 actual=0 roots=493 degree=3396/3396 lead=100066 claimed=251942 row_formula=100066 apparition=0
+DIAG 19/20 pair=45/50 p=690997 H=831 h=547 k=672 actual=0 roots=550 degree=3666/3666 lead=556025 claimed=214761 row_formula=556025 apparition=0
+DIAG 19/20 pair=46/50 p=690997 H=831 h=687 k=816 actual=0 roots=689 degree=4518/4518 lead=70536 claimed=411976 row_formula=70536 apparition=0
+DIAG 19/20 pair=47/50 p=690997 H=831 h=689 k=690 actual=0 roots=693 degree=4146/4146 lead=333460 claimed=690996 row_formula=333460 apparition=0
+DIAG 19/20 pair=48/50 p=690997 H=831 h=740 k=754 actual=0 roots=745 degree=4491/4491 lead=352232 claimed=117888 row_formula=352232 apparition=0
+DIAG 19/20 pair=49/50 p=690997 H=831 h=774 k=801 actual=0 roots=777 degree=4734/4734 lead=55824 claimed=421173 row_formula=55824 apparition=0
+DIAG 19/20 pair=50/50 p=690997 H=831 h=783 k=797 actual=0 roots=786 degree=4749/4749 lead=233611 claimed=117888 row_formula=233611 apparition=0
+ROWCHECK p=690997 passed=20/20
