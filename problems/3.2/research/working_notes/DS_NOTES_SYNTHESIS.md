@@ -216,3 +216,14 @@ factor (P(σ_d1=σ_d2) ≈ √2/p, not 1/p). The R_H/H² constant ~0.707 = 1/√
 - ⟹ the √2 inflation in the germ double-returns is fully explained: 0.25 mirror-forced
   (structural, exactly 1 root per same-parity pair) + 0.48–0.50 Poisson residual (non-mirror
   double-returns are Poisson). The ρ=2 law's random model = mirror-forced + Poisson residual.
+
+## 4.16 RES law measurement (DS, Fable's fixed-δ slices)
+- **Consistency**: R_H(germ) = Σ_δ Σ_h Z(Ψ_{h,h+δ}) = 2909 (p=1009, H=64) ✓; the slice and
+  germ computations agree.
+- **Total residual**: R_H_residual/H² = 0.468 (p=1009, H=64) — Poisson-consistent (~0.5).
+  Also 0.473/0.498 at H=32 (p=1009/2003).
+- **Per-δ slices**: S_res(δ)/H ranges 0.48–1.08 (δ=1..20), avg ~0.8, NO clear δ-trend.
+  So "Σ_h Z(Ψ_{h,h+δ}) ~ H/2 per δ" holds only ON AVERAGE over δ (total 0.47·H²), NOT for each
+  individual δ (small δ are ~0.8·H, higher than H/2).
+- Mirror removal verified: even-δ slices lose exactly the forced root at r*=(p−1−h−k)/2
+  (S_tot − S_res = #same-parity pairs).
