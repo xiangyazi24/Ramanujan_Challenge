@@ -80,3 +80,16 @@
   在飞：cron2 CRIT-2H all-h、cron3 log/meso、cron4 clock-compression 四机制、cron5 q=2 重跑+MIDPOINT-AC、
   cron6 NEAR-WALL 敌审、cron8 box 簿记、cron9 一墙四坐标 writeup；codex×4（mesopair_diag/ghirred/crit2h/wallprobe）。
   cron1/7/10 阵亡。与 life 总攻协同（角度错开，Abel 观察回赠）。
+- segment 4 续（附录 AT.15–AT.23，至 ~14:0x）：**G_h 战线全弧收束**——[COLL-2H] 定格（Q6634 全量）
+  → C_h 零实根发现（四元组结构）→ Morse 归约（W_h 不可约⟹全链）→ crit2h codex 大捷
+  （h≤30 full Morse 证书链=G_h 绝对不可约该范围成定理，[L2-FREQ] 无条件化）→
+  [PRIMITIVE-MORSE]（反射商 A_h=正确 Galois 对象）→ **[NONCOLLAPSE-ALL|MORSE] 全 h 定理**
+  （纤维度计数五行杀；正性直觉判死入档）→ 剩余=两条纯特征零单变量路
+  （A_h 本原两素数协议 / W_h 不可约单件通吃），双侧 codex+Montes 证书战役在跑。
+  组合墙终格：log 锐（Q6619 多尺度 AP 下界）；最弱坐标 [MESO-S1-2/3]（一阶矩 census，
+  注意它在超临界档严格强于 GPRV 直接推论——qBI 在核）与 [MIDPOINT-AC']（hinge，
+  log 不自消，单纵横比警告）。算术墙终名：[OBSERVABLE-ONLY-WEYL-FACTOR]（p-typical 塔）；
+  我方 p-curvature 观察（T_{mp+v}=T_v·T_p^m 高位压缩，墙在地平线下方）复核在飞。
+  wallprobe 收官（1296 箱四反例世界零检出、三 gauge 稳、lc-零 AP 薄族登记）。
+  跨窗口防双写首次实战拦截（life q34=AR.6 重发现，降格第二证明）。
+  投递层退化中（Notion stub/双连接器超时频发）——重印协议（in-channel-only）工作正常。
