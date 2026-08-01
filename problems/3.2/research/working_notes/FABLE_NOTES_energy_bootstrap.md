@@ -1015,3 +1015,21 @@ double-certified.
 - 部署: codex-fm 双开 (spec=CODEX_SPEC_franel_mellin.md; high=规范化,
   max=单值性+Katz F_p-Mellin 适用范围); qA–qD 四问在飞; codex-hgk max 仍在磨;
   U_p 阶散布否定纯 ζ₂₄ 拟合 (up_cyclotomic_test.py) 已通报 cron。
+
+## §45 (08-01) Q6356 GK 卷积三源闭合 + 新一轮四问
+
+- Q6356 公式我方第三方实现 p=29/37/41 全 r 全中 (q6356_gk_convolution_check.py);
+  实现要点: mod-𝔭 模型下 ψ=恒等字符, J(m,n)=Σ_{x≠0,1}x^m(1−x)^n, 且 −1/N ≡ 1 (mod p)
+  ⇒ b_r ≡ Σ_t J(...)²J(...)² 直接成立。cron(13,17)+我(29,37,41)+ChatGPT 推导 = 三源。
+- 与 codex-high 公式的关系: 两者都是 O(p) 项二次链接 Jacobi 卷积且都精确等于 b_r
+  (操作层面互验); codex 版经支系数原子, Q6356 版直接 Mellin 对角——同一对象两坐标。
+- ₄F₃^G 形式 ⇒ b_r = 固定秩-4 超几何对象在字符参数 A_r 处的迹 ⇒ 新框架:
+  p|b_r ≈ 族 {H_r} 的 non-ordinarity 条件, 若 Hasse 不变量是字符参数空间上的
+  低复杂度截面, 零点数有度数界 ⇒ 直接 o(p)。已派 qE 深挖。
+- 警戒(qH 敌意 referee 已派): Franel–Mellin"绕开"的非循环性依赖 [GAP-DESCENT]——
+  T(r) 含 A_p(其系数=b_n); split 轨道上 A_p 值=H² (Franel 数据), inert 轨道无 x-点,
+  descent 正是把 inert 部分也归约为固定数据的缺口。qF 专攻。
+- 本轮在飞: qE(HGM ordinarity) qF(GAP-DESCENT) qG(F_p 零点计数文献审计)
+  qH(敌意 referee); codex-fm×2, codex-hgk-max 未回。Q6366(cron, horizontal Deligne
+  boundary) 新增 [GAP-MON]/[GAP-DESCENT]/[GAP-ZERO]/[GAP-HORIZONTAL] 账本, 与
+  codex-fm 任务表对齐。
