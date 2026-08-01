@@ -1,0 +1,198 @@
+sigma(r,[x:y]) = (r+1, [P(r)x-r^6 y : x]).
+
+T_h(r) = T(r+h-1) ... T(r),
+T(u) = [[P(u),-u^6],[1,0]].
+
+lambda(sigma) = 1.
+
+[OBSERVABLE-ONLY-WEYL-FACTOR]
+Can the single Apéry collision matrix coefficient factor through a fixed
+algebraic quotient of the finite Weyl-Cartier tower, even though the whole
+clock algebra has no small quotient?
+
+T(r) z = [P(r)x-r^6 y : x].
+
+sigma : A^1 x P^1 --> A^1 x P^1,
+sigma(r,z) = (r+1,T(r)z).
+
+sigma^h(r,z) = (r+h,T_h(r)z),
+T_h(r) = T(r+h-1) ... T(r).
+
+G_h(s) =
+[[-(s+h)^6 U_{h-2}(s+1), (s+h)^6 U_{h-1}(s)],
+ [-U_{h-1}(s+1),             U_h(s)            ]].
+
+deg U_j = 3j,
+
+3h,
+3h+3,
+3h-3,
+3h.
+
+deg sigma^h = Theta(h),
+lim_{h->infinity} (deg sigma^h)^(1/h) = 1.
+
+pi(r)=pi(r+h)  <=>  N_h(r)=0,
+deg N_h=3h-3.
+
+det T(r) = r^6.
+
+T(0) = [[5,0],[1,0]].
+
+G_m x P^1 = {r != 0} x P^1.
+
+..., -2, -1, 0, 1, 2, ...,
+
+det T_h(r) = product_{j=0}^{h-1} (r+j)^6.
+
+r = 0,-1,...,-h+1.
+
+- the direct surface is not an automorphism;
+- no finite translation-stable localization repairs it;
+- the natural birational regularizations have complexity growing with h or p.
+
+f(X+1)/f(X) = X^6/c,
+
+Either retain the affine clock and accept a lambda-one birational map with
+linearly growing conductor,
+
+or retain the finite p-typical clock and accept a matrix algebra whose rank
+grows with p^k.
+
+|sum_{r in F_p} psi(F_h(r))| <= C h sqrt(p),
+
+slow degree growth can improve orbit sums when combined with long-period,
+permutation, averaging, or iterate-independence hypotheses,
+
+lambda=1 alone gives square-root cancellation uniformly for a single
+length-p nonautonomous projective cocycle.
+
+T(r+h-1) ... T(r),
+
+sum_{1 <= h <= H} |sum_r psi(t Delta_{r,h})|^2
+    << p^(1+epsilon) H
+
+R_k = Z/p^k Z,
+N = p^k,
+J_k = direct_sum_{n=0}^{N-1} R_k e_n.
+
+L e_n = e_{n+1}       for 0 <= n < N-1,
+L e_{N-1} = 0.
+
+U e_n = e_{n+1 mod N},
+
+Theta e_n = n e_n.
+
+U Theta U^(-1) = Theta - I + N E_0,
+
+Ad_U(Theta) = U Theta U^(-1) = Theta - I.
+
+L = U (I-E_{N-1}).
+
+L^h e_n = U^h e_n.
+
+n = p q + a,
+0 <= a < p,
+0 <= q < p^(k-1).
+
+V_a e_q = e_{pq+a},
+C_a e_{pq+b} = delta_{a,b} e_q.
+
+C_a V_b = delta_{a,b} I,
+sum_{a=0}^{p-1} V_a C_a = I.
+
+U_k = sum_{a=0}^{p-2} V_{a+1} C_a
+      + V_0 U_{k-1} C_{p-1}.
+
+U_k V_a = V_{a+1}                  for a<p-1,
+U_k V_{p-1} = V_0 U_{k-1}.
+
+Theta_k = sum_{a=0}^{p-1} V_a (a I + p Theta_{k-1}) C_a.
+
+C_a U_k^p V_b = delta_{a,b} U_{k-1}.
+
+- U_k is low-digit increment plus one carry edge;
+- U_k^p descends to the high-digit shift;
+- Cartier digit extraction sees the carry explicitly.
+
+U^p = I,
+Ad_U(Theta)=Theta-I.
+
+E_a = I - (Theta-a I)^(p-1)
+
+U^(i-a) E_a
+
+F_p[U,Theta] = End_Fp(F_p^p) = M_p(F_p).
+
+A_k = (U_k tensor I_2) T(Theta_k)
+
+T(Theta_k) = [[P(Theta_k), -Theta_k^6],[I,0]].
+
+A_k(e_n tensor v) = e_{n+1} tensor T(n)v,
+
+A_k^h(e_n tensor v)
+  = e_{n+h} tensor T(n+h-1)...T(n)v
+
+B_k = diag(b_0,...,b_{N-1}),
+C_k = diag(c_0,...,c_{N-1}).
+
+Omega_{h,k}
+  = B_k (U_k^(-h) C_k U_k^h)
+    - C_k (U_k^(-h) B_k U_k^h).
+
+(Omega_{h,k})_{n,n}
+  = b_n c_{n+h mod N} - c_n b_{n+h mod N}.
+
+W_{h,k} = sum_{n=0}^{N-h-1} E_n
+
+(W_{h,k} Omega_{h,k})_{n,n} = Delta_{n,h}.
+
+pi(n)=pi(n+h)
+  <=>
+(W_{h,k} Omega_{h,k})_{n,n}=0.
+
+Cartier depth:          k,
+carry rank:             1 exceptional carry edge,
+transfer gate degree:   6,
+iterate degree:         O(h).
+
+rank J_k = p^k,
+rank End(J_k) = p^(2k).
+
+small recursive description != small conductor.
+
+U_{p,k}, Theta_{p,k}, B_{p,k}, C_{p,k}, Omega_{h,k}
+
+zeta(R^r S^h q_{p,k}) = 0
+  <=>
+(Omega_{h,k})_{r,r} = 0
+  <=>
+N_h(r)=0 mod p?
+
+S models the p-dilation/depth transition,
+R models the low-digit cyclic shift and its carry.
+
+omega_h(r) = (Omega_{h,1})_{r,r}
+
+for infinitely many p, the smallest translation-Cartier-stable algebra
+that preserves the zero loci of the omega_h has complexity Omega(p).
+
+q = q(p-typical boundary state, low digit state)
+
+Ad_U(Theta)=Theta-I mod p^k.
+
+U_k = sum_{a=0}^{p-2} V_{a+1}C_a + V_0 U_{k-1}C_{p-1}.
+
+Omega_{h,k}
+  = B_k Ad_{U_k^(-h)}(C_k)
+    - C_k Ad_{U_k^(-h)}(B_k).
+
+[OBSERVABLE-ONLY-WEYL-FACTOR]
+
+Does the scalar zero observable
+
+    (Omega_{h,k})_{r,r} = 0
+
+factor through a fixed algebraic quotient of the finite Weyl-Cartier tower,
+uniformly in p,k,h,r, even though the complete clock algebra is M_p at the
+first digit?
