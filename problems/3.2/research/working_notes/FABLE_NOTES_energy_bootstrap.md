@@ -361,3 +361,23 @@ The amplification question (multiplicity on the Ψ family) is with R5.
   2.26 vs global 2.35). Per R7's own decision rule: bounded-conductor Kummer
   translation sees no structure — the Mellin 3/2 route has no self-twist
   shortcut; the sub-5/3 wall is STRUCTURAL for this campaign.
+
+## 16. Phase 3/2 opened (2026-08-01): rho = 2 MEASURED EXACT; germ reformulation
+
+- ρ-measurement (rho_measure.py; p = 1009..40009, H = 4..32): R_H/H² constant
+  ≈ 0.70–0.73, p-independent, H-independent; R_H/H³ ~ 0.7/H. **The ρ=2
+  average-root law R_H ≤ C·H², C ≈ 0.72, is empirically exact.** Actual triple
+  wastage T_H/R_H ≈ 0 — no candidate filtering needed: proving ρ=2 gives
+  E(p) ≪ p^{3/2+o(1)} outright via the R5 ladder.
+- Second-level determination CONFIRMED algebraically (solo): with v = (1,s),
+  T_h(r)(1,s) = (1, A_{h−1}(r)+B_{h−1}(r)s); a second coincident lag h+δ forces
+  σ_δ(r+h) = A_{h−1}(r) + B_{h−1}(r)·σ_h(r) — the shifted-base σ-value is an
+  affine image; collisions telescope along the dual orbit.
+- GERM REFORMULATION: parametrize projective solution germs by (base r, ratio s):
+  σ_d(r) = s ⟺ the germ (r,s) returns at lag d. Then R_H = Σ_{germs}
+  C(#returns in [1,H], 2): the ρ=2 law = "solution germs have Poisson-scale
+  double-return statistics" (random model gives exactly H²/2). Per fixed δ:
+  Σ_h Z(Ψ_{h,h+δ}) = total backward-return count of the one-parameter family
+  γ_δ(x) (the forward-δ-return germs) — self-similar to the original problem;
+  the circle must be broken by an actual counting theorem (R11 grinding the
+  telescoping-product and recursion routes; R9 two-base; R10 spectral).
