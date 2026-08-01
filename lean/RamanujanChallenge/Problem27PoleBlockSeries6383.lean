@@ -101,7 +101,8 @@ theorem integral_pow_mul_exp_neg_mul
           Real.Gamma_nat_eq_factorial n
     rw [show (n : ℝ) + 1 = ((n + 1 : ℕ) : ℝ) by push_cast; ring,
       Real.rpow_natCast, hGamma]
-    field_simp [ha.ne']
+    rw [one_div, inv_pow,
+      mul_inv_cancel₀ (pow_ne_zero (n + 1) ha.ne')]
 
 theorem integrableOn_boseTerm (m k : ℕ) :
     IntegrableOn (boseTerm m k) (Ioi 0) := by
@@ -183,7 +184,7 @@ theorem hasSum_boseTerm {m : ℕ} {t : ℝ} (ht : 0 < t) :
     unfold boseTerm
     dsimp only [A, q]
     rw [← Real.exp_nat_mul, hexp]
-  · simp [A, q, boseKernel, div_eq_mul_inv]
+    ring
 
 theorem summable_integral_norm_boseTerm (m : ℕ) :
     Summable (fun k : ℕ =>
@@ -208,7 +209,6 @@ theorem summable_integral_norm_boseTerm (m : ℕ) :
         exact mul_nonneg hpoly (Real.exp_pos _).le]
   rw [integral_boseTerm]
   push_cast
-  ring
 
 theorem integral_boseKernel_eq_tsum (m : ℕ) :
     (∫ t : ℝ in Ioi 0, (boseKernel m t : ℂ)) =
@@ -226,15 +226,24 @@ theorem integral_boseKernel_eq_tsum (m : ℕ) :
         ∫ t : ℝ in Ioi 0, ∑' k : ℕ, F k t := by
           apply integral_congr_ae
           filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-          exact_mod_cast (hasSum_boseTerm (m := m) ht).tsum_eq.symm
+          have hc := Complex.ofRealCLM.hasSum
+            (hasSum_boseTerm (m := m) ht)
+          simpa only [F, Complex.ofRealCLM_apply] using hc.tsum_eq.symm
     _ = ∑' k : ℕ, ∫ t : ℝ in Ioi 0, F k t := hswap.symm
     _ = ∑' k : ℕ,
         ((1 / (m + k + 1 : ℝ) ^ 2 +
           1 / (m + k + 1 : ℝ) ^ 3 : ℝ) : ℂ) := by
           apply tsum_congr
           intro k
-          change (∫ t : ℝ in Ioi 0, (boseTerm m k t : ℂ)) = _
-          rw [integral_ofReal, integral_boseTerm]
+          calc
+            (∫ t : ℝ in Ioi 0, (boseTerm m k t : ℂ)) =
+                ((∫ t : ℝ in Ioi 0, boseTerm m k t) : ℂ) := by
+                  change (∫ t : ℝ, (boseTerm m k t : ℂ)
+                    ∂(volume.restrict (Ioi 0))) =
+                    ((∫ t : ℝ, boseTerm m k t
+                      ∂(volume.restrict (Ioi 0))) : ℂ)
+                  exact _root_.integral_ofReal
+            _ = _ := by rw [integral_boseTerm]
 
 #print axioms integral_boseKernel_eq_tsum
 
