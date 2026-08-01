@@ -1,4 +1,4 @@
-# Ramanujan Challenge — Status (audited 2026-07-30)
+# Ramanujan Challenge — Status (updated 2026-08-01)
 
 **Deadline:** August 1, 2026, 23:59 UTC
 
@@ -28,7 +28,7 @@ earlier session's claim.
 | Problem | Topic | Method | Audited? | State |
 |---------|-------|--------|----------|-------|
 | 2.1 | PCF → π | sign-flip of Cohen's Entry 5.3.22 | ✅ audited | **DONE — packaged in `SUBMIT/2.1/`** |
-| 2.2 | γ Apéry | claimed = Aptekarev after shift m=n+3 | ✅ audited | **the identification is FALSE — see below** |
+| 2.2 | γ Apéry | Rivoal Ore transform + finite Stein concentration | ✅ audited | **DONE — unconditional Lean theorem and rewritten proof** |
 | 2.3 | π+e | tensor product: Lambert ⊗ derangement | ✅ audited | **DONE — packaged in `SUBMIT/2.3/`** |
 | 2.4 | harmonic+polylog | weight-4 HPL symbolic summation | not re-audited | inherited claim |
 | 2.5 | Catalan CMF | Delannoy decomposition + k-recurrence | not re-audited | inherited claim |
@@ -37,25 +37,28 @@ earlier session's claim.
 | 2.8 | √10005/π | Chudnovsky in CMF disguise | ✅ (earlier) | **DONE — packaged in `SUBMIT/2.8/`** |
 | 3.1 | knot π² | A-polynomial / Mahler measure | ✅ (earlier) | **DONE — packaged in `SUBMIT/3.1/`** |
 
-### 2.2 — the identification is wrong
+### 2.2 — what closed it
 
-The write-up asserted that the challenge's initial values `(0,7,179)`/`(1,12,306)`
-"are precisely the initial values of the Aptekarev rational approximants". They
-are not. Aptekarev's published values (Hessami Pilehrood & Hessami Pilehrood,
-arXiv:1010.1420, eq. (3)) are `p̃ = (0,2,31)`, `q̃ = (1,3,50)`, and his recurrence
-is `(16n-15)y_{n+1} = (128n³+40n²-82n-45)y_n - n²(256n³-240n²+64n-7)y_{n-1} +
-n²(n-1)²(16n+1)y_{n-2}` — coefficient degrees 1,3,5,5, not the challenge's
-3,5,7,9. Rivoal's order-3 γ-recurrence (2009) does not match either: its
-sequences are `Q = 1, 7, 65/2, 727/6, …` against the challenge's
-`1, 12, 306, 13056, …`.
+The earlier direct identification with Aptekarev's recurrence was indeed false.
+The replacement route is exact: the challenge recurrence is a first-order Ore
+transform of Rivoal's order-3 recurrence, and Rivoal's two fixed solutions have
+finite positive hypergeometric formulas with weight
+`(2n+k+1) choose(n,k)^2/k!`.  No cited convergence theorem is used.
 
-What *is* verified: the challenge's own sequences are integral and `p_n/q_n → γ`
-(27.7 digits at n=60, subexponential — the Aptekarev-type signature). Also
-checked and ruled out: neither `p` nor `q` satisfies any order-2 recurrence with
-polynomial coefficients of degree ≤ 10, so the order-3 operator does not factor
-the way 2.3's did. The right reference is probably Aptekarev–Tulyakov,
-*Four-term recurrence relations for γ-forms*, which we have not obtained.
-**2.2 is not submittable as it stands.**
+The adjacent-weight identity gives a finite birth–death/Stein identity at the
+cubic saddle `k³=(n-k)²`.  Polynomial moment estimates prove
+`E[(k³-(n-k)²)²] ≤ 81 n³√n`.  A good/bad-set decomposition and the elementary
+bound `0 ≤ H_m-log m-γ ≤ 1/m` then give
+
+```text
+weighted error ≤ 5/M + 8δ + 81(6+5 log n)/(δ²√n),
+```
+
+which tends to zero by choosing `δ`, then `M`, then `n`.  The Ore transform
+preserves the limit as a positive weighted average of adjacent ratios.  Lean:
+`problem22_solved : Problem22Claim`, 0 `sorry`; axiom audit
+`{propext, Classical.choice, Quot.sound}`.  The old false PDF has been replaced
+by the matching five-page proof in `problems/2.2/proof.tex`.
 
 ### 2.1 — what closed it
 

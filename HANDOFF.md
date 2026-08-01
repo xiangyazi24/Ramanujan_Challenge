@@ -3,7 +3,7 @@
 ```
 project: Ramanujan_Challenge
 workdir: ~/repos/Ramanujan_Challenge
-written:  2026-07-30 20:10 America/Chicago
+updated:  2026-08-01 America/Chicago
 deadline: 2026-08-01 23:59 UTC  ( = 2026-08-01 18:59 America/Chicago )
 ```
 
@@ -32,8 +32,7 @@ That is witnessed by constant sequences and says nothing. P2.2's version
 asserted the challenge's initial values and then converged to `179/306`, not γ.
 There was also `sign_flip_P … : True := trivial` with four unused hypotheses,
 and `u1_value : x = x := rfl`. All of these are now **deleted** (commit
-`109a033`), and every affected file carries a note saying its limit is not
-formalized.
+`109a033`). P2.2 and P2.3 have since been rebuilt as unconditional proofs.
 
 Do not reintroduce this pattern in any form. A `sorry` is fine and legible; a
 vacuous existential shipped in a submission reads as a faked formalization. If a
@@ -52,7 +51,9 @@ promote a row without doing the work.
 
 ## 1. Current state: what is shippable right now
 
-Submission set = **2.1, 2.3, 2.8, 3.1**, packaged under `SUBMIT/`.
+Packaged submission set = **2.1, 2.3, 2.8, 3.1**, under `SUBMIT/`.
+P2.2 is now unconditionally proved in the main Lean project and has a rewritten
+standalone PDF, but has not yet been copied into a `SUBMIT/2.2` package.
 
 ```bash
 cd ~/repos/Ramanujan_Challenge/SUBMIT
@@ -150,45 +151,36 @@ Both were closed the same way, and it is the template for the rest:
 
 ## 3. Per-problem state and next actions
 
-### 2.2 (γ) — the inherited identification is FALSE. Read this before working on it.
+### 2.2 (γ) — DONE unconditionally; package next
 
-`problems/2.2/proof.tex` asserted that the challenge's initial values
-`(0,7,179)`/`(1,12,306)` "are precisely the initial values of the Aptekarev
-rational approximants". They are not.
+The old direct Aptekarev identification was false. The replacement proof uses
+an exact first-order Ore transform of Rivoal's recurrence,
 
-- Aptekarev's published data (Hessami Pilehrood & Hessami Pilehrood,
-  arXiv:1010.1420, eq. (3)): `p̃ = (0,2,31)`, `q̃ = (1,3,50)`, recurrence
-  `(16n−15)y_{n+1} = (128n³+40n²−82n−45)y_n − n²(256n³−240n²+64n−7)y_{n−1} + n²(n−1)²(16n+1)y_{n−2}`,
-  coefficient degrees **1,3,5,5** — the challenge's are **3,5,7,9**.
-- Rivoal's order-3 γ-recurrence (2009, same paper §1) gives
-  `Q = 1, 7, 65/2, 727/6, 9589/24, …` — not the challenge's
-  `1, 12, 306, 13056, 833400, …`.
+```text
+C_n = (T_{n+1} + (n+1)(3n+4)T_n)/(8n+11),
+```
 
-Reproduce with `scripts/p22_compare_aptekarev_rivoal.py`.
+whose transformed initial triples are exactly the challenge's. The fixed
+Rivoal solutions have WZ-verified finite sums with positive weights
+`(2n+k+1) choose(n,k)^2/k!`.
 
-What *is* established (`scripts/p22_forward_solve_gamma.py`): the challenge's own
-`p_n, q_n` are integers and `p_n/q_n → γ`, to 27.7 digits at n=60, subexponentially
-— the Aptekarev-family signature. Under the `(n!)²` gauge the limiting
-characteristic polynomial is `−8(r−1)³`, a triple root, which is what produces
-the `exp(c·n^{1/3})` corrections.
+For the normalized weights, the adjacent ratio yields a finite birth–death
+Stein identity. With `G=k³-(n-k)²`, it proves
+`E[G²] ≤ 81 n³√n`. A good/bad saddle decomposition then gives the explicit
+harmonic error bound
 
-**Dead end already checked** (`scripts/p22_order2_factor_search.py`): neither `p`
-nor `q` satisfies *any* order-2 recurrence with polynomial coefficients of degree
-≤ 10. So the order-3 operator does not factor the way 2.3's did — the 2.3
-template does not transfer. Do not spend time re-deriving this.
+```text
+5/M + 8δ + 81(6+5 log n)/(δ²√n),
+```
 
-Most promising lead: **Aptekarev & Tulyakov, "Four-term recurrence relations for
-γ-forms"** (in *Rational approximation of Euler's constant and recurrence
-relations*, Aptekarev ed., Current Problems in Math. 9, Steklov 2007) — cited as
-[4] in arXiv:1010.1420. "Four-term recurrence" is literally the challenge's shape.
-That volume is Russian and was not obtainable in this session. Second lead:
-arXiv:1010.1420 §3 gives a *general* construction of γ-forms from Meijer
-G-functions with free parameters `a_j, b_j, c_j, d_j` (their eqs. (20)–(22));
-the challenge's recurrence is plausibly one member. Fitting those parameters to
-reproduce `1, 12, 306, 13056` would close it.
+which tends to zero. The rational correction is `≤1/(2n+1)`, and the Ore
+quotient is a positive weighted average of adjacent Rivoal quotients.
 
-**2.2 is not submittable as it stands.** If it stays unproved, do not ship a
-package for it; leaving it out is better than shipping a false identification.
+Lean modules: `Problem22.lean`, `Problem22Concentration.lean`,
+`Problem22Moment.lean`, `Problem22Harmonic.lean`. Public theorem:
+`problem22_solved : Problem22Claim`; 0 `sorry`; standard three-axiom audit in
+`lean/P22Audit.lean`. The matching proof is `problems/2.2/proof.tex` and builds
+to a five-page PDF. Remaining submission work is packaging only.
 
 ### 2.6 (ζ(2)+ζ(3) series) — real gap, honestly self-declared
 

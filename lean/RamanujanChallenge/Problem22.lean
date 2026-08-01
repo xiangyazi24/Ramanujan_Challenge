@@ -1286,7 +1286,7 @@ theorem challengeQ22_pos (n : ℕ) : 0 < challengeQ22 n := by
 theorem challengeQ22_ne_zero (n : ℕ) : challengeQ22 n ≠ 0 :=
   (challengeQ22_pos n).ne'
 
-/-! ## The target constant and the still-open analytic step -/
+/-! ## The target constant and the analytic interface -/
 
 /-- The Mathlib Euler--Mascheroni constant is `1 - Γ'(2)`.  This is the
 identity from `Ripple.Number.EulerGamma` specialized to the part that depends
@@ -1729,15 +1729,17 @@ theorem problem22_of_harmonic_concentration
 The exact limit is `Problem22Claim`.  The explicit hypergeometric formulas,
 their WZ certificates (including all boundary terms), the Ore identification,
 the complete limit-transfer argument, and denominator positivity are proved
-above.  The remaining formalization boundary is
-`RivoalHarmonicConcentrationClaim22`: the positive weights
+above.  This module isolates the analytic interface
+`RivoalHarmonicConcentrationClaim22` for the positive weights
 
 ```
 (2n+k+1) * choose(n,k)^2 / k!
 ```
 
-must concentrate where `3 H_k - 2 H_(n-k)` is close to `γ`.  The harmless
-`1 / (2n+k+1)` correction has already been bounded and removed in Lean.
+which must concentrate where `3 H_k - 2 H_(n-k)` is close to `γ`.  The
+harmless `1 / (2n+k+1)` correction has already been bounded and removed here;
+`Problem22Harmonic` discharges the concentration interface and proves the
+unconditional theorem `problem22_solved`.
 
 An earlier version of this file carried a theorem of the shape
 

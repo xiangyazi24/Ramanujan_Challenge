@@ -4,6 +4,8 @@ import RamanujanChallenge.KnotShapes
 import RamanujanChallenge.Problem21
 import RamanujanChallenge.Problem22
 import RamanujanChallenge.Problem22Concentration
+import RamanujanChallenge.Problem22Moment
+import RamanujanChallenge.Problem22Harmonic
 import RamanujanChallenge.Problem23
 import RamanujanChallenge.Problem24
 import RamanujanChallenge.Problem25

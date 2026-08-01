@@ -1,0 +1,5 @@
+import RamanujanChallenge.Problem22Harmonic
+
+#print axioms RamanujanChallenge.P22.rivoalSaddleSecondMoment22_le
+#print axioms RamanujanChallenge.P22.rivoalHarmonicConcentrationClaim22
+#print axioms RamanujanChallenge.P22.problem22_solved
