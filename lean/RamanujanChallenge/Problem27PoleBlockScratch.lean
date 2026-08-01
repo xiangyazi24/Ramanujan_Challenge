@@ -38,7 +38,6 @@ private theorem integrableOn_pow_mul_exp_neg_mul27
   filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
   rw [mul_pow]
   field_simp [ha.ne']
-  ring
 
 private theorem integrableOn_cpow_mul_cexp_neg_mul27
     (n : ℕ) {z : ℂ} (hz : 0 < z.re) :
@@ -68,7 +67,9 @@ private theorem tendsto_self_mul_exp_neg_mul27
   have hc := h.const_mul a⁻¹
   convert hc using 1
   · funext t
+    simp only [Function.comp_apply, id_eq, pow_one]
     field_simp [ha.ne']
+    ring
   · simp
 
 private theorem integral_self_mul_cexp_neg_mul_Ioi27
@@ -95,7 +96,7 @@ private theorem integral_self_mul_cexp_neg_mul_Ioi27
     simpa [u, v'] using integrableOn_cpow_mul_cexp_neg_mul27 1 hz
   have hu'v : IntegrableOn (u' * v) (Ioi 0) := by
     have h := (integrableOn_cpow_mul_cexp_neg_mul27 0 hz).neg.div_const z
-    simpa only [Pi.mul_apply, one_mul, u', v] using h
+    simpa [u', v] using h
   have hzero : Tendsto (u * v) (𝓝[>] (0 : ℝ)) (𝓝 0) := by
     have hc : ContinuousAt (u * v) 0 := by
       dsimp [u, v]
@@ -103,7 +104,10 @@ private theorem integral_self_mul_cexp_neg_mul_Ioi27
     simpa [u, v] using hc.continuousWithinAt.tendsto
   have hinfty : Tendsto (u * v) atTop (𝓝 0) := by
     rw [tendsto_zero_iff_norm_tendsto_zero]
-    have hreal := (tendsto_self_mul_exp_neg_mul27 hz).div_const ‖z‖
+    have hreal :
+        Tendsto (fun t : ℝ =>
+          t * Real.exp (-(z.re * t)) / ‖z‖) atTop (𝓝 0) := by
+      simpa using (tendsto_self_mul_exp_neg_mul27 hz).div_const ‖z‖
     refine hreal.congr' ?_
     filter_upwards [eventually_ge_atTop (0 : ℝ)] with t ht
     dsimp [u, v]
@@ -118,13 +122,17 @@ private theorem integral_self_mul_cexp_neg_mul_Ioi27
     calc
       (∫ t : ℝ in Ioi 0, v t) =
           (-z⁻¹) * ∫ t : ℝ in Ioi 0, Complex.exp (-z * (t : ℂ)) := by
+            change (∫ t : ℝ, v t ∂(volume.restrict (Ioi 0))) =
+              (-z⁻¹) * ∫ t : ℝ,
+                Complex.exp (-z * (t : ℂ)) ∂(volume.restrict (Ioi 0))
             rw [← MeasureTheory.integral_const_mul]
             apply integral_congr_ae
             filter_upwards with t
             simp [v, div_eq_mul_inv]
       _ = -(z⁻¹ * z⁻¹) := by rw [integral_cexp_neg_mul_Ioi27 hz]; ring
+  simp only [u', Pi.mul_apply, one_mul] at hibp
   rw [hvint] at hibp
-  simpa [u, v', u', v, pow_two] using hibp
+  simpa [u, v', pow_two] using hibp
 
 private theorem integral_laplace_poleBlock27
     {z : ℂ} (hz : 0 < z.re) :
@@ -154,6 +162,13 @@ private theorem integral_laplace_poleBlock27
     _ = (∫ t : ℝ in Ioi 0, Complex.exp (-z * (t : ℂ))) +
         (1 / 2 : ℂ) *
           ∫ t : ℝ in Ioi 0, (t : ℂ) * Complex.exp (-z * (t : ℂ)) := by
+            congr 1
+            change (∫ t : ℝ,
+              (1 / 2 : ℂ) * ((t : ℂ) * Complex.exp (-z * (t : ℂ)))
+                ∂(volume.restrict (Ioi 0))) =
+              (1 / 2 : ℂ) * ∫ t : ℝ,
+                (t : ℂ) * Complex.exp (-z * (t : ℂ))
+                  ∂(volume.restrict (Ioi 0))
             rw [MeasureTheory.integral_const_mul]
     _ = z⁻¹ + (z ^ 2)⁻¹ / 2 := by
       rw [integral_cexp_neg_mul_Ioi27 hz,
