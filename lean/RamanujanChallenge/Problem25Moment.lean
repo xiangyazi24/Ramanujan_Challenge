@@ -118,8 +118,7 @@ def remainderPoly (N : ℕ) (j : Fin 3) (X : ℝ) : ℝ :=
 
 theorem remainderPoly_neg_one (N : ℕ) (j : Fin 3) :
     remainderPoly N j (-1) = (denominator N j : ℝ) := by
-  simp [remainderPoly, remainderA, remainderB, mul_neg, mul_one, neg_neg, sub_neg_eq_add,
-    add_sub_cancel]
+  simp [remainderPoly, remainderA, remainderB, mul_neg, mul_one, neg_neg]
 
 theorem neg_remainderB (N : ℕ) (j : Fin 3) :
     -remainderB N j = (numerator N j : ℝ) := by
@@ -131,8 +130,8 @@ theorem denominator_as_moment (N : ℕ) (j : Fin 3) :
     (denominator N j : ℝ) =
       ∫ x in (0 : ℝ)..1,
         (10 - 18 * x) * (remainderA N j + remainderB N j * x) := by
-  rw [affine_moment_wq]
-  simp [remainderA, remainderB]; ring
+  rw [affine_moment_wq, remainderA, remainderB]
+  ring
 
 theorem numerator_as_moment (N : ℕ) (j : Fin 3) :
     (numerator N j : ℝ) =

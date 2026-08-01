@@ -556,3 +556,27 @@ set algebraic of low degree.
   index-scaling (p | b_r ⟹ p | b_{rp^j} ∀j, from Beukers mod p³) is a REAL
   integer-level mass-leakage constraint not yet exploited in any cross-prime
   argument.
+
+## 24. R13 harvest + curve-nullity: phase 3/2 bottoms out at one named theorem
+
+- Diagonal-germ route completed exactly: SL₂ kick-drift form (S_n = unipotent
+  shear pair, det 1); Green representation δ_d − 1 = 4Σ_j(2r+2j+1)³K_j/D_j;
+  the frieze/bilinear relation (5.10); the rank-two kernel Y(x,r) = P_r·V_x;
+  and the MASTER identity: Ψ_{h,k}(r) = 0 ⟺ P_r, P_{r+h}, P_{r+k} COLLINEAR
+  in the evaluation-orbit plane (det identity (5.1)). The whole problem is
+  incidence geometry of the orbit against its own short secants.
+- Verified: Green recursion exact; φ₂ = 4(2x+3)³ (g₁ has NO primitive part!),
+  φ₃ = 4(2z−1)Q₅, φ₄ = 8(2z+1)R₈ all machine-checked. Adjacent-gcd support
+  theorem (Prop 4.1): common roots of consecutive φ's = terminal cubic +
+  type-II locus only.
+- Escape hatches: [GAP-CUBIC] group-law model KILLED experimentally — curve
+  nullity 0 through degree 12 at p = 1009, 5003 (curve_nullity.py; orbit size
+  (p+1)/2 exactly = reflection halving). [GAP-TRACE] = the bounded-conductor
+  wall already closed vertically. [GAP-EXP] = the statement itself.
+- Quantifier form finalized (matches R12b): the 3/2 theorem must be mesoscopic
+  (H ≥ p^ε) / off-exceptional-primes; literal H-only uniformity is impossible.
+- **PHASE 3/2 FINAL STATE: E(p) ≪ p^{5/3} unconditional stands. E ≪ p^{3/2+o(1)}
+  off exceptional primes ⟸ [GAP-PAIR′]: banded random-scale secant incidence
+  for the Apéry evaluation orbit — a genuine new equidistribution theorem;
+  every elementary/algebraic/spectral/geometric shortcut is now closed with
+  proofs or experiments; the statement is measured true six constants deep.**
