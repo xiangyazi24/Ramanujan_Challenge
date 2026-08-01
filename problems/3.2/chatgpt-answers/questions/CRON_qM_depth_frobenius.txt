@@ -1,0 +1,52 @@
+[qM — Apéry 伴随解的 p-adic 深度层 Frobenius 半线性结构（attack #1 修正靶）]
+
+## 背景（自足，可只读本文）
+
+Apéry 递推 n³y_n = (34n³−51n²+27n−5)y_{n−1} − (n−1)³y_{n−2}。两个解:
+- b: b_0=1, b_1=5（Apéry 数 A_n，整数）
+- c: c_0=0, c_1=1（伴随解，c_n = W_n/(n!)³，W_n ∈ Z 为整数化身，W_n = N_n(0) 为端点 continuant）
+- Casoratian 精确闭式: b_{n+1}c_n − b_n c_{n+1} = −1/n³（已机器验证）。
+
+射影轨道 π(n)=[b_n:c_n] ∈ P¹(F_p)，n=0..p−2。已证（机器穷举验证）：p|N_h(r) ⟺ π(r)=π(r+h)，
+即 gap 根 = 轨道碰撞。唯一缺失引理 =「Apéry 射影轨道能量引理」：E^π(p) := Σ_v mult(v)² = O(p)
+（实测 3p+o(p)，547 素数 + 10⁶ 尺度）。任何 E ≪ p^{5/3−δ} 都已是新定理（现状平凡界 p^{5/3}）。
+
+攻击 #1 = (b,c) 对的算术：b 有 Dwork/Gessel/Lucas 结构（b_{np+v} ≡ b_n b_v mod p³ 型同余，
+Beukers/Straub），跨块 digit 律给 b 方向的 Frobenius 压缩。问题是 c（= MUM 点 log 解的 mod p /
+p-adic 影子）的对应结构。
+
+## 已判死的朴素路线（勿重走，金数据在此）
+
+朴素 mod-p digit 律（c_{np+v} mod p 由 digit 分解决定）已被机器判死：
+- 精确计算 p=13, 17 到 n=3p：**v_p(W_{p+v}) = 0**（v 非 Apéry 零点时）——整数化身跨块后是 p-单位。
+- 而 v_p((p+v)!³) 在跨块处 = 3（Legendre）⟹ c_{p+v} 本身 p-adic 爆破 −3 阶。
+- ⟹ mod-p 投影在块 u≥1 整体退化到 [1:0]：mod-p 层面看不到任何跨块结构。
+- v_p(W_{p+v}) 在 v ∈ Z_p（Apéry 零点位）处有 +1 凸起（p=17, v=3 实测 ✓，与 Lucas 零点转移一致）。
+
+结论口径：c 的跨块半线性**不住在 mod p，住在 p-adic 深度层**——应是 Dwork 型半线性 /
+unit-root 分解的第二分量（log 周期非纯 Frobenius 本征周期）。
+
+## 求证/求构（按价值排序）
+
+1. **深度层半线性律的精确形式**：求 c（或 W_n）的跨块同余的正确陈述。候选形状（不要被
+   限制住）：W_{np+v} ≡ (unit) · b_n^{?} · W_v · (1 + p·(线性于 n 的项) + ...) mod p^k？
+   或 Frobenius 作用 F(c) = c + κ_p·b 型半线性（κ_p = p-adic 周期/L-值？）在化身层面的显影。
+   你给出的任何公式我们都会拿 p=13/17/29 的精确整数数据机器验证——请把公式写到可机验的程度。
+2. **κ_p 的识别**：若 c 的 Frobenius 半线性含平移系数 κ_p，它是什么？（Apéry 情形：与
+   ζ_p(3)、p-adic L-值、unit root α_p 的关系？Beukers–Stienstra K3 情形有 unit-root 公式。）
+3. **对能量引理的杠杆**：深度层结构如何控制轨道碰撞 π(r)=π(r+h)？特别是：碰撞条件
+   b_r c_{r+h} ≡ b_{r+h} c_r 在 digit 分解下是否化为「块内碰撞 + 深度层匹配」的塔式条件——
+   若是，每层压缩因子多少，能否推 E^π ≪ p^{5/3−δ}？
+4. **文献定位**：Dwork 同余的第二解版本（log 解的 p-adic 变形）在文献里叫什么、谁做过？
+   （Dwork p-adic cycles/periods；Beukers 的 Apéry 同余系列；Straub；Krattenthaler–Müller
+   supercongruences；unit-root F-crystal 的 non-unit 部分；Frobenius structure on
+   hypergeometric/CY differential equations——只引真实存在的文献，我们逐条核对，已抓到三例
+   编造引用。）
+
+## 约束
+
+- 我们只认可机验的公式与真实文献。给出的每条同余请附最小可检验实例（p、v、n、两边数值）。
+- 不排除任何路线；若你认为深度层框架本身有更好的替代（如 p-adic 高度、Coleman 积分、
+  rigid cohomology 的 Frobenius 矩阵直接算），请直说并给出可操作起点。
+- 末尾请回答两问：(i) 你这次答案里最不自信的一点是什么？(ii) 你认为我们双方的共同盲点
+  可能在哪？
