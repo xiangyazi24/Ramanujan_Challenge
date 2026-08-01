@@ -109,8 +109,10 @@ theorem continuous_ctExtension_vertical27_final
   intro y
   have ht : verticalPoint x y ∈ halfIntegerStrip (m : ℤ) := by
     simpa [verticalPoint, halfIntegerStrip] using hx
+  have hv : ContinuousAt (fun u : ℝ => (x : ℂ) + (u : ℂ) * Complex.I) y := by
+    fun_prop
   exact (ctExtension_differentiableAt27_final hm1 ht).continuousAt.comp
-    (by fun_prop : ContinuousAt (verticalPoint x) y)
+    (by simpa [verticalPoint] using hv)
 
 theorem integrable_ctExtension_vertical27_final
     {n m : ℕ} (hm1 : 1 ≤ m) (hmn : m ≤ n) {x : ℝ}
@@ -178,10 +180,10 @@ theorem integrable_ctExtension_vertical27_final
     simp only [Set.mem_union, Set.mem_Iio, Set.mem_Icc, Set.mem_Ioi,
       Set.mem_univ, iff_true]
     by_cases hlow : y < -1
-    · exact Or.inl hlow
+    · exact Or.inl (Or.inl hlow)
     by_cases hhigh : 1 < y
-    · exact Or.inr (Or.inr hhigh)
-    · exact Or.inr (Or.inl ⟨le_of_not_gt hlow, le_of_not_gt hhigh⟩)
+    · exact Or.inr hhigh
+    · exact Or.inl (Or.inr ⟨le_of_not_gt hlow, le_of_not_gt hhigh⟩)
   rw [hcover] at hall
   simpa [IntegrableOn] using hall
 
