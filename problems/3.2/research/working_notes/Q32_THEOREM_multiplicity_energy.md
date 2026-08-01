@@ -21,8 +21,13 @@ this gives E(p) ≪ p²/log p.
 
 Remarks. (i) The trivial bounds are N ≤ p, E ≤ p². The random truth is
 N ≍ log p/log log p, E = 3p + O(√p) (measured). These are the first
-unconditional savings for this sequence; the method uses only the recurrence's
-NON-AUTONOMY, no algebraic geometry. (ii) Theorem 2 gives, via Parseval
+unconditional savings for this sequence that we are aware of (audited negative
+literature search: Garaev–Luca–Shparlinski, "Catalan and Apéry numbers in
+residue classes", JCTA 113 (2006) — value-set/additive-basis statements, not
+maximum-fiber bounds; Luca–Shparlinski JLMS 78 (2008) — prime factors of b_n,
+not residue multiplicities; Ostafe–Shparlinski Canad. J. Math 74 (2022) —
+C-finite families only). The method uses only the recurrence's NON-AUTONOMY,
+no algebraic geometry. (ii) Theorem 2 gives, via Parseval
 (Σ_{h≠0}|C_p(h)|² = pE − p²), the average bound RMS_h |C_p(h)| ≪ p/√log p.
 
 ## 1. Setup
@@ -34,7 +39,10 @@ Transfer: T_d(r) = M(r+d−1)···M(r), so v_{r+d} = T_d(r)v_r; write
 b_{r+d} = A_d(r)b_r + B_d(r)b_{r−1}. A_d, B_d ∈ Q(x) have poles only at
 x ∈ {−1,…,−d}, each of order ≤ 3, and (clearing ∏_{j=1}^d(x+j)³) numerator
 degrees ≤ 4d. All identities below are algebraic, hence valid over F_p verbatim
-whenever the evaluation points avoid poles and 0 < d < p.
+whenever the evaluation points avoid poles and 0 < d < p. Domain statement
+(audit item G): all lags are differences of ordered fiber elements inside
+[1, p−2], so every recurrence step used has index ≤ p−2 and no transfer ever
+takes the singular step p−1 → p; r = 0 is excluded at the cost of one point.
 
 Facts used: (F1) A_d(0) = b_d, B_d(0) = 0 (M(0) = [[5,0],[1,0]] is regular and
 kills the second column). (F2) B_d(x) = −x³/(x+1)³·A_{d−1}(x+1) (second column
@@ -98,7 +106,9 @@ _Proof._ Write Ψ = (B_{d′} − B_d) − K with K = A_dB_{d′} − A_{d′}B_
 K = det T_d·B_δ(x+d) = (x³/(x+d)³)·B_δ(x+d); since B_δ vanishes to order 3 at
 0 (by F2), K is regular at x = −d. By (F3) again,
 B_{d′}(x) = A_δ(x+d)B_d(x) + B_δ(x+d)B_{d−1}(x); at x = −d the second summand
-vanishes (order-3 zero times a regular value — B_{d−1} has no pole at −d), and
+is REGULAR: B_δ(x+d) ∈ (x+d)³·F_p[[x+d]] always (over F_p the cubic coefficient
+u_δ CAN vanish — e.g. u_2 ≡ 0 mod 13, so ord may exceed 3 — but membership in
+the cube ideal is what the argument uses, and that always holds), and
 A_δ(x+d) → A_δ(0) = b_δ by (F1). Hence the (x+d)^{−3}-coefficient of Ψ equals
 (b_δ − 1)·c_d = (b_δ − 1)·d³·b_{d−1} ≠ 0 in F_p by hypothesis. A function with
 a genuine pole is not identically zero. ∎
@@ -115,10 +125,14 @@ taken ≤ 4 times, and φ(R) lies in the image: (p−1)/D² ≤ 4D. ∎
 **Theorem 1.** Let c ≠ 0, N = N_p(c), and work in the window 1 ≤ r ≤ p−2−D
 with D := 6p/N (the ≤ D+2 excluded fiber elements are absorbed below). For
 each fiber element r let d₁(r) < d₂(r) be the lags to the next two fiber
-elements. Telescoping gives Σ_r d₁(r) ≤ p and Σ_r d₂(r) ≤ 2p, so at least
-N/2 − O(D) elements satisfy d₁+d₂ ≤ D′ := 12p/N.
+elements. Telescoping gives Σ_r (d₁+d₂)(r) ≤ 3p [AUDIT R3b: the earlier 3N/4
+claim from 1.5p was FALSE — an adversarial near-uniform fiber makes ~N/2 bases
+bad; N/2 − O(1) good bases is the correct and sufficient count], so at least
+N/2 − O(1) elements satisfy d₁+d₂ ≤ D′ := 12p/N.
 
-Suppose N ≥ C₀p/log p with C₀ = 50. Then D′ ≤ 0.24·log p, so every lag and
+Suppose N ≥ C₀p/log p with C₀ = 50 (audit: any K > 6·log 34 = 21.16 works for
+D = 6p/N; with D′ = 12p/N the threshold doubles, C₀ = 50 is comfortable). Then
+D′ ≤ 0.85·log p/3.526, so every lag and
 lag-difference k in play satisfies 3.526·k ≤ 0.85·log p, whence by (F4) the
 integers b_{d₁−1} and b_δ − 1 lie strictly between 0 and p — in particular
 b_{d₁−1} ≢ 0 and b_δ ≢ 1 (mod p), and p ∤ d₁. So for every pair (d₁,d₂) in
@@ -127,7 +141,9 @@ degree ≤ 8d₁ — nonzero since its pole-3 coefficient c_{d₁} = d₁³b_{d�
 or type I at both (root of the Ψ_{d₁,d₂} numerator, ≢ 0 by the nondegeneracy
 lemma, degree ≤ 9(d₁+d₂) ≤ 9D′).
 
-Total root capacity over all pairs d₁ < d₂ ≤ D′:
+Type-II capacity (mixed cases charged to numerator(B_d), a nonzero polynomial
+since its x³-Laurent datum d³b_{d−1} ≢ 0 here): Σ_{d≤D′} O(d) = O(D′²).
+Total type-I root capacity over all pairs d₁ < d₂ ≤ D′:
 Σ 9(d₁+d₂) ≤ 9·D′·(D′)²/2 ≤ 5(D′)³ ≤ 5·(0.24 log p)³ < (log p)³.
 But we need ≥ N/2 − O(D) ≥ (C₀/4)·p/log p elements rooted — impossible for
 large p. Contradiction; hence N < C₀·p/log p. (Small p: absorb into C₀.) ∎
