@@ -580,3 +580,32 @@ set algebraic of low degree.
   for the Apéry evaluation orbit — a genuine new equidistribution theorem;
   every elementary/algebraic/spectral/geometric shortcut is now closed with
   proofs or experiments; the statement is measured true six constants deep.**
+
+## 25. R14 harvest + F4 experiment: the main conjecture fully characterized
+
+- **Named conditional gateway (with proof): Apéry-EH4(η)** — F₄(N) ≪ L⁴/N³ +
+  N^{4−η} ⟹ pointwise P3.2. The known 2/3 exceptional set IS the trivial
+  fourth moment (F₄ ≪ N^{14/3}); independence gives N^{11/3} — a full N^{1/3}
+  margin; any σ-saving improves the exceptional exponent to 2/3−σ; the hybrid
+  Rosenthal inequality (4.5) would give H(n) ≪ n^{2/3+o(1)} pointwise.
+- Standard tools audited dead with precision: large sieve (constant N+Q² ≍ N²,
+  one power over); GRH (p|b_z is a RAMIFIED/moving-divisor event, not
+  unramified Frobenius); ABC/radical (window product log B_n = n/2 ≪ 3.53n
+  fits inside the size budget); supercongruence = precision not multiplicity
+  (e=1 proved; constant shaving needs e > 2λ ≈ 7.05); mass leakage dead in the
+  top window (echo indices O(1)); no constant improvement below 1/2 possible
+  from any current vertical info (reflection-preserving singleton adversary).
+- NEW integer-level reformulation (AGCD): via strong reflection,
+  H(n)·log(n/2) ≤ Σ_z log gcd_{>max}(b_z, b_{n−2z−1}) — anti-diagonal moving
+  self-gcd sum; a Vojta-flavored statement, cleanest integer form of the wall.
+- **F4 EXPERIMENT (f4_experiment.py, census data to 2×10⁶): F₄ ≡ 0 in every
+  dyadic window (not one 4-prime coincidence exists; maxH = 3); R₂ = 0.97–1.01
+  and R₃ ≈ 1 match the reflection-preserving null model exactly.** Fourth-order
+  quasirandomness holds at maximal measurable precision; Apéry-EH4 is
+  empirically true with unbounded margin; no hidden horizontal structure.
+- FINAL MAIN-CONJECTURE STATE: pointwise P3.2 ⟸ Apéry-EH4(η) (proved
+  implication, measured-true hypothesis); the wall = fourth-order
+  near-orthogonality of the moving divisor sets {p + Z_p} — outside every
+  audited standard tool; the blind-spot candidate is a global motivic object
+  coupling integer factorizations across characteristics (existence would
+  itself be the breakthrough).

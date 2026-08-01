@@ -308,3 +308,12 @@ the prime side, and a star is K_{2,2}-free, so no combinatorial argument can exc
 - entry state: Problem24QuadraticAlt.lean 2324 lines, 11 sorries, 0 errors
 - end: <open>
 - final result: <open>
+
+## Run 2026-08-01 (P2.5 Catalan connection, automode, dm window)
+- doctrine: DOCTRINE.md (P2.5 avenue (a) moment formula route)
+- starting avenue: (a) Catalan integral → remainder integral → commonLimit = G
+- entry state: Problem25Moment.lean 164 lines, 0 sorry, moment identities proved
+- approach: prove integral identities + connection chain, sorry the two hard
+  analytic inputs (Catalan integral representation, remainder Padé decay)
+- end: <open>
+- final result: <open>

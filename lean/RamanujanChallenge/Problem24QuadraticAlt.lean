@@ -2418,5 +2418,90 @@ theorem quadAltV_slope_tendsto_one :
   rw [Function.comp_apply, hkey, ← quadAlt_neg2V_eq_W0 hxpos hx1]
   field_simp
 
+/-- `(1-x) · J(-x) → 0` as `x → 1⁻`: `J(-x)` blows up only like `log(1-x)^2`,
+which the factor `(1-x)` kills. -/
+theorem oneSub_mul_quadAltJneg_tendsto :
+    Tendsto (fun x : ℝ => (1 - x) * quadAltJclosed (-x)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+  have hone : Tendsto (fun x : ℝ => 1 - x) (𝓝[<] (1:ℝ)) (𝓝 0) :=
+    tendsto_nhdsWithin_iff.mp tendsto_one_sub_nhdsWithin |>.1
+  -- bounded factors: log(1+x) → log 2
+  have hlog1p : Tendsto (fun x : ℝ => Real.log (1 + x)) (𝓝[<] (1:ℝ)) (𝓝 (Real.log 2)) := by
+    have hc : ContinuousAt (fun x : ℝ => Real.log (1 + x)) 1 := by
+      apply ContinuousAt.log (by fun_prop); norm_num
+    have h1 := hc.tendsto; norm_num at h1
+    exact h1.mono_left nhdsWithin_le_nhds
+  -- dilog((1-x)/2) → dilog 0 = 0
+  have hdil0 : Tendsto (fun x : ℝ => dilog ((1 - x)/2)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have hin : Tendsto (fun x : ℝ => (1 - x)/2) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+      simpa using hone.div_const 2
+    have hcd : ContinuousWithinAt dilog (Icc (-1:ℝ) 1) 0 :=
+      dilog_continuousOn_unit 0 (by norm_num)
+    have hev : ∀ᶠ x in 𝓝[<] (1:ℝ), (1 - x)/2 ∈ Icc (-1:ℝ) 1 := by
+      filter_upwards [self_mem_nhdsWithin,
+        (eventually_gt_nhds (show (-1:ℝ) < 1 by norm_num)).filter_mono
+          nhdsWithin_le_nhds] with x hx hxg
+      have hx1 : x < 1 := hx
+      constructor <;> [linarith; linarith]
+    have := hcd.tendsto.comp (tendsto_nhdsWithin_iff.mpr ⟨hin, hev⟩)
+    simpa [dilog_zero] using this
+  -- dilog(x²) → dilog 1
+  have hdil1 : Tendsto (fun x : ℝ => dilog (x^2)) (𝓝[<] (1:ℝ)) (𝓝 (Real.pi^2/6)) := by
+    have hin : Tendsto (fun x : ℝ => x^2) (𝓝[<] (1:ℝ)) (𝓝 1) := by
+      have hc : ContinuousAt (fun x : ℝ => x^2) 1 := by fun_prop
+      have h1 := hc.tendsto; norm_num at h1
+      exact h1.mono_left nhdsWithin_le_nhds
+    have hcd : ContinuousWithinAt dilog (Icc (-1:ℝ) 1) 1 :=
+      dilog_continuousOn_unit 1 (by norm_num)
+    have hev : ∀ᶠ x in 𝓝[<] (1:ℝ), x^2 ∈ Icc (-1:ℝ) 1 := by
+      filter_upwards [self_mem_nhdsWithin,
+        (eventually_gt_nhds (show (-1:ℝ) < 1 by norm_num)).filter_mono
+          nhdsWithin_le_nhds] with x hx hxg
+      have hx1 : x < 1 := hx
+      constructor
+      · nlinarith
+      · nlinarith
+    have := hcd.tendsto.comp (tendsto_nhdsWithin_iff.mpr ⟨hin, hev⟩)
+    simpa [dilog_one] using this
+  -- assemble the seven terms
+  have T1 : Tendsto (fun x : ℝ => (1-x) * (Real.log (1+x)^2/2)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have := hone.mul ((hlog1p.pow 2).div_const 2); simpa using this
+  have T2 : Tendsto (fun x : ℝ => (1-x) * Real.log (1-x)^2) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have := oneSub_logSq_tendsto; simpa [mul_comm] using this
+  have T3 : Tendsto (fun x : ℝ => (1-x) * (2 * Real.log (1+x) * Real.log (1-x)))
+      (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have h := (hlog1p.const_mul 2).mul oneSub_log_tendsto
+    simpa [mul_comm, mul_assoc, mul_left_comm] using h
+  have T4 : Tendsto (fun x : ℝ => (1-x) * (2 * Real.log 2 * Real.log (1-x)))
+      (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have h := oneSub_log_tendsto.const_mul (2 * Real.log 2)
+    simpa [mul_comm, mul_assoc, mul_left_comm] using h
+  have T5 : Tendsto (fun x : ℝ => (1-x) * (Real.pi^2/6 - Real.log 2^2))
+      (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have := hone.mul_const (Real.pi^2/6 - Real.log 2^2); simpa using this
+  have T6 : Tendsto (fun x : ℝ => (1-x) * (-2 * dilog ((1-x)/2))) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have := hone.mul (hdil0.const_mul (-2)); simpa using this
+  have T7 : Tendsto (fun x : ℝ => (1-x) * dilog (x^2)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have := hone.mul hdil1; simpa using this
+  have hsum := ((((((T1.add T2).add T3).add T4).add T5).add T6).add T7)
+  simp only [add_zero] at hsum
+  refine hsum.congr ?_
+  intro x
+  unfold quadAltJclosed quadAltMclosed
+  ring
+
+/-- `F x = -2 V x · J(-x) → 0` as `x → 1⁻`. -/
+theorem quadAltF_tendsto_zero_left :
+    Tendsto (fun x : ℝ => -2 * quadAltV x * quadAltJclosed (-x)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+  have hA := quadAltV_slope_tendsto_one
+  have hB := oneSub_mul_quadAltJneg_tendsto
+  have hprod := (hA.mul hB).const_mul (2:ℝ)
+  simp only [mul_zero] at hprod
+  refine hprod.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hx1 : x < 1 := hx
+  have hne : x - 1 ≠ 0 := by linarith
+  field_simp
+  ring
+
 end RamanujanChallenge.P24QuadAlt
 
