@@ -377,3 +377,49 @@ kernels help directly: they are trilogarithm-based
 (`(ζ₃ − Li₃(x))/(1−x)` and `(ζ₃ − Li₃(−x))/(1+x)`), not `W0`-based.
 
 **Remaining.** Six hypotheses, the rows `I10 … I22`.
+
+## The rows are much cheaper than the Li₄-basis derivations suggest
+
+The published analytic derivations all route through dilog/trilog functional
+equations at `1/2` and produce `Li₄(1/2)` by way of an antiderivative — which in
+Lean would need the derivative of `Li₄`, which neither this repo nor Mathlib
+v4.29 has.  That is the expensive route and it is not necessary.
+
+Substituting `u = t/2` FIRST collapses `W0`: `log²(t/2)` becomes `log²u`, so
+
+```
+W0(t) = ζ₂ − 2 Li₂(u) − log²u        (u = t/2)
+```
+
+and the remaining factor is an exact differential in every case:
+
+```
+H1(t)/t  dt = −log(1−t)/t dt  = d[Li₂(t)]
+H2(t)/t  dt = −log(1−u)/u du  = d[Li₂(u)]
+H2(t)/(2−t) dt = −log(1−u)/(1−u) du = d[log²(1−u)/2]
+```
+
+so the `Li₂` cross term integrates by the chain rule, `∫ Li₂ d Li₂ = Li₂²/2`,
+with no series at all.  Two rows come out immediately, both verified as exact
+symbolic identities against the recorded table at 41 digits:
+
+```
+I20 = ζ₂·Li₂(½) − Li₂(½)² − log²2·Li₂(½) − 2 log2·Li₃(½) − 2 Li₄(½)
+I10 = ζ₂² − 2 V₂ − 2 ζ₄ − 2 log2·ζ₃ − log²2·ζ₂ ,   V₂ = Σ_{m≥1} H_m/(2^m m³)
+```
+
+`I20` needs no Euler sum whatsoever — only `Li₂(½)` (already proved here as
+`quadAlt_dilog_half`), `Li₃(½)`, and `Li₄(½)`.  `I10` needs one, `V₂`, plus the
+three elementary moments `Σ(1/n)(2/n³) = 2ζ₄`, `Σ(1/n)(1/n²) = ζ₃`,
+`Σ 1/n² = ζ₂`.
+
+The remaining three (`I12`, `I21`, `I22`) go the same way but land on the two
+half-interval moments `J12 = ∫₀^{1/2} log u log²(1−u)/u du` and
+`D3 = ∫₀^{1/2} log³(1−u)/u du`, whose series expansions produce `V₃` and `V₄`.
+Both are confirmed to close in the basis — see
+`scripts/p24_half_argument_basis.py`.  Consistency check passed: the direct
+route gives `I22 = ζ₂L²/2 − Li₂(½)L² − L⁴/2 + J12 − D3`, and the earlier IBP
+route gives `I22 = J12 − D3`; these agree exactly because
+`Li₂(½) = ζ₂/2 − L²/2`.
+
+**Order of attack, cheapest first: I20, I10, then I22, I12, I21.**
