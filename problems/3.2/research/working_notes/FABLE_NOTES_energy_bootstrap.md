@@ -2196,3 +2196,32 @@ double-certified.
   深度层塔端到端定理级, 进文; AUDIT-4 判负(碰撞不强制 jet,
   c∉span{b,D,E,F})——jet 线性杠杆死亡证书, 能量杠杆唯秩四 mixed
   cocycle 存活(Q6517_formulas.txt = crystal 节素材)。
+
+## §111 — Campaign 3 opening: COINC 第四靶 (2026-08-01 午后, life)
+
+**新归约 (自推, 已双机数值验证)**: Δ_{r,h} = b_r c_{r+h} − b_{r+h} c_r =
+N_h(r)/∏_{j=1}^h (r+j)³ (Casoratian gap identity, 归纳证明 + 22275/22275 机器验证,
+无奇异对: 窗口内 r+j 永不整除 p)。centered Cauchy (无需 Fourier):
+Σ_{h≤H} C_h ≤ #S/p + √(N_coinc(H) − #S²/p)。
+**[COINC_β]**: N_coinc(p^β) ≤ #S²/p + K·#S ⟹ **F_p ≤ (1+o(1))p^{2−β}** (β∈(1/2,1)),
+β=1 ⟹ E1 常数 (3+2√K)p。任何 β>1/2 破 3/2 纪录。
+Parseval 桥: [COINC@H] = GAP-2D-SQRT 的 L²(t) 平均 ⟹ 严格最弱充分靶。
+
+**战线定位**: (i) 逐对 Weil 死 (有效区 p^{1/4} < 平凡交叉 p^{1/3});
+(ii) 族平均完美相消也只到 √p = 恰好复现 3/2; (iii) Vinh 关联几何 = 3/2 集合级
+泛型阈值, 破 3/2 必须用序列的算术顺序 — 三重独立确认 family-compat 是唯一战场。
+梯子只需单尺度 Δ=p^{2/3} (σ=3/2 靶)。顶部 gap h≥M−√p 免费 (≤p/2)。
+中部 gap 由 block 结构自动豁免 (梯子只见块内小 gap)。
+
+**数值**: K_emp(H=p^.66) = 1.24/1.08/1.08/1.08/1.05 (p=499→7919) 有界递减;
+组件分解 (codex high): diag≡1, zz→0 (随p), refl≡0 (反射是反对称!), same+gen≈随机。
+ΣC_h ≈ 1.4H 线性 (CV 0.08–0.12)。
+
+**产物**: FABLE_SECTION_coinc_target.tex (语法绿, 待审计后并 proof.tex);
+CODEX_COINC_NUMERICS_report.md; campaign3_scripts/coinc_gonogo.py;
+DOCTRINE_SIGMA_STRIKE.md。
+**在飞**: life1–10 九发 (双审计/不可约/族平均/Dwork/换参/ATR/GPRV分层/退火);
+codex max 符号分解 (S1–S5, 含更新恒等式自相似 S4)。
+**风险登记 (两问)**: (a) 最没信心: [COINC] 与"仿射 Parseval"死亡证书的关系
+未对表原文 (q7/life8 在查); (b) 盲角: β∈(1/2,2/3) 是否存在比 2/3 更便宜的
+中间 rung 未系统扫描 (q1 第4问在查)。
