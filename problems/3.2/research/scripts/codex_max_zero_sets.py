@@ -27,6 +27,18 @@ def legendre(a, p):
     return -1 if value == p - 1 else value
 
 
+def apery_truncation_mod(p):
+    """Return b_0,...,b_(p-1) modulo p from the Apéry recurrence."""
+    values = [1, 5]
+    for n in range(1, p - 1):
+        numerator = (
+            (2 * n + 1) * (17 * n * n + 17 * n + 5) * values[n]
+            - n**3 * values[n - 1]
+        ) % p
+        values.append(numerator * pow((n + 1) ** 3, -1, p) % p)
+    return values[:p]
+
+
 def branch_sequence(kind, degree, p):
     inv2 = pow(2, -1, p)
     if kind == "tau":
@@ -71,6 +83,7 @@ def main():
     p23_examples = []
     p13_examples = []
     raw_exceptions = []
+    ordinary_double_roots = 0
 
     for p in primes_below(LIMIT):
         residue = p % 24
@@ -81,6 +94,18 @@ def main():
         values = branch_sequence(kind, degree, p)
         epsilon = legendre(-2, p)
         assert all(values[degree - j] == epsilon * values[j] % p for j in range(degree + 1))
+
+        # This directly audits the Sun + ordinary-point input in the proof:
+        # A_p(1) has order exactly two precisely in the anti-reciprocal cases.
+        apery_values = apery_truncation_mod(p)
+        at_one = sum(apery_values) % p
+        first = sum(n * value for n, value in enumerate(apery_values)) % p
+        second = sum(n * (n - 1) * value for n, value in enumerate(apery_values)) % p
+        assert (at_one == 0) == (epsilon == -1)
+        assert (2 * first - (p - 1) * at_one) % p == 0
+        if epsilon == -1:
+            assert first == 0 and second != 0
+            ordinary_double_roots += 1
 
         quarter = (p - 1) // 4 if kind == "tau" else (p - 3) // 4
         zero = values[quarter] == 0
@@ -133,6 +158,7 @@ def main():
             assert (4 * (j + 1) ** 2 + (2 * j + 1) ** 2) % p == pow(2, -1, p)
 
     print(f"Relevant-branch quarter law and reversal checked for every prime p < {LIMIT}")
+    print(f"A_p(1) ordinary double-root cases checked: {ordinary_double_roots}")
     for residue in (1, 5, 7, 11, 13, 17, 19, 23):
         print(f"  p mod 24 = {residue:2d}: zero/nonzero = {table[residue]}")
     print("Complete relevant-branch zero-count distributions:")
