@@ -740,3 +740,13 @@ mean_max 单调增 ⟹ **极值律增长坐实，非有界**。life 单素数采
 **AP.4 能量杠杆分叉（AUDIT-4 立项）**：深度塔现状=解释赋值、不压缩碰撞。三条最小引理任一到手即变能量工具：(i) c_v ≡ R_m(b_v,D_v,E_v,…) 有界次数恢复；(ii) 碰撞自动强推非平凡 jet 条件；(iii) mixed Frobenius extension 给独立 affine cocycle 每碰撞加一新方程。AUDIT-4（jet 张成测试 + 低次关系搜索 + 碰撞对上 b_rD_s−b_sD_r 消失率）= 死亡证书或 O(p) 入口的分叉实验。可执行几何路线：建秩四 mixed connection、解半线性 Φ 到 p^4、查 extension entry 是否提升 κ_p。
 
 **AP.5 [F] 转存缺陷与文献**：bridge 剥离 display-math——(B0) 母递推、(C2)/(C3) 完整式、jet 定义不全，**AUDIT-2/4 待 ASCII 重发**（已派 cron2 短问）。文献包：Beukers–Vlasenko Dwork crystals I–III + "Frobenius structure and p-adic zeta values"（Adv. Math. 480 (2025), Prop 1.3）+ Asakura 系 + Rowland–Yassawi–Krattenthaler（entire interpolation, D_v 来源）+ Beukers p-linear schemes（Indag. 2024）——含其对 Krattenthaler–Müller 引用的自查纠正。仓库锚点 88504170 验真。Casoratian 索引规范差一位的 [F] 标注采纳。归档 chatgpt-answers/Q6509.md。**共同盲点两条（立项收录）**：(1) c 与纯 MUM log 解混同=范畴错；(2) "跨块压缩自动控第一块能量"是错觉（最低层秩一退化、深层先见 jet 非 c）。
+
+---
+
+## 附录 AQ（战役三续）：小 h 因式分解定律——统计与代数完全咬合（GPRV = 族 {M_h} Chebotarev 方差）+ qN/Q6515 收获（P 部分 no-go 三命题 + 新靶 [GAP-2D-SQRT] 经验成立）
+
+**AQ.1 因式分解定律与统计-代数咬合【cron 机验（sympy h=2..14）+ 手验】**：**偶 h：N_h = (2r+h+1)·M_h（唯一有理根 r≡−(h+1)/2 = 恰是镜像强制碰撞点 (p−1−h)/2 mod p）；奇 h：N_h=M_h 整体不可约（h≤14，与 qI 证书一致）**。对账闭合：Chebotarev 平均根数（每 Q-不可约因子贡献 1）× 有效区间份额 (p−1−h)/p（对 h 平均=1/2）⟹ E[R_h]=1+1/2=1.5（偶）/1/2=0.5（奇）——**与 AM.6 实测 1.4952/0.5019 精确吻合**。图景定格："生日碰撞"= M_h 的 mod-p 根；**[GPRV] = 族 {M_h} 的 Chebotarev 根计数方差陈述**（family 相容性 = 增长导手 Chebotarev 的量词墙，现有精确字典）。**−51 贯通（life §108/Q6456）**：R_2 的 disc=−51（17t²+17t+5）与退火二步返回概率 (2+(−51|p))/(p−1) 是**同一个 Q(√−51)**——双世界（quenched/annealed）同治小 gap 层，"小 gap 免费"的代数根源，立项文档异常分层节开篇例。
+
+**AQ.2 Q6515 收获（P 部分攻坚回执）**：(1) 记号三分定格：P^first(支撑)/S_p(H)=ΣR_h(总量)/Q_p(H)(重复)，S=P^first+Σ(d−1)₊≤P^first+Q；数据 Q≈0 ⟹ S 主质量=singleton ⟹ **墙=P^first**。(2) **no-go 三命题（严格化）**：结式塔/renewal/相邻互素**原则上只控 Q 不控 P^first**（反模型证书：全结式非零、Q=0、S≍H²——SageMath 构造归档 Q6515_code.txt）；镜像只给常数 2/4 不给指数；朴素 Stepanov 在 (3H,H−1) 双次数曲线上退化为 Bézout 恒等式（无乘法子群维数盈余，Hilbert 维数+秩测试矩阵在其 §4）。(3) **新靶 [GAP-2D-SQRT]**：B_t(H)=Σ_{h≤H}Σ_r e_p(tΔ_{r,h})（Δ=Casoratian 二点式）满足 |B_t|≪(pH)^{1/2}p^ε ⟹ **S_p(H)≪H+(pH)^{1/2}p^ε**（H=√p 时 S≪p^{3/4}，δ=1/2 改进）；L¹-flattening 版 (0.5) ⟹ 全目标 S≪Hp^ε。所需=方向 (−tc_r,tb_r) 随 r 旋转的双线性二维相消（固定 gap Weil 不覆盖）。(4) **P 与 Q 不等价、P 与 E1 不形式等价**（双向反模型其 §6）——但技术类型同级（固定 p、增长 h、保序 quenched family）。(5) 优先级：时间低频谱账 > 2D-sqrt > 结式（只服务 Q）> Stepanov 秩缺陷实验后止损。盲点：**clock-twisted/bispectral 低秩对象**（分析低秩 vs 代数低秩双测——若存在则全部 degree-growth no-go 失效，若证伪则 no-go 升级为封顶定理）。
+
+**AQ.3 [GAP-2D-SQRT] 泄漏测试（cron 即跑）**：p=10007/30011，t∈{1,2,5}，dyadic H 到 √p：**|B_t(H)|/√(pH) 全场 O(1)（0.01–2.07 波动，H 跨 128 倍无幂增长）——conductor 泄漏未出现，[GAP-2D-SQRT] 经验成立**（Q6515 自己给的可证伪测试通过）。战役三现有三个经验成立的攻坚靶：[GPRV θ=0]（AN.5）、[ATR]（AO.1）、[GAP-2D-SQRT]（本条）——全部等待同一类 quenched family 输入。归档 chatgpt-answers/Q6515.md + Q6515_code.txt。

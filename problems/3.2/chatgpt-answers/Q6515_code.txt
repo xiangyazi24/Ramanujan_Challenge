@@ -1,0 +1,76 @@
+p = 1009
+H = 12
+F = GF(p)
+R.<X> = PolynomialRing(F)
+
+# 预留所有偶 h 的镜像中心，避免被较早层拿走。
+reserved = {(p - 1 - h)//2 for h in range(2, H + 1, 2)}
+used = set()
+A = {}
+P = {}
+
+for h in range(1, H + 1):
+    Ah = set()
+    if h % 2 == 0:
+        c = (p - 1 - h)//2
+        assert c not in used
+        Ah.add(c)
+        used.add(c)
+
+    # 偶 h: 2h+1 个根；奇 h: 2h 个根。都 <= 3h。
+    target = 2*h + (1 if h % 2 == 0 else 0)
+    for r in range(0, p - h):
+        s = p - 1 - h - r
+        if r >= s:
+            continue
+        if r in used or s in used:
+            continue
+        if r in reserved or s in reserved:
+            continue
+        Ah.update([r, s])
+        used.update([r, s])
+        if len(Ah) == target:
+            break
+
+    assert len(Ah) == target
+    A[h] = Ah
+    P[h] = prod(X - F(a) for a in Ah)
+
+    # 镜像函数方程。
+    assert P[h](F(p - 1 - h) - X) == (-1)^P[h].degree() * P[h]
+    assert P[h].degree() <= 3*h
+    assert (P[h].degree() % 2) == (1 if h % 2 == 0 else 0)
+
+# 全部跨层互素/结果式非零。
+for h in range(1, H + 1):
+    for k in range(h + 1, H + 1):
+        assert gcd(P[h], P[k]) == 1
+        assert P[h].resultant(P[k]) != 0
+
+S = sum(P[h].degree() for h in range(1, H + 1))
+Q = 0                              # 根集两两不交
+Pfirst = len(set().union(*A.values()))
+assert S == Pfirst and Q == 0
+print(S, H^2, S/H)
+
+每层次数 O(h)
++ 镜像配对
++ 全部 pairwise resultant 非零/小共同根
++ renewal 对共同根的描述
+
+列: c_{ij}, 0<=i<=A, 0<=j<=B;
+行: (h,q,k), 1<=h<=H, 0<=q<M, 0<=k<deg N_h;
+矩阵元: X^k 在 rem_{N_h}(∂_X^[q](X^i h^j)) 中的系数。
+
+P 部分  <=>  E^π=O(p)
+
+1. A_p(k) = FFT_h(R_h)（按 (8.2) 的规范化恢复）；
+2. 剥离镜像基准 R_h^mir = 1_{2|h} 后的 A_p^res(k)；
+3. 对 H=2^j 和 H=floor(sqrt(p)) 输出
+   L_p(H)=p^{-1} sum_k (A_p(k)-N) F_H(k)；
+4. 输出低频带 |k|<=p/H 内的
+   max |A_p^res(k)-baseline|、L1 质量和二阶质量。
+
+[GAP-TIME-FEJER]
+For H<=sqrt(p),
+ p^{-1} sum_k (A_p(k)-N)F_H(k) << H p^epsilon.
