@@ -43,6 +43,19 @@ other's way; mechanically they do not, so:
   message. This has already happened.
 - Expect your index to be cleared by a concurrent commit. Re-stage and retry
   rather than assuming your edit was lost.
+- **After every commit, verify it is yours.** The sweep is silent: `git commit`
+  reports "no changes added" and your work is already in someone else's commit
+  under their message. Detection is
+
+  ```
+  git log --oneline -S'<a symbol you just introduced>' -- <path>
+  ```
+
+  If that names a commit you did not write, the content is safe but the audit
+  trail is wrong. Do **not** rewrite history — the foreign commit has
+  descendants. Add an empty commit recording what actually landed where.
+  This has now happened twice (2026-08-01: P2.4 Layer E step 2 landed in a
+  P3.2 dispersion commit).
 - A sandboxed agent that can only write under its own clone has to be merged in
   explicitly. Wire its clone as a git remote and cherry-pick by path.
 

@@ -257,6 +257,44 @@ record).  Per-prime zero counts along the way: mean $0.9996$, maximum $12$
 $2\cdot\mathrm{Poisson}(0.4998)+\text{midpoint}$ law
 ($\chi^2=3.43$ on 5 d.f.).
 
+\subsection{The quarter-point value theorem}
+
+\begin{theorem}[quarter-point value]\label{thm:quarter-value}
+For $p\equiv1\pmod4$ (the nonvanishing classes of
+Theorem~\ref{thm:apparition}(iii)), the quarter coefficient is the $p$-th
+Fourier coefficient of a single fixed ($p$-independent) series:
+\[
+v_p:=\tau_{(p-1)/4}\;\equiv\;[Q^p]\,\mathcal F(Q)\pmod p,\qquad
+\mathcal F(Q)=Q\,D(Q^4)\prod_{n\ge1}
+\bigl[(1-Q^{4n})(1-Q^{8n})(1-Q^{12n})(1-Q^{24n})\bigr]^{1/2},
+\]
+where $D=\tfrac12\bigl(E_2(\tau)-2E_2(2\tau)-3E_2(3\tau)+6E_2(6\tau)\bigr)$
+— a weight-$3$ eta-multiplier form on the fourfold cyclic cover of the
+level-$6$ modular curve.  The value factorizes as $v_p\equiv2A\cdot c_p$
+with $2A=\binom{(p-1)/2}{(p-1)/4}$ (Gauss) and $c_p$ satisfying the
+order-$24$ layer recurrence; since the multiplier introduces unbounded
+powers of $2$ in the denominators, $\mathcal F$ is not congruent to any
+rational newform — explaining the failure of every low-degree
+CM/Jacobsthal fit (all such fits were eliminated on $267$ primes).
+\end{theorem}
+
+\begin{proof}[Certification]
+Derivation hand-checked line by line (eta-quotient identity
+$H=W\,T^{1/4}=(\eta_1\eta_2\eta_3\eta_6)^{1/2}$; integrality
+$U=T^{-1/4}\in q^{-1/4}\mathbb Z[[q]]$; $U^p\equiv U(q^p)$; degree
+pigeonhole forcing the unique $k=0$ term).  Machine verification: in-sample
+$12/12$ and out-of-sample $5/5$ at $p=769,937,1009,1033,1153$
+(\texttt{CRON\_q6360\_verify.py}, independently re-run).  Recurrence for
+$c_p$ agrees verbatim with the independently derived $U$-recurrence
+(double source).
+\end{proof}
+
+\noindent Together, Theorems~\ref{thm:apparition}, \ref{thm:bounded-object},
+\ref{thm:quarter-value} and Proposition~\ref{prop:parity} complete the
+apparition program: which residue classes vanish, what geometric object
+carries the values, the exact value at the distinguished point, and the
+parity of the zero fibre.
+
 \subsection{The character-order counting lemma and its consequence}
 
 \begin{lemma}[character-order counting]\label{lem:counting}

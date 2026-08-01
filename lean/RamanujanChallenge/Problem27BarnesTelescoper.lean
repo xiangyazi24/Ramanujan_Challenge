@@ -697,7 +697,6 @@ theorem zudilinBarnesPhi_telescoper_halfplane27
   apply zudilinBarnesPhi_telescoper_fixedS27 k s
   have h := ctPoleProduct_translate_ne_zero27 (n := k + 3) (s := s) hs
   convert h using 1
-  push_cast
 
 #print axioms ctQhat_poly_identity27
 #print axioms ctR_telescoper_stepC27

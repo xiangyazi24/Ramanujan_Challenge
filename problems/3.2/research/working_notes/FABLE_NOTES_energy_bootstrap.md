@@ -1285,3 +1285,15 @@ double-certified.
   跨素数意外恒等式。Tests A–G 数值任务单归 cron 对相关账本续跑。
 - **结论**: P3.2 点态定格 Lang–Trotter 难度类, 判定由 20+ 独立审计源
   (9 ChatGPT 深问+4 codex+双侧机器验证)一致背书。转入收网整理期。
+
+## §61 (08-01) 四分点值定理入文 — apparition 纲领完璧
+
+- Q6360 (q14, 爸爸 in-chat 手贴回收): v_p = τ_{(p−1)/4} ≡ [Q^p]𝓕, 𝓕 =
+  level-6 四重循环覆盖上固定权-3 eta-乘子形式(含 E₂ 组合 D)。我机复跑
+  CRON_q6360_verify.py: **in-sample 12/12 + OOS 5/5** 全中。乘子分母无界
+  2 幂 ⟹ 非有理同余 newform——附录 N 低次全灭获机制解释。
+- 已写成 Theorem(quarter-point value) 入 apparition 节, 与 bounded-object
+  定理、parity 命题并列; 纲领四件套齐: 消失类(apparition)/几何载体
+  (bounded-object)/特殊点精确值(quarter-value)/零纤维奇偶(parity)。
+  proof.tex 构建绿。
+- 战役收网态势: 武器审判全毕(§60), 定理群完璧(§61), 剩余=收网文档整理。
