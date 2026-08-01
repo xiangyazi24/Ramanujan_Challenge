@@ -59,3 +59,45 @@ First endpoint evaluation. Only after (a)-(c).
 Before proving anything new: grep the repo. This run has already found TWO stubs
 that were false gaps (`hcontM` derivable from a lemma proved 15 min earlier;
 `quadAlt_dilog_landen` already in `Problem26WeightThree`). Assume more exist.
+
+## Layer E targets — the six endpoint integrals, PSLQ-verified at 60 digits
+
+Computed independently (mpmath, dps=60, PSLQ against the weight-4 basis
+`{Li4(1/2), log⁴2, log²2·ζ2, log2·ζ3, ζ2²}`). These are the exact targets to
+formalize; do not re-derive them, and do not accept a closed form that
+disagrees with one of these.
+
+```
+I10 = -2 Li4(1/2) -  (1/12) log⁴2 -      log²2·ζ2 -  (7/4) log2·ζ3 + (1/10) ζ2²
+I11 =                                                -(7/2) log2·ζ3 +  (3/4) ζ2²
+I12 = -6 Li4(1/2) -   (1/4) log⁴2 +  3   log²2·ζ2 - (21/4) log2·ζ3 +  (9/5) ζ2²
+I20 = -2 Li4(1/2) -  (1/12) log⁴2 +  (1/2) log²2·ζ2 - (7/4) log2·ζ3 +  (1/4) ζ2²
+I21 = -6 Li4(1/2) -   (1/4) log⁴2 -  (3/2) log²2·ζ2 - (7/2) log2·ζ3 + (51/20) ζ2²
+I22 = -6 Li4(1/2) -   (1/4) log⁴2 +  (3/2) log²2·ζ2 - (21/4) log2·ζ3 + (23/10) ζ2²
+```
+
+**`I11 = cubicLinearEulerValue24` exactly** — the repo's `Tplus` is
+`-(7/2) log2 ζ3 + (3/4) ζ2²`, identical to the I11 row. Verified to 48 digits.
+So the coefficient of `Tminus` in I11 is ZERO; an earlier reading of the
+certificate that mixed `Tplus` and `Tminus` into this individual row was wrong —
+that mixture belongs only to the final six-integral combination.
+
+Consistency of the whole table, checked symbolically term by term on
+`-2I10 - 2I11 + 2I12 + 4I20 + 6I21 - 5I22`:
+
+| basis element | from the table | target |
+| --- | --- | --- |
+| Li4(1/2)   | 4 - 12 - 8 - 36 + 30 = -22 | -22 |
+| log⁴2      | (2-6-4-18+15)/12 = -11/12  | -11/12 |
+| log²2·ζ2   | 2+6+2-9-7.5 = -13/2        | -13/2 |
+| log2·ζ3    | 3.5+7-10.5-7-21+26.25 = -7/4 | -7/4 |
+| ζ2²        | -0.2-1.5+3.6+1+15.3-11.5 = 67/10 | 67/10 |
+
+and numerically the combination agrees with `alternatingQuadraticEulerValue24`
+to 57 digits. The certificate's endpoint table is therefore independently
+confirmed, not merely transcribed.
+
+Numerical note: the `/t` and `/(1-t)` rows need the substitution `t = e^{-u}`
+(resp. `1-t = e^{-u}`) to reach PSLQ precision — direct quadrature on `[0,1]`
+stalls around 14 digits near the log² endpoint and makes PSLQ report "no
+relation" for I10, which is an artifact, not a fact about the integral.
