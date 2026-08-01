@@ -77,7 +77,7 @@ private theorem integral_pow_mul_neg_log (n : ℕ) :
             (((n : ℝ) + 1) ^ 2)) using 1
         · funext x
           field_simp
-        · ring
+        · ring_nf
       simpa [F] using hmain
     · have hcont : ContinuousAt F 1 := by
         dsimp [F]
