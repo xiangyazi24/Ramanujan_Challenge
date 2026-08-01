@@ -1,0 +1,12 @@
+import RamanujanChallenge.Problem22ConcentrationFinite
+
+namespace RamanujanChallenge.P22
+
+#print axioms rivoalWeightedCube22_le
+#print axioms rivoalWeightedSquare22_le
+#print axioms rivoalSaddleSecondMoment22_exact
+#print axioms rivoalSaddleSecondMoment22_le
+#print axioms rivoalWeightedCauchySchwarz22
+#print axioms tendsto_saddle_mean22
+
+end RamanujanChallenge.P22
