@@ -205,3 +205,14 @@ Fable's targets on the ρ=2 law, measured:
   from pairwise correlation of σ values, not from any special subfamily.
 ⟹ "Proving ρ=2 = proving Poisson germ statistics" must account for the √2 collision-rate
 factor (P(σ_d1=σ_d2) ≈ √2/p, not 1/p). The R_H/H² constant ~0.707 = 1/√2 is the fingerprint.
+
+## 4.15 mirror-root decode CONFIRMED (DS, Fable's decode verified)
+- **Mirror identity**: σ_h(r*)=σ_k(r*) at r*=(p−1−h−k)/2 for ALL same-parity (h,k) pairs
+  (240/240, p=1009 and 2003, 100% hit). The mirror-forced root holds.
+- **Opposite-parity forced root at 2r+h+k=−1: NO** (0/256 pairs, p=1009/2003) — R12's question
+  answered: the singular-point reflection gives no forced root on opposite-parity pairs.
+- **Decomposition confirmed**: R_H/H² = 0.707 (p=1009) = 0.2344 mirror-forced (240 same-parity
+  pairs) + 0.4727 residual; p=2003: 0.7324 = 0.2344 + 0.4980. The residual ≈ Poisson 0.5.
+- ⟹ the √2 inflation in the germ double-returns is fully explained: 0.25 mirror-forced
+  (structural, exactly 1 root per same-parity pair) + 0.48–0.50 Poisson residual (non-mirror
+  double-returns are Poisson). The ρ=2 law's random model = mirror-forced + Poisson residual.
