@@ -54,7 +54,7 @@ for upper_shift in range(1, 16, 2):
           "first bad", next((n for n, x in enumerate(upper) if x < 0), None),
           "min float", float(min(upper)))
 
-lower_shift, upper_shift = 2, 3
+lower_shift, upper_shift = 4, 5
 print("\nscaled states for shifts", lower_shift, upper_shift)
 for n, (p, q) in enumerate(data[:20]):
     lo = [q[j]*partials[2*n+lower_shift]-p[j] for j in range(3)]

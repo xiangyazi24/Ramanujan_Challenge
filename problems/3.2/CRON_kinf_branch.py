@@ -1528,6 +1528,51 @@ def logarithmic_model_diagnostic(
     }
 
 
+def fit_band_height_decay(
+    anatomy_rows: Sequence[Dict[str, Any]], band_index: int
+) -> Dict[str, Any]:
+    """Fit a fixed dyadic band's per-height minimum to ``C*h^-alpha``."""
+
+    points = []
+    for row in anatomy_rows:
+        band = next(item for item in row["dyadic_bands"] if item["k"] == band_index)
+        points.append((row["h"], mp.mpf(band["minimum_relative_separation"])))
+    xs = [mp.log(h) for h, _ in points]
+    ys = [mp.log(value) for _, value in points]
+    x_mean = sum(xs) / len(xs)
+    y_mean = sum(ys) / len(ys)
+    slope = sum((x - x_mean) * (y - y_mean) for x, y in zip(xs, ys)) / sum(
+        (x - x_mean) ** 2 for x in xs
+    )
+    intercept = y_mean - slope * x_mean
+    free_rmse = mp.sqrt(
+        sum((y - (intercept + slope * x)) ** 2 for x, y in zip(xs, ys))
+        / len(points)
+    )
+    constant_rmse = mp.sqrt(sum((y - y_mean) ** 2 for y in ys) / len(points))
+    inverse_intercept = sum(y + x for x, y in zip(xs, ys)) / len(points)
+    inverse_rmse = mp.sqrt(
+        sum((y - (inverse_intercept - x)) ** 2 for x, y in zip(xs, ys))
+        / len(points)
+    )
+    return {
+        "band": "k=%d" % band_index,
+        "distance_interval": "[2^-%d,2^-%d)" % (band_index, band_index - 1),
+        "fit_range": "%d..%d" % (points[0][0], points[-1][0]),
+        "point_count": len(points),
+        "model": "min_relative_separation = C*h^(-alpha)",
+        "alpha": mp.nstr(-slope, 14),
+        "C": mp.nstr(mp.exp(intercept), 14),
+        "free_log_rmse": mp_scientific(free_rmse, 12),
+        "constant_log_rmse": mp_scientific(constant_rmse, 12),
+        "inverse_h_log_rmse": mp_scientific(inverse_rmse, 12),
+        "first_height": points[0][0],
+        "first_minimum": mp_scientific(points[0][1], 18),
+        "last_height": points[-1][0],
+        "last_minimum": mp_scientific(points[-1][1], 18),
+    }
+
+
 def build_pair_anatomy_payload(
     standard_payload: Dict[str, Any], anatomy_rows: Sequence[Dict[str, Any]], args: argparse.Namespace
 ) -> Dict[str, Any]:
@@ -1541,8 +1586,26 @@ def build_pair_anatomy_payload(
         parity_points[parity].append(
             (row["h"], mp.mpf(row["central_gap"]["gap_times_h_squared"]))
         )
+    primary_cutoff = max(min(row["h"] for row in anatomy_rows), max(row["h"] for row in anatomy_rows) - 20)
     fits = {
-        parity: fit_central_limit(points)
+        parity: fit_central_limit(
+            [(h, value) for h, value in points if h >= primary_cutoff]
+        )
+        for parity, points in parity_points.items()
+    }
+    stability_cutoffs = sorted(
+        {
+            min(row["h"] for row in anatomy_rows),
+            min(row["h"] for row in anatomy_rows) + 10,
+            primary_cutoff,
+        }
+    )
+    fit_stability = {
+        parity: [
+            fit_central_limit([(h, value) for h, value in points if h >= cutoff])
+            for cutoff in stability_cutoffs
+            if sum(1 for h, _ in points if h >= cutoff) >= 3
+        ]
         for parity, points in parity_points.items()
     }
     kappa_odd = mp.mpf(fits["odd"]["coefficients"]["kappa"])
@@ -1595,6 +1658,16 @@ def build_pair_anatomy_payload(
     macroscopic = [row for row in aggregate_rows if row["k"] <= 2]
     far_row = min(macroscopic, key=lambda row: mp.mpf(row["empirical_lower_bound"]))
     far_lower_bound = mp.mpf(far_row["empirical_lower_bound"])
+    height_decay = [
+        fit_band_height_decay(anatomy_rows, band_index)
+        for band_index in (1, 2, 3)
+    ]
+    k1_decay_exponent = mp.mpf(height_decay[0]["alpha"])
+    far_uniform_supported = (
+        k1_decay_exponent < mp.mpf("0.25")
+        and mp.mpf(height_decay[0]["constant_log_rmse"])
+        <= mp.mpf(height_decay[0]["inverse_h_log_rmse"])
+    )
     every_minimum_is_central = all(
         row["global_minimum"]["is_predicted_central_inner_pair"]
         for row in anatomy_rows
@@ -1610,6 +1683,7 @@ def build_pair_anatomy_payload(
         and kappa_odd > 0
         and kappa_even > 0
         and far_lower_bound > 0
+        and far_uniform_supported
     )
 
     result = {
@@ -1627,8 +1701,10 @@ def build_pair_anatomy_payload(
             "all_global_minima_are_predicted_central_inner_pairs": every_minimum_is_central,
             "fit_residual_gate": fit_residual_ok,
             "macroscopic_far_threshold": "cell distance >= 1/4",
+            "far_uniform_constant_or_quadratic_supported": far_uniform_supported,
         },
         "central_fits": fits,
+        "central_fit_stability": fit_stability,
         "constants": {
             "kappa_odd": mp.nstr(kappa_odd, 20),
             "kappa_even": mp.nstr(kappa_even, 20),
@@ -1641,8 +1717,11 @@ def build_pair_anatomy_payload(
             "macroscopic_far_lower_bound": mp_scientific(far_lower_bound, 20),
             "macroscopic_far_lower_bound_band": far_row["band"],
             "macroscopic_far_lower_bound_h": far_row["attained_at_h"],
+            "macroscopic_far_lower_bound_pair": far_row["minimizing_pair"],
+            "k1_height_decay_exponent": height_decay[0]["alpha"],
         },
         "far_band_model_diagnostic": logarithmic_model_diagnostic(aggregate_rows),
+        "far_band_height_decay": height_decay,
         "aggregate_dyadic_bands": aggregate_rows,
         "heights": list(anatomy_rows),
     }
