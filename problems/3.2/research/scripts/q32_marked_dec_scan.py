@@ -6,8 +6,10 @@ five spike primes from CODEX_TE_SCAN.md.  All recurrence, polynomial, root,
 and counting operations are exact modulo p; floating point is used only for
 reported ratios and the log-log regression.
 
-The script has no third-party dependencies.  Its polynomial root counter
-uses gcd(f, X^p-X); dense products are accelerated by exact Kronecker
+The Python driver has no third-party dependencies.  For the full exhaustive
+root scan it compiles an embedded C11 continuant evaluator with the system C
+compiler.  An independent pure-Python gcd(f, X^p-X) implementation is kept
+for backend cross-checks; dense polynomial products use exact Kronecker
 substitution into Python integers.
 """
 
