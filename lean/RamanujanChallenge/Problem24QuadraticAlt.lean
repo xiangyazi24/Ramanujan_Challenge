@@ -2173,6 +2173,48 @@ theorem quadAltF_tendsto_zero_left :
   field_simp
   ring
 
+/-! ## Integrability atoms for the IBP side conditions
+
+Integrability is much weaker than continuity: `log` and `(log x)^2` are both
+integrable on `[0,1]`, so the endpoint singularities of `A` and `B` need only be
+DOMINATED, not removed. -/
+
+/-- `|log x| ≤ 4 * x ^ (-(1:ℝ)/4)` for `0 < x ≤ 1`. -/
+theorem abs_log_le_rpow {x : ℝ} (hx0 : 0 < x) (hx1 : x ≤ 1) :
+    |Real.log x| ≤ 4 * x ^ (-(1:ℝ)/4) := by
+  have hlognonpos : Real.log x ≤ 0 := Real.log_nonpos hx0.le hx1
+  rw [abs_of_nonpos hlognonpos]
+  have hinv : (0:ℝ) ≤ x⁻¹ := by positivity
+  have h := Real.log_le_rpow_div hinv (show (0:ℝ) < 1/4 by norm_num)
+  rw [Real.log_inv] at h
+  have hrw : (x⁻¹) ^ ((1:ℝ)/4) = x ^ (-(1:ℝ)/4) := by
+    rw [← Real.rpow_neg_one x, ← Real.rpow_mul hx0.le]
+    norm_num
+  rw [hrw] at h
+  calc -Real.log x ≤ x ^ (-(1:ℝ)/4) / (1/4) := h
+    _ = 4 * x ^ (-(1:ℝ)/4) := by ring
+
+/-- `(log x)^2` is interval-integrable on `[0,1]`: dominated by `16 x^(-1/2)`. -/
+theorem intervalIntegrable_logSq :
+    IntervalIntegrable (fun x : ℝ => Real.log x ^ 2) volume 0 1 := by
+  have hmaj : IntervalIntegrable (fun x : ℝ => 16 * x ^ (-(1:ℝ)/2)) volume 0 1 :=
+    (intervalIntegrable_rpow' (by norm_num)).const_mul 16
+  rw [intervalIntegrable_iff_integrableOn_Ioc_of_le (by norm_num : (0:ℝ) ≤ 1)] at hmaj ⊢
+  refine hmaj.mono' ?_ ?_
+  · exact (Real.measurable_log.pow_const 2).aestronglyMeasurable
+  · filter_upwards [ae_restrict_mem measurableSet_Ioc] with x hx
+    have hx0 : 0 < x := hx.1
+    have hx1 : x ≤ 1 := hx.2
+    have h := abs_log_le_rpow hx0 hx1
+    have habs : (0:ℝ) ≤ |Real.log x| := abs_nonneg _
+    have hr : (0:ℝ) < x ^ (-(1:ℝ)/4) := Real.rpow_pos_of_pos hx0 _
+    rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _)]
+    calc Real.log x ^ 2 = |Real.log x| ^ 2 := by rw [sq_abs]
+      _ ≤ (4 * x ^ (-(1:ℝ)/4)) ^ 2 := by nlinarith
+      _ = 16 * x ^ (-(1:ℝ)/2) := by
+          rw [mul_pow, ← Real.rpow_natCast (x ^ (-(1:ℝ)/4)) 2, ← Real.rpow_mul hx0.le]
+          norm_num
+
 /-- Integration by parts (Q6047 (4.9)): with `F = −2V·J(−x)`, `F(1)=F(0)=0`
 (`V(1)=0`, `J(0)=0`), so `∫₀¹ (−log x)/x·Q(−x) = ∫₀¹ (−2V(x))·Dminus(x)`. -/
 theorem quadAltCoeffIntegral_eq_neg2V_Dminus :
