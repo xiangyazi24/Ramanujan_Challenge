@@ -180,6 +180,90 @@ private theorem integral_laplace_poleBlock27
         integral_self_mul_cexp_neg_mul_Ioi27 hz]
       ring
 
+private def poleAbscissa27 (m : ℕ) : ℝ :=
+  (m : ℝ) + 1 / 2
+
+private def polePoint27 (m : ℕ) (y : ℝ) : ℂ :=
+  (poleAbscissa27 m : ℂ) + (y : ℂ) * Complex.I
+
+@[simp] private theorem polePoint_re27 (m : ℕ) (y : ℝ) :
+    (polePoint27 m y).re = poleAbscissa27 m := by
+  simp [polePoint27]
+
+private def poleBlock27 (m : ℕ) (y : ℝ) : ℂ :=
+  (polePoint27 m y)⁻¹ + ((polePoint27 m y) ^ 2)⁻¹ / 2
+
+private def laplaceWeight27 (m : ℕ) (t : ℝ) : ℝ :=
+  (1 + t / 2) * Real.exp (-(poleAbscissa27 m * t))
+
+private def sechSq27 (y : ℝ) : ℝ :=
+  1 / Real.cosh (Real.pi * y) ^ 2
+
+private def fourierKernel27 (t y : ℝ) : ℂ :=
+  Complex.exp (-(y * t : ℝ) * Complex.I) /
+    (Real.cosh (Real.pi * y) : ℂ) ^ 2
+
+private theorem poleAbscissa_pos27 (m : ℕ) : 0 < poleAbscissa27 m := by
+  unfold poleAbscissa27
+  positivity
+
+private theorem integrableOn_laplaceWeight27 (m : ℕ) :
+    IntegrableOn (laplaceWeight27 m) (Ioi 0) := by
+  have h0 := integrableOn_pow_mul_exp_neg_mul27 0 (poleAbscissa_pos27 m)
+  have h1 := integrableOn_pow_mul_exp_neg_mul27 1 (poleAbscissa_pos27 m)
+  have hsum := h0.add (h1.const_mul (1 / 2 : ℝ))
+  refine hsum.congr ?_
+  filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+  simp [laplaceWeight27]
+  ring
+
+private theorem integrable_sechSq27 : Integrable sechSq27 := by
+  apply integrable_zudilinBarnesEnvelope27.mono'
+  · apply Continuous.aestronglyMeasurable
+    fun_prop
+  · filter_upwards with y
+    let C : ℝ := Real.cosh (Real.pi * y)
+    have hCpos : 0 < C := Real.cosh_pos _
+    have hC1 : 1 ≤ C := Real.one_le_cosh _
+    have hsqrt0 : 0 ≤ Real.sqrt C := Real.sqrt_nonneg _
+    have hsqrt_sq : (Real.sqrt C) ^ 2 = C := Real.sq_sqrt hCpos.le
+    have hsqrt_le : Real.sqrt C ≤ C ^ 2 := by
+      nlinarith [sq_nonneg (Real.sqrt C - 1), sq_nonneg (C - 1)]
+    rw [Real.norm_eq_abs, abs_of_nonneg (by unfold sechSq27; positivity)]
+    unfold sechSq27 zudilinBarnesEnvelope27
+    exact one_div_le_one_div_of_le (Real.sqrt_pos.2 hCpos) hsqrt_le
+
+private theorem integral_fourierKernel27 {t : ℝ} (ht : 0 < t) :
+    (∫ y : ℝ, fourierKernel27 t y) =
+      ((t / (Real.pi * Real.sinh (t / 2)) : ℝ) : ℂ) := by
+  let ξ : ℝ := t / (2 * Real.pi)
+  have hξ : ξ ≠ 0 := by
+    dsimp only [ξ]
+    exact div_ne_zero ht.ne' (mul_ne_zero (by norm_num) Real.pi_ne_zero)
+  have h := integral_sechSq_cexp27 ξ
+  rw [if_neg hξ] at h
+  calc
+    (∫ y : ℝ, fourierKernel27 t y) =
+        ∫ y : ℝ,
+          Complex.exp (-(2 * Real.pi * y * ξ) * Complex.I) /
+            (Real.cosh (Real.pi * y) : ℂ) ^ 2 := by
+              apply integral_congr_ae
+              filter_upwards with y
+              unfold fourierKernel27
+              congr 2
+              push_cast
+              dsimp only [ξ]
+              field_simp [Real.pi_ne_zero]
+              ring
+    _ = ((2 * ξ / Real.sinh (Real.pi * ξ) : ℝ) : ℂ) := h
+    _ = ((t / (Real.pi * Real.sinh (t / 2)) : ℝ) : ℂ) := by
+      norm_cast
+      dsimp only [ξ]
+      rw [show Real.pi * (t / (2 * Real.pi)) = t / 2 by
+        field_simp [Real.pi_ne_zero]]
+      field_simp [Real.pi_ne_zero]
+
 #print axioms integral_laplace_poleBlock27
+#print axioms integral_fourierKernel27
 
 end RamanujanChallenge.P27
