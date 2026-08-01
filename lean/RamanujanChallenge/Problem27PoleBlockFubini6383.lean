@@ -15,9 +15,31 @@ theorem integrable_doubleKernel (m : ℕ) :
       ((volume.restrict (Ioi 0)).prod volume) := by
   have hmajor := (integrableOn_laplaceWeight m).norm.mul_prod integrable_sechSq
   apply hmajor.mono'
-  · apply Continuous.aestronglyMeasurable
-    unfold Function.uncurry doubleKernel fourierKernel laplaceWeight
-    fun_prop
+  · have hlap : Continuous fun p : ℝ × ℝ =>
+        (laplaceWeight m p.1 : ℂ) := by
+      unfold laplaceWeight
+      fun_prop
+    have hphase : Continuous fun p : ℝ × ℝ =>
+        Complex.exp (-(p.2 * p.1 : ℝ) * Complex.I) := by
+      fun_prop
+    have hden : Continuous fun p : ℝ × ℝ =>
+        (Real.cosh (Real.pi * p.2) : ℂ) ^ 2 := by
+      fun_prop
+    have hden0 : ∀ p : ℝ × ℝ,
+        (Real.cosh (Real.pi * p.2) : ℂ) ^ 2 ≠ 0 := fun p =>
+      pow_ne_zero 2 (Complex.ofReal_ne_zero.mpr (Real.cosh_pos _).ne')
+    have hcont : Continuous fun p : ℝ × ℝ =>
+        (laplaceWeight m p.1 : ℂ) *
+          (Complex.exp (-(p.2 * p.1 : ℝ) * Complex.I) /
+            (Real.cosh (Real.pi * p.2) : ℂ) ^ 2) :=
+      hlap.mul (hphase.div hden hden0)
+    change AEStronglyMeasurable
+      (fun p : ℝ × ℝ =>
+        (laplaceWeight m p.1 : ℂ) *
+          (Complex.exp (-(p.2 * p.1 : ℝ) * Complex.I) /
+            (Real.cosh (Real.pi * p.2) : ℂ) ^ 2))
+      ((volume.restrict (Ioi 0)).prod volume)
+    exact hcont.aestronglyMeasurable
   · filter_upwards with p
     rcases p with ⟨t, y⟩
     change ‖(laplaceWeight m t : ℂ) * fourierKernel t y‖ ≤
@@ -44,10 +66,27 @@ theorem integral_doubleKernel_t (m : ℕ) (y : ℝ) :
           filter_upwards with t
           unfold doubleKernel laplaceWeight fourierKernel polePoint
           push_cast
-          rw [← Complex.exp_add]
-          field_simp [hC]
-          congr 2
-          ring
+          have hexp :
+              Complex.exp (-(↑(poleAbscissa m) * (t : ℂ))) *
+                  Complex.exp (-(y : ℂ) * (t : ℂ) * Complex.I) =
+                Complex.exp (-(↑(poleAbscissa m) + (y : ℂ) * Complex.I) *
+                  (t : ℂ)) := by
+            rw [← Complex.exp_add]
+            congr 2
+            ring
+          calc
+            (1 + (t : ℂ) / 2) *
+                  Complex.exp (-(↑(poleAbscissa m) * (t : ℂ))) *
+                    (Complex.exp (-(y : ℂ) * (t : ℂ) * Complex.I) /
+                      (Real.cosh (Real.pi * y) : ℂ) ^ 2) =
+                (1 + (t : ℂ) / 2) *
+                  (Complex.exp (-(↑(poleAbscissa m) * (t : ℂ))) *
+                    Complex.exp (-(y : ℂ) * (t : ℂ) * Complex.I)) /
+                      (Real.cosh (Real.pi * y) : ℂ) ^ 2 := by ring
+            _ = (1 + (t : ℂ) / 2) *
+                  Complex.exp (-(↑(poleAbscissa m) + (y : ℂ) * Complex.I) *
+                    (t : ℂ)) /
+                    (Real.cosh (Real.pi * y) : ℂ) ^ 2 := by rw [hexp]
     _ = (∫ t : ℝ in Ioi 0,
           ((1 + t / 2 : ℝ) : ℂ) *
             Complex.exp (-polePoint m y * (t : ℂ))) /
