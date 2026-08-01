@@ -2215,6 +2215,21 @@ theorem intervalIntegrable_logSq :
           rw [mul_pow, ← Real.rpow_natCast (x ^ (-(1:ℝ)/4)) 2, ← Real.rpow_mul hx0.le]
           norm_num
 
+/-- Continuity on the OPEN interval plus an integrable majorant gives
+`IntervalIntegrable`: endpoint values are irrelevant, which is exactly what an
+integrable endpoint singularity needs. -/
+theorem intervalIntegrable_of_continuousOn_Ioo_of_le
+    {f g : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
+    (hf : ContinuousOn f (Set.Ioo a b))
+    (hg : IntervalIntegrable g MeasureTheory.volume a b)
+    (hfg : ∀ x ∈ Set.Ioo a b, ‖f x‖ ≤ g x) :
+    IntervalIntegrable f MeasureTheory.volume a b := by
+  rw [intervalIntegrable_iff_integrableOn_Ioo_of_le hab] at hg ⊢
+  exact hg.mono' (hf.aestronglyMeasurable measurableSet_Ioo)
+    (by
+      filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with x hx
+      exact hfg x hx)
+
 /-- Integration by parts (Q6047 (4.9)): with `F = −2V·J(−x)`, `F(1)=F(0)=0`
 (`V(1)=0`, `J(0)=0`), so `∫₀¹ (−log x)/x·Q(−x) = ∫₀¹ (−2V(x))·Dminus(x)`. -/
 theorem quadAltCoeffIntegral_eq_neg2V_Dminus :
