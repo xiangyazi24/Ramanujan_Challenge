@@ -145,9 +145,91 @@ theorem rivoalHarmonic_error_le_envelope
         nlinarith
   linarith
 
+/-- Normalized left harmonic-remainder mean. -/
+def rivoalLeftRemainderMean22 (n : ℕ) : ℝ :=
+  (∑ k ∈ Finset.range (n + 1),
+      rivoalRealWeight22 n k * (1 / ((k : ℝ) + 1))) /
+    ((rivoalExplicitQ22 n : ℚ) : ℝ)
+
+/-- Normalized right harmonic-remainder mean. -/
+def rivoalRightRemainderMean22 (n : ℕ) : ℝ :=
+  (∑ k ∈ Finset.range (n + 1),
+      rivoalRealWeight22 n k *
+        (1 / (((n - k : ℕ) : ℝ) + 1))) /
+    ((rivoalExplicitQ22 n : ℚ) : ℝ)
+
+/-- Normalized absolute shifted-log saddle mean. -/
+def rivoalLogSaddleMean22 (n : ℕ) : ℝ :=
+  (∑ k ∈ Finset.range (n + 1),
+      rivoalRealWeight22 n k * |rivoalLogSaddle22 n k|) /
+    ((rivoalExplicitQ22 n : ℚ) : ℝ)
+
+theorem rivoalWeightedHarmonicError22_nonneg (n : ℕ) :
+    0 ≤ rivoalWeightedHarmonicError22 n := by
+  apply div_nonneg
+  · apply Finset.sum_nonneg
+    intro k _
+    exact mul_nonneg (rivoalRealWeight22_nonneg n k) (abs_nonneg _)
+  · exact_mod_cast (rivoalExplicitQ22_pos n).le
+
+/-- Boundary-safe finite weighted transfer. -/
+theorem rivoalWeightedHarmonicError22_le_three_means (n : ℕ) :
+    rivoalWeightedHarmonicError22 n ≤
+      3 * rivoalLeftRemainderMean22 n +
+        2 * rivoalRightRemainderMean22 n +
+          rivoalLogSaddleMean22 n := by
+  have hQ : 0 < ((rivoalExplicitQ22 n : ℚ) : ℝ) := by
+    exact_mod_cast rivoalExplicitQ22_pos n
+  have hsum :
+      (∑ k ∈ Finset.range (n + 1),
+        rivoalRealWeight22 n k *
+          |rivoalRealHarmonicValue22 n k -
+            Real.eulerMascheroniConstant|) ≤
+      ∑ k ∈ Finset.range (n + 1),
+        rivoalRealWeight22 n k *
+          (3 * (1 / ((k : ℝ) + 1)) +
+            2 * (1 / (((n - k : ℕ) : ℝ) + 1)) +
+              |rivoalLogSaddle22 n k|) := by
+    apply Finset.sum_le_sum
+    intro k hk
+    have hkn : k ≤ n := by
+      exact Nat.le_of_lt_succ (Finset.mem_range.mp hk)
+    exact mul_le_mul_of_nonneg_left
+      (rivoalHarmonic_error_le_remainders_log n k hkn)
+      (rivoalRealWeight22_nonneg n k)
+  rw [rivoalWeightedHarmonicError22,
+    rivoalLeftRemainderMean22, rivoalRightRemainderMean22,
+    rivoalLogSaddleMean22]
+  apply (div_le_div_of_nonneg_right hsum hQ.le).trans_eq
+  field_simp [hQ.ne']
+  simp only [Finset.mul_sum]
+  ring
+
+/-- Exact analytic interface consumed by the harmonic transfer. -/
+theorem rivoalHarmonicConcentrationClaim22_of_three_means
+    (hleft : Tendsto rivoalLeftRemainderMean22 atTop (𝓝 0))
+    (hright : Tendsto rivoalRightRemainderMean22 atTop (𝓝 0))
+    (hlog : Tendsto rivoalLogSaddleMean22 atTop (𝓝 0)) :
+    RivoalHarmonicConcentrationClaim22 := by
+  rw [RivoalHarmonicConcentrationClaim22]
+  apply squeeze_zero
+  · exact rivoalWeightedHarmonicError22_nonneg
+  · exact rivoalWeightedHarmonicError22_le_three_means
+  · have hleft' :
+        Tendsto (fun n => 3 * rivoalLeftRemainderMean22 n)
+          atTop (𝓝 0) := by
+      simpa using tendsto_const_nhds.mul hleft
+    have hright' :
+        Tendsto (fun n => 2 * rivoalRightRemainderMean22 n)
+          atTop (𝓝 0) := by
+      simpa using tendsto_const_nhds.mul hright
+    simpa only [add_zero] using hleft'.add (hright'.add hlog)
+
 #print axioms abs_harmonic_sub_log_succ_sub_gamma_le
 #print axioms abs_log_sub_log_le_abs_sub_div_min
 #print axioms rivoalHarmonic_error_le_remainders_log
 #print axioms rivoalHarmonic_error_le_envelope
+#print axioms rivoalWeightedHarmonicError22_le_three_means
+#print axioms rivoalHarmonicConcentrationClaim22_of_three_means
 
 end RamanujanChallenge.P22.Q6502
