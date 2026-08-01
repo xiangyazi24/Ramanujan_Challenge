@@ -541,3 +541,18 @@ set algebraic of low degree.
 - STATUS: the 3/2 milestone is now COMPLETELY characterized — correct statement
   (6.3)/(6.4), named missing tool, falsity of the naive form, and all elementary
   routes closed with proofs. This is the honest frontier of phase 3/2.
+
+## 23. Main-conjecture recentering (Xiang directive): alpha = 2/3 is method-universal; cross-prime is the sole frontier
+
+- α = 1/2 flank tested: B-numerator cores are pairwise coprime over Q (max gcd
+  deg 3 = classified x³; each numB = classified linears × one big irreducible —
+  B_gcd_test.py). But the self-consistent ledger locks at |Z_p| ≤ p^{2/3}
+  REGARDLESS of route (gap-polynomials / two-lag gcd / resultant ledger):
+  Z² ≤ 36p·𝔟(p) with 𝔟 self-consistently ~ p^{1/3}. The 2/3 barrier is
+  dimensionally universal for one-prime methods. (Their "tight at p^{2/3}
+  Chebotarev" thus extends to our machinery — banked as a closure.)
+- Consequence: the ONLY path to pointwise P3.2 runs through cross-prime moments
+  (M₃ needs α = 1/2 — unavailable; M₄ suffices at α = 2/3). The supercongruence
+  index-scaling (p | b_r ⟹ p | b_{rp^j} ∀j, from Beukers mod p³) is a REAL
+  integer-level mass-leakage constraint not yet exploited in any cross-prime
+  argument.
