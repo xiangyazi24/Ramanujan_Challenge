@@ -301,3 +301,10 @@ It does not exist for DEGREE (one index).  Equivalent faces of the same barrier:
 the k>=2 moments (modulus p_1...p_k ~ N^k exceeds the range), and the additive energy.  Note
 E = o(N^2/log^2 N) is EQUIVALENT to the goal, not weaker.  The incidence graph is K_{2,2}-free on
 the prime side, and a star is K_{2,2}-free, so no combinatorial argument can exclude one bad n.
+
+## Run 2026-08-01 (P2.4 Q⁻ Layer D/E closure, automode)
+- doctrine: DOCTRINE_P24_LAYERD.md
+- starting avenue: (a) right endpoint limit + tendsto-FTC swap
+- entry state: Problem24QuadraticAlt.lean 2324 lines, 11 sorries, 0 errors
+- end: <open>
+- final result: <open>
