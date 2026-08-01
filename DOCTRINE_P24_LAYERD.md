@@ -582,3 +582,40 @@ weight-four identity, not a rearrangement.  So `I10` costs exactly one
 evaluation — either `V₂` directly (half-interval log moments, per the analytic
 derivation already in hand) or the `V₂ ↔ K` identity — whichever is cheaper in
 Lean.  It does not cost zero, and it does not need any constant beyond `K`.
+
+### Carried-hypothesis audit, done by instantiation rather than by reading
+
+A hostile audit raised two dangers that `#print axioms` cannot see:
+
+1. the coefficient-vector theorem might be about a *named* integral that is not
+   literally the one the series bridge produces;
+2. the seven-hypothesis conditional theorem might be vacuous, or hide an eighth
+   obligation.
+
+Both were closed by making Lean answer, not by reading the statements:
+
+```lean
+example : (∑' n, alternatingQuadraticEulerTerm24 n)
+    = -2*I10 - 2*I11 + 2*I12 + 4*I20 + 6*I21 - 5*I22 :=
+  quadAlt_tsum_eq_coeff_integral.trans quadAltCoeffIntegral_eq_six
+```
+
+`trans` typechecks, so the two theorems are about the *same* integral — Lean
+unified them syntactically. Danger 1 is closed.
+
+```lean
+example (h10 : I10 = …) (h12 : I12 = …) (h21 : I21 = …) :
+    sixIntegralCombination = bridgeValue :=
+  quadAltSixIntegral_eq_bridgeValue quadAltK_eq h10 quadAltI11_eq h12
+    quadAltI20_eq h21 quadAltI22_eq
+```
+
+Feeding in every hypothesis that is already proved leaves exactly three, and the
+application typechecks. So the conditional theorem is not vacuous, there is no
+hidden eighth obligation, and the endgame shape is settled: **I10, I12, I21 land
+and the capstone closes.**
+
+This is the right way to discharge the "carried hypotheses read and judged
+satisfiable" clause in UNDERSTANDING.md — instantiate what you have and let the
+kernel report the remainder, rather than reading the statement and forming an
+opinion.
