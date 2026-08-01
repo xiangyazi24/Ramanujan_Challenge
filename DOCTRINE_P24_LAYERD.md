@@ -423,3 +423,50 @@ route gives `I22 = J12 − D3`; these agree exactly because
 `Li₂(½) = ζ₂/2 − L²/2`.
 
 **Order of attack, cheapest first: I20, I10, then I22, I12, I21.**
+
+## The six rows collapse to ONE integral plus ONE row
+
+The coefficient vector `(-2,-2,2,4,6,-5)` is not arbitrary — it comes out of the
+Möbius substitution — and it carries structure that row-by-row evaluation throws
+away.  Four of the six kernels are exact differentials:
+
+```
+H1/t     dt = d[Li₂(t)]        H1/(1-t) dt = d[H1²/2]
+H2/t     dt = d[Li₂(t/2)]      H2/(2-t) dt = d[H2²/2]
+```
+
+The leftover `2 H1/(2-t) + 6 H2/(1-t)` is NOT exact, but it is exact *up to a
+smaller multiple of one kernel*: using
+`d[log(1-t) log(2-t)] = -log(2-t)/(1-t) - log(1-t)/(2-t)` and
+`H2 = log 2 - log(2-t)`, the coefficient 6 drops to 4.  Writing
+
+```
+Φ(t) = -2 Li₂(t) - H1(t)² + 4 Li₂(t/2) - (5/2) H2(t)²
+       + 2 log(1-t) log(2-t) + 2 log2 · H1(t)
+```
+
+the whole bracket satisfies, verified at 30 digits at six interior points,
+
+```
+G(t) = Φ'(t) + 4 H2(t)/(1-t)
+```
+
+Both boundary terms of `∫ W0 dΦ` vanish — `W0·Φ` is `3e-14` at `t = 1e-8` and
+`6e-14` at `t = 1-1e-8`, decaying quadratically — because `W0` has a double zero
+at `1` and `Φ = O(t)` at `0`.  Hence, with `W0' = -2R/t`,
+
+```
+S  :=  -2I10 - 2I11 + 2I12 + 4I20 + 6I21 - 5I22
+    =  2 ∫₀¹ Φ(t) R(t)/t dt  +  4 I21
+```
+
+confirmed numerically to 30 digits against the target constant.
+
+**Six obligations become two.**  And the surviving integral no longer contains
+`W0`: `R(t) = log t - log(2-t)` is elementary, so every piece of `∫ Φ R/t` is
+`(elementary or Li₂) × log / t` — exactly the shape the repo's termwise
+template eats.  One of the six pieces, `2 log2 · ∫ H1 R/t`, is only weight three.
+
+This is an alternative to the row-by-row route, not a replacement: keep whichever
+lands first.  Row-by-row already has `I20` and `I10` in closed form and `I11`
+under way.
