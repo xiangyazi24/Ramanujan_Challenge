@@ -1,0 +1,448 @@
+
+Then Markov gives
+
+
+so the banked tail statistic satisfies
+
+
+The banked [ZERO-TAIL-2] layer-cake inequality therefore gives
+
+
+Hence
+
+
+implies
+
+
+and [MESO-TOTAL]/W1 follows. The same conclusion holds if
+
+
+because L=N^o(1). Thus logarithmic losses are harmless for the wall-breaking implication.
+
+The attack on the head has a mixed verdict.
+
+1. There is a useful exact decomposition of M_2(D).
+
+1. The diagonal and all same-clique parallel-edge pairs whose starting points are at distance at most D are already bounded by
+
+
+at the hatch scale.
+
+1. Window 2/3-sparsity plus the global color energy gives an explicit bound for the complete same-clique term, but it is far too weak:
+
+
+1. There is no independent banked handle on equal-lag edge pairs belonging to different cliques. In the generic case in which every clique contributes only one h-edge, this cross-clique term is essentially R_h^2 itself.
+
+1. More decisively, a reflection-symmetric union-of-cliques countermodel satisfies the degree bound, window 2/3-sparsity, the energy theorem's numerical ceiling, and even Q_D=0, while one selected lag d approximately D has
+
+
+Therefore [SAME-LAG-L2] is not a consequence of the existing combinatorial toolkit. It is a genuinely arithmetic anti-concentration theorem for the root counts R_h.
+
+The sharp residual is not the whole second moment. After the automatic near-clique part is removed, it is
+
+
+A convenient algebraic strengthening is the same-polynomial shifted-gcd estimate
+
+
+The more economical statistical formulation is a fixed-p Barban-Davenport-Halberstam statement for the lag profile:
+
+
+where kappa_h is the forced mirror skeleton, normally 1 for the appropriate parity and 0 otherwise. Equation (0.8) implies [SAME-LAG-L2] because sum kappa_h^2=O(D) and sqrt(DN)=o(N).
+
+The repository's latest machine run supports the target strongly. At
+
+
+it records
+
+
+and M_2(D) is approximately 4.3D. Thus the arithmetic orbit is extremely far from the abstract degree ceiling even though the present proof tools cannot see that fact.
+
+---
+
+# 1. Verification of the wall-breaking chain
+
+For integer-valued R_h>=0,
+
+
+Split at T_0:
+
+
+For t>T_0, the definition of Z_D gives
+
+
+and therefore
+
+
+This is [ZERO-TAIL-2]. Also
+
+
+so Z_D<=M_2(D). Combining (1.1)-(1.4) gives (0.1).
+
+With D=sqrt(N)L,
+
+
+Thus the proposed implication is airtight, up to harmless ceiling constants.
+
+A useful strengthening is worth recording:
+
+
+still gives
+
+
+which is o(N) whenever L and H are subpolynomial. Hence the actual arithmetic target may carry polylogarithmic losses.
+
+---
+
+# 2. Exact clique decomposition
+
+Let
+
+
+and define the h-difference multiplicity inside the color v by
+
+
+Then
+
+
+For one h,
+
+
+Summing over h<=D gives the exact identity
+
+
+where
+
+
+counts distinct equal-lag edge pairs inside one clique, and
+
+
+counts equal-lag edge pairs in different cliques.
+
+This separates two genuinely different mechanisms.
+
+- W_D is a short-difference additive-energy count inside individual color sets.
+
+- X_D measures how many distinct colors reuse the same lag. It is not an additive-energy count of one set.
+
+The B1 cross-correlation experiment from the earlier campaign measured intersections between different lag root sets. It does not control X_D, which keeps h fixed and varies both the base and the color.
+
+---
+
+# 3. Same-clique term: the near part is already controlled
+
+Take two distinct h-edges in one clique,
+
+
+Split W_D into
+
+
+according as t<=D or t>D.
+
+## 3.1 Injection into Q_(2D)
+
+Assume t<=D.
+
+If t!=h, the three points
+
+
+have one color, and the two distinct gaps h,t are both at most D. Hence this edge-pair gives an object counted by Q_D.
+
+If t=h, the two edges are
+
+
+Then
+
+
+have one color, and the distinct gaps h,2h are at most 2D. Hence this edge-pair is counted by Q_(2D).
+
+A single Q-object can arise from at most two orientations of the same four-point rectangle: h may be the edge length and t the separation, or the two roles may be reversed. Therefore, independently of ordered/unordered normalization,
+
+
+The factor 2 is deliberately safe. If the project's Q convention fixes an orientation, it may be reducible to 1; no exponent depends on this constant.
+
+Consequently
+
+
+Using the banked estimates
+
+
+we obtain
+
+
+At D=sqrt(N)L with L=N^o(1), this is
+
+
+Thus the diagonal and the nearby same-clique parallelograms are not the wall. They are already at a wall-breaking scale up to harmless subpolynomial factors.
+
+---
+
+# 4. What window 2/3-sparsity gives for the full same-clique term
+
+Let
+
+
+be the banked upper bound for the number of points of one color in any interval of length D.
+
+For one color A_v, every a in A_v has at most M_D-1 later points of A_v within distance D. Therefore
+
+
+Also
+
+
+Hence
+
+
+Summing over colors gives
+
+
+The projective energy is
+
+
+Therefore
+
+
+At the hatch scale D=sqrt(N)L, the energy alternative is smaller and gives
+
+
+This is much larger than N. Thus window sparsity and the global color energy do not prove the desired same-clique estimate.
+
+Equation (4.5) is the cleanest unconditional consequence of those two inputs. It also explains the failure: window sparsity controls how many points one color places in one interval, but two h-edges with far-separated starts live in unrelated windows.
+
+The near/far split improves the interpretation:
+
+
+while all loss in (4.8) may be placed in W_D^far.
+
+---
+
+# 5. Cross-clique term: no banked independent handle
+
+For fixed h, put
+
+
+Then
+
+
+The facts
+
+
+do not save anything. In the generic configuration
+
+
+one has
+
+
+Thus the cross-clique count may contain essentially the entire off-diagonal part of R_h^2 while every individual color class is maximally sparse.
+
+This is why neither the window lemma nor the global color energy sees X_D. Both are statistics internal to color classes; X_D measures reuse of one lag by many different colors.
+
+Algebraically, a cross-clique pair is
+
+
+If t=r'-r, then it is a common root of
+
+
+This produces the exact stronger interface
+
+
+No currently banked resultant or shifted-gcd theorem controls the sum of (5.7) over both h and t. The earlier [MESO-SHIFTED-GCD] involved different gap polynomials and a clock shift. Here the same polynomial is translated in the base variable; it is a new family problem.
+
+---
+
+# 6. A sharp abstract countermodel
+
+The present combinatorial hypotheses do not merely fail quantitatively; they permit a one-lag obstruction.
+
+Assume N is large, D=sqrt(N)L, and D=o(N). Choose one integer
+
+
+and let
+
+
+Choose M disjoint pairs
+
+
+in a left interval of length O(d). This is possible by using alternating blocks of length d. Put the reflected pair
+
+
+near the right endpoint, and give these four points one new color. Choose the left and right supports far enough apart that every cross-mirror difference is greater than D. Give every unused point its own singleton color.
+
+Then:
+
+1. Reflection closure holds by construction.
+
+1. Each nontrivial color class has size 4.
+
+1. Each color contributes exactly two short edges, both of difference d.
+
+1. Hence
+
+
+1. Every point has at most one forward same-color neighbor within D, so
+
+
+1. Every interval of length W contains at most two points of one color on either side, so the banked 2/3 window inequality holds with enormous slack.
+
+1. The color energy is
+
+
+far below the allowed O(N^(3/2)).
+
+Nevertheless
+
+
+The construction uses only O(D) non-singleton points, so it fits whenever N>>D. Other differences inside a reflected four-point class are greater than D and do not affect the short profile.
+
+This countermodel proves that the following inputs, even together, cannot imply [SAME-LAG-L2]:
+
+
+The missing fact is arithmetic: the actual Apéry root sets do not allow many colors to synchronize on one lag.
+
+A useful necessary consequence is
+
+
+For h approximately D, the algebraic degree bound only gives
+
+
+Thus even excluding a single saturated high lag requires a factor-L improvement beyond degree. Pointwise R_h<<sqrt(N) is necessary but not sufficient; an L2 average over h is still required.
+
+---
+
+# 7. Best unconditional bound from the full current toolkit
+
+The exact degree bound gives immediately
+
+
+At D=sqrt(N)L,
+
+
+There is another bound from the row statistic Q_D. The banked identity and Cauchy inequality give
+
+
+so
+
+
+Since R_h<=3D,
+
+
+Thus the best clean unconditional statement is
+
+
+At the hatch scale this is
+
+
+Both alternatives are far above N. The global edge bound obtained from the energy theorem is weaker at this scale.
+
+For the decomposition, however, we have the sharper structural estimate
+
+
+The first two terms are N^(1+o(1)). Therefore the exact minimal residual is
+
+
+This is strictly weaker than proving [SAME-LAG-L2] from scratch, because all diagonal and near same-color configurations have already been removed.
+
+---
+
+# 8. Arithmetic forms of the residual
+
+## 8.1 Shifted self-gcd form
+
+A sufficient, stronger theorem is
+
+
+Each unordered distinct root pair of N_h contributes at its separation t, so (8.1) implies
+
+
+and hence [SAME-LAG-L2].
+
+This statement is a family large-sieve theorem for translates of one gap polynomial. Per-h squarefreeness and absolute irreducibility of the value-collision curve do not imply it.
+
+## 8.2 Lag-profile BDH form
+
+Let kappa_h denote the forced root skeleton. The most natural sharp target is
+
+
+Indeed,
+
+
+With a more precise expansion, the cross term is at most O(sqrt(DN))=o(N). This is exactly a quenched variance theorem over the growing h-family.
+
+## 8.3 Tail-only form
+
+The genuinely weakest wall-breaking statement remains [ZERO-TAIL-2]:
+
+
+Thus a proof need not control the small Poisson-scale values of R_h at all. It only has to exclude a heavy tail of exceptional lags.
+
+---
+
+# 9. Machine verification already present in the project
+
+The latest project ledger records a direct orbit computation using the orbit(p) implementation from CRON_b1_crosscorr.py, with the same nonwrapping collision definition as R_h.
+
+At
+
+
+the recorded output is
+
+
+Across these runs,
+
+
+Thus the observed profile is not merely below N; it is linear in D, with a bounded maximum root count. The ratios M_2(D)/N decrease as p grows.
+
+These values verify the requested p=3001 and p=10007 instances and add p=30011 as a third check. They were already generated and banked in the updated repository; no new external numerical claim is being introduced here.
+
+The empirical scale suggests the much stronger truth
+
+
+but the proof target (8.5) is far weaker.
+
+---
+
+# 10. Strategic conclusion
+
+The new target is correctly identified as the lowest arithmetic wall face, but it does not fall to clique combinatorics.
+
+What is now proved from the toolkit is:
+
+
+The automatic part consists of
+
+
+and is controlled by S_D+Q_(2D).
+
+The new arithmetic object is the return-difference multiset
+
+
+viewed simultaneously over all bases. The required theorem must prevent many colors, or many far-apart pieces of one color, from assigning excessive multiplicity to a common h.
+
+The recommended next attack is not another window lemma. It is one of:
+
+1. prove [SAME-LAG-BDH] by a family Frobenius large sieve over h;
+
+1. prove [SELF-SHIFT-GCD] using the renewal identity plus cancellation over translations t;
+
+1. prove only the tail estimate (8.5), perhaps by classifying lags with R_h>T_0 rather than estimating all h.
+
+The third option is the weakest and best aligned with the empirical fact that max R_h=8 while
+
+
+tends to infinity.
+
+---
+
+# Required self-audit
+
+## (a) Least-confident step
+
+The least-confident point is the exact constant in
+
+
+The injection is structurally correct, but the factor is sensitive to whether Q counts ordered or unordered gap pairs and to whether the two orientations of a four-point rectangle are identified. A safe absolute constant is enough for every conclusion; no exponent or residual statement depends on whether the optimal factor is 1, 2, or 4.
+
+The reflection-symmetric countermodel is also an abstract color-partition model, not an actual Apéry orbit. That is intentional: it proves only that the banked combinatorial constraints do not imply the theorem. It does not argue that the Apéry orbit is close to the countermodel.
+
+## (b) Blind spot
+
+The main blind spot is confusing three nearly orthogonal statistics:
