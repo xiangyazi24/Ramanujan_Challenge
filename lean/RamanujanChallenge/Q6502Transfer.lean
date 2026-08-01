@@ -91,9 +91,12 @@ theorem rivoalHarmonic_error_le_remainders_log
       abs_add_le _ _
     _ ≤ (|3 * rk| + |2 * rj|) + |rivoalLogSaddle22 n k| := by
       have htri : |3 * rk - 2 * rj| ≤ |3 * rk| + |2 * rj| := by
-        rw [sub_eq_add_neg, abs_neg]
-        exact abs_add_le _ _
-      exact add_le_add_right htri _
+        rw [sub_eq_add_neg]
+        calc
+          |3 * rk + -(2 * rj)| ≤ |3 * rk| + |-(2 * rj)| :=
+            abs_add_le _ _
+          _ = |3 * rk| + |2 * rj| := by rw [abs_neg]
+      exact add_le_add htri (le_refl _)
     _ = (3 * |rk| + 2 * |rj|) + |rivoalLogSaddle22 n k| := by
       rw [abs_mul, abs_mul]
       norm_num
@@ -119,8 +122,12 @@ theorem rivoalHarmonic_error_le_envelope
     exact_mod_cast Nat.add_le_add_right hk 1
   have hjarg : ((n - k : ℕ) : ℝ) + 1 ≤ (n : ℝ) + 1 := by
     exact_mod_cast Nat.add_le_add_right (Nat.sub_le n k) 1
-  have hkone : (1 : ℝ) ≤ (k : ℝ) + 1 := by positivity
-  have hjone : (1 : ℝ) ≤ ((n - k : ℕ) : ℝ) + 1 := by positivity
+  have hkone : (1 : ℝ) ≤ (k : ℝ) + 1 := by
+    have hk0 : (0 : ℝ) ≤ (k : ℝ) := by positivity
+    linarith
+  have hjone : (1 : ℝ) ≤ ((n - k : ℕ) : ℝ) + 1 := by
+    have hj0 : (0 : ℝ) ≤ ((n - k : ℕ) : ℝ) := by positivity
+    linarith
   have hlogk0 : 0 ≤ Real.log ((k : ℝ) + 1) := Real.log_nonneg hkone
   have hlogj0 : 0 ≤ Real.log (((n - k : ℕ) : ℝ) + 1) :=
     Real.log_nonneg hjone
@@ -135,8 +142,15 @@ theorem rivoalHarmonic_error_le_envelope
           2 * Real.log (((n - k : ℕ) : ℝ) + 1)| ≤
         |3 * Real.log ((k : ℝ) + 1)| +
           |2 * Real.log (((n - k : ℕ) : ℝ) + 1)| := by
-        rw [sub_eq_add_neg, abs_neg]
-        exact abs_add_le _ _
+        rw [sub_eq_add_neg]
+        calc
+          |3 * Real.log ((k : ℝ) + 1) +
+              -(2 * Real.log (((n - k : ℕ) : ℝ) + 1))| ≤
+            |3 * Real.log ((k : ℝ) + 1)| +
+              |-(2 * Real.log (((n - k : ℕ) : ℝ) + 1))| :=
+            abs_add_le _ _
+          _ = |3 * Real.log ((k : ℝ) + 1)| +
+              |2 * Real.log (((n - k : ℕ) : ℝ) + 1)| := by rw [abs_neg]
       _ = 3 * Real.log ((k : ℝ) + 1) +
           2 * Real.log (((n - k : ℕ) : ℝ) + 1) := by
         rw [abs_mul, abs_mul, abs_of_nonneg hlogk0, abs_of_nonneg hlogj0]
