@@ -1,0 +1,272 @@
+A subset [0,N],
+#(A intersect W) <= 4 |W|^(2/3) for every interval W,
+sum_v |A_v| = N,
+sum_v |A_v|^2 = O(N^(4/3)) <= O(N^(3/2)),
+R_h := sum_v r_(A_v)(h) <= 3(h-1) for every h>=1,
+
+D = sqrt(N) L,
+
+sum_v sum_(1<=h<=D) r_(A_v)(h)^2
+  >= c D N^(2/3)
+  = c N^(7/6) L.
+
+N^(1/6) L,
+
+sum_v r_(A_v)(h)^2 = R_h^2
+
+sum_(h<=D) R_h^2 << N.
+
+c D N^(2/3)
+  <= maximum
+  <= min(C E_0 D^(2/3), 3D^3),
+
+[0,N] = {0,1,...,N}.
+
+m = |A|,
+r_A(h) = #{a : a in A and a+h in A},
+Q_A(D) = sum_(1<=h<=D) r_A(h).
+
+|A intersect W| <= 4 |W|^(2/3)                 (WS)
+
+Q_A(D) <= 4m D^(2/3).                           (2.1)
+
+a < b <= a+D
+
+r_A(h)
+  <= min(m, 4((N+1)/h+2)h^(2/3))
+  << min(m, N h^(-1/3)+h^(2/3)).                (2.2)
+
+x -> x+h
+
+(k-1)h+1.
+
+k <= 4((k-1)h+1)^(2/3)
+  <= 4(kh)^(2/3),
+
+k <= 64 h^2.                                   (2.3)
+
+sum_(h<=D) r_A(h)^2
+  <= m Q_A(D)
+  <= 4m^2 D^(2/3).                              (2.4)
+
+sum_(h<=D) r_A(h)^2
+  << min(m^2 D^(2/3), m N D^(1/3)).             (2.5)
+
+max r_A(h) << min(m,NH^(-1/3)),
+sum_(H<h<=2H) r_A(h) <= Q_A(2H) << mH^(2/3),
+
+sum_(H<h<=2H) r_A(h)^2
+  << min(m^2 H^(2/3),mN H^(1/3)).
+
+A = {0,s,2s,...,(k-1)s},
+k = floor(s^2).
+
+q^3 <= 4q^2s^2 <= 16(q-1)^2s^2,
+
+q <= 4((q-1)s+1)^(2/3).
+
+D >= (k-1)s asymp s^3,
+
+sum_(h<=D) r_A(h)^2
+  = sum_(j=1)^(k-1) (k-j)^2
+  asymp k^3
+  asymp s^6
+  asymp D^2.
+
+m^2D^(2/3) asymp s^4 s^2 = s^6.
+
+A = {x,x+s,...,x+(k-1)s}.
+
+k <= 4(ks)^(2/3),
+
+k <= 64s^2.                                    (3.1)
+
+q = min(k-1,floor(D/s)),
+
+sum_(h<=D) r_A(h)^2
+  = sum_(j=1)^q (k-j)^2.                       (3.2)
+
+sum_(h<=D) r_A(h)^2
+  asymp k^2 min(k,D/s)                         (3.3)
+
+r_A(s)=k-1 <= R_s <= 3(s-1),
+
+k <= 3s-2.                                     (3.4)
+
+s = k = floor(sqrt(N))/2
+
+sum_(h<=D) r_A(h)^2
+  >= c L k^2
+  >= c N L.                                    (3.5)
+
+N = 4q^3.
+
+rho(i) = the representative in {0,...,q-1} of (i mod q)^2 mod q.
+
+A = {a_i : 0<=i<q^2},
+a_i = 4qi + rho(i).                             (4.1)
+
+0 <= rho(i) <= q-1,
+
+0 <= a_i < 4q^3=N.
+
+|A|=q^2 asymp N^(2/3).                         (4.2)
+
+[4qi,4q(i+1)-1]
+
+w/(4q)+2                                             (4.3)
+
+2 <= 4w^(2/3).
+
+w/(4q) <= w^(2/3),
+2 <= 2w^(2/3).
+
+|A intersect W| <= 3w^(2/3) <= 4w^(2/3).       (4.4)
+
+a_j-a_i = 4qd + rho(i+d)-rho(i).                (4.5)
+
+J_d = [4qd-(q-1), 4qd+(q-1)].                   (4.6)
+
+h=4qd+t,
+|t|<=q-1.
+
+rho(i+d)-rho(i)=t.                              (4.7)
+
+2d(i mod q)+d^2 = t mod q.                      (4.8)
+
+r_A(h) <= q,             if q does not divide d.   (4.9)
+
+h=4qd,
+
+r_A(4qd)=q^2-d <= q^2.                           (4.10)
+
+h >= 4q-(q-1)=3q+1,
+
+r_A(h) <= q <= (h-1)/3 <= 3(h-1).               (4.11)
+
+h >= 4q^2-(q-1) > 3q^2,
+
+r_A(h) <= 3(h-1).                               (4.12)
+
+r_A(h) <= 3(h-1) for every h>=1.                (4.13)
+
+D = floor(sqrt(N)L)=floor(2q^(3/2)L),
+1 <= L <= q^(1/2),
+H = floor((D-(q-1))/(4q)).                       (4.14)
+
+H >= D/(8q),
+H<q.                                             (4.15)
+
+t_(d,r)=rho(r+d)-rho(r),
+h_(d,r)=4qd+t_(d,r).                             (4.16)
+
+1 <= h_(d,r) <= D.                              (4.17)
+
+r -> 2dr+d^2 mod q
+
+rho(i+d)-rho(i)=t_(d,r).
+
+r_A(h_(d,r)) >= q-1.                            (4.18)
+
+sum_(h<=D) r_A(h)^2
+  >= H q (q-1)^2
+  >= c D q^2.                                   (4.19)
+
+q^2=(N/4)^(2/3),
+
+sum_(h<=D) r_A(h)^2
+  >= c D N^(2/3)
+  = c N^(7/6)L.                                 (4.20)
+
+A_0=A.
+
+sum_v |A_v|
+  = q^2+(N-q^2)
+  = N.                                           (5.1)
+
+R_h=sum_v r_(A_v)(h)=r_A(h)<=3(h-1).             (5.2)
+
+sum_v |A_v|^2
+  = q^4+(N-q^2)
+  = O(N^(4/3))
+  = O(N^(3/2)).                                  (5.3)
+
+sum_v sum_(h<=D) r_(A_v)(h)^2
+  = sum_(h<=D) r_A(h)^2
+  >= c N^(7/6)L.                                 (5.4)
+
+sum_v r_(A_v)(h)^2=R_h^2.                       (5.5)
+
+m_v=|A_v|,
+E_0=sum_v m_v^2.
+
+sum_(h<=D) r_(A_v)(h) <= 4m_vD^(2/3).
+
+sum_v sum_(h<=D) r_(A_v)(h)^2
+  <= 4D^(2/3) sum_v m_v^2
+  = 4E_0D^(2/3).                                (6.1)
+
+sum_v r_(A_v)(h)^2
+  <= (sum_v r_(A_v)(h))^2
+  = R_h^2.
+
+sum_v sum_(h<=D) r_(A_v)(h)^2
+  <= 9 sum_(h<=D)(h-1)^2
+  <= 3D^3.                                       (6.2)
+
+sum_v sum_(h<=D) r_(A_v)(h)^2
+  <= min(4E_0D^(2/3),3D^3).                     (6.3)
+
+E_0=O(N^(3/2)),
+D=sqrt(N)L,
+
+O(min(N^(11/6)L^(2/3), N^(3/2)L^3)).            (6.4)
+
+Omega(N^(7/6)L).                                (6.5)
+
+c N^(7/6)L
+  <= maximum
+  <= C min(N^(11/6)L^(2/3),N^(3/2)L^3)          (6.6)
+
+rho(i+d)-rho(i).
+
+window sparsity:   spatial concentration inside one color;
+color energy:      sizes of the color classes;
+R_h<=3(h-1):       first moment at one lag.
+
+max_(h<=D) R_h << sqrt(N)/L^c,
+
+sum_(h<=D) R_h^2 << N,
+
+or a Barban-Davenport-Halberstam type variance estimate for the root counts
+of the translated gap polynomials N_h(r).
+
+[SAME-LAG-L2] is not abstract additive combinatorics under the banked window
+and energy hypotheses. It is an Apery-specific arithmetic theorem.
+
+r_A(h)
+  << min(|A|,N h^(-1/3)+h^(2/3)),
+
+sum_(h<=D) r_A(h)
+  <= 4|A|D^(2/3),
+
+sum_(h<=D) r_A(h)^2
+  << min(|A|^2D^(2/3), |A|N D^(1/3)).
+
+k<=64s^2
+
+sum_(h<=D)r_A(h)^2
+  = sum_(j<=min(k-1,D/s))(k-j)^2
+  asymp k^2 min(k,D/s).
+
+sum_v sum_(h<=D) r_(A_v)(h)^2 << N
+
+sum_v sum_(h<=D) r_(A_v)(h)^2
+  >= cN^(7/6)L.
+
+sum_(h<=D)R_h^2
+  = sum_v sum_(h<=D)r_(A_v)(h)^2.
+
+Omega(DN^(2/3))
+
+O(min(E_0D^(2/3),D^3)).
