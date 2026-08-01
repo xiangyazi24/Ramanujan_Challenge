@@ -133,8 +133,17 @@ index and residue degree of `mathfrak p` are both one.  For the rational
 integer `P_r`, therefore,
 
 \[
- v_p(P_r)=v_{\mathfrak p}(P_r)\ge k.
+ \boxed{
+ v_p(P_r)=v_{\mathfrak p}(P_r)
+   =\sum_{s\in O_r}v_{\mathfrak p}(\Delta_s)
+   =\sum_{\lambda\mid p}v_\lambda(\Delta_r)\ge k.}        \tag{1.7a}
 \]
+
+The last equality uses
+`Delta_{ar}=sigma_a(Delta_r)`: pulling the fixed `mathfrak p` back through
+the distinct elements of `Gal(Q(zeta_q)/Q)` runs through the distinct primes
+`lambda|p`.  This is the exact transfer; it does not confuse `k` different
+conjugate primes of one factor with the same prime of that factor.
 
 Thus, provided `P_r != 0`,
 
@@ -702,6 +711,10 @@ VERIFIED p=37: rational map lands on E_iota(u) at 1092 affine points
 VERIFIED explicit isogeny at five primes (2148 point evaluations total)
 VERIFIED a_p(E_iota(u))=(-3|p)*a_p(E_u) at p=5,7,11,13,17 (38 smooth fibers; split and nonsplit twists)
 ```
+
+The two cyclotomic scripts compute `M` exactly.  They verify the Galois/norm
+mechanism, not the rational coefficient field for the genuine `T` lift; that
+extension remains precisely **[GAP-LT-RATIONALITY]**.
 
 ## 9. Sources checked
 
