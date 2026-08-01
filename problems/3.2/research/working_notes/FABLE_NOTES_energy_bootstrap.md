@@ -516,3 +516,28 @@ at x; v-independence by homogeneity. The [GAP-PAIR] question becomes: does the
 ONE two-parameter object {Y = 1} have H^{1+o(1)} points per unit lag-width in
 the strip — R13 is grinding whether the x-direction recursion makes this level
 set algebraic of low degree.
+
+## 22. R12b harvest + char-0 ledger: THE 3/2 PROBLEM FULLY CHARACTERIZED
+
+- R12b's exact identities (all verified or verifiable): P(n) = n³+(n+1)³+4(2n+1)³
+  (checked exactly — the self-adjoint form); flux/shear decomposition (det-1
+  unipotent pair); forced Casoratian law C_h = (x+h)⁶C_{h−1} − 4(2x+2h+1)³D_hP_h;
+  slope telescope m_k−m_h = Σ C_j/(P_jP_{j+1}); holonomic kernel K_x(s,t)
+  packaging the whole Ψ family (bounded order, but lag extraction = jets).
+- Route closures (proof-level): two-base second moment circular; fixed-δ shift
+  identity's correction keeps full h-transfer; additive completion = conductor
+  wall; restricted-δ results CANNOT buy 3/2 (spaced-fiber blindness, p²/D term).
+- (RES) unmasked: it is a FROBENIUS FIXED-POINT law for reductions of FIXED
+  integer polynomials Φ_{h,k}. Complete-splitting warning: primes splitting in
+  the compositum give R = D_H = Σ deg rad.
+- **CHAR-0 LEDGER VERDICT (char0_ledger2.py, H=10): each residual = (classified
+  linear factors) × ONE BIG IRREDUCIBLE of degree ≈ 3k; D_core/H³ = 0.79.**
+  Hence: (i) the ALL-PRIME (RES) is FALSE — complete-splitting primes violate
+  it; (ii) E(p) ≪ p^{3/2+o(1)} can only hold in scale-coupled / off-exceptional-
+  prime form (same shape as Theorem 4 — the problem's true geometry);
+  (iii) the required tool is exactly [GAP-FROB]: a Frobenius large sieve over
+  the lag family (avg O(1) fixed points per big irreducible at one prime,
+  outside a sparse prime set / on dyadic average (6.3)).
+- STATUS: the 3/2 milestone is now COMPLETELY characterized — correct statement
+  (6.3)/(6.4), named missing tool, falsity of the naive form, and all elementary
+  routes closed with proofs. This is the honest frontier of phase 3/2.

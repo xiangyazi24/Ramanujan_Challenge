@@ -45,18 +45,18 @@ All non-`sorry` theorems axiom-clean: {propext, Classical.choice, Quot.sound}.
 
 | Problem | Module | Sorry | What is actually proved |
 |---------|--------|-------|--------------------------|
-| P2.1 | Problem21.lean | 0 | coefficient definitions + the index-shift identities `a_n = −α(n+1)`, `b_n = β(n)` (`ring`). **Limit not formalized.** |
+| P2.1 | Problem21.lean | 0 ✅ | **full chain**: Cohen Entry 5.3.22 sign-flip, even contraction, moment integral J_n→0, unconditional `problem21_pcf_value`. |
 | P2.2 | Problem22.lean | 0 | the four shift identities `c̃_j(m) = c_j(m−3)` (`ring`). **Limit not formalized.** |
 | P2.3 | Problem23.lean | 0 ✅ | **full chain**: tensor-annihilation theorem for arbitrary solutions, closed forms solve the recurrence, all 8 initial values, `c₀ ≠ 0` + uniqueness, exact ratio splitting, `m!/D_m → e` from Mathlib, main theorem — conditional only on Lambert's CF value, which is an explicit hypothesis |
 | P2.4 | Problem24.lean | 1 ⚠️ | strong form (polylogarithm identity) left as `sorry` |
 | P2.5 | Problem25.lean | 0 | exact CMF transcription and row recurrences; first product; determinant and nonsingularity; Pochhammer gauge identity; Poincaré cubic; sign conjugation to a strictly positive cocycle; nonvanishing of every finite denominator; exact positive-weight/convex-hull nesting of all three finite ratios; exact Catalan-error recurrence; rigorous rational bounds on `G` and the three initial transformed-error signs. **Main limit not formalized:** the exact dominant connection coefficient is still missing. |
-| P2.6 | Problem26.lean | 0 | `recessiveRatio_limit` (ratio → 1/4) and `zeta2_eq` (ζ(2) = π²/6). **Identity not formalized.** |
-| P2.7 | Problem27.lean | 0 | nothing beyond documentation. **Nothing substantive.** |
-| P2.8 | Problem28.lean | 1 ⚠️ | strong form (Chudnovsky series) left as `sorry`; the *submitted* 2.8 package uses the separate Ripple extraction, which is far stronger |
-| P3.1 | Problem31/ | 0* | GV arithmetic chain |
+| P2.6 | Problem26.lean + 5 aux files | 0 | ~6200 lines. Ore factorization, first-order reduction, central-binomial summability, Li₂(−1)=−π²/12, weight-2 inverse-binomial sum = π²/18 (proved), alternating ζ(2)/ζ(3) splitting, dilog antiderivative. **Gap: nested weight-3 evaluation Σ D_k = (π²/6 − ζ(3))/3.** |
+| P2.7 | Problem27.lean + Problem27Barnes.lean | 0 | ~2800 lines. Full 3×3 rational gauge (column identities all proved), analytic transfer complete, Barnes midpoint ≤ 2·(1/4)^n, Euler cosh product, integrable envelope, **Barnes error integral → 0 proved**. **Gap: source normalization (Zudilin recurrence error = Barnes contour integral).** |
+| P2.8 | **Problem28_SUBMIT/** | 0 ✅ | **Complete formalization synced from SUBMIT** (30080 lines, 27 files, Lean v4.29). Full Ripple CM extraction: j(τ₁₆₃) = −640320³, Chudnovsky hypergeometric, period bridge. `Problem28.lean` (107 lines, 1 sorry) is the old stub. |
+| P3.1 | **Problem31_SUBMIT/** | 0 ✅ | **Complete formalization synced from SUBMIT** (4724 lines, 28 files, Lean v4.29). Bloch-Wigner four-shape vanishing, rational reconstruction. `Problem31/` is the old stub. See `SUBMIT/3.1/lean/UNDERSTANDING.md` for atom checklist. |
 | P3.2 | Problem32/ | 3 🔨 | IN PROGRESS — Apéry GCD conjecture |
 
-*P3.1 RegulatorCert and Main have weak statements; need strengthening.
+**Synced SUBMIT packages (2026-08-01):** `Problem28_SUBMIT/` and `Problem31_SUBMIT/` are verbatim copies of `SUBMIT/2.8/lean/Ripple/` and `SUBMIT/3.1/lean/Ramanujan31/` respectively. Both are complete, 0-sorry formalizations on Lean v4.29. The old `Problem28.lean` and `Problem31/` stubs remain for reference but are superseded.
 
 **Rule going forward:** a formal statement counts only if it mentions the
 challenge's own recurrence or sequences. An `∃ p q, …` with free `p, q` is not a
