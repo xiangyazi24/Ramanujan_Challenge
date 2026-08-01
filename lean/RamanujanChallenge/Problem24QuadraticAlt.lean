@@ -376,6 +376,52 @@ theorem bridgeValue_eq_alternatingQuadraticEulerValue24 :
     cubicLinearEulerValue24 alternatingCubicLinearEulerValue24
   ring
 
+/-! ## Layer E: the six endpoint values collapse to ONE weight-four integral -/
+
+/-- `K = ∫₀¹ log²x · log(1+x)/(1+x) dx`.
+
+Modulo the lower-product space `span_ℚ{L²ζ₂, Lζ₃, ζ₂²}` the six endpoint values
+`I10 … I22` span a ONE-dimensional space, and this is its generator.  `L⁴`
+cancels out of every row once they are written through `K`, which is the
+structural reason `I10, I20` share the leading pair `(-2, -1/12)` and
+`I12, I21, I22` share `(-6, -1/4)` in the `Li₄(1/2)` basis. -/
+noncomputable def quadAltK : ℝ :=
+  ∫ x in (0 : ℝ)..1, Real.log x ^ 2 * Real.log (1 + x) / (1 + x)
+
+/-- Layer E, algebraic core: the six endpoint evaluations in `K` normal form,
+plus the reduction of `K` to the repo's already-proved cubic-linear constants,
+give the bridge value.
+
+This step contains no analysis at all — it is rational arithmetic over the
+atoms `polylog4 (1/2)`, `Real.log 2`, `zeta3_24` and `π`.  Its purpose is to
+pin down exactly what Layer E still owes: seven integral evaluations and
+nothing else.  Every hypothesis below is a true statement, each confirmed
+numerically at 40 digits against its integral, and `I10, I11, I20, I22`
+additionally have independent analytic derivations that use neither quadrature
+nor integer-relation detection. -/
+theorem quadAltSixIntegral_eq_bridgeValue
+    (hK : quadAltK = (1 / 5) * (Real.pi ^ 2 / 6) ^ 2
+        - 2 * alternatingCubicLinearEulerValue24 - 2 * cubicLinearEulerValue24)
+    (h10 : I10 = -(1 / 2) * quadAltK
+        - (3 / 2) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6)
+        - (13 / 20) * (Real.pi ^ 2 / 6) ^ 2)
+    (h11 : I11 = -(7 / 2) * Real.log 2 * zeta3_24
+        + (3 / 4) * (Real.pi ^ 2 / 6) ^ 2)
+    (h12 : I12 = -(3 / 2) * quadAltK
+        + (3 / 2) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6)
+        - (9 / 20) * (Real.pi ^ 2 / 6) ^ 2)
+    (h20 : I20 = -(1 / 2) * quadAltK - (1 / 2) * (Real.pi ^ 2 / 6) ^ 2)
+    (h21 : I21 = -(3 / 2) * quadAltK
+        - 3 * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6)
+        + (7 / 4) * Real.log 2 * zeta3_24
+        + (3 / 10) * (Real.pi ^ 2 / 6) ^ 2)
+    (h22 : I22 = -(3 / 2) * quadAltK + (1 / 20) * (Real.pi ^ 2 / 6) ^ 2) :
+    sixIntegralCombination = bridgeValue := by
+  unfold sixIntegralCombination bridgeValue
+  rw [h10, h11, h12, h20, h21, h22, hK]
+  unfold cubicLinearEulerValue24 alternatingCubicLinearEulerValue24
+  ring
+
 /-! ## The target theorem (open) -/
 
 /-- Summability of the outer-alternating quadratic terms (already proved in
@@ -391,10 +437,18 @@ theorem alternatingQuadraticEulerTerm24_hasSum :
     HasSum alternatingQuadraticEulerTerm24 alternatingQuadraticEulerValue24 := by
   -- route (Q6047 Layer F):
   --   rw [← summable_quadAlt.hasSum.tsum_eq]
-  --   tsum = ∫₀¹ (-log x)/x * Q(-x) dx   (coefficient integration)
-  --        = sixIntegralCombination        (IBP + Mobius)
-  --        = bridgeValue                   (endpoint evaluations)
+  --   tsum = ∫₀¹ (-log x)/x * Q(-x) dx   quadAlt_tsum_eq_coeff_integral   ✓ proved
+  --        = sixIntegralCombination        quadAltCoeffIntegral_eq_six     ✓ proved
+  --        = bridgeValue                   quadAltSixIntegral_eq_bridgeValue
+  --                                          — proved, but still carries its
+  --                                            seven hypotheses (Layer E)
   --        = alternatingQuadraticEulerValue24
+  --                                        bridgeValue_eq_…                ✓ proved
+  --
+  -- So the ONLY thing between here and a closed capstone is discharging the
+  -- seven hypotheses of `quadAltSixIntegral_eq_bridgeValue`: the evaluation of
+  -- `quadAltK`, and the six rows `I10 … I22` in `K` normal form.  Everything
+  -- else on the route is already axiom-clean.
   sorry
 
 /-! ## Layer B2: normalization `M(0) = 0` (Q6047 (2.9)) -/
