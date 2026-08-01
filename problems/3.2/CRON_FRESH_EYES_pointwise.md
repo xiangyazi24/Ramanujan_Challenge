@@ -401,3 +401,22 @@ b_r ≡ −(1/N)·Σ_{t=0}^{N−1} J(φψ^{t+r}, ψ^{N/2−t})²·J(φψ^{t−r}
 - 爸爸令"派 codex 双雄追速度"：cron 双雄 = zp_bigscan(high, p<10⁶ 分布/中点素数/Poisson 大样本) + garqi_moments(max, X 到 2^19 的 AQI 标定)，两份独立 C 实现共享内核=互为交叉验证（spec: CODEX_SPEC_CRON_zp_bigscan.md / CODEX_SPEC_CRON_garqi_moments.md）；life 双雄 = Galois 轨道(high) + **T-adic 路线**(max, Liu–Wan/Davis–Wan–Xiao——Wan 学派 T-adic 指数和恰是"固定层×全体乘法字符 twist"的定义特征精确设置，[GAP-LT-MELLIN] 最深一枪)。
 - GPT tab 补弹（ASK_AFFINITY 钉位）：q16→cron7（首强度），q18→cron8（双层逆定理+Cartier），q19→cron4（**Lucas apparition 校准案独立深挖**：max_n #{p∈(n/2,n]: α(p)|n−p} 无条件界+传移审计表）。cron6(q17)/cron10(q18 首发) 仍在飞。
 - **⚠️ 新调度铁律（Q.4 补）**：后台 shell 里 TMUX_PANE 为空 ⟹ ask-gpt 窗口探测漂到聚焦窗口（本班实案：被识别成 life，affinity 安全网拦下）。后台派发一律 `TMUX_PANE='%5'`（cron pane）+ ASK_AFFINITY 钉 tab。已写进记忆 feedback_askgpt_no_channel。
+
+---
+
+## 附录 R（2026-08-01 续）：Q6400 收获（q17 反 sunflower）——Lucas 校准定理 + 二项式反例 + Lemma A 数据击毙；水平机制格局定案
+
+**R.1 三大件（均经我方机器验证，CRON_q6400_verify.py 全绿）**：
+1. **Lucas 校准案完整解决（无条件定理）**：H_U(n) = #{p∈(n/2,n]: p|U_{n−p}} ≪ τ(n±1)·√(n/log n) = n^{1/2+o(1)}。机制：对合塌缩 ρ(p)|n−p ⟺ ρ(p)|n−χ_p（用 ρ|p−χ）⟹ **全部命中素数整除两个固定整数 U_{n∓1}**，再按 d=ρ(p) 除数分裂（高度界 vs 等差数列界，y=√(nL/2c) 平衡）。四要素：rank 律 / 有限偏移集 {±1} / ρ|p−χ / 指数高度。**我方验证**：ρ|p−χ 300/300，塌缩 n=3001 零违例，界成立（worst H=4 vs 688）。证明逐行核过无误。
+2. **中心二项式反例（负校准）**：a_r=C(2r,r) 时命中集 = (n/2, 2n/3] 全体素数（Kummer 进位判据 2r≥p），**sunflower 达 n/(6log n) 正密度**。我方验证三个 n 逐个精确相等。⟹ 超几何出身/回文/低阶 ODE 本身给零反对齐——"fixed motive" 不是定理级替代品。
+3. **层级定标**：固定多项式（H≤deg F，理想 carrier）→ Lucas rank 律（n^{1/2}）→ 全局 motive 精确迹零（Lang–Trotter 级，无定理）→ 无 rank 结构超几何（可达正密度）。Apéry 在 3-4 档之间，必须自己挣出机制。
+
+**R.2 Lemma A 数据击毙 [DEAD: 有限偏移 apparition 代理]**：答案给出的最便宜机制（每命中 (p,r) 有证书 d|r, d|p−ε, p|C_d, ε∈有限集）按其"快速证伪"建议实测：载体 C_d=b_d、E={0,±1}，**p<4000 全部 498 命中中 473 个无证书**（最小反例 (17,13)）。Apéry 无 apparition 律结构确证——与 |Z_p|=2·Poisson(1/2) 随机模型一致。（逻辑上更野的载体族仍可能，但零证据。）
+
+**R.3 水平机制格局（六排名收敛后的活口清单）**：
+- **[LIVE-1] Lemma FD（Franel Type-II 双线性化 + Linnik 色散）**——排名第一的真活口：色散法（BFI/Maynard）是唯一屡次击穿单模数欠采样墙的成熟技术，Franel 平方是唯一有卷积形状的 Apéry 恒等式。缺失件：把中心化零指示函数分解为一致有界导手的 O(1) 个 Type-II 核。失败终点也明确：证明任何来自 Franel 平方的精确表示导手 ≫ p^c。**这是下一发派题/codex 的首选目标（k=2 build-or-kill）**。
+- **[LIVE-2] Lemma C（亚指数 carrier）**：立即收官但仓库饱和审计已示自然 carrier 全线性高度；新提案必须先交高度账本（log|C_n|=o(n)）再做局部代数。
+- **[LIVE-3] Lemma HL（水平 Kummer 局部极限）= [GAP-LT-MELLIN] 的水平版**：ℳ_p(ω_p^{n−1})≡0 的一致 n 计数——与 life qI/T-adic 同一正典前沿；Sato–Tate/单值性单独给不了定义特征局部极限（与我方 P.4 审计口径一致）。
+- 包装器（非源头）：cumulant/Stein/依赖图/聚类展开——需先有 k=2 算术估计；larger/inverse sieve 需先有中心放大定理（Lemma LS）。
+- 字符指数勘误确认：Mellin 对角是 ω_p^{n−1}（mod p−1）而非 ω_p^n（mod p 的加法索引 n）——两坐标并存，8.5 检查表两同余式我方 trivially 核过。
+- q19(Q6414@cron4) 落地后与 §5 Lucas 定理做独立 diff（双源）。全文归档 chatgpt-answers/Q6400.md。
