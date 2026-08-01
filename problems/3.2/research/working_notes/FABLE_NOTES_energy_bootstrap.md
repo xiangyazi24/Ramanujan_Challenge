@@ -2098,3 +2098,15 @@ double-certified.
   3/2])。攻击资产: 三+四条路线(qN 结式塔/Stepanov/短区间Weyl + qO
   审计判死三条留 vdC 变体)、Q2BF 结构版、全套代数引擎、crystal 坐标
   候选。战役三=GPRV 单点总攻, 双 session 合卷立项。
+
+## §105 (08-02 01:20) 卷宗交接收讫 — 战役二全卷归档
+
+- cron DOSSIER_E1_EMPIRICAL.md (1a5e884) 已 pull 核实在库: 12 条已验证
+  统计总表(含 GPRV θ=0)+结构定理清单+死亡证书+盲点榜+复现脚本索引,
+  开卷句 H²→H 定格。战役三立项文档的经验卷宗就位, 合写时直接嵌。
+- cron 两问记档: 最不自信=μ_h 经验均值口径+极值律指数 log/loglog vs
+  √log 未分辨; 盲点=全部统计在 (b,c)/n-参数化下测, crystal 坐标坐实
+  需重测——与我方 §104 盲点栏合并。
+- 双方在飞: cron 四发 SOL(qM/q19v2/qL/qN)+Montes codex; life 侧
+  qFS2/Q6462/悬题×2。落地各自归档, 明日按 GPRV 单点立项合卷。
+  **战役二 + final strike 正式全卷归档。**
