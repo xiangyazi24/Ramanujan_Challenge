@@ -28,6 +28,11 @@ p|N_h(r) ⟺ π(r)=π(r+h)【穷举证】；镜像 π(p−1−n)=π(n) 逐点恒
 | 10 | 仿射零超额 Σm²(2D)=2N−2 | 精确 | p=211/499/1009/2003 | AM.8【射影/仿射碰撞分离】 |
 | 11 | max\|T(α,β)\| ≈ √(4p log p) | orbit 落 √2·√(2log p) 线 | 全 (α,β) 谱 ×4 素数 | AM.8（镜像√2相干因子; iid 对照吻合） |
 | 12 | **[GPRV] θ=0** G/p ≈ 1.08 | 1.069/1.087/1.093/1.082 | 波段 3k/10k/30k/100k 各8素数 | **AN.5（E1 充分统计量直接经验成立，跨33倍p无漂移）** |
+| 13 | (PAIR-QRLL) Q_p(H)/(H+H²/p) 有界 | ≤0.28 全场，H≤128 时=0 | p=3k/10k/30k/100k dyadic H | AO.8（重复返回随机小量） |
+| 14 | (SAME-LAG-BDH) Σ_hR_h² = O(p) | A_p(H)/H 平坦 ≈3.7–4.5 | 同上 | AO.8 |
+| 15 | **[GAP-2D-SQRT] 无 conductor 泄漏** | B_t(H)/√(pH) = O(1)（0.01–2.07，H 跨 128 倍） | p=10007/30011, t∈{1,2,5} | AQ.3（Q6515 可证伪测试通过） |
+| 16 | 深度层塔 (A)–(C3) 全过 | AUDIT-1/2/3 零失败（177 组 + mod p⁷ 全 v + κ 律） | p=13/17/29 | AP.2, AQ.4【定理级】 |
+| 17 | jet 杠杆分叉初判 | 碰撞对 jet 消失率=随机基线；c∉span{b,D,E,F}（秩4→5） | p=101/211, 深度≤3 线性 | AQ.4（死亡证书方向；(iii) 存活） |
 
 ## 结构定理（已证，非经验）
 
@@ -36,23 +41,52 @@ p|N_h(r) ⟺ π(r)=π(r+h)【穷举证】；镜像 π(p−1−n)=π(n) 逐点恒
 - 镜像逐点恒等 γ=id（AK.2）
 - [THM-ENERGY-3/2] E^π ≪ 2.45p^{3/2} 无条件（life §103，块分割+deg 界）
 - Fourier 字典 E^π=(1/p)Σ_{[u:v]}Σ_s|T(su,sv)|²（AN.1）；C_1=O(1) Casoratian 刚性
+- **E^π ≤ 2N + T3**（AO.1，一行不等式，完整证明）；非回绕口径 3·ΣJ=T3（AO.8 口径锁机验）
+- **σ 指数机器**：Q_p(Δ)≪Δ^{3−σ}p^ε ⟹ E^π≪p^{2−1/(3−σ)+ε}（AO.2 完整证明；σ=0 恰 5/3，σ=1 恰 3/2，**σ=2 = E1**）
+- **径向恒等式** p²E^π=(p−1)N²+Σ_ℓ(pM_ℓ−N)²（AO.3/AO.8 机验锁定）
+- **小 h 因式分解定律**：偶 h N_h=(2r+h+1)·M_h（有理根=镜像点）；奇 h N_h 不可约（h≤14）；Chebotarev×区间份额 ⟹ 均值 1.5/0.5 与实测咬合（AQ.1）——**[GPRV] = 族 {M_h} 的 Chebotarev 根计数方差**
+- **深度层塔**（AP.2/AQ.4 机验定理级）：p³c_{ap+v}≡c_a·b_v (mod p)；v_p(W_{ap+v})=3(a−1)；K_v 母公式 mod p⁷；**κ_p≡−(2/3)B_{p−3}≡−2ζ_p(3) (mod p)**
+- 范畴定位（AP.1）：c = K3 F-crystal 的 mixed extension/p-adic normal function（LC=t），非 MUM log 解
+
+## 三靶（E1 program 的并列开放目标——注意：充分而非等价，P 与 E1 不形式等价见 Q6515 §6 反模型）
+
+| 靶 | 陈述 | ⟹ | 经验状态 |
+|---|---|---|---|
+| [GPRV] | Σ_h(C_h−μ_h)² ≤ Cp | E^π=O(p) | θ=0, C≈1.08（#12） |
+| [ATR] | Σ_{h≠k}J(h,k) ≪ p | E^π≤2N+T3=O(p) | T3=3.974p（#6） |
+| [GAP-2D-SQRT] | \|B_t(H)\|≪(pH)^{1/2}p^ε | S_p(H)≪H+(pH)^{1/2}（P 部分 δ=1/2） | B_t/√(pH)=O(1)（#15） |
 
 ## 死亡证书（攻此靶时勿重走）
 
-- mod-p 跨块 digit 律（AK.4：v_p(W_{p+v})=0，u≥1 块 mod-p 退化 [1:0]；深度层另攻=qM 在飞）
+- mod-p 跨块 digit 律（AK.4：v_p(W_{p+v})=0，u≥1 块 mod-p 退化 [1:0]；深度层已定理化=AP.2）
 - 低次曲线 Weil（AN.2(c)：仿射零超额反证低次关系）
 - GMR digit 直套（AN.2(b)：automaton 状态随 p 增长）
 - max-Weyl via 现成理论（AN.2(a)：缺固定 conductor sheaf realization——未杀死，缺基建）
 - Green 公理不足证 E1（life §103 反例：必须用算术字）
+- 中心化协方差路线（AO.1：不闭合，带回一阶量）
+- St⊠St 谱路线（AO.4：需 p^{−2} 矩阵元；BG 不可移植）
+- 结式塔/renewal 控 P^first（AQ.2：反模型 Q=0 但 S≍H²，Sage 证书）
+- 朴素 Stepanov（AQ.2：Bézout 无维数盈余）
+- 深度 ≤3 全纯 jet 线性恢复/强制（AQ.4：AUDIT-4 判负；(iii) mixed cocycle 存活）
 
 ## 盲点榜（总攻文档应收录）
 
-1. n-参数化可能是错的：真对象或是 F-crystal 族的有限域点（Q6516 §盲点；与 qM 深度层共振）。
+1. n-参数化可能是错的：真对象或是 F-crystal 族的有限域点（Q6516 §盲点；范畴已定位 AP.1）。
 2. 镜像商掉后的 primitive orbit 才是"纯随机"对象——√2 因子是 rank-one 对称，勿当信号。
 3. 极值律（#5）与一致重数 3p^{2/3} 间三个数量级的空档——任何 polylog 重数定理都是新定理。
+4. 薄异常族：小 h Chebotarev 层（−51 例，AQ.1）——证三靶时结构根须单列剔除。
+5. clock-twisted/bispectral 低秩对象（Q6515）：存在⟹全部 degree-growth no-go 失效；证伪⟹no-go 升级封顶定理。
+
+## 定理群指针（供 FABLE_SECTION 合并；账本 = CRON_FRESH_EYES_pointwise.md）
+
+AJ.1（重构链五件）· AJ.2（一致重数）· AK.1（能量引理命名+θ 刻度）· AK.2（γ=id）·
+AO.1（TRIPLE/E^π≤2N+T3/[ATR]）· AO.2（σ 机器）· AO.3（RADIAL-BDH + Q6499 勘误）·
+AO.4（谱死亡证书）· AO.5（随机模型精确 3p/4p）· AQ.1（分裂律+Chebotarev 字典+−51）·
+AQ.2（P 部分 no-go 三命题+[GAP-2D-SQRT]）· AP.1（范畴修正）· AP.2/AQ.4（深度层塔+κ_p）
 
 ## 复现脚本（全部单文件可跑）
 
 CRON_greens_reframing_verify.py（重构链）· CRON_maxmult_trend.py + CRON_maxmult_1e6.py（#1/4/5）·
 CRON_b1_crosscorr.py（#6/7）· CRON_rh_variance.py（#8/9）· CRON_weyl2d.py（#10/11）·
-CRON_gprv_stability.py（#12）
+CRON_gprv_stability.py（#12）· CRON_qL_experiments.py（#13/14 + 口径锁/径向）·
+CRON_qM_audit13.py + CRON_qM_audit24.py（#16/17）
