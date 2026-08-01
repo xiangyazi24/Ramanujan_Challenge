@@ -449,3 +449,26 @@ E(p) ≪ p^{3/2+o(1)} is the single statement:
 
 All structure identified; (RES) is pure family-equidistribution ("the Ψ family
 has random-polynomial root statistics after removing the one forced root").
+
+## 19. R9 + R10 harvests: the three frontiers are ONE statement; (SG) experiment decisive
+
+- R9 (two-base filter): mixed determinant exists (C = det[T_t w_h | w_u-shifted]),
+  bad alignments form a partial matching (avoidable — clean lemma), anchor
+  variant provably adds nothing; pointwise degrees still cap at 5/3; decisive
+  missing lemma sharpened to (MIX): average relevant-common-root ≪ H^{2+o(1)}G.
+- R10 (spectral): naive transfer operator & Gram-spectrum routes dead with
+  exact obstructions (deterministic one-branch = no gap; spec(G) = fiber sizes;
+  band graph not expander; M-cap + H³-capacity RIGOROUSLY capped at 5/3 —
+  matches R5's adversary). Distilled target (SG): lag-incidence operator norm
+  ‖A_H‖² ≪ H^{o(1)}·bounded ⟹ E ≪ p^{3/2+o(1)} (Thm 10.1; exchange rate
+  θ ↦ (3+θ)/2).
+- (SG) EXPERIMENT (sg_test.py): σ₁(A_H)² = 5.2→7.0 BOUNDED over p = 10³→10⁵ at
+  H = √p; Λ = σ₁²/H decays 0.169→0.022; top singular vector localizes on
+  isolated single lags (no structured bad family). (SG) holds with huge margin.
+- UNIFICATION (Fable, re-derived): W_H := #{bases with two collision lags ≤ H}
+  ≤ R_H-capacity (via (UN), unconditional); ΣL² = T_H + 2W_H; Cauchy + block
+  lower bound give E ≤ (2p/H)T_H + p²/H; hence
+    W_H ≪ H^{2+o(1)}  ⟺ ρ=2 ⟺ (RES) ⟺ scalar-(SG) ⟹ E(p) ≪ p^{3/2+o(1)} (H=√p).
+  (MIX) is an alternative sufficient route. ALL frontiers = the single
+  average-root statement; measured truth 0.72H² = (proved mirror 0.23H²) +
+  (Poisson residual 0.5H²). R11/R12b attacking; MIX diagnostic running.
