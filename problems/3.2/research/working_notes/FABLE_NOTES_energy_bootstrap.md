@@ -2395,3 +2395,10 @@ VERIFIED-32: C_h squarefree+C_h(0)≠0 h≤32; gcd(C_h,C_k)=1 全 465 对。
 [CRIT-2H] 无界 h 仍 OPEN (反射商干净路线已列)。
 ⟹ Morse/census/Goursat 塔无条件范围推至 **h≤32**; genus 命题的 squarefree 假设
 转正为定理。全 h 残余 = W_h 不可约 (codex 在跑) 或 A_h 本原 (Protocol A)。
+
+## §125 — 首批满辛群定理 (08-02 凌晨, Q6663)
+
+**PROVED: G_geom(G_2)=Sp_6, G_geom(G_3)=Sp_10, M₄=3 (h=2,3)** — 路线: CRIT(h) 不可约
++ 精确局部惯性分解 + 双局部群本原性 + 低维不可约连通辛子群分类 + T₀³ Jordan 型
+(J_2^{h−1}⊕J_1^{2h}, rank(ν−1)=h−1); 先证 Sp-full, M₄=3 自动。
+⟹ FLAT-LAW/Deligne 等分布在 h=2,3 是定理; 模板的 h-依赖 = 分类步 (q47 推广中)。
