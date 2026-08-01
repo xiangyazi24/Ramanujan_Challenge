@@ -90,7 +90,10 @@ theorem rivoalHarmonic_error_le_remainders_log
         |3 * rk - 2 * rj| + |rivoalLogSaddle22 n k| :=
       abs_add_le _ _
     _ ≤ (|3 * rk| + |2 * rj|) + |rivoalLogSaddle22 n k| := by
-      exact add_le_add_right (abs_sub_le _ _) _
+      have htri : |3 * rk - 2 * rj| ≤ |3 * rk| + |2 * rj| := by
+        rw [sub_eq_add_neg, abs_neg]
+        exact abs_add_le _ _
+      exact add_le_add_right htri _
     _ = (3 * |rk| + 2 * |rj|) + |rivoalLogSaddle22 n k| := by
       rw [abs_mul, abs_mul]
       norm_num
@@ -116,10 +119,11 @@ theorem rivoalHarmonic_error_le_envelope
     exact_mod_cast Nat.add_le_add_right hk 1
   have hjarg : ((n - k : ℕ) : ℝ) + 1 ≤ (n : ℝ) + 1 := by
     exact_mod_cast Nat.add_le_add_right (Nat.sub_le n k) 1
-  have hlogk0 : 0 ≤ Real.log ((k : ℝ) + 1) :=
-    Real.log_nonneg (by positivity)
+  have hkone : (1 : ℝ) ≤ (k : ℝ) + 1 := by positivity
+  have hjone : (1 : ℝ) ≤ ((n - k : ℕ) : ℝ) + 1 := by positivity
+  have hlogk0 : 0 ≤ Real.log ((k : ℝ) + 1) := Real.log_nonneg hkone
   have hlogj0 : 0 ≤ Real.log (((n - k : ℕ) : ℝ) + 1) :=
-    Real.log_nonneg (by positivity)
+    Real.log_nonneg hjone
   have hlogk := Real.log_le_log (by positivity : 0 < (k : ℝ) + 1) hkarg
   have hlogj := Real.log_le_log
     (by positivity : 0 < ((n - k : ℕ) : ℝ) + 1) hjarg
@@ -130,7 +134,9 @@ theorem rivoalHarmonic_error_le_envelope
       |3 * Real.log ((k : ℝ) + 1) -
           2 * Real.log (((n - k : ℕ) : ℝ) + 1)| ≤
         |3 * Real.log ((k : ℝ) + 1)| +
-          |2 * Real.log (((n - k : ℕ) : ℝ) + 1)| := abs_sub_le _ _
+          |2 * Real.log (((n - k : ℕ) : ℝ) + 1)| := by
+        rw [sub_eq_add_neg, abs_neg]
+        exact abs_add_le _ _
       _ = 3 * Real.log ((k : ℝ) + 1) +
           2 * Real.log (((n - k : ℕ) : ℝ) + 1) := by
         rw [abs_mul, abs_mul, abs_of_nonneg hlogk0, abs_of_nonneg hlogj0]
