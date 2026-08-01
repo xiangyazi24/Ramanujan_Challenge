@@ -15,18 +15,9 @@ theorem integrable_doubleKernel (m : ℕ) :
       ((volume.restrict (Ioi 0)).prod volume) := by
   have hmajor := (integrableOn_laplaceWeight m).norm.mul_prod integrable_sechSq
   apply hmajor.mono'
-  · have hnum : Continuous fun p : ℝ × ℝ =>
-        (laplaceWeight m p.1 : ℂ) *
-          Complex.exp (-(p.2 * p.1 : ℝ) * Complex.I) := by
-      unfold laplaceWeight
-      fun_prop
-    have hden : Continuous fun p : ℝ × ℝ =>
-        (Real.cosh (Real.pi * p.2) : ℂ) ^ 2 := by
-      fun_prop
-    have hquot := hnum.div hden (fun p =>
-      pow_ne_zero 2 (Complex.ofReal_ne_zero.mpr (Real.cosh_pos _).ne'))
-    simpa [Function.uncurry, doubleKernel, fourierKernel] using
-      hquot.aestronglyMeasurable
+  · apply Continuous.aestronglyMeasurable
+    unfold Function.uncurry doubleKernel fourierKernel laplaceWeight
+    fun_prop
   · filter_upwards with p
     rcases p with ⟨t, y⟩
     change ‖(laplaceWeight m t : ℂ) * fourierKernel t y‖ ≤
@@ -53,7 +44,7 @@ theorem integral_doubleKernel_t (m : ℕ) (y : ℝ) :
           filter_upwards with t
           unfold doubleKernel laplaceWeight fourierKernel polePoint
           push_cast
-          rw [Complex.ofReal_exp, ← Complex.exp_add]
+          rw [← Complex.exp_add]
           field_simp [hC]
           congr 2
           ring
