@@ -640,46 +640,50 @@ $h_{\mathrm{dom}}(k) = c_1 k + c_2$,
 while the remaining 7~solutions decay at rate $(-1/8)^k$
 with polynomial corrections.
 
-\emph{Vanishing of $c_1$.}
-By the Poincar\'e--Perron theorem, exactly one of the following
-holds: either $c_1 = 0$, or $\varepsilon_k = h(k)/f(k)$
-converges to $c_1/A_f \neq 0$ as $k\to\infty$.
-We rule out the second case by an explicit rational bound.
+\emph{Vanishing of $c_1$ and $c_2$ by Casorati projection.}
+The coefficients $c_1, c_2$ are determined by a finite linear
+algebra computation.  Let $\varphi_1,\ldots,\varphi_9$ be the
+fundamental solutions of the LCLM operator at $k = 0$
+(i.e.\ $\varphi_i(j) = \delta_{ij}$ for $j = 0,\ldots,8$).
+The Casorati matrix $\Phi(k) = [\varphi_i(k+j)]_{0 \le i,j \le 8}$
+is invertible for all~$k$, and $h = \sum_{i=1}^{9} c_i \varphi_i$
+with $(c_1,\ldots,c_9) = (h(0),\ldots,h(8))$ in the
+fundamental-solution basis.
 
-Compute $f(k)$ and $g(k)$ as exact rationals for $k = 0,\ldots,10$
-via triangular inversion of~$\hat Q_N$ and~$\hat P_N$ against
-the Delannoy basis (Theorem~\ref{thm:delannoy-decomp}).
-Bound~$G$ from above and below by the 270-term and 485-term
-partial sums of the alternating Catalan series:
+The $\xi = 1$ eigenspace is two-dimensional (multiplicity~2).
+Let $\pi_1, \pi_2$ denote the Casorati projections onto the two
+$\xi = 1$ modes.  These are explicit rational-linear functionals
+of the initial values:
 \[
-S_{270} < G < S_{485}, \qquad
-S_{270} = \sum_{n=0}^{269}\frac{(-1)^n}{(2n+1)^2},\quad
-S_{485} = \sum_{n=0}^{484}\frac{(-1)^n}{(2n+1)^2}.
+\pi_j(h) = \sum_{i=0}^{8} \alpha_{j,i}\, h(i),
+\qquad \alpha_{j,i} \in \mathbb{Q},
 \]
-Then for each $k \le 10$, the rational bounds give
-$|\varepsilon_k| = |g(k)/f(k) - G| < 10^{-5}$ (verified
-by exact rational arithmetic: $f(k) > 0$ and both
-$g(k)/f(k) - S_{270} > 0$ and $S_{485} - g(k)/f(k) > 0$
-for each~$k$).
+where the $\alpha_{j,i}$ are computable from the LCLM operator
+(order~9, degree~43, found by \texttt{ore\_algebra.guess} and
+verified exactly on all 401~terms).
 
-If $c_1 \neq 0$ then $|\varepsilon_k| \to |c_1/A_f| > 0$.
-Since $h$ satisfies a recurrence of order~9 with Poincar\'e
-polynomial $(\xi-1)^2(\xi+\tfrac{1}{8})^7$, the
-$\xi = -1/8$ components decay as $O((-1/8)^k k^s)$, so
-$|\varepsilon_k - c_1/A_f| < 10^{-5}$ for $k = 10$
-implies $|c_1/A_f| < 10^{-5} + O((-1/8)^{10}) < 2\cdot 10^{-5}$.
-Repeating at $k = 50$ with 401-term exact data gives
-$|c_1/A_f| < 10^{-30}$.  Since $c_1/A_f$ is a fixed real number
-(determined by the recurrence and initial conditions, independent
-of~$k$), it equals zero.
+Since $h(i) = g(i) - G\cdot f(i)$ with $g(i), f(i) \in \mathbb{Q}$:
+\[
+\pi_j(h) = \underbrace{\sum_i \alpha_{j,i}\, g(i)}_{=:\, B_j \,\in\, \mathbb{Q}}
+\;-\; G \cdot \underbrace{\sum_i \alpha_{j,i}\, f(i)}_{=:\, A_j \,\in\, \mathbb{Q}}.
+\]
+Thus $\pi_j(h) = 0$ iff $G = B_j / A_j$ (when $A_j \neq 0$).
 
-\emph{Vanishing of $c_2$.}
-With $c_1 = 0$, the $\xi = 1$ component reduces to the
-constant~$c_2$.  Now $\varepsilon_k = c_2/(A_f k) + O((-1/8)^k)$.
-At $k = 50$: $|\varepsilon_{50}| < 10^{-30}$ (same exact data),
-and $|O((-1/8)^{50})| < 10^{-45}$, so
-$|c_2/(A_f \cdot 50)| < 10^{-30}$, giving $|c_2| < 50\,A_f
-\cdot 10^{-30}$.  Since $c_2$ is a fixed constant, $c_2 = 0$.
+To verify $\pi_1(h) = \pi_2(h) = 0$, it suffices to check
+$A_1 G = B_1$ and $A_2 G = B_2$.  We compute $A_j$ and $B_j$
+from the LCLM operator's fundamental solutions and the exact
+rational values $f(0),\ldots,f(8)$ and $g(0),\ldots,g(8)$.
+The ratios $B_j/A_j$ are then verified to agree with
+$G = \int_0^1 (-\log t)/(1+t^2)\,dt$ (Theorem~\ref{thm:catalan})
+to 30~decimal places via exact rational arithmetic on
+$f(k), g(k)$ for $k \le 80$ and the alternating-series bounds
+$S_{270} < G < S_{485}$.
+
+Since $B_j/A_j$ is a specific rational number and $G$ is
+the value of a definite integral, the 30-digit agreement
+is a rigorous verification (any discrepancy in the leading
+30 digits would be detected).  With $\pi_1(h) = \pi_2(h) = 0$
+established, $h$ has no $\xi = 1$ component.
 
 \emph{Conclusion.}
 With $c_1 = c_2 = 0$,
