@@ -2377,3 +2377,7 @@ cron: crit2h squarefree+V(0)≠0 三素数证书到 h=30 ⟹ **[CRIT-2H] ⟹ G_h
 证明 (restart/companion 机制, 齐次零纤维输入)** — 机制本身或有推广空间 (restart
 可迭代/可 p-adic 化, 间距分割不能), 以此身份记账。教训: 又一次 derived-index
 staleness (我方 CTX 里的'3/4 纪录'陈旧) — 跨 session 定理台账必须先 grep 对方附录。
+
+§122 追记: q38/Q6657 — [THM-NEAR-WALL-3/7]+W-注入 我方独立复核 CONFIRMED
+(两小修: 端点一基约定; Q6630 笔误, 原式对)。审计矩阵四大导入定理全绿
+(H2LOGH 双审/σ½/NEAR-WALL/三角机制)。q41 成稿在做。
