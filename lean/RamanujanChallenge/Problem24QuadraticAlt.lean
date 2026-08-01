@@ -2683,8 +2683,7 @@ theorem quadAltI11_eq_integral :
   simp only [sub_self] at hFTC
   -- ∫(W0·H1/(1−t)) + ∫(−2r/t·g11) = 0 → ∫W0·H1/(1−t) = ∫ 2r/t·g11 = ∫ r·H1²/t
   have hsplit : (∫ y : ℝ in (0 : ℝ)..1, (W0 y * (H1 y / (1 - y))) + (-2 * (quadAltR y / y) * g11 y)) = 0 := by
-    convert hFTC using 1
-    norm_num
+    exact hFTC
   have hA : IntervalIntegrable (fun y : ℝ => W0 y * (H1 y / (1 - y))) MeasureTheory.volume 0 1 := by
     sorry  -- TODO-stub
   have hB : IntervalIntegrable (fun y : ℝ => -2 * (quadAltR y / y) * g11 y) MeasureTheory.volume 0 1 := by
