@@ -137,3 +137,18 @@
 - 并行: (b) rank-4 Dwork 奖品线 (ChatGPT), codex sol 双开数值/符号验证
 - end: <fill on close>
 - final result: <fill on close>
+
+### Campaign 3 中期战况 (15:00±)
+- avenue (a) COINC: 条件定理成型入 tex (审计过), 数值 go/no-go 通过 (K_emp≈1 有界到 H=M-1)。
+- 结构定理群 (今日新证): 加法律 (transfer product, 36/36 机验); 三阶极点诚实性
+  (Apery 正性); 泛型亏格 6hk−3h−3k−2 (双源: 我 RH 手推 + Q6561, X_{2,3}=19 吻合);
+  分量二分定理 (Jordan/Goursat, MON 假设下); census h≤8 全吻合。
+- 判死 (书面): 低亏格坍缩 (亏格公式); h-代数化 (Q6548); sheaf 三角归纳/End-collapse
+  (Q6566); vdC 缩短转移长度 (Q6570); master-variety (Q6546); 逐对 Weil 范围 p^{1/6}。
+- 幸存汇聚点: SHELL 方差 (固定差 d 壳相关 A_d 一致小) ⟹ COINC@p^{2/3} ⟹ p^{4/3+ε}。
+  codex 在测 A_d 实证; MON 归结到 C_h 不可约 (q16 攻坚中)。
+- 两问: (a) 最没信心: Goursat 定理中 h=k 情形 joint group 是否必含对角 A (若两投影被
+  非平凡外自同构扭曲?deg≥5 时 S 无外自同构, 应安全, 待 codex-max 复核); tex 中
+  poles 引理的 proof 是 sketch (机验背书)。(b) 盲角: t=0 附近/小 t 的 S_h(t) 特殊行为
+  未单独检查; cron 侧 qP-qZ 战果未对表 (黑名单纪律下待其自报)。
+- 在飞: 8 GPT (q2/q6/q9/qDWORK2/q15/q16/q17/q18) + codex×2 (crosscorr, irred-theorem)。
