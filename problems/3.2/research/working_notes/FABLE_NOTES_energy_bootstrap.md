@@ -203,3 +203,13 @@ p^{3/4}/p^{7/4} theorems follow with the SAME counting as the clean regime.
 Publication structure: Theorems 1–3 unconditional; Theorem A/B conditional on
 one explicit finite-checkable arithmetic statement (far cleaner than the
 previous "missing sheaf" conditionality).
+
+## 9b. GCD conjecture refined + sweep (d₁<16, d₂≤22)
+
+K = d₂³·bracket. Sweep of gcd(b_δ−1, num(bracket)): max 5400 = 2³3³5² at
+(2,22); ALL prime factors observed ≤ 19 (vs d₂ ≤ 22). Operative conjecture,
+final form: **every prime divisor of gcd(b_δ−1, K(d₁,d₂)) is O(d₂)** — which
+is exactly enough (counting uses d₂ ≤ D' ~ p^{1/4} ≪ p, so no doubly-
+exceptional pair exists for large p, and Theorems A/B (p^{3/4}, p^{7/4})
+follow by the clean-regime counting verbatim). Distribution mostly tiny
+(4×145, 72×18, 24×11); script bracket_test.py.
