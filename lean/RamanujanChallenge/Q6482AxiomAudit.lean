@@ -1,0 +1,15 @@
+import RamanujanChallenge.Problem27Barnes
+
+namespace RamanujanChallenge.P27
+
+#print axioms problem27_challenge_sequences
+#print axioms gaugeUnscaled_zudilinB_eq_challengeQ
+#print axioms gaugeUnscaled_zudilinM23_eq_challengeP
+#print axioms gaugeRow2Real_zudilinB_tendsto_atBot
+#print axioms problem27_of_source_error
+#print axioms problem27_zeta2_add_zeta3
+#print axioms zudilinBarnesErrorIntegral_tendsto_zero27
+#print axioms zudilinCombinedError_tendsto_of_barnes_representation27
+#print axioms problem27_zeta2_add_zeta3_of_barnes_representation
+
+end RamanujanChallenge.P27
