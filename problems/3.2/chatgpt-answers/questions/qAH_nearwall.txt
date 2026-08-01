@@ -1,0 +1,30 @@
+[P3.2 cron / follow-up to your Q6573] Attack [NEAR-WALL_eta] — the first wall fragment. Three independent lines now converge on exactly this object; it is the campaign's #1 target.
+
+THE TARGET (your Q6573 §14.2):
+```text
+K_p(H,D) = sum_{1<=d<=D} sum_{H<h<=2H-d} J_p(h,h+d) << H D^{2-eta} p^eps
+```
+for ANY fixed eta>0 (renewal currently gives K_p <= (3/2) H D^2 via J_p(h,h+d) <= R_d <= 3d). Any eta>0 => Q_I << H^{3-1/(2-eta)} < H^{5/2}, breaking the box barrier.
+
+CONVERGENT EVIDENCE THIS IS THE RIGHT OBJECT:
+- The sigma=1/2 audit's blind spot: the proof forgets all triple certificates come from ONE orbit; the next gain must be a joint same-box bound beating sum of individual R_d bounds. K_p IS that joint sum.
+- The MESO-PAIR attack: axis strips are O(N)-controlled; everything reduces to the balanced/near-diagonal core. K_p is its dyadic near-diagonal face.
+- The exponent LP (independently verified): 13/6 is the fixed point of the banked system; cheapest breaking input = balanced-core estimate.
+
+STRUCTURAL REFORMULATION (verify first, then use or refute): J_p(h,h+d) counts r with pi(r)=pi(r+h)=pi(r+h+d); setting u=r+h, this equals #{u: N_d(u)=0-type gap-d collision base, and pi(u-h)=pi(u), h in (H,2H-d]}. Hence
+```text
+K_p(H,D) = sum_{d<=D} sum_{u in Z_d} W_H(u),
+Z_d = set of gap-d collision bases (|Z_d| = R_d <= 3d),
+W_H(u) = #{h in (H,2H-d]: pi(u-h)=pi(u)} = backward-window return count of color pi(u).
+```
+So the needed statement is an ANTI-CORRELATION: short-gap collision bases u do not systematically sit at colors with high backward-window multiplicity. Random heuristic: E[W_H] ~ H/p * (mean color mass) = O(H/p * something) — the true random scale for K_p is D^2 * H/p + D^2, far below H D^2; enormous slack.
+
+ATTACK ROUTES (drive each to a verdict):
+1. DISPERSION/second moment over the algebraic set Z_d: Z_d is the root set of the degree-3(d-1) polynomial N_d. For fixed d and fixed h, #{u in Z_d: pi(u-h)=pi(u)} = #{u: N_d(u)=0 and N_h(u-h)=0} — a complete-intersection count. Cauchy-Schwarz in which variable gives a Weil-tractable object? Work out the dispersion: sum_h (sum_{u in Z_d} [N_h(u-h)=0]) and its second moment sum_{h,h'} #{u,u' ...} — identify exactly which correlation sums have bounded-degree Weil form and which reintroduce the family wall. Where exactly does it break?
+2. AVERAGE over d exploiting DISTINCT d-values: the sets Z_d for different d<=D are roots of coprime-ish polynomials (adjacent coprimality banked; pairwise gcds = the shifted-resultant object). Total |union Z_d| <= (3/2)D^2 but the WINDOW functional may average better over the union than per-d. Does summing first over d (fixed u: u in Z_d for at most nu(u) values of d, sum_u nu(u) <= (3/2)D^2) + Cauchy in u beat the trivial bound? Note sum_u nu(u)^2 = 2Q_D^{(<=D)} + S_D <= known! Q_D <= (27/4)D^{5/2} gives sum nu^2 << D^{5/2}. Push: K_p <= sqrt(sum_u nu(u)^2) * sqrt(sum_{u in union} W_H(u)^2) — the second factor is a window-multiplicity second moment over an algebraic sparse set. Bound it by M-window results? Compute the exponent this yields — does it already give eta>0 UNCONDITIONALLY? CHECK THIS CAREFULLY; it looks dangerously close to a win.
+3. If route 2's second factor is the blocker: it needs sum over sparse set of W^2 — relate to Q-type quantities in the backward window (W_H(u)^2 ~ pairs of returns = window pair counts at u). Express exactly and see if sigma=1/2 machinery applies to it.
+4. If all routes stall, state the minimal residual (which correlation sum, which quantifier) and whether it is strictly weaker than [MESO-BALANCED-PAIR].
+
+Conventions: nonwrapping, R_1=0, R_d<=3(d-1), M_W<=4|W|^{2/3} window multiplicity, Q_D<=(27/4)D^{5/2}, all banked/audited.
+
+Required final answers: (a) least-confident step? (b) likely shared blind spot?

@@ -1,0 +1,23 @@
+[P3.2 cron] Hostile audit of the [WALL] chapter's formal reductions (they are about to become the campaign document's spine — verify every displayed step; we machine-check what you flag).
+
+DOCUMENT UNDER AUDIT (reproduced below in compressed form; audit each numbered reduction):
+
+Setup: Delta_p(r,h)=b_r c_{r+h}-c_r b_{r+h} on the nonwrapping triangle Omega_p; pi(r)=pi(r+h) iff Delta_p(r,h)=0. [WALL]: for all intervals I,J and complex weights u,v: sum_a |nu_{u,v}(a)-W_{u,v}/p|^2 <= C_eps X^eps E_{u,v}, X=2+|I|+|J|, E=sum|u_r v_h|^2, nu(a)=sum_{Delta=a} u_r v_h, W=sum u_r v_h.
+
+R1 (Fourier): sum_a |nu(a)-W/p|^2 = (1/p) sum_{s!=0} |B_s(u,v)|^2 with B_s = sum u_r v_h e_p(s Delta). [Parseval — check normalization]
+R2 ([WALL]=>row variance): with v=1, duality: sum_{r in J} |d_I(r)-q_I(r)/p|^2 <= C_eps X^eps |I|. [check the duality step: is taking v_h=1 then dualizing in u legitimate, and does it lose a factor |J|?]
+R3 (=>MESO-PAIR): sum_r d_I(r)^2 <= 2 sum_r|d_I(r)-q_I(r)/p|^2 + 2 sum_r (q_I(r)/p)^2 << D p^eps + D^2/p, so Q_p(D) << D p^eps + D^2/p; at D=sqrt(N)L: o(N). [check: does sum_r (q_I/p)^2 really give D^2/p — q_I(r)<=D, sum over ~p values of r gives p*(D/p)^2 = D^2/p OK? verify]
+R4 (=>T3): Q_p(p-2)=T3/6 exactly (each color with multiplicity m contributes C(m,3)? verify the claimed sum_i C(m-i,2)=C(m,3) identity and the factor 6); then T3 << p^{1+eps}.
+R5 (=>sigma=2): Q_p(D) << D p^eps for all D.
+R6 (=>BLOCK-SUBQUAD): S_p(J,L) << L^2/p + L^{1+eps} via |S-M/p|^2 <= C L^eps M with M<<L^2. [check: this uses u=v=1 and only the a=0 term — but [WALL] bounds the SUM over a; extracting one term is fine; verify the square/sqrt bookkeeping: |S-M/p| <= sqrt(C_eps L^eps M) = L^{1+eps/2}, OK?]
+R7 (=>GPRV): columns: |sum_h v_h z_h|^2 <= C_eps p^{1+eps} sum|v_h|^2 with z_h=C_h-n_h/p; duality => sum_h z_h^2 << p^{1+eps}. [check where the p^{1} comes from: u_r=1 makes E_{u,v}=|J| sum|v_h|^2 ~ p sum|v_h|^2 — verify]
+R8 (=>COINC): sum_a|nu(a)-M/p|^2 = N_coinc - M^2/p (u=v=1). [check this identity: sum_a nu(a)^2 - 2(M/p)sum_a nu(a) + p*(M/p)^2 = N_coinc - M^2/p, needs sum_a nu(a)=M — verify]
+R9 (zero-fiber insufficiency for COINC): two maps with identical zero sets, one uniform on nonzero values, one constant on one nonzero value: zero-fiber matrices identical, COINC maximally different. [sanity-check the example]
+R10 ([NEAR-WALL_eta] => Q_I << H^2 D^{1-eta} + H^3/D => with D=H^{1/(2-eta)}: Q_I << H^{3-1/(2-eta)}; check 3-1/(2-eta) < 5/2 iff eta>0, and that the master inequality application is the banked (8.1) with S_1(D-1) replaced by the near-diagonal weighted version — is the substitution legitimate given B_d <= H (the same-box pair count), i.e. does K_p(H,D) really substitute for H*S_1(D-1)?]
+R11 (1/6 defect accounting §15): size-biased mean H^{2/3}->H^{1/2} gain H^{1/6}; global p^{13/6}->p^2 needs biased mean p^{2/3}->p^{1/2}. [check arithmetic]
+
+Also audit two DESIGN claims:
+D1: [WALL-zero] suffices for MESO-PAIR/T3/sigma/BLOCK/GPRV but NOT COINC (the all-level requirement) — any error?
+D2 (§21 gauge caveat): multiplying Delta by an h-dependent nonzero scalar preserves zero-fiber statements but can change COINC/all-level completely — verify, and state which normalizations are natural candidates (raw determinant; determinant/(leading coefficient); crystal-Frobenius normalization).
+
+Output: per-item verdict CONFIRMED / ERROR(with correction) / GAP(with what's missing). ASCII only. Final: (a) least-confident? (b) blind spot?
