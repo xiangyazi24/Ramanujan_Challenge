@@ -2415,3 +2415,11 @@ VERIFIED-32: C_h squarefree+C_h(0)≠0 h≤32; gcd(C_h,C_k)=1 全 465 对。
 - §6: 其余 banked 路线 "以当前转换 DEAD, 未被反驳为定理"。
 战役三收官形态: 墙未破, 但赢面收束到三个命名条件件: (4.8)/(4.9) 逃生口 +
 codegree-敏感证书 + [MESO-S1-2/3] 一阶矩 census (并列 cron [MIDPOINT-AC'])。
+
+## §127 — [SP-FULL-ALL] monodromy 塔闭合 (08-02 凌晨, Q6677)
+
+**PROVED (条件: CRIT(h)+BG(h)+审计局部类型+p>4h−2, 全 h≥2)**: G_geom(G_h)=Sp_{4h−2}。
+路线: wild 多重 1 权 ⟹ rank(H)≥2h−1 ⟹ Testerman–Zalesski Ω₂ 分类 ⟹ 维 4h−2 仅三
+候选 (Sp 自身 / SL₂ on Sym^{4h−3} / h=4 特例 Sp_6-ω₃) ⟹ 幂幺 Jordan 型 J₂^{h−1}
+排除真子候选。配 BG 证书 ⟹ **满辛群+M₄=3+FLAT-LAW+对拟正交 = h≤32 全范围定理**。
+monodromy 塔正式闭合 (全 h 条件悬于 CRIT/BG = 同一单变量族, 与 Morse 塔同源)。
