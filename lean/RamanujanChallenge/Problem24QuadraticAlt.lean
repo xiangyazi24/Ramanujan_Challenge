@@ -2342,5 +2342,81 @@ theorem quadAltW0_slope_tendsto :
     Tendsto (fun t : ℝ => W0 t / (t - 1)) (𝓝[≠] (1:ℝ)) (𝓝 0) :=
   slope_tendsto_of_hasDerivAt_eq_zero W0 1 0 quadAltW0_hasDerivAt_one quadAltW0_one
 
+/-! ## Right-endpoint atoms: transport through `x ↦ 1-x`, and `V`'s double zero at 1
+
+`V 1 = 0` and `V' 1 = log 1/(1·2) = 0`, so `V` vanishes to second order at `1`.
+Proving that directly would want `dilog` differentiable at the boundary point
+`-1`; instead we go through `-2 V x = W0 (2x/(1+x))`, for which `1` is an
+interior point (`W0` only ever needed `t < 2`). -/
+
+theorem tendsto_one_sub_nhdsWithin :
+    Tendsto (fun x : ℝ => 1 - x) (𝓝[<] (1:ℝ)) (𝓝[>] (0:ℝ)) := by
+  rw [tendsto_nhdsWithin_iff]
+  constructor
+  · have hcont : Continuous (fun x : ℝ => 1 - x) := by fun_prop
+    have hc : Tendsto (fun x : ℝ => 1 - x) (𝓝 (1:ℝ)) (𝓝 0) := by
+      have h1 := hcont.tendsto (1:ℝ)
+      simpa using h1
+    exact hc.mono_left nhdsWithin_le_nhds
+  · filter_upwards [self_mem_nhdsWithin] with x hx
+    have hx1 : x < 1 := hx
+    simp only [Set.mem_Ioi]
+    linarith
+
+theorem oneSub_logSq_tendsto :
+    Tendsto (fun x : ℝ => Real.log (1-x) ^ 2 * (1-x)) (𝓝[<] (1:ℝ)) (𝓝 0) :=
+  logSq_mul_self_tendsto.comp tendsto_one_sub_nhdsWithin
+
+theorem oneSub_log_tendsto :
+    Tendsto (fun x : ℝ => Real.log (1-x) * (1-x)) (𝓝[<] (1:ℝ)) (𝓝 0) :=
+  log_mul_self_tendsto.comp tendsto_one_sub_nhdsWithin
+
+/-- The Möbius map `x ↦ 2x/(1+x)` sends `𝓝[<] 1` into `𝓝[≠] 1`. -/
+theorem tendsto_mobius_nhdsNe_one :
+    Tendsto (fun x : ℝ => 2 * x / (1 + x)) (𝓝[<] (1:ℝ)) (𝓝[≠] (1:ℝ)) := by
+  rw [tendsto_nhdsWithin_iff]
+  constructor
+  · have hc : ContinuousAt (fun x : ℝ => 2 * x / (1 + x)) 1 := by
+      apply ContinuousAt.div (by fun_prop) (by fun_prop)
+      norm_num
+    have h1 := hc.tendsto
+    norm_num at h1
+    exact h1.mono_left nhdsWithin_le_nhds
+  · filter_upwards [self_mem_nhdsWithin,
+      (eventually_gt_nhds (show (0:ℝ) < 1 by norm_num)).filter_mono
+        nhdsWithin_le_nhds] with x hx hxpos
+    have hx1 : x < 1 := hx
+    have h1x : (0:ℝ) < 1 + x := by linarith
+    simp only [Set.mem_compl_iff, Set.mem_singleton_iff]
+    intro hcon
+    rw [div_eq_one_iff_eq (ne_of_gt h1x)] at hcon
+    linarith
+
+/-- `V x / (x - 1) → 0` as `x → 1⁻`: `V` has a double zero at `1`, seen through
+`-2 V x = W0 (2x/(1+x))` where `1` is an interior point of `W0`'s good range. -/
+theorem quadAltV_slope_tendsto_one :
+    Tendsto (fun x : ℝ => quadAltV x / (x - 1)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+  have hcomp := quadAltW0_slope_tendsto.comp tendsto_mobius_nhdsNe_one
+  -- W0(t)/(t-1) = -2·V x·(1+x)/(x-1), so multiply by -1/(2(1+x)) → -1/4
+  have hg : Tendsto (fun x : ℝ => -1 / (2 * (1 + x))) (𝓝[<] (1:ℝ)) (𝓝 (-(1/4))) := by
+    have hc : ContinuousAt (fun x : ℝ => -1 / (2 * (1 + x))) 1 := by
+      apply ContinuousAt.div (by fun_prop) (by fun_prop)
+      norm_num
+    have h1 := hc.tendsto
+    norm_num at h1
+    exact h1.mono_left nhdsWithin_le_nhds
+  have hmul := hcomp.mul hg
+  simp only [zero_mul] at hmul
+  refine hmul.congr' ?_
+  filter_upwards [self_mem_nhdsWithin,
+    (eventually_gt_nhds (show (0:ℝ) < 1 by norm_num)).filter_mono
+      nhdsWithin_le_nhds] with x hx hxpos
+  have hx1 : x < 1 := hx
+  have h1x : (0:ℝ) < 1 + x := by linarith
+  have hxne : x - 1 ≠ 0 := by linarith
+  have hkey : 2 * x / (1 + x) - 1 = (x - 1) / (1 + x) := by field_simp; ring
+  rw [Function.comp_apply, hkey, ← quadAlt_neg2V_eq_W0 hxpos hx1]
+  field_simp
+
 end RamanujanChallenge.P24QuadAlt
 
