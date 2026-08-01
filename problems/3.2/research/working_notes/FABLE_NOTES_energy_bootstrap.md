@@ -213,3 +213,12 @@ is exactly enough (counting uses d₂ ≤ D' ~ p^{1/4} ≪ p, so no doubly-
 exceptional pair exists for large p, and Theorems A/B (p^{3/4}, p^{7/4})
 follow by the clean-regime counting verbatim). Distribution mostly tiny
 (4×145, 72×18, 24×11); script bracket_test.py.
+
+## 9c. Wide sweep (d₁<20, d₂≤50): Theorem 4 exceptional set empirically EMPTY
+
+Largest prime factor of any gcd(K, b_δ−1) or gcd(K, b_{d₁−1}) over the full
+sweep: 89, at (d₁,d₂) = (3,37) — i.e. ≈ 2.4·d₂; no large residual factors at
+all (script G_wide_sweep.py). The "p | gcd ⟹ p ≤ C·d₂" law holds on all ~850
+pairs. Practical consequence: for every prime p > ~10³ the p^{3/4}/p^{7/4}
+bounds of Theorem 4 hold OUTRIGHT in this lag range — the density-zero
+exceptional set contains no prime visible in the data.
