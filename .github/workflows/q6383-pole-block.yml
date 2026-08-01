@@ -6,14 +6,9 @@ on:
     paths:
       - 'lean/RamanujanChallenge/Problem27PoleBlockScratch.lean'
       - '.github/workflows/q6383-pole-block.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'lean/RamanujanChallenge/Problem27PoleBlockScratch.lean'
-      - '.github/workflows/q6383-pole-block.yml'
 
 concurrency:
-  group: q6383-pole-block-${{ github.event_name }}
+  group: q6383-pole-block
   cancel-in-progress: true
 
 permissions:
@@ -32,12 +27,6 @@ jobs:
         run: |
           curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - uses: actions/cache@v4
-        with:
-          path: |
-            lean/.lake/packages
-            lean/.lake/build
-          key: q6383-lean429-${{ hashFiles('lean/lake-manifest.json', 'lean/lakefile.toml', 'lean/lean-toolchain') }}
       - name: Compile exact module
         shell: bash
         run: |
@@ -51,7 +40,6 @@ jobs:
           printf 'cache_status=%s\nbuild_status=%s\n' "$cache_status" "$build_status" | tee q6383-status.out
           exit 0
       - name: Persist compiler output
-        if: github.event_name == 'push'
         shell: bash
         run: |
           git config user.name 'github-actions[bot]'
