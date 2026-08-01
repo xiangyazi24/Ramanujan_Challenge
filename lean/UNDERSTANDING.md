@@ -25,9 +25,10 @@ P2.3 has been **rebuilt with real content** — see below.
 ## Status
 
 - **Genuine `sorry`s** (declared-hard statements): P24 (1), P28 (1), P32 (3).
-- **Genuinely proved**: P2.3 (full chain modulo one cited classical input), plus
-  real auxiliary content in P2.1/2.2/2.6 and the P3.1 and P3.2 layers.
-- **Not formalized**: the main limits of P2.1, P2.2, P2.5, P2.6, P2.7.
+- **Genuinely proved**: P2.3 (full chain modulo one cited classical input),
+  P2.6 (unconditional full chain), plus real auxiliary content in P2.1/2.2
+  and the P3.1 and P3.2 layers.
+- **Not formalized**: the main limits of P2.1, P2.2, P2.5, P2.7.
   P2.5 now has a substantial exact algebraic layer, but the Catalan connection
   coefficient is still missing.
 
@@ -50,7 +51,7 @@ All non-`sorry` theorems axiom-clean: {propext, Classical.choice, Quot.sound}.
 | P2.3 | Problem23.lean | 0 ✅ | **full chain**: tensor-annihilation theorem for arbitrary solutions, closed forms solve the recurrence, all 8 initial values, `c₀ ≠ 0` + uniqueness, exact ratio splitting, `m!/D_m → e` from Mathlib, main theorem — conditional only on Lambert's CF value, which is an explicit hypothesis |
 | P2.4 | Problem24.lean | 1 ⚠️ | strong form (polylogarithm identity) left as `sorry` |
 | P2.5 | Problem25.lean + Problem25Connection.lean + Problem25Moment.lean | 0 | ~2400 lines across 3 files. CMF transcription, row recurrences, det factorization, Pochhammer gauge, Poincaré cubic, sign conjugation, positive cocycle, nonvanishing denominators, convex-hull nesting, Catalan error recurrence + initial signs. **Problem25Connection.lean** (757 lines): unconditional projective contraction → all 3 ratios converge to `commonLimit` (2/3 geometric rate). `Problem25Claim ↔ commonLimit = catalanConstant`. **Problem25Moment.lean** (WIP): moment formulas ∫wq·R = Q, ∫wp·R = P proved, remainder polynomial defined. **Gap: Catalan integral representation G = -∫log(t)/(1+t²)dt + remainder integral identity → commonLimit = G.** |
-| P2.6 | Problem26.lean + 5 aux files | 0 | ~6200 lines. Ore factorization, first-order reduction, central-binomial summability, Li₂(−1)=−π²/12, weight-2 inverse-binomial sum = π²/18 (proved), alternating ζ(2)/ζ(3) splitting, dilog antiderivative. **Gap: nested weight-3 evaluation Σ D_k = (π²/6 − ζ(3))/3.** |
+| P2.6 | Problem26.lean + 5 aux files | 0 ✅ | **Complete unconditional formalization** (6224 lines). Exact recurrence and initial values, uniqueness, Ore factorization and reduction of order, summability, generating-function/integral bridge, weight-2 and nested weight-3 inverse-binomial evaluations, and the cyclotomic logarithmic integral are all proved. `problem26_of_spec` states the result for every rational sequence satisfying the printed recurrence and initial values. Lean v4.29; axiom audit: `{propext, Classical.choice, Quot.sound}`. |
 | P2.7 | Problem27.lean + Problem27Barnes.lean | 0 | ~2800 lines. Full 3×3 rational gauge (column identities all proved), analytic transfer complete, Barnes midpoint ≤ 2·(1/4)^n, Euler cosh product, integrable envelope, **Barnes error integral → 0 proved**. **Gap: source normalization (Zudilin recurrence error = Barnes contour integral).** |
 | P2.8 | **Problem28_SUBMIT/** | 0 ✅ | **Complete formalization synced from SUBMIT** (30080 lines, 27 files, Lean v4.29). Full Ripple CM extraction: j(τ₁₆₃) = −640320³, Chudnovsky hypergeometric, period bridge. `Problem28.lean` (107 lines, 1 sorry) is the old stub. |
 | P3.1 | **Problem31_SUBMIT/** | 0 ✅ | **Complete formalization synced from SUBMIT** (4724 lines, 28 files, Lean v4.29). Bloch-Wigner four-shape vanishing, rational reconstruction. `Problem31/` is the old stub. See `SUBMIT/3.1/lean/UNDERSTANDING.md` for atom checklist. |

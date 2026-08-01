@@ -13,6 +13,7 @@
   Layer 3: remainder polynomial and its key evaluations.
 -/
 import RamanujanChallenge.Problem25Connection
+import RamanujanChallenge.Problem25Integral
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
 noncomputable section
@@ -172,16 +173,6 @@ theorem integral_neg_log_01 :
     ext; ring
   rw [h, intervalIntegral.integral_const_mul, integral_log_from_zero]
   simp [Real.log_one]
-
-/-! ## Catalan integral identity (to be proved in Problem25Integral.lean)
-
-The standard identity G = ∫₀¹ (-log t)/(1+t²) dt follows from term-by-term
-integration of the geometric series 1/(1+t²) = Σ (-1)^n t^{2n} using
-∫₀¹ t^k(-log t) dt = 1/(k+1)² and dominated convergence. -/
-
-theorem catalanConstant_eq_integral :
-    catalanConstant = ∫ t in (0 : ℝ)..1, (-Real.log t) / (1 + t ^ 2) := by
-  sorry
 
 /-! ## The Catalan error is subdominant
 

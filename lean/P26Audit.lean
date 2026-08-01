@@ -1,6 +1,7 @@
 import RamanujanChallenge.Problem26Assembly
 
 #print axioms RamanujanChallenge.P26.problem26
+#print axioms RamanujanChallenge.P26.problem26_hasSum_of_spec
 #print axioms RamanujanChallenge.P26.problem26_of_spec
 #print axioms RamanujanChallenge.P26.cyclotomicLogIntegralEvaluation26
 #print axioms RamanujanChallenge.P26.inverseBinomialDTerm26_hasSum_cyclotomic_integral

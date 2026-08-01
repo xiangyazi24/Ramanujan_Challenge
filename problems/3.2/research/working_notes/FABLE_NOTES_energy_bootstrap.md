@@ -632,3 +632,43 @@ set algebraic of low degree.
   the corpus's core reductions (block law, top-window, 2/3-class bookkeeping)
   and lands on the same single missing input — strong evidence the map has no
   elementary hole. R15b (hole-in-map) + cron-Fable still out.
+
+## 27. R15b + cron fresh-eyes: THE HOLE IN THE MAP — the modular–Padé approximation module
+
+- **R15b found the genuine structural hole**: the map committed to ONE vector
+  V_n = (d³a_n, d³b_n); the absent object is the integral lattice of ALL
+  modular/Padé approximants to ζ(3) (affine deformations, Atkin–Lehner cusp
+  transforms W₂/W₃/W₆, weakly holomorphic multiples, Hecke translates). Key
+  invariant: pointed determinantal divisor Δ_n = gcd_j det(V_n, U_{n,j}) —
+  G_n divides EVERY determinant. A modular saturation theorem log Δ_n = o(n)
+  proves the conjecture, bypassing |Z_p|/energy/cross-prime entirely — this
+  chain EVADES the 2/3 lock without contradicting the map. Gap ladder:
+  [GAP-MODULE]/[GAP-PADE]/[GAP-SAT]/[GAP-MINORS]/[GAP-CF]. Analog successes:
+  CF unimodularity; exponential Hermite–Padé maximal-minor gcds
+  (Matala-aho–Seppälä 1805.00750; LMT 1609.07076; Cullinan–Scheel 2007.01329;
+  Bortolotto–Oliveira 2605.00673 UNVERIFIED — network blocked; but the affine
+  family itself is trivially true: linear combos of consecutive approximants).
+- [GAP-CF] gem: log G_n > 3n spikes force reduced Apéry rationals to be actual
+  continued-fraction convergents of ζ(3) (Legendre). Uniform-c ≤ 3 from the
+  Casoratian; RV measure gives pointwise ≤ 5.2467n — INDEPENDENTLY derived by
+  BOTH fresh eyes (R15b and cron-Fable) — cross-validated. Reverse route
+  structurally impossible (needs μ < 2).
+- Modular Hecke-eigenvalue route dead for the right reason: b_n = Hauptmodul
+  Taylor coefficients (growing pole = modular avatar of the Swan obstruction);
+  the live version is integral cohomology lattice + Fitting ideals + mod-p
+  q-expansion/Sturm arguments.
+- CRON fresh-eyes: no-go lemma (row-local ⇏ pointwise — matches our adversary);
+  trichotomy (Fibonacci provable via apparition law / central binomials false /
+  Apéry lacks exactly an apparition law); NEW SUPERCONGRUENCE
+  b_{p+r} ≡ 5b_r + 10p·D_r (mod p²), D_r = Σ C²C²(H_{r+k}−H_{r−k}) —
+  WE VERIFIED 63/63 (p ≤ 29; cron_supercong_check.py); first-order Frobenius
+  deformation is UNIVERSAL (zero p-info) ⟹ first true invariants (x'_p, y'_p)
+  live mod p³ — extraction + modular correlation (γ_p level-6 weight-4) is the
+  designated next experiment; W_p tables extracted, Apéry-operator residual
+  nonzero (inhomogeneous E_r term present, as predicted).
+- CAUTION on [GAP-MINORS] naive version (our analysis): recurrence-only
+  comparison vectors W_{n,j} = D_n(a_{n−j}, b_{n−j}) carry v_p(det) ≥ 6
+  automatically at window primes (D² dead weight) — the divisibility is
+  vacuous; the PRIMITIVE test is whether p | G_n forces p | Q_j(n−j) (gap
+  continuants) for all j. Only rows with genuinely different denominator
+  envelopes (the modular rows) can break this — exactly [GAP-SAT]'s content.
