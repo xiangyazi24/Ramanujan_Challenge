@@ -597,6 +597,17 @@ static int write_report(const Scan *scan, const SpotCheck spots[3],
             "`CRON_zp_bigscan.csv`.\n\n",
             date, scan->limit, scan->nprimes, total_zeros, mean, max_count);
 
+    if (scan->limit == DEFAULT_LIMIT) {
+        fprintf(out,
+                "The primary \\(p<10^6\\) target was completed. The optional "
+                "\\(2\\cdot10^6\\) stretch was not run: under the concurrent "
+                "machine load, the measured %.0f-second primary scan "
+                "projected roughly %.0f minutes for the approximately "
+                "four-times-larger stretch workload, so it did not meet the "
+                "spec's fast-run condition.\n\n",
+                scan->kernel_seconds, 4.0 * scan->kernel_seconds / 60.0);
+    }
+
     fprintf(out,
             "The scanner uses \\(c_n=(n!)^3b_n\\), whose zero set equals "
             "that of \\(b_n\\) for \\(n<p\\). Its division-free recurrence "

@@ -6,6 +6,8 @@ Date: 2026-08-01
 
 The threaded scan covered every prime \(7\le p<1000000\): **78495 primes** and **78462 zeros** in total. The mean was **0.999579591057**, and the largest zero set had size **12**. The complete per-prime data are in `CRON_zp_bigscan.csv`.
 
+The primary \(p<10^6\) target was completed. The optional \(2\cdot10^6\) stretch was not run: under the concurrent machine load, the measured 362-second primary scan projected roughly 24 minutes for the approximately four-times-larger stretch workload, so it did not meet the spec's fast-run condition.
+
 The scanner uses \(c_n=(n!)^3b_n\), whose zero set equals that of \(b_n\) for \(n<p\). Its division-free recurrence is evaluated with 32-bit Montgomery products and finite differences. This is algebraically the original Apéry recurrence, not a probabilistic shortcut.
 
 ## Mandatory sanity gates
