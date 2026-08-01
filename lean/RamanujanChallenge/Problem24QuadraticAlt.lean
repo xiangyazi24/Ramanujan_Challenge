@@ -670,5 +670,141 @@ theorem quadAltC_abs_le (k : ℕ) : |1 + 2 * (-1 : ℝ) ^ (k + 1)| ≤ 3 := by
       norm_num
     _ = 3 := by norm_num
 
+
+/-- Bound `|moment k t| ≤ 9·H(k+1)·x^k` on `0 ≤ t ≤ x`. -/
+theorem quadAltMMoment_norm_le {x t : ℝ} (hx0 : 0 ≤ x) (ht0 : 0 ≤ t) (htx : t ≤ x) (k : ℕ) :
+    ‖quadAltMMoment k t‖ ≤ 9 * (harmonicNumber (k + 1) : ℝ) * x ^ k := by
+  unfold quadAltMMoment
+  rw [Real.norm_eq_abs, abs_mul, abs_mul]
+  calc
+    |1 + 2 * (-1 : ℝ) ^ (k + 1)| * |parityRemainder24 k| * |t ^ k|
+        ≤ 3 * (3 * harmonicNumber k) * |t ^ k| := by
+          gcongr
+          · exact quadAltC_abs_le k
+          · exact abs_parityRemainder24_le k
+    _ = 9 * (harmonicNumber k : ℝ) * |t ^ k| := by ring
+    _ ≤ 9 * (harmonicNumber (k + 1) : ℝ) * |t ^ k| := by
+      have h1 : 9 * harmonicNumber k ≤ 9 * harmonicNumber (k + 1) := by
+        exact mul_le_mul_of_nonneg_left (harmonicNumber_mono (Nat.le_succ k)) (by positivity)
+      exact mul_le_mul_of_nonneg_right h1 (by positivity)
+    _ ≤ 9 * (harmonicNumber (k + 1) : ℝ) * x ^ k := by
+      have h2 : |t ^ k| ≤ x ^ k := by
+        rw [abs_of_nonneg (pow_nonneg ht0 k)]
+        exact pow_le_pow_left₀ ht0 htx k
+      have hc : 0 ≤ 9 * harmonicNumber (k + 1) := by
+        exact mul_nonneg (by norm_num) (harmonicNumber_nonneg (k + 1))
+      exact mul_le_mul_of_nonneg_left h2 hc
+
+/-- Summability of the `M`-moment norm integrals (dominance by `Σ 9H(k+1)x^k`). -/
+theorem quadAltMMoment_integral_norm_summable {x : ℝ} (hx0 : 0 ≤ x) (hx1 : x < 1) :
+    Summable (fun k : ℕ => ∫ t : ℝ in Set.Ioc (0 : ℝ) x, ‖quadAltMMoment k t‖) := by
+  have hH (k : ℕ) : (harmonicNumber (k + 1) : ℝ) ≤ (k + 1 : ℝ) := by
+    have hsum : (∑ j ∈ Finset.range (k + 1), (1 : ℝ) / (j + 1 : ℝ)) ≤ (k + 1 : ℝ) := by
+      calc
+        (∑ j ∈ Finset.range (k + 1), (1 : ℝ) / (j + 1 : ℝ))
+            ≤ ∑ _j ∈ Finset.range (k + 1), (1 : ℝ) := by
+              exact Finset.sum_le_sum (fun j hj => by
+                rw [one_div]
+                have hj1 : (1 : ℝ) ≤ (j + 1 : ℝ) := by
+                  exact_mod_cast (by omega : 1 ≤ j + 1)
+                have hjpos : (0 : ℝ) < (j + 1 : ℝ) := by
+                  exact_mod_cast (by omega : 0 < j + 1)
+                exact (inv_le_one₀ hjpos).mpr hj1)
+        _ = (k + 1 : ℝ) := by simp
+    simpa [harmonicNumber] using hsum
+  have hgeom : Summable (fun k : ℕ => 9 * (harmonicNumber (k + 1) : ℝ) * x ^ k) := by
+    have hxnorm : ‖x‖ < 1 := by
+      rw [Real.norm_eq_abs, abs_of_nonneg hx0]
+      exact hx1
+    have hk : Summable (fun k : ℕ => (k : ℝ) * x ^ k) := by
+      simpa using (summable_pow_mul_geometric_of_norm_lt_one 1 (r := x) hxnorm)
+    have h1 : Summable (fun k : ℕ => x ^ k) :=
+      summable_geometric_of_lt_one hx0 hx1
+    have hsum : Summable (fun k : ℕ => (k + 1 : ℝ) * x ^ k) := by
+      -- (k+1)x^k = k·x^k + x^k
+      simpa [add_mul, one_mul, Nat.cast_add, Nat.cast_one] using
+        (hk.add h1).congr (fun k => by ring)
+    refine (hsum.mul_left 9).of_nonneg_of_le ?_ ?_
+    · intro k
+      exact mul_nonneg (mul_nonneg (by norm_num) (harmonicNumber_nonneg (k + 1)))
+        (pow_nonneg hx0 k)
+    · intro k
+      have hxnonneg : 0 ≤ x ^ k := pow_nonneg hx0 k
+      calc
+        9 * harmonicNumber (k + 1) * x ^ k = 9 * (harmonicNumber (k + 1) * x ^ k) := by ring
+        _ ≤ 9 * ((k + 1 : ℝ) * x ^ k) := by
+          exact mul_le_mul_of_nonneg_left
+            (mul_le_mul_of_nonneg_right (hH k) hxnonneg) (by norm_num)
+  refine hgeom.of_nonneg_of_le ?_ ?_
+  · intro k
+    exact MeasureTheory.integral_nonneg (fun t => norm_nonneg _)
+  · intro k
+    -- 目标是集合积分 ∫ t in Ioc 0 x, ‖moment k t‖ ≤ 常数, 不是两个区间积分比大小,
+    -- 所以走 setIntegral_mono_on 压成常数积分, 再用 |Ioc 0 x| = x ≤ 1 收口。
+    have hC : (0 : ℝ) ≤ 9 * (harmonicNumber (k + 1) : ℝ) * x ^ k :=
+      mul_nonneg (mul_nonneg (by norm_num) (harmonicNumber_nonneg (k + 1))) (pow_nonneg hx0 k)
+    have hcont : ContinuousOn (fun t : ℝ => ‖quadAltMMoment k t‖) (Set.uIcc (0 : ℝ) x) := by
+      unfold quadAltMMoment
+      exact ((continuousOn_pow k).const_mul
+        ((1 + 2 * (-1 : ℝ) ^ (k + 1)) * parityRemainder24 k)).norm
+    have hIon : MeasureTheory.IntegrableOn (fun t : ℝ => ‖quadAltMMoment k t‖)
+        (Set.Ioc (0 : ℝ) x) MeasureTheory.volume :=
+      (hcont.integrableOn_compact isCompact_uIcc).mono_set (by
+        intro t ht
+        rcases (Set.mem_Ioc.mp ht) with ⟨ht0, htx⟩
+        simp [Set.uIcc_of_le hx0, ht0.le, htx])
+    calc (∫ t : ℝ in Set.Ioc (0 : ℝ) x, ‖quadAltMMoment k t‖)
+        ≤ ∫ _t : ℝ in Set.Ioc (0 : ℝ) x, 9 * (harmonicNumber (k + 1) : ℝ) * x ^ k :=
+          MeasureTheory.setIntegral_mono_on hIon
+            (MeasureTheory.integrableOn_const
+              (hs := by simp [Real.volume_Ioc]))
+            measurableSet_Ioc
+            (fun t ht => quadAltMMoment_norm_le hx0 ht.1.le ht.2 k)
+      _ = 9 * (harmonicNumber (k + 1) : ℝ) * x ^ k * x := by
+          rw [MeasureTheory.setIntegral_const]
+          simp [MeasureTheory.measureReal_def, Real.volume_Ioc, hx0, smul_eq_mul,
+            mul_comm]
+      _ ≤ 9 * (harmonicNumber (k + 1) : ℝ) * x ^ k := by nlinarith [hC, hx0, hx1.le]
+
+/-- The `M` series: `Σ_{k≥0} c_{k+1}P(k) x^(k+1)/(k+1) = Mclosed x` for `0 < x < 1`
+(Q6047 (2.5)–(2.7), via termwise integration). -/
+theorem quadAltM_hasSum {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasSum (fun k : ℕ => (1 + 2 * (-1 : ℝ) ^ (k + 1)) * parityRemainder24 k *
+        x ^ (k + 1) / (k + 1 : ℝ))
+      (quadAltMclosed x) := by
+  have hint : ∀ k : ℕ, MeasureTheory.Integrable (quadAltMMoment k)
+      (MeasureTheory.volume.restrict (Set.Ioc (0 : ℝ) x)) := by
+    intro k
+    have hcont : ContinuousOn (quadAltMMoment k) (Set.uIcc (0 : ℝ) x) := by
+      unfold quadAltMMoment
+      exact (continuousOn_pow k).const_mul
+        ((1 + 2 * (-1 : ℝ) ^ (k + 1)) * parityRemainder24 k)
+    have hI : MeasureTheory.IntegrableOn (quadAltMMoment k)
+        (Set.uIcc (0 : ℝ) x) MeasureTheory.volume :=
+      hcont.integrableOn_compact isCompact_uIcc
+    exact hI.mono_set (by
+      intro t ht
+      rcases (Set.mem_Ioc.mp ht) with ⟨ht0, htx⟩
+      simp [Set.uIcc_of_le (le_of_lt hx0), ht0.le, htx])
+  have hnorm_sum : Summable (fun k : ℕ =>
+      ∫ t : ℝ in Set.Ioc (0 : ℝ) x, ‖quadAltMMoment k t‖) :=
+    quadAltMMoment_integral_norm_summable hx0.le hx1
+  have hsum := MeasureTheory.hasSum_integral_of_summable_integral_norm
+    (μ := MeasureTheory.volume.restrict (Set.Ioc (0 : ℝ) x)) hint hnorm_sum
+  -- hsum : HasSum (fun k => ∫ t in Ioc 0 x, moment k t) (∫ t in Ioc 0 x, ∑' k, moment k t)
+  -- 全程留在集合积分上, 只在需要闭式时才换成区间积分 —— 混用两种记号正是之前卡住的原因。
+  have hterm : ∀ k : ℕ, (∫ t : ℝ in Set.Ioc (0 : ℝ) x, quadAltMMoment k t)
+      = (1 + 2 * (-1 : ℝ) ^ (k + 1)) * parityRemainder24 k * x ^ (k + 1) / (k + 1 : ℝ) := by
+    intro k
+    rw [← intervalIntegral.integral_of_le (le_of_lt hx0), quadAltMMoment_integral hx0]
+  have hlim : (∫ t : ℝ in Set.Ioc (0 : ℝ) x, ∑' k : ℕ, quadAltMMoment k t)
+      = quadAltMclosed x := by
+    rw [← quadAltMclosed_eq_integral hx0 hx1,
+      intervalIntegral.integral_of_le (le_of_lt hx0)]
+    refine MeasureTheory.setIntegral_congr_ae measurableSet_Ioc ?_
+    filter_upwards with t ht
+    exact (quadAltMMoment_hasSum_pointwise ht.1 ht.2 hx1).tsum_eq
+  simpa only [hterm, hlim] using hsum
+
 end RamanujanChallenge.P24QuadAlt
 
