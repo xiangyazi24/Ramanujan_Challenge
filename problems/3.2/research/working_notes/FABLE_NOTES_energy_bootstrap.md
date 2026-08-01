@@ -943,3 +943,17 @@ Discovery credits: quarter-point law (cron-Fable), branch reflection law
 independent verification at every step (life-Fable). A genuinely new,
 fully-proved arithmetic law for the Apéry numbers — found, decoded, and
 proved in one night by the joint machine.
+
+## 41. DOUBLE PROOF + closed forms (codex-max, independent of R18)
+
+Codex-max (xhigh, 3 commits d9af2b9/1b5bb0c/77e089b, CODEX_JACOBSTHAL_DEEP.md)
+independently PROVED the apparition law via the direct reversal route
+(t^{deg}s_p(1/t) = (−2|p)s_p(t), no endpoint Gauss evaluation), closing
+[GAP-BR] a second way — the theorem now has TWO independent proofs
+(R18 Franel-pullback endpoint + codex-max reversal). Bonus: [PROVED]
+hypergeometric closed forms — τ, σ are algebraic pullbacks of one classical
+₂F₁ with exact coefficient formulae by Lagrange inversion (writeup-grade).
+Also anchored an independent β_p proof + verification ledger (93 checks
+p < 500; rational identities to n = 39/59; all p < 3000 quarter/zero-set
+checks). The vertical theory of Apéry mod p is now COMPLETE and
+double-certified.

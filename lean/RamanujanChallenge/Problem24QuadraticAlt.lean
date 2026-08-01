@@ -39,6 +39,7 @@ import RamanujanChallenge.Problem24
 import RamanujanChallenge.Problem24Euler
 import RamanujanChallenge.Dilogarithm
 import RamanujanChallenge.Problem26WeightThree
+import Mathlib.Analysis.Calculus.LHopital
 
 noncomputable section
 
@@ -2230,6 +2231,194 @@ theorem intervalIntegrable_of_continuousOn_Ioo_of_le
       filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with x hx
       exact hfg x hx)
 
+/-- A function continuous on an open interval and with finite one-sided limits
+at both endpoints is interval-integrable.  `extendFrom` supplies the continuous
+representative on the closed interval; the endpoint changes are null. -/
+theorem intervalIntegrable_of_continuousOn_Ioo_of_tendsto
+    {f : ℝ → ℝ} {a b la lb : ℝ} (hab : a < b)
+    (hf : ContinuousOn f (Set.Ioo a b))
+    (ha : Tendsto f (𝓝[>] a) (𝓝 la))
+    (hb : Tendsto f (𝓝[<] b) (𝓝 lb)) :
+    IntervalIntegrable f MeasureTheory.volume a b := by
+  let fext : ℝ → ℝ := extendFrom (Set.Ioo a b) f
+  have hfext : ContinuousOn fext (Set.Icc a b) := by
+    exact continuousOn_Icc_extendFrom_Ioo hf ha hb
+  have hint : IntervalIntegrable fext MeasureTheory.volume a b :=
+    hfext.intervalIntegrable_of_Icc hab.le
+  apply hint.congr_ae
+  filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_uIoc,
+    MeasureTheory.Measure.ae_ne
+      (MeasureTheory.volume.restrict (Set.uIoc a b)) b] with x hx hxb
+  have hx' : x ∈ Set.Ioo a b := by
+    rw [Set.uIoc_of_le hab.le] at hx
+    exact ⟨hx.1, lt_of_le_of_ne hx.2 hxb⟩
+  exact extendFrom_extends hf x hx'
+
+/-- Multiplication by a function with finite endpoint limits preserves interval
+integrability, even when the displayed multiplier has arbitrary endpoint
+values. -/
+theorem IntervalIntegrable.mul_of_continuousOn_Ioo_of_tendsto
+    {f g : ℝ → ℝ} {a b ga gb : ℝ} (hab : a < b)
+    (hf : IntervalIntegrable f MeasureTheory.volume a b)
+    (hg : ContinuousOn g (Set.Ioo a b))
+    (hga : Tendsto g (𝓝[>] a) (𝓝 ga))
+    (hgb : Tendsto g (𝓝[<] b) (𝓝 gb)) :
+    IntervalIntegrable (fun x => f x * g x) MeasureTheory.volume a b := by
+  let gext : ℝ → ℝ := extendFrom (Set.Ioo a b) g
+  have hgext : ContinuousOn gext (Set.Icc a b) := by
+    exact continuousOn_Icc_extendFrom_Ioo hg hga hgb
+  have hint : IntervalIntegrable (fun x => f x * gext x) MeasureTheory.volume a b :=
+    hf.mul_continuousOn (by simpa [Set.uIcc_of_le hab.le] using hgext)
+  apply hint.congr_ae
+  filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_uIoc,
+    MeasureTheory.Measure.ae_ne
+      (MeasureTheory.volume.restrict (Set.uIoc a b)) b] with x hx hxb
+  have hx' : x ∈ Set.Ioo a b := by
+    rw [Set.uIoc_of_le hab.le] at hx
+    exact ⟨hx.1, lt_of_le_of_ne hx.2 hxb⟩
+  rw [extendFrom_extends hg x hx']
+
+/-- The double zero of `W0` at one, in the quantitative form needed to
+dominate the logarithmic kernels. -/
+theorem quadAltW0_quadratic_tendsto :
+    Tendsto (fun t : ℝ => W0 t / (t - 1) ^ 2) (𝓝[≠] (1 : ℝ)) (𝓝 (-2)) := by
+  let dW : ℝ → ℝ := fun t => -2 * Real.log (t / (2 - t)) / t
+  have hdW_one : HasDerivAt dW (-4) 1 := by
+    have hden : HasDerivAt (fun t : ℝ => 2 - t) (-1) 1 := by
+      simpa using (hasDerivAt_const (1 : ℝ) 2).sub (hasDerivAt_id (1 : ℝ))
+    have hmob : HasDerivAt (fun t : ℝ => t / (2 - t)) 2 1 := by
+      convert (hasDerivAt_id (1 : ℝ)).div hden (by norm_num) using 1 <;> norm_num
+    have hlog : HasDerivAt (fun t : ℝ => Real.log (t / (2 - t))) 2 1 := by
+      have hlogAt : HasDerivAt Real.log 1 1 := by
+        simpa using Real.hasDerivAt_log (by norm_num : (1 : ℝ) ≠ 0)
+      have h := hlogAt.comp 1 hmob
+      convert h using 1 <;> norm_num
+    unfold dW
+    convert (hlog.const_mul (-2)).div (hasDerivAt_id (1 : ℝ)) (by norm_num) using 1 <;>
+      norm_num
+  have hdW_zero : dW 1 = 0 := by
+    unfold dW
+    norm_num
+  have hslope : Tendsto (fun t : ℝ => dW t / (t - 1))
+      (𝓝[≠] (1 : ℝ)) (𝓝 (-4)) :=
+    slope_tendsto_of_hasDerivAt_eq_zero dW 1 (-4) hdW_one hdW_zero
+  have hratio : Tendsto (fun t : ℝ => dW t / (2 * (t - 1)))
+      (𝓝[≠] (1 : ℝ)) (𝓝 (-2)) := by
+    have h := hslope.div_const 2
+    norm_num at h
+    refine h.congr' ?_
+    filter_upwards [self_mem_nhdsWithin] with t ht
+    have htne : t - 1 ≠ 0 := sub_ne_zero.mpr ht
+    field_simp [htne]
+  have hWderiv : ∀ᶠ t in 𝓝[≠] (1 : ℝ), HasDerivAt W0 (dW t) t := by
+    filter_upwards [
+      (eventually_gt_nhds (show (0 : ℝ) < 1 by norm_num)).filter_mono nhdsWithin_le_nhds,
+      (eventually_lt_nhds (show (1 : ℝ) < 2 by norm_num)).filter_mono nhdsWithin_le_nhds]
+      with t ht0 ht2
+    exact quadAltW0_hasDerivAt ht0 ht2
+  have hsqderiv : ∀ᶠ t in 𝓝[≠] (1 : ℝ),
+      HasDerivAt (fun y : ℝ => (y - 1) ^ 2) (2 * (t - 1)) t := by
+    filter_upwards with t
+    simpa [id_eq] using ((hasDerivAt_id t).sub_const 1).pow 2
+  have hsqne : ∀ᶠ t in 𝓝[≠] (1 : ℝ), 2 * (t - 1) ≠ 0 := by
+    filter_upwards [self_mem_nhdsWithin] with t ht
+    exact mul_ne_zero (by norm_num) (sub_ne_zero.mpr ht)
+  have hWlim : Tendsto W0 (𝓝[≠] (1 : ℝ)) (𝓝 0) := by
+    simpa [quadAltW0_one] using
+      quadAltW0_hasDerivAt_one.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
+  have hsqlim : Tendsto (fun t : ℝ => (t - 1) ^ 2)
+      (𝓝[≠] (1 : ℝ)) (𝓝 0) := by
+    have hsub : Tendsto (fun t : ℝ => t - 1) (𝓝 (1 : ℝ)) (𝓝 0) := by
+      simpa using (tendsto_id.sub_const (1 : ℝ))
+    exact (hsub.pow 2).mono_left nhdsWithin_le_nhds
+  exact HasDerivAt.lhopital_zero_nhdsNE hWderiv hsqderiv hsqne hWlim hsqlim hratio
+
+/-- The logarithmic singularity of `W0` at zero is interval-integrable. -/
+theorem quadAltW0_intervalIntegrable :
+    IntervalIntegrable W0 MeasureTheory.volume 0 1 := by
+  have hlog : IntervalIntegrable Real.log MeasureTheory.volume 0 1 :=
+    intervalIntegral.intervalIntegrable_log'
+  have hconstLog : IntervalIntegrable (fun _ : ℝ => Real.log 2 ^ 2)
+      MeasureTheory.volume 0 1 := intervalIntegrable_const
+  have hexpand : IntervalIntegrable
+      (fun t : ℝ => Real.log t ^ 2 - 2 * Real.log 2 * Real.log t + Real.log 2 ^ 2)
+      MeasureTheory.volume 0 1 :=
+    (intervalIntegrable_logSq.sub (hlog.const_mul (2 * Real.log 2))).add hconstLog
+  have hlogdiv : IntervalIntegrable (fun t : ℝ => Real.log (t / 2) ^ 2)
+      MeasureTheory.volume 0 1 := by
+    apply hexpand.congr_ae
+    filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_uIoc] with t ht
+    have ht0 : 0 < t := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using ht.1
+    rw [Real.log_div (ne_of_gt ht0) (by norm_num : (2 : ℝ) ≠ 0)]
+    ring
+  have hdilog_cont : ContinuousOn (fun t : ℝ => dilog (t / 2)) (Set.Icc 0 1) := by
+    apply dilog_continuousOn_unit.comp (by fun_prop)
+    intro t ht
+    constructor <;> linarith [ht.1, ht.2]
+  have hdilog : IntervalIntegrable (fun t : ℝ => dilog (t / 2))
+      MeasureTheory.volume 0 1 := hdilog_cont.intervalIntegrable_of_Icc (by norm_num)
+  have hconstPi : IntervalIntegrable (fun _ : ℝ => Real.pi ^ 2 / 6)
+      MeasureTheory.volume 0 1 := intervalIntegrable_const
+  unfold W0
+  exact (hconstPi.sub (hdilog.const_mul 2)).sub hlogdiv
+
+theorem quadAltH1_div_self_tendsto_zero_right :
+    Tendsto (fun t : ℝ => H1 t / t) (𝓝[>] (0 : ℝ)) (𝓝 1) := by
+  have hinner : HasDerivAt (fun t : ℝ => 1 - t) (-1) 0 := by
+    simpa using (hasDerivAt_const (0 : ℝ) 1).sub (hasDerivAt_id (0 : ℝ))
+  have hH1 : HasDerivAt H1 1 0 := by
+    unfold H1
+    convert (hinner.log (by norm_num)).neg using 1 <;> norm_num
+  have h := hH1.tendsto_slope_zero_right
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with t ht
+  have htne : t ≠ 0 := ne_of_gt ht
+  unfold H1
+  field_simp [htne]
+
+theorem quadAltH2_div_self_tendsto_zero_right :
+    Tendsto (fun t : ℝ => H2 t / t) (𝓝[>] (0 : ℝ)) (𝓝 (1 / 2)) := by
+  have hinner : HasDerivAt (fun t : ℝ => 1 - t / 2) (-1 / 2) 0 := by
+    convert (hasDerivAt_const (0 : ℝ) 1).sub ((hasDerivAt_id (0 : ℝ)).div_const 2) using 1 <;>
+      norm_num
+  have hH2 : HasDerivAt H2 (1 / 2) 0 := by
+    unfold H2
+    convert (hinner.log (by norm_num)).neg using 1 <;> norm_num
+  have h := hH2.tendsto_slope_zero_right
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with t ht
+  have htne : t ≠ 0 := ne_of_gt ht
+  unfold H2
+  field_simp [htne]
+
+theorem quadAltH1_mul_oneSub_tendsto_one :
+    Tendsto (fun t : ℝ => (1 - t) * H1 t) (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+  have h := oneSub_log_tendsto.neg
+  refine h.congr' ?_
+  filter_upwards with t
+  unfold H1
+  ring
+
+theorem quadAltH2_tendsto_one :
+    Tendsto H2 (𝓝[<] (1 : ℝ)) (𝓝 (Real.log 2)) := by
+  have hc : ContinuousAt H2 1 := by
+    unfold H2
+    apply ContinuousAt.neg
+    apply ContinuousAt.log (by fun_prop)
+    norm_num
+  have h := hc.tendsto.mono_left
+    (nhdsWithin_le_nhds (a := (1 : ℝ)) (s := Set.Iio 1))
+  have hval : H2 1 = Real.log 2 := by
+    unfold H2
+    norm_num
+    rw [Real.log_div]
+    · simp
+    · norm_num
+    · norm_num
+  rw [hval] at h
+  exact h
+
 /-! ## Continuity of the pieces on the open interval
 
 Each of `Mclosed`, `Jclosed`, `V`, `Dminus` is continuous away from the points
@@ -2714,4 +2903,3 @@ theorem quadAltI11_eq_integral :
 
 
 end RamanujanChallenge.P24QuadAlt
-
