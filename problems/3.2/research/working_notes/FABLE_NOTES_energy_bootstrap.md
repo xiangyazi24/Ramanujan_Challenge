@@ -739,3 +739,24 @@ by any known deduction.
 moment; measured true, F₄ ≡ 0); (2) modular–Padé saturation [GAP-SAT] (Smith
 ledger); (3) the apparition line (quarter-point law → Jacobsthal → Z_p as
 algebraic shadow) — now the most alive, with its first theorem in hand.**
+
+## 31. beta_p identity + complete mod-24 table + codex pair deployment
+
+- **β_p ≡ −(14/3)·B_{p−3} (mod p)** (cron/Q6323 discovery, cron 27/27, OUR
+  INDEPENDENT verification 31/31, beta_bernoulli_check.py). Explicit four-digit
+  Frobenius law: b_p ≡ 5 − (14/3)B_{p−3}p³ (mod p⁴). β_p = 0 ⟺ Wolstenholme
+  prime (16843, 2124679 only known); p = 7 coefficient degeneracy (14 = 2·7).
+  Modularity for β formally rejected (Bernoulli class ≠ weight-4 coefficients).
+  Critical for pointwise: on the locus p | b_r the β·b_r term self-cancels —
+  the tower stays universal through p⁴ at bad primes; first visible residual
+  predicted at p⁵ (−(28/3)B_{p−3}D_r — next experiment).
+- **Complete mod-24 table (ours, p < 2000)**: quarter-point zeros EXACTLY at
+  {p≡5: τ@(p−1)/4, 38/38} and {p≡23: σ@(p−3)/4, 37/37}; all six other classes
+  zero-free in both branches — cron's unified "(−3|p) = −1" form CONFLICTS
+  with classes 11, 17 (also 2 mod 3, no zeros at floor-quarter points);
+  discrepancy flagged to cron (either their unified derivation is wrong or
+  the structured point for 11/17 sits elsewhere). First-pass value laws
+  (τ_J/x, τ_J/y) unstructured — Gauss-style normalization needed (codex-high).
+- Codex pair deployed on the apparition line (gpt-5.6-sol; high = fast recon,
+  xhigh = deep proof program; first dispatch failed on model name 'gpt-5.6' —
+  account requires gpt-5.6-sol, memory confirmed).
