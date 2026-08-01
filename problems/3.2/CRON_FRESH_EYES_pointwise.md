@@ -302,3 +302,11 @@ N³ 因子 = 全部刚性机制。端点数据仅需 b_p ≡ 5 mod p³（Coster�
 **J.4 Y_p 结构判决**：Y_p = 挠部（仅中点零，(6.5)）⊔ 泛型部（高阶 Mellin 扭，Poisson 模型）；正确形式框架 = Forey–Fresán–Kowalski 算术 Fourier 变换（arXiv:2109.11961），需对本 Heun 层做单值性计算。与 Q6325 战局图完全一致。
 
 **J.5 传输诊断（系统性）**：Q6329 的 delivery note 揭示池 A 该 tab 的 GitHub/Notion connector **只读无写**——池 A 全部 ALL-CONNECTORS-FAILED 的根因。池 A 答案只能 in-chat/手贴回收。
+
+---
+
+## 附录 K（2026-08-01 深夜）：回马枪方向——Franel 推前的有界复杂度 Mellin 重构 [未验证, 移交]
+
+**想法**（针对 [GAP-BGK] 项数爆炸）：项数爆炸是 GK/Lagrange 提取路线的伪影。改走推前：若 CFVZ 拉回 A_p(t(x)) ≡ H(x)²/(1+x)^{p−1} 逐点成立（(1+x)^{p−1}≡1 by Fermat），则 b_r ≡ −Σ_t A_p(t)t^{−r} 换元为 **b_r ≡ c·Σ_x H_p(x)²·t(x)^{−r}**——固定有界导手迹函数（Franel 平方）对固定 deg-2 有理映射的字符扭和，r 依赖 = 纯字符指数。这正是 FFK 单值性纲领/[GAP-CARTIER] 需要的有界几何对象。
+
+**状态**：第一次 naive 逐点测试失败（p=13: 拟合 α=0, 7/13 错位）——截断与代入不交换，需要 CFVZ (arXiv:2510.23298) 的精确规范（t 的符号约定、(1+x) 幂的整段处理、截断 H vs 完整 h 的尾差、deg-2 纤维重数与分歧修正）。**移交 life 侧 GK Codex**（其上下文已载 CFVZ 精确约定）核对；若修正后成立，[GAP-BGK] 的活口从 [GAP-CARTIER] 单点扩为两条。
