@@ -259,8 +259,10 @@ def euler_trace_on_cover(prime: int, x: int, logarithms: list[int]) -> complex |
     )
 
 
-def euler_square_fibre_values(prime: int) -> tuple[list[complex], float]:
-    """Push the squared Euler trace through the split part of the cover.
+def euler_fibre_values(
+    prime: int,
+) -> tuple[list[complex], list[complex], float]:
+    """Push the Euler trace and its square through the split cover.
 
     The single x above z=infinity is punctured.  Its contribution is an
     explicit parity mode and is deliberately kept out of the uniform Weil
@@ -269,7 +271,8 @@ def euler_square_fibre_values(prime: int) -> tuple[list[complex], float]:
 
     logarithms = discrete_log_table(prime)
     fibres = cover_fibres(prime)
-    values = [0j] * prime
+    linear_values = [0j] * prime
+    square_values = [0j] * prime
     maximum = 0.0
     for t, fibre in fibres.items():
         for x in fibre:
@@ -277,16 +280,17 @@ def euler_square_fibre_values(prime: int) -> tuple[list[complex], float]:
             if trace is None:
                 continue
             maximum = max(maximum, abs(trace))
-            values[t] += trace * trace
-    return values, maximum
+            linear_values[t] += trace
+            square_values[t] += trace * trace
+    return linear_values, square_values, maximum
 
 
 def verify_split_cover_trace_correlation() -> None:
     """Check the exact two-prime DFT collapse for the Kummer cover lift."""
 
     prime, other = 13, 29
-    first_values, first_maximum = euler_square_fibre_values(prime)
-    second_values, second_maximum = euler_square_fibre_values(other)
+    first_linear_values, first_values, first_maximum = euler_fibre_values(prime)
+    second_linear_values, second_values, second_maximum = euler_fibre_values(other)
 
     # A rank-one Kummer sheaf on P^1 minus at most four points has H_c^1
     # dimension at most two here.  The exceptional z=0,1 fibres are smaller.
@@ -316,9 +320,27 @@ def verify_split_cover_trace_correlation() -> None:
     # most 4p.  Hence the exact gcd-term expression is <=64 L*g*p*q.
     bound = 64 * period * common * prime * other
     assert abs(right) <= bound + 1e-7
+
+    # The unsquared rank-two lift has fibre size at most 4*sqrt(p), and hence
+    # the analogous full-period correlation is at most 16*L*g*sqrt(pq).
+    first_linear = multiplicative_ordering(first_linear_values, prime)
+    second_linear = multiplicative_ordering(second_linear_values, other)
+    linear_left = sum(
+        mellin_transform(first_linear, index)
+        * mellin_transform(second_linear, index).conjugate()
+        for index in range(period)
+    )
+    linear_right = period * sum(
+        first_linear[first_order * residue // common]
+        * second_linear[second_order * residue // common].conjugate()
+        for residue in range(common)
+    )
+    assert abs(linear_left - linear_right) < 1e-7 * max(1.0, abs(linear_right))
+    linear_bound = 16 * period * common * sqrt(prime * other)
+    assert abs(linear_right) <= linear_bound + 1e-7
     print(
-        "split-cover Euler-square two-prime correlation: "
-        f"Weil bound and {common}-term DFT collapse VERIFIED"
+        "split-cover Euler/Euler-square two-prime correlations: "
+        f"Weil bounds and {common}-term DFT collapses VERIFIED"
     )
 
 

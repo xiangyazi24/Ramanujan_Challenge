@@ -141,6 +141,47 @@ given in \texttt{CODEX\_JACOBSTHAL\_DEEP.md} (commits d9af2b9--77e089b), with
 its own verification ledger (all $p<3000$).
 \end{proof}
 
+\subsection{Self-twist rigidity of the branch system}
+
+\begin{theorem}[self-twist rigidity]\label{thm:self-twist}
+Let $\mathcal V_\tau$ be the rank-two local system on
+$U=\mathbb P^1\setminus\{0,\alpha,\beta,\infty\}$ ($\alpha\beta=1$ the roots
+of $q$) defined by the branch operator
+$\mathcal D_\tau=4q(t)\theta^2+4t(t-17)\theta+t(t-10)$ annihilating
+$\tau=\sqrt F$, with Riemann scheme exponents $\{0,0\}$ at $0$,
+$\{0,\tfrac12\}$ at $\alpha,\beta$, $\{\tfrac12,\tfrac12\}$ at $\infty$, and
+$\det\mathcal V_\tau=\delta$ the quadratic Kummer system of $\sqrt{q}$-type.
+Then, with a fixed determinant normalization, every geometric finite-order
+Kummer self-twist of $\mathcal V_\tau$ is trivial, and the conjugate-twist
+list is exactly $\{1,\delta\}$; comparing raw and determinant-one
+normalizations enlarges the list only to
+$\langle\eta\rangle=\{1,\eta,\delta,\eta^{-1}\}$ of order $4$
+($\eta=q^{1/4}$).  Moreover $\operatorname{Sym}^2\mathcal V_\tau$ admits no
+nontrivial geometric self-twist, the external product on $U\times U$ is
+irreducible with only factorwise quadratic twists, and the diagonal rank-four
+tensor decomposes only as the Clebsch--Gordan $3+1$.  In particular no Kummer
+character of order $>4$ is a self-twist or decomposition character.
+\end{theorem}
+
+\begin{proof}[Proof sketch and certification]
+Local exponents by direct indicial computation (machine-verified together
+with the operator identity $\mathcal D_\tau\tau=0$ to $O(t^{40})$ and the
+half-integer recurrences: \texttt{q6372\_local\_system\_check.py}); a
+self-twist $L$ must have $L^2$ trivial with ramification supported on the
+four singular points, and the exponent lists above eliminate all nontrivial
+possibilities via the rigidity lemma (ramification comparison at each cusp);
+the tensor statements follow from Zariski density of the connected monodromy
+in $SL_2$ and Clebsch--Gordan.  Full proof: working note
+\texttt{GPT\_Q6372\_self\_twist\_classification.md} (\S4--\S8), including the
+caveat that $\boxtimes$ on $U\times U$ is irreducible and the familiar $3+1$
+splitting refers to its diagonal pullback only.
+\end{proof}
+
+\noindent This closes the geometric prerequisite of the counting lemma
+below: all self-twist and tensor-decomposition exceptions lie in a fixed set
+of order $\le4$, so no high-order Mellin character can correlate with the
+column event through a hidden twist.
+
 \subsection{The character-order counting lemma and its consequence}
 
 \begin{lemma}[character-order counting]\label{lem:counting}
