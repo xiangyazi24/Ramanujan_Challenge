@@ -49,3 +49,19 @@ The p=307 ratio 3.22 is a ~3σ random-walk fluctuation; p=401,503 return to ~1.0
   The O(√p) local-limit statement holds (hit residues have multiplicity ~√p; non-hit = 0,
   trivially within O(√p) of the mean). NOT F_p-uniform — only ~√p residues hit, confirming
   the folding picture.
+
+## ⚠️ CORRECTION (Fable, 8b7bbf5) — my "√p folding" story was WRONG
+Fable (strongest model) refuted the folding mechanism: D(p) = #distinct L(χ) mod p = 
+0.3963p ± 0.018 (measured 164 primes ≤ 1000), EXACTLY p(1−e^{−1/2}) = 0.3935p — the Poisson
+occupancy law under the reflection FE (b_r ≡ b_{p−1−r}), NOT archimedean folding. My p=11..19
+was too small to discriminate (the two laws coincide at p~11). Verified: D/p = 41/101=0.406,
+79/199=0.397, 121/307=0.394 — confirms 0.3963 (41 ≫ √101=10, so NOT √p). The "|L|≤Cp^{3/2}
+folds only √p times" story is REMOVED. Distinct-value deficit (0.39 vs Poisson 0.63) = 100%
+reflection FE, 0% folding.
+Also per Fable: mean|C_p(1)|/√p = Rayleigh 1.2533 (my measured 1.26 matches); max_h|C_p(h)|
+= Gumbel √(2p·ln(p/2)) (3.27 explained); the uniform-in-h C√p statement is FALSE (fixed-h /
+E(p)=O(p) is the correct target); e_p(hL(χ_m)) IS a rank-1 Artin-Schreier trace with
+Swan_∞=deg f ~ p (my recurrence-order-p confirmed), so (iv) fails at maximal strength and
+GOS gives p^{3/2} — the ℓ-adic and archimedean bounds are the same object in two languages.
+**E(p) = O(p) is the single cleanest open vertical statement** (Parseval: Σ_{h≠0}|C_p(h)|²
+= p·E(p) − p²).
