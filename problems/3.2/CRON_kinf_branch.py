@@ -27,6 +27,7 @@ No package is installed into the system interpreter.
 from __future__ import annotations
 
 import argparse
+from fractions import Fraction
 import json
 import math
 import os
@@ -338,6 +339,95 @@ class Jet2:
         return 2 * self.coeff[2]
 
 
+@dataclass
+class AcbJet2:
+    """The same order-two jet, with C-level Arb/Acb scalar arithmetic."""
+
+    coeff: Tuple[Any, Any, Any]
+
+    @staticmethod
+    def constant(value: Any) -> "AcbJet2":
+        return AcbJet2((acb(value), acb(0), acb(0)))
+
+    @staticmethod
+    def variable(value: Any) -> "AcbJet2":
+        return AcbJet2((acb(value), acb(1), acb(0)))
+
+    @staticmethod
+    def coerce(value: Any) -> "AcbJet2":
+        return value if isinstance(value, AcbJet2) else AcbJet2.constant(value)
+
+    def __add__(self, other: Any) -> "AcbJet2":
+        other = AcbJet2.coerce(other)
+        return AcbJet2(
+            (
+                self.coeff[0] + other.coeff[0],
+                self.coeff[1] + other.coeff[1],
+                self.coeff[2] + other.coeff[2],
+            )
+        )
+
+    __radd__ = __add__
+
+    def __neg__(self) -> "AcbJet2":
+        return AcbJet2((-self.coeff[0], -self.coeff[1], -self.coeff[2]))
+
+    def __sub__(self, other: Any) -> "AcbJet2":
+        return self + (-AcbJet2.coerce(other))
+
+    def __rsub__(self, other: Any) -> "AcbJet2":
+        return AcbJet2.coerce(other) - self
+
+    def __mul__(self, other: Any) -> "AcbJet2":
+        other = AcbJet2.coerce(other)
+        a0, a1, a2 = self.coeff
+        b0, b1, b2 = other.coeff
+        return AcbJet2(
+            (
+                a0 * b0,
+                a0 * b1 + a1 * b0,
+                a0 * b2 + a1 * b1 + a2 * b0,
+            )
+        )
+
+    __rmul__ = __mul__
+
+    def reciprocal(self) -> "AcbJet2":
+        a0, a1, a2 = self.coeff
+        return AcbJet2((1 / a0, -a1 / a0**2, a1**2 / a0**3 - a2 / a0**2))
+
+    def __truediv__(self, other: Any) -> "AcbJet2":
+        return self * AcbJet2.coerce(other).reciprocal()
+
+    def __rtruediv__(self, other: Any) -> "AcbJet2":
+        return AcbJet2.coerce(other) / self
+
+    def __pow__(self, exponent: int) -> "AcbJet2":
+        if exponent < 0:
+            return self.reciprocal() ** (-exponent)
+        result = AcbJet2.constant(1)
+        base = self
+        power = exponent
+        while power:
+            if power & 1:
+                result *= base
+            base *= base
+            power >>= 1
+        return result
+
+    @property
+    def value(self) -> Any:
+        return self.coeff[0]
+
+    @property
+    def first(self) -> Any:
+        return self.coeff[1]
+
+    @property
+    def second(self) -> Any:
+        return 2 * self.coeff[2]
+
+
 def jet_linear_combination(values: Sequence[Jet2], weights: Sequence[Any]) -> Jet2:
     return Jet2(
         tuple(
@@ -461,6 +551,103 @@ class KInfinityCell:
         return z * k.first - 3 * k.value, z * k.second - 2 * k.first
 
 
+def exact_extrapolation_weights(nodes: Sequence[int]) -> List[Any]:
+    """Exact rational Lagrange weights, converted outward to Arb."""
+
+    ts = [Fraction(1, n) for n in nodes]
+    weights = []
+    for i, ti in enumerate(ts):
+        weight = Fraction(1)
+        for j, tj in enumerate(ts):
+            if i != j:
+                weight *= -tj / (ti - tj)
+        weights.append(arb(weight.numerator) / weight.denominator)
+    return weights
+
+
+@dataclass
+class AcbKInfinityCell:
+    """Fast Arb evaluation of the same limiting cell and its first two jets."""
+
+    apery: Sequence[int]
+    nodes: Sequence[int]
+    weights: Sequence[Any]
+    ratio_n: Optional[Sequence[Any]] = None
+    ratio_prev: Optional[Sequence[Any]] = None
+
+    def __post_init__(self) -> None:
+        maximum = max(self.nodes)
+        ratio_n = [arb(0)] * maximum
+        ratio_prev = [arb(0)] * maximum
+        for n in range(1, maximum):
+            denominator = arb(self.apery[n + 1])
+            ratio_n[n] = arb(self.apery[n]) / denominator
+            ratio_prev[n] = arb(self.apery[n - 1]) / denominator
+        self.ratio_n = ratio_n
+        self.ratio_prev = ratio_prev
+
+    def phi_gamma(self, z: AcbJet2) -> Tuple[AcbJet2, AcbJet2]:
+        wanted = set(self.nodes)
+        phi_prev = AcbJet2.constant(1)
+        phi = apery_P(z) / (5 * (z + 1) ** 3)
+        gamma_prev = AcbJet2.constant(0)
+        gamma = 1 / (5 * (z + 1) ** 3)
+        by_index: Dict[int, Tuple[AcbJet2, AcbJet2]] = {}
+        for n in range(1, max(self.nodes)):
+            shifted = z + n
+            shifted_squared = shifted * shifted
+            shifted_cubed = shifted_squared * shifted
+            denominator_inverse = ((shifted + 1) ** 3).reciprocal()
+            transfer = (
+                34 * shifted_cubed
+                + 51 * shifted_squared
+                + 27 * shifted
+                + 5
+            )
+            alpha = transfer * self.ratio_n[n] * denominator_inverse
+            beta = -shifted_cubed * self.ratio_prev[n] * denominator_inverse
+            phi_next = alpha * phi + beta * phi_prev
+            gamma_next = alpha * gamma + beta * gamma_prev
+            phi_prev, phi = phi, phi_next
+            gamma_prev, gamma = gamma, gamma_next
+            if n + 1 in wanted:
+                by_index[n + 1] = (phi, gamma)
+
+        phi_coefficients = []
+        gamma_coefficients = []
+        for degree in range(3):
+            phi_coefficients.append(
+                sum(
+                    (
+                        self.weights[k] * by_index[n][0].coeff[degree]
+                        for k, n in enumerate(self.nodes)
+                    ),
+                    acb(0),
+                )
+            )
+            gamma_coefficients.append(
+                sum(
+                    (
+                        self.weights[k] * by_index[n][1].coeff[degree]
+                        for k, n in enumerate(self.nodes)
+                    ),
+                    acb(0),
+                )
+            )
+        return AcbJet2(tuple(phi_coefficients)), AcbJet2(tuple(gamma_coefficients))
+
+    def K_jet(self, value: Any) -> AcbJet2:
+        z = AcbJet2.variable(value)
+        phi_plus, gamma_plus = self.phi_gamma(z)
+        phi_minus, gamma_minus = self.phi_gamma(-z)
+        return phi_minus * phi_plus + z**6 * gamma_minus * gamma_plus
+
+    def H_and_derivative(self, value: Any) -> Tuple[Any, Any]:
+        k = self.K_jet(value)
+        z = acb(value)
+        return z * k.first - 3 * k.value, z * k.second - 2 * k.first
+
+
 def fixed_phi_gamma_jet(n: int, z: Jet2, apery: Sequence[int]) -> Tuple[Jet2, Jet2]:
     """Exact finite recurrence evaluation of ``phi_n,gamma_n``."""
 
@@ -479,7 +666,7 @@ def fixed_cell_K_jet(r: int, s: int, value: Any, apery: Sequence[int]) -> Jet2:
     return phi_r * phi_s + z**6 * gamma_r * gamma_s
 
 
-def isolate_kinfinity_roots(
+def central_branch_extrapolation(
     numerators: Sequence[Any], digits: int, m_values: Sequence[int]
 ) -> Dict[str, Any]:
     """Extrapolate the four central ``K_(m,m)`` roots to ``K_infinity``.
@@ -563,6 +750,93 @@ def isolate_kinfinity_roots(
         "root_count": len(roots),
         "finite_rows": finite_rows,
         "roots": roots,
+    }
+
+
+def isolate_kinfinity_roots(
+    numerators: Sequence[Any], digits: int, m_values: Sequence[int]
+) -> Dict[str, Any]:
+    """Newton-search the finite roots of the accelerated ``H_infinity``."""
+
+    ctx.prec = max(448, int(4.5 * digits))
+    nodes = [48 * (k + 1) for k in range(8)]
+    apery = build_apery_numbers(max(nodes))
+    weights = exact_extrapolation_weights(nodes)
+    cell = AcbKInfinityCell(apery=apery, nodes=nodes, weights=weights)
+    seeds = [
+        acb("-0.5", "0.1104"),
+        acb("-0.5", "-0.1104"),
+        acb("-0.47", "1.8"),
+        acb("-0.47", "-1.8"),
+    ]
+    attempts = []
+    converged_values = []
+    threshold = 10.0 ** -30
+    for seed in seeds:
+        z = seed
+        previous = math.inf
+        correction_size = math.inf
+        converged = False
+        derivative = acb(0)
+        residual = acb(0)
+        for iteration in range(12):
+            residual, derivative = cell.H_and_derivative(z)
+            if derivative.contains(0):
+                break
+            correction = (residual / derivative).mid()
+            correction_size = float(correction.abs_upper())
+            z = (z - correction).mid()
+            if correction_size < threshold:
+                converged = True
+                break
+            if correction_size > 10 * previous and iteration >= 3:
+                break
+            previous = correction_size
+        residual, derivative = cell.H_and_derivative(z)
+        attempts.append(
+            {
+                "seed_real": seed.real.str(12, radius=False),
+                "seed_imag": seed.imag.str(12, radius=False),
+                "converged": converged,
+                "real": z.real.str(40, radius=False),
+                "imag": z.imag.str(40, radius=False),
+                "residual_upper": float_scientific(float(residual.abs_upper()), 8),
+                "newton_correction": float_scientific(correction_size, 8),
+                "derivative_lower": float_scientific(float(derivative.abs_lower()), 8),
+            }
+        )
+        if converged:
+            midpoint = complex(float(z.real), float(z.imag))
+            if not any(abs(midpoint - other) < 1e-20 for other in converged_values):
+                converged_values.append(midpoint)
+
+    direct_roots = []
+    for value in sorted(converged_values, key=lambda item: item.imag):
+        matching = min(
+            (row for row in attempts if row["converged"]),
+            key=lambda row: abs(
+                complex(float(row["real"]), float(row["imag"])) - value
+            ),
+        )
+        direct_roots.append(
+            {
+                "real": matching["real"],
+                "imag": matching["imag"],
+                "residual_upper": matching["residual_upper"],
+                "newton_correction": matching["newton_correction"],
+                "derivative_lower": matching["derivative_lower"],
+            }
+        )
+
+    central = central_branch_extrapolation(numerators, digits, m_values)
+    return {
+        "status": "UNCERTIFIED",
+        "method": "Arb-accelerated normalized recurrence plus Newton",
+        "nodes": nodes,
+        "root_count": len(direct_roots),
+        "roots": direct_roots,
+        "seed_attempts": attempts,
+        "central_branch_evidence": central,
     }
 
 
