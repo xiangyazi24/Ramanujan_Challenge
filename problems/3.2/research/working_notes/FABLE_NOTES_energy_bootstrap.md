@@ -2699,3 +2699,25 @@ Frobenius 不动点数, 平均值将由 Burnside 给成常数、可用 Chebotare
 X^{5/3}/log X; q81 双 tab 独立攻 (life3 已回: 恒等式与判据全过审, 确认
 [AVG-ZERO] **严格弱于**原猜想 (非等价, 逆向不成立), 但 banked 输入无幂省;
 其命名的缺失件 = **跨素数大素因子定理** Σ_{r<X}#{p∈(r,X]: p|b_r} ≪ X/loglog X)。
+
+## §144 — Christol/自动机路线判负 + [AVG-ZERO] 的精确门槛校准 (08-02)
+
+**q82 双 tab 独立同判 (Q6816/Q6817)**: 路线**结构正确但不给界**。
+- 正确部分: Apéry 是有理函数对角 ⟹ (Furstenberg) B(t)=Σb_nt^n 在 F_p(t) 上代数
+  ⟹ (Christol) (b_n mod p) 是 **p-自动的**; 零集 = "某位 base-p 数字 ∈ Z_p"
+  (与 §141 数字判据同一件事); |Z_p| = p-Mahler 分解 B=B_0(t)B(t^p) 中
+  **种子多项式 B_0 的零系数个数**。
+- **判负理由 (决定性)**: 代数性/自动性**不蕴含零系数稀疏**。反例: 1/(1−t^m)
+  的自动机极小而前 p 个系数有 ~p(1−1/m) 个零。CKMR 理论只给"零集自动 + 密度可算",
+  不给"密度小"。Derksen (char-p 线性递推零集) 不迁移到一般代数对角。
+  Adamczewski-Bell 有效对角界不给**关于 p 一致**的自动机尺寸。
+- **门槛校准 (重要, 双方一致)**: 由 Σ_{p≤X}log p ~ X (Chebyshev),
+  逐素数界 |Z_p| ≤ C·log p **恰好只给 Θ(X), 不是 o(X)** ⟹ [AVG-ZERO] 需要
+  **mean|Z_p| = o(log p)**。真值 mean≈0.945 (常数), 故余量是 log X 但门槛很"薄":
+  任何 p^α 型界 (α>0) 全废, 必须做到 o(log p) 平均。
+- **被正名的缺失件**: "Apéry 特定的 **Cartier 刚性**" — (b_n mod p) 的 p-kernel
+  中产生零输出的状态质量对 p 平均有界。这比 Christol 强, 且恰好裁到 [AVG-ZERO]。
+
+⟹ 三条捷径全判死于 [AVG-ZERO]: Chebotarev/不动点 (§143), Christol/自动机 (本节),
+以及 char-0 大小论证 (7 倍富余, CRON 早判)。活口仍是 Cartier 刚性 / 跨素数大素因子
+定理 Σ_{r<X}#{p∈(r,X]:p|b_r} ≪ X/loglog X。
