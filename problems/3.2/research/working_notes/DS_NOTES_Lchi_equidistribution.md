@@ -1,5 +1,22 @@
 # DS note: L(chi) mod p — Claude's reformulation verified + quantified (2026-07-31)
 
+**[CORRECTION BLOCK 2026-07-31 Fable — supersedes the folding story below;
+full data in FABLE_NOTES_vertical_value_law.md, script fable_vertical_value_law.py]**
+1. The "41 distinct values ≈ √p folding" reading is WRONG. The law is LINEAR:
+   D(p) = (1−e^{−1/2})·p = 0.3935p — Poisson occupancy conditioned on the
+   reflection FE b_r ≡ b_{p−1−r} (Q3.2_density_theorem.md §5.9). Measured over
+   164 primes ≤ 1000: D/p = 0.3963 ± 0.018; p=997: 392 observed vs 391.8 predicted.
+   41 = 0.406·101, 79 = 0.397·199. No archimedean p^{3/2}-folding content at all.
+2. The value multiset {b_m mod p} is statistically "iid uniform mod FE" four
+   constants deep: E(p) fluct std 2.67 vs pred 2√2; mean|C_p(1)|/√p = 1.261 vs
+   Rayleigh 1.2533 (this explains the measured 1.26); max_h = Gumbel
+   √(2p ln(p/2)) (so uniform-h C√p is false; fixed-h / E(p)=O(p) is the target).
+3. The "decisive computation" (bounded-complexity trace function?) is answered
+   NO by proof: e_p(L(χ_m)) is the trace function of the rank-1 Artin–Schreier
+   sheaf of f(X) = Σ_s N_Λ(g^s)X^s with Swan_∞ = deg f ≈ p (the measured
+   recurrence order = p IS this degree). Katz/Deligne in the χ-aspect returns
+   exactly the archimedean p^{3/2} — same bound, two languages.
+
 ## Verification (p=11, p=101)
 - **b_m ≡ −L(χ_m) mod p** (p=11: m=1..9 all; p=101: sample m=1,2,3,5,17,50 all) — the Mellin
   trace connection (matches Q6125's moment formula). L(χ_m)=Σ_a χ_m(a)N_Λ(a).

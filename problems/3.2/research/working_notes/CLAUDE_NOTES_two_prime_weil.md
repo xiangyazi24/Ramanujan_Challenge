@@ -11,6 +11,14 @@ C_p(h) = Σ_{a=0}^{p-1} e(h·b_a/p)
 Average |C_p(1)|/√p = 1.26
 ```
 
+**[CORRECTED 2026-07-31 Fable — see FABLE_NOTES_vertical_value_law.md]** The right
+reading of Data 1: fixed-h |C_p(h)| is Rayleigh with mean 1.2533√p (measured 1.261 —
+the 1.26 above IS this constant); max over h is Gumbel √(2p·ln(p/2)), NOT C·√p
+(the 3.27 ceiling is the Gumbel max at p ≤ 1000: √(2 ln 500) = 3.53). So the
+uniform-in-h form "|C_p(h)| ≤ C√p for all h" is FALSE asymptotically; the correct
+targets are the fixed-h bound and the energy form E(p) = Σ_a N_p(a)² = O(p)
+(exact Parseval bridge: Σ_{h≠0}|C_p(h)|² = p·E(p) − p²).
+
 ### Data 2: Two-prime shifted correlation
 ```
 Corr(p,q,d) = Σ_{m=0}^{M-1} e(b_m/p - b_{m+d}/q),   d = |p-q|, M = min(p,q)-|d|-1
@@ -29,7 +37,16 @@ Corr(p,q,d) = Σ_{m=0}^{M-1} e(b_m/p - b_{m+d}/q),   d = |p-q|, M = min(p,q)-|d|
 
 ## The precise missing theorem (from Q6261 + Q6262)
 
-**Theorem (to prove).** For every pair of distinct large primes p, q and every fixed
+**[CORRECTED 2026-07-31 Fable]** As stated below this is NOT well-posed: a lisse
+sheaf on A¹ lives over ONE residue characteristic, and no Frobenius at a point m
+can produce the two-characteristic value ψ_p(b_m)·ψ_q(−b_{m+d}) (m is an integer
+in an interval, reduced mod p AND mod q simultaneously). The honest form of the
+two-prime input is the cross-characteristic quenched-vs-annealed comparison
+(DS_NOTES_SYNTHESIS §4.9/§4.11: pair-Gram norm bounded, F₂ = o(N²/log²N)).
+Keep the original text below as the record of the (type-incoherent) sheaf dream:
+
+**Theorem (to prove — NOT well-posed as stated, see correction above).** For every
+pair of distinct large primes p, q and every fixed
 shift d, there exists a lisse sheaf G_{p,q,d} on A^1 such that:
 
 (i) Tr(Frob_m | G_{p,q,d}) = ψ_p(b_m)·ψ_q(-b_{m+d})
@@ -41,6 +58,18 @@ shift d, there exists a lisse sheaf G_{p,q,d} on A^1 such that:
 (iv) cond(G) = rank + Σ_x(1 + Swan_x) = O(1) independent of p, q
 
 Then Deligne's Riemann Hypothesis gives the needed bound.
+
+**[ADDENDUM 2026-07-31 Fable — one-prime version resolved tautologically]** For the
+VERTICAL (one-prime) analogue the sheaf exists and is unique-in-effect: with
+u = g^m and f(X) = Σ_s N_Λ(g^s)X^s ∈ F_p[X], the phase e_p(hL(χ_m)) IS the trace
+function of the rank-1 Artin–Schreier sheaf L_{ψ(hf)} on G_m — pure of weight 0,
+geometrically irreducible, i.e. (i)–(iii) hold for free. The content was always
+(iv), and (iv) FAILS provably: Swan_∞ = deg f = mod-p linear complexity − O(1) ≈ p
+(DS measured order = p; §1b degree bound gives deg ≥ p/C unconditionally). GOS then
+returns exactly the archimedean p^{3/2} — the ℓ-adic and archimedean routes are the
+same bound in two languages. Any Deligne-style proof would need a DIFFERENT
+bounded-conductor sheaf agreeing with ψ(hf) on F_p-points only (not over
+extensions); no known mechanism produces such coincidences.
 
 ## The construction route
 
@@ -93,8 +122,8 @@ coefficient level.
 
 **Consequence**: C_p(h) = Σ_χ ψ(-h·L(χ)) + O(1)
 
-The vertical Weil bound |C_p(h)| ≤ C√p is EQUIVALENT to:
-|Σ_χ e(-h·L(χ)/p)| ≤ C√p
+The vertical Weil bound (fixed h; uniform-in-h is false, see Data 1 correction)
+|C_p(h)| ≤ C_h√p is EQUIVALENT to: |Σ_χ e(-h·L(χ)/p)| ≤ C_h√p
 
 This is a sum of additive characters of L-function values — a "mod p of Frobenius
 trace" equidistribution problem. No existing theorem (Katz, Deligne, Sato-Tate)
@@ -120,6 +149,14 @@ Random prediction: ratio → 1.0. Observed: close to random with mild excess.
 
 ## DS data (p=11,13,17,101,...,503)
 - |C_p|/√p bounded: max 3.22 at p=307, cluster ~1.0
-- L(χ_m) takes ~√p distinct residues mod p (folding from range Cp^{3/2})
-- Local-limit: max multiplicity ~√p, confirmed for p=11,13,17
-- Linear-recurrence order of L(χ_m) = p (growing, not bounded-complexity)
+- ~~L(χ_m) takes ~√p distinct residues mod p (folding from range Cp^{3/2})~~
+  **[CORRECTED 2026-07-31 Fable]** The distinct-value law is LINEAR, not √p:
+  D(p) = (1−e^{−1/2})p = 0.3935p (measured 0.3963p ± 0.018 over 164 primes;
+  p=997: 392 obs vs 391.8 pred). It is the Poisson occupancy law conditioned on
+  the reflection FE b_r ≡ b_{p−1−r}, with ZERO archimedean-folding content.
+  The p=11..19 data could not discriminate (the two laws cross at p ≈ 11).
+- ~~Local-limit: max multiplicity ~√p, confirmed for p=11,13,17~~
+  **[CORRECTED]** max multiplicity grows like the Poisson-max ~log p/log log p
+  (measured 4→8 from p=101→997), far below √p.
+- Linear-recurrence order of L(χ_m) = p (growing, not bounded-complexity) —
+  consistent with Swan_∞ = deg f ≈ p in the Artin–Schreier tautology above.
