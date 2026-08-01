@@ -443,6 +443,15 @@ untwisted wording in Q6394.  It disappears after symmetric square:
 Thus (6.11) supplies precisely the Frobenius-compatible correspondence needed
 for the rank-three descent.  At five good split primes, the script evaluates
 the rational map and the coordinate change at every eligible affine point.
+At both split and nonsplit primes it separately verifies the exact trace law
+
+\[
+ a_p(E_{\iota(u)})=\left(\frac{-3}{p}\right)a_p(E_u),      \tag{6.13}
+\]
+
+so the traces themselves need not be equal; their squares always are.  This
+also corrects any untwisted “same Frobenius trace” formulation of the Fricke
+pair elsewhere in the working notes.
 
 ## 7. CFVZ hypergeometric convention
 
@@ -519,6 +528,7 @@ VERIFIED p=19: rational map lands on E_iota(u) at 228 affine points
 VERIFIED p=31: rational map lands on E_iota(u) at 732 affine points
 VERIFIED p=37: rational map lands on E_iota(u) at 1092 affine points
 VERIFIED explicit isogeny at five primes (2148 point evaluations total)
+VERIFIED a_p(E_iota(u))=(-3|p)*a_p(E_u) at p=5,7,11,13,17 (38 smooth fibers; split and nonsplit twists)
 ```
 
 ## 9. Sources checked

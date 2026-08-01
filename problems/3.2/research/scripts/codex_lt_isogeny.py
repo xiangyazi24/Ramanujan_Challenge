@@ -159,6 +159,25 @@ def inv(value: int, prime: int) -> int:
     return pow(value % prime, -1, prime)
 
 
+def legendre(value: int, prime: int) -> int:
+    value %= prime
+    if value == 0:
+        return 0
+    return 1 if pow(value, (prime - 1) // 2, prime) == 1 else -1
+
+
+def elliptic_trace(parameter: int, prime: int) -> int:
+    """Count E_parameter(F_p) on the displayed Weierstrass model."""
+    a1 = (1 - 2 * parameter) % prime
+    a3 = parameter * parameter % prime
+    points = 1
+    for x_value in range(prime):
+        linear_y = (a1 * x_value + a3) % prime
+        discriminant = (linear_y * linear_y + 4 * x_value**3) % prime
+        points += 1 + legendre(discriminant, prime)
+    return prime + 1 - points
+
+
 def eval_expr(expression: sp.Expr, values: dict[sp.Symbol, int], prime: int) -> int:
     numerator, denominator = sp.cancel(expression).as_numer_denom()
     n = int(numerator.subs(values)) % prime
@@ -222,5 +241,32 @@ def verify_five_primes(data: tuple[sp.Expr, ...]) -> None:
     print(f"VERIFIED explicit isogeny at five primes ({checked} point evaluations total)")
 
 
+def verify_trace_twist() -> None:
+    """Check the load-bearing -3 twist, including nonsplit primes."""
+    checked = 0
+    nonsplit = 0
+    for prime in (5, 7, 11, 13, 17):
+        twist_sign = legendre(-3, prime)
+        nonsplit += twist_sign == -1
+        singular = {0, prime - 1, inv(8, prime)}
+        for parameter in range(prime):
+            if parameter in singular:
+                continue
+            partner = (
+                (1 - 8 * parameter) * inv(8 * (1 + parameter), prime)
+            ) % prime
+            assert partner not in singular
+            assert elliptic_trace(partner, prime) == twist_sign * elliptic_trace(
+                parameter, prime
+            )
+            checked += 1
+    assert nonsplit > 0
+    print(
+        "VERIFIED a_p(E_iota(u))=(-3|p)*a_p(E_u) at "
+        f"p=5,7,11,13,17 ({checked} smooth fibers; split and nonsplit twists)"
+    )
+
+
 if __name__ == "__main__":
     verify_five_primes(exact_formulae())
+    verify_trace_twist()
