@@ -54,8 +54,6 @@ theorem integrable_doubleKernel (m : ℕ) :
 theorem integral_doubleKernel_t (m : ℕ) (y : ℝ) :
     (∫ t : ℝ in Ioi 0, doubleKernel m t y) =
       poleBlock m y / (Real.cosh (Real.pi * y) : ℂ) ^ 2 := by
-  have hC : (Real.cosh (Real.pi * y) : ℂ) ^ 2 ≠ 0 :=
-    pow_ne_zero 2 (Complex.ofReal_ne_zero.mpr (Real.cosh_pos _).ne')
   calc
     (∫ t : ℝ in Ioi 0, doubleKernel m t y) =
         ∫ t : ℝ in Ioi 0,
@@ -68,7 +66,7 @@ theorem integral_doubleKernel_t (m : ℕ) (y : ℝ) :
           push_cast
           have hexp :
               Complex.exp (-(↑(poleAbscissa m) * (t : ℂ))) *
-                  Complex.exp (-(y : ℂ) * (t : ℂ) * Complex.I) =
+                  Complex.exp (-((y : ℂ) * (t : ℂ)) * Complex.I) =
                 Complex.exp (-(↑(poleAbscissa m) + (y : ℂ) * Complex.I) *
                   (t : ℂ)) := by
             rw [← Complex.exp_add]
@@ -77,16 +75,16 @@ theorem integral_doubleKernel_t (m : ℕ) (y : ℝ) :
           calc
             (1 + (t : ℂ) / 2) *
                   Complex.exp (-(↑(poleAbscissa m) * (t : ℂ))) *
-                    (Complex.exp (-(y : ℂ) * (t : ℂ) * Complex.I) /
-                      (Real.cosh (Real.pi * y) : ℂ) ^ 2) =
+                    (Complex.exp (-((y : ℂ) * (t : ℂ)) * Complex.I) /
+                      Complex.cosh ((Real.pi : ℂ) * (y : ℂ)) ^ 2) =
                 (1 + (t : ℂ) / 2) *
                   (Complex.exp (-(↑(poleAbscissa m) * (t : ℂ))) *
-                    Complex.exp (-(y : ℂ) * (t : ℂ) * Complex.I)) /
-                      (Real.cosh (Real.pi * y) : ℂ) ^ 2 := by ring
+                    Complex.exp (-((y : ℂ) * (t : ℂ)) * Complex.I)) /
+                      Complex.cosh ((Real.pi : ℂ) * (y : ℂ)) ^ 2 := by ring
             _ = (1 + (t : ℂ) / 2) *
                   Complex.exp (-(↑(poleAbscissa m) + (y : ℂ) * Complex.I) *
                     (t : ℂ)) /
-                    (Real.cosh (Real.pi * y) : ℂ) ^ 2 := by rw [hexp]
+                    Complex.cosh ((Real.pi : ℂ) * (y : ℂ)) ^ 2 := by rw [hexp]
     _ = (∫ t : ℝ in Ioi 0,
           ((1 + t / 2 : ℝ) : ℂ) *
             Complex.exp (-polePoint m y * (t : ℂ))) /
