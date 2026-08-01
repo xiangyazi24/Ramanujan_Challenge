@@ -190,6 +190,22 @@ companion is
  \equiv\chi_2(q(t))A_p(t)\pmod p.                             \tag{1.4}
 \]
 
+Thus, for the companion sum called `T(r)` in the specification, the precise
+bounded-object statement is
+
+\[
+ \boxed{
+ T(r)\equiv\operatorname{Mell}_p
+ \left(t\mapsto\operatorname{Tr}(\operatorname{Frob}_t\mid\mathcal G_T);
+       \omega^{-r}\right)\pmod{\mathfrak p},
+ \quad \mathcal G_T:=\mathcal Q,
+ \quad\operatorname{cond}(\mathcal G_T)=11.}                 \tag{1.4a}
+\]
+
+Here and below equality with the original `F_p`-valued sum means reduction at
+the chosen prime `mathfrak p` above `p`; it is not equality of the complex
+Mellin value with an element of `F_p`.
+
 The CFVZ convention is exactly
 
 \[
@@ -499,6 +515,7 @@ VERIFIED Sym^2(S_+) is annihilated by the third-order Apery operator
 VERIFIED Franel exponents: 0:(0,0), -1:(0,0), 1/8:(0,0), infinity:(1,1)
 VERIFIED S_+ exponents: 0:(0,0), q-roots:(0,1/2), infinity:(1/2,1/2)
 VERIFIED S_- exponents: 0:(0,0), q-roots:(0,-1/2), infinity:(3/2,3/2)
+VERIFIED repeated exponents have logarithmic second solutions and nontrivial unipotent blocks
 VERIFIED tame conductor bookkeeping: cond(phi_* Sym^2 F)=20, cond(K tensor L_chi(q))=11
 VERIFIED local eigenvalue test at t=0 forces every Kummer self-twist scalar to be 1
 VERIFIED ranks 6 and 3 rule out a mutual Kummer twist of the two displayed sheaves
