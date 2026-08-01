@@ -170,3 +170,15 @@ the cleanest single sufficient condition. Empirically R₄≈0.87–0.98 (h=1), 
    into proof.tex (Claude owns it).
 4. Kill-list to record in STATUS.md: p-curvature route (det=1), |Z_p|-only
    routes, KST-only, higher-moment-only, raw CRT decoding — all documented dead.
+
+## 4.12 Fable's (UN) theorem + 5/3 energy (final state, 2026-07-31)
+- **(UN) N_p(c) ≤ 8p^{3/4} for ALL c (incl. c=0), unconditional all primes** — R4b 17-lemma
+  proof, 277-case machine verification (un_proof_check.py). E(p) ≪ p^{5/3}, RMS vertical ≪ p^{5/6}.
+- Single-basis ceiling at 5/3 (adversarial model); Kummer negative; below 5/3 needs candidate
+  kernel filtering.
+- N(c) ≤ 8p^{3/4} covers all values but is weaker at c=0 than |Z_p| ≤ 3p^{2/3}; downstream
+  neutral — the pointwise wall remains CROSS-PRIME.
+- **Campaign vertical status**: |Z_p| ≤ 3p^{2/3} (elementary, optimal for that class) is still
+  the best ZERO-FIBER bound; (UN) gives 8p^{3/4} over all fibers. Both are vertical; neither
+  closes pointwise. The frontier = the horizontal/cross-prime decorrelation (Apéry large
+  sieve / SG1 / local-limit law), where every route terminates.

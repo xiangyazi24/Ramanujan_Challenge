@@ -136,7 +136,22 @@ gap-singleton property, route audit. **Two NEW avenues from Q6179** (not in DS s
 Q6179 also reclassifies the grade route: missing step is GLOBAL (subexponential lift of
 A=b_n/R mod R^K, or a nonzero high base-R CRT digit), not a local p⁸ congruence.
 
-## 7. DS ⇄ Claude coordination on the two-prime Weil / sheaf route (2026-07-31 ~20:00)
+## 7b. Fable's (UN) theorem + 5/3 energy — merged into the ledger (2026-07-31)
+Fable (life window, strongest model) upgraded the universal nondegeneracy to a THEOREM:
+- **(UN) N_p(c) ≤ 8p^{3/4} for ALL c (including the zero fiber c=0), unconditionally for all
+  primes** — R4b, 17-lemma proof, 277-case machine verification zero failures
+  (un_proof_check.py). E(p) ≪ p^{5/3}, RMS vertical ≪ p^{5/6}.
+- **Ceiling**: single-basis methods stuck at 5/3 (adversarial model); Kummer experiments
+  negative (no small-order enrichment); below 5/3 needs candidate-kernel filtering to true orbits.
+- tex: FABLE_SECTION_value_distribution.tex (ready to \input).
+- **Comparison note**: N(c) ≤ 8p^{3/4} at c=0 is WEAKER than the existing |Z_p| ≤ 3p^{2/3}
+  (7/8 > 2/3), but it covers the WHOLE value range (all c). Downstream neutral (the pointwise
+  wall is still cross-prime).
+- **ChatGPT fabrication**: 4 fake citations caught and filed (verify with git cat-file / ls).
+- DS adjudication (Fable-flagged): E(p)=O(p) gives density-one/exceptional-set, NOT pointwise
+  (singleton-aligned countermodel); density doc line 1056 annotated (DS_NOTES_corpus_adjudication.md).
+
+## 8. DS ⇄ Claude coordination on the two-prime Weil / sheaf route (2026-07-31 ~20:00)
 Claude proposed (CLAUDE_NOTES_two_prime_weil.md): the missing theorem is a bounded-conductor
 l-adic sheaf G_{p,q,d} with trace ψ_p(b_m)ψ_q(−b_{m+d}) ⟹ two-prime Weil bound ⟹ 4th-moment
 ⟹ pointwise ⟹ conjecture. She asked DS to attack the sheaf from the Dwork/Cartier angle.
