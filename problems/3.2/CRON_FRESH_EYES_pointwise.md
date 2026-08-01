@@ -517,3 +517,15 @@ b_r ≡ −(1/N)·Σ_{t=0}^{N−1} J(φψ^{t+r}, ψ^{N/2−t})²·J(φψ^{t−r}
 **Z.3 接口引理成文（可派发）**：**(DRS)** 反集中 #{r: v_p(D_p)≥1} ≪ p^α 或 **(RLL)** 残差局部极限。门槛表：α<2/3 改进现有纤维界、**α<1/2 关 k=2**、α=0 有界行数。关键结构注记：exact 逆定理证明预期用全轨道放大器，而 mod-𝔭 事件恰好摧毁它——两 regime 结构性离婚，(DRS) 逻辑独立于逆定理。
 
 **Z.4 施工图（Package A–F）**：A=记号+整比较（A_± 落定+Frobenius 稳定格+比较定理；Dwork-crystal 机械）；B=联合 Mellin Tannaka 群（deck 对合在生成纤维上的作用；product/graph/不连通判定——**即 [GAP-2] 的正式施工单**）；C=exact 分圆逆定理（原始射影子+Ramanujan 和 → 幂映射诱导分类——exact 侧最干净路线）；D=辅助素数筛（Perret-Gentil 模型，或得 p^{1−δ} 但 δ 小）；E=**定义特征残差局部极限——唯一触及 |Z_p| 的 package，无文献完成**；F=order-4 特殊块——**已由我方 Q6360/附录 X 完成**（𝓕 形式 = Package F 的答案；勿外推到全部 r，与 X.2 口径一致）。逆定理例外表 10 项（Apéry 二次伴侣=第一个非平凡 graph 案例，K_q 非 Kummer 字符层不可吸收）。双线性校准：成对 Deligne 天花板 p^{3/4}；shift 放大器单独不破 2/3。全文归档 chatgpt-answers/Q6413.md（摘要）+ Notion 页。
+
+---
+
+## 附录 AA（2026-08-01 续）：codex-max pushforward 验证收官——P.3 审计三分定案 + 与 Q6413 三源汇合 + [GAP-2] 经验地基交付
+
+**AA.1 验收**：8 素数（29..101）全过，纯整数/有限域精确算术，Beauville-IV 模型定位（E_u: y²+(1−2u)xy+u²y = x³），nodal 纤维单独处理。采信。
+
+**AA.2 REFUTED（P.3 的 [未验证] 就地结案为驳斥）**：(1) **rank-18 驳斥**——张量方推前 rank 8、Sym² 推前 rank 6（与 Q6413 rank 账逐项一致），SL₃⋊Z/2⊂GL₁₈ 包随 rank-3 前提一起倒；(2) **Q6375 直接差公式迹层驳斥**——T_G−T_{G_q} 支撑 ~0（8素数中6个恰空、2个仅分歧点），accidental matches ≤2/p——**投影公式坍缩的数值指纹，与 Q6413 的理论论证独立同结论（三源：Q6413 论证 + codex 数值 + cron Z.1 自洽核）**。正确修正项 = χ₂(q(t))·A_p(t)（Apéry 伴侣）非 χ₂·T_G。
+
+**AA.3 VERIFIED**：纤维数公式全 t 全 p；修正拉回 A_p(t)=H²/(1+x)^{p−1} 含非分裂纤维（F_p[√q]，x=(1−t+√q)/16；naive failures 表证明 (1+x)^{p−1} 因子真必需）；Mellin 反演对全部 r 复现 b_r，**端点混叠约定**成文（r≡0 处见 b_0+b_N，需减法修正——字符混叠非归一化错误）；**自扭排除：G 与 G_q 两迹在全部 8 素数 order ≤30 的 t-Kummer 自扭唯平凡**（[GAP-2]/Package B 经验地基交付；qD 定理 + codex-fm 单值性表的第三源）；χ₂(q(t)) 确证非 t 的乘法字符（graph 案例地位坐实）；反演位移唯一 **c=0**（b_{p−1−r}=b_r 的字符空间形式）。
+
+**AA.4 仍 [待验]**（与 Q6413 Package B 对齐）：rank-6/8 推前的完整 Tannakian 群、层级局部单值性、全阶自扭排除、generic Mellin L-度、特征零相容系统比较——即 Package A/B 的正式施工内容。cron 二轮双雄全部收官。
