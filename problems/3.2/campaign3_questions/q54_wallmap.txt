@@ -1,0 +1,252 @@
+[qWALLMAP — production: the definitive campaign wall map document. life5]
+From the ledger sections below, produce WALL_MAP_2026-08-02.md: a single self-contained map with (1) the goal hierarchy (E1 > sigma>1/2 rungs > break-3/2 = any unbounded L); (2) ALL live targets with exact statements and implication arrows ([MESO-S1-2/3], [MESO-TOTAL/PAIR], [MIDPOINT-AC'], (4.8)/(4.9) hatches, [OP-OFF-0]/GRAM, [TR6] horizontal, [SHELL-L2-DIAGONAL], COINC_beta family, [T3-2MINUS], ATR, GPRV, codegree-sensitive certificate); (3) the dead-route certificate list (one line + source each); (4) the theorem inventory pointer + structure-tower status (Morse/monodromy h<=32, all-h residuals CRIT/BG/W_h/A_h with Montes structural-prime death); (5) the empirical stack (five levels, all random-floor); (6) next-battle recommended order with reasons. Mark provenance (life/cron/joint) per item. Plain markdown, precise statements, no hype. LEDGER FOLLOWS:
+## §111 — Campaign 3 opening: COINC 第四靶 (2026-08-01 午后, life)
+
+**新归约 (自推, 已双机数值验证)**: Δ_{r,h} = b_r c_{r+h} − b_{r+h} c_r =
+N_h(r)/∏_{j=1}^h (r+j)³ (Casoratian gap identity, 归纳证明 + 22275/22275 机器验证,
+无奇异对: 窗口内 r+j 永不整除 p)。centered Cauchy (无需 Fourier):
+Σ_{h≤H} C_h ≤ #S/p + √(N_coinc(H) − #S²/p)。
+**[COINC_β]**: N_coinc(p^β) ≤ #S²/p + K·#S ⟹ **F_p ≤ (1+o(1))p^{2−β}** (β∈(1/2,1)),
+β=1 ⟹ E1 常数 (3+2√K)p。任何 β>1/2 破 3/2 纪录。
+Parseval 桥: [COINC@H] = GAP-2D-SQRT 的 L²(t) 平均 ⟹ 严格最弱充分靶。
+
+**战线定位**: (i) 逐对 Weil 死 (有效区 p^{1/4} < 平凡交叉 p^{1/3});
+(ii) 族平均完美相消也只到 √p = 恰好复现 3/2; (iii) Vinh 关联几何 = 3/2 集合级
+泛型阈值, 破 3/2 必须用序列的算术顺序 — 三重独立确认 family-compat 是唯一战场。
+梯子只需单尺度 Δ=p^{2/3} (σ=3/2 靶)。顶部 gap h≥M−√p 免费 (≤p/2)。
+中部 gap 由 block 结构自动豁免 (梯子只见块内小 gap)。
+
+**数值**: K_emp(H=p^.66) = 1.24/1.08/1.08/1.08/1.05 (p=499→7919) 有界递减;
+组件分解 (codex high): diag≡1, zz→0 (随p), refl≡0 (反射是反对称!), same+gen≈随机。
+ΣC_h ≈ 1.4H 线性 (CV 0.08–0.12)。
+
+**产物**: FABLE_SECTION_coinc_target.tex (语法绿, 待审计后并 proof.tex);
+CODEX_COINC_NUMERICS_report.md; campaign3_scripts/coinc_gonogo.py;
+DOCTRINE_SIGMA_STRIKE.md。
+**在飞**: life1–10 九发 (双审计/不可约/族平均/Dwork/换参/ATR/GPRV分层/退火);
+codex max 符号分解 (S1–S5, 含更新恒等式自相似 S4)。
+**审计判决 (Q6550/life8, 已回)**: D1–D4 独立证明成立; 非 alias, 旧仿射-Parseval
+死因不适用; 无逻辑循环。修正: (i) σ-machine 的 Q_p(Δ)=Σbinom(d,2) 是 triple-return,
+≠ΣC_h — 结论 p^{4/3} 走 block-energy 无损 (tex 本来就用 block); (ii) X_{h,h'} 泛型
+genus O(hh') 非 O(h+h'), per-pair 范围实为 p^{1/6} (低亏格坍缩定理若成立才到 p^{1/4});
+(iii) 直言状态: COINC 内嵌零纤维差额 (A−N/p)² 为非负坐标 ⟹ 是"最弱充分靶+拨盘"的
+重述, 不是难度削减。审计最不自信点 = continuant 结构是否强制低亏格坍缩 → 已派
+qLOWGENUS(life8); family 机制(非自治 Möbius 走动混合/block-glueing) → qFAMMECH(life1)。
+**风险登记 (两问)**: (a) 最没信心: [COINC] 与"仿射 Parseval"死亡证书的关系
+未对表原文 (q7/life8 在查); (b) 盲角: β∈(1/2,2/3) 是否存在比 2/3 更便宜的
+中间 rung 未系统扫描 (q1 第4问在查)。
+
+## §112 — 分量定理架构 (Jordan/Goursat, 自推) + 战果汇合 (08-01 下午)
+
+**收获汇总**: (i) Q6547 sheaf 纲领: F_h=FT_ψ(R(f_h)_!), COINC ⟺ (a)几何不可约
+(b)Hom_geom(F_h,F_k)=0 (c)非Tate迹 O(p²H); 新无条件界 |S_h(t)|≤(4h+1)√p (rigid,
+Swan@三阶极点)。weight 预算泛型卡 H⁴p^{3/2} → p^{1/6}, 需 End-collapse。
+(ii) codex-max: 加法律 δ_{h+d}(x)=(x+h+1)³(δ_{h+1}(x)δ_d(x+h)−δ_h(x)δ_{d−1}(x+h+1))
+[U1/U2/F-update, 36/36]; census h≤8: c(h,h)=2 (对角+H_h), c(h,k)=1, 无镜像分量,
+h=1 立方根例外; gcd(C_h,C_k)=1 (分歧值两两不交)。(iii) Q6546: master-variety 死于
+rank 增长, 需 dynamical large sieve → q14 在飞; 跨相关测量协议 → codex 在跑。
+(iv) Q6551: 命名引理 APERY GENERIC-COVER COMPATIBILITY ⟹ COINC@p^{2/3} ⟹ p^{4/3}。
+(v) 方法学教训: fiber-product 点计数波动测的是两纤维序列相关性 (随机对照 std≈1),
+**不测 genus**; 低亏格坍缩未确立 (Sage 精确计算在跑), RH 泛型 O(hk) 大概率成立。
+
+**分量定理架构 (我推的, 待 codex-max 交叉验证)**:
+1. 极点 3-cycle 无条件: N_h(−j)=±((j−1)!)³b_{j−1}((h−j)!)³b_{h−j} ≠ 0 (Apéry 正性)。
+2. 本原性: C_h 不可约 (deg 4h−4) + N_h squarefree ⟹ δ_h 无复合分解
+   (外层 crit 值=小 Galois 稳定集 vs C_h 不可约; x^m 逃逸被 N_h 非幂封死; h=1 例外=1/(x+1)³ 真立方)。
+3. Jordan: 本原+3-cycle ⟹ ⊇A_{3h}; +对换 (C_h squarefree ⟹ 简单 crit) ⟹ =S_{3h}。
+4. Goursat: h≠k: 公共商仅 Z/2, A×A 已传递 ⟹ 不可约; h=k: 2-传递 ⟹ 恰好 对角+H_h。
+⟹ 全部分量控制归结为一元族 C_h 的 Galois 结构。⚠️勘误(08-01晚): 此前写'C_h 不可约 ≤8 已验'不实——codex 只验了 gcd(C_h,C_k)=1 (两两互素), 不可约性从未被验证。Q6579 修正: **C_h(T)=D_h(T²) 恒为偶** (反射反对称的定理级后果), 正确目标 = D_h (deg 2h−2) 不可约 + 根非平方 (充分)。简单 Newton polygon @2/3/5/17 判负; N_h≡R_h³ (mod 3) 结构 + Montes 高阶交叉路线 LIVE ([P1]–[P8] 台账, Q6579)。
+配合窗口 completion (log² 代价) ⟹ 无条件 COINC_β, β≤1/6 (第四靶首个已证实例,
+不改能量指数, 但把靶的形状钉死)。q15(life9) 在写全证明。
+
+**在飞**: life2(q2)/4(qDWORK2)/5(qSELFREC)/7(q6)/10(q9)/3(q14-DLS)/9(q15-THIN),
+life1 疑卡; codex: crosscorr(high)+irred-theorem(max); Sage genus X_{2,3}。
+
+## §113 — 终极范式 [GRAM-OP] + 战线合流 (08-01 傍晚)
+
+Q6565 (weight 预算, 待 q22 敌审): G_h=FT_ψ(P_h[1]) 完整局部类型 (rank 4h−2 lisse on
+G_m; t=0: U_2^{h−1}+χ_3^{±h}, Swan 0; t=∞: break-0 rank 2 + break-1 rank 4h−4 =
+⊕L_ψ(a_x t)⊗χ_2, Swan 4h−4); 窗口−核 = 三条端点线 (1, L_ψ(±c_h t)) 精确序列。
+**(5.3) Hom_geom(P_h,P_k) 维数 = c_{h,k}−1 ⟹ 分量 census ≡ Hom-vanishing** —
+几何线与 sheaf 线正式合流: MON/C_h ⟹ (a)+(b); (c) 仍卡 H⁴p^{3/2} 泛型预算。
+**最终范式 [GRAM-OP]**: ‖Γ‖_op ≤ Cp² (Γ_{h,k}=Σ_t S_hS̄_k, H≤p^{2/3}) ⟹ COINC ⟹
+F≪p^{4/3}; Schur ⟹ 只需 [ROWWISE]: Σ_k|E_{h,k}| ≤ Cp 逐行——与 Q6570 的 SHELL、
+Q6580 的 [SHELL-L2-DIAGONAL] 同山异面; codex crosscorr 在测。
+Q6580: d-平均→COINC 被杀 (对角损失 H); [SHELL-L2-DIAGONAL] T₂≪p^{2+ε}H² 幸存为
+精确条件路线。q21 (Schur-row 最优无条件界, life4) / q22 (局部类型敌审, life2) 在飞。
+cron 并卷包 (σ½+Q6533+Q6564) 转换 subagent 在做。
+
+## §114 — codex-max 分量定理报告 + q18 精确常数 + Q6607 成稿 (08-01 晚)
+
+- **CODEX_IRRED_THEOREM_report.md**: PROVED (all-h, 条件): [CRIT(h)]: s_h≥2h−1 个
+  单重非零临界值 ⟹ δ_h 不可分解 (Ritt 型计数, 修正我 §112 的 naive Jordan 语句)
+  ⟹ GeomMon=S_{3h} ⟹ T1/T3。T2 精确刻画: gcd(C_h*,C_k*)=1。**VERIFIED-16**:
+  两好素数精确证书 (非抽样) ⟹ BG(h) ∀h≤16 + 105 对互素 ⟹ MON/分量二分
+  无条件到 h=16。命名残余: [CRIT-2H] + [BD-ALL]。注意 [CRIT-2H] 远弱于
+  D_h 不可约 (Montes 线的靶可放松)。
+- **q18/Q6587**: 精确常数 = (4h−1)√p (affine H¹_c 维数 4h−1; 4h+1 多计 2;
+  Artin-Schreier 非退化: 极点阶≤3<p)。新无条件定理入库。
+- **Q6607 (q19 ASCII 兜底)**: p^{1/6} 条件定理全文 LaTeX 落盘
+  (campaign3_questions/answers/Q6607_p16_theorem.tex): CENSUS_H ⟹
+  N_coinc ≤ S²/p+4S @ H≤p^{1/6}/4, 诚实 log 完成范围, h=1 例外, 8 项假设清单。
+  与 VERIFIED-16 拼接 ⟹ 无条件版在 H≤16 平凡成立 (小范围), 真无条件 p^{1/6}
+  仍需 [CRIT-2H]+[BD-ALL]。
+- 在飞: q21(Schur/life4)/q22(局部类型敌审/life2)/q23(Montes/life8)/
+  q24(BIGMON/life9)/q25(谱路线/life10)/q6-ATR(life7)/q20(结构敌审/life5)/
+  codex crosscorr; 并卷转换 subagent。
+
+## §115 — row 路线终判 + 生产转段 (08-01 晚)
+
+Q6602 (q21): row/Gram 绝对值链终判——(27/4) 定理方向不匹配 (无锚点转移到 M_3
+joint-value 对象); 最优无条件 row 界连 3/2 都复现不了; 命名 p^{3/2} 阻塞项
+(三种语言: 组合/二阶矩/符号收缩)。与 crosscorr 实测 (dossier §20) 双源一致:
+绝对值路线全死, 幸存 = 符号谱 [GRAM-OP] (Wishart/random-frame 相容)。
+生产转段: q27 (经验定律塔+GRAM-OP 小节成稿, life4) + MESO 追加 (agent) 在做。
+
+## §116 — 最后一墙总攻部署 (08-01 夜)
+
+爸爸令: 攻最后一道墙。墙 = 超临界归一化 S_D/Q_D ≪ N @ D=√N·L (任意无界 L 即破 3/2)。
+双 session 五角度错开: cron=[MIDPOINT-AC]+clock-compression+box复核+NEAR-WALL审;
+life=restart推广到一般fiber(逐基 d_D(r))+primitive分解bootstrap+小d算术
+(codex sol max: CODEX_SPEC_lastwall.md; high: 地基实测 max_r d_D(r)/P_D/小d R_d)。
+cron 回赠 Abel: S_1(Y)≪Y^{2−δ} 全Y ⟹ ΣR_d/d²=O(1) ⟹ 去log; L²因子=窗口耦合层,
+组合内不可破 (Q6623 REFUTED), 需 variance 输入 = 分布式 d_D(r)。
+q22 判决: G_h 核心包 CONFIRMED, GRAM 需投影 3 端点线 + [GOOD-POLE]/[GOOD-CRIT]
+分层 (q28 在证: 窗口化 restart ⟹ Z(H)≪H^{2/3} ⟹ Bad(H)≪H^{5/3} 负担可忽略)。
+cron 第四定理 [NEAR-WALL-3/7]: K_p(H,D)≪HD^{11/7}; H²logH 敌审零缺陷可并卷。
+
+## §117 — 收敛加速 (08-01 深夜)
+
+- 并卷 R2: [Q-H2LOGH] 正文 (CRON_SECTION_h2logh.tex) 入 MERGE-SLOT, proof.tex 171pp
+  零error push (4847ca8)。
+- Q6612 (BIGMON): **G_geom(G_h) ⊆ Sp_{4h−2} PROVED** (反射⟹辛自对偶); 条件定理
+  M₄=3 ⟹ Sp 满 (Larsen+U(2)幂幺); gap1 (2-传递) 已被 CRIT(h) 链闭合; 缺失引理
+  = 四变量加性能量簇分量计数 (q32/life9 在证)。M₄ 实测 2.3–3.6 ≈ 3 ✓。
+- Q6624 (PAIR-FLAT): 二级表示 V_{h,k} 不可约+Haar ⟹ 迹方差 1 与维数无关 (正解);
+  可证常数 O(hk) 固定对; census 对上真 O(√p) 定理; 水平一致性=二级族大筛。
+- Q6613 (谱): [TR4'] ~H³p⁶ 恰够 COINC (吃满余量); 六阶矩首个有真富余
+  (‖O‖≤H^{2/3}p^{3/2} ⟹ 范围到 p^{3/4}!) → q31 六阶矩几何在算; [OP-OFF-0]
+  任意绝对常数即可; λ_max 幂迭代 codex 直测中。
+- cron wallprobe: gauge 异常未实现 (COINC 几何安全); SVD<3; lc 薄族 (等差 h) 无害;
+  C_h 全复根 h≤8; **归约 W_h 不可约 ⟹ full Morse ⟹ [CRIT-2H]** — 分量残差=单变量族。
+- lastwall 地基: 重数 log 级无结构; primitive 主导 (分解不缩); 小d R_d=O(1) 到 log²p。
+
+## §118 — 战局重构: 一阶矩赢面 (08-01 深夜, Q6619)
+
+- **纯组合去 log 判死**: 多尺度 AP 构造 (R_d≤d, Q=Θ(H²logH)) — 去 log 必须算术输入。
+- **新谱机制**: Q_D ≤ (√2/3)·S₁(D)^{3/2} ⟹ **[MESO-S1-2/3]**: S₁≪N^{2/3} ⟹ MESO-PAIR。
+- **赢面最终形态**: S_D ≪ N @ D=√N·L = 一阶矩 meso 尺度省 L² (平凡 1.5NL²)。
+  层级: 行方差⟹线性prefix⟹MESO; 窗口对质量单独不够 (反例在档)。
+- W_h 定义链到手; squarefree+W_h(0)≠0 ⟹ full Morse ⟹ CRIT-2H; codex 证书 h≤32 开跑。
+- Q6632: 窗口 restart Z(H)≤1+(3/2)H^{2/3} PROVED (主文常数顺带 3→3/2); Bad(H)≪H^{5/3}。
+
+## §119 — 分量塔落定 h≤30 (08-01 深夜)
+
+cron: crit2h squarefree+V(0)≠0 三素数证书到 h=30 ⟹ **[CRIT-2H] ⟹ G_h 绝对不可约
+= h≤30 无条件定理**; W_h 不可约机验 h≤7 (all-h 加固靶, 我方 codex h≤32 证书在跑,
+先交叉验证前7)。mesoscopic 残差定稿: [MIDPOINT-AC'] (balanced hinge) 与
+[MESO-S1-2/3] 并列两面; log 不自消 (a=1 中性)。
+
+## §120 — 三角机制验证 + 矩方法收官 (08-02 凌晨)
+
+- q36/Q6651: **三角谱机制 CONFIRMED** — 碰撞图 (顶点=指标, 边=碰撞事件 {r,r+d}):
+  S₁(D)=边数, Q_D=三角形数 (精确, 无 2/3/6 因子); Q_D ≤ (√2/3)S₁^{3/2}, 系数
+  在区间碰撞类内渐近锐。一阶矩的 log/L 因子被抬到 3/2 次幂 (不消)。无条件插平凡
+  S₁ 只给 D³ — 机制价值 = census→meso 的高效转换器。[MESO-S1-2/3] 链全验证。
+- q31/Q6640: [TR6] 水平版有 p^{1/18} 余量 (范围到 p^{3/4}); **fixed-index 矩方法
+  最终死亡证书** (任意矩阶损 H^{q−1}, 完美 PAIR-FLAT 不救); 幸存 = 水平符号
+  闭环相消。
+
+## §121 — 两个新无条件定理: 逐基/逐纤维窗口 2/3 律 (08-02 凌晨, Q6646)
+
+- **[THM-BASE-RETURN-2/3]**: ∀p≥7, ∀正则基 r, ∀窗口 D:
+  d_D(r) ≤ min_Y((3/2)Y(Y−1)+⌊D/(Y+1)⌋) ≪ D^{2/3} (常数 3^{4/3}/2≈2.163)。
+  机制: companion-at-r 解 z_0=0 同样从零出发 — restart 论证的真输入是
+  "齐次零纤维特殊性"而非 b-特殊性; N_h(z)=0 的 U-字典逐基成立。
+- **[THM-PROJECTIVE-FIBER-2/3]**: ∀v∈P¹(F_p), ∀正则区间 J, |J|=H:
+  #{n∈J: π(n)=v} ≪ H^{2/3} — **把主文一般纤维纪录 8p^{3/4} 改进到 ≪p^{2/3}**,
+  且窗口化。推论: T₃ ≤ max·F ≪ p^{13/6} (次于 H2LOGH 的 p²logp, 不立新 T₃ 纪录)。
+- 数值验证: p=499/997/1999 全基零违例 (真值 max 2–3 vs 界 23–46)。
+- meso 直接推论 Q_D ≪ D^{8/3} 仍不及 H2LOGH; 价值 = 行方差层级的第一块
+  无条件砖 + 多尺度递归 (q29) 的 bottom 输入。敌审在派。
+
+## §121-勘误 (08-02 凌晨, cron 查重提示后即核实)
+
+**§121 两条'新定理'是重发现**: cron AR.6 [THM-Q-SIGMA-ONE-THIRD] (Q6521) 早已 banked
+完全相同的窗口重数引理 m_I(v)−1 ≤ L/(K+1)+(3/2)K(K−1) ≤ 4L^{2/3} (任意色 v, 任意
+区间), 推论 max_r d_Δ(r)≤4Δ^{2/3} 与 Q≤3Δ^{8/3} (σ=1/3) 一并在账。其证明 (同色间距
+分短长+deg 界) 比我方 restart 路更简单。我方 §121 声称"3/4→2/3 纪录改进"基于过时
+口径 (老 N_p(c)≤8p^{3/4} 已被 AR.6 取代), 作废。q34 的真实价值 = **同一引理的第二
+证明 (restart/companion 机制, 齐次零纤维输入)** — 机制本身或有推广空间 (restart
+可迭代/可 p-adic 化, 间距分割不能), 以此身份记账。教训: 又一次 derived-index
+staleness (我方 CTX 里的'3/4 纪录'陈旧) — 跨 session 定理台账必须先 grep 对方附录。
+
+§122 追记: q38/Q6657 — [THM-NEAR-WALL-3/7]+W-注入 我方独立复核 CONFIRMED
+(两小修: 端点一基约定; Q6630 笔误, 原式对)。审计矩阵四大导入定理全绿
+(H2LOGH 双审/σ½/NEAR-WALL/三角机制)。q41 成稿在做。
+
+§123 追记: cron Q6659 — [NONCOLLAPSE-ALL|MORSE] 全 h≥2 已证 (纤维度计数)。
+全 h Morse 输入二选一: (a) A_h 本原+C_h sf; (b) W_h 不可约 (单件通吃)。
+证书协议 Protocol A (两素数: q0 不可约+q1 素数p>h−1 循环⟹本原); 警告:
+不可约≠本原/transposition 不够/sf disc 不够。我方 W_h codex=路线(b)。
+
+## §124 — CRIT-2H codex 收卷: 两个全 h 定理 (08-02 凌晨)
+
+CODEX_CRIT2H_report.md: **PROVED ∀h≥2: (1) N_h 在 Q 上 squarefree** (三对角 pencil
++标量局部化+实根单性+非实重根排除); **(2) C_h(0)≠0** (精确常数项恒等式)。
+VERIFIED-32: C_h squarefree+C_h(0)≠0 h≤32; gcd(C_h,C_k)=1 全 465 对。
+[CRIT-2H] 无界 h 仍 OPEN (反射商干净路线已列)。
+⟹ Morse/census/Goursat 塔无条件范围推至 **h≤32**; genus 命题的 squarefree 假设
+转正为定理。全 h 残余 = W_h 不可约 (codex 在跑) 或 A_h 本原 (Protocol A)。
+
+## §125 — 首批满辛群定理 (08-02 凌晨, Q6663)
+
+**PROVED: G_geom(G_2)=Sp_6, G_geom(G_3)=Sp_10, M₄=3 (h=2,3)** — 路线: CRIT(h) 不可约
++ 精确局部惯性分解 + 双局部群本原性 + 低维不可约连通辛子群分类 + T₀³ Jordan 型
+(J_2^{h−1}⊕J_1^{2h}, rank(ν−1)=h−1); 先证 Sp-full, M₄=3 自动。
+⟹ FLAT-LAW/Deligne 等分布在 h=2,3 是定理; 模板的 h-依赖 = 分类步 (q47 推广中)。
+
+## §126 — lastwall max 深攻终判 (08-02 凌晨)
+
+**NO UNBOUNDED L PROVED — 3/2 纪录未破。** 但完成逐寸测绘 (CODEX_LASTWALL_report.md):
+- V7: 一般纤维定理 PROVED (标量化后移动靶问题消失; 与 AR.6 一致); 作为
+  MESO 闭合机制 DEAD (指数不够)。cut-edge 污染完全分类且无害。
+- V8: primitive=首返回 PROVED; 精确分裂/renewal 恒等式 PROVED; 标量 bootstrap
+  =容量不等式复现 DEAD; 反射对称 no-go 词 PROVED — (4.8)/(4.9) 为精确条件逃生口。
+- 小 gap 算术: raw 证书不可能 DEAD; lc-apparition 无根界 DEAD; centered/
+  codegree-敏感替代 CONDITIONAL (需忽略孤立镜像边)。
+- §6: 其余 banked 路线 "以当前转换 DEAD, 未被反驳为定理"。
+战役三收官形态: 墙未破, 但赢面收束到三个命名条件件: (4.8)/(4.9) 逃生口 +
+codegree-敏感证书 + [MESO-S1-2/3] 一阶矩 census (并列 cron [MIDPOINT-AC'])。
+
+## §127 — [SP-FULL-ALL] monodromy 塔闭合 (08-02 凌晨, Q6677)
+
+**PROVED (条件: CRIT(h)+BG(h)+审计局部类型+p>4h−2, 全 h≥2)**: G_geom(G_h)=Sp_{4h−2}。
+路线: wild 多重 1 权 ⟹ rank(H)≥2h−1 ⟹ Testerman–Zalesski Ω₂ 分类 ⟹ 维 4h−2 仅三
+候选 (Sp 自身 / SL₂ on Sym^{4h−3} / h=4 特例 Sp_6-ω₃) ⟹ 幂幺 Jordan 型 J₂^{h−1}
+排除真子候选。配 BG 证书 ⟹ **满辛群+M₄=3+FLAT-LAW+对拟正交 = h≤32 全范围定理**。
+monodromy 塔正式闭合 (全 h 条件悬于 CRIT/BG = 同一单变量族, 与 Morse 塔同源)。
+
+## §128 — λ_max 直测: [OP-OFF-0] 实证通过 (08-02 凌晨, CODEX_LAMBDAMAX_report.md)
+
+三素数 (997/1999/4001, H=p^{2/3}), 隐式 matvec 40 步幂迭代 + 固定步 Lanczos 双审:
+**λ₁/p² ∈ [1.76,2.42] (剥 h=1 立方行后 [1.76,1.90]), 随 p 无增长** — [OP-OFF-0]
+有界情景直接实证; ‖O‖/(√H·p^{3/2}) ∈ [3.04,3.29] 常数 — Wishart/随机框架尺度精确。
+正谱边主导; 立方行 outlier 剥离干净。至此: 终极对象在实证上全绿
+(K_emp/FLAT/PAIR-FLAT/壳统计/λ_max 五层全部随机地板), 只欠证明机制。
+
+## §129 — 战役三终章 (08-02 凌晨)
+
+- **R3 并卷落地: proof.tex 171→193pp 零error 已 push (38ed1ff)** — GRAM/经验定律
+  + zwin 引理包 + NEAR-WALL + 条件 p^{1/6} + 窗口引理第二证明 (framing 按勘误)。
+  三轮共 152→193pp (+41pp 定理内容)。
+- Montes 终判 (Q6668): p=3/17 结构素数路线对 all-h **结构性无能** (局部类型非一致);
+  有限正果 A_h 不可约 h=3,4,5 (Capell 条件)。⟹ 结构塔 all-h 残余无素数捷径。
+- 战役三总结: 能量墙未破 (3/2 立); 结构塔 h≤32 全定理化; 实证栈五层全绿;
+  两侧 all-h/all-scale 残余均收束为"超出现有技术的一致性输入"——同一座山的
+  两个面。下一战役入口三件 + [MESO-S1-2/3]∥[MIDPOINT-AC'] 已在墙图。
+
+§130 终记: W_h 证书 PASS 全 2≤h≤32 (不可约/W(0)≠0/squarefree, 八素数交集法,
+CODEX_WH_CERT_report.md + results.json 可复现) — 路线(b)单件通吃在 h≤32 兑现,
+与 BG 直接证书双保险。今日全部 codex 航班收官 (lastwall/CRIT2H/λmax/W_h/A_h/
+crosscorr/empirics/numerics/symbolic/irred 十班全落)。
