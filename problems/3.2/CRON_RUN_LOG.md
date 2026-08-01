@@ -23,6 +23,12 @@
   DOSSIER_E1_EMPIRICAL.md 交卷(12 统计+死亡证书+盲点榜, 供合写立项);
   crystal 坐标三处独立共振(qM+Q6452+Q6506)入总攻档候选。
   commits: 46768ba/71187e7/cd07657/e9864a1
+- segment 3 start: 2026-08-01 11:2x (handoff 接续; 本 session 为后台 job, TMUX_PANE 空,
+  capture-pane 实证 cron pane 显示本 session 输出后放行 handoff)。
+  接续动作: montes watcher 重装(codex 活, python pipeline 在跑); q19v2/Q6510 线放弃
+  (cron3 failed 无 drop, 按 handoff 条款); 10 cron tab 全空闲 → 6 发 SOL 铺满
+  (Φ构造/[GAP-TIME-FEJER]/[ATR]σ>0/GPRV-Chebotarev方差/双低秩测试设计/[GAP-2D-SQRT]双线性);
+  自跑: Q6515 §8.2 时间低频 FFT 实验(第一优先) + 异常分层实验(Q6511 §9.3 第5条)。
 - 两问 self-audit: (a) 最不自信 = G/p 的 μ_h 用奇偶类经验均值口径(非模型期望),
   若 GPRV 正式陈述用别的中心化, 常数会动(θ=0 结论稳); AM.2 极值律系数 1.2 是
   三点拟合, 指数 log/loglog vs √log 未分辨【已解决: 10⁶ 收官后定量核对——极值统计

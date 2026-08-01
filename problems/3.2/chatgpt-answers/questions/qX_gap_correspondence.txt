@@ -1,0 +1,35 @@
+[P3.2 Apery gap 战役三: 把"gap correspondence 的水平分布定理"做精确——二变量代数对象与单值性路线]
+
+背景: 你方审计(Q6525)判定 3/2 能量定理的块方法有真屏障, 并指出双方盲点:
+"不该把 gap 多项式只当根计数对象; 突破可能需要把族 {N_h} 看成二变量代数对应
+(two-variable algebraic correspondence), 证几何不可约/单值性——现有 degree/resultant
+框架之外的水平分布定理。" 本轮把这句话做成精确数学。
+
+对象(已证结构, 可直接用):
+- b, c: Apery 主/伴随解, (n+1)^3 y[n+1] = P(n) y[n] - n^3 y[n-1], P(x)=34x^3+51x^2+27x+5。
+- pi(n) = [b_n : c_n] in P^1(F_p); 碰撞 pi(r)=pi(r+h) <=> p | N_h(r); deg_r N_h = 3(h-1)。
+- N_h(r) 是固定二元 holonomic 系统的解(Green 函数): h 方向转移递推 + r 方向底部递推
+  N_h(r) = P(r+1) N_{h-1}(r+1) - (r+2)^6 N_{h-2}(r+2)。
+- 偶 h: N_h = (2r+h+1) M_h; 奇 h: N_h = M_h(h<=14 不可约); 17-adic lc(N_h)=Lucas U_h(34,1);
+  mod 3: N_h == R_h^3; 相继互素; 猜想 S: Gal(M_h) = S_{m_h}。
+- Beukers: b_n 有模形式参数化(eta 积, 与 K3/X_0(6) 相关)——如果有用请精确引用并使用。
+
+任务:
+1. 正确的二变量对象是什么? 候选: (i) 曲线族 C_h: {N_h(r)=0} 作为 A^1 的 0 维族, 对 h 取
+   correspondence 拼成曲面 V = {(r,h): N_h(r)=0} —— 但 N_h 不是 h 的多项式, V 不是代数曲面。
+   (ii) 转移矩阵 T_h(r) = prod_{j=1}^{h} A(r+j) 的 entries 作为 (r 的多项式, h 的指标),
+   correspondence = {(x, T_h(r) x)} 图像族。(iii) 二元生成函数/holonomic D-module 的
+   特征簇(characteristic variety)——把 (R)/(E1) 翻译成该 D-module 的什么性质?
+   请裁决哪一个是能承载"水平分布定理"的对象, 并把该定理精确陈述出来
+   (形如: 对应族的几何单值群大 => 根在 h-方向等分布 => GPRV/[ATR] 的哪个弱化版)。
+2. 单值性能证吗? 对象是 F_p 上固定素数的 quenched 族——通常单值性/大 Galois 论证给的是
+   对 p 平均(horizontal/vertical Sato-Tate)的结论。请精确说明: 已知的水平分布定理
+   (Katz 型, 或 Deligne 等分布)在"固定 p, h 增长"设定下还剩什么? 若答案是"什么都不剩",
+   请指出这条路线与 qS(GPRV=Chebotarev 方差)的 GRH 判定是不是同一堵墙的两个名字。
+3. 若 1-2 都到墙: 这条路线独有的可能性——holonomic 结构(两方向递推)是 degree/resultant
+   框架没用到的真新输入。二元 holonomic D-module 的 p-curvature / 特征簇有没有可能
+   给出"根集在 (r,h) 平面不能聚集"型命题(哪怕很弱, 比如任何 Delta x Delta 方块内
+   根数 << Delta^{2-delta})? p-curvature 幂零性(Grothendieck-Katz)对这个具体系统算得出来吗?
+   请给出可机验的第一个计算(我们可以直接跑 sympy/sage)。
+
+最后两问(必答): (a) 你这轮答案里最没把握的是哪一步? (b) 双方共同盲点可能在哪?
