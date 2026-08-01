@@ -1,0 +1,8 @@
+[qSM-AUDIT — hostile audit of the second-moment reduction. life1]
+ROLE: hostile referee. Your job is to BREAK the chain (D1)-(D6) above, or certify each link with a complete proof. Specifically:
+1. Prove or refute (D1) exactly (boundary conventions: which r,h does it hold for; what happens when some r+j = 0 mod p — the wrapped/singular indices; how many pairs (r,h) with h <= H are affected and does discarding them change (D2)-(D4) by more than O(H + #affected)).
+2. Verify (D2),(D3) including the EXACT treatment of the singular pairs from point 1 and of Delta = 0 values (Delta_{r,h} = 0 iff collision — these are IN the coincidence count; check they contribute the K*#S_H allowance and no more, given sum C_h itself is what we bound — is there circularity?).
+3. Verify (D4) Cauchy-Schwarz constants and (D5): is Q_p(D) <= sum_{h<=D} C_h correct for the in-block pair count used by our sigma-ladder proof (blocks of length D, ordered in-block pairs)?
+4. THE KEY QUESTION: state precisely the minimal range of H and the minimal strength of [COINC] needed to reach sigma = 3/2 (F << p^{4/3}), sigma = 5/4, and any sigma > 1 at all. Is there a cheaper rung: e.g. [COINC] only for H <= p^{1/2} combined with the trivial C_h <= 3h for larger gaps — compute exactly what F-exponent that yields.
+5. List every place where the argument could silently lose: wrapping windows, the difference between #X on the algebraic curve vs the integer box [1,M-h]x[1,M-h'] (incomplete sums — this costs a log^2 factor via completion, does it survive?), multiplicity of the value map.
+Deliverable: verdict per link (PROVED/FIXED/BROKEN+why), then the exact minimal [COINC] statement worth attacking.
