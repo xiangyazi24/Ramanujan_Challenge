@@ -383,3 +383,15 @@ b_r ≡ −(1/N)·Σ_{t=0}^{N−1} J(φψ^{t+r}, ψ^{N/2−t})²·J(φψ^{t−r}
 **P.5 有效收缩（双源汇合）**：缺失定理的正典形式 = **双层 Mellin 逆定理**：Σf(t)χ(t)=Σg(t)χ(t) 对多个 χ ⟹ f,g 同层差有限自扭。这与我们支柱(b)"坏对角逆定理"从矩方法独立到达的形状完全汇合（乘法版逆定理，加法 Gowers 刚性的类比，OPEN）。但注意 P.4：即使拿到 exact-vanishing 版逆定理，用到 p|b_r 仍需 mod-𝔭 过桥。行动：follow-up 已派（Tannakian+Larsen–Pink+bilinear 攻击提纲 + 定义特征转移的可行性 + Cartier 化身对接 [GAP-CARTIER] 2A·U_p）。全文归档 chatgpt-answers/Q6375.md。
 
 **P.6 派发台账**：q16=Q6399(cron10, 首强度+α<1/2 校准)、q17=Q6400(cron6, 反sunflower+Lucas校准)——均 processing，Q6399 投递超时待 git-drop。⚠️ 路由复用了 q14/q11 的 tab（bridge 视 FAIL 为空位）,若原答案在生成中有被打断风险；q14 内容已被 qpv 负结果+J.3 覆盖大半，可接受。|Z_p| 直扫统计（CRON_zp_stats.py, p<30000）进行中：中期 mean|Z_p|≈1.01、max=8@p=3727 起未破（vs p^{1/2}≈158）——经验 α=0 越来越硬。
+
+---
+
+## 附录 Q（2026-08-01 续）：|Z_p| 直扫定案（p<30000 全量）——偶性定律 + Poisson-对模型 + 中点素数 {11, 3137}；跨窗口回执与死案更新
+
+**Q.1 最终统计（CRON_zp_stats.py，3242 素数 7≤p<30000）**：mean|Z_p| = 1.0185；分布 {0:1933, 1:2, 2:1008, 4:260, 6:34, 8:5}；记录 (7,0),(11,1),(17,2),(181,4),(379,6),(3727,8)——记录素数十倍间隔，增长 ~log p 级；max=8 对比 p^{1/2}=61、p^{2/3}=240。**经验 α=0 定案**（已证 2/3、k=2 需 <1/2、真值 0——证明空间巨大）。Σ|Z|²/Σ|Z| = 2.95 有界，方差对 GARQI 无害。
+
+**Q.2 结构发现（本扫描主产出）**：**|Z_p| 除恰两个素数外全偶**。机制 = 反射 r↦p−1−r 配对（唯一不动点 = 中点 (p−1)/2）+ 中点消失稀有。两个奇素数 = 中点零素数 **{11, 3137}**（binomial 定义式独立复核 ✓✓，与递推法交叉验证）——即 Apéry 非常规素数（附录 L 射线 m=2 的 nonordinary locus），2/3242 的稀疏度与 Lang–Trotter 预期同阶。**经验定律：|Z_p| = 2·Poisson(λ̂=0.509) + 中点指示**，逐箱拟合比 0.993/1.017/1.030/0.793/0.916，χ²=2.47（df=3, p≈0.48）。⟹ [GAP-LT-MELLIN]/qI 的实证模型精确化：对计数 Poisson(1/2)，非对部分纯 Lang–Trotter。
+
+**Q.3 跨窗口回执入账（life §49–52）**：(i) rank 裁决：Franel 椭圆系统 rank 2（Beauville-IV 定案），Apéry F 三阶 = Sym²(D_τ) ⟹ rank 3 属 Apéry/伴随对象——Q6375 的 rank-3 挂对了对象，"₃F₂(1/3,2/3,1)"字面识别 [SUSPECT]（四奇点 vs 超几何三奇点），待 q18 回核；(ii) **qF2/Q6394 descent 定理双源闭合**：T(r) = G_m 上整相容秩-3 导手≤11 系统的 Mellin 迹，与 codex-fm 𝒢_T cond=11 独立同数——b_r 最强非循环陈述成立；(iii) [GAP-DCM] 改写为 Lang–Trotter 形式 **[GAP-LT-MELLIN]**（qI 在飞：Galois 轨道乘积 σ_a(M(r))=M(ar) + Parseval 二阶矩 + BGKS 值分布）；(iv) qE2/Q6393：HGM ordinarity 重构**正确但恒真**（p|b_r = 秩-3 中间延拓在平衡 conifold λ=1 非常规性，但字符空间零维长度 p−1，Hasse 截面低次代表=Apéry 和自身），**[DEAD: HGM-degree 捷径]**——handoff 活口 qE 关闭。计数前沿唯一 = [GAP-LT-MELLIN]。
+
+**Q.4 调度教训（bridge 堆叠坑，写给下一班）**：bridge 把投递超时(ALL CONNECTORS FAILED)当空位 ⟹ 自动路由把 q14(Q6360)→q16(Q6399)→q18(Q6401) 三连堆进同一 cron10 tab——同 tab 新消息会打断上一个生成，q14/q16 大概率被顶掉。**对策**：FAIL 后该 tab 不是空位；后续派题用 ASK_AFFINITY=<channel> 钉到别的 tab；等 cron10 落地哪个算哪个，丢的重派。当前在途：cron10(最后收到 q18)、cron6(q17=Q6400)、q10 池A待 in-chat 回收、Q6322 待归档。
