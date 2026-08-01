@@ -44,24 +44,46 @@ def test_box(lx, ux, ly, uy, start=0, verbose=False):
     return all(all(row) for row in bounds)
 
 
+def test_az_box(la, ua, lz, uz, start=0, verbose=False):
+    """Use X=5/4+A/h, Y=2+(8/3)A/h+Z/h^2, h=n+2."""
+    h = s.Poly(n + 2, n, domain=s.QQ)
+    hp = s.Poly(n + 3, n, domain=s.QQ)
+    rows = []
+    for A in (la, ua):
+        for Z in (lz, uz):
+            xnum = s.Rational(5, 4)*h + A
+            ynum = 2*h*h + s.Rational(8, 3)*A*h + Z
+            d = h**4*PP[0][0] - h*xnum*PP[1][0] - ynum*PP[2][0]
+            e1 = -h**4*PP[0][1] + h*xnum*PP[1][1] + ynum*PP[2][1]
+            e2 = -h**4*PP[0][2] + h*xnum*PP[1][2] + ynum*PP[2][2]
+            na = hp**3*e1 - s.Rational(5, 4)*hp*d
+            nz = hp**2*(hp**2*(e2-s.Rational(8, 3)*e1)
+                        + s.Rational(4, 3)*d)
+            tests = [d, na-la*d, ua*d-na, nz-lz*d, uz*d-nz]
+            flags = [eventually_nonnegative(t, start) for t in tests]
+            rows.append(flags)
+            if verbose:
+                print("AZ", A, Z, flags)
+                for t, ok in zip(tests, flags):
+                    if not ok:
+                        print(" bad", s.factor(t.shift(start).as_expr()))
+    return all(all(row) for row in rows)
+
+
 candidates_x = [s.Rational(5,4), s.Rational(6,5), s.Rational(19,16),
                 s.Rational(25,16), s.Rational(8,5), s.Rational(5,3)]
 candidates_y = [s.Rational(2), s.Rational(19,10), s.Rational(15,7),
                 s.Rational(13,6), s.Rational(11,5), s.Rational(9,4)]
 
-for start in (0, 1, 2, 4, 8, 16, 32):
-    for lx in candidates_x[:3]:
-        for ux in candidates_x[3:]:
-            if lx >= ux:
-                continue
-            for ly in candidates_y[:2]:
-                for uy in candidates_y[2:]:
-                    if ly >= uy:
-                        continue
-                    if test_box(lx, ux, ly, uy, start):
-                        print("FOUND", start, lx, ux, ly, uy, flush=True)
+for start in (2, 3, 4, 8, 16):
+    for la in (s.Rational(1, 6), s.Rational(3, 16), s.Rational(9, 50)):
+        for ua in (s.Rational(7, 32), s.Rational(1, 4), s.Rational(1, 3)):
+            for lz in (-s.Rational(3, 5), -s.Rational(1, 2), -s.Rational(9, 20)):
+                for uz in (-s.Rational(1, 4), -s.Rational(1, 5), 0):
+                    if test_az_box(la, ua, lz, uz, start):
+                        print("FOUND AZ", start, la, ua, lz, uz, flush=True)
                         raise SystemExit
 
-print("candidate diagnostic", flush=True)
-test_box(s.Rational(5,4), s.Rational(25,16), s.Rational(2),
-         s.Rational(15,7), 0, True)
+print("AZ candidate diagnostic", flush=True)
+test_az_box(s.Rational(3,16), s.Rational(7,32), -s.Rational(1,2),
+            -s.Rational(1,4), 3, True)

@@ -869,7 +869,27 @@ PYTHONPYCACHEPREFIX=/tmp/codex-breakwall2-pycache \
   python3 -u CRON_breakwall2_verify.py
 ```
 
-The final transcript and SHA-256 are inserted after the final clean run.
+SHA-256 of the verifier:
+
+```text
+71e3dd7c02e7c931d3d83265749fb509bf41d308a6560a5ca1162589a5684726  CRON_breakwall2_verify.py
+```
+
+Output:
+
+```text
+SYMBOLIC_GATES PASS renewal=20 reflection=9 gap_renewal=33 backward=28 shifted_gcd=33 cross_gcd=36 cross_resultant=15 cut_poles=5
+LORENTZ_FINITE_GATE PASS profiles=19530
+MIRROR_WORD_GATE PASS N=200000 D=2000 d=1999 R_d=5994 Q_D=0 energy=423974 stripped2=35928036 Z2/N=35928036/200000 Wmu*H/N=0.084727 W1model_S=161000 W1model_Wmu*H/N=2.877057
+RESTART_COUNTEREXAMPLE PASS p=461 h=44 R_h=11 continuation=0 neighbors=0,0 R_2h=1
+FINITE_FIELD_GATES
+p N L D T0 S maxR W2 Z2 E E^2*T0/N^2 W32sq D*W32sq/N^3 B sumMu2 Wmu WmuH/N maxR*D/N spike_old/excess/lorentz W1model_S/fails_excess/fails_lorentz
+1009 1008 2 64 4 90 5 135 50 2 16/1016064 6075 388800/1024192512 0 37 0 0.000000000 320/1008 4225/True/True 992/True/True partners=90
+3001 3000 3 165 5 250 8 360 98 5 125/9000000 43200 7128000/27000000000 0 126 0 0.000000000 1320/3000 27225/True/True 2952/True/True partners=250
+10007 10006 3 301 6 475 8 747 147 4 96/100120036 186003 55986903/1001801080216 1 244 0 0.000000000 2408/10006 90601/True/True 9900/True/True partners=474
+FINITE_FIELD_GATES PASS
+ALL_BREAKWALL2_GATES_PASS
+```
 
 ## 10. Terminal status
 
