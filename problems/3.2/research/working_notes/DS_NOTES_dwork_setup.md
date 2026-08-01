@@ -32,3 +32,17 @@ executed. The recipe is in Q6153 (Cartier formula, precision N=2 then N=4) and Q
   Dwork/Frobenius eigenvector structure.
 - Exponential sums |Σ_{m<M} e_11(b_m)| = 2.73, 6.06, 7.79, 13.99 (M=11,22,33,55) ~ √M — the
   random-walk scale (what the Dwork framework must explain, not sheaf-cancellation).
+
+## Griffiths-Dwork Cartier matrix (p=11) — DS computed
+- **CT(C(e₀)) = b_m EXACTLY** (m=0..25, no mismatches) — the Cartier operator on the e₀ period
+  reproduces the Apéry numbers.
+- **Cartier matrix on the period vectors**: M = [[1,0,0],[0,1,0],[0,1,0]] (mod 11), verified
+  over m=1..30 with ZERO mismatches. Meaning: C(e₀ period)=e₀, C(e₁ period)=e₁,
+  C(e₂ period)=e₁ (the e₂ correction's Cartier CT cancels into e₁).
+- Interpretation: the Cartier/Frobenius action on the Apéry periods is the IDENTITY (+ a
+  collapse) — Frobenius-simple, slopes 0, bounded. This is the "bounded slopes/dimensions"
+  structure Q6276 asked about, at the PERIOD level. (The full cohomology Cartier on the forms
+  mod exact-forms is beyond this CT-level; but the period level is what controls the Apéry
+  sequence / the exponential sums' target values.)
+- The decisive identity Tr(Frob|H_Dwork)=Σe_p(b_m) still needs the p-adic overconvergent
+  machinery (splitting function + Banach space + finite-dim extraction) — the next heavy step.
