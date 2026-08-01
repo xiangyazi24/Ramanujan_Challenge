@@ -1,0 +1,217 @@
+% SUMMARY AND AUDIT TRAIL (campaign 3, 2026-08-01)
+% Standalone subsection, drop-in after the three targets of
+% FABLE_SECTION_orbit_energy.tex.  No new packages.
+% Proved here, complete proofs: Casoratian gap identity (machine-checked
+% 1500/1500 across p in {499,997,1999,4001,7919}); centered-count inequality;
+% the conditional energy theorem [COINC_beta] => F_p <= (1+o(1)) p^{2-beta};
+% the Parseval bridge showing COINC is the L^2(t)-average of GAP-2D-SQRT,
+% hence the WEAKEST member of the sufficient-target family.
+% Open and labelled conjectural: [COINC_beta] itself for every beta > 1/2.
+% Numerical status points to the campaign dossier; no empirical assertion
+% is used in any proof.
+
+\subsection{A fourth target: coincidence second moments of gap Casoratians}
+\label{subsec:coinc-target}
+
+The three targets above either control every additive character twist
+(GAP--2D--SQRT), the full variance of the family $\{C_h\}$ (GPRV), or the
+triple returns (ATR).  This subsection isolates a fourth target, strictly
+weaker than GAP--2D--SQRT at the same scale, carrying a scale dial
+$\beta$: any value $\beta>\tfrac12$ already lowers the unconditional
+exponent $3/2$ of Theorem~\ref{thm:oe-energy-three-halves}, and $\beta=1$
+recovers E1 with an explicit constant.
+
+For $1\le h\le M-1$ and $1\le r\le M-h$ put
+\[
+ \Delta_{r,h}=b_rc_{r+h}-b_{r+h}c_r\in\mathbb F_p ,
+\]
+the gap Casoratian of the pair of solutions at distance $h$.
+
+\begin{lemma}[Casoratian gap identity]\label{lem:coinc-gap-identity}
+For every $1\le h\le M-1$ and $1\le r\le M-h$,
+\begin{equation}\label{eq:coinc-gap-identity}
+ \boxed{\;\Delta_{r,h}
+ =\frac{N_h(r)}{\prod_{j=1}^{h}(r+j)^3}\;}
+\end{equation}
+in $\mathbb F_p$; every factor $r+j$ in the range $1\le j\le h$ satisfies
+$2\le r+j\le M<p$ and is invertible.  In particular, on the nonwrapping
+window, $\Delta_{r,h}=0$ if and only if $\pi(r)=\pi(r+h)$, and
+$\#\{r:\Delta_{r,h}=0\}=C_h$.
+\end{lemma}
+
+\begin{proof}
+Fix $r$ and set $y_n=b_rc_n-c_rb_n$, a solution of the
+recurrence~\eqref{eq:oe-recurrence} in $n$, with $y_r=0$ and, by
+Lemma~\ref{lem:oe-casoratian},
+$y_{r+1}=b_rc_{r+1}-c_rb_{r+1}=-W_{r+1}=1/(r+1)^3$.
+Let $\hat y$ be the normalized restart solution, $\hat y_r=0$,
+$\hat y_{r+1}=1$, so $y_n=(r+1)^{-3}\hat y_n$ by linearity.  We claim
+\begin{equation}\label{eq:coinc-normalized-restart}
+ \hat y_{r+h}=\frac{N_h(r)}{\prod_{j=2}^{h}(r+j)^3}\qquad(r+h\le M),
+\end{equation}
+which
+gives~\eqref{eq:coinc-gap-identity} after multiplying by $(r+1)^{-3}$.
+For $h=1$, both sides are $1=N_1$.  For $h=2$, the recurrence at $n=r+1$
+reads $(r+2)^3\hat y_{r+2}=P(r+1)\hat y_{r+1}-(r+1)^3\hat y_r=P(r+1)=N_2(r)$.
+Assume~\eqref{eq:coinc-normalized-restart} for $h-1$ and $h$.  The
+recurrence at $n=r+h$, multiplied by $\prod_{j=2}^{h}(r+j)^3$, reads
+\[
+ (r+h+1)^3\!\!\prod_{j=2}^{h}(r+j)^3\,\hat y_{r+h+1}
+ =P(r+h)N_h(r)-(r+h)^6N_{h-1}(r)
+ =N_{h+1}(r),
+\]
+by the gap recurrence of Lemma~\ref{lem:gap-poly}; this
+is~\eqref{eq:coinc-normalized-restart} for $h+1$.  The zero
+characterization is the dictionary~\eqref{eq:oe-dictionary} together with
+the invertibility of the product.
+\end{proof}
+
+For $1\le H\le M-1$ define the index set and the value counts
+\[
+ \mathcal S_H=\{(r,h):1\le h\le H,\ 1\le r\le M-h\},
+ \qquad
+ n_H(a)=\#\{(r,h)\in\mathcal S_H:\Delta_{r,h}=a\},
+\]
+with $S:=\#\mathcal S_H=\sum_{h\le H}(M-h)$, and the coincidence second
+moment
+\[
+ \mathcal N(H)=\sum_{a\in\mathbb F_p}n_H(a)^2
+ =\#\{\bigl((r,h),(r',h')\bigr)\in\mathcal S_H^2:
+ \Delta_{r,h}=\Delta_{r',h'}\}.
+\]
+
+\begin{conjecture}[coincidence target, $\mathrm{COINC}_\beta$]
+\label{conj:coinc-beta}
+Let $\tfrac12<\beta\le1$.  There is an absolute constant $K$ such that,
+for every prime $p\ge7$, with $H=\lceil p^\beta\rceil\wedge(M-1)$,
+\begin{equation}\label{eq:coinc-hypothesis}
+ \mathcal N(H)\le\frac{S^2}{p}+K\,S .
+\end{equation}
+This is open for every $\beta>\tfrac12$; it asserts that the values
+$\Delta_{r,h}$ equidistribute in second moment at scale $H$.
+\end{conjecture}
+
+\begin{lemma}[centered-count inequality]\label{lem:coinc-centered}
+Unconditionally, for every $1\le H\le M-1$,
+\begin{equation}\label{eq:coinc-centered}
+ \sum_{h=1}^{H}C_h\;\le\;\frac Sp+\sqrt{\mathcal N(H)-\frac{S^2}p\,}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:coinc-gap-identity}, $\sum_{h\le H}C_h=n_H(0)$.  Since
+$\sum_an_H(a)=S$,
+\[
+ \Bigl(n_H(0)-\frac Sp\Bigr)^2
+ \le\sum_{a\in\mathbb F_p}\Bigl(n_H(a)-\frac Sp\Bigr)^2
+ =\mathcal N(H)-\frac{S^2}p .
+\]
+\end{proof}
+
+\begin{theorem}[conditional energy exponents from coincidence counting]
+\label{thm:coinc-energy}
+Assume Conjecture~\ref{conj:coinc-beta} for one value
+$\tfrac12<\beta\le1$ with constant $K$.  Then for $\tfrac12<\beta<1$,
+\[
+ \mathcal F_p\le(1+o(1))\,p^{2-\beta},
+\]
+and for $\beta=1$,
+\[
+ \mathcal F_p\le(3+2\sqrt K)\,p ,
+\]
+i.e.\ E1 holds.  In particular any single $\beta>\tfrac12$ strictly
+improves the unconditional exponent $3/2$ of
+Theorem~\ref{thm:oe-energy-three-halves}.
+\end{theorem}
+
+\begin{proof}
+Let $H=\lceil p^\beta\rceil\wedge(M-1)$.
+By Lemma~\ref{lem:coinc-centered} and~\eqref{eq:coinc-hypothesis},
+using $S\le MH$,
+\begin{equation}\label{eq:coinc-linear-sum}
+ \sum_{h\le H}C_h\le\frac{MH}p+\sqrt{K\,MH}\le H+\sqrt{K\,pH}.
+\end{equation}
+Partition $I_p$ into $\lceil M/(H+1)\rceil$ consecutive blocks of length
+at most $H+1$; the proof of Theorem~\ref{thm:oe-energy-three-halves},
+verbatim with block length $H+1$ in place of $H$, gives
+\[
+ \mathcal F_p\le
+ \Bigl\lceil\frac M{H+1}\Bigr\rceil
+ \Bigl(M+2\sum_{h=1}^{H}C_h\Bigr)
+ \le\Bigl(\frac MH+1\Bigr)
+ \Bigl(M+2H+2\sqrt{KpH}\Bigr).
+\]
+For $\tfrac12<\beta<1$ the right side is
+$p^{2-\beta}\bigl(1+2\sqrt K\,p^{(\beta-1)/2}+O(p^{\beta-1}+p^{-\beta}+p^{2\beta-2})\bigr)
+=(1+o(1))p^{2-\beta}$, since every correction exponent is negative for
+$\tfrac12<\beta<1$.  For $\beta=1$ one block suffices ($H=M-1$):
+$\mathcal F_p\le M+2\sum_{h\le M-1}C_h\le M+2(M-1)+2\sqrt{K\,p\,(M-1)}
+\le(3+2\sqrt K)p$.
+\end{proof}
+
+\begin{proposition}[position in the target hierarchy]
+\label{prop:coinc-position}
+Fix a scale $1\le H\le p^{1-\delta}$, $\delta>0$.  Then, with $B_t(H)$ as
+in Conjecture~\ref{conj:oe-2D-sqrt} extended to the index set
+$\mathcal S_H$,
+\begin{equation}\label{eq:coinc-parseval}
+ \sum_{t\ne0}\bigl|B_t(H)\bigr|^2
+ =p\,\mathcal N(H)-S^2 .
+\end{equation}
+Consequently the square-root cancellation
+$|B_t(H)|\le C(pH)^{1/2}p^{\varepsilon}$ for \emph{every} $t\ne0$
+(GAP--2D--SQRT at scale $H$) implies~\eqref{eq:coinc-hypothesis} with
+$K=C^2p^{2\varepsilon}(1+o(1))$: the coincidence target is precisely the
+$L^2$-average over $t$ of GAP--2D--SQRT, and is therefore the weakest
+member of the sufficient family at its scale.  It is not comparable to
+ATR or GPRV in either direction by any argument recorded in this paper.
+\end{proposition}
+
+\begin{proof}
+Orthogonality of additive characters gives
+$\sum_{t\in\mathbb F_p}|B_t|^2=p\sum_an_H(a)^2=p\,\mathcal N(H)$, and the
+$t=0$ term is $S^2$.  For the implication, sum the pointwise bound over
+$t\ne0$: $p\,\mathcal N(H)-S^2\le(p-1)\,C^2pH\,p^{2\varepsilon}$, and
+$S=\sum_{h\le H}(M-h)\ge H(M-H)=(1-o(1))\,pH$ for $H\le p^{1-\delta}$,
+so $\mathcal N(H)-S^2/p\le C^2p^{2\varepsilon}(1+o(1))\,S$.
+\end{proof}
+
+\begin{remark}[why $\beta>\tfrac12$ is the battle line]
+\label{rem:coinc-battle-line}
+For $H\le p^{1/2}$ the bound~\eqref{eq:coinc-linear-sum} gives
+$\sum_{h\le H}C_h\ll(pH)^{1/2}$, which through the block argument
+reproduces the exponent $3/2$ and nothing better; this is the exact
+content of the crossover in Theorem~\ref{thm:coinc-energy}.  On the other
+side, for $H>p^{1/2}$ the degrees $3(h-1)$ of the gap polynomials exceed
+$\sqrt p$, so pointwise Weil bounds for the fibers of
+$\Delta_{\cdot,h}$ carry error terms at least as large as the main terms:
+every route through fixed-$h$ algebraic geometry is dead in the regime
+where Conjecture~\ref{conj:coinc-beta} has content.  This is one more
+independent arrival at the family-compatibility frontier of
+Remark~\ref{rem:oe-chebotarev-limitation}.
+\end{remark}
+
+\begin{remark}[the exponent $3/2$ is the set-genericity threshold]
+\label{rem:coinc-vinh}
+The pairs $(n,m)$ with $\pi(n)=\pi(m)$ are exactly the incidences between
+the point set $\{v_n\}$ and the line set $\{\mathrm{span}(v_m)\}$ in
+$\mathbb F_p^2$, and Vinh's finite-field incidence theorem gives, for
+\emph{any} $M$ points and $M$ lines, at most $M^2/p+p^{1/2}M$ incidences
+--- with $M\sim p$ this is again $O(p^{3/2})$.  Thus
+Theorem~\ref{thm:oe-energy-three-halves} attains precisely the bound that
+holds for a set-generic configuration, and \emph{no} argument that uses
+the orbit only as a set of directions can pass $3/2$: E1 and every
+$\beta>\tfrac12$ instance of Conjecture~\ref{conj:coinc-beta} are
+assertions about the arithmetic ordering of the sequence
+$n\mapsto v_n$, invisible to incidence geometry.
+\end{remark}
+
+\begin{remark}[numerical status only]\label{rem:coinc-empirical}
+For $p\in\{499,997,1999,4001,7919\}$ and $H=\lceil p^{0.66}\rceil$, the
+measured value of $\bigl(\mathcal N(H)-S^2/p\bigr)/S$ is
+$1.24,\,1.08,\,1.08,\,1.08,\,1.05$: bounded and slowly decreasing in $p$,
+consistent with Conjecture~\ref{conj:coinc-beta} at $\beta=2/3$ with
+$K$ close to $1$.  Identity~\eqref{eq:coinc-gap-identity} was verified
+exactly at $300$ random pairs $(r,h)$ for each of the five primes.  These
+are numerical data, not theorems, and none is used above.
+\end{remark}
