@@ -168,6 +168,42 @@ def check_explicit_elliptic_family() -> None:
     assert sp.limit(c4_at_infinity, v, 0) != 0
     print("VERIFIED Delta(E_u)=u^6(1+u)^2(1-8u) and fiber types I6,I2,I1,I3")
 
+    # A projective linear change identifies the toric Franel cubic with E_u.
+    X, Y, Z, x, y, z = sp.symbols("X Y Z x y z")
+    cubic_product = (X + Y) * (Y + Z) * (Z + X)
+    for exponent in range(9):
+        coefficient = sp.Poly(cubic_product**exponent, X, Y, Z).coeff_monomial(
+            X**exponent * Y**exponent * Z**exponent
+        )
+        assert coefficient == franel(exponent)
+    for prime in primes_up_to(37):
+        if prime >= 5:
+            assert all(
+                comb(prime - 1, exponent) * (-1) ** exponent % prime == 1
+                for exponent in range(prime)
+            )
+    print("VERIFIED toric cubic Hasse coefficient equals H_p by constant terms")
+
+    franel_cubic = X * Y * Z - u * cubic_product
+    weierstrass_cubic = y**2 * z + (1 - 2 * u) * x * y * z + u**2 * y * z**2 - x**3
+    forward = {
+        x: u**2 * (X + Y + Z),
+        y: u**2 * (u * X - Y + u * Z),
+        z: u * (X + Y) - Z,
+    }
+    inverse = {
+        X: (1 - u) * x + y + u**2 * z,
+        Y: u * x - y,
+        Z: u * x - u**2 * z,
+    }
+    assert sp.expand(
+        weierstrass_cubic.subs(forward) - u**4 * (u + 1) ** 2 * franel_cubic
+    ) == 0
+    assert sp.expand(
+        franel_cubic.subs(inverse) - u**2 * (u + 1) * weierstrass_cubic
+    ) == 0
+    print("VERIFIED projective linear isomorphism from the toric Franel cubic to E_u")
+
     checked = 0
     for prime in primes_up_to(101):
         if prime < 5:
