@@ -155,17 +155,17 @@
 
 ### 收割看板 (在飞, 落地即勾)
 - [ ] life2 q20-qAUDIT3 (新 tex 结构定理群敌审) — 提交失败一次, 排队重发
-- [ ] life3 q19-TEXPROD (p^{1/6} 条件定理成稿 LaTeX)
-- [ ] life4 q12-qDWORK2 (Hom 分类 + weight 预算; FLAT-LAW 是其情景(ii)证据)
-- [ ] life5 q17-qSHELL2 (shell 的 d-二阶矩几何 + 例外集容忍版链条)
-- [ ] life7 q6-ATR 重发 (max-fiber Hölder 无条件三重返回界)
+- [x] q19→Q6607 (ASCII兜底) p^{1/6} 定理全文落盘 (Q6607_p16_theorem.tex, 待审后入卷)
+- [x] q12→Q6565 GRAM-OP 终极形式 + 局部类型 (经 q22 修正)
+- [x] q17→Q6580 [SHELL-L2-DIAGONAL] 幸存, d-平均→COINC 判死
+- [x] q6→Q6585 T3 门槛校准: 任何 p^{2-δ} 即新定理, 现 p²logp 差一log
 - [ ] life8 q16-qCH-IRRED (C_h 不可约: Newton polygon/Eisenstein 攻坚)
-- [ ] life9 q18-VERIFY 重发 ((4h+1)√p 常数复核; 我方数值: 实际平坦 ~√(2lnp), 界未触及)
-- [ ] life10 q9-ANN 重发 (退火→淬火转移)
-- [ ] codex high CODEX_CROSSCORR_report.md (A_d/V_p 实测 = SHELL 实证)
-- [ ] codex max CODEX_IRRED_THEOREM_report.md (monodromy 全对称群路线 + census→16)
+- [x] q18→Q6587 精确常数 (4h−1)√p 定格
+- [x] q9→Q6586 退火转移判死 (3步起维度阻断), thin-progression 立靶
+- [x] crosscorr: PAIR-FLAT 新律, L1/Schur 实证否决, 符号壳好
+- [x] irred-theorem: CRIT(h) 判据 PROVED, VERIFIED-16, [CRIT-2H]/[BD-ALL] 命名
 - [x] life1 弃用 (tab 卡死, q1/qFAMMECH/q18 三问被吞; q1 内容已由 Q6550 覆盖,
       qFAMMECH 由 Q6570 覆盖, q18 已改派 life9)
-- [ ] 并卷任务 (cron b448f7a): σ½定理+Q6533四件+Q6564三件 → FABLE_SECTION_sigma_half.tex
-      (subagent 转换中; AT.3 两修正硬性; MESO-QRLL 勿并卷) → proof.tex build 门 → commit
-- [ ] 并卷追加 (cron AS.5 撤回勿并卷): [MESO] 套件 ([MESO-TOTAL]<[MESO-PAIR]+little-o+固定幂+sharpness) → 转换 worker 完成后 SendMessage 追加
+- [x] 并卷任务完成: σ½+Q6533四件+Q6564三件+MESO套件 → sigma_half.tex + coinc_target.tex
+      → proof.tex 152→170pp 零error, rebase 43 commits 零冲突, push f72d106
+- [x] MESO 套件已入卷 (同上)
