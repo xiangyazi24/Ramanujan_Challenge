@@ -1014,3 +1014,14 @@ E_2(w) = 1 + 5cot²(πw)          = const·(q²+3q+1)/(q−1)²             （�
 ```
 ——把"自动"因子 A_a（=banked 相邻结式律）与真正的算术内容 R_{a,r} 分离。相邻情形有**精确乘积公式** |Res(N_h,N_{h+1})| = ∏_{j≤h−1}((j!)³b_j)^6，渐近 **9h²log h + (3log λ₊ − 27/2)h² + …**（与我方实测 9.7/43.7/115.5 相容）。⟹ [RES-DIV-STAT] 的正确形态是关于 **T_{a,d} mod p** 的稀疏性/等分布，不是原始 Res。
 (3) **主墙状态（收工定格）**：三条 angle 全部有书面终判——angle 1（对称性）判死（AT.69）、angle 2（格刚性）判死（本条）、angle 3 换对象后仍开放（[RES-DIV-STAT] on T_{a,d}）；加上 [ARITH-LAG-SHEAF]（算术谱）。差距仍是 **N^{o(1)} = L·√log N**。
+
+**AT.75 [CRIT-2H] 收工定格（Q6895/Q6898/Q6891 消化）——分析归约已完成，只剩两个"有限、与 h 无关"的认证计算**：(1) **结构歧义已被 anatomy 消除**：唯一渐近危险的比较就是**中心相邻的 inner 有限临界支对**（奇 h 折叠步长 1/h、偶 h 对应的中心非镜像步长 2/h）⟹ D\* 可以通过**一个耦合的局部对观测量**定义，不再需要全局双支包络（这正是 AT.66 那条"两支需两图卡"障碍的解除方式：外支与极小无关）。(2) **剩余工作的精确状态（Q6898 原话口径）**：
+```
+far-band coercivity : 已归约为 ONE finite, h-INDEPENDENT Arb computation
+local D_*           : 已归约为 ONE finite mixed-parameter Arb computation
+numerical c_F       : 尚未认证
+numerical D_*       : 尚未认证
+numerical h0        : 未定
+all-h [CRIT-2H]     : 尚未证明
+```
+⟹ **分析侧归约已完成**：不再有"缺定理"，只剩**两个有限的、与 h 无关的区间算术计算**（正是 codex/Arb 最擅长的活）。(3) **顺带（Q6891）**：renewal 恒等式**消掉了直接结式的奇异性**——T_{a,g}=Res_X(N_a(X), N_g(X+a)) 由精确加法律给出，与 AT.74 的移位饱和对象一致（两票会师）。**segment 6 的 [CRIT-2H] 立项书因此简化为一条工程任务**：写 Arb 程序算 c_F 与 D\*（两者都 h-无关），得 h₀，与 h≤60 证书拼接。

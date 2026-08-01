@@ -7,6 +7,7 @@ from sage.all import GF, matrix
 prime = 2305843009213693951
 field = GF(prime)
 terms = 900
+print("start", flush=True)
 
 
 def inv(value):
@@ -66,6 +67,8 @@ for n in range(terms):
     lower = [sum((lower[i]+r*tail[i])*C[i, j] for i in range(3)) for j in range(3)]
     upper = [sum((upper[i]+t*tail[i])*C[i, j] for i in range(3)) for j in range(3)]
     tail = [s*sum(tail[i]*C[i, j] for i in range(3)) for j in range(3)]
+    if n % 100 == 99:
+        print("generated", n+1, flush=True)
 
 
 def search(values, name):
