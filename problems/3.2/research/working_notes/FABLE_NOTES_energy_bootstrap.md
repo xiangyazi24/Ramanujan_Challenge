@@ -265,3 +265,15 @@ The amplification question (multiplicity on the Ψ family) is with R5.
   ACCEPTED — matches our own §9 sheltering analysis; the exceptional-set
   Theorem 4 is unaffected (bad primes excluded wholesale), the all-p claim
   needs (UN).
+
+## 12. (UN) empirical status + stress tests (final numerics of the session)
+
+- R3b's decisive stress test: primes ≤ 30000, pairs d₁<d₂≤10: ZERO flags
+  (no case of Ψ ≡ 0 with nonzero predicted coefficient; u₂≡0 mod 13 retained
+  and harmless). The nondegeneracy lemma survives its designated kill-shot.
+- (UN) sweep: primes ≤ 20000 × all pairs h<k≤30 (~10⁶ combinations): ZERO
+  identically-vanishing Ψ. Universal nonvanishing holds everywhere tested.
+- Status ladder now: Theorems 1–3 (all p, audited, repaired); Theorem 4
+  (exceptional-set p^{3/4}, G-integers now tiny closed forms); (UN) ⟹ all-p
+  N(c) ≤ 8p^{3/4} incl. c=0 via the block/Hölder count — awaiting R4b's
+  self-contained proof of (UN) for machine verification.
