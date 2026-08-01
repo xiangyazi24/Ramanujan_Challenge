@@ -14,3 +14,21 @@
 | 6 | 08-01 | [F] | 早期口径 "truth is O(1)" | 混淆 o(p) 与一致 O(1) | 分裂: [GAP-LT-MELLIN] (o(p), sup 缓慢无界=正常随机) vs [+] 版(一致界=额外刚性) | 闭 (§54) |
 | 7 | 08-01 | [P] | ChatGPT 四次编造 | 幻影 Q32_paper tex/Theorem E(1)/commit 831e147; 假 commits eda609dd/732d85a1/2336ac53 | 全部 git cat-file 证伪; 纪律=每条 repo 引用必验 | 闭 (§前期) |
 | 8 | 08-01 | [F] | "唯一剩余目标=零密度" 口径 | 被 referee 判 REFORMULATION 非定量归约 | 收录口径: 归约精确但不降难度; 提交文档按此措辞 | 闭 (§58) |
+
+## [F] 2026-08-02 — §134 [NO-RUN] 推导整体作废 (codex 驳倒, 活反例)
+
+- **错误**: §134/DOCTRINE LS-b/CTX_LASTSTAND 声称 ξ_{r+1}=M_r ξ_r (ξ_r=(b_r:c_r))
+  及其推论 (2-run ⟹ ξ_r=v(r,d); 3-run ⟹ F(r,d)=0 ⟹ 3-run 总数 O(D))。
+- **错因**: 射影对象混淆。伴随阵 M_n 传播**单解**二时刻状态 (u_{n−1},u_n)
+  (即 b-ratio walk η_r=(b_{r−1}:b_r)), 不传播**双解行** (b_n:c_n)。
+- **反例** (CODEX_NORUN_report.md, 机器验证): p=997, r=248,249∈Z_182, c_248≠0,
+  ξ_248 key=758 ≠ v(248,182) key=798。§134 的"实测 2-run 吻合"从未真正逐点
+  验证 (脚本 placeholder 未跑) — 流程教训已提取。
+- **幸存部分**: (a) F=−24d²G 符号证书对 **ratio-walk collision 族**有效 (另一族,
+  非能量对象); (b) [GAP-ONE-CASORATIAN] W_r=6/(r+1)³ 被 codex 独立证明;
+  §135 strip-分离/Heilbronn 归约链不依赖 run-rigidity, 完好。
+- **新正果** (codex, 同报告): U_r=[u_{r−1};u_r] 可逆 (det=W≠0) ⟹
+  **collision ⟺ (T_{r,d})_{21}=0** — 碰撞条件从头就是轨道无关多项式恒等
+  (=continuant N_d(r)); 正确的 2-run 问题 = p | Res_x(N_d(x),N_d(x+1))。
+- 波及: Q6733/Q6735/Q6742 等快答中所有引用 run-rigidity 之处作废;
+  CTX_LASTSTAND.txt 已修正; q63 发出的 "NO-RUN certified" 状态更新作废。
