@@ -15,23 +15,21 @@ P2.2's version was worse — it asserted the initial values and then converged t
 `179/306`, not γ. `Problem21.lean` also carried `sign_flip_P … : True := trivial`
 with unused hypotheses.
 
-**All of these have been deleted** (not weakened, not `sorry`-ed) and each file
-now carries an explicit note saying the limit is not formalized there. A `sorry`
-is honest; a vacuous existential is not, and shipping one in a submission would
+**All of these have been deleted** (not weakened, not `sorry`-ed). A `sorry` is
+honest; a vacuous existential is not, and shipping one in a submission would
 read as an attempt to fake a formalization.
 
-P2.3 has been **rebuilt with real content** — see below.
+P2.2 and P2.3 have since been **rebuilt with real content** — see below.
 
 ## Status
 
 - **Genuine `sorry`s** (declared-hard statements): P24 (1), P25 (1), P28 (1), P32 (3).
-- **Genuinely proved**: P2.1, P2.3, and P2.6 (all unconditional),
-  plus real auxiliary content in P2.2
-  and the P3.1 and P3.2 layers.
+- **Genuinely proved**: P2.1, P2.2, P2.3, and P2.6 (all unconditional),
+  plus the P3.1 and P3.2 layers.
 - **Conditionally proved**: P2.5 (`problem25_solved : Problem25Claim` modulo
   `catalanError_over_denominator_tendsto_zero` — the Padé remainder subdominance).
   The Catalan integral identity `G = ∫₀¹(-log t)/(1+t²)dt` is now fully proved.
-- **Not formalized**: the main limits of P2.2, P2.7.
+- **Not formalized**: the main limit of P2.7.
 
 Build warnings are exactly the six `sorry` declarations (P24×1, P25×1, P28×1, P32×3).
 All non-`sorry` theorems axiom-clean: {propext, Classical.choice, Quot.sound}.
@@ -48,7 +46,7 @@ All non-`sorry` theorems axiom-clean: {propext, Classical.choice, Quot.sound}.
 | Problem | Module | Sorry | What is actually proved |
 |---------|--------|-------|--------------------------|
 | P2.1 | Problem21.lean | 0 ✅ | **full chain**: Cohen Entry 5.3.22 sign-flip, even contraction, moment integral J_n→0, unconditional `problem21_pcf_value`. |
-| P2.2 | Problem22.lean | 0 | the four shift identities `c̃_j(m) = c_j(m−3)` (`ring`). **Limit not formalized.** |
+| P2.2 | Problem22.lean + Problem22Concentration.lean + Problem22Moment.lean + Problem22Harmonic.lean | 0 ✅ | **complete unconditional chain**: exact Rivoal WZ sums, Ore intertwiner and initial-value identification, denominator positivity, finite Stein identity, cubic-saddle second moment, harmonic good/bad decomposition, and limit transfer. `problem22_solved : Problem22Claim`; axiom audit `{propext, Classical.choice, Quot.sound}`. |
 | P2.3 | Problem23.lean | 0 ✅ | **complete unconditional chain**: tensor annihilation, closed forms, all 8 initial values, uniqueness, exact ratio splitting, `m!/D_m → e`, plus a positive-moment proof of `B_m/A_m → π/4`; `problem23_pi_add_e` has no mathematical hypothesis |
 | P2.4 | Problem24.lean | 1 ⚠️ | strong form (polylogarithm identity) left as `sorry` |
 | P2.5 | Problem25.lean + Problem25Connection.lean + Problem25Integral.lean + Problem25Moment.lean | 1 ⚠️ | ~2800 lines across 4 files. CMF transcription, row recurrences, det factorization, Pochhammer gauge, Poincaré cubic, sign conjugation, positive cocycle, nonvanishing denominators, convex-hull nesting, Catalan error recurrence + initial signs. **Problem25Connection.lean** (757 lines): unconditional projective contraction → all 3 ratios converge to `commonLimit` (2/3 geometric rate). `Problem25Claim ↔ commonLimit = catalanConstant`. **Problem25Integral.lean** (214 lines, 0 sorry): Catalan integral identity `catalanConstant = ∫₀¹(-log t)/(1+t²)dt` via FTC + dominated convergence (integration by parts for ∫t^k(-log t)dt = 1/(k+1)², geometric series pointwise convergence, norm summability). **Problem25Moment.lean** (227 lines, 1 sorry): moment formulas, remainder polynomial, `integral_neg_log_01`, full chain `catalanError_over_denominator_tendsto_zero → commonLimit_eq_catalanConstant → problem25_solved : Problem25Claim`. **Gap: `catalanError_over_denominator_tendsto_zero` (Padé remainder subdominance — the catalanError's Perron coefficient is zero).** |
