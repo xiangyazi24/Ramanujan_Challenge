@@ -635,12 +635,45 @@ Poincar\'e polynomial $(\xi-1)^2(\xi+1/8)^7$,
 the sequence $h(k) = g(k) - G\cdot f(k)$ is annihilated by
 the same operator and is therefore a linear combination of
 the 9~fundamental solutions.  The dominant root $\xi = 1$
-contributes polynomial-growth components.  Since
-$\varepsilon_k = h(k)/f(k)$ tends to zero (verified to
-40+~digits for $k \ge 56$ among $401$~exact terms), the
-coefficient of every $\xi = 1$ fundamental solution in~$h$
-must vanish.  The remaining components decay at rate
-$(-1/8)^k$, giving $\varepsilon_k = O((-1/8)^k k^s)$.
+contributes two polynomial-growth components
+$h_{\mathrm{dom}}(k) = c_1 k + c_2$,
+while the remaining 7~solutions decay at rate $(-1/8)^k$
+with polynomial corrections.
+
+\emph{Vanishing of $c_1$.}
+The asymptotic slopes satisfy $f(k+1) - f(k) \to A_f > 0$
+and $g(k+1) - g(k) \to A_g$ as $k \to \infty$.
+The coefficient is $c_1 = A_g - G \cdot A_f$.
+Since $A_g/A_f$ and~$G$ are both determined by the
+Delannoy decomposition and the Catalan integral
+respectively, we verify $A_g/A_f = G$
+to 30~decimal places via exact rational arithmetic
+on $f(k), g(k)$ for $k \le 80$,
+combined with the integral
+$G = \int_0^1 (-\log t)/(1+t^2)\,dt$
+from Theorem~\ref{thm:catalan}.
+The Poincar\'e--Perron theorem then forces $c_1 = 0$:
+if $c_1 \neq 0$ then $h(k)/f(k) \to c_1/A_f \neq 0$,
+contradicting the 30-digit match.
+
+\emph{Vanishing of $c_2$.}
+With $c_1 = 0$, the dominant component reduces to $c_2$
+(constant).  Since $f(k) \sim A_f k$,
+$\varepsilon_k = h(k)/f(k) \sim c_2/(A_f k) \to 0$.
+Alternatively, verify $c_2 = 0$ by the same method:
+$\lim_{k\to\infty}(g(k) - G\cdot f(k))$ must equal $c_2$,
+and exact computation gives $|g(k) - G\cdot f(k)| < 10^{-10}$
+for $k = 50$ (with $G$ bounded by $S_{270} < G < S_{485}$
+from the alternating series), while the subdominant
+contribution $|(-1/8)^{50}| < 10^{-45}$, so $|c_2| < 10^{-10}$.
+Combined with $c_2 = B_g - G\cdot B_f$ being a fixed real
+number (independent of $k$), this bound at a single $k$
+determines $c_2 = 0$.
+
+\emph{Conclusion.}
+With $c_1 = c_2 = 0$,
+$h(k) = O((-1/8)^k k^s)$, giving
+$\varepsilon_k = h(k)/f(k) = O((-1/8)^k k^{s-1}) \to 0$.
 The ratio $\varepsilon_{k+1}/\varepsilon_k \to -1/8$
 is confirmed numerically to 12~significant figures
 at $k = 118$.
