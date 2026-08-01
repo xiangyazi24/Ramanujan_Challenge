@@ -269,8 +269,10 @@ because
  t^2q(t^{-1})=q(t),
 \]
 
-and \(t^2\) is a square.  Exact Mellin transforms were then searched over all
-shifts `c mod (p-1)`.  For `G`, `G_q`, and the virtual trace, every prime
+and \(t^2\) is a square.  The mod-\(p\) Mellin vectors were then searched over
+all shifts `c mod (p-1)`.  Pointwise integer inversion proves the `c=0`
+identity for exact character values, while the mod-\(p\) search excludes
+every other shift.  For `G`, `G_q`, and the virtual trace, every prime
 has the unique shift set
 
 \[

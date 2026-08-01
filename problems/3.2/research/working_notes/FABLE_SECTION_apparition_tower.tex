@@ -182,6 +182,51 @@ below: all self-twist and tensor-decomposition exceptions lie in a fixed set
 of order $\le4$, so no high-order Mellin character can correlate with the
 column event through a hidden twist.
 
+\subsection{The bounded-object theorem}
+
+\begin{theorem}[Franel--Mellin bounded object]\label{thm:bounded-object}
+Let $\phi(x)=x(1-8x)/(1+x)$ (the Fricke $w_6$ quotient map of the
+Beauville-IV elliptic pencil $E_x$ over $X_1(6)$, whose Hasse invariant is
+the truncated Franel polynomial $H_p$), and let $q(t)=t^2-34t+1$ be the
+fibre discriminant of $\phi$.  Then for every $p\ge7$ and $1\le r\le p-2$:
+\[
+b_r\;\equiv\;-\sum_{x}H_p(x)^2\,\omega^{-r}(\phi(x))
+\;+\;\sum_{t}\chi_2(q(t))\,A_p(t)\,\omega^{-r}(t)\pmod p,
+\]
+exactly and with no boundary corrections, and both summands are Mellin
+values of trace functions of FIXED bounded-conductor objects: the first of
+$\phi_*\mathrm{Sym}^2(\mathcal E)$ (conductor $20$), the second of an
+integral compatible rank-three system $\mathcal A_-$ on $\mathbb G_m$ with
+absolute conductor $\le11$.  The descent uses the explicit correspondence
+obtained by quotienting the Weierstrass model of $E_x$ by its rational
+cyclic subgroup of order six; the quotient is the constant $(-3)$-quadratic
+twist of the deck-conjugate fibre, and the twist cancels in
+$\mathrm{Sym}^2$.  Consequently $p\mid b_r$ if and only if the
+defining-characteristic reduction of a two-dimensional Mellin cohomology
+trace of a fixed rank-three bounded-conductor sheaf vanishes.
+\end{theorem}
+
+\begin{proof}[Certification]
+The finite-field identity and its boundary bookkeeping are theorems by the
+adversarial referee audit (working note \texttt{GPT\_Q6424}, links (1)--(3):
+no hidden corrections at the pole $x=-1$, the zero fibre, branch points, or
+nonsplit fibres).  The two-sheaf normalization with conductor accounting was
+obtained twice independently — the descent construction of
+\texttt{GPT\_Q6394} and the sheaf normalization of
+\texttt{CODEX\_FRANEL\_MELLIN} — with identical conductor $11$; the
+correspondence left unwritten in the former ([GAP-1: display]) is printed
+and machine-verified in \texttt{codex\_lt\_isogeny.py} ($2148$ point
+evaluations at five primes; the trace identity
+$a_p(E_{\iota(u)})=(\tfrac{-3}p)a_p(E_u)$ on $38$ smooth fibres).  Machine
+certificates for every displayed identity:
+\texttt{franel\_pointwise\_test.py}, \texttt{franel\_mellin\_mult\_test.py},
+\texttt{codex\_fm\_geometry.py} ($a_p(E_u)=H_p(u)$ on $1084$ fibres),
+\texttt{codex\_fm\_local\_monodromy.py}.  The residual integral/crystalline
+comparison at middle-extension points — equality as reductions at the
+chosen prime above $p$, not of complex traces — is the one remaining
+normalization statement and is recorded as such.
+\end{proof}
+
 \subsection{The parity law for the zero fibre}
 
 \begin{proposition}[parity law]\label{prop:parity}
