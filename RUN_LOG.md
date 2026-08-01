@@ -306,8 +306,48 @@ the prime side, and a star is K_{2,2}-free, so no combinatorial argument can exc
 - doctrine: DOCTRINE_P24_LAYERD.md
 - starting avenue: (a) right endpoint limit + tendsto-FTC swap
 - entry state: Problem24QuadraticAlt.lean 2324 lines, 11 sorries, 0 errors
-- end: <open>
-- final result: <open>
+- end: goal reached
+- final result: **DOCTRINE goal met.** Problem24QuadraticAlt.lean went 14 sorries
+  -> 1, and the survivor is the frontier capstone
+  `alternatingQuadraticEulerTerm24_hasSum`, which the doctrine explicitly allows
+  to stay open. 3735 lines. Full-module compile green on the pinned v4.29.0, and
+  `#print axioms` clean (propext / Classical.choice / Quot.sound only) on all
+  eight chain theorems: quadAlt_tsum_eq_coeff_integral,
+  quadAltCoeffIntegral_eq_neg2V_Dminus, quadAltMobiusSubst,
+  quadAltSixIntegralLinear, quadAltCoeffIntegral_eq_six, quadAltI11_eq_integral,
+  quadAltS_generating_hasSum, quadAltM_hasSum_neg.
+
+  Avenue (a) -- right endpoint limit + tendsto-FTC swap: DONE. Both `ContinuousOn`
+  stubs were deleted structurally rather than discharged, by moving to
+  `integral_eq_sub_of_hasDerivAt_of_tendsto`.
+  Avenue (b) -- integrability: DONE (Codex, two rounds, 8 stubs).
+  Avenues (c),(d): folded in; six-integral linearity and the I11 restatement are
+  both closed and clean.
+
+  Beyond the doctrine: Layer E mapped end to end, difficulty reduced twice under
+  verification -- six independent weight-4 evaluations -> one (K) -> none, since K
+  reduces to repo constants Tminus/Tplus. The one remaining new analytic step is
+  a single termwise integration, written out exactly in DOCTRINE_P24_LAYERD.md.
+  A cheaper IBP route for it (K = -int_0^1 log x log^2(1+x)/x dx, both boundary
+  terms vanishing) is out for review.
+
+  Verification: whole chain checked numerically; the six endpoint integrals
+  re-confirmed at 40 dps against their closed forms (I11/I12/I21/I22 agree to 32
+  digits, I10/I20 to 15 -- the log^2 endpoint), and the combination
+  -2I10-2I11+2I12+4I20+6I21-5I22 reproduces the repo's
+  `alternatingQuadraticEulerValue24` to 33 digits and, symbolically over Q, in all
+  five basis coefficients exactly. I10 and I22 additionally have a fully analytic
+  independent derivation (no quadrature, no PSLQ) confirming them coefficient by
+  coefficient; the other four are out for the same treatment. Every Lean
+  definition was audited character by character against the formulas used in the
+  numerics, and I10 was recomputed by series expansion, a different method from
+  the quadrature+PSLQ used elsewhere.
+
+  Two errors found and fixed in this closing pass, both mine: four of the six
+  I_ab rows were mistranscribed into an outgoing verification request (the file
+  of record was right; I typed from memory instead of reading it), and the
+  re-check script integrated [0,1] twice per row, giving a uniform factor of 2.
+  The second was caught by the factor being exactly 2 on all six rows at once.
 
 ## Run 2026-08-01 (P2.5 Catalan connection, automode, dm window)
 - doctrine: DOCTRINE.md (P2.5 avenue (a) moment formula route)
