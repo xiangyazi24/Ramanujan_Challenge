@@ -6,8 +6,8 @@ on:
     paths:
       - '.github/workflows/q6427-lean-audit.yml'
       - 'lean/RamanujanChallenge/Q6427Scratch.lean'
-      - 'lean/RamanujanChallenge/Q6427HorizontalFixed.lean'
-      - 'lean/RamanujanChallenge/Q6427Complete.lean'
+      - 'lean/RamanujanChallenge/Q6427HorizontalFinal.lean'
+      - 'lean/RamanujanChallenge/Q6427CompleteFinal.lean'
 
 permissions:
   contents: read
@@ -29,9 +29,9 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           cd lean
           lake exe cache get
-      - name: Compile Q6427 fixed horizontal bounds
+      - name: Compile Q6427 final horizontal bounds
         shell: bash
         run: |
           export PATH="$HOME/.elan/bin:$PATH"
           cd lean
-          lake build RamanujanChallenge.Q6427HorizontalFixed
+          lake build RamanujanChallenge.Q6427HorizontalFinal
