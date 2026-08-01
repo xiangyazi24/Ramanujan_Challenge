@@ -6629,4 +6629,288 @@ theorem quadAltI12_eq :
   rw [hzeta] at hsum
   linarith
 
+private theorem testI21_substitution :
+    I21 - I22 =
+      -2 * ∫ x : ℝ in 0..1,
+        quadAltV x * Real.log (1 + x) / (1 - x) := by
+  let g : ℝ → ℝ := fun x =>
+    -2 * quadAltV x * Real.log (1 + x) / (1 - x)
+  have hsub := testMobiusIntegral g
+  have hrows : I21 - I22 =
+      ∫ t : ℝ in 0..1,
+        W0 t * H2 t / (1 - t) -
+          W0 t * H2 t / (2 - t) := by
+    unfold I21 I22
+    rw [← intervalIntegral.integral_sub
+      quadAltI21_kernel_intervalIntegrable
+      quadAltI22_kernel_intervalIntegrable]
+  have hright :
+      -2 * ∫ x : ℝ in 0..1,
+          quadAltV x * Real.log (1 + x) / (1 - x) =
+        ∫ x : ℝ in 0..1, g x := by
+    rw [← intervalIntegral.integral_const_mul]
+    apply intervalIntegral.integral_congr
+    intro x _
+    dsimp only [g]
+    ring
+  rw [hrows, hright, hsub]
+  apply intervalIntegral.integral_congr_ae
+  filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+    with t htne ht
+  have ht' : t ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using ht
+  have ht0 : 0 < t := ht'.1
+  have ht1 : t < 1 := lt_of_le_of_ne ht'.2 htne
+  have h2mt : 0 < 2 - t := by linarith
+  have hx0 : 0 < t / (2 - t) := by positivity
+  have hx1 : t / (2 - t) < 1 := by
+    rw [div_lt_one h2mt]
+    linarith
+  have hnorm :
+      2 * (t / (2 - t)) / (1 + t / (2 - t)) = t := by
+    field_simp [ne_of_gt h2mt]
+    ring
+  have hW := quadAlt_neg2V_eq_W0 hx0 hx1
+  rw [hnorm] at hW
+  have hlog : Real.log (1 + t / (2 - t)) = H2 t := by
+    have harg :
+        1 + t / (2 - t) = (1 - t / 2)⁻¹ := by
+      field_simp [ne_of_gt h2mt, (by linarith : 1 - t / 2 ≠ 0)]
+      ring
+    rw [harg, Real.log_inv]
+    unfold H2
+    rfl
+  have honeSub :
+      1 - t / (2 - t) = 2 * (1 - t) / (2 - t) := by
+    field_simp [ne_of_gt h2mt]
+    ring
+  dsimp only [g]
+  rw [← hW, hlog, honeSub]
+  field_simp [ne_of_gt h2mt, (by linarith : 1 - t ≠ 0)]
+  ring
+
+private theorem testVLogMinusPlus_intervalIntegrable :
+    IntervalIntegrable
+      (fun x : ℝ => quadAltV x * Real.log (1 - x) / (1 + x))
+      MeasureTheory.volume 0 1 := by
+  let c : ℝ → ℝ := fun x =>
+    quadAltV x * Real.log (1 - x) / x
+  have hc : IntervalIntegrable c MeasureTheory.volume 0 1 := by
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ => -(quadAltV x * H1 x / x)) ?_
+      testVH1Div_intervalIntegrable.neg
+    intro x _
+    dsimp only [c]
+    unfold H1
+    ring
+  have hfac : ContinuousOn (fun x : ℝ => x / (1 + x))
+      (Set.uIcc (0 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    intro x hx
+    exact continuousAt_id.div (continuousAt_const.add continuousAt_id)
+      (by linarith [hx.1] : 1 + x ≠ 0) |>.continuousWithinAt
+  have hprod := hc.continuousOn_mul hfac
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ => (x / (1 + x)) * c x) ?_ hprod
+  intro x hx
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+  have hxne : x ≠ 0 := ne_of_gt hx'.1
+  have hplus : 1 + x ≠ 0 := by linarith [hx'.1]
+  dsimp only [c]
+  field_simp [hxne, hplus]
+
+private theorem testVLogPlusMinus_intervalIntegrable :
+    IntervalIntegrable
+      (fun x : ℝ => quadAltV x * Real.log (1 + x) / (1 - x))
+      MeasureTheory.volume 0 1 := by
+  have hcont : ContinuousOn
+      (fun x : ℝ => quadAltV x * Real.log (1 + x) / (1 - x))
+      (Set.Ioo (0 : ℝ) 1) := by
+    intro x hx
+    exact ((quadAltV_continuousAt hx.1 hx.2).mul
+      (ContinuousAt.log (by fun_prop)
+        (by linarith [hx.1] : 1 + x ≠ 0))).div
+      (by fun_prop) (by linarith [hx.2] : 1 - x ≠ 0) |>.continuousWithinAt
+  have hlogDeriv : HasDerivAt (fun x : ℝ => Real.log (1 + x)) 1 0 := by
+    have hinner : HasDerivAt (fun x : ℝ => 1 + x) 1 0 := by
+      convert (hasDerivAt_const (0 : ℝ) 1).add (hasDerivAt_id 0) using 1 <;>
+        norm_num
+    have hlog := Real.hasDerivAt_log
+      (show 1 + (0 : ℝ) ≠ 0 by norm_num)
+    have hcomp := HasDerivAt.comp (h := fun x : ℝ => 1 + x)
+      (0 : ℝ) hlog hinner
+    simpa using hcomp
+  have hlogSlope : Tendsto (fun x : ℝ => Real.log (1 + x) / x)
+      (𝓝[>] (0 : ℝ)) (𝓝 1) :=
+    (slope_tendsto_of_hasDerivAt_zero _ 1 hlogDeriv (by norm_num)).mono_left
+      (nhdsWithin_mono _ (fun x hx => ne_of_gt hx))
+  have hden0 : Tendsto (fun x : ℝ => 1 - x)
+      (𝓝[>] (0 : ℝ)) (𝓝 1) := by
+    have hid : Tendsto (fun x : ℝ => x) (𝓝[>] (0 : ℝ)) (𝓝 0) :=
+      tendsto_id.mono_left nhdsWithin_le_nhds
+    simpa using tendsto_const_nhds.sub hid
+  have hzero : Tendsto
+      (fun x : ℝ => quadAltV x * Real.log (1 + x) / (1 - x))
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    have h := (quadAltV_mul_self_tendsto.mul hlogSlope).div hden0
+      (by norm_num)
+    norm_num at h
+    refine h.congr' ?_
+    filter_upwards [self_mem_nhdsWithin] with x hx
+    have hxne : x ≠ 0 := ne_of_gt hx
+    simp only [Pi.div_apply]
+    field_simp [hxne]
+  have hlogOne : Tendsto (fun x : ℝ => Real.log (1 + x))
+      (𝓝[<] (1 : ℝ)) (𝓝 (Real.log 2)) := by
+    have hc : ContinuousAt (fun x : ℝ => Real.log (1 + x)) 1 := by
+      exact ContinuousAt.log (by fun_prop) (by norm_num)
+    convert hc.tendsto.mono_left nhdsWithin_le_nhds using 1 <;> norm_num
+  have hone : Tendsto
+      (fun x : ℝ => quadAltV x * Real.log (1 + x) / (1 - x))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    have h := (quadAltV_slope_tendsto_one.mul hlogOne).neg
+    simp only [zero_mul, neg_zero] at h
+    refine h.congr' ?_
+    filter_upwards [self_mem_nhdsWithin] with x hx
+    have hne : x - 1 ≠ 0 := sub_ne_zero.mpr (ne_of_lt hx)
+    have hden : 1 - x ≠ 0 := sub_ne_zero.mpr (ne_of_gt hx)
+    field_simp [hne, hden]
+    ring
+  exact intervalIntegrable_of_continuousOn_Ioo_of_tendsto
+    (by norm_num) hcont hzero hone
+
+private noncomputable def testMixedLogPrimitive (x : ℝ) : ℝ :=
+  quadAltV x * Real.log (1 - x) * Real.log (1 + x)
+
+private theorem testMixedLogPrimitive_hasDerivAt
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt testMixedLogPrimitive
+      (Real.log x * Real.log (1 - x) * Real.log (1 + x) /
+          (x * (1 + x)) -
+        quadAltV x * Real.log (1 + x) / (1 - x) +
+        quadAltV x * Real.log (1 - x) / (1 + x)) x := by
+  have hminus : 0 < 1 - x := by linarith
+  have hplus : 0 < 1 + x := by linarith
+  have hm : HasDerivAt (fun y : ℝ => Real.log (1 - y))
+      (-1 / (1 - x)) x := by
+    have hinner : HasDerivAt (fun y : ℝ => 1 - y) (-1) x := by
+      convert (hasDerivAt_const x (1 : ℝ)).sub (hasDerivAt_id x) using 1 <;>
+        norm_num
+    have hlog := Real.hasDerivAt_log (ne_of_gt hminus)
+    convert HasDerivAt.comp (h := fun y : ℝ => 1 - y) x hlog hinner using 1
+    field_simp [ne_of_gt hminus]
+  have hp : HasDerivAt (fun y : ℝ => Real.log (1 + y))
+      (1 / (1 + x)) x := by
+    have hinner : HasDerivAt (fun y : ℝ => 1 + y) 1 x := by
+      convert (hasDerivAt_const x (1 : ℝ)).add (hasDerivAt_id x) using 1 <;>
+        norm_num
+    have hlog := Real.hasDerivAt_log (ne_of_gt hplus)
+    convert HasDerivAt.comp (h := fun y : ℝ => 1 + y) x hlog hinner using 1
+    field_simp [ne_of_gt hplus]
+  have hprod := ((quadAltV_hasDerivAt hx0 hx1).mul hm).mul hp
+  unfold testMixedLogPrimitive
+  convert hprod using 1
+  simp only [Pi.mul_apply]
+  field_simp [ne_of_gt hx0, ne_of_gt hminus, ne_of_gt hplus]
+  ring
+
+private theorem testMixedLogPrimitive_tendsto_zero :
+    Tendsto testMixedLogPrimitive (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hminus : Tendsto (fun x : ℝ => Real.log (1 - x))
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    have hc : ContinuousAt (fun x : ℝ => Real.log (1 - x)) 0 := by
+      exact ContinuousAt.log (by fun_prop) (by norm_num)
+    simpa using hc.tendsto.mono_left nhdsWithin_le_nhds
+  have hlogDeriv : HasDerivAt (fun x : ℝ => Real.log (1 + x)) 1 0 := by
+    have hinner : HasDerivAt (fun x : ℝ => 1 + x) 1 0 := by
+      convert (hasDerivAt_const (0 : ℝ) 1).add (hasDerivAt_id 0) using 1 <;>
+        norm_num
+    have hlog := Real.hasDerivAt_log
+      (show 1 + (0 : ℝ) ≠ 0 by norm_num)
+    have hcomp := HasDerivAt.comp (h := fun x : ℝ => 1 + x)
+      (0 : ℝ) hlog hinner
+    simpa using hcomp
+  have hplusSlope : Tendsto (fun x : ℝ => Real.log (1 + x) / x)
+      (𝓝[>] (0 : ℝ)) (𝓝 1) :=
+    (slope_tendsto_of_hasDerivAt_zero _ 1 hlogDeriv (by norm_num)).mono_left
+      (nhdsWithin_mono _ (fun x hx => ne_of_gt hx))
+  have h := (quadAltV_mul_self_tendsto.mul hminus).mul hplusSlope
+  simp only [zero_mul] at h
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hxne : x ≠ 0 := ne_of_gt hx
+  unfold testMixedLogPrimitive
+  field_simp [hxne]
+
+private theorem testMixedLogPrimitive_tendsto_one :
+    Tendsto testMixedLogPrimitive (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+  have hminus : Tendsto (fun x : ℝ => (x - 1) * Real.log (1 - x))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    have h := oneSub_log_tendsto.neg
+    simp only [neg_zero] at h
+    refine h.congr' ?_
+    filter_upwards with x
+    ring
+  have hplus : Tendsto (fun x : ℝ => Real.log (1 + x))
+      (𝓝[<] (1 : ℝ)) (𝓝 (Real.log 2)) := by
+    have hc : ContinuousAt (fun x : ℝ => Real.log (1 + x)) 1 := by
+      exact ContinuousAt.log (by fun_prop) (by norm_num)
+    convert hc.tendsto.mono_left nhdsWithin_le_nhds using 1 <;> norm_num
+  have h := (quadAltV_slope_tendsto_one.mul hminus).mul hplus
+  simp only [zero_mul] at h
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hne : x - 1 ≠ 0 := sub_ne_zero.mpr (ne_of_lt hx)
+  unfold testMixedLogPrimitive
+  field_simp [hne]
+
+private theorem testMixedLogIntegralRelation :
+    (∫ x : ℝ in 0..1,
+      quadAltV x * Real.log (1 - x) / (1 + x)) -
+        ∫ x : ℝ in 0..1,
+          quadAltV x * Real.log (1 + x) / (1 - x) =
+      -(∫ x : ℝ in 0..1,
+        Real.log x * Real.log (1 - x) * Real.log (1 + x) /
+          (x * (1 + x))) := by
+  have hderivInt :=
+    (quadAltMixedLogIntervalIntegrable24.sub
+      testVLogPlusMinus_intervalIntegrable).add
+      testVLogMinusPlus_intervalIntegrable
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (a := (0 : ℝ)) (b := 1) (f := testMixedLogPrimitive)
+    (f' := fun x : ℝ =>
+      Real.log x * Real.log (1 - x) * Real.log (1 + x) /
+          (x * (1 + x)) -
+        quadAltV x * Real.log (1 + x) / (1 - x) +
+        quadAltV x * Real.log (1 - x) / (1 + x))
+    (by norm_num)
+    (fun x hx => testMixedLogPrimitive_hasDerivAt hx.1 hx.2)
+    hderivInt testMixedLogPrimitive_tendsto_zero
+    testMixedLogPrimitive_tendsto_one
+  rw [intervalIntegral.integral_add
+      (quadAltMixedLogIntervalIntegrable24.sub
+        testVLogPlusMinus_intervalIntegrable)
+      testVLogMinusPlus_intervalIntegrable,
+    intervalIntegral.integral_sub quadAltMixedLogIntervalIntegrable24
+      testVLogPlusMinus_intervalIntegrable] at hFTC
+  norm_num at hFTC
+  linarith
+
+theorem quadAltI21_eq :
+    I21 = -(3 / 2) * quadAltK
+      - 3 * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6)
+      + (7 / 4) * Real.log 2 * zeta3_24
+      + (3 / 10) * (Real.pi ^ 2 / 6) ^ 2 := by
+  have h21 := testI21_substitution
+  have h12 := testI12_substitution
+  have hmix := testMixedLogIntegralRelation
+  have hrow : I21 = 2 * I22 - I12 -
+      2 * ∫ x : ℝ in 0..1,
+        Real.log x * Real.log (1 - x) * Real.log (1 + x) /
+          (x * (1 + x)) := by
+    linarith
+  rw [quadAltI22_eq, quadAltI12_eq, quadAltMixedLogIntegral24] at hrow
+  linarith
+
 end RamanujanChallenge.P24QuadAlt
