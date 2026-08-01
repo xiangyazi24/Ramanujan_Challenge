@@ -112,3 +112,22 @@
   Q6708/Q6723 长文未逐行审计 (依赖 codex 实现暴露问题)。(b) 盲点 = PRE 里 c1=6 与
   orbit 代码 c1=1 归一化差异未理论对齐 (经验侧 orbit 权威, N_3 系数+奇偶律双向吻合
   说明自洽, 但值得一条对齐引理); 折叠框架只在 p=3001 三个 lag 上实证。
+- segment 5 终账 (17:4x, 附录 AT.40–AT.51, 25+ commits): **四个新结构定理/引理**([PARITY-LAW]
+  奇偶律+镜像骨架 κ_h; [ALL-PAIRS-COPRIME] strip-disjointness 全对互素[P]; 根高度|Im|≤Ch
+  +结式高度 O(ab log(a+b)); restart 词典 K_m(X)=Np_{m+1}(X−1)) + **墙底两次下降**
+  ([ZERO-TAIL-2]→[MIRROR-WL1] 弱-L¹面 via codex ULTRA; 再→逐点面 [PT-ANTICONC-1/4] 闭环)
+  + **墙的最简等价陈述定稿**(S_D≪D^{2−δ} 任意幂节省; 平凡=D², 真值=D^{1+o(1)})
+  + **paired-Poisson 模型确认**(11素数×3数量级, μ̄=0.49 钉死, 超越计数逐档吻合)
+  + **[CELL-LATTICE]**(bulk 根精确在 strip 中心 1e-14, Im*=0.2096003591 普适常数, 边缘 λ₊^{-2} 衰减)
+  + 快算法 O(N+S_D) 使 p≤10⁶ 秒级(旧 O(pD) 逐位对表验证)。
+  **三次诚实撤回/降格**: α_p 精确律→[MODEL](Q6775 敌审); cell 常数闭式→OPEN(机验推翻 Q6773);
+  Poisson 拒绝→撤回(小样本假象, AT.50)。**两条路线自纠错**(回文诱导 lag / bootstrap 迭代,
+  均我方先机验/自证再发更正, 三 tab 独立会师确认)。
+  codex: ULTRA breakwall2 交卷([MIRROR-WL1] 定名+两定理与我方独立会师), kinf (sol max) 仍在跑。
+  ChatGPT: 40+ 答, 10 tab 全程滚动无空转; 投递层退化(Notion stub/超时)靠 network-capture+
+  git-drop+重印协议兜底。
+- 两问 self-audit (segment 5): (a) 最不自信 = [ALL-PAIRS-COPRIME] 的传递性退化 locus 未逐点证
+  ([P] 标记, codex Thm 6.1 独立给出但未逐行审); Q6708 共轭定理/Q6723 K∞ 算法两份长文未逐行审计
+  (依赖 codex kinf 实现暴露问题); [MIRROR-WL1] bridge 的 ε_h 端点项常数未独立复核。
+  (b) 盲点 = 所有大范围统计都在 D=√N·log N 这一个纵横比上; 若 L 取别的增长(如 loglog),
+  T₀ 与 maxμ 的赛跑结论可能改变(赛跑是本 segment 唯一余量小的面, 值得专门扫描)。
