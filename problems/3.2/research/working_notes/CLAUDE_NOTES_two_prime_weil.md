@@ -82,3 +82,24 @@ But b_a mod p = [t^a]F(t), NOT [t^a]α_p(t).
 of a geometrically controlled ℓ-adic sheaf. This is a problem in p-adic Hodge theory:
 comparison between de Rham period sections and ℓ-adic Frobenius traces at the
 coefficient level.
+
+## Moment bridge reformulation (Q6278-Q6282, verified p=5,7,11)
+
+**Key identity**: b_m ≡ -L(χ_m) (mod p) for m = 0,...,p-2, where:
+- L(χ) = Σ_{a ∈ F_p^*} χ(a) N_Λ(a) is the twisted point count
+- χ_m(a) = a^m is the m-th multiplicative character
+- N_Λ(a) = #{x ∈ (F_p^*)^3 : Λ(x,y,z) = a}
+- Λ(x,y,z) = (1+x)(1+y)(1+z)((1+y)(1+z)+xyz)/(xyz)
+
+**Consequence**: C_p(h) = Σ_χ ψ(-h·L(χ)) + O(1)
+
+The vertical Weil bound |C_p(h)| ≤ C√p is EQUIVALENT to:
+|Σ_χ e(-h·L(χ)/p)| ≤ C√p
+
+This is a sum of additive characters of L-function values — a "mod p of Frobenius
+trace" equidistribution problem. No existing theorem (Katz, Deligne, Sato-Tate)
+gives this: archimedean equidistribution controls |L(χ)|/p^{3/2}, not L(χ) mod p.
+
+**Status**: Numerically verified (|C_p| ≤ 3.27√p for 166 primes), but unproved.
+The reformulation is new and connects the Apéry coefficient problem to families
+of L-functions in a precise way.
