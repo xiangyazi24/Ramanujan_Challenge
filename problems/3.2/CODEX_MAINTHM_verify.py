@@ -851,37 +851,69 @@ def master_digit_and_average_gate(b: list[int], a: list[Fraction], d: list[int])
 
     # Correct truncated averaging identity and its S(X) sandwich (p>5 exact).
     zero_sets = {p: {r for r in range(p) if b[r] % p == 0} for p in primes}
+    average_limit = 1200
+    a_events = [0] * (average_limit + 1)
+    a_events_large = [0] * (average_limit + 1)
+    s_events = [0] * (average_limit + 1)
+    s_events_large = [0] * (average_limit + 1)
+    top_events = [0] * (average_limit + 1)
+    top_events_large = [0] * (average_limit + 1)
+
+    for p in primes:
+        if p > average_limit:
+            continue
+        s_events[p] += len(zero_sets[p])
+        if p > 5:
+            s_events_large[p] += len(zero_sets[p])
+        for r in zero_sets[p]:
+            endpoint = p + r
+            if 1 <= r and endpoint <= average_limit:
+                a_events[endpoint] += 1
+                if p > 5:
+                    a_events_large[endpoint] += 1
+    for n in range(2, average_limit + 1):
+        for p in primes:
+            if p > n:
+                break
+            if 2 * p > n and b[n] % p == 0:
+                top_events[n] += 1
+                if p > 5:
+                    top_events_large[n] += 1
+
+    def prefix(values: list[int]) -> list[int]:
+        answer = values[:]
+        for index in range(1, len(answer)):
+            answer[index] += answer[index - 1]
+        return answer
+
+    a_prefix = prefix(a_events)
+    a_large_prefix = prefix(a_events_large)
+    s_prefix = prefix(s_events)
+    s_large_prefix = prefix(s_events_large)
+    top_prefix = prefix(top_events)
+    top_large_prefix = prefix(top_events_large)
 
     def A_count(x: int, exclude_small: bool = False) -> int:
-        return sum(
-            1
-            for p in primes
-            if p <= x and (not exclude_small or p > 5)
-            for r in zero_sets[p]
-            if 1 <= r <= x - p
-        )
+        check(0 <= x <= average_limit, "A_count prefix range")
+        return (a_large_prefix if exclude_small else a_prefix)[x]
 
     def S_count(x: int, exclude_small: bool = False) -> int:
-        return sum(
-            len(zero_sets[p])
-            for p in primes
-            if p <= x and (not exclude_small or p > 5)
-        )
+        check(0 <= x <= average_limit, "S_count prefix range")
+        return (s_large_prefix if exclude_small else s_prefix)[x]
 
     def actual_top_sum(x: int, exclude_small: bool = False) -> int:
-        return sum(
-            1
-            for n in range(2, x + 1)
-            for p in primes
-            if p <= n and 2 * p > n and (not exclude_small or p > 5)
-            and b[n] % p == 0
-        )
+        check(0 <= x <= average_limit, "actual_top_sum prefix range")
+        return (top_large_prefix if exclude_small else top_prefix)[x]
 
     for x in (50, 100, 200, 400, 600):
         check(actual_top_sum(x, True) == A_count(x, True),
               f"corrected averaging identity X={x}")
         check(A_count(x) <= S_count(x) <= A_count(2 * x),
               f"AVG sandwich X={x}")
+    for x in range(1, 601):
+        correction = int(x >= 5) + int(x >= 7) + int(x >= 9)
+        check(actual_top_sum(x) == A_count(x) + correction,
+              f"p=5 exact endpoint correction X={x}")
     check((actual_top_sum(600), actual_top_sum(600, True), A_count(600),
            A_count(600, True), S_count(600), A_count(1200))
           == (85, 80, 82, 80, 109, 137), "X=600 averaging data")
@@ -908,6 +940,49 @@ def master_digit_and_average_gate(b: list[int], a: list[Fraction], d: list[int])
         "R31(101)=[8,39] middle=(n,p,q,r)=(37,17,2,3) ",
         "X600=(TOPall85,TOP>5=80,A=82,S=109) q2-model=60/topload1",
     )
+
+
+def factorial_moment_gate(b: list[int]) -> None:
+    """Exact CRT gate for the unconditional second factorial moment."""
+    records = []
+    for X in (20, 30, 50, 80):
+        primes = [p for p in primes_upto(2 * X) if X < p <= 2 * X]
+        zero_sets = {
+            p: [r for r in range(p) if b[r] % p == 0]
+            for p in primes
+        }
+        loads = [0] * (X * X)
+        for p in primes:
+            zeros = set(zero_sets[p])
+            for m in range(X * X):
+                loads[m] += int(m % p in zeros)
+        moment = sum(load * (load - 1) for load in loads)
+
+        crt_count = 0
+        for p in primes:
+            for q in primes:
+                if p == q:
+                    continue
+                for r in zero_sets[p]:
+                    for s in zero_sets[q]:
+                        multiplier = ((s - r) * pow(p, -1, q)) % q
+                        representative = r + p * multiplier
+                        check(0 <= representative < p * q,
+                              "CRT representative range")
+                        crt_count += int(representative < X * X)
+        check(moment == crt_count, f"CRT factorial identity X={X}")
+
+        lam = sum(
+            (Fraction(len(zero_sets[p]), p) for p in primes),
+            Fraction(0),
+        )
+        zero_mass = sum(len(zero_sets[p]) for p in primes)
+        check(Fraction(zero_mass) <= 2 * X * lam,
+              f"zero-mass/lambda comparison X={X}")
+        check(Fraction(moment) <= 4 * X * X * lam * lam,
+              f"second factorial bound X={X}")
+        records.append((X, len(primes), zero_mass, moment))
+    print("FACTORIAL-MOMENT-CRT", records, "constant=4")
 
 
 def exponent_budget_gate() -> None:
@@ -950,6 +1025,7 @@ def main() -> None:
     vector_parseval_and_full_spectrum_gate()
     hyperbola_clock_gate()
     master_digit_and_average_gate(b, a, d)
+    factorial_moment_gate(b)
     exponent_budget_gate()
 
 

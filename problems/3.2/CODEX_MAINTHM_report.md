@@ -559,10 +559,14 @@ For \(p>5\), (4.2) and \(n=p+r\) give
 
 \[
 \sum_{n\le X}\mathrm{TOP}_{p>5}(n)
-=R(X):=\#\{(p,r):p>5,\ r\in Z_p,\ p+r\le X\}. \tag{4.5}
+=R_{>5}(X):=\#\{(p,r):p>5,\ r\in Z_p,\ p+r\le X\}. \tag{4.5}
 \]
 
-The supplied identity_check.py did not check the left side: it tested \(p\mid b_{n-p}\). At \(p=5\), \(b_1\equiv0\), so division by \(5\) is invalid. In fact \(Z_5=\{1,3\}\), also refuting the proof.tex claim \(Z(5)=0\). The endpoint correction is
+Put \(R(X)=\#\{(p,r):r\in Z_p,\ 1\le r,\ p+r\le X\}\), now including
+the small primes. The supplied identity_check.py did not check the left side:
+it tested \(p\mid b_{n-p}\). At \(p=5\), \(b_1\equiv0\), so division by
+\(5\) is invalid. In fact \(Z_5=\{1,3\}\), also refuting the proof.tex claim
+\(Z(5)=0\). The exact endpoint correction is
 
 \[
 \sum_{n\le X}\mathrm{TOP}(n)
