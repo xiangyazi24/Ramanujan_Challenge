@@ -17,7 +17,7 @@
 \title{Solution to Ramanujan Challenge Problem 2.3:\\
 The Sum $\pi + e$ as an Ap\'ery Limit}
 \author{Xiang Huang\\{\small University of Illinois Springfield}\\{\small\texttt{xhuan5@uis.edu}}}
-\date{July 2026}
+\date{August 2026}
 
 \begin{document}
 \maketitle
@@ -35,10 +35,9 @@ and the ratio splits \emph{exactly}, with no asymptotic analysis:
 \[
 \frac{p_n}{q_n} \;=\; 4\,\frac{B_{n+2}}{A_{n+2}} \;+\; \frac{(n+3)!}{D_{n+3}}.
 \]
-Everything above is proved here and machine-checked in Lean~4. The single
-classical input we do not reprove is the value of Lambert's continued fraction,
-$B_m/A_m\to\pi/4$; it is isolated as an explicit hypothesis of the formal
-statement, so that the dependency is visible rather than hidden.
+Every step is proved here and machine-checked in Lean~4. In particular, the
+Lambert limit $B_m/A_m\to\pi/4$ is derived from a positive moment integral and
+a geometric remainder bound; it is not cited as an external input.
 \end{abstract}
 
 \section{The problem}
@@ -285,73 +284,84 @@ between $S_2 = 1/2$ and $S_3 = 1/3$. So the reciprocals converge to $e$.
 $\displaystyle \lim_{m\to\infty}\frac{B_m}{A_m} = \frac{\pi}{4}$.
 \end{theorem}
 
-This is classical, and it is the one ingredient of this solution that we cite
-rather than reprove. Precisely: $A_m$ and $B_m$ are the continuant sequences
-(denominators and numerators) of Lambert's continued fraction for $\arctan$
-evaluated at $z=1$,
-\[
-\arctan z = \cfrac{z}{1+\cfrac{z^2}{3+\cfrac{4z^2}{5+\cfrac{9z^2}{7+\ddots}}}},
-\qquad
-\frac{\pi}{4} = \arctan 1,
-\]
-whose partial numerators are $m^2$ and partial denominators $2m+1$ --- exactly
-the coefficients of~\eqref{eq:lambert}. Convergence and the value are due to
-Lambert~\cite{Lambert1761} and Legendre~\cite{Legendre1794}; modern treatments
-via Gauss's continued fraction for ratios of ${}_2F_1$ are in
-Wall~\cite[\S92]{Wall1948} and Jones--Thron~\cite[Ch.~6]{JonesThron1980}. An
-equivalent form is Brouncker's continued fraction for $4/\pi$, treated in
-detail by Khrushchev~\cite{Khrushchev2008}.
-
-What we \emph{can} supply unconditionally is the structure of the
-approximation, which pins down everything except the value of the limit.
-
-\begin{proposition}[Existence and rate]\label{prop:rate}
-The sequence $B_m/A_m$ converges. Indeed, by Lemma~\ref{lem:cas},
-\begin{equation}\label{eq:alt}
-\frac{B_m}{A_m} \;=\; 1 \;+\; \sum_{j=1}^{m}\frac{(-1)^{j}(j!)^2}{A_jA_{j-1}},
-\end{equation}
-an alternating series whose terms decrease strictly to $0$. Moreover, under the
-gauge $X_m = m!\,Z_m$ the recurrence~\eqref{eq:lambert} becomes
-$Z_m = \frac{2m+1}{m}Z_{m-1} + \frac{m}{m-1}Z_{m-2}$, with limiting
-characteristic polynomial $r^2-2r-1$ and roots $1\pm\sqrt2$. Hence $A_m$ is the
-dominant solution, the linear form $R_m := A_m\frac{\pi}{4}-B_m$ is the
-recessive one, and
-\[
-\Bigl|\frac{\pi}{4}-\frac{B_m}{A_m}\Bigr| = \frac{|R_m|}{A_m}
-= O\bigl((3-2\sqrt2)^m\bigr),
-\qquad 3-2\sqrt2 = 0.17157\ldots
-\]
-\end{proposition}
-
 \begin{proof}
-Dividing $\Cas_m = A_mB_{m-1}-A_{m-1}B_m = (-1)^{m+1}(m!)^2$ by $A_mA_{m-1}$
-gives $B_{m-1}/A_{m-1} - B_m/A_m = (-1)^{m+1}(m!)^2/(A_mA_{m-1})$; summing from
-$1$ to $m$ and using $B_0/A_0 = 1$ yields~\eqref{eq:alt}. For the terms
-$t_m := (m!)^2/(A_mA_{m-1})$, positivity of the coefficients gives
-$A_m \ge (2m+1)A_{m-1}$ and hence
-$A_{m+1} \ge \bigl[(2m+3)(2m+1)+(m+1)^2\bigr]A_{m-1}$, so
+Put
 \[
-\frac{t_{m+1}}{t_m} = \frac{(m+1)^2A_{m-1}}{A_{m+1}}
-\le \frac{(m+1)^2}{5m^2+10m+4} \xrightarrow[m\to\infty]{} \frac15 .
+s=\sqrt2,\qquad c=2-s,\qquad P(x)=x(1-x),\qquad D(x)=1-cP(x),
 \]
-Thus $t_m$ is strictly decreasing and tends to $0$ geometrically, and the
-alternating series~\eqref{eq:alt} converges. This much is unconditional and
-elementary.
+and, for $r\ge0$, define the positive moments
+\begin{equation}\label{eq:moment}
+K_r:=\int_0^1\frac{P(x)^r}{D(x)^{r+1}}\,dx.
+\end{equation}
+On $[0,1]$ we have $0\le P(x)\le1/4$ and $0<c<1$, hence $D(x)>0$.
 
-The final assertion about the rate is the only place where we invoke asymptotic
-theory. The gauge computation is immediate; since the limiting characteristic
-roots $1\pm\sqrt2$ have distinct moduli, Poincar\'e's theorem
-(see~\cite[Ch.~8]{Elaydi2005}) applies, giving that every solution has
-$|Z_m|^{1/m}$ tending to $|1+\sqrt2|$ or $|1-\sqrt2|$, and the linear form $R_m$
-is the recessive one. The stated exponent is the ratio
-$\bigl|(1-\sqrt2)/(1+\sqrt2)\bigr| = 3-2\sqrt2$. Nothing in
-Theorem~\ref{thm:main} depends on this paragraph.
+We first compute two initial moments. Substituting $y=2x-1$ and using
+$\arctan(s-1)=\pi/8$ gives
+\begin{equation}\label{eq:K0}
+K_0=\frac4s\arctan(s-1)=s\frac{\pi}{4}.
+\end{equation}
+For completeness, the arctangent identity follows from the double-angle
+formula: $2(s-1)/(1-(s-1)^2)=1$, and both angles lie in $(0,\pi/2)$.
+Next, direct differentiation gives
+\[
+\frac{d}{dx}\frac{1-2x}{D(x)}
+=-s\frac1{D(x)}-2\frac{P(x)}{D(x)^2}.
+\]
+The expression on the left takes the values $1$ and $-1$ at the two
+endpoints. Integrating and using~\eqref{eq:K0}, we obtain
+\begin{equation}\label{eq:K1}
+K_1=1-\frac{\pi}{4}.
+\end{equation}
+
+The same integration-by-parts mechanism gives the whole recurrence. For every
+$r\ge0$, algebraic differentiation yields
+\begin{align*}
+\frac{d}{dx}\left(
+  \frac{(1-2x)P(x)^{r+1}}{D(x)^{r+2}}
+\right)
+={}&(r+1)\frac{P(x)^r}{D(x)^{r+1}}
+ -(2r+3)s\frac{P(x)^{r+1}}{D(x)^{r+2}}\\
+&-2(r+2)\frac{P(x)^{r+2}}{D(x)^{r+3}}.
+\end{align*}
+Because $P(0)=P(1)=0$, the boundary term vanishes. Thus
+\begin{equation}\label{eq:Krec}
+2(r+2)K_{r+2}=(r+1)K_r-(2r+3)sK_{r+1}.
+\end{equation}
+
+Define
+\[
+E_r:=\frac{r!s^r}{s}K_r.
+\]
+Equations~\eqref{eq:K0}--\eqref{eq:Krec} become
+\[
+E_0=\frac{\pi}{4},\qquad E_1=1-\frac{\pi}{4},\qquad
+E_{r+2}=(r+1)^2E_r-(2r+3)E_{r+1}.
+\]
+Comparing this recurrence and its two initial values with
+\eqref{eq:lambert}, induction gives the exact remainder formula
+\begin{equation}\label{eq:lambert-remainder}
+A_{r-1}\frac{\pi}{4}-B_{r-1}=(-1)^r E_r
+\qquad(r\ge0).
+\end{equation}
+
+It remains only to show that this remainder is negligible relative to $A_m$.
+Since $P/D\le1/(2+s)$ on $[0,1]$, positivity of the integrand gives
+\[
+0\le K_r\le \left(\frac1{2+s}\right)^rK_0.
+\]
+Using $s/(2+s)=s-1$ and~\eqref{eq:K0}, this implies
+\begin{equation}\label{eq:Ebound}
+0\le E_r\le r!(s-1)^r\frac{\pi}{4}.
+\end{equation}
+The positive recurrence for $A_m$ also gives $A_{r-1}\ge r!$ by induction.
+Taking $r=m+1$ in~\eqref{eq:lambert-remainder} and applying
+\eqref{eq:Ebound}, we conclude that
+\[
+\left|\frac{\pi}{4}-\frac{B_m}{A_m}\right|
+\le \frac{\pi}{4}(\sqrt2-1)^{m+1}\longrightarrow0,
+\]
+because $0<\sqrt2-1<1$.
 \end{proof}
-
-So the content of Theorem~\ref{thm:lambert} that we import is precisely the
-\emph{value} $\pi/4$ of an alternating series that is unconditionally shown
-here to converge geometrically. Numerically, $|R_m|/A_m$ agrees with
-$0.221\cdot(3-2\sqrt2)^m$ to three significant figures for $10\le m\le 20$.
 
 \begin{theorem}[Main]\label{thm:main}
 $\displaystyle\lim_{n\to\infty}\frac{p_n}{q_n} = \pi + e$.
@@ -380,9 +390,9 @@ Theorem~\ref{thm:tensor} does in closed form.
 \section{Formal verification}\label{sec:formal}
 
 The accompanying Lean~4 development (\texttt{lean/}, toolchain
-\texttt{leanprover/lean4:v4.30.0}, Mathlib pinned in \texttt{lake-manifest.json})
-builds with \textbf{0 errors and 0 \texttt{sorry}} and formalises the whole
-argument above except Theorem~\ref{thm:lambert}. The principal statements are:
+\texttt{leanprover/lean4:v4.29.0}, Mathlib pinned in \texttt{lake-manifest.json})
+builds with \textbf{0 errors and 0 \texttt{sorry}} and formalises the entire
+argument above, including Theorem~\ref{thm:lambert}. The principal statements are:
 
 \begin{center}
 \begin{tabular}{ll}
@@ -392,6 +402,7 @@ argument above except Theorem~\ref{thm:lambert}. The principal statements are:
 \texttt{challengeQ\_zero}\,\dots\,\texttt{challengeP\_three} & the eight initial values~\eqref{eq:init}\\
 \texttt{C0\_ne\_zero}, \texttt{eq\_of\_satisfiesRec} & Lemma~\ref{lem:c0} and uniqueness\\
 \texttt{ratio\_split} & Corollary~\ref{cor:split}\\
+\texttt{lambertB\_div\_lambertA\_tendsto\_pi\_div\_four} & Theorem~\ref{thm:lambert}\\
 \texttt{factorial\_div\_derang\_tendsto\_exp\_one} & Lemma~\ref{lem:e}\\
 \texttt{problem23\_pi\_add\_e} & Theorem~\ref{thm:main}\\
 \end{tabular}
@@ -405,16 +416,12 @@ algebraic ones (\texttt{tensor\_rec}, \texttt{challengeQ\_rec},
 \texttt{numDerangements\_tendsto\_inv\_e} after proving that our \texttt{derang}
 agrees with Mathlib's \texttt{numDerangements}.
 
-Theorem~\ref{thm:lambert} appears as an explicit \emph{hypothesis}:
+The top-level theorem has no mathematical hypotheses:
 \begin{verbatim}
-theorem problem23_pi_add_e
-    (hLambert : Tendsto (fun m => (lambertB m : R) / (lambertA m : R))
-                  atTop (nhds (Real.pi / 4))) :
+theorem problem23_pi_add_e :
     Tendsto (fun m => (challengeP m : R) / (challengeQ m : R))
       atTop (nhds (Real.pi + Real.exp 1))
 \end{verbatim}
-We chose this over introducing an axiom or a \texttt{sorry} so that the reliance
-on the classical continued fraction is legible in the statement itself.
 
 \section{Numerical verification}\label{sec:numeric}
 
@@ -428,42 +435,10 @@ $q_1 = 1836$, $q_2 = 97680$, $p_1 = 10656$, $p_2 = 573344$.
 values, so that no accidental agreement of a particular solution can be
 mistaken for the general identity.
 \item It evaluates $p_n/q_n$ in high precision: at $n=50$ the agreement with
-$\pi+e = 5.859874482048838\ldots$ is to $40$ decimal places, consistent with the
-geometric rate $(3-2\sqrt2)^n$ of Proposition~\ref{prop:rate}.
+$\pi+e = 5.859874482048838\ldots$ is to $40$ decimal places.
 \end{enumerate}
 
-\begin{thebibliography}{10}
-
-\bibitem{Elaydi2005}
-S.~Elaydi,
-\emph{An Introduction to Difference Equations}, 3rd ed., Springer, 2005.
-
-\bibitem{JonesThron1980}
-W.~B.~Jones and W.~J.~Thron,
-\emph{Continued Fractions: Analytic Theory and Applications},
-Encyclopedia of Mathematics and its Applications~11, Addison--Wesley, 1980.
-
-\bibitem{Khrushchev2008}
-S.~Khrushchev,
-\emph{Orthogonal Polynomials and Continued Fractions: From Euler's Point of View},
-Cambridge University Press, 2008.
-
-\bibitem{Lambert1761}
-J.~H.~Lambert,
-\emph{M\'emoire sur quelques propri\'et\'es remarquables des quantit\'es
-transcendantes circulaires et logarithmiques},
-Histoire de l'Acad\'emie Royale des Sciences et Belles-Lettres de Berlin
-\textbf{17} (1761/1768), 265--322.
-
-\bibitem{Legendre1794}
-A.-M.~Legendre,
-\emph{\'El\'ements de g\'eom\'etrie}, Paris, 1794; Note~IV.
-
-\bibitem{Wall1948}
-H.~S.~Wall,
-\emph{Analytic Theory of Continued Fractions},
-Van Nostrand, 1948.
-
+\begin{thebibliography}{1}
 \bibitem{Challenge2026}
 Ramanujan Machine Group,
 \emph{The Ramanujan Challenge for AI}, 2026.

@@ -38,9 +38,14 @@ Prove: lim p_n/q_n = π + e
 - Product factorization L = Q·P: EXISTS (uisai2 ore_algebra)
 - But P and Q don't cleanly separate π from e
 
-### ChatGPT "proof" via Lambert+derangement: DEBUNKED
-- Lambert CF A_m/B_m → I₀(2)/I₁(2) ≈ 0.698, NOT π
-- Initial values don't match
+### Superseded false Lambert lead
+- The debunked lead used the different recurrence implemented in
+  `verify_decomposition.py`; its ratio tends to a Bessel-value quotient and its
+  initial values do not match.
+- The final proof uses `X_m = (2m+1)X_{m-1}+m²X_{m-2}`. Its tensor identity and
+  all initial values are kernel-checked in `lean/RamanujanChallenge/Problem23.lean`.
+  A positive moment representation now proves its ratio tends to `π/4`, so the
+  final theorem is fully unconditional.
 
 ## Approach Ideas (updated)
 - The non-semisimple structure suggests a Jordan-block phenomenon

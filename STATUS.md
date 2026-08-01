@@ -72,9 +72,10 @@ Order 4 = 2 × 2. The challenge operator annihilates every product
 `X_{n+2} Y_{n+3}` of a Lambert-recurrence solution with a derangement-recurrence
 solution; `m!` satisfies the *same* recurrence as `D_m`, which is why π and e
 appear together and additively. Hence the **exact** splitting
-`p_n/q_n = 4·B_{n+2}/A_{n+2} + (n+3)!/D_{n+3}`. Lean: 0 sorry, standard axioms
-only, no `native_decide`; the sole cited input (Lambert's CF value π/4) is an
-explicit hypothesis of the theorem statement.
+`p_n/q_n = 4·B_{n+2}/A_{n+2} + (n+3)!/D_{n+3}`. The Lambert value is now proved
+from a positive moment representation and geometric remainder bound. Lean: 0
+sorry, standard axioms only, no `native_decide`; the main theorem is fully
+unconditional.
 
 ## P3.2 — gcd(d_n a_n, d_n b_n) = e^{o(n)} for Apéry sequences
 

@@ -13,6 +13,7 @@ open RamanujanChallenge.P23
 #print axioms C0_ne_zero
 #print axioms eq_of_satisfiesRec
 #print axioms ratio_split
+#print axioms lambertB_div_lambertA_tendsto_pi_div_four
 #print axioms factorial_div_derang_tendsto_exp_one
 #print axioms problem23_pi_add_e
 

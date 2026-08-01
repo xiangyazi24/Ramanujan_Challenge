@@ -12,7 +12,7 @@ Attacking all 10 problems from [The Ramanujan Challenge for AI](https://www.rama
 |---|------|--------|--------|
 | 2.1 | Polynomial continued fraction for π | PCF = 6/(3-π) | Open |
 | 2.2 | Euler's γ as Apéry limit | p_n/q_n → γ (4-term recurrence) | Open |
-| 2.3 | π + e as Apéry limit | p_n/q_n → π+e (5-term recurrence) | Open |
+| 2.3 | π + e as Apéry limit | p_n/q_n → π+e (5-term recurrence) | Lean formalized (unconditional) |
 | 2.4 | Harmonic/polylogarithm + zeta | Double sum = Li₄ + log + ζ combo | Open |
 | 2.5 | Catalan's G rational approx | 3×3 matrix recurrence → G | Open |
 | 2.6 | Series for ζ(2)+ζ(3) | 2077/720 + Σu_j = ζ(2)+ζ(3) | Lean formalized (unconditional) |

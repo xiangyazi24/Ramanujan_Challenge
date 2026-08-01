@@ -25,8 +25,8 @@ P2.3 has been **rebuilt with real content** — see below.
 ## Status
 
 - **Genuine `sorry`s** (declared-hard statements): P24 (1), P25 (1), P28 (1), P32 (3).
-- **Genuinely proved**: P2.1 (unconditional), P2.3 (full chain modulo one cited classical input),
-  P2.6 (unconditional full chain), plus real auxiliary content in P2.2
+- **Genuinely proved**: P2.1, P2.3, and P2.6 (all unconditional),
+  plus real auxiliary content in P2.2
   and the P3.1 and P3.2 layers.
 - **Conditionally proved**: P2.5 (`problem25_solved : Problem25Claim` modulo
   `catalanError_over_denominator_tendsto_zero` — the Padé remainder subdominance).
@@ -49,7 +49,7 @@ All non-`sorry` theorems axiom-clean: {propext, Classical.choice, Quot.sound}.
 |---------|--------|-------|--------------------------|
 | P2.1 | Problem21.lean | 0 ✅ | **full chain**: Cohen Entry 5.3.22 sign-flip, even contraction, moment integral J_n→0, unconditional `problem21_pcf_value`. |
 | P2.2 | Problem22.lean | 0 | the four shift identities `c̃_j(m) = c_j(m−3)` (`ring`). **Limit not formalized.** |
-| P2.3 | Problem23.lean | 0 ✅ | **full chain**: tensor-annihilation theorem for arbitrary solutions, closed forms solve the recurrence, all 8 initial values, `c₀ ≠ 0` + uniqueness, exact ratio splitting, `m!/D_m → e` from Mathlib, main theorem — conditional only on Lambert's CF value, which is an explicit hypothesis |
+| P2.3 | Problem23.lean | 0 ✅ | **complete unconditional chain**: tensor annihilation, closed forms, all 8 initial values, uniqueness, exact ratio splitting, `m!/D_m → e`, plus a positive-moment proof of `B_m/A_m → π/4`; `problem23_pi_add_e` has no mathematical hypothesis |
 | P2.4 | Problem24.lean | 1 ⚠️ | strong form (polylogarithm identity) left as `sorry` |
 | P2.5 | Problem25.lean + Problem25Connection.lean + Problem25Integral.lean + Problem25Moment.lean | 1 ⚠️ | ~2800 lines across 4 files. CMF transcription, row recurrences, det factorization, Pochhammer gauge, Poincaré cubic, sign conjugation, positive cocycle, nonvanishing denominators, convex-hull nesting, Catalan error recurrence + initial signs. **Problem25Connection.lean** (757 lines): unconditional projective contraction → all 3 ratios converge to `commonLimit` (2/3 geometric rate). `Problem25Claim ↔ commonLimit = catalanConstant`. **Problem25Integral.lean** (214 lines, 0 sorry): Catalan integral identity `catalanConstant = ∫₀¹(-log t)/(1+t²)dt` via FTC + dominated convergence (integration by parts for ∫t^k(-log t)dt = 1/(k+1)², geometric series pointwise convergence, norm summability). **Problem25Moment.lean** (227 lines, 1 sorry): moment formulas, remainder polynomial, `integral_neg_log_01`, full chain `catalanError_over_denominator_tendsto_zero → commonLimit_eq_catalanConstant → problem25_solved : Problem25Claim`. **Gap: `catalanError_over_denominator_tendsto_zero` (Padé remainder subdominance — the catalanError's Perron coefficient is zero).** |
 | P2.6 | Problem26.lean + 5 aux files | 0 ✅ | **Complete unconditional formalization** (6246 lines). Exact recurrence and initial values, uniqueness, Ore factorization and reduction of order, summability, generating-function/integral bridge, weight-2 and nested weight-3 inverse-binomial evaluations, and the cyclotomic logarithmic integral are all proved. `problem26_hasSum_of_spec` states convergence and the value for every rational sequence satisfying the printed recurrence and initial values. Lean v4.29; axiom audit: `{propext, Classical.choice, Quot.sound}`. |

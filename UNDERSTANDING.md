@@ -83,6 +83,22 @@ from a lemma proved fifteen minutes earlier, and a Landen identity that already
 existed in `Problem26WeightThree` while a hundred lines were spent re-deriving
 it. Assume more exist. Grep by statement shape, not just by name.
 
+## Problem 2.3 is fully unconditional (2026-08-01)
+
+`lean/RamanujanChallenge/Problem23.lean` proves the entire challenge statement
+without a Lambert-limit hypothesis. The missing value `B_m/A_m → π/4` is now
+obtained from the positive moments
+
+```
+K_n = ∫₀¹ [x(1-x)]ⁿ / [1-(2-√2)x(1-x)]ⁿ⁺¹ dx.
+```
+
+Their recurrence and initial values identify the normalized moments with the
+alternating Lambert remainder; `x(1-x)/D(x) ≤ 1/(2+√2)` supplies geometric
+decay. The public capstone `problem23_pi_add_e` therefore has no mathematical
+hypothesis. The human proof is `problems/2.3/proof.tex`; the standalone package
+under `SUBMIT/2.3/` is pinned to Lean/Mathlib v4.29.0.
+
 ## `lake env lean` is not a gate on a large file — use `lake build`
 
 On `Problem24QuadraticAlt.lean` this bit four separate times in one session:

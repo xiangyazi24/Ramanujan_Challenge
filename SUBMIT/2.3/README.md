@@ -10,7 +10,7 @@ Contact: xhuan5@uis.edu
 ## What is in this package
 
 ```
-solution.pdf / solution.tex   human-readable proof (REQUIRED ARTIFACT), 7 pages
+solution.pdf / solution.tex   human-readable proof (REQUIRED ARTIFACT), 6 pages
 lean/                         self-contained Lean 4 formalization
 verify.py                     exact-arithmetic certificates, reproducible
 README.md                     this file
@@ -56,26 +56,40 @@ p_n / q_n  =  4 · B_{n+2}/A_{n+2}  +  (n+3)!/D_{n+3}   →   4·(π/4) + e  =  
 No Poincaré–Perron or Birkhoff asymptotics enter the proof of the limit; the
 splitting is an identity valid term by term.
 
+The Lambert half is also proved internally. With `s = √2`,
+`P(x) = x(1-x)`, and `D(x) = 1-(2-s)P(x)`, the positive moments
+
+```
+K_r = integral_0^1 P(x)^r / D(x)^(r+1) dx
+```
+
+satisfy the same recurrence as the alternating Lambert remainder after the
+normalization `E_r = r! s^r K_r / s`. Their initial values are
+`E_0 = π/4`, `E_1 = 1-π/4`. The pointwise bound
+`P(x)/D(x) ≤ 1/(2+s)` gives
+`E_r ≤ r!(s-1)^r π/4`; together with `A_{r-1} ≥ r!`, this proves
+`B_m/A_m → π/4` geometrically and without an external hypothesis.
+
 ## The Lean formalization, and exactly what it proves
 
 `lean/` is a **self-contained** Lake project: `Ramanujan23/Problem23.lean`
-imports only `Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic` and
-`Mathlib.Combinatorics.Derangements.Exponential`, and nothing outside `lean/`.
+imports only Mathlib modules and nothing outside `lean/`.
 
 **Build status.**
 
 ```
-Build completed successfully (2071 jobs).   0 errors, 0 sorry
+Problem23.lean elaborated successfully.   0 errors, 0 sorry
+AxiomCheck.lean completed successfully.   no nonstandard axioms
 ```
 
-against the pinned toolchain `leanprover/lean4:v4.30.0` and Mathlib
-`c5ea00351c28…` (tag `v4.30.0`), fixed in `lean-toolchain` and
+against the pinned toolchain `leanprover/lean4:v4.29.0` and Mathlib tag
+`v4.29.0`, fixed in `lean-toolchain` and
 `lake-manifest.json`.
 
-*Scope of what we verified:* the project was built as a standalone Lake package
-with these pins, from these sources alone. We did not additionally rebuild it
-from scratch on a fresh machine with a cold Mathlib cache; the Mathlib build
-artifacts were reused from the same pinned revision. To reproduce from nothing:
+*Scope of what we verified:* the source was elaborated as a standalone Lake
+package with these pins, a fresh module `olean` was generated, and
+`AxiomCheck.lean` was run against that artifact. Mathlib build artifacts were
+reused from the same pinned revision. To reproduce from nothing:
 
 ```bash
 cd lean
@@ -95,8 +109,9 @@ lake env lean AxiomCheck.lean
 | `C0_ne_zero` | `c_0(n) ≠ 0` for every integer `n ≥ 1` |
 | `eq_of_satisfiesRec` | a solution over a char-0 field is determined by its first four values |
 | `ratio_split` | the exact splitting identity above |
+| `lambertB_div_lambertA_tendsto_pi_div_four` | `B_m/A_m → π/4`, from the positive moment representation |
 | `factorial_div_derang_tendsto_exp_one` | `m!/D_m → e` |
-| `problem23_pi_add_e` | the main theorem, given the Lambert hypothesis |
+| `problem23_pi_add_e` | the unconditional main theorem |
 
 **Axiom audit.** `#print axioms` on the verified build (`AxiomCheck.lean`)
 reports **only the three standard axioms**, and less for the algebraic core:
@@ -106,49 +121,23 @@ reports **only the three standard axioms**, and less for the algebraic core:
 | `factorial_isDerRec` | `propext` |
 | `tensor_rec`, `challengeQ_rec`, `challengeP_rec` | `propext, Quot.sound` |
 | `C0_ne_zero`, `eq_of_satisfiesRec`, `ratio_split` | `propext, Classical.choice, Quot.sound` |
+| `lambertB_div_lambertA_tendsto_pi_div_four` | `propext, Classical.choice, Quot.sound` |
 | `factorial_div_derang_tendsto_exp_one` | `propext, Classical.choice, Quot.sound` |
 | `problem23_pi_add_e` | `propext, Classical.choice, Quot.sound` |
 
 There is **no `native_decide`** anywhere in this development, and no `sorry`.
 
-**The one hypothesis that remains.** The top-level theorem is stated
-**conditionally** on the classical value of Lambert's continued fraction:
+**No mathematical hypothesis remains.** The top-level theorem is:
 
 ```lean
-theorem problem23_pi_add_e
-    (hLambert : Tendsto (fun m => (lambertB m : ℝ) / (lambertA m : ℝ))
-                  atTop (𝓝 (Real.pi / 4))) :
+theorem problem23_pi_add_e :
     Tendsto (fun m => (challengeP m : ℝ) / (challengeQ m : ℝ))
       atTop (𝓝 (Real.pi + Real.exp 1))
 ```
 
-`lambertA`, `lambertB` are the continuant sequences of
-
-```
-arctan z = z / (1 + z²/(3 + 4z²/(5 + 9z²/(7 + …)))),      π/4 = arctan 1,
-```
-
-whose partial numerators `m²` and partial denominators `2m+1` are exactly the
-coefficients of the `L`-recurrence. The convergence and the value are due to
-Lambert (1761) and Legendre (1794); see Wall, *Analytic Theory of Continued
-Fractions* §92, or Jones–Thron Ch. 6, for modern proofs via Gauss's continued
-fraction for `₂F₁` ratios. We deliberately kept this as an explicit hypothesis
-rather than an axiom or a `sorry`, so that the dependency is visible in the
-statement itself.
-
-What the submission *does* establish unconditionally about that limit
-(§5 of `solution.pdf`): from the Casorati determinant
-`A_m B_{m-1} - A_{m-1} B_m = (-1)^{m+1} (m!)²` we get
-
-```
-B_m/A_m  =  1 + Σ_{j=1}^{m} (-1)^j (j!)² / (A_j A_{j-1}),
-```
-
-an alternating series whose terms are proved to decrease strictly to 0 with
-ratio ≤ 1/5. So the *existence* of the limit is unconditional and elementary;
-what is imported from the classical literature is its *value*.
-
-The `e` half is fully formal: our `derang` is proved equal to Mathlib's
+The Lambert moment recurrence, both moment initial values, the geometric
+majorization, and the normalized remainder identity are all formalized in the
+same file. The `e` half is likewise fully formal: our `derang` is proved equal to Mathlib's
 `numDerangements`, and the limit comes from Mathlib's
 `numDerangements_tendsto_inv_e`.
 
@@ -170,7 +159,7 @@ It performs three checks:
    particular solution cannot be mistaken for the general identity.
 3. **The limit.** At `n = 50`, `p_n/q_n` agrees with
    `π + e = 5.859874482048838473822930854632…` to 40 decimal places
-   (error `1.4e-41`), consistent with the geometric rate `(3-2√2)^n`.
+   (error `1.4e-40`), consistent with the geometric rate `(3-2√2)^n`.
 
 ## References
 
