@@ -1,0 +1,17 @@
+[P3.2 cron] Writeup: "One wall, four coordinates" — the campaign-map synthesis section. One ```latex block, self-contained, \newtheorem placeholders (conjecture/remark/definition), labels wall:l2, wall:galois, wall:crystal, wall:carrier, wall:combinatorial, rem:one-wall.
+
+Content (synthesis of banked results; statements only, one-paragraph discussions):
+
+wall:l2 [master statement]: the quenched triangular all-level L2 sieve [WALL] for Delta_p(r,h)=b_r c_{r+h}-c_r b_{r+h} (full quantified box/weight form; its six shadows: MESO-PAIR, T3/ATR, sigma ladder endpoint, BLOCK-SUBQUAD, GPRV, COINC; note [WALL-zero] suffices for all but COINC; note the gauge caveat for all-level statements).
+
+wall:galois [FAV]: for the Artin representations of the gap family M_h: sum_{h<=p}|Tr rho_h(Frob_p)-E_h|^2=O(p); GRH insufficient by p^{5+}; GRH+[FAV] => GPRV; equivalent post-lift to a bounded-conductor second moment (P1-P5 lift conditions).
+
+wall:crystal [Index-Mellin comparison]: existence of finite-rank T, fixed Phi_p, correspondence K with C_h - mu_h = Tr(K Phi_p^h|T) + e_h, sum|e_h|^2=O(p); the verified depth tower (p^3c[p+v]=(p^3c[p])K_v(p) mod p^7) is the index-cocycle evidence; missing piece: cocycle-to-single-Frobenius comparison (index Frobenius vs t-Frobenius).
+
+wall:carrier [clock compression]: the universal two-clock carrier exists (flat GL_2 x GL_2 transfer cocycle U_{m+g}(X)=U_g(X+m)U_m(X); balanced incidence = fixed codim-2 determinantal/Plucker condition); what is missing is not rank but clock-complexity compression: an Apery-specific quotient in which index translation is bounded-complexity (candidate mechanisms: higher-order bispectral, Cartier semilinear via the digit structure, Mellin character, mixed-Frobenius inner shift).
+
+wall:combinatorial [mesoscopic normalization]: pure combinatorics is complete up to logs — the sigma ladder ends at [ABSTRACT-Q-H2LOGH] (Q_H <= 22C H^2(1+log H), exponent optimal) and [NEAR-WALL-3/7] (K_p << HD^{11/7}); the remaining combinatorial-arithmetic interface statements are the log removal (equivalent to prefix subquadraticity), the mesoscopic bound Q_D << N at D=sqrt(N)L (worst-case window coupling must be replaced by variance input), and [MIDPOINT-AC_rho] (Cauchy-defect anti-correlation at the critical aspect ratio).
+
+rem:one-wall: these are four coordinates of ONE missing theorem — each asks that the deterministic nonautonomous clock h acquire bounded algebraic complexity (bounded conductor / fixed Frobenius / compressed carrier / sub-worst-case coupling); any one coordinate falling makes the others fall through the banked reductions; the experimental record (Poisson+mirror at every tested statistic: four-moment, FFT low-frequency, Radon B_p bounded, supercritical Q_D strata) is consistent with the wall's truth and gives no free arithmetic structure to exploit.
+
+No bibliography. Final: (a) least-confident phrasing? (b) blind spot?

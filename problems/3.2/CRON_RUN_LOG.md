@@ -66,3 +66,17 @@
   null 预言表→cron10); codex max×3(mesopair 五量表诊断/qdsup 超临界分层/ghirred
   G_h 绝对不可约 h≤40)。cron6/8/9 数分钟即返(Q6594/6595/6596)——tab 明显非 SOL 档,
   按滑步规则暂不入账, 重推/自验后处理(Q6595 的 LP 判定自跑 Python 独立验证)。
+- segment 4 结果账（至 ~13:3x，附录 AT.1–AT.12，commits b448f7a..76761e4+)：**单 segment 四个无条件定理**：
+  [Q-SIGMA-1/2] 敌审 CONFIRMED 定格（27/4 常数+抽象盒引理+master 8.1）→ life 并卷；
+  [THM-ABSTRACT-Q-H2LOGH]（σ 梯到顶 σ=1−ε，指数 2 最优，三重验证：手工+下界机验+敌审零缺陷）；
+  [THM-NEAR-WALL-3/7]（K≪HD^{11/7}，W-注入引理，恒等式机验；bootstrap 固定点{2,16/7}与 H²logH 会师）；
+  MESO-PAIR 正攻（axis-strip 归约新引理+balanced core 定格+raw 结式判死）。
+  T3: 13/6→2+o(1)。墙收敛为"一墙四坐标"（FAV-lift/Index-Mellin/clock-compression/mesoscopic 归一化）。
+  实验三连收官：radon2（B_p 有界 vs binomial 对照 1.98，GPRV 主诊断过）、qdsup（1764 恒等式零失败，
+  无薄 family，Poisson+镜像定格）、lowrank（双负向，无低秩 carrier）。质检四件+勘误两处交 life。
+  U1 偏移勘误（多项式层 a+1 非 a，轨道正则点仍 a——gauge 冻结警告入档）。
+  双向审计制度两次工作：Q6605 两 ERROR 判决被我方反审计+独立仲裁推翻（2-1 带完整推导）；
+  Q6610 镜像修正 D²/8 判废（差三个数量级）。
+  在飞：cron2 CRIT-2H all-h、cron3 log/meso、cron4 clock-compression 四机制、cron5 q=2 重跑+MIDPOINT-AC、
+  cron6 NEAR-WALL 敌审、cron8 box 簿记、cron9 一墙四坐标 writeup；codex×4（mesopair_diag/ghirred/crit2h/wallprobe）。
+  cron1/7/10 阵亡。与 life 总攻协同（角度错开，Abel 观察回赠）。
