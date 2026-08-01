@@ -1,0 +1,13 @@
+[q71 LASTSTAND — BROWSE AND VERIFY: exact literature status of collisions/zeros of reciprocal partial sums mod p. Use web browsing; quote exact theorems. life4]
+
+Q6751 flagged all citations UNVERIFIED. Your task: browse and pin down the actual state of the art. For each item, give: authors, year, exact theorem statement (in ASCII), and whether it implies anything for our target. Do NOT reason from memory alone; verify by browsing. If browsing is unavailable, say so at the top and give your best-memory citations clearly labeled.
+
+Target shape for calibration: for the harmonic walk H_r = sum_{n<=r} 1/n mod p, bound
+  T1(D) = sum_{D/2<d<=D} #{r <= p-2-d : H_{r+d} == H_r (mod p)}  by  D^(2-eta),  D ~ sqrt(p) * L.
+
+Items to verify:
+1. Distribution/equidistribution of H_r mod p as r ranges over [1, p-1]: strongest known discrepancy or second-moment (energy) bound. (Search: "harmonic sums modulo p distribution", "partial sums of the harmonic series modulo p", authors Shkredov, Shparlinski, Garaev, Korolev; also "Fermat quotients distribution" — H_{p-1}-type objects relate to Fermat quotients, and there is a literature on the distribution of Fermat quotients q_p(a) with strong results by Ostafe-Shparlinski, Bourgain-Ford-Konyagin-Shparlinski. Fermat quotient equidistribution may transfer to H_r since H-sums and Fermat quotients are linked by known congruences — pin the exact link and what it buys.)
+2. Solution counts of H_{r+d} - H_r == c mod p for FIXED d or averaged over d: anything known? (Search: "reciprocal sums congruence solutions", "Lehmer problem reciprocals intervals", Bourgain-Garaev incomplete Kloosterman sums, "sums of inverses in intervals modulo p" — the quantity sum_{n in (r, r+d]} 1/n == 0 is a shifted-interval inverse sum; zero-counts of such sums may appear in work on Kloosterman sums over intervals / Karatsuba's inverse-sum problems.)
+3. Additive energy of the SEQUENCE (H_r)_{r<=p}: known upper bounds below the trivial? (This equals total collision pairs over all distances + p; any nontrivial bound implies distance-averaged information.)
+4. Any result specifically about the DISTANCE distribution of collisions (pairs r<s, H_r=H_s, with s-r localized in a strip)? This is the exact shape we need; likely absent — confirm absence after searching.
+Verdict: classify our toy target as KNOWN / PARTIAL (which piece) / OPEN, with the citation trail. This calibrates whether the Apery wall is Apery-specific or a general frontier.
