@@ -43,7 +43,7 @@ not `(s,r,-z)`.  The latter is correct only after switching to the opposite pole
 | 7 | 2 | (1,5) | `2.4491103e-111` |
 | 12 | 5 | (4,7) | `2.6254668e-99` |
 
-The transfer anchors were also checked symbolically in the implementation: `lambda_+- = 17 +- 12 sqrt(2)` and the two normalized diagonal drifts used by the limiting object are both `-3/2`; consequently no `n^d` ratio remains in `K_infinity`.
+The exact transfer anchors used by the implementation are `lambda_+- = 17 +- 12 sqrt(2)` and the two normalized diagonal drifts used by the limiting object are both `-3/2`; consequently no `n^d` ratio remains in `K_infinity`.
 
 ## K_infinity bulk template (uncertified)
 
@@ -51,8 +51,8 @@ The code implements `K_infinity(z)=phi(-z)phi(z)+z^6 gamma(-z)gamma(z)` through 
 
 | Re(z) | Im(z) | residual (fit) | shorter-fit check | Newton correction |
 |---:|---:|---:|---:|---:|
-| `-0.5000000000000000000008359435742539470351` | `-0.1103178000763257967025342734633929459559` | `9.1606938e-102` | `8.9465807e-18` | `1.8443096e-52` |
-| `-0.5000000000000000000008359435742539470351` | `0.1103178000763257967025342734633929459559` | `9.1606938e-102` | `8.9465807e-18` | `1.8443096e-52` |
+| `-0.5` | `-0.1103178000763258` | `9.1606938e-102` | `8.9465807e-18` | `1.8443096e-52` |
+| `-0.5` | `0.1103178000763258` | `9.1606938e-102` | `8.9465807e-18` | `1.8443096e-52` |
 
 The outer seed attempts did not converge to additional finite roots; their final diagnostics are retained in `CRON_kinf_results.json`.  The finite central-cell outer branches move outward with `m`, so they are not silently counted as finite `K_infinity` branches.  Without a certified outer-contour count this is evidence of escape, not an exhaustive theorem about all finite `H_infinity` zeros.
 

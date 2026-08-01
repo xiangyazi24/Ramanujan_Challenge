@@ -827,8 +827,12 @@ def isolate_kinfinity_roots(
         shorter_residual, _ = shorter_cell.H_and_derivative(root_point)
         direct_roots.append(
             {
-                "real": matching["real"],
-                "imag": matching["imag"],
+                # The omitted-node extrapolation check is only at the 1e-17
+                # level, so do not print the 100-digit fit as if all of its
+                # digits described the limiting root.  Full Newton iterates
+                # remain available under ``seed_attempts`` for diagnostics.
+                "real": mp.nstr(mp.mpf(matching["real"]), 17),
+                "imag": mp.nstr(mp.mpf(matching["imag"]), 17),
                 "residual_upper": matching["residual_upper"],
                 "newton_correction": matching["newton_correction"],
                 "derivative_lower": matching["derivative_lower"],
@@ -1211,8 +1215,8 @@ def report_markdown(payload: Dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "The transfer anchors were also checked symbolically in the "
-            "implementation: `lambda_+- = 17 +- 12 sqrt(2)` and the two "
+            "The exact transfer anchors used by the implementation are "
+            "`lambda_+- = 17 +- 12 sqrt(2)` and the two "
             "normalized diagonal drifts used by the limiting object are both "
             "`-3/2`; consequently no `n^d` ratio remains in `K_infinity`.",
             "",
