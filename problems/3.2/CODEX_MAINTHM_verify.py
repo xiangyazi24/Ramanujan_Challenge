@@ -120,6 +120,10 @@ def exact_sequence_and_gcd_gate() -> tuple[list[int], list[Fraction], list[int]]
     # Correct target-notation determinant divisibility.  Here d_n already is
     # lcm(1,...,n)^3, so no additional cube belongs on d_n.
     gs = [0] + [exact_g(n, b, a, d) for n in range(1, 181)]
+    invalid_single_d = Fraction(6 * d[6], 6**3)
+    check(gs[6] == 270 and invalid_single_d == 6000
+          and invalid_single_d.numerator % gs[6] == 60,
+          "proof.tex false G_n | 6 d_n/n^3 counterexample")
     for n in range(1, 180):
         determinant = Fraction(6 * d[n] * d[n + 1], (n + 1) ** 3)
         check(determinant.denominator == 1, f"integer adjacent determinant n={n}")
@@ -577,6 +581,7 @@ def shifted_P(shift: int, p: int) -> list[int]:
         poly_add(poly_add([5], poly_mul([27], z, p), p),
                  poly_mul([51], poly_mul(z, z, p), p), p),
         poly_mul([34], poly_mul(poly_mul(z, z, p), z, p), p),
+        p,
     )
 
 
