@@ -2378,6 +2378,52 @@ theorem elementarySeries24_of_euler_certificate
       elementarySeriesValue24
     ring
 
+/-- The even-index quadratic value.  By `P(2j) = 2H_j - H_{2j}` the underlying
+series is `(1/4) ∑_j (r_j² - H_{2j}^{(2)})/j²` with `r_j = 2H_j - H_{2j}`, i.e.
+exactly the object Stage 1 produces — no odd-index `parityRemainder24` occurs. -/
+noncomputable def evenQuadraticEulerValue24 : ℝ :=
+  (quadraticEulerValue24 + alternatingQuadraticEulerValue24) / 2
+
+/-- Variant of `elementarySeries24_of_euler_certificate` taking the EVEN-INDEX
+quadratic sum as a single hypothesis.
+
+The original theorem takes `hQuadratic` and `hAlternatingQuadratic` separately,
+but uses them only to build `hQuadraticEven` via `hasSum_even_position24`; the
+rest of its proof never mentions either again.  So one evaluation suffices where
+the certificate previously asked for two. -/
+theorem elementarySeries24_of_even_quadratic
+    (hQuadraticEven :
+      HasSum (fun m : ℕ ↦ quadraticEulerTerm24 (2 * m + 1))
+        evenQuadraticEulerValue24)
+    (hCubic :
+      HasSum cubicLinearEulerTerm24 cubicLinearEulerValue24)
+    (hAlternatingCubic :
+      HasSum alternatingCubicLinearEulerTerm24
+        alternatingCubicLinearEulerValue24)
+    (hShifted :
+      HasSum shiftedLinearEulerTerm24 shiftedLinearEulerValue24) :
+    HasSum elementaryOuterTerm24 elementarySeriesValue24 := by
+  have hQE : HasSum (fun m : ℕ ↦ quadraticEulerTerm24 (2 * m + 1))
+      ((quadraticEulerValue24 + alternatingQuadraticEulerValue24) / 2) := by
+    simpa [evenQuadraticEulerValue24] using hQuadraticEven
+  have hCubicEven :
+      HasSum (fun m : ℕ ↦ cubicLinearEulerTerm24 (2 * m + 1))
+        ((cubicLinearEulerValue24 +
+          alternatingCubicLinearEulerValue24) / 2) := by
+    apply hasSum_even_position24 hCubic
+    simpa [alternatingCubicLinearEulerTerm24] using hAlternatingCubic
+  have hCombined :=
+    (((hQE.mul_left 4).add (hShifted.mul_left 8)).sub
+      (hCubicEven.mul_left 24)).add rationalCorrection_hasSum24
+  convert hCombined using 1
+  · funext m
+    rw [elementaryOuterTerm24_euler_decomposition]
+  · unfold quadraticEulerValue24 alternatingQuadraticEulerValue24
+      cubicLinearEulerValue24 alternatingCubicLinearEulerValue24
+      shiftedLinearEulerValue24 rationalCorrectionValue24
+      elementarySeriesValue24
+    ring
+
 /-- Expanded certificate in which every remaining input is a standard
 level-two Euler sum, without the problem-specific shifted summand. -/
 theorem elementarySeries24_of_standard_euler_certificate
