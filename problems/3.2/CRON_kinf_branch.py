@@ -480,57 +480,88 @@ def fixed_cell_K_jet(r: int, s: int, value: Any, apery: Sequence[int]) -> Jet2:
 
 
 def isolate_kinfinity_roots(
-    digits: int, base_n: int, order: int
+    numerators: Sequence[Any], digits: int, m_values: Sequence[int]
 ) -> Dict[str, Any]:
-    """Uncertified high-precision Newton isolation of the four bulk roots."""
+    """Extrapolate the four central ``K_(m,m)`` roots to ``K_infinity``.
+
+    Q6723 (6.1)-(6.6) gives a full inverse-length branch expansion.  The
+    present first pass uses its numerical consequence: each simple central
+    branch has a power series in ``1/m``.  Every finite ``K_(m,m)`` root used
+    below is first isolated by Arb; only the extrapolation to ``m=infinity``
+    is uncertified.
+    """
+
+    import cmath
 
     old_dps = mp.dps
     mp.dps = max(digits, 120)
-    nodes = [base_n * (k + 1) for k in range(order + 1)]
-    apery = build_apery_numbers(max(nodes))
-    weights = extrapolation_weights(nodes)
-    cell = KInfinityCell(apery=apery, nodes=nodes, weights=weights)
-    seeds = [
-        mp.mpc("-0.5", "0.1104"),
-        mp.mpc("-0.5", "-0.1104"),
-        mp.mpc("-0.5", "1.50"),
-        mp.mpc("-0.5", "-1.50"),
-    ]
-    roots: List[Dict[str, Any]] = []
-    for seed in seeds:
-        z = seed
-        correction = mp.inf
-        for _ in range(14):
-            value, derivative = cell.H_and_derivative(z)
-            if derivative == 0:
-                break
-            correction = value / derivative
-            z -= correction
-            if abs(correction) < mp.power(10, -(digits // 2)):
-                break
-        residual, derivative = cell.H_and_derivative(z)
-        roots.append(
+    branches: List[List[Any]] = []
+    finite_rows = []
+    for m in m_values:
+        h = 2 * m + 1
+        data = build_height_data(h, numerators[h])
+        ctx.prec = max(384, int(4 * digits))
+        quotient_roots = acb_poly(data.quotient_critical).roots(
+            tol=arb(10) ** -45, maxprec=max(1024, int(10 * digits))
+        )
+        central = []
+        for root in quotient_roots:
+            midpoint = complex(float(root.mid().real), float(root.mid().imag))
+            s_value = cmath.sqrt(midpoint)
+            if s_value.real > 0:
+                s_value = -s_value
+            z_value = s_value / 2
+            if -1 < z_value.real < 0:
+                central.append(mp.mpc(str(z_value.real), str(z_value.imag)))
+        central.sort(key=lambda value: (float(value.imag), float(value.real)))
+        if len(central) != 4:
+            raise ArithmeticError(
+                "expected four central K_(m,m) roots at m=%d, found %d"
+                % (m, len(central))
+            )
+        branches.append(central)
+        finite_rows.append(
             {
-                "real": mp.nstr(z.real, 45),
-                "imag": mp.nstr(z.imag, 45),
-                "residual": mp_scientific(abs(residual), 8),
-                "newton_radius": mp_scientific(abs(correction), 8),
-                "derivative_abs": mp_scientific(abs(derivative), 8),
+                "m": m,
+                "h": h,
+                "roots": [
+                    {"real": mp.nstr(value.real, 18), "imag": mp.nstr(value.imag, 18)}
+                    for value in central
+                ],
             }
         )
 
-    unique = []
-    for root in roots:
-        value = mp.mpc(root["real"], root["imag"])
-        if not any(abs(value - other) < mp.power(10, -30) for other in unique):
-            unique.append(value)
+    weights = extrapolation_weights(m_values)
+    roots = []
+    for branch in range(4):
+        values = [row[branch] for row in branches]
+        limit = sum(
+            (weight * value for weight, value in zip(weights, values)), mp.mpc(0)
+        )
+        shorter_weights = extrapolation_weights(m_values[1:])
+        shorter = sum(
+            (
+                weight * value
+                for weight, value in zip(shorter_weights, values[1:])
+            ),
+            mp.mpc(0),
+        )
+        roots.append(
+            {
+                "real": mp.nstr(limit.real, 30),
+                "imag": mp.nstr(limit.imag, 30),
+                "extrapolation_delta": mp_scientific(abs(limit - shorter), 8),
+                "last_finite_m": int(m_values[-1]),
+            }
+        )
+
     mp.dps = old_dps
     return {
         "status": "UNCERTIFIED",
-        "method": "order-%d Richardson extrapolation in 1/n" % order,
-        "base_n": base_n,
-        "nodes": list(nodes),
-        "root_count": len(unique),
+        "method": "central K_(m,m) branch extrapolation in 1/m",
+        "m_values": list(m_values),
+        "root_count": len(roots),
+        "finite_rows": finite_rows,
         "roots": roots,
     }
 
@@ -898,27 +929,30 @@ def report_markdown(payload: Dict[str, Any]) -> str:
             "",
             "## K_infinity bulk template (uncertified)",
             "",
-            "`K_infinity(z)=phi(-z)phi(z)+z^6 gamma(-z)gamma(z)` was evaluated "
-            "by the normalized `F_n/b_n,G_n/b_n` recurrences and an order-%d "
-            "Richardson extrapolation in `1/n`.  This supplies starting boxes "
-            "for the direct finite-height solver; it is not used as a proof "
-            "of any fixed-height row.  The four numerical zeros of "
+            "The code implements "
+            "`K_infinity(z)=phi(-z)phi(z)+z^6 gamma(-z)gamma(z)` through the "
+            "normalized `F_n/b_n,G_n/b_n` recurrence and Richardson "
+            "extrapolation.  For the recorded zero table it uses the faster "
+            "equivalent branch limit: Arb isolates the four central "
+            "`K_(m,m)` roots for `m=%s`, and their inverse-length branches are "
+            "extrapolated to `m=infinity`.  This supplies starting boxes for "
+            "the direct finite-height solver; it is not used as a proof of "
+            "any fixed-height row.  The resulting four numerical zeros of "
             "`H_infinity=zK_infinity'-3K_infinity` are:"
-            % int(payload["kinfinity"]["method"].split("-")[1].split()[0]),
+            % ",".join(str(value) for value in payload["kinfinity"].get("m_values", [])),
             "",
-            "| Re(z) | Im(z) | |H_inf(z)| | Newton radius | |H_inf'(z)| |",
-            "|---:|---:|---:|---:|---:|",
+            "| Re(z) | Im(z) | extrapolation delta | last finite m |",
+            "|---:|---:|---:|---:|",
         ]
     )
     for root in payload["kinfinity"]["roots"]:
         lines.append(
-            "| `%s` | `%s` | `%s` | `%s` | `%s` |"
+            "| `%s` | `%s` | `%s` | %d |"
             % (
                 root["real"],
                 root["imag"],
-                root["residual"],
-                root["newton_radius"],
-                root["derivative_abs"],
+                root["extrapolation_delta"],
+                root["last_finite_m"],
             )
         )
 
@@ -1003,8 +1037,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--digits", type=int, default=120)
     parser.add_argument("--cert-digits", type=int, default=110)
     parser.add_argument("--retries", type=int, default=2)
-    parser.add_argument("--kinf-base", type=int, default=128)
-    parser.add_argument("--kinf-order", type=int, default=12)
+    parser.add_argument("--kinf-base", type=int, default=10)
+    parser.add_argument("--kinf-step", type=int, default=5)
+    parser.add_argument("--kinf-order", type=int, default=4)
     parser.add_argument("--skip-kinf", action="store_true")
     parser.add_argument("--report", default="CODEX_KINF_report.md")
     parser.add_argument("--json", default="CRON_kinf_results.json")
@@ -1027,7 +1062,9 @@ def main() -> None:
         "[config] h=%d..%d mpmath=%d digits Arb target=%d digits"
         % (args.min_h, args.max_h, args.digits, args.cert_digits)
     )
-    numerators = build_numerators(max(args.max_h, 12))
+    m_values = [args.kinf_base + args.kinf_step * k for k in range(args.kinf_order + 1)]
+    kinf_height = 2 * max(m_values) + 1
+    numerators = build_numerators(max(args.max_h, 12, kinf_height))
     apery_small = build_apery_numbers(max(args.max_h, 12))
     checks = check_cell_identity(numerators, apery_small, args.digits)
     for check in checks:
@@ -1052,7 +1089,7 @@ def main() -> None:
     else:
         log("[kinf] isolating H_infinity template roots (uncertified)")
         kinfinity = isolate_kinfinity_roots(
-            args.digits, args.kinf_base, args.kinf_order
+            numerators, args.digits, m_values
         )
         log("[kinf] roots=%d" % kinfinity["root_count"])
 
