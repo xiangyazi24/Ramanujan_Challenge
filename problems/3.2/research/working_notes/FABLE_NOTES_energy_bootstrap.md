@@ -2327,3 +2327,12 @@ cron 第四定理 [NEAR-WALL-3/7]: K_p(H,D)≪HD^{11/7}; H²logH 敌审零缺陷
 - cron wallprobe: gauge 异常未实现 (COINC 几何安全); SVD<3; lc 薄族 (等差 h) 无害;
   C_h 全复根 h≤8; **归约 W_h 不可约 ⟹ full Morse ⟹ [CRIT-2H]** — 分量残差=单变量族。
 - lastwall 地基: 重数 log 级无结构; primitive 主导 (分解不缩); 小d R_d=O(1) 到 log²p。
+
+## §118 — 战局重构: 一阶矩赢面 (08-01 深夜, Q6619)
+
+- **纯组合去 log 判死**: 多尺度 AP 构造 (R_d≤d, Q=Θ(H²logH)) — 去 log 必须算术输入。
+- **新谱机制**: Q_D ≤ (√2/3)·S₁(D)^{3/2} ⟹ **[MESO-S1-2/3]**: S₁≪N^{2/3} ⟹ MESO-PAIR。
+- **赢面最终形态**: S_D ≪ N @ D=√N·L = 一阶矩 meso 尺度省 L² (平凡 1.5NL²)。
+  层级: 行方差⟹线性prefix⟹MESO; 窗口对质量单独不够 (反例在档)。
+- W_h 定义链到手; squarefree+W_h(0)≠0 ⟹ full Morse ⟹ CRIT-2H; codex 证书 h≤32 开跑。
+- Q6632: 窗口 restart Z(H)≤1+(3/2)H^{2/3} PROVED (主文常数顺带 3→3/2); Bad(H)≪H^{5/3}。
