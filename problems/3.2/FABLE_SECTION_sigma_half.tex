@@ -769,3 +769,332 @@ strictly conjectural (Conjecture~\ref{conj:sh-gap2dsqrt});
 power improvement, which requires extracting a genuinely new dual
 geometric invariant (Remark~\ref{rem:sh-mixed-return}).
 \end{remark}
+
+% Ledger sources: CRON_FRESH_EYES_pointwise.md, entries AS.5 (Q6554 hostile
+% re-audit of the [MESO] suite; the AR.7 singleton objection is withdrawn via
+% the capacity inequality) and AT.2 (Q6567 direct-attack receipt: axis-strip
+% reduction, balanced core, shifted-gcd / shifted-valuation strengthenings,
+% raw bad-pair death via the A_m cut-edge formula).
+\subsection{The mesoscopic normalization suite [MESO]}
+\label{sec:sh-meso}
+
+Throughout this subsection $N:=p-2=|I_p|$ and
+$E:=\mathcal F_p=\sum_vm_p(v)^2$ is the full energy of
+Section~\ref{sec:orbit-energy}.  Fix a parameter $L=L(N)$ with
+$1\le L$ and $D:=\lceil\sqrt N\,L\rceil\le N-1$ (the \emph{mesoscopic
+normalization}; the scales $D\ge\sqrt N$ are called supercritical), and
+recall from Section~\ref{sec:sh-sigma-half} the window multiplicity
+$d_D(r)$ and the moments
+\[
+ S_D:=\sum_{r\in I_p}d_D(r)=S_1(D),
+ \qquad
+ Q_D:=Q_p(D)=\sum_{r\in I_p}\binom{d_D(r)}{2}.
+\]
+All bounds $\ll$ are uniform in $p$.  Applying
+Lemma~\ref{lem:sh-inject}(a) with the single box $[1,D]$ (so $q=1$,
+$L_r=\binom{d_D(r)}{2}$) gives the exact \emph{renewal identity}
+\begin{equation}\label{eq:sh-meso-renewal}
+ Q_D=\sum_{\substack{a,g\ge1\\ a+g\le D}}C_p(a,g),
+\end{equation}
+where
+\[
+ C_p(a,g):=T(a,\,a+g)
+ =\#\{r:\ r+a+g\le M,\ \pi(r)=\pi(r+a)=\pi(r+a+g)\},
+\]
+the span-truncated triple object: at full span,
+$6Q_{p-3}=T_3$ by Lemma~\ref{lem:sh-triple-gap}.
+
+\begin{lemma}[environment-capacity inequality]\label{lem:sh-meso-capacity}
+For every $D\ge1$,
+\[
+ S_D^2\ \le\ N\bigl(S_D+2Q_D\bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+Since $a^2=a+2\binom a2$, we have
+$\sum_rd_D(r)^2=S_D+2Q_D$; the sum has at most $N$ nonzero terms
+(the base-point support is at most $|I_p|=N$), so by Cauchy--Schwarz
+$S_D^2=\bigl(\sum_rd_D(r)\bigr)^2\le N\sum_rd_D(r)^2$.
+\end{proof}
+
+\begin{remark}[the capacity phase transition]\label{rem:sh-meso-capacity}
+Solving the quadratic in Lemma~\ref{lem:sh-meso-capacity} gives
+$S_D\le N+\sqrt{2NQ_D}$; in particular $Q_D\ll N$ forces
+$S_D\ll N$.  The point is that the singleton/first-return mass (the
+linear part of $S_D$) is capped by the number $N$ of base points.  At
+supercritical scales $D\ge\sqrt N$ -- at the mesoscopic scale
+$D=\lceil\sqrt N\,L\rceil$ one has $N=D^2/L^2\ll D^2$ -- this cap is
+paid by the environment size automatically.  This is exactly why
+control of the pair count $Q_D$ alone suffices there, and why the
+earlier internal objection that ``$Q$ does not control singletons''
+is withdrawn: the capacity inequality was the missing step.  At
+subcritical scales the cap $N$ exceeds $D^2$ and pays nothing; see
+Remark~\ref{rem:sh-meso-sharp}.
+\end{remark}
+
+\begin{lemma}[axis-strip reduction]\label{lem:sh-meso-axis}
+Let $M_D$ denote the maximal number of indices in a discrete interval
+of length $D+1$ sharing one projective value; by the banked window
+multiplicity bound of Remark~\ref{rem:sh-context},
+$M_D\le3D^{2/3}+1\le4D^{2/3}$.  For $1\le G\le D$ put
+\[
+ Q_D^{\mathrm{axis}}(G)
+ :=\sum_{\substack{a,g\ge1,\ a+g\le D\\ \min(a,g)\le G}}C_p(a,g).
+\]
+Then, unconditionally,
+\[
+ Q_D^{\mathrm{axis}}(G)\ \le\ 12\,D^{2/3}G^2 .
+\]
+\end{lemma}
+
+\begin{proof}
+Consider first the strip $a\le G$.  For fixed $a$, every $r$ counted
+by $C_p(a,g)$ for some $g$ is a gap-$a$ collision base, of which there
+are $R_a\le3(a-1)$ by~\eqref{eq:sh-onegap}; for each such $r$ the
+number of admissible $g$ (namely $1\le g\le D-a$ with
+$\pi(r+a)=\pi(r+a+g)$) is at most the number of forward window mates
+of $r+a$, which is at most $M_D-1\le4D^{2/3}$.  Hence
+\[
+ \sum_{\substack{a\le G\\ g\ge1,\ a+g\le D}}C_p(a,g)
+ \ \le\ \sum_{a\le G}3(a-1)\cdot4D^{2/3}
+ \ =\ 12D^{2/3}\,\frac{G(G-1)}2\ \le\ 6D^{2/3}G^2 .
+\]
+For the strip $g\le G$, fix $g$ and map $r\mapsto u=r+a$: then $u$ is
+a gap-$g$ collision base ($R_g\le3(g-1)$ choices), $a$ is a backward
+window mate of $u$ (at most $M_D-1\le4D^{2/3}$ choices, the fiber of
+$\pi(u)$ in the interval $[u-D,u]$), and the pair $(u,a)$ determines
+$r$.  The same computation bounds this strip by $6D^{2/3}G^2$.  Adding
+the two strips (a union bound; pairs with both $a,g\le G$ may be
+counted twice) gives $12D^{2/3}G^2$.
+\end{proof}
+
+\begin{remark}[choice of $G$ and the balanced core]\label{rem:sh-meso-core}
+At the mesoscopic scale $D=\lceil\sqrt N\,L\rceil$ choose
+\[
+ G=\bigl\lceil N^{1/3}L^{-1/3}\bigr\rceil
+ \asymp\sqrt{N/D^{2/3}} ,
+\]
+so that $12D^{2/3}G^2=O(N)$
+($D^{2/3}\asymp N^{1/3}L^{2/3}$ and $G^2\asymp N^{2/3}L^{-2/3}$).
+With the \emph{balanced core}
+\[
+ \mathcal K=\mathcal K_{D,G}
+ :=\{(a,g):\ a>G,\ g>G,\ a+g\le D\},
+\]
+the renewal identity~\eqref{eq:sh-meso-renewal} and
+Lemma~\ref{lem:sh-meso-axis} give
+\[
+ Q_D\ \le\ \sum_{(a,g)\in\mathcal K}C_p(a,g)\ +\ O(N).
+\]
+Thus [MESO-PAIR] below is equivalent, up to $O(N)$, to its restriction
+to the balanced core.  The deleted axis strips contain all the known
+degenerate certificates -- $R_1=0$, the adjacent resultants, the $-51$
+layer, and the small-$h$ certificates -- so none of these carries any
+load for the remaining mass.
+\end{remark}
+
+For $(a,g)$ with $a,g\ge1$ define the \emph{regular double-root count}
+\[
+ \rho_p(a,g):=\#\{r\ \text{regular}:\ N_a(r)=0,\ N_g(r+a)=0
+ \ \text{in }\mathbb F_p\},
+\]
+so that $C_p(a,g)\le\rho_p(a,g)$ (every collision base counted
+in~\eqref{eq:sh-meso-renewal} is a regular index $r$ with $N_a(r)=0$
+and $N_g(r+a)=0$, by the gap-polynomial dictionary), and the
+\emph{shifted resultant}
+\[
+ e_{a,g}:=\operatorname{Res}_X\bigl(N_a(X),\,N_g(X+a)\bigr)\in\mathbb Z,
+\]
+with the convention $v_p(0)=+\infty$.  The shifted -- not the raw --
+family is the load-bearing object: by the exact same-base
+factorization
+$\operatorname{Res}(N_h,N_k)=A_{h-1}\cdot
+\operatorname{Res}\bigl(N_h(X),N_{k-h}(X+h)\bigr)$ with
+\[
+ A_m=(-1)^{m(m+1)/2}\prod_{j\le m}\bigl((j!)^3b_j\bigr)^6,
+\]
+any low Ap\'ery zero $p\mid b_j$ pollutes $\Theta(D^2)$ raw pairs
+through the factor $A_{h-1}$ (cut-edge roots $X=-j$, which are not
+regular collisions; e.g.\ $b_3=1445=5\cdot17^2$ pollutes all $15$ raw
+pairs $3\le m<k\le8$ at $p=17$).  The raw bad-pair target is dead;
+targets must be stated after this saturation.
+
+In the five conjectures below, $L=L(N)\to\infty$ with
+$D=\lceil\sqrt N\,L\rceil\le N-1$, and
+$G=\lceil N^{1/3}L^{-1/3}\rceil$; the fixed-power specialization
+$L=N^{\eta}$ with $0<\eta<\tfrac12$ is the form [MESO-$\eta$]
+(Conjecture~\ref{conj:sh-meso-eta}).
+
+\begin{conjecture}[{[MESO-SHIFTED-VALUATION]}]
+\label{conj:sh-meso-shifted-valuation}
+$\displaystyle
+\sum_{(a,g)\in\mathcal K_{D,G}}v_p\bigl(e_{a,g}\bigr)\ \ll\ N .$
+(In particular $e_{a,g}\ne0$ on the balanced core.)
+\end{conjecture}
+
+\begin{conjecture}[{[MESO-SHIFTED-GCD]}]
+\label{conj:sh-meso-shifted-gcd}
+$\displaystyle
+\sum_{(a,g)\in\mathcal K_{D,G}}
+\deg\gcd_{\mathbb F_p}\bigl(N_a(X),\,N_g(X+a)\bigr)\ \ll\ N .$
+\end{conjecture}
+
+\begin{conjecture}[{[MESO-BALANCED-PAIR]}]
+\label{conj:sh-meso-balanced-pair}
+$\displaystyle
+\sum_{(a,g)\in\mathcal K_{D,G}}\rho_p(a,g)\ \ll\ N .$
+\end{conjecture}
+
+\begin{conjecture}[{[MESO-PAIR]}]\label{conj:sh-meso-pair}
+$Q_D\ll N$ at $D=\lceil\sqrt N\,L\rceil$.
+\end{conjecture}
+
+\begin{conjecture}[{[MESO-TOTAL]}]\label{conj:sh-meso-total}
+$S_D\ll N$ at $D=\lceil\sqrt N\,L\rceil$.
+\end{conjecture}
+
+\begin{proposition}[implication chain]\label{thm:sh-meso-chain}
+With the notation above, and abbreviating each conjecture of the suite
+by the last component of its name,
+\begin{gather*}
+ \text{[VALUATION]}
+ \Longrightarrow\text{[GCD]}
+ \Longrightarrow\text{[BALANCED]}
+ \Longrightarrow\text{[PAIR]}
+ \Longrightarrow\text{[TOTAL]},\\
+ \text{[TOTAL]}
+ \Longrightarrow\
+ E\ \ll\ \frac{N^{3/2}}{L}+N .
+\end{gather*}
+The first implication holds for $p\nmid34$; all other implications are
+unconditional in $p$.
+\end{proposition}
+
+\begin{proof}
+\emph{Valuation implies gcd.}  From the transfer
+recurrence~\eqref{eq:oe-U-recurrence}, $\deg U_m=3m$ and the leading
+coefficient of $U_m$ is $34^m$; hence the leading coefficient of $N_a$
+is $34^{a-1}$, and for $p\nmid34$ reduction modulo $p$ preserves
+degrees.  The standard valuation inequality
+$v_p(\operatorname{Res}(f,g))\ge
+\deg\gcd_{\mathbb F_p}(f\bmod p,\,g\bmod p)$ (for integer polynomials
+whose leading coefficients are prime to $p$, and with $v_p(0)=+\infty$
+covering vanishing resultants) then bounds each gcd degree by the
+corresponding valuation.
+%% MERGE-FLAG: the ledger (AT.2) asserts VALUATION => GCD without
+%% recording the leading-coefficient normalization; the p | 34 exception
+%% (only p=17 in range) derived here from lc(N_a)=34^{a-1} should be
+%% confirmed against the ledger's convention on merge.
+
+\emph{Gcd implies balanced-pair.}  Distinct regular double roots $r$
+counted by $\rho_p(a,g)$ are distinct common roots $X=r$ of
+$N_a(X)$ and $N_g(X+a)$ in $\mathbb F_p$, so
+$\rho_p(a,g)\le\deg\gcd_{\mathbb F_p}(N_a(X),N_g(X+a))$.
+
+\emph{Balanced-pair implies pair.}  By
+Remark~\ref{rem:sh-meso-core} and $C_p\le\rho_p$,
+\[
+ Q_D\ \le\ \sum_{(a,g)\in\mathcal K}\rho_p(a,g)+O(N)\ \ll\ N .
+\]
+
+\emph{Pair implies total.}  Lemma~\ref{lem:sh-meso-capacity} gives
+$S_D\le N+\sqrt{2NQ_D}\ll N$.
+
+\emph{Total implies the energy bound.}  Partition $I_p$ into
+$q'=\lceil N/D\rceil$ consecutive blocks of length at most $D$, and
+let $m_v^{(j)}$ be the fiber multiplicities within block $j$, so
+$m_p(v)=\sum_jm_v^{(j)}$.  By Cauchy--Schwarz over the blocks,
+\begin{align*}
+ E=\sum_vm_p(v)^2
+ &\le q'\sum_v\sum_j\bigl(m_v^{(j)}\bigr)^2\\
+ &= q'\Bigl(N+2\,\#\{\text{same-block collision pairs}\}\Bigr)
+ \ \le\ q'\bigl(N+2S_D\bigr),
+\end{align*}
+because every same-block pair has gap at most $D-1$ and is therefore
+counted (once, by its left endpoint) in $S_D$.  With $S_D\ll N$ and
+$q'\le N/D+1$,
+\[
+ E\ \ll\ \frac{N^2}{D}+N\ \le\ \frac{N^{3/2}}{L}+N . \qedhere
+\]
+\end{proof}
+
+\begin{conjecture}[{[MESO-$\eta$]}: fixed-power form]
+\label{conj:sh-meso-eta}
+There is a fixed $\eta$ with $0<\eta<\tfrac12$ such that
+[MESO-PAIR] (or merely [MESO-TOTAL]) holds at
+$D=\lceil N^{1/2+\eta}\rceil$.  By
+Proposition~\ref{thm:sh-meso-chain} this gives
+$E\ll N^{3/2-\eta}+N$.
+\end{conjecture}
+
+\begin{remark}[weakest useful form; relation to
+{[T3-2MINUS]}]\label{rem:sh-meso-variants}
+The weakest useful (little-$o$) form: any bound
+$S_D=o\bigl(D\sqrt N\bigr)$ at a scale $D=\lceil\sqrt N\,L\rceil$
+with $L\to\infty$ already gives $E=o(N^{3/2})$ by the block
+Cauchy--Schwarz step of Proposition~\ref{thm:sh-meso-chain}, i.e.\ a
+strict improvement on the unconditional $p^{3/2}$ energy theorem.
+% (The ledger's AS.5 entry states the little-o threshold with a
+% corrupted formula; the form S_D = o(D sqrt N) used here is the exact
+% threshold read off from E <= (N/D+1)(N+2S_D).)
+Moreover [MESO-$\eta$] and [T3-2MINUS]
+(Remark~\ref{rem:sh-triple-hierarchy}) are the two parallel shortest
+fixed-power interfaces -- the one-scale/renewal route and the global
+moment route -- and they are \emph{not} mutually derivable: by
+\eqref{eq:sh-meso-renewal} and Lemma~\ref{lem:sh-triple-gap} one has
+$Q_D\le T_3/6$, but neither statement implies the other.
+\end{remark}
+
+\begin{remark}[sharpness: the periodic-block model]
+\label{rem:sh-meso-sharp}
+The output $N^2/D+N$ of Proposition~\ref{thm:sh-meso-chain} is
+optimal given $Q$-information alone, and no first-moment or one-gap
+hypothesis can be dropped into the model.  Let $D\mid N$ and take an
+abstract word of exact period $D$ on $N$ letters whose $D$ letters
+within one period are pairwise distinct.  Then each value has fiber
+size $N/D$, so
+\[
+ E=D\Bigl(\frac ND\Bigr)^{2}=\frac{N^2}{D},
+\]
+while $d_D(r)\le1$ for every $r$ (only the gap $h=D$ collides), so
+\[
+ Q_D=0,
+ \qquad
+ S_D\le N .
+\]
+Hence: (i) $Q_D=0$ is compatible with $E=N^2/D$, so the bound
+$N^2/D+N$ cannot be improved from $Q_D$ alone and $Q$-control can
+never give $E=O(N)$; (ii) at subcritical scales $D\le\sqrt N$ even
+$Q_D=0$ allows $E=N^2/D\ge N^{3/2}$, so subcritical $Q$-control has
+no yield -- the load-bearing condition is supercriticality, as in
+Remark~\ref{rem:sh-meso-capacity}.
+\end{remark}
+
+%% MERGE-SLOT: the statement and proof of [THM-ABSTRACT-Q-H2LOGH]
+%% (unconditional abstract bound Q_H <= 22C H^2(1+\log H) for any finite
+%% word satisfying R_d <= Cd) arrive separately from the parallel
+%% session and are to be inserted here.
+
+\begin{remark}[what remains of the wall at the mesoscopic scale]
+\label{rem:sh-meso-h2logh}
+The unconditional abstract bound [THM-ABSTRACT-Q-H2LOGH],
+\[
+ Q_H\ \le\ 22C\,H^2\bigl(1+\log H\bigr)
+ \qquad\text{for any word with }R_d\le Cd,
+\]
+improves, for all large $H$, on the $\tfrac{27}4H^{5/2}$ bound of
+Theorem~\ref{thm:sh-sigma-half} within the same abstract hypothesis.
+Evaluated at the mesoscopic scale $D=\lceil\sqrt N\,L\rceil$ with the
+Ap\'ery input $C=3$, it gives
+\[
+ Q_D\ \ll\ D^2\log D\ \asymp\ N\,L^2\log N,
+\]
+against the target $Q_D\ll N$ of
+Conjecture~\ref{conj:sh-meso-pair}: what remains is exactly the
+factor $L^2\log N$.  The combinatorial side of the wall is therefore
+de-logging plus this factor $L^2$; everything beyond it -- the
+balanced-core sums of
+Conjectures~\ref{conj:sh-meso-shifted-valuation}--%
+\ref{conj:sh-meso-balanced-pair} -- is arithmetic input.
+\end{remark}
