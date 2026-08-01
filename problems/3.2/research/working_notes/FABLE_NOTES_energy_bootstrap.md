@@ -1322,3 +1322,24 @@ double-certified.
 - 本账本 §43–62 封卷; 新 session 接战入口 = CAMPAIGN_MAP + 本账本 + cron
   附录 K–AA。战役统计: ChatGPT 深问 qA–qI+审计共 ~15 发全回收, 4 codex
   7 commits 全复验, ~40 验证脚本全绿, proof.tex +7 页。
+
+## §64 (08-01 08:05) 新 session 接战 — 下一场战役侦察全面铺开
+
+- 接手: handoff 防劫持检查过(window=life, project 匹配), CAMPAIGN_MAP 读毕,
+  爸爸指示"先不收兵, 看下一场战役"。TG 已发四方向评估(推荐 GAP-2 主攻/
+  相位模副攻), 等爸爸表态。cron(tmux 6) 协同通报已发, 其 q16/q19/q23 +
+  Tests A/F 车道不动。
+- **ChatGPT 侦察三发**(饱和纪律, 空 tab): Q6440(life1) 联合 Tannaka 群
+  判定树+Goursat 分离指纹+kill tests; Q6441(life4) Katz 27.1 输出端
+  判决表——能否摸 mod-p 事件, 四候选机制逐条 verdict; Q6442(life8)
+  相位模 2-3 个精确候选形式化+第一定理+攻击线。
+- **codex 双雄**(爸爸令, high+max): max=CODEX_SPEC_joint_tannaka.md
+  (A_± 联合矩指纹: M_k 单体/M_{a,b} 联合/**跨扭 C_η 检测(order≤12,
+  从未查过, 本 spec 最值钱的数)**, gate=Mellin 反演复现 b_r);
+  high=CODEX_SPEC_bad_diagonal.md (坏对角逆定理形式化+10项例外表重建+
+  match-count 矩阵数值压测+Apéry 二次伴侣 graph 案例判决+反例狩猎)。
+- **误捕获警报**: Q6440 DOM 兜底 3.5min 抢跑, 抓到 stale Q6298 页面
+  (885B)。已隔离为 Q6440.MISCAPTURE-of-Q6298.md, 台账改回 in-tab,
+  真答案等 drop, 勿重发。qB2(Q6425) 同样投递超时 in-tab。Q6416 in-tab。
+- 在飞总账: Q6416(life3)/Q6425(life7)/Q6440(life1)/Q6441(life4)/
+  Q6442(life8) + codex×2。Monitor 已布 /tmp/gpt/life 落地唤醒。
