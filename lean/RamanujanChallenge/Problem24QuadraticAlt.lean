@@ -422,34 +422,12 @@ theorem quadAltSixIntegral_eq_bridgeValue
   unfold cubicLinearEulerValue24 alternatingCubicLinearEulerValue24
   ring
 
-/-! ## The target theorem (open) -/
+/-! ## The target theorem -/
 
 /-- Summability of the outer-alternating quadratic terms (already proved in
 `Problem24`). -/
 theorem summable_quadAlt : Summable alternatingQuadraticEulerTerm24 :=
   summable_alternatingQuadraticEulerTerm24
-
-/-- The missing P2.4 hypothesis: the outer-alternating quadratic Euler sum
-evaluates to `alternatingQuadraticEulerValue24`.  This is the target of the
-Q6047 six-integral certificate; the endpoint lemmas I10..I22 remain to be
-filled in. -/
-theorem alternatingQuadraticEulerTerm24_hasSum :
-    HasSum alternatingQuadraticEulerTerm24 alternatingQuadraticEulerValue24 := by
-  -- route (Q6047 Layer F):
-  --   rw [← summable_quadAlt.hasSum.tsum_eq]
-  --   tsum = ∫₀¹ (-log x)/x * Q(-x) dx   quadAlt_tsum_eq_coeff_integral   ✓ proved
-  --        = sixIntegralCombination        quadAltCoeffIntegral_eq_six     ✓ proved
-  --        = bridgeValue                   quadAltSixIntegral_eq_bridgeValue
-  --                                          — proved, but still carries its
-  --                                            seven hypotheses (Layer E)
-  --        = alternatingQuadraticEulerValue24
-  --                                        bridgeValue_eq_…                ✓ proved
-  --
-  -- So the ONLY thing between here and a closed capstone is discharging the
-  -- seven hypotheses of `quadAltSixIntegral_eq_bridgeValue`: the evaluation of
-  -- `quadAltK`, and the six rows `I10 … I22` in `K` normal form.  Everything
-  -- else on the route is already axiom-clean.
-  sorry
 
 /-! ## Layer B2: normalization `M(0) = 0` (Q6047 (2.9)) -/
 
@@ -6912,5 +6890,27 @@ theorem quadAltI21_eq :
     linarith
   rw [quadAltI22_eq, quadAltI12_eq, quadAltMixedLogIntegral24] at hrow
   linarith
+
+/-- The missing P2.4 hypothesis: the outer-alternating quadratic Euler sum
+evaluates to `alternatingQuadraticEulerValue24`. -/
+theorem alternatingQuadraticEulerTerm24_hasSum :
+    HasSum alternatingQuadraticEulerTerm24 alternatingQuadraticEulerValue24 := by
+  have htsum : (∑' n : ℕ, alternatingQuadraticEulerTerm24 n) =
+      alternatingQuadraticEulerValue24 := by
+    calc
+      (∑' n : ℕ, alternatingQuadraticEulerTerm24 n) =
+          ∫ x : ℝ in (0 : ℝ)..1,
+            (-Real.log x) / x * quadAltQclosed (-x) :=
+        quadAlt_tsum_eq_coeff_integral
+      _ = -2 * I10 - 2 * I11 + 2 * I12 + 4 * I20 + 6 * I21 - 5 * I22 :=
+        quadAltCoeffIntegral_eq_six
+      _ = sixIntegralCombination := rfl
+      _ = bridgeValue := quadAltSixIntegral_eq_bridgeValue
+        quadAltK_eq quadAltI10_eq quadAltI11_eq quadAltI12_eq
+        quadAltI20_eq quadAltI21_eq quadAltI22_eq
+      _ = alternatingQuadraticEulerValue24 :=
+        bridgeValue_eq_alternatingQuadraticEulerValue24
+  rw [← htsum]
+  exact summable_quadAlt.hasSum
 
 end RamanujanChallenge.P24QuadAlt
