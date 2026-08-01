@@ -66,7 +66,11 @@ b_{p+r}\equiv 5b_r+10p\,D_r+p^2E_r+p^3(\tilde U_r+\beta_p b_r)
 +p^4(\hat U_r-6W^a_r+2\beta_pD_r+8a_r+y_4b_r)\pmod{p^5}
 \]
 holds with UNIVERSAL (p-independent) sequences at orders $p^0$–$p^2$, where
-$D_r=\sum_k\binom rk^2\binom{r+k}k^2(H_{r+k}-H_{r-k})$; the only
+$D_r=\sum_k\binom rk^2\binom{r+k}k^2(H_{r+k}-H_{r-k})$.  (Attribution: the
+$p^0$ layer is Gessel's congruence (1982); the $p^1$--$p^2$ layers are the
+$n=1$ case of A.~Straub, arXiv:2301.12248, Monatsh.\ Math.\ (2024),
+Thm.~1.3.  New here: the $p^3$/$p^4$ universality, the closed forms of the
+invariants, and the all-order tower structure.)  The only
 $p$-dependent invariants through order $p^4$ are $\beta_p=(b_p-5)/p^3\bmod p$
 and $y_4$ (second invariant, weight-3 Kummer quotient).  Moreover:
 \[
@@ -80,9 +84,16 @@ specializes to it), and the $y_4$ Kummer-quotient formula.  In particular
 $\beta_p=0\iff p$ is a Wolstenholme prime, and on the divisibility locus
 $p\mid b_r$ the terms $\beta_pb_r$, $y_4b_r$ self-cancel: the tower is
 universal through $p^4$ at bad primes.
-(Verification: supercongruence 63/63 \texttt{cron\_supercong\_check.py};
-$\beta_p$ 31/31 \texttt{beta\_bernoulli\_check.py}; master identity 21/21
-\texttt{harmonic\_p5\_check.py}; independent cron ledgers 25--27/27.)
+Unconditional proof (cron, Q6330): the exact block identity
+$b_{N+r}=b_N F_r(N)-N^3b_{N-1}G_r(N)$ (recurrence uniqueness) plus the two
+endpoint lemmas $b_p\equiv5\ (p^3)$, $b_{p-1}\equiv1\ (p^2)$ assemble the
+tower through $p^4$; the $N^3$ factor is the entire rigidity mechanism, and
+all $p$-dependence concentrates in the two endpoint digit sequences
+(all-order form).  (Verification: supercongruence 63/63
+\texttt{cron\_supercong\_check.py}; $\beta_p$ 31/31
+\texttt{beta\_bernoulli\_check.py} — equivalently $\beta_p\equiv
+7\cdot(\text{Wolstenholme quotient})$; master identity 21/21
+\texttt{harmonic\_p5\_check.py}; independent ledgers 25--27/27.)
 \end{theorem}
 
 \subsection{The apparition theorem}

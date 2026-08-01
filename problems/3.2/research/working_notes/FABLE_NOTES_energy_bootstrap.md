@@ -957,3 +957,23 @@ Also anchored an independent β_p proof + verification ledger (93 checks
 p < 500; rational identities to n = 39/59; all p < 3000 quarter/zero-set
 checks). The vertical theory of Apéry mod p is now COMPLETE and
 double-certified.
+
+## 42. TOWER PROVED (Q6330) + attribution corrections — vertical theory FINAL
+
+- Tower theorem now UNCONDITIONALLY PROVED (cron Q6330, 27eba6e): exact block
+  identity b_{N+r} = b_N·F_r(N) − N³·b_{N−1}·G_r(N) (recurrence uniqueness,
+  two lines) + endpoint lemmas (b_p ≡ 5 mod p³ Beukers, b_{p−1} ≡ 1 mod p²)
+  assemble the tower through p⁴. The N³ factor IS the rigidity mechanism;
+  all-order form: all p-dependence lives in the two endpoint digit sequences.
+  The −6 mystery = gauge U₃ = 5K + 35a/6.
+- ATTRIBUTION corrections applied to proof.tex §16: p⁰ layer = Gessel 1982;
+  p¹–p² layers = n=1 case of Straub arXiv:2301.12248 (Monatsh. Math. 2024)
+  Thm 1.3. NEW: p³/p⁴ universality, β_p closed form (equiv. 7·Wolstenholme
+  quotient), y₄ Kummer identification, all-order tower, master corner
+  identity, apparition theorem. Rebuild green.
+- Dwork verdict: published Dwork congruences tautological for this direction;
+  the crystalline interpretation is genuinely new (nine-step skeleton with
+  explicit gaps); strategy inverted to recurrence-transport-first. Layer A–E
+  formalization dependency graph Lean-ready (future formalization target).
+- **VERTICAL THEORY: FINAL.** Every theorem unconditionally proved, correctly
+  attributed, machine-verified, and wired into proof.tex §15–16.
