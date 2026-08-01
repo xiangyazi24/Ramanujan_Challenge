@@ -2413,6 +2413,226 @@ theorem quadAltH2_tendsto_one :
   rw [hval] at h
   exact h
 
+theorem quadAltH1_continuousAt {t : ℝ} (ht : t < 1) : ContinuousAt H1 t := by
+  unfold H1
+  exact (ContinuousAt.log (by fun_prop) (by linarith : 1 - t ≠ 0)).neg
+
+theorem quadAltH2_continuousAt {t : ℝ} (ht : t < 2) : ContinuousAt H2 t := by
+  unfold H2
+  have hinner : ContinuousAt (fun y : ℝ => 1 - y / 2) t := by fun_prop
+  exact (hinner.log (by linarith : 1 - t / 2 ≠ 0)).neg
+
+/-- A finite left endpoint multiplier and a quadratic right endpoint
+vanishing factor suffice to multiply the integrable logarithmic kernel `W0`. -/
+theorem quadAltW0_mul_intervalIntegrable
+    {q : ℝ → ℝ} {q0 : ℝ}
+    (hq : ContinuousOn q (Set.Ioo 0 1))
+    (hq0 : Tendsto q (𝓝[>] (0 : ℝ)) (𝓝 q0))
+    (hq1 : Tendsto (fun t : ℝ => (t - 1) ^ 2 * q t)
+      (𝓝[<] (1 : ℝ)) (𝓝 0)) :
+    IntervalIntegrable (fun t : ℝ => W0 t * q t) MeasureTheory.volume 0 1 := by
+  have hWleft : IntervalIntegrable W0 MeasureTheory.volume 0 (1 / 2) := by
+    apply quadAltW0_intervalIntegrable.mono_set
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2),
+      Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    intro t ht
+    exact ⟨ht.1, by linarith [ht.2]⟩
+  have hqmid_at : ContinuousAt q (1 / 2) :=
+    (hq (1 / 2) (by norm_num)).continuousAt (Ioo_mem_nhds (by norm_num) (by norm_num))
+  have hleft : IntervalIntegrable (fun t : ℝ => W0 t * q t)
+      MeasureTheory.volume 0 (1 / 2) :=
+    IntervalIntegrable.mul_of_continuousOn_Ioo_of_tendsto (by norm_num) hWleft
+      (hq.mono (by intro t ht; exact ⟨ht.1, by linarith [ht.2]⟩)) hq0
+      (hqmid_at.tendsto.mono_left nhdsWithin_le_nhds)
+  have hWratio : Tendsto (fun t : ℝ => W0 t / (t - 1) ^ 2)
+      (𝓝[<] (1 : ℝ)) (𝓝 (-2)) :=
+    quadAltW0_quadratic_tendsto.mono_left
+      (nhdsWithin_mono _ (by intro t ht; exact ne_of_lt ht))
+  have hright_lim : Tendsto (fun t : ℝ => W0 t * q t)
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    have h := hWratio.mul hq1
+    norm_num at h
+    refine h.congr' ?_
+    filter_upwards [self_mem_nhdsWithin] with t ht
+    have htne : t - 1 ≠ 0 := ne_of_lt (sub_neg.mpr ht)
+    field_simp [htne]
+  have hWq_cont : ContinuousOn (fun t : ℝ => W0 t * q t) (Set.Ioo (1 / 2) 1) := by
+    intro t ht
+    have ht0 : 0 < t := by linarith [ht.1]
+    have ht2 : t < 2 := by linarith [ht.2]
+    have hqt : ContinuousAt q t :=
+      (hq t ⟨ht0, ht.2⟩).continuousAt (Ioo_mem_nhds ht0 ht.2)
+    exact ((quadAltW0_hasDerivAt ht0 ht2).continuousAt.mul hqt).continuousWithinAt
+  have hright := intervalIntegrable_of_continuousOn_Ioo_of_tendsto (by norm_num)
+    hWq_cont
+    (((quadAltW0_hasDerivAt (by norm_num : (0 : ℝ) < 1 / 2) (by norm_num : (1 / 2 : ℝ) < 2)).continuousAt.mul
+      hqmid_at).tendsto.mono_left nhdsWithin_le_nhds)
+    hright_lim
+  exact hleft.trans hright
+
+theorem quadAltI10_kernel_intervalIntegrable : IntervalIntegrable
+    (fun t : ℝ => W0 t * H1 t / t) MeasureTheory.volume 0 1 := by
+  have hqcont : ContinuousOn (fun t : ℝ => H1 t / t) (Set.Ioo 0 1) := by
+    intro t ht
+    exact ((quadAltH1_continuousAt ht.2).div continuousAt_id (ne_of_gt ht.1)).continuousWithinAt
+  have hone : Tendsto (fun t : ℝ => 1 - t) (𝓝[<] (1 : ℝ)) (𝓝 0) :=
+    tendsto_nhdsWithin_iff.mp tendsto_one_sub_nhdsWithin |>.1
+  have hid : Tendsto (fun t : ℝ => t) (𝓝[<] (1 : ℝ)) (𝓝 1) :=
+    tendsto_id.mono_left nhdsWithin_le_nhds
+  have hratio : Tendsto (fun t : ℝ => (1 - t) / t)
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    simpa using hone.div hid (by norm_num)
+  have hq1 : Tendsto (fun t : ℝ => (t - 1) ^ 2 * (H1 t / t))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    have h := quadAltH1_mul_oneSub_tendsto_one.mul hratio
+    norm_num at h
+    refine h.congr' ?_
+    filter_upwards with t
+    ring
+  convert quadAltW0_mul_intervalIntegrable hqcont
+    quadAltH1_div_self_tendsto_zero_right hq1 using 1 <;> ring
+
+theorem quadAltI11_kernel_intervalIntegrable : IntervalIntegrable
+    (fun t : ℝ => W0 t * H1 t / (1 - t)) MeasureTheory.volume 0 1 := by
+  have hqcont : ContinuousOn (fun t : ℝ => H1 t / (1 - t)) (Set.Ioo 0 1) := by
+    intro t ht
+    exact ((quadAltH1_continuousAt ht.2).div (by fun_prop)
+      (sub_ne_zero.mpr (ne_of_gt ht.2))).continuousWithinAt
+  have hH10 : Tendsto H1 (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    convert (quadAltH1_continuousAt (by norm_num : (0 : ℝ) < 1)).tendsto.mono_left
+      (show 𝓝[>] (0 : ℝ) ≤ 𝓝 0 from nhdsWithin_le_nhds) using 1 <;> simp [H1]
+  have hden0 : Tendsto (fun t : ℝ => 1 - t) (𝓝[>] (0 : ℝ)) (𝓝 1) := by
+    have hid : Tendsto (fun t : ℝ => t) (𝓝[>] (0 : ℝ)) (𝓝 0) :=
+      tendsto_id.mono_left nhdsWithin_le_nhds
+    simpa using tendsto_const_nhds.sub hid
+  have hq0 : Tendsto (fun t : ℝ => H1 t / (1 - t))
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa using hH10.div hden0 (by norm_num)
+  have hq1 : Tendsto (fun t : ℝ => (t - 1) ^ 2 * (H1 t / (1 - t)))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    refine quadAltH1_mul_oneSub_tendsto_one.congr' ?_
+    filter_upwards [self_mem_nhdsWithin] with t ht
+    have hne : 1 - t ≠ 0 := sub_ne_zero.mpr (ne_of_gt ht)
+    field_simp [hne]
+    ring
+  convert quadAltW0_mul_intervalIntegrable hqcont hq0 hq1 using 1 <;> ring
+
+theorem quadAltI12_kernel_intervalIntegrable : IntervalIntegrable
+    (fun t : ℝ => W0 t * H1 t / (2 - t)) MeasureTheory.volume 0 1 := by
+  have hqcont : ContinuousOn (fun t : ℝ => H1 t / (2 - t)) (Set.Ioo 0 1) := by
+    intro t ht
+    exact ((quadAltH1_continuousAt ht.2).div (by fun_prop)
+      (sub_ne_zero.mpr (by linarith [ht.2]))).continuousWithinAt
+  have hH10 : Tendsto H1 (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    convert (quadAltH1_continuousAt (by norm_num : (0 : ℝ) < 1)).tendsto.mono_left
+      (show 𝓝[>] (0 : ℝ) ≤ 𝓝 0 from nhdsWithin_le_nhds) using 1 <;> simp [H1]
+  have hden0 : Tendsto (fun t : ℝ => 2 - t) (𝓝[>] (0 : ℝ)) (𝓝 2) := by
+    have hid : Tendsto (fun t : ℝ => t) (𝓝[>] (0 : ℝ)) (𝓝 0) :=
+      tendsto_id.mono_left nhdsWithin_le_nhds
+    simpa using tendsto_const_nhds.sub hid
+  have hq0 : Tendsto (fun t : ℝ => H1 t / (2 - t))
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa using hH10.div hden0 (by norm_num)
+  have hone : Tendsto (fun t : ℝ => 1 - t) (𝓝[<] (1 : ℝ)) (𝓝 0) :=
+    tendsto_nhdsWithin_iff.mp tendsto_one_sub_nhdsWithin |>.1
+  have hden1 : Tendsto (fun t : ℝ => 2 - t) (𝓝[<] (1 : ℝ)) (𝓝 1) := by
+    have hid : Tendsto (fun t : ℝ => t) (𝓝[<] (1 : ℝ)) (𝓝 1) :=
+      tendsto_id.mono_left nhdsWithin_le_nhds
+    convert tendsto_const_nhds.sub hid using 1 <;> norm_num
+  have hratio : Tendsto (fun t : ℝ => (1 - t) / (2 - t))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    simpa using hone.div hden1 (by norm_num)
+  have hq1 : Tendsto (fun t : ℝ => (t - 1) ^ 2 * (H1 t / (2 - t)))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    have h := quadAltH1_mul_oneSub_tendsto_one.mul hratio
+    norm_num at h
+    refine h.congr' ?_
+    filter_upwards with t
+    ring
+  convert quadAltW0_mul_intervalIntegrable hqcont hq0 hq1 using 1 <;> ring
+
+theorem quadAltI20_kernel_intervalIntegrable : IntervalIntegrable
+    (fun t : ℝ => W0 t * H2 t / t) MeasureTheory.volume 0 1 := by
+  have hqcont : ContinuousOn (fun t : ℝ => H2 t / t) (Set.Ioo 0 1) := by
+    intro t ht
+    exact ((quadAltH2_continuousAt (by linarith [ht.2])).div continuousAt_id
+      (ne_of_gt ht.1)).continuousWithinAt
+  have hone : Tendsto (fun t : ℝ => 1 - t) (𝓝[<] (1 : ℝ)) (𝓝 0) :=
+    tendsto_nhdsWithin_iff.mp tendsto_one_sub_nhdsWithin |>.1
+  have hid : Tendsto (fun t : ℝ => t) (𝓝[<] (1 : ℝ)) (𝓝 1) :=
+    tendsto_id.mono_left nhdsWithin_le_nhds
+  have hq1 : Tendsto (fun t : ℝ => (t - 1) ^ 2 * (H2 t / t))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    have h := ((hone.pow 2).mul quadAltH2_tendsto_one).div hid (by norm_num)
+    norm_num at h
+    refine h.congr' ?_
+    filter_upwards with t
+    simp only [Pi.div_apply]
+    ring
+  convert quadAltW0_mul_intervalIntegrable hqcont
+    quadAltH2_div_self_tendsto_zero_right hq1 using 1 <;> ring
+
+theorem quadAltI21_kernel_intervalIntegrable : IntervalIntegrable
+    (fun t : ℝ => W0 t * H2 t / (1 - t)) MeasureTheory.volume 0 1 := by
+  have hqcont : ContinuousOn (fun t : ℝ => H2 t / (1 - t)) (Set.Ioo 0 1) := by
+    intro t ht
+    exact ((quadAltH2_continuousAt (by linarith [ht.2])).div (by fun_prop)
+      (sub_ne_zero.mpr (ne_of_gt ht.2))).continuousWithinAt
+  have hH20 : Tendsto H2 (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    convert (quadAltH2_continuousAt (by norm_num : (0 : ℝ) < 2)).tendsto.mono_left
+      (show 𝓝[>] (0 : ℝ) ≤ 𝓝 0 from nhdsWithin_le_nhds) using 1 <;> simp [H2]
+  have hden0 : Tendsto (fun t : ℝ => 1 - t) (𝓝[>] (0 : ℝ)) (𝓝 1) := by
+    have hid : Tendsto (fun t : ℝ => t) (𝓝[>] (0 : ℝ)) (𝓝 0) :=
+      tendsto_id.mono_left nhdsWithin_le_nhds
+    simpa using tendsto_const_nhds.sub hid
+  have hq0 : Tendsto (fun t : ℝ => H2 t / (1 - t))
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa using hH20.div hden0 (by norm_num)
+  have hone : Tendsto (fun t : ℝ => 1 - t) (𝓝[<] (1 : ℝ)) (𝓝 0) :=
+    tendsto_nhdsWithin_iff.mp tendsto_one_sub_nhdsWithin |>.1
+  have hq1 : Tendsto (fun t : ℝ => (t - 1) ^ 2 * (H2 t / (1 - t)))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    have h := hone.mul quadAltH2_tendsto_one
+    norm_num at h
+    refine h.congr' ?_
+    filter_upwards [self_mem_nhdsWithin] with t ht
+    have hne : 1 - t ≠ 0 := sub_ne_zero.mpr (ne_of_gt ht)
+    field_simp [hne]
+    ring
+  convert quadAltW0_mul_intervalIntegrable hqcont hq0 hq1 using 1 <;> ring
+
+theorem quadAltI22_kernel_intervalIntegrable : IntervalIntegrable
+    (fun t : ℝ => W0 t * H2 t / (2 - t)) MeasureTheory.volume 0 1 := by
+  have hqcont : ContinuousOn (fun t : ℝ => H2 t / (2 - t)) (Set.Ioo 0 1) := by
+    intro t ht
+    exact ((quadAltH2_continuousAt (by linarith [ht.2])).div (by fun_prop)
+      (sub_ne_zero.mpr (by linarith [ht.2]))).continuousWithinAt
+  have hH20 : Tendsto H2 (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    convert (quadAltH2_continuousAt (by norm_num : (0 : ℝ) < 2)).tendsto.mono_left
+      (show 𝓝[>] (0 : ℝ) ≤ 𝓝 0 from nhdsWithin_le_nhds) using 1 <;> simp [H2]
+  have hden0 : Tendsto (fun t : ℝ => 2 - t) (𝓝[>] (0 : ℝ)) (𝓝 2) := by
+    have hid : Tendsto (fun t : ℝ => t) (𝓝[>] (0 : ℝ)) (𝓝 0) :=
+      tendsto_id.mono_left nhdsWithin_le_nhds
+    simpa using tendsto_const_nhds.sub hid
+  have hq0 : Tendsto (fun t : ℝ => H2 t / (2 - t))
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa using hH20.div hden0 (by norm_num)
+  have hone : Tendsto (fun t : ℝ => 1 - t) (𝓝[<] (1 : ℝ)) (𝓝 0) :=
+    tendsto_nhdsWithin_iff.mp tendsto_one_sub_nhdsWithin |>.1
+  have hden1 : Tendsto (fun t : ℝ => 2 - t) (𝓝[<] (1 : ℝ)) (𝓝 1) := by
+    have hid : Tendsto (fun t : ℝ => t) (𝓝[<] (1 : ℝ)) (𝓝 1) :=
+      tendsto_id.mono_left nhdsWithin_le_nhds
+    convert tendsto_const_nhds.sub hid using 1 <;> norm_num
+  have hq1 : Tendsto (fun t : ℝ => (t - 1) ^ 2 * (H2 t / (2 - t)))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    have h := ((hone.pow 2).mul quadAltH2_tendsto_one).div hden1 (by norm_num)
+    norm_num at h
+    refine h.congr' ?_
+    filter_upwards with t
+    simp only [Pi.div_apply]
+    ring
+  convert quadAltW0_mul_intervalIntegrable hqcont hq0 hq1 using 1 <;> ring
+
 /-! ## Continuity of the pieces on the open interval
 
 Each of `Mclosed`, `Jclosed`, `V`, `Dminus` is continuous away from the points
@@ -3001,7 +3221,13 @@ theorem quadAltSixIntegralLinear :
         | _ => -5 * (W0 t * H2 t / (2 - t)))
       MeasureTheory.volume 0 1 := by
     intro k
-    sorry  -- TODO-stub: integrability of the six kernels on [0,1]
+    fin_cases k
+    · simpa using quadAltI10_kernel_intervalIntegrable.const_mul (-2)
+    · simpa using quadAltI11_kernel_intervalIntegrable.const_mul (-2)
+    · simpa using quadAltI12_kernel_intervalIntegrable.const_mul 2
+    · simpa using quadAltI20_kernel_intervalIntegrable.const_mul 4
+    · simpa using quadAltI21_kernel_intervalIntegrable.const_mul 6
+    · simpa using quadAltI22_kernel_intervalIntegrable.const_mul (-5)
   rw [hpt]
   -- 线性拆分：∫(Σ) = Σ∫（逐步 integral_add/sub/const_mul）
   have hlin : (∫ t : ℝ in (0 : ℝ)..1,
@@ -3014,7 +3240,36 @@ theorem quadAltSixIntegralLinear :
         (∫ t : ℝ in (0 : ℝ)..1, 4 * (W0 t * H2 t / t)) +
         (∫ t : ℝ in (0 : ℝ)..1, 6 * (W0 t * H2 t / (1 - t))) -
         (∫ t : ℝ in (0 : ℝ)..1, 5 * (W0 t * H2 t / (2 - t))) := by
-    sorry  -- TODO-stub: linearity of the integral on the six summands
+    have h0 : IntervalIntegrable (fun t : ℝ => -2 * (W0 t * H1 t / t))
+        MeasureTheory.volume 0 1 := by simpa using hint (0 : Fin 6)
+    have h1 : IntervalIntegrable (fun t : ℝ => 2 * (W0 t * H1 t / (1 - t)))
+        MeasureTheory.volume 0 1 := by
+      simpa using quadAltI11_kernel_intervalIntegrable.const_mul 2
+    have h2 : IntervalIntegrable (fun t : ℝ => 2 * (W0 t * H1 t / (2 - t)))
+        MeasureTheory.volume 0 1 := by simpa using hint (2 : Fin 6)
+    have h3 : IntervalIntegrable (fun t : ℝ => 4 * (W0 t * H2 t / t))
+        MeasureTheory.volume 0 1 := by simpa using hint (3 : Fin 6)
+    have h4 : IntervalIntegrable (fun t : ℝ => 6 * (W0 t * H2 t / (1 - t)))
+        MeasureTheory.volume 0 1 := by simpa using hint (4 : Fin 6)
+    have h5 : IntervalIntegrable (fun t : ℝ => 5 * (W0 t * H2 t / (2 - t)))
+        MeasureTheory.volume 0 1 := by
+      simpa using quadAltI22_kernel_intervalIntegrable.const_mul 5
+    have h01 := h0.sub h1
+    have h012 := h01.add h2
+    have h0123 := h012.add h3
+    have h01234 := h0123.add h4
+    have hneg1 : -(∫ t : ℝ in (0 : ℝ)..1, 2 * (W0 t * H1 t / (1 - t))) =
+        ∫ t : ℝ in (0 : ℝ)..1, -2 * (W0 t * H1 t / (1 - t)) := by
+      rw [← intervalIntegral.integral_neg]
+      congr 1
+      funext t
+      ring
+    rw [intervalIntegral.integral_sub h01234 h5,
+      intervalIntegral.integral_add h0123 h4,
+      intervalIntegral.integral_add h012 h3,
+      intervalIntegral.integral_add h01 h2,
+      intervalIntegral.integral_sub h0 h1]
+    linear_combination hneg1
   rw [hlin]
   -- 每项 → I（常数提取 + 定义）
   simp [I10, I11, I12, I20, I21, I22,
