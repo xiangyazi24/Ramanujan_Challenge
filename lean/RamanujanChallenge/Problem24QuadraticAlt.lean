@@ -4137,4 +4137,56 @@ theorem quadAltK_hasSum :
   have hxlt : x < 1 := lt_of_le_of_ne hx.2 hxne
   exact (quadAltKMoment_hasSum_pointwise hx.1 hxlt).tsum_eq.symm
 
+/-- **Layer E, step 3: the value of `K`.**
+
+Purely a series rearrangement: with
+`a n = (-1)^{n+1} H_{n+1}/(n+1)³` and `b n = (-1)^{n+1}/(n+1)⁴`, both of which
+this development already evaluates in closed form, the `K` summand is exactly
+`2(a(n+1) - b(n+1))` — the `1/(n+2)⁴` produced by `H_{n+2} = H_{n+1} + 1/(n+2)`
+is cancelled by `b`.  No new analysis. -/
+theorem quadAltK_eq :
+    quadAltK = (1 / 5) * (Real.pi ^ 2 / 6) ^ 2
+      - 2 * alternatingCubicLinearEulerValue24 - 2 * cubicLinearEulerValue24 := by
+  have hHsucc : ∀ m : ℕ, harmonicNumber (m + 1) = harmonicNumber m + 1 / ((m : ℝ) + 1) := by
+    intro m; simp [harmonicNumber, Finset.sum_range_succ]
+  set Va : ℝ := 2 * polylog4 (1 / 2) + (1 / 12 : ℝ) * Real.log 2 ^ 4 -
+      (1 / 2 : ℝ) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) +
+      (7 / 4 : ℝ) * Real.log 2 * zeta3_24 -
+      (11 / 4 : ℝ) * (Real.pi ^ 4 / 90) with hVa
+  set Vb : ℝ := -(7 / 8 : ℝ) * (Real.pi ^ 4 / 90) with hVb
+  have ha : HasSum
+      (fun n : ℕ => (-1 : ℝ) ^ (n + 1) * harmonicNumber (n + 1) / ((n : ℝ) + 1) ^ 3) Va :=
+    alternatingHarmonicCubic_hasSum24
+  have hb : HasSum (fun n : ℕ => (-1 : ℝ) ^ (n + 1) / ((n : ℝ) + 1) ^ 4) Vb :=
+    alternatingZetaFour_hasSum24
+  have hc : HasSum (fun n : ℕ =>
+      (-1 : ℝ) ^ (n + 1) * harmonicNumber (n + 1) / ((n : ℝ) + 1) ^ 3
+        - (-1 : ℝ) ^ (n + 1) / ((n : ℝ) + 1) ^ 4) (Va - Vb) := ha.sub hb
+  have hc1 := (hasSum_nat_add_iff' (f := fun n : ℕ =>
+      (-1 : ℝ) ^ (n + 1) * harmonicNumber (n + 1) / ((n : ℝ) + 1) ^ 3
+        - (-1 : ℝ) ^ (n + 1) / ((n : ℝ) + 1) ^ 4) 1).mpr hc
+  have hzero : (∑ i ∈ Finset.range 1,
+      ((-1 : ℝ) ^ (i + 1) * harmonicNumber (i + 1) / ((i : ℝ) + 1) ^ 3
+        - (-1 : ℝ) ^ (i + 1) / ((i : ℝ) + 1) ^ 4)) = 0 := by
+    norm_num [harmonicNumber]
+  rw [hzero, sub_zero] at hc1
+  have hcomb := hc1.mul_left 2
+  have hkey : HasSum
+      (fun n : ℕ => 2 * (-1 : ℝ) ^ n * harmonicNumber (n + 1) / ((n : ℝ) + 2) ^ 3)
+      (2 * (Va - Vb)) := by
+    refine hcomb.congr_fun ?_
+    intro n
+    have hH : harmonicNumber (n + 1 + 1) = harmonicNumber (n + 1) + 1 / ((n : ℝ) + 2) := by
+      rw [hHsucc (n + 1)]; push_cast; ring_nf
+    have hsign : (-1 : ℝ) ^ (n + 1 + 1) = (-1 : ℝ) ^ n := by
+      rw [pow_succ, pow_succ]; ring
+    have hne : ((n : ℝ) + 2) ≠ 0 := by positivity
+    rw [show ((n + 1 : ℕ) : ℝ) + 1 = (n : ℝ) + 2 by push_cast; ring, hH, hsign]
+    field_simp
+    ring
+  have := quadAltK_hasSum.unique hkey
+  rw [this, hVa, hVb]
+  unfold alternatingCubicLinearEulerValue24 cubicLinearEulerValue24
+  ring
+
 end RamanujanChallenge.P24QuadAlt

@@ -6503,4 +6503,34 @@ theorem alternatingCubicLinearEulerTerm24_hasSum :
   · unfold alternatingCubicLinearEulerValue24
     ring
 
+/-! ## Public re-statements for Layer E of `Problem24QuadraticAlt`
+
+The two alternating weight-four series below are already proved above, but as
+private declarations phrased through private abbreviations.  Layer E needs them
+with their summands written out, so they are restated here rather than
+re-proved. -/
+
+/-- `∑_{n≥0} (-1)^{n+1} H_{n+1}/(n+1)³` in closed form. -/
+theorem alternatingHarmonicCubic_hasSum24 :
+    HasSum (fun n : ℕ => (-1 : ℝ) ^ (n + 1) * harmonicNumber (n + 1) / ((n : ℝ) + 1) ^ 3)
+      (2 * polylog4 (1 / 2) + (1 / 12 : ℝ) * Real.log 2 ^ 4 -
+        (1 / 2 : ℝ) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) +
+        (7 / 4 : ℝ) * Real.log 2 * zeta3_24 -
+        (11 / 4 : ℝ) * (Real.pi ^ 4 / 90)) := by
+  convert alternatingOrdinaryHarmonicCubicTerm24_hasSum using 1
+  funext n
+  unfold alternatingOrdinaryHarmonicCubicTerm24 ordinaryHarmonicCubicTerm24
+  push_cast
+  ring
+
+/-- `∑_{n≥0} (-1)^{n+1}/(n+1)⁴ = -(7/8) ζ(4)`. -/
+theorem alternatingZetaFour_hasSum24 :
+    HasSum (fun n : ℕ => (-1 : ℝ) ^ (n + 1) / ((n : ℝ) + 1) ^ 4)
+      (-(7 / 8 : ℝ) * (Real.pi ^ 4 / 90)) := by
+  convert alternatingZetaFourTerm24_hasSum using 1
+  funext n
+  unfold alternatingZetaFourTerm24 zetaFourTerm24
+  push_cast
+  ring
+
 end
