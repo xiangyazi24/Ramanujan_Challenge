@@ -1,0 +1,35 @@
+name: Q6474 Lean 4.29 audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/q6474-audit.yml'
+      - 'lean/RamanujanChallenge/Q6474Audit.lean'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean toolchain
+        shell: bash
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch Mathlib cache
+        shell: bash
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          cd lean
+          lake exe cache get
+      - name: Compile Q6474 uniqueness bridge
+        shell: bash
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          cd lean
+          lake build RamanujanChallenge.Q6474Audit
