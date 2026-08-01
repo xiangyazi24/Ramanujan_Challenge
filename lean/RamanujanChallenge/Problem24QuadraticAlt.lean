@@ -1978,39 +1978,26 @@ theorem quadAltCoeffIntegral_eq_neg2V_Dminus :
     have hprod := hV'.mul hJ
     unfold F
     convert hprod using 1
-  have hFcont : ContinuousOn F (Set.Icc (0 : ℝ) 1) := by
-    sorry  -- TODO-stub: continuity of F (V and J∘neg continuous on [0,1])
   have hFint : IntervalIntegrable
       (fun x : ℝ => -2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x) +
         (-2 * quadAltV x) * (-quadAltDminus x)) MeasureTheory.volume 0 1 := by
     sorry  -- TODO-stub: integrability of F' on [0,1]
-  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+  -- endpoint LIMITS replace ContinuousOn on the closed interval: both are 0.
+  have hFlim0 : Tendsto F (𝓝[>] (0:ℝ)) (𝓝 0) := quadAltF_tendsto_zero_right
+  have hFlim1 : Tendsto F (𝓝[<] (1:ℝ)) (𝓝 0) := quadAltF_tendsto_zero_left
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
     (a := 0) (b := 1) (f := F)
     (f' := fun x : ℝ => -2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x) +
       (-2 * quadAltV x) * (-quadAltDminus x))
-    (by norm_num) hFcont hFderiv hFint
-  have hF1 : F 1 = 0 := by
-    unfold F
-    rw [quadAltV_one]
-    ring
-  have hJ0 : quadAltJclosed 0 = 0 := by
-    unfold quadAltJclosed
-    rw [quadAltMclosed_zero]
-    simp [dilog_zero]
-  have hF0 : F 0 = 0 := by
-    unfold F
-    rw [neg_zero]
-    rw [hJ0]
-    ring
-  rw [hF1, hF0] at hFTC
+    (by norm_num) hFderiv hFint hFlim0 hFlim1
+  simp only [sub_self] at hFTC
   -- ∫₀¹ F' = 0 → ∫₀¹ (−2V')·J(−x) = −∫₀¹ (−2V)·(−Dminus) = ∫₀¹ (−2V)·Dminus
   have hFTC' : (∫ x : ℝ in (0 : ℝ)..1,
       -2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x)) =
       -∫ x : ℝ in (0 : ℝ)..1, (-2 * quadAltV x) * (-quadAltDminus x) := by
     have hsplit : (∫ x in (0 : ℝ)..1, -2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x) +
           (-2 * quadAltV x) * (-quadAltDminus x)) = 0 := by
-      convert hFTC using 1
-      norm_num
+      exact hFTC
     have hA_int : IntervalIntegrable
         (fun x : ℝ => -2 * (Real.log x / (x * (1 + x))) * quadAltJclosed (-x))
         MeasureTheory.volume 0 1 := by
