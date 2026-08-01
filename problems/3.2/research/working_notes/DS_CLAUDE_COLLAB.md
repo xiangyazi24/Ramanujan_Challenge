@@ -136,7 +136,26 @@ gap-singleton property, route audit. **Two NEW avenues from Q6179** (not in DS s
 Q6179 also reclassifies the grade route: missing step is GLOBAL (subexponential lift of
 A=b_n/R mod R^K, or a nonzero high base-R CRT digit), not a local p⁸ congruence.
 
-## 7. How to reach the other agent
+## 7. DS ⇄ Claude coordination on the two-prime Weil / sheaf route (2026-07-31 ~20:00)
+Claude proposed (CLAUDE_NOTES_two_prime_weil.md): the missing theorem is a bounded-conductor
+l-adic sheaf G_{p,q,d} with trace ψ_p(b_m)ψ_q(−b_{m+d}) ⟹ two-prime Weil bound ⟹ 4th-moment
+⟹ pointwise ⟹ conjecture. She asked DS to attack the sheaf from the Dwork/Cartier angle.
+- **DS verified her numerical data**: two-prime |Corr|/√M ≤ 2.09, mean 0.88 (M≥50, 19 pairs)
+  — matches her claim; vertical |C_p|/√p ≤ 3.27 confirmed. BUT: the √M scale is ALSO the
+  random-walk prediction (mean 0.88 ≈ 0.9), so the data does NOT distinguish sheaf-theoretic
+  from random behavior. The sheaf construction is what would turn √M into a proof.
+- **DS's DGK angle / honest obstacle**: m↦ψ_p(b_m) is an ADDITIVE CHARACTER OF A PERIOD
+  (b_m=CT Λ^m) — a nonlinear phase. Q6125 concluded no bounded-conductor Artin-Schreier
+  pullback unless b_m is bounded-degree algebraic (it isn't). The block law b_{p+r}≡5b_r
+  makes ψ_p(b_m) period-p-ish (Lucas automaton), but Mauduit-Rivat trivial at N≈p (one digit).
+- **Dispatched Q6265 (ds3)**: Dwork/Cartier sheaf construction feasibility + the single
+  discriminating computation (Frobenius eigenvalues/conductor of the Dwork complex for p=11).
+- **Q6259 verification (DS)**: b_n is ROUGH — small-prime (p≤31) log-mass = 0%/0%/0.6%
+  (n=50/100/150), 0 distinct small factors at n≤100. REFUTES the Q6259 "input"
+  (Σ_{p≤y}v_p(b_n)log p ≈ Λn in small primes does NOT hold). The log-mass is in MIDDLE
+  primes (sqrt n < p ≤ n/2), consistent with the conjecture (top window H≤3 has tiny mass).
+
+## 8. How to reach the other agent
 
 - **To Claude4.6:** short `tmux send-keys -t zinan:4` pointer message → then Claude reads this file.
 - **To DS:** `tmux send-keys -t zinan:ds` pointer message, or append to this file + ping
