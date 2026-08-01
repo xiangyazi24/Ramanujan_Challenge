@@ -505,3 +505,14 @@ constants (0.72 / 3.0 / σ₁²≈7). ONE proof of ONE average-root law = E ≪ 
   gap); [GAP-RAD] radical of the fixed-δ product; [GAP-TII] non-type-I
   bookkeeping (mild); [GAP-SIGNED-TO-ROOT]. The countermodel is combinatorial —
   the actual transfer family may forbid it; that is where the proof must live.
+
+## 21. Diagonal-germ reduction for [GAP-PAIR] (verified with central correction)
+
+δ=1 primitive count = level set #{(x,r): 2 ≤ x−r ≤ H+1, Y(x,r)=1} MINUS the
+explicit central band (strong-reflection forced events at r+h ≈ (p−1)/2,
+O(H) many — verified: 18 = 6 direct + 12 central at p=101, H=12;
+diag_germ_check.py). Y(x,r) = value at r of the germ normalized to state (1,1)
+at x; v-independence by homogeneity. The [GAP-PAIR] question becomes: does the
+ONE two-parameter object {Y = 1} have H^{1+o(1)} points per unit lag-width in
+the strip — R13 is grinding whether the x-direction recursion makes this level
+set algebraic of low degree.

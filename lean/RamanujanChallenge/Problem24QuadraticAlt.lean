@@ -1820,6 +1820,78 @@ theorem quadAltCoeffKernel_eq_VJ {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
   ring
 
 
+/-! ## Endpoint limit atoms for the IBP boundary conditions
+
+The IBP on `[0,1]` has removable singularities at both ends: `V ~ (log x)²/2`
+blows up at `0` but `J(-x) → 0` fast enough to kill it, and at `1` the blow-up of
+`Dminus` is killed by `V 1 = 0`. These atoms make that precise. -/
+
+theorem logSq_mul_self_tendsto :
+    Tendsto (fun x : ℝ => Real.log x ^ 2 * x) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+  have h := tendsto_log_mul_rpow_nhdsGT_zero (r := (1:ℝ)/2) (by norm_num)
+  have hsq := h.mul h
+  simp only [mul_zero] at hsq
+  refine hsq.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hx0 : (0:ℝ) < x := hx
+  have hh : x ^ ((1:ℝ)/2) * x ^ ((1:ℝ)/2) = x := by
+    rw [← Real.rpow_add hx0]; norm_num
+  calc Real.log x * x ^ ((1:ℝ)/2) * (Real.log x * x ^ ((1:ℝ)/2))
+      = Real.log x ^ 2 * (x ^ ((1:ℝ)/2) * x ^ ((1:ℝ)/2)) := by ring
+    _ = Real.log x ^ 2 * x := by rw [hh]
+
+theorem log_mul_self_tendsto :
+    Tendsto (fun x : ℝ => Real.log x * x) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+  have h := tendsto_log_mul_rpow_nhdsGT_zero (r := (1:ℝ)) one_pos
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  rw [Real.rpow_one]
+
+/-- If `f` is differentiable at `0` with `f 0 = 0`, the difference quotient
+`f x / x` converges to the derivative. -/
+theorem slope_tendsto_of_hasDerivAt_zero (f : ℝ → ℝ) (d : ℝ)
+    (h : HasDerivAt f d 0) (h0 : f 0 = 0) :
+    Tendsto (fun x : ℝ => f x / x) (𝓝[≠] (0:ℝ)) (𝓝 d) := by
+  refine (hasDerivAt_iff_tendsto_slope.mp h).congr ?_
+  intro x
+  rw [slope_def_field, h0]
+  ring
+
+/-- `V x * x → 0` as `x → 0⁺`. -/
+theorem quadAltV_mul_self_tendsto :
+    Tendsto (fun x : ℝ => quadAltV x * x) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+  have t1 : Tendsto (fun x : ℝ => Real.log x ^ 2 / 2 * x) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+    have := logSq_mul_self_tendsto.div_const 2
+    simpa [mul_comm, mul_div_assoc, mul_assoc] using this
+  have t2 : Tendsto (fun x : ℝ => Real.log x * Real.log (1+x) * x) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+    have hlog1 : Tendsto (fun x : ℝ => Real.log (1+x)) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+      have hc : ContinuousAt (fun x : ℝ => Real.log (1+x)) 0 := by
+        apply ContinuousAt.log (by fun_prop); norm_num
+      simpa using (hc.tendsto.mono_left nhdsWithin_le_nhds)
+    have := log_mul_self_tendsto.mul hlog1
+    simpa [mul_zero, mul_comm, mul_assoc, mul_left_comm] using this
+  have t3 : Tendsto (fun x : ℝ => dilog (-x) * x) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+    have hd : Tendsto (fun x : ℝ => dilog (-x)) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+      have hca : ContinuousAt dilog 0 :=
+        (dilog_hasDerivAt_of_abs_lt_one (by norm_num : |(0:ℝ)| < 1)).continuousAt
+      have hneg : ContinuousAt (fun x : ℝ => -x) 0 := by fun_prop
+      have hca' : ContinuousAt dilog (-(0:ℝ)) := by rwa [neg_zero]
+      have hcomp := hca'.comp hneg
+      have := hcomp.tendsto.mono_left (nhdsWithin_le_nhds (a := (0:ℝ)) (s := Set.Ioi 0))
+      simpa [dilog_zero] using this
+    have := hd.mul (tendsto_id.mono_left nhdsWithin_le_nhds)
+    simpa using this
+  have t4 : Tendsto (fun x : ℝ => Real.pi^2/12 * x) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+    have h0 : Tendsto (fun x : ℝ => x) (𝓝[>] (0:ℝ)) (𝓝 0) :=
+      tendsto_id.mono_left nhdsWithin_le_nhds
+    simpa using h0.const_mul (Real.pi^2/12)
+  have hcomb := ((t1.sub t2).sub t3).sub t4
+  simp only [sub_zero] at hcomb
+  refine hcomb.congr ?_
+  intro x
+  unfold quadAltV
+  ring
+
 /-- Integration by parts (Q6047 (4.9)): with `F = −2V·J(−x)`, `F(1)=F(0)=0`
 (`V(1)=0`, `J(0)=0`), so `∫₀¹ (−log x)/x·Q(−x) = ∫₀¹ (−2V(x))·Dminus(x)`. -/
 theorem quadAltCoeffIntegral_eq_neg2V_Dminus :
