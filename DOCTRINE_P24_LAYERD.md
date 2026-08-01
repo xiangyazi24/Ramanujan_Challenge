@@ -136,3 +136,33 @@ is already proved (Problem24Euler.lean:3800) and `I11 = cubicLinearEulerValue24`
 exactly, so `I11` reduces to finding an integral representation of the
 cubic-linear sum that matches `I11`'s integrand — not to a fresh weight-4
 evaluation. Start there.
+
+## I11: the derivation skeleton (independently confirmed, no MZV table needed)
+
+An independent derivation reaches the same value PSLQ found,
+`I11 = -(7/2) log2 ζ3 + π⁴/48 = -(7/2) log2 ζ3 + (3/4) ζ2²`, and — importantly
+for formalization — **without** invoking `Li4(1/2)`, an alternating Euler-sum
+table, or any multiple-zeta reduction. The route:
+
+1. **One integration by parts**, using
+   `d/dt Li₂(t/2) = -log(1-t/2)/t`, hence
+   `W0'(t) = (2/t)·log((2-t)/t)`, together with `(H(t)²/2)' = H(t)/(1-t)`.
+   This is exactly the `hprod'` / `g11` structure already written in
+   `quadAltI11_eq_integral` — the Lean file's existing IBP is the right first
+   step, not a detour.
+   Reduces the problem to three logarithmic integrals.
+2. Two of the three are immediate from nonnegative power-series expansions.
+3. The third: introduce one parameter and apply **Tonelli** (nonnegativity makes
+   the interchange free — this is the step that would otherwise need a
+   dominated-convergence argument).
+4. Two elementary integrations by parts reduce it to the alternating polylog
+   series at `-1`.
+
+Only standard input needed: `∑ H_n/n³ = (5/4) ζ4 = π⁴/72`. Note `ζ4 = π⁴/90 =
+(2/5) ζ2²` is ordinary even-zeta normalisation, not an extra MZV input.
+
+Implication for the Lean work: the existing `quadAltI11_eq_integral` skeleton
+(IBP with `g11 = H1²/2`, endpoint limits already proved) is on the right track;
+what remains after Codex closes its integrability side conditions is steps 2-4,
+and the only genuinely new analytic ingredient is one Tonelli interchange on a
+nonnegative double series.
