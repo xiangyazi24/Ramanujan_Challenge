@@ -550,3 +550,35 @@ Two warnings that came with it, both matching traps already hit here:
 - **Do not expand its three terms into series separately.**  That produces
   coloured depth-three Euler sums outside the four-item half-argument list, which
   would break the series-only plan.
+
+### I10 reduces to a single evaluation, and V₂ is tied to the already-proved K
+
+Splitting `W0` rather than integrating by parts,
+
+```
+I10 = ζ₂·∫₀¹ H1/t  -  2·∫₀¹ Li₂(t/2) H1/t  -  ∫₀¹ log²(t/2) H1/t
+    = ζ₂·ζ₂  -  2 V₂  -  (2ζ₄ + 2Lζ₃ + L²ζ₂)
+```
+
+with `V₂ = ∫₀¹ Li₂(t/2) H1(t)/t dt = Σ_{m≥1} H_m/(2^m m³)`.  The first and third
+integrals are termwise integrations against moments already proved here
+(`∫₀¹ t^{n-1} = 1/n`, `∫₀¹ t^{n-1} log t = -1/n²`, `∫₀¹ t^{n-1} log²t = 2/n³`).
+`V₂` needs `∫₀¹ t^{m-1}(-log(1-t)) dt = H_m/m` and then its own value.
+
+That value is tied to `K`, which is already proved:
+
+```
+V₂ = (1/4) K + (1/4) L²ζ₂ - Lζ₃ + (17/40) ζ₂²
+```
+
+verified numerically.  Substituting it back reproduces the recorded K-normal-form
+row `I10 = -(1/2)K - (3/2)L²ζ₂ - (13/8)ζ₄` exactly, which is a consistency check
+on both.
+
+**Do not mistake this for a free reduction.**  `K`'s series is alternating and
+full-argument, `Σ(-1)ⁿ H_{n+1}/(n+2)³`; `V₂`'s is non-alternating and
+half-argument, `Σ H_m/(2^m m³)`.  The relation between them is a genuine
+weight-four identity, not a rearrangement.  So `I10` costs exactly one
+evaluation — either `V₂` directly (half-interval log moments, per the analytic
+derivation already in hand) or the `V₂ ↔ K` identity — whichever is cheaper in
+Lean.  It does not cost zero, and it does not need any constant beyond `K`.
