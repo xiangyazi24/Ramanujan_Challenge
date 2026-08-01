@@ -1,4 +1,5 @@
-import RamanujanChallenge.Problem27BarnesShift
+import RamanujanChallenge.Problem27BarnesTelescoper
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
 
 open Filter Set MeasureTheory Topology
 open scoped BigOperators Interval Real
@@ -7,16 +8,19 @@ noncomputable section
 
 namespace RamanujanChallenge.P27.Q6448
 
+def verticalPoint (x y : ℝ) : ℂ :=
+  (x : ℂ) + (y : ℂ) * Complex.I
+
 def rawKernel27 (t : ℂ) : ℂ :=
   zudilinBarnesSquaredSineKernel27 t
 
 def rPhiVertical27 (n : ℕ) (x : ℝ) : ℂ :=
   ∫ y : ℝ,
-    ctRPhi27 n (verticalPoint27 x y) * rawKernel27 (verticalPoint27 x y)
+    ctRPhi27 n (verticalPoint x y) * rawKernel27 (verticalPoint x y)
 
 def sPhiVertical27 (n : ℕ) (x : ℝ) : ℂ :=
   ∫ y : ℝ,
-    ctSPhi27 n (verticalPoint27 x y) * rawKernel27 (verticalPoint27 x y)
+    ctSPhi27 n (verticalPoint x y) * rawKernel27 (verticalPoint x y)
 
 theorem rawKernel_add_one27 (t : ℂ) :
     rawKernel27 (t + 1) = rawKernel27 t := by
@@ -41,9 +45,9 @@ theorem rawKernel_add_nat27 (r : ℕ) (t : ℂ) :
         _ = rawKernel27 t := ih
 
 theorem nativePoint_eq_translate27 (n : ℕ) (y : ℝ) :
-    verticalPoint27 ((n : ℝ) + 1 / 2) y =
+    verticalPoint ((n : ℝ) + 1 / 2) y =
       zudilinBarnesLine27 y + (((n + 1 : ℕ) : ℂ)) := by
-  unfold verticalPoint27 zudilinBarnesLine27
+  unfold verticalPoint zudilinBarnesLine27
   push_cast
   ring
 
@@ -90,29 +94,29 @@ theorem sPhi_shifted_integral_eq_of_one_strip27
         sPhiVertical27 (k + 2) (3 / 2))
     (k : ℕ) :
     (∫ y : ℝ,
-      ctSPhi27 (k + 2) (verticalPoint27 (1 / 2) y + 1) *
-        rawKernel27 (verticalPoint27 (1 / 2) y)) =
+      ctSPhi27 (k + 2) (verticalPoint (1 / 2) y + 1) *
+        rawKernel27 (verticalPoint (1 / 2) y)) =
       ∫ y : ℝ,
-        ctSPhi27 (k + 2) (verticalPoint27 (1 / 2) y) *
-          rawKernel27 (verticalPoint27 (1 / 2) y) := by
+        ctSPhi27 (k + 2) (verticalPoint (1 / 2) y) *
+          rawKernel27 (verticalPoint (1 / 2) y) := by
   calc
     (∫ y : ℝ,
-      ctSPhi27 (k + 2) (verticalPoint27 (1 / 2) y + 1) *
-        rawKernel27 (verticalPoint27 (1 / 2) y)) =
+      ctSPhi27 (k + 2) (verticalPoint (1 / 2) y + 1) *
+        rawKernel27 (verticalPoint (1 / 2) y)) =
         sPhiVertical27 (k + 2) (3 / 2) := by
       unfold sPhiVertical27
       apply integral_congr_ae
       filter_upwards with y
-      have hp : verticalPoint27 (1 / 2) y + 1 =
-          verticalPoint27 (3 / 2) y := by
-        unfold verticalPoint27
+      have hp : verticalPoint (1 / 2) y + 1 =
+          verticalPoint (3 / 2) y := by
+        unfold verticalPoint
         push_cast
         ring
-      rw [← rawKernel_add_one27 (verticalPoint27 (1 / 2) y), hp]
+      rw [← rawKernel_add_one27 (verticalPoint (1 / 2) y), hp]
     _ = sPhiVertical27 (k + 2) (1 / 2) := (hone k).symm
     _ = ∫ y : ℝ,
-        ctSPhi27 (k + 2) (verticalPoint27 (1 / 2) y) *
-          rawKernel27 (verticalPoint27 (1 / 2) y) := rfl
+        ctSPhi27 (k + 2) (verticalPoint (1 / 2) y) *
+          rawKernel27 (verticalPoint (1 / 2) y) := rfl
 
 #print axioms rawKernel_add_nat27
 #print axioms raw_fixedLine_eq_native27
