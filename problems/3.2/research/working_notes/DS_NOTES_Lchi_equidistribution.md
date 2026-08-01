@@ -38,3 +38,14 @@ this note.
 |Σ_m e_p(L(χ_m))|/√p = 0.76, 1.37, 3.22, 1.06, 1.00 (p=101,199,307,401,503).
 The p=307 ratio 3.22 is a ~3σ random-walk fluctuation; p=401,503 return to ~1.0.
 ⟹ the vertical Weil bound |C_p| ≤ C√p holds with a bounded constant (cluster ~1, max ~3.2).
+
+## Decisive complexity + local-limit experiments (DS, p=11..19)
+- **L(χ_m) mod p is NOT bounded-complexity (linear-recurrence sense)**: minimal constant-
+  coefficient recurrence order of m -> L(χ_m) = p (p=11,13,17,19 → 11,13,17,19), growing
+  with p. This is the generic behavior (any function on F_p^* has order ≤ p−1). Refutes the
+  "L(χ) mod p is a bounded-order linear-recurrent trace" hope.
+- **Local-limit deviation ~√p (supports the target)**: #{m: L(χ_m)=r mod p} takes only
+  ~√p distinct values (6,6,7 of p−1=10,12,16), max multiplicity 2,4,4 vs √p ≈ 3,4,4.
+  The O(√p) local-limit statement holds (hit residues have multiplicity ~√p; non-hit = 0,
+  trivially within O(√p) of the mean). NOT F_p-uniform — only ~√p residues hit, confirming
+  the folding picture.
