@@ -1,12 +1,16 @@
-TWO-REGIME CONFIRMED — kappa_odd=2.6476351565264811761, kappa_even=5.2962252861633128319, ratio=2.0003606890881458683, F''(1/2)=5.2962252861633128319, far-band lower bound=3.8163389774311825327e-3 for |Δt|>=1/4
+TWO-REGIME REFUTED — kappa_odd=2.6476303, kappa_even=5.2955351, ratio=2.0001037, F''(1/2)=5.2955351, finite far-band lower bound=0.003816339 for |Δt|>=1/4; k=1 decay exponent=1.0882211
 
 # Certified per-pair margin anatomy
 
 ## Verdict
 
-The two-regime picture is `CONFIRMED` on the requested finite scan.  At every tested height the global midpoint relative-separation minimum is the predicted central `inner`-branch pair.  Its distance is `1/h` for odd `h`; for even `h` the pair straddles the reflection-fixed cell and has distance `2/h`.  Thus both parity families are in the `O(1/h)` near regime.
+The proposed two-regime picture is `REFUTED` by its far-pair clause, while its central near-pair clause is confirmed.  At every tested height the global midpoint relative-separation minimum is the predicted central `inner`-branch pair.  Its cell distance is `1/h` for odd `h`; for even `h` the pair straddles the reflection-fixed cell and has distance `2/h`.  The relative gap is `kappa_parity*h^-2 + O(h^-3)`.
 
-For the unambiguously macroscopic region `|Δt| >= 1/4`, the smallest observed relative separation is `3.8163389774311825327e-3` (attained at `h=52`, band `k=2`).  This is an empirical finite-height lower bound, not an all-height certificate.
+The far pairs are not bounded below by a height-independent constant or by `c'|Δt|^2`.  Already in the fixed macroscopic band `1/2 <= |Δt| < 1`, the minimum falls from `9.31756195468843311e-2` at `h=20` to `2.99869328107161605e-2` at `h=60`; the fit `C*h^-alpha` gives `alpha=1.0882210996634` (log-RMSE `5.48353735188e-2`), close to `1/h`, not a constant.  Since `|Δt|` stays at least `1/2`, this also rules out a uniform positive `c'|Δt|^2` interpretation of the scanned profile.
+
+There is also a distinct cross-branch event: the smallest observed separation with `|Δt|>=1/4` is `3.8163389774311825327e-3` at `h=52`, between `h52-j3-inner` and `h52-j17-outer` at distance `0.26923076923076923077`.  This `inner/outer` near-collision is far below the smooth same-branch trend and shows that a faithful all-height partition must track branch combinations, not distance alone.
+
+This refutation does not by itself kill the intended comparison strategy: the generic far gap observed here is roughly `h^-1`, still larger than an `O(h^-2)` tail.  It does kill the stated two-regime lower-bound claim and exposes an additional cross-branch regime that needs its own estimate.
 
 ## Cell and branch convention
 
@@ -30,19 +34,30 @@ The original per-height Arb lower bound is retained separately as `certified_rel
 
 ## Central-gap fits
 
-Both fits use `relative_gap*h^2 = kappa + a/h + b/h^2`.  The fit range, RMSE, and maximum absolute residual are stated explicitly; digits beyond the residual scale are diagnostic rather than certified as asymptotic constants.
+The primary fits use the tail window beginning at `h=40` and the model `relative_gap*h^2 = kappa + a/h + b/h^2`.  The fit range, RMSE, and maximum absolute residual are stated explicitly; digits beyond the residual scale are diagnostic rather than certified as asymptotic constants.
 
 | parity | fit heights | n | kappa | a | b | RMSE | max |residual| |
 |:---:|:---:|---:|---:|---:|---:|---:|---:|
-| odd | 21..59 | 20 | `2.6476351565264811761` | `2.3392991975294356068` | `1.4908556082720327432` | `1.523398115099069e-7` | `3.085803065438876e-7` |
-| even | 20..60 | 21 | `5.2962252861633128319` | `4.5799931978427213793` | `21.972675418082615944` | `2.809613661062996e-5` | `6.146081002011369e-5` |
+| odd | 41..59 | 10 | `2.6476302690822900164` | `2.3397277747325793579` | `1.4817655032897417614` | `3.213600459878472e-9` | `4.625396801482743e-9` |
+| even | 40..60 | 11 | `5.2955351465525116299` | `4.6395492166458062699` | `20.7398201782374365` | `4.544182636168864e-7` | `6.721218466606821e-7` |
+
+Fit-window drift is the relevant systematic uncertainty.  The following table repeats the same fit on successively later windows; every displayed constant therefore carries its own range and residual.
+
+| parity | fit heights | n | kappa | RMSE | max |residual| |
+|:---:|:---:|---:|---:|---:|---:|
+| odd | 21..59 | 20 | `2.6476351565264811761` | `1.523398115099069e-7` | `3.085803065438876e-7` |
+| odd | 31..59 | 15 | `2.6476317963650169196` | `2.403211905015292e-8` | `4.251600551137884e-8` |
+| odd | 41..59 | 10 | `2.6476302690822900164` | `3.213600459878472e-9` | `4.625396801482743e-9` |
+| even | 20..60 | 21 | `5.2962252861633128319` | `2.809613661062996e-5` | `6.146081002011369e-5` |
+| even | 30..60 | 16 | `5.2957155048890483622` | `3.503946103294933e-6` | `6.584990994041322e-6` |
+| even | 40..60 | 11 | `5.2955351465525116299` | `4.544182636168864e-7` | `6.721218466606821e-7` |
 
 Using the proved identities `kappa_even = F''(1/2)` and `kappa_odd = F''(1/2)/2`, the data give
 
 ```text
-F''(1/2) = 5.2962252861633128319
-kappa_odd - kappa_even/2 = -4.774865551752398e-4
-relative half-identity error = 1.803445440729341e-4
+F''(1/2) = 5.2955351465525116299
+kappa_odd - kappa_even/2 = -1.373041939657985e-4
+relative half-identity error = 5.185927792455339e-5
 ```
 
 ### Per-height central gaps and fit residuals
@@ -106,7 +121,15 @@ A positive-distance pair is put in band `k` when `2^-k <= |Δt| < 2^(-k+1)`.  Sa
 | k=5 | [2^-5,2^-4) | 8544 | `1.4940614877413101622e-3` | 60 | `h60-j29-inner / h60-j31-inner` | `8.9799808055728085453e-1` |
 | k=6 | [2^-6,2^-5) | 4984 | `7.7210926164426042972e-4` | 59 | `h59-j29-inner / h59-j30-inner` | `2.6877123397836705558` |
 
-On the fixed far bands `k=1, k=2, k=3` (`|Δt|>=1/8`), a free log-log fit has slope `1.16550912403`.  The log-RMSE is `8.8275575917e-1` for a constant model and `7.65658535838e-1` for a quadratic model; by this deliberately coarse diagnostic the profile is `quadratic-like`.
+Across the three far distance bands `k=1, k=2, k=3`, a free log-log fit against distance has slope `1.16550912403`.  Its constant-model log-RMSE is `8.8275575917e-1`, versus `7.65658535838e-1` for a quadratic-distance model.  This cross-band diagnostic alone calls the shape `quadratic-like`, but it does **not** supply a uniform lower bound because each fixed band's minimum itself decays with height.
+
+### Fixed-band decay with height
+
+| band | distance range | fit heights | alpha in C*h^-alpha | free log-RMSE | constant log-RMSE | 1/h log-RMSE | first min | last min |
+|:---:|:---:|:---:|---:|---:|---:|---:|---:|---:|
+| k=1 | [2^-1,2^-0) | 20..60 | `1.0882210996634` | `5.48353735188e-2` | `3.48856280418e-1` | `6.15385836031e-2` | `9.31756195468843311e-2` (h=20) | `2.99869328107161605e-2` (h=60) |
+| k=2 | [2^-2,2^-1) | 20..60 | `1.2398969978341` | `2.19310924411e-1` | `4.49648637321e-1` | `2.32089468978e-1` | `4.56839317907496822e-2` (h=20) | `1.28668771371237485e-2` (h=60) |
+| k=3 | [2^-3,2^-2) | 20..60 | `1.2060332678992` | `1.14448453579e-1` | `3.98601628643e-1` | `1.31731329659e-1` | `2.88075520593240125e-2` (h=20) | `6.07910894316555472e-3` (h=60) |
 
 ### Profile as a function of height
 
@@ -348,7 +371,7 @@ On the fixed far bands `k=1, k=2, k=3` (`|Δt|>=1/8`), a free log-log fit has sl
 
 ## Caveats
 
-1. `CONFIRMED` is a verdict about the finite Arb scan, not an all-height proof.  The orbit balls and fixed-height separation certificates are rigorous; the extrapolated `kappa` values are numerical fits.
+1. `REFUTED` means that the observed fixed far band has clear height decay, contrary to the proposed uniform lower bound.  A finite scan does not prove the eventual exponent.  The orbit balls and fixed-height separation certificates are rigorous; the extrapolated exponents and `kappa` values are numerical fits.
 2. Relative pair separations in the anatomy tables use Arb-ball midpoints, as requested.  The raw midpoint and radius make the rounding scale explicit.  The pre-existing certificate path was not weakened and its outward-rounded minimum is retained per height.
 3. The `inner/outer` label is geometric (imaginary height), not a new algebraic theorem about continuation of branches in `h`.
 4. The constant-vs-quadratic far-band comparison uses only three fixed dyadic bands and is descriptive.  On any region bounded away from zero, both a positive constant and `c'|Δt|^2` give a positive uniform lower bound; the table is the durable result.

@@ -1986,18 +1986,22 @@ def pair_anatomy_report_markdown(payload: Dict[str, Any]) -> str:
     """Readable summary of the raw orbit and all-pair anatomy payload."""
 
     constants = payload["constants"]
+    short = lambda value: mp.nstr(mp.mpf(value), 8)
     first_line = (
         "%s — kappa_odd=%s, kappa_even=%s, ratio=%s, F''(1/2)=%s, "
-        "far-band lower bound=%s for |Δt|>=1/4"
+        "finite far-band lower bound=%s for |Δt|>=1/4; k=1 decay exponent=%s"
         % (
             payload["verdict"],
-            constants["kappa_odd"],
-            constants["kappa_even"],
-            constants["kappa_even_over_odd"],
-            constants["F_second_at_one_half_from_even_identity"],
-            constants["macroscopic_far_lower_bound"],
+            short(constants["kappa_odd"]),
+            short(constants["kappa_even"]),
+            short(constants["kappa_even_over_odd"]),
+            short(constants["F_second_at_one_half_from_even_identity"]),
+            short(constants["macroscopic_far_lower_bound"]),
+            short(constants["k1_height_decay_exponent"]),
         )
     )
+    k1_decay = payload["far_band_height_decay"][0]
+    far_pair = constants["macroscopic_far_lower_bound_pair"]
     lines = [
         first_line,
         "",
@@ -2005,22 +2009,48 @@ def pair_anatomy_report_markdown(payload: Dict[str, Any]) -> str:
         "",
         "## Verdict",
         "",
-        "The two-regime picture is `%s` on the requested finite scan.  "
-        "At every tested height the global midpoint relative-separation "
-        "minimum is the predicted central `inner`-branch pair.  Its distance "
-        "is `1/h` for odd `h`; for even `h` the pair straddles the "
-        "reflection-fixed cell and has distance `2/h`.  Thus both parity "
-        "families are in the `O(1/h)` near regime." % payload["verdict"].split()[-1],
+        "The proposed two-regime picture is `REFUTED` by its far-pair clause, "
+        "while its central near-pair clause is confirmed.  At every tested "
+        "height the global midpoint relative-separation minimum is the "
+        "predicted central `inner`-branch pair.  Its cell distance is `1/h` "
+        "for odd `h`; for even `h` the pair straddles the reflection-fixed "
+        "cell and has distance `2/h`.  The relative gap is "
+        "`kappa_parity*h^-2 + O(h^-3)`.",
         "",
-        "For the unambiguously macroscopic region `|Δt| >= 1/4`, the smallest "
-        "observed relative separation is `%s` (attained at `h=%d`, band `%s`).  "
-        "This is an empirical finite-height lower bound, not an all-height "
-        "certificate."
+        "The far pairs are not bounded below by a height-independent constant "
+        "or by `c'|Δt|^2`.  Already in the fixed macroscopic band "
+        "`1/2 <= |Δt| < 1`, the minimum falls from `%s` at `h=%d` to `%s` "
+        "at `h=%d`; the fit `C*h^-alpha` gives `alpha=%s` (log-RMSE `%s`), "
+        "close to `1/h`, not a constant.  Since `|Δt|` stays at least `1/2`, "
+        "this also rules out a uniform positive `c'|Δt|^2` interpretation of "
+        "the scanned profile."
+        % (
+            k1_decay["first_minimum"],
+            k1_decay["first_height"],
+            k1_decay["last_minimum"],
+            k1_decay["last_height"],
+            k1_decay["alpha"],
+            k1_decay["free_log_rmse"],
+        ),
+        "",
+        "There is also a distinct cross-branch event: the smallest observed "
+        "separation with `|Δt|>=1/4` is `%s` at `h=%d`, between `%s` and `%s` "
+        "at distance `%s`.  This `inner/outer` near-collision is far below the "
+        "smooth same-branch trend and shows that a faithful all-height "
+        "partition must track branch combinations, not distance alone."
         % (
             constants["macroscopic_far_lower_bound"],
             constants["macroscopic_far_lower_bound_h"],
-            constants["macroscopic_far_lower_bound_band"],
+            far_pair["orbit_a"],
+            far_pair["orbit_b"],
+            far_pair["cell_distance"],
         ),
+        "",
+        "This refutation does not by itself kill the intended comparison "
+        "strategy: the generic far gap observed here is roughly `h^-1`, still "
+        "larger than an `O(h^-2)` tail.  It does kill the stated two-regime "
+        "lower-bound claim and exposes an additional cross-branch regime that "
+        "needs its own estimate.",
         "",
         "## Cell and branch convention",
         "",
@@ -2056,8 +2086,9 @@ def pair_anatomy_report_markdown(payload: Dict[str, Any]) -> str:
         "",
         "## Central-gap fits",
         "",
-        "Both fits use `relative_gap*h^2 = kappa + a/h + b/h^2`.  The fit "
-        "range, RMSE, and maximum absolute residual are stated explicitly; "
+        "The primary fits use the tail window beginning at `h=40` and the "
+        "model `relative_gap*h^2 = kappa + a/h + b/h^2`.  The fit range, "
+        "RMSE, and maximum absolute residual are stated explicitly; "
         "digits beyond the residual scale are diagnostic rather than certified "
         "as asymptotic constants.",
         "",
@@ -2083,6 +2114,31 @@ def pair_anatomy_report_markdown(payload: Dict[str, Any]) -> str:
     lines.extend(
         [
             "",
+            "Fit-window drift is the relevant systematic uncertainty.  The "
+            "following table repeats the same fit on successively later "
+            "windows; every displayed constant therefore carries its own "
+            "range and residual.",
+            "",
+            "| parity | fit heights | n | kappa | RMSE | max |residual| |",
+            "|:---:|:---:|---:|---:|---:|---:|",
+        ]
+    )
+    for parity in ("odd", "even"):
+        for fit in payload["central_fit_stability"][parity]:
+            lines.append(
+                "| %s | %s | %d | `%s` | `%s` | `%s` |"
+                % (
+                    parity,
+                    fit["fit_range"],
+                    fit["point_count"],
+                    fit["coefficients"]["kappa"],
+                    fit["rmse"],
+                    fit["max_abs_residual"],
+                )
+            )
+    lines.extend(
+        [
+            "",
             "Using the proved identities `kappa_even = F''(1/2)` and "
             "`kappa_odd = F''(1/2)/2`, the data give",
             "",
@@ -2098,10 +2154,13 @@ def pair_anatomy_report_markdown(payload: Dict[str, Any]) -> str:
             "|---:|:---:|:---:|---:|---:|---:|---:|:---:|---:|",
         ]
     )
+    # The per-height table spans the whole scan, so use the widest stability
+    # window for its residual column.  The primary tail-fit residuals remain
+    # available verbatim in ``central_fits`` and the raw JSON.
     residual_lookup = {
         (parity, row["h"]): row
-        for parity, fit in payload["central_fits"].items()
-        for row in fit["residuals"]
+        for parity, fits in payload["central_fit_stability"].items()
+        for row in fits[0]["residuals"]
     }
     for row in payload["heights"]:
         parity = "odd" if row["h"] % 2 else "even"
@@ -2159,10 +2218,12 @@ def pair_anatomy_report_markdown(payload: Dict[str, Any]) -> str:
         lines.extend(
             [
                 "",
-                "On the fixed far bands `%s` (`|Δt|>=1/8`), a free log-log "
-                "fit has slope `%s`.  The log-RMSE is `%s` for a constant "
-                "model and `%s` for a quadratic model; by this deliberately "
-                "coarse diagnostic the profile is `%s`."
+                "Across the three far distance bands `%s`, a free log-log "
+                "fit against distance has slope `%s`.  Its constant-model "
+                "log-RMSE is `%s`, versus `%s` for a quadratic-distance "
+                "model.  This cross-band diagnostic alone calls the shape "
+                "`%s`, but it does **not** supply a uniform lower bound because "
+                "each fixed band's minimum itself decays with height."
                 % (
                     ", ".join(diagnostic["bands"]),
                     diagnostic["free_log_log_slope"],
@@ -2171,6 +2232,32 @@ def pair_anatomy_report_markdown(payload: Dict[str, Any]) -> str:
                     diagnostic["closer_model"],
                 ),
             ]
+        )
+    lines.extend(
+        [
+            "",
+            "### Fixed-band decay with height",
+            "",
+            "| band | distance range | fit heights | alpha in C*h^-alpha | free log-RMSE | constant log-RMSE | 1/h log-RMSE | first min | last min |",
+            "|:---:|:---:|:---:|---:|---:|---:|---:|---:|---:|",
+        ]
+    )
+    for decay in payload["far_band_height_decay"]:
+        lines.append(
+            "| %s | %s | %s | `%s` | `%s` | `%s` | `%s` | `%s` (h=%d) | `%s` (h=%d) |"
+            % (
+                decay["band"],
+                decay["distance_interval"],
+                decay["fit_range"],
+                decay["alpha"],
+                decay["free_log_rmse"],
+                decay["constant_log_rmse"],
+                decay["inverse_h_log_rmse"],
+                decay["first_minimum"],
+                decay["first_height"],
+                decay["last_minimum"],
+                decay["last_height"],
+            )
         )
     lines.extend(
         [
@@ -2203,10 +2290,11 @@ def pair_anatomy_report_markdown(payload: Dict[str, Any]) -> str:
             "",
             "## Caveats",
             "",
-            "1. `CONFIRMED` is a verdict about the finite Arb scan, not an "
-            "all-height proof.  The orbit balls and fixed-height separation "
-            "certificates are rigorous; the extrapolated `kappa` values are "
-            "numerical fits.",
+            "1. `REFUTED` means that the observed fixed far band has clear "
+            "height decay, contrary to the proposed uniform lower bound.  A "
+            "finite scan does not prove the eventual exponent.  The orbit "
+            "balls and fixed-height separation certificates are rigorous; "
+            "the extrapolated exponents and `kappa` values are numerical fits.",
             "2. Relative pair separations in the anatomy tables use Arb-ball "
             "midpoints, as requested.  The raw midpoint and radius make the "
             "rounding scale explicit.  The pre-existing certificate path was "
