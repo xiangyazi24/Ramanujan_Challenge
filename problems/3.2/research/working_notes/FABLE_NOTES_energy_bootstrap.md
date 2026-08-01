@@ -1313,3 +1313,12 @@ double-certified.
 - **自扭排除三源闭合**: qD 定理(理论) + codex-fm 单值性表(层计算) + cron
   codex-max ord≤30 数值(8素数×2迹唯平凡)——[GAP-2] 的经验地基交付。
 - cron 双雄×2 全收官。全场余量: q16/q19/q23 三发 tab + qB2/Q6416。
+
+## §63 (08-01) 收网固定 — 文档制度落地, 战役账本封卷
+
+- 建 ERRATA.md (常驻勘误表, 8 条全闭) + CAMPAIGN_MAP_2026-08-01.md
+  (总图: 定理群表/八张死亡证书/存活四方向/文件索引/未结尾声)。
+- proof.tex 144 页绿 (含今日七块新定理/命题/数据点)。
+- 本账本 §43–62 封卷; 新 session 接战入口 = CAMPAIGN_MAP + 本账本 + cron
+  附录 K–AA。战役统计: ChatGPT 深问 qA–qI+审计共 ~15 发全回收, 4 codex
+  7 commits 全复验, ~40 验证脚本全绿, proof.tex +7 页。
