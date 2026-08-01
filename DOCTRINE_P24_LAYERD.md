@@ -261,3 +261,33 @@ Everything downstream of that is rational arithmetic over constants the repo
 already owns. The earlier readings — "six independent weight-4 evaluations",
 then "one weight-4 evaluation K" — were both overestimates; the true remaining
 analytic content is a single termwise integration.
+
+## Layer E build order (decided)
+
+Keep the six named `I_ab` rows; do **not** collapse into one combined theorem as
+the primary route. An independent architecture review makes the case: the
+combined integrand is genuinely smoother at `t = 0`, but at `t = 1` there is no
+extra cancellation among the six coefficients — the vanishing still comes from
+`W0`'s double zero — and an explicit primitive of the combined bracket is just
+the same linear combination of the six row primitives. So the combined route
+compresses six statements into one large one without compressing the analytic
+dependency graph, and is harder to debug and reuse.
+
+Order:
+
+1. a few shared master endpoint theorems, living in `Problem24Euler.lean`
+   alongside the existing kernel library;
+2. each `I_ab` derived in `Tminus`/`Tplus` normal form (this is where the
+   `K = 2((7/8)ζ4 - Tminus - Tplus - (1/4)ζ2²)` reduction does its work — no new
+   weight-4 analysis);
+3. the fully expanded PSLQ forms by `unfold` + `ring`;
+4. finish with `quadAltSixIntegralLinear` / `quadAltCoeffIntegral_eq_six`, both
+   already proved and axiom-clean.
+
+A direct combined identity is still worth adding afterwards as a regression
+cross-check — but not as the main proof.
+
+The one genuinely new analytic step in the whole of Layer E remains the termwise
+integration behind `K` (expand `log(1+x)/(1+x)`, integrate `∫₀¹ xⁿ log²x = 2/(n+1)³`,
+reindex with `H_n = H_{n+1} - 1/(n+1)`). Everything else is rational arithmetic
+over constants this repo already owns.
