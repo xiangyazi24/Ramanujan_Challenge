@@ -168,3 +168,4 @@
       qFAMMECH 由 Q6570 覆盖, q18 已改派 life9)
 - [ ] 并卷任务 (cron b448f7a): σ½定理+Q6533四件+Q6564三件 → FABLE_SECTION_sigma_half.tex
       (subagent 转换中; AT.3 两修正硬性; MESO-QRLL 勿并卷) → proof.tex build 门 → commit
+- [ ] 并卷追加 (cron AS.5 撤回勿并卷): [MESO] 套件 ([MESO-TOTAL]<[MESO-PAIR]+little-o+固定幂+sharpness) → 转换 worker 完成后 SendMessage 追加
