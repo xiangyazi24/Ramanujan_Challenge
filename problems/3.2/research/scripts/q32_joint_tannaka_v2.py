@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """Exact joint-Tannakian trace gates and Mellin moment fingerprints.
 
-This implements the integral trace recipe in Q6457, Sections 5--6.  All
-finite-field work uses exact integer arithmetic.  NumPy int64 arrays are used
-only to vectorize the exact F_{p^2} point counts; complex128 first appears
+This implements the integral trace recipe in Q6457, Sections 5--6, with the
+certified correction eps = Legendre(-3, p) required by the v2 specification.
+All finite-field work uses exact integer arithmetic.  NumPy int64 arrays are
+used only to vectorize the exact F_{p^2} point counts; complex128 first appears
 after every exact gate has passed, in the final FFT and moment stage.
 
-The default run covers every prime in [29, 199].  On a gate failure the run
-stops before any FFT is taken and writes a stall report with the witness.
+The default run covers every prime in [29, 149] and extends through 199 when
+the exact stage reaches the extension point in under 25 minutes.  On a gate
+failure the run stops before any FFT is taken and writes a stall report with
+the witness.
 """
 
 from __future__ import annotations
@@ -31,6 +34,8 @@ REPORT_PATH = ROOT / "CODEX_JOINT_TANNAKA_V2.md"
 RAW_CHECK_PATH = ROOT / "CRON_pushforward_check.py"
 DEFAULT_MIN_PRIME = 29
 DEFAULT_MAX_PRIME = 199
+BASE_MAX_PRIME = 149
+EXTENSION_CUTOFF_SECONDS = 25 * 60
 TWIST_ORDERS = (2, 3, 4, 6)
 
 
@@ -358,8 +363,8 @@ class TraceTable:
     split_count: int
     inert_count: int
     branch_count: int
-    max_plus_ratio: float
-    max_minus_ratio: float
+    max_plus_abs: int
+    max_minus_abs: int
     endpoint_residue: int
     endpoint_expected: int
     trace_sha256: str
@@ -513,7 +518,8 @@ def verify_prime(prime: int) -> TraceTable:
         evaluate_polynomial(apery, t_value, prime)
         for t_value in range(prime)
     )
-    epsilon = characters[2]
+    epsilon = characters[(-3) % prime]
+    branch_character = characters[2]
     inverse_sixteen = pow(16, -1, prime)
     grid = fp2_grid(prime)
 
@@ -664,12 +670,13 @@ def verify_prime(prime: int) -> TraceTable:
             f"t={t_value}, |T+|={abs(plus)}, |T-|={abs(minus)}",
         )
 
-    expected_branch_count = 2 if epsilon == 1 else 0
+    expected_branch_count = 2 if branch_character == 1 else 0
     require(
         branch_count == expected_branch_count,
         prime,
         "branch checksum",
-        f"epsilon={epsilon}, branches={branch_count}, expected={expected_branch_count}",
+        f"(2/p)={branch_character}, branches={branch_count}, "
+        f"expected={expected_branch_count}",
     )
     require(
         split_count + inert_count + branch_count == prime - 1,
@@ -717,8 +724,8 @@ def verify_prime(prime: int) -> TraceTable:
         split_count=split_count,
         inert_count=inert_count,
         branch_count=branch_count,
-        max_plus_ratio=max(abs(value) for value in t_plus[1:]) / prime,
-        max_minus_ratio=max(abs(value) for value in t_minus[1:]) / prime,
+        max_plus_abs=max(abs(value) for value in t_plus[1:]),
+        max_minus_abs=max(abs(value) for value in t_minus[1:]),
         endpoint_residue=endpoint_residue,
         endpoint_expected=endpoint_expected,
         trace_sha256=trace_digest(t_plus[1:], t_minus[1:], pushforward[1:]),
@@ -788,8 +795,12 @@ def compute_moment_row(table: TraceTable) -> MomentRow:
     )
     parseval_plus = float(np.sum(np.abs(transform_plus) ** 2))
     parseval_minus = float(np.sum(np.abs(transform_minus) ** 2))
-    exact_parseval_plus = order * sum(value * value for value in plus_log)
-    exact_parseval_minus = order * sum(value * value for value in minus_log)
+    exact_parseval_plus = order * sum(
+        value * value for value in table.t_plus[1:]
+    )
+    exact_parseval_minus = order * sum(
+        value * value for value in table.t_minus[1:]
+    )
     require(
         abs(parseval_plus - exact_parseval_plus)
         <= 1e-9 * max(1.0, exact_parseval_plus),
@@ -931,21 +942,32 @@ def render_report(
 
     largest_primes = ", ".join(str(row.prime) for row in last_five)
     prime_text = ", ".join(str(table.prime) for table in tables)
+    if tables[-1].prime >= DEFAULT_MAX_PRIME:
+        runtime_sentence = (
+            f"The exact trace stage took {exact_elapsed:.3f} seconds and the "
+            f"complete run took {total_elapsed:.3f} seconds on this machine; "
+            "after covering [29,149], the computation therefore extended through "
+            "199, well below the 25-minute cutoff."
+        )
+    else:
+        runtime_sentence = (
+            f"The exact trace stage took {exact_elapsed:.3f} seconds and the "
+            f"complete run took {total_elapsed:.3f} seconds on this machine.  "
+            f"The computed range ended at p={tables[-1].prime}."
+        )
+
     lines = [
         "# Joint Tannakian moments v2: exact integral-trace fingerprint",
         "",
         "## Verdict",
         "",
         (
-            "All Q6457 trace gates passed before any FFT was computed.  "
+            "All corrected Q6457-recipe trace gates passed before any FFT was "
+            "computed.  "
             f"The exact prime set was `{prime_text}`."
         ),
         "",
-        (
-            f"The exact trace stage took {exact_elapsed:.3f} seconds and the "
-            f"complete run took {total_elapsed:.3f} seconds on this machine; "
-            "the run therefore extended through 199, well below the 25-minute cutoff."
-        ),
+        runtime_sentence,
         "",
         "## Exact gates",
         "",
@@ -956,7 +978,7 @@ def render_report(
             "is the p=29 raw-count checksum."
         ),
         "",
-        "| p | eps | split | inert | branch | g1 | g2 | g3 | g4 | g5 | g6 | max |T+|/p | max |T-|/p | trace SHA |",
+        "| p | eps=(-3/p) | split | inert | branch | g1 | g2 | g3 | g4 | g5 | g6 | max |T+|/p | max |T-|/p | trace SHA |",
         "|---:|---:|---:|---:|---:|:---:|:---:|:---:|:---:|:---:|:---:|---:|---:|:---|",
     ]
     for table in tables:
@@ -964,7 +986,8 @@ def render_report(
             f"| {table.prime} | {table.epsilon:+d} | {table.split_count} | "
             f"{table.inert_count} | {table.branch_count} | PASS | PASS | PASS | "
             f"PASS | PASS | {'PASS' if table.prime == 29 else '--'} | "
-            f"{table.max_plus_ratio:.3f} | {table.max_minus_ratio:.3f} | "
+            f"{table.max_plus_abs / table.prime:.3f} | "
+            f"{table.max_minus_abs / table.prime:.3f} | "
             f"`{table.trace_sha256}` |"
         )
 
@@ -998,6 +1021,11 @@ def render_report(
                 "- For every prime and every nonzero t, the integral sum, both "
                 "residual congruences, and both `3p` bounds passed; the branch count "
                 "was two exactly when `(2/p)=+1`."
+            ),
+            (
+                "- The inert normalization used the corrected certified sign "
+                "`eps=(-3/p)` at every prime; `(2/p)` was used only for the "
+                "independent branch-count checksum."
             ),
             (
                 "- For every prime, Mellin inversion passed for every "
@@ -1125,10 +1153,14 @@ def render_report(
             "|---:|:---|---:|---:|",
         ]
     )
+    twist_choices: list[tuple[int, str]] = []
     for twist_order in TWIST_ORDERS:
         supported = [
             row for row in last_five if row.twists[twist_order] is not None
         ]
+        if not supported:
+            lines.append(f"| {twist_order} | none | -- | -- |")
+            continue
         specified = mean(
             row.twists[twist_order].specified  # type: ignore[union-attr]
             for row in supported
@@ -1140,6 +1172,29 @@ def render_report(
         lines.append(
             f"| {twist_order} | {', '.join(str(row.prime) for row in supported)} | "
             f"{specified:.6f} | {generic:.6f} |"
+        )
+        twist_choices.append(
+            (
+                twist_order,
+                nearest_verdict(
+                    generic, {"product": avg_product, "Sym3 graph": avg_graph}
+                ),
+            )
+        )
+
+    if twist_choices:
+        choice_text = ", ".join(
+            f"order {twist_order}: {choice}"
+            for twist_order, choice in twist_choices
+        )
+        lines.extend(
+            [
+                "",
+                (
+                    "Against the same largest-five product/graph baselines, the "
+                    f"generic shifted detectors favor `{choice_text}`."
+                ),
+            ]
         )
 
     lines.extend(
@@ -1193,6 +1248,36 @@ def render_report(
         minus_bad = ", ".join(f"k={index}" for index in row.bad_minus) or "none"
         lines.append(f"| {row.prime} | {plus_bad} | {minus_bad} |")
 
+    plus_violation_primes = [row.prime for row in rows if row.bad_plus]
+    minus_violation_primes = [row.prime for row in rows if row.bad_minus]
+    if plus_violation_primes or minus_violation_primes:
+        plus_summary = (
+            ", ".join(str(prime) for prime in plus_violation_primes) or "none"
+        )
+        minus_summary = (
+            ", ".join(str(prime) for prime in minus_violation_primes) or "none"
+        )
+        lines.extend(
+            [
+                "",
+                (
+                    "Contrary to the parenthetical expectation in the spec, the "
+                    "nontrivial-character audit found plus-side violations at "
+                    f"p = {plus_summary}; minus-side violation primes: "
+                    f"{minus_summary}.  These ceilings are a requested diagnostic, "
+                    "not one of gates g1--g6, so the characters are reported rather "
+                    "than silently discarded from the moments."
+                ),
+                "",
+                (
+                    "As an exact spot-check, at p=41 the order-four characters "
+                    "k=10 and k=30 both have `S_+=-574=-14p`, obtained by grouping "
+                    "the four integer residue-class sums in discrete-log order; "
+                    "thus their violation is not FFT roundoff."
+                ),
+            ]
+        )
+
     lines.extend(
         [
             "",
@@ -1245,47 +1330,37 @@ def write_stall_report(
         "`CODEX_SPEC_joint_tannaka_v2.md`.  Consequently the success acceptance "
         "criterion was not reached; returning a nonzero status is intentional.",
         "",
-        "## Independent checks on the witness",
+        "## Exact witness handling",
         "",
-        "The Apéry polynomial was computed by the requested recurrence.  When "
-        "the residue failed, all coefficients were recomputed independently from "
-        "the binomial formula.  The inert elliptic trace was first obtained from "
-        "the exact norm-character point count in `F_{p^2}` and then recomputed by "
-        "a separate scalar implementation using exponentiation inside "
-        "`F_p[z]/(z^2-d)`.  At this small witness the script additionally exhausted "
-        "all `(x,y)` pairs.  All three values are printed in the witness.",
+        "All finite-field values preceding the failure were computed with exact "
+        "integer arithmetic.  For a `g2` failure the script also recomputes the "
+        "Apéry coefficients from the independent binomial formula; for an inert "
+        "witness it independently repeats the `F_{p^2}` character count with "
+        "scalar field arithmetic, and for p <= 50 additionally exhausts all "
+        "`(x,y)` pairs.  Any such diagnostics are included in the witness above.",
         "",
     ]
-    if failure.prime == 37 and failure.gate == "g2":
-        lines.extend(
-            [
-                "At the first failing point, `p=37, t=3`, one has `d=19`, "
-                "`epsilon=(2/37)=-1`, and the exact count is `#E(F_{37^2})=1320`. "
-                "Thus `a2=37^2+1-1320=50`.  Q6457 prescribes "
-                "`T+=epsilon*a2-p=-87`, whose residue is 24, whereas both Apéry "
-                "computations give `A_37(3)=13`.",
-                "",
-                "As a diagnostic only, `(-3/37)=+1`, so replacing the prescribed "
-                "factor `(2/p)` by `(-3/p)` repairs this witness and is consistent "
-                "with the repository's separately verified constant `(-3)` twist. "
-                "That replacement was not made: it is outside the supplied recipe "
-                "and requires a corrected descent-normalization derivation.",
-                "",
-            ]
+    p29_table = next((table for table in completed if table.prime == 29), None)
+    if p29_table is not None and p29_table.p29_checks is not None:
+        p29 = p29_table.p29_checks
+        checksum_text = (
+            "Before the stall, the p=29 recurrence/direct/CRON Apéry arrays "
+            f"agreed; all {p29.split_fibres} split fibres agreed among exact "
+            "counts, centered Franel Hasse--Witt residues, and raw CRON counts; "
+            f"all {p29.inert_conjugate_counts} inert counts were invariant under "
+            "conjugation; and the named t=2 checksum had sources "
+            f"{p29.t2_parameters}, traces {p29.t2_traces}, and f={p29.t2_f}."
         )
+    else:
+        checksum_text = "The p=29 g6 checksum had not completed before the stall."
     lines.extend(
         [
             "## Checksums reached before the stall",
             "",
-            "At p=29, the recurrence/direct/CRON Apéry arrays agreed; every split "
-            "trace agreed among direct point counts, centered Franel Hasse--Witt "
-            "residues, and raw CRON counts; conjugating every inert square root "
-            "preserved the degree-two count; and the named checksum was "
-            "`t=2`, sources `(8,10)`, traces `(-6,6)`, `f=7`.",
+            checksum_text,
             "",
-            "Gates g1--g5 passed completely at p=29 and p=31.  The first failure "
-            "was then g2 at p=37, before the remaining primes and before all "
-            "floating-point work.",
+            f"All mandatory gates passed completely at primes `{completed_text}`.  "
+            "The failure occurred before all floating-point work.",
             "",
             "## Limitation",
             "",
@@ -1316,6 +1391,18 @@ def main() -> int:
     completed: list[TraceTable] = []
     try:
         for prime in primes:
+            if (
+                prime > BASE_MAX_PRIME
+                and completed
+                and completed[-1].prime <= BASE_MAX_PRIME
+                and perf_counter() - started >= EXTENSION_CUTOFF_SECONDS
+            ):
+                print(
+                    "EXTENSION SKIPPED: exact [29,149] stage reached the "
+                    "25-minute cutoff",
+                    flush=True,
+                )
+                break
             table = verify_prime(prime)
             completed.append(table)
             print(
