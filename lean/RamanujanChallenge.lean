@@ -14,6 +14,7 @@ import RamanujanChallenge.Problem26Nested
 import RamanujanChallenge.Problem26WeightThree
 import RamanujanChallenge.Problem26Assembly
 import RamanujanChallenge.Problem27
+import RamanujanChallenge.Problem27BarnesClosure
 import RamanujanChallenge.Problem28
 import RamanujanChallenge.Problem31
 import RamanujanChallenge.Problem31.APoly
