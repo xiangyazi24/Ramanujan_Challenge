@@ -128,6 +128,7 @@ private theorem integral_self_mul_cexp_neg_mul_Ioi27
               apply integral_congr_ae
               filter_upwards with t
               simp [v, div_eq_mul_inv]
+              ring
       _ = (-z⁻¹) * ∫ t : ℝ in Ioi 0,
             Complex.exp (-z * (t : ℂ)) :=
         MeasureTheory.integral_const_mul _ _
@@ -142,7 +143,7 @@ private theorem integral_self_mul_cexp_neg_mul_Ioi27
         (t : ℂ) * Complex.exp (-z * (t : ℂ))) =
         -(∫ t : ℝ in Ioi 0, v t) := hibp'
     _ = -(-(z⁻¹ * z⁻¹)) := by rw [hvint]
-    _ = (z ^ 2)⁻¹ := by field_simp [hz0]; ring
+    _ = (z ^ 2)⁻¹ := by field_simp [hz0]
 
 private theorem integral_laplace_poleBlock27
     {z : ℂ} (hz : 0 < z.re) :
