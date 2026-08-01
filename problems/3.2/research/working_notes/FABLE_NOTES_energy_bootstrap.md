@@ -183,3 +183,23 @@ range. If "p | gcd ⟹ p ≤ poly(d₂)" holds in general (algebraic reason hunt
 R4a), the p^{3/4} theorem follows with NO exceptional-element combinatorics at
 all. Machine check of the whole collision mechanism: 60/60 fiber elements with
 two forward lags root Ψ or the type-II polynomials (p = 101, 199; psi_e2e.py).
+
+## 9. Sheltering analysis + the final gcd conjecture (solo, late session)
+
+Counting doubly-exceptional pairs via integer sizes gives #bad pairs ≤ CD⁴/log²p
+(≤ Cp/log²p at D ~ p^{1/4}), but one bad pair can shelter many fiber elements;
+re-pairing sheltered elements against each other (mutual lags + Markov) caps a
+single bad pair's shelter at ~p^{2/3} — not enough by itself. The REAL closing
+statement is the empirically-supported arithmetic conjecture:
+
+**GCD Conjecture (explicit, checkable):** every prime divisor of
+gcd(b_δ − 1, K(d₁, d₁+δ)) is ≤ C·d₂^{O(1)}. (Data d₁<13, d₂<16: primes seen
+only 2,3,5,7,11; gcd maxima 37268 = 2²·7·11³, 625 = 5⁴; the cube pattern 11³,
+7³, 5³ tracks the d³-type constants, suggesting a closed form for the gcd like
+the c_d = d³b_{d−1} discovery.)
+
+Under this conjecture: no doubly-exceptional pairs for p > poly(D'), and the
+p^{3/4}/p^{7/4} theorems follow with the SAME counting as the clean regime.
+Publication structure: Theorems 1–3 unconditional; Theorem A/B conditional on
+one explicit finite-checkable arithmetic statement (far cleaner than the
+previous "missing sheaf" conditionality).
