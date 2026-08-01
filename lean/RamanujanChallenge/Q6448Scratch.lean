@@ -29,7 +29,7 @@ theorem rawKernel_add_one27 (t : ℂ) :
       (Real.pi : ℂ) * t + (Real.pi : ℂ) by ring,
     Complex.sin_add]
   simp only [Complex.sin_pi, Complex.cos_pi, mul_zero, mul_neg_one,
-    zero_add]
+    add_zero]
   rw [div_neg]
   ring
 
