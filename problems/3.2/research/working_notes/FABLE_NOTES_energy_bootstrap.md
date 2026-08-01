@@ -170,3 +170,16 @@ only the exceptional-lag handling of §6.2 — the analytic core is identical.
 - Classical Stepanov transfer (T-variable): dead at the coefficient/index bridge
   (R1b) — the ODE lives in T, fibers live in r. THE BOOTSTRAP ABOVE IS THE
   REPLACEMENT: non-autonomy of the recurrence is the derivative-substitute.
+
+## 8. Second-criterion data (K-test, 2026-07-31 late)
+
+K(d₁,d₂) := pole-3 coefficient of Ψ at x = −d₂ = d₂³[(1−A_{d₁}(−d₂))b_{d₂−1} −
+b_{d₂}B_{d₁}(−d₂)] — formula CONFIRMED against symbolic Laurent limits (4/4).
+K ≠ 0 in all tested pairs. Crucially, for d₁ < 13, d₂ < 16:
+max gcd(K, b_δ−1) = 37268 = 2²·7·11³ and max gcd(K, b_{d₁−1}) = 625 = 5⁴ —
+ALL prime factors tiny. So a doubly-exceptional pair (both criteria ≡ 0 mod p)
+requires p ≤ (small bound): for large p the escape set is EMPTY in the tested
+range. If "p | gcd ⟹ p ≤ poly(d₂)" holds in general (algebraic reason hunted in
+R4a), the p^{3/4} theorem follows with NO exceptional-element combinatorics at
+all. Machine check of the whole collision mechanism: 60/60 fiber elements with
+two forward lags root Ψ or the type-II polynomials (p = 101, 199; psi_e2e.py).
