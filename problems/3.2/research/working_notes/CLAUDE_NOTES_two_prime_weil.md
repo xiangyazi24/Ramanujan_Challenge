@@ -56,3 +56,29 @@ The decisive step: prove the tensor product has no trivial component
 Relevant technology: Katz "Exponential Sums and Differential Equations" (1990),
 Katz "Gauss Sums, Kloosterman Sums, and Monodromy Groups" (1988),
 Adolphson-Sperber toric exponential sums, Fu-Wan polynomial recursion sums.
+
+## Extended attack session (Q6261-Q6271): routes explored
+
+| Q# | Route | Verdict |
+|----|-------|---------|
+| Q6261 | Two-prime correlation as Deligne trace-function theorem | ✅ Framework correct, missing sheaf construction |
+| Q6262 | ℓ-adic sheaf construction for Apéry | ✅ Precise theorem identified; Apéry is Calabi-Yau, not rigid |
+| Q6263 | Katz rigid local systems | Apéry is NOT rigid; NOT hypergeometric |
+| Q6264 | Elementary (Stepanov, collision counting) | All reduce to the same sheaf problem |
+| Q6265 | Katz rigidity / middle convolution | NOT applicable; non-rigid |
+| Q6266 | Hadamard reduction to ζ(2) | b_n ≠ u_n²; different motivic structure |
+| Q6267 | Finite-dimensional matrix realization | b_a ≠ Tr(M^a) for bounded-rank M |
+| Q6269 | Coefficient extraction via ℓ-adic Fourier transform | ✅ Standard operation (Deligne-Laumon) |
+| Q6270 | Fourier constraint from recurrence | Gives Picard-Fuchs ODE, not bound |
+| Q6271 | Dwork unit-root = period coefficients? | **FALSE**: α_p(t)=F(t)/F(t^p)≠F(t) |
+
+## The precise gap (after 20+ rounds)
+
+The ℓ-adic Fourier transform CAN extract coefficients from a trace function (Q6269).
+The Dwork theory gives a sheaf for the UNIT ROOT α_p(t) = F(t)/F(t^p).
+But b_a mod p = [t^a]F(t), NOT [t^a]α_p(t).
+
+**Missing theorem**: realize the PERIOD COEFFICIENTS (not unit root) as trace functions
+of a geometrically controlled ℓ-adic sheaf. This is a problem in p-adic Hodge theory:
+comparison between de Rham period sections and ℓ-adic Frobenius traces at the
+coefficient level.
