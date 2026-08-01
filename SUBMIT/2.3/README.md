@@ -78,18 +78,19 @@ imports only Mathlib modules and nothing outside `lean/`.
 **Build status.**
 
 ```
-Problem23.lean elaborated successfully.   0 errors, 0 sorry
-AxiomCheck.lean completed successfully.   no nonstandard axioms
+lake build completed successfully.        2663 jobs, 0 errors
+Problem23.lean contains no sorry.
+AxiomCheck.lean completed successfully.    no nonstandard axioms
 ```
 
 against the pinned toolchain `leanprover/lean4:v4.29.0` and Mathlib tag
 `v4.29.0`, fixed in `lean-toolchain` and
 `lake-manifest.json`.
 
-*Scope of what we verified:* the source was elaborated as a standalone Lake
-package with these pins, a fresh module `olean` was generated, and
-`AxiomCheck.lean` was run against that artifact. Mathlib build artifacts were
-reused from the same pinned revision. To reproduce from nothing:
+*Scope of what we verified:* the complete standalone Lake package was built
+with these pins (`2663` jobs), and `AxiomCheck.lean` was run against the
+resulting artifact. Mathlib build artifacts were reused from the same pinned
+revision. To reproduce from nothing:
 
 ```bash
 cd lean
