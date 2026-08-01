@@ -2474,3 +2474,30 @@ strike 2 的 [ANTI-COEXIST]、与今晨 COINC 战线的 family compatibility、�
 战役三的科学结论: 该问题存在一个单一的、被从五个独立方向精确刻画的缺失机制
 (固定 p 下增长族的一致相消), 其外的一切都已定理化或判死。这是可发表的
 program-level 认识。闭卷。
+
+## §134 — 最后一搏开局: [NO-RUN] 新砖 + 缺失机制三重命名 (08-02, life fresh eyes)
+
+**自推核心重述**: collision ⟺ 射影轨道 ξ_r=(b_r:c_r) 纤维重合 (等价关系/团结构);
+ξ_{r+1}=M_rξ_r 伴随阵非自治 Möbius 走动。**[NO-RUN] 机制 (新, 本 session)**:
+r,r+1∈Z_d (c_r≠0) ⟹ ξ_r = v(r,d) = (α_r−α_{r+d} : β_r−β_{r+d}) 显式点
+(伴随阵 cross-product 坍缩, Q6733 复核成立); 3-run ⟹ 轨道无关恒等式 F(r,d)≡0。
+**机器证书 (frun_check.py, scratchpad→codex 班固化)**: F ≢ 0, deg_r=8, deg_d=6,
+F=−24d²·G。**实测** (p=499/997/1999/4999, d≤√p·log p): max run=2, 3-run=0,
+2-run 数 0/2/0/0 ≈ ND/p² 启发式。⟹ Strike2 padded 构造的整区间条款对真 Apéry
+轨道不可能。**限度**: scattered 变 gap 配对不受约束 (Q6733/Q6735/Q6730 三方一致)。
+
+**第一轮六审计收敛** (Q6730/31/33/34/35/36, 快档, 引用前复推): quarter-value/
+self-twist/triple-poles 三条补审全不咬 scattered (§7 表+3行, Q6730 交付);
+Sp-full h≤32 = 校准定理非中观定理, addition law 是双线性 cocycle 非 Markov
+(Q6731); 固定 m₀ 局部刚性只买常数密度, m₀ 增长撞 degree/counting 交叉
+(Q6734); [FR_η] 三条修复路线命名: (R1) 非自治递推水平大筛, (R2) 平移根集
+rank-drop 相关, (R3) cocycle 反集中/慢变扰动 (Q6735)。缺失机制三重等价命名:
+族平均相消 = 有序钟 cocycle 反集中 = 移位根集相关。
+
+**新活口 (本轮独立发现, 在飞)**: (a) Gap(r) 差闭结构 ⟹ 多回行归约到单回行
+(=P_{D,1} 层, 与 Strike2 (7.1) 精确对齐) — q66 精确色散计算; (b) 零代数熵/
+离散 Painlevé 结构: 周期点线性增长 3(d−1) ⟹ Apéry 对应动力学退化 — 词级
+对手无法模仿的结构输入, tau-函数若存在则 d-指标代数化 — q65; (c) Gessel
+p-Lucas b_{np+r}≡b_nb_r + jet (b,c)=(b,b') 结构 ⟹ mod-p 数字化描述 — q64
+(前提待自验)。q63=q60 重发 (首投被旧答案 Q6692 污染)。codex 双开:
+norun 全证书班 (high) + cocycle 主攻班 (**ultra 档实测存在**)。

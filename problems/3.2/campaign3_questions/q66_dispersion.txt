@@ -1,0 +1,12 @@
+[q66 LASTSTAND — do the exact dyadic dispersion computation with the difference-closure structure; find the true exponent it yields. life6]
+
+Two proved structural facts about the per-row return sets Gap(r) = {d >= 1 : xi_{r+d} = xi_r}:
+ (A) DIFFERENCE-CLOSURE: d < d' in Gap(r) => d' - d in Gap(r + d). (Fiber transitivity; exact.)
+ (B) TRIANGLE INJECTION: |Z_h ∩ Z_k| <= C_{|h-k|} <= 3|h-k| (same mechanism).
+Plus the marginals: C_d <= 3(d-1); per-row restart bound: #(Gap(r) ∩ (0,H]) <= 1 + (3/2) H^(2/3).
+
+TASK (computation, not literature): compute EXACTLY what second-moment/dispersion over the dyadic strip yields.
+(i) Let T = sum_{D/2<d<=D} C_d and W = #{(r, d<d') : both in Gap(r), both dyadic}. Difference-closure maps each such pair to (r+d, d'-d) with d'-d < D/2 and r+d in Z_{d'-d}. Determine the multiplicity of this map exactly (how many dyadic pairs can land on one (s,g) with g < D/2: given s in Z_g, the preimages are r = s-d with d dyadic, r in Z_d, i.e. #preimages = #(dyadic returns TO s from the left) -- itself a return count; write the exact identity, do not lose this multiplicity). Derive the best unconditional recursive inequality relating W, T(dyadic at scale D), and T(all gaps < D/2). Iterate it across log D dyadic scales: what is the fixed point? Does the recursion give T(D) << D^(2-eta) for ANY eta, or does it stabilize at T ~ D^2 (report the exact fixed-point exponent and the lossy step)?
+(ii) Cauchy-Schwarz with the multiplicity identity: T <= |active rows| + sqrt(2 |active rows| W)-type bounds; insert (i)'s W-bound; again iterate over scales. Track constants; identify whether the bottleneck is the multiplicity of the difference map or the base case at small scales.
+(iii) The "one-return dominance" question: define A_1 = #rows with exactly one dyadic return, A_2 = #rows with >= 2. Difference-closure gives A_2 <= sum_{g < D/2} C_g * (max preimage multiplicity) -- make this exact. If A_2 << D^{2-eta'} unconditionally, then T << A_1 + contribution, and the problem reduces to SINGLE-return rows (the genuinely primitive stratum, where no identity-based mechanism applies -- confirm this reduction cleanly, because it would prove the adversary analysis exact: the whole wall is the k_r=1 stratum, matching the Strike2 P_{D,1} formulation).
+(iv) Deliver: the sharpest unconditional inequality chain with explicit exponents, the identity ledger (each step exact or a cited banked fact), and the single quantified statement about single-return rows that remains.

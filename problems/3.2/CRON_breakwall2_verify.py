@@ -4,8 +4,8 @@
 The symbolic part independently rebuilds the Apéry gap continuants, checks
 the renewal identity, the reflection factor, and small-pair characteristic-
 zero coprimality.  The finite-field part extracts ``orbit(p)`` verbatim from
-``CRON_b1_crosscorr.py`` and evaluates the critical lag-Lorentz residual at
-the three primes required by the breakwall specification.
+``CRON_b1_crosscorr.py`` and evaluates two residuals strictly below the old
+truncated weak-L2 wall at the three primes required by the specification.
 
 For
 
@@ -16,6 +16,13 @@ all comparisons are kept integral by storing
     W32_SQ = max_{t >= 1} t^3 * #{h : R_h >= t}^2.
 
 Thus ``W32 <= N^(3/2)/sqrt(D)`` is exactly ``D*W32_SQ <= N^3``.
+
+For the declared integrated-tail residual, put
+
+    E = sum_h (R_h - T0)_+ = sum_{t > T0} #{h : R_h >= t}.
+
+The concrete face ``[ZERO-EXCESS-1/2]`` is checked without floating point as
+``E^2*T0 <= N^2``.
 """
 
 from __future__ import annotations
@@ -191,6 +198,11 @@ def zero_tail_two(counts: list[int], length: int) -> tuple[int, int]:
     return threshold, value
 
 
+def zero_excess(counts: list[int], threshold: int) -> int:
+    """Return sum_h (R_h-T0)_+, the integrated tail above T0."""
+    return sum(max(value - threshold, 0) for value in counts)
+
+
 def mirror_skeleton(diameter: int) -> list[int]:
     """The one forced central collision at every even lag."""
     return [1 if h % 2 == 0 else 0 for h in range(1, diameter + 1)]
@@ -246,8 +258,9 @@ def finite_field_gates() -> None:
     orbit = load_orbit_function()
     print(
         "FINITE_FIELD_GATES\n"
-        "p N L D T0 S maxR W2 Z2 W32sq "
-        "D*W32sq/N^3 maxR*D/N spike_old/new W1model_S/fails_new"
+        "p N L D T0 S maxR W2 Z2 E E^2*T0/N^2 W32sq "
+        "D*W32sq/N^3 eps spike_old/excess/lorentz "
+        "W1model_S/fails_excess/fails_lorentz"
     )
     for prime in (1009, 3001, 10007):
         length = prime - 1
@@ -261,41 +274,60 @@ def finite_field_gates() -> None:
             for h, value in enumerate(counts, start=1)
         )
 
-        # The reflection law forces the central base at every even lag.
-        for h in range(2, diameter + 1, 2):
-            base = (prime - 1 - h) // 2
-            assert 0 <= base < base + h < length
-            assert points[base] == points[base + h]
+        # On the truncated nonwrapping orbit, reflection pairs all roots
+        # except r=0.  Hence R_h=kappa_h+2q_h+epsilon_h exactly, where
+        # kappa_h=1_{2|h} and epsilon_h=1_{pi(h)=pi(0)}.
+        endpoint_count = 0
+        for h, value in enumerate(counts, start=1):
+            central = 1 if h % 2 == 0 else 0
+            endpoint = 1 if points[0] == points[h] else 0
+            endpoint_count += endpoint
+            assert value >= central + endpoint
+            assert (value - central - endpoint) % 2 == 0
+            if central:
+                base = (prime - 1 - h) // 2
+                assert 0 <= base < base + h < length
+                assert points[base] == points[base + h]
 
         threshold, old_tail = zero_tail_two(counts, length)
         weak2_value = weak_two(counts)
         lorentz_sq = lorentz_three_halves_sq(counts)
+        excess = zero_excess(counts, threshold)
         total = sum(counts)
 
-        # Exact forms of the Lorentz embedding and the new residual.
+        # Exact forms of both new residuals and the Lorentz embedding.
+        assert excess * excess * threshold <= length**2
         assert total**3 <= 27 * diameter * lorentz_sq
         assert diameter * lorentz_sq <= length**3
 
         spike = spike_profile(diameter)
         spike_threshold, spike_old = zero_tail_two(spike, length)
         assert spike_threshold == threshold
+        spike_excess = zero_excess(spike, threshold)
         spike_lorentz_sq = lorentz_three_halves_sq(spike)
         assert spike_old > length
+        assert spike_excess * spike_excess * threshold <= length**2
         assert diameter * spike_lorentz_sq <= length**3
         assert sum(value * value for value in spike) > length
 
         boundary = w1_not_lorentz_profile(length, diameter)
+        boundary_excess = zero_excess(boundary, threshold)
         boundary_lorentz_sq = lorentz_three_halves_sq(boundary)
         assert sum(boundary) <= length
+        assert boundary_excess * boundary_excess * threshold > length**2
         assert diameter * boundary_lorentz_sq > length**3
 
         print(
             f"{prime} {length} {slow} {diameter} {threshold} {total} "
-            f"{max(counts)} {weak2_value} {old_tail} {lorentz_sq} "
+            f"{max(counts)} {weak2_value} {old_tail} {excess} "
+            f"{excess * excess * threshold}/{length**2} {lorentz_sq} "
             f"{diameter * lorentz_sq}/{length**3} "
             f"{max(counts) * diameter}/{length} "
-            f"{spike_old}/{diameter * spike_lorentz_sq <= length**3} "
-            f"{sum(boundary)}/{diameter * boundary_lorentz_sq > length**3}"
+            f"{endpoint_count} "
+            f"{spike_old}/{spike_excess * spike_excess * threshold <= length**2}"
+            f"/{diameter * spike_lorentz_sq <= length**3} "
+            f"{sum(boundary)}/{boundary_excess * boundary_excess * threshold > length**2}"
+            f"/{diameter * boundary_lorentz_sq > length**3}"
         )
     print("FINITE_FIELD_GATES PASS")
 

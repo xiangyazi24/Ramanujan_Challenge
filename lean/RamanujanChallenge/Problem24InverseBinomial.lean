@@ -254,8 +254,7 @@ private theorem leshG_zero (n : ℕ) :
   rw [leshBase_zero_eq]
   unfold leshGCoef leshchinerWeightFourTerm24
     inverseCentralFourthCoefficient24
-  simp only [Nat.cast_zero, add_zero, zero_pow, mul_zero, zero_add,
-    pow_zero, mul_one]
+  simp only [Nat.cast_zero, add_zero, mul_zero]
   field_simp
   ring
 
@@ -275,7 +274,6 @@ private theorem leshF_norm_le (n k : ℕ) :
   have hN : (0 : ℝ) < n + k + 1 := by positivity
   have hk1 : (0 : ℝ) < k + 1 := by positivity
   have hkN : (k + 1 : ℝ) ≤ n + k + 1 := by
-    push_cast
     linarith
   have hH : 0 ≤ harmonicSquare24 n := by
     unfold harmonicSquare24
@@ -333,20 +331,17 @@ private theorem leshG_norm_le (n k : ℕ) :
     4 * k * (n + 1)
   have hN : 1 ≤ N := by
     unfold N
-    push_cast
     linarith
   have hNpos : 0 < N := lt_of_lt_of_le (by norm_num) hN
   have hk1 : (0 : ℝ) < k + 1 := by positivity
   have hkN : (k + 1 : ℝ) ≤ N := by
     unfold N
-    push_cast
     linarith
   have hA : 0 ≤ A := by
     unfold A
     positivity
   have hAle : A ≤ 3 * N ^ 2 := by
     unfold A N
-    push_cast
     nlinarith [mul_nonneg (show (0 : ℝ) ≤ n + 1 by positivity)
       (show (0 : ℝ) ≤ k by positivity)]
   have hN2 : (1 : ℝ) ≤ N ^ 2 := by nlinarith [sq_nonneg (N - 1)]
@@ -387,7 +382,6 @@ private theorem leshG_norm_le (n k : ℕ) :
               exact harmonicSquare24_le_zeta_two n
       _ = 4 + 3 * (Real.pi ^ 2 / 6) := by ring
   have hden : (k + 1 : ℝ) ≤ 2 * n + k + 2 := by
-    push_cast
     linarith
   have hcoef : ‖leshGCoef n k‖ ≤
       (4 + 3 * (Real.pi ^ 2 / 6)) / (2 * (k + 1 : ℝ)) := by
@@ -640,8 +634,7 @@ private theorem bbbG_zero (n : ℕ) :
   unfold bbbGCoef bbbFCoef bbbWeightFourTerm24
     inverseCentralFourthCoefficient24
   rw [harmonicSquare24_succ]
-  simp only [harmonicSquare24, sum_range_zero, Nat.cast_zero, add_zero,
-    sub_zero]
+  simp only [harmonicSquare24, sum_range_zero, Nat.cast_zero, sub_zero]
   field_simp
   ring
 
@@ -773,7 +766,7 @@ private theorem alternating_zeta_four_hasSum24 :
   funext k
   simp [a, f, div_eq_mul_inv]
 
-private theorem tendsto_zero_of_norm_tendsto_zero24
+private theorem inverseBinomial_tendsto_zero_of_norm24
     {u : ℕ → ℝ} (h : Tendsto (fun n => ‖u n‖) atTop (nhds 0)) :
     Tendsto u atTop (nhds 0) := by
   rw [NormedAddGroup.tendsto_nhds_zero]
@@ -799,7 +792,7 @@ private theorem leshF_boundary :
         ring
       · ring
     have hterm : Tendsto (fun N => leshF N k) atTop (nhds 0) :=
-      tendsto_zero_of_norm_tendsto_zero24 hnorm
+      inverseBinomial_tendsto_zero_of_norm24 hnorm
     apply hterm.congr'
     filter_upwards [eventually_gt_atTop k] with N hN
     simp [f, hN]
@@ -863,7 +856,7 @@ private theorem leshG_boundary :
         field_simp
       · ring
     have hterm : Tendsto (fun N => leshG n N) atTop (nhds 0) :=
-      tendsto_zero_of_norm_tendsto_zero24 hnorm
+      inverseBinomial_tendsto_zero_of_norm24 hnorm
     apply hterm.congr'
     filter_upwards [eventually_gt_atTop n] with N hN
     simp [f, hN]
@@ -924,7 +917,7 @@ private theorem bbbF_boundary :
         ring
       · ring
     have hterm : Tendsto (fun N => bbbF N k) atTop (nhds 0) :=
-      tendsto_zero_of_norm_tendsto_zero24 hnorm
+      inverseBinomial_tendsto_zero_of_norm24 hnorm
     apply hterm.congr'
     filter_upwards [eventually_gt_atTop k] with N hN
     simp [f, hN]
@@ -975,7 +968,7 @@ private theorem bbbG_boundary :
         ring
       · ring
     have hterm : Tendsto (fun N => bbbG n N) atTop (nhds 0) :=
-      tendsto_zero_of_norm_tendsto_zero24 hnorm
+      inverseBinomial_tendsto_zero_of_norm24 hnorm
     apply hterm.congr'
     filter_upwards [eventually_gt_atTop n] with N hN
     simp [f, hN]
