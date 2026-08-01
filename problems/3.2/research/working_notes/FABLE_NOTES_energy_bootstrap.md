@@ -2336,3 +2336,10 @@ cron 第四定理 [NEAR-WALL-3/7]: K_p(H,D)≪HD^{11/7}; H²logH 敌审零缺陷
   层级: 行方差⟹线性prefix⟹MESO; 窗口对质量单独不够 (反例在档)。
 - W_h 定义链到手; squarefree+W_h(0)≠0 ⟹ full Morse ⟹ CRIT-2H; codex 证书 h≤32 开跑。
 - Q6632: 窗口 restart Z(H)≤1+(3/2)H^{2/3} PROVED (主文常数顺带 3→3/2); Bad(H)≪H^{5/3}。
+
+## §119 — 分量塔落定 h≤30 (08-01 深夜)
+
+cron: crit2h squarefree+V(0)≠0 三素数证书到 h=30 ⟹ **[CRIT-2H] ⟹ G_h 绝对不可约
+= h≤30 无条件定理**; W_h 不可约机验 h≤7 (all-h 加固靶, 我方 codex h≤32 证书在跑,
+先交叉验证前7)。mesoscopic 残差定稿: [MIDPOINT-AC'] (balanced hinge) 与
+[MESO-S1-2/3] 并列两面; log 不自消 (a=1 中性)。
