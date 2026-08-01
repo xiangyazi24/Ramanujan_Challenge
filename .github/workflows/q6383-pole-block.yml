@@ -4,7 +4,8 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - 'lean/RamanujanChallenge/Problem27PoleBlockScratch.lean'
+      - 'lean/RamanujanChallenge/Problem27PoleBlockCore6383.lean'
+      - 'lean/RamanujanChallenge/Problem27PoleBlockFourier6383.lean'
       - '.github/workflows/q6383-pole-block.yml'
 
 concurrency:
@@ -31,7 +32,7 @@ jobs:
           cd lean
           lake exe cache get 2>&1 | tee ../q6383-cache.out
           cache_status=${PIPESTATUS[0]}
-          lake build RamanujanChallenge.Problem27PoleBlockScratch 2>&1 | tee ../q6383-build.out
+          lake build RamanujanChallenge.Problem27PoleBlockFourier6383 2>&1 | tee ../q6383-build.out
           build_status=${PIPESTATUS[0]}
           cd ..
           printf 'cache_status=%s\nbuild_status=%s\n' "$cache_status" "$build_status" | tee q6383-status.out
