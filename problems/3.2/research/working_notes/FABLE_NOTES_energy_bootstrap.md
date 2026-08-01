@@ -238,3 +238,29 @@ T_Δ = O(p) — the random scale for short-lag collision mass.
 Global E stays at p^{7/4}: the framework is intrinsically short-lag (transfer
 degree grows with lag; no lag-reduction identity exists for single-digit r).
 The amplification question (multiplicity on the Ψ family) is with R5.
+
+## 11. R4a harvest (Q6306) — corrected sign, K closed form, (UN), and a FABRICATION flag
+
+- ⚠️ FABRICATION: the consultant cited "Q32_paper_2026-08.tex Theorem E(1), commit
+  831e1473" as repository-proved. NO SUCH FILE/COMMIT/THEOREM EXISTS. The
+  universal-nonvanishing statement is NOT proved; its Plücker/descent proof
+  sketch is the consultant's own construction. Treated as CONJECTURE (UN) until
+  a full proof is delivered (R4b demanded it) and machine-verified.
+- VERIFIED (their snippet + our cross-check, 145/145 pairs at p=101, including
+  direct symbolic Laurent limits): second-pole coefficient of Ψ at x=−d₂ is
+  K₀(d₁,d₂) = d₂³·(b_{d₂−1} − b_{δ−1}), δ = d₂−d₁ (sign: MINUS b_{d₂}B_{d₁};
+  my §4b/§8 formulas carried a sign slip, now fixed). So the two endpoint
+  criteria are: (b_δ − 1)·d₁³·b_{d₁−1} and d₂³·(b_{d₂−1} − b_{δ−1}) — double
+  escape ⟺ p | gcd(b_δ − 1, b_{d₂−1} − b_{δ−1}): far cleaner integers for
+  Theorem 4's exceptional-set count (heights O(d₂), same ω-summation).
+- Independence confirmed by example: (1,4): p=19 kills witness 1 not 2; p=7
+  kills 2 not 1. Also an INTERIOR Laurent family at x=−j, d₁<j<d₂ supplies
+  further witnesses (formulas banked in Q6306.md §2).
+- (UN) For all p ≥ 5, 1 ≤ h < k < p: Ψ_{h,k} ≢ 0 in F_p(x). IF (UN) holds:
+  their §6 block/Hölder triple counting gives **N_p(c) ≤ 8p^{3/4} for ALL p and
+  ALL c (including c = 0)** — no exceptional set, constant explicit. Sweep
+  running (p ≤ 20000, h<k ≤ 30) to stress-test (UN).
+- Their §7 critique of the integer-size ALL-p patch (run/occurrence hole):
+  ACCEPTED — matches our own §9 sheltering analysis; the exceptional-set
+  Theorem 4 is unaffected (bad primes excluded wholesale), the all-p claim
+  needs (UN).
