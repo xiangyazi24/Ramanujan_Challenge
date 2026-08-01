@@ -1982,3 +1982,21 @@ double-certified.
   ⟹ Δ 首项恒正 over Q——短gap引理的 over-Q 非零性以更强形式重立。
   mod p 例外分析相应改为 p | (−c_{k−h−1}+c_{k−1}−c_{h−1}) 的稀疏事件
   (仍等差/apparition 型, 密度更低)。
+
+## §98 (08-01 22:15) qFS3 审计判决: 数学链全 HOLDS, 证据簿记修理执行
+
+- **Q6500 (qFS3, life5) 判决**: restart 链数学**全部成立**——
+  转移+重启 HOLDS(域修正 u≠−1, M_{−1}∉PGL₂); gap-根编码 FIXABLE
+  (双索引口径 N_h vs U_m 危险重载, write-up 统一); 短/长 gap 不等式
+  HOLDS(**tail 锐化为 (p−3)/(H+1)**); 中间 ∞-命中 HOLDS(矩阵复合精确);
+  wrap 窗口 FIXABLE(改用 R_restricted, 方向不变——真 gap 窗口全不 wrap);
+  **条件推理 R≪Hp^{o(1)} ⟹ |Z_p|≪p^{1/2+o(1)} HOLDS**。
+- 三 FATAL 全在证据簿记, 状态: (1)(2) "1.36 实验/结构常数"——审计
+  跑的是 §88 快照, §91-93 已自我修正(1.36=wrap 欠计→1.5=Chebotarev
+  3/2 ✓ 审计的预测与我方修正精确一致); 修理=per-m 原始数据补档
+  (family_root_raw.txt 在跑)。(3) "因子组合树"——我问题文本里的推测
+  被正确击毙(restart 给公共根轨迹的同余, 非因子); §90 实际因子定律
+  (仅中心因子)不受影响且与击毙结论吻合。(4) "证据已立前提"——正确;
+  [CONJ-PAIR-MEAN] 一直标 CONJ, 无 overclaim。
+- 修理清单归 write-up: 域修正/口径统一/R_restricted 重述/tail 常数/
+  原始数据附档。**最后一击的骨架经敌意审计站立。**
