@@ -29,9 +29,9 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           cd lean
           lake exe cache get
-      - name: Compile Q6427 final horizontal bounds
+      - name: Compile complete Q6427 contour shift
         shell: bash
         run: |
           export PATH="$HOME/.elan/bin:$PATH"
           cd lean
-          lake build RamanujanChallenge.Q6427HorizontalFinal
+          lake build RamanujanChallenge.Q6427CompleteFinal
