@@ -2258,3 +2258,17 @@ rank 增长, 需 dynamical large sieve → q14 在飞; 跨相关测量协议 →
 
 **在飞**: life2(q2)/4(qDWORK2)/5(qSELFREC)/7(q6)/10(q9)/3(q14-DLS)/9(q15-THIN),
 life1 疑卡; codex: crosscorr(high)+irred-theorem(max); Sage genus X_{2,3}。
+
+## §113 — 终极范式 [GRAM-OP] + 战线合流 (08-01 傍晚)
+
+Q6565 (weight 预算, 待 q22 敌审): G_h=FT_ψ(P_h[1]) 完整局部类型 (rank 4h−2 lisse on
+G_m; t=0: U_2^{h−1}+χ_3^{±h}, Swan 0; t=∞: break-0 rank 2 + break-1 rank 4h−4 =
+⊕L_ψ(a_x t)⊗χ_2, Swan 4h−4); 窗口−核 = 三条端点线 (1, L_ψ(±c_h t)) 精确序列。
+**(5.3) Hom_geom(P_h,P_k) 维数 = c_{h,k}−1 ⟹ 分量 census ≡ Hom-vanishing** —
+几何线与 sheaf 线正式合流: MON/C_h ⟹ (a)+(b); (c) 仍卡 H⁴p^{3/2} 泛型预算。
+**最终范式 [GRAM-OP]**: ‖Γ‖_op ≤ Cp² (Γ_{h,k}=Σ_t S_hS̄_k, H≤p^{2/3}) ⟹ COINC ⟹
+F≪p^{4/3}; Schur ⟹ 只需 [ROWWISE]: Σ_k|E_{h,k}| ≤ Cp 逐行——与 Q6570 的 SHELL、
+Q6580 的 [SHELL-L2-DIAGONAL] 同山异面; codex crosscorr 在测。
+Q6580: d-平均→COINC 被杀 (对角损失 H); [SHELL-L2-DIAGONAL] T₂≪p^{2+ε}H² 幸存为
+精确条件路线。q21 (Schur-row 最优无条件界, life4) / q22 (局部类型敌审, life2) 在飞。
+cron 并卷包 (σ½+Q6533+Q6564) 转换 subagent 在做。
