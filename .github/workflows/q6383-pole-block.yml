@@ -12,6 +12,10 @@ on:
       - 'lean/RamanujanChallenge/Problem27PoleBlockScratch.lean'
       - '.github/workflows/q6383-pole-block.yml'
 
+concurrency:
+  group: q6383-pole-block-${{ github.event_name }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
