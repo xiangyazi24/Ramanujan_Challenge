@@ -1364,3 +1364,24 @@ double-certified.
   层面 product 仍可能成立(K_q 的 Mellin 铺开可能去相关)。所以联合矩
   实测真有信息量: M_{2,2}≈1 ⟹ Mellin 级 product(好消息, 27.1 可直接
   用大群); M_{2,2}≈3 ⟹ Mellin 级 graph(例外表第9项现身, 逆定理绕不开)。
+
+## §66 (08-01 08:25) 战役定案(爸爸授权自主选向) + §65 勘误 + 二波深探
+
+- **爸爸原话"我不掌握细节，不能选方向，你按你理解的来选就好"** ⟹ 定案:
+  主攻 Package B([GAP-2] 联合 Tannaka 群 + Katz 27.1), 奖品线 Package E
+  ((DRS)/相位模)持续深探, 坏对角=基建喂 B(codex-high 在跑), q23 归 cron。
+  TaskCreate #1 已立(退出条件: 爸爸叫停或 B 闭合)。
+- **[勘误§65] 矩预测的群空间搞混了**: §65 的 O₃/SO₃ 表(M₄=3)是 **t-线
+  逐点单值群**(⊂GL₃, 管 T_±(t)/p 的 Sato-Tate over t)的矩; 而 Mellin-χ
+  矩由 **Mellin-Tannaka 群**(⊂GL₂, 因生成 Mellin H¹ 维数=2, Q6413 §VII)
+  统治, 正确归一化 S_±(χ)/p^{3/2}∈[−2,2](权3维2), 非 /p。SL₂ 情形:
+  M₂=1, M₄=2(半圆律); product SL₂×SL₂: M_{1,1}=0, M_{2,2}=1; graph:
+  M_{2,2}=M₄=2。**判决数仍是 M_{2,2}(1 vs 2), 但阈值从 1vs3 改 1vs2**。
+  波及: (a) CODEX_SPEC_joint_tannaka 的归一化指令(/p)错——codex-max 的
+  矩会带 ~p 尺度, 裁决时我重归一化; (b) Q6440 问法里 "O₃×O₃" 框架有同
+  一混淆——SOL 若纠正我们, 那是对的; qNB3(→life5) 专问此点做解药。
+- **二波派发**: qNE2(→life2) = (DRS) 直攻施工单(Beukers–Vlasenko Cartier
+  矩阵显式化 + 转移矩阵乘积 local limit 框架评估 + Gross–Koblitz 相位/
+  模数因子化真伪 + 第一引理); qNB3(→life5) = AM-180 判群配方逐章应用到
+  A_± + **逐点群 vs Mellin 群关系精确化(全纲领 #1 混淆风险)** + GL₂ 版
+  Goursat 判别数。在飞总数 7 问 + codex×2; life9/10 留滚动跟进位。
