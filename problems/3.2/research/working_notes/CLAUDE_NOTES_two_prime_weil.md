@@ -103,3 +103,23 @@ gives this: archimedean equidistribution controls |L(χ)|/p^{3/2}, not L(χ) mod
 **Status**: Numerically verified (|C_p| ≤ 3.27√p for 166 primes), but unproved.
 The reformulation is new and connects the Apéry coefficient problem to families
 of L-functions in a precise way.
+
+## Additional routes explored (Q6285-Q6293)
+
+| Q# | Route | Verdict |
+|----|-------|---------|
+| Q6285 | Bezout / bounded-degree orbit curve | NO: orbit degree grows with p |
+| Q6288 | Katz discrepancy → mod-p residues | NO: test function frequency ~p^{1/2} too high |
+| Q6289 | Modularity / Hecke structure | Identifies object but doesn't close additive twist |
+| Q6291 | RS/MDS coding theory | NO: MDS controls Hamming distance, not Fourier |
+| Q6293 | Weyl differencing on L(χ_m) | NO: "degree" = p-1, all frequencies present |
+
+## Collision count data (46 primes ≤ 199)
+Σ N_t² / (2p) ∈ [0.90, 2.01], mean ≈ 1.4. Max multiplicity ≤ 10 (mostly ≤ 6).
+Random prediction: ratio → 1.0. Observed: close to random with mild excess.
+
+## DS data (p=11,13,17,101,...,503)
+- |C_p|/√p bounded: max 3.22 at p=307, cluster ~1.0
+- L(χ_m) takes ~√p distinct residues mod p (folding from range Cp^{3/2})
+- Local-limit: max multiplicity ~√p, confirmed for p=11,13,17
+- Linear-recurrence order of L(χ_m) = p (growing, not bounded-complexity)
