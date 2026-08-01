@@ -331,6 +331,13 @@ the prime side, and a star is K_{2,2}-free, so no combinatorial argument can exc
     Integral representation G·Q-P = ∫kernel·R is tautological (=definition).
     The sorry requires Padé subdominance theory (not in project).
   - Commits: 49533e1 (integral + chain), verified build 1 sorry only.
-- Codex dispatched: P2.5 decay (exploring matrix sign-preservation structure)
+- Codex dispatched: P2.5 decay (operator factorization via Ore algebra + ChatGPT SOL Pro)
+- tight bounds: catalan_tight_lower/upper compiled (270/485-term alternating series)
+- N=1 signs: positiveCatalanError_one_zero_neg + one_two_pos compiled (0 sorry)
+- numerical bound: |G - commonLimit| < envelopeGap 1 ≈ 4.5e-6
+- N=2 infeasible: needs ~15850 terms (23-digit integers, ~1e-9 envelope)
+- total new files: Problem25Integral (214), TightBounds (39), SignN1 (53) = 306 lines, 0 sorry
+- commits: 49533e1, 7eab864, 3e90590, 83a0e33
+- remaining: 1 sorry (catalanError_over_denominator_tendsto_zero = Padé subdominance)
 - end: <open>
 - final result: <open>
