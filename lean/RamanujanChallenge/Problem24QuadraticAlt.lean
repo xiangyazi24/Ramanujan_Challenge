@@ -44,6 +44,8 @@ noncomputable section
 open Filter Set Topology
 open scoped Interval
 
+set_option maxHeartbeats 800000
+
 namespace RamanujanChallenge.P24QuadAlt
 
 /-! ## Layer A: the quadratic remainder sequence `S` (Q6047 §1-2)
@@ -805,6 +807,787 @@ theorem quadAltM_hasSum {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
     filter_upwards with t ht
     exact (quadAltMMoment_hasSum_pointwise ht.1 ht.2 hx1).tsum_eq
   simpa only [hterm, hlim] using hsum
+
+
+/-! ## Layer C: coefficient integration (Q6047 §3) -/
+
+/-- `Σ_{k≥1} c_{k+1}P(k)y^k/(k+1) = Mclosed(y)/y`: the `P`-part of the
+increment series, reindexed from `quadAltM_hasSum` (Q6047 (2.5)). -/
+theorem quadAltMPart_hasSum {y : ℝ} (hy0 : 0 < y) (hy1 : y < 1) :
+    HasSum (fun m : ℕ => (1 + 2 * (-1 : ℝ) ^ (m + 2)) * parityRemainder24 (m + 1) *
+        y ^ (m + 1) / (m + 2 : ℝ))
+      (quadAltMclosed y / y) := by
+  have H1 := quadAltM_hasSum hy0 hy1
+  -- H1 : HasSum (fun k => c_{k+1} P(k) y^(k+1)/(k+1)) (Mclosed y)
+  have hf0 : (1 + 2 * (-1 : ℝ) ^ (0 + 1)) * parityRemainder24 0 * y ^ (0 + 1) / (0 + 1 : ℝ) = 0 := by
+    simp [quadAltP_zero]
+  have H1a : HasSum (fun n : ℕ => (1 + 2 * (-1 : ℝ) ^ (n + 1 + 1)) * parityRemainder24 (n + 1) *
+        y ^ (n + 1 + 1) / ((n + 1 : ℝ) + 1))
+      (quadAltMclosed y - (1 + 2 * (-1 : ℝ) ^ (0 + 1)) * parityRemainder24 0 *
+        y ^ (0 + 1) / (0 + 1 : ℝ)) := by
+    simpa [hf0] using
+      (hasSum_nat_add_iff' (f := fun k : ℕ =>
+        (1 + 2 * (-1 : ℝ) ^ (k + 1)) * parityRemainder24 k * y ^ (k + 1) / (k + 1 : ℝ))
+        (1 : ℕ)).mpr H1
+  -- multiply by 1/y: y^(n+2)/((n+2)·y) = y^(n+1)/(n+2)
+  have H1b := H1a.mul_left (1 / y)
+  convert H1b using 1
+  · funext n
+    field_simp [ne_of_gt hy0]
+    ring
+  · field_simp [ne_of_gt hy0]
+    simp [quadAltP_zero]
+
+
+/-- `Σ_{j≥0} y^(j+1)/(j+2)² = (dilog y − y)/y` for `|y| < 1`, `y ≠ 0`.
+(NOTE: `(j + 2 : ℝ)` must be written as `↑(j+2)` — the single-cast form —
+because `(j + 2 : ℝ)` elaborates to `↑j + 2` and forces a whnf blowup when
+unified with the `f (n+1)` terms from `hasSum_nat_add_iff'`.) -/
+theorem quadAlt_dilog_tail_hasSum {y : ℝ} (hy : |y| < 1) (hyne : y ≠ 0) :
+    HasSum (fun j : ℕ => y ^ (j + 1) / (↑(j + 2) : ℝ) ^ 2) ((dilog y - y) / y) := by
+  have H : HasSum (fun m : ℕ => y ^ (m + 1) / (↑(m + 1) : ℝ) ^ 2) (dilog y) := by
+    unfold dilog
+    exact (dilog_summable hy.le).hasSum
+  have H1 : HasSum (fun n : ℕ => y ^ (n + 1 + 1) / (↑n + 1 + 1) ^ 2)
+      (dilog y - y) := by
+    simpa [show y ^ (0 + 1) / (↑(0 + 1) : ℝ) ^ 2 = y by norm_num] using
+      (hasSum_nat_add_iff' (f := fun m : ℕ => y ^ (m + 1) / (↑(m + 1) : ℝ) ^ 2)
+        (1 : ℕ)).mpr H
+  have H2 := H1.mul_left (1 / y)
+  have hterm : ∀ n : ℕ, y ^ (n + 1) / (↑(n + 2) : ℝ) ^ 2 =
+      1 / y * (y ^ (n + 1 + 1) / (↑n + 1 + 1) ^ 2) := by
+    intro n
+    field_simp [hyne]
+    push_cast
+    ring
+  have H3 : HasSum (fun n : ℕ => y ^ (n + 1) / (↑(n + 2) : ℝ) ^ 2)
+      (1 / y * (dilog y - y)) :=
+    H2.congr_fun (fun n => hterm n)
+  convert H3 using 1
+  ring
+
+
+/-- `Σ_{j≥0} (−1)^j y^(j+1)/(j+2)² = (dilog(−y) + y)/y` for `|y| < 1`, `y ≠ 0`. -/
+theorem quadAlt_dilog_neg_tail_hasSum {y : ℝ} (hy : |y| < 1) (hyne : y ≠ 0) :
+    HasSum (fun j : ℕ => (-1 : ℝ) ^ j * y ^ (j + 1) / (↑(j + 2) : ℝ) ^ 2)
+      ((dilog (-y) + y) / y) := by
+  have H : HasSum (fun m : ℕ => (-y) ^ (m + 1) / (↑(m + 1) : ℝ) ^ 2) (dilog (-y)) := by
+    unfold dilog
+    exact (dilog_summable (by simpa using hy.le)).hasSum
+  have H1 : HasSum (fun n : ℕ => (-y) ^ (n + 1 + 1) / (↑n + 1 + 1) ^ 2)
+      (dilog (-y) - (-y)) := by
+    simpa [show (-y) ^ (0 + 1) / (↑(0 + 1) : ℝ) ^ 2 = -y by norm_num] using
+      (hasSum_nat_add_iff' (f := fun m : ℕ => (-y) ^ (m + 1) / (↑(m + 1) : ℝ) ^ 2)
+        (1 : ℕ)).mpr H
+  have H2 := H1.mul_left (1 / y)
+  have hterm : ∀ n : ℕ, (-1 : ℝ) ^ n * y ^ (n + 1) / (↑(n + 2) : ℝ) ^ 2 =
+      1 / y * ((-y) ^ (n + 1 + 1) / (↑n + 1 + 1) ^ 2) := by
+    intro n
+    field_simp [hyne]
+    push_cast
+    rw [neg_pow]
+    ring
+  have H3 : HasSum (fun n : ℕ => (-1 : ℝ) ^ n * y ^ (n + 1) / (↑(n + 2) : ℝ) ^ 2)
+      (1 / y * (dilog (-y) - -y)) :=
+    H2.congr_fun (fun n => hterm n)
+  convert H3 using 1
+  ring
+
+
+/-- Diagonal part of the increment series:
+`Σ 4(1+(−1)^{j+2})y^(j+1)/(j+2)² = 4(dilog y + dilog(−y))/y` (Q6047 (2.4)). -/
+theorem quadAltDiag_hasSum {y : ℝ} (hy : |y| < 1) (hyne : y ≠ 0) :
+    HasSum (fun j : ℕ => 4 * (1 + (-1 : ℝ) ^ (j + 2)) * y ^ (j + 1) / (↑(j + 2) : ℝ) ^ 2)
+      (4 * (dilog y + dilog (-y)) / y) := by
+  have hp := quadAlt_dilog_tail_hasSum hy hyne
+  have hm := quadAlt_dilog_neg_tail_hasSum hy hyne
+  have hcomb := hp.add hm
+  have hpow (j : ℕ) : (-1 : ℝ) ^ (j + 2) = (-1 : ℝ) ^ j := by
+    rw [pow_add]
+    norm_num
+  convert hcomb.mul_left 4 using 1
+  · funext j
+    rw [hpow]
+    ring
+  · ring
+
+
+/-- `Li2(z) + Li2(−z) = Li2(z²)/2` for `|z| < 1` (general version; the
+positive version `quadAlt_dilog_add_neg` covers only `0 < z < 1`). -/
+theorem quadAlt_dilog_add_neg' {z : ℝ} (hz : |z| < 1) :
+    dilog z + dilog (-z) = dilog (z ^ 2) / 2 := by
+  rcases lt_or_ge z 0 with hzneg | hzpos
+  · -- z < 0：令 t = −z > 0
+    have ht : |(-z)| < 1 := by simpa using hz
+    have hzlt1 : z < 1 := lt_of_lt_of_le hzneg (by linarith)
+    have htpos : 0 < -z := by linarith
+    have h := quadAlt_dilog_add_neg (x := -z) htpos (by
+      rw [abs_lt] at hz
+      linarith)
+    -- h : dilog (−z) + dilog (−(−z)) = dilog ((−z)²)/2
+    convert h using 1
+    all_goals ring
+  · -- z ≥ 0
+    rcases lt_or_eq_of_le hzpos with hzpos' | rfl
+    · have hz1 : z < 1 := (abs_lt.mp hz).2
+      exact quadAlt_dilog_add_neg hzpos' hz1
+    · simp [dilog_zero]
+
+
+/-- `M' = F − 2F(−x)` for all `|x| < 1` (general version; the positive-only
+`quadAltMclosed_hasDerivAt` is kept for the `[0,x]` FTC in `quadAltM_hasSum`). -/
+theorem quadAltMclosed_hasDerivAt' {x : ℝ} (hx : |x| < 1) :
+    HasDerivAt quadAltMclosed (quadAltFclosed x - 2 * quadAltFclosed (-x)) x := by
+  have h1mx : 0 < 1 - x := by
+    rw [abs_lt] at hx
+    nlinarith
+  have h1px : 0 < 1 + x := by
+    rw [abs_lt] at hx
+    nlinarith
+  have hmid0 : 0 < (1 + x) / 2 := by
+    rw [abs_lt] at hx
+    nlinarith
+  have hmid1 : (1 + x) / 2 < 1 := by
+    rw [abs_lt] at hx
+    nlinarith
+  have ha : HasDerivAt (fun y : ℝ => Real.log (1 - y)) (-1 / (1 - x)) x := by
+    have hc : HasDerivAt (fun y : ℝ => 1 - y) (-1) x := by
+      convert (hasDerivAt_const x 1).sub (hasDerivAt_id x) using 1
+      simp
+    have hlog := Real.hasDerivAt_log (ne_of_gt h1mx)
+    have hD : HasDerivAt (fun y : ℝ => Real.log (1 - y)) ((1 - x)⁻¹ * (-1)) x :=
+      HasDerivAt.comp (h := fun y : ℝ => 1 - y) x hlog hc
+    convert hD using 1
+    field_simp
+  have hb : HasDerivAt (fun y : ℝ => Real.log (1 + y)) (1 / (1 + x)) x := by
+    have hc : HasDerivAt (fun y : ℝ => 1 + y) 1 x := by
+      convert (hasDerivAt_const x 1).add (hasDerivAt_id x) using 1
+      simp
+    have hlog := Real.hasDerivAt_log (ne_of_gt h1px)
+    have hD : HasDerivAt (fun y : ℝ => Real.log (1 + y)) ((1 + x)⁻¹ * 1) x :=
+      HasDerivAt.comp (h := fun y : ℝ => 1 + y) x hlog hc
+    convert hD using 1
+    field_simp
+  have hd : HasDerivAt (fun y : ℝ => (1 + y) / 2) (1 / 2) x := by
+    have hc : HasDerivAt (fun y : ℝ => 1 + y) 1 x := by
+      convert (hasDerivAt_const x 1).add (hasDerivAt_id x) using 1
+      simp
+    convert hc.div_const 2 using 1
+  have hD : HasDerivAt (fun y : ℝ => dilog ((1 + y) / 2))
+      (-Real.log ((1 - x) / 2) / (1 + x)) x := by
+    have hmid := dilog_hasDerivAt hmid0 hmid1
+    have hD2 : HasDerivAt (fun y : ℝ => dilog ((1 + y) / 2))
+        (-(Real.log (1 - (1 + x) / 2)) / ((1 + x) / 2) * (1 / 2)) x :=
+      HasDerivAt.comp (h := fun y : ℝ => (1 + y) / 2) x hmid hd
+    convert hD2 using 1
+    field_simp
+    congr 1
+    ring
+  have hconst : HasDerivAt (fun y : ℝ => Real.pi ^ 2 / 6 - Real.log 2 ^ 2) 0 x := by
+    exact hasDerivAt_const x (Real.pi ^ 2 / 6 - Real.log 2 ^ 2)
+  have h1 : HasDerivAt (fun y : ℝ => Real.log (1 - y) ^ 2 / 2)
+      (-Real.log (1 - x) / (1 - x)) x := by
+    convert (ha.pow 2).div_const 2 using 1
+    all_goals norm_num
+    all_goals field_simp [h1mx.ne', h1px.ne']
+    all_goals ring_nf
+  have h2 : HasDerivAt (fun y : ℝ => Real.log (1 + y) ^ 2)
+      (2 * Real.log (1 + x) / (1 + x)) x := by
+    convert hb.pow 2 using 1
+    all_goals norm_num
+    all_goals field_simp [h1mx.ne', h1px.ne']
+    all_goals ring_nf
+  have h3 : HasDerivAt (fun y : ℝ => 2 * Real.log (1 - y) * Real.log (1 + y))
+      (2 * (-Real.log (1 + x) / (1 - x) + Real.log (1 - x) / (1 + x))) x := by
+    have hm := ha.mul hb
+    convert hm.const_mul 2 using 1
+    all_goals norm_num
+    all_goals field_simp [h1mx.ne', h1px.ne']
+    all_goals ring_nf
+  have h4 : HasDerivAt (fun y : ℝ => 2 * Real.log 2 * Real.log (1 + y))
+      (2 * Real.log 2 / (1 + x)) x := by
+    convert hb.const_mul (2 * Real.log 2) using 1
+    all_goals norm_num
+    all_goals field_simp [h1mx.ne', h1px.ne']
+    all_goals ring_nf
+  have h5 : HasDerivAt (fun y : ℝ => -2 * dilog ((1 + y) / 2))
+      (2 * Real.log ((1 - x) / 2) / (1 + x)) x := by
+    convert hD.const_mul (-2) using 1
+    all_goals norm_num
+    all_goals field_simp [h1mx.ne', h1px.ne']
+    all_goals ring_nf
+  have hM : HasDerivAt (fun y : ℝ => quadAltMclosed y)
+      (-Real.log (1 - x) / (1 - x) +
+        2 * Real.log (1 + x) / (1 + x) +
+        2 * (-Real.log (1 + x) / (1 - x) + Real.log (1 - x) / (1 + x)) +
+        2 * Real.log 2 / (1 + x) +
+        0 +
+        2 * Real.log ((1 - x) / 2) / (1 + x)) x := by
+    unfold quadAltMclosed
+    convert ((((h1.add h2).add h3).add h4).add hconst).add h5 using 2
+    all_goals simp
+    all_goals field_simp [h1mx.ne', h1px.ne']
+    all_goals ring_nf
+  convert hM using 1
+  unfold quadAltFclosed
+  norm_num
+  rw [show Real.log ((1 - x) / 2) = Real.log (1 - x) - Real.log 2 by
+    rw [Real.log_div]
+    · exact h1mx.ne'
+    · norm_num]
+  ring_nf
+
+
+/-- `M` series for `−1 < y < 0` (termwise integration on `[y,0]`; the
+positive-only `quadAltM_hasSum` covers `0 < y < 1`). -/
+theorem quadAltM_hasSum_neg {y : ℝ} (hy0 : -1 < y) (hy1 : y < 0) :
+    HasSum (fun k : ℕ => (1 + 2 * (-1 : ℝ) ^ (k + 1)) * parityRemainder24 k *
+        y ^ (k + 1) / (k + 1 : ℝ))
+      (quadAltMclosed y) := by
+  have hyabs : |y| < 1 := by
+    rw [abs_of_neg hy1]
+    linarith
+  have hle : y ≤ (0 : ℝ) := le_of_lt hy1
+  -- 1. integrability on Ioc y 0
+  have hint : ∀ k : ℕ, MeasureTheory.Integrable (quadAltMMoment k)
+      (MeasureTheory.volume.restrict (Set.Ioc y (0 : ℝ))) := by
+    intro k
+    have hcont : ContinuousOn (quadAltMMoment k) (Set.uIcc y (0 : ℝ)) := by
+      unfold quadAltMMoment
+      exact (continuousOn_pow k).const_mul
+        ((1 + 2 * (-1 : ℝ) ^ (k + 1)) * parityRemainder24 k)
+    have hI : MeasureTheory.IntegrableOn (quadAltMMoment k)
+        (Set.uIcc y (0 : ℝ)) MeasureTheory.volume :=
+      hcont.integrableOn_compact isCompact_uIcc
+    exact hI.mono_set (by
+      intro t ht
+      rcases (Set.mem_Ioc.mp ht) with ⟨hyt, ht0⟩
+      simp [Set.uIcc, min_eq_left hle, max_eq_right hle, hyt.le, ht0])
+  -- 2. norm summability: |t| ≤ |y| on (y, 0]
+  have hnorm_sum : Summable (fun k : ℕ =>
+      ∫ t : ℝ in Set.Ioc y (0 : ℝ), ‖quadAltMMoment k t‖) := by
+    have hH (k : ℕ) : (harmonicNumber (k + 1) : ℝ) ≤ (k + 1 : ℝ) := by
+      have hsum : (∑ j ∈ Finset.range (k + 1), (1 : ℝ) / (j + 1 : ℝ)) ≤ (k + 1 : ℝ) := by
+        calc
+          (∑ j ∈ Finset.range (k + 1), (1 : ℝ) / (j + 1 : ℝ))
+              ≤ ∑ _j ∈ Finset.range (k + 1), (1 : ℝ) := by
+                exact Finset.sum_le_sum (fun j hj => by
+                  rw [one_div]
+                  have hj1 : (1 : ℝ) ≤ (j + 1 : ℝ) := by exact_mod_cast (by omega : 1 ≤ j + 1)
+                  have hjpos : (0 : ℝ) < (j + 1 : ℝ) := by exact_mod_cast (by omega : 0 < j + 1)
+                  exact (inv_le_one₀ hjpos).mpr hj1)
+          _ = (k + 1 : ℝ) := by simp
+      simpa [harmonicNumber] using hsum
+    have hyabs0 : 0 ≤ |y| := abs_nonneg y
+    have hgeom : Summable (fun k : ℕ => 9 * (harmonicNumber (k + 1) : ℝ) * |y| ^ k) := by
+      have hxnorm : ‖|y|‖ < 1 := by simpa using hyabs
+      have hk : Summable (fun k : ℕ => (k : ℝ) * |y| ^ k) := by
+        simpa using (summable_pow_mul_geometric_of_norm_lt_one 1 (r := |y|) hxnorm)
+      have h1 : Summable (fun k : ℕ => |y| ^ k) :=
+        summable_geometric_of_lt_one hyabs0 hyabs
+      have hsum : Summable (fun k : ℕ => (k + 1 : ℝ) * |y| ^ k) := by
+        simpa [add_mul, one_mul, Nat.cast_add, Nat.cast_one] using
+          (hk.add h1).congr (fun k => by ring)
+      refine (hsum.mul_left 9).of_nonneg_of_le ?_ ?_
+      · intro k
+        exact mul_nonneg (mul_nonneg (by norm_num) (harmonicNumber_nonneg (k + 1)))
+          (pow_nonneg hyabs0 k)
+      · intro k
+        have hyk : 0 ≤ |y| ^ k := pow_nonneg hyabs0 k
+        have hHk : harmonicNumber (k + 1) ≤ (k + 1 : ℝ) := hH k
+        have hmid : harmonicNumber (k + 1) * |y| ^ k ≤ (k + 1 : ℝ) * |y| ^ k :=
+          mul_le_mul_of_nonneg_right hHk hyk
+        have hres : 9 * (harmonicNumber (k + 1) * |y| ^ k) ≤ 9 * ((k + 1 : ℝ) * |y| ^ k) :=
+          mul_le_mul_of_nonneg_left hmid (by norm_num)
+        simpa [mul_assoc] using hres
+    refine hgeom.of_nonneg_of_le ?_ ?_
+    · intro k
+      exact MeasureTheory.setIntegral_nonneg measurableSet_Ioc (fun t ht => norm_nonneg _)
+    · intro k
+      -- ∫_{Ioc y 0} ‖moment‖ ≤ 9H(k+1)|y|^k·(−y) ≤ 9H(k+1)|y|^k（−y ≤ 1）
+      have hb (t : ℝ) (ht : t ∈ Set.Ioc y (0 : ℝ)) :
+          ‖quadAltMMoment k t‖ ≤ 9 * (harmonicNumber (k + 1) : ℝ) * |y| ^ k := by
+        rcases (Set.mem_Ioc.mp ht) with ⟨hyt, ht0⟩
+        have htabs : |t| ≤ |y| := by
+          rw [abs_of_nonpos ht0, abs_of_neg hy1]
+          linarith
+        have htnonneg : 0 ≤ |t| := abs_nonneg t
+        unfold quadAltMMoment
+        rw [Real.norm_eq_abs, abs_mul, abs_mul, abs_pow]
+        calc
+          |1 + 2 * (-1 : ℝ) ^ (k + 1)| * |parityRemainder24 k| * |t| ^ k
+              ≤ 3 * (3 * harmonicNumber k) * |t| ^ k := by
+                gcongr
+                · exact quadAltC_abs_le k
+                · exact abs_parityRemainder24_le k
+          _ = 9 * (harmonicNumber k : ℝ) * |t| ^ k := by ring
+          _ ≤ 9 * (harmonicNumber (k + 1) : ℝ) * |y| ^ k := by
+            have h1 : 9 * harmonicNumber k ≤ 9 * harmonicNumber (k + 1) := by
+              exact mul_le_mul_of_nonneg_left (harmonicNumber_mono (Nat.le_succ k)) (by positivity)
+            have h2 : |t| ^ k ≤ |y| ^ k := pow_le_pow_left₀ htnonneg htabs k
+            have h3 : 0 ≤ 9 * harmonicNumber (k + 1) := by
+              exact mul_nonneg (by norm_num) (harmonicNumber_nonneg (k + 1))
+            exact (mul_le_mul_of_nonneg_right h1 (pow_nonneg htnonneg k)).trans
+              (mul_le_mul_of_nonneg_left h2 h3)
+      -- ∫_{Ioc y 0} 常数 9H|y|^k = 9H|y|^k·(−y)
+      calc
+        (∫ t : ℝ in Set.Ioc y (0 : ℝ), ‖quadAltMMoment k t‖)
+            ≤ ∫ _t : ℝ in Set.Ioc y (0 : ℝ), 9 * (harmonicNumber (k + 1) : ℝ) * |y| ^ k := by
+              have hI_abs : MeasureTheory.IntegrableOn (fun t : ℝ => ‖quadAltMMoment k t‖)
+                  (Set.Ioc y (0 : ℝ)) MeasureTheory.volume := by
+                have hcont_abs : ContinuousOn (fun t : ℝ => ‖quadAltMMoment k t‖)
+                    (Set.uIcc y (0 : ℝ)) := by
+                  unfold quadAltMMoment
+                  exact ((continuousOn_pow k).const_mul
+                    ((1 + 2 * (-1 : ℝ) ^ (k + 1)) * parityRemainder24 k)).norm
+                have hI : MeasureTheory.IntegrableOn (fun t : ℝ => ‖quadAltMMoment k t‖)
+                    (Set.uIcc y (0 : ℝ)) MeasureTheory.volume :=
+                  hcont_abs.integrableOn_compact isCompact_uIcc
+                exact hI.mono_set (by
+                  intro t ht
+                  rcases (Set.mem_Ioc.mp ht) with ⟨hyt, ht0⟩
+                  simp [Set.uIcc, min_eq_left hle, max_eq_right hle, hyt.le, ht0])
+              have hgI : MeasureTheory.IntegrableOn
+                  (fun _t : ℝ => 9 * (harmonicNumber (k + 1) : ℝ) * |y| ^ k)
+                  (Set.Ioc y (0 : ℝ)) MeasureTheory.volume := by
+                have hc : ContinuousOn
+                    (fun _t : ℝ => 9 * (harmonicNumber (k + 1) : ℝ) * |y| ^ k)
+                    (Set.uIcc y (0 : ℝ)) := continuousOn_const
+                have hI : MeasureTheory.IntegrableOn
+                    (fun _t : ℝ => 9 * (harmonicNumber (k + 1) : ℝ) * |y| ^ k)
+                    (Set.uIcc y (0 : ℝ)) MeasureTheory.volume :=
+                  hc.integrableOn_compact isCompact_uIcc
+                exact hI.mono_set (by
+                  intro t ht
+                  rcases (Set.mem_Ioc.mp ht) with ⟨hyt, ht0⟩
+                  simp [Set.uIcc, min_eq_left hle, max_eq_right hle, hyt.le, ht0])
+              exact MeasureTheory.setIntegral_mono_on hI_abs hgI measurableSet_Ioc (by
+                intro t ht
+                exact hb t ht)
+        _ = 9 * (harmonicNumber (k + 1) : ℝ) * |y| ^ k * (-y) := by
+          rw [MeasureTheory.setIntegral_const]
+          have hvol : MeasureTheory.volume.real (Set.Ioc y (0 : ℝ)) = -y := by
+            change (MeasureTheory.volume (Set.Ioc y (0 : ℝ))).toReal = -y
+            rw [Real.volume_Ioc]
+            simp [ENNReal.toReal_ofReal, hy1.le]
+          rw [hvol]
+          ring
+        _ ≤ 9 * (harmonicNumber (k + 1) : ℝ) * |y| ^ k := by
+          -- −y ≤ 1（y > −1）
+          have hneg : -y ≤ 1 := by linarith
+          have hnn : 0 ≤ 9 * (harmonicNumber (k + 1) : ℝ) * |y| ^ k := by
+            exact mul_nonneg (mul_nonneg (by norm_num) (harmonicNumber_nonneg (k + 1)))
+              (pow_nonneg hyabs0 k)
+          calc
+            9 * harmonicNumber (k + 1) * |y| ^ k * -y = (-y) * (9 * harmonicNumber (k + 1) * |y| ^ k) := by ring
+            _ ≤ 1 * (9 * harmonicNumber (k + 1) * |y| ^ k) := by
+              exact mul_le_mul_of_nonneg_right hneg hnn
+            _ = 9 * harmonicNumber (k + 1) * |y| ^ k := by ring
+  -- 3. hasSum_integral
+  have hsum := MeasureTheory.hasSum_integral_of_summable_integral_norm
+    (μ := MeasureTheory.volume.restrict (Set.Ioc y (0 : ℝ))) hint hnorm_sum
+  -- 4. moment integral = − M-term
+  have hIoc_pow (k : ℕ) : (∫ t : ℝ in Set.Ioc y (0 : ℝ), t ^ k) = -y ^ (k + 1) / (k + 1 : ℝ) := by
+    calc
+      (∫ t : ℝ in Set.Ioc y (0 : ℝ), t ^ k) = -∫ t : ℝ in (0 : ℝ)..y, t ^ k := by
+        rw [intervalIntegral.integral_of_ge hle]
+        ring
+      _ = -y ^ (k + 1) / (k + 1 : ℝ) := by
+        rw [integral_pow]
+        ring
+  have hterm : ∀ k : ℕ, (∫ t : ℝ in Set.Ioc y (0 : ℝ), quadAltMMoment k t)
+      = -((1 + 2 * (-1 : ℝ) ^ (k + 1)) * parityRemainder24 k * y ^ (k + 1) / (k + 1 : ℝ)) := by
+    intro k
+    unfold quadAltMMoment
+    rw [show (fun t : ℝ => (1 + 2 * (-1 : ℝ) ^ (k + 1)) * parityRemainder24 k * t ^ k) =
+        fun t => ((1 + 2 * (-1 : ℝ) ^ (k + 1)) * parityRemainder24 k) * t ^ k by
+          funext t; ring,
+      MeasureTheory.integral_const_mul, hIoc_pow k]
+    ring
+  -- 5. limit: ∫_{Ioc y 0} tsum = −Mclosed y
+  have hlim : (∫ t : ℝ in Set.Ioc y (0 : ℝ), ∑' k : ℕ, quadAltMMoment k t)
+      = -quadAltMclosed y := by
+    -- 桥：∫_{Ioc y 0} g = −∫₀₍y₎ g = ∫₍y₎₀ g
+    have hftc : (∫ t : ℝ in (0 : ℝ)..y, (quadAltFclosed t - 2 * quadAltFclosed (-t))) = quadAltMclosed y := by
+      -- FTC on [y,0]：∫₍y₎₀ f' = f 0 − f y = −Mclosed y；∫₀ʸ = −∫₍y₎₀ = Mclosed y
+      have hcontM : ContinuousOn quadAltMclosed (Set.Icc y (0 : ℝ)) := by
+        intro t ht
+        have htabs : |t| < 1 := by
+          rw [abs_lt]
+          rcases Set.mem_Icc.mp ht with ⟨hty, ht0⟩
+          constructor <;> linarith
+        exact ((quadAltMclosed_hasDerivAt' htabs).continuousAt).continuousWithinAt
+      have hderivM : ∀ t ∈ Set.Ioo y (0 : ℝ),
+          HasDerivAt quadAltMclosed (quadAltFclosed t - 2 * quadAltFclosed (-t)) t := by
+        intro t ht
+        rcases (Set.mem_Ioo.mp ht) with ⟨hyt, ht1⟩
+        exact quadAltMclosed_hasDerivAt' (by
+          rw [abs_lt]
+          constructor <;> linarith)
+      have hintM : IntervalIntegrable
+          (fun t : ℝ => quadAltFclosed t - 2 * quadAltFclosed (-t)) MeasureTheory.volume y 0 := by
+        apply ContinuousOn.intervalIntegrable
+        rw [Set.uIcc_of_le (le_of_lt hy1)]
+        intro t ht
+        rcases Set.mem_Icc.mp ht with ⟨hty, ht0⟩
+        have htabs : |t| < 1 := by rw [abs_lt]; constructor <;> linarith
+        have hF : ContinuousAt quadAltFclosed t := by
+          unfold quadAltFclosed
+          have h1 : (1 : ℝ) - t ≠ 0 := by linarith
+          have h2 : (0 : ℝ) < 1 + t := by linarith
+          fun_prop (disch := first | linarith | positivity)
+        have hFneg : ContinuousAt (fun s : ℝ => quadAltFclosed (-s)) t := by
+          unfold quadAltFclosed
+          have h1 : (1 : ℝ) + t ≠ 0 := by linarith
+          have h2 : (0 : ℝ) < 1 - t := by linarith
+          fun_prop (disch := first | linarith | positivity)
+        exact ((hF.sub (hFneg.const_smul (2:ℝ))).continuousWithinAt).congr
+          (fun s _ => by simp [smul_eq_mul]) (by simp [smul_eq_mul])
+      have hfund := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+        (a := y) (b := 0) (f := quadAltMclosed)
+        (f' := fun t : ℝ => quadAltFclosed t - 2 * quadAltFclosed (-t))
+        hle hcontM hderivM hintM
+      rw [quadAltMclosed_zero] at hfund
+      -- hfund : ∫₍y₎₀ f' = −Mclosed y；∫₀₍y₎ = −∫₍y₎₀ = Mclosed y
+      rw [intervalIntegral.integral_symm y 0, hfund]
+      ring
+    calc
+      (∫ t : ℝ in Set.Ioc y (0 : ℝ), ∑' k : ℕ, quadAltMMoment k t)
+          = -∫ t : ℝ in (0 : ℝ)..y, (∑' k : ℕ, quadAltMMoment k t) := by
+            rw [intervalIntegral.integral_of_ge hle]
+            ring
+      _ = -quadAltMclosed y := by
+        have hcon : (∫ t : ℝ in (0 : ℝ)..y, ∑' k : ℕ, quadAltMMoment k t)
+            = (∫ t : ℝ in (0 : ℝ)..y, (quadAltFclosed t - 2 * quadAltFclosed (-t))) := by
+          apply intervalIntegral.integral_congr_ae
+          filter_upwards with t ht
+          have htabs : |t| < 1 := by
+            rw [abs_lt]
+            rcases (Set.mem_uIoc.mp ht) with ⟨hyt, ht0⟩ | ⟨hyt, ht0⟩
+            · exfalso
+              linarith
+            · constructor <;> linarith
+          by_cases ht0 : t = 0
+          · subst t
+            have hterm0 : ∀ k : ℕ, quadAltMMoment k 0 = 0 := by
+              intro k
+              unfold quadAltMMoment
+              by_cases hk : k = 0
+              · subst hk
+                simp [quadAltP_zero]
+              · have hk' : (0 : ℝ) ^ k = 0 := zero_pow (by omega : k ≠ 0)
+                rw [hk']
+                ring
+            have htsum : (∑' k : ℕ, quadAltMMoment k 0) = 0 := by
+              simp [hterm0]
+            rw [htsum]
+            simp [quadAltFclosed]
+          · exact (quadAltC_hasSum htabs ht0).tsum_eq
+        rw [hcon, hftc]
+  -- 6. assemble
+  have hmain : HasSum (fun k : ℕ => -((1 + 2 * (-1 : ℝ) ^ (k + 1)) * parityRemainder24 k *
+        y ^ (k + 1) / (k + 1 : ℝ))) (-quadAltMclosed y) := by
+    simpa only [hterm, hlim] using hsum
+  convert hmain.neg using 1
+  · funext k
+    ring
+  · ring
+
+
+/-- `M` series for all `|y| < 1`, `y ≠ 0` (general version, by sign split). -/
+theorem quadAltM_hasSum' {y : ℝ} (hy : |y| < 1) (hyne : y ≠ 0) :
+    HasSum (fun k : ℕ => (1 + 2 * (-1 : ℝ) ^ (k + 1)) * parityRemainder24 k *
+        y ^ (k + 1) / (k + 1 : ℝ))
+      (quadAltMclosed y) := by
+  rcases lt_or_gt_of_ne hyne with hyneg | hypos
+  · have hy0 : -1 < y := (abs_lt.mp hy).1
+    exact quadAltM_hasSum_neg hy0 hyneg
+  · have hy1 : y < 1 := (abs_lt.mp hy).2
+    exact quadAltM_hasSum hypos hy1
+
+/-- `Σ_{k≥1} c_{k+1}P(k)y^k/(k+1) = Mclosed(y)/y` for `|y| < 1`, `y ≠ 0`
+(general version of `quadAltMPart_hasSum`). -/
+theorem quadAltMPart_hasSum' {y : ℝ} (hy : |y| < 1) (hyne : y ≠ 0) :
+    HasSum (fun m : ℕ => (1 + 2 * (-1 : ℝ) ^ (m + 2)) * parityRemainder24 (m + 1) *
+        y ^ (m + 1) / (m + 2 : ℝ))
+      (quadAltMclosed y / y) := by
+  have H1 := quadAltM_hasSum' hy hyne
+  have hf0 : (1 + 2 * (-1 : ℝ) ^ (0 + 1)) * parityRemainder24 0 * y ^ (0 + 1) / (0 + 1 : ℝ) = 0 := by
+    simp [quadAltP_zero]
+  have H1a : HasSum (fun n : ℕ => (1 + 2 * (-1 : ℝ) ^ (n + 1 + 1)) * parityRemainder24 (n + 1) *
+        y ^ (n + 1 + 1) / ((n + 1 : ℝ) + 1))
+      (quadAltMclosed y - (1 + 2 * (-1 : ℝ) ^ (0 + 1)) * parityRemainder24 0 *
+        y ^ (0 + 1) / (0 + 1 : ℝ)) := by
+    simpa [hf0] using
+      (hasSum_nat_add_iff' (f := fun k : ℕ =>
+        (1 + 2 * (-1 : ℝ) ^ (k + 1)) * parityRemainder24 k * y ^ (k + 1) / (k + 1 : ℝ))
+        (1 : ℕ)).mpr H1
+  have H2 := H1a.mul_left (1 / y)
+  have hterm : ∀ n : ℕ, (1 + 2 * (-1 : ℝ) ^ (n + 2)) * parityRemainder24 (n + 1) *
+        y ^ (n + 1) / (n + 2 : ℝ) =
+      1 / y * ((1 + 2 * (-1 : ℝ) ^ (n + 1 + 1)) * parityRemainder24 (n + 1) *
+        y ^ (n + 1 + 1) / ((n + 1 : ℝ) + 1)) := by
+    intro n
+    field_simp [hyne]
+    ring
+  have H3 : HasSum (fun n : ℕ => (1 + 2 * (-1 : ℝ) ^ (n + 2)) * parityRemainder24 (n + 1) *
+        y ^ (n + 1) / (n + 2 : ℝ))
+      (1 / y * (quadAltMclosed y - (1 + 2 * (-1 : ℝ) ^ (0 + 1)) * parityRemainder24 0 *
+        y ^ (0 + 1) / (0 + 1 : ℝ))) :=
+    H2.congr_fun (fun n => hterm n)
+  convert H3 using 1
+  field_simp [hyne]
+  simp [quadAltP_zero]
+
+
+/-- Increment series: `Σ_{k≥0} (S_{k+1}−S_k)y^k = 2J(y)/y` (Q6047 (2.2)–(2.5)). -/
+theorem quadAltIncrement_hasSum {y : ℝ} (hy : |y| < 1) (hyne : y ≠ 0) :
+    HasSum (fun k : ℕ => quadAltIncrement k * y ^ k) (2 * quadAltJclosed y / y) := by
+  have h0 : quadAltIncrement 0 = 0 := by
+    unfold quadAltIncrement
+    simp [quadAltS_zero]
+  have hP := quadAltMPart_hasSum' hy hyne
+  have hD := quadAltDiag_hasSum hy hyne
+  have hmain : HasSum (fun j : ℕ =>
+        2 * ((1 + 2 * (-1 : ℝ) ^ (j + 2)) * parityRemainder24 (j + 1) * y ^ (j + 1) / (j + 2 : ℝ)) +
+        4 * (1 + (-1 : ℝ) ^ (j + 2)) * y ^ (j + 1) / (↑(j + 2) : ℝ) ^ 2)
+      (2 * (quadAltMclosed y / y) + 4 * (dilog y + dilog (-y)) / y) :=
+    (hP.mul_left 2).add hD
+  have hterm (j : ℕ) :
+      2 * ((1 + 2 * (-1 : ℝ) ^ (j + 2)) * parityRemainder24 (j + 1) * y ^ (j + 1) / (j + 2 : ℝ)) +
+        4 * (1 + (-1 : ℝ) ^ (j + 2)) * y ^ (j + 1) / (↑(j + 2) : ℝ) ^ 2
+      = quadAltIncrement (j + 1) * y ^ (j + 1) := by
+    unfold quadAltIncrement
+    have hj : j + 1 ≠ 0 := by omega
+    simp [hj]
+    rw [quadAltS_succ_sub]
+    rw [quadAltC_sq_sub_one]
+    ring
+  have hval : 2 * (quadAltMclosed y / y) + 4 * (dilog y + dilog (-y)) / y = 2 * quadAltJclosed y / y := by
+    unfold quadAltJclosed
+    have hd := quadAlt_dilog_add_neg' hy
+    rw [hd]
+    ring
+  have hshift : HasSum (fun k : ℕ => quadAltIncrement (k + 1) * y ^ (k + 1))
+      (2 * quadAltJclosed y / y) := by
+    convert hmain using 1
+    · funext j
+      exact (hterm j).symm
+    · exact hval.symm
+  refine (hasSum_nat_add_iff' (f := fun k : ℕ => quadAltIncrement k * y ^ k)
+    (g := 2 * quadAltJclosed y / y) (1 : ℕ)).mp ?_
+  simpa [h0] using hshift
+
+
+/-- `S`-series: `Σ_{n≥0} S_{n+1} y^n = Qclosed(y)/y` (Q6047 (2.10), Cauchy product
+of the increment series with the geometric series). -/
+theorem quadAltS_generating_hasSum {y : ℝ} (hy : |y| < 1) (hyne : y ≠ 0) :
+    HasSum (fun n : ℕ => quadAltS n * y ^ n) (quadAltQclosed y / y) := by
+  have hInc := quadAltIncrement_hasSum hy hyne
+  have hf : Summable (fun k : ℕ => ‖quadAltIncrement k * y ^ k‖) :=
+    hInc.summable.norm
+  have hg : Summable (fun m : ℕ => ‖y ^ m‖) := by
+    simpa [Real.norm_eq_abs, abs_pow, abs_of_nonneg (abs_nonneg y)] using
+      (summable_geometric_of_lt_one (abs_nonneg y) hy)
+  have hproduct := hasSum_sum_range_mul_of_summable_norm
+    (f := fun k : ℕ => quadAltIncrement k * y ^ k) (g := fun m : ℕ => y ^ m) hf hg
+  have hcoeff (n : ℕ) : (∑ k ∈ Finset.range (n + 1), quadAltIncrement k * y ^ k * y ^ (n - k))
+      = quadAltS n * y ^ n := by
+    calc
+      (∑ k ∈ Finset.range (n + 1), quadAltIncrement k * y ^ k * y ^ (n - k))
+          = (∑ k ∈ Finset.range (n + 1), quadAltIncrement k * y ^ n) := by
+            apply Finset.sum_congr rfl
+            intro k hk
+            have hkn : k < n + 1 := Finset.mem_range.mp hk
+            have hpow : y ^ k * y ^ (n - k) = y ^ n := by
+              rw [← pow_add]
+              congr 1
+              omega
+            rw [mul_assoc, hpow]
+      _ = (∑ k ∈ Finset.range (n + 1), quadAltIncrement k) * y ^ n := by
+            rw [Finset.sum_mul]
+      _ = quadAltS n * y ^ n := by
+        rw [quadAltS_eq_sum_increment]
+  have hval : (∑' k : ℕ, quadAltIncrement k * y ^ k) * (∑' m : ℕ, y ^ m) = quadAltQclosed y / y := by
+    have hgeom : (∑' m : ℕ, y ^ m) = 1 / (1 - y) := by
+      have hs := hasSum_geometric_of_norm_lt_one (show ‖y‖ < 1 by simpa using hy)
+      simpa using hs.tsum_eq
+    rw [hInc.tsum_eq, hgeom]
+    unfold quadAltQclosed
+    field_simp [hyne]
+  convert hproduct using 1
+  · funext n
+    exact (hcoeff n).symm
+  · exact hval.symm
+
+
+/-! ## Layer C main: coefficient integration (Q6047 §3.3) -/
+
+/-- Coefficient moment: `(−log x)/x · S_{n+1}(−x)^{n+1}` on `[0,1]`. -/
+def quadAltCoeffMoment (n : ℕ) (x : ℝ) : ℝ :=
+  (-Real.log x) / x * quadAltS n * (-x) ^ (n + 1)
+
+/-- Pointwise HasSum: `Σ moment n x = (−log x)/x · Q(−x)` for `0 < x < 1`. -/
+theorem quadAltCoeffMoment_hasSum_pointwise {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasSum (fun n : ℕ => quadAltCoeffMoment n x)
+      ((-Real.log x) / x * quadAltQclosed (-x)) := by
+  have hS := quadAltS_generating_hasSum (y := -x)
+    (by simpa [abs_of_pos hx0] using hx1) (by linarith)
+  -- hS : HasSum (fun n => S_{n+1}·(−x)^n) (Qclosed(−x)/(−x))
+  -- moment = (−log x)/x·(−x)·S·(−x)^n
+  have hmul := hS.mul_left ((-Real.log x) / x * (-x))
+  convert hmul using 1
+  · funext n
+    unfold quadAltCoeffMoment
+    rw [pow_succ]
+    field_simp [ne_of_gt hx0]
+  · field_simp [ne_of_gt hx0]
+
+/-- Integral of the coefficient moment over `[0,1]` = the alternating quadratic term. -/
+theorem quadAltCoeffMoment_integral (n : ℕ) :
+    (∫ x : ℝ in (0 : ℝ)..1, quadAltCoeffMoment n x) =
+      alternatingQuadraticEulerTerm24 n := by
+  unfold quadAltCoeffMoment alternatingQuadraticEulerTerm24 quadraticEulerTerm24
+  -- ∫₀¹ (−log x)/x·S·(−x)^{n+1} = S·(−1)^{n+1}·∫₀¹ (−log x)x^n
+  rw [show (fun x : ℝ => (-Real.log x) / x * quadAltS n * (-x) ^ (n + 1)) =
+      fun x => quadAltS n * (-1 : ℝ) ^ (n + 1) * (x ^ n * (-Real.log x)) by
+        funext x
+        rw [neg_pow]
+        by_cases hx : x = 0
+        · subst x
+          simp
+        · field_simp [hx]
+          ring]
+  rw [intervalIntegral.integral_const_mul]
+  -- ∫₀¹ x^n·(−log x) = 1/(n+1)²
+  have hlog : (∫ x : ℝ in (0 : ℝ)..1, x ^ n * (-Real.log x)) = 1 / (n + 1 : ℝ) ^ 2 := by
+    have h := RamanujanChallenge.P26.integral_pow_mul_log26 n
+    -- h : ∫₀¹ x^n·log x = −1/(n+1)²
+    have hneg : (∫ x : ℝ in (0 : ℝ)..1, x ^ n * (-Real.log x)) =
+        -∫ x : ℝ in (0 : ℝ)..1, x ^ n * Real.log x := by
+      rw [← intervalIntegral.integral_neg]
+      congr 1
+      funext x
+      ring
+    rw [hneg, h]
+    ring
+  rw [hlog]
+  unfold quadAltS
+  ring
+
+
+/-- Layer C main: `tsum(alternatingQuadraticEulerTerm24) = ∫₀¹ (−log x)/x · Q(−x) dx`
+(the coefficient integration, Q6047 §3.3). -/
+theorem quadAlt_tsum_eq_coeff_integral :
+    (∑' n : ℕ, alternatingQuadraticEulerTerm24 n) =
+      ∫ x : ℝ in (0 : ℝ)..1, (-Real.log x) / x * quadAltQclosed (-x) := by
+  have hint : ∀ n : ℕ, MeasureTheory.Integrable (quadAltCoeffMoment n)
+      (MeasureTheory.volume.restrict (Set.Ioc (0 : ℝ) 1)) := by
+    intro n
+    have hlogI : IntervalIntegrable (fun x : ℝ => x ^ n * Real.log x)
+        MeasureTheory.volume 0 1 :=
+      (intervalIntegral.intervalIntegrable_log').continuousOn_mul (continuousOn_pow n)
+    have hlogI' : IntervalIntegrable (fun x : ℝ => (-Real.log x) * x ^ n)
+        MeasureTheory.volume 0 1 := by
+      simpa [mul_comm] using hlogI.neg
+    have hEq (x : ℝ) : quadAltCoeffMoment n x =
+        quadAltS n * (-1 : ℝ) ^ (n + 1) * ((-Real.log x) * x ^ n) := by
+      unfold quadAltCoeffMoment
+      rw [neg_pow]
+      by_cases hx : x = 0
+      · subst x
+        simp
+      · field_simp [hx]
+        ring
+    have hconst := (hlogI'.const_mul (quadAltS n * (-1 : ℝ) ^ (n + 1)))
+    have hI : IntervalIntegrable (quadAltCoeffMoment n) MeasureTheory.volume 0 1 := by
+      convert hconst using 1
+      funext x
+      rw [hEq]
+    -- IntervalIntegrable 0 1 = IntegrableOn (Ioc 0 1) ∧ …；第一分量即所需
+    exact hI.1.integrable
+  have hnorm_sum : Summable (fun n : ℕ =>
+      ∫ t : ℝ in Set.Ioc (0 : ℝ) 1, ‖quadAltCoeffMoment n t‖) := by
+    -- ∫|moment| = |alternatingQuadraticEulerTerm24|（用 ∫₀¹ (−log x)x^n = 1/(n+1)² 的精确值）
+    have hnorm (n : ℕ) : (∫ t : ℝ in Set.Ioc (0 : ℝ) 1, ‖quadAltCoeffMoment n t‖)
+        = |alternatingQuadraticEulerTerm24 n| := by
+      have hEq (t : ℝ) (ht0 : 0 < t) : ‖quadAltCoeffMoment n t‖ =
+          |quadAltS n| * ‖(-Real.log t) * t ^ n‖ := by
+        unfold quadAltCoeffMoment
+        rw [Real.norm_eq_abs, Real.norm_eq_abs]
+        simp only [abs_mul, abs_div, abs_pow, abs_neg]
+        rw [abs_of_pos ht0]
+        field_simp [ne_of_gt ht0]
+        ring
+      have hlog (n : ℕ) : (∫ x : ℝ in (0 : ℝ)..1, (-Real.log x) * x ^ n) = 1 / (n + 1 : ℝ) ^ 2 := by
+        have h := RamanujanChallenge.P26.integral_pow_mul_log26 n
+        have hneg : (∫ x : ℝ in (0 : ℝ)..1, x ^ n * (-Real.log x)) =
+            -∫ x : ℝ in (0 : ℝ)..1, x ^ n * Real.log x := by
+          rw [← intervalIntegral.integral_neg]
+          congr 1
+          funext x
+          ring
+        have hswap : (∫ x : ℝ in (0 : ℝ)..1, (-Real.log x) * x ^ n)
+            = ∫ x : ℝ in (0 : ℝ)..1, x ^ n * (-Real.log x) := by
+          apply intervalIntegral.integral_congr_ae
+          filter_upwards with x hx
+          ring
+        rw [hswap, hneg, h]
+        ring
+      -- ∫_{Ioc} |moment| = ∫₀¹ |S|·|(−log t)·t^n| = |S|·∫₀¹ (−log t)·t^n
+      calc
+        (∫ t : ℝ in Set.Ioc (0 : ℝ) 1, ‖quadAltCoeffMoment n t‖)
+            = ∫ t : ℝ in (0 : ℝ)..1, ‖quadAltCoeffMoment n t‖ := by
+              rw [intervalIntegral.integral_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+        _ = ∫ t : ℝ in (0 : ℝ)..1, |quadAltS n| * ‖(-Real.log t) * t ^ n‖ := by
+              apply intervalIntegral.integral_congr_ae
+              filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)] with t htne ht
+              exact hEq t (by simpa using ht.1)
+        _ = |quadAltS n| * (∫ t : ℝ in (0 : ℝ)..1, ‖(-Real.log t) * t ^ n‖) := by
+              rw [intervalIntegral.integral_const_mul]
+        _ = |quadAltS n| * (1 / (n + 1 : ℝ) ^ 2) := by
+              congr 1
+              -- ∫₀¹ |(−log t)·t^n| = ∫₀¹ (−log t)·t^n（t ∈ (0,1] 时 −log t ≥ 0）
+              have hnonneg : ∀ t ∈ Set.Ioc (0 : ℝ) 1, 0 ≤ (-Real.log t) * t ^ n := by
+                intro t ht
+                rcases (Set.mem_Ioc.mp ht) with ⟨ht0, ht1⟩
+                have hlogt : Real.log t ≤ 0 := Real.log_nonpos ht0.le ht1
+                exact mul_nonneg (by linarith) (pow_nonneg ht0.le n)
+              rw [← hlog]
+              apply intervalIntegral.integral_congr_ae
+              filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)] with t htne ht
+              rw [Real.norm_eq_abs]
+              congr 1
+              rw [abs_of_nonneg (hnonneg t ⟨by simpa using ht.1, by simpa using ht.2⟩)]
+        _ = |alternatingQuadraticEulerTerm24 n| := by
+              unfold alternatingQuadraticEulerTerm24 quadraticEulerTerm24 quadAltS
+              rw [abs_mul, abs_div, abs_pow]
+              norm_num
+              ring
+    exact summable_quadAlt.norm.congr (fun n => (hnorm n).symm)
+  have hsum := MeasureTheory.hasSum_integral_of_summable_integral_norm
+    (μ := MeasureTheory.volume.restrict (Set.Ioc (0 : ℝ) 1)) hint hnorm_sum
+  have hterm (n : ℕ) : (∫ t : ℝ in Set.Ioc (0 : ℝ) 1, quadAltCoeffMoment n t)
+      = alternatingQuadraticEulerTerm24 n := by
+    rw [← intervalIntegral.integral_of_le (by norm_num : (0 : ℝ) ≤ 1),
+      quadAltCoeffMoment_integral n]
+  have hlim : (∫ t : ℝ in Set.Ioc (0 : ℝ) 1, ∑' n : ℕ, quadAltCoeffMoment n t)
+      = ∫ x : ℝ in (0 : ℝ)..1, (-Real.log x) / x * quadAltQclosed (-x) := by
+    rw [← intervalIntegral.integral_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)] with x hxne hx
+    have hx0 : 0 < x := by simpa using hx.1
+    have hx1 : x < 1 := lt_of_le_of_ne (by simpa using hx.2) hxne
+    exact (quadAltCoeffMoment_hasSum_pointwise hx0 hx1).tsum_eq
+  have hsum' : HasSum (fun n : ℕ => ∫ t : ℝ in Set.Ioc (0 : ℝ) 1, quadAltCoeffMoment n t)
+      (∫ x : ℝ in (0 : ℝ)..1, (-Real.log x) / x * quadAltQclosed (-x)) := by
+    simpa [hlim] using hsum
+  have hfinal : HasSum alternatingQuadraticEulerTerm24
+      (∫ x : ℝ in (0 : ℝ)..1, (-Real.log x) / x * quadAltQclosed (-x)) := by
+    convert hsum' using 1
+    funext n
+    exact (hterm n).symm
+  rw [← hfinal.tsum_eq]
 
 end RamanujanChallenge.P24QuadAlt
 
