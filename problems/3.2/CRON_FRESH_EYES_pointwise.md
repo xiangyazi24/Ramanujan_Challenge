@@ -420,3 +420,5 @@ b_r ≡ −(1/N)·Σ_{t=0}^{N−1} J(φψ^{t+r}, ψ^{N/2−t})²·J(φψ^{t−r}
 - 包装器（非源头）：cumulant/Stein/依赖图/聚类展开——需先有 k=2 算术估计；larger/inverse sieve 需先有中心放大定理（Lemma LS）。
 - 字符指数勘误确认：Mellin 对角是 ω_p^{n−1}（mod p−1）而非 ω_p^n（mod p 的加法索引 n）——两坐标并存，8.5 检查表两同余式我方 trivially 核过。
 - q19(Q6414@cron4) 落地后与 §5 Lucas 定理做独立 diff（双源）。全文归档 chatgpt-answers/Q6400.md。
+
+**R.4（life §53 回执，2026-08-01）**：codex-fm-max 收官两件：(1) **[VERIFIED-KATZ-H]**——Katz Conv&Equid Thm 27.1 允许有限域序列，天然是跨素数水平等分布定理；缺口仅在输入侧 = **[GAP-2] 公共 Tannakian 群 + 相容整实现**（群计算可攻，qD 自扭分类是模板）。⟹ 在飞的 q18（双层 Mellin 逆定理/Tannakian 提纲）与 q22（FD 判决）落地后按 GAP-2 框架收割，优先级抬升。(2) a_p(E_u)=H_p(u) 于 1084 纤维全验证（5≤p≤101），Beauville-IV 最强数值证书。全战役缺口地图定格三件套：GAP-1 晶体比较 / GAP-2 Tannakian 群 / GAP-DCM（=LT-MELLIN）零密度。
