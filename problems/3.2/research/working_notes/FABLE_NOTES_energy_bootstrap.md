@@ -2625,3 +2625,28 @@ fixed-p quenched 问题不是一个技术域。最有希望的子问题 (已作�
 Gessel/Lucas b_{mp+r}=b_m b_r 或 weight-4 level-8 模形式能否把 b_{n−p} mod p
 表达成 p 处的 Frobenius 数据 —— 若能, 密度问题变成模形式系数的
 等分布/非消失问题, 那是可攻的。q79 (带上述数值反驳) 已发 life8。
+
+## §141 — 主定理的数字判据重述 (Gessel ⟹ base-p 数字), 与稀疏切片链定稿 (08-02)
+
+**自推 + 机验 (gessel_top.py, n∈[40,140) 全部素数窗)**: 顶窗 p∈(n/2,n] 时
+n = 1·p + (n−p), Gessel b_{mp+r}≡b_m b_r 给 **b_n ≡ 5·b_{n−p} (mod p)**,
+故 **p | b_{n−p} ⟺ p | b_n** — 顶窗稀疏切片条件与"b_n 的素因子"完全同一
+(印证 cron 早先的等价形式, 且说明 q79(3c) 的 Gessel 转换**不是免费午餐**:
+它把切片条件送回原命题, 不产生新的 Frobenius 局部量)。
+
+**一般 p 的数字判据 (推论)**: p 素数 ⟹ p | b_n ⟺ **n 的某个 base-p 数字 d 满足
+p | b_d** (Gessel 递归 + p 素故 p|b_m b_r ⟺ p|b_m 或 p|b_r)。即
+p | b_n ⟺ n 的某位数字 ∈ Z_p。⟹ 主定理点态形式 =
+  #{p∈(n/2,n] : (n mod p) ∈ Z_p} = o(n/log n)
+—— **一族"每素数取一个指定残数、问它是否落进稀疏集 Z_p"的单点测试**,
+不是轨道访问计数。Z_p 平均大小实测 0.912 (§140)。
+
+**难点定位 (自算)**: 对 n 取平均是**容易**的 —
+Σ_n #{p: n mod p ∈ Z_p} ≈ range·Σ_p |Z_p|/p ≈ range·log2/log N ⟹ 几乎所有 n
+都好; 猜想要**每个** n。这是经典的 average-easy / pointwise-hard 分界, 与
+CRON 点态线的困难同源, 现在有了精确的组合陈述。
+
+**q79/Q6801 定稿链 (对表通过)**: log G_n ≤ 6M(n)+O(n^{2/3}log n),
+M(n) = Σ_{√n<p≤n} log p·|R_p(n)|, R_p(n)={r<n/2 : r≡n mod p, p|b_r};
+顶窗 Σ_{n/2<p≤n} log p·1[p|b_n] = o(n); 中段 Σ_{√n<p≤n/2} log p·|R_p(n)| = o(n),
+|R_p(n)| ≤ 1+n/(2p)。其 (3c) 判负与我方 Gessel 机验一致 (index 依赖不消)。
