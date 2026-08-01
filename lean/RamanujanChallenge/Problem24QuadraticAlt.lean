@@ -2230,6 +2230,89 @@ theorem intervalIntegrable_of_continuousOn_Ioo_of_le
       filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with x hx
       exact hfg x hx)
 
+/-! ## Continuity of the pieces on the open interval
+
+Each of `Mclosed`, `Jclosed`, `V`, `Dminus` is continuous away from the points
+where a `log` or `dilog` argument leaves its good range. These feed the
+integrability side conditions. -/
+
+theorem quadAltMclosed_continuousAt {x : ℝ} (hx : x ∈ Set.Ioo (-1:ℝ) 1) :
+    ContinuousAt quadAltMclosed x := by
+  have h1 : (0:ℝ) < 1 - x := by linarith [hx.2]
+  have h2 : (0:ℝ) < 1 + x := by linarith [hx.1]
+  have h3 : (0:ℝ) < (1 + x)/2 := by positivity
+  have hlm : ContinuousAt (fun y : ℝ => Real.log (1 - y)) x := by
+    apply ContinuousAt.log (by fun_prop); linarith
+  have hlp : ContinuousAt (fun y : ℝ => Real.log (1 + y)) x := by
+    apply ContinuousAt.log (by fun_prop); linarith
+  have hd : ContinuousAt (fun y : ℝ => dilog ((1+y)/2)) x := by
+    have habs : |(1+x)/2| < 1 := by
+      rw [abs_lt]
+      exact ⟨by linarith [hx.1], by linarith [hx.2]⟩
+    have hne : (1+x)/2 ≠ 0 := ne_of_gt h3
+    have hdil : ContinuousAt dilog ((fun y : ℝ => (1+y)/2) x) :=
+      (dilog_hasDerivAt_of_abs_lt_one habs hne).continuousAt
+    have hin : ContinuousAt (fun y : ℝ => (1+y)/2) x := by fun_prop
+    exact ContinuousAt.comp (f := fun y : ℝ => (1+y)/2) (g := dilog) hdil hin
+  unfold quadAltMclosed
+  exact ((((((hlm.pow 2).div_const 2).add (hlp.pow 2)).add
+      ((hlm.const_mul 2).mul hlp)).add
+      ((hlp.const_mul (2 * Real.log 2)))).add continuousAt_const).sub
+      continuousAt_const |>.sub (hd.const_mul 2)
+
+theorem quadAltJclosed_continuousAt {x : ℝ} (hx : x ∈ Set.Ioo (-1:ℝ) 1) :
+    ContinuousAt quadAltJclosed x := by
+  have hM := quadAltMclosed_continuousAt hx
+  have hsq : ContinuousAt (fun y : ℝ => dilog (y^2)) x := by
+    by_cases hx0 : x = 0
+    · subst hx0
+      have hdil : ContinuousAt dilog ((fun y : ℝ => y^2) 0) := by
+        simpa using RamanujanChallenge.P26.dilog_hasDerivAt_zero26.continuousAt
+      exact ContinuousAt.comp (f := fun y : ℝ => y^2) (g := dilog) hdil (by fun_prop)
+    · have habs : |x^2| < 1 := by
+        rw [abs_of_nonneg (sq_nonneg x)]
+        nlinarith [hx.1, hx.2]
+      have hne : x^2 ≠ 0 := pow_ne_zero 2 hx0
+      have hdil : ContinuousAt dilog ((fun y : ℝ => y^2) x) :=
+        (dilog_hasDerivAt_of_abs_lt_one habs hne).continuousAt
+      exact ContinuousAt.comp (f := fun y : ℝ => y^2) (g := dilog) hdil (by fun_prop)
+  unfold quadAltJclosed
+  exact hM.add hsq
+
+theorem quadAltV_continuousAt {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    ContinuousAt quadAltV x := by
+  have hlog : ContinuousAt Real.log x := Real.continuousAt_log (ne_of_gt hx0)
+  have hlp : ContinuousAt (fun y : ℝ => Real.log (1 + y)) x := by
+    apply ContinuousAt.log (by fun_prop); linarith
+  have hdil : ContinuousAt (fun y : ℝ => dilog (-y)) x := by
+    have habs : |(-x)| < 1 := by rw [abs_neg, abs_of_pos hx0]; exact hx1
+    have hne : (-x) ≠ 0 := by simpa using ne_of_gt hx0
+    have hd : ContinuousAt dilog ((fun y : ℝ => -y) x) :=
+      (dilog_hasDerivAt_of_abs_lt_one habs hne).continuousAt
+    exact ContinuousAt.comp (f := fun y : ℝ => -y) (g := dilog) hd (by fun_prop)
+  unfold quadAltV
+  exact (((hlog.pow 2).div_const 2).sub (hlog.mul hlp)).sub hdil |>.sub continuousAt_const
+
+theorem quadAltDminus_continuousAt {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    ContinuousAt quadAltDminus x := by
+  have h1m : (0:ℝ) < 1 - x := by linarith
+  have h1p : (0:ℝ) < 1 + x := by linarith
+  have hlm : ContinuousAt (fun y : ℝ => Real.log (1 - y)) x := by
+    apply ContinuousAt.log (by fun_prop); linarith
+  have hlp : ContinuousAt (fun y : ℝ => Real.log (1 + y)) x := by
+    apply ContinuousAt.log (by fun_prop); linarith
+  unfold quadAltDminus
+  have t1 : ContinuousAt (fun y : ℝ => -(Real.log (1+y) + 2 * Real.log (1-y))/(1+y)) x := by
+    apply ContinuousAt.div (by exact ((hlp.add (hlm.const_mul 2)).neg)) (by fun_prop)
+    linarith
+  have t2 : ContinuousAt (fun y : ℝ => 2 * (Real.log (1-y) + 2 * Real.log (1+y))/(1-y)) x := by
+    apply ContinuousAt.div (by exact ((hlm.add (hlp.const_mul 2)).const_mul 2)) (by fun_prop)
+    linarith
+  have t3 : ContinuousAt (fun y : ℝ => 2 * (Real.log (1-y) + Real.log (1+y))/y) x := by
+    apply ContinuousAt.div (by exact ((hlm.add hlp).const_mul 2)) (by fun_prop)
+    linarith
+  exact (t1.add t2).add t3
+
 /-- Integration by parts (Q6047 (4.9)): with `F = −2V·J(−x)`, `F(1)=F(0)=0`
 (`V(1)=0`, `J(0)=0`), so `∫₀¹ (−log x)/x·Q(−x) = ∫₀¹ (−2V(x))·Dminus(x)`. -/
 theorem quadAltCoeffIntegral_eq_neg2V_Dminus :
