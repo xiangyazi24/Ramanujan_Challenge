@@ -599,3 +599,310 @@ S(X)\ll\frac{X^{5/3}}{\log X}. \tag{4.9}
 \]
 
 This already gives the usual density-one normalized top-window conclusion by Markov; [AVG-ZERO] would give the much stronger density-one assertion \(\mathrm{TOP}(n)=0\).
+
+## 4.4 A cross-prime gap-root reduction
+
+Write
+
+\[
+\Delta S(P)=\sum_{P<p\le2P}|Z_p|
+\]
+
+and partition \(1,\ldots,p-1\) into consecutive cells of length \(H\), where
+\(2\le H\le P\). If a cell contains \(q\) zeros, then
+
+\[
+q\le1+\binom q2.
+\]
+
+Every pair \(r<s\) in the same cell has \(h=s-r<H\), and the gap
+Casoratian gives \(N_h(r)=0\pmod p\). Consequently, with
+
+\[
+\rho_h(p)=\#\{x\in\mathbf F_p:N_h(x)=0\},
+\qquad
+\mathcal R(P,H)=\sum_{2\le h<H}\sum_{P<p\le2P}\rho_h(p),
+\]
+
+one has the unconditional reduction
+
+\[
+\boxed{\Delta S(P)\ll {P^2\over H\log P}+\mathcal R(P,H).} \tag{4.10}
+\]
+
+This is a scalar cross-prime statement. It has no mesoscopic strip and no
+ordered-orbit cancellation. The finite verifier checks the per-cell injection,
+the gap-polynomial certificate for every actual close pair, and (4.10) at four
+independent scales.
+
+The degree estimate \(\rho_h(p)\le3(h-1)\), with the finitely many
+degenerate small characteristics separated, gives
+
+\[
+\mathcal R(P,H)\ll {PH^2\over\log P}.
+\]
+
+Balancing at \(H=P^{1/3}\) recovers exactly
+\(\Delta S(P)\ll P^{5/3}/\log P\); it does not improve the known bound.
+More generally, the growing-height average-root estimate
+
+\[
+\sum_{P<p\le2P}\rho_h(p)
+\ll {P\over\log P}h^\alpha
+\quad(2\le h<H),\qquad \alpha<1, \tag{4.11}
+\]
+
+would give
+
+\[
+\Delta S(P)
+\ll P^{(2\alpha+3)/(\alpha+2)+o(1)}, \tag{4.12}
+\]
+
+a strict power improvement over \(5/3\). Equivalently, a bound
+\(\mathcal R(P,H)\ll PH^{2-\delta}/\log P\) optimizes at
+\(H=P^{1/(3-\delta)}\) and gives exponent
+\(2-1/(3-\delta)<5/3\).
+
+This is the cleanest target for the first unconditional movement on
+[AVG-ZERO]. Fixed-height Chebotarev information is insufficient: the estimate
+must be uniform in a growing family reaching beyond the \(P^{1/3}\) barrier.
+
+The integer-height codegree argument does not create that saving. For one fixed
+pair \(0\le r<s\), \(h=s-r\), all primes \(p>s\) dividing both \(b_r\) and
+\(b_s\) divide the positive integer \(N_h(r)\), whose logarithmic height is
+\(O(h\log s)\). This gives only \(O(h)\) such primes. Summing over all short
+pairs pays the same linear-in-\(h\) budget as the polynomial degree, without
+prime-aspect cancellation.
+
+## 4.5 A repaired unconditional exceptional-set theorem
+
+Although the every-\(n\) theorem remains open, the codegree mechanism does
+prove a strong exceptional-set statement after correcting the valuation cap
+and companion height:
+
+\[
+\boxed{\#\{n\le X:\log G_n>\varepsilon n\}
+=O_\varepsilon((\log X)^2).} \tag{4.13}
+\]
+
+Here is the complete repaired argument. For \(n\in(N,2N]\), let
+
+\[
+t(n)=\#\{p>\sqrt n:p\mid b_{\,n\bmod p}\}.
+\]
+
+Equations (1.2), (1.4), and (1.8) imply, for sufficiently large \(N\),
+
+\[
+\log G_n>\varepsilon n
+\quad\Longrightarrow\quad
+t(n)\ge c\varepsilon {N\over\log N}. \tag{4.14}
+\]
+
+For \(m<n\) in this block, put \(h=n-m\). The number of primes
+\(p>\sqrt N\) counted by both \(t(m)\) and \(t(n)\) is \(O(h)\):
+
+- if \(p\le h\), count the primes trivially;
+- if \(p>h\) and there is no wrap, the two residues differ by \(h\), so
+  \(p\mid N_h(m)\);
+- if there is a wrap, then \(p\mid\prod_{j=1}^h(m+j)\).
+
+The no-wrap carrier is nonzero. Its symmetric tridiagonal determinant is
+positive definite because
+
+\[
+P(k)-k^3-(k+1)^3=4(2k+1)^3>0, \tag{4.15}
+\]
+
+and its logarithmic height is \(O(h\log N)\). The wrap carrier has the same
+height. Since \(p>\sqrt N\), both cases contain only \(O(h)\) eligible prime
+divisors.
+
+Now take an interval \(J\subset(N,2N]\) of length
+
+\[
+Y=c_1\varepsilon^2N/\log N
+\]
+
+and let it contain \(M\) exceptional integers. If \(d_p\) is the load of
+prime \(p\) on those integers, then (4.14) gives
+
+\[
+I:=\sum_pd_p\gg {\varepsilon NM\over\log N}.
+\]
+
+There are \(L\ll N/\log N\) possible primes. Hence
+
+\[
+\sum_p\binom{d_p}{2}
+\ge {1\over2}\left({I^2\over L}-I\right), \tag{4.16}
+\]
+
+whereas the codegree bound gives
+
+\[
+\sum_p\binom{d_p}{2}
+\ll\sum_{\substack{m<n\\m,n\in J}}(n-m)
+\ll YM^2. \tag{4.17}
+\]
+
+Choosing \(c_1\) below the absolute codegree constant forces
+\(M=O_\varepsilon(1)\). There are \(O_\varepsilon(\log N)\) such intervals
+per dyadic block and \(O(\log X)\) blocks, proving (4.13). The verifier checks
+the exact dominance identity (4.15), positive continuants and their height
+majorant over independent ranges, both wrap certificates, and the exact
+pair-incidence/Cauchy algebra.
+
+This theorem permits a zero-density exceptional sequence; it does not bound a
+single prescribed \(n\).
+
+## 4.6 The pointwise digit-sieve gateway
+
+For \(X<p\le2X\), define
+
+\[
+K_X(m)=\#\{p:m\bmod p\in Z_p\},\qquad
+\lambda_X=\sum_{X<p\le2X}{|Z_p|\over p}.
+\]
+
+Chinese remaindering proves the unconditional second factorial moment
+
+\[
+\sum_{0\le m<X^2}(K_X(m))_2\le4X^2\lambda_X^2. \tag{4.18}
+\]
+
+Indeed, an ordered choice of two distinct primes and two prescribed zero
+residues has at most one representative below \(X^2\), since the modulus
+exceeds \(X^2\), and
+\(\sum_{X<p\le2X}|Z_p|\le2X\lambda_X\).
+
+The direct sufficient condition is one fixed higher moment at the same
+independence scale:
+
+\[
+\mathrm{(HM)}_k:\qquad
+\sum_{0\le m<X^2}(K_X(m))_k
+\ll X^{2+o(1)}\lambda_X^k. \tag{4.19}
+\]
+
+Using the unconditional \(\lambda_X\ll X^{2/3}/\log X\), (4.19) implies
+
+\[
+\max_{m<X^2}K_X(m)
+\ll X^{2/3+2/k+o(1)}. \tag{4.20}
+\]
+
+Thus any fixed \(k>6\), applied dyadically to
+\(\sqrt n<p\le n\), proves \(M(n)=o(n)\) and hence the main theorem.
+The proved case \(k=2\) reaches only the boundary exponent \(5/3\) after the
+corresponding first-moment conversion and supplies no pointwise saving.
+No independence-scale theorem for any fixed \(k>2\) is currently proved.
+
+This formulation is a family of prescribed single-residue tests, one for each
+prime. It is exactly aligned with the every-\(n\) target and avoids the false
+inference from an average over \(n\).
+
+## 4.7 How many bad primes may be discarded?
+
+The master sum tolerates an arbitrary exceptional prime family
+\(\mathcal E_n\subset(\sqrt n,n]\) provided
+
+\[
+\sum_{p\in\mathcal E_n}\log p=o(n). \tag{4.21}
+\]
+
+In particular, \(|\mathcal E_n|=o(n/\log n)\) is sufficient. The valuation cap
+(1.2) makes its contribution to \(\log G_n\) at most six times (4.21).
+This is the exact useful meaning of allowing per-prime failure. A
+zero-proportion statement among all primes in the full
+\((\sqrt n,n]\) range is sufficient; a theorem only for almost every \(n\), or
+only for \(p>n/2\), is not.
+
+# 5. Route comparison
+
+There are two different rankings.
+
+For the first new unconditional exponent, [AVG-ZERO] is the most tractable.
+It is scalar, cross-prime, and (4.10)--(4.12) identify an exact first-saving
+target. It would be genuine progress even though it controls only the
+quotient-\(1\) average and cannot prove the main theorem.
+
+For the main theorem itself, the digit-sieve/high-moment route is the most
+direct: one fixed \(\mathrm{(HM)}_k\) with \(k>6\) closes the whole dyadic
+master sum. It is also presently the hardest, because pairwise CRT
+independence stops exactly at \(k=2\), while adversarial private singletons
+defeat pair-correlation inputs.
+
+The determinant-bilinear route ranks between them. A fixed power saving in
+the mean of \(|B(t)|\) would establish the required fixed-prime
+[FR_eta] gateway, and the full-frequency data are compatible with square-root
+cancellation. But all current proofs stop before the needed clock-twisted
+two-parameter cancellation; static incidence, additive energy, untwisted
+vector spectra, and characteristic-zero coprimality do not supply it.
+
+Accordingly:
+
+- best target for first movement: the aggregate growing-gap estimate (4.11);
+- best logically aligned target for the theorem: \(\mathrm{(HM)}_k\), \(k>6\);
+- most developed fixed-prime experiment but no proved saving: the
+  determinant-bilinear route.
+
+# 6. Claim ledger
+
+PROVED in this report:
+
+- the corrected determinant normalization, physical pair count, and exponent
+  budget;
+- exact second/fourth determinant moments and the clock-twisted completion
+  identity;
+- the master-sum formula (1.7), digit criterion, and corrected top-window
+  averaging identity;
+- the cross-prime reduction (4.10);
+- the exceptional-set theorem (4.13);
+- the conditional implications (2.9), (4.12), and
+  \(\mathrm{(HM)}_k\Rightarrow\) MAIN for \(k>6\).
+
+REFUTED as stated:
+
+- the missing factor \(6\), the single-index divisibility
+  \(G_n\mid6d_n/n^3\), and valuation cap \(3\);
+- the claim that an \(O(p\log p)\) completed determinant bound is currently
+  proved;
+- the incidence formula using \(|R_p(n)|\);
+- the uncorrected \(82=82\) top-window identity and \(Z_5=0\);
+- fixed-working-prime use of characteristic-zero coprimality without
+  saturation;
+- the assertion that no unconditional almost-all normalized theorem is
+  known.
+
+OPEN:
+
+- any fixed power saving in the determinant mean;
+- centered collision variance (3.3);
+- a growing-height prime-average root saving such as (4.11);
+- [AVG-ZERO];
+- any independence-scale \(\mathrm{(HM)}_k\) for \(k>2\);
+- the unconditional every-\(n\) main theorem.
+
+The spectral tables and root-count averages are EMPIRICAL only.
+
+# 7. Verification
+
+Run
+
+~~~text
+python3 CODEX_MAINTHM_verify.py
+~~~
+
+The script recomputes exact Apéry data, rational Wronskians and gcds,
+modular continuants, all-frequency determinant transforms, moment identities,
+vector multiplicities and full spectra, saturation counterexamples,
+digit/top-window counts, the cross-prime gap-root injection, codegree
+certificates, CRT factorial moments, and every displayed exponent comparison.
+Every gate is an assertion; there is no placeholder success branch. The final
+line of a successful run is
+
+~~~text
+PASS
+~~~
