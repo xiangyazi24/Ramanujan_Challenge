@@ -42,9 +42,10 @@ After correcting those points, the exact route verdicts are:
   resultants also have the wrong prime/gap quantifier order.
 - **R3:** the raw companion matrices are nowhere slowly varying in the
   relevant \(p\)-adic sense.  An exact resultant shows that every adjacent
-  pair has a unit-sized coefficient change and is noncommuting.  Except at
-  at most twenty residues, adjacent matrices are separable and share no
-  eigenline even over the algebraic closure.  Thus the proposed adiabatic
+  pair has a unit-sized coefficient change and that the normalized
+  representatives do not commute in \(\mathrm{GL}_2\).  Except at most
+  twenty residues, adjacent matrices are separable and share no eigenline
+  even over the algebraic closure.  Thus the proposed adiabatic
   diagonalization cannot start.  This local obstruction is not itself a
   long-product anti-concentration theorem.
 
@@ -567,7 +568,9 @@ a_tb_s-a_sb_t&b_t-b_s
 \end{pmatrix}.                                    \tag{4.5}
 \]
 Equations (4.1)--(4.3) show that the first row in (4.5) is nonzero when
-\(t=s+1\).  Adjacent physical matrices never commute.
+\(t=s+1\).  Thus these normalized \(\mathrm{GL}_2\) representatives never
+commute.  This sentence does not assert that their projective classes cannot
+commute up to a scalar.
 
 Archimedeanly, the changes in fact have size \(O(s^{-2})\), slightly better
 than the \(O(s^{-1})\) suggestion in the specification.  That observation
@@ -581,6 +584,11 @@ The characteristic polynomial of \(M_s\) is
 \[
 \chi_s(z)=z^2-\alpha_sz+\beta_s.
 \]
+For this companion form, an eigenvector \((x,y)^T\) necessarily has
+\(x\ne0\).  After scaling it to \((1,z)^T\), the first coordinate of the
+eigenvalue equation forces the eigenvalue itself to be \(z\), and the second
+coordinate is exactly \(\chi_s(z)=0\).  Hence two adjacent companion matrices
+share an eigenline if and only if \(\chi_s\) and \(\chi_{s+1}\) share a root.
 Its discriminant factors as
 \[
 \alpha_s^2-4\beta_s
@@ -661,17 +669,13 @@ table, most active bases are singletons and \(I_2\) is tiny compared with
 | `[PRIVATE-SINGLETON-OBSTRUCTION]` | PROVED | R1/R2 inputs permit \(S_J=U_J=D^{2-o(1)}\) with every active row singleton | Section 2.4; literal private-block constructor |
 | `[SHIFTED-RENEWAL-CORRELATION]` | PROVED | Exact equality (3.2); at least half of dyadic shifted gap pairs obey (3.5) | Sections 3.1--3.2; symbolic renewal gates and banked \(Q_{2D}\) bound |
 | `[FIXED-P-SPECIALIZATION-CAVEAT]` | PROVED | Characteristic-zero coprimality, squarefreeness, and nonzero pole values do not give the needed live-prime statements | Section 3.4; exact \(p=73,211\) certificates |
-| `[NO-P-ADIC-ADIABATIC-EIGENFRAME]` | PROVED | Adjacent raw matrices are unit-separated/noncommuting; outside at most twenty residues they share no eigenline | Section 4; exact symbolic resultants and finite-field gates |
+| `[NO-P-ADIC-ADIABATIC-EIGENFRAME]` | PROVED | Adjacent raw matrices are unit-separated and their normalized representatives do not commute; outside at most twenty residues they share no eigenline | Section 4; exact symbolic resultants and finite-field gates |
 
 None of these bricks proves `[FR_eta]`.  The first one corrects the attack
 surface; the others identify precisely why the proposed reductions stop.
 
 ## 7. Sharp surviving conditional statement
 
-The banked triangle bound controls the shell pair mass by
-\[
-I_B\le Q_D\le66D^2(1+\log D).                    \tag{7.1}
-\]
 Indeed, by (3.6),
 \[
 I_B=\sum_{h<k\in B_D}C_p(h,k-h)\le Q_D.          \tag{7.1}
@@ -730,14 +734,16 @@ python3 CODEX_LASTSTAND_COCYCLE_verify.py
 from this directory.  The terminal line is
 
 ```text
-FINAL GATE: PASS -- all claims in the terminal report were reproduced
+FINAL GATE: PASS -- all programmed exact and numerical gates passed
 ```
 
 The verifier uses exact integer, rational, finite-field, and SymPy polynomial
 arithmetic.  It independently checks primality, the high-precision numerical
 cutoffs, all displayed shell counts, the two live cocycle counterexamples,
 the private-block construction, and every displayed resultant or
-specialization value.
+specialization value.  The general theorems are proved in the text; the
+finite symbolic grids and exhaustive small-prime gates are regression
+certificates, not substitutes for those proofs.
 
 ## 9. Required closing answers
 

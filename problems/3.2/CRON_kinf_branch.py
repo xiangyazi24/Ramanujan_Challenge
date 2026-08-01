@@ -400,9 +400,50 @@ class KInfinityCell:
     apery: Sequence[int]
     nodes: Sequence[int]
     weights: Sequence[Any]
+    ratio_n: Optional[Sequence[Any]] = None
+    ratio_prev: Optional[Sequence[Any]] = None
+
+    def __post_init__(self) -> None:
+        """Cache the huge Apéry-number ratios once, not in every Newton step."""
+
+        maximum = max(self.nodes)
+        ratio_n = [mp.mpf(0)] * maximum
+        ratio_prev = [mp.mpf(0)] * maximum
+        for n in range(1, maximum):
+            denominator = mp.mpf(self.apery[n + 1])
+            ratio_n[n] = mp.mpf(self.apery[n]) / denominator
+            ratio_prev[n] = mp.mpf(self.apery[n - 1]) / denominator
+        self.ratio_n = ratio_n
+        self.ratio_prev = ratio_prev
 
     def phi_gamma(self, z: Jet2) -> Tuple[Jet2, Jet2]:
-        phis, gammas = phi_gamma_sequence_jets(z, self.nodes, self.apery)
+        wanted = set(self.nodes)
+        phi_prev = Jet2.constant(1)
+        phi = apery_P(z) / (5 * (z + 1) ** 3)
+        gamma_prev = Jet2.constant(0)
+        gamma = 1 / (5 * (z + 1) ** 3)
+        by_index: Dict[int, Tuple[Jet2, Jet2]] = {}
+        for n in range(1, max(self.nodes)):
+            shifted = z + n
+            shifted_squared = shifted * shifted
+            shifted_cubed = shifted_squared * shifted
+            denominator_inverse = ((shifted + 1) ** 3).reciprocal()
+            transfer = (
+                34 * shifted_cubed
+                + 51 * shifted_squared
+                + 27 * shifted
+                + 5
+            )
+            alpha = transfer * self.ratio_n[n] * denominator_inverse
+            beta = -shifted_cubed * self.ratio_prev[n] * denominator_inverse
+            phi_next = alpha * phi + beta * phi_prev
+            gamma_next = alpha * gamma + beta * gamma_prev
+            phi_prev, phi = phi, phi_next
+            gamma_prev, gamma = gamma, gamma_next
+            if n + 1 in wanted:
+                by_index[n + 1] = (phi, gamma)
+        phis = [by_index[n][0] for n in self.nodes]
+        gammas = [by_index[n][1] for n in self.nodes]
         return (
             jet_linear_combination(phis, self.weights),
             jet_linear_combination(gammas, self.weights),

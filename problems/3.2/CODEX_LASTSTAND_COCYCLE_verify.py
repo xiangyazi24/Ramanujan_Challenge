@@ -13,6 +13,7 @@ from __future__ import annotations
 from collections import Counter, defaultdict
 from decimal import Decimal, ROUND_FLOOR, localcontext
 from fractions import Fraction
+import itertools
 import math
 import sys
 
@@ -346,6 +347,70 @@ def r2_correlation_gate() -> None:
             )
             assert sp.expand(lhs - rhs) == 0
 
+    # Separate the two triangle slices which the report distinguishes.
+    # In the abstract fibre {0,6,13}, both consecutive gaps are in
+    # B=(5,10], yet both shell bases are singletons and I_B=0.
+    abstract_fibre = (0, 6, 13)
+    abstract_D = 10
+    abstract_B = range(abstract_D // 2 + 1, abstract_D + 1)
+    abstract_Z: dict[int, set[int]] = defaultdict(set)
+    for i, r in enumerate(abstract_fibre):
+        for endpoint in abstract_fibre[i + 1 :]:
+            abstract_Z[endpoint - r].add(r)
+    abstract_multiplicity = Counter()
+    for d in abstract_B:
+        for r in abstract_Z[d]:
+            abstract_multiplicity[r] += 1
+    abstract_I = sum(
+        math.comb(value, 2) for value in abstract_multiplicity.values()
+    )
+    abstract_kappa = sum(
+        r in abstract_Z[6] and r + 6 in abstract_Z[7]
+        for r in abstract_fibre
+    )
+    assert abstract_multiplicity == {0: 1, 6: 1}
+    assert abstract_I == 0 and abstract_kappa == 1
+
+    # On a live small orbit, check both the same-base I_B slice and the
+    # consecutive-edge kappa slice against the full triangle census.
+    p, D = 101, 20
+    b, c = apery_orbit(p)
+    N = p - 2
+    fibres: dict[tuple[int, int], list[int]] = defaultdict(list)
+    for r in range(1, N + 1):
+        fibres[projective_key(b[r], c[r], p)].append(r)
+    Z: dict[int, set[int]] = defaultdict(set)
+    Q_2D = 0
+    for positions in fibres.values():
+        for i, r in enumerate(positions):
+            for endpoint in positions[i + 1 :]:
+                if endpoint - r <= 2 * D:
+                    Z[endpoint - r].add(r)
+        Q_2D += sum(
+            endpoints[-1] - endpoints[0] <= 2 * D
+            for endpoints in itertools.combinations(positions, 3)
+        )
+    B_shell = range(D // 2 + 1, D + 1)
+    multiplicities = Counter()
+    for d in B_shell:
+        for r in Z[d]:
+            multiplicities[r] += 1
+    I_B = sum(math.comb(value, 2) for value in multiplicities.values())
+    same_base_correlations = sum(
+        len(Z[h] & Z[k])
+        for h in B_shell
+        for k in B_shell
+        if h < k
+    )
+    assert I_B == same_base_correlations
+    kappa_sum = 0
+    for a in B_shell:
+        for g in B_shell:
+            shifted = {r for r in Z[a] if r + a in Z[g]}
+            assert shifted == Z[a] & Z[a + g]
+            kappa_sum += len(shifted)
+    assert kappa_sum <= Q_2D
+
     # Nonzero over Z/Q is not nonzero modulo the working prime.
     exact_pole_value = apery_P(-1) * apery_P(-2) - 1
     assert exact_pole_value == 584 == 8 * 73
@@ -419,6 +484,9 @@ def r3_no_adiabatic_gate() -> None:
     )
     chi = z**2 - alpha * z + beta
     chi_next = z**2 - alpha_next * z + beta_next
+    symbolic_eigenvector = sp.Matrix([[0, 1], [-beta, alpha]]) * sp.Matrix([1, z])
+    assert sp.simplify(symbolic_eigenvector[0] - z) == 0
+    assert sp.simplify(symbolic_eigenvector[1] - z**2) == -chi
     assert sp.cancel(
         sp.resultant(chi, chi_next, z)
         + 24 * R8 / ((s + 1) ** 6 * (s + 2) ** 6)
@@ -573,7 +641,7 @@ def main() -> int:
     r2_correlation_gate()
     r3_no_adiabatic_gate()
     empirical_gate()
-    print("FINAL GATE: PASS -- all claims in the terminal report were reproduced")
+    print("FINAL GATE: PASS -- all programmed exact and numerical gates passed")
     return 0
 
 
