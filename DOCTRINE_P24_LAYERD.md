@@ -653,3 +653,34 @@ derivative).  A proof that never produces it needs none.
 
 Both values verified exactly (agreement at 1e-31 against the recorded rows) and
 the integrals themselves to 15 digits.
+
+## The non-alternating twin: what actually differs (2026-08-01)
+
+`quadraticEulerTerm24` is the last open certificate input.  Its Layer C analogue
+holds, verified to 1e-28 with the proved alternating case as a control:
+
+```
+∑ quadraticEulerTerm24 = ∫₀¹ (-log x)/x · Q(x) dx = quadraticEulerValue24
+                       = 20 Li₄(½) + (5/6)log⁴2 + 7log²2·ζ₂ - (59/10)ζ₂²
+```
+
+(no `log2·ζ₃` term, unlike the alternating value).
+
+**But it is NOT the alternating chain with a sign flipped.** `Q(x) = 2J(x)/(1-x)`
+has a pole at `x = 1`.  The alternating chain evaluates `Q(-x)` for `x ∈ (0,1)`,
+i.e. argument in `(-1,0)`, and never sees it.  The non-alternating chain runs the
+argument INTO the pole.
+
+Half of the pole is cancelled — `-log x ~ (1-x)` near 1 — but only half:
+`J(x)` itself grows like `log²(1-x)`, so the integrand behaves like `2log²(1-x)`.
+Measured: `154` at `x = 1-1e-6`, `468` at `1e-10`, `952` at `1e-14`, i.e. exactly
+`log²`.
+
+So the integrand has an **integrable log² singularity at `x = 1`** which the
+alternating integrand does not have.  Formalizing the twin therefore needs
+endpoint integrability work at `1` that the alternating chain never required —
+the same class of argument as `intervalIntegrable_logSq` plus the
+continuity-on-the-open-interval + integrable-majorant glue lemma, both already in
+the file, but it is real added work rather than a sign change.
+
+Do not brief an agent on this task with "mirror the alternating chain" alone.
