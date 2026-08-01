@@ -641,3 +641,25 @@ b_r ≡ −(1/N)·Σ_{t=0}^{N−1} J(φψ^{t+r}, ψ^{N/2−t})²·J(φψ^{t−r}
 **AJ.2 白拿的一致重数定理**：continuant 2/3 论证只用递推结构不用 b 的初值 ⟹ **∀v∈P¹(F_p): #{n: π(n)=v} ≤ 3p^{2/3}**（此前只对 L 点有）。E^π ≪ p^{5/3} 平凡随之。
 
 **AJ.3 战果口径**：(R) 聚合 ⟺ **E^π = O(p)**（(E1) 能量命题，经验上以尖锐形式 E^π=3p+o(p) 成立）；(C) ⟺ L 点在能量预算内不吃偏食（已知 m_L=|Z_p|≪p^{2/3}+Poisson(1/2)）。**GARQI-1′ ⟸ (E1)+(E2)，全部 family/层族/增长导手语言消失**——代之以：F_p² 中显式点集 {(b_n,c_n)} 的过原点共线能量（incidence geometry 对象）/ 或 2D 联合 Weyl 和 T(α,β)=Σe_p(αb_n+βc_n) 的二阶矩（与 [GAP-RES-WEYL] 的单点版本直接接轨）。qK 已带全部实测数字派出（攻击顺序：审计重构→incidence 临界域→指数和 Parseval→c 解的算术：c = 第二 Frobenius 解 = MUM log-解的 mod p 影子，其 Lucas/digit 结构 = 跨 h 相容性的 Frobenius 压缩候选）。脚本 CRON_greens_reframing_verify.py。
+
+---
+
+## 附录 AK（战役三续）：qK/Q6499 审计通过——**Apéry 射影轨道能量引理**正式命名 + γ=恒等（c 回文）⟹ 轨道精确 2-对-1 + 谱偶性 + 跨块 digit 律判死
+
+**AK.1 Q6499 审计判决**：Green 函数重构**审计通过**（无隐藏解依赖因子——Casoratian −1/n³ 使全部标度显式；c 解合法无需 b 非零假设；r+h=p−1 端点=镜像贡献照旧单列）。一致重数升级确认为真定理（每个色）。**唯一缺失引理正式命名：Apéry 射影轨道能量引理 E^π(p)=O(p)**——严格强于现有全部 gap-root 界；**任何 E≪p^{5/3−δ} 都已是新的 family 相容性定理**（θ 刻度表入档：5/3=现状, 1+δ=部分, 1=关半边）。攻击排序：#1 **(b,c) 对的算术**（c 的 Lucas/digit 半线性 = "决定性突破候选"）；#2 二维指数和 T(α,β) 平方根相消（严格强于单坐标 [GAP-RES-WEYL]）；#3 (p,h) 族二阶矩；#4 泛型 incidence/扩张（N≍p 临界域盲区，PROVED）。死亡证书句式：缺的 = (b_n,c_n) 对的真二坐标 Frobenius/digit 定理。归档 chatgpt-answers/Q6499.md（GitHub drop 经 commit aa570b60 取回——投递为真）。
+
+**AK.2 γ = 恒等【定理级，接 strong-reflection】**：机器逐点验证（p=101/211/1009 全 n）：**c_{p−1−n} ≡ c_n**（A=1,B=0）——即账本 strong reflection 定理（y_{p−1−n}=y_n **全解** germ）在伴随解上的直接体现。推论：**π(p−1−n)=π(n) 逐点成立，整条轨道经镜像精确 2-对-1**（非统计对称而是逐点恒等）。
+
+**AK.3 谱形定格（547 素数聚合）**：重数谱几乎全偶（m=2:307k, m=4:76.8k, m=6:12.6k, m=8:1.5k；奇 m 合计 <1.1k = 中心点效应），max m_v ≤ 14 全场、均值 ~8 且随 p 缓慢增长（log 型，远低于 3p^{2/3} 上界）——**(E1) 经验上以最强形式成立**（谱 O(1) 集中）。**(E1) 约化定格：E^π=O(p) ⟺ 半轨道（n<(p−1)/2）能量 O(p)，通用重数 1，碰撞率 Poisson**；m=4 值 = 半轨道的一次真碰撞。
+
+**AK.4 跨块 digit 律判死（attack #1 第一探，负结果+金数据）**：整数化身 W_n=N_n(0)（c_n=W_n/(n!)³）精确计算 p=13/17 到 3p：**v_p(W_{p+v})=0**（伴随化身跨块后是 p-单位！c 本身 p-adic 爆破 −3 阶），v_p(B_{p+v})=3（Legendre）⟹ **mod-p 投影图表在 u≥1 块整体退化到 [1:0]——朴素 mod-p digit 律死亡**；v_p 在 v∈Z_p 处 +1 凸起（17 的 v=3 ✓ 与 Lucas 零转移一致）。c 的跨块半线性住在 p-adic 深度层（与 Q6499 §5.3 "log 周期非纯 Frobenius 本征周期"一致）——**attack #1 修正口径：目标 = 深度层 Frobenius 半线性（Dwork 型），非 mod-p 公式**。
+
+---
+
+## 附录 AL（战役三续）：qI/Q6490 收获——M_h 不可约性结构八件套（Theorem A）+ 瓶颈定名 Montes 一致型树 + 编造引用第三例（cron1 惯犯）
+
+**AL.1 Theorem A（全精确、不依赖有限计算，八件）**：(1) 中心化递推 G_h(T)=Q_h(T−1)G_{h−1}... 系数级 p-adic 工作的正确形式（并解释为何朴素 Newton 多边形递推关不上：平移二项混合系数，状态必须带残余多项式/MacLane 型）；(2) **mod 3：N_h ≡ R_h³（Frobenius 立方！）**——首层多边形原理性致盲（三支重合），必须算 3-adic 首个非零修正层；(3) mod 2 四循环（h≡0 mod 4 层全偶——2-content 周期性丢层）；(4) **17-adic 首项精确律：lc(N_h)=Lucas U_h(34,1)**，apparition rank 2，LTE 抬升——偶 h 首项赋值增长/奇 h 单位交替（我方"非一致 Eisenstein"观察的精确定理化）；(5) 相邻结式精确公式 ⟹ 相继 continuant 互素（但根排斥恒等式**不给域包含**，Galois 无 h-方向感应）；(6) 根圆盘 |Y|<(3h+5)²（tridiagonal 核向量 Gershgorin，不需实根性）；(7) 素值判据严格化：|M_h(y_h)| 素 ⟹ 不可约，Ω(M_h(y_h))≥κ；y_h=(3h+5)²+2；(8) 泛型 continuant 不可约 + pencil N_h+tN_{h−1} 几何不可约（并点名朴素特化论证的核缺陷：转录度塌缩）。
+
+**AL.2 判死/裁决**：Bunyakovsky 循环论证（其假设已含不可约）；Irving 殆素数筛给 O(h) 非 O(1)；Nair/Heath-Brown 是上界工具非存在定理；随机 tridiagonal 不可约性（Bary-Soroker–Garzoni–Sodin 2502.17218）需随机性假设、单刚性轨道不适用；h-方向无 Galois 形变机制（五条理由成文）。**Conjecture S**（Gal(M_h)=S_{m_h} 全 h）与 **Conjecture K**（κ≤C）正式立靶。**瓶颈单点**：{2,3,5,17} 上的一致 Montes/MacLane 完整型树定理（局部因子度集交 = {0, m_h}）——下一步实验管线八步成文（→已派 codex）。
+
+**AL.3 打假第三例**：Q6490 引"working_notes/scripts_q32_audit/rho.py + commit ed218c03 存档 h≤40 因子分解"——**commit 不存在、文件无迹，拒收**（答案自身已对冲"以 h≤14 为准"——采纳）。**注意：cron1 = Q6375 编造案同一 tab，惯犯，其"项目存档"类声称一律默认不信**。其余外引（Guardia–Montes–Nart 0807.2620/0807.4065、El Fadil 2007.07659、Irving 1410.3333、Nair、Henriot 1102.1643、Paredes–Sasyk 2202.10420、BGS 2502.17218）为真实文献。归档 chatgpt-answers/Q6490.md。
