@@ -17,10 +17,10 @@ open scoped Interval
 
 noncomputable section
 
-private def parityIncrement24 (n : ℕ) : ℝ :=
+def parityIncrement24 (n : ℕ) : ℝ :=
   (1 + 2 * (-1 : ℝ) ^ (n + 1)) / (n + 1 : ℝ)
 
-private theorem parityRemainder24_eq_sum_increment (n : ℕ) :
+theorem parityRemainder24_eq_sum_increment (n : ℕ) :
     parityRemainder24 (n + 1) =
       ∑ j ∈ Finset.range (n + 1), parityIncrement24 j := by
   unfold parityRemainder24 harmonicNumber signedHarmonic24 parityIncrement24
@@ -30,7 +30,7 @@ private theorem parityRemainder24_eq_sum_increment (n : ℕ) :
   push_cast
   ring
 
-private theorem parityIncrement24_hasSum
+theorem parityIncrement24_hasSum
     {x : ℝ} (hx : |x| < 1) (hxne : x ≠ 0) :
     HasSum (fun n : ℕ => parityIncrement24 n * x ^ n)
       ((-Real.log (1 - x) - 2 * Real.log (1 + x)) / x) := by
@@ -49,7 +49,7 @@ private theorem parityIncrement24_hasSum
   · rw [show 1 - -x = 1 + x by ring]
     ring
 
-private theorem parityIncrement24_norm_summable
+theorem parityIncrement24_norm_summable
     {x : ℝ} (hx : |x| < 1) :
     Summable (fun n : ℕ => ‖parityIncrement24 n * x ^ n‖) := by
   have hgeom : Summable (fun n : ℕ => |x| ^ n) :=
@@ -78,7 +78,7 @@ private theorem parityIncrement24_norm_summable
       _ = 3 := by norm_num
   exact mul_le_mul_of_nonneg_right hcoeff (pow_nonneg (abs_nonneg x) n)
 
-private theorem parityRemainder24_generating_hasSum
+theorem parityRemainder24_generating_hasSum
     {x : ℝ} (hx : |x| < 1) (hxne : x ≠ 0) :
     HasSum (fun n : ℕ => parityRemainder24 (n + 1) * x ^ n)
       ((-Real.log (1 - x) - 2 * Real.log (1 + x)) /
