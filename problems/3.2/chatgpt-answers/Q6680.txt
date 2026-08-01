@@ -1,0 +1,710 @@
+Q6680 - higher fiber moments from S_{3h} monodromy, and why the naive bridge does not break W3
+
+# Executive verdict
+
+The monodromy-to-moment part of the proposed chain is correct, after three
+corrections.
+
+1. The m-fold equal-value fiber product is a curve, not an
+   (m-1)-dimensional variety. It has m source coordinates and m-1 independent
+   equal-value equations.
+
+2. If n=3h and the geometric monodromy of
+
+     f_h(X)=D_h(X)=N_h(X)/q_h(X)^3
+
+   is S_n, then
+
+     M_m(h):=sum_{a in F_p} nu_h(a)^m
+
+   has main term
+
+     b_m(n) p,
+
+   where
+
+     b_m(n)=sum_{j=1}^{min(m,n)} Stirling2(m,j).
+
+   If m<=n, this is the Bell number B_m, equivalently the m-th moment of a
+   Poisson(1) random variable. In particular
+
+     B_2=2,
+     B_4=15,
+     B_6=203,
+     B_8=4140.
+
+3. The square-root error is not O_{m}(sqrt p) uniformly in h. The normalized
+   j-distinct fiber component has genus Theta_j(n^j). Consequently the honest
+   fixed-m estimate is
+
+     M_m(h)=b_m(n)p+O_m(n^m sqrt p+n^m).                (E1)
+
+   For m=2k this is exactly the h^{2k} sqrt p error anticipated in the
+   question.
+
+The fatal point is what happens after taking the m-th root:
+
+  R_h <= M_m(h)^{1/m}
+      << B_m^{1/m} p^{1/m} + h p^{1/(2m)}.             (E2)
+
+The second term is at least a constant times h, hence it is never better than
+(and is usually worse than) the trivial degree bound R_h<=3h-3. There is no
+scale on which the Bell main term both dominates the Weil error and improves the
+degree bound:
+
+  main term improves degree  =>  p^{1/m}<h  => h^m>p,
+  main term dominates error   =>  h^m sqrt p<p => h^m<sqrt p.
+
+These conditions are incompatible.
+
+After summing by Holder one gets, for fixed m,
+
+  S_D
+  <<_m B_m^{1/m} D p^{1/m}
+       + C_m^{1/m} D^2 p^{1/(2m)}.                     (E3)
+
+At D=sqrt(p)L this becomes
+
+  S_D
+  <<_m B_m^{1/m} p^{1/2+1/m} L
+       + C_m^{1/m} p^{1+1/(2m)} L^2.                   (E4)
+
+The second term is worse than the trivial O(D^2)=O(pL^2), so one replaces it
+by the trivial bound. Letting m or k grow makes the first term approach
+p^{1/2+o(1)}, but the error/trivial term remains p^{1+o(1)}. The final exponent
+of this pipeline is therefore 1, not 1/2.
+
+Thus:
+
+  FULL S_{3h} MONODROMY FOR ALL h DOES NOT BY ITSELF PROVE W3.
+
+It supplies all fixed moments and their exact Bell main terms, but the conductor
+of the higher fiber powers grows at precisely the rate that destroys the
+pointwise zero-fiber gain.
+
+There is nevertheless a clean genuine bridge. If, for one fixed m>=7, one could
+prove the family-averaged moment estimate
+
+  [AVG-MOMENT-m]
+  sum_{h<=D} sum_a nu_h(a)^m <<_m pD                 (E5)
+
+uniformly for D=sqrt(p)L, then
+
+  S_D <<_m D p^{1/m}.                                  (E6)
+
+For the even-moment program, m=8 gives
+
+  S_D << p^{5/8}L = p^{5/8+o(1)} << p^{2/3},           (E7)
+
+and therefore breaks W3. The sixth moment gives only p^{2/3}L, so it misses the
+stated W3 target when L tends to infinity. The eighth averaged moment is the
+first even moment that wins.
+
+The new residual is therefore not another one-variable monodromy theorem. It is
+an h-averaged cancellation theorem for the traces/errors of the higher fiber
+powers. That is a two-clock statement and is essentially another coordinate of
+the wall.
+
+-----------------------------------------------------------------------
+
+# 1. Setup and the affine/projective bookkeeping
+
+Write
+
+  q_h(X)=product_{i=1}^h (X+i),
+  f_h(X)=D_h(X)=N_h(X)/q_h(X)^3.
+
+As a map P^1 -> P^1, f_h has degree
+
+  n=3h.                                                 (1.1)
+
+Indeed deg(q_h^3)=3h and deg N_h=3h-3.
+
+For a finite value a in F_p, define the full regular affine fiber count
+
+  nu_h(a)=#{x in F_p : q_h(x)!=0 and f_h(x)=a}.         (1.2)
+
+The nonwrapping census quantity R_h is bounded by nu_h(0), because it counts
+only a subinterval of the roots of N_h.
+
+It is convenient to add the point x=infinity. Since
+
+  f_h(X) ~ lc(N_h) X^{-3}
+
+at infinity, the point infinity lies over a=0 with ramification index 3. If
+bar_nu_h denotes the projective finite-value fiber count, then
+
+  bar_nu_h(a)=nu_h(a)+1_{a=0}.                          (1.3)
+
+Therefore replacing nu by bar_nu changes the m-th moment by at most O_m(n^{m-1}),
+and this is absorbed in every error below. I will use the projective cover in
+the geometric proof and return to R_h afterward.
+
+The needed good-reduction hypothesis is:
+
+  [MON_h,p]
+  - p>3;
+  - the degree n=3h is preserved modulo p;
+  - the branch-cycle pattern is preserved;
+  - the geometric monodromy over Fbar_p is S_n.
+
+For each fixed h, the characteristic-zero S_n theorem implies [MON_h,p] for all
+but finitely many p. Uniformity when h grows with p is an additional hypothesis;
+it does not follow formally from the characteristic-zero statement.
+
+In the certified range h<=40, the project supplies the required monodromy and
+collision geometry at the stated good primes. For an all-h theorem below, assume
+[MON_h,p] for every h in the range being summed.
+
+-----------------------------------------------------------------------
+
+# 2. Exact moment constant from monodromy
+
+For an integer m>=1, form the m-fold fiber product over the target:
+
+  Y_{h,m}
+    = P^1 x_{f_h,P^1,f_h} P^1 x_{P^1} ... x_{P^1} P^1.
+                                                               (2.1)
+
+A rational point over a finite target value is exactly an ordered tuple
+
+  (x_1,...,x_m)
+
+with
+
+  f_h(x_1)=...=f_h(x_m).
+
+Hence
+
+  #Y_{h,m}(F_p over A^1)
+    = sum_{a in F_p} bar_nu_h(a)^m.                    (2.2)
+
+The scheme Y_{h,m} is a curve: it sits in (P^1)^m and is cut out by m-1
+equalities
+
+  f_h(x_1)=f_h(x_i),  i=2,...,m.                       (2.3)
+
+## 2.1 Components are equality patterns
+
+Let Omega be the n-point geometric generic fiber. The geometrically irreducible
+components dominating the target correspond to orbits of the geometric
+monodromy group on Omega^m.
+
+For S_n, two ordered m-tuples are in the same orbit exactly when they have the
+same equality pattern. Equality patterns are set partitions of {1,...,m}; a
+partition with j blocks is possible exactly when j<=n.
+
+Therefore the number of dominant geometric components is
+
+  b_m(n)=sum_{j=1}^{min(m,n)} {m brace j}.              (2.4)
+
+Here {m brace j} is a Stirling number of the second kind. If m<=n, then
+
+  b_m(n)=B_m,                                           (2.5)
+
+where B_m is the Bell number.
+
+This is also Burnside's lemma in the permutation representation:
+
+  b_m(n)
+    = dim ((Q^Omega)^{tensor m})^{S_n}
+    = average_{sigma in S_n} Fix(sigma)^m.              (2.6)
+
+For n>=m, Fix(sigma) has the first m moments of Poisson(1), hence the Bell
+constant.
+
+The same statement may be phrased using distinct tuples. For a partition with
+j blocks, its component is the normalization of the cover whose generic fiber
+is the set
+
+  Omega^{underline j}
+
+of ordered injective j-tuples. Since S_n is j-transitive for j<=n, that cover is
+geometrically connected and therefore geometrically irreducible.
+
+A minor correction to the proposed bookkeeping: one does not need to require
+m<=n in order to define the moment or the components. If m>n, one simply uses
+the restricted Bell number b_m(n). The ordinary Bell number B_m is valid when
+m<=n.
+
+-----------------------------------------------------------------------
+
+# 3. Exact genus growth of the distinct-tuple components
+
+The h-dependence of the error is the decisive issue. In the full-Morse situation
+the branch cycles of f_h are explicit.
+
+Let n=3h.
+
+- There are 4h-4 finite nonzero branch values, each with a transposition branch
+  cycle.
+
+- Over 0, the point x=infinity has ramification index 3 and all other points are
+  unramified. The branch cycle has type
+
+    (3)(1^{n-3}).                                      (3.1)
+
+- Over infinity, the h poles -1,...,-h all have ramification index 3. The branch
+  cycle has type
+
+    3^h.                                                (3.2)
+
+The total ramification is
+
+  (4h-4)+2+2h=6h-2=2n-2,
+
+as required for a degree-n map P^1 -> P^1.
+
+Fix 1<=j<=n. Let X_{h,j} be the normalization of the connected cover whose
+generic fiber is Omega^{underline j}. Put
+
+  N_j=(n)_{j}=n(n-1)...(n-j+1).                        (3.3)
+
+For a transposition tau acting on injective j-tuples,
+
+  Fix(tau)=(n-2)_{j},
+
+so its permutation index is
+
+  ind_j(tau)
+    = [N_j-(n-2)_{j}]/2.                               (3.4)
+
+For the 3-cycle over 0, Burnside on its cyclic group gives
+
+  ind_j(sigma_0)
+    = (2/3)[N_j-(n-3)_{j}].                            (3.5)
+
+For sigma_infinity of type 3^h, there are no fixed injective tuples under
+sigma_infinity or sigma_infinity^2, so
+
+  ind_j(sigma_infinity)=(2/3)N_j.                      (3.6)
+
+Riemann-Hurwitz now gives the exact genus formula
+
+  2g_{h,j}-2
+    = -2N_j
+      +(4h-4) [N_j-(n-2)_{j}]/2
+      +(2/3)[N_j-(n-3)_{j}]
+      +(2/3)N_j                                         (3.7)
+
+or equivalently
+
+  2g_{h,j}-2
+    = (2h-2)[N_j-(n-2)_{j}]
+      -(2/3)[N_j+(n-3)_{j}].                           (3.8)
+
+For fixed j and n -> infinity,
+
+  g_{h,j}
+    = (2/3)(j-1)n^j + O_j(n^{j-1}).                    (3.9)
+
+Thus the n^j conductor growth is genuine, not an artifact of a crude plane
+Bezout bound.
+
+There is an equivalent complete-intersection check. In (P^1)^m, the i-th
+equality in (2.3) has divisor class
+
+  n(H_1+H_i).
+
+The full fiber product is a complete-intersection curve with arithmetic genus
+
+  p_a(Y_{h,m})
+    = 1+n^{m-1}[(m-1)n-m].                             (3.10)
+
+Again the leading size is Theta_m(n^m).
+
+-----------------------------------------------------------------------
+
+# 4. The fixed-m moment theorem
+
+Decompose ordered tuples by their exact equality partition. A partition with j
+blocks contributes a copy of the j-distinct cover X_{h,j}, with finitely many
+branch/boundary identifications. Weil's bound on the normalizations, followed by
+summing over the {m brace j} partitions, gives
+
+  M_m(h)
+    := sum_{a in F_p} nu_h(a)^m
+
+    = b_m(n)p
+      + O( E_m(n) sqrt p + E_m(n) ),                   (4.1)
+
+where one may take
+
+  E_m(n)
+    << sum_{j=1}^{min(m,n)} {m brace j}(g_{h,j}+n^j)
+    <<_m n^m.                                           (4.2)
+
+Consequently
+
+  M_m(h)=b_m(n)p+O_m(n^m sqrt p+n^m).                  (4.3)
+
+This is the exact higher-moment analogue of [L2-FREQ].
+
+For n>=m, the first cases are
+
+  M_2(h)=2p+O(h^2 sqrt p),                              (4.4)
+
+  M_4(h)=15p+O(h^4 sqrt p),                             (4.5)
+
+  M_6(h)=203p+O(h^6 sqrt p),                            (4.6)
+
+  M_8(h)=4140p+O(h^8 sqrt p).                           (4.7)
+
+The constants 2,15,203,4140 are not heuristic. They are the exact numbers of
+S_n-orbits on ordered tuples, equivalently Bell numbers.
+
+References for the general mechanism are the standard monodromy/moment formalism
+in N. Katz, Gauss Sums, Kloosterman Sums, and Monodromy Groups, especially the
+curve cohomology and equal-characteristic equidistribution chapters. The orbit
+interpretation is also the elementary Galois correspondence for finite etale
+covers; the error in (4.1) is the Weil bound applied to the normalized component
+curves. No sheaf-theoretic strengthening removes the n^m conductor here: formula
+(3.8) shows that the top distinct-tuple component already has genus
+Theta_m(n^m).
+
+-----------------------------------------------------------------------
+
+# 5. Pointwise zero-fiber consequence and the no-overlap obstruction
+
+Since the zero fiber is one summand of M_m(h),
+
+  R_h^m <= nu_h(0)^m <= M_m(h).                         (5.1)
+
+Taking m-th roots in (4.3),
+
+  R_h
+    <<_m b_m(n)^{1/m} p^{1/m}
+       + n p^{1/(2m)}.                                 (5.2)
+
+With n=3h,
+
+  R_h
+    <<_m B_m^{1/m}p^{1/m}
+       + h p^{1/(2m)}                                  (5.3)
+
+when m<=3h.
+
+But
+
+  h p^{1/(2m)} >= h.                                    (5.4)
+
+Therefore the error term is never better than the elementary root-degree bound
+
+  R_h<=deg N_h=3h-3.                                    (5.5)
+
+There is a sharper way to see the impossibility. To obtain a strict improvement
+from the Bell main term one would need
+
+  p^{1/m}<h,
+
+which means
+
+  h^m>p.                                                (5.6)
+
+To make the Bell main term dominate the Weil error one would need
+
+  h^m sqrt p < p,
+
+which means
+
+  h^m<sqrt p.                                           (5.7)
+
+There is no h satisfying both (5.6) and (5.7).
+
+This remains true if m=2k grows with p. The m-th root of the geometric error is
+
+  (h^m sqrt p)^{1/m}=h p^{1/(2m)},                     (5.8)
+
+which tends to h, not to 1. Growth of Bell numbers and of the implied constants
+only makes the estimate weaker.
+
+Thus the sentence
+
+  "S_{3h} handles all k simultaneously"
+
+is correct only at the component-classification level. It is false as a uniform
+point-count conclusion: every increase of k also increases the genus/conductor
+of the relevant component by another factor comparable to h.
+
+-----------------------------------------------------------------------
+
+# 6. Dyadic and global summation
+
+Let
+
+  S_D=sum_{h<=D} R_h.
+
+Holder and (4.3) give
+
+  S_D^m
+    <= D^{m-1} sum_{h<=D} R_h^m
+    <= D^{m-1} sum_{h<=D} M_m(h).                       (6.1)
+
+For fixed m, summing the individual moment estimates yields
+
+  sum_{h<=D} M_m(h)
+    <<_m B_m pD + sqrt p D^{m+1}.                       (6.2)
+
+Hence
+
+  S_D
+    <<_m B_m^{1/m} D p^{1/m}
+       + D^2 p^{1/(2m)}.                               (6.3)
+
+The same formula holds on a dyadic block H<h<=2H with D replaced by H.
+Choosing m separately on each block does not help, because the second term is
+always at least H^2 and the trivial block estimate is O(H^2).
+
+At the target scale
+
+  D=sqrt(N)L ~ sqrt(p)L,
+
+(6.3) becomes
+
+  S_D
+    <<_m B_m^{1/m} p^{1/2+1/m}L
+       + p^{1+1/(2m)}L^2.                              (6.4)
+
+Replacing the second term by the better trivial estimate gives only
+
+  S_D << pL^2.                                          (6.5)
+
+As m -> infinity, the first term is formally p^{1/2+o(1)}, but the surviving
+term is still p^{1+o(1)}. The optimized exponent is 1.
+
+Therefore the proposed higher-moment pipeline, with the honest Lang-Weil error,
+does not reach N^{3/4}, N^{2/3}, or any improvement over the trivial census at
+the mesoscopic endpoint.
+
+-----------------------------------------------------------------------
+
+# 7. What [L2-FREQ] alone implies
+
+There is also a direct interpolation showing the same fixed point without using
+new fiber products. Since every fiber has size at most n,
+
+  nu_h(a)^m <= n^{m-2} nu_h(a)^2,
+
+so
+
+  M_m(h) <= n^{m-2} M_2(h).                             (7.1)
+
+Using [L2-FREQ],
+
+  R_h
+    <= M_m(h)^{1/m}
+    << n^{1-2/m}(p+h^2 sqrt p)^{1/m}.                  (7.2)
+
+Even if the error in M_2 is ignored, summing the main part gives
+
+  sum_{h<=D} h^{1-2/m} p^{1/m}
+    << D^{2-2/m}p^{1/m}.                               (7.3)
+
+At D=sqrt p L this has p-exponent
+
+  (2-2/m)/2+1/m=1.                                     (7.4)
+
+Thus pure interpolation from the second moment lands exactly at the trivial
+exponent for every m. Higher geometric monodromy moments do not alter this
+because their conductor error has the matching n^m size.
+
+A set-valued Cauchy estimate has the same limitation. From
+
+  sum_a nu_h(a)=p+O(h),
+  sum_a nu_h(a)^2=2p+O(h^2 sqrt p),
+
+one obtains for A subset F_p
+
+  sum_{a in A} nu_h(a)
+    <= |A|+O(sqrt(|A|p)+h p^{1/4}|A|^{1/2}).            (7.5)
+
+For A={0}, this is still a square-root bound. The algebraic meaning of 0 is not
+used unless one has an additional mechanism transporting the zero fiber to many
+other values.
+
+Information-theoretically, [L2-FREQ] alone permits the same distinguished value
+to have multiplicity comparable to sqrt p for every h; the remaining values can
+still be arranged with total second moment comparable to 2p. Cross-h information
+is indispensable.
+
+-----------------------------------------------------------------------
+
+# 8. The genuine moment-to-census bridge
+
+The positive bridge is an averaged moment theorem, not the individual
+Lang-Weil theorem.
+
+[AVG-MOMENT-m]
+
+For some fixed m>=2 and D=sqrt(p)L,
+
+  sum_{h<=D} sum_{a in F_p} nu_h(a)^m <<_m pD.          (8.1)
+
+Then by Holder,
+
+  S_D
+    <= D^{1-1/m}
+       (sum_{h<=D} nu_h(0)^m)^{1/m}
+
+    <= D^{1-1/m}
+       (sum_{h<=D} sum_a nu_h(a)^m)^{1/m}
+
+    <<_m D p^{1/m}.                                     (8.2)
+
+At D=sqrt(p)L,
+
+  S_D <<_m p^{1/2+1/m}L.                               (8.3)
+
+Consequences:
+
+- m=4 gives p^{3/4}L;
+
+- m=6 gives p^{2/3}L, exactly the exponent target but with an unwanted L;
+
+- m=7 gives p^{9/14}L;
+
+- m=8 gives p^{5/8}L and therefore W3 for every L=p^{o(1)}.
+
+Thus the first winning even moment is the eighth moment.
+
+In Bell-main-term language, it would suffice to prove the upper estimate
+
+  sum_{h<=D}
+    [M_8(h)-4140p]
+    << pD,                                              (8.4)
+
+with bad/boundary h handled separately. Individual monodromy plus Weil gives
+only
+
+  sum_{h<=D}|M_8(h)-4140p|
+    << sqrt p D^9,                                      (8.5)
+
+which at D=sqrt p is of order p^5, whereas (8.4) asks for order p^{3/2}.
+The missing saving is enormous and must come from cancellation as h varies.
+
+This identifies the exact new object:
+
+  [AVG-FIBERPOWER-8]
+  a square-root/cancellation theorem in the h-direction for the eighth
+  fiber-power trace.
+
+It is a two-parameter family theorem. The one-variable S_{3h} monodromy controls
+the invariant space at each fixed h, but not cancellation of the nontrivial
+cohomological traces as h runs through an interval. Additive completion in h,
+uniform conductor control, or a genuine two-clock monodromy theorem would be
+needed.
+
+In other words, the wall has not disappeared; it has moved from the zero fiber
+to the h-average of the higher fiber-power error.
+
+-----------------------------------------------------------------------
+
+# 9. Dependence on the all-h monodromy hypothesis
+
+The conclusions separate cleanly.
+
+## 9.1 Unconditional certified range h<=40
+
+For every fixed m and every certified good prime, the moment theorem (4.3) holds
+for 2<=h<=40. This gives a valid higher-moment certificate in that finite range.
+It gives no asymptotic census improvement, because
+
+  sum_{h<=40} R_h=O(1)
+
+already follows from deg N_h=3h-3.
+
+## 9.2 Conditional range h<=p^delta
+
+Assume [MON_h,p] for every h<=p^delta. Then (4.3) is uniform with the displayed
+O_m(h^m sqrt p) dependence. Nevertheless, the pointwise and summed bounds do not
+improve the degree estimate at any delta, because of the incompatibility
+(5.6)-(5.7).
+
+Thus extending the S_{3h} theorem from h<=40 to all h is extremely valuable for
+[L2-FREQ] and the collision geometry, but it does not by itself prove W3.
+
+## 9.3 A hypothesis that really suffices
+
+All-h S_{3h} plus [AVG-FIBERPOWER-8] does prove W3. Equivalently, one may replace
+[AVG-FIBERPOWER-8] by the weaker zero-column moment bound
+
+  sum_{h<=D} nu_h(0)^8 << pD.                           (9.1)
+
+But (9.1) is already an anti-concentration theorem for the special value zero;
+it is not a consequence of fixed-h monodromy.
+
+-----------------------------------------------------------------------
+
+# 10. Final answers to the race questions
+
+(a) Does Mon(f_h)=S_{3h} give Bell/Poisson moments?
+
+Yes. For fixed m,
+
+  sum_a nu_h(a)^m
+    = b_m(3h)p+O_m(h^m sqrt p),                         (10.1)
+
+and b_m(3h)=B_m when m<=3h. The main constant is the number of S_{3h}-orbits on
+ordered m-tuples, equivalently the restricted Bell number.
+
+(b) Is the higher fiber product irreducible?
+
+Not as a whole. It has one component for every equality partition. The
+all-distinct j-tuple component is geometrically irreducible because S_{3h} is
+j-transitive. For m<=3h there are B_m dominant components in total.
+
+(c) Is its dimension 2k-1 for the 2k-th moment?
+
+No. It is a curve of dimension 1. Its complexity grows through degree and genus,
+not dimension.
+
+(d) Can one choose k dyadically or let k grow to get
+sqrt(p)p^{o(1)}?
+
+No, not from individual Lang-Weil estimates. The 2k-th-root error is
+
+  h p^{1/(4k)},                                        (10.2)
+
+which tends to h. At D=sqrt p, the summed error/trivial contribution stays at
+exponent 1.
+
+(e) What is the exact win condition?
+
+An averaged m-th moment bound of size pD. The eighth moment is the first even
+moment that yields W3 at D=sqrt(p)L with L=p^{o(1)}.
+
+-----------------------------------------------------------------------
+
+# 11. Least-confident step
+
+The least-confident step is not the Bell constant or the exponent h^m; those are
+structural and can be checked independently by the orbit decomposition,
+Riemann-Hurwitz, and the complete-intersection genus formula.
+
+The least-confident detail is the completely uniform reduction statement when h
+grows with p: characteristic-zero monodromy S_{3h} implies the required
+finite-field geometric monodromy for all but finitely many primes for each fixed
+h, but the exceptional set can depend on h. A theorem asserted simultaneously
+for every h<=p^delta needs a uniform good-reduction certificate. The current
+h<=40 certificates supply this only in their recorded range.
+
+This issue does not weaken the no-go. Even granting perfect good reduction and
+S_{3h} for every h, the h^m genus term still blocks the bridge.
+
+-----------------------------------------------------------------------
+
+# 12. Likely blind spot
+
+The likely shared blind spot was treating "full monodromy controls every moment"
+as though it meant "every moment has a uniform O(sqrt p) error." Full monodromy
+controls the invariant/main-term dimension. It does not control the conductor of
+the tensor/fiber-power object independently of h and m.
+
+Here that conductor is visible geometrically: the j-distinct component has genus
+Theta_j((3h)^j). Once this factor is restored, taking higher roots never beats
+the degree bound.
+
+A second blind spot is that the special value zero is arithmetically aligned
+across all h. Averaging over values at each fixed h loses exactly that alignment.
+Any successful bridge must use cross-h cancellation or a zero-specific algebraic
+operation; fixed-h equidistribution, even in all moments, does not see it.
