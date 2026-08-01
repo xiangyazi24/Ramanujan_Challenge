@@ -109,9 +109,10 @@ type I: Σ_{d₁<d₂≤D} C(d₁+d₂) ≈ CD³ with D = 10p/N ⟹ N⁴ ≲ Cp�
 
 ## 5b. CLEAN COROLLARY — no exceptional-lag caveats (fully rigorous core)
 
-If N := N(c) ≥ 21p/ln p (c ≠ 0), then D := 6p/N ≤ 0.29·ln p, so every lag in
-play satisfies d ≤ D < (ln p)/3.53, hence the INTEGERS b_{d−1} and b_δ − 1 lie
-strictly in (0, p) (log b_k ≈ 3.53k) — so mod p they cannot be 0 or 1, and the
+If N := N(c) ≥ 25p/ln p (c ≠ 0), then D := 6p/N ≤ 0.24·ln p, so every lag in
+play satisfies 3.53·d ≤ 0.85·ln p (margin: at the 21 constant this was 1.009·ln p
+— OVER the line; 25 gives 0.85), hence the INTEGERS b_{d−1} and b_δ − 1 lie
+strictly in (0, p) (b_k < (1+√2)^{4k} = e^{3.526k} for all k ≥ 1) — so mod p they cannot be 0 or 1, and the
 Laurent criterion (§4) applies to EVERY pair: all Ψ_{d₁,d₂} ≢ 0, degrees ≤ 9D.
 Root capacity ≤ (D²/4)·9D ≪ (ln p)³ < N/4. Contradiction. Therefore:
 
