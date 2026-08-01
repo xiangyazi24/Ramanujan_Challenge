@@ -34,5 +34,5 @@ Gap: source normalization = Barnes contour integral.
 - P3.1: DONE (SUBMIT, 0 sorry)
 - P2.8: DONE (SUBMIT, 0 sorry)
 - P2.5: moment formulas proved, avenue (a) active
-- P2.6: DONE (6224 lines, 0 sorry, unconditional)
+- P2.6: DONE (6246 lines, 0 sorry, unconditional)
 - P2.7: ~2800 lines, Barnes integral → 0 proved
