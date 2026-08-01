@@ -22,9 +22,9 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           cd lean
           lake exe cache get
-      - name: Compile finite-moment closure
+      - name: Compile finite-moment closure and audit
         shell: bash
         run: |
           export PATH="$HOME/.elan/bin:$PATH"
           cd lean
-          lake build RamanujanChallenge.Problem22ConcentrationFinite
+          lake build RamanujanChallenge.Q6503Audit
