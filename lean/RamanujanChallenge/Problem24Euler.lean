@@ -7136,4 +7136,69 @@ theorem quadAltI22HalfRadialIntegral24 :
       rw [quarticCoreHalfIntegral24, halfLogCubeOneSubIntegral24]
       ring
 
+/-! ## Half-interval moments used by the Layer E row `I10` -/
+
+/-- The derivative of the real trilogarithm at zero. -/
+theorem trilog26_hasDerivAt_zero24_export :
+    HasDerivAt RamanujanChallenge.P26.trilog26 1 0 := by
+  exact trilog26_hasDerivAt_zero24
+
+/-- The real fourth polylogarithm vanishes at zero. -/
+@[simp] theorem polylog4_zero24_export : polylog4 0 = 0 := by
+  exact polylog4_zero24
+
+/-- The real fourth polylogarithm is continuous at zero. -/
+theorem polylog4_continuousAt_zero24_export : ContinuousAt polylog4 0 := by
+  exact polylog4_continuousOn_unit24.continuousAt
+    (Icc_mem_nhds (by norm_num : (-1 : ℝ) < 0)
+      (by norm_num : (0 : ℝ) < 1))
+
+/-- Continuity of the real fourth polylogarithm on its closed unit interval. -/
+theorem polylog4_continuousOn_unit24_export :
+    ContinuousOn polylog4 (Icc (-1 : ℝ) 1) := by
+  exact polylog4_continuousOn_unit24
+
+/-- Derivative of the real fourth polylogarithm in the open unit interval. -/
+theorem polylog4_hasDerivAt24_export
+    {x : ℝ} (hx : |x| < 1) (hxne : x ≠ 0) :
+    HasDerivAt polylog4
+      (RamanujanChallenge.P26.trilog26 x / x) x := by
+  exact polylog4_hasDerivAt24 hx hxne
+
+/-- The real fourth polylogarithm at one. -/
+theorem polylog4_one24_export : polylog4 1 = Real.pi ^ 4 / 90 := by
+  exact polylog4_one24
+
+/-- Integrability of `log²(1-x)/x` on `[0,1/2]`. -/
+theorem quadAltHalfLogSquareIntervalIntegrable24 :
+    IntervalIntegrable
+      (fun x : ℝ => Real.log (1 - x) ^ 2 / x)
+      MeasureTheory.volume 0 (1 / 2) := by
+  apply ContinuousOn.intervalIntegrable
+  rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)]
+  exact minusLogSquareKernel24_continuousOn_half
+
+/-- The cubic half-interval moment `∫₀¹ᐟ² log²(1-x)/x`. -/
+theorem quadAltHalfLogSquareIntegral24 :
+    (∫ x : ℝ in 0..(1 / 2),
+      Real.log (1 - x) ^ 2 / x) =
+      (1 / 4 : ℝ) * zeta3_24 -
+        (1 / 3 : ℝ) * Real.log 2 ^ 3 := by
+  exact minusLogSquareHalfIntegral24
+
+/-- Integrability of `log x log²(1-x)/x` on `[0,1/2]`. -/
+theorem quadAltHalfQuarticCoreIntervalIntegrable24 :
+    IntervalIntegrable
+      (fun x : ℝ => Real.log x * Real.log (1 - x) ^ 2 / x)
+      MeasureTheory.volume 0 (1 / 2) := by
+  exact quarticCoreKernel24_intervalIntegrable_half
+
+/-- The quartic half-interval moment `∫₀¹ᐟ² log x log²(1-x)/x`. -/
+theorem quadAltHalfQuarticCoreIntegral24 :
+    (∫ x : ℝ in 0..(1 / 2),
+      Real.log x * Real.log (1 - x) ^ 2 / x) =
+      (1 / 4 : ℝ) * Real.log 2 ^ 4 -
+        (1 / 4 : ℝ) * (Real.pi ^ 4 / 90) := by
+  exact quarticCoreHalfIntegral24
+
 end

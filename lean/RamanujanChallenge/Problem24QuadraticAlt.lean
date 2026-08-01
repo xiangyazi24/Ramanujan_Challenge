@@ -4507,4 +4507,1200 @@ theorem quadAltI22_eq :
   unfold alternatingCubicLinearEulerValue24 cubicLinearEulerValue24
   ring
 
+private noncomputable def i10PowerH1Primitive (n : ℕ) (x : ℝ) : ℝ :=
+  H1 x * ((x ^ (n + 1) - 1) / ((n : ℝ) + 1)) +
+    (1 / ((n : ℝ) + 1)) *
+      ∑ k ∈ Finset.range (n + 1), x ^ (k + 1) / ((k : ℝ) + 1)
+
+private theorem i10PowerH1Primitive_hasDerivAt (n : ℕ)
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt (i10PowerH1Primitive n) (x ^ n * H1 x) x := by
+  have hxne : x ≠ 0 := ne_of_gt hx0
+  have h1xne : 1 - x ≠ 0 := ne_of_gt (sub_pos.mpr hx1)
+  have hH1 : HasDerivAt H1 (1 / (1 - x)) x := by
+    have hinner : HasDerivAt (fun y : ℝ => 1 - y) (-1) x := by
+      convert (hasDerivAt_const x 1).sub (hasDerivAt_id x) using 1 <;> norm_num
+    unfold H1
+    convert (hinner.log h1xne).neg using 1
+    field_simp [h1xne]
+  have hpow : HasDerivAt
+      (fun y : ℝ => (y ^ (n + 1) - 1) / ((n : ℝ) + 1))
+      (x ^ n) x := by
+    convert ((hasDerivAt_pow (n + 1) x).sub_const 1).div_const
+      ((n : ℝ) + 1) using 1
+    simp only [Nat.cast_add, Nat.cast_one]
+    field_simp
+    simp
+  have hsum : HasDerivAt
+      (fun y : ℝ => (1 / ((n : ℝ) + 1)) *
+        ∑ k ∈ Finset.range (n + 1), y ^ (k + 1) / ((k : ℝ) + 1))
+      ((1 / ((n : ℝ) + 1)) *
+        ∑ k ∈ Finset.range (n + 1), x ^ k) x := by
+    have heach : ∀ k ∈ Finset.range (n + 1), HasDerivAt
+        (fun y : ℝ => y ^ (k + 1) / ((k : ℝ) + 1)) (x ^ k) x := by
+      intro k hk
+      convert (hasDerivAt_pow (k + 1) x).div_const ((k : ℝ) + 1) using 1
+      simp only [Nat.cast_add, Nat.cast_one]
+      field_simp
+      simp
+    have hs := HasDerivAt.sum heach
+    convert hs.const_mul (1 / ((n : ℝ) + 1)) using 1 <;>
+      simp only [Finset.sum_apply]
+  unfold i10PowerH1Primitive
+  convert (hH1.mul hpow).add hsum using 1
+  have hxone : x ≠ 1 := ne_of_lt hx1
+  have hxsub : x - 1 ≠ 0 := sub_ne_zero.mpr hxone
+  rw [geom_sum_eq hxone]
+  simp only [pow_succ]
+  field_simp [h1xne, hxone, hxsub]
+  ring_nf
+
+private theorem i10PowerH1Primitive_tendsto_zero (n : ℕ) :
+    Tendsto (i10PowerH1Primitive n) (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hH : Tendsto H1 (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    have hc : ContinuousAt H1 0 := by
+      unfold H1
+      exact ((continuousAt_const.sub continuousAt_id).log (by norm_num)).neg
+    simpa [H1] using hc.tendsto.mono_left nhdsWithin_le_nhds
+  have hpow : Tendsto
+      (fun x : ℝ => (x ^ (n + 1) - 1) / ((n : ℝ) + 1))
+      (𝓝[>] (0 : ℝ)) (𝓝 (-(1 / ((n : ℝ) + 1)))) := by
+    have hc : ContinuousAt
+        (fun x : ℝ => (x ^ (n + 1) - 1) / ((n : ℝ) + 1)) 0 := by
+      fun_prop
+    convert hc.tendsto.mono_left nhdsWithin_le_nhds using 1
+    simp [zero_pow (Nat.succ_ne_zero n)]
+    ring
+  have hsum : Tendsto
+      (fun x : ℝ => (1 / ((n : ℝ) + 1)) *
+        ∑ k ∈ Finset.range (n + 1), x ^ (k + 1) / ((k : ℝ) + 1))
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    have hc : ContinuousAt
+        (fun x : ℝ => (1 / ((n : ℝ) + 1)) *
+          ∑ k ∈ Finset.range (n + 1), x ^ (k + 1) / ((k : ℝ) + 1)) 0 := by
+      fun_prop
+    simpa [zero_pow (Nat.succ_ne_zero _)] using
+      hc.tendsto.mono_left nhdsWithin_le_nhds
+  unfold i10PowerH1Primitive
+  simpa using (hH.mul hpow).add hsum
+
+private theorem i10PowerH1Primitive_tendsto_one (n : ℕ) :
+    Tendsto (i10PowerH1Primitive n) (𝓝[<] (1 : ℝ))
+      (𝓝 (harmonicNumber (n + 1) / ((n : ℝ) + 1))) := by
+  have hgeom : Tendsto
+      (fun x : ℝ =>
+        (∑ k ∈ Finset.range (n + 1), x ^ k) / ((n : ℝ) + 1))
+      (𝓝[<] (1 : ℝ)) (𝓝 1) := by
+    have hc : ContinuousAt
+        (fun x : ℝ =>
+          (∑ k ∈ Finset.range (n + 1), x ^ k) / ((n : ℝ) + 1)) 1 := by
+      fun_prop
+    convert hc.tendsto.mono_left nhdsWithin_le_nhds using 1
+    simp
+    field_simp
+  have hfirst := oneSub_log_tendsto.mul hgeom
+  simp only [zero_mul] at hfirst
+  have hfirst' : Tendsto
+      (fun x : ℝ => H1 x * ((x ^ (n + 1) - 1) / ((n : ℝ) + 1)))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    apply hfirst.congr'
+    filter_upwards [self_mem_nhdsWithin] with x hx
+    have hxone : x ≠ 1 := ne_of_lt hx
+    have hxsub : x - 1 ≠ 0 := sub_ne_zero.mpr hxone
+    unfold H1
+    rw [geom_sum_eq hxone]
+    field_simp [hxone, hxsub]
+    ring
+  have hsecond : Tendsto
+      (fun x : ℝ => (1 / ((n : ℝ) + 1)) *
+        ∑ k ∈ Finset.range (n + 1), x ^ (k + 1) / ((k : ℝ) + 1))
+      (𝓝[<] (1 : ℝ))
+      (𝓝 (harmonicNumber (n + 1) / ((n : ℝ) + 1))) := by
+    have hc : ContinuousAt
+        (fun x : ℝ => (1 / ((n : ℝ) + 1)) *
+          ∑ k ∈ Finset.range (n + 1), x ^ (k + 1) / ((k : ℝ) + 1)) 1 := by
+      fun_prop
+    convert hc.tendsto.mono_left nhdsWithin_le_nhds using 1
+    simp [harmonicNumber]
+    ring
+  unfold i10PowerH1Primitive
+  simpa using hfirst'.add hsecond
+
+private theorem i10PowerH1_intervalIntegrable (n : ℕ) :
+    IntervalIntegrable (fun x : ℝ => x ^ n * H1 x)
+      MeasureTheory.volume 0 1 := by
+  have hlog := (intervalIntegral.intervalIntegrable_log'
+    (a := (0 : ℝ)) (b := 1)).comp_sub_left 1
+  have hH1 : IntervalIntegrable H1 MeasureTheory.volume 0 1 := by
+    simpa [H1] using hlog.symm.neg
+  exact hH1.continuousOn_mul (continuousOn_pow n)
+
+theorem i10PowerH1_integral (n : ℕ) :
+    (∫ x : ℝ in 0..1, x ^ n * H1 x) =
+      harmonicNumber (n + 1) / ((n : ℝ) + 1) := by
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (f := i10PowerH1Primitive n)
+    (fa := (0 : ℝ))
+    (fb := harmonicNumber (n + 1) / ((n : ℝ) + 1))
+    (by norm_num)
+    (fun x hx => i10PowerH1Primitive_hasDerivAt n hx.1 hx.2)
+    (i10PowerH1_intervalIntegrable n)
+    (i10PowerH1Primitive_tendsto_zero n)
+    (i10PowerH1Primitive_tendsto_one n)]
+  ring
+
+private noncomputable def i10HalfHarmonicTerm (n : ℕ) : ℝ :=
+  harmonicNumber (n + 1) /
+    ((2 : ℝ) ^ (n + 1) * ((n : ℝ) + 1) ^ 3)
+
+private theorem i10HalfHarmonicTerm_summable :
+    Summable i10HalfHarmonicTerm := by
+  apply summable_harmonicNumber_succ_sq_div.of_norm_bounded
+  intro n
+  have hH : 0 ≤ harmonicNumber (n + 1) := harmonicNumber_nonneg (n + 1)
+  have hHsq : harmonicNumber (n + 1) ≤ harmonicNumber (n + 1) ^ 2 :=
+    harmonicNumber_succ_le_sq n
+  have hpow : (1 : ℝ) ≤ 2 ^ (n + 1) := one_le_pow₀ (by norm_num)
+  rw [Real.norm_eq_abs, abs_of_nonneg (by
+    unfold i10HalfHarmonicTerm
+    positivity)]
+  unfold i10HalfHarmonicTerm
+  calc
+    harmonicNumber (n + 1) /
+        ((2 : ℝ) ^ (n + 1) * ((n : ℝ) + 1) ^ 3) ≤
+        harmonicNumber (n + 1) / ((n : ℝ) + 1) ^ 3 := by
+      apply div_le_div_of_nonneg_left hH (by positivity)
+      exact le_mul_of_one_le_left (by positivity) hpow
+    _ ≤ harmonicNumber (n + 1) ^ 2 / ((n : ℝ) + 1) ^ 3 := by
+      gcongr
+    _ ≤ harmonicNumber (n + 1) ^ 2 / ((n : ℝ) + 1) ^ 2 := by
+      apply div_le_div_of_nonneg_left (sq_nonneg _) (by positivity)
+      have hn0 : (0 : ℝ) ≤ n := Nat.cast_nonneg n
+      have hn : (1 : ℝ) ≤ (n : ℝ) + 1 := by linarith
+      nlinarith [sq_nonneg ((n : ℝ) + 1)]
+
+private noncomputable def i10CrossMoment (n : ℕ) (x : ℝ) : ℝ :=
+  ((x / 2) ^ (n + 1) / ((n : ℝ) + 1) ^ 2) * (H1 x / x)
+
+private theorem i10CrossMoment_intervalIntegrable (n : ℕ) :
+    IntervalIntegrable (i10CrossMoment n) MeasureTheory.volume 0 1 := by
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ =>
+      (1 / ((2 : ℝ) ^ (n + 1) * ((n : ℝ) + 1) ^ 2)) *
+        (x ^ n * H1 x)) ?_
+    ((i10PowerH1_intervalIntegrable n).const_mul
+      (1 / ((2 : ℝ) ^ (n + 1) * ((n : ℝ) + 1) ^ 2)))
+  intro x hx
+  rw [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] at hx
+  have hxne : x ≠ 0 := ne_of_gt hx.1
+  unfold i10CrossMoment
+  rw [div_pow]
+  field_simp [hxne]
+  ring
+
+private theorem i10CrossMoment_integral (n : ℕ) :
+    (∫ x : ℝ in 0..1, i10CrossMoment n x) =
+      i10HalfHarmonicTerm n := by
+  calc
+    (∫ x : ℝ in 0..1, i10CrossMoment n x) =
+        ∫ x : ℝ in 0..1,
+          (1 / ((2 : ℝ) ^ (n + 1) * ((n : ℝ) + 1) ^ 2)) *
+            (x ^ n * H1 x) := by
+      apply intervalIntegral.integral_congr
+      intro x hx
+      by_cases hxzero : x = 0
+      · subst x
+        simp [i10CrossMoment, H1]
+      · unfold i10CrossMoment
+        rw [div_pow]
+        field_simp [hxzero]
+        ring
+    _ = i10HalfHarmonicTerm n := by
+      rw [intervalIntegral.integral_const_mul, i10PowerH1_integral]
+      unfold i10HalfHarmonicTerm
+      rw [pow_succ]
+      field_simp
+
+private theorem i10CrossMoment_hasSum_pointwise
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasSum (fun n : ℕ => i10CrossMoment n x)
+      (dilog (x / 2) * H1 x / x) := by
+  have hs : HasSum
+      (fun n : ℕ => (x / 2) ^ (n + 1) / ((n : ℝ) + 1) ^ 2)
+      (dilog (x / 2)) := by
+    have habs : |x / 2| ≤ 1 := by
+      rw [abs_of_pos (by positivity : 0 < x / 2)]
+      linarith
+    simpa only [dilog, Nat.cast_add, Nat.cast_one] using
+      (dilog_summable habs).hasSum
+  have hmul := hs.mul_right (H1 x / x)
+  convert hmul using 1
+  · ring
+
+private theorem i10CrossMoment_integral_norm (n : ℕ) :
+    (∫ x : ℝ in 0..1, ‖i10CrossMoment n x‖) =
+      i10HalfHarmonicTerm n := by
+  calc
+    (∫ x : ℝ in 0..1, ‖i10CrossMoment n x‖) =
+        ∫ x : ℝ in 0..1, i10CrossMoment n x := by
+      apply intervalIntegral.integral_congr
+      intro x hx
+      rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)] at hx
+      change |i10CrossMoment n x| = i10CrossMoment n x
+      rw [abs_of_nonneg]
+      unfold i10CrossMoment
+      have hx0 : 0 ≤ x := hx.1
+      have hx1 : x ≤ 1 := hx.2
+      have hH1 : 0 ≤ H1 x := by
+        unfold H1
+        exact neg_nonneg.mpr (Real.log_nonpos
+          (by linarith : 0 ≤ 1 - x) (by linarith : 1 - x ≤ 1))
+      exact mul_nonneg (div_nonneg (pow_nonneg (by positivity) _)
+        (sq_nonneg _)) (div_nonneg hH1 hx0)
+    _ = i10HalfHarmonicTerm n := i10CrossMoment_integral n
+
+private theorem i10CrossIntegral_hasSum :
+    HasSum i10HalfHarmonicTerm
+      (∫ x : ℝ in 0..1, dilog (x / 2) * H1 x / x) := by
+  have hInt : ∀ n : ℕ, MeasureTheory.Integrable (i10CrossMoment n)
+      (MeasureTheory.volume.restrict (Set.Ioc (0 : ℝ) 1)) :=
+    fun n => (i10CrossMoment_intervalIntegrable n).1
+  have hNorm : Summable (fun n : ℕ =>
+      ∫ x : ℝ in Set.Ioc (0 : ℝ) 1, ‖i10CrossMoment n x‖) := by
+    simpa only [← intervalIntegral.integral_of_le
+      (by norm_num : (0 : ℝ) ≤ 1)] using
+      (i10HalfHarmonicTerm_summable.congr fun n =>
+        (i10CrossMoment_integral_norm n).symm)
+  have h := MeasureTheory.hasSum_integral_of_summable_integral_norm
+    (μ := MeasureTheory.volume.restrict (Set.Ioc (0 : ℝ) 1)) hInt hNorm
+  have h' : HasSum i10HalfHarmonicTerm
+      (∫ x : ℝ in Set.Ioc (0 : ℝ) 1,
+        ∑' n : ℕ, i10CrossMoment n x) := by
+    convert h using 1
+    funext n
+    rw [← intervalIntegral.integral_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    exact (i10CrossMoment_integral n).symm
+  convert h' using 1
+  rw [intervalIntegral.integral_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+  apply MeasureTheory.setIntegral_congr_ae measurableSet_Ioc
+  filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+    with x hxne hx
+  have hxlt : x < 1 := lt_of_le_of_ne hx.2 hxne
+  exact (i10CrossMoment_hasSum_pointwise hx.1 hxlt).tsum_eq.symm
+
+private noncomputable def i10HalfMoment (n : ℕ) (x : ℝ) : ℝ :=
+  (1 / 2 : ℝ) * harmonicNumber (n + 1) *
+    x ^ n * Real.log (2 * x) ^ 2
+
+private theorem i10HalfMoment_intervalIntegrable (n : ℕ) :
+    IntervalIntegrable (i10HalfMoment n)
+      MeasureTheory.volume 0 (1 / 2) := by
+  let base : ℝ → ℝ := fun y => y ^ n * Real.log y ^ 2
+  have hbase : IntervalIntegrable base MeasureTheory.volume 0 1 := by
+    exact intervalIntegrable_logSq.continuousOn_mul (continuousOn_pow n)
+  have hcomp := hbase.comp_mul_left (c := (2 : ℝ))
+  have hcomp' : IntervalIntegrable (fun x : ℝ => base (2 * x))
+      MeasureTheory.volume 0 (1 / 2) := by
+    convert hcomp using 1 <;> norm_num
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ =>
+      (harmonicNumber (n + 1) / (2 : ℝ) ^ (n + 1)) * base (2 * x)) ?_
+    (hcomp'.const_mul
+      (harmonicNumber (n + 1) / (2 : ℝ) ^ (n + 1)))
+  intro x _
+  unfold i10HalfMoment
+  dsimp only [base]
+  rw [mul_pow, pow_succ]
+  field_simp
+
+private theorem i10HalfMoment_integral (n : ℕ) :
+    (∫ x : ℝ in 0..(1 / 2), i10HalfMoment n x) =
+      i10HalfHarmonicTerm n := by
+  let base : ℝ → ℝ := fun y => y ^ n * Real.log y ^ 2
+  have hscale := intervalIntegral.smul_integral_comp_mul_left
+    (a := (0 : ℝ)) (b := (1 / 2 : ℝ)) base (2 : ℝ)
+  have hbase := integral_pow_mul_logSq n
+  have hcomp : (∫ x : ℝ in 0..(1 / 2), base (2 * x)) =
+      1 / ((n : ℝ) + 1) ^ 3 := by
+    have hs : (2 : ℝ) * (∫ x : ℝ in 0..(1 / 2), base (2 * x)) =
+        2 / ((n : ℝ) + 1) ^ 3 := by
+      have hscale' : (2 : ℝ) * (∫ x : ℝ in 0..(1 / 2), base (2 * x)) =
+          ∫ x : ℝ in 0..1, base x := by
+        simpa [smul_eq_mul] using hscale
+      have hbase' : (∫ x : ℝ in 0..1, base x) =
+          2 / ((n : ℝ) + 1) ^ 3 := by
+        simpa [base] using hbase
+      exact hscale'.trans hbase'
+    calc
+      (∫ x : ℝ in 0..(1 / 2), base (2 * x)) =
+          (1 / 2 : ℝ) *
+            (2 * ∫ x : ℝ in 0..(1 / 2), base (2 * x)) := by ring
+      _ = (1 / 2 : ℝ) * (2 / ((n : ℝ) + 1) ^ 3) := by rw [hs]
+      _ = 1 / ((n : ℝ) + 1) ^ 3 := by ring
+  calc
+    (∫ x : ℝ in 0..(1 / 2), i10HalfMoment n x) =
+        ∫ x : ℝ in 0..(1 / 2),
+          (harmonicNumber (n + 1) / (2 : ℝ) ^ (n + 1)) *
+            base (2 * x) := by
+      apply intervalIntegral.integral_congr
+      intro x _
+      unfold i10HalfMoment
+      dsimp only [base]
+      rw [mul_pow]
+      simp only [pow_succ]
+      field_simp
+    _ = i10HalfHarmonicTerm n := by
+      rw [intervalIntegral.integral_const_mul, hcomp]
+      unfold i10HalfHarmonicTerm
+      rw [pow_succ]
+      field_simp
+
+private theorem i10HalfMoment_hasSum_pointwise
+    {x : ℝ} (hx0 : 0 < x) (hxhalf : x < 1 / 2) :
+    HasSum (fun n : ℕ => i10HalfMoment n x)
+      (-(1 / 2 : ℝ) * Real.log (1 - x) * Real.log (2 * x) ^ 2 /
+        (x * (1 - x))) := by
+  have hs := harmonicNumber_generating_hasSum
+    (x := x) (by rw [abs_of_pos hx0]; linarith) (ne_of_gt hx0)
+  have hmul := hs.mul_left ((1 / 2 : ℝ) * Real.log (2 * x) ^ 2)
+  convert hmul using 1
+  · funext n
+    unfold i10HalfMoment
+    ring
+  · field_simp [ne_of_gt hx0, ne_of_gt (by linarith : 0 < 1 - x)]
+
+private theorem i10HalfMoment_integral_norm (n : ℕ) :
+    (∫ x : ℝ in 0..(1 / 2), ‖i10HalfMoment n x‖) =
+      i10HalfHarmonicTerm n := by
+  calc
+    (∫ x : ℝ in 0..(1 / 2), ‖i10HalfMoment n x‖) =
+        ∫ x : ℝ in 0..(1 / 2), i10HalfMoment n x := by
+      apply intervalIntegral.integral_congr
+      intro x hx
+      rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)] at hx
+      change |i10HalfMoment n x| = i10HalfMoment n x
+      rw [abs_of_nonneg]
+      unfold i10HalfMoment
+      have hH : 0 ≤ harmonicNumber (n + 1) := harmonicNumber_nonneg (n + 1)
+      have hxpow : 0 ≤ x ^ n := pow_nonneg hx.1 n
+      have hlog : 0 ≤ Real.log (2 * x) ^ 2 := sq_nonneg _
+      positivity
+    _ = i10HalfHarmonicTerm n := i10HalfMoment_integral n
+
+private theorem i10HalfIntegral_hasSum :
+    HasSum i10HalfHarmonicTerm
+      (∫ x : ℝ in 0..(1 / 2),
+        -(1 / 2 : ℝ) * Real.log (1 - x) * Real.log (2 * x) ^ 2 /
+          (x * (1 - x))) := by
+  have hInt : ∀ n : ℕ, MeasureTheory.Integrable (i10HalfMoment n)
+      (MeasureTheory.volume.restrict (Set.Ioc (0 : ℝ) (1 / 2))) :=
+    fun n => (i10HalfMoment_intervalIntegrable n).1
+  have hNorm : Summable (fun n : ℕ =>
+      ∫ x : ℝ in Set.Ioc (0 : ℝ) (1 / 2), ‖i10HalfMoment n x‖) := by
+    simpa only [← intervalIntegral.integral_of_le
+      (by norm_num : (0 : ℝ) ≤ 1 / 2)] using
+      (i10HalfHarmonicTerm_summable.congr fun n =>
+        (i10HalfMoment_integral_norm n).symm)
+  have h := MeasureTheory.hasSum_integral_of_summable_integral_norm
+    (μ := MeasureTheory.volume.restrict (Set.Ioc (0 : ℝ) (1 / 2))) hInt hNorm
+  have h' : HasSum i10HalfHarmonicTerm
+      (∫ x : ℝ in Set.Ioc (0 : ℝ) (1 / 2),
+        ∑' n : ℕ, i10HalfMoment n x) := by
+    convert h using 1
+    funext n
+    rw [← intervalIntegral.integral_of_le
+      (by norm_num : (0 : ℝ) ≤ 1 / 2)]
+    exact (i10HalfMoment_integral n).symm
+  convert h' using 1
+  rw [intervalIntegral.integral_of_le
+    (by norm_num : (0 : ℝ) ≤ 1 / 2)]
+  apply MeasureTheory.setIntegral_congr_ae measurableSet_Ioc
+  filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 / 2 : ℝ)]
+    with x hxne hx
+  have hxlt : x < 1 / 2 := lt_of_le_of_ne hx.2 hxne
+  exact (i10HalfMoment_hasSum_pointwise hx.1 hxlt).tsum_eq.symm
+
+private theorem i10Cross_eq_halfIntegral :
+    (∫ x : ℝ in 0..1, dilog (x / 2) * H1 x / x) =
+      ∫ x : ℝ in 0..(1 / 2),
+        -(1 / 2 : ℝ) * Real.log (1 - x) * Real.log (2 * x) ^ 2 /
+          (x * (1 - x)) := by
+  exact i10CrossIntegral_hasSum.unique i10HalfIntegral_hasSum
+
+private theorem i10LogPlusSquare_intervalIntegrable :
+    IntervalIntegrable
+      (fun x : ℝ => (Real.log x + Real.log 2) ^ 2)
+      MeasureTheory.volume 0 (1 / 2) := by
+  have hsq : IntervalIntegrable (fun x : ℝ => Real.log x ^ 2)
+      MeasureTheory.volume 0 (1 / 2) := by
+    apply intervalIntegrable_logSq.mono_set
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2),
+      Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    intro x hx
+    exact ⟨hx.1, by linarith [hx.2]⟩
+  have hlog : IntervalIntegrable Real.log MeasureTheory.volume 0 (1 / 2) :=
+    intervalIntegral.intervalIntegrable_log'
+  have hraw := (hsq.add (hlog.const_mul (2 * Real.log 2))).add
+    (intervalIntegrable_const (c := Real.log 2 ^ 2))
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ =>
+      Real.log x ^ 2 + 2 * Real.log 2 * Real.log x + Real.log 2 ^ 2) ?_ hraw
+  intro x _
+  ring
+
+private theorem i10Ax_intervalIntegrable :
+    IntervalIntegrable
+      (fun x : ℝ =>
+        Real.log (1 - x) * (Real.log x + Real.log 2) ^ 2 / x)
+      MeasureTheory.volume 0 (1 / 2) := by
+  let q : ℝ → ℝ := fun x => Real.log (1 - x) / x
+  have hq : ContinuousOn q (Set.Ioo (0 : ℝ) (1 / 2)) := by
+    intro x hx
+    have hxlt : x < 1 / 2 := hx.2
+    unfold q
+    exact ((continuousAt_const.sub continuousAt_id).log
+      (ne_of_gt (by linarith : 0 < 1 - x))).div
+      continuousAt_id (ne_of_gt hx.1) |>.continuousWithinAt
+  have hq0 : Tendsto q (𝓝[>] (0 : ℝ)) (𝓝 (-1)) := by
+    have h := quadAltH1_div_self_tendsto_zero_right.neg
+    convert h using 1 <;> simp only [q, H1] <;> ring
+  have hqhalf : Tendsto q (𝓝[<] (1 / 2 : ℝ))
+      (𝓝 (Real.log (1 - (1 / 2 : ℝ)) / (1 / 2))) := by
+    have hc : ContinuousAt q (1 / 2) := by
+      unfold q
+      exact ((continuousAt_const.sub continuousAt_id).log
+        (by norm_num : 1 - (1 / 2 : ℝ) ≠ 0)).div
+          continuousAt_id (by norm_num)
+    exact hc.tendsto.mono_left nhdsWithin_le_nhds
+  have hmul := IntervalIntegrable.mul_of_continuousOn_Ioo_of_tendsto
+    (by norm_num : (0 : ℝ) < 1 / 2)
+    i10LogPlusSquare_intervalIntegrable hq hq0 hqhalf
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ => (Real.log x + Real.log 2) ^ 2 * q x) ?_ hmul
+  intro x _
+  unfold q
+  ring
+
+private noncomputable def i10AxPrimitive (x : ℝ) : ℝ :=
+  -(Real.log x + Real.log 2) ^ 2 * dilog x +
+    2 * (Real.log x + Real.log 2) * RamanujanChallenge.P26.trilog26 x -
+    2 * polylog4 x
+
+private theorem i10AxPrimitive_hasDerivAt
+    {x : ℝ} (hx0 : 0 < x) (hxhalf : x < 1 / 2) :
+    HasDerivAt i10AxPrimitive
+      (Real.log (1 - x) * (Real.log x + Real.log 2) ^ 2 / x) x := by
+  have hxne : x ≠ 0 := ne_of_gt hx0
+  have hx1 : x < 1 := hxhalf.trans (by norm_num)
+  have hlog := Real.hasDerivAt_log hxne
+  have hd := dilog_hasDerivAt hx0 hx1
+  have ht := RamanujanChallenge.P26.trilog26_hasDerivAt_of_abs_lt_one
+    (by rw [abs_of_pos hx0]; exact hx1) hxne
+  have hq := polylog4_hasDerivAt24_export
+    (by rw [abs_of_pos hx0]; exact hx1) hxne
+  unfold i10AxPrimitive
+  have htotal :=
+    (((hlog.add_const (Real.log 2)).pow 2).mul hd).neg.add
+      (((hlog.add_const (Real.log 2)).mul ht).const_mul 2) |>.sub
+      (hq.const_mul 2)
+  convert htotal using 1
+  · funext y
+    simp only [Pi.add_apply, Pi.neg_apply, Pi.mul_apply, Pi.pow_apply,
+      Pi.sub_apply]
+    ring
+  · field_simp [hxne]
+    simp only [Pi.add_apply, Pi.pow_apply]
+    ring
+
+private theorem i10AxPrimitive_tendsto_zero :
+    Tendsto i10AxPrimitive (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hdSlope :
+      Tendsto (fun x : ℝ => x⁻¹ * dilog x)
+        (𝓝[>] (0 : ℝ)) (𝓝 1) := by
+    simpa [dilog_zero] using
+      RamanujanChallenge.P26.dilog_hasDerivAt_zero26.tendsto_slope_zero_right
+  have htSlope :
+      Tendsto (fun x : ℝ => x⁻¹ * RamanujanChallenge.P26.trilog26 x)
+        (𝓝[>] (0 : ℝ)) (𝓝 1) := by
+    simpa [RamanujanChallenge.P26.trilog26_zero] using
+      trilog26_hasDerivAt_zero24_export.tendsto_slope_zero_right
+  have hd : Tendsto dilog (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa [dilog_zero] using
+      RamanujanChallenge.P26.dilog_hasDerivAt_zero26.continuousAt.tendsto.mono_left
+        nhdsWithin_le_nhds
+  have hq : Tendsto polylog4 (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa using
+      polylog4_continuousAt_zero24_export.tendsto.mono_left nhdsWithin_le_nhds
+  have hlogSqDilog :
+      Tendsto (fun x : ℝ => Real.log x ^ 2 * dilog x)
+        (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    have hraw := logSq_mul_self_tendsto.mul hdSlope
+    have hraw' : Tendsto (fun x : ℝ => Real.log x ^ 2 * dilog x)
+        (𝓝[>] (0 : ℝ)) (𝓝 (0 * 1)) := by
+      apply hraw.congr'
+      filter_upwards [self_mem_nhdsWithin] with x hx
+      have hx0 : 0 < x := hx
+      field_simp [ne_of_gt hx0]
+    simpa using hraw'
+  have hlogDilog :
+      Tendsto (fun x : ℝ => Real.log x * dilog x)
+        (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    have hraw := log_mul_self_tendsto.mul hdSlope
+    have hraw' : Tendsto (fun x : ℝ => Real.log x * dilog x)
+        (𝓝[>] (0 : ℝ)) (𝓝 (0 * 1)) := by
+      apply hraw.congr'
+      filter_upwards [self_mem_nhdsWithin] with x hx
+      have hx0 : 0 < x := hx
+      field_simp [ne_of_gt hx0]
+    simpa using hraw'
+  have hlogTrilog :
+      Tendsto (fun x : ℝ => Real.log x * RamanujanChallenge.P26.trilog26 x)
+        (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    have hraw := log_mul_self_tendsto.mul htSlope
+    have hraw' : Tendsto
+        (fun x : ℝ => Real.log x * RamanujanChallenge.P26.trilog26 x)
+        (𝓝[>] (0 : ℝ)) (𝓝 (0 * 1)) := by
+      apply hraw.congr'
+      filter_upwards [self_mem_nhdsWithin] with x hx
+      have hx0 : 0 < x := hx
+      field_simp [ne_of_gt hx0]
+    simpa using hraw'
+  have ht : Tendsto RamanujanChallenge.P26.trilog26
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa [RamanujanChallenge.P26.trilog26_zero] using
+      trilog26_hasDerivAt_zero24_export.continuousAt.tendsto.mono_left
+        nhdsWithin_le_nhds
+  have hfirst :=
+    ((hlogSqDilog.add (hlogDilog.const_mul (2 * Real.log 2))).add
+      (hd.const_mul (Real.log 2 ^ 2))).neg
+  have hsecond :=
+    ((hlogTrilog.add (ht.const_mul (Real.log 2))).const_mul 2)
+  have htotal := (hfirst.add hsecond).sub (hq.const_mul 2)
+  simp only [neg_zero, add_zero, mul_zero, sub_zero] at htotal
+  refine htotal.congr' ?_
+  filter_upwards with x
+  unfold i10AxPrimitive
+  ring
+
+private theorem i10AxPrimitive_tendsto_half :
+    Tendsto i10AxPrimitive (𝓝[<] (1 / 2 : ℝ))
+      (𝓝 (-2 * polylog4 (1 / 2))) := by
+  have hd : ContinuousAt dilog (1 / 2 : ℝ) :=
+    dilog_continuousOn_unit.continuousAt
+      (Icc_mem_nhds (by norm_num : (-1 : ℝ) < 1 / 2)
+        (by norm_num : (1 / 2 : ℝ) < 1))
+  have ht : ContinuousAt RamanujanChallenge.P26.trilog26 (1 / 2 : ℝ) :=
+    RamanujanChallenge.P26.trilog26_continuousOn_unit.continuousAt
+      (Icc_mem_nhds (by norm_num : (-1 : ℝ) < 1 / 2)
+        (by norm_num : (1 / 2 : ℝ) < 1))
+  have hq : ContinuousAt polylog4 (1 / 2 : ℝ) :=
+    polylog4_continuousOn_unit24_export.continuousAt
+      (Icc_mem_nhds (by norm_num : (-1 : ℝ) < 1 / 2) (by norm_num))
+  have hc : ContinuousAt i10AxPrimitive (1 / 2 : ℝ) := by
+    unfold i10AxPrimitive
+    have hlog : ContinuousAt Real.log (1 / 2 : ℝ) :=
+      Real.continuousAt_log (by norm_num)
+    have htotal := (((hlog.add_const (Real.log 2)).pow 2).mul hd).neg.add
+      (((hlog.add_const (Real.log 2)).mul ht).const_mul 2) |>.sub
+      (hq.const_mul 2)
+    convert htotal using 1
+    funext x
+    simp only [Pi.add_apply, Pi.neg_apply, Pi.mul_apply, Pi.pow_apply,
+      Pi.sub_apply]
+    ring
+  have hloghalf : Real.log (1 / 2 : ℝ) = -Real.log 2 := by
+    rw [one_div, Real.log_inv]
+  simpa [i10AxPrimitive, hloghalf] using
+    hc.tendsto.mono_left nhdsWithin_le_nhds
+
+private theorem i10Ax_integral :
+    (∫ x : ℝ in 0..(1 / 2),
+      Real.log (1 - x) * (Real.log x + Real.log 2) ^ 2 / x) =
+      -2 * polylog4 (1 / 2) := by
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (f := i10AxPrimitive) (fa := (0 : ℝ))
+    (fb := -2 * polylog4 (1 / 2)) (by norm_num)
+    (fun x hx => i10AxPrimitive_hasDerivAt hx.1 hx.2)
+    i10Ax_intervalIntegrable i10AxPrimitive_tendsto_zero
+    i10AxPrimitive_tendsto_half]
+  ring
+
+private theorem i10A1_intervalIntegrable :
+    IntervalIntegrable
+      (fun x : ℝ =>
+        Real.log (1 - x) * (Real.log x + Real.log 2) ^ 2 / (1 - x))
+      MeasureTheory.volume 0 (1 / 2) := by
+  let g : ℝ → ℝ := fun x => x / (1 - x)
+  have hg : ContinuousOn g (Set.uIcc (0 : ℝ) (1 / 2)) := by
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)]
+    intro x hx
+    have hxle : x ≤ 1 / 2 := hx.2
+    unfold g
+    exact continuousAt_id.div (continuousAt_const.sub continuousAt_id)
+      (ne_of_gt (by linarith : 0 < 1 - x)) |>.continuousWithinAt
+  have hprod := i10Ax_intervalIntegrable.mul_continuousOn hg
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ =>
+      (Real.log (1 - x) * (Real.log x + Real.log 2) ^ 2 / x) * g x) ?_
+    hprod
+  intro x hx
+  rw [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)] at hx
+  have hxle : x ≤ 1 / 2 := hx.2
+  by_cases hxzero : x = 0
+  · subst x
+    simp [g]
+  · have hden : 1 - x ≠ 0 := ne_of_gt (by linarith : 0 < 1 - x)
+    unfold g
+    field_simp [hxzero, hden]
+
+private noncomputable def i10A1Primitive (x : ℝ) : ℝ :=
+  -(1 / 2 : ℝ) * Real.log (1 - x) ^ 2 *
+    (Real.log x + Real.log 2) ^ 2
+
+private theorem i10A1Primitive_hasDerivAt
+    {x : ℝ} (hx0 : 0 < x) (hxhalf : x < 1 / 2) :
+    HasDerivAt i10A1Primitive
+      (Real.log (1 - x) * (Real.log x + Real.log 2) ^ 2 / (1 - x) -
+        Real.log x * Real.log (1 - x) ^ 2 / x -
+        Real.log 2 * (Real.log (1 - x) ^ 2 / x)) x := by
+  have hxne : x ≠ 0 := ne_of_gt hx0
+  have hden : 1 - x ≠ 0 := ne_of_gt (by linarith : 0 < 1 - x)
+  have hinner : HasDerivAt (fun y : ℝ => 1 - y) (-1) x := by
+    convert (hasDerivAt_const x 1).sub (hasDerivAt_id x) using 1 <;> norm_num
+  have ha : HasDerivAt (fun y : ℝ => Real.log (1 - y))
+      (-1 / (1 - x)) x := by
+    convert hinner.log hden using 1
+  have hl := Real.hasDerivAt_log hxne
+  unfold i10A1Primitive
+  have htotal := ((ha.pow 2).mul ((hl.add_const (Real.log 2)).pow 2)).const_mul
+    (-(1 / 2 : ℝ))
+  convert htotal using 1
+  · funext y
+    simp only [Pi.mul_apply, Pi.pow_apply, Pi.neg_apply]
+    ring
+  · simp only [Pi.add_apply, Pi.pow_apply]
+    field_simp [hxne, hden]
+    ring
+
+private theorem i10A1Primitive_tendsto_zero :
+    Tendsto i10A1Primitive (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hH := quadAltH1_div_self_tendsto_zero_right
+  have hid : Tendsto (fun x : ℝ => x) (𝓝[>] (0 : ℝ)) (𝓝 0) :=
+    tendsto_id.mono_left nhdsWithin_le_nhds
+  have hv := log_mul_self_tendsto.add (hid.const_mul (Real.log 2))
+  have hraw := ((hH.pow 2).mul (hv.pow 2)).const_mul (-(1 / 2 : ℝ))
+  have hraw' : Tendsto
+      (fun x : ℝ => -((1 / 2 : ℝ) * ((H1 x / x) ^ 2 *
+        (Real.log x * x + Real.log 2 * x) ^ 2)))
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa using hraw
+  refine hraw'.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hx0 : 0 < x := hx
+  unfold i10A1Primitive H1
+  field_simp [ne_of_gt hx0]
+
+private theorem i10A1Primitive_tendsto_half :
+    Tendsto i10A1Primitive (𝓝[<] (1 / 2 : ℝ)) (𝓝 0) := by
+  have hlog : ContinuousAt Real.log (1 / 2 : ℝ) :=
+    Real.continuousAt_log (by norm_num)
+  have hlogSub : ContinuousAt (fun x : ℝ => Real.log (1 - x)) (1 / 2) :=
+    (continuousAt_const.sub continuousAt_id).log (by norm_num)
+  have hc : ContinuousAt i10A1Primitive (1 / 2 : ℝ) := by
+    unfold i10A1Primitive
+    have htotal := (((hlogSub.pow 2).mul
+      ((hlog.add_const (Real.log 2)).pow 2)).const_mul (-(1 / 2 : ℝ)))
+    convert htotal using 1
+    funext x
+    simp only [Pi.mul_apply, Pi.pow_apply]
+    ring
+  have hloghalf : Real.log (1 / 2 : ℝ) = -Real.log 2 := by
+    rw [one_div, Real.log_inv]
+  simpa [i10A1Primitive, hloghalf] using
+    hc.tendsto.mono_left nhdsWithin_le_nhds
+
+private theorem i10A1_integral :
+    (∫ x : ℝ in 0..(1 / 2),
+      Real.log (1 - x) * (Real.log x + Real.log 2) ^ 2 / (1 - x)) =
+      -(1 / 12 : ℝ) * Real.log 2 ^ 4 +
+        (1 / 4 : ℝ) * Real.log 2 * zeta3_24 -
+        (1 / 4 : ℝ) * (Real.pi ^ 4 / 90) := by
+  let f : ℝ → ℝ := fun x =>
+    Real.log (1 - x) * (Real.log x + Real.log 2) ^ 2 / (1 - x)
+  let j : ℝ → ℝ := fun x => Real.log x * Real.log (1 - x) ^ 2 / x
+  let b : ℝ → ℝ := fun x => Real.log (1 - x) ^ 2 / x
+  have hf : IntervalIntegrable f MeasureTheory.volume 0 (1 / 2) := by
+    simpa [f] using i10A1_intervalIntegrable
+  have hj : IntervalIntegrable j MeasureTheory.volume 0 (1 / 2) := by
+    simpa [j] using quadAltHalfQuarticCoreIntervalIntegrable24
+  have hb : IntervalIntegrable b MeasureTheory.volume 0 (1 / 2) := by
+    simpa [b] using quadAltHalfLogSquareIntervalIntegrable24
+  have hder : IntervalIntegrable
+      (fun x : ℝ => f x - j x - Real.log 2 * b x)
+      MeasureTheory.volume 0 (1 / 2) :=
+    (hf.sub hj).sub (hb.const_mul (Real.log 2))
+  have hzero : (∫ x : ℝ in 0..(1 / 2),
+      (f x - j x - Real.log 2 * b x)) = 0 := by
+    rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+      (f := i10A1Primitive) (fa := (0 : ℝ)) (fb := (0 : ℝ))
+      (by norm_num)
+      (fun x hx => by
+        simpa [f, j, b] using i10A1Primitive_hasDerivAt hx.1 hx.2)
+      hder i10A1Primitive_tendsto_zero i10A1Primitive_tendsto_half]
+    ring
+  rw [intervalIntegral.integral_sub (hf.sub hj) (hb.const_mul (Real.log 2)),
+    intervalIntegral.integral_sub hf hj,
+    intervalIntegral.integral_const_mul] at hzero
+  have hjval : (∫ x : ℝ in 0..(1 / 2), j x) =
+      (1 / 4 : ℝ) * Real.log 2 ^ 4 -
+        (1 / 4 : ℝ) * (Real.pi ^ 4 / 90) := by
+    simpa [j] using quadAltHalfQuarticCoreIntegral24
+  have hbval : (∫ x : ℝ in 0..(1 / 2), b x) =
+      (1 / 4 : ℝ) * zeta3_24 -
+        (1 / 3 : ℝ) * Real.log 2 ^ 3 := by
+    simpa [b] using quadAltHalfLogSquareIntegral24
+  rw [hjval, hbval] at hzero
+  dsimp only [f] at hzero
+  linarith
+
+private theorem i10HalfIntegral_eq :
+    (∫ x : ℝ in 0..(1 / 2),
+      -(1 / 2 : ℝ) * Real.log (1 - x) * Real.log (2 * x) ^ 2 /
+        (x * (1 - x))) =
+      polylog4 (1 / 2) + (1 / 24 : ℝ) * Real.log 2 ^ 4 -
+        (1 / 8 : ℝ) * Real.log 2 * zeta3_24 +
+        (1 / 8 : ℝ) * (Real.pi ^ 4 / 90) := by
+  calc
+    (∫ x : ℝ in 0..(1 / 2),
+      -(1 / 2 : ℝ) * Real.log (1 - x) * Real.log (2 * x) ^ 2 /
+        (x * (1 - x))) =
+        ∫ x : ℝ in 0..(1 / 2), -(1 / 2 : ℝ) *
+          (Real.log (1 - x) * (Real.log x + Real.log 2) ^ 2 / x +
+           Real.log (1 - x) * (Real.log x + Real.log 2) ^ 2 / (1 - x)) := by
+      apply intervalIntegral.integral_congr
+      intro x hx
+      rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)] at hx
+      have hxle : x ≤ 1 / 2 := hx.2
+      by_cases hxzero : x = 0
+      · subst x
+        simp
+      · have hden : 1 - x ≠ 0 := ne_of_gt (by linarith : 0 < 1 - x)
+        dsimp only
+        rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) hxzero]
+        field_simp [hxzero, hden]
+        ring
+    _ = polylog4 (1 / 2) + (1 / 24 : ℝ) * Real.log 2 ^ 4 -
+        (1 / 8 : ℝ) * Real.log 2 * zeta3_24 +
+        (1 / 8 : ℝ) * (Real.pi ^ 4 / 90) := by
+      rw [intervalIntegral.integral_const_mul,
+        intervalIntegral.integral_add i10Ax_intervalIntegrable i10A1_intervalIntegrable,
+        i10Ax_integral, i10A1_integral]
+      ring
+
+private noncomputable def i10Q (x : ℝ) : ℝ := H1 x / x
+
+private theorem i10Q_continuousOn_half :
+    ContinuousOn i10Q (Set.Ioo (0 : ℝ) (1 / 2)) := by
+  intro x hx
+  have hxlt : x < 1 / 2 := hx.2
+  unfold i10Q H1
+  exact ((continuousAt_const.sub continuousAt_id).log
+    (ne_of_gt (by linarith : 0 < 1 - x))).neg.div
+      continuousAt_id (ne_of_gt hx.1) |>.continuousWithinAt
+
+private theorem i10Q_tendsto_zero :
+    Tendsto i10Q (𝓝[>] (0 : ℝ)) (𝓝 1) := by
+  exact quadAltH1_div_self_tendsto_zero_right
+
+private theorem i10Q_tendsto_half :
+    Tendsto i10Q (𝓝[<] (1 / 2 : ℝ))
+      (𝓝 (H1 (1 / 2) / (1 / 2))) := by
+  have hc : ContinuousAt i10Q (1 / 2 : ℝ) := by
+    unfold i10Q H1
+    exact ((continuousAt_const.sub continuousAt_id).log (by norm_num)).neg.div
+      continuousAt_id (by norm_num)
+  exact hc.tendsto.mono_left nhdsWithin_le_nhds
+
+private theorem i10H1_intervalIntegrable :
+    IntervalIntegrable H1 MeasureTheory.volume (1 / 2) 1 := by
+  have hlog := (intervalIntegral.intervalIntegrable_log'
+    (a := (0 : ℝ)) (b := (1 / 2))).comp_sub_left 1
+  convert hlog.symm.neg using 1 <;> norm_num [H1]
+
+private theorem i10H1Div_intervalIntegrable :
+    IntervalIntegrable (fun x : ℝ => H1 x / x)
+      MeasureTheory.volume 0 1 := by
+  have hleft : IntervalIntegrable i10Q MeasureTheory.volume 0 (1 / 2) :=
+    intervalIntegrable_of_continuousOn_Ioo_of_tendsto (by norm_num)
+      i10Q_continuousOn_half i10Q_tendsto_zero i10Q_tendsto_half
+  have hg : ContinuousOn (fun x : ℝ => 1 / x)
+      (Set.uIcc (1 / 2 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    intro x hx
+    have hxlo : 1 / 2 ≤ x := hx.1
+    exact continuousAt_const.div continuousAt_id
+      (ne_of_gt (by linarith : 0 < x)) |>.continuousWithinAt
+  have hright := i10H1_intervalIntegrable.continuousOn_mul hg
+  apply IntervalIntegrable.trans (b := (1 / 2 : ℝ))
+  · simpa [i10Q] using hleft
+  · apply IntervalIntegrable.congr
+      (f := fun x : ℝ => (1 / x) * H1 x) ?_ hright
+    intro x _
+    ring
+
+private theorem i10LogH1Div_intervalIntegrable :
+    IntervalIntegrable (fun x : ℝ => Real.log x * H1 x / x)
+      MeasureTheory.volume 0 1 := by
+  have hlog : IntervalIntegrable Real.log MeasureTheory.volume 0 (1 / 2) :=
+    intervalIntegral.intervalIntegrable_log'
+  have hleft := IntervalIntegrable.mul_of_continuousOn_Ioo_of_tendsto
+    (by norm_num : (0 : ℝ) < 1 / 2) hlog i10Q_continuousOn_half
+      i10Q_tendsto_zero i10Q_tendsto_half
+  have hg : ContinuousOn (fun x : ℝ => Real.log x / x)
+      (Set.uIcc (1 / 2 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    intro x hx
+    have hxlo : 1 / 2 ≤ x := hx.1
+    exact (Real.continuousAt_log (ne_of_gt (by linarith : 0 < x))).div
+      continuousAt_id (ne_of_gt (by linarith : 0 < x)) |>.continuousWithinAt
+  have hright := i10H1_intervalIntegrable.continuousOn_mul hg
+  apply IntervalIntegrable.trans (b := (1 / 2 : ℝ))
+  · apply IntervalIntegrable.congr
+      (f := fun x : ℝ => Real.log x * i10Q x) ?_ hleft
+    intro x _
+    unfold i10Q
+    ring
+  · apply IntervalIntegrable.congr
+      (f := fun x : ℝ => (Real.log x / x) * H1 x) ?_ hright
+    intro x _
+    ring
+
+private theorem i10LogSqH1Div_intervalIntegrable :
+    IntervalIntegrable (fun x : ℝ => Real.log x ^ 2 * H1 x / x)
+      MeasureTheory.volume 0 1 := by
+  have hsq : IntervalIntegrable (fun x : ℝ => Real.log x ^ 2)
+      MeasureTheory.volume 0 (1 / 2) := by
+    apply intervalIntegrable_logSq.mono_set
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2),
+      Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    intro x hx
+    exact ⟨hx.1, by linarith [hx.2]⟩
+  have hleft := IntervalIntegrable.mul_of_continuousOn_Ioo_of_tendsto
+    (by norm_num : (0 : ℝ) < 1 / 2) hsq i10Q_continuousOn_half
+      i10Q_tendsto_zero i10Q_tendsto_half
+  have hg : ContinuousOn (fun x : ℝ => Real.log x ^ 2 / x)
+      (Set.uIcc (1 / 2 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    intro x hx
+    have hxlo : 1 / 2 ≤ x := hx.1
+    exact ((Real.continuousAt_log (ne_of_gt (by linarith : 0 < x))).pow 2).div
+      continuousAt_id (ne_of_gt (by linarith : 0 < x)) |>.continuousWithinAt
+  have hright := i10H1_intervalIntegrable.continuousOn_mul hg
+  apply IntervalIntegrable.trans (b := (1 / 2 : ℝ))
+  · apply IntervalIntegrable.congr
+      (f := fun x : ℝ => Real.log x ^ 2 * i10Q x) ?_ hleft
+    intro x _
+    unfold i10Q
+    ring
+  · apply IntervalIntegrable.congr
+      (f := fun x : ℝ => (Real.log x ^ 2 / x) * H1 x) ?_ hright
+    intro x _
+    ring
+
+private theorem i10_dilog_tendsto_one :
+    Tendsto dilog (𝓝[<] (1 : ℝ)) (𝓝 (Real.pi ^ 2 / 6)) := by
+  have hWithin : ContinuousWithinAt dilog (Iio (1 : ℝ)) 1 :=
+    (dilog_continuousOn_unit 1 (by norm_num)).mono_of_mem_nhdsWithin
+      (Icc_mem_nhdsLT (show (-1 : ℝ) < 1 by norm_num))
+  simpa [dilog_one] using hWithin.tendsto
+
+private theorem i10_trilog_tendsto_one :
+    Tendsto RamanujanChallenge.P26.trilog26
+      (𝓝[<] (1 : ℝ)) (𝓝 zeta3_24) := by
+  have hWithin : ContinuousWithinAt RamanujanChallenge.P26.trilog26
+      (Iio (1 : ℝ)) 1 :=
+    (RamanujanChallenge.P26.trilog26_continuousOn_unit
+      1 (by norm_num)).mono_of_mem_nhdsWithin
+      (Icc_mem_nhdsLT (show (-1 : ℝ) < 1 by norm_num))
+  simpa [RamanujanChallenge.P26.trilog26_one,
+    RamanujanChallenge.P26.zeta3, zeta3_24] using hWithin.tendsto
+
+private theorem i10_polylog4_tendsto_one :
+    Tendsto polylog4 (𝓝[<] (1 : ℝ)) (𝓝 (Real.pi ^ 4 / 90)) := by
+  have hWithin : ContinuousWithinAt polylog4 (Iio (1 : ℝ)) 1 :=
+    (polylog4_continuousOn_unit24_export
+      1 (by norm_num)).mono_of_mem_nhdsWithin
+      (Icc_mem_nhdsLT (show (-1 : ℝ) < 1 by norm_num))
+  simpa [polylog4_one24_export] using hWithin.tendsto
+
+private theorem i10_log_dilog_tendsto_zero :
+    Tendsto (fun x : ℝ => Real.log x * dilog x)
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hslope : Tendsto (fun x : ℝ => x⁻¹ * dilog x)
+      (𝓝[>] (0 : ℝ)) (𝓝 1) := by
+    simpa [dilog_zero] using
+      RamanujanChallenge.P26.dilog_hasDerivAt_zero26.tendsto_slope_zero_right
+  have hraw := log_mul_self_tendsto.mul hslope
+  have hraw' : Tendsto (fun x : ℝ => Real.log x * dilog x)
+      (𝓝[>] (0 : ℝ)) (𝓝 (0 * 1)) := by
+    apply hraw.congr'
+    filter_upwards [self_mem_nhdsWithin] with x hx
+    have hx0 : 0 < x := hx
+    field_simp [ne_of_gt hx0]
+  simpa using hraw'
+
+private theorem i10_logSq_dilog_tendsto_zero :
+    Tendsto (fun x : ℝ => Real.log x ^ 2 * dilog x)
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hslope : Tendsto (fun x : ℝ => x⁻¹ * dilog x)
+      (𝓝[>] (0 : ℝ)) (𝓝 1) := by
+    simpa [dilog_zero] using
+      RamanujanChallenge.P26.dilog_hasDerivAt_zero26.tendsto_slope_zero_right
+  have hraw := logSq_mul_self_tendsto.mul hslope
+  have hraw' : Tendsto (fun x : ℝ => Real.log x ^ 2 * dilog x)
+      (𝓝[>] (0 : ℝ)) (𝓝 (0 * 1)) := by
+    apply hraw.congr'
+    filter_upwards [self_mem_nhdsWithin] with x hx
+    have hx0 : 0 < x := hx
+    field_simp [ne_of_gt hx0]
+  simpa using hraw'
+
+private theorem i10_log_trilog_tendsto_zero :
+    Tendsto (fun x : ℝ =>
+      Real.log x * RamanujanChallenge.P26.trilog26 x)
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hslope : Tendsto
+      (fun x : ℝ => x⁻¹ * RamanujanChallenge.P26.trilog26 x)
+      (𝓝[>] (0 : ℝ)) (𝓝 1) := by
+    simpa [RamanujanChallenge.P26.trilog26_zero] using
+      trilog26_hasDerivAt_zero24_export.tendsto_slope_zero_right
+  have hraw := log_mul_self_tendsto.mul hslope
+  have hraw' : Tendsto
+      (fun x : ℝ => Real.log x * RamanujanChallenge.P26.trilog26 x)
+      (𝓝[>] (0 : ℝ)) (𝓝 (0 * 1)) := by
+    apply hraw.congr'
+    filter_upwards [self_mem_nhdsWithin] with x hx
+    have hx0 : 0 < x := hx
+    field_simp [ne_of_gt hx0]
+  simpa using hraw'
+
+private theorem i10H1Div_integral :
+    (∫ x : ℝ in 0..1, H1 x / x) = Real.pi ^ 2 / 6 := by
+  have hzero : Tendsto dilog (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa [dilog_zero] using
+      RamanujanChallenge.P26.dilog_hasDerivAt_zero26.continuousAt.tendsto.mono_left
+        nhdsWithin_le_nhds
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (f := dilog) (fa := (0 : ℝ)) (fb := Real.pi ^ 2 / 6)
+    (by norm_num) (fun x hx => by
+      simpa [H1] using dilog_hasDerivAt hx.1 hx.2)
+    i10H1Div_intervalIntegrable hzero i10_dilog_tendsto_one]
+  ring
+
+private noncomputable def i10LogDilogPrimitive (x : ℝ) : ℝ :=
+  Real.log x * dilog x - RamanujanChallenge.P26.trilog26 x
+
+private theorem i10LogDilogPrimitive_hasDerivAt
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt i10LogDilogPrimitive (Real.log x * H1 x / x) x := by
+  have hxne : x ≠ 0 := ne_of_gt hx0
+  have hlog := Real.hasDerivAt_log hxne
+  have hd := dilog_hasDerivAt hx0 hx1
+  have ht := RamanujanChallenge.P26.trilog26_hasDerivAt_of_abs_lt_one
+    (by rw [abs_of_pos hx0]; exact hx1) hxne
+  unfold i10LogDilogPrimitive
+  convert (hlog.mul hd).sub ht using 1
+  unfold H1
+  field_simp [hxne]
+  ring
+
+private theorem i10LogDilogPrimitive_tendsto_zero :
+    Tendsto i10LogDilogPrimitive (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have ht : Tendsto RamanujanChallenge.P26.trilog26
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa [RamanujanChallenge.P26.trilog26_zero] using
+      trilog26_hasDerivAt_zero24_export.continuousAt.tendsto.mono_left
+        nhdsWithin_le_nhds
+  simpa [i10LogDilogPrimitive] using i10_log_dilog_tendsto_zero.sub ht
+
+private theorem i10LogDilogPrimitive_tendsto_one :
+    Tendsto i10LogDilogPrimitive (𝓝[<] (1 : ℝ)) (𝓝 (-zeta3_24)) := by
+  have hlog : Tendsto Real.log (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    simpa using (Real.continuousAt_log (by norm_num : (1 : ℝ) ≠ 0)).tendsto.mono_left
+      nhdsWithin_le_nhds
+  have htotal := (hlog.mul i10_dilog_tendsto_one).sub i10_trilog_tendsto_one
+  simpa [i10LogDilogPrimitive] using htotal
+
+private theorem i10LogH1Div_integral :
+    (∫ x : ℝ in 0..1, Real.log x * H1 x / x) = -zeta3_24 := by
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (f := i10LogDilogPrimitive) (fa := (0 : ℝ)) (fb := -zeta3_24)
+    (by norm_num) (fun x hx => i10LogDilogPrimitive_hasDerivAt hx.1 hx.2)
+    i10LogH1Div_intervalIntegrable i10LogDilogPrimitive_tendsto_zero
+    i10LogDilogPrimitive_tendsto_one]
+  ring
+
+private noncomputable def i10LogSqDilogPrimitive (x : ℝ) : ℝ :=
+  Real.log x ^ 2 * dilog x -
+    2 * Real.log x * RamanujanChallenge.P26.trilog26 x +
+    2 * polylog4 x
+
+private theorem i10LogSqDilogPrimitive_hasDerivAt
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt i10LogSqDilogPrimitive (Real.log x ^ 2 * H1 x / x) x := by
+  have hxne : x ≠ 0 := ne_of_gt hx0
+  have hlog := Real.hasDerivAt_log hxne
+  have hd := dilog_hasDerivAt hx0 hx1
+  have ht := RamanujanChallenge.P26.trilog26_hasDerivAt_of_abs_lt_one
+    (by rw [abs_of_pos hx0]; exact hx1) hxne
+  have hq := polylog4_hasDerivAt24_export
+    (by rw [abs_of_pos hx0]; exact hx1) hxne
+  unfold i10LogSqDilogPrimitive
+  have htotal := (((hlog.pow 2).mul hd).sub
+    ((hlog.mul ht).const_mul 2)).add (hq.const_mul 2)
+  convert htotal using 1
+  · funext y
+    simp only [Pi.add_apply, Pi.sub_apply, Pi.mul_apply, Pi.pow_apply]
+    ring
+  · field_simp [hxne]
+    unfold H1
+    simp only [Pi.pow_apply]
+    ring
+
+private theorem i10LogSqDilogPrimitive_tendsto_zero :
+    Tendsto i10LogSqDilogPrimitive (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hq : Tendsto polylog4 (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa using polylog4_continuousAt_zero24_export.tendsto.mono_left
+      nhdsWithin_le_nhds
+  have htotal := (i10_logSq_dilog_tendsto_zero.sub
+    (i10_log_trilog_tendsto_zero.const_mul 2)).add (hq.const_mul 2)
+  have htotal' : Tendsto
+      (fun x : ℝ => Real.log x ^ 2 * dilog x -
+        2 * (Real.log x * RamanujanChallenge.P26.trilog26 x) +
+        2 * polylog4 x) (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa using htotal
+  refine htotal'.congr' ?_
+  filter_upwards with x
+  unfold i10LogSqDilogPrimitive
+  ring
+
+private theorem i10LogSqDilogPrimitive_tendsto_one :
+    Tendsto i10LogSqDilogPrimitive (𝓝[<] (1 : ℝ))
+      (𝓝 (2 * (Real.pi ^ 4 / 90))) := by
+  have hlog : Tendsto Real.log (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    simpa using (Real.continuousAt_log (by norm_num : (1 : ℝ) ≠ 0)).tendsto.mono_left
+      nhdsWithin_le_nhds
+  have htotal := (((hlog.pow 2).mul i10_dilog_tendsto_one).sub
+    ((hlog.mul i10_trilog_tendsto_one).const_mul 2)).add
+      (i10_polylog4_tendsto_one.const_mul 2)
+  have htotal' : Tendsto
+      (fun x : ℝ => Real.log x ^ 2 * dilog x -
+        2 * (Real.log x * RamanujanChallenge.P26.trilog26 x) +
+        2 * polylog4 x) (𝓝[<] (1 : ℝ))
+        (𝓝 (2 * (Real.pi ^ 4 / 90))) := by
+    simpa using htotal
+  refine htotal'.congr' ?_
+  filter_upwards with x
+  unfold i10LogSqDilogPrimitive
+  ring
+
+private theorem i10LogSqH1Div_integral :
+    (∫ x : ℝ in 0..1, Real.log x ^ 2 * H1 x / x) =
+      2 * (Real.pi ^ 4 / 90) := by
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (f := i10LogSqDilogPrimitive) (fa := (0 : ℝ))
+    (fb := 2 * (Real.pi ^ 4 / 90)) (by norm_num)
+    (fun x hx => i10LogSqDilogPrimitive_hasDerivAt hx.1 hx.2)
+    i10LogSqH1Div_intervalIntegrable i10LogSqDilogPrimitive_tendsto_zero
+    i10LogSqDilogPrimitive_tendsto_one]
+  ring
+
+private theorem i10Cross_intervalIntegrable :
+    IntervalIntegrable (fun x : ℝ => dilog (x / 2) * H1 x / x)
+      MeasureTheory.volume 0 1 := by
+  have hg : ContinuousOn (fun x : ℝ => dilog (x / 2)) (Set.uIcc (0 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    apply dilog_continuousOn_unit.comp (by fun_prop)
+    intro x hx
+    constructor <;> linarith [hx.1, hx.2]
+  have hprod := i10H1Div_intervalIntegrable.continuousOn_mul hg
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ => dilog (x / 2) * (H1 x / x)) ?_ hprod
+  intro x _
+  ring
+
+private theorem i10Cross_integral :
+    (∫ x : ℝ in 0..1, dilog (x / 2) * H1 x / x) =
+      polylog4 (1 / 2) + (1 / 24 : ℝ) * Real.log 2 ^ 4 -
+        (1 / 8 : ℝ) * Real.log 2 * zeta3_24 +
+        (1 / 8 : ℝ) * (Real.pi ^ 4 / 90) := by
+  exact i10Cross_eq_halfIntegral.trans i10HalfIntegral_eq
+
+private theorem quadAltI10_raw :
+    I10 = (Real.pi ^ 2 / 6) ^ 2 -
+      2 * polylog4 (1 / 2) - (1 / 12 : ℝ) * Real.log 2 ^ 4 -
+      (7 / 4 : ℝ) * Real.log 2 * zeta3_24 -
+      Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) -
+      (9 / 4 : ℝ) * (Real.pi ^ 4 / 90) := by
+  let q : ℝ → ℝ := fun x => H1 x / x
+  let c : ℝ → ℝ := fun x => dilog (x / 2) * H1 x / x
+  let a1 : ℝ → ℝ := fun x => Real.log x * H1 x / x
+  let a2 : ℝ → ℝ := fun x => Real.log x ^ 2 * H1 x / x
+  let e : ℝ → ℝ := fun x =>
+    ((Real.pi ^ 2 / 6) * q x - 2 * c x) -
+      (a2 x - 2 * Real.log 2 * a1 x + Real.log 2 ^ 2 * q x)
+  have hq : IntervalIntegrable q MeasureTheory.volume 0 1 := by
+    simpa [q] using i10H1Div_intervalIntegrable
+  have hc : IntervalIntegrable c MeasureTheory.volume 0 1 := by
+    simpa [c] using i10Cross_intervalIntegrable
+  have ha1 : IntervalIntegrable a1 MeasureTheory.volume 0 1 := by
+    simpa [a1] using i10LogH1Div_intervalIntegrable
+  have ha2 : IntervalIntegrable a2 MeasureTheory.volume 0 1 := by
+    simpa [a2] using i10LogSqH1Div_intervalIntegrable
+  have hfirst := (hq.const_mul (Real.pi ^ 2 / 6)).sub (hc.const_mul 2)
+  have hsecond := (ha2.sub (ha1.const_mul (2 * Real.log 2))).add
+    (hq.const_mul (Real.log 2 ^ 2))
+  have he : IntervalIntegrable e MeasureTheory.volume 0 1 := by
+    exact hfirst.sub hsecond
+  calc
+    I10 = ∫ x : ℝ in 0..1, e x := by
+      unfold I10
+      apply intervalIntegral.integral_congr
+      intro x hx
+      rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)] at hx
+      by_cases hxzero : x = 0
+      · subst x
+        simp [e, q, c, a1, a2, W0, H1]
+      · dsimp only [e, q, c, a1, a2]
+        unfold W0
+        rw [Real.log_div hxzero (by norm_num : (2 : ℝ) ≠ 0)]
+        ring
+    _ = (Real.pi ^ 2 / 6) ^ 2 -
+      2 * polylog4 (1 / 2) - (1 / 12 : ℝ) * Real.log 2 ^ 4 -
+      (7 / 4 : ℝ) * Real.log 2 * zeta3_24 -
+      Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) -
+      (9 / 4 : ℝ) * (Real.pi ^ 4 / 90) := by
+      dsimp only [e]
+      rw [intervalIntegral.integral_sub hfirst hsecond,
+        intervalIntegral.integral_sub (hq.const_mul (Real.pi ^ 2 / 6))
+          (hc.const_mul 2),
+        intervalIntegral.integral_add
+          (ha2.sub (ha1.const_mul (2 * Real.log 2)))
+          (hq.const_mul (Real.log 2 ^ 2)),
+        intervalIntegral.integral_sub ha2 (ha1.const_mul (2 * Real.log 2))]
+      repeat rw [intervalIntegral.integral_const_mul]
+      dsimp only [q, c, a1, a2]
+      rw [i10H1Div_integral, i10Cross_integral, i10LogH1Div_integral,
+        i10LogSqH1Div_integral]
+      ring
+
+theorem quadAltI10_eq :
+    I10 = -(1 / 2) * quadAltK
+      - (3 / 2) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6)
+      - (13 / 20) * (Real.pi ^ 2 / 6) ^ 2 := by
+  rw [quadAltI10_raw, quadAltK_eq]
+  unfold alternatingCubicLinearEulerValue24 cubicLinearEulerValue24
+  ring
+
+
 end RamanujanChallenge.P24QuadAlt
