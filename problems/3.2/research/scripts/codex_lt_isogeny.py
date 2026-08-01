@@ -148,10 +148,19 @@ def exact_formulae() -> tuple[sp.Expr, ...]:
     ]
     assert all(reduce_w(expression) == 0 for expression in changes)
 
+    # The normalized symmetric-square correspondence used in Q6394 divides
+    # by the degree six.  Its Hodge-line scalar is rational and satisfies the
+    # deck cocycle, although the rank-two isomorphism itself needs w^2=-3.
+    hodge_scalar = sp.Rational(8, 9) * (1 + u) ** 2
+    assert reduce_w(-q**2 / 6 - hodge_scalar) == 0
+    partner_scalar = sp.Rational(8, 9) * (1 + v) ** 2
+    assert sp.factor(hodge_scalar * partner_scalar - 1) == 0
+
     print("VERIFIED exact Franel model and deck involution phi(iota(u))=phi(u)")
     print("VERIFIED Q=(u,-u) has exact order 6 and kernel x-coordinates 0,u,-u^2")
     print("VERIFIED exact formulas for the cyclic 6-isogeny E_u -> C_u")
     print("VERIFIED C_u becomes E_iota(u) over Q(sqrt(-3))(u); twist class is -3")
+    print("VERIFIED normalized Sym^2 scalar g(u)=8(1+u)^2/9 and g(u)g(iota(u))=1")
     return u, x, y, w, v, nx, dx, ny, dy, a4c, a6c, q, r, s, tt
 
 

@@ -10,14 +10,19 @@ No power saving for
 
 follows from either proposed route.
 
-- **[VERIFIED-GALOIS]** The character convention is covariant:
-  `sigma_a(chi_r(t))=chi_{ar}(t)`.  The elliptic traces and the pointwise
-  traces defining `T` are rational integers, hence are fixed.  Exact
-  cyclotomic computations at `p=13,17` verify the action on every `r` and
-  every automorphism.
-- **[VERIFIED-NORM]** For one Galois orbit, its product is an integer.  If
-  `k` members vanish modulo the same chosen `mathfrak p` and the product is
-  nonzero, then `p^k` divides that integer.
+- **[VERIFIED-GALOIS-M]** The character convention is covariant:
+  `sigma_a(chi_r(t))=chi_{ar}(t)`.  Exact cyclotomic computations at
+  `p=13,17` verify the action on `M` for every `r` and every automorphism.
+  The identical statement for `T` follows if its pointwise characteristic-zero
+  traces are rational integers.  The intended Apéry/K3 construction has this
+  normalization, but the inherited phrase “integral compatible system” alone
+  only implies algebraic integrality; this documentary issue is
+  **[GAP-LT-RATIONALITY]**.
+- **[CONDITIONAL-NORM]** Under that rationality input, the product over one
+  Galois orbit is an integer.  If `k` members vanish modulo the same chosen
+  `mathfrak p` and the product is nonzero, then `p^k` divides that integer.
+  Even granting this strongest coefficient-field case, the resulting bound
+  is vacuous.
 - **[NEGATIVE-NORM]** The sharp available Archimedean scale is
   `p^(3/2)` per conjugate.  It yields `k <= (3/2+o(1))|O|`, which is weaker
   than `k<=|O|`.  Orbitwise AM--GM becomes nontrivial only when the orbit
@@ -26,7 +31,7 @@ follows from either proposed route.
   cross terms inside the degree-two fibers of `phi`.  The exact right side
   uses the fiber sums `B_t=sum_{phi(x)=t}a_{p,x}^2`.  This correction makes
   the second moment larger, not smaller.
-- **[GAP-CHAR0-ZERO]** If an orbit product is zero, the whole orbit consists
+- **[GAP-LT-EXACT-ZERO]** If an orbit product is zero, the whole orbit consists
   of characteristic-zero trace zeros.  Both Mellin objects have weight
   three; purity does not exclude this case or bound its orbit size.
 - **[NEGATIVE-TADIC]** The `T` in the checked T-adic exponential-sum theory
@@ -43,7 +48,7 @@ follows from either proposed route.
   `2F1(1/3,2/3;1)`.  CFVZ use this rank-two Franel object; the Apéry object
   is its rank-three symmetric square after a rational pullback.
 
-## 1. The Galois action and the integer orbit product
+## 1. The Galois action and the conditional integer orbit product
 
 Put `N=p-1`, choose a primitive root `g` modulo `p`, and realize the lifted
 Teichmüller character by
@@ -67,9 +72,20 @@ rational integer,
  \sigma_a(\widetilde M(r))=\widetilde M(ar).               \tag{1.2}
 \]
 
-The rank-three Apéry companion is defined over `Z` and its quadratic twist
-has values in `{0,+1,-1}`, so its pointwise Frobenius traces are also rational
-integers.  Therefore the same argument gives
+For `T`, the same conclusion requires the coefficient-field assertion
+
+\[
+ \tau_{p,t}:=\operatorname{Tr}(\operatorname{Frob}_t\mid\mathcal A_-)
+ \in\mathbf Z.                                             \tag{1.3a}
+\]
+
+It is compatible with the intended construction: the Apéry rank-three object
+is defined over `Q`, and the quadratic twist has values in `{0,+1,-1}`.
+However, Q6394 states only “integral compatible system”; algebraic integrality
+without `Q`-rationality would give `tau_{p,t} in O_E` for a coefficient field
+`E`, not necessarily an integer.  Until the rational coefficient field and
+all middle-extension stalks are written explicitly, this is
+**[GAP-LT-RATIONALITY]**.  Granting (1.3a),
 
 \[
  \sigma_a(\widetilde T(r))=\widetilde T(ar),\qquad
@@ -96,8 +112,12 @@ is fixed by `Gal(Q(zeta_N)/Q)`.  Each factor is an algebraic integer, so
  \boxed{P_r\in\mathbf Z}.                                  \tag{1.6}
 \]
 
-This remains true if `Delta_r` happens to lie in a proper subfield: (1.5)
-then repeats the smaller-field norm by a fixed multiplicity.
+This remains true if `Delta_r` happens to lie in a proper cyclotomic
+subfield: (1.5) then repeats the smaller-field norm by a fixed multiplicity.
+If instead the coefficient field is `E != Q`, the same cyclotomic product is
+only in `O_E`; applying `N_{E/Q}` recovers an integer but multiplies the
+Archimedean exponent by `[E:Q]`.  Thus the coefficient-field caveat can only
+weaken the method and does not affect the negative conclusion below.
 
 ### 1.1 Exact transfer from `mathfrak p` to `p`
 
@@ -128,22 +148,25 @@ the fixed prime correspond to `k` distinct conjugate primes dividing
 
 ## 2. The Archimedean bound is intrinsically vacuous
 
-For the generic nonexceptional characters, the inherited cohomology ledger
-has Mellin dimensions six for `M` and four for `T`.  Purity gives
+For the generic nonexceptional characters, the literal `a_{p,x}^2` lift in
+the task is the rank-eight tensor-square pushforward, while `T` has Mellin
+dimension four.  The inherited local-monodromy ledger therefore gives
 
 \[
- |\widetilde M(r)|\le6p^{3/2},\qquad
+ |\widetilde M(r)|\le8p^{3/2},\qquad
  |\widetilde T(r)|\le4p^{3/2},
 \]
 
-hence one may take `c=10` in the direct presentation.  The conductor ledger
-gives the coarser uniform constant `31` when all middle-extension corrections
-are retained.  After the characteristic-zero descent cancellation, the
-generic surviving `A_+` Mellin cohomology has dimension two, giving the
-strongest constant
+hence one may take `c=12` in the direct presentation.  The conductor ledger
+gives the coarser uniform constant `35` when all middle-extension corrections
+are retained.  The rank-two `A_+` Mellin trace is only the *residual* survivor:
+the genuine characteristic-zero difference also contains the Tate summand
+`phi_* det(F)`, whose trace vanishes modulo `p` but not in characteristic
+zero.  Generically its nontrivial Mellin part has dimension two, so the exact
+descent can at best improve the constant to
 
 \[
- |\Delta_r|\le2p^{3/2}.                                   \tag{2.1}
+ |\Delta_r|\le4p^{3/2}.                                   \tag{2.1}
 \]
 
 Any of these constants has the same fatal exponent.  Writing `m=|O_r|`,
@@ -154,7 +177,7 @@ Any of these constants has the same fatal exponent.  Writing `m=|O_r|`,
  \le m\left(\frac32+\log_p c\right).                      \tag{2.2}
 \]
 
-Even with `c=2`, the right side is larger than `m`, so (2.2) is weaker than
+Even with `c=4`, the right side is larger than `m`, so (2.2) is weaker than
 the trivial `k<=m`.
 
 ### 2.1 Orbitwise AM--GM: the exact threshold
@@ -185,12 +208,12 @@ i.e. the orbit root-mean-square is `<p`.  More generally,
  k\le(1-\eta)m.                                           \tag{2.5}
 \]
 
-The natural and observed root-mean-square is instead of order `p^(3/2)`.
+The natural and observed root-mean-square is of order `p^(3/2)`.
 No orbit size changes the exponent in (2.3): small orbits have too little
 averaging, while an orbit of size comparable to `p` still has mean square of
 order `p^3`.  The available global second moment does not force (2.4) for a
-single orbit.  Hence **no orbit structure `q|p-1` is presently
-nonvacuous**.
+single orbit.  The precise worst-case calculation appears in Section 3.
+Hence **no orbit structure `q|p-1` is presently nonvacuous**.
 
 ## 3. Parseval: the required fiber correction
 
@@ -225,16 +248,44 @@ Thus the heuristic `2p^4` for the ungrouped expression becomes approximately
 `4p^4` for the actual Parseval right side.  The exact identity (3.1), not the
 asymptotic constant, is what is used here.
 
-For the surviving rank-three amplitude `d_t` one likewise has
+For the literal difference in the target, write
 
 \[
- \sum_{r=0}^{N-1}|\Delta_r|^2=N\sum_t|d_t|^2.              \tag{3.3}
+ \tau_t=\operatorname{Tr}(\operatorname{Frob}_t\mid\mathcal A_-),
+ \qquad D_t=B_t-\tau_t,
+ \qquad \Delta_r=\sum_tD_t\chi_r(t).                       \tag{3.3}
 \]
 
-The pointwise Weil bound `|d_t|<=3p` gives only a global mean-square of order
-`p^3` per character.  Substituting that scale into (2.3) again gives the
-vacuous exponent `3m/2`.  Parseval confirms the obstruction rather than
-removing it.
+Under the rationality normalization in Section 1, the degree-two fibers and
+Hasse bound give `|B_t|<=8p`; rank three and purity give `|tau_t|<=3p`.
+Hence `|D_t|<=11p` and exact full-character Parseval gives
+
+\[
+ \sum_{r=0}^{N-1}|\Delta_r|^2
+   =N\sum_t|D_t|^2 \le121N^2p^2<121p^4.                   \tag{3.4}
+\]
+
+For `r=1,...,N-1`, the exact left side is the right side of (3.4) minus
+`|sum_t D_t|^2`.  If an orbit has size `m`, the global bound alone yields
+
+\[
+ \sqrt{S_O/m}\le {11Np\over\sqrt m},\qquad
+ {k\over m}\le\log_p\left({11Np\over\sqrt m}\right).       \tag{3.5}
+\]
+
+If `m=p^theta`, the latter is `2-theta/2+o(1)`.  Even for the largest
+possible `m` comparable to `p`, it is `3/2+o(1)`.  Equivalently, forcing the
+nontrivial threshold `S_O/m<p^2` from (3.4) would require `m>121N^2`, whereas
+`m<=N`.
+Thus Parseval makes **no orbit size or divisor structure nonvacuous**.  A
+useful orbit argument would require the genuinely new orbitwise input
+
+\[
+ S_O<mp^2,                                                  \tag{3.6}
+\]
+
+marked **[GAP-LT-ORBIT-ENERGY]**; the global `O(p^4)` moment does not imply
+it.
 
 ## 4. The zero orbit product cannot be removed by purity
 
@@ -247,83 +298,190 @@ covariance implies
 
 There is no weight mismatch to exclude (4.1).  Both `M` and `T` come from
 weight-two input trace functions followed by `H_c^1`, so their generic
-Mellin eigenvalues and their difference have weight three.  After descent,
-`Delta_s` is the trace on a two-dimensional weight-three Mellin cohomology
-space; a trace of two nonzero Weil numbers can be exactly zero.
+Mellin eigenvalues and their difference have weight three.  After reduction,
+the surviving `A_+` block has two-dimensional weight-three Mellin cohomology;
+the genuine characteristic-zero difference also has the Tate-pushforward
+block described above.  Already a trace of two nonzero Weil numbers can be
+exactly zero, so neither presentation excludes exact cancellation.
 
 Katz's complex equidistribution may predict that exact trace zero has measure
 zero in an appropriate extension-field limit, but it supplies no uniform
 bound for these characteristic-zero zero orbits as `p` and the tame character
-group vary diagonally.  This is **[GAP-CHAR0-ZERO]**.  It is logically prior
+group vary diagonally.  This is **[GAP-LT-EXACT-ZERO]**.  It is logically prior
 to applying a nonzero integer norm bound and could contain an orbit of size
 `phi(q)` comparable to `p`.
 
 ## 5. Vertical family / T-adic audit
 
-### 5.1 What the variable `T` actually interpolates
+### 5.1 Exact literature verdict: `T` is the wrong variable
 
-Liu--Wan define a locally constant additive character
-`psi:Z_p -> C_p^times` whose image has order `p^m`.  Their specialization
-`T=pi_psi=psi(1)-1` interpolates wild additive characters of increasing
-`p`-power conductor.  Their T-adic entire-function, Hodge-bound, transfer,
-and ordinarity theorems all vary this additive character.
+The named papers were checked at their definitions and main theorems.
 
-In Liu--Niu's “twisted T-adic” theory, the multiplicative character is
-written `chi=omega^{-u}` and is fixed.  The variable `T` still changes only
-the additive `p`-power character.  The Hasse polynomial `H_u` depends on the
-fixed exponent `u`; the theorems do not assemble the `q-1` possible values of
-`u` into one family or count the exceptional `u`.
+- Liu--Wan, Definitions 1.1--1.2, take a locally constant **additive**
+  character `psi:Z_p -> C_p^times` of order `p^m` and specialize
+  `T=psi(1)-1`.  Theorems 1.4--1.5 and 2.9 concern analytic continuation,
+  the Hodge bound, and ordinarity transfer across those additive
+  specializations.
+- Davis--Wan--Xiao take finite characters of the additive Galois group
+  `Z_p` of an Artin--Schreier--Witt tower.  Theorem 1.2 varies their
+  `p`-power conductor and proves eventual slope progressions.
+- Ren--Wan--Xiao--Yu replace `Z_p` by the additive group
+  `Z_{p^ell}`, topologically `Z_p^ell`.  Their universal character has
+  variables `T_1,...,T_ell`; Theorem 1.4 is an
+  `I=(T_1,...,T_ell)`-adic Hodge/leading
+  term result and Theorem 1.6 is a spectral-halo statement on an admissible
+  locus.  These are several wild variables, not a tame one.
+- In Liu--Niu's twisted theory, `chi=omega^{-u}` is fixed and `T` still
+  varies the additive character.  The Hasse polynomial `H_u` is constructed
+  separately for each fixed `u`.
+- Ren makes the separation explicit: Definition 1.2 defines
+  `L_f(omega^u,chi,s)` with fixed `u` and additive
+  `chi:Z_p -> C_p^times`; Theorem 1.6 varies only the conductor of `chi`.
+  Definition 2.7 specializes `T=chi(1)-1`.  Lemma 2.8 packages all `u` only
+  through the discrete product
 
-Davis--Wan--Xiao similarly study characters of the Galois group `Z_p` of an
-Artin--Schreier--Witt tower.  Their slope stability as the conductor grows is
-a wild pro-`p` statement.  Our characters
+  \[
+   \prod_{u=0}^{q-2}L_f(\omega^u,T,s)
+       =L_{f(x^{q-1})}(1,T,s),                             \tag{5.1}
+  \]
+
+  not through analytic interpolation in `u`.  For `q=p`, the degree of
+  `f(x^{p-1})` and the associated Hodge/conductor complexity are already of
+  order `p`.
+
+Our characters `chi_r:F_p^times -> mu_{p-1}` are purely tame.  None of these
+theorems compares them, so the exact verdict is **[NEGATIVE-TADIC]**: the
+checked T-adic/Newton--Hodge results give neither `o(p)` nor `O(polylog p)`.
+
+### 5.2 The tame base is `p-1` disconnected points
+
+The correct integral tame-character base at a fixed prime is
 
 \[
- \chi_r:\mathbf F_p^\times\longrightarrow\mu_{p-1}
+ X_p=\operatorname{Spec}\mathbf Z_p[U]/(U^{p-1}-1)
+     \simeq\coprod_{r\bmod p-1}\operatorname{Spec}\mathbf Z_p, \tag{5.2}
 \]
 
-are tame and prime-to-`p`.  They are not specializations of that weight
-space.  Consequently, the checked T-adic/eigencurve results give **no bound
-better than `O(p)`**, and in particular neither `o(p)` nor `O(polylog p)`.
+because the Teichmüller roots are distinct modulo `p`.  Its ring of functions
+is the product of `p-1` copies of `Z_p`; a section may vanish on an arbitrary
+subset of the components.  On a reduced zero-dimensional base a nonempty
+zero locus is a union of connected components, not a bounded-degree Cartier
+divisor.
 
-### 5.2 A direct obstruction to a `Z_p` interpolation of `r`
+The same obstruction is visible in the full multiplicative weight space:
+`Hom_cont(Z_p^times,C_p^times)` is a disjoint union of `p-1` open disks,
+indexed by the restriction to `mu_{p-1}`.  The pure tame characters
+`omega^{-r}` are the wild-trivial center points of different disks.  Halo
+theorems work inside one fixed disk and do not compare these centers.
 
-For a fixed nontrivial tame root `zeta`, suppose a continuous function on
-`Z_p` agreed with `n -> zeta^n` at every integer.  Since `p^j -> 0` in
-`Z_p`, continuity would require `zeta^(p^j) -> 1`.  But
+There is also a direct continuity obstruction.  For a nontrivial tame root
+`zeta`, if `n -> zeta^n` extended continuously to `Z_p`, then `p^j -> 0`
+would imply `zeta^{p^j} -> 1`; instead
 
 \[
- p^j\equiv1\pmod{p-1},\qquad \zeta^{p^j}=\zeta\ne1.        \tag{5.1}
+ p^j\equiv1\pmod{p-1},\qquad \zeta^{p^j}=\zeta\ne1.        \tag{5.3}
 \]
 
-Thus the tame character indices do not lie on one natural rigid disk.  They
-form a zero-dimensional finite etale character scheme of length `p-1`.
-A function on that scheme can have `Theta(p)` zeros, and Strassmann's theorem
-cannot help without a separately constructed analytic function of uniformly
-bounded Weierstrass degree.
+Thus no connected rigid reparametrization joins all `r`.  The disconnected
+package (5.2) exists, but a general Hasse tuple on it has `p-1` independent
+coordinates and only the tautological `O(p)` zero bound.
 
-### 5.3 “Non-ordinary divisor” needs four missing inputs
+### 5.3 Trace divisibility is not automatically non-ordinarity
 
-Even the identification “trace zero modulo `p` = non-ordinary fiber” is not
-automatic.  It requires:
+For an integral rank-two Frobenius module with characteristic polynomial
 
-- **[GAP-CRYS]** an integral overconvergent `F`-crystal companion and lattice
-  for the rank-two Mellin object, with its trace reducing to the displayed
-  `b_r`;
-- **[GAP-HODGE]** a determinant/Hodge-polygon calculation proving that trace
-  cancellation modulo `p` is equivalent to a Newton-polygon jump;
-- **[GAP-FAMILY]** one rigid/formal parameter family containing all tame
-  twists `omega^{-r}`;
-- **[GAP-DEGREE]** an `o(p)` bound for the degree of its Hasse or Weierstrass
-  function.
+\[
+ X^2-BX+D,\qquad v_p(D)=h>0,                               \tag{5.4}
+\]
 
-The common heuristic that a Hasse locus on a curve has conductor-bounded
-degree is false in defining characteristic without further normalization.
-For an elliptic family the Hasse invariant is a section of
-`omega_Hodge^(p-1)`, so its divisor has degree
-`(p-1)deg(omega_Hodge)`.  The Legendre Hasse polynomial has degree
-`(p-1)/2`, an explicit `Theta(p)` example.  Even a genuine curve family would
-therefore not by itself yield `o(p)`.
+and Hodge slopes `{0,h}`, ordinarity means a unique unit root.  In this
+narrow normalization, `B` is a unit exactly when that unit root exists, so
+`p|B` is equivalent to non-ordinarity.  Every hypothesis is load-bearing:
+
+- `diag(1,-1)` has two unit roots and trace zero but is ordinary for Hodge
+  slopes `{0,0}`;
+- `diag(p,p^2)` is ordinary for Hodge slopes `{1,2}` and its trace is
+  automatically divisible by `p`;
+- in higher rank, two unit eigenvalues may cancel in the full trace.
+
+Q6394 supplies an `ell`-adic rank-two generic Mellin cohomology trace after
+residual cancellation.  It does not yet print an integral overconvergent
+`F`-crystal, stable lattice, determinant valuation, or Hodge polygon.  Hence
+the asserted equivalence between `p|b_r` and non-ordinarity of that rank-two
+Mellin block is **[GAP-LT-TRACE-ORD]**, not an inherited consequence of
+complex weight three.
+
+Even for a genuine family over a curve, “the Hasse locus is a divisor” gives
+no uniform bounded degree in defining characteristic.  The Legendre Hasse
+polynomial has degree `(p-1)/2`; equivalently the elliptic Hasse invariant is
+a section of `omega_Hodge^(p-1)`.  Thus a curve by itself would still permit
+linearly many nonordinary points.
+
+### 5.4 Explicit computation plan for the rank-three objects
+
+There is a useful computation, but it tests a new conjecture rather than
+invoking an existing T-adic theorem.
+
+1. Construct integral overconvergent `F`-crystals for `A_-` (conductor at
+   most 11) and for the residual `A_+` block.  Print their connections,
+   Frobenius matrices, stable lattices, local residues, and determinants.
+   Rigid/log-de Rham cohomology must reproduce generic Mellin ranks four for
+   `A_-` and two for `A_+`; the finite exceptional low-order characters and
+   their `H_c^0/H_c^2` corrections must be enumerated separately.  For the
+   generic `A_+` block, the desired calculation is
+
+   \[
+    \det(1-X\Phi_r)=1-B_rX+p^3\epsilon_rX^2,
+    \quad \epsilon_r\in\mathbf Z_p^\times,
+    \quad B_r\bmod p=b_r,                                 \tag{5.5}
+   \]
+
+   together with Hodge slopes `{0,3}`.  Equation (5.5) and those slopes are
+   **[GAP-LT-CRYS]**; they are the precise input needed to close
+   **[GAP-LT-TRACE-ORD]**.
+2. Pull the crystal back along the Lang cover
+   `L_p:G_m -> G_m`, `y -> y^(p-1)`, whose deck group is `F_p^times`.
+   Projection and the integral idempotents
+
+   \[
+    e_r={1\over p-1}\sum_{a\in\mathbf F_p^\times}
+          \omega^r(a)[a]                                  \tag{5.6}
+   \]
+
+   split the global rigid cohomology into the individual Kummer-twist
+   blocks.  Compute Frobenius on the pullback to precision at least `p^4`,
+   apply a Teichmüller DFT to the deck action, and compare every block trace
+   modulo `p` with the existing `b_r` table.
+3. Compute each Newton polygon.  If (5.5) holds, put
+   `delta_r=NP_r(1)-HP_r(1)`.  A hit has `delta_r>=1`; hence
+
+   \[
+    \#Z_p\le\sum_r\delta_r.                                \tag{5.7}
+   \]
+
+   This makes the total Newton--Hodge excess a concrete experimental target.
+
+The pullback has degree `p-1` and total cohomological rank linear in `p`.
+Standard Dwork, Grothendieck--Ogg--Shafarevich, and Hodge estimates therefore
+give only `sum_r delta_r=O(p)`, exactly as Ren's product (5.1) acquires degree
+linear in `p`.
+
+### 5.5 The theorem that would actually finish the route
+
+What is missing is not another fixed-component halo theorem but a
+cross-component residual theorem.  A sufficient statement is:
+
+> **[GAP-LT-TAME-COUNT]** For a fixed integral bounded-conductor
+> `F`-isocrystal `A`, there is `delta>0` such that, uniformly at good primes,
+> the number of tame `chi:F_p^times -> mu_{p-1}` for which
+> `Tr(Frob | H_c^1(G_m,A tensor L_chi))` is zero modulo `p` is
+> `O_A(p^(1-delta))`.
+
+Equivalently for the computation above, one could prove
+`sum_r delta_r=o(p)`.  None of Liu--Wan, Davis--Wan--Xiao,
+Ren--Wan--Xiao--Yu, Liu--Niu, or Ren contains such a conclusion.  Constructing
+a relative Kummer--Mellin crystal over (5.2) would only place the same `p-1`
+blocks side by side; without **[GAP-LT-TAME-COUNT]** it is tautological.
 
 ## 6. Explicit Beauville-IV correspondence
 
@@ -440,13 +598,24 @@ untwisted wording in Q6394.  It disappears after symmetric square:
    \simeq\operatorname{Sym}^2(V).                          \tag{6.12}
 \]
 
-Thus (6.11) supplies precisely the Frobenius-compatible correspondence needed
-for the rank-three descent.  At five good split primes, the script evaluates
-the rational map and the coordinate change at every eligible affine point.
+Moreover the coordinate scale in (6.9) satisfies
+
+\[
+ -{q^2\over6}={8\over9}(1+u)^2=:g(u),\qquad
+ g(u)g(\iota(u))=1.                                      \tag{6.13}
+\]
+
+Thus the degree-six normalized symmetric square realizes exactly the
+connection cocycle from Q6394.  This supplies the generic-fiber
+Frobenius-compatible correspondence needed for the rank-three descent.  Its
+integral/crystalline normalization at all bad middle-extension stalks is not
+checked by these rational maps and remains **[GAP-LT-BAD-STALKS]**.  At five
+good split primes, the script evaluates the rational map and coordinate
+change at every eligible affine point.
 At both split and nonsplit primes it separately verifies the exact trace law
 
 \[
- a_p(E_{\iota(u)})=\left(\frac{-3}{p}\right)a_p(E_u),      \tag{6.13}
+ a_p(E_{\iota(u)})=\left(\frac{-3}{p}\right)a_p(E_u),      \tag{6.14}
 \]
 
 so the traces themselves need not be equal; their squares always are.  This
@@ -510,6 +679,8 @@ VERIFIED p=17: grouped Parseval identity; ungrouped RHS differs by 207360
 
 $ python3 problems/3.2/research/scripts/codex_lt_tadic_obstruction.py
 VERIFIED tame exponent obstruction: p^j=1 mod (p-1), so zeta^(p^j)=zeta != 1 although p^j tends p-adically to 0
+VERIFIED tame character special fiber splits into p-1 independent points at p=5,7,13,17,29
+VERIFIED trace mod p is not a general ordinarity test; the unique-unit-root Hodge/determinant hypotheses are load-bearing
 VERIFIED Legendre Hasse polynomial degree=(p-1)/2 for p=5,7,11,13,17,19,23,29,31
 
 $ python3 problems/3.2/research/scripts/codex_lt_cfvz_rank_check.py
@@ -522,6 +693,7 @@ VERIFIED exact Franel model and deck involution phi(iota(u))=phi(u)
 VERIFIED Q=(u,-u) has exact order 6 and kernel x-coordinates 0,u,-u^2
 VERIFIED exact formulas for the cyclic 6-isogeny E_u -> C_u
 VERIFIED C_u becomes E_iota(u) over Q(sqrt(-3))(u); twist class is -3
+VERIFIED normalized Sym^2 scalar g(u)=8(1+u)^2/9 and g(u)g(iota(u))=1
 VERIFIED p=7: rational map lands on E_iota(u) at 12 affine points
 VERIFIED p=13: rational map lands on E_iota(u) at 84 affine points
 VERIFIED p=19: rational map lands on E_iota(u) at 228 affine points
@@ -538,16 +710,23 @@ VERIFIED a_p(E_iota(u))=(-3|p)*a_p(E_u) at p=5,7,11,13,17 (38 smooth fibers; spl
    Definitions 1.1--1.2 and Theorems 1.4--1.5, 2.3, 2.9.
 2. C. Liu and C. Niu,
    [*Generic twisted T-adic exponential sums of polynomials*](https://arxiv.org/abs/0911.4213),
-   Definition 1.1 and Theorems 1.9--1.12.
-3. C. Niu, W. Liu, and C. Liu,
-   [*On L-functions of twisted T-adic exponential sums*](https://doi.org/10.1016/j.jnt.2017.10.016).
-4. C. Davis, D. Wan, and L. Xiao,
+   Definition 1.1 and Theorems 1.4 and 1.10.
+3. C. Davis, D. Wan, and L. Xiao,
    [*Newton slopes for Artin--Schreier--Witt towers*](https://arxiv.org/abs/1310.5311),
-   especially Theorem 1.2.
-5. X. Caruso, F. Fuernsinn, D. Vargas-Montoya, and W. Zudilin,
+   Theorem 1.2 and Section 4.
+4. R. Ren, D. Wan, L. Xiao, and M. Yu,
+   [*Slopes for higher rank Artin--Schreier--Witt towers*](https://arxiv.org/abs/1605.02254),
+   Theorems 1.1, 1.4, 1.6 and Section 2.3.
+5. R. Ren,
+   [*Newton slopes for twisted Artin--Schreier--Witt towers*](https://arxiv.org/abs/1704.07017),
+   Definition 1.2, Theorem 1.6, Definition 2.7, and Lemma 2.8.
+6. R. Liu, D. Wan, and L. Xiao,
+   [*The eigencurve over the boundary of weight space*](https://arxiv.org/abs/1412.2584),
+   Introduction pp. 2--4 and Theorems 1.3 and 1.5; the tame component is fixed.
+7. X. Caruso, F. Fuernsinn, D. Vargas-Montoya, and W. Zudilin,
    [*Galois Groups of Apéry-like Series Modulo Primes*](https://arxiv.org/abs/2510.23298),
    especially pp. 2--4 and p. 9 of v1.
-6. D. Zagier,
+8. D. Zagier,
    [*Integral solutions of Apéry-like recurrence equations*](https://people.mpim-bonn.mpg.de/zagier/files/tex/AperylikeRecEqs/fulltext.pdf),
    Section 7, for Beauville family IV and its `Gamma_1(6)` model.  The explicit
    cyclic degree-six map in Section 6 above is a new Velu calculation checked
@@ -555,11 +734,13 @@ VERIFIED a_p(E_iota(u))=(-3|p)*a_p(E_u) at p=5,7,11,13,17 (38 smooth fibers; spl
 
 ## Least-confident step
 
-**[GAP-CRYS] is the least-confident step.**  The integral `ell`-adic descent,
-the explicit degree-six isogeny (including its constant quadratic twist), and
-all finite-field trace congruences are concrete.  What has not been
-constructed is one integral overconvergent rank-two Mellin `F`-crystal with a
-lattice whose reduction realizes every `b_r` and whose Hodge data turn trace
-cancellation into a Newton-polygon jump.  Without that object, “non-ordinary
-twist” is a heuristic renaming of the original divisibility event, not a
-theorem to which a Hasse-locus degree bound can be applied.
+**[GAP-LT-CRYS] is the least-confident step.**  The generic-fiber degree-six
+isogeny, its constant quadratic twist, and the displayed finite-field trace
+checks are concrete.  What has not been constructed is one integral
+overconvergent rank-two Mellin `F`-crystal with a stable lattice whose
+reduction realizes every `b_r` and whose Hodge data turn trace cancellation
+into a Newton-polygon jump.  The coefficient-field issue
+**[GAP-LT-RATIONALITY]** and bad-stalk normalization
+**[GAP-LT-BAD-STALKS]** are part of that arithmetic upgrade.  Without it,
+“non-ordinary twist” is a heuristic renaming of the original divisibility
+event, not a theorem to which a Hasse-locus argument can be applied.
