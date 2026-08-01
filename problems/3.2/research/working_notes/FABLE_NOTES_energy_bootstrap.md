@@ -2311,3 +2311,19 @@ cron 回赠 Abel: S_1(Y)≪Y^{2−δ} 全Y ⟹ ΣR_d/d²=O(1) ⟹ 去log; L²因
 q22 判决: G_h 核心包 CONFIRMED, GRAM 需投影 3 端点线 + [GOOD-POLE]/[GOOD-CRIT]
 分层 (q28 在证: 窗口化 restart ⟹ Z(H)≪H^{2/3} ⟹ Bad(H)≪H^{5/3} 负担可忽略)。
 cron 第四定理 [NEAR-WALL-3/7]: K_p(H,D)≪HD^{11/7}; H²logH 敌审零缺陷可并卷。
+
+## §117 — 收敛加速 (08-01 深夜)
+
+- 并卷 R2: [Q-H2LOGH] 正文 (CRON_SECTION_h2logh.tex) 入 MERGE-SLOT, proof.tex 171pp
+  零error push (4847ca8)。
+- Q6612 (BIGMON): **G_geom(G_h) ⊆ Sp_{4h−2} PROVED** (反射⟹辛自对偶); 条件定理
+  M₄=3 ⟹ Sp 满 (Larsen+U(2)幂幺); gap1 (2-传递) 已被 CRIT(h) 链闭合; 缺失引理
+  = 四变量加性能量簇分量计数 (q32/life9 在证)。M₄ 实测 2.3–3.6 ≈ 3 ✓。
+- Q6624 (PAIR-FLAT): 二级表示 V_{h,k} 不可约+Haar ⟹ 迹方差 1 与维数无关 (正解);
+  可证常数 O(hk) 固定对; census 对上真 O(√p) 定理; 水平一致性=二级族大筛。
+- Q6613 (谱): [TR4'] ~H³p⁶ 恰够 COINC (吃满余量); 六阶矩首个有真富余
+  (‖O‖≤H^{2/3}p^{3/2} ⟹ 范围到 p^{3/4}!) → q31 六阶矩几何在算; [OP-OFF-0]
+  任意绝对常数即可; λ_max 幂迭代 codex 直测中。
+- cron wallprobe: gauge 异常未实现 (COINC 几何安全); SVD<3; lc 薄族 (等差 h) 无害;
+  C_h 全复根 h≤8; **归约 W_h 不可约 ⟹ full Morse ⟹ [CRIT-2H]** — 分量残差=单变量族。
+- lastwall 地基: 重数 log 级无结构; primitive 主导 (分解不缩); 小d R_d=O(1) 到 log²p。
