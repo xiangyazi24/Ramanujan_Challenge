@@ -1199,3 +1199,21 @@ double-certified.
   存活行动项: (a) square-root barrier 的条件 p^{1/2} 路线(特定混合和的平方根
   消去); (b) [GAP-2] Tannakian 群计算→Katz 27.1 水平定理(可攻, qD 模板);
   (c) 水平色散 k=2 (cron q22 判决待落)。
+
+## §56 (08-01) codex-lt-high 收官: isogeny 显式化 + [FALSE-3F2] 裁决 + 轨道范数账本定案
+
+- **[VERIFIED-ISOGENY]** Q6394 欠的 isogeny 显示补齐: Weierstrass 模型商掉
+  有理 6 阶循环子群, 商 = deck-共轭纤维的常 (−3) 二次扭, Sym² 后扭消失
+  (机制解释了为何 b_r 层面看不见)。我机复跑: 五素数 2148 点评值 +
+  a_p(E_ι(u)) = (−3|p)·a_p(E_u) 38 纤维全绿 (codex_lt_isogeny.py)。
+- **[FALSE-3F2]** cron q15 疑点(i)裁决: ₃F₂(1/3,2/3,1;1,1) 字面识别为假——
+  参数消去后 = 秩-2 ₂F₁(1/3,2/3;1); CFVZ 用的就是秩-2 Franel 对象, Apéry =
+  其有理拉回后的秩-3 Sym²。与我 §51 的 rank 簿记裁决完全一致, 现为定理级。
+- [VERIFIED-GALOIS/NORM] + [NEGATIVE-NORM]: 轨道范数簿记与 Q6405 互证
+  (阈值错配 vacuous, orbitwise AM–GM 精确阈值算出); 新增 [GAP-CHAR0-ZERO]
+  (轨道积=0 的纯性排除, 逻辑在先)。
+- [NEGATIVE-TADIC] 第四票 + 非常规除子路线四缺件清单
+  (GAP-CRYS/HODGE/FAMILY/DEGREE)。
+- cron S.5: [CONJ-MASS-1] 降级勘误入账; 二阶检验功效分析=任何规模无功效,
+  mass 问题纯代数活口(q20)。
+- 在场: codex-lt-max(终报待落), q22 色散判决, qH2/qB 候安静 tab 重发。

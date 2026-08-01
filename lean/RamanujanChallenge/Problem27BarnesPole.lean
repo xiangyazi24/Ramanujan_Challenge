@@ -438,6 +438,15 @@ private theorem integral_barnesPoleFubini_inner_left27 (m : ℕ) (y : ℝ) :
     _ = sechSq27 y * barnesPoleBlock27 (barnesPolePoint27 m y) := by
       rw [integral_laplacePoleBlock27 hz]
 
+/-- Absolute integrability of each pole block on a Barnes line. -/
+theorem integrable_sechSq_mul_barnesPoleBlock27 (m : ℕ) :
+    Integrable (fun y : ℝ =>
+      sechSq27 y * barnesPoleBlock27 (barnesPolePoint27 m y)) := by
+  have h := (integrable_barnesPoleFubini27 m).integral_prod_left
+  apply h.congr
+  filter_upwards with y
+  exact integral_barnesPoleFubini_inner_left27 m y
+
 private theorem integral_barnesPoleFubini_inner_right27
     (m : ℕ) {t : ℝ} (ht : 0 < t) :
     (∫ y : ℝ, barnesPoleFubini27 m y t) =
