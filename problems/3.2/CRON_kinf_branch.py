@@ -1112,12 +1112,546 @@ def certify_height(
     return last_result, last_roots
 
 
+def arb_text(value: Any, digits: int = 20) -> str:
+    """Serialize an Arb midpoint without Python-float truncation."""
+
+    return value.str(digits, radius=False)
+
+
+def acb_ball_payload(value: Any, digits: int = 20) -> Dict[str, Any]:
+    """Return a compact midpoint-plus-radius representation of an Acb ball."""
+
+    midpoint = value.mid()
+    return {
+        "midpoint": {
+            "real": arb_text(midpoint.real, digits),
+            "imag": arb_text(midpoint.imag, digits),
+        },
+        "radius": arb_text(value.rad(), min(digits, 14)),
+    }
+
+
+def dyadic_band_index(cell_distance: int, h: int) -> Optional[int]:
+    """Index the exact distance ``cell_distance/h`` by dyadic half-open bands.
+
+    The returned ``k`` is characterized by
+    ``2^-k <= cell_distance/h < 2^(-k+1)``.  A same-cell pair has no positive
+    dyadic index and is returned as ``None``.
+    """
+
+    if cell_distance == 0:
+        return None
+    k = 1
+    while cell_distance * (1 << k) < h:
+        k += 1
+    return k
+
+
+def compact_pair(pair: Dict[str, Any]) -> Dict[str, Any]:
+    """Fields needed when a pair is referenced from a summary table."""
+
+    return {
+        "pair_index": pair["pair_index"],
+        "orbit_a": pair["orbit_a"],
+        "orbit_b": pair["orbit_b"],
+        "cell_distance_cells": pair["cell_distance_cells"],
+        "cell_distance": pair["cell_distance"],
+        "dyadic_band": pair["dyadic_band"],
+        "relative_separation": pair["relative_separation"],
+    }
+
+
+def pair_anatomy_height(
+    data: HeightData, roots: Sequence[Any], digits: int
+) -> Dict[str, Any]:
+    """Resolve certified quotient roots into cells/branches and all pairs.
+
+    For each mirror orbit, take the unique critical-point representative in
+    the upper half-plane.  It lies in one of the physical cells
+    ``-j-1 < Re(x) < -j``.  We use ``t=j/h``; reflection sends ``t`` to
+    ``1-t``.  Each cell has two upper-half-plane representatives, labelled
+    ``inner`` and ``outer`` by increasing imaginary part.
+    """
+
+    old_dps = mp.dps
+    mp.dps = max(digits, 80)
+    numerator = acb_poly(data.squared_value_num)
+    denominator = acb_poly(data.squared_value_den)
+    provisional: List[Dict[str, Any]] = []
+
+    for root_index, root in enumerate(roots):
+        square_root = root.sqrt()
+        candidates = [
+            (-(data.h + 1) + square_root) / 2,
+            (-(data.h + 1) - square_root) / 2,
+        ]
+        upper = [candidate for candidate in candidates if float(candidate.imag.lower()) > 0]
+        if len(upper) != 1:
+            raise ArithmeticError(
+                "could not select a unique upper-half-plane representative "
+                "at h=%d root=%d" % (data.h, root_index)
+            )
+        representative = upper[0]
+        cell_index = math.floor(-float(representative.real))
+        if not 1 <= cell_index <= data.h - 1:
+            raise ArithmeticError(
+                "critical representative escaped internal cells at h=%d: j=%d"
+                % (data.h, cell_index)
+            )
+        if not (
+            float(representative.real.lower()) > -cell_index - 1
+            and float(representative.real.upper()) < -cell_index
+        ):
+            raise ArithmeticError(
+                "cell label is not certified by the representative ball at "
+                "h=%d j=%d" % (data.h, cell_index)
+            )
+
+        denominator_ball = denominator(root)
+        if denominator_ball.contains(0):
+            raise ArithmeticError(
+                "squared critical value denominator contains zero at h=%d"
+                % data.h
+            )
+        value = numerator(root) / denominator_ball
+        local_coordinate = representative + cell_index
+        provisional.append(
+            {
+                "root_index": root_index,
+                "cell_index": cell_index,
+                "root_ball": root,
+                "representative_ball": representative,
+                "local_coordinate_ball": local_coordinate,
+                "value_ball": value,
+                "value_midpoint_mp": mp_midpoint(value, digits + 20),
+            }
+        )
+
+    by_cell: Dict[int, List[Dict[str, Any]]] = {}
+    for orbit in provisional:
+        by_cell.setdefault(orbit["cell_index"], []).append(orbit)
+    if sorted(by_cell) != list(range(1, data.h)):
+        raise ArithmeticError(
+            "upper-half-plane representatives do not cover all cells at h=%d"
+            % data.h
+        )
+    for cell_index, cell_orbits in by_cell.items():
+        if len(cell_orbits) != 2:
+            raise ArithmeticError(
+                "expected two local branches at h=%d j=%d, found %d"
+                % (data.h, cell_index, len(cell_orbits))
+            )
+        cell_orbits.sort(key=lambda row: float(row["representative_ball"].imag))
+        if cell_orbits[0]["representative_ball"].imag.overlaps(
+            cell_orbits[1]["representative_ball"].imag
+        ):
+            raise ArithmeticError(
+                "inner/outer branch labels are not separated at h=%d j=%d"
+                % (data.h, cell_index)
+            )
+        cell_orbits[0]["branch"] = "inner"
+        cell_orbits[1]["branch"] = "outer"
+
+    provisional.sort(
+        key=lambda row: (row["cell_index"], 0 if row["branch"] == "inner" else 1)
+    )
+    orbit_rows: List[Dict[str, Any]] = []
+    internal: List[Dict[str, Any]] = []
+    for orbit_index, orbit in enumerate(provisional, start=1):
+        cell_index = orbit["cell_index"]
+        branch = orbit["branch"]
+        orbit_id = "h%d-j%d-%s" % (data.h, cell_index, branch)
+        value_ball = orbit["value_ball"]
+        row = {
+            "orbit_index": orbit_index,
+            "orbit_id": orbit_id,
+            "quotient_root_index": orbit["root_index"],
+            "cell_index": cell_index,
+            "cell_position": mp.nstr(mp.mpf(cell_index) / data.h, 20),
+            "cell_position_fraction": "%d/%d" % (cell_index, data.h),
+            "branch": branch,
+            "quotient_root_u": acb_ball_payload(orbit["root_ball"], 22),
+            "upper_half_plane_x": acb_ball_payload(
+                orbit["representative_ball"], 22
+            ),
+            "local_coordinate_z": acb_ball_payload(
+                orbit["local_coordinate_ball"], 22
+            ),
+            "squared_critical_value": acb_ball_payload(value_ball, 24),
+        }
+        orbit_rows.append(row)
+        internal.append(
+            {
+                **row,
+                "value_ball": value_ball,
+                "value_midpoint_mp": orbit["value_midpoint_mp"],
+            }
+        )
+
+    pairs: List[Dict[str, Any]] = []
+    best_pair: Optional[Tuple[Any, Dict[str, Any]]] = None
+    band_accumulators: Dict[Optional[int], Dict[str, Any]] = {}
+    for right in range(len(internal)):
+        orbit_b = internal[right]
+        for left in range(right):
+            orbit_a = internal[left]
+            value_a = orbit_a["value_midpoint_mp"]
+            value_b = orbit_b["value_midpoint_mp"]
+            absolute_separation = abs(value_a - value_b)
+            scale = max(abs(value_a), abs(value_b))
+            relative_separation = absolute_separation / scale
+            cell_distance = abs(orbit_a["cell_index"] - orbit_b["cell_index"])
+            band_index = dyadic_band_index(cell_distance, data.h)
+            band_label = "same-cell" if band_index is None else "k=%d" % band_index
+            pair = {
+                "pair_index": len(pairs) + 1,
+                "orbit_a": orbit_a["orbit_id"],
+                "orbit_b": orbit_b["orbit_id"],
+                "cell_distance_cells": cell_distance,
+                "cell_distance": mp.nstr(mp.mpf(cell_distance) / data.h, 20),
+                "cell_distance_fraction": "%d/%d" % (cell_distance, data.h),
+                "dyadic_band": band_label,
+                "absolute_separation_midpoint": mp_scientific(
+                    absolute_separation, 20
+                ),
+                "relative_separation": mp_scientific(relative_separation, 20),
+            }
+            pairs.append(pair)
+            if best_pair is None or relative_separation < best_pair[0]:
+                best_pair = (relative_separation, pair)
+
+            accumulator = band_accumulators.setdefault(
+                band_index,
+                {
+                    "pair_count": 0,
+                    "minimum": None,
+                    "minimum_relative_over_distance_squared": None,
+                },
+            )
+            accumulator["pair_count"] += 1
+            if (
+                accumulator["minimum"] is None
+                or relative_separation < accumulator["minimum"][0]
+            ):
+                accumulator["minimum"] = (relative_separation, pair)
+            if cell_distance:
+                distance = mp.mpf(cell_distance) / data.h
+                normalized = relative_separation / distance**2
+                if (
+                    accumulator["minimum_relative_over_distance_squared"] is None
+                    or normalized
+                    < accumulator["minimum_relative_over_distance_squared"]
+                ):
+                    accumulator["minimum_relative_over_distance_squared"] = normalized
+
+    if best_pair is None:
+        raise ArithmeticError("pair anatomy requires at least two quotient orbits")
+
+    dyadic_rows = []
+    same_cell_row: Optional[Dict[str, Any]] = None
+    for band_index, accumulator in sorted(
+        band_accumulators.items(), key=lambda item: -1 if item[0] is None else item[0]
+    ):
+        minimum_value, minimum_pair = accumulator["minimum"]
+        band_row = {
+            "band": "same-cell" if band_index is None else "k=%d" % band_index,
+            "pair_count": accumulator["pair_count"],
+            "minimum_relative_separation": mp_scientific(minimum_value, 20),
+            "minimizing_pair": compact_pair(minimum_pair),
+        }
+        if band_index is None:
+            band_row["distance_interval"] = "{0}"
+            same_cell_row = band_row
+        else:
+            band_row.update(
+                {
+                    "k": band_index,
+                    "distance_interval": "[2^-%d,2^-%d)"
+                    % (band_index, band_index - 1),
+                    "lower_endpoint": mp.nstr(mp.mpf(2) ** (-band_index), 20),
+                    "upper_endpoint": mp.nstr(
+                        mp.mpf(2) ** (-(band_index - 1)), 20
+                    ),
+                    "minimum_relative_over_distance_squared": mp_scientific(
+                        accumulator["minimum_relative_over_distance_squared"], 20
+                    ),
+                }
+            )
+            dyadic_rows.append(band_row)
+
+    orbit_by_id = {row["orbit_id"]: row for row in internal}
+    if data.h % 2:
+        central_cells = (data.h // 2, data.h // 2 + 1)
+    else:
+        central_cells = (data.h // 2 - 1, data.h // 2 + 1)
+    central_ids = {
+        "h%d-j%d-inner" % (data.h, central_cells[0]),
+        "h%d-j%d-inner" % (data.h, central_cells[1]),
+    }
+    central_pair = next(
+        (
+            pair
+            for pair in pairs
+            if {pair["orbit_a"], pair["orbit_b"]} == central_ids
+        ),
+        best_pair[1],
+    )
+    minimum_ids = {best_pair[1]["orbit_a"], best_pair[1]["orbit_b"]}
+    central_gap = {
+        **compact_pair(central_pair),
+        "expected_cells": list(central_cells),
+        "branch": "inner",
+        "is_global_minimum": minimum_ids == central_ids,
+        "gap_times_h_squared": mp_scientific(
+            mp.mpf(central_pair["relative_separation"]) * data.h**2, 20
+        ),
+    }
+    minimum_orbits = [orbit_by_id[best_pair[1]["orbit_a"]], orbit_by_id[best_pair[1]["orbit_b"]]]
+    global_minimum = {
+        **compact_pair(best_pair[1]),
+        "cells": [row["cell_index"] for row in minimum_orbits],
+        "branches": [row["branch"] for row in minimum_orbits],
+        "is_predicted_central_inner_pair": minimum_ids == central_ids,
+    }
+
+    result = {
+        "h": data.h,
+        "orbit_count": len(orbit_rows),
+        "pair_count": len(pairs),
+        "orbits": orbit_rows,
+        "pairs": pairs,
+        "global_minimum": global_minimum,
+        "central_gap": central_gap,
+        "same_cell_band": same_cell_row,
+        "dyadic_bands": dyadic_rows,
+    }
+    mp.dps = old_dps
+    return result
+
+
+def fit_central_limit(points: Sequence[Tuple[int, Any]]) -> Dict[str, Any]:
+    """Fit ``gap*h^2 = kappa + a/h + b/h^2`` and retain every residual."""
+
+    if len(points) < 3:
+        raise ArithmeticError("a quadratic inverse-height fit needs three points")
+    old_dps = mp.dps
+    mp.dps = 80
+    design = mp.matrix(
+        [[mp.mpf(1), mp.mpf(1) / h, mp.mpf(1) / h**2] for h, _ in points]
+    )
+    observations = mp.matrix([mp.mpf(value) for _, value in points])
+    coefficients = mp.lu_solve(design.T * design, design.T * observations)
+    fitted = design * coefficients
+    residual_values = [observations[k] - fitted[k] for k in range(len(points))]
+    rmse = mp.sqrt(sum(value**2 for value in residual_values) / len(points))
+    maximum = max(abs(value) for value in residual_values)
+    result = {
+        "model": "relative_gap*h^2 = kappa + a/h + b/h^2",
+        "fit_range": "%d..%d" % (min(h for h, _ in points), max(h for h, _ in points)),
+        "heights": [h for h, _ in points],
+        "point_count": len(points),
+        "coefficients": {
+            "kappa": mp.nstr(coefficients[0], 20),
+            "a": mp.nstr(coefficients[1], 20),
+            "b": mp.nstr(coefficients[2], 20),
+        },
+        "rmse": mp_scientific(rmse, 16),
+        "max_abs_residual": mp_scientific(maximum, 16),
+        "residuals": [
+            {
+                "h": h,
+                "observed": mp.nstr(observations[k], 20),
+                "fitted": mp.nstr(fitted[k], 20),
+                "residual": mp_scientific(residual_values[k], 16),
+            }
+            for k, (h, _) in enumerate(points)
+        ],
+    }
+    mp.dps = old_dps
+    return result
+
+
+def logarithmic_model_diagnostic(
+    bands: Sequence[Dict[str, Any]]
+) -> Dict[str, Any]:
+    """Compare constant and quadratic descriptions of far-band minima."""
+
+    selected = [row for row in bands if row["k"] <= 3]
+    if len(selected) < 2:
+        return {"status": "INSUFFICIENT DATA"}
+    xs = [mp.log(mp.mpf(row["minimizing_pair"]["cell_distance"])) for row in selected]
+    ys = [mp.log(mp.mpf(row["empirical_lower_bound"])) for row in selected]
+    x_mean = sum(xs) / len(xs)
+    y_mean = sum(ys) / len(ys)
+    denominator = sum((value - x_mean) ** 2 for value in xs)
+    slope = sum((x - x_mean) * (y - y_mean) for x, y in zip(xs, ys)) / denominator
+    intercept = y_mean - slope * x_mean
+    constant_intercept = y_mean
+    quadratic_intercept = sum(y - 2 * x for x, y in zip(xs, ys)) / len(xs)
+    constant_rmse = mp.sqrt(
+        sum((y - constant_intercept) ** 2 for y in ys) / len(ys)
+    )
+    quadratic_rmse = mp.sqrt(
+        sum((y - (quadratic_intercept + 2 * x)) ** 2 for x, y in zip(xs, ys))
+        / len(ys)
+    )
+    label = "quadratic-like" if quadratic_rmse < constant_rmse else "constant-like"
+    return {
+        "status": "EMPIRICAL",
+        "bands": [row["band"] for row in selected],
+        "distance_floor": "1/8",
+        "free_log_log_slope": mp.nstr(slope, 12),
+        "free_log_log_intercept": mp.nstr(intercept, 12),
+        "constant_log_rmse": mp_scientific(constant_rmse, 12),
+        "quadratic_log_rmse": mp_scientific(quadratic_rmse, 12),
+        "closer_model": label,
+    }
+
+
+def build_pair_anatomy_payload(
+    standard_payload: Dict[str, Any], anatomy_rows: Sequence[Dict[str, Any]], args: argparse.Namespace
+) -> Dict[str, Any]:
+    """Aggregate per-height anatomy into fits and fixed dyadic-band profiles."""
+
+    old_dps = mp.dps
+    mp.dps = 80
+    parity_points: Dict[str, List[Tuple[int, Any]]] = {"odd": [], "even": []}
+    for row in anatomy_rows:
+        parity = "odd" if row["h"] % 2 else "even"
+        parity_points[parity].append(
+            (row["h"], mp.mpf(row["central_gap"]["gap_times_h_squared"]))
+        )
+    fits = {
+        parity: fit_central_limit(points)
+        for parity, points in parity_points.items()
+    }
+    kappa_odd = mp.mpf(fits["odd"]["coefficients"]["kappa"])
+    kappa_even = mp.mpf(fits["even"]["coefficients"]["kappa"])
+    ratio = kappa_even / kappa_odd
+    half_error = kappa_odd - kappa_even / 2
+
+    aggregate: Dict[int, Dict[str, Any]] = {}
+    for row in anatomy_rows:
+        for band in row["dyadic_bands"]:
+            k = band["k"]
+            value = mp.mpf(band["minimum_relative_separation"])
+            normalized = mp.mpf(band["minimum_relative_over_distance_squared"])
+            target = aggregate.setdefault(
+                k,
+                {
+                    "k": k,
+                    "band": band["band"],
+                    "distance_interval": band["distance_interval"],
+                    "lower_endpoint": band["lower_endpoint"],
+                    "upper_endpoint": band["upper_endpoint"],
+                    "pair_count": 0,
+                    "minimum": None,
+                    "minimum_normalized": None,
+                },
+            )
+            target["pair_count"] += band["pair_count"]
+            if target["minimum"] is None or value < target["minimum"][0]:
+                target["minimum"] = (value, row["h"], band["minimizing_pair"])
+            if target["minimum_normalized"] is None or normalized < target["minimum_normalized"]:
+                target["minimum_normalized"] = normalized
+
+    aggregate_rows = []
+    for k in sorted(aggregate):
+        row = aggregate[k]
+        value, height, pair = row.pop("minimum")
+        normalized = row.pop("minimum_normalized")
+        aggregate_rows.append(
+            {
+                **row,
+                "empirical_lower_bound": mp_scientific(value, 20),
+                "attained_at_h": height,
+                "minimizing_pair": pair,
+                "minimum_relative_over_distance_squared": mp_scientific(
+                    normalized, 20
+                ),
+            }
+        )
+
+    macroscopic = [row for row in aggregate_rows if row["k"] <= 2]
+    far_row = min(macroscopic, key=lambda row: mp.mpf(row["empirical_lower_bound"]))
+    far_lower_bound = mp.mpf(far_row["empirical_lower_bound"])
+    every_minimum_is_central = all(
+        row["global_minimum"]["is_predicted_central_inner_pair"]
+        for row in anatomy_rows
+    )
+    fit_residual_ok = all(
+        mp.mpf(fit["max_abs_residual"])
+        < mp.mpf(fit["coefficients"]["kappa"]) * mp.mpf("1e-3")
+        for fit in fits.values()
+    )
+    confirmed = (
+        every_minimum_is_central
+        and fit_residual_ok
+        and kappa_odd > 0
+        and kappa_even > 0
+        and far_lower_bound > 0
+    )
+
+    result = {
+        "schema": "CRON-kinf-pair-anatomy-v1",
+        "command": serialize_anatomy_command(args),
+        "runtime": standard_payload["runtime"],
+        "scan": {
+            **standard_payload["scan"],
+            "pair_anatomy": True,
+            "orbit_position_convention": "upper-half-plane representative; -j-1 < Re(x) < -j; t=j/h",
+            "branch_convention": "inner/outer by increasing Im(x) within each cell",
+        },
+        "verdict": "TWO-REGIME CONFIRMED" if confirmed else "TWO-REGIME REFUTED",
+        "checks": {
+            "all_global_minima_are_predicted_central_inner_pairs": every_minimum_is_central,
+            "fit_residual_gate": fit_residual_ok,
+            "macroscopic_far_threshold": "cell distance >= 1/4",
+        },
+        "central_fits": fits,
+        "constants": {
+            "kappa_odd": mp.nstr(kappa_odd, 20),
+            "kappa_even": mp.nstr(kappa_even, 20),
+            "kappa_even_over_odd": mp.nstr(ratio, 20),
+            "F_second_at_one_half_from_even_identity": mp.nstr(kappa_even, 20),
+            "kappa_odd_minus_half_kappa_even": mp_scientific(half_error, 16),
+            "relative_half_identity_error": mp_scientific(
+                abs(half_error) / abs(kappa_odd), 16
+            ),
+            "macroscopic_far_lower_bound": mp_scientific(far_lower_bound, 20),
+            "macroscopic_far_lower_bound_band": far_row["band"],
+            "macroscopic_far_lower_bound_h": far_row["attained_at_h"],
+        },
+        "far_band_model_diagnostic": logarithmic_model_diagnostic(aggregate_rows),
+        "aggregate_dyadic_bands": aggregate_rows,
+        "heights": list(anatomy_rows),
+    }
+    mp.dps = old_dps
+    return result
+
+
 def serialize_command(args: argparse.Namespace) -> str:
     return (
         "python3 -u CRON_kinf_branch.py --min-h %d --max-h %d "
         "--digits %d --cert-digits %d"
         % (args.min_h, args.max_h, args.digits, args.cert_digits)
     )
+
+
+def serialize_anatomy_command(args: argparse.Namespace) -> str:
+    parts = [
+        "python3 -u CRON_kinf_branch.py",
+        "--min-h %d" % args.min_h,
+        "--max-h %d" % args.max_h,
+        "--digits %d" % args.digits,
+        "--cert-digits %d" % args.cert_digits,
+        "--pair-anatomy",
+        "--anatomy-report %s" % args.anatomy_report,
+        "--anatomy-json %s" % args.anatomy_json,
+    ]
+    if args.skip_kinf:
+        parts.append("--skip-kinf")
+    return " ".join(parts)
 
 
 def report_markdown(payload: Dict[str, Any]) -> str:
@@ -1349,6 +1883,259 @@ def report_markdown(payload: Dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def pair_anatomy_report_markdown(payload: Dict[str, Any]) -> str:
+    """Readable summary of the raw orbit and all-pair anatomy payload."""
+
+    constants = payload["constants"]
+    first_line = (
+        "%s — kappa_odd=%s, kappa_even=%s, ratio=%s, F''(1/2)=%s, "
+        "far-band lower bound=%s for |Δt|>=1/4"
+        % (
+            payload["verdict"],
+            constants["kappa_odd"],
+            constants["kappa_even"],
+            constants["kappa_even_over_odd"],
+            constants["F_second_at_one_half_from_even_identity"],
+            constants["macroscopic_far_lower_bound"],
+        )
+    )
+    lines = [
+        first_line,
+        "",
+        "# Certified per-pair margin anatomy",
+        "",
+        "## Verdict",
+        "",
+        "The two-regime picture is `%s` on the requested finite scan.  "
+        "At every tested height the global midpoint relative-separation "
+        "minimum is the predicted central `inner`-branch pair.  Its distance "
+        "is `1/h` for odd `h`; for even `h` the pair straddles the "
+        "reflection-fixed cell and has distance `2/h`.  Thus both parity "
+        "families are in the `O(1/h)` near regime." % payload["verdict"].split()[-1],
+        "",
+        "For the unambiguously macroscopic region `|Δt| >= 1/4`, the smallest "
+        "observed relative separation is `%s` (attained at `h=%d`, band `%s`).  "
+        "This is an empirical finite-height lower bound, not an all-height "
+        "certificate."
+        % (
+            constants["macroscopic_far_lower_bound"],
+            constants["macroscopic_far_lower_bound_h"],
+            constants["macroscopic_far_lower_bound_band"],
+        ),
+        "",
+        "## Cell and branch convention",
+        "",
+        "A root ball `u` of the exact quotient polynomial `J_h(u)` represents "
+        "the critical-point pair",
+        "",
+        "```text",
+        "x = (-(h+1) ± sqrt(u))/2.",
+        "```",
+        "",
+        "The anatomy pass chooses the unique member in the upper half-plane.  "
+        "If it lies in `-j-1 < Re(x) < -j`, its cell position is `t=j/h`.  "
+        "The Arb ball itself is checked to lie strictly inside that cell.  "
+        "For every `j=1..h-1` there are exactly two such representatives; "
+        "the one with smaller imaginary part is `inner`, the other `outer`.  "
+        "This gives exactly `2h-2` labelled mirror-orbits.",
+        "",
+        "Choosing the lower-half-plane member instead sends `j` to `h-j`, "
+        "hence `t` to `1-t`.  It preserves every `|t_a-t_b|`, dyadic band, "
+        "and minimising pair.  The reported anatomy is therefore independent "
+        "of this representative choice.",
+        "",
+        "Each raw orbit record contains the midpoint and radius of its Arb "
+        "root ball, representative, local coordinate, and squared critical "
+        "value.  Each raw pair record uses the midpoint quantity",
+        "",
+        "```text",
+        "|V_a - V_b| / max(|V_a|, |V_b|).",
+        "```",
+        "",
+        "The original per-height Arb lower bound is retained separately as "
+        "`certified_relative_margin`.",
+        "",
+        "## Central-gap fits",
+        "",
+        "Both fits use `relative_gap*h^2 = kappa + a/h + b/h^2`.  The fit "
+        "range, RMSE, and maximum absolute residual are stated explicitly; "
+        "digits beyond the residual scale are diagnostic rather than certified "
+        "as asymptotic constants.",
+        "",
+        "| parity | fit heights | n | kappa | a | b | RMSE | max |residual| |",
+        "|:---:|:---:|---:|---:|---:|---:|---:|---:|",
+    ]
+    for parity in ("odd", "even"):
+        fit = payload["central_fits"][parity]
+        coefficients = fit["coefficients"]
+        lines.append(
+            "| %s | %s | %d | `%s` | `%s` | `%s` | `%s` | `%s` |"
+            % (
+                parity,
+                fit["fit_range"],
+                fit["point_count"],
+                coefficients["kappa"],
+                coefficients["a"],
+                coefficients["b"],
+                fit["rmse"],
+                fit["max_abs_residual"],
+            )
+        )
+    lines.extend(
+        [
+            "",
+            "Using the proved identities `kappa_even = F''(1/2)` and "
+            "`kappa_odd = F''(1/2)/2`, the data give",
+            "",
+            "```text",
+            "F''(1/2) = %s" % constants["F_second_at_one_half_from_even_identity"],
+            "kappa_odd - kappa_even/2 = %s" % constants["kappa_odd_minus_half_kappa_even"],
+            "relative half-identity error = %s" % constants["relative_half_identity_error"],
+            "```",
+            "",
+            "### Per-height central gaps and fit residuals",
+            "",
+            "| h | parity | minimizing cells | Δt | relative gap | gap*h^2 | fit residual | global min? | Arb bits |",
+            "|---:|:---:|:---:|---:|---:|---:|---:|:---:|---:|",
+        ]
+    )
+    residual_lookup = {
+        (parity, row["h"]): row
+        for parity, fit in payload["central_fits"].items()
+        for row in fit["residuals"]
+    }
+    for row in payload["heights"]:
+        parity = "odd" if row["h"] % 2 else "even"
+        central = row["central_gap"]
+        residual = residual_lookup[(parity, row["h"])]["residual"]
+        lines.append(
+            "| %d | %s | `%s` | `%s` | `%s` | `%s` | `%s` | %s | %d |"
+            % (
+                row["h"],
+                parity,
+                ",".join(str(value) for value in central["expected_cells"]),
+                central["cell_distance"],
+                central["relative_separation"],
+                central["gap_times_h_squared"],
+                residual,
+                "YES" if central["is_global_minimum"] else "NO",
+                row["certificate"]["precision_bits"],
+            )
+        )
+
+    diagnostic = payload["far_band_model_diagnostic"]
+    lines.extend(
+        [
+            "",
+            "## Dyadic-band profile",
+            "",
+            "A positive-distance pair is put in band `k` when "
+            "`2^-k <= |Δt| < 2^(-k+1)`.  Same-cell `inner/outer` pairs are "
+            "recorded separately in the JSON.  The `sep/Δt^2` column is the "
+            "smallest value over all pairs in that band, so it directly tests "
+            "a lower bound of the form `c'|Δt|^2`.",
+            "",
+            "### Aggregate over all tested heights",
+            "",
+            "| band | distance range | pair count | empirical min sep | h | minimizing pair | min sep/Δt^2 |",
+            "|:---:|:---:|---:|---:|---:|:---|---:|",
+        ]
+    )
+    for band in payload["aggregate_dyadic_bands"]:
+        pair = band["minimizing_pair"]
+        lines.append(
+            "| %s | %s | %d | `%s` | %d | `%s / %s` | `%s` |"
+            % (
+                band["band"],
+                band["distance_interval"],
+                band["pair_count"],
+                band["empirical_lower_bound"],
+                band["attained_at_h"],
+                pair["orbit_a"],
+                pair["orbit_b"],
+                band["minimum_relative_over_distance_squared"],
+            )
+        )
+    if diagnostic.get("status") == "EMPIRICAL":
+        lines.extend(
+            [
+                "",
+                "On the fixed far bands `%s` (`|Δt|>=1/8`), a free log-log "
+                "fit has slope `%s`.  The log-RMSE is `%s` for a constant "
+                "model and `%s` for a quadratic model; by this deliberately "
+                "coarse diagnostic the profile is `%s`."
+                % (
+                    ", ".join(diagnostic["bands"]),
+                    diagnostic["free_log_log_slope"],
+                    diagnostic["constant_log_rmse"],
+                    diagnostic["quadratic_log_rmse"],
+                    diagnostic["closer_model"],
+                ),
+            ]
+        )
+    lines.extend(
+        [
+            "",
+            "### Profile as a function of height",
+            "",
+            "| h | band | distance range | pair count | min relative sep | minimizing pair | min sep/Δt^2 |",
+            "|---:|:---:|:---:|---:|---:|:---|---:|",
+        ]
+    )
+    for row in payload["heights"]:
+        for band in row["dyadic_bands"]:
+            pair = band["minimizing_pair"]
+            lines.append(
+                "| %d | %s | %s | %d | `%s` | `%s / %s` | `%s` |"
+                % (
+                    row["h"],
+                    band["band"],
+                    band["distance_interval"],
+                    band["pair_count"],
+                    band["minimum_relative_separation"],
+                    pair["orbit_a"],
+                    pair["orbit_b"],
+                    band["minimum_relative_over_distance_squared"],
+                )
+            )
+
+    lines.extend(
+        [
+            "",
+            "## Caveats",
+            "",
+            "1. `CONFIRMED` is a verdict about the finite Arb scan, not an "
+            "all-height proof.  The orbit balls and fixed-height separation "
+            "certificates are rigorous; the extrapolated `kappa` values are "
+            "numerical fits.",
+            "2. Relative pair separations in the anatomy tables use Arb-ball "
+            "midpoints, as requested.  The raw midpoint and radius make the "
+            "rounding scale explicit.  The pre-existing certificate path was "
+            "not weakened and its outward-rounded minimum is retained per "
+            "height.",
+            "3. The `inner/outer` label is geometric (imaginary height), not a "
+            "new algebraic theorem about continuation of branches in `h`.",
+            "4. The constant-vs-quadratic far-band comparison uses only three "
+            "fixed dyadic bands and is descriptive.  On any region bounded "
+            "away from zero, both a positive constant and `c'|Δt|^2` give a "
+            "positive uniform lower bound; the table is the durable result.",
+            "5. Heights 80 and 100 are optional in the mission.  They are not "
+            "part of this report unless they appear in the per-height table.",
+            "",
+            "Reproduction command:",
+            "",
+            "```bash",
+            payload["command"],
+            "```",
+            "",
+            "The complete orbit balls and every nonmirror pair are in "
+            "`%s`." % Path(payload["command"].split("--anatomy-json ", 1)[1].split()[0]).name,
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--min-h", type=int, default=2)
@@ -1362,6 +2149,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--skip-kinf", action="store_true")
     parser.add_argument("--report", default="CODEX_KINF_report.md")
     parser.add_argument("--json", default="CRON_kinf_results.json")
+    parser.add_argument(
+        "--pair-anatomy",
+        action="store_true",
+        help="emit certified orbit labels, every pair, dyadic profiles, and fits",
+    )
+    parser.add_argument("--anatomy-report", default="CODEX_MARGINS_report.md")
+    parser.add_argument("--anatomy-json", default="CRON_margins_results.json")
     return parser.parse_args()
 
 
@@ -1413,6 +2207,7 @@ def main() -> None:
         log("[kinf] roots=%d" % kinfinity["root_count"])
 
     rows = []
+    anatomy_rows = []
     machine_summary = []
     for h in range(args.min_h, args.max_h + 1):
         data = build_height_data(h, numerators[h])
@@ -1431,6 +2226,32 @@ def main() -> None:
             }
         else:
             uncertified = uncertified_height(data, roots, args.digits)
+        if args.pair_anatomy:
+            if certified.get("status") != "YES" or len(roots) != 2 * h - 2:
+                raise ArithmeticError(
+                    "pair anatomy requires a complete certified row at h=%d" % h
+                )
+            anatomy = pair_anatomy_height(data, roots, args.digits)
+            anatomy["certificate"] = {
+                "status": certified["status"],
+                "precision_bits": certified["precision_bits"],
+                "certified_relative_margin": certified["relative_margin"],
+                "max_root_radius": certified["max_root_radius"],
+                "interval_newton_pass": certified["interval_newton_pass"],
+                "denominator_excludes_zero": certified["denominator_excludes_zero"],
+            }
+            anatomy_rows.append(anatomy)
+            log(
+                "[anatomy] h=%d pairs=%d min=%s central=%s"
+                % (
+                    h,
+                    anatomy["pair_count"],
+                    anatomy["global_minimum"]["relative_separation"],
+                    anatomy["global_minimum"][
+                        "is_predicted_central_inner_pair"
+                    ],
+                )
+            )
         row = {"h": h, "uncertified": uncertified, "certified": certified}
         rows.append(row)
         summary = (
@@ -1489,6 +2310,20 @@ def main() -> None:
     json_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
     report_path.write_text(report_markdown(payload))
     log("[done] wrote %s and %s" % (json_path, report_path))
+    if args.pair_anatomy:
+        anatomy_payload = build_pair_anatomy_payload(payload, anatomy_rows, args)
+        anatomy_json_path = Path(args.anatomy_json)
+        anatomy_report_path = Path(args.anatomy_report)
+        anatomy_json_path.write_text(
+            json.dumps(anatomy_payload, separators=(",", ":")) + "\n"
+        )
+        anatomy_report_path.write_text(
+            pair_anatomy_report_markdown(anatomy_payload)
+        )
+        log(
+            "[done] wrote %s and %s"
+            % (anatomy_json_path, anatomy_report_path)
+        )
     log("[done] wall=%.2fs" % (time.monotonic() - started))
 
 

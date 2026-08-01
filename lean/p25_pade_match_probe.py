@@ -4,6 +4,7 @@
 from fractions import Fraction as F
 from functools import lru_cache
 from math import comb
+import sympy as sp
 
 
 def matrix(n):
@@ -77,6 +78,22 @@ def pade_value(L, M, z=F(1)):
 
 f, g = delannoy_coefficients()
 targets = [g[k] / f[k] for k in range(12)]
+
+determinants = [g[k+1] * f[k] - g[k] * f[k+1] for k in range(11)]
+print("consecutive determinant ratios")
+for k in range(10):
+    ratio = determinants[k+1] / determinants[k]
+    print(k, sp.factor(sp.Rational(ratio.numerator, ratio.denominator)))
+
+x = sp.symbols("k")
+points = [(sp.Integer(k), sp.Rational((determinants[k+1] / determinants[k]).numerator,
+                                      (determinants[k+1] / determinants[k]).denominator))
+          for k in range(10)]
+for numdeg in range(9):
+    candidate = sp.factor(sp.rational_interpolate(points[:9], numdeg, x))
+    if sp.cancel(candidate.subs(x, 9) - points[9][1]) == 0:
+        print("determinant ratio rational fit", numdeg, sp.factor(candidate))
+        break
 for k, target in enumerate(targets[:6]):
     matches = []
     for L in range(13):
