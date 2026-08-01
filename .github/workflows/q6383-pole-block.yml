@@ -1,8 +1,8 @@
 name: Q6383 pole-block Lean gate
 
 on:
-  push:
-    branches: [q6383-pole-block-0445261f]
+  pull_request:
+    branches: [main]
     paths:
       - 'lean/RamanujanChallenge/Problem27PoleBlockScratch.lean'
       - '.github/workflows/q6383-pole-block.yml'
@@ -10,9 +10,6 @@ on:
 concurrency:
   group: q6383-pole-block
   cancel-in-progress: true
-
-permissions:
-  contents: write
 
 jobs:
   build:
@@ -39,11 +36,6 @@ jobs:
           cd ..
           printf 'cache_status=%s\nbuild_status=%s\n' "$cache_status" "$build_status" | tee q6383-status.out
           exit 0
-      - name: Persist compiler output
+      - name: Show status
         shell: bash
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add q6383-cache.out q6383-build.out q6383-status.out
-          git commit -m 'Q6383: record Lean compile output' || exit 0
-          git push origin HEAD:q6383-pole-block-0445261f
+        run: cat q6383-status.out
