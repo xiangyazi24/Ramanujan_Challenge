@@ -3465,7 +3465,9 @@ theorem quadAltA11_intervalIntegrable : IntervalIntegrable
     intro y hy
     have hW : ContinuousAt W0 y :=
       (quadAltW0_hasDerivAt (by linarith [hy.1]) (by linarith [hy.2])).continuousAt
-    exact (hW.div (by fun_prop) (sub_ne_zero.mpr (ne_of_lt hy.2))).continuousWithinAt
+    have hden : ContinuousAt (fun z : ℝ => z - 1) y :=
+      continuousAt_id.sub continuousAt_const
+    exact (hW.div hden (sub_ne_zero.mpr (ne_of_lt hy.2))).continuousWithinAt
   have hqmid : Tendsto q (𝓝[>] (1 / 2 : ℝ)) (𝓝 (q (1 / 2))) := by
     have hqt : ContinuousAt q (1 / 2 : ℝ) := by
       dsimp [q]
@@ -3492,7 +3494,9 @@ theorem quadAltA11_intervalIntegrable : IntervalIntegrable
   have hCnonneg : 0 ≤ C := (abs_nonneg C0).trans hC0C
   let g : ℝ → ℝ := fun y => C * (1 + ‖H1 y‖)
   have hg : IntervalIntegrable g MeasureTheory.volume 0 1 := by
-    exact (intervalIntegrable_const.add hH1.norm).const_mul C
+    have hOne : IntervalIntegrable (fun _ : ℝ => (1 : ℝ))
+        MeasureTheory.volume 0 1 := intervalIntegrable_const
+    exact (hOne.add hH1.norm).const_mul C
   apply intervalIntegrable_of_continuousOn_Ioo_of_le (by norm_num) hAcont hg
   intro y hy
   by_cases hyl : y < 3 / 4
@@ -3515,10 +3519,13 @@ theorem quadAltA11_intervalIntegrable : IntervalIntegrable
         _ ≤ C1 := hC1 y ⟨hyr.le, hy.2.le⟩
         _ ≤ |C1| := le_abs_self C1
     have hnorm : ‖A y‖ = ‖q y‖ * ‖H1 y‖ := by
-      dsimp [A, q]
-      rw [Real.norm_eq_abs, abs_mul, abs_div, Real.norm_eq_abs, abs_div,
-        Real.norm_eq_abs, abs_sub_comm y 1]
-      ring
+      have hy1 : y - 1 ≠ 0 := sub_ne_zero.mpr (ne_of_lt hy.2)
+      have h1y : 1 - y ≠ 0 := sub_ne_zero.mpr (ne_of_gt hy.2)
+      have hAq : A y = -(q y * H1 y) := by
+        dsimp [A, q]
+        field_simp [hy1, h1y]
+        ring
+      rw [hAq, norm_neg, norm_mul]
     calc
       ‖A y‖ = ‖q y‖ * ‖H1 y‖ := hnorm
       _ ≤ |C1| * ‖H1 y‖ := mul_le_mul_of_nonneg_right hqbound (norm_nonneg _)
@@ -3544,7 +3551,7 @@ theorem quadAltB11_intervalIntegrable : IntervalIntegrable
         (sub_ne_zero.mpr (by linarith [hy.2])))
     have hg : ContinuousAt g11 y := by
       dsimp [g11]
-      fun_prop
+      exact ((quadAltH1_continuousAt hy.2).pow 2).div_const 2
     exact ((continuousAt_const.mul
       (hR.div continuousAt_id (ne_of_gt hy.1))).mul hg).continuousWithinAt
   have hB0 : Tendsto B (𝓝[>] (0 : ℝ)) (𝓝 0) := by
@@ -3564,7 +3571,8 @@ theorem quadAltB11_intervalIntegrable : IntervalIntegrable
         (eventually_lt_nhds (show (0 : ℝ) < 2 by norm_num)).filter_mono
           nhdsWithin_le_nhds] with y hy hy2
       unfold quadAltR
-      rw [Real.log_div (ne_of_gt hy) (sub_ne_zero.mpr (ne_of_lt hy2))]
+      rw [Real.log_div (ne_of_gt hy) (by linarith : 2 - y ≠ 0)]
+      ring
     have h := (hRt.mul (quadAltH1_div_self_tendsto_zero_right.pow 2)).neg
     simp only [zero_mul, neg_zero] at h
     refine h.congr' ?_
@@ -3572,7 +3580,6 @@ theorem quadAltB11_intervalIntegrable : IntervalIntegrable
     have hy0 : y ≠ 0 := ne_of_gt hy
     dsimp [B, g11]
     field_simp [hy0]
-    ring
   have hRslope : Tendsto (fun y : ℝ => quadAltR y / (y - 1))
       (𝓝[<] (1 : ℝ)) (𝓝 2) := by
     have hden : HasDerivAt (fun y : ℝ => 2 - y) (-1) 1 := by
@@ -3617,7 +3624,9 @@ theorem quadAltB11_intervalIntegrable : IntervalIntegrable
   let g : ℝ → ℝ := fun y => |C| *
     (1 + Real.log y ^ 2 + Real.log (1 - y) ^ 2)
   have hg : IntervalIntegrable g MeasureTheory.volume 0 1 := by
-    exact ((intervalIntegrable_const.add intervalIntegrable_logSq).add
+    have hOne : IntervalIntegrable (fun _ : ℝ => (1 : ℝ))
+        MeasureTheory.volume 0 1 := intervalIntegrable_const
+    exact ((hOne.add intervalIntegrable_logSq).add
       hOneSubLogSq).const_mul |C|
   have hBint : IntervalIntegrable B MeasureTheory.volume 0 1 := by
     apply intervalIntegrable_of_continuousOn_Ioo_of_le (by norm_num) hBcont hg
@@ -3628,7 +3637,8 @@ theorem quadAltB11_intervalIntegrable : IntervalIntegrable
       _ ≤ C := hC y ⟨hy.1.le, hy.2.le⟩
       _ ≤ |C| := le_abs_self C
       _ ≤ |C| * (1 + Real.log y ^ 2 + Real.log (1 - y) ^ 2) := by
-        have hfac : 1 ≤ 1 + Real.log y ^ 2 + Real.log (1 - y) ^ 2 := by positivity
+        have hfac : 1 ≤ 1 + Real.log y ^ 2 + Real.log (1 - y) ^ 2 := by
+          nlinarith [sq_nonneg (Real.log y), sq_nonneg (Real.log (1 - y))]
         simpa using mul_le_mul_of_nonneg_left hfac (abs_nonneg C)
   simpa [B, g11] using hBint
 
