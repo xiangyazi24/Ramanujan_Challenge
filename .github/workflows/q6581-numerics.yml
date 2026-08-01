@@ -1,0 +1,136 @@
+name: Q6581 numerical verification
+
+on:
+  pull_request:
+    branches:
+      - chatgpt-drop
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compute complete rational exponential sums
+        shell: bash
+        run: |
+          node <<'NODE'
+          function mod(a, p) {
+            const x = a % p;
+            return x < 0 ? x + p : x;
+          }
+
+          function mulMod(a, b, p) {
+            return (a * b) % p;
+          }
+
+          function powMod(a, e, p) {
+            let x = mod(a, p);
+            let y = 1;
+            while (e > 0) {
+              if (e & 1) y = mulMod(y, x, p);
+              x = mulMod(x, x, p);
+              e >>= 1;
+            }
+            return y;
+          }
+
+          function polyP(u, p) {
+            const x = mod(u, p);
+            const x2 = mulMod(x, x, p);
+            const x3 = mulMod(x2, x, p);
+            return mod(34 * x3 + 51 * x2 + 27 * x + 5, p);
+          }
+
+          const primes = [101, 199, 499];
+          const gaps = [2, 3, 5, 8, 12];
+          const maxH = Math.max(...gaps);
+
+          console.log('Q6581_NUMERICS_BEGIN');
+          for (const p of primes) {
+            const N = Array.from({ length: maxH + 1 }, () => Array(p).fill(0));
+            for (let r = 0; r < p; r++) {
+              let prev = 0; // N_0
+              let curr = 1; // N_1
+              N[1][r] = curr;
+              for (let h = 1; h < maxH; h++) {
+                const u = mod(r + h, p);
+                const next = mod(mulMod(polyP(u, p), curr, p) - mulMod(powMod(u, 6, p), prev, p), p);
+                prev = curr;
+                curr = next;
+                N[h + 1][r] = curr;
+              }
+            }
+
+            const rootsRe = Array(p);
+            const rootsIm = Array(p);
+            for (let k = 0; k < p; k++) {
+              const theta = 2 * Math.PI * k / p;
+              rootsRe[k] = Math.cos(theta);
+              rootsIm[k] = Math.sin(theta);
+            }
+
+            for (const h of gaps) {
+              const hist = Array(p).fill(0);
+              let pointCount = 0;
+              let cancelledAtDisplayedPole = 0;
+
+              for (let j = 1; j <= h; j++) {
+                const rPole = p - j;
+                if (N[h][rPole] === 0) cancelledAtDisplayedPole++;
+              }
+
+              for (let r = 0; r < p; r++) {
+                let den = 1;
+                let isDisplayedPole = false;
+                for (let j = 1; j <= h; j++) {
+                  const factor = mod(r + j, p);
+                  if (factor === 0) {
+                    isDisplayedPole = true;
+                    break;
+                  }
+                  den = mulMod(den, factor, p);
+                }
+                if (isDisplayedPole) continue;
+                const den3 = powMod(den, 3, p);
+                const invDen3 = powMod(den3, p - 2, p);
+                const value = mulMod(N[h][r], invDen3, p);
+                hist[value]++;
+                pointCount++;
+              }
+
+              let maxAbs = -1;
+              let argMax = -1;
+              let maxRe = 0;
+              let maxIm = 0;
+              for (let t = 1; t < p; t++) {
+                let re = 0;
+                let im = 0;
+                for (let value = 0; value < p; value++) {
+                  const count = hist[value];
+                  if (count === 0) continue;
+                  const phase = (t * value) % p;
+                  re += count * rootsRe[phase];
+                  im += count * rootsIm[phase];
+                }
+                const abs = Math.hypot(re, im);
+                if (abs > maxAbs) {
+                  maxAbs = abs;
+                  argMax = t;
+                  maxRe = re;
+                  maxIm = im;
+                }
+              }
+              console.log([
+                `p=${p}`,
+                `h=${h}`,
+                `points=${pointCount}`,
+                `cancelled=${cancelledAtDisplayedPole}`,
+                `argmax=${argMax}`,
+                `max_re=${maxRe.toFixed(12)}`,
+                `max_im=${maxIm.toFixed(12)}`,
+                `max_abs=${maxAbs.toFixed(12)}`,
+                `ratio=${(maxAbs / Math.sqrt(p)).toFixed(12)}`
+              ].join(' '));
+            }
+          }
+          console.log('Q6581_NUMERICS_END');
+          NODE
