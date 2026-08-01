@@ -1882,7 +1882,7 @@ theorem quadAltV_mul_self_tendsto :
   have t3 : Tendsto (fun x : ℝ => dilog (-x) * x) (𝓝[>] (0:ℝ)) (𝓝 0) := by
     have hd : Tendsto (fun x : ℝ => dilog (-x)) (𝓝[>] (0:ℝ)) (𝓝 0) := by
       have hca : ContinuousAt dilog 0 :=
-        (dilog_hasDerivAt_of_abs_lt_one (by norm_num : |(0:ℝ)| < 1)).continuousAt
+        (RamanujanChallenge.P26.dilog_hasDerivAt_zero26).continuousAt
       have hneg : ContinuousAt (fun x : ℝ => -x) 0 := by fun_prop
       have hca' : ContinuousAt dilog (-(0:ℝ)) := by rwa [neg_zero]
       have hcomp := hca'.comp hneg
@@ -1949,18 +1949,6 @@ theorem quadAltF_tendsto_zero_right :
   have hxne : x ≠ 0 := ne_of_gt hx
   field_simp
 
-
-/-- `W0` is differentiable at `1` with derivative `0` (the hypothesis of
-`quadAltW0_hasDerivAt` only ever needed `t < 2`, so `t = 1` is an interior point). -/
-theorem quadAltW0_hasDerivAt_one : HasDerivAt W0 0 1 := by
-  have h := quadAltW0_hasDerivAt (t := 1) (by norm_num) (by norm_num)
-  norm_num at h
-  exact h
-
-/-- `W0 t / (t - 1) → 0` as `t → 1`. -/
-theorem quadAltW0_slope_tendsto :
-    Tendsto (fun t : ℝ => W0 t / (t - 1)) (𝓝[≠] (1:ℝ)) (𝓝 0) :=
-  slope_tendsto_of_hasDerivAt_eq_zero W0 1 0 quadAltW0_hasDerivAt_one quadAltW0_one
 
 /-- Integration by parts (Q6047 (4.9)): with `F = −2V·J(−x)`, `F(1)=F(0)=0`
 (`V(1)=0`, `J(0)=0`), so `∫₀¹ (−log x)/x·Q(−x) = ∫₀¹ (−2V(x))·Dminus(x)`. -/
@@ -2341,6 +2329,18 @@ theorem quadAltW0_one : W0 1 = 0 := by
     · norm_num
   rw [hlog]
   ring
+
+/-- `W0` is differentiable at `1` with derivative `0` (the hypothesis of
+`quadAltW0_hasDerivAt` only ever needed `t < 2`, so `t = 1` is an interior point). -/
+theorem quadAltW0_hasDerivAt_one : HasDerivAt W0 0 1 := by
+  have h := quadAltW0_hasDerivAt (t := 1) (by norm_num) (by norm_num)
+  norm_num at h
+  exact h
+
+/-- `W0 t / (t - 1) → 0` as `t → 1`. -/
+theorem quadAltW0_slope_tendsto :
+    Tendsto (fun t : ℝ => W0 t / (t - 1)) (𝓝[≠] (1:ℝ)) (𝓝 0) :=
+  slope_tendsto_of_hasDerivAt_eq_zero W0 1 0 quadAltW0_hasDerivAt_one quadAltW0_one
 
 end RamanujanChallenge.P24QuadAlt
 
