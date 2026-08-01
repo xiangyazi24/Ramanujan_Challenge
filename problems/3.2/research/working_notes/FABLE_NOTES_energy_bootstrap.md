@@ -862,3 +862,23 @@ B_{p−5}/Fermat-quotient/weight-5 invariants exist through p⁵.
 VERTICAL PROGRAM STATUS: structure theorem + tower (now one-line master
 identity) + apparition chain (one nail: [GAP-BR] atom, R18/R3a dual attack)
 + value-distribution package = a complete standalone theory of Apéry mod p.
+
+## 38. Q6332: beta_p reaches THEOREM status + genus/forms writeup package
+
+- **β_p ≡ −(14/3)B_{p−3} (mod p) is now a THEOREM**: direct binomial/harmonic
+  proof supplied in Q6332 + independent literature anchor (Ji-Cai Liu,
+  arXiv:2404.16636, Thm 1.1 specializes to b_p ≡ 5 − (14/3)p³B_{p−3} mod p⁴;
+  citation to verify when network returns — Liu is a real supercongruence
+  author, high prior). Combined with our 31/31 + cron 27/27 + 25/25
+  verifications: closed.
+- Clean writeup package: disc −24 class-number-2 lemmas (forms [1,0,6],[2,0,3];
+  representation classes 1,7 / 5,11 mod 24; uniqueness; genus = class);
+  23 mod 24 inert — the σ-quarter class is NOT a form class (branch-dependent
+  Frobenius in the conductor-24 cyclotomic language is the correct frame —
+  matches our (−2|p) mechanism).
+- Convolution non-transfer (final clarification): square-root SUPPORT does not
+  determine Z_p — b_r = Σ τ_iτ_j (resp. c_r − 34c_{r−1} + c_{r−2}) depends on
+  values+phases; the connective tissue is an additive-character correlation
+  estimate — academic for pointwise (counting lemma already renders the low-
+  order structure harmless), but closes the last conceptual loop of the
+  apparition program.
