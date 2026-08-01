@@ -58,6 +58,23 @@ other's way; mechanically they do not, so:
   P3.2 dispersion commit).
 - A sandboxed agent that can only write under its own clone has to be merged in
   explicitly. Wire its clone as a git remote and cherry-pick by path.
+- **Separating files is not enough — `.lake/build` is shared too.** On 2026-08-01
+  three agents ran on P2.4 with clean file separation by construction: one owned
+  `Problem24QuadraticAlt.lean`, one was forbidden every tracked file and wrote
+  only to `/tmp`, one created a brand-new module. They still deadlocked. The
+  first left the main file red mid-iteration, its `.olean` vanished, and the
+  other two — both importing that module — failed every build with
+  `object file ... does not exist` (11 and 2 hits before it was noticed).
+
+  An agent that breaks a file it legitimately owns takes the whole downstream
+  import closure offline with it. Real isolation is one `git worktree` per
+  writer, each with its own `.lake`. Failing that, serialize anyone who imports
+  what another agent is actively editing, and put this line in every parallel
+  dispatch: *if a build fails with a missing olean, another agent is mid-build —
+  wait and retry, do not rebuild the package yourself.* Without it they will try
+  to repair someone else's tree. Detect it with
+  `grep -c "does not exist" <agent log>`; a climbing count means an agent is
+  burning turns on a wall.
 
 ## Verification gate
 
