@@ -22,3 +22,13 @@ executed. The recipe is in Q6153 (Cartier formula, precision N=2 then N=4) and Q
   coordinate is the object; its Frobenius slopes/dimensions bounded as p varies would confirm
   the p-adic framework.
 - This is a substantial implementation (multi-hour), not a quick grind.
+
+## Katz-sheaf moment bridge verified (p=11, DS)
+- CT Λ^m = b_m mod 11 (m=0..8) — the constant-term realization.
+- **sum_x Λ(x)^m ≡ (p−1)³·b_m ≡ −b_m (mod 11)** for m=1..7 — Claude's Katz-sheaf bridge
+  (c_m = moment = (p−1)^d·b_m, d=3) CONFIRMED. (My first comparison failed only by missing
+  the mod-11 reduction.)
+- Cartier operator on the coefficient array: C(b)_m = b_{pm} ≡ b_m (m=1..4) — the coefficient
+  Dwork/Frobenius eigenvector structure.
+- Exponential sums |Σ_{m<M} e_11(b_m)| = 2.73, 6.06, 7.79, 13.99 (M=11,22,33,55) ~ √M — the
+  random-walk scale (what the Dwork framework must explain, not sheaf-cancellation).
