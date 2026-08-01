@@ -1505,3 +1505,26 @@ double-certified.
 - 判别数采样复核(我): μ₄(std)=2, μ₄(Sym³)=4, C₂₂ graph=2/product=1,
   朴素协方差两情形皆0——Q6453 全部数字机器证实。
 - 四答案归档 chatgpt-answers/Q6441/42/52/53.md。
+
+## §71 (08-01 10:40) Q6456 收割 — 退火 Poisson 定理(条件)入账, 定理链定形
+
+- **Q6456 (qNE4, life8) = 完整 AGG Chen–Stein 证明**, 状态逐步标注:
+  [THEOREM-ANNEALED-APERY-BM] 条件于 **BM(θ)**(log-块 L² 混合
+  ||K^L−Π|| ≤ Cp^{−3/2−θ}, L=O(log p)) ⟹ 访问数 TV-误差 O(p^{−η}),
+  η=min(θ,1/2), 均匀初值。無条件宝石([PROVED], 我抽验):
+  一步返回=0(重启 ∞→0 确定性); 二步返回=(2+(−51|p))/(p−1)
+  (P(u) 线性根 −1/2 + 二次判别式 289−340=−51 ✓ 我验); 任意滞后返回
+  ≤3/(p−1); 更新结构+精确强度 1/(p+1)+极值指数1(非复合 Poisson);
+  重启奇异模 h₀→h_A 一步等距后 O(p^{−1/2}) 收缩(显式无害)。
+- **CG 假设修正**: 秩界本身不够——抽象反例(双块均匀核, rank R=1 零误差
+  但永不跨块) ⟹ 无 η(δ,rank) 公式; 需 **[GAP-EXCEPTIONAL-MODES]**:
+  算 K_p 在每个分类例外模上的输运矩阵, 证 EX(D,ρ)/幂零/直接 BM(θ)。
+  接口精确化: 退火证明用 with-replacement 独立性的 7 处清单成文
+  (=[GAP-QUENCHED-ORDER] 的精确界面)。
+- **定理链定形**: [GAP-CODEGREE](qNE3 life4 符号+codex-max 数值, 在飞)
+  → [GAP-EXCEPTIONAL-MODES](新) → BM(θ) → 退火 Poisson ✓(条件入账)
+  → [GAP-QUENCHED-ORDER](墙, qNE6→life8 正面探针已派: 两尺度 gap 分解
+  (fixed-h Weil 可能白拿无条件指数!)/van der Corput 差分/素数平均
+  large sieve/子群困陷四机制排序)。
+- 审计状态: Q6456 证明 skim-级复核过(b1/b2/b3 形状标准, 返回概率显式),
+  逐行审计待后续 codex 对抗轮。答案归档 chatgpt-answers/Q6456.md。
