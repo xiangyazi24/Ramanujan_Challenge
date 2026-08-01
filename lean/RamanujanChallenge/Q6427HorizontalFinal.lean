@@ -51,6 +51,7 @@ theorem norm_sinePi_top_ge_final (x T : ℝ) (hT : 1 ≤ T) :
     unfold sinePi
     rw [Complex.sin]
     dsimp [w]
+    simp only [neg_mul]
   calc
     Real.exp (Real.pi * T) / 4 =
         (Real.exp (Real.pi * T) / 2) / 2 := by ring
@@ -102,6 +103,7 @@ theorem norm_sinePi_bottom_ge_final (x T : ℝ) (hT : 1 ≤ T) :
     unfold sinePi
     rw [Complex.sin]
     dsimp [w]
+    simp only [neg_mul]
     ring
   calc
     Real.exp (Real.pi * T) / 4 =
@@ -415,7 +417,9 @@ theorem ctHorizontalMajorant_tendsto_zero27_final (n : ℕ) :
     rw [pow_two, ← Real.exp_add]
     congr 1
     ring
-  rw [hE, div_eq_mul_inv, ← Real.exp_neg]
+  rw [hE]
+  simp only [div_eq_mul_inv]
+  rw [← Real.exp_neg]
   ring
 
 theorem ctHorizontal_top_tendsto_zero27_final {n m : ℕ}
@@ -451,7 +455,8 @@ theorem ctHorizontal_top_tendsto_zero27_final {n m : ℕ}
       rw [← ctIntegrand_eq_extension27 hm1 hmn hmem hne]
       exact norm_ctIntegrand_top_le_final hm1 hmn hx' hT
     exact intervalIntegral.norm_integral_le_of_norm_le_const hbound
-  · simpa using ctHorizontalMajorant_tendsto_zero27_final n
+  · simpa using (ctHorizontalMajorant_tendsto_zero27_final n).mul_const
+      (|(2 : ℝ)⁻¹ + (2 : ℝ)⁻¹|)
 
 theorem ctHorizontal_bottom_tendsto_zero27_final {n m : ℕ}
     (hm1 : 1 ≤ m) (hmn : m ≤ n) :
@@ -486,7 +491,8 @@ theorem ctHorizontal_bottom_tendsto_zero27_final {n m : ℕ}
       rw [← ctIntegrand_eq_extension27 hm1 hmn hmem hne]
       exact norm_ctIntegrand_bottom_le_final hm1 hmn hx' hT
     exact intervalIntegral.norm_integral_le_of_norm_le_const hbound
-  · simpa using ctHorizontalMajorant_tendsto_zero27_final n
+  · simpa using (ctHorizontalMajorant_tendsto_zero27_final n).mul_const
+      (|(2 : ℝ)⁻¹ + (2 : ℝ)⁻¹|)
 
 #print axioms ctHorizontal_top_tendsto_zero27_final
 #print axioms ctHorizontal_bottom_tendsto_zero27_final
