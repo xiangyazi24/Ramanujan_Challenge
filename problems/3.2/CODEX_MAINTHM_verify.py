@@ -665,6 +665,11 @@ def cross_prime_gap_root_gate(b: list[int]) -> None:
                 h: sum(poly_evaluate(continuants[h], x, p) == 0 for x in range(p))
                 for h in range(2, H)
             }
+            for h in range(2, H):
+                check(continuants[h] != [0],
+                      f"gap polynomial nonzero P={P},p={p},h={h}")
+                check(len(continuants[h]) - 1 <= 3 * (h - 1),
+                      f"gap polynomial degree P={P},p={p},h={h}")
             # Check the load-bearing per-prime block inequality directly,
             # including every close zero pair and its gap-continuant root.
             pair_count = 0
@@ -951,10 +956,10 @@ def factorial_moment_gate(b: list[int]) -> None:
             p: [r for r in range(p) if b[r] % p == 0]
             for p in primes
         }
-        loads = [0] * (X * X)
+        loads = [0] * (X * X + 1)
         for p in primes:
             zeros = set(zero_sets[p])
-            for m in range(X * X):
+            for m in range(X * X + 1):
                 loads[m] += int(m % p in zeros)
         moment = sum(load * (load - 1) for load in loads)
 
@@ -969,7 +974,7 @@ def factorial_moment_gate(b: list[int]) -> None:
                         representative = r + p * multiplier
                         check(0 <= representative < p * q,
                               "CRT representative range")
-                        crt_count += int(representative < X * X)
+                        crt_count += int(representative <= X * X)
         check(moment == crt_count, f"CRT factorial identity X={X}")
 
         lam = sum(

@@ -188,5 +188,17 @@
 - approval: 爸爸 TG "最后一搏，尝试推进 conjecture fully unconditional proof。
   可以用 chatgpt 还有 codex gpt5.6 sol ultra" (2026-08-02, life)
 - starting avenue: LS-a (padded-word killer hunt) + LS-b (转移积不动点刚性) 并行
-- end: <fill on close>
-- final result: <fill on close>
+- end: 2026-08-02 收工 (爸爸叫停, 交由 Codex 整理文本)
+- final result: **主定理未证; 3/2 未破。** 但靶被正名 (P3.2 主定理 = gcd=e^{o(n)},
+  能量线是手段) 且开出一条全新的、严格更弱的攻击面 [AVG-ZERO] Σ_{p≤X}|Z_p|=o(X),
+  它经 gate-verified 的数字判据 + 平均恒等式**精确等于**主定理顶窗的对-n-平均版本。
+  交付: 八个独立验收门全绿 (LASTSTAND_VERIFY.py, exit 0); 账本 §139–146;
+  UNDERSTANDING.md (收工状态书); 死亡证书 6 张新增 ([NO-RUN] 活反例 /
+  [DEAD-MAX-WEYL-CLASS] / [PRIVATE-SINGLETON] / Chebotarev 捷径 / Christol 捷径 /
+  Σlog p|Z_p|=o(X) 假设为假); 制度: 验收门规则入 ERRATA。
+- 两问: (a) 最没信心: §139 completion 簿记 (唯一 provisional 项, 逐行写在 §146,
+  唯一未证假设=完整二维和的平方根相消, 只有 cron AS.1 数值支持); 以及 rc 的
+  codex ultra 报告尚未审读, 其 verifier 需查 placeholder。
+  (b) 盲角: 本日五次改口暴露的是流程盲角 (探索期摆动当进展发布, 且自己的验证脚本
+  里留 placeholder), 已立验收门制度; 数学盲角 = [AVG-ZERO] 与主定理的差距是否
+  真的"严格更弱"只有 Q6809 一家判过, 未经第二方独立复核。

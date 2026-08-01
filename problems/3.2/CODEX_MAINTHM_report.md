@@ -785,7 +785,7 @@ K_X(m)=\#\{p:m\bmod p\in Z_p\},\qquad
 Chinese remaindering proves the unconditional second factorial moment
 
 \[
-\sum_{0\le m<X^2}(K_X(m))_2\le4X^2\lambda_X^2. \tag{4.18}
+\sum_{0\le m\le X^2}(K_X(m))_2\le4X^2\lambda_X^2. \tag{4.18}
 \]
 
 Indeed, an ordered choice of two distinct primes and two prescribed zero
@@ -798,14 +798,14 @@ independence scale:
 
 \[
 \mathrm{(HM)}_k:\qquad
-\sum_{0\le m<X^2}(K_X(m))_k
+\sum_{0\le m\le X^2}(K_X(m))_k
 \ll X^{2+o(1)}\lambda_X^k. \tag{4.19}
 \]
 
 Using the unconditional \(\lambda_X\ll X^{2/3}/\log X\), (4.19) implies
 
 \[
-\max_{m<X^2}K_X(m)
+\max_{m\le X^2}K_X(m)
 \ll X^{2/3+2/k+o(1)}. \tag{4.20}
 \]
 
