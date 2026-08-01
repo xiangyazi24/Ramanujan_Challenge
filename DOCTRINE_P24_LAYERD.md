@@ -510,3 +510,43 @@ inner sum — gave clean relations immediately.  This is the same trap already
 recorded in UNDERSTANDING.md under "substitute before trusting PSLQ"; the lesson
 generalises past substitution to *any* claim that a constant is not in a basis.
 Cross-check two independent evaluations before believing a negative.
+
+### …but the FULL collapse is circular — do not pursue it
+
+The leftover `2H1/(2-t) + 6H2/(1-t)` IS exact, with primitive
+`2 H1 H2 + 4L·H1 - 4 Li₂(t-1) - 2ζ₂`.  So the whole bracket has a primitive and
+`S = ∫ W0 dΨ` for a single `Ψ`.  That looks like it collapses everything to one
+integration by parts — and it does, straight back to where we started:
+
+```
+Ψ(t) = -quadAltJclosed(-t/(2-t))
+```
+
+i.e. the combined primitive is exactly the Möbius pullback of the Layer C
+integrand.  Integrating by parts against `W0' = -2R/t` therefore reverses the
+first IBP + Möbius step and returns the Layer C coefficient integral.  Nothing is
+evaluated.
+
+This is worth stating because the collapse is genuinely attractive and the
+circularity is not visible until you identify `Ψ`.  The partial collapse recorded
+above (`S = 2∫ΦR/t + 4 I21`) escapes it only because it stops short of full
+exactness.
+
+**Conclusion: row-by-row is the route.**  The useful collapsed statement would be
+`sixIntegralCombination = -(11/2)K - 12 L²ζ₂ + (35/2) Lζ₃ - (31/20) ζ₂²` — but
+that is not a consequence of exactness; it IS the whole weight-four reduction
+written on one line.
+
+### Cross-row relations: I12 and I21 need no independent evaluation
+
+With `I10, I11, I20, I22` banked, two elementary relations (R12), (R21) obtained
+from a Möbius difference give `I12` and `I21`.  They need one extra integral, a
+GROUPED packet that is elementary in the unit-interval alphabet `{0, 1, -1}` — no
+half-argument endpoint, no `Li₄` derivative.
+
+Two warnings that came with it, both matching traps already hit here:
+- **The packet must stay grouped.**  Splitting it under `1/(1-x)` produces two
+  individually divergent integrals; only the sum is integrable.
+- **Do not expand its three terms into series separately.**  That produces
+  coloured depth-three Euler sums outside the four-item half-argument list, which
+  would break the series-only plan.
