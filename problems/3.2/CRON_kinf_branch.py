@@ -1137,12 +1137,17 @@ def report_markdown(payload: Dict[str, Any]) -> str:
         "",
         "## Verdict",
         "",
-        "The 120-decimal-digit mpmath pass returned `YES` for `h=%d..%d`. "
-        "The independent proof-grade pass then returned `YES` for exactly "
+        "The %d-decimal-digit mpmath pass returned `YES` for `h=%d..%d`. "
+        "The proof-grade pass then returned `YES` for exactly "
         "`h=%s`: Arb isolated all quotient critical roots, every explicit "
         "interval-Newton inclusion succeeded, every squared critical-value "
         "ball excluded zero, and all nonmirror value balls were disjoint."
-        % (min(uncertified_yes), max(uncertified_yes), certified_range),
+        % (
+            payload["scan"]["uncertified_digits"],
+            min(uncertified_yes),
+            max(uncertified_yes),
+            certified_range,
+        ),
         "",
         "Thus the empirical failure cutoff is `%s`.  In the whole tested range "
         "there are `2h-2` certified mirror-orbits (equivalently `4h-4` "
@@ -1324,6 +1329,11 @@ def report_markdown(payload: Dict[str, Any]) -> str:
             "4. `python-flint` was found in the pinned uv cache rather than the "
             "system Python import path.  The script re-executes through uv and "
             "records the exact versions in the JSON payload.",
+            "5. The uncertified pass takes the midpoints of FLINT root balls as "
+            "Newton seeds, then discards every radius and recomputes roots and "
+            "values in mpmath.  It is a 100+-digit floating-point regression "
+            "pass, not an implementation-independent root finder; the Arb pass "
+            "is the certificate.",
             "",
             "Reproduction command:",
             "",
