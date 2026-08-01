@@ -486,7 +486,7 @@ def r3_no_adiabatic_gate() -> None:
     chi_next = z**2 - alpha_next * z + beta_next
     symbolic_eigenvector = sp.Matrix([[0, 1], [-beta, alpha]]) * sp.Matrix([1, z])
     assert sp.simplify(symbolic_eigenvector[0] - z) == 0
-    assert sp.simplify(symbolic_eigenvector[1] - z**2) == -chi
+    assert sp.cancel(symbolic_eigenvector[1] - z**2 + chi) == 0
     assert sp.cancel(
         sp.resultant(chi, chi_next, z)
         + 24 * R8 / ((s + 1) ** 6 * (s + 2) ** 6)
