@@ -2501,3 +2501,29 @@ rank-drop 相关, (R3) cocycle 反集中/慢变扰动 (Q6735)。缺失机制三�
 p-Lucas b_{np+r}≡b_nb_r + jet (b,c)=(b,b') 结构 ⟹ mod-p 数字化描述 — q64
 (前提待自验)。q63=q60 重发 (首投被旧答案 Q6692 污染)。codex 双开:
 norun 全证书班 (high) + cocycle 主攻班 (**ultra 档实测存在**)。
+
+## §135 — 归约链大合流: FR_η ⟸ 单变量 Weyl 幂省 (Heilbronn 类) (08-02, life)
+
+**strip 分离链 (自推, Q6759 独立复核一致)**: 能量恒等 E(p)=Σm_v² = 全距离碰撞
+对 ⟹ 能量界永远给不了 strip 靶; [FR_η] = 碰撞**距离分布**反集中。用加性字符/
+Fejér 展开 strip 指示子 ⟹ 完全双线性分离:
+T(D) ≲ (1/p²)Σ_{t,s} Ŵ(s)|σ(t,s)|², σ(t,s)=Σ_r e_p(t·φ_r+sr)。
+**任意一致幂省 |σ(t,s)|≤p^{1−δ} (δ>η/4) ⟹ [FR_η] ⟹ 破 3/2。**
+族问题第一次归约为单变量指数和问题。与 cron max-Weyl 线 (AN.2) 合流:
+其"缺失引理=固定导子 sheaf realization"现在同时喂点态与能量两线。
+
+**调和玩具校准 (Q6751/Q6758 浏览核实)**: T1 strip 靶文献**空缺** (GLS 2005 只有
+单点分布; 距离局域返回定理 absent) ⟹ 墙非 Apéry 特有, 是分析数论共同前沿。
+**Bernoulli 恒等 (自推, 待 von Staudt 校正)**: H_r = 唯一 deg p−1 多项式 f,
+f(0)=0, f(x+1)−f(x)=x^{p−2} ⟹ 玩具相位=结构化高次多项式 = **Heilbronn 和类**
+(Heath-Brown p^{11/12}, HB-Konyagin 改进, 走 Stepanov 辅助多项式)。玩具 crux:
+|Σe_p(t·f(r)+sr)| ≤ p^{1−δ} — 若文献已有或可证, 玩具 strip 定理成立(独立可发表)。
+**Apéry 侧对应**: 相位 u_r=c_r/b_r (仿射卡), 扭差分 u_{r+1}−u_r=6/((r+1)³b_rb_{r+1}),
+轨道=A⁴ 显式有理动力系统单轨 — "递推轨道相位的 Stepanov" 纲领 (乘法子群
+Weyl 界的非自治推广; 关系供给=addition law/差闭结构)。q73 (玩具 Stepanov 执行,
+life9) + q74 (Apéry 变体设计, life10) 在飞。
+
+**其他终判**: q70/Q6753: Furstenberg 对角代数化死在第二解 c (Dwork-log 类,
+Cartier 复杂度), open lemma= o(√p) avatar; 盲点提示: Frobenius 不变商/形式群
+坐标可能低复杂度。q67 modprop 与 q69 skeptic 两答滞留 Notion 不可读页,
+重发中。Q6745 (旧队列): hatch 条件 A⟹S=o(N)@中观, B 只给 O(N) 且 sharp。

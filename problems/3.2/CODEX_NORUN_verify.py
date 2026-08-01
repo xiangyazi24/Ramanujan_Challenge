@@ -43,14 +43,6 @@ def apery_P(n):
     return 34 * n**3 + 51 * n**2 + 27 * n + 5
 
 
-def alpha(n):
-    return apery_P(n) / (n + 1) ** 3
-
-
-def beta(n):
-    return n**3 / (n + 1) ** 3
-
-
 def symbolic_state_certificate() -> None:
     """Reproduce the advertised F, but only for a companion-state orbit."""
 
