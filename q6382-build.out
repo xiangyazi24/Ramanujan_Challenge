@@ -1,5 +1,5 @@
-✔ [2719/2721] Built RamanujanChallenge.Problem27 (33s)
-⚠ [2720/2721] Built RamanujanChallenge.Problem27Barnes (12s)
+✔ [2719/2721] Built RamanujanChallenge.Problem27 (37s)
+⚠ [2720/2721] Built RamanujanChallenge.Problem27Barnes (13s)
 info: RamanujanChallenge/Problem27Barnes.lean:477:2: Try this:
   [apply] ring_nf
   
@@ -36,40 +36,27 @@ Note: This linter can be disabled with `set_option linter.unusedTactic false`
 warning: RamanujanChallenge/Problem27Barnes.lean:1083:70: this tactic is never executed
 
 Note: This linter can be disabled with `set_option linter.unreachableTactic false`
-✖ [2721/2721] Building RamanujanChallenge.Q6382Scratch (8.9s)
-trace: .> LEAN_PATH=/home/runner/work/Ramanujan_Challenge/Ramanujan_Challenge/lean/.lake/packages/Cli/.lake/build/lib/lean:/home/runner/work/Ramanujan_Challenge/Ramanujan_Challenge/lean/.lake/packages/batteries/.lake/build/lib/lean:/home/runner/work/Ramanujan_Challenge/Ramanujan_Challenge/lean/.lake/packages/Qq/.lake/build/lib/lean:/home/runner/work/Ramanujan_Challenge/Ramanujan_Challenge/lean/.lake/packages/aesop/.lake/build/lib/lean:/home/runner/work/Ramanujan_Challenge/Ramanujan_Challenge/lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/runner/work/Ramanujan_Challenge/Ramanujan_Challenge/lean/.lake/packages/importGraph/.lake/build/lib/lean:/home/runner/work/Ramanujan_Challenge/Ramanujan_Challenge/lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/runner/work/Ramanujan_Challenge/Ramanujan_Challenge/lean/.lake/packages/plausible/.lake/build/lib/lean:/home/runner/work/Ramanujan_Challenge/Ramanujan_Challenge/lean/.lake/packages/mathlib/.lake/build/lib/lean:/home/runner/work/Ramanujan_Challenge/Ramanujan_Challenge/lean/.lake/build/lib/lean /home/runner/.elan/toolchains/leanprover--lean4---v4.29.0/bin/lean /home/runner/work/Ramanujan_Challenge/Ramanujan_Challenge/lean/RamanujanChallenge/Q6382Scratch.lean -o /home/runner/work/Ramanujan_Challenge/Ramanujan_Challenge/lean/.lake/build/lib/lean/RamanujanChallenge/Q6382Scratch.olean -i /home/runner/work/Ramanujan_Challenge/Ramanujan_Challenge/lean/.lake/build/lib/lean/RamanujanChallenge/Q6382Scratch.ilean -c /home/runner/work/Ramanujan_Challenge/Ramanujan_Challenge/lean/.lake/build/ir/RamanujanChallenge/Q6382Scratch.c --setup /home/runner/work/Ramanujan_Challenge/Ramanujan_Challenge/lean/.lake/build/ir/RamanujanChallenge/Q6382Scratch.setup.json --json
+⚠ [2721/2721] Built RamanujanChallenge.Q6382Scratch (10s)
 warning: RamanujanChallenge/Q6382Scratch.lean:144:15: 'push_cast' tactic does nothing
 
 Note: This linter can be disabled with `set_option linter.unusedTactic false`
-error: RamanujanChallenge/Q6382Scratch.lean:171:4: 'change' tactic failed, pattern
-  deriv (fun z ↦ Complex.sin (z * ↑π)) ↑m = ↑π * Complex.cos (↑π * ↑m)
-is not definitionally equal to target
-  deriv sinePi ↑m = ↑π * Complex.cos (↑π * ↑m)
-warning: RamanujanChallenge/Q6382Scratch.lean:234:2: try 'simp' instead of 'simpa'
+warning: RamanujanChallenge/Q6382Scratch.lean:238:2: try 'simp' instead of 'simpa'
 
 Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
-warning: RamanujanChallenge/Q6382Scratch.lean:309:48: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+warning: RamanujanChallenge/Q6382Scratch.lean:313:48: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
-warning: RamanujanChallenge/Q6382Scratch.lean:319:48: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+warning: RamanujanChallenge/Q6382Scratch.lean:323:48: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
-info: RamanujanChallenge/Q6382Scratch.lean:340:0: 'RamanujanChallenge.P27.Q6382.verticalIntegral_eq_of_horizontal_tendsto' depends on axioms: [propext,
+info: RamanujanChallenge/Q6382Scratch.lean:344:0: 'RamanujanChallenge.P27.Q6382.verticalIntegral_eq_of_horizontal_tendsto' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
-info: RamanujanChallenge/Q6382Scratch.lean:341:0: '_private.RamanujanChallenge.Q6382Scratch.0.RamanujanChallenge.P27.Q6382.sineSlope_ne_zero_on_strip' depends on axioms: [propext,
- sorryAx,
+info: RamanujanChallenge/Q6382Scratch.lean:345:0: '_private.RamanujanChallenge.Q6382Scratch.0.RamanujanChallenge.P27.Q6382.sineSlope_ne_zero_on_strip' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
-info: RamanujanChallenge/Q6382Scratch.lean:342:0: '_private.RamanujanChallenge.Q6382Scratch.0.RamanujanChallenge.P27.Q6382.barnesRaw_eq_extension_of_mem_strip_of_ne' depends on axioms: [propext,
- sorryAx,
+info: RamanujanChallenge/Q6382Scratch.lean:346:0: '_private.RamanujanChallenge.Q6382Scratch.0.RamanujanChallenge.P27.Q6382.barnesRaw_eq_extension_of_mem_strip_of_ne' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
-info: RamanujanChallenge/Q6382Scratch.lean:343:0: 'RamanujanChallenge.P27.Q6382.barnes_one_strip_shift' depends on axioms: [propext,
- sorryAx,
- Classical.choice,
- Quot.sound]
-error: Lean exited with code 1
-Some required targets logged failures:
-- RamanujanChallenge.Q6382Scratch
-error: build failed
+info: RamanujanChallenge/Q6382Scratch.lean:347:0: 'RamanujanChallenge.P27.Q6382.barnes_one_strip_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (2721 jobs).
