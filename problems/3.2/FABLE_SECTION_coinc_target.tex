@@ -272,23 +272,50 @@ and $\delta_h$ vanishes to exact order $3$ at $x=\infty$.
 \end{lemma}
 
 \begin{proof}
-Apply~\eqref{eq:coinc-U1} with $(h,d)=(j-1+(h-j+1))$ arranged so the
-first factor is evaluated at the singular index, or directly: at
-$x=-j$ the transfer product $G_{h-1}(x+1)$ factors through the two
-regular blocks on either side of the vanishing step, and the two blocks
-contribute the two normalized restart values, which
-by~\eqref{eq:coinc-gap-identity} are the displayed factorial--Ap\'ery
-products; nonvanishing holds because the Ap\'ery numbers are positive
-integers.  (Machine-verified exactly for all $1\le j\le h\le10$.)
+First, induction on $m$ from the $U$-recurrence and the Ap\'ery
+recurrence gives, for all $m\ge1$,
+\[
+ U_{m-1}(1)=\bigl((m-1)!\bigr)^3b_{m-1},
+ \qquad\text{i.e.}\qquad
+ N_m(0)=\bigl((m-1)!\bigr)^3b_{m-1}.
+\]
+For $j=1$ this is the claim after the shift $x\mapsto x-1$ is undone.
+For $2\le j\le h$, apply the addition law~\eqref{eq:coinc-U1} with first
+length $j-1$ and second length $h-j+1$ at $x=-j$: the term carrying
+$N_{j-1}(-j)\cdot(\cdots)$ survives while the complementary term
+vanishes, and the proved reflection identity
+$N_m(-m-1-x)=(-1)^{m-1}N_m(x)$ converts the reflected evaluation into
+$N_{j-1}(0)$ and $N_{h-j}(0)$-type values, yielding the displayed sign
+and factorial--Ap\'ery product.  Nonvanishing over $\mathbb Q$ holds
+because the Ap\'ery numbers are positive integers; since
+$\prod_{j'}(x+j')^3$ has an exact triple zero at $x=-j$, every finite
+pole of $\delta_h$ has exact order $3$.  At infinity, put $z=1/x$: since
+$\deg N_h=3h-3$ with nonzero leading coefficient and
+$\deg\prod(x+j)^3=3h$, one has $\delta_h(z^{-1})=z^3(\lambda+O(z))$ with
+$\lambda\ne0$, an exact zero of order $3$; in particular
+$\deg\delta_h=3h$ and $\gcd(N_h,\prod(x+j)^3)=1$ over $\mathbb Q$.
+(Machine-verified exactly for all $1\le j\le h\le10$.)
 \end{proof}
+
+\begin{remark}[characteristic-$p$ caveat]\label{rem:coinc-poles-charp}
+Lemma~\ref{lem:coinc-poles} is a statement over $\mathbb Q$.  Modulo
+$p$, a pole order can drop when $p$ divides $b_{j-1}b_{h-j}$ (or the
+leading coefficient), so any finite-field application must exclude or
+count these bad reductions; positivity over $\mathbb Z$ does not imply
+nonvanishing in $\mathbb F_p$.
+\end{remark}
 
 \begin{proposition}[generic genus of the difference correspondence]
 \label{prop:coinc-genus}
-Fix $h\ne k$ and suppose $X_{h,k}$ is irreducible with $\delta_h$,
-$\delta_k$ having simple finite critical points, distinct critical
-values, and branch loci disjoint from each other away from
-$\{0,\infty\}$ (all verified exactly for $2\le h<k\le8$).  Then the
-normalization of $X_{h,k}$ has genus
+Fix $h\ne k$ and assume the exact ramification profiles: over $\infty$
+each of $\delta_h,\delta_k$ has only the triple poles of
+Lemma~\ref{lem:coinc-poles}; over $0$ the fibers consist of the simple
+roots of the (squarefree) $N_h$, $N_k$ together with the order-$3$
+point at $x=\infty$; the remaining $4h-4$ resp.\ $4k-4$ critical points
+are simple, with critical values nonzero, pairwise distinct, and the
+two branch loci disjoint away from $\{0,\infty\}$; and $X_{h,k}$ is
+irreducible (all of this verified exactly for $2\le h<k\le16$).  Then
+the normalization of $X_{h,k}$ has genus
 \[
  g=6hk-3h-3k-2 .
 \]
@@ -300,7 +327,11 @@ Conjecture~\ref{conj:coinc-beta} gains anything.
 \end{proposition}
 
 \begin{proof}
-Riemann--Hurwitz on the normalized fiber product: over $\infty$ both
+We use the local defect formula for fiber products: if points of
+ramification indices $e$ and $f$ lie over a common branch point, the
+normalized fiber product has $\gcd(e,f)$ branches there, each of
+ramification index $\mathrm{lcm}(e,f)$, with total Riemann--Hurwitz
+defect $ef-\gcd(e,f)$.  Over $\infty$ both
 fibers consist of order-$3$ points ($h$ resp.\ $k$ of them, by
 Lemma~\ref{lem:coinc-poles}), contributing defect $6hk$; over $0$ the
 fibers are $3(h-1)$ resp.\ $3(k-1)$ simple points plus one order-$3$
@@ -324,24 +355,37 @@ $\overline{\mathbb Q}$.
 components over $\overline{\mathbb Q}$: the diagonal $x=y$ and one
 further component $H_h$.
 \end{enumerate}
-Consequently, under $\mathrm{MON}_h$ for all $h\le H$, the total
-component excess is $\sum_{h,k\le H}(c_{h,k}-1)=H+O(1)$, exactly the
-allowance of Conjecture~\ref{conj:coinc-beta}.
+Consequently, under $\mathrm{MON}_h$ for all $2\le h\le H$, the total
+component excess is $\sum_{h,k\le H}(c_{h,k}-1)=H+1$ (the diagonal of
+each same-gap curve for $2\le h\le H$, plus the two extra lines of the
+special case $h=k=1$), exactly the allowance of
+Conjecture~\ref{conj:coinc-beta}.  These are statements over
+$\overline{\mathbb Q}$; for any \emph{fixed} pair they transfer to
+$\mathbb F_p$ for all $p$ outside a computable finite set by standard
+spreading out, but no uniform bad-reduction control in the growing
+range $h,k\le p^{\beta}$ is asserted here --- that uniformity is
+exactly the hypothesis $p>p_0(H)$ of the census.
 \end{theorem}
 
 \begin{proof}
-Components of $X_{h,k}$ over $\overline{\mathbb Q}$ correspond to orbits
-of the joint monodromy group $G\le S_{3h}\times S_{3k}$ (the image of
-the fundamental group of the common punctured base acting on pairs of
-sheets) on $\{1,\dots,3h\}\times\{1,\dots,3k\}$.  By Goursat, $G$ is the
+Work over the base $\mathbb P^1$ punctured at the union of the two
+branch loci; components of $X_{h,k}$ over $\overline{\mathbb Q}$
+correspond to orbits of the joint monodromy group
+$G\le S_{3h}\times S_{3k}$ (the image of the fundamental group of this
+common punctured base acting on pairs of sheets) on
+$\{1,\dots,3h\}\times\{1,\dots,3k\}$.  By Goursat, $G$ is the
 fiber product of the two full symmetric images over a common quotient;
-the only proper common quotient of $S_{3h}$ and $S_{3k}$ is
-$\mathbb Z/2$, so $G$ contains $A_{3h}\times A_{3k}$.  For $h\ne k$
-each alternating factor is transitive, so $G$ is transitive on the
-product: one orbit, one component.  For $h=k$ the two projections are
-identified along the same cover; $G$ contains the diagonal image of
-$A_{3h}$, and $S_{3h}$ acting diagonally on ordered pairs has exactly
-two orbits (diagonal and off-diagonal) by $2$-transitivity.
+for $3h,3k\ge6$ the proper common quotients of $S_{3h}$ and $S_{3k}$
+are trivial or $\mathbb Z/2$, so $G$ contains $A_{3h}\times A_{3k}$
+(the low-degree case $3h=3$, i.e.\ $h=1$, is excluded and handled
+separately).  For $h\ne k$ each alternating factor is transitive, so
+$G$ is transitive on the product: one orbit, one component.  For $h=k$
+the fiber product of the cover with itself has joint monodromy exactly
+the diagonally embedded $\mathrm{Mon}(\delta_h)=S_{3h}$ acting on
+ordered pairs of sheets, with exactly two orbits (diagonal and
+off-diagonal) by $2$-transitivity; the off-diagonal orbit yields the
+single residual component $H_h$, no quotient by the factor swap being
+involved.
 \end{proof}
 
 \begin{remark}[status of $\mathrm{MON}_h$]\label{rem:coinc-mon-status}
@@ -389,18 +433,20 @@ Proposition~\ref{prop:coinc-genus}; one van der Corput step applied
 to~\eqref{eq:coinc-D-update} does not shorten the transfer length
 (the law couples the two blocks at one base point), and block-glueing
 by Cauchy--Schwarz alone cannot pass the trivial degree scale.  What
-remains is the \emph{shell variance}: with
-$E_{h,k}$ the centered coincidence correlation of $\delta_h$ and
-$\delta_k$ on the windows, the statement
-\[
- \Bigl|\sum_{h\le H}E_{h,h+d}\Bigr|\ll pH^{1+o(1)}/D
- \quad\text{uniformly for }d\le D,\ H\le p^{2/3},
-\]
-after removal of the diagonal and the classified components, implies
-Conjecture~\ref{conj:coinc-beta} at $\beta=2/3$ up to $p^{\varepsilon}$
-and hence $\mathcal F_p\ll p^{4/3+\varepsilon}$.  This is the precise
-family-compatibility object to which all campaign routes have
-converged.
+remains is the \emph{shell variance}.  For $1\le h,k\le H$ let
+$E_{h,k}=\#\{(r,r')\in I_h\times I_k:\Delta_{r,h}=\Delta_{r',k}\}
+-|I_h||I_k|/p-[\text{classified component main terms}]$ denote the
+centered coincidence correlation (unordered gaps, nonwrapping windows),
+and $A_d(H)=\sum_{h\le H-d}E_{h,h+d}$ the shell sums.  Since
+$\mathcal N(H)-S^2/p=\sum_{h,k}E_{h,k}+[\text{main terms}]
+=A_0+2\sum_{1\le d\le H-1}A_d+O(S)$, a bound
+$|A_d(H)|\ll pH^{1+o(1)}/d$ for \emph{every} $1\le d\le H-1$ (all
+shells, not an initial segment) at $H=\lceil p^{2/3}\rceil$ implies
+Conjecture~\ref{conj:coinc-beta} at $\beta=2/3$ up to
+$p^{\varepsilon}$, hence $\mathcal F_p\ll p^{4/3+\varepsilon}$.  The
+structural theorems of this subsection do not prove shell variance; it
+is the precise family-compatibility object to which all campaign routes
+have converged.
 \end{remark}
 
 \begin{remark}[numerical status only]\label{rem:coinc-empirical}

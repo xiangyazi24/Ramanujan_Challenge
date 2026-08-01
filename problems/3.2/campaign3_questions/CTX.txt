@@ -12,7 +12,7 @@ Gap polynomials (proved): N_1 = 1, N_2(r) = P(r+1), N_{h+1}(r) = P(r+h) N_h(r) -
 U_m: U_{-1}=0, U_0=1, U_{m+1}(s) = P(s+m) U_m(s) - (s+m)^6 U_{m-1}(s). N_h(r) = U_{h-1}(r+1).
 On a nonwrapping window: pi(r) = pi(r+h) iff N_h(r) = 0 in F_p.
 C_h = #{1 <= r <= M-h : N_h(r) = 0 in F_p}. Trivial: C_h <= 3(h-1). Chebotarev average (fixed h, p -> infty, proved): avg C_h = kappa_h + (p-2-h-kappa_h)/(p+1) + o(1), kappa_h = 1 for h even (forced mirror collision from the proved reflection theorem y_{p-1-n} = y_n), 0 for h odd.
-Transfer matrices: M_u = [[0, (u+1)^6], [-1, P(u)]], G_m(s) = M_{s+m-1}...M_s = [[-(s+m)^6 U_{m-2}(s+1), (s+m)^6 U_{m-1}(s)], [-U_{m-1}(s+1), U_m(s)]], det G_m(s) = prod_{j=0}^{m-1} (s+j)^6.
+Transfer matrices: M_u = [[0, (u+1)^6], [-1, P(u)]], G_m(s) = M_{s+m-1}...M_s = [[-(s+m)^6 U_{m-2}(s+1), (s+m)^6 U_{m-1}(s)], [-U_{m-1}(s+1), U_m(s)]], det G_m(s) = prod_{j=1}^{m} (s+j)^6.
 Adjacent coprimality (proved): gcd(N_h, N_{h+1}) = 1 as polynomials (over Q).
 Factorization law (proved): for h even, N_h = (2r+h+1) M_h with M_h the primitive factor; for h odd N_h is irreducible over Q for all h <= 14 (verified).
 h=2 splitting law (proved): full root count of N_2 = 1 + 2*[(-51/p) = 1]. Same field Q(sqrt(-51)) appears in the proved annealed two-step return probability (2 + (-51/p))/(p-1).

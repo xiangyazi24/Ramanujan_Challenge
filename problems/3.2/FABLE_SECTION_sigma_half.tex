@@ -1,0 +1,771 @@
+% SUMMARY AND AUDIT TRAIL
+% Target: standalone section for problems/3.2/proof.tex; no new packages
+% (amsmath/amssymb/amsthm assumed, as in the orbit-energy section).
+% Ledger sources: Q6577 (hostile audit of [THM-Q-SIGMA-ONE-HALF], verdict
+% CONFIRMED; the proof below follows its Sections 1-5 and 8: box partition of
+% [1,H] into q=ceil(H/D) boxes, per-base inequality (2.1), triple-collision
+% injection with counting factor H, master inequality (8.1), optimization
+% D=ceil(sqrt(H)) giving 6H^{5/2}+(3/4)H^{5/2}=(27/4)H^{5/2}; abstract box
+% lemma and constant-word example from its Section 7; context from 9-10);
+% Q6533 ([T3-INTERP], block-method barrier, [HEEGNER-DEAD], triple-gap
+% equivalence); Q6564 ([L2-FREQ], [GAP-2D-SQRT] numerics, [MIXED-RETURN-eta*]).
+% Corrections applied:
+%   (A) [T3-INTERP]: the source threshold M_0=p^{(tau-1)/2} fails at tau=1
+%       (there M_0=1 does not tend to infinity and the absorption of the
+%       term 3M_0^{-1}E fails).  Fixed to M_0=6p^{(tau-1)/2}; then
+%       3M_0^{-1}<=1/2 for all 1<=tau<2, the low part obeys
+%       E_low<=6p^{(1+tau)/2}, and the final explicit constant is 37/3.
+%   (B) [GAP-2D-SQRT]: the source status line "THEOREM (experimental
+%       evidence only)" is downgraded; the statement appears below strictly
+%       as a Conjecture with numerical support, never as a theorem.
+% No empirical assertion is used in any proof.  All constants of the audited
+% sources are preserved exactly (27/4, R_d<=3(d-1), 3/2, 8/3, 8/5, 13/6,
+% 3.4--5.3, 0.67, ...).
+
+\section{The $\sigma=\tfrac12$ factorial-moment theorem and its interfaces}
+\label{sec:sigma-half}
+
+Throughout this section we keep the conventions of the orbit-energy
+section (Section~\ref{sec:orbit-energy}): $p\ge7$ is prime,
+$I_p=\{1,\ldots,p-2\}$, $M=|I_p|=p-2$, and
+$\pi(n)=[b_n:c_n]\in\mathbb P^1(\mathbb F_p)$ is the projective Ap\'ery
+orbit.  For $h\ge1$ and $r$, $r+h$ in the regular range, the gap
+polynomial $N_h$ detects collisions:
+$\pi(r)=\pi(r+h)$ if and only if $N_h(r)=0$, and
+\begin{equation}\label{eq:sh-degree}
+ \deg_rN_h=3(h-1).
+\end{equation}
+
+% Ledger sources: Q6577 Sections 1-5, 7-10.
+\subsection{The $\sigma=\tfrac12$ theorem:
+$Q_p(\Delta)\le\tfrac{27}{4}H^{5/2}$}
+\label{sec:sh-sigma-half}
+
+For $r\in I_p$ and $h\ge1$ put $I(r,h)=1$ if $r+h\le M$ and
+$\pi(r)=\pi(r+h)$, and $I(r,h)=0$ otherwise.  For $\Delta\ge1$ define the
+window collision multiplicity and its second factorial moment
+\[
+ d_\Delta(r)=\#\{1\le h\le\Delta:\ r+h\le M,\ \pi(r)=\pi(r+h)\}
+            =\sum_{1\le h\le\Delta}I(r,h),
+\]
+\[
+ Q_p(\Delta)=\sum_{r\in I_p}\binom{d_\Delta(r)}{2},
+\]
+together with the one-gap counts and their partial sums
+\[
+ R_h=\sum_{r\in I_p}I(r,h),
+ \qquad
+ S_1(Y)=\sum_{1\le d\le Y}R_d .
+\]
+By~\eqref{eq:sh-degree}, the banked one-gap estimate reads
+\begin{equation}\label{eq:sh-onegap}
+ R_d\ \le\ \deg_rN_d\ =\ 3(d-1)\qquad(1\le d\le p-3).
+\end{equation}
+Estimate~\eqref{eq:sh-onegap} is the \emph{only} Ap\'ery-specific input of
+this subsection; see Remark~\ref{rem:sh-abstract}.
+
+Since $r\ge1$ and $r+h\le M=p-2$ force $h\le p-3$, gaps larger than $p-3$
+never occur.  Hence, with
+\[
+ H:=\min(\Delta,\,p-3),
+\]
+we have $d_\Delta(r)=d_H(r)$ for every $r$ and $Q_p(\Delta)=Q_p(H)$; it
+suffices to treat $1\le H\le p-3$.  The first moment is exact:
+\begin{equation}\label{eq:sh-firstmoment}
+ S:=\sum_{r\in I_p}d_H(r)=\sum_{h=1}^{H}R_h=S_1(H)
+ \ \le\ 3\sum_{h=1}^{H}(h-1)=\tfrac32H(H-1)\ \le\ \tfrac32H^2 .
+\end{equation}
+
+Fix an integer box length $D$ with $1\le D\le H$ and partition $[1,H]$
+into consecutive boxes
+\[
+ B_j=\{(j-1)D+1,\ldots,\min(jD,H)\},\qquad 1\le j\le q,\qquad
+ q=\Bigl\lceil\frac HD\Bigr\rceil,
+\]
+the last box possibly shorter; no divisibility assumption $D\mid H$ is
+made.  For each base $r$ set
+\[
+ a_j(r)=\#\{h\in B_j:\ I(r,h)=1\},
+ \qquad
+ L_r=\sum_{j=1}^{q}\binom{a_j(r)}{2},
+ \qquad
+ L=\sum_{r\in I_p}L_r .
+\]
+
+\begin{lemma}[per-base box inequality]\label{lem:sh-box}
+For every $r\in I_p$,
+\begin{equation}\label{eq:sh-boxineq}
+ \binom{d_H(r)}{2}\ \le\ q\,L_r+\frac{q-1}{2}\,d_H(r).
+\end{equation}
+Consequently, summing over $r\in I_p$,
+\begin{equation}\label{eq:sh-summedbox}
+ Q_p(H)\ \le\ q\,L+\frac{q-1}{2}\,S .
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Since the boxes partition $[1,H]$ we have $d_H(r)=\sum_ja_j(r)$, and from
+$a^2=2\binom a2+a$,
+\[
+ \sum_{j=1}^{q}a_j(r)^2
+ =\sum_{j=1}^{q}\Bigl(2\binom{a_j(r)}{2}+a_j(r)\Bigr)
+ =2L_r+d_H(r).
+\]
+By the Cauchy--Schwarz inequality applied to the $q$ boxes,
+\[
+ d_H(r)^2=\Bigl(\sum_{j=1}^{q}a_j(r)\Bigr)^{\!2}
+ \ \le\ q\sum_{j=1}^{q}a_j(r)^2
+ \ =\ q\bigl(2L_r+d_H(r)\bigr).
+\]
+Hence $d_H(r)^2-d_H(r)\le 2qL_r+(q-1)d_H(r)$, which
+is~\eqref{eq:sh-boxineq} after division by $2$.  The short final box is
+already included in the definition of $a_j(r)$; there is no endpoint
+issue.  Summing~\eqref{eq:sh-boxineq} over $r$
+gives~\eqref{eq:sh-summedbox}.
+\end{proof}
+
+\begin{lemma}[triple-collision injection]\label{lem:sh-inject}
+For $1\le h<k\le H$ let
+\[
+ T(h,k)=\#\{r\in I_p:\ r+k\le M,\ \pi(r)=\pi(r+h)=\pi(r+k)\}.
+\]
+Then:
+\begin{enumerate}
+\item[(a)] $\displaystyle
+ L=\sum_{j=1}^{q}\ \sum_{\substack{h<k\\ h,k\in B_j}}T(h,k)$;
+\item[(b)] for every fixed pair $h<k$, with $d=k-h$,
+ \begin{equation}\label{eq:sh-inject}
+  T(h,k)\ \le\ R_{k-h};
+ \end{equation}
+\item[(c)] $\displaystyle L\ \le\ \sum_{d=1}^{D-1}\mathcal B_d\,R_d
+ \ \le\ H\,S_1(D-1)$, where
+ $\mathcal B_d=\#\{(h,k):h<k,\ k-h=d,\ h,k\in\text{one box}\}\le H$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) For fixed $r$ and $j$, $\binom{a_j(r)}{2}$ counts the unordered pairs
+$h<k$ with $h,k\in B_j$ and $I(r,h)=I(r,k)=1$; since $k>h$, the condition
+$I(r,h)=I(r,k)=1$ says exactly that $r+k\le M$ and
+$\pi(r)=\pi(r+h)=\pi(r+k)$, i.e.\ that $r$ is counted by $T(h,k)$.
+Summing over $r$ and $j$ gives the identity.  Note that $L$ counts the
+joint objects $(r,\{h,k\})$ \emph{with multiplicity} across different
+pairs; this convention is used in (b) below.
+
+(b) Fix $h<k$ and put $d=k-h\ge1$.  For every $r$ counted by $T(h,k)$
+set $u=r+h$.  Then $u\in I_p$, and
+\[
+ u+d=r+k\le M,
+ \qquad
+ \pi(u)=\pi(r+h)=\pi(r+k)=\pi(u+d)
+\]
+by transitivity of equality, so $u$ is a valid base of a gap-$d$
+collision, i.e.\ $I(u,d)=1$.  For this fixed pair $(h,k)$ the map
+$r\mapsto u=r+h$ is injective ($u$ determines $r=u-h$).
+Hence $T(h,k)\le R_d$.  The same translated base $u$ may arise from
+different pairs $(h,k)$; this is harmless, because (a) counts
+$(r,\{h,k\})$ with multiplicity and~\eqref{eq:sh-inject} is applied
+separately to each fixed pair before the bounds are added.  No
+disjointness of the images across pairs is asserted or needed.  The
+nonwrapping boundary is preserved automatically:
+$r+k\le M$ implies $u+d\le M$, so no admissible base is lost and none is
+newly introduced.
+
+(c) A same-box pair $h<k$ with $k-h=d$ exists only for $1\le d\le D-1$,
+since each box has length at most $D$.  If the box lengths are
+$\ell_1,\ldots,\ell_q$, then exactly
+$\mathcal B_d=\sum_{j=1}^{q}\max(\ell_j-d,0)$; in particular
+$\mathcal B_d\le H$, because such a pair is determined by its first
+member $h\in[1,H]$.  (The incomplete final box only decreases these
+counts.)  Combining (a), (b) and $\mathcal B_d\le H$,
+\[
+ L\ \le\ \sum_{d=1}^{D-1}\mathcal B_d\,R_d
+ \ \le\ H\sum_{d=1}^{D-1}R_d\ =\ H\,S_1(D-1). \qedhere
+\]
+\end{proof}
+
+The next lemma is the reusable interface of the method: it is stated
+before any degree estimate is inserted, and any future short-range
+improvement of $S_1$ plugs into it directly
+(Remark~\ref{rem:sh-interface}).
+
+\begin{lemma}[master inequality]\label{lem:sh-master}
+For every integer $1\le D\le H$, with $q=\lceil H/D\rceil$,
+\begin{equation}\label{eq:sh-master}
+ \boxed{\ Q_p(H)\ \le\ q\,H\,S_1(D-1)\ +\ \frac{q-1}{2}\,S_1(H).\ }
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Insert Lemma~\ref{lem:sh-inject}(c) and the exact first-moment identity
+$S=S_1(H)$ from~\eqref{eq:sh-firstmoment}
+into~\eqref{eq:sh-summedbox}.
+\end{proof}
+
+\begin{remark}[the interface for short-range improvements]
+\label{rem:sh-interface}
+Only the aggregated one-gap data $S_1$ enters~\eqref{eq:sh-master}.
+Suppose the short range is improved to
+$S_1(Y)\ll Y^{2-\eta}$ for $Y\le D$ and some $\eta>0$, while the long
+range retains the degree bound $S_1(H)\ll H^2$.
+Then~\eqref{eq:sh-master} gives
+\[
+ Q_p(H)\ \ll\ H^2D^{1-\eta}+\frac{H^3}{D},
+\]
+and the choice $D=H^{1/(2-\eta)}$ yields
+\[
+ Q_p(H)\ \ll\ H^{\,3-\frac{1}{2-\eta}} .
+\]
+Checks: $\eta=0$ gives the exponent $\tfrac52$; $\eta=\tfrac12$ gives
+$\tfrac73$; $\eta=1$ gives $2$.  If the improvement also holds at the
+long scale $H$, it may be inserted in the second term
+of~\eqref{eq:sh-master} as well, with a stronger optimization.  A more
+precise weighted form is also available: by the exact count
+$\mathcal B_d=\sum_j\max(\ell_j-d,0)\le\min\bigl(H,q(D-d)\bigr)$ in
+Lemma~\ref{lem:sh-inject}(c),
+\[
+ Q_p(H)\ \le\ q\sum_{d=1}^{D-1}\mathcal B_d\,R_d+\frac{q-1}{2}S_1(H)
+ \ \le\ q^2\sum_{d=1}^{D-1}(D-d)R_d+\frac{q-1}{2}S_1(H).
+\]
+\end{remark}
+
+\begin{theorem}[$\sigma=\tfrac12$; explicit constant]
+\label{thm:sh-sigma-half}
+For every prime $p\ge7$ and every $\Delta\ge1$, with
+$H=\min(\Delta,p-3)$,
+\[
+ Q_p(\Delta)\ \le\ \frac{27}{4}\,H^{5/2}.
+\]
+In particular $Q_p(\Delta)\ll\Delta^{5/2}$ uniformly in $p$ and
+$\Delta$, with an absolute constant and no factor $p^\varepsilon$.  In
+the $\sigma$-ladder normalization $Q_p(\Delta)\ll\Delta^{3-\sigma}$ this
+is $\sigma=\tfrac12$.
+\end{theorem}
+
+\begin{proof}
+As noted above, $Q_p(\Delta)=Q_p(H)$ and we may assume $1\le H\le p-3$.
+By~\eqref{eq:sh-onegap},
+\[
+ S_1(D-1)=\sum_{d=1}^{D-1}R_d\le3\sum_{d=1}^{D-1}(d-1)
+ =\tfrac32(D-1)(D-2)\le\tfrac32D^2,
+ \qquad
+ S_1(H)\le\tfrac32H^2 ,
+\]
+so the master inequality~\eqref{eq:sh-master} gives
+\begin{equation}\label{eq:sh-51}
+ Q_p(H)\ \le\ \tfrac32\,q\,H\,D^{2}+\tfrac34\,(q-1)\,H^{2}.
+\end{equation}
+Choose the integer box length
+\[
+ D=\bigl\lceil\sqrt H\,\bigr\rceil .
+\]
+For $H\ge1$ this satisfies
+\[
+ \sqrt H\le D\le 2\sqrt H,\qquad D\le H,\qquad
+ q=\Bigl\lceil\frac HD\Bigr\rceil\le\frac{2H}{D},\qquad
+ q-1<\frac HD .
+\]
+Therefore
+\[
+ \tfrac32\,q\,H\,D^{2}\ \le\ 3H^{2}D\ \le\ 6H^{5/2},
+ \qquad
+ \tfrac34\,(q-1)\,H^{2}\ <\ \tfrac34\,\frac{H^{3}}{D}\ \le\ \tfrac34\,H^{5/2},
+\]
+and~\eqref{eq:sh-51} yields
+$Q_p(H)\le6H^{5/2}+\tfrac34H^{5/2}=\tfrac{27}4H^{5/2}$.
+\end{proof}
+
+\begin{remark}[superseded upper bound]\label{rem:sh-superseded}
+The exponent $5/2$ of Theorem~\ref{thm:sh-sigma-half} has since been
+superseded: the abstract box method sharpens, for an arbitrary word with
+$R_d\le Cd$, to the optimal-exponent bound
+$Q_H\le 22\,C\,H^2(1+\log H)$
+([THM-ABSTRACT-Q-H2LOGH]; monochromatic-triple recount plus an
+inverse-square clique energy lemma, with an explicit word showing the
+exponent $2$ cannot be improved).  Theorem~\ref{thm:sh-sigma-half} and
+Lemma~\ref{lem:sh-master} are retained as the reusable box/master
+interface; the sigma ladder is thereby combinatorially complete up to
+the logarithm, and the remaining wall at exponent $3/2$ is the
+mesoscopic normalization $Q_D\ll N$ at $D=\sqrt N\,L$, where the purely
+combinatorial bound leaves exactly a factor $L^2\log N$.
+\end{remark}
+
+
+\begin{remark}[abstract box lemma; the only Ap\'ery input]
+\label{rem:sh-abstract}
+After the one-gap estimates are supplied, the proof above never uses the
+Ap\'ery recurrence again.  It therefore establishes the following
+abstract statement.
+
+\emph{Abstract box lemma.  Let $x_0,\ldots,x_N$ be an arbitrary finite
+word over an arbitrary set.  Define $R_d$, $d_H(r)$ and $Q_H$ by
+equality of word values, with nonwrapping indices.  If $R_d\le Cd$ for
+every $1\le d\le H$, then $Q_H\ll_C H^{5/2}$.}
+
+The only Ap\'ery-specific input of
+Theorem~\ref{thm:sh-sigma-half} is the gap-polynomial degree
+bound~\eqref{eq:sh-onegap}, $R_d\le\deg_rN_d=3(d-1)$; with the coarser
+input $R_d\le3d$ the same proof gives an absolute constant such as $8$.
+Consequently no artificial word satisfying the one-gap profile can be a
+counterexample.
+
+By contrast, the aggregate first moment alone is insufficient.  Keep
+only $S=\sum_{d\le H}R_d=O(H^2)$ and drop the individual short-gap
+bounds: the constant word $x_0=x_1=\cdots=x_H$ has
+\[
+ R_d=H+1-d,\qquad S=\sum_{d=1}^{H}R_d=\frac{H(H+1)}2=O(H^2),
+\]
+yet
+\[
+ d_H(r)=H-r,\qquad
+ Q_H=\sum_{r=0}^{H}\binom{H-r}{2}=\binom{H+1}{3}\asymp H^3 .
+\]
+Thus first-moment input alone cannot give any exponent below $3$.  The
+constant word violates the actual hypothesis at the shortest gap
+($R_1=H$, whereas the Ap\'ery bound gives $R_1=0$ and in general
+$R_d\le3d$).  This identifies the injection
+Lemma~\ref{lem:sh-inject}, not the Cauchy step of
+Lemma~\ref{lem:sh-box}, as the genuinely new input.
+\end{remark}
+
+\begin{remark}[placement in the ladder]
+\label{rem:sh-context}
+The previous record came from the pointwise window bound
+$\max_rd_H(r)\le3H^{2/3}$ together with the first
+moment~\eqref{eq:sh-firstmoment}:
+\[
+ Q_p(H)\le\tfrac12\Bigl(\max_rd_H(r)\Bigr)\sum_rd_H(r)
+ \le\tfrac94H^{8/3}\le3H^{8/3}.
+\]
+Theorem~\ref{thm:sh-sigma-half} is stronger by the factor
+$H^{8/3-5/2}=H^{1/6}$, and both bounds may be retained as
+$Q_p(H)\ll\min(H^{5/2},H^{8/3})$.  Fed into the $\sigma$-machine of
+Section~\ref{sec:orbit-energy}, $\sigma=\tfrac12$ yields the energy
+exponent $p^{2-1/(5/2)}=p^{8/5}$, which does \emph{not} beat the direct
+unconditional $p^{3/2}$ energy theorem; the value of
+Theorem~\ref{thm:sh-sigma-half} is the nontrivial local
+factorial-moment saving and the reusable
+interface~\eqref{eq:sh-master}.  Any further improvement within the box
+method must improve at least one of: $S_1(D)$, $S_1(H)$, the bound
+$T(h,k)\le R_{k-h}$, or the Cauchy cross-box loss $q$.  Merely changing
+box endpoints, or treating the forced mirror root separately (it is
+already included in $R_d\le\deg N_d$), cannot improve the exponent
+$\tfrac52$.
+\end{remark}
+
+% Ledger sources: Q6533 Sections 1-4.  Correction (A) applied in
+% Theorem \ref{thm:sh-t3-interp}: threshold M_0 = 6 p^{(tau-1)/2}.
+\subsection{Interpolation, internal barriers, and the triple-gap
+dictionary}
+\label{sec:sh-interp}
+
+Let $(m_v)_{v\in\mathbb P^1(\mathbb F_p)}$ be the fibre multiplicities
+of the projective orbit over an index window of length $N\le p$ (for the
+window $I_p$ of this paper, $m_v=m_p(v)$ and $N=p-2$).  Write
+\[
+ E=\sum_vm_v^2,
+ \qquad
+ T_3=\sum_v(m_v)_3,
+ \qquad
+ (m)_3=m(m-1)(m-2),
+\]
+so that in the conventions
+of~Section~\ref{sec:orbit-energy}, $E$ is the full energy
+$\mathcal F_p$ when the window is $I_p$.
+
+\begin{theorem}[triple-collision interpolation]
+\label{thm:sh-t3-interp}
+Assume
+\[
+ T_3\le p^{\tau},\qquad 1\le\tau<2 .
+\]
+Then
+\[
+ E\ \le\ \tfrac{37}{3}\,p^{(1+\tau)/2}.
+\]
+In particular, if $T_3\le p^{2-\delta}$ for some $0<\delta\le1$, then
+$E\le\tfrac{37}3\,p^{3/2-\delta/2}$.
+\end{theorem}
+
+\begin{proof}
+From $m^3=(m)_3+3m^2-2m$ and $\sum_vm_v=N\le p$,
+\[
+ \sum_vm_v^3=T_3+3E-2N\ \le\ T_3+3E .
+\]
+Set the threshold
+\[
+ M_0=6\,p^{(\tau-1)/2}.
+\]
+(The factor $6$ is what makes the absorption below uniform in $\tau$,
+including the endpoint $\tau=1$, where the unnormalized threshold
+$p^{(\tau-1)/2}=1$ would fail to absorb the high-energy term.)
+Split $E=E_{\mathrm{low}}+E_{\mathrm{high}}$, where
+$E_{\mathrm{low}}=\sum_{m_v\le M_0}m_v^2$ and
+$E_{\mathrm{high}}=\sum_{m_v>M_0}m_v^2$.
+
+For the low part,
+\[
+ E_{\mathrm{low}}\ \le\ M_0\sum_vm_v\ =\ M_0N
+ \ \le\ 6\,p^{(\tau-1)/2}\cdot p\ =\ 6\,p^{(1+\tau)/2}.
+\]
+For the high part, $m_v^2\le M_0^{-1}m_v^3$ whenever $m_v>M_0$, so
+\[
+ E_{\mathrm{high}}\ \le\ M_0^{-1}\sum_vm_v^3
+ \ \le\ M_0^{-1}T_3+3M_0^{-1}E .
+\]
+Here
+\[
+ M_0^{-1}T_3\ \le\ \tfrac16\,p^{-(\tau-1)/2}\cdot p^{\tau}
+ \ =\ \tfrac16\,p^{(1+\tau)/2},
+\]
+and, since $\tau\ge1$,
+\[
+ 3M_0^{-1}=\tfrac12\,p^{-(\tau-1)/2}\ \le\ \tfrac12 .
+\]
+Adding the two parts,
+\[
+ E\ \le\ 6\,p^{(1+\tau)/2}+\tfrac16\,p^{(1+\tau)/2}+\tfrac12E,
+\]
+so $\tfrac12E\le\tfrac{37}6p^{(1+\tau)/2}$, i.e.\
+$E\le\tfrac{37}3p^{(1+\tau)/2}$.  The final assertion is the case
+$\tau=2-\delta$, since $(1+\tau)/2=\tfrac32-\tfrac\delta2$.
+\end{proof}
+
+\begin{remark}[block-method barrier: three internal no-go statements]
+\label{rem:sh-barrier}
+The existing short-gap block method cannot produce a power saving below
+the $\tfrac32$ energy scale without a new input.  The obstructions are
+the following.
+\begin{enumerate}
+\item[(i)] The block decomposition gives the generic form
+\[
+ E\ \le\ O(pL)+O\!\left(\frac{p^2}{L}\right),
+\]
+in which the second term is the long-gap contribution.  Improving the
+short-gap contribution requires an estimate of the shape
+\[
+ S_p(L)\ll L^{2-\epsilon}
+\]
+for the short-gap collision count inside an interval of length $L$.  No
+such estimate is currently proved for the Ap\'ery projective orbit.
+\item[(ii)] The continuant estimate gives only degree control of
+individual gaps,
+\[
+ \#\{r:N_h(r)=0\}\ \ll\ h,
+\]
+and no cancellation \emph{between} different gaps.
+\item[(iii)] The hybrid single-moment attempt fails: a bound of the
+shape $T_3\le ME$ closes only if the exponents satisfy $\mu>\theta$,
+where $E\ll p^{\theta}$ and $T_3\ll p^{\mu}$; existing bounds do not
+create this contradiction.
+\item[(iv)] Reflection symmetry does not create an independent
+square-root gain.  The M\"obius involution pairs collision points and
+doubles the contribution, but the paired collision is algebraically the
+same event; there is no independent Bernoulli factor.
+\end{enumerate}
+The open input identified by (i)--(iv) is exactly the triple-gap
+statement of Remark~\ref{rem:sh-triple-hierarchy}.
+\end{remark}
+
+\begin{remark}[modular parameterization: a death certificate]
+\label{rem:sh-heegner}
+The Beukers modular parameterization does not presently convert Ap\'ery
+orbit collisions into CM/Heegner point counting problems.  Three
+independent category mismatches occur.
+\begin{enumerate}
+\item[(i)] \emph{Index mismatch.}  The parameter $n$ in
+$B(t)=\sum b_nt^n$ is a Taylor coefficient index at a maximally
+unipotent boundary point; it is not a modular point $\tau$.  The
+parameterization gives $t=t(\tau)$ and identifies the generating
+function with a period; it does not identify the coefficient index $n$
+with a point of $X_0(6)^+$.
+\item[(ii)] \emph{Collision mismatch.}  The collision
+$\pi(r)=\pi(r+h)$ is equality of two finite-field jet states of a
+recurrence.  A Heegner condition is a statement about a CM elliptic
+curve or an isogeny class; equality of two Taylor-jet states is not an
+isogeny relation.  Therefore $N_h(r)=0$ does not presently define a
+Heegner divisor or special cycle.
+\item[(iii)] \emph{Reduction mismatch.}  The modular parameterization
+is a characteristic-zero period identity.  Reduction modulo $p$ does not
+automatically identify the $p-2$ recurrence states with points of
+$X_0(6)^+(\mathbb F_p)$.
+\end{enumerate}
+The missing bridge would be: \emph{a Frobenius-compatible integral
+mod-$p$ realization of the Ap\'ery projective orbit as a modular
+correspondence, such that $\pi(r)=\pi(r+h)$ is equivalent to membership
+in an explicitly defined special cycle.}  No such theorem is known; the
+route is dead unless such a Frobenius--modular interface is proved.
+\end{remark}
+
+\begin{lemma}[triple-gap dictionary]\label{lem:sh-triple-gap}
+Adopt the nonwrapping convention: for distinct integers $h,k\ge1$ let
+\[
+ J(h,k)=\#\{r\in I_p:\ r+\max(h,k)\le M,\ \pi(r)=\pi(r+h)=\pi(r+k)\},
+\]
+so that $J(h,k)$ counts the simultaneous solutions of the two gap
+equations $N_h(r)=N_k(r)=0$.  With $T_3$ computed over the window
+$I_p$,
+\[
+ \sum_{h\ne k}J(h,k)\ =\ \frac{T_3}{3}.
+\]
+\end{lemma}
+
+\begin{proof}
+$T_3=\sum_vm_v(m_v-1)(m_v-2)$ is the number of ordered triples
+$(n_1,n_2,n_3)$ of pairwise distinct indices in $I_p$ with
+$\pi(n_1)=\pi(n_2)=\pi(n_3)$; each unordered triple $\{a<b<c\}$ with a
+common $\pi$-value contributes exactly $6$ such ordered triples.  On the
+other side, since the gaps are positive, an $r$ counted by $J(h,k)$
+determines the unordered triple $\{r,r+h,r+k\}$ with minimum $r$;
+conversely, a triple $\{a<b<c\}$ with common $\pi$-value arises exactly
+from the base $r=a$ with the two ordered gap pairs
+$(h,k)\in\{(b-a,\,c-a),\,(c-a,\,b-a)\}$, i.e.\ it contributes exactly
+$2$ to $\sum_{h\ne k}J(h,k)$.  Hence
+$\sum_{h\ne k}J(h,k)=2\cdot\tfrac{T_3}6=\tfrac{T_3}3$.
+\end{proof}
+
+\begin{remark}[one missing theorem in three strengths]
+\label{rem:sh-triple-hierarchy}
+By Lemma~\ref{lem:sh-triple-gap}, a bound on $T_3$ is exactly a
+two-gap intersection statement: the intersections
+$\{N_h=0\}\cap\{N_k=0\}$ must have the expected codimension-two size.
+The following are successive strengths of the same missing horizontal
+distribution theorem:
+\[
+ \text{[ATR]}\quad T_3\ll p;
+ \qquad
+ \text{[T3-2MINUS]}\quad T_3\ll p^{2-\delta};
+ \qquad
+ \text{[current]}\quad T_3\ll p^{13/6}.
+\]
+Through Theorem~\ref{thm:sh-t3-interp}, [T3-2MINUS] gives
+$E\ll p^{3/2-\delta/2}$, beating the unconditional $p^{3/2}$ energy
+theorem, and [ATR] gives $E\ll p$.  Geometrically the missing input is a
+transversality theorem for the two gap correspondences: the two
+equations are not independent polynomial equations in an arbitrary
+plane; they arise from one Ap\'ery orbit, so the required statement is a
+horizontal three-point distribution theorem.  The least secure step in
+any upgrade is the passage from the recurrence correspondence
+$\{N_h=0\}\cap\{N_k=0\}$ to a genuine codimension-two equidistribution
+statement: existing algebraic geometry controls fixed varieties, whereas
+here the horizontal parameter is the recurrence index itself.
+\end{remark}
+
+% Ledger sources: Q6564 Sections 1-3.  Correction (B) applied in
+% Conjecture \ref{conj:sh-gap2dsqrt}: downgraded from "THEOREM
+% (experimental evidence only)" to a conjecture with numerical support.
+\subsection{Spectral interfaces: $L^2$ frequency mass, square-root
+cancellation, and the mixed-return target}
+\label{sec:sh-spectral}
+
+Write $e_p(x)=e^{2\pi ix/p}$.  For $h\ge1$ put
+$Q_h(x)=(x+1)(x+2)\cdots(x+h)$ and, for $x$ with $Q_h(x)\ne0$, define
+the normalized gap function
+\begin{equation}\label{eq:sh-Dh}
+ D_h(x)\ =\ b_xc_{x+h}-b_{x+h}c_x\ =\ \frac{N_h(x)}{Q_h(x)^3},
+\end{equation}
+the banked $h$-step Casoratian identity of
+Section~\ref{sec:orbit-energy}; by linear independence of the two
+solution vectors, $\pi(x)=\pi(x+h)$ if and only if $D_h(x)=0$.  Define
+the collision polynomial
+\begin{equation}\label{eq:sh-Gh}
+ G_h(x,y)\ =\ \frac{N_h(x)Q_h(y)^3-N_h(y)Q_h(x)^3}{x-y}
+ \ \in\ \mathbb F_p[x,y],
+\end{equation}
+a polynomial of total degree at most $6h-4$ (the numerator vanishes on
+the diagonal, so the quotient is a polynomial), whose zero set carries
+the off-diagonal collisions $D_h(x)=D_h(y)$.
+
+\begin{proposition}[$L^2$ frequency mass]\label{thm:sh-l2freq}
+Let $W\subseteq\{1,\ldots,p-3\}$ be a finite set of gaps and, for each
+$h\in W$, let $A_h\subseteq\{x\in\mathbb F_p:Q_h(x)\ne0\}$ be a set of
+admissible bases.  Put
+\[
+ F(t,\xi)=\sum_{h\in W}\sum_{r\in A_h}e_p\bigl(tD_h(r)+\xi h\bigr),
+\]
+\[
+ \operatorname{Collision}(h)=\#\{(r,r')\in A_h\times A_h:\
+ D_h(r)=D_h(r')\}.
+\]
+\begin{enumerate}
+\item[(a)] One has the exact Parseval identity
+\[
+ \sum_{t\in\mathbb F_p}\sum_{\xi\in\mathbb F_p}|F(t,\xi)|^2
+ \ =\ p^2\sum_{h\in W}\operatorname{Collision}(h).
+\]
+\item[(b)] Let $A_h=\{x\in\mathbb F_p:Q_h(x)\ne0\}$ be maximal, and
+assume $4h<p$.  If $G_h$ is absolutely irreducible over
+$\mathbb F_p$, then
+\[
+ \operatorname{Collision}(h)\ =\ 2p+O\!\bigl(h^2\sqrt p\bigr).
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) Expanding the square,
+\begin{multline*}
+ \sum_{t,\xi}|F(t,\xi)|^2
+ =\sum_{h,h'\in W}\ \sum_{r\in A_h}\sum_{r'\in A_{h'}}
+ \Bigl(\sum_{t}e_p\bigl(t(D_h(r)-D_{h'}(r'))\bigr)\Bigr)\\
+ \times\Bigl(\sum_{\xi}e_p\bigl(\xi(h-h')\bigr)\Bigr).
+\end{multline*}
+Since $W\subseteq\{1,\ldots,p-3\}$, distinct gaps remain distinct modulo
+$p$, so the $\xi$-sum vanishes unless $h=h'$, where it equals $p$; the
+$t$-sum then vanishes unless $D_h(r)=D_h(r')$, where it equals $p$.  The
+identity follows; it is exact for every choice of the finite sets
+$A_h$.
+
+(b) The diagonal contributes $|A_h|=p+O(h)$ pairs, since $Q_h$ has at
+most $h$ roots.  For $x\ne y$, both in $A_h$, the equation
+$D_h(x)=D_h(y)$ is equivalent to $G_h(x,y)=0$
+by~\eqref{eq:sh-Dh}--\eqref{eq:sh-Gh}.  By the Weil bound for
+absolutely irreducible affine plane curves of degree $\delta$,
+$\#\{G_h=0\}=p+O(\delta^2\sqrt p)$; here $\delta\le6h-4=O(h)$, giving
+$p+O(h^2\sqrt p)$.
+% Bookkeeping below is made explicit here; Q6564 leaves it implicit.
+From this count we must remove the points of $\{G_h=0\}$ lying on the
+diagonal $x=y$ or on the excluded pole locus $Q_h(x)Q_h(y)=0$.  First,
+the diagonal is not a component of $\{G_h=0\}$: since $G_h$ is
+absolutely irreducible, that would force $G_h=c(x-y)$, i.e.\
+$N_h(x)Q_h(y)^3-N_h(y)Q_h(x)^3=c(x-y)^2$; fixing any $y_0$ with
+$N_h(y_0)Q_h(y_0)\ne0$ (such $y_0$ exists because $N_h\not\equiv0$ --
+otherwise $G_h\equiv0$ -- and $N_hQ_h$ has at most $4h-3<p$ roots), the
+left side has $x$-degree exactly $3h\ge3$ with leading coefficient
+$-N_h(y_0)\ne0$, contradicting the right side.  Hence the diagonal
+meets the curve in at most $\deg G_h=O(h)$ points (B\'ezout).  Second,
+the pole locus is a union of at most $2h$ coordinate lines, none of
+which is a component of the absolutely irreducible curve $\{G_h=0\}$
+(its degree exceeds $1$ for $h\ge1$, and it is not a coordinate line by
+the same degree computation), so B\'ezout bounds the excluded points by
+$(6h-4)\cdot2h=O(h^2)$.  Both corrections are $O(h^2)=O(h^2\sqrt p)$.
+Therefore the off-diagonal admissible count is $p+O(h^2\sqrt p)$, and
+$\operatorname{Collision}(h)=2p+O(h^2\sqrt p)$.
+\end{proof}
+
+\begin{remark}[computational note]\label{rem:sh-l2freq-numerics}
+Proposition~\ref{thm:sh-l2freq} says that bounded $h$-windows carry
+random-model $L^2$ mass up to the optimal square-root error; in
+particular almost all Fourier frequencies exhibit square-root
+cancellation.  The hypothesis is supported computationally: symbolic
+computation gives $G_h$ irreducible over $\mathbb Q$ for
+$h=2,\ldots,6$, and direct finite-field collision counts for
+$h=2,\ldots,21$ give ratios to the random prediction in the range
+$0.98$--$1.01$.  The exceptional value $h=1$ has ratio exactly $1.50$,
+explained by the cubic three-to-one structure (by~\eqref{eq:sh-Dh},
+$D_1(x)$ is a cube of a linear-fractional expression, so its fibers are
+generically three-to-one and $G_1$ is not absolutely irreducible for
+$p\equiv1\bmod3$).  These numerics support the hypothesis only; no
+empirical assertion is used in the proof, which is conditional on the
+absolute irreducibility of $G_h$.
+\end{remark}
+
+%% MERGE-FLAG: Q6564 Section 2 reports numerics for B_t(H) without
+%% restating its definition; the definition below is inferred from the
+%% [L2-FREQ] construction (the single-frequency gap sum, i.e. the xi=0
+%% aggregation of the same phases).  Confirm against the main ledger's
+%% [GAP-2D-SQRT] entry when merging.
+For $t\in\mathbb F_p$ and $H\ge1$ define the two-dimensional gap sum
+\[
+ B_t(H)\ =\ \sum_{1\le h\le H}\ \sum_{r\in A_h}e_p\bigl(tD_h(r)\bigr),
+\]
+with $A_h$ maximal as in Proposition~\ref{thm:sh-l2freq}(b).
+
+\begin{conjecture}[{[GAP-2D-SQRT]}: square-root cancellation]
+\label{conj:sh-gap2dsqrt}
+As $p\to\infty$, uniformly for $t\in\mathbb F_p^{\times}$ and
+$1\le H\le\sqrt p$ (the range of
+Conjecture~\ref{conj:oe-2D-sqrt}; the numerical evidence below reaches
+$H=p^{0.6}$),
+\[
+ |B_t(H)|\ \le\ (pH)^{1/2+o(1)} .
+\]
+\end{conjecture}
+
+% Correction (B): the source status line read "Status: THEOREM
+% (experimental evidence only)".  This designation is wrong and is
+% corrected here: the statement is a conjecture with numerical support,
+% not a theorem.  No analytic proof exists.
+
+\begin{remark}[numerical support for
+Conjecture~\ref{conj:sh-gap2dsqrt}]
+\label{rem:sh-gap2d-evidence}
+Full frequency scans over three primes in the range $10^4$--$10^5$,
+including all $t$ and dyadic $H$ up to the supercritical regime
+$H=p^{0.6}$, give
+\[
+ \max_t\,\frac{|B_t(H)|}{\sqrt{pH}}\ \in\ [3.4,\,5.3],
+\]
+while the median remains at the random level, approximately $0.67$.
+The maximum follows the expected Gumbel extreme-value profile with no
+observed power growth.  This closes the previous numerical gap for the
+two-prime/three-frequency obstruction.  The interpretation is:
+individual correlations behave at square-root scale; no hidden large
+fiber contribution appears in the scanned range; and the remaining
+problem is a \emph{proof of uniformity}, not evidence for a different
+scale.  These computations constitute evidence only;
+Conjecture~\ref{conj:sh-gap2dsqrt} remains open and is nowhere used in
+a proof.
+\end{remark}
+
+\begin{remark}[corrected mixed-return target
+{[MIXED-RETURN-$\eta^*$]}]
+\label{rem:sh-mixed-return}
+The previous linear extension target is too strong: the rank-four
+first-block Frobenius extension cannot provide a new collision
+equation, because its mixed column is already absorbed by the old gap
+data.  The viable target is a small-image/small-fiber statement.  For a
+mixed holonomy invariant $\operatorname{Hol}_h(r)$ one seeks a
+gauge-invariant construction, with value set $S_h$, satisfying
+\[
+ |S_h|\le h^{o(1)}
+ \qquad\text{and}\qquad
+ \#\{r:\operatorname{Hol}_h(r)=s\}\ll h^{1-\eta}
+ \quad\text{for every }s\in S_h,
+\]
+for some fixed $\eta>0$.  This gives the effective saving
+$\eta-\sigma$, where $\sigma$ is the existing gap multiplicity
+exponent.
+
+The four original candidate objects collapse to two families.
+\emph{Family I: index-side contiguity.}  The naive contiguity
+construction fails: its translation holonomy determinant is a unit
+times the old gap function, so it contains no new information.  Status:
+dead.
+%% MERGE-FLAG: Q6564 asserts the Family-I determinant identity ("a unit
+%% times the old gap function") without proof; a proof or a computation
+%% certificate must be merged from the ledger before this death is cited
+%% as established.
+\emph{Family II: central extension geometry.}  The surviving candidates
+are equivalent descriptions of the same possible object:
+(1) a biextension/syntomic height; (2) a rank-five iterated extension
+matrix model; (3) a cup-product pairing in the Heisenberg-type central
+coordinate.  The required new object is an independent dual Ap\'ery
+normal function.
+
+Any candidate must pass the survival criteria:
+\begin{enumerate}
+\item[S1.] gauge-shift invariance;
+\item[S2.] independence from the existing gap coordinates;
+\item[S3.] nontrivial central extension class;
+\item[S4.] fiber reduction after quotienting the gauge directions;
+\item[S5.] gcd non-degeneracy:
+ $\deg\gcd\bigl(N_h^{\mathrm{prim}},J_h\bigr)\ll h^{1-\eta}$;
+\item[S6.] compatibility with Frobenius and the mirror involution.
+\end{enumerate}
+The first failure of any of these tests falsifies the candidate.
+Status: open target.
+\end{remark}
+
+\begin{remark}[classification of the spectral layers]
+\label{rem:sh-classification}
+The current geometry separates into three layers:
+(1) the $L^2$ frequency layer, essentially solved conditionally on
+absolute irreducibility by the collision geometry of
+Proposition~\ref{thm:sh-l2freq};
+(2) the [GAP-2D-SQRT] layer, strongly supported by computation but
+strictly conjectural (Conjecture~\ref{conj:sh-gap2dsqrt});
+(3) the mixed-return layer, the only remaining plausible route to a
+power improvement, which requires extracting a genuinely new dual
+geometric invariant (Remark~\ref{rem:sh-mixed-return}).
+\end{remark}
