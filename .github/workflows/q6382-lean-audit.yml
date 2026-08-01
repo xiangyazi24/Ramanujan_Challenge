@@ -1,6 +1,11 @@
 name: Q6382 Lean 4.29 audit
 
 on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/q6382-lean-audit.yml'
+      - 'lean/RamanujanChallenge/Q6382Scratch.lean'
   push:
     branches: [q6382-audit-8efeab4d]
     paths:
