@@ -336,6 +336,7 @@ theorem rivoalSaddleSecondMoment22_le {n : ℕ} (hn : 1 ≤ n) :
   let s : ℝ := Real.sqrt (n : ℝ)
   have hnR : (0 : ℝ) < (n : ℝ) := by
     exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_one hn)
+  have hnR1 : (1 : ℝ) ≤ (n : ℝ) := by exact_mod_cast hn
   have hQ : 0 < Q := by exact rivoalRealQ22_pos n
   have hs : 0 < s := Real.sqrt_pos.2 hnR
   have hs2 : s ^ 2 = (n : ℝ) := Real.sq_sqrt hnR.le
@@ -397,10 +398,16 @@ theorem rivoalSaddleSecondMoment22_le {n : ℕ} (hn : 1 ≤ n) :
           _ ≤ (n : ℝ) ^ 4 := hd4
           _ = (n : ℝ) ^ 3 * (n : ℝ) := by ring
       apply mul_le_mul_of_nonneg_left
-      · exact (two_mul_le_mul_sq_add_sq_div22
-          (a := rivoalSaddleError22 n k)
-          (b := ((n : ℝ) - (k : ℝ)) ^ 2) hnR).trans
-            (add_le_add (le_refl _) hdiv)
+      · calc
+          2 * ((n : ℝ) - (k : ℝ)) ^ 2 *
+              rivoalSaddleError22 n k =
+            2 * rivoalSaddleError22 n k *
+              ((n : ℝ) - (k : ℝ)) ^ 2 := by ring
+          _ ≤ (n : ℝ) * rivoalSaddleError22 n k ^ 2 +
+              (((n : ℝ) - (k : ℝ)) ^ 2) ^ 2 / (n : ℝ) :=
+            two_mul_le_mul_sq_add_sq_div22 hnR
+          _ ≤ (n : ℝ) * rivoalSaddleError22 n k ^ 2 +
+              (n : ℝ) ^ 3 := add_le_add (le_refl _) hdiv
       · exact rivoalRealWeight22_nonneg n k
     calc
       _ ≤ _ := hp
@@ -589,6 +596,7 @@ theorem rivoalWeightedCauchySchwarz22 (n : ℕ) :
     have hw := rivoalRealWeight22_pos n k
       (Nat.lt_succ_iff.mp (Finset.mem_range.mp hk))
     field_simp [hw.ne']
+    rw [sq_abs]
   rw [rivoalRealWeight22_sum, hright] at hcs
   have hQ := rivoalRealQ22_pos n
   have hm := (div_le_iff₀ hQ).1 hcs
@@ -662,7 +670,8 @@ theorem tendsto_saddle_mean22 :
   have hroot :
       Tendsto (fun n : ℕ => Real.sqrt (100 / Real.sqrt (n : ℝ)))
         atTop (𝓝 0) := by
-    simpa using (Real.continuous_sqrt.tendsto 0).comp hinner
+    simpa only [Function.comp_apply, Real.sqrt_zero] using
+      (Real.continuous_sqrt.tendsto 0).comp hinner
   apply squeeze_zero'
   · exact Eventually.of_forall rivoalSaddleMean22_nonneg
   · filter_upwards [eventually_atTop.2 ⟨1, fun n hn => hn⟩] with n hn
