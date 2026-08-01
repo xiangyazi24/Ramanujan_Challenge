@@ -1089,3 +1089,15 @@ double-certified.
 - **Phase-0 裁决送出**: X^{2/3} 定理 = 例外集计数(F₄ 平凡界过 Markov), 非全局
   M₂; GARQI-k2 需 α<1/2 (接口判据一致), 无捷径。
 - life1 连第五次吐陈旧片段(Q6396/qH), qH 已钉 life2 重发(qH2)。
+
+## §49 (08-01) codex-fm high 收官: T(r) 有界对象显式化 (descent 对象层落地)
+
+- 追加 commit 8e0da63: **T(r) ≡ Mell_p(Tr(Frob|𝒢_T); ω^{−r}) mod 𝔭, 𝒢_T=𝒬,
+  cond=11**; 第一项 φ_*Sym²(Franel) cond=20。S_− 指数表 {0:(0,0), q根:(0,−1/2),
+  ∞:(3/2,3/2)}, 重复指数处对数解+非平凡幂幺块, t=0 局部特征值排除一切 Kummer
+  自扭标量, 秩 6/3 排除两层互扭——五行验证我机复跑全绿
+  (codex_fm_local_monodromy.py)。
+- 定位: [GAP-DESCENT] 的对象层构造完成(带精确导手账); 残余 = 报告自己声明的
+  caveat——等式是 mod 𝔭 归约、非复数等式, 即仍是 [GAP-1] 晶体比较。qF2(Q6394)
+  返回后与此构造对表。
+- codex-fm high 退场(两 commit 全收割); fm-max 仍在磨任务 2-3。
