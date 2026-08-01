@@ -1,0 +1,29 @@
+import RamanujanChallenge.Problem27BarnesClosure
+
+open Filter Topology
+
+namespace RamanujanChallenge.P27
+
+#check ZudilinSatisfiesRecC27.eq_of_initial
+#check ZudilinSatisfiesRec.castComplex27
+#check zudilinSourceErrorC_rec27
+#check zudilinBarnesErrorIntegral_recC27
+#check zudilinBarnesErrorIntegral_zeroC27
+#check zudilinBarnesErrorIntegral_oneC27
+#check zudilinBarnesErrorIntegral_twoC27
+#check zudilinCombinedError_eq_barnes27
+#check zudilinCombinedError_tendsto_zero_direct27
+#check problem27_zeta2_add_zeta3_direct
+
+#print axioms ZudilinSatisfiesRecC27.eq_of_initial
+#print axioms ZudilinSatisfiesRec.castComplex27
+#print axioms zudilinSourceErrorC_rec27
+#print axioms zudilinBarnesErrorIntegral_recC27
+#print axioms zudilinBarnesErrorIntegral_zeroC27
+#print axioms zudilinBarnesErrorIntegral_oneC27
+#print axioms zudilinBarnesErrorIntegral_twoC27
+#print axioms zudilinCombinedError_eq_barnes27
+#print axioms zudilinCombinedError_tendsto_zero_direct27
+#print axioms problem27_zeta2_add_zeta3_direct
+
+end RamanujanChallenge.P27
