@@ -215,3 +215,49 @@ constants. Two possible shapes:
 
 The second is likely cheaper and should be tried first. Either way the estimate
 "six independent weight-4 evaluations" is wrong — it is one.
+
+## …and K itself reduces to constants the repo has already proved
+
+One step further. Expanding `log(1+x)/(1+x) = Σ_{n≥1} (-1)^{n+1} H_n xⁿ` and using
+`∫₀¹ xⁿ log²x dx = 2/(n+1)³`, then shifting the index with
+`H_n = H_{n+1} - 1/(n+1)`:
+
+```
+K = 2 ( η(4) - A ),    A := Σ_{n≥1} (-1)^{n-1} H_n / n³,   η(4) = (7/8) ζ4
+```
+
+and the alternating linear Euler sum `A` satisfies
+
+```
+A = Tminus + Tplus + (1/4) ζ2²
+```
+
+where `Tplus = cubicLinearEulerValue24` and
+`Tminus = alternatingCubicLinearEulerValue24` — **both already proved in this
+repo** (`cubicLinearEulerTerm24_hasSum`, and its alternating companion). Hence
+
+```
+K = 2 ( (7/8) ζ4 - Tminus - Tplus - (1/4) ζ2² )
+```
+
+All three relations verified numerically to 40 digits.
+
+**So Layer E needs no new weight-4 evaluation at all.** The chain is
+
+```
+six-integral combination
+  = -(11/2) K - 12 L²ζ2 + (35/2) Lζ3 - (31/8) ζ4        [rational algebra]
+  = elementary function of Tplus, Tminus, ζ4, ζ2², Lζ3   [the K identity above]
+  = alternatingQuadraticEulerValue24                     [already proved:
+                                                          bridgeValue_eq_…]
+```
+
+The only genuinely new Lean content left is the **integral-to-series step for K**:
+expand, integrate term by term, and reindex. That is one interchange on an
+alternating series — dominated convergence with `Σ H_n/(n+1)³` as dominator, or
+split into even/odd and use Tonelli twice.
+
+Everything downstream of that is rational arithmetic over constants the repo
+already owns. The earlier readings — "six independent weight-4 evaluations",
+then "one weight-4 evaluation K" — were both overestimates; the true remaining
+analytic content is a single termwise integration.
