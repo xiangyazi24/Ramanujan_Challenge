@@ -201,6 +201,17 @@ $\chi^2=2.47$ on 3 d.f., mean $1.0185$, max $8$; scan banked in the appendix-Q
 ledger.)
 \end{proof}
 
+\noindent\emph{Data point.}  The midpoint-zero primes $11$ and $3137$ were
+identified by Zudilin (arXiv:2409.00384), who verified that they are the only
+examples below $2\times10^4$.  Our scan — two independent C implementations
+in exact agreement (78{,}462 window zeros compared bitwise) — extends this:
+\emph{$11$ and $3137$ remain the only midpoint-zero primes below $10^6$}
+(all $78{,}495$ window primes; a fifty-fold extension of the published
+record).  Per-prime zero counts along the way: mean $0.9996$, maximum $12$
+(at $p=159977$), in exact agreement with the
+$2\cdot\mathrm{Poisson}(0.4998)+\text{midpoint}$ law
+($\chi^2=3.43$ on 5 d.f.).
+
 \subsection{The character-order counting lemma and its consequence}
 
 \begin{lemma}[character-order counting]\label{lem:counting}

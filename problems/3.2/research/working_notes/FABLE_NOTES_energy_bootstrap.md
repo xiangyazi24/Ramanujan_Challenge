@@ -1252,3 +1252,19 @@ double-certified.
   两者合并 = 有界对象定理的完整书面证明。列为收网期第一件整理任务:
   Q6394 构造 + codex_lt_isogeny 合写成定理入 proof.tex。
 - qH 三度补发终获完整答案(life1 黑洞两次+此次成功), 我方审计矩阵收满。
+
+## §59 (08-01) codex-lt-max 收官 + Zudilin 数据点入文 — 四 codex 全收割
+
+- lt-max 终报 (ff5174a): 新增 [GAP-LT-RATIONALITY] (中间延拓有理性), 五脚本
+  我机全绿: Galois 作用在 Q(ζ_16) 精确验证(164 Mellin 恒等式+2448 点-字符
+  恒等式)——我的 σ_a(M(r))=M(ar) 声明现为机器定理; 轨道积整性+p-adic hit
+  transfer; **Clausen 平方 ₂F₁(1/3,2/3;1)² = ₃F₂(...)** = rank 之惑的机制
+  根源(₃F₂ 是平方不是新对象); t-adic 反例(迹 mod p 非一般 ordinarity 测试,
+  唯一单位根假设 load-bearing)。
+- Zudilin 数据点按爸爸决定入文(不致信): parity 命题后附 Data point 段——
+  {11,3137} 纪录 2×10⁴ (arXiv:2409.00384) → 10⁶ 零新增(双源 78,462 零点
+  逐位一致), 50 倍延伸。proof.tex 143 页构建绿。
+- **四 codex 全收割** (fm-high/fm-max/lt-high/lt-max, 共 7 commits 全部
+  机器复验)。审计矩阵 qA-qI 九问全回。
+- 待场: q22 色散(最后武器判决), qB2(Shimura 重发), Q6416 悬案, cron 二轮
+  双雄(对相关账本+单值性数值包), q23(符号因子化)。
