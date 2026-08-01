@@ -766,7 +766,7 @@ private theorem alternating_zeta_four_hasSum24 :
   funext k
   simp [a, f, div_eq_mul_inv]
 
-private theorem inverseBinomial_tendsto_zero_of_norm24
+private theorem inverseBinomial_norm_limit_bridge24
     {u : ℕ → ℝ} (h : Tendsto (fun n => ‖u n‖) atTop (nhds 0)) :
     Tendsto u atTop (nhds 0) := by
   rw [NormedAddGroup.tendsto_nhds_zero]
@@ -792,7 +792,7 @@ private theorem leshF_boundary :
         ring
       · ring
     have hterm : Tendsto (fun N => leshF N k) atTop (nhds 0) :=
-      inverseBinomial_tendsto_zero_of_norm24 hnorm
+      inverseBinomial_norm_limit_bridge24 hnorm
     apply hterm.congr'
     filter_upwards [eventually_gt_atTop k] with N hN
     simp [f, hN]
@@ -856,7 +856,7 @@ private theorem leshG_boundary :
         field_simp
       · ring
     have hterm : Tendsto (fun N => leshG n N) atTop (nhds 0) :=
-      inverseBinomial_tendsto_zero_of_norm24 hnorm
+      inverseBinomial_norm_limit_bridge24 hnorm
     apply hterm.congr'
     filter_upwards [eventually_gt_atTop n] with N hN
     simp [f, hN]
@@ -917,7 +917,7 @@ private theorem bbbF_boundary :
         ring
       · ring
     have hterm : Tendsto (fun N => bbbF N k) atTop (nhds 0) :=
-      inverseBinomial_tendsto_zero_of_norm24 hnorm
+      inverseBinomial_norm_limit_bridge24 hnorm
     apply hterm.congr'
     filter_upwards [eventually_gt_atTop k] with N hN
     simp [f, hN]
@@ -968,7 +968,7 @@ private theorem bbbG_boundary :
         ring
       · ring
     have hterm : Tendsto (fun N => bbbG n N) atTop (nhds 0) :=
-      inverseBinomial_tendsto_zero_of_norm24 hnorm
+      inverseBinomial_norm_limit_bridge24 hnorm
     apply hterm.congr'
     filter_upwards [eventually_gt_atTop n] with N hN
     simp [f, hN]
