@@ -49,8 +49,15 @@ theorem ZudilinSatisfiesRec.castComplex27
     {u : ℕ → ℚ} (hu : ZudilinSatisfiesRec u) :
     ZudilinSatisfiesRecC27 (fun n => (u n : ℂ)) := by
   intro k
+  change
+    (ctAlpha27 k : ℂ) * (u (k + 3) : ℂ)
+      - (ctBeta27 k : ℂ) * (u (k + 2) : ℂ)
+      + (ctGamma27 k : ℂ) * (u (k + 1) : ℂ)
+      - (ctDelta27 k : ℂ) * (u k : ℂ) = 0
   have hq := (zudilinSatisfiesRec_iff_ct27 u).1 hu k
-  exact_mod_cast hq
+  have hc := congrArg (fun q : ℚ => (q : ℂ)) hq
+  push_cast at hc
+  exact hc
 
 /-- The exact complex constant used by both the source and Barnes sequences. -/
 def L27 : ℂ := ((Real.pi ^ 2 / 6 + zeta3 : ℝ) : ℂ)
