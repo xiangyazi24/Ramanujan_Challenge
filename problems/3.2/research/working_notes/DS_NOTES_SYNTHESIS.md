@@ -191,3 +191,17 @@ shifted Apéry recurrence). DS computed R_H/H² = 0.719/0.707 (p=1009, H=16/32),
 ⟹ the ρ=2 average-root law R_H ≤ C·H² (C≈0.72) is empirically exact. Per Fable's R5 ladder,
 proving ρ=2 gives E(p) ≪ p^{3/2+o(1)}. This is the 3/2 attack's foundation, now independently
 verified.
+
+## 4.14 germ return-distribution + sqrt2 inflation source (DS, Fable's targets)
+Fable's targets on the ρ=2 law, measured:
+- (1) **Identity Σ_germs ret = pH − typeII holds** (p=1009: 31684+604=32288=pH; p=2003: 63496+600=64096 ✓).
+- (2) **Distribution P(ret=j)**: {1:30264, 2:700, 3:4, 4:2} (p=1009) — Poisson-ish, NO heavy tail
+  (max ret=4, rare). R_H/H² = 0.707 (p=1009), 0.732 (p=2003) — the √2 inflation vs Poisson 0.5.
+- (3) **Reflection stratification**: symmetric germs (s = reflection-conjugate ratio) are only
+  0.1% (24/30970) and contribute 0 to R_H. **NOT the reflection subfamily.**
+- **SOURCE of the √2 inflation = GLOBAL mild positive correlation**: lag-pair collision rate
+  P(σ_{d1}(r)=σ_{d2}(r)) = 0.0016/0.0008/0.0003 (p=1009/2003/4001) ≈ √2/p (independent would be
+  1/p; measured ratio 1.5–1.6×). So the double-return statistics have a universal √2 factor
+  from pairwise correlation of σ values, not from any special subfamily.
+⟹ "Proving ρ=2 = proving Poisson germ statistics" must account for the √2 collision-rate
+factor (P(σ_d1=σ_d2) ≈ √2/p, not 1/p). The R_H/H² constant ~0.707 = 1/√2 is the fingerprint.
