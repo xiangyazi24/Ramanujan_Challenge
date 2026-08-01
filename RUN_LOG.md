@@ -381,3 +381,60 @@ the prime side, and a star is K_{2,2}-free, so no combinatorial argument can exc
 - remaining: 1 sorry (catalanError_over_denominator_tendsto_zero = Padé subdominance)
 - end: <open>
 - final result: <open>
+
+## Run 2026-08-01 (P2.4 full day — Layer E closure and the certificate inputs)
+
+**Entry state.** `Problem24QuadraticAlt.lean` at 14 sorries, 8 of its 14 theorems
+`sorryAx`-backed, the Layer C chain deleted by a previous agent, and the working
+clone on Lean v4.30 rather than the competition-required v4.29.0.
+
+**Exit state.** `Problem24QuadraticAlt.lean` and `Problem24InverseBinomial.lean`
+both at 0 sorries, both axiom-clean, on v4.29.0.  Of the seven inputs to
+`problem24_of_euler_and_classical`, **six are now real theorems**; the
+composition typechecks with exactly one hypothesis left
+(`quadraticEulerTerm24`), so there is no hidden eighth obligation.
+`problem24Statement` itself remains unproved and 2.4 does not belong in
+`SUBMIT/`.
+
+**What was proved today**
+- `alternatingQuadraticEulerTerm24_hasSum` — the whole Layer C→E chain: the
+  coefficient integral, IBP, the Möbius reduction to six endpoint integrals, the
+  single generator `K` with its value, all six rows, the capstone.
+- `leshchinerWeightFourTerm24_hasSum`, `bbbWeightFourTerm24_hasSum` — via the two
+  classical inverse-central-binomial sums, which are two linear combinations of
+  the same pair.
+- `elementarySeries24_of_even_quadratic` — certificate variant needing only the
+  even-index quadratic sum, since the original used both quadratic sums solely to
+  build it.
+- `integral_pow_mul_logSq`, the `K` series, and the publicisation of the harmonic
+  generating function, all reusable.
+
+**Route findings worth keeping** (all in `DOCTRINE_P24_LAYERD.md`)
+- `Li₄`'s derivative exists neither here nor in Mathlib v4.29, which kills the
+  classical antiderivative route.  Substituting `u = t/2` FIRST collapses `W0`
+  and makes four of six kernels exact differentials, so `Li₄(1/2)` arrives as the
+  answer instead of as an obstacle.
+- The full "collapse the bracket to one primitive" shortcut is circular: the
+  primitive is the Möbius pullback of the integrand one started from.
+- The two Möbius relations reduce two rows to the others, and their values carry
+  no polylogarithm at all — only `η(2)²` and `ζ(4)`.
+- The non-alternating twin is not a sign flip: it runs into `Q`'s pole at `x = 1`
+  and carries an integrable `log²` singularity the alternating chain never sees.
+
+**Method notes**
+- Carried hypotheses were discharged by *instantiation* — feed the kernel every
+  hypothesis already proved and read off the remainder — not by reading the
+  statement and forming an opinion.
+- Two near-misses caught: a PSLQ "no relation" that was unconverged quadrature,
+  and a structural "collapse" that was circular.  Both looked like discoveries.
+- Five separate obstacles turned out to be already proved in the repo, twice as
+  private lemmas.  Grep before building, by statement shape.
+- Concurrent-agent cost: file separation is not isolation, `.lake/build` is
+  shared, and one red module takes its whole import closure offline.  Roughly two
+  hours of parallel agent time was lost to this before it was noticed.  Recorded
+  in `UNDERSTANDING.md` and the playbook.
+- Four commits of this work were swept into other agents' `git add -A` commits.
+
+**Paper.** `problems/2.4/proof.tex` Stage 2 rewritten from a one-sentence sketch
+to the actual chain, 5 pages, every displayed formula numerically audited;
+`ζ(4) = (2/3)ζ(2)²` corrected to `(2/5)`.
