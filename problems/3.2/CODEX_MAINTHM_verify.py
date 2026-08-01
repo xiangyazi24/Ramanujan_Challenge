@@ -649,6 +649,133 @@ def saturation_counterexample_gate() -> None:
     print("SATURATION p=73 gcd=X+3; p=211 repeated=[114,33,1]")
 
 
+def cross_prime_gap_root_gate(b: list[int]) -> None:
+    """Finite exact gates for [CROSS-PRIME-GAP-ROOT]."""
+    records = []
+    for P, H in ((20, 5), (50, 7), (100, 9), (200, 12)):
+        left = 0
+        block_cost = 0
+        root_cost = 0
+        for p in primes_upto(2 * P):
+            if not (P < p <= 2 * P):
+                continue
+            z = {r for r in range(1, p) if b[r] % p == 0}
+            continuants = modular_continuants(p, H - 1)
+            rho = {
+                h: sum(poly_evaluate(continuants[h], x, p) == 0 for x in range(p))
+                for h in range(2, H)
+            }
+            # Check the load-bearing per-prime block inequality directly,
+            # including every close zero pair and its gap-continuant root.
+            pair_count = 0
+            for start in range(1, p, H):
+                cell = sorted(r for r in z if start <= r < min(p, start + H))
+                pair_count += len(cell) * (len(cell) - 1) // 2
+                for i, r in enumerate(cell):
+                    for s in cell[i + 1 :]:
+                        h = s - r
+                        check(1 <= h < H, "cell-pair gap range")
+                        check(h != 1, "consecutive Apéry zeros")
+                        check(poly_evaluate(continuants[h], r, p) == 0,
+                              f"gap-root implication P={P},p={p},h={h}")
+            cells = (p - 1 + H - 1) // H
+            check(len(z) <= cells + pair_count,
+                  f"cell singleton/pair inequality P={P},p={p}")
+            check(pair_count <= sum(rho.values()),
+                  f"pair-to-rho injection P={P},p={p}")
+            check(len(z) <= cells + sum(rho.values()),
+                  f"gap-root per-prime inequality P={P},p={p}")
+            left += len(z)
+            block_cost += cells
+            root_cost += sum(rho.values())
+        check(left <= block_cost + root_cost, f"aggregate gap-root P={P}")
+        records.append((P, H, left, block_cost, root_cost))
+    print("CROSS-PRIME-GAP-ROOT", records)
+
+
+def integer_continuant_value(m: int, h: int) -> int:
+    check(h >= 1, "invalid continuant height")
+    if h == 1:
+        return 1
+    previous, current = 1, apery_coefficient(m + 1)
+    for j in range(2, h):
+        previous, current = current, (
+            apery_coefficient(m + j) * current - (m + j) ** 6 * previous
+        )
+    return current
+
+
+def codegree_polylog_gate(b: list[int]) -> None:
+    """Exact identities/certificates used by the repaired exceptional-set proof."""
+    # Equality of two degree-three polynomials is forced by four points; the
+    # larger range below also catches indexing/implementation errors.
+    for x in range(-20, 81):
+        check(apery_coefficient(x) - x**3 - (x + 1) ** 3
+              == 4 * (2 * x + 1) ** 3,
+              f"diagonal-dominance identity x={x}")
+
+    positivity_checks = 0
+    for scale in range(2, 18):
+        for m in range(scale + 1, 2 * scale + 1):
+            for h in range(1, min(11, 2 * scale - m + 2)):
+                value = integer_continuant_value(m, h)
+                check(value > 0, f"positive continuant m={m},h={h}")
+                check(value <= (570 * scale**3) ** max(0, h - 1),
+                      f"continuant height m={m},h={h}")
+                positivity_checks += 1
+
+    no_wrap = 0
+    wrap = 0
+    common = 0
+    for p in [q for q in primes_upto(180) if q >= 7]:
+        for m in range(18, 91):
+            for n in range(m + 1, min(111, m + 31)):
+                h = n - m
+                r, s = m % p, n % p
+                if b[r] % p or b[s] % p:
+                    continue
+                common += 1
+                if p <= h:
+                    continue
+                if r + h < p:
+                    check(s == r + h, "no-wrap residue relation")
+                    check(integer_continuant_value(r, h) % p == 0,
+                          "no-wrap gap certificate at residue")
+                    check(integer_continuant_value(m, h) % p == 0,
+                          "no-wrap integer certificate")
+                    no_wrap += 1
+                else:
+                    j = p - r
+                    check(1 <= j < h and (m + j) % p == 0,
+                          "wrap product certificate")
+                    wrap += 1
+
+    # The exact pair-incidence identity and its Cauchy lower bound.
+    cs_checks = 0
+    for rows in range(1, 10):
+        for cols in range(1, 13):
+            matrix = [
+                [((17 * i + 11 * j + i * j + rows) % 7) < 3 for j in range(cols)]
+                for i in range(rows)
+            ]
+            loads = [sum(matrix[i][j] for i in range(rows)) for j in range(cols)]
+            incidence = sum(loads)
+            column_pairs = sum(v * (v - 1) // 2 for v in loads)
+            row_pairs = sum(
+                sum(matrix[i][j] and matrix[k][j] for j in range(cols))
+                for i in range(rows) for k in range(i + 1, rows)
+            )
+            check(column_pairs == row_pairs, "pair incidence double count")
+            check(2 * cols * column_pairs >= incidence**2 - cols * incidence,
+                  "pair incidence Cauchy bound")
+            cs_checks += 1
+    print(
+        "CODEGREE-POLYLOG",
+        f"positive/height={positivity_checks} common={common} ",
+        f"no-wrap={no_wrap} wrap={wrap} CS={cs_checks}",
+    )
+
+
 def original_master_hits(n: int, b: list[int], primes: list[int]) -> list[tuple[int, int]]:
     hits = []
     for r in range((n + 1) // 2):  # exactly 2r<n
@@ -815,6 +942,8 @@ def main() -> None:
     b, a, d = exact_sequence_and_gcd_gate()
     chart_free_algebra_gate()
     saturation_counterexample_gate()
+    cross_prime_gap_root_gate(b)
+    codegree_polylog_gate(b)
     determinant_full_frequency_gate()
     positive_completion_gate()
     determinant_moment_gate()
