@@ -166,11 +166,15 @@ private theorem sineSlope_at_int_ne_zero (m : ℤ) :
       deriv sinePi (m : ℂ) =
         (Real.pi : ℂ) *
           Complex.cos ((Real.pi : ℂ) * (m : ℂ)) := by
-    have h :=
-      (((hasDerivAt_id (m : ℂ)).const_mul (Real.pi : ℂ)).csin.deriv)
-    change deriv (fun z : ℂ => Complex.sin (z * (Real.pi : ℂ))) (m : ℂ) =
-      (Real.pi : ℂ) * Complex.cos ((Real.pi : ℂ) * (m : ℂ))
-    convert h using 1 <;> ring
+    have hinner :
+        HasDerivAt (fun z : ℂ => (Real.pi : ℂ) * z)
+          (Real.pi : ℂ) (m : ℂ) := by
+      simpa only [id_eq, mul_comm, mul_one] using
+        ((hasDerivAt_id (m : ℂ)).const_mul (Real.pi : ℂ))
+    have h := hinner.csin.deriv
+    rw [show sinePi =
+      (fun z : ℂ => Complex.sin ((Real.pi : ℂ) * z)) by rfl]
+    simpa only [mul_comm] using h
   have harg :
       (Real.pi : ℂ) * (m : ℂ) =
         (((m : ℝ) * Real.pi : ℝ) : ℂ) := by
