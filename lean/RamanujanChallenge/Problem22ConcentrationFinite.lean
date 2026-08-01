@@ -28,7 +28,7 @@ private theorem rivoalSupportBounds22 {n k : ℕ}
   · exact_mod_cast (Nat.lt_succ_iff.mp (Finset.mem_range.mp hk))
 
 private theorem rivoalBirth22_nonneg_on_support {n k : ℕ}
-    (hk : k ∈ Finset.range (n + 1)) :
+    (_hk : k ∈ Finset.range (n + 1)) :
     0 ≤ rivoalBirth22 n k := by
   unfold rivoalBirth22
   exact mul_nonneg (by positivity) (sq_nonneg _)
@@ -42,8 +42,11 @@ private theorem rivoalBirth22_le_five_cube {n k : ℕ}
   have hdle : (n : ℝ) - (k : ℝ) ≤ (n : ℝ) := by linarith
   have hsquare :
       ((n : ℝ) - (k : ℝ)) ^ 2 ≤ (n : ℝ) ^ 2 := by
-    nlinarith [mul_nonneg (sub_nonneg.mpr hkn)
-      (add_nonneg (by positivity : 0 ≤ (n : ℝ)) hd0)]
+    have hprod :
+        0 ≤ ((n : ℝ) - ((n : ℝ) - (k : ℝ))) *
+          ((n : ℝ) + ((n : ℝ) - (k : ℝ))) :=
+      mul_nonneg (sub_nonneg.mpr hdle) (add_nonneg (by positivity) hd0)
+    nlinarith
   have hlinear :
       2 * (n : ℝ) + (k : ℝ) + 2 ≤ 5 * (n : ℝ) := by
     linarith
@@ -170,8 +173,7 @@ theorem rivoalWeightedSquare22_le {n : ℕ} (hn : 1 ≤ n) :
   have hs2 : s ^ 2 = (n : ℝ) := by
     exact Real.sq_sqrt (by linarith)
   have hs1 : 1 ≤ s := by
-    have hs0 := hs.le
-    nlinarith
+    nlinarith [hs2]
   have hQ0 : 0 ≤ ((rivoalExplicitQ22 n : ℚ) : ℝ) :=
     (rivoalRealQ22_pos n).le
   have hsum :
@@ -207,6 +209,7 @@ theorem rivoalWeightedSquare22_le {n : ℕ} (hn : 1 ≤ n) :
       _ = _ := by
             rw [← Finset.sum_mul, ← Finset.sum_div,
               rivoalRealWeight22_sum]
+            ring
   have hcube := rivoalWeightedCube22_le hn
   have hdiv :
       (∑ k ∈ Finset.range (n + 1),
@@ -218,7 +221,6 @@ theorem rivoalWeightedSquare22_le {n : ℕ} (hn : 1 ≤ n) :
         3 * (n : ℝ) * s * ((rivoalExplicitQ22 n : ℚ) : ℝ) := by
     rw [← hs2]
     field_simp [hs.ne']
-    ring
   have hbase :
       (n : ℝ) * ((rivoalExplicitQ22 n : ℚ) : ℝ) ≤
         (n : ℝ) * s * ((rivoalExplicitQ22 n : ℚ) : ℝ) := by
@@ -234,7 +236,7 @@ theorem rivoalWeightedSquare22_le {n : ℕ} (hn : 1 ≤ n) :
           rw [hdecomp, hs2]
     _ ≤ (n : ℝ) * ((rivoalExplicitQ22 n : ℚ) : ℝ) +
         (3 * (n : ℝ) ^ 2 * ((rivoalExplicitQ22 n : ℚ) : ℝ)) / s :=
-      add_le_add_left hdiv _
+      add_le_add (le_refl _) hdiv
     _ = (n : ℝ) * ((rivoalExplicitQ22 n : ℚ) : ℝ) +
         3 * (n : ℝ) * s * ((rivoalExplicitQ22 n : ℚ) : ℝ) := by rw [hid]
     _ ≤ 4 * (n : ℝ) * s * ((rivoalExplicitQ22 n : ℚ) : ℝ) := by
@@ -314,10 +316,11 @@ theorem rivoalSaddleSecondMoment22_exact (n : ℕ) :
 private theorem two_mul_le_mul_sq_add_sq_div22
     {a b c : ℝ} (hc : 0 < c) :
     2 * a * b ≤ c * a ^ 2 + b ^ 2 / c := by
-  apply le_of_mul_le_mul_of_pos_left _ hc
-  rw [mul_add]
-  rw [mul_div_cancel₀ _ hc.ne']
-  nlinarith [sq_nonneg (c * a - b)]
+  have hmul :
+      c * (2 * a * b) ≤ c * (c * a ^ 2 + b ^ 2 / c) := by
+    rw [mul_add, mul_div_cancel₀ _ hc.ne']
+    nlinarith [sq_nonneg (c * a - b)]
+  exact le_of_mul_le_mul_of_pos_left hmul hc
 
 /-- Explicit weighted saddle second moment. -/
 theorem rivoalSaddleSecondMoment22_le {n : ℕ} (hn : 1 ≤ n) :
@@ -336,7 +339,7 @@ theorem rivoalSaddleSecondMoment22_le {n : ℕ} (hn : 1 ≤ n) :
   have hQ : 0 < Q := by exact rivoalRealQ22_pos n
   have hs : 0 < s := Real.sqrt_pos.2 hnR
   have hs2 : s ^ 2 = (n : ℝ) := Real.sq_sqrt hnR.le
-  have hs1 : 1 ≤ s := by nlinarith [hs.le]
+  have hs1 : 1 ≤ s := by nlinarith [hs2]
   have hleft :
       (2 * (n : ℝ)) * S2 ≤
         ∑ k ∈ Finset.range (n + 1),
@@ -358,8 +361,9 @@ theorem rivoalSaddleSecondMoment22_le {n : ℕ} (hn : 1 ≤ n) :
         apply Finset.sum_le_sum
         intro k hk
         apply mul_le_mul_of_nonneg_left
-        · exact mul_le_mul_of_nonneg_right
-            (by positivity : 2 * (n : ℝ) ≤ 2 * (n : ℝ) + (k : ℝ))
+        · have hk0 : 0 ≤ (k : ℝ) := by positivity
+          exact mul_le_mul_of_nonneg_right
+            (by linarith : 2 * (n : ℝ) ≤ 2 * (n : ℝ) + (k : ℝ))
             (sq_nonneg _)
         · exact rivoalRealWeight22_nonneg n k
   have hterm1 :
@@ -388,14 +392,15 @@ theorem rivoalSaddleSecondMoment22_le {n : ℕ} (hn : 1 ≤ n) :
             (n : ℝ) ^ 3 := by
         apply (div_le_iff₀ hnR).2
         calc
-          (((n : ℝ) - (k : ℝ)) ^ 2) ^ 2 ≤ (n : ℝ) ^ 4 := by
-            simpa [pow_mul] using hd4
+          (((n : ℝ) - (k : ℝ)) ^ 2) ^ 2 =
+              ((n : ℝ) - (k : ℝ)) ^ 4 := by ring
+          _ ≤ (n : ℝ) ^ 4 := hd4
           _ = (n : ℝ) ^ 3 * (n : ℝ) := by ring
       apply mul_le_mul_of_nonneg_left
       · exact (two_mul_le_mul_sq_add_sq_div22
           (a := rivoalSaddleError22 n k)
           (b := ((n : ℝ) - (k : ℝ)) ^ 2) hnR).trans
-            (add_le_add_left hdiv _)
+            (add_le_add (le_refl _) hdiv)
       · exact rivoalRealWeight22_nonneg n k
     calc
       _ ≤ _ := hp
@@ -428,6 +433,7 @@ theorem rivoalSaddleSecondMoment22_le {n : ℕ} (hn : 1 ≤ n) :
                 apply Finset.sum_congr rfl
                 intro k hk
                 ring]
+            ring
   have hterm2 :
       (∑ k ∈ Finset.range (n + 1),
         rivoalRealWeight22 n k *
@@ -532,9 +538,29 @@ theorem rivoalSaddleSecondMoment22_le {n : ℕ} (hn : 1 ≤ n) :
   have hC : 15 * (n : ℝ) ^ 4 * Q ≤ 15 * (n : ℝ) ^ 4 * s * Q := by
     have hnonneg : 0 ≤ 15 * (n : ℝ) ^ 4 * Q := by positivity
     nlinarith
-  have hmul :
-      (n : ℝ) * S2 ≤ 100 * (n : ℝ) ^ 4 * s * Q := by
+  have hsub :
+      (n : ℝ) * S2 ≤
+        (n : ℝ) ^ 3 * Q +
+          (15 * (n : ℝ) ^ 3 * K2 + 15 * (n : ℝ) ^ 4 * Q) := by
+    nlinarith [hcore]
+  have h76 :
+      (n : ℝ) ^ 3 * Q +
+          (15 * (n : ℝ) ^ 3 * K2 + 15 * (n : ℝ) ^ 4 * Q) ≤
+        76 * (n : ℝ) ^ 4 * s * Q := by
+    calc
+      _ ≤ (n : ℝ) ^ 4 * s * Q +
+          (60 * (n : ℝ) ^ 4 * s * Q +
+            15 * (n : ℝ) ^ 4 * s * Q) :=
+        add_le_add hA (add_le_add hKterm hC)
+      _ = 76 * (n : ℝ) ^ 4 * s * Q := by ring
+  have h100 :
+      76 * (n : ℝ) ^ 4 * s * Q ≤
+        100 * (n : ℝ) ^ 4 * s * Q := by
+    have hnonneg : 0 ≤ (n : ℝ) ^ 4 * s * Q := by positivity
     nlinarith
+  have hmul :
+      (n : ℝ) * S2 ≤ 100 * (n : ℝ) ^ 4 * s * Q :=
+    hsub.trans (h76.trans h100)
   apply le_of_mul_le_mul_of_pos_left _ hnR
   dsimp only [S2, s, Q] at hmul ⊢
   convert hmul using 1 <;> ring
@@ -563,8 +589,6 @@ theorem rivoalWeightedCauchySchwarz22 (n : ℕ) :
     have hw := rivoalRealWeight22_pos n k
       (Nat.lt_succ_iff.mp (Finset.mem_range.mp hk))
     field_simp [hw.ne']
-    rw [sq_abs]
-    ring
   rw [rivoalRealWeight22_sum, hright] at hcs
   have hQ := rivoalRealQ22_pos n
   have hm := (div_le_iff₀ hQ).1 hcs
@@ -606,8 +630,6 @@ theorem rivoalSaddleMean22_sq_le {n : ℕ} (hn : 1 ≤ n) :
     _ = (100 / s) * (Q * (n : ℝ) ^ 2) ^ 2 := by
       rw [← hs2]
       field_simp [hs.ne']
-      ring
-  rfl
 
 private theorem rivoalSaddleMean22_nonneg (n : ℕ) :
     0 ≤
@@ -640,7 +662,7 @@ theorem tendsto_saddle_mean22 :
   have hroot :
       Tendsto (fun n : ℕ => Real.sqrt (100 / Real.sqrt (n : ℝ)))
         atTop (𝓝 0) := by
-    simpa using Real.continuous_sqrt.continuousAt.comp hinner
+    simpa using (Real.continuous_sqrt.tendsto 0).comp hinner
   apply squeeze_zero'
   · exact Eventually.of_forall rivoalSaddleMean22_nonneg
   · filter_upwards [eventually_atTop.2 ⟨1, fun n hn => hn⟩] with n hn
@@ -649,6 +671,11 @@ theorem tendsto_saddle_mean22 :
     have hright : 0 ≤ 100 / Real.sqrt (n : ℝ) := by positivity
     have hsqrt0 := Real.sqrt_nonneg (100 / Real.sqrt (n : ℝ))
     have hsqrt2 := Real.sq_sqrt hright
+    change
+      (∑ k ∈ Finset.range (n + 1),
+          rivoalRealWeight22 n k * |rivoalSaddleError22 n k|) /
+        (((rivoalExplicitQ22 n : ℚ) : ℝ) * (n : ℝ) ^ 2) ≤
+      Real.sqrt (100 / Real.sqrt (n : ℝ))
     nlinarith
   · exact hroot
 
