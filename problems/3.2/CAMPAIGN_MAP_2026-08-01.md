@@ -74,3 +74,19 @@
   Q6375 已被 tab 自身正式撤回 (Q6438/附录 AC, 仅 sympy 已验部分可引);
   Tests A/F 数值。
 - 收网提交文档框架 — 等爸爸定 (TG 已问)。
+
+## 6. 战役二定案 (08-01 08:30, 爸爸授权自主选向)
+
+- **主攻 = Package B**([GAP-2] 联合 Tannaka 群 + Katz 27.1 水平钩子);
+  **奖品线 = Package E**((DRS)/相位模, 唯一触及 |Z_p|); 坏对角 = 基建喂 B;
+  q23 支线已由 cron 收官(见下)。决策依据: Q6413 全文 §VI(exact 逆定理
+  本身不改进 |Z_p|) + (DRS) 与逆定理逻辑独立 ⟹ B=工作马, E=奖品, (DRS)=桥。
+- **第 9 张死亡证书**(cron, Q6429/附录AB): q23 行结式≠值循环阵(Fourier
+  对偶勘误, p=17 见证, 49/49 复验); q20-mass 线全关; 复活条件映射 B/E。
+- 在飞: life 七发(Q6416/25/40/41/42 + qNE2/qNB3) + life codex 双雄
+  (联合矩指纹/坏对角审计); cron: Q6445(exact 逆定理构造尝试, 与 life
+  坏对角审计成双源) + qG(GARQI-1prime) + q19 + codex Tests A/F。
+- ⚠️ 引文对表项: cron Q6444 引 Katz 书 "Thm 7.2" vs 我方口径 "Thm 27.1"
+  ——Q6441 落地时核对条款号与书名(AM-180 章节 vs 其他 Katz 书)。
+- 勘误挂牌: 逐点群(GL₃) vs Mellin-Tannaka 群(GL₂, 生成纤维维2)不可混——
+  联合矩判决数 M_{2,2}: product=1 vs graph=2(归一化 S/p^{3/2})。详账本 §66。
