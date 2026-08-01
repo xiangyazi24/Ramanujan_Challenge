@@ -1,0 +1,15 @@
+testing 3077 primes in [1000, 30000]
+identity failures: 0/3077
+Z_p tally: {0: 1837, 1: 1, 2: 951, 4: 251, 6: 32, 8: 5}
+mean |Z_p| = 1.0201
+max|S|/sqrt(p): mean 4.278, min 3.053, max 6.594
+avg|S|/sqrt(p): mean 1.2533
+  p in [1000,4000): mean max|S|/sqrt(p) = 3.873 (n=382)
+  p in [4000,10000): mean max|S|/sqrt(p) = 4.157 (n=679)
+  p in [10000,20000): mean max|S|/sqrt(p) = 4.333 (n=1033)
+  p in [20000,30000): mean max|S|/sqrt(p) = 4.460 (n=983)
+  p in [1000,4000): mean max|S|/sqrt(p log p) = 1.393
+  p in [4000,10000): mean max|S|/sqrt(p log p) = 1.400
+  p in [10000,20000): mean max|S|/sqrt(p log p) = 1.399
+  p in [20000,30000): mean max|S|/sqrt(p log p) = 1.402
+VERIFIED
