@@ -2276,6 +2276,7 @@ theorem IntervalIntegrable.mul_of_continuousOn_Ioo_of_tendsto
   have hx' : x ∈ Set.Ioo a b := by
     rw [Set.uIoc_of_le hab.le] at hx
     exact ⟨hx.1, lt_of_le_of_ne hx.2 hxb⟩
+  change f x * extendFrom (Set.Ioo a b) g x = f x * g x
   rw [extendFrom_extends hg x hx']
 
 /-- The double zero of `W0` at one, in the quantitative form needed to
@@ -2289,9 +2290,10 @@ theorem quadAltW0_quadratic_tendsto :
     have hmob : HasDerivAt (fun t : ℝ => t / (2 - t)) 2 1 := by
       convert (hasDerivAt_id (1 : ℝ)).div hden (by norm_num) using 1 <;> norm_num
     have hlog : HasDerivAt (fun t : ℝ => Real.log (t / (2 - t))) 2 1 := by
-      have hlogAt : HasDerivAt Real.log 1 1 := by
-        simpa using Real.hasDerivAt_log (by norm_num : (1 : ℝ) ≠ 0)
-      have h := hlogAt.comp 1 hmob
+      have hlogAt : HasDerivAt Real.log 1 ((fun t : ℝ => t / (2 - t)) 1) := by
+        convert Real.hasDerivAt_log (by norm_num : (1 : ℝ) ≠ 0) using 1 <;>
+          norm_num [div_eq_mul_inv]
+      have h := HasDerivAt.comp (h := fun t : ℝ => t / (2 - t)) 1 hlogAt hmob
       convert h using 1 <;> norm_num
     unfold dW
     convert (hlog.const_mul (-2)).div (hasDerivAt_id (1 : ℝ)) (by norm_num) using 1 <;>
@@ -2328,9 +2330,13 @@ theorem quadAltW0_quadratic_tendsto :
       quadAltW0_hasDerivAt_one.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
   have hsqlim : Tendsto (fun t : ℝ => (t - 1) ^ 2)
       (𝓝[≠] (1 : ℝ)) (𝓝 0) := by
+    have hid : Tendsto (fun t : ℝ => t) (𝓝 (1 : ℝ)) (𝓝 1) := tendsto_id
     have hsub : Tendsto (fun t : ℝ => t - 1) (𝓝 (1 : ℝ)) (𝓝 0) := by
-      simpa using (tendsto_id.sub_const (1 : ℝ))
-    exact (hsub.pow 2).mono_left nhdsWithin_le_nhds
+      simpa using (hid.sub_const (1 : ℝ))
+    have hpow := hsub.pow 2
+    norm_num at hpow
+    exact hpow.mono_left
+      (nhdsWithin_le_nhds (a := (1 : ℝ)) (s := ({1} : Set ℝ)ᶜ))
   exact HasDerivAt.lhopital_zero_nhdsNE hWderiv hsqderiv hsqne hWlim hsqlim hratio
 
 /-- The logarithmic singularity of `W0` at zero is interval-integrable. -/
@@ -2370,12 +2376,8 @@ theorem quadAltH1_div_self_tendsto_zero_right :
   have hH1 : HasDerivAt H1 1 0 := by
     unfold H1
     convert (hinner.log (by norm_num)).neg using 1 <;> norm_num
-  have h := hH1.tendsto_slope_zero_right
-  refine h.congr' ?_
-  filter_upwards [self_mem_nhdsWithin] with t ht
-  have htne : t ≠ 0 := ne_of_gt ht
-  unfold H1
-  field_simp [htne]
+  simpa [H1, smul_eq_mul, div_eq_mul_inv, mul_comm] using
+    hH1.tendsto_slope_zero_right
 
 theorem quadAltH2_div_self_tendsto_zero_right :
     Tendsto (fun t : ℝ => H2 t / t) (𝓝[>] (0 : ℝ)) (𝓝 (1 / 2)) := by
@@ -2385,20 +2387,12 @@ theorem quadAltH2_div_self_tendsto_zero_right :
   have hH2 : HasDerivAt H2 (1 / 2) 0 := by
     unfold H2
     convert (hinner.log (by norm_num)).neg using 1 <;> norm_num
-  have h := hH2.tendsto_slope_zero_right
-  refine h.congr' ?_
-  filter_upwards [self_mem_nhdsWithin] with t ht
-  have htne : t ≠ 0 := ne_of_gt ht
-  unfold H2
-  field_simp [htne]
+  simpa [H2, smul_eq_mul, div_eq_mul_inv, mul_comm] using
+    hH2.tendsto_slope_zero_right
 
 theorem quadAltH1_mul_oneSub_tendsto_one :
     Tendsto (fun t : ℝ => (1 - t) * H1 t) (𝓝[<] (1 : ℝ)) (𝓝 0) := by
-  have h := oneSub_log_tendsto.neg
-  refine h.congr' ?_
-  filter_upwards with t
-  unfold H1
-  ring
+  simpa [H1, mul_comm] using oneSub_log_tendsto.neg
 
 theorem quadAltH2_tendsto_one :
     Tendsto H2 (𝓝[<] (1 : ℝ)) (𝓝 (Real.log 2)) := by
