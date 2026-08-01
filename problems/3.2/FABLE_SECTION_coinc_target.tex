@@ -358,14 +358,28 @@ $\mathbb Z/3$) while no $\delta_h$ with $h\ge2$ can factor through a
 power map ($N_h$ is squarefree).  Toward $\mathrm{MON}_h$ in general:
 local monodromy at every pole is a $3$-cycle
 (Lemma~\ref{lem:coinc-poles}); a simple finite critical point supplies a
-transposition; by Jordan's theorem the remaining input is primitivity,
-which reduces to the absence of small Galois-stable critical-value
-subsets --- in particular irreducibility of the one-variable
-critical-value resultants
-$C_h(T)=\mathrm{Res}_x\bigl(N_h-TL_h^3,\;L_hN_h'-3L_h'N_h\bigr)$,
-verified for $h\le8$ and pairwise coprime in the same range.  The
-entire component theory of the family thus rests on one explicit
-one-variable irreducibility family.
+transposition; the remaining input is primitivity.  Writing $s_h$ for
+the number of \emph{simple nonzero} critical values of $\delta_h$, the
+condition $\mathrm{CRIT}(h)\colon s_h\ge2h-1$ rules out every
+decomposition $\delta_h=g\circ f$ (a Ritt-type count: a decomposition
+caps the number of simple critical values), and
+$\mathrm{CRIT}(h)\Rightarrow\mathrm{MON}_h$; exact certificates at two
+good primes prove the full-Morse strengthening (all $4h-4$ critical
+values simple and nonzero, pairwise-$h$ coprime branch loci) for every
+$2\le h\le16$, so $\mathrm{MON}_h$ and the component dichotomy are
+\emph{unconditional} for $h\le16$.  The named residual statements are
+$[\mathrm{CRIT}\text{-}2H]$: $s_h\ge2h-1$ for all $h$, and
+$[\mathrm{BD}\text{-}\mathrm{ALL}]$:
+$\mathrm{Res}_T(C_h^*,C_k^*)\ne0$ for all $h<k$.  The critical-value resultants
+$C_h(T)=\mathrm{Res}_x\bigl(N_h-TL_h^3,\;L_hN_h'-3L_h'N_h\bigr)$ are
+pairwise coprime for $h\le8$ (exact computation), and the proved
+reflection anti-symmetry forces the exact evenness
+$C_h(T)=D_h(T^2)$ with $\deg D_h=2h-2$: critical values come in
+$\pm$-pairs.  A sufficient input for primitivity is that $D_h$ be
+irreducible over $\mathbb Q$ with a non-square root; this is open for
+every $h$ (simple Newton-polygon arguments at $2,3,5,17$ provably do
+not suffice).  The entire component theory of the family thus rests on
+the Galois structure of one explicit one-variable family.
 \end{remark}
 
 \begin{remark}[the surviving mechanism: shell variance]

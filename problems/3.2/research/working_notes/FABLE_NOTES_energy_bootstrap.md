@@ -2272,3 +2272,22 @@ Q6580 的 [SHELL-L2-DIAGONAL] 同山异面; codex crosscorr 在测。
 Q6580: d-平均→COINC 被杀 (对角损失 H); [SHELL-L2-DIAGONAL] T₂≪p^{2+ε}H² 幸存为
 精确条件路线。q21 (Schur-row 最优无条件界, life4) / q22 (局部类型敌审, life2) 在飞。
 cron 并卷包 (σ½+Q6533+Q6564) 转换 subagent 在做。
+
+## §114 — codex-max 分量定理报告 + q18 精确常数 + Q6607 成稿 (08-01 晚)
+
+- **CODEX_IRRED_THEOREM_report.md**: PROVED (all-h, 条件): [CRIT(h)]: s_h≥2h−1 个
+  单重非零临界值 ⟹ δ_h 不可分解 (Ritt 型计数, 修正我 §112 的 naive Jordan 语句)
+  ⟹ GeomMon=S_{3h} ⟹ T1/T3。T2 精确刻画: gcd(C_h*,C_k*)=1。**VERIFIED-16**:
+  两好素数精确证书 (非抽样) ⟹ BG(h) ∀h≤16 + 105 对互素 ⟹ MON/分量二分
+  无条件到 h=16。命名残余: [CRIT-2H] + [BD-ALL]。注意 [CRIT-2H] 远弱于
+  D_h 不可约 (Montes 线的靶可放松)。
+- **q18/Q6587**: 精确常数 = (4h−1)√p (affine H¹_c 维数 4h−1; 4h+1 多计 2;
+  Artin-Schreier 非退化: 极点阶≤3<p)。新无条件定理入库。
+- **Q6607 (q19 ASCII 兜底)**: p^{1/6} 条件定理全文 LaTeX 落盘
+  (campaign3_questions/answers/Q6607_p16_theorem.tex): CENSUS_H ⟹
+  N_coinc ≤ S²/p+4S @ H≤p^{1/6}/4, 诚实 log 完成范围, h=1 例外, 8 项假设清单。
+  与 VERIFIED-16 拼接 ⟹ 无条件版在 H≤16 平凡成立 (小范围), 真无条件 p^{1/6}
+  仍需 [CRIT-2H]+[BD-ALL]。
+- 在飞: q21(Schur/life4)/q22(局部类型敌审/life2)/q23(Montes/life8)/
+  q24(BIGMON/life9)/q25(谱路线/life10)/q6-ATR(life7)/q20(结构敌审/life5)/
+  codex crosscorr; 并卷转换 subagent。
