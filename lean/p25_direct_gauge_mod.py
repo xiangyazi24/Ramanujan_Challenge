@@ -43,7 +43,7 @@ def target(n):
 def transpose(a): return [list(x) for x in zip(*a)]
 
 
-def equations(degree, variant='plain', offset=0, samples_extra=5):
+def equations(degree, variant='plain', offset=0, samples_extra=5, denominator='one'):
     rows=[]
     for n in range(1, degree+samples_extra+1):
         b=source(n+offset);t=target(n)
@@ -51,14 +51,21 @@ def equations(degree, variant='plain', offset=0, samples_extra=5):
         if variant in ('tt','both'): t=transpose(t)
         xp=[pow(n,k,P) for k in range(degree+1)]
         yp=[pow(n+1,k,P) for k in range(degree+1)]
+        def den(x):
+            if denominator == 'det':
+                return (x+1)*(x+2)*(2*x+3)**2*(2*x+5)**2 % P
+            if denominator == 'detn':
+                return x*(x+1)*(x+2)*(2*x+1)**2*(2*x+3)**2*(2*x+5)**2 % P
+            return 1
+        dn,dnp=den(n),den(n+1)
         for i in range(3):
           for j in range(3):
             row=[0]*(9*(degree+1))
             for k in range(degree+1):
               for a in range(3):
-                row[k*9+a*3+j]=(row[k*9+a*3+j]+b[i][a]*yp[k])%P
+                row[k*9+a*3+j]=(row[k*9+a*3+j]+dn*b[i][a]*yp[k])%P
               for c in range(3):
-                row[k*9+i*3+c]=(row[k*9+i*3+c]-xp[k]*t[c][j])%P
+                row[k*9+i*3+c]=(row[k*9+i*3+c]-dnp*xp[k]*t[c][j])%P
             rows.append(row)
     return rows
 
@@ -87,11 +94,12 @@ if __name__=='__main__':
   variants=(sys.argv[1],) if len(sys.argv)>1 else ('plain','bt','tt','both')
   offsets=(int(sys.argv[2]),) if len(sys.argv)>2 else range(-3,4)
   maximum=int(sys.argv[3]) if len(sys.argv)>3 else 24
+  denominator=sys.argv[4] if len(sys.argv)>4 else 'one'
   for variant in variants:
     for offset in offsets:
       print('variant',variant,'offset',offset,flush=True)
       for d in range(maximum+1):
-        rows=equations(d,variant,offset)
+        rows=equations(d,variant,offset,denominator=denominator)
         nullity=9*(d+1)-rank(rows)
         if d%4==0 or nullity:print(d,nullity,flush=True)
         if nullity:break

@@ -14,6 +14,9 @@
 | 6 | 08-01 | [F] | 早期口径 "truth is O(1)" | 混淆 o(p) 与一致 O(1) | 分裂: [GAP-LT-MELLIN] (o(p), sup 缓慢无界=正常随机) vs [+] 版(一致界=额外刚性) | 闭 (§54) |
 | 7 | 08-01 | [P] | ChatGPT 四次编造 | 幻影 Q32_paper tex/Theorem E(1)/commit 831e147; 假 commits eda609dd/732d85a1/2336ac53 | 全部 git cat-file 证伪; 纪律=每条 repo 引用必验 | 闭 (§前期) |
 | 8 | 08-01 | [F] | "唯一剩余目标=零密度" 口径 | 被 referee 判 REFORMULATION 非定量归约 | 收录口径: 归约精确但不降难度; 提交文档按此措辞 | 闭 (§58) |
+| 9 | 08-01 | [F] | `CODEX_SPEC_laststand_cocycle.md` / `CODEX_SPEC_laststand_norun.md` | 把单解的 two-time companion action 错套到 `xi_r=(b_r:c_r)`，故 fixed-point、2-run eigenvector、3-run curve 全部靶错 | 正确状态是 fundamental frame；return 当且仅当 `(T_{r,d})_{21}=0`（固定 Borel hit） | 闭 (`CODEX_LASTSTAND_COCYCLE_report.md` §1) |
+| 10 | 08-01 | [F] | laststand `[FR_eta]` 口径 | 把 shell incidence `sum_d |Z_d|`、dyadic union、primitive count 称为等价；且字面 `L -> infinity` 未写 slow/nonempty-window 限制 | 分开记 `S_B` 与 `U_B`，仅有 `U_B <= S_B`；能量链使用 `L=N^{o(1)}`, `D=o(N)` | 闭 (`CODEX_LASTSTAND_COCYCLE_report.md` §1.5) |
+| 11 | 08-01 | [P] | Q6730 “honest poles remain nonzero mod p” | 整数非零误推工作素数下非零；`N_3(-3)=584=8*73`，且 `gcd_F73(N_3,N_4)=X+3` | fixed-p correlation 必须先 saturation；不能直接用特征零 pole/resultant | 闭 (`CODEX_LASTSTAND_COCYCLE_report.md` §3.4) |
 
 ## [F] 2026-08-02 — §134 [NO-RUN] 推导整体作废 (codex 驳倒, 活反例)
 
