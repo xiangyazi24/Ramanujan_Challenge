@@ -4,8 +4,9 @@
 The symbolic part independently rebuilds the Apéry gap continuants, checks
 the renewal identity, the reflection factor, and small-pair characteristic-
 zero coprimality.  The finite-field part extracts ``orbit(p)`` verbatim from
-``CRON_b1_crosscorr.py`` and evaluates two residuals strictly below the old
-truncated weak-L2 wall at the three primes required by the specification.
+``CRON_b1_crosscorr.py`` and evaluates the declared structure-aware residual
+``[MIRROR-WL1]`` at the three primes required by the specification.  It also
+checks two auxiliary distributional residuals and their exact embeddings.
 
 For
 
@@ -17,7 +18,7 @@ all comparisons are kept integral by storing
 
 Thus ``W32 <= N^(3/2)/sqrt(D)`` is exactly ``D*W32_SQ <= N^3``.
 
-For the declared integrated-tail residual, put
+For the auxiliary integrated-tail residual, put
 
     E = sum_h (R_h - T0)_+ = sum_{t > T0} #{h : R_h >= t}.
 
@@ -196,12 +197,27 @@ def symbolic_gates() -> None:
                 assert numerator(left).resultant(numerator(right)) != 0
                 resultant_checks += 1
 
+    # Resultant divisibility is not the same as a physical F_p slice
+    # intersection.  At p=17 the pole X=-4 is a raw root for every h>=4,
+    # but its residue 13 lies outside every corresponding physical window.
+    cut_pole_checks = 0
+    for h in range(4, 9):
+        assert int(numerator(h).eval(-4)) % 17 == 0
+        assert 13 > 17 - 2 - h
+        cut_pole_checks += 1
+    assert int(numerator(2).resultant(numerator(4))) % 17 == 0
+    assert not any(
+        int(numerator(2).eval(value)) % 17 == 0
+        and int(numerator(4).eval(value)) % 17 == 0
+        for value in range(17)
+    )
+
     print(
         "SYMBOLIC_GATES PASS "
         f"renewal={renewal_checks} reflection={reflection_checks} "
         f"gap_renewal={renewal_n_checks} backward={backward_checks} "
         f"shifted_gcd={shifted_gcd_checks} cross_gcd={gcd_checks} "
-        f"cross_resultant={resultant_checks}"
+        f"cross_resultant={resultant_checks} cut_poles={cut_pole_checks}"
     )
 
 
@@ -527,9 +543,36 @@ def exhaustive_lorentz_gate() -> None:
     print(f"LORENTZ_FINITE_GATE PASS profiles={checked}")
 
 
+def restart_counterexample_gate(orbit) -> None:
+    """Check the actual Apéry row which kills recurrence-only pumping."""
+    prime = 461
+    points = orbit(prime)
+
+    def roots(lag: int) -> set[int]:
+        return {
+            base
+            for base in range(len(points) - lag)
+            if points[base] == points[base + lag]
+        }
+
+    roots_44 = roots(44)
+    expected = {42, 45, 68, 133, 142, 208, 274, 283, 348, 371, 374}
+    assert roots_44 == expected
+    assert not any(base + 44 in roots_44 for base in roots_44)
+    assert len(roots(43)) == 0
+    assert len(roots(45)) == 0
+    assert len(roots(88)) == 1
+    print(
+        "RESTART_COUNTEREXAMPLE PASS "
+        "p=461 h=44 R_h=11 continuation=0 "
+        "neighbors=0,0 R_2h=1"
+    )
+
+
 def finite_field_gates() -> None:
     """Evaluate all exact quantities at the three mandated primes."""
     orbit = load_orbit_function()
+    restart_counterexample_gate(orbit)
     print(
         "FINITE_FIELD_GATES\n"
         "p N L D T0 S maxR W2 Z2 E E^2*T0/N^2 W32sq "

@@ -98,3 +98,17 @@
   多问 ChatGPT。接续动作: 10 tab 全空 → 10 发铺满 (S5-1..S5-10); 快 tab 秒回×3 (cron7/9/10) 滑步
   处理后补发 (S5-11..S5-15); codex sol-ultra breakwall-2 派出。
   骨架新候选(待机验): 偶 h 中心根 -(h+1)/2 mod p 非回绕 ⟹ κ_h≥1_{h even} + R_h 奇偶律。
+- segment 5 结果账 (至 17:2x, 附录 AT.40–AT.43, commits ..644dd78+): **三个新无条件结构定理**:
+  [PARITY-LAW] (R_h 奇偶律+κ_h=1_{h even}, 机验三素数零违例, max-lag 奇偶预言命中);
+  [ALL-PAIRS-COPRIME] ([P]级: strip-disjointness 免费定理+descent, 机验 h≤12 全绿);
+  高度引理双件+restart 词典。主项精确定格 α_p(h)=3/2+(1/2)(−1)^h (解释 (3/2)M 平均律)。
+  折叠 QR 框架实证 (A_h=H_h 的 QR-z-根数, 逐例吻合)。墙第六坐标定名 [ARITH-LAG-SHEAF]
+  (U=MS 转移算子谱形式)。死亡证书四张新增 (全程正性/结式预算/行列矩交换/mod-2 退化候选)。
+  [CRIT-2H] 链: Q6708 共轭定理+Q6723 K∞ 算法 (d=∓3/2 抵消)+Q6756 装配定理草案;
+  codex kinf (sol max) 扫描在跑。codex ultra breakwall2 在跑 (1.7MB log, 爸爸点名试 ultra 档)。
+  ChatGPT: 25+ 答, 10 tab 全程滚动满载, 快 tab 滑步纪律执行 (全部自验后入账)。
+- 两问 self-audit: (a) 最不自信 = [ALL-PAIRS-COPRIME] 传递性步骤的退化 locus 未逐点证
+  ([P] 标记); α_p 精确律的 Burnside 账未独立机验 (μ 拟合 0.48 vs 理论 0.5, 未做检验);
+  Q6708/Q6723 长文未逐行审计 (依赖 codex 实现暴露问题)。(b) 盲点 = PRE 里 c1=6 与
+  orbit 代码 c1=1 归一化差异未理论对齐 (经验侧 orbit 权威, N_3 系数+奇偶律双向吻合
+  说明自洽, 但值得一条对齐引理); 折叠框架只在 p=3001 三个 lag 上实证。

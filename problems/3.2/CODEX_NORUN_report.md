@@ -118,7 +118,7 @@ whereas `xi_248` has key `758`.
 There is a second symmetric witness at `r=565`:
 
 \[
-\xi_{565}=409,qquad
+\xi_{565}=409,\qquad
 (\alpha_{565}-\alpha_{747})/(\beta_{565}-\beta_{747})=165
 \pmod {997}.
 \]
