@@ -477,3 +477,5 @@ b_r ≡ −(1/N)·Σ_{t=0}^{N−1} J(φψ^{t+r}, ψ^{N/2−t})²·J(φψ^{t−r}
 **V.3 结构注记**：p=11 另具 Type III 例外全局像（Boylan; O'Sullivan et al. 2511.16039）——与非常规性逻辑独立，校准时视为潜在非代表点；3137=56²+1 判为巧合（非 CM、无 inner twist、11≡3 mod 4）；非常规 ⟹ 剩余表示 niveau-2 不可约（Fontaine–Laffaille/Edixhoven）——结构重述而非选素判据。全文归档 chatgpt-answers/Q6418.md。
 
 **V.4（life §58 回执：K 链敌意终审定级，2026-08-01）**：qH3/Q6424 referee 定级——**K.2 拉回恒等式+K.3 GK 卷积 = THEOREM**（边界簿记全闭无隐藏修正，我方 K 节条目升级定案）；"有界导手对" = **UNPROVED**（链内），但 referee 明示 isogeny 对应写出即升定理——codex-lt-high 已写出并 2148 点验证，收网期第一整理任务 = Q6394+isogeny 合写定理（life 管）；等分布→零密度 = **WISHFUL**（与我方 P.4 审计拒收同源，双源确认）；"唯一目标"口径 = REFORMULATION 非降难。life 审计矩阵 qA–qI 九问收满，全场余 qB2 + q22（+cron 侧 q16/18/19/23 + 双雄×2）。
+
+**V.5（life §59 回执：四 codex 收割完毕 + 两案收口，2026-08-01）**：(1) lt-max 终报新增 [GAP-LT-RATIONALITY]，五脚本全绿；Galois 作用 σ_a(M(r))=M(ar) 在 Q(ζ_16) 精确机器验证（164+2448 恒等式）升格机器定理。(2) **P.1/S.7 rank 之惑机制收口：Clausen 平方 ₂F₁(1/3,2/3;1)² = ₃F₂**——Q6375 的 rank-3 是 Franel 的平方非新对象，[FALSE-3F2] 正字标准答案，本案闭。(3) V.1 的 Zudilin 数据点定夺落定：**不致信，入我们提交**（parity 命题后 Data point 段，proof.tex 143 页绿）——[可发表级数据点] 标记转为已消化。全场只待：q22（唯一能改变终盘性质的变量，落地第一时间转 life）+ q23 + qB2 + Q6416 + cron 二轮双雄。
