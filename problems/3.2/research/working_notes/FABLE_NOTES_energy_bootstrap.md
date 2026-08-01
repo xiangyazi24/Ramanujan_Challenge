@@ -1343,3 +1343,24 @@ double-certified.
   真答案等 drop, 勿重发。qB2(Q6425) 同样投递超时 in-tab。Q6416 in-tab。
 - 在飞总账: Q6416(life3)/Q6425(life7)/Q6440(life1)/Q6441(life4)/
   Q6442(life8) + codex×2。Monitor 已布 /tmp/gpt/life 落地唤醒。
+
+## §65 (08-01 08:15) Q6413 全文取回 + 独立矩预测(裁决 codex-max 用)
+
+- Q6413 全文从 Notion 取回存 chatgpt-answers/Q6413_full.md(10项例外表=其§V;
+  已 push, codex-high 可用)。全文比摘要尖锐的两点:
+  (1) **§VI: exact 逆定理本身不改进 |Z_p|**——只管 Z_p^exact, 真零由
+  Z_p^res 接口主导 ⟹ 方向3(坏对角)是 char-0 纲领, 战略上是"喂 Package
+  B/D 的基建"而非直接攻 |Z_p|; (2) (DRS) 与逆定理**逻辑独立**——Package E
+  可以不等 C 单独攻。四方向权重据此修正: B(群计算)=具体工作马,
+  E=唯一奖品, (DRS)=桥。
+- **独立矩预测**(我自己推的, 等 codex-max 报告来对表, 不看它的先写下):
+  SO₃ std: M₁=0 M₂=1 M₃=1 M₄=3; O₃ std(det 扭): M₁=0 M₂=1 M₃=0 M₄=3。
+  联合: product ⟹ M_{1,1}=0, M_{2,2}=M₂M₂=1; 逐点耦合 det-graph
+  (g↦det(g)g) ⟹ M_{1,1}=∫det·tr²=0 **也是零**, 但 M_{2,2}=∫tr⁴=3。
+  ⟹ **M_{1,1} 无分辨力(两情形皆0), M_{2,2} 是判决数: 1=product vs
+  3=graph**。若 codex-max 用 M_{1,1}≈0 下"product"结论=踩坑, 拦。
+- 微妙点(自己想清楚的): A_−≅A_+⊗K_q 是 t-线上的层关系, 但 Mellin 后
+  S_−(χ)=Σχ(t)χ₂(q(t))A_+(t) 是卷积混合非逐点关系——Mellin-Tannaka
+  层面 product 仍可能成立(K_q 的 Mellin 铺开可能去相关)。所以联合矩
+  实测真有信息量: M_{2,2}≈1 ⟹ Mellin 级 product(好消息, 27.1 可直接
+  用大群); M_{2,2}≈3 ⟹ Mellin 级 graph(例外表第9项现身, 逆定理绕不开)。
