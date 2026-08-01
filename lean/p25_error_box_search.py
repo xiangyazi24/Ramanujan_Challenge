@@ -18,7 +18,7 @@ P = s.Matrix([
 
 
 def eventually_nonnegative(poly, start=0):
-    poly = s.Poly(s.cancel(poly), n)
+    poly = s.Poly(s.expand(poly), n)
     shifted = s.Poly(poly.as_expr().subs(n, n + start), n)
     return all(c >= 0 for c in shifted.all_coeffs())
 
@@ -27,11 +27,9 @@ def test_box(lx, ux, ly, uy, start=0, verbose=False):
     bounds = []
     for X in (lx, ux):
         for Y in (ly, uy):
-            x = X/(n+2)**2
-            y = Y/(n+2)**2
-            d = P[0, 0]-x*P[1, 0]-y*P[2, 0]
-            e1 = -P[0, 1]+x*P[1, 1]+y*P[2, 1]
-            e2 = -P[0, 2]+x*P[1, 2]+y*P[2, 2]
+            d = (n+2)**2*P[0, 0]-X*P[1, 0]-Y*P[2, 0]
+            e1 = -(n+2)**2*P[0, 1]+X*P[1, 1]+Y*P[2, 1]
+            e2 = -(n+2)**2*P[0, 2]+X*P[1, 2]+Y*P[2, 2]
             tests = [d, (n+3)**2*e1-lx*d, ux*d-(n+3)**2*e1,
                      (n+3)**2*e2-ly*d, uy*d-(n+3)**2*e2]
             flags = [eventually_nonnegative(t, start) for t in tests]
@@ -40,8 +38,7 @@ def test_box(lx, ux, ly, uy, start=0, verbose=False):
                 print(X, Y, flags)
                 for t, ok in zip(tests, flags):
                     if not ok:
-                        num = s.cancel(t).as_numer_denom()[0]
-                        print(" bad", s.factor(num.subs(n, n+start)))
+                        print(" bad", s.factor(s.together(t.subs(n, n+start))))
     return all(all(row) for row in bounds)
 
 

@@ -2527,3 +2527,19 @@ life9) + q74 (Apéry 变体设计, life10) 在飞。
 Cartier 复杂度), open lemma= o(√p) avatar; 盲点提示: Frobenius 不变商/形式群
 坐标可能低复杂度。q67 modprop 与 q69 skeptic 两答滞留 Notion 不可读页,
 重发中。Q6745 (旧队列): hatch 条件 A⟹S=o(N)@中观, B 只给 O(N) 且 sharp。
+
+## §136 — 勘误落地 + exp3 镜像线判负 + 正确重述 (08-02)
+
+- **[NO-RUN] 作废** (ERRATA 2026-08-02 条): 射影对象混淆, codex 活反例
+  p=997/r=248/d=182。根因流程教训: 数值逐点验证留 placeholder 未跑就入账。
+  幸存: strip-分离链(§135), GAP-ONE-CASORATIAN, ratio-walk 版 F-证书(另族)。
+- **正确重述** (codex): collision ⟺ (T_{r,d})_{21}=0, 轨道无关; 2-run@d ⟺
+  p | Res_x(N_d(x),N_d(x+1)); 3-run 的正确方程组含轨道依赖比值 λ₁/λ₀ (报告 §3)。
+- **exp3 判负** (Q6762 实验3, 本地): p=1999 bideg(10,10) kernel=18 全部=
+  镜像线因子 (2r+d−(p−1))·B — 反射恒等式 ⟹ 直线 d=p−1−2r 整条是碰撞
+  (44/46 点恰合 kernel 维数 18/12 双素数精确账)。碰撞簇在该尺度**无**镜像线
+  之外低次分量; 与 q52 "可见强制族=Θ(D)" 精确对上 (镜像族即 Θ(D) 族)。
+  外推测试: kernel 元只在未见镜像点上消失, 其余非零 — 无隐藏结构。
+- 在飞: codex ultra (cocycle 主攻); q73/q74 已回 (玩具 Stepanov 障碍=极点增长;
+  变体裁决=Stepanov-on-coincidence-variety 需 addition law 升级为低次闭包定理,
+  4 项机器实验已列, exp3 已执行判负); q75 (mod-p² 提升/Γ_p 分布关系) 待发。
