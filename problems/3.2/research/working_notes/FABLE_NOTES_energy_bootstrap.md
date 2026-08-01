@@ -2381,3 +2381,8 @@ staleness (我方 CTX 里的'3/4 纪录'陈旧) — 跨 session 定理台账必�
 §122 追记: q38/Q6657 — [THM-NEAR-WALL-3/7]+W-注入 我方独立复核 CONFIRMED
 (两小修: 端点一基约定; Q6630 笔误, 原式对)。审计矩阵四大导入定理全绿
 (H2LOGH 双审/σ½/NEAR-WALL/三角机制)。q41 成稿在做。
+
+§123 追记: cron Q6659 — [NONCOLLAPSE-ALL|MORSE] 全 h≥2 已证 (纤维度计数)。
+全 h Morse 输入二选一: (a) A_h 本原+C_h sf; (b) W_h 不可约 (单件通吃)。
+证书协议 Protocol A (两素数: q0 不可约+q1 素数p>h−1 循环⟹本原); 警告:
+不可约≠本原/transposition 不够/sf disc 不够。我方 W_h codex=路线(b)。
