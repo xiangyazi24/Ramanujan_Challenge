@@ -2252,7 +2252,7 @@ rank 增长, 需 dynamical large sieve → q14 在飞; 跨相关测量协议 →
    (外层 crit 值=小 Galois 稳定集 vs C_h 不可约; x^m 逃逸被 N_h 非幂封死; h=1 例外=1/(x+1)³ 真立方)。
 3. Jordan: 本原+3-cycle ⟹ ⊇A_{3h}; +对换 (C_h squarefree ⟹ 简单 crit) ⟹ =S_{3h}。
 4. Goursat: h≠k: 公共商仅 Z/2, A×A 已传递 ⟹ 不可约; h=k: 2-传递 ⟹ 恰好 对角+H_h。
-⟹ 全部分量控制归结为一元族 **C_h 不可约性** (≤8 已验, codex 扩到 16)。
+⟹ 全部分量控制归结为一元族 C_h 的 Galois 结构。⚠️勘误(08-01晚): 此前写'C_h 不可约 ≤8 已验'不实——codex 只验了 gcd(C_h,C_k)=1 (两两互素), 不可约性从未被验证。Q6579 修正: **C_h(T)=D_h(T²) 恒为偶** (反射反对称的定理级后果), 正确目标 = D_h (deg 2h−2) 不可约 + 根非平方 (充分)。简单 Newton polygon @2/3/5/17 判负; N_h≡R_h³ (mod 3) 结构 + Montes 高阶交叉路线 LIVE ([P1]–[P8] 台账, Q6579)。
 配合窗口 completion (log² 代价) ⟹ 无条件 COINC_β, β≤1/6 (第四靶首个已证实例,
 不改能量指数, 但把靶的形状钉死)。q15(life9) 在写全证明。
 
