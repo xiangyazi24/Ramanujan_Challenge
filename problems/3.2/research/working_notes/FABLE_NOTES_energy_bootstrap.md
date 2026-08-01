@@ -777,3 +777,15 @@ algebraic shadow) — now the most alive, with its first theorem in hand.**
   harmonic-weighted companion) — Z_p membership sees p only through β_p·D_r.
 - β_p ≡ −(14/3)B_{p−3}: our independent re-verification was already done
   (31/31, commit cf74d18).
+
+## 33. D-imaging channel: NEGATIVE (cron, 722 rows; independently launched by us too)
+
+Z_p membership is UNCORRELATED with D_r (p | D_z only 2/722 = Poisson scale;
+D_z/a_z non-constant 0/292; decile-uniform). Byproduct lemma (exact, from the
+tower): **p² | b_n ⟺ p | D_{n−p}** — the double-divisibility (record-prime)
+criterion. CUMULATIVE b-LEVEL VERDICT: every channel tested (structure points,
+D-imaging, mod-8 classes) is structureless; deterministic law exists ONLY at
+the rank-2 quarter points. The apparition program's remaining hope: the
+rank-2 law's convolution shadow must be statistical (affecting Z_p's
+DISTRIBUTION, not membership) — or the pointwise conjecture needs the
+Diophantine/lattice routes after all.

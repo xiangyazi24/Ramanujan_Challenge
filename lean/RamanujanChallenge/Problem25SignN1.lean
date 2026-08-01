@@ -87,9 +87,9 @@ theorem catalan_in_envelope_one :
   have hq2 : (0 : ℝ) < (positiveDenominator 1 2 : ℝ) := by
     exact_mod_cast positiveDenominator_pos 1 2
   simp only [positiveRatio]
-  constructor
-  · rw [lt_div_iff₀ hq2]; linarith
-  · rw [div_lt_iff₀ hq0]; linarith
+  refine ⟨?_, ?_⟩
+  · rw [div_lt_iff₀ hq2]; linarith
+  · rw [lt_div_iff₀ hq0]; linarith
 
 end RamanujanChallenge.P25
 
