@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/q6427-lean-audit.yml'
       - 'lean/RamanujanChallenge/Q6427Scratch.lean'
+      - 'lean/RamanujanChallenge/Q6427Bounds.lean'
 
 permissions:
   contents: read
@@ -27,9 +28,9 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           cd lean
           lake exe cache get
-      - name: Compile Q6427 scratch
+      - name: Compile Q6427 bounds
         shell: bash
         run: |
           export PATH="$HOME/.elan/bin:$PATH"
           cd lean
-          lake build RamanujanChallenge.Q6427Scratch
+          lake build RamanujanChallenge.Q6427Bounds
