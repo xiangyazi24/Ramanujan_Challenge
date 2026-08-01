@@ -1528,3 +1528,17 @@ double-certified.
   large sieve/子群困陷四机制排序)。
 - 审计状态: Q6456 证明 skim-级复核过(b1/b2/b3 形状标准, 返回概率显式),
   逐行审计待后续 codex 对抗轮。答案归档 chatgpt-answers/Q6456.md。
+
+## §72 (08-01 10:50) cron GARQI 线汇合 — "固定尺度免费/增长尺度是墙"三源同构
+
+- cron 附录 AG/AE.4 (d8f402d/ab0943a 已 pull): gap 多项式/除子路线封顶
+  X^{7/3}/logX(镜像障碍+二次度障碍); 最小充分输入=染色根 BV 包 (R)+(C)
+  ——与 [GAP-RES-WEYL] 正交(单素数幂节省 vs 跨素数平均)。判别器 3/3 绿
+  (S*lnX/X=0.697≈log2 正中, 镜像份额 43%, E|Z|²=2.992@2^20)。
+- **三源同构确认**: cron "N̂_h 固定 h 不可约 ⟹ Chebotarev 白拿固定-h (R),
+  难度集中在 h 增长 family 一致性" ≅ 我方 qNE5 "固定 L 滑块 Weil 白拿,
+  难度在 L 增长/history 耦合" ≅ qNE6 两尺度分解 "固定 h 计数 Weil 可及,
+  尾部要能量"。**墙的普适形状: 固定尺度代数对象免费, 尺度随 p 增长时
+  的 family 一致性是唯一硬点**。cron 反射降半度技巧可能移植到我方
+  T_{s,h} 对应(反射 b_{p−1−r}=b_r 同源)。qH(cron) 与 qNE5/qNE6(life)
+  落地后做三方对表。
