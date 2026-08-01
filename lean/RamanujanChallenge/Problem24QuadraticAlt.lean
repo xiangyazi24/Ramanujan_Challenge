@@ -3950,4 +3950,72 @@ theorem quadAltK_eq_neg_integral :
   unfold quadAltK
   linarith [hzero]
 
+/-- The second logarithmic moment `∫₀¹ xⁿ log²x dx = 2/(n+1)³`.
+
+Companion to `P26.integral_pow_mul_log26` (`∫₀¹ xⁿ log x = -1/(n+1)²`), proved
+the same way: an explicit antiderivative plus the tendsto form of FTC. -/
+theorem integral_pow_mul_logSq (n : ℕ) :
+    (∫ x : ℝ in (0:ℝ)..1, x ^ n * Real.log x ^ 2) = 2 / ((n : ℝ) + 1) ^ 3 := by
+  have hn1 : (0:ℝ) < (n : ℝ) + 1 := by positivity
+  have hn1ne : ((n : ℝ) + 1) ≠ 0 := ne_of_gt hn1
+  set c : ℝ := (n : ℝ) + 1 with hc
+  let F : ℝ → ℝ := fun x =>
+    x ^ (n + 1) * (Real.log x ^ 2 / c - 2 * Real.log x / c ^ 2 + 2 / c ^ 3)
+  have hInt : IntervalIntegrable (fun x : ℝ => x ^ n * Real.log x ^ 2)
+      MeasureTheory.volume 0 1 :=
+    intervalIntegrable_logSq.continuousOn_mul (continuousOn_pow n)
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (f := F) (fa := 0) (fb := 2 / c ^ 3) (hint := hInt)]
+  · ring
+  · norm_num
+  · intro x hx
+    have hx0 : x ≠ 0 := ne_of_gt hx.1
+    have hpow : HasDerivAt (fun y : ℝ => y ^ (n + 1)) (c * x ^ n) x := by
+      convert hasDerivAt_pow (n + 1) x using 1
+      simp [hc]
+    have hlog : HasDerivAt Real.log x⁻¹ x := Real.hasDerivAt_log hx0
+    have hrest : HasDerivAt
+        (fun y : ℝ => Real.log y ^ 2 / c - 2 * Real.log y / c ^ 2 + 2 / c ^ 3)
+        ((2 * Real.log x * x⁻¹) / c - (2 * x⁻¹) / c ^ 2) x := by
+      have h1 : HasDerivAt (fun y : ℝ => Real.log y ^ 2 / c)
+          ((2 * Real.log x ^ (2 - 1) * x⁻¹) / c) x := (hlog.pow 2).div_const c
+      have h2 : HasDerivAt (fun y : ℝ => 2 * Real.log y / c ^ 2)
+          ((2 * x⁻¹) / c ^ 2) x := (hlog.const_mul 2).div_const (c ^ 2)
+      have := (h1.sub h2).add_const (2 / c ^ 3)
+      simpa using this
+    dsimp only [F]
+    convert hpow.mul hrest using 1
+    field_simp
+    ring
+  · -- left endpoint: xⁿ⁺¹·(log²x/c − 2log x/c² + 2/c³) → 0
+    have hx0 : Tendsto (fun x : ℝ => x ^ n) (𝓝[>] (0:ℝ)) (𝓝 ((0:ℝ) ^ n)) :=
+      ((continuous_pow n).continuousAt.tendsto).mono_left nhdsWithin_le_nhds
+    have hA : Tendsto (fun x : ℝ => (Real.log x ^ 2 * x) * x ^ n / c)
+        (𝓝[>] (0:ℝ)) (𝓝 0) := by
+      simpa using ((logSq_mul_self_tendsto.mul hx0).div_const c)
+    have hB : Tendsto (fun x : ℝ => 2 * ((Real.log x * x) * x ^ n) / c ^ 2)
+        (𝓝[>] (0:ℝ)) (𝓝 0) := by
+      simpa using (((log_mul_self_tendsto.mul hx0).const_mul 2).div_const (c ^ 2))
+    have hC : Tendsto (fun x : ℝ => 2 * (x * x ^ n) / c ^ 3)
+        (𝓝[>] (0:ℝ)) (𝓝 0) := by
+      have h : Tendsto (fun x : ℝ => x) (𝓝[>] (0:ℝ)) (𝓝 0) :=
+        tendsto_id.mono_left nhdsWithin_le_nhds
+      simpa using (((h.mul hx0).const_mul 2).div_const (c ^ 3))
+    have := (hA.sub hB).add hC
+    simp only [sub_zero, add_zero] at this
+    refine this.congr ?_
+    intro x
+    dsimp only [F]
+    ring
+  · have hcont : ContinuousAt F 1 := by
+      dsimp only [F]
+      have h1 : ContinuousAt Real.log 1 := Real.continuousAt_log (by norm_num)
+      exact (continuousAt_pow _ _).mul
+        ((((h1.pow 2).div_const c).sub ((h1.const_mul 2).div_const (c ^ 2))).add
+          continuousAt_const)
+    have hval : F 1 = 2 / c ^ 3 := by dsimp only [F]; simp
+    have := hcont.tendsto
+    rw [hval] at this
+    exact this.mono_left nhdsWithin_le_nhds
+
 end RamanujanChallenge.P24QuadAlt

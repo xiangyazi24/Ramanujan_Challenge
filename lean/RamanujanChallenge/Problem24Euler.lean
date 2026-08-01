@@ -405,7 +405,12 @@ private theorem harmonicIncrement24_norm_summable
   simpa using mul_le_mul_of_nonneg_right hinc
     (pow_nonneg (abs_nonneg x) n)
 
-private theorem harmonicNumber_generating_hasSum
+/-- `∑_{n≥0} H_{n+1} xⁿ = -log(1-x)/(x(1-x))` for `|x| < 1`, `x ≠ 0`.
+
+Made public (was private) because Layer E of `Problem24QuadraticAlt` needs it at
+`x = -t`: it is exactly the generating function of the `K` integrand,
+`log(1+t)/(1+t) = ∑_{n≥0} (-1)ⁿ H_{n+1} tⁿ⁺¹`. -/
+theorem harmonicNumber_generating_hasSum
     {x : ℝ} (hx : |x| < 1) (hxne : x ≠ 0) :
     HasSum (fun n : ℕ => harmonicNumber (n + 1) * x ^ n)
       (-Real.log (1 - x) / (x * (1 - x))) := by
