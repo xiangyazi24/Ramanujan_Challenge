@@ -17,7 +17,7 @@ private def strip (m : ℕ) : Set ℂ :=
 
 private theorem left_le_right (m : ℕ) : left m ≤ right m := by
   unfold left right
-  norm_num
+  linarith
 
 private theorem top_mem_strip {m : ℕ} {x T : ℝ}
     (hx : x ∈ [[left m, right m]]) :
