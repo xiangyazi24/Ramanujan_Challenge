@@ -166,3 +166,5 @@
 - [ ] codex max CODEX_IRRED_THEOREM_report.md (monodromy 全对称群路线 + census→16)
 - [x] life1 弃用 (tab 卡死, q1/qFAMMECH/q18 三问被吞; q1 内容已由 Q6550 覆盖,
       qFAMMECH 由 Q6570 覆盖, q18 已改派 life9)
+- [ ] 并卷任务 (cron b448f7a): σ½定理+Q6533四件+Q6564三件 → FABLE_SECTION_sigma_half.tex
+      (subagent 转换中; AT.3 两修正硬性; MESO-QRLL 勿并卷) → proof.tex build 门 → commit
