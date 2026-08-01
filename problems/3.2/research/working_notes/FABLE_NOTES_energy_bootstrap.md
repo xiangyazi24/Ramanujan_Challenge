@@ -672,3 +672,18 @@ set algebraic of low degree.
   vacuous; the PRIMITIVE test is whether p | G_n forces p | Q_j(n−j) (gap
   continuants) for all j. Only rows with genuinely different denominator
   envelopes (the modular rows) can break this — exactly [GAP-SAT]'s content.
+
+## 28. cron tower theorem: all p-arithmetic collapses to the Beukers defect β_p
+
+cron-Fable's designated experiment (CRON_modp3_tower.py, all green, p < 128):
+the two-digit Frobenius tower b_{p+r} ≡ 5b_r + 10pD_r + p²E_r + p³(Ũ_r + β_p·b_r)
+(mod p⁴) is UNIVERSAL at orders p¹, p², p³ ((x_p,y_p) ≡ (0,0) — the mod-p³
+invariant hunt is empty); the FIRST and only p-dependent invariant through
+order p⁴ is the single scalar β_p = (b_p − 5)/p³ mod p (Beukers defect;
+x₃ ≡ −6 universal). p = 7 is Apéry–Wieferich (β₇ = 0, b₇ ≡ 5 mod 7⁴).
+No visible linear relation β_p ~ γ₆/γ₈ mod p. STRATEGIC CONSEQUENCE: in the
+Dwork frame the deformation carries no p-information, so all p-specific
+arithmetic (the would-be apparition law) lives in B_p = q·s_p² — the CFVZ
+square factor's discriminant/factorization data. This docks the cron program
+directly onto the modular–Padé/Smith-ledger program (§27): both are digging
+the p-saturation of the same level-6 integral lattice.
