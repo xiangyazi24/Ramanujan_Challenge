@@ -4315,4 +4315,196 @@ theorem quadAltI20_eq :
         cubicLinearEulerValue24
       ring
 
+/-! ## Layer E, row `I22` -/
+
+private theorem quadAltI22_radial_intervalIntegrable :
+    IntervalIntegrable
+      (fun t : ℝ => quadAltR t * H2 t ^ 2 / t)
+      MeasureTheory.volume 0 1 := by
+  let half : ℝ → ℝ := fun u =>
+    (Real.log u - Real.log (1 - u)) *
+      Real.log (1 - u) ^ 2 / u
+  have hhalf : IntervalIntegrable half MeasureTheory.volume 0 (1 / 2) := by
+    exact quadAltI22HalfRadialIntervalIntegrable24
+  have hcomp := hhalf.comp_mul_left (c := (1 / 2 : ℝ))
+  have hcomp' : IntervalIntegrable (fun t : ℝ => half (t / 2))
+      MeasureTheory.volume 0 1 := by
+    convert hcomp using 1 <;> norm_num
+    funext t
+    ring
+  apply IntervalIntegrable.congr
+    (f := fun t : ℝ => (1 / 2 : ℝ) * half (t / 2)) ?_
+    (hcomp'.const_mul (1 / 2 : ℝ))
+  intro t ht
+  rw [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] at ht
+  have htzero : t ≠ 0 := ne_of_gt ht.1
+  have hthalf : t / 2 ≠ 0 := div_ne_zero htzero (by norm_num)
+  have h2t : 2 - t ≠ 0 := by linarith [ht.2]
+  have hhalfden : 1 - t / 2 ≠ 0 := by linarith [ht.2]
+  unfold half quadAltR H2
+  dsimp only
+  rw [show t / (2 - t) = (t / 2) / (1 - t / 2) by
+    field_simp [h2t, hhalfden],
+    Real.log_div hthalf hhalfden]
+  field_simp [htzero]
+
+private theorem quadAltI22_radial_eq_half :
+    (∫ t : ℝ in (0 : ℝ)..1,
+      quadAltR t * H2 t ^ 2 / t) =
+      ∫ u : ℝ in (0 : ℝ)..(1 / 2),
+        (Real.log u - Real.log (1 - u)) *
+          Real.log (1 - u) ^ 2 / u := by
+  let radial : ℝ → ℝ := fun t => quadAltR t * H2 t ^ 2 / t
+  have hscale := intervalIntegral.smul_integral_comp_mul_left
+    (a := (0 : ℝ)) (b := (1 / 2 : ℝ)) radial (2 : ℝ)
+  calc
+    (∫ t : ℝ in (0 : ℝ)..1, quadAltR t * H2 t ^ 2 / t) =
+        (2 : ℝ) * ∫ u : ℝ in (0 : ℝ)..(1 / 2), radial (2 * u) := by
+      simpa [radial, smul_eq_mul] using hscale.symm
+    _ = ∫ u : ℝ in (0 : ℝ)..(1 / 2), 2 * radial (2 * u) := by
+      rw [← intervalIntegral.integral_const_mul]
+    _ = ∫ u : ℝ in (0 : ℝ)..(1 / 2),
+        (Real.log u - Real.log (1 - u)) *
+          Real.log (1 - u) ^ 2 / u := by
+      apply intervalIntegral.integral_congr
+      intro u hu
+      rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)] at hu
+      by_cases huzero : u = 0
+      · subst u
+        simp [radial, quadAltR, H2]
+      · have hu0 : 0 < u := lt_of_le_of_ne hu.1 (Ne.symm huzero)
+        have h1u : 1 - u ≠ 0 := by linarith [hu.2]
+        unfold radial quadAltR H2
+        dsimp only
+        rw [show (2 * u) / (2 - 2 * u) = u / (1 - u) by
+          field_simp [h1u],
+          Real.log_div (ne_of_gt hu0) h1u]
+        field_simp [huzero]
+
+private theorem quadAltW0_mul_g22_tendsto_right :
+    Tendsto (fun t : ℝ => W0 t * (H2 t ^ 2 / 2))
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hratio : Tendsto
+      (fun t : ℝ => (H2 t / t) / (H1 t / t))
+      (𝓝[>] (0 : ℝ)) (𝓝 (1 / 2)) := by
+    simpa using quadAltH2_div_self_tendsto_zero_right.div
+      quadAltH1_div_self_tendsto_zero_right (by norm_num)
+  have h := quadAltW0_mul_g11_tendsto_right.mul (hratio.pow 2)
+  norm_num at h
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin,
+    (eventually_lt_nhds (show (0 : ℝ) < 1 by norm_num)).filter_mono
+      nhdsWithin_le_nhds] with t ht0 ht1
+  have htne : t ≠ 0 := ne_of_gt ht0
+  have hH1pos : 0 < H1 t := by
+    unfold H1
+    have htpos : 0 < t := ht0
+    have hsubpos : 0 < 1 - t := sub_pos.mpr ht1
+    have hsublt : 1 - t < 1 := sub_lt_self 1 htpos
+    exact neg_pos.mpr (Real.log_neg hsubpos hsublt)
+  have hH1ne : H1 t ≠ 0 := ne_of_gt hH1pos
+  field_simp [htne, hH1ne]
+
+private theorem quadAltW0_mul_g22_tendsto_left :
+    Tendsto (fun t : ℝ => W0 t * (H2 t ^ 2 / 2))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+  have hW : Tendsto W0 (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    simpa [quadAltW0_one] using
+      quadAltW0_hasDerivAt_one.continuousAt.tendsto.mono_left
+        nhdsWithin_le_nhds
+  have h := hW.mul ((quadAltH2_tendsto_one.pow 2).div_const 2)
+  simpa using h
+
+private theorem quadAltI22_eq_radial :
+    I22 = ∫ t : ℝ in (0 : ℝ)..1,
+      quadAltR t * H2 t ^ 2 / t := by
+  let g22 : ℝ → ℝ := fun t => H2 t ^ 2 / 2
+  have hg22' : ∀ t ∈ Set.Ioo (0 : ℝ) 1,
+      HasDerivAt g22 (H2 t / (2 - t)) t := by
+    intro t ht
+    have hden : 1 - t / 2 ≠ 0 := by linarith [ht.2]
+    have hinner : HasDerivAt (fun y : ℝ => 1 - y / 2)
+        (-1 / 2) t := by
+      convert (hasDerivAt_const t 1).sub
+        ((hasDerivAt_id t).div_const 2) using 1 <;> norm_num
+    have hH2 : HasDerivAt H2 (1 / (2 - t)) t := by
+      unfold H2
+      convert (hinner.log hden).neg using 1
+      field_simp [hden]
+    unfold g22
+    convert (hH2.pow 2).div_const 2 using 1
+    field_simp
+    ring
+  have hprod' : ∀ t ∈ Set.Ioo (0 : ℝ) 1,
+      HasDerivAt (fun y : ℝ => W0 y * g22 y)
+        (W0 t * (H2 t / (2 - t)) +
+          (-2 * (quadAltR t / t) * g22 t)) t := by
+    intro t ht
+    have hprod :=
+      (quadAltW0_hasDerivAt ht.1 (by linarith [ht.2])).mul
+        (hg22' t ht)
+    unfold g22
+    convert hprod using 1
+    unfold quadAltR
+    ring
+  have hA : IntervalIntegrable
+      (fun t : ℝ => W0 t * (H2 t / (2 - t)))
+      MeasureTheory.volume 0 1 := by
+    apply IntervalIntegrable.congr
+      (f := fun t : ℝ => W0 t * H2 t / (2 - t)) ?_
+      quadAltI22_kernel_intervalIntegrable
+    intro t _
+    ring
+  have hB : IntervalIntegrable
+      (fun t : ℝ => -2 * (quadAltR t / t) * g22 t)
+      MeasureTheory.volume 0 1 := by
+    have hrad := quadAltI22_radial_intervalIntegrable.neg
+    apply IntervalIntegrable.congr
+      (f := fun t : ℝ => -(quadAltR t * H2 t ^ 2 / t)) ?_ hrad
+    intro t _
+    unfold g22
+    ring
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (a := (0 : ℝ)) (b := 1)
+    (f := fun t : ℝ => W0 t * g22 t)
+    (f' := fun t : ℝ => W0 t * (H2 t / (2 - t)) +
+      (-2 * (quadAltR t / t) * g22 t))
+    (by norm_num) hprod' (hA.add hB)
+    (by simpa [g22] using quadAltW0_mul_g22_tendsto_right)
+    (by simpa [g22] using quadAltW0_mul_g22_tendsto_left)
+  simp only [sub_self] at hFTC
+  rw [intervalIntegral.integral_add hA hB] at hFTC
+  have hBint :
+      (∫ t : ℝ in (0 : ℝ)..1,
+        -2 * (quadAltR t / t) * g22 t) =
+        -(∫ t : ℝ in (0 : ℝ)..1,
+          quadAltR t * H2 t ^ 2 / t) := by
+    rw [← intervalIntegral.integral_neg]
+    apply intervalIntegral.integral_congr
+    intro t _
+    unfold g22
+    ring
+  rw [hBint] at hFTC
+  have hmain :
+      (∫ t : ℝ in (0 : ℝ)..1, W0 t * (H2 t / (2 - t))) =
+        ∫ t : ℝ in (0 : ℝ)..1, quadAltR t * H2 t ^ 2 / t := by
+    linarith
+  unfold I22
+  calc
+    (∫ t : ℝ in (0 : ℝ)..1, W0 t * H2 t / (2 - t)) =
+        ∫ t : ℝ in (0 : ℝ)..1, W0 t * (H2 t / (2 - t)) := by
+      apply intervalIntegral.integral_congr
+      intro t _
+      ring
+    _ = ∫ t : ℝ in (0 : ℝ)..1,
+        quadAltR t * H2 t ^ 2 / t := hmain
+
+theorem quadAltI22_eq :
+    I22 = -(3 / 2) * quadAltK +
+      (1 / 20) * (Real.pi ^ 2 / 6) ^ 2 := by
+  rw [quadAltI22_eq_radial, quadAltI22_radial_eq_half,
+    quadAltI22HalfRadialIntegral24, quadAltK_eq]
+  unfold alternatingCubicLinearEulerValue24 cubicLinearEulerValue24
+  ring
+
 end RamanujanChallenge.P24QuadAlt

@@ -7091,4 +7091,49 @@ theorem quadAltI20Primitive24_tendsto_one :
   rw [quadAltI20Primitive24_one] at ht
   simpa using ht
 
+/-! ## The half-interval logarithmic moment used by `I22` -/
+
+/-- Integrability of the half-interval radial kernel for `I22`. -/
+theorem quadAltI22HalfRadialIntervalIntegrable24 :
+    IntervalIntegrable
+      (fun u : ℝ =>
+        (Real.log u - Real.log (1 - u)) *
+          Real.log (1 - u) ^ 2 / u)
+      MeasureTheory.volume 0 (1 / 2) := by
+  have hdiff := quarticCoreKernel24_intervalIntegrable_half.sub
+    halfLogCubeOneSubKernel24_intervalIntegrable
+  apply IntervalIntegrable.congr
+    (f := fun u : ℝ =>
+      quarticCoreKernel24 u - halfLogCubeOneSubKernel24 u) ?_ hdiff
+  intro u _
+  unfold quarticCoreKernel24 halfLogCubeOneSubKernel24
+  ring
+
+/-- Value of the half-interval radial kernel for `I22`. -/
+theorem quadAltI22HalfRadialIntegral24 :
+    (∫ u : ℝ in 0..(1 / 2),
+      (Real.log u - Real.log (1 - u)) *
+        Real.log (1 - u) ^ 2 / u) =
+      -6 * polylog4 (1 / 2) -
+        (1 / 4 : ℝ) * Real.log 2 ^ 4 +
+        (3 / 2 : ℝ) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) -
+        (21 / 4 : ℝ) * Real.log 2 * zeta3_24 +
+        (23 / 4 : ℝ) * (Real.pi ^ 4 / 90) := by
+  calc
+    (∫ u : ℝ in 0..(1 / 2),
+      (Real.log u - Real.log (1 - u)) *
+        Real.log (1 - u) ^ 2 / u) =
+        (∫ u : ℝ in 0..(1 / 2), quarticCoreKernel24 u) -
+          ∫ u : ℝ in 0..(1 / 2), halfLogCubeOneSubKernel24 u := by
+      rw [← intervalIntegral.integral_sub
+        quarticCoreKernel24_intervalIntegrable_half
+        halfLogCubeOneSubKernel24_intervalIntegrable]
+      apply intervalIntegral.integral_congr
+      intro u _
+      unfold quarticCoreKernel24 halfLogCubeOneSubKernel24
+      ring
+    _ = _ := by
+      rw [quarticCoreHalfIntegral24, halfLogCubeOneSubIntegral24]
+      ring
+
 end
