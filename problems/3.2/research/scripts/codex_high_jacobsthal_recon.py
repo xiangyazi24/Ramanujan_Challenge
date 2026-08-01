@@ -46,6 +46,10 @@ def branch_for(residue: int) -> str:
     return "tau" if residue in (1, 5, 7, 11) else "sigma"
 
 
+def legendre_minus_two(p: int) -> int:
+    return -1 if pow(p - 2, (p - 1) // 2, p) == p - 1 else 1
+
+
 def coefficients_mod(p: int, branch: str, degree: int) -> list[int]:
     """Return tau or sigma through ``degree`` using its order-two recurrence."""
     if degree == 0:
@@ -262,6 +266,33 @@ def print_summary(rows: list[Row]) -> None:
             f"  {quarter_zeros:>13}  {nonempty:>16}  {histogram}"
         )
 
+    reflection_checks = 0
+    for row in rows:
+        values = coefficients_mod(row.p, row.branch, row.degree)
+        sign = legendre_minus_two(row.p)
+        assert all(
+            values[row.degree - j] == sign * values[j] % row.p
+            for j in range(row.degree + 1)
+        )
+        reflection_checks += 1
+    print(
+        "\nFull coefficient reflection a[D-j]=(-2|p)*a[j]: "
+        f"{reflection_checks}/{len(rows)}"
+    )
+
+    for residue in (11, 17):
+        class_rows = [row for row in rows if row.residue == residue]
+        pair_checks = 0
+        for row in class_rows:
+            values = coefficients_mod(row.p, row.branch, row.degree)
+            left = row.degree // 2
+            right = left + 1
+            pair_checks += values[left] == values[right] != 0
+        print(
+            f"class {residue} nonzero equal central pair: "
+            f"{pair_checks}/{len(class_rows)}"
+        )
+
     class_13 = [row for row in rows if row.residue == 13]
     class_23 = [row for row in rows if row.residue == 23]
     assert all(
@@ -296,6 +327,27 @@ def print_summary(rows: list[Row]) -> None:
         "class 5 extra-pair displacement a*x+b*y, |a|,|b| <= 64: "
         f"best hit count {representation_linear_position_max(class_5_extra, 'quarter')}"
         f"/{len(class_5_extra)}"
+    )
+    ratio_functions = (
+        lambda p, x, y: x / (x + y),
+        lambda p, x, y: y / (x + y),
+        lambda p, x, y: x * x / (x * x + y * y),
+        lambda p, x, y: y * y / (x * x + y * y),
+        lambda p, x, y: 2 * x * x / p,
+        lambda p, x, y: 3 * y * y / p,
+    )
+    ratio_hits = []
+    for ratio_function in ratio_functions:
+        hits = 0
+        for row in class_5_extra:
+            x, y = row.rep_23[0]
+            predicted = round(row.p * ratio_function(row.p, x, y))
+            hits += predicted in row.zeros and predicted != row.quarter
+        ratio_hits.append(hits)
+    print(
+        "class 5 rounded p*ratio position candidates "
+        "(x/(x+y), y/(x+y), square variants, 2x^2/p, 3y^2/p): "
+        f"{ratio_hits} out of {len(class_5_extra)}"
     )
     print_value_hunt(rows)
 
