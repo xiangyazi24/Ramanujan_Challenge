@@ -811,6 +811,12 @@ def isolate_kinfinity_roots(
                 converged_values.append(midpoint)
 
     direct_roots = []
+    shorter_nodes = nodes[1:]
+    shorter_cell = AcbKInfinityCell(
+        apery=apery,
+        nodes=shorter_nodes,
+        weights=exact_extrapolation_weights(shorter_nodes),
+    )
     for value in sorted(converged_values, key=lambda item: item.imag):
         matching = min(
             (row for row in attempts if row["converged"]),
@@ -818,6 +824,8 @@ def isolate_kinfinity_roots(
                 complex(float(row["real"]), float(row["imag"])) - value
             ),
         )
+        root_point = acb(matching["real"], matching["imag"])
+        shorter_residual, _ = shorter_cell.H_and_derivative(root_point)
         direct_roots.append(
             {
                 "real": matching["real"],
@@ -825,6 +833,9 @@ def isolate_kinfinity_roots(
                 "residual_upper": matching["residual_upper"],
                 "newton_correction": matching["newton_correction"],
                 "derivative_lower": matching["derivative_lower"],
+                "extrapolation_check": float_scientific(
+                    float(shorter_residual.abs_upper()), 8
+                ),
             }
         )
 
@@ -1206,28 +1217,48 @@ def report_markdown(payload: Dict[str, Any]) -> str:
             "The code implements "
             "`K_infinity(z)=phi(-z)phi(z)+z^6 gamma(-z)gamma(z)` through the "
             "normalized `F_n/b_n,G_n/b_n` recurrence and Richardson "
-            "extrapolation.  For the recorded zero table it uses the faster "
-            "equivalent branch limit: Arb isolates the four central "
-            "`K_(m,m)` roots for `m=%s`, and their inverse-length branches are "
-            "extrapolated to `m=infinity`.  This supplies starting boxes for "
-            "the direct finite-height solver; it is not used as a proof of "
-            "any fixed-height row.  The resulting four numerical zeros of "
-            "`H_infinity=zK_infinity'-3K_infinity` are:"
-            % ",".join(str(value) for value in payload["kinfinity"].get("m_values", [])),
+            "extrapolation.  Arb-accelerated Newton found the following "
+            "finite numerical roots of "
+            "`H_infinity=zK_infinity'-3K_infinity`.  As an independent "
+            "asymptotic diagnostic, exact central `K_(m,m)` roots were also "
+            "computed for `m=%s`.  Neither template calculation is used as a "
+            "proof of any fixed-height row."
+            % ",".join(
+                str(value)
+                for value in payload["kinfinity"]
+                .get("central_branch_evidence", {})
+                .get("m_values", [])
+            ),
             "",
-            "| Re(z) | Im(z) | extrapolation delta | last finite m |",
-            "|---:|---:|---:|---:|",
+            "| Re(z) | Im(z) | residual (fit) | shorter-fit check | Newton correction |",
+            "|---:|---:|---:|---:|---:|",
         ]
     )
     for root in payload["kinfinity"]["roots"]:
         lines.append(
-            "| `%s` | `%s` | `%s` | %d |"
+            "| `%s` | `%s` | `%s` | `%s` | `%s` |"
             % (
                 root["real"],
                 root["imag"],
-                root["extrapolation_delta"],
-                root["last_finite_m"],
+                root["residual_upper"],
+                root["extrapolation_check"],
+                root["newton_correction"],
             )
+        )
+    failed_seeds = [
+        row for row in payload["kinfinity"].get("seed_attempts", []) if not row["converged"]
+    ]
+    if failed_seeds:
+        lines.extend(
+            [
+                "",
+                "The outer seed attempts did not converge to additional finite roots; "
+                "their final diagnostics are retained in `CRON_kinf_results.json`.  "
+                "The finite central-cell outer branches move outward with `m`, so "
+                "they are not silently counted as finite `K_infinity` branches.  "
+                "Without a certified outer-contour count this is evidence of escape, "
+                "not an exhaustive theorem about all finite `H_infinity` zeros.",
+            ]
         )
 
     lines.extend(
@@ -1284,9 +1315,10 @@ def report_markdown(payload: Dict[str, Any]) -> str:
             "`EXHAUST`, `SAME`, `CROSS`, and `COUNT` on inverse-length boxes.  "
             "Therefore the finite result alone does not close the all-height "
             "campaign prize.",
-            "3. The displayed `K_infinity` roots are an accelerated mpmath "
-            "template computation without the explicit Q6708 conjugation-tail "
-            "ball.  They are intentionally labelled uncertified; every "
+            "3. The displayed `K_infinity` roots use accelerated normalized "
+            "recurrences and central-branch extrapolation without the explicit "
+            "Q6708 conjugation-tail ball or an outer-contour count.  They are "
+            "intentionally labelled uncertified; every "
             "fixed-height verdict is recomputed from exact integer polynomials "
             "and does not depend on them.",
             "4. `python-flint` was found in the pinned uv cache rather than the "
