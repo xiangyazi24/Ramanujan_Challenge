@@ -2447,3 +2447,8 @@ monodromy 塔正式闭合 (全 h 条件悬于 CRIT/BG = 同一单变量族, 与 
 CODEX_WH_CERT_report.md + results.json 可复现) — 路线(b)单件通吃在 h≤32 兑现,
 与 BG 直接证书双保险。今日全部 codex 航班收官 (lastwall/CRIT2H/λmax/W_h/A_h/
 crosscorr/empirics/numerics/symbolic/irred 十班全落)。
+
+§131 追记 (第四波快答潮 triage, 快档口径待复推): Q6689 (hatch赛跑): cascade 是唯一
+真新机制; Selberg 检测器无相关性输入不省 L²log; 平凡 P_D≪D²。Q6690/92: cascade
+封闭与 k-run 结构定义层展开 (浅)。Q6694: TR6-HORIZONTAL 定义层。q51 补发中;
+q54 墙图/q56 Protocol-A 在深跑。主攻 = codex strike2 (max) 未回。
