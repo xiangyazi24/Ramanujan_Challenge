@@ -1183,3 +1183,19 @@ double-certified.
   度数随 p 增长; 即使建成仍需超越 p-adic Weil II 的局部极限定理)——与 Q6393
   零维字符概形障碍同形。等 codex-lt-max 文献判决作第三票。
 - 记录不变: 3p^{2/3} (递归/continuant 论证)。
+
+## §55 (08-01) T-adic 三票判死 [NEGATIVE-TADIC-TAME-ASPECT]
+
+- Q6415 (codex-lt-max 自派审计, 29KB 逐篇文献判决): Liu–Wan/DWX/LWX/RWXY/Ren
+  的解析变量全为加法字符(p-幂导手)/wild pro-p/单 tame 分量内模权; **tame 字符
+  标记连通分量, halo 定理逐分量**, 无跨分量定理; "ordinary for one ⟹ all"
+  只对加法特化 T=π_ψ 有效, 换成全体 Teichmüller 扭无效。
+- 三票齐: Q6393(字符概形零维) + Q6405(Route A least-confident) + Q6415
+  (逐篇判死)。残余任务三分: [GAP-FCRYSTAL](整 F-crystal 构造) /
+  [GAP-HASSE=TARGET](Mellin 标量=Hasse minor 的等式, 未证前称"Hasse 不变量"
+  是过度声明——口径警告收录) / [GAP-TAME-COUNT](跨分量零计数, 唯一给 o(p) 的
+  一步, 需全新定理)。
+- **战略定局**: 现有文献无武器攻 [GAP-LT-MELLIN]; 3.2 点态确入硬核类。
+  存活行动项: (a) square-root barrier 的条件 p^{1/2} 路线(特定混合和的平方根
+  消去); (b) [GAP-2] Tannakian 群计算→Katz 27.1 水平定理(可攻, qD 模板);
+  (c) 水平色散 k=2 (cron q22 判决待落)。
