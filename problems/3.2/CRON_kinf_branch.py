@@ -1180,18 +1180,36 @@ def pair_anatomy_height(
     provisional: List[Dict[str, Any]] = []
 
     for root_index, root in enumerate(roots):
-        square_root = root.sqrt()
-        candidates = [
-            (-(data.h + 1) + square_root) / 2,
-            (-(data.h + 1) - square_root) / 2,
-        ]
-        upper = [candidate for candidate in candidates if float(candidate.imag.lower()) > 0]
-        if len(upper) != 1:
-            raise ArithmeticError(
-                "could not select a unique upper-half-plane representative "
-                "at h=%d root=%d" % (data.h, root_index)
+        if root.imag.contains(0) and float(root.real.upper()) < 0:
+            # A real-coefficient polynomial has the conjugate root in the
+            # conjugate ball.  Exhaustive isolation and disjoint root balls
+            # force this unique root to be real.  Direct Acb sqrt on a ball
+            # crossing the negative real axis deliberately returns both signs,
+            # so construct the positive-imaginary square root from the real
+            # interval instead.
+            representative = acb(
+                arb(-(data.h + 1)) / 2,
+                (-root.real).sqrt() / 2,
             )
-        representative = upper[0]
+            representative_method = "negative-real quotient root"
+        else:
+            square_root = root.sqrt()
+            candidates = [
+                (-(data.h + 1) + square_root) / 2,
+                (-(data.h + 1) - square_root) / 2,
+            ]
+            upper = [
+                candidate
+                for candidate in candidates
+                if float(candidate.imag.lower()) > 0
+            ]
+            if len(upper) != 1:
+                raise ArithmeticError(
+                    "could not select a unique upper-half-plane representative "
+                    "at h=%d root=%d" % (data.h, root_index)
+                )
+            representative = upper[0]
+            representative_method = "principal sqrt with sign chosen by Im(x)>0"
         cell_index = math.floor(-float(representative.real))
         if not 1 <= cell_index <= data.h - 1:
             raise ArithmeticError(
@@ -1221,6 +1239,7 @@ def pair_anatomy_height(
                 "cell_index": cell_index,
                 "root_ball": root,
                 "representative_ball": representative,
+                "representative_method": representative_method,
                 "local_coordinate_ball": local_coordinate,
                 "value_ball": value,
                 "value_midpoint_mp": mp_midpoint(value, digits + 20),
@@ -1270,6 +1289,7 @@ def pair_anatomy_height(
             "cell_position": mp.nstr(mp.mpf(cell_index) / data.h, 20),
             "cell_position_fraction": "%d/%d" % (cell_index, data.h),
             "branch": branch,
+            "representative_method": orbit["representative_method"],
             "quotient_root_u": acb_ball_payload(orbit["root_ball"], 22),
             "upper_half_plane_x": acb_ball_payload(
                 orbit["representative_ball"], 22

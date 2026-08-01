@@ -306,3 +306,296 @@ The old \(148,195,462\) values used \(t=1,\ldots,59\) and a rectangle. The compl
 | 16001 | 252 | 1,991,997 | 179 | 1125.078760 | 1411.381238 |
 
 This extends the experiment to \(p=16001\). It is square-root-compatible but EMPIRICAL.
+
+# 3. §7.2 — moments, geometry, and sheaves
+
+## 3.1 Exact second and fourth moments
+
+For the determinant histogram \(\nu\), put \(M=\sum_x\nu(x)\), \(\rho(x)=\nu(x)-M/p\). Orthogonality gives
+
+\[
+\sum_{t\ne0}|B(t)|^2=p\sum_x\nu(x)^2-M^2=p\|\rho\|_2^2. \tag{3.1}
+\]
+
+Hence
+
+\[
+\mathcal A_1\le\sqrt{\frac p{p-1}}\,\|\rho\|_2. \tag{3.2}
+\]
+
+The useful missing estimate is
+
+\[
+\sum_x\nu(x)^2=\frac{M^2}{p}+O(Mp^{o(1)}). \tag{3.3}
+\]
+
+It would give \(\mathcal A_1\ll\sqrt M\,p^{o(1)}=p^{3/4+o(1)}\) and close every fixed \(\eta<1/2\).
+
+Let
+
+\[
+E_+(\nu)=\sum_s\left(\sum_x\nu(x)\nu(s-x)\right)^2.
+\]
+
+Then exactly
+
+\[
+\sum_{t\ne0}|B(t)|^4
+=pE_+(\nu)-M^4
+=p\left(E_+(\nu)-\frac{M^4}{p}\right). \tag{3.4}
+\]
+
+A fourth-moment proof of \(\mathcal A_1\ll p^{1-\kappa}\) needs
+
+\[
+E_+(\nu)-M^4/p\ll p^{4-4\kappa}. \tag{3.5}
+\]
+
+This is energy of the clock-ordered determinant-value multiset, not additive energy of the static orbit support.
+
+## 3.2 Why gapwise Cauchy–Schwarz stalls
+
+Let \(\nu_d\) be the histogram for one gap, \(M_d=\sum\nu_d\), \(\rho_d=\nu_d-M_d/p\). Then
+
+\[
+\rho=\sum_d\rho_d,\qquad
+\|\rho\|_2^2=\sum_d\|\rho_d\|_2^2
++2\sum_{d<e}\langle\rho_d,\rho_e\rangle. \tag{3.6}
+\]
+
+Cauchy–Schwarz before controlling covariances gives
+
+\[
+\mathcal A_1
+\le\left(\frac{p|J_D|}{p-1}\sum_d\|\rho_d\|_2^2\right)^{1/2}. \tag{3.7}
+\]
+
+At the random fixed-gap scale \(\|\rho_d\|_2^2\asymp p\), this is order \(p\), with no power saving. The missing statement is clockwise almost orthogonality,
+
+\[
+\left\|\sum_d\rho_d\right\|_2^2
+\ll p^{o(1)}\sum_d\|\rho_d\|_2^2. \tag{3.8}
+\]
+
+No such theorem is proved.
+
+## 3.3 Static geometry cannot imply (3.8)
+
+Let \(p=2m+1\), choose primitive \(g\), and put
+
+\[
+j(r)=\min(r,2m-r),\qquad v_r=(g^{j(r)},g^{-j(r)}).
+\]
+
+The support lies on \(xy=1\), has reflection multiplicity two except at the center, and:
+
+- every affine line meets it in at most two points, since substitution gives a quadratic;
+- \(E_+(A)\le3|A|^2\), since a nonzero vector sum determines the unordered pair from sum and product, while zero-sum pairs form one class.
+
+Nevertheless, on each noncrossing half,
+
+\[
+\det(v_r,v_{r+d})=g^{-d}-g^d
+\]
+
+is independent of \(r\). Parseval and \(\|B\|_\infty\le M\) give
+
+\[
+\operatorname{mean}_{t\ne0}|B(t)|\gg p
+\]
+
+for \(D=o(p)\) in a fixed positive range. The verifier checks \(p=101,211,401\), including a certified linear lower bound. Static Rudnev/Stevens–de Zeeuw/Shkredov-style support estimates alone cannot prove clock-ordered cancellation.
+
+## 3.4 Vector Weyl sums
+
+For
+
+\[
+S(\alpha,\beta)=\sum_{r=1}^Ne_p(\alpha b_r+\beta c_r),
+\]
+
+let \(\mu(v)\) be affine-vector multiplicity. Exact Parseval is
+
+\[
+\sum_{\alpha,\beta}|S(\alpha,\beta)|^2=p^2\sum_v\mu(v)^2. \tag{3.9}
+\]
+
+Reflection gives \(\sum\mu^2\ge2N-1\), not \(2N\), because of one fixed midpoint. Extra coincidences occur:
+
+\[
+p=73:\quad (b_r,c_r)=(5,6)\text{ at }r=1,4,68,71,
+\]
+
+and \(p=997\) also has a fourfold collision. Exactly 17 of the 166 primes \(5\le p\le1000\) have extra collisions. Thus “exactly two-to-one for every prime” is false.
+
+Full spectra:
+
+| \(p\) | \(\sum\mu^2\) | max nonzero \(|S|\) | ratio to \(\sqrt N\) |
+|---:|---:|---:|---:|
+| 1009 | 2013 | 176.033819 | 5.54730 |
+| 2003 | 4001 | 244.481930 | 5.46542 |
+| 3001 | 6005 | 294.307009 | 5.37418 |
+
+The \(p=3001\) line extends the original experiment; all three lines are EMPIRICAL.
+
+Completion actually needs
+
+\[
+S_\xi(\alpha,\beta)=\sum_u e_p(\alpha b_u+\beta c_u+\xi u),
+\]
+
+with exact identity
+
+\[
+F_t(\xi)=\sum_r e_p(-\xi r)S_\xi(-tc_r,tb_r). \tag{3.10}
+\]
+
+The measured untwisted \(S_0\) covers only \(\xi=0\). Even a hypothetical square-root bound for every \(S_\xi\), inserted by naive outer Cauchy/triangle, gives \(F_t(\xi)\ll p^{3/2}\), not \(p\). A moving-frequency correlation is missing.
+
+## 3.5 Reflection and the sheaf claim
+
+Strong reflection \(u_{p-1-r}=u_r\) maps
+
+\[
+(r,d)\longmapsto(p-1-r-d,d)
+\]
+
+inside the physical strip and negates the determinant. Thus
+
+\[
+\nu(x)=\nu(-x),\qquad B(t)\in\mathbf R. \tag{3.11}
+\]
+
+There is one fixed zero edge for each even \(d\), at \(2r+d=p-1\).
+
+No fixed-conductor l-adic realization of the two-variable kernel has been constructed. Characteristic-zero nonvanishing cannot be transferred to the working prime without saturation:
+
+\[
+N_3(-3)=584=8\cdot73,\qquad
+\gcd_{\mathbf F_{73}}(N_3,N_4)=X+3,
+\]
+
+and
+
+\[
+\gcd_{\mathbf F_{211}}(N_{32},N_{32}')=(X-89)^2.
+\]
+
+Thus honest-pole and characteristic-zero resultant arguments do not supply a fixed-\(p\) sheaf theorem in the mesoscopic range. The bounded-conductor route remains OPEN.
+
+# 4. §7.3 — master sum and cross-prime routes
+
+## 4.1 The incidence \(R_p(n)\) formula is false
+
+The correction ledger defines
+
+\[
+R_p(n)=\{r<n/2:r\equiv n\pmod p,\ p\mid b_r\}
+\]
+
+and claims \(M(n)=\sum\log p\,|R_p(n)|\). This ignores \(p>r\). At
+
+\[
+n=101,\qquad p=31,
+\]
+
+both \(r=8,39\) lie in \(R_{31}(101)\), but only \(r=8<p\) contributes to \(M(101)\). Formula (1.7) is the corrected exact statement.
+
+## 4.2 Digit criterion and top window
+
+Gessel's congruence
+
+\[
+b_{mp+r}\equiv b_mb_r\pmod p
+\]
+
+iterates over the base-\(p\) expansion \(n=\sum n_ip^i\) to give
+
+\[
+p\mid b_n
+\Longleftrightarrow
+\text{some base-}p\text{ digit }n_i\text{ belongs to }Z_p. \tag{4.1}
+\]
+
+For \(p>n/2\), \(n=p+(n-p)\), so for \(p>5\),
+
+\[
+b_n\equiv5b_{n-p}\pmod p,\qquad
+p\mid b_n\Longleftrightarrow p\mid b_{n-p}. \tag{4.2}
+\]
+
+This is the \(q=1\) channel, not a new Frobenius invariant and not the full theorem. The middle witness
+
+\[
+37=2\cdot17+3,\qquad17\mid b_3,\qquad17\mid G_{37}
+\]
+
+is absent from the top window.
+
+The exact pointwise criterion is
+
+\[
+\sum_{\sqrt n<p\le n}\log p\;\mathbf1_{\,n\bmod p\in Z_p}=o(n), \tag{4.3}
+\]
+
+equivalently
+
+\[
+\#\{\sqrt n<p\le n:n\bmod p\in Z_p\}=o(n/\log n). \tag{4.4}
+\]
+
+The verifier constructs a reflection-symmetric row model aligning 60 quotient-\(2\) primes at \(N=10000\), while every induced quotient-\(1\) target has load at most one. It is not an Apéry counterexample; it shows row cardinality, reflection, and Lucas reindexing alone cannot promote a top-window theorem to (4.3).
+
+## 4.3 Correct [AVG-ZERO] identity
+
+Let
+
+\[
+\mathrm{TOP}(n)=\#\{p:n/2<p\le n,\ p\mid b_n\},\qquad
+S(X)=\sum_{p\le X}|Z_p|.
+\]
+
+For \(p>5\), (4.2) and \(n=p+r\) give
+
+\[
+\sum_{n\le X}\mathrm{TOP}_{p>5}(n)
+=R(X):=\#\{(p,r):p>5,\ r\in Z_p,\ p+r\le X\}. \tag{4.5}
+\]
+
+The supplied identity_check.py did not check the left side: it tested \(p\mid b_{n-p}\). At \(p=5\), \(b_1\equiv0\), so division by \(5\) is invalid. In fact \(Z_5=\{1,3\}\), also refuting the proof.tex claim \(Z(5)=0\). The endpoint correction is
+
+\[
+\sum_{n\le X}\mathrm{TOP}(n)
+=R(X)+\mathbf1_{X\ge5}+\mathbf1_{X\ge7}+\mathbf1_{X\ge9}. \tag{4.6}
+\]
+
+At \(X=600\),
+
+\[
+\sum_{n\le600}\mathrm{TOP}(n)=85,\quad
+R(600)=82,\quad R_{p>5}(600)=80,\quad S(600)=109.
+\]
+
+The truncation matters. Exactly,
+
+\[
+R(X)\le S(X)\le R(2X), \tag{4.7}
+\]
+
+up to the finite-prime convention. Therefore
+
+\[
+\frac1X\sum_{n\le X}\mathrm{TOP}(n)\to0
+\Longleftrightarrow
+\boxed{S(X)=\sum_{p\le X}|Z_p|=o(X)}. \tag{4.8}
+\]
+
+This is mean top-hit count tending to zero, not “the average version of the main theorem” without qualification. It does not imply the every-\(n\) maximum in (4.3): sparse spikes can total \(o(X)\). Conversely \(\mathrm{TOP}(n)=1\) at every \(n\) satisfies the pointwise main-theorem scale but sums to \(\asymp X\). The two norms are incomparable, and (4.8) sees no \(q\ge2\).
+
+The measured \(S(600)=109=\pi(600)\) and mean \(|Z_p|=0.912\) below \(4000\) support \(S(X)\asymp X/\log X\), but are not theorems. Unconditionally,
+
+\[
+S(X)\ll\frac{X^{5/3}}{\log X}. \tag{4.9}
+\]
+
+This already gives the usual density-one normalized top-window conclusion by Markov; [AVG-ZERO] would give the much stronger density-one assertion \(\mathrm{TOP}(n)=0\).
