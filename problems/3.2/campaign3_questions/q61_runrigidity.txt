@@ -1,0 +1,25 @@
+[q61 LASTSTAND — prove run-rigidity: consecutive elements of Z_d force the orbit onto explicit points; 3-runs live on a bounded-degree plane curve. life9]
+
+DERIVATION TO VERIFY AND COMPLETE (this session's, from the companion-matrix structure; check every step):
+
+Write the recurrence as xi_{s+1} = M_s xi_s with M_s = [[0,1],[-beta_s, alpha_s]], alpha_s = (34s^3+51s^2+27s+5)/(s+1)^3, beta_s = s^3/(s+1)^3 (denominators nonzero in window).
+
+STEP 1 (two consecutive elements). r and r+1 in Z_d means xi_{r+d} = xi_r =: u and xi_{r+d+1} = xi_{r+1}, i.e. M_{r+d} u is proportional to M_r u. For companion matrices the cross product collapses: with u = (u1 : u2),
+  M_r u x M_{r+d} u = u2 * [ (beta_r - beta_{r+d}) u1 + (alpha_{r+d} - alpha_r) u2 ].
+So EITHER u2 = 0 (i.e. c_r == 0 mod p) OR
+  xi_r = v(r,d) := ( alpha_r - alpha_{r+d} : beta_r - beta_{r+d} ),
+an EXPLICIT rational point of bounded height in (r,d). Verify: (a) the collapse of the cross product; (b) that alpha_r = alpha_{r+d} and beta_r = beta_{r+d} cannot both hold mod p for 1 <= d <= D (i.e. v(r,d) is well-defined; compute the resultant conditions -- beta_r = beta_{r+d} means r^3 (r+d+1)^3 = (r+d)^3 (r+1)^3, classify its solutions mod p and count them, they should form O(D) exceptional pairs at most); (c) the u2 = 0 branch: c_r == 0 and c_{r+1} == 0 simultaneously is impossible (gap-1 Casoratian is const/(r+1)^3 != 0), so within a run the u2=0 branch can occur at no two consecutive base points -- work out exactly how much of a k-run can hide in this branch, using also that #{r : c_r == 0 mod p} obeys the same 3p^(2/3)-type zero-count bound as any solution.
+
+STEP 2 (three consecutive elements). r, r+1, r+2 in Z_d gives xi_r = v(r,d), xi_{r+1} = v(r+1,d), and xi_{r+1} = M_r xi_r. Hence the ORBIT-FREE identity
+  M_r v(r,d) proportional to v(r+1,d),
+one polynomial equation F(r,d) == 0 mod p of absolute bounded degree (compute F explicitly and its degree; sympy-level work, do it exactly).
+
+STEP 3 (dichotomy). Either F is identically zero as a rational identity over Q -- in which case run-rigidity FAILS structurally and the orbit-closure supports runs (this would be a major structural discovery: report it loudly with the certificate) -- or F is a nontrivial plane curve, and then for each d <= D there are at most deg_r(F) values of r hosting a 3-run start, giving
+  total 3-runs across all d <= D  <=  deg_r(F) * D + (u2=0 branch contributions) = O(D).
+Also treat the mixed branches (one point of the run in the c==0 fibre, the rest forced): each mixed branch yields its own explicit orbit-free identity; enumerate all of them (there are finitely many patterns for a 3-run) and bound each.
+
+STEP 4 (amplify). A k-run contains k-2 3-run starts, so sum over d of (length of longest run - 2)_+ mass is O(D). Formulate the clean theorem statement [NO-RUN] with explicit constants, in the inventory's status language (PROVED-all-h expected).
+
+STEP 5 (calibrate worth). Given [NO-RUN]: the Strike2 padded-word construction (interval pairing, Z_{d_j} contains a full length-d_j interval inside each block) is arithmetically IMPOSSIBLE for the Apery orbit. State precisely which clause of the padded theorem dies. NOTE HONESTLY: the scattered variant (variable gaps, no runs) is not touched by [NO-RUN]; do not overclaim.
+
+Numerical pre-flight you should specify (we run it locally, you just say what to check): for p in a range up to ~10^5, compute the maximal run length in any Z_d, d <= sqrt(p) log p, and the count of 2-runs; compare 2-run count against the predicted curve-point count from your explicit F. Predict: max run length 2, 2-run count O(D) with small constant.
