@@ -106,9 +106,19 @@ def verify_crt_averages() -> None:
     )
     assert actual == expected
 
+    four_length = 23
+    four_sliding_total = sum(
+        sum(
+            all(index % value in zeros for value, zeros in zip(primes, zero_sets))
+            for index in range(start, start + four_length)
+        )
+        for start in range(four_period)
+    )
+    assert four_sliding_total == four_length * expected
+
     print(
         "CRT averages: pair and four-prime complete periods factor exactly; "
-        "sliding-interval mean and additive zero detector VERIFIED"
+        "pair/four sliding means and additive zero detector VERIFIED"
     )
 
 

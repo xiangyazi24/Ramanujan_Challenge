@@ -14,8 +14,8 @@ runs three deterministic searches:
 * linear forms twisted by small quartic characters.
 
 The default run prints the complete search summary.  ``--dump-csv`` emits the
-267-row data set instead.  The code intentionally uses only Python's standard
-library except for the dense LLL probe, for which SymPy is imported lazily.
+267-row data set instead.  The code uses only Python's standard library,
+including a small exact-rational LLL reducer for the dense polynomial probe.
 """
 
 from __future__ import annotations
@@ -345,13 +345,29 @@ def make_fit(
 
 
 def deduplicate_fits(fits: Iterable[Fit]) -> list[Fit]:
-    best_by_prediction: dict[tuple[int, ...], Fit] = {}
+    # The same prediction vector can be compared with different targets
+    # (notably v/G1 versus v*G1), so its exact failure set is part of the key.
+    best_by_prediction: dict[tuple[tuple[int, ...], tuple[int, ...]], Fit] = {}
     for fit in fits:
-        old = best_by_prediction.get(fit.prediction)
+        key = (fit.prediction, fit.failures)
+        old = best_by_prediction.get(key)
         if old is None or (len(fit.formula), fit.formula) < (len(old.formula), old.formula):
-            best_by_prediction[fit.prediction] = fit
+            best_by_prediction[key] = fit
     return sorted(
         best_by_prediction.values(),
+        key=lambda fit: (-fit.hits, len(fit.formula), fit.formula),
+    )
+
+
+def deduplicate_supports(fits: Iterable[Fit]) -> list[Fit]:
+    """Keep the shortest formula for each exact hit/failure pattern."""
+    best_by_failures: dict[tuple[int, ...], Fit] = {}
+    for fit in fits:
+        old = best_by_failures.get(fit.failures)
+        if old is None or (len(fit.formula), fit.formula) < (len(old.formula), old.formula):
+            best_by_failures[fit.failures] = fit
+    return sorted(
+        best_by_failures.values(),
         key=lambda fit: (-fit.hits, len(fit.formula), fit.formula),
     )
 
@@ -787,7 +803,7 @@ def centered(value: int, p: int) -> int:
 def quartic_factor_families(
     rows: Sequence[PrimeRow], include_fourth_roots: bool = True
 ) -> list[tuple[str, tuple[int, ...]]]:
-    factors: list[tuple[str, tuple[int, ...]]] = []
+    simple_factors: list[tuple[str, tuple[int, ...]]] = []
     simple_generators = (
         ("eps16", tuple(1 if row.p % 16 == 1 else -1 for row in rows)),
         ("q2", tuple(centered(row.q2, row.p) for row in rows)),
@@ -805,15 +821,26 @@ def quartic_factor_families(
             % row.p
             for row_index, row in enumerate(rows)
         )
-        factors.append((name, values))
+        simple_factors.append((name, values))
+    factors = list(simple_factors)
     if include_fourth_roots:
         for base_index, base in enumerate(QUARTIC_SMALL_BASES):
-            factors.append(
-                (
-                    f"chi4({base})",
-                    tuple(row.quartic_small[base_index] for row in rows),
+            raw_values = tuple(row.quartic_small[base_index] for row in rows)
+            for sign_name, sign_values in simple_factors:
+                name = (
+                    f"chi4({base})"
+                    if sign_name == "1"
+                    else f"{sign_name}*chi4({base})"
                 )
-            )
+                factors.append(
+                    (
+                        name,
+                        tuple(
+                            sign * raw % row.p
+                            for sign, raw, row in zip(sign_values, raw_values, rows)
+                        ),
+                    )
+                )
 
     # Keep one readable name for each empirically identical factor.
     unique: dict[tuple[int, ...], tuple[str, tuple[int, ...]]] = {}
@@ -1006,6 +1033,9 @@ def run_analysis(rows: Sequence[PrimeRow]) -> None:
     print("  direct sqrt(Apery) cross-check: 4/4 primes below 250")
     print(f"  midpoint tau_((p-1)/2)=(-2|p): {len(rows)}/{len(rows)}")
     print(f"  Gauss normalization G1=2a: {len(rows)}/{len(rows)}")
+    for name in ("q2", "q3", "q6"):
+        counts = Counter(centered(getattr(row, name), row.p) for row in rows)
+        print(f"  quartic {name[1:]} distribution: {dict(sorted(counts.items()))}")
 
     print("\nBOUNDED-RATIONAL MONOMIAL SEARCH")
     monomial_threshold, monomial_best = search_scaled_monomials(rows)
@@ -1014,6 +1044,8 @@ def run_analysis(rows: Sequence[PrimeRow]) -> None:
         f"|num|,den <= {RATIONAL_BOUND}"
     )
     print(f"  distinct candidates with >= {MONOMIAL_HIT_THRESHOLD} hits: {len(monomial_threshold)}")
+    if monomial_best:
+        print(f"  best support: {monomial_best[0].hits}/{len(rows)} for {monomial_best[0].formula}")
     for index, fit in enumerate(monomial_threshold, 1):
         print_fit(f"  qualifying {index}", fit)
 
@@ -1037,6 +1069,8 @@ def run_analysis(rows: Sequence[PrimeRow]) -> None:
         f"against {len(quartic_factor_families(rows))} distinct quartic factors"
     )
     print(f"  distinct candidates with >= {MONOMIAL_HIT_THRESHOLD} hits: {len(quartic_threshold)}")
+    if quartic_best:
+        print(f"  best support: {quartic_best[0].hits}/{len(rows)} for {quartic_best[0].formula}")
     for index, fit in enumerate(quartic_threshold, 1):
         print_fit(f"  qualifying {index}", fit)
 
@@ -1051,8 +1085,11 @@ def run_analysis(rows: Sequence[PrimeRow]) -> None:
         print_fit(f"  identity {index}", fit)
 
     if not complete:
-        near_misses = deduplicate_fits(monomial_best + polynomial_fits + quartic_best)[:3]
-        print("  three best distinct near-misses:")
+        # Dense LLL candidates are deliberately fitted on ten probes and are
+        # already reported above.  For theory guidance, rank the a-priori
+        # monomial/twist families and require distinct exact support sets.
+        near_misses = deduplicate_supports(monomial_best + quartic_best)[:3]
+        print("  three best a-priori near-misses with distinct support sets:")
         for index, fit in enumerate(near_misses, 1):
             print_fit(f"    near-miss {index}", fit)
 

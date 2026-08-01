@@ -4,15 +4,17 @@
 
 The FAST-RECON outcome is mixed.
 
-1. **[VERIFIED]** On the relevant branch range, every binomial atom in the
-   Lagrange--Buermann formula for \(\tau_j\) or \(\sigma_j\) has both an exact
-   carry-free Morita-\(\Gamma_p\) formula and a residual Jacobi-sum formula.
-   Gross--Koblitz gives the corresponding three-\(\Gamma_p\) quotient for every
-   interior atom.  This yields completely explicit finite multiple sums for
-   the branch coefficients.
-2. **[VERIFIED]** Substitution gives an explicit quadratic Jacobi convolution
-   for every \(b_r\bmod p\).  At \(p=13\) and \(p=29\), all relevant branch
-   coefficients and all \(b_0,\ldots,b_{p-1}\) agree with direct calculation.
+1. **[VERIFIED]** In addition to the carry-free Lagrange--Gross--Koblitz
+   formula, the rank-two source has a fixed-dimensional finite-field
+   compression.  Its Franel Hasse polynomial is one homogenized
+   \({}_2F_1\) Jacobi polynomial, equivalently one Euler--Kummer sum, on the
+   quadratic cover \(t=x(1-8x)/(1+x)\).  Finite Mellin inversion recovers every
+   \(\tau_j\) or \(\sigma_j\).  This is the exact object promised by rank two;
+   it is not an \(O(1)\)-term Jacobi evaluation of each reverted coefficient.
+2. **[VERIFIED]** Substitution gives both an explicit quadratic Jacobi
+   convolution and a shorter Mellin formula for every interior \(b_r\bmod p\).
+   At \(p=13\) and \(p=29\), all relevant branch coefficients and all
+   \(b_0,\ldots,b_{p-1}\) agree with direct calculation.
 3. **[GAP-BGK]** The verified formula is **not** a bounded-length sum of
    Gauss/Jacobi monomials.  Each summand has bounded Gamma/Jacobi complexity,
    but the number of summands grows polynomially with \(j\).  Rank two of the
@@ -20,15 +22,23 @@ The FAST-RECON outcome is mixed.
    coefficient extraction caused by the algebraic reversion
    \(t=x(1-8x)/(1+x)\).  No bounded-length compression was found or proved
    impossible.
-4. **[NEGATIVE-HORIZONTAL]** Consequently the formula does not create a
-   bounded-conductor trace function in the index \(r\), and ordinary
-   Weil--Deligne estimates give no new two-prime saving.  The exact
-   cross-prime expression below is an incomplete mixed-characteristic CRT
-   diagonal.  Completion over a full CRT period merely factorizes it into
-   separate one-prime sums.
+4. **[PARTIAL-HORIZONTAL]** Weil gives \(2\sqrt p\) for every generic fiber of
+   the Euler--Kummer lift.  This yields an unconditional \(O(p^{3/2})\) bound
+   for the linear split-cover Mellin sum, and an exact full-character-period
+   two-prime correlation with a genuine power saving.  The latter concerns a
+   complex lift of a split/quadratically-twisted *linear* coefficient, not the
+   zero indicator.
+5. **[NEGATIVE-ZERO-HORIZONTAL]** No new saving follows for the fixed shell
+   pair count or \(F_4\).  Additive zero detection exponentiates the value of
+   the whole Jacobi/Mellin sum and cannot move the additive character inside
+   it.  The surviving object is an incomplete mixed-characteristic CRT
+   diagonal.  The only unconditional zero-event saving is the complete-period
+   or sliding-shift average from CRT and the pre-existing vertical bound.
 
-The verification script is
-`research/scripts/codex_horizontal_gk_verify.py`.
+The three independent verification scripts are
+`research/scripts/codex_horizontal_gk_verify.py`,
+`research/scripts/codex_hgk_coefficients.py`, and
+`research/scripts/codex_hgk_horizontal.py`.
 
 ## 1. Carry-free Gamma and Jacobi atoms
 
@@ -188,6 +198,90 @@ the falling factors are \(p\)-units.  Some upper residues at the branch
 endpoint equal \(p-1\); the elementary trivial-character cases recorded
 after (1.3) cover them.
 
+### The fixed-dimensional rank-two compression
+
+The growing Lagrange sums are not the only exact description.  Put
+
+\[
+ N_p=[-1/3]_p,\qquad M_p=[-2/3]_p,\qquad
+ N_p+M_p=p-1,\qquad K_p=\min(N_p,M_p)=\lfloor(p-1)/3\rfloor,
+\]
+
+and abbreviate \(B_p(a,k)=\mathcal C_p(a,k)\).  Define
+
+\[
+ P_p(z)=\sum_{k=0}^{K_p}B_p(N_p,k)B_p(M_p,k)z^k.
+ \tag{2.9}
+\]
+
+There is an elementary finite-field Euler formula
+
+\[
+ \boxed{P_p(z)=(-1)^{M_p+1}\sum_{y\in\mathbf F_p}
+ y^{N_p}(1-y)^{M_p}(1-zy)^{N_p}.}
+ \tag{2.10}
+\]
+
+Indeed, after expanding the last factor, the coefficient of \(z^k\) reduces
+to the unique power-sum exponent \(N_p+k+(M_p-k)=p-1\); it is exactly
+\(B_p(N_p,k)B_p(M_p,k)\).  Thus this identity needs no unproved finite-field
+hypergeometric transformation.
+
+The homogenized pullback is
+
+\[
+ \boxed{
+ H_p(x)=\sum_{k=0}^{K_p}B_p(N_p,k)B_p(M_p,k)27^kx^{2k}
+ (1-2x)^{p-1-3k}
+ =\sum_{m=0}^{p-1}f_mx^m.}
+ \tag{2.11}
+\]
+
+Away from \(x=1/2\), this is
+\((1-2x)^{p-1}P_p(27x^2/(1-2x)^3)\); (2.11) supplies the value at the
+missing point.  Let
+
+\[
+ \phi(x)=\frac{x(1-8x)}{1+x},\qquad R(x)=1-16x-8x^2,
+ \qquad q(t)=t^2-34t+1.
+\]
+
+The inverse equation is
+
+\[
+ 8x^2+(t-1)x+t=0,
+ \qquad x=\frac{1-t\pm\sqrt{q(t)}}{16}.
+ \tag{2.12}
+\]
+
+On either root, in \(\mathbf F_p\) or \(\mathbf F_{p^2}\), the relevant branch
+polynomial descends as
+
+\[
+ \boxed{
+ S_p(\phi(x))=
+ \begin{cases}
+ H_p(x)/(1+x)^{(p-1)/2},&(-6/p)=+1,\\[2mm]
+ H_p(x)/(R(x)(1+x)^{(p-3)/2}),&(-6/p)=-1.
+ \end{cases}}
+ \tag{2.13}
+\]
+
+At removable singularities (2.13) is interpreted by polynomial continuation.
+The two inverse roots give the same base-field value.  Since
+\(\deg S_p\le p-2\), finite Mellin inversion is exact:
+
+\[
+ \boxed{s_{p,j}=-\sum_{t\in\mathbf F_p^\times}S_p(t)t^{-j},
+ \qquad 0\le j\le D_p.}
+ \tag{2.14}
+\]
+
+Equations (2.9)--(2.14) are the bounded-dimensional rank-two object that
+survives algebraic reversion: one \(y\)-sum, a degree-two cover, and one Mellin
+sum.  They coexist with, but do not imply, an \(O(1)\)-term Jacobi evaluation
+for an individual coefficient.
+
 ### Why this is not yet the bounded formula requested in the spec
 
 Formula (2.7), fully expanded into Jacobi atoms, has
@@ -195,14 +289,14 @@ Formula (2.7), fully expanded into Jacobi atoms, has
 \[
  L_\sigma(n)=\sum_{m=0}^n(m+1)(n-m+1)
  =\binom{n+3}{3}.
- \tag{2.9}
+ \tag{2.15}
 \]
 
 Formula (2.8) has
 
 \[
  L_\tau(n)=\binom{n+3}{3}+\binom{n+2}{3}+\binom{n+1}{3}.
- \tag{2.10}
+ \tag{2.16}
 \]
 
 Thus the derivative-free reconstruction is \(\Theta(n^3)\), not a short sum.
@@ -250,15 +344,74 @@ with \(C_{p,-1}=C_{p,-2}=0\).  Equations (3.1)--(3.2) are the exact
 "quadratic Jacobi convolution."  They are explicit, but inherit the growing
 length of (2.7)--(2.8).
 
+There is also a literal double Mellin form.  For \(d=D_p\), put
+
+\[
+ K_{p,r}(t,u)=
+ \sum_{i=\max(0,r-d)}^{\min(d,r)}t^{-i}u^{-(r-i)}.
+ \tag{3.3}
+\]
+
+Then the unfiltered square coefficient is
+
+\[
+ \boxed{[T^r]S_p(T)^2=
+ \sum_{t,u\in\mathbf F_p^\times}S_p(t)S_p(u)K_{p,r}(t,u).}
+ \tag{3.4}
+\]
+
+For the \(\tau\)-branch this is \(b_r\); for the \(\sigma\)-branch one applies
+the three-term \(1,-34,1\) filter in (3.2).  The kernel (3.3) is a finite
+geometric progression, so this is a fixed-dimensional double character-sum
+presentation even though its expansion into Jacobi monomials is long.
+
+For Step 3 an even shorter identity is decisive.  Let
+
+\[
+ A_p(t)=\sum_{r=0}^{p-1}b_rt^r
+ =\begin{cases}S_p(t)^2,&(-6/p)=+1,\\q(t)S_p(t)^2,&(-6/p)=-1.
+ \end{cases}
+\]
+
+For every possible nontrivial bad index \(1\le r\le p-2\), cyclic and
+ordinary coefficient extraction agree, hence
+
+\[
+ \boxed{b_r=-\sum_{t\in\mathbf F_p^\times}A_p(t)t^{-r}.}
+ \tag{3.5}
+\]
+
+At \(r=0\), Mellin extraction aliases the two endpoint coefficients
+\(b_0=b_{p-1}=1\); neither endpoint is a zero.  Squaring (2.13) removes the
+branch distinction and gives the pointwise cover identity
+
+\[
+ \boxed{A_p(\phi(x))=\frac{H_p(x)^2}{(1+x)^{p-1}}=H_p(x)^2,
+ \qquad x\in\mathbf F_p\setminus\{-1\}.}
+ \tag{3.6}
+\]
+
+The cover fiber over \(t\) has exactly
+
+\[
+ \#\{x\in\mathbf F_p:\phi(x)=t\}=1+\eta_p(q(t)),
+ \tag{3.7}
+\]
+
+where \(\eta_p(0)=0\).  Thus the \(x\)-cover computes a split-weighted Mellin
+coefficient, not silently the unweighted coefficient in (3.5).
+
 ## 4. Exhaustive machine checks at \(p=13,29\)
 
-Running
+Running all three independent checks
 
 ```text
 python3 research/scripts/codex_horizontal_gk_verify.py
+python3 research/scripts/codex_hgk_coefficients.py
+python3 research/scripts/codex_hgk_horizontal.py
 ```
 
-produces
+includes the outputs
 
 ```text
 p=13: chi=-1, branch=sigma, D=5, all 6 branch coefficients and all 13 b_r verified
@@ -270,6 +423,14 @@ p=29: chi=+1, branch=tau, D=14, all 15 branch coefficients and all 29 b_r verifi
   distinct carry-free Gamma/Jacobi atoms checked: 309
   fully expanded top-coefficient Jacobi monomials: 1695
 quadratic Jacobi convolution agrees with the direct Apéry sum: VERIFIED
+p=13: branch=sigma, all 6 coefficients; Jacobi/Gamma, 2F1 pullback, Mellin inversion, and b_r convolution VERIFIED
+p=29: branch=tau, all 15 coefficients; Jacobi/Gamma, 2F1 pullback, Mellin inversion, and b_r convolution VERIFIED
+CRT averages: pair and four-prime complete periods factor exactly; pair/four sliding means and additive zero detector VERIFIED
+Apéry Mellin extraction and split quadratic-cover projection: p=13,29, every interior index VERIFIED
+linear Mellin full-period identity: p=13, q=29, gcd(p-1,q-1)=4, period=84, VERIFIED
+split-cover Euler-square two-prime correlation: Weil bound and 4-term DFT collapse VERIFIED
+nonlinear zero-detector interchange: explicit F_5 counterexample VERIFIED
+zero events over lcm(p-1,q-1): gcd-stratified identity VERIFIED
 ```
 
 For every atom used, the script independently compares the direct generalized
@@ -277,7 +438,12 @@ binomial product, (1.1), the finite-field power sum (1.3), and the interior
 Gross--Koblitz quotient (1.4).  It compares both the original derivative
 Lagrange formula and the integrated formulas (2.7)--(2.8) with the rank-two
 recurrence, and finally compares (3.1) or (3.2) with the defining Apéry
-binomial sum for every \(0\leq r<p\).
+binomial sum for every \(0\leq r<p\).  The second script independently checks
+(2.9)--(2.14) on every point of the quadratic cover, including nonsplit fibers
+in \(\mathbf F_{p^2}\).  The third checks (3.5)--(3.7), additive
+orthogonality, complete CRT factorization, the full-character-period DFT
+identity, and the invalid nonlinear interchange used in the obstruction
+below.
 
 ## 5. Step 3: the exact horizontal object
 
@@ -331,51 +497,207 @@ expansion over four distinct primes gives terms
  \tag{5.3}
 \]
 
-Equations (5.2)--(5.3), followed by (1.3) and (3.1)--(3.2), are the exact
-requested rewrite.  They also show precisely why it is not yet a usable
-complete exponential sum over one bounded-complexity variety.
+Equations (5.2)--(5.3), followed by either (3.1)--(3.4) or the shorter (3.5),
+are the exact requested rewrite.  The shorter form makes the surviving
+nonlinearity especially transparent:
 
-### What Weil--Deligne can and cannot do
+\[
+ e_p(ab_r)
+ =e_p\!\left(-a\sum_{t\ne0}A_p(t)t^{-r}\right)
+ =\prod_{t\ne0}e_p(-aA_p(t)t^{-r}),
+ \tag{5.4}
+\]
 
-- At one fixed prime it can estimate a genuinely complete trace-function sum
-  of bounded conductor once such a sheaf is supplied.  Formula (1.3) also
-  evaluates each individual Jacobi atom exactly.
-- Expanding the atoms in (2.7)--(2.8) and geometrically summing their
-  fixed-dimensional index polytope may produce a bounded-dimensional complete
-  sum, with singular boundary strata treated separately.  Deligne could bound
-  the complex realization of such a fixed-coefficient sum after a
-  nondegeneracy audit.  This would still be neither a bounded Jacobi-product
-  evaluation nor a sheaf in the moving index \(r\), and a complex size bound
-  would not decide reduction to zero at the defining prime.
-- The present \(r\mapsto\mathcal B_p(r)\) formula is a growing multiple sum,
-  not a proved bounded-conductor trace function in \(r\).  Therefore one
-  cannot apply a uniform Deligne bound to the inner \(s\)-sum in (5.2).
-- Completing \(s\) modulo \(pq\) makes the sum factor, by CRT, into one
-  \(p\)-sum and one \(q\)-sum.  This supplies no interaction between the two
-  characteristics.  The relevant interval has length \(\asymp N\), whereas
-  the complete period is \(pq\asymp N^2\); for four primes the mismatch is
-  \(N\) versus \(\asymp N^4\).
-- The additive zero detector itself averages over all \(a\in\mathbf F_p\).
-  Pointwise square-root cancellation for isolated nonzero modes, even if it
-  were available, would not automatically survive this mode sum and the short
-  mixed-characteristic diagonal.
+not \(\sum_{t\ne0}e_p(-aA_p(t)t^{-r})\).  The false interchange already fails
+for a two-term sum over \(\mathbf F_5\), as checked by the third script.  Thus
+the zero detector is an additive character of a *global trace value*.  If it
+is forced into a sheaf description, its tensor/conductor complexity grows
+with \(p\); it is not the bounded-conductor sheaf underlying an individual
+Jacobi sum.
 
-There is one complete-period identity:
+### A genuine one-prime Weil object
+
+Let \(\widetilde\omega_p\) be a complex Teichmuller character, set
+\(\chi_p=\widetilde\omega_p^{N_p}\), and define
+
+\[
+ \mathscr P_p(z)=(-1)^{M_p+1}\sum_{y\in\mathbf F_p}
+ \chi_p(y)\chi_p^{-1}(1-y)\chi_p(1-zy).
+ \tag{5.5}
+\]
+
+Its reduction at the chosen prime over \(p\) is (2.10).  For
+\(z\notin\{0,1\}\), the combined Kummer function
+\(y(1-zy)/(1-y)\) has four distinct simple zero/pole points.  The associated
+rank-one tame sheaf has \(\dim H_c^1=2\) and no \(H_c^0,H_c^2\), so Weil gives
+
+\[
+ \boxed{|\mathscr P_p(z)|\le2\sqrt p.}
+ \tag{5.6}
+\]
+
+At \(z=0,1\) the sum degenerates to a Jacobi or punctured-character sum of
+size at most one.  This proves the fiber bound with no monodromy assumption.
+
+Substitute \(z=27x^2/(1-2x)^3\), multiply by the relevant branch and Mellin
+Kummer factors, and omit the finitely many singular \(x\).  The resulting
+split-cover sum \(\mathscr C_{p,j}^{\tau}\) or
+\(\mathscr C_{p,j}^{\sigma}\) is a complete \((x,y)\)-sum.  Fiberwise use of
+(5.6) gives unconditionally
+
+\[
+ \boxed{|\mathscr C_{p,j}^{\bullet}|\ll p^{3/2}.}
+ \tag{5.7}
+\]
+
+This is a square-root saving over the raw \(p^2\) terms.  Deligne improves
+(5.7) to \(O(p)\) if the rank-two weight-one sheaf obtained after pushforward
+in \(y\), pullback in \(x\), and Kummer twisting has no geometrically constant
+constituent.  That irreducibility/local-monodromy audit is
+**[GAP-COVER-MONODROMY]**; rank two alone does not prove it.
+
+The cover has another exact limitation.  Its reduction is, up to explicitly
+removed boundary points,
+
+\[
+ -\sum_{t\ne0}(1+\eta_p(q(t)))S_p(t)t^{-j}
+ =s_{p,j}+s_{p,j}^{(\eta)},
+ \tag{5.8}
+\]
+
+where
+\(s_{p,j}^{(\eta)}=-\sum_{t\ne0}\eta_p(q(t))S_p(t)t^{-j}\).  Thus it is not
+\(s_{p,j}\) alone.  Isolating the unweighted lift requires a compatible
+deck-equivariant descent to the \(t\)-line, or an independent construction of
+the nonsplit part.  Equality of the reductions on the two sheets is weaker
+than such a sheaf descent.  This is **[GAP-DESCENT]**.
+
+### The partial two-prime power saving that survives
+
+There is nevertheless a rigorous cross-prime estimate for the *linearized
+split-cover lift*.  Puncture the one point above \(z=\infty\), whose omitted
+contribution is an explicit parity mode, and put
+
+\[
+ \mathscr F_p(t)=
+ \sum_{\substack{x:\ \phi(x)=t\\x\text{ nonsingular}}}
+ \mathscr P_p(z(x))^2,
+ \qquad |\mathscr F_p(t)|\le8p,
+ \tag{5.9}
+\]
+
+\[
+ \mathscr M_p(r)=-\sum_{t\in\mathbf F_p^\times}
+ \mathscr F_p(t)\chi_{p,r}(t),
+ \qquad
+ \chi_{p,r}(g_p^e)=\exp\!\left(-\frac{2\pi i re}{p-1}\right).
+ \tag{5.10}
+\]
+
+Modulo the Teichmuller prime, (5.10) is the
+\((1+\eta_p(q(t)))\)-weighted version of (3.5), with the stated single parity
+correction.  Let
+
+\[
+ a=p-1,\quad b=q-1,\quad g=\gcd(a,b),\quad L=\operatorname{lcm}(a,b).
+\]
+
+Finite Fourier orthogonality gives the exact cross-prime identity
+
+\[
+ \boxed{
+ \sum_{r=0}^{L-1}\mathscr M_p(r)\overline{\mathscr M_q(r)}
+ =L\sum_{k=0}^{g-1}
+ \mathscr F_p(g_p^{ak/g})
+ \overline{\mathscr F_q(g_q^{bk/g})}.}
+ \tag{5.11}
+\]
+
+Combining (5.6), the two-sheeted fibers, and (5.11) yields
+
+\[
+ \boxed{
+ \left|\sum_{r=0}^{L-1}\mathscr M_p(r)
+ \overline{\mathscr M_q(r)}\right|
+ \le64Lgpq.}
+ \tag{5.12}
+\]
+
+The termwise bound for the left side is \(O(Lp^2q^2)\), so (5.12) saves a
+factor \(pq/g\); for \(p,q\asymp N\) this is at least one power of \(N\).
+This is the requested genuine two-prime power saving newly exposed by the
+rank-two Euler formula.  Its scope is exact but limited: it is a complete
+character-index period \(L\asymp N^2/g\), it concerns a complex split-cover
+lift of linear coefficients, and it gives no information about whether the
+defining-characteristic reduction \(b_r\) is zero.
+
+### The strongest unconditional zero-event averages
+
+For the periodic zero sets themselves, CRT gives
 
 \[
  \frac1{pq}\sum_{n\bmod pq}
  \mathbf1_{\mathcal B_p(n-p)=0}
  \mathbf1_{\mathcal B_q(n-q)=0}
  =\frac{|Z_p|}{p}\frac{|Z_q|}{q}
- \ll p^{-1/3}q^{-1/3}.
- \tag{5.4}
+ \ll (pq)^{-1/3}.
+ \tag{5.13}
 \]
 
-The displayed power saving uses the known \(|Z_p|\ll p^{2/3}\), but it is
-just CRT plus the vertical bound and predates the Gamma/Jacobi reconstruction.
-No new incomplete-interval or genuine two-prime power saving follows from the
-present formula.  The missing input remains a high-order,
-defining-characteristic Mellin diagonal zero-density/dispersion theorem.
+More quantitatively, if \(C_{p,q}(A;X)\) is the length-\(X\) correlation of
+the periodic extensions beginning at \(A\), then
+
+\[
+ \boxed{
+ \sum_{A\bmod pq}C_{p,q}(A;X)=X|Z_p||Z_q|,
+ \qquad
+ \mathbb E_A C_{p,q}(A;X)\ll X(pq)^{-1/3}.}
+ \tag{5.14}
+\]
+
+For \(p,q,X\asymp N\), this is \(O(N^{1/3})\), a genuine
+\(N^{2/3}\)-saving for the average shift.  It uses only the known
+\(|Z_p|\ll p^{2/3}\), so it predates the Gamma/Jacobi reconstruction and does
+not control the arithmetically fixed shell interval.
+
+For one fixed interval \(I\) of length \(X\), CRT gives only
+
+\[
+ C_{p,q}(I)\le |Z_p||Z_q|\left(\frac{X}{pq}+1\right).
+ \tag{5.15}
+\]
+
+When \(p,q,X\asymp N\), the \(+1\) term is larger than the trivial interval
+bound, so (5.15) contains no fixed-shell saving.  The four-prime sliding-shift
+analogue of (5.14) has mean
+\(X\prod_i|Z_{p_i}|/\prod_i p_i\ll
+X(\prod_i p_i)^{-1/3}\), which is \(O(N^{-1/3})\) when all four primes and
+\(X\) are of size \(N\); its averaging period is, however, \(\asymp N^4\).
+
+There is also an exact character-period stratification.  With
+\(Z_p^*=Z_p\cap[0,p-2]\), let \(z_{p,c}\) count its elements congruent to
+\(c\pmod g\).  Then
+
+\[
+ \sum_{r=0}^{L-1}
+ \mathbf1_{r\bmod(p-1)\in Z_p^*}
+ \mathbf1_{r\bmod(q-1)\in Z_q^*}
+ =\sum_{c\bmod g}z_{p,c}z_{q,c}
+ \le |Z_p||Z_q|.
+ \tag{5.16}
+\]
+
+Thus its density is \(\ll g(pq)^{-1/3}\), a power saving whenever
+\(g=o((pq)^{1/3})\).  Again, this is a complete index average, not the
+length-\(N\) diagonal in (5.2).
+
+Completing the actual \(s\)-sum modulo \(pq\) merely factors it into one
+\(p\)-sum and one \(q\)-sum.  The target interval has length \(\asymp N\)
+while \(pq\asymp N^2\); for four primes the mismatch is \(N\) versus
+\(\asymp N^4\).  Complex Weil bounds do not detect divisibility at the prime
+of reduction: the cyclotomic field degree grows with \(p\), so a lift of size
+\(O(p)\) can still lie in the prime above \(p\).  The missing input remains a
+high-order defining-characteristic Mellin zero-density/dispersion theorem.
 
 ## 6. Final gap ledger
 
@@ -385,6 +707,17 @@ defining-characteristic Mellin diagonal zero-density/dispersion theorem.
   excluded.  It would require identifying the reverted local-coefficient
   functional with a controlled Cartier/Frobenius matrix entry; this is extra
   arithmetic, not a consequence of rank two.
+- **[GAP-COVER-MONODROMY]** Prove that the pulled-back rank-two Kummer sheaf in
+  (5.7) has no geometrically constant constituent after the branch/Mellin
+  twists.  This upgrades \(O(p^{3/2})\) to \(O(p)\); the displayed formula
+  alone does not.
+- **[GAP-DESCENT]** Construct a deck-equivariant cyclotomic/sheaf descent from
+  the quadratic \(x\)-cover to the \(t\)-line.  Without it, the rigorous trace
+  bound applies to the split-weighted combination (5.8), not the full branch
+  coefficient.
+- **[GAP-ZERO]** Supply a defining-characteristic unit, valuation, or norm
+  theorem converting a complex trace bound into nonvanishing modulo \(p\).
+  Weil--Deligne size estimates alone do not make this conversion.
 - **[GAP-INDEX-SHEAF]** Construct a bounded-conductor sheaf for
   \(r\mapsto e_p(a\mathcal B_p(r))\), uniformly in \(p,a\), or prove an
   equivalent complete-sum estimate.  The parameter-side rank-two sheaf does
@@ -392,3 +725,18 @@ defining-characteristic Mellin diagonal zero-density/dispersion theorem.
 - **[GAP-MIXED]** Obtain cancellation on the length-\(N\) CRT diagonal in
   (5.2) or (5.3), uniformly across changing residue characteristics.  Separate
   one-prime Deligne bounds do not address this step.
+
+## 7. Primary references used
+
+- B. Gross and N. Koblitz, [*Gauss sums and the \(p\)-adic
+  \(\Gamma\)-function*](https://annals.math.princeton.edu/1979/109-3/p06),
+  *Annals of Mathematics* 109 (1979), 569--581.
+- J. Greene, [*Hypergeometric functions over finite
+  fields*](https://www.ams.org/tran/1987-301-01/S0002-9947-1987-0879564-8/S0002-9947-1987-0879564-8.pdf),
+  *Transactions of the AMS* 301 (1987), 77--101.
+- P. Deligne, [*La conjecture de Weil:
+  II*](https://numdam.org/articles/10.1007/BF02684780/), *Publications
+  Mathématiques de l'IHÉS* 52 (1980), 137--252.
+- X. Caruso, F. Fürnsinn, D. Vargas-Montoya, and W. Zudilin,
+  [*Galois Groups of Apéry-like Series Modulo
+  Primes*](https://arxiv.org/abs/2510.23298), arXiv:2510.23298.

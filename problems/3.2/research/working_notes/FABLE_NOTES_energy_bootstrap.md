@@ -1033,3 +1033,17 @@ double-certified.
   qH(敌意 referee); codex-fm×2, codex-hgk-max 未回。Q6366(cron, horizontal Deligne
   boundary) 新增 [GAP-MON]/[GAP-DESCENT]/[GAP-ZERO]/[GAP-HORIZONTAL] 账本, 与
   codex-fm 任务表对齐。
+
+## §46 (08-01) Q6324 四射线 + life1 事故记录
+
+- cron Q6324: 四条 motivic 射线 b_{⌊p/m⌋}≡a_p(f_N) mod p, m=2,3,4,6 (LTYZ 刚性
+  CY), 全部 Lang–Trotter 稀疏型——结构区无害判断再获支撑。中点形式勘误(level-8
+  order-4 刚性 CY): 我核查 proof.tex L1118/L5500 两处均已是 level-8 (η(2z)⁴η(4z)⁴,
+  S₄(Γ₀(8))), 无 level-6 表述, 无需修改。"generic 非 motivic"改述口径收到:
+  固定有理比例=冻结超几何数据, 2,3,4,6 特殊在 Q-descent+刚性模性。
+- life1 tab 事故: 假完成(吐旧 Q6298 确认文本)→伪空闲→连吞四题
+  Q6384(cron FM)/Q6386(qE HGM)/Q6387(qF DESCENT)/Q6388(qG 零点计数);
+  前三者大概率被后续 submit 截断, 仅 Q6388 可能完整。已请 Xiang 刷新 tab;
+  台账三行改 ✗ NEEDS-PASTE; qH 干净未派(择机重发); scratch 监视器在跑。
+  恢复计划: tab 修复后按价值序重发 qE→qF→qH。
+- cron 原始五问全收割(Q6322 被抢答, Q6326/Q6343 moot); cron 换弹交接中。
