@@ -1,0 +1,84 @@
+\begin{theorem}[No right-degree 2 or 3 decomposition]\label{thm:no-right-23}
+For every $h\geq 2$ the rational function
+\[
+f_h=N_h/q_h^3
+\]
+admits no decomposition $g(u(X))$ with $\deg u\in\{2,3\}$ over $\overline{\mathbb Q}$. Equivalently, the geometric monodromy has no block system with blocks of size $2$ or $3$.
+
+\begin{proof}[Proof sketch]
+The pole-profile and squarefree zero-fibre ramification bookkeeping rule out both possible right degrees. Every zero of $g$ must be simple, the infinite point forces $e_u(\infty)=3$, and the resulting ramification contribution is incompatible with the Riemann--Hurwitz count against the $h$ poles of order $3$.
+\end{proof}
+\end{theorem}
+
+\begin{proposition}[Zero-tail bridge]\label{prop:zero-tail-bridge}
+Let $R_1,\ldots,R_D$ be nonnegative integers. Put
+\[
+T_0=\lceil\sqrt{N/D}\rceil,\qquad A_D(t)=\#\{h\leq D:R_h\geq t\},
+\]
+and
+\[
+Z_D=\max_{t>T_0}t^2A_D(t).
+\]
+Then
+\[
+S_D=\sum_{h\leq D}R_h\leq DT_0+Z_D/T_0.
+\]
+Indeed, the layer-cake formula gives
+\[
+S_D=\sum_{t\geq1}A_D(t)
+\leq DT_0+\sum_{t>T_0}A_D(t),
+\]
+and the definition of $Z_D$ yields
+\[
+\sum_{t>T_0}A_D(t)\leq Z_D\sum_{t>T_0}t^{-2}\ll Z_D/T_0.
+\]
+Hence if $D=\sqrt N L$ and $Z_D\ll N$, then
+\[
+S_D\ll N^{3/4}L^{1/2}+N^{1/2}L=o(N),
+\]
+which is [MESO-TOTAL] and gives the energy improvement.
+
+Moreover,
+\[
+Z_D\leq\sum_{h\leq D}R_h^2.
+\]
+Thus the following conjectural input is sufficient.
+\end{proposition}
+
+\begin{conjecture}[Same-lag L2 control]\label{conj:same-lag-l2}
+For $D=\sqrt N L$,
+\[
+\sum_{h\leq D}R_h^2\ll N.
+\]
+This requires only same-lag second-moment control: no cross-lag estimate and no value-distribution input. Empirically one observes
+\[
+\sum_h R_h^2\sim 3D.
+\]
+\end{conjecture}
+
+\begin{remark}[Sufficient-condition ladder]\label{rem:ladder-bottom}
+The sufficient-condition ladder, from weakest required input upward, is
+\[
+[\mathrm{SAME\!\!\!-LAG\!\!\!-L2}]
+\Longrightarrow
+[\mathrm{ZERO\!\!\!-TAIL\!\!\!-2}]
+\Longrightarrow
+[\mathrm{MESO\!\!\!-TOTAL}].
+\]
+Parallel faces are
+\[
+[\mathrm{MESO\!\!\!-S1\!\!\!-2/3}]
+\]
+(the census route via the spectral triangle bound) and
+\[
+[\mathrm{MIDPOINT\!\!\!-AC'}]
+\]
+(the hinge route). All of these are strictly weaker than
+\[
+[\mathrm{WALL\!\!\!-zero}],
+\]
+which is itself weaker than
+\[
+[\mathrm{WALL}].
+\]
+\end{remark}
