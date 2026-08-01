@@ -2020,3 +2020,11 @@ double-certified.
   [CONJ-PAIR-MEAN] 更名归入 [GAP-QRLL] 口径。
 - [GAP-IRR] 命名(原始部分不可约性, 解释常数用, 证明不依赖)。
   与 cron (E1) 对表: P_p 界=其半轨道通用重数1的计数形式——同一命题。
+
+## §100 (08-01 23:05) 证书快线停手记录
+
+- 我方 U_m Galois 证书快线 (m≤24) 重跑全 INCOMPLETE——判定脚本疑有
+  条件 bug(连 m=2 未过, 与 §78 f_x 同法成功矛盾)。**不再投入**:
+  cron codex 证书管线(h≤40, 同族, Montes 树框架)已在飞且更完整,
+  我方快线属重复建设——按防过度生产纪律让位。[GAP-IRR] 非载重
+  (仅解释常数), m≤14 现有证书够 [THEOREM-AVERAGE-SMALLGAP] 用。
