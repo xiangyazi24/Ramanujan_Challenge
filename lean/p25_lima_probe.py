@@ -79,25 +79,53 @@ for k in list(range(8)) + [12, 20, 30, 35]:
 
 print("\ncorrection quotient fits for g-f*A_(k+s)")
 x = sp.symbols("k")
+
+
+def mod_rank(rows, prime):
+    rows = [[entry % prime for entry in row] for row in rows]
+    rank = 0
+    columns = len(rows[0])
+    for column in range(columns):
+        pivot = next((i for i in range(rank, len(rows)) if rows[i][column]), None)
+        if pivot is None:
+            continue
+        rows[rank], rows[pivot] = rows[pivot], rows[rank]
+        inverse = pow(rows[rank][column], -1, prime)
+        rows[rank] = [(entry*inverse) % prime for entry in rows[rank]]
+        for i in range(len(rows)):
+            if i != rank and rows[i][column]:
+                scale = rows[i][column]
+                rows[i] = [(rows[i][j]-scale*rows[rank][j]) % prime
+                           for j in range(columns)]
+        rank += 1
+    return rank
+
+
+def possible_degrees(values, maximum=12):
+    prime = 2305843009213693951
+    points = []
+    for k, value in enumerate(values[:30]):
+        residue = value.numerator % prime * pow(value.denominator % prime, -1, prime) % prime
+        points.append((k, residue))
+    answers = []
+    for pdegree in range(maximum+1):
+        for qdegree in range(maximum+1):
+            unknowns = pdegree+qdegree+2
+            if len(points) < unknowns+2:
+                continue
+            rows = []
+            for k, value in points:
+                rows.append([pow(k, j, prime) for j in range(pdegree+1)] +
+                            [(-value*pow(k, j, prime)) % prime for j in range(qdegree+1)])
+            if mod_rank(rows, prime) < unknowns:
+                answers.append((pdegree, qdegree))
+    return answers
+
+
 for shift in range(0, 10):
     d = [g[k]-f[k]*partials[k+shift] for k in range(count)]
     ratios = [d[k+1]/d[k] for k in range(count-1) if d[k] != 0]
-    points = [(sp.Integer(k), sp.Rational(ratios[k].numerator, ratios[k].denominator))
-              for k in range(min(28, len(ratios)))]
-    found = None
-    for numerator_degree in range(0, 14):
-        for sample_count in [14, 18, 22]:
-            if sample_count > len(points) or sample_count <= numerator_degree:
-                continue
-            candidate = sp.cancel(sp.rational_interpolate(
-                points[:sample_count], numerator_degree, X=x))
-            if all(sp.cancel(candidate.subs(x, point)-value) == 0
-                   for point, value in points):
-                found = candidate
-                break
-        if found is not None:
-            break
-    print("shift", shift, "fit", found)
+    print("shift", shift, "possible degrees", possible_degrees(ratios))
 
 print("\naffine combinations of adjacent Lima partial sums")
 # Solve r_k = u_k A_(k+s) + (1-u_k) A_(k+s+2), then test u_k.
@@ -107,13 +135,5 @@ for shift in range(0, 8):
         r = g[k]/f[k]
         a, b = partials[k+shift], partials[k+shift+2]
         weights.append((r-b)/(a-b))
-    points = [(sp.Integer(k), sp.Rational(v.numerator, v.denominator))
-              for k, v in enumerate(weights[:28])]
-    found = None
-    for numerator_degree in range(0, 14):
-        candidate = sp.cancel(sp.rational_interpolate(points[:20], numerator_degree, X=x))
-        if all(sp.cancel(candidate.subs(x, point)-value) == 0 for point, value in points):
-            found = candidate
-            break
-    print("shift", shift, "weight fit", found,
+    print("shift", shift, "weight possible degrees", possible_degrees(weights),
           "range", float(min(weights)), float(max(weights)))
