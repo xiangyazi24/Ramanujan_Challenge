@@ -194,6 +194,13 @@ theorem rivoalWeightedHarmonicError22_le_three_means (n : ℕ) :
           rivoalLogSaddleMean22 n := by
   have hQ : 0 < ((rivoalExplicitQ22 n : ℚ) : ℝ) := by
     exact_mod_cast rivoalExplicitQ22_pos n
+  let A : ℝ := ∑ k ∈ Finset.range (n + 1),
+    rivoalRealWeight22 n k * (1 / ((k : ℝ) + 1))
+  let B : ℝ := ∑ k ∈ Finset.range (n + 1),
+    rivoalRealWeight22 n k *
+      (1 / (((n - k : ℕ) : ℝ) + 1))
+  let C : ℝ := ∑ k ∈ Finset.range (n + 1),
+    rivoalRealWeight22 n k * |rivoalLogSaddle22 n k|
   have hsum :
       (∑ k ∈ Finset.range (n + 1),
         rivoalRealWeight22 n k *
@@ -211,13 +218,35 @@ theorem rivoalWeightedHarmonicError22_le_three_means (n : ℕ) :
     exact mul_le_mul_of_nonneg_left
       (rivoalHarmonic_error_le_remainders_log n k hkn)
       (rivoalRealWeight22_nonneg n k)
+  have hdecomp :
+      (∑ k ∈ Finset.range (n + 1),
+        rivoalRealWeight22 n k *
+          (3 * (1 / ((k : ℝ) + 1)) +
+            2 * (1 / (((n - k : ℕ) : ℝ) + 1)) +
+              |rivoalLogSaddle22 n k|)) =
+        3 * A + 2 * B + C := by
+    simp only [A, B, C]
+    calc
+      _ = ∑ k ∈ Finset.range (n + 1),
+          (3 * (rivoalRealWeight22 n k * (1 / ((k : ℝ) + 1))) +
+            2 * (rivoalRealWeight22 n k *
+              (1 / (((n - k : ℕ) : ℝ) + 1))) +
+            rivoalRealWeight22 n k * |rivoalLogSaddle22 n k|) := by
+          apply Finset.sum_congr rfl
+          intro k _
+          ring
+      _ = 3 * A + 2 * B + C := by
+          simp only [A, B, C, Finset.sum_add_distrib, Finset.mul_sum]
   rw [rivoalWeightedHarmonicError22,
     rivoalLeftRemainderMean22, rivoalRightRemainderMean22,
     rivoalLogSaddleMean22]
-  apply (div_le_div_of_nonneg_right hsum hQ.le).trans_eq
-  field_simp [hQ.ne']
-  simp only [Finset.mul_sum]
-  ring
+  change _ ≤ 3 * (A / _) + 2 * (B / _) + C / _
+  calc
+    _ ≤ (3 * A + 2 * B + C) / ((rivoalExplicitQ22 n : ℚ) : ℝ) := by
+      exact div_le_div_of_nonneg_right (hsum.trans_eq hdecomp) hQ.le
+    _ = 3 * (A / ((rivoalExplicitQ22 n : ℚ) : ℝ)) +
+        2 * (B / ((rivoalExplicitQ22 n : ℚ) : ℝ)) +
+          C / ((rivoalExplicitQ22 n : ℚ) : ℝ) := by ring
 
 /-- Exact analytic interface consumed by the harmonic transfer. -/
 theorem rivoalHarmonicConcentrationClaim22_of_three_means
@@ -237,7 +266,7 @@ theorem rivoalHarmonicConcentrationClaim22_of_three_means
         Tendsto (fun n => 2 * rivoalRightRemainderMean22 n)
           atTop (𝓝 0) := by
       simpa using tendsto_const_nhds.mul hright
-    simpa only [add_zero] using hleft'.add (hright'.add hlog)
+    simpa only [add_assoc, add_zero] using hleft'.add (hright'.add hlog)
 
 #print axioms abs_harmonic_sub_log_succ_sub_gamma_le
 #print axioms abs_log_sub_log_le_abs_sub_div_min
