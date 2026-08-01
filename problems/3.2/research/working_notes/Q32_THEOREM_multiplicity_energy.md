@@ -72,12 +72,24 @@ reflection pairs r ↔ p−1−r.)
 
   c_d := lim (x+d)³B_d(x) = d³·b_{d−1},   a_d := lim (x+d)³A_d(x) = −d³·b_d.
 
-_Proof sketch._ The pole sits in the last factor: near x = −1,
-M(x) = (x+1)^{−3}(1,0)ᵀ(−5,1) + O((x+1)^{−2}), so the order-3 polar part of
-T_d at −d is (1,0)ᵀ·(−5,1)·T_{d−1}(−d). The identity
-(−5,1)·T_{d−1}(−d) = d³·(−b_d, b_{d−1}) follows by induction on d using
-P(−1−n) = −P(n) (the index reflection symmetry of the Apéry operator).
-Verified exactly for d ≤ 30 (c_d) and d ≤ 15 (a_d) in rational arithmetic. ∎
+_Proof._ Split M(x) = (x+1)^{−3}(1,0)ᵀ(P(x), −x³) + [[0,0],[1,0]]. Since
+T_{d−1}(x) has poles only at −1,…,−(d−1), it is regular at −d, and
+T_d(x) = M(x+d−1)T_{d−1}(x) has order-3 polar part at x = −d equal to
+(1,0)ᵀ·(P(−1), 1)·T_{d−1}(−d) = (1,0)ᵀ·(−5,1)·T_{d−1}(−d).
+
+Claim: w_d := (−5,1)·T_{d−1}(−d) = d³·(−b_d, b_{d−1}).
+Base d = 2: w_2 = (−5,1)M(−2); with P(−2) = −117, (x+1)³ = −1, x³ = −8:
+w_2 = (5·(−117)+1, −(−5)(−8)/(−1)·(−1)... ) = (−584, 40) = 8·(−73, 5) = 2³(−b_2, b_1). ✓
+Step: w_{d+1} = w_d·M(−d−1) (note T_d(−d−1) = M(−2)···M(−d−1) shifts the base by one).
+With x = −d−1: (x+1)³ = −d³, x³ = −(d+1)³, and P(−1−d) = −P(d) (the index
+reflection antisymmetry of the Apéry operator, checked by direct expansion):
+d³(−b_d, b_{d−1})·M(−d−1)
+  first entry: d³[ −b_d·(−P(d))/(−d³) + b_{d−1} ] = −(P(d)b_d − d³b_{d−1})
+             = −(d+1)³b_{d+1} (the recurrence),
+  second entry: d³[ −(−b_d)·(−(d+1)³)/(−d³) ] = (d+1)³·b_d.
+So w_{d+1} = (d+1)³(−b_{d+1}, b_d). ∎
+(Also verified exactly for d ≤ 30 (c_d) and d ≤ 15 (a_d) in rational
+arithmetic. The pole has order exactly 3 mod p iff p ∤ d³b_{d−1} resp. d³b_d.)
 
 **Lemma (nondegeneracy).** Let 1 ≤ d < d′, δ = d′−d, and suppose p ∤ d,
 b_{d−1} ≢ 0, and b_δ ≢ 1 (mod p). Then Ψ_{d,d′} ≢ 0 in F_p(x).
