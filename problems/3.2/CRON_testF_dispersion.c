@@ -449,6 +449,7 @@ int main(void) {
     int symmetry_failures = 0;
     int parity_failures_all = 0;
     int parity_failures_sample20 = 0;
+    int midpoint_hits = 0;
     for (int i = 0; i < nprimes; ++i) {
         build_row(&rows[i], primes[i]);
         for (int r = 0; r < rows[i].n; ++r) {
@@ -463,6 +464,7 @@ int main(void) {
             ++parity_failures_all;
         if (i < 20 && !parity_ok)
             ++parity_failures_sample20;
+        midpoint_hits += rows[i].midpoint_hit;
         double now = monotonic_seconds();
         if (now - last_progress >= 30.0) {
             fprintf(stderr, "[testF] rows: %d/%d (%.1fs)\n",
@@ -571,6 +573,7 @@ int main(void) {
     printf("META,prime_max,%d\n", PRIME_MAX);
     printf("META,prime_count,%d\n", nprimes);
     printf("META,pair_count,%" PRIu64 "\n", total_pairs);
+    printf("META,midpoint_hit_count,%d\n", midpoint_hits);
     printf("VALID,p17,1,3;13\n");
     printf("VALID,parity_sample20,%d,0\n", 20);
     printf("VALID,parity_all,%d,0\n", nprimes);

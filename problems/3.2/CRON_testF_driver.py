@@ -145,6 +145,17 @@ def render_report(meta, valid, stats, profiles, fourier, command: str) -> str:
     )
     lines.append("")
     lines.append(
+        "The cyclic centering also recovers Q6420 Section 2.1's endpoint "
+        "conversion. If $z_p=|Z_p|$ and "
+        "$g_p(r)=1_{Z_p}(r)-z_p/p$ on $\\mathbb F_p$, then for "
+        "$0\\le r\\le p-2$ one has "
+        "$g_p(r)=h_p(r)+z_p/[p(p-1)]$, while the separate endpoint "
+        "$r=p-1$ contributes $-z_p/p$. The fallback statistic below is "
+        "defined directly with $h_p$, so it needs no hidden endpoint "
+        "correction."
+    )
+    lines.append("")
+    lines.append(
         "**Flagged fallback.** Q6420's export omits the displayed definition of "
         "$W$ and the ambient integer interval. Therefore the primary tables use "
         "the specification's explicit fallback"
@@ -308,6 +319,13 @@ def render_report(meta, valid, stats, profiles, fourier, command: str) -> str:
         "positive excess."
     )
     lines.append("")
+    lines.append(
+        f"There were {meta['midpoint_hit_count']} midpoint hits in this prime "
+        "window. Consequently midpoint deletion changes no bin (0% of every "
+        "positive excess); all changes in the reduced column come from passing "
+        "to one reflection-orbit representative and re-centering."
+    )
+    lines.append("")
     lines.append("## Reconstructed shifted linkage")
     lines.append("")
     shifted_rows: list[list[str]] = []
@@ -422,7 +440,7 @@ def render_report(meta, valid, stats, profiles, fourier, command: str) -> str:
                 "RMS near",
                 "near/full shifted RMS",
                 "cyclic max RMS ratio",
-                "argmax at ±D",
+                "endpoint ±D attains max",
             ],
             near_rows,
         )
@@ -507,6 +525,32 @@ def render_report(meta, valid, stats, profiles, fourier, command: str) -> str:
     else:
         overall = "MIXED"
     lines.append(f"**Signature verdict: {overall}.**")
+    lines.append("")
+    surrogate_good = sum(
+        all(
+            status_for(stats[("aligned", bin_number, name)]) == "~1"
+            for name in ("T", "T2", "T3")
+        )
+        for bin_number in bins
+    )
+    indicator_excess = sum(
+        status_for(stats[("aligned", bin_number, "indicator")]) == "EXCESS"
+        for bin_number in bins
+    )
+    indicator_deficit = sum(
+        status_for(stats[("aligned", bin_number, "indicator")]) == "DEFICIT"
+        for bin_number in bins
+    )
+    lines.append(
+        f"All three fixed-degree surrogates are simultaneously in the ~1 band "
+        f"in {surrogate_good}/{len(bins)} bins. The exact indicator has excess "
+        f"RMS in {indicator_excess}/{len(bins)} bins, a deficit in "
+        f"{indicator_deficit}/{len(bins)}, and is in-band in "
+        f"{len(bins) - indicator_excess - indicator_deficit}/{len(bins)}. "
+        f"Thus the predicted surrogate/indicator split is clear in "
+        f"{confirmations}/{len(reliable)} adequately populated bins, but it is "
+        "not uniform across the dyadic profile."
+    )
     lines.append("")
     lines.append(
         "The table uses a declared descriptive rule: <code>~1</code> means "

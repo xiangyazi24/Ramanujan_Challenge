@@ -2,7 +2,7 @@
 
 ## Scope and reproducibility
 
-The full requested window was used: 208 primes in [500, 2000], hence 21528 pairs. No range reduction was needed. The C run took 4.09 seconds.
+The full requested window was used: 208 primes in [500, 2000], hence 21528 pairs. No range reduction was needed. The C run took 4.25 seconds.
 
 Reproduce with <code>python3 CRON_testF_driver.py</code> from this directory.
 
@@ -21,6 +21,8 @@ the shifted pair has the exact Fourier reconstruction
 $$C_{p,q}(F;d,W)=\frac1{PQ}\sum_{u\bmod P}\sum_{v\bmod Q}\widehat h_{p,F}(u)\widehat h_{q,F}(v)e^{2\pi ivd/Q}K_W(u/P+v/Q).$$
 
 For the exact indicator, additive orthogonality gives, for nonzero $u$, $\widehat h_p(u)=p^{-1}\sum_{a=1}^{p-1}\mathfrak N_{p,a}(u)$, where $\mathfrak N_{p,a}(u)=\sum_r e_p(aT_p(r))e^{-2\pi iur/P}$. Substitution for both primes is the fourfold $(a,b,u,v)$ formula. Centering sets the $u=0$ and $v=0$ coefficients to zero.
+
+The cyclic centering also recovers Q6420 Section 2.1's endpoint conversion. If $z_p=|Z_p|$ and $g_p(r)=1_{Z_p}(r)-z_p/p$ on $\mathbb F_p$, then for $0\le r\le p-2$ one has $g_p(r)=h_p(r)+z_p/[p(p-1)]$, while the separate endpoint $r=p-1$ contributes $-z_p/p$. The fallback statistic below is defined directly with $h_p$, so it needs no hidden endpoint correction.
 
 **Flagged fallback.** Q6420's export omits the displayed definition of $W$ and the ambient integer interval. Therefore the primary tables use the specification's explicit fallback
 
@@ -110,6 +112,8 @@ In every bin, <code>RMS ratio</code> means $\sqrt{\sum C_{p,q}^2/\sum V_{p,q}}$;
 
 The percentages compare normalized excess energy $R^2-1$; negative percentages mean that removal increased, rather than explained, the observed excess. <code>n/a</code> means the original bin had no positive excess.
 
+There were 0 midpoint hits in this prime window. Consequently midpoint deletion changes no bin (0% of every positive excess); all changes in the reduced column come from passing to one reflection-orbit representative and re-centering.
+
 ## Reconstructed shifted linkage
 
 | D bin | nonempty/all | F | sum C | RMS | benchmark RMS | RMS ratio | sum z |
@@ -183,7 +187,7 @@ The maximum direct-versus-Fourier absolute error was 3.120e-14. Thus the reconst
 
 For each pair, the near block is $v=-u$, $1\le |u|\le\lfloor((p+q)/2)/D\rfloor$, truncated to the signed frequency ranges. Both signs are included. The last two columns profile the exact indicator over every cyclic shift $|\delta|\le D$.
 
-| D bin | near nonempty/all | sum near | RMS near | near/full shifted RMS | cyclic max RMS ratio | argmax at ±D |
+| D bin | near nonempty/all | sum near | RMS near | near/full shifted RMS | cyclic max RMS ratio | endpoint ±D attains max |
 | --- | --- | --- | --- | --- | --- | --- |
 | [2,4) | 37/37 | -0.01170 | 0.00104 | 0.995 | 0.059 | 4/4 |
 | [4,8) | 119/119 | -0.06586 | 0.00193 | 0.893 | 0.088 | 12/12 |
@@ -222,5 +226,7 @@ For each pair, the near block is $v=-u$, $1\le |u|\le\lfloor((p+q)/2)/D\rfloor$,
 | [1024,2048) | 2134 | 0.977 / -0.02 (~1) | 1.018 (~1) | 0.989 (~1) | 0.986 (~1) | NO |
 
 **Signature verdict: MIXED.**
+
+All three fixed-degree surrogates are simultaneously in the ~1 band in 9/10 bins. The exact indicator has excess RMS in 4/10 bins, a deficit in 3/10, and is in-band in 3/10. Thus the predicted surrogate/indicator split is clear in 4/10 adequately populated bins, but it is not uniform across the dyadic profile.
 
 The table uses a declared descriptive rule: <code>~1</code> means $0.80\le R\le1.25$; <code>EXCESS</code> means $R>1.25$; and <code>DEFICIT</code> means $R<0.80$. The separately reported sum z records signed drift, but pair statistics sharing a prime are not independent, so it is not used as a formal z-test. Bins with fewer than 30 pairs are not used for the overall verdict. These thresholds are reporting conventions, not formal significance tests.
