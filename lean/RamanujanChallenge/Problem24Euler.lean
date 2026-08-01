@@ -6533,4 +6533,290 @@ theorem alternatingZetaFour_hasSum24 :
   push_cast
   ring
 
+/-! ## Public quartic endpoint integrals for `Problem24QuadraticAlt`
+
+The reflected `I11` kernel uses the ordinary quartic core together with the
+alternating complement below.  The core was already evaluated privately above;
+the complement is obtained by the same termwise-integration template, using
+`-signedHarmonic24 (n+1)` as its nonnegative Taylor coefficient. -/
+
+/-- `∫₀¹ log x · log²(1-x) / x = -ζ(4)/2`. -/
+theorem quarticCoreIntegral24_export :
+    (∫ x : ℝ in 0..1,
+      Real.log x * Real.log (1 - x) ^ 2 / x) =
+      -(1 / 2 : ℝ) * (Real.pi ^ 4 / 90) := by
+  exact quarticCoreIntegral24
+
+/-- Integrability companion to `quarticCoreIntegral24_export`. -/
+theorem quarticCoreIntervalIntegrable24_export :
+    IntervalIntegrable
+      (fun x : ℝ => Real.log x * Real.log (1 - x) ^ 2 / x)
+      MeasureTheory.volume 0 1 := by
+  exact quarticCoreKernel24_intervalIntegrable_half.trans
+    quarticCoreKernel24_intervalIntegrable_upper
+
+private def quarticAlternatingComplementMoment24
+    (n : ℕ) (x : ℝ) : ℝ :=
+  -signedHarmonic24 (n + 1) *
+    (x ^ (n + 1) * Real.log x ^ 2)
+
+private theorem quarticAlternatingComplementMoment24_intervalIntegrable
+    (n : ℕ) :
+    IntervalIntegrable (quarticAlternatingComplementMoment24 n)
+      MeasureTheory.volume 0 1 := by
+  unfold quarticAlternatingComplementMoment24
+  apply ContinuousOn.intervalIntegrable
+  rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+  exact
+    (powerLogSquare24_continuousOn n).const_mul
+      (-signedHarmonic24 (n + 1))
+
+private theorem quarticAlternatingComplementMoment24_integral
+    (n : ℕ) :
+    (∫ x : ℝ in 0..1,
+      quarticAlternatingComplementMoment24 n x) =
+      2 * (-signedHarmonic24 (n + 1)) / (n + 2 : ℝ) ^ 3 := by
+  unfold quarticAlternatingComplementMoment24
+  rw [intervalIntegral.integral_const_mul,
+    integral_powerLogSquare24]
+  ring
+
+private theorem quarticAlternatingComplementMoment24_integral_norm
+    (n : ℕ) :
+    (∫ x : ℝ in 0..1,
+      ‖quarticAlternatingComplementMoment24 n x‖) =
+      2 * |signedHarmonic24 (n + 1)| / (n + 2 : ℝ) ^ 3 := by
+  have hpoint :
+      ∀ x ∈ Set.uIcc (0 : ℝ) 1,
+        ‖quarticAlternatingComplementMoment24 n x‖ =
+          |signedHarmonic24 (n + 1)| *
+            (x ^ (n + 1) * Real.log x ^ 2) := by
+    intro x hx
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)] at hx
+    unfold quarticAlternatingComplementMoment24
+    rw [Real.norm_eq_abs, abs_mul, abs_neg,
+      abs_of_nonneg
+        (mul_nonneg (pow_nonneg hx.1 _) (sq_nonneg _))]
+  calc
+    (∫ x : ℝ in 0..1,
+        ‖quarticAlternatingComplementMoment24 n x‖) =
+        ∫ x : ℝ in 0..1,
+          |signedHarmonic24 (n + 1)| *
+            (x ^ (n + 1) * Real.log x ^ 2) := by
+      apply intervalIntegral.integral_congr
+      exact hpoint
+    _ = |signedHarmonic24 (n + 1)| *
+          (∫ x : ℝ in 0..1,
+            x ^ (n + 1) * Real.log x ^ 2) := by
+      rw [intervalIntegral.integral_const_mul]
+    _ = 2 * |signedHarmonic24 (n + 1)| /
+          (n + 2 : ℝ) ^ 3 := by
+      rw [integral_powerLogSquare24]
+      ring
+
+private theorem
+    quarticAlternatingComplementMoment24_integral_norm_summable :
+    Summable
+      (fun n : ℕ =>
+        ∫ x : ℝ in 0..1,
+          ‖quarticAlternatingComplementMoment24 n x‖) := by
+  apply quarticPlusSeriesMoment24_integral_norm_summable.of_nonneg_of_le
+  · intro n
+    rw [quarticAlternatingComplementMoment24_integral_norm]
+    positivity
+  · intro n
+    rw [quarticAlternatingComplementMoment24_integral_norm,
+      quarticPlusSeriesMoment24_integral_norm]
+    exact div_le_div_of_nonneg_right
+      (mul_le_mul_of_nonneg_left
+        (abs_signedHarmonic24_le_harmonicNumber (n + 1))
+        (by norm_num))
+      (by positivity)
+
+private theorem quarticAlternatingComplementMoment24_hasSum_pointwise
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasSum
+      (fun n : ℕ => quarticAlternatingComplementMoment24 n x)
+      (Real.log x ^ 2 * Real.log (1 + x) / (1 - x)) := by
+  have habs : |x| < 1 := by rw [abs_of_pos hx0]; exact hx1
+  have hxne : x ≠ 0 := ne_of_gt hx0
+  have hH := harmonicNumber_generating_hasSum habs hxne
+  have hP := parityRemainder24_generating_hasSum habs hxne
+  have hscaled := (hH.sub hP).mul_left
+    (x * Real.log x ^ 2 / 2)
+  convert hscaled using 1
+  · funext n
+    unfold quarticAlternatingComplementMoment24 parityRemainder24
+    rw [pow_succ]
+    ring
+  · have h1xne : 1 - x ≠ 0 := ne_of_gt (sub_pos.mpr hx1)
+    field_simp [hxne, h1xne]
+    ring
+
+private theorem quarticAlternatingComplement_hasSum_integral :
+    HasSum
+      (fun n : ℕ =>
+        2 * (-signedHarmonic24 (n + 1)) / (n + 2 : ℝ) ^ 3)
+      (∫ x : ℝ in 0..1,
+        Real.log x ^ 2 * Real.log (1 + x) / (1 - x)) := by
+  have hInt : ∀ n : ℕ,
+      MeasureTheory.Integrable
+        (quarticAlternatingComplementMoment24 n)
+        (MeasureTheory.volume.restrict (Set.Ioc (0 : ℝ) 1)) :=
+    fun n => (quarticAlternatingComplementMoment24_intervalIntegrable n).1
+  have hNorm : Summable (fun n : ℕ =>
+      ∫ x : ℝ in Set.Ioc (0 : ℝ) 1,
+        ‖quarticAlternatingComplementMoment24 n x‖) := by
+    simpa only [
+      ← intervalIntegral.integral_of_le
+        (by norm_num : (0 : ℝ) ≤ 1)] using
+      quarticAlternatingComplementMoment24_integral_norm_summable
+  have h := MeasureTheory.hasSum_integral_of_summable_integral_norm
+    (μ := MeasureTheory.volume.restrict (Set.Ioc (0 : ℝ) 1)) hInt hNorm
+  have h' : HasSum
+      (fun n : ℕ =>
+        2 * (-signedHarmonic24 (n + 1)) / (n + 2 : ℝ) ^ 3)
+      (∫ x : ℝ in Set.Ioc (0 : ℝ) 1,
+        ∑' n : ℕ, quarticAlternatingComplementMoment24 n x) := by
+    convert h using 1
+    funext n
+    rw [← intervalIntegral.integral_of_le
+      (by norm_num : (0 : ℝ) ≤ 1)]
+    exact (quarticAlternatingComplementMoment24_integral n).symm
+  convert h' using 1
+  rw [intervalIntegral.integral_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+  apply MeasureTheory.setIntegral_congr_ae measurableSet_Ioc
+  filter_upwards [
+    MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)
+  ] with x hxne hx
+  exact
+    (quarticAlternatingComplementMoment24_hasSum_pointwise
+      hx.1 (lt_of_le_of_ne hx.2 hxne)).tsum_eq.symm
+
+/-- Integrability of the alternating quartic complement. -/
+theorem quarticAlternatingComplementIntervalIntegrable24 :
+    IntervalIntegrable
+      (fun x : ℝ =>
+        Real.log x ^ 2 * Real.log (1 + x) / (1 - x))
+      MeasureTheory.volume 0 1 := by
+  apply IntervalIntegrable.trans (b := (1 / 2 : ℝ))
+  · have hcont : ContinuousOn
+        (fun x : ℝ =>
+          (x * Real.log x ^ 2) *
+            RamanujanChallenge.P26.logOnePlusSlope26 x / (1 - x))
+        (Icc (0 : ℝ) (1 / 2)) := by
+      apply ContinuousOn.div
+        (selfMulLogSquare24_continuousOn.mono
+          (fun x hx => ⟨hx.1, hx.2.trans (by norm_num)⟩) |>.mul
+          (RamanujanChallenge.P26.logOnePlusSlope26_continuousOn.mono
+            (fun x hx => ⟨hx.1, hx.2.trans (by norm_num)⟩)))
+        (continuousOn_const.sub continuousOn_id)
+      intro x hx
+      exact ne_of_gt (show 0 < 1 - x by linarith [hx.2])
+    have hint : IntervalIntegrable
+        (fun x : ℝ =>
+          (x * Real.log x ^ 2) *
+            RamanujanChallenge.P26.logOnePlusSlope26 x / (1 - x))
+        MeasureTheory.volume 0 (1 / 2) := by
+      apply ContinuousOn.intervalIntegrable
+      rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)]
+      exact hcont
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ =>
+        (x * Real.log x ^ 2) *
+          RamanujanChallenge.P26.logOnePlusSlope26 x / (1 - x))
+      ?_ hint
+    intro x _
+    by_cases hxzero : x = 0
+    · subst x
+      simp
+    · simp [RamanujanChallenge.P26.logOnePlusSlope26, hxzero]
+      field_simp [hxzero]
+  · have hsub : ContinuousOn (fun x : ℝ => 1 - x)
+        (Icc (1 / 2 : ℝ) 1) := by fun_prop
+    have hmap : MapsTo (fun x : ℝ => 1 - x)
+        (Icc (1 / 2 : ℝ) 1) (Icc (0 : ℝ) (1 / 2)) := by
+      intro x hx
+      constructor <;> linarith [hx.1, hx.2]
+    have hslope := logOneMinusSlope24_continuousOn.comp hsub hmap
+    have hlog : ContinuousOn (fun x : ℝ => Real.log x)
+        (Icc (1 / 2 : ℝ) 1) := by
+      apply continuousOn_id.log
+      intro x hx
+      exact ne_of_gt (show 0 < x by linarith [hx.1])
+    have hplus : ContinuousOn (fun x : ℝ => Real.log (1 + x))
+        (Icc (1 / 2 : ℝ) 1) := by
+      apply (continuousOn_const.add continuousOn_id).log
+      intro x hx
+      exact ne_of_gt (show 0 < 1 + x by linarith [hx.1])
+    have hcont : ContinuousOn
+        (fun x : ℝ =>
+          logOneMinusSlope24 (1 - x) * Real.log x *
+            Real.log (1 + x))
+        (Icc (1 / 2 : ℝ) 1) := (hslope.mul hlog).mul hplus
+    have hint : IntervalIntegrable
+        (fun x : ℝ =>
+          logOneMinusSlope24 (1 - x) * Real.log x *
+            Real.log (1 + x))
+        MeasureTheory.volume (1 / 2) 1 := by
+      apply ContinuousOn.intervalIntegrable
+      rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+      exact hcont
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ =>
+        logOneMinusSlope24 (1 - x) * Real.log x *
+          Real.log (1 + x)) ?_ hint
+    intro x _
+    by_cases hxone : x = 1
+    · subst x
+      simp
+    · have h1xne : 1 - x ≠ 0 := sub_ne_zero.mpr (Ne.symm hxone)
+      simp [logOneMinusSlope24, h1xne]
+      field_simp [h1xne]
+
+/-- `∫₀¹ log²x · log(1+x)/(1-x)` in closed form. -/
+theorem quarticAlternatingComplementIntegral24 :
+    (∫ x : ℝ in 0..1,
+      Real.log x ^ 2 * Real.log (1 + x) / (1 - x)) =
+      (7 / 2 : ℝ) * Real.log 2 * zeta3_24 -
+        (19 / 8 : ℝ) * (Real.pi ^ 4 / 90) := by
+  have hBar : HasSum barHarmonicCubicTerm24
+      ((7 / 4 : ℝ) * Real.log 2 * zeta3_24 -
+        (1 / 8 : ℝ) * (Real.pi ^ 2 / 6) ^ 2) := by
+    rw [← barHarmonicCubicIntegral24]
+    exact barHarmonicCubicTerm24_hasSum_integral
+  have hBarTail : HasSum
+      (fun n : ℕ => barHarmonicCubicTerm24 (n + 1))
+      ((7 / 4 : ℝ) * Real.log 2 * zeta3_24 -
+        (1 / 8 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 - 1) := by
+    apply (hasSum_nat_add_iff (f := barHarmonicCubicTerm24) 1).mpr
+    convert hBar using 1 <;>
+      simp [barHarmonicCubicTerm24, signedHarmonic24] <;> ring
+  have hZetaTail : HasSum
+      (fun n : ℕ => alternatingZetaFourTerm24 (n + 1))
+      (1 - (7 / 8 : ℝ) * (Real.pi ^ 4 / 90)) := by
+    apply
+      (hasSum_nat_add_iff
+        (f := alternatingZetaFourTerm24) 1).mpr
+    convert alternatingZetaFourTerm24_hasSum using 1 <;>
+      simp [alternatingZetaFourTerm24, zetaFourTerm24] <;> ring
+  have hValue := (hBarTail.add hZetaTail).mul_left 2
+  have hSeries : HasSum
+      (fun n : ℕ =>
+        2 * (-signedHarmonic24 (n + 1)) / (n + 2 : ℝ) ^ 3)
+      ((7 / 2 : ℝ) * Real.log 2 * zeta3_24 -
+        (19 / 8 : ℝ) * (Real.pi ^ 4 / 90)) := by
+    convert hValue using 1
+    · funext n
+      unfold barHarmonicCubicTerm24 alternatingZetaFourTerm24
+        zetaFourTerm24
+      rw [signedHarmonic24_succ (n + 1)]
+      push_cast
+      have hden : (n + 2 : ℝ) ≠ 0 := by positivity
+      field_simp [hden]
+      simp only [pow_succ]
+      ring
+    · ring
+  exact quarticAlternatingComplement_hasSum_integral.unique hSeries
+
 end

@@ -4189,4 +4189,88 @@ theorem quadAltK_eq :
   unfold alternatingCubicLinearEulerValue24 cubicLinearEulerValue24
   ring
 
+/-! ## Layer E, row `I11`
+
+Reflection turns the post-IBP kernel into the difference between the ordinary
+quartic core and its alternating complement.  Both values are supplied by the
+series library in `Problem24Euler`. -/
+
+theorem quadAltI11_reflected :
+    I11 = ∫ x : ℝ in (0 : ℝ)..1,
+      (Real.log x ^ 2 * Real.log (1 - x) / (1 - x) -
+        Real.log x ^ 2 * Real.log (1 + x) / (1 - x)) := by
+  rw [quadAltI11_eq_integral]
+  let f : ℝ → ℝ := fun t => quadAltR t * H1 t ^ 2 / t
+  have hreflect := intervalIntegral.integral_comp_sub_left
+    (a := (0 : ℝ)) (b := 1) f 1
+  calc
+    (∫ t : ℝ in (0 : ℝ)..1, quadAltR t * H1 t ^ 2 / t) =
+        ∫ x : ℝ in (0 : ℝ)..1, f (1 - x) := by
+      simpa [f] using hreflect.symm
+    _ = ∫ x : ℝ in (0 : ℝ)..1,
+        (Real.log x ^ 2 * Real.log (1 - x) / (1 - x) -
+          Real.log x ^ 2 * Real.log (1 + x) / (1 - x)) := by
+      apply intervalIntegral.integral_congr
+      intro x hx
+      rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)] at hx
+      by_cases hxzero : x = 0
+      · subst x
+        simp [f, quadAltR, H1]
+      by_cases hxone : x = 1
+      · subst x
+        simp [f, quadAltR, H1]
+      have hx0 : 0 < x := lt_of_le_of_ne hx.1 (Ne.symm hxzero)
+      have hx1 : x < 1 := lt_of_le_of_ne hx.2 hxone
+      have h1xne : 1 - x ≠ 0 := ne_of_gt (sub_pos.mpr hx1)
+      have h1pxne : 1 + x ≠ 0 := by linarith
+      unfold f quadAltR H1
+      dsimp only
+      rw [show 2 - (1 - x) = 1 + x by ring,
+        show 1 - (1 - x) = x by ring,
+        Real.log_div h1xne h1pxne]
+      field_simp [h1xne]
+
+theorem quadAltI11_eq :
+    I11 = -(7 / 2) * Real.log 2 * zeta3_24
+      + (3 / 4) * (Real.pi ^ 2 / 6) ^ 2 := by
+  let core : ℝ → ℝ := fun x =>
+    Real.log x * Real.log (1 - x) ^ 2 / x
+  let first : ℝ → ℝ := fun x =>
+    Real.log x ^ 2 * Real.log (1 - x) / (1 - x)
+  let alt : ℝ → ℝ := fun x =>
+    Real.log x ^ 2 * Real.log (1 + x) / (1 - x)
+  have hFirstInt : IntervalIntegrable first MeasureTheory.volume 0 1 := by
+    have h :=
+      (quarticCoreIntervalIntegrable24_export.comp_sub_left 1).symm
+    convert h using 1
+    funext x
+    unfold first
+    rw [show 1 - (1 - x) = x by ring]
+    ring
+    all_goals norm_num
+  have hAltInt : IntervalIntegrable alt MeasureTheory.volume 0 1 := by
+    exact quarticAlternatingComplementIntervalIntegrable24
+  have hFirst : (∫ x : ℝ in (0 : ℝ)..1, first x) =
+      -(1 / 2 : ℝ) * (Real.pi ^ 4 / 90) := by
+    have hreflect := intervalIntegral.integral_comp_sub_left
+      (a := (0 : ℝ)) (b := 1) core 1
+    calc
+      (∫ x : ℝ in (0 : ℝ)..1, first x) =
+          ∫ x : ℝ in (0 : ℝ)..1, core (1 - x) := by
+        apply intervalIntegral.integral_congr
+        intro x _
+        unfold first core
+        dsimp only
+        rw [show 1 - (1 - x) = x by ring]
+        ring
+      _ = ∫ x : ℝ in (0 : ℝ)..1, core x := by
+        simpa using hreflect
+      _ = -(1 / 2 : ℝ) * (Real.pi ^ 4 / 90) := by
+        exact quarticCoreIntegral24_export
+  rw [quadAltI11_reflected]
+  change (∫ x : ℝ in (0 : ℝ)..1, first x - alt x) = _
+  rw [intervalIntegral.integral_sub hFirstInt hAltInt,
+    hFirst, quarticAlternatingComplementIntegral24]
+  ring
+
 end RamanujanChallenge.P24QuadAlt
