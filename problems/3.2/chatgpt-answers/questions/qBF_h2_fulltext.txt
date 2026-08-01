@@ -1,0 +1,26 @@
+[P3.2 cron] MERGE-READY FULL TEXT: the [ABSTRACT-Q-H2LOGH] theorem block for insertion into a 170-page proof document (a %%MERGE-SLOT is waiting). Referee-grade: every inequality displayed, every case written, no "clearly/similarly" skips. One ```latex block.
+
+Environments available in the target document: theorem, lemma, proposition, remark, proof (standard amsthm). Use labels thm:abstract-h2logh, lem:clique-energy, lem:window-localize, prop:word-lower, cor:apery-h2, cor:t3-log.
+
+CONTENT (all statements triple-verified; write COMPLETE proofs):
+
+\begin{theorem}[Abstract inverse-square clique bound]\label{thm:abstract-h2logh}
+Let x_0,...,x_N be a word over an arbitrary alphabet, R_d = #{r : x_r = x_{r+d}}, d_H(r) = #{1<=h<=H : x_r=x_{r+h}}, Q_H = sum_r binom{d_H(r)}{2}. If R_d <= Cd for all 1<=d<=H, then Q_H <= 22 C H^2 (1+log H).
+\end{theorem}
+
+Proof via two lemmas:
+
+\begin{lemma}[Clique energy]\label{lem:clique-energy} A a set of positions of one color inside an interval of at most 2H consecutive integers, m=|A|, E_H(A) = sum_{u<v in A, v-u<=H} (v-u)^{-2}. Then binom{m}{3} <= 11 H^2 E_H(A).\end{lemma}
+Full proof: cases m<3 (trivial), m=3 (two consecutive gaps summing to at most 2H-1, hence one gap at most H-1; E >= 1/H^2), m>=4 (split into two halves of at most H positions; one half holds n >= ceil(m/2) points with span at most H-1; k=n-1 consecutive gaps g_i; the two Cauchy-Schwarz steps sum(1/g_i^2) >= (sum 1/g_i)^2/k and (sum g_i)(sum 1/g_i) >= k^2 giving sum(1/g_i^2) >= k^3/H^2; k >= m/4 for m>=4 with the boundary check at m=4,5; hence E_H(A) >= m^3/(64H^2); conclude binom{m}{3} <= m^3/6 <= (64/6) H^2 E < 11 H^2 E).
+
+\begin{lemma}[Window localization]\label{lem:window-localize} With blocks B_j=[jH,(j+1)H) and windows W_j=[jH,(j+2)H): Q_H equals the number of monochromatic triples u<v<w with w-u<=H (counted at the least point); each triple assigned to the block of its least point lies entirely in the corresponding window; and each monochromatic pair at gap d<=H lies in at most two windows, whence sum over windows and colors of E_H <= 2 sum_{d<=H} R_d/d^2 <= 2C(1+log H).\end{lemma}
+Full proof including the triple-count identity (why each triple is counted exactly once with the gap pair (h,k)=(v-u,w-u)), the containment u in B_j, w-u<=H => triple in W_j, and the multiplicity-two computation (u in B_t => u in W_j only for j in {t-1,t}; v=u+d also lies in both those windows; harmonic sum bound).
+
+\begin{proposition}[Sharpness]\label{prop:word-lower} There are words with R_d <= (5/2)d for all d and Q_H = (1/8+o(1))H^2.\end{proposition}
+Full construction: M=floor(H/2); for 1<=s<=t<=M a private symbol placed at b_e, b_e+t, b_e+2t with b_e=e(H+1); all other positions fresh singletons; verify R_d = 2 n_d + 1[2|d] n_{d/2} with n_t=t (including the remark that cross-block near-coincidences are non-collisions since symbols are private), so R_d <= 5d/2; each class contributes one triple of span 2t <= H, so Q_H = M(M+1)/2.
+
+\begin{corollary}\label{cor:apery-h2} For the Apery projective orbit (R_d <= 3(d-1)): Q_p(Delta) <= 66 H^2(1+log H), H=min(Delta,p-3). \end{corollary}
+\begin{corollary}\label{cor:t3-log} T_3 = 6 Q_p(p-2) <= 396 (p-2)^2 (1+log(p-2)). \end{corollary}
+With a closing remark: exponent 2 is optimal in the abstract class by prop:word-lower; the only remaining abstract question is the logarithm, and by Abel summation the log removal follows from any prefix bound S_1(Y)=sum_{d<=Y}R_d << Y^{2-delta} (state this remark with the two-line Abel computation).
+
+Final: (a) least-confident displayed formula (we re-verify)? (b) blind spot?

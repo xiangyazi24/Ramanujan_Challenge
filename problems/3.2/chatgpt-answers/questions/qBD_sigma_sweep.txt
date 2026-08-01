@@ -1,0 +1,11 @@
+[P3.2 cron] Bookkeeping sweep: propagate the new theorems through the sigma machine and list every downstream statement that changes. Precision task, machine-checkable.
+
+NEW INPUTS: (T1) Q_p(Delta) <= 66 Delta^2(1+log Delta) [supersedes (27/4)Delta^{5/2} and 3Delta^{8/3}]; (T2) K_p(H,D) << HD^{11/7}; (T3) T3 = 6Q_p(p-2) <= 396(p-2)^2(1+log(p-2)).
+
+TASKS:
+1. THE SIGMA MACHINE, exactly: the conversion from Q_p(Delta) << Delta^{3-sigma} to an energy bound. State the machine precisely (block decomposition E <= (p/Delta)(N + 2Q_Delta)-type? give the exact banked form), then compute what T1 gives: E << ? (expect p^{3/2} * polylog — state the exact log power). Compare with the direct energy theorem E <= 2*sqrt(3)*p^{3/2}: which is stronger, and is there any Delta-range where T1 improves any energy statement?
+2. [T3-INTERP] rerun: with T3 << p^2 log p, the interpolation E << p^{(1+tau)/2} at tau = 2+o(1) gives E << p^{3/2+o(1)} — verify, state the exact log power, confirm consistency (no contradiction with the direct theorem, no improvement either).
+3. CHANGED-STATEMENT LIST: enumerate every statement in the current campaign body that cites one of the superseded exponents {8/3, 5/2 (as a Q bound), 13/6, p^{1/6} gap} and state its updated form: (a) the sigma ladder table; (b) the "smallest explicit gap" claim (T3-2MINUS gap was p^{1/6}, now the gap to T3 << p^{2-delta} is A SINGLE LOG — restate the sharpest open form: is "remove the log in T3 <= 396 p^2 log p" now the single smallest open gap in the whole campaign? What EXACTLY does T3 << p^2 (log-free, say <= Cp^2) buy through [T3-INTERP]: E << p^{3/2} with explicit constant — compare constants with 2sqrt(3)); (c) [MESO-QRLL]/[MESO-PAIR] margin statements; (d) the LP fixed-point statement (13/6 -> 2+o(1)); (e) [NEAR-WALL_eta] status (from "open target, any eta>0" to "proved eta=3/7, and eta=1-o(1) via T1+Cauchy — state the exact log-corrected form of K from T1"). For each: old statement -> new statement, one line each.
+4. SANITY: with T1, does anything downstream break (a statement that USED the 5/2 bound in a direction where log matters, e.g. summing over dyadic scales where logs accumulate)? Check the axis-strip reduction and the W-injection consequences specifically.
+
+ASCII. Final: (a) least-confident conversion? (b) blind spot?
