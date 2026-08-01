@@ -152,3 +152,17 @@
   poles 引理的 proof 是 sketch (机验背书)。(b) 盲角: t=0 附近/小 t 的 S_h(t) 特殊行为
   未单独检查; cron 侧 qP-qZ 战果未对表 (黑名单纪律下待其自报)。
 - 在飞: 8 GPT (q2/q6/q9/qDWORK2/q15/q16/q17/q18) + codex×2 (crosscorr, irred-theorem)。
+
+### 收割看板 (在飞, 落地即勾)
+- [ ] life2 q20-qAUDIT3 (新 tex 结构定理群敌审) — 提交失败一次, 排队重发
+- [ ] life3 q19-TEXPROD (p^{1/6} 条件定理成稿 LaTeX)
+- [ ] life4 q12-qDWORK2 (Hom 分类 + weight 预算; FLAT-LAW 是其情景(ii)证据)
+- [ ] life5 q17-qSHELL2 (shell 的 d-二阶矩几何 + 例外集容忍版链条)
+- [ ] life7 q6-ATR 重发 (max-fiber Hölder 无条件三重返回界)
+- [ ] life8 q16-qCH-IRRED (C_h 不可约: Newton polygon/Eisenstein 攻坚)
+- [ ] life9 q18-VERIFY 重发 ((4h+1)√p 常数复核; 我方数值: 实际平坦 ~√(2lnp), 界未触及)
+- [ ] life10 q9-ANN 重发 (退火→淬火转移)
+- [ ] codex high CODEX_CROSSCORR_report.md (A_d/V_p 实测 = SHELL 实证)
+- [ ] codex max CODEX_IRRED_THEOREM_report.md (monodromy 全对称群路线 + census→16)
+- [x] life1 弃用 (tab 卡死, q1/qFAMMECH/q18 三问被吞; q1 内容已由 Q6550 覆盖,
+      qFAMMECH 由 Q6570 覆盖, q18 已改派 life9)
