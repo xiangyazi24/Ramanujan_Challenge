@@ -472,3 +472,11 @@ has random-polynomial root statistics after removing the one forced root").
   (MIX) is an alternative sufficient route. ALL frontiers = the single
   average-root statement; measured truth 0.72H² = (proved mirror 0.23H²) +
   (Poisson residual 0.5H²). R11/R12b attacking; MIX diagnostic running.
+
+## 19b. MIX diagnostic positive (mix_diagnostic.py)
+
+Average roots per mixed-determinant triple (h,u,t): 2.92–3.02, CONSTANT in H
+(8→20) and p (1009, 5003). So I(H,G) ≈ 3H²G empirically — (MIX) holds with a
+flat constant; the degree-bound saturation R9 feared does not occur. Status:
+all three sufficient statements (RES)/(MIX)/(SG) measured TRUE with stable
+constants (0.72 / 3.0 / σ₁²≈7). ONE proof of ONE average-root law = E ≪ p^{3/2}.
