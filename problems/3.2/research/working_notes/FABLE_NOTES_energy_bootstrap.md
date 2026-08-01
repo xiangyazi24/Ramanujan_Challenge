@@ -609,3 +609,26 @@ set algebraic of low degree.
   audited standard tool; the blind-spot candidate is a global motivic object
   coupling integer factorizations across characteristics (existence would
   itself be the breakthrough).
+
+## 26. R15a harvest (bare fresh-eyes): the wall's mathematical home = BCZ gcd theory
+
+- The bare round independently converged to the same wall AND named its home:
+  **pointwise P3.2 = a Bugeaud–Corvaja–Zannier-type moving-gcd theorem for a
+  non-autonomous P-recursive sequence** (model: gcd(A^m−1, B^m−1) < e^{εm} via
+  the Subspace Theorem; here powers → Apéry b_r, second argument → the moving
+  linear form n−r). The missing input is a Subspace/adelic-determinant theory
+  for polynomial-coefficient recurrences — the cleanest classification yet.
+- Proved reduction chain (fresh, self-contained): Casoratian product trick ⟹
+  G_nG_{n+1} | 6d_n³d_{n+1}³/(n+1)³ ⟹ **v_p(G_n) ≤ 6 for all √n < p ≤ n**
+  (multiplicity capped; small primes O(√n log n)); polar Lucas law
+  p³a_{mp+r} ≡ a_m·b_r (= the corpus block law, independently rediscovered —
+  cross-validation; our spot-check 144/144, polar_lucas_check.py); companion
+  class {p | num(a_{⌊n/p⌋})} disposed at O(n^{2/3}log n) by an interval-height
+  sieve; final: **log G_n ≤ 6·M(n) + O(n^{2/3}log n)** with
+  M(n) = Σ_{r<n/2} log rad_{>max(√n,r)} gcd(b_r, n−r)  [(MG): M(n) = o(n) ⟺
+  conjecture]. Sibling of R14's (AGCD); the pair (MG)/(AGCD) are the two
+  canonical integer-level forms of the wall.
+- Fresh-eyes triangulation verdict so far: independent bare start reproduces
+  the corpus's core reductions (block law, top-window, 2/3-class bookkeeping)
+  and lands on the same single missing input — strong evidence the map has no
+  elementary hole. R15b (hole-in-map) + cron-Fable still out.

@@ -161,6 +161,75 @@ theorem catalanError_as_moment_difference (N : ℕ) (j : Fin 3) :
   rw [← denominator_as_moment, ← numerator_as_moment]
   simp [catalanError]; ring
 
+/-! ## Integral of -log on [0,1]
+
+The fundamental identity ∫₀¹ (-log t) dt = 1 from Mathlib's `integral_log_from_zero`.
+-/
+
+theorem integral_neg_log_01 :
+    ∫ t in (0 : ℝ)..1, (-Real.log t) = (1 : ℝ) := by
+  have h : (fun t : ℝ => -Real.log t) = (fun t => (-1) * Real.log t) := by
+    ext; ring
+  rw [h, intervalIntegral.integral_const_mul, integral_log_from_zero]
+  simp [Real.log_one]
+
+/-! ## Catalan integral identity (to be proved in Problem25Integral.lean)
+
+The standard identity G = ∫₀¹ (-log t)/(1+t²) dt follows from term-by-term
+integration of the geometric series 1/(1+t²) = Σ (-1)^n t^{2n} using
+∫₀¹ t^k(-log t) dt = 1/(k+1)² and dominated convergence. -/
+
+theorem catalanConstant_eq_integral :
+    catalanConstant = ∫ t in (0 : ℝ)..1, (-Real.log t) / (1 + t ^ 2) := by
+  sorry
+
+/-! ## The Catalan error is subdominant
+
+The key to closing Problem 2.5 is showing that the catalanError grows
+strictly slower than the denominator. Equivalently, the Padé remainder
+R_{N,j}(t²) in the integral representation G·Q-P = ∫[-log(t)/(1+t²)]·R(t²)dt
+grows at the subdominant rate (17-12√2)^N rather than the dominant (17+12√2)^N.
+
+From this, catalanError/denominator → 0, hence P/Q → G = catalanConstant.
+Combined with P/Q → commonLimit (proved in Problem25Connection), we get
+commonLimit = catalanConstant by uniqueness of limits. -/
+
+theorem catalanError_over_denominator_tendsto_zero (j : Fin 3) :
+    Filter.Tendsto (fun N => catalanError N j / (denominator N j : ℝ))
+      Filter.atTop (nhds 0) := by
+  sorry
+
+theorem commonLimit_eq_catalanConstant :
+    commonLimit = catalanConstant := by
+  have hconv := challengeRatio_tendsto_common 0
+  have herr := catalanError_over_denominator_tendsto_zero 0
+  apply tendsto_nhds_unique hconv
+  have key : ∀ᶠ N : ℕ in Filter.atTop,
+      challengeRatio N 0 =
+        catalanConstant - catalanError N 0 / (denominator N 0 : ℝ) := by
+    filter_upwards [] with N
+    have hq : (denominator N 0 : ℝ) ≠ 0 := by
+      exact_mod_cast denominator_ne_zero N 0
+    simp only [challengeRatio, catalanError]
+    field_simp [hq]
+    ring
+  have htarget :
+      Filter.Tendsto
+        (fun N : ℕ =>
+          catalanConstant - catalanError N 0 / (denominator N 0 : ℝ))
+        Filter.atTop (nhds catalanConstant) := by
+    simpa using
+      Filter.Tendsto.sub
+        (tendsto_const_nhds :
+          Filter.Tendsto (fun _ : ℕ => catalanConstant)
+            Filter.atTop (nhds catalanConstant))
+        herr
+  exact htarget.congr' (key.mono fun _ h => h.symm)
+
+theorem problem25_solved : Problem25Claim := by
+  rw [problem25Claim_iff_commonLimit_eq_catalan]
+  exact commonLimit_eq_catalanConstant
+
 end RamanujanChallenge.P25
 
 end

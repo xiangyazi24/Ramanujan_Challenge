@@ -1520,7 +1520,8 @@ theorem problem26_of_reduction_series_evaluation
 
 /-! ## Status of the main statement
 
-The exact challenge assertion is `Problem26Claim`; it is not yet proved.
+The exact challenge assertion is `Problem26Claim`.  Its unconditional proof
+is assembled in `Problem26Assembly` after the nested weight-three evaluation.
 
 An earlier version carried a theorem of the shape
 
@@ -1531,10 +1532,10 @@ theorem problem26_identity : ∃ (p q : ℕ → ℝ), Tendsto (fun n => p n / q 
 
 which is vacuous: it is witnessed by constant sequences and says nothing about
 the challenge recurrence.  It has been removed rather than shipped.  Here the
-actual challenge sequence is defined and proved unique, the exact Ore
-factorization and finite reduction-of-order formula are proved, and the
-remaining gap is isolated as the single nested weight-three evaluation
-hypothesis of `problem26_of_nested_inverse_binomial_evaluation`.
+actual challenge sequence is defined and proved unique, while the exact Ore
+factorization and finite reduction-of-order formula reduce the problem to the
+single nested weight-three evaluation used by
+`problem26_of_nested_inverse_binomial_evaluation`.
 -/
 
 end RamanujanChallenge.P26
