@@ -69,8 +69,10 @@ private theorem scaledSigmoid27_mul_one_sub (y : ℝ) :
   rw [hcosh]
   field_simp [Real.exp_ne_zero]
   simp only [add_sub_cancel_left]
-  rw [pow_two, ← Real.exp_add, ← Real.exp_add]
-  ring_nf
+  rw [pow_two, ← Real.exp_add, mul_assoc, ← Real.exp_add]
+  rw [show -(2 * Real.pi * y) + (Real.pi * y + Real.pi * y) = 0 by ring,
+    Real.exp_zero]
+  norm_num
 
 private theorem scaledSigmoid27_logit (y : ℝ) :
     Real.log (scaledSigmoid27 y) -
@@ -88,7 +90,8 @@ private theorem scaledSigmoid27_logit (y : ℝ) :
         field_simp
         simp only [add_sub_cancel_left]
         rw [← Real.exp_add]
-        ring_nf]
+        ring_nf
+        rw [Real.exp_zero]]
   exact Real.log_exp _
 
 private theorem betaFourierIntegrand_scaledSigmoid27 (ξ y : ℝ) :
@@ -102,10 +105,24 @@ private theorem betaFourierIntegrand_scaledSigmoid27 (ξ y : ℝ) :
     show 1 - (scaledSigmoid27 y : ℂ) =
       ((1 - scaledSigmoid27 y : ℝ) : ℂ) by exact (Complex.ofReal_sub _ _).symm,
     Complex.cpow_def_of_ne_zero (Complex.ofReal_ne_zero.mpr hx1.ne')]
-  rw [← Complex.ofReal_log hx0.le, ← Complex.ofReal_log hx1.le, ← Complex.exp_add]
+  rw [← Complex.ofReal_log hx0.le, ← Complex.ofReal_log hx1.le,
+    mul_assoc, ← Complex.exp_add]
   congr 2
-  push_cast [scaledSigmoid27_logit]
-  ring
+  have hlog :
+      ((Real.log (scaledSigmoid27 y) : ℝ) : ℂ) -
+          (Real.log (1 - scaledSigmoid27 y) : ℂ) =
+        (2 * Real.pi * y : ℝ) := by
+    exact_mod_cast scaledSigmoid27_logit y
+  calc
+    ((Real.log (scaledSigmoid27 y) : ℂ) * -(Complex.I * ξ) +
+        (Real.log (1 - scaledSigmoid27 y) : ℂ) * (Complex.I * ξ)) =
+        -(Complex.I * ξ) *
+          ((Real.log (scaledSigmoid27 y) : ℂ) -
+            (Real.log (1 - scaledSigmoid27 y) : ℂ)) := by ring
+    _ = -(Complex.I * ξ) * (2 * Real.pi * y : ℝ) := by rw [hlog]
+    _ = -(2 * (Real.pi : ℂ) * (y : ℂ) * (ξ : ℂ)) * Complex.I := by
+      push_cast
+      ring
 
 /-- Fourier transform of `sech² (π y)`, in beta-integral form. -/
 theorem integral_sechSq_cexp_eq_beta27 (ξ : ℝ) :
@@ -141,7 +158,7 @@ theorem integral_sechSq_cexp_eq_beta27 (ξ : ℝ) :
             apply intervalIntegral.integral_congr
             intro x hx
             unfold g betaFourierIntegrand27
-            congr 1 <;> ring
+            ring_nf
       _ = ((2 / Real.pi : ℝ) : ℂ) *
           ∫ x : ℝ in 0..1,
             (x : ℂ) ^ (1 - Complex.I * ξ - 1) *
@@ -154,12 +171,74 @@ theorem integral_sechSq_cexp_eq_beta27 (ξ : ℝ) :
   filter_upwards with y
   have hfpos : 0 < f' y := by
     dsimp only [f']
-    positivity
+    exact mul_pos
+      (mul_pos (mul_pos (by norm_num) Real.pi_pos) (Real.sigmoid_pos _))
+      (sub_pos.mpr (Real.sigmoid_lt_one _))
   rw [abs_of_pos hfpos]
   dsimp only [f, f', g]
   rw [betaFourierIntegrand_scaledSigmoid27]
-  rw [← scaledSigmoid27_mul_one_sub]
+  have hw :
+      1 / (Real.cosh (Real.pi * y) : ℂ) ^ 2 =
+        4 * (scaledSigmoid27 y : ℂ) * (1 - scaledSigmoid27 y) := by
+    exact_mod_cast (scaledSigmoid27_mul_one_sub y).symm
+  rw [div_eq_mul_inv, ← one_div, hw]
   push_cast
+  rw [Complex.real_smul]
+  field_simp [Real.pi_ne_zero]
   ring
+
+private theorem betaIntegral_one_sub_I_mul_one_add_I_mul27
+    (ξ : ℝ) :
+    Complex.betaIntegral (1 - Complex.I * ξ) (1 + Complex.I * ξ) =
+      if ξ = 0 then 1 else
+        ((Real.pi * ξ / Real.sinh (Real.pi * ξ) : ℝ) : ℂ) := by
+  by_cases hξ : ξ = 0
+  · subst ξ
+    simp [Complex.betaIntegral_eval_one_right]
+  · rw [if_neg hξ]
+    have hIξ : Complex.I * (ξ : ℂ) ≠ 0 :=
+      mul_ne_zero Complex.I_ne_zero (Complex.ofReal_ne_zero.mpr hξ)
+    rw [Complex.betaIntegral_eq_Gamma_mul_div]
+    · rw [show (1 - Complex.I * ξ) + (1 + Complex.I * ξ) = 2 by ring]
+      norm_num [Complex.Gamma_nat_eq_factorial]
+      rw [show 1 + Complex.I * ξ = Complex.I * ξ + 1 by ring,
+        Complex.Gamma_add_one _ hIξ]
+      have hreflect := Complex.Gamma_mul_Gamma_one_sub (Complex.I * (ξ : ℂ))
+      rw [show 1 - Complex.I * (ξ : ℂ) = 1 - Complex.I * ξ by rfl] at hreflect
+      calc
+        Complex.Gamma (1 - Complex.I * ξ) *
+              (Complex.I * ξ * Complex.Gamma (Complex.I * ξ)) =
+            (Complex.I * ξ) *
+              (Complex.Gamma (Complex.I * ξ) *
+                Complex.Gamma (1 - Complex.I * ξ)) := by ring
+        _ = (Complex.I * ξ) *
+              ((Real.pi : ℂ) /
+                Complex.sin ((Real.pi : ℂ) * (Complex.I * ξ))) := by
+              rw [hreflect]
+        _ = ((Real.pi * ξ / Real.sinh (Real.pi * ξ) : ℝ) : ℂ) := by
+              rw [show (Real.pi : ℂ) * (Complex.I * ξ) =
+                ((Real.pi * ξ : ℝ) : ℂ) * Complex.I by push_cast; ring,
+                Complex.sin_mul_I]
+              have hs : Real.sinh (Real.pi * ξ) ≠ 0 :=
+                Real.sinh_ne_zero.mpr (mul_ne_zero Real.pi_ne_zero hξ)
+              field_simp [hs, Complex.I_ne_zero]
+              ring
+    · norm_num
+    · norm_num
+
+/-- Closed form of the Fourier transform of `sech² (π y)`. -/
+theorem integral_sechSq_cexp27 (ξ : ℝ) :
+    (∫ y : ℝ,
+      Complex.exp (-(2 * Real.pi * y * ξ) * Complex.I) /
+        (Real.cosh (Real.pi * y) : ℂ) ^ 2) =
+      if ξ = 0 then (2 / Real.pi : ℝ) else
+        (2 * ξ / Real.sinh (Real.pi * ξ) : ℝ) := by
+  rw [integral_sechSq_cexp_eq_beta27,
+    betaIntegral_one_sub_I_mul_one_add_I_mul27]
+  split_ifs with hξ
+  · push_cast
+    ring
+  · push_cast
+    field_simp [Real.pi_ne_zero]
 
 end RamanujanChallenge.P27

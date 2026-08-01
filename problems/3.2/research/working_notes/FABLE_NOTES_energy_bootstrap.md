@@ -813,3 +813,23 @@ Diophantine/lattice routes after all.
   results); life/ChatGPT → formalize (b); cron → continues GPT rounds.
   The three-line map updates: apparition line RESOLVED-as-harmless (its
   ceiling is known); weight shifts to inverse-theorem (b).
+
+## 35. Branch reflection law: the quarter-point law's true engine (codex-high + our proof chain)
+
+- **Branch reflection law (codex-high discovery, our verification 92/92, all
+  primes 7 ≤ p < 500, both classes):** the truncated square-root polynomial
+  (deg D) satisfies a_{D−j} ≡ (−2|p)·a_j (mod p) — the character-twisted
+  descent of the strong reflection theorem to rank 2.
+- **COMPLETE EXPLANATION CHAIN (ours, from the law):** at the center j = D/2:
+  a_{D/2}(1 − (−2|p)) ≡ 0, so (−2|p) = −1 FORCES the central zero.
+  (−2|p) = −1 ⟺ p ≡ 5,7 (mod 8); intersect with integral-center classes ⟹
+  exactly {p ≡ 5, 23 (mod 24)} ✓ — every piece of the quarter-point numerology
+  explained at once. Proof route for the law itself: strong reflection
+  (proved) + the √-branch symmetry (the (−2|p) is the branch character of
+  √ under x ↦ reflected variable — formalization pending, [GAP-BR]).
+- Codex-high extras: classes 11/17 structured points = nonzero EQUAL central
+  pairs (consistent with (−2|p) = +1 there... 11 mod 8 = 3: (−2|11)=+1 ✓,
+  17 mod 8 = 1: +1 ✓); σ eighth-point zero skeleton (13 class: two, 23 class:
+  three — order-8 characters, still in the counting-lemma-harmless region);
+  Jacobsthal linear-position and neighbor-constant fits NEGATIVE (the (x,y)
+  parametrization hope dies; the law is characterial, not lattice-point).

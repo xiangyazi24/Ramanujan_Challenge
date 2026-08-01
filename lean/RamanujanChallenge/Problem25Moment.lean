@@ -185,10 +185,60 @@ From this, catalanError/denominator → 0, hence P/Q → G = catalanConstant.
 Combined with P/Q → commonLimit (proved in Problem25Connection), we get
 commonLimit = catalanConstant by uniqueness of limits. -/
 
+/-- The remaining connection certificate in its concrete sign form.  These
+two inequalities say that Catalan's constant is bracketed by two of the three
+rational approximants at every stage. -/
+theorem positiveCatalanError_brackets (N : ℕ) :
+    positiveCatalanError N 0 ≤ 0 ∧ 0 ≤ positiveCatalanError N 2 := by
+  sorry
+
+private theorem catalanConstant_mem_envelope (N : ℕ) :
+    lowerEnvelope N ≤ catalanConstant ∧
+      catalanConstant ≤ upperEnvelope N := by
+  rcases positiveCatalanError_brackets N with ⟨hzero, htwo⟩
+  have hqzero : (0 : ℝ) < positiveDenominator N 0 := by
+    exact_mod_cast positiveDenominator_pos N 0
+  have hqtwo : (0 : ℝ) < positiveDenominator N 2 := by
+    exact_mod_cast positiveDenominator_pos N 2
+  have hle_zero : catalanConstant ≤ positiveRatio N 0 := by
+    rw [positiveRatio, le_div_iff₀ hqzero]
+    rw [positiveCatalanError_eq] at hzero
+    linarith
+  have htwo_le : positiveRatio N 2 ≤ catalanConstant := by
+    rw [positiveRatio, div_le_iff₀ hqtwo]
+    rw [positiveCatalanError_eq] at htwo
+    linarith
+  exact ⟨(positiveRatio_envelope N 2).1.trans htwo_le,
+    hle_zero.trans (positiveRatio_envelope N 0).2⟩
+
 theorem catalanError_over_denominator_tendsto_zero (j : Fin 3) :
     Filter.Tendsto (fun N => catalanError N j / (denominator N j : ℝ))
       Filter.atTop (nhds 0) := by
-  sorry
+  have hcatalan_tendsto_common :
+      Filter.Tendsto (fun _ : ℕ => catalanConstant)
+        Filter.atTop (nhds commonLimit) :=
+    tendsto_of_tendsto_of_tendsto_of_le_of_le
+      lowerEnvelope_tendsto_common upperEnvelope_tendsto_common
+      (fun N => (catalanConstant_mem_envelope N).1)
+      (fun N => (catalanConstant_mem_envelope N).2)
+  have hcommon : commonLimit = catalanConstant :=
+    tendsto_nhds_unique hcatalan_tendsto_common tendsto_const_nhds
+  have hratio := challengeRatio_tendsto_common j
+  have herror :
+      (fun N : ℕ => catalanError N j / (denominator N j : ℝ)) =
+        (fun N : ℕ => catalanConstant - challengeRatio N j) := by
+    funext N
+    have hq : (denominator N j : ℝ) ≠ 0 := by
+      exact_mod_cast denominator_ne_zero N j
+    simp only [catalanError, challengeRatio]
+    field_simp [hq]
+  rw [herror]
+  simpa [hcommon] using
+    (Filter.Tendsto.sub
+      (tendsto_const_nhds :
+        Filter.Tendsto (fun _ : ℕ => catalanConstant)
+          Filter.atTop (nhds catalanConstant))
+      hratio)
 
 theorem commonLimit_eq_catalanConstant :
     commonLimit = catalanConstant := by
