@@ -1,0 +1,24 @@
+# DS note: p=11 Dwork/Cartier computation — setup verified (2026-07-31)
+
+Tool: **Sage** (correct for finite-field/p-adic Dwork work; Mathematica is unsuitable for mod-p).
+
+## Verified setup (mod 11)
+- Apéry b_m mod 11 correct (exact-integer computation; naive mod-p recurrence fails at m=p−1
+  because (m+1)³ vanishes mod p — must fall back to exact values, as the session file noted).
+- **PF operator annihilates F(t)=Σb_m t^m mod 11** (coefficient-wise m=2..22) — the rank-3
+  Beukers-Peters connection matrix A(t) (a0,a1,a2 as rational functions mod 11) is correct.
+- **Block law b_{p+r} ≡ 5·b_r mod 11** holds for r=1..10 (valid range).
+- **Cartier operator acts as IDENTITY on the Apéry coefficient array**: b_{pm} ≡ b_m mod p
+  (verified p=7,11,13, m=1..19) — from the vector Lucas b_{qp+r} ≡ b_q b_r (verified q=2,3 all r).
+  This is the coefficient-level Frobenius/Cartier structure: the Apéry coefficient vector is
+  a Frobenius eigenvector with eigenvalue 1.
+
+## The decisive next step (Q6276 §5 — heavy, research-level)
+Tr(Frob|H_Dwork) = Σ_{m<M} e_11(b_m) requires the FULL Griffiths-Dwork Cartier matrix on the
+relative Dwork cohomology of F(t)=CT(1−tΛ)^{-1}. This is the Beukers-Vlasenko rational-form
+Cartier operator (Prop 3.3) + Griffiths-Dwork reduction, which Q6174 honestly noted is NOT yet
+executed. The recipe is in Q6153 (Cartier formula, precision N=2 then N=4) and Q6276 §5.
+- The overconvergent F-isocrystal structure + additive-character twist on the coefficient
+  coordinate is the object; its Frobenius slopes/dimensions bounded as p varies would confirm
+  the p-adic framework.
+- This is a substantial implementation (multi-hour), not a quick grind.
