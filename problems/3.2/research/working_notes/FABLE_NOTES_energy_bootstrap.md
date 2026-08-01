@@ -1444,3 +1444,33 @@ double-certified.
   对应曲线符号分解+例外轨迹分类; qNE4(→life8) 退火 Poisson 定理证明
   (条件于 CG 假设, 含重启结构 F_u(∞)=0 的 Chen-Stein 改造);
   qNB4(→life9) 整本征迹构造。在飞: 6 ChatGPT + codex-max。
+
+## §69 (08-01 09:45) Q6453 纠正轮 + Q6445 冲击处理 + 自对偶探针
+
+- **Q6453 (qNB3 解药, life5) 三重纠正**:
+  (1) **d₋=4 非 2**——Euler-Poincaré: A₊ 在 α,β 惯性不变量维 2(降1×2 ⟹
+  d₊=2), A₋ 不变量维 1(降2×2 ⟹ d₋=4); 恰解释 Artin 导手 9 vs 11 差 2。
+  经查我方档案 Q6394 早已记录(其行41/233/285: companion "Mellin rank 4"),
+  我 qNB4 spec 的"both dim 2"前提错——qNB4 在飞, 答案会自行纠正(问法
+  要求展示计算)。
+  (2) **Mellin 自对偶号=辛**: 正交输入+度1上同调 ⟹ 交错配对 ⟹
+  G₊⊆Sp₂=SL₂, G₋⊆Sp₄。G₋ 主候选: Sp₄(M₄=3) vs Sym³SL₂(M₄=4) vs 退化。
+  (3) **Goursat 修正版**: G₋=Sp₄ ⟹ product 自动(SL₂≇Sp₄ 单群);
+  graph 仅当 G₋=Sym³SL₂。**判别数 C₂₂=E|s₊|²|s₋|²: product=1 vs
+  Sym³-graph=2**; 朴素协方差两情形皆 0(std⊥Sym³)——与我 §65 "M₁₁盲"
+  同判, 机制修正。相位敏感版 E[x³ȳ]=1(graph, 除ν扭后)。
+  午后 kill-test 配方: FFT μ₄^{(±)}, C₂₂ + 扩域 L-多项式 e₄≠0 证 d₋=4
+  ——待 qNB4 整迹落地后派 codex。**最不自信步=对象级
+  inversion/autoduality 同构**(局部数据造不出, 需 Fricke 几何)。
+- **Q6445 冲击(cron 急件)**: Q6339 原口径"正密度⟹O(1/δ)陪集⟹有界自扭"
+  被膨胀族反例击毙(陪集覆盖≥q)。已核 codex-high 报告: 其主形式化=
+  MI(c,ε,η)(Q6413 §II 口径)不依赖被杀步——**无恙**; 阈值表 positive-
+  density 行降级+C0/Prop3 替代已写入报告裁决附记(commit 已 push)。
+  路由共识: C 线下一步=B 的三件输入, 不再证分圆逆定理。
+- **qNB5(→life5) 已派**: 自对偶同构构造——inv 作用(q 回文 ⟹ α↔β=1/α),
+  inv*K_q ≅ K_q⊗L_{χ₂}(回文 ⟹ √q(1/t)=√q(t)/t) 的二次 Kummer 位移
+  疑点(自对偶可能带 χ→χ₂/χ 位移——与 apparition 四分律 mod 24 对表),
+  Verdier 结合+号计算+G₊=SL₂ 剩余步。
+- cron Tests A/F 收官吸收: A=检测器线性律 0.394p=(1−e^{−1/2})p, E_p~3p
+  (E 线建模常数); F=MIXED(exact 指示器大 bin +2.4σ, BOUNDARY-PROFILE
+  未扣挂牌)。
