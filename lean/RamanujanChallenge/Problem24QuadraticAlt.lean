@@ -3786,4 +3786,168 @@ theorem quadAltI11_eq_integral :
   simpa [mul_div_assoc] using (hmain.trans hcongr)
 
 
+/-! ## Layer E, step 1: the IBP that removes `K`'s termwise integration
+
+`d[log²x · log²(1+x)/2] = log x·log²(1+x)/x + log²x·log(1+x)/(1+x)` and BOTH
+boundary terms vanish — at `1` because `log 1 = 0`, at `0` because
+`log(1+x) = O(x)` beats `log²x`.  So `K` equals the negative of the other piece,
+and the expensive route through
+`MeasureTheory.hasSum_integral_of_summable_integral_norm` is not needed here. -/
+
+/-- `log(1+x) ≤ x` for `x ≥ 0`. -/
+theorem log_one_add_le_self {x : ℝ} (hx : 0 ≤ x) : Real.log (1 + x) ≤ x := by
+  have h := Real.log_le_sub_one_of_pos (show (0:ℝ) < 1 + x by linarith)
+  simpa using h
+
+/-- `0 ≤ log(1+x)` for `x ≥ 0`. -/
+theorem log_one_add_nonneg {x : ℝ} (hx : 0 ≤ x) : 0 ≤ Real.log (1 + x) :=
+  Real.log_nonneg (by linarith)
+
+/-- The IBP antiderivative `F = log²x · log²(1+x) / 2`. -/
+noncomputable def quadAltKF (x : ℝ) : ℝ :=
+  Real.log x ^ 2 * Real.log (1 + x) ^ 2 / 2
+
+theorem quadAltKF_hasDerivAt {x : ℝ} (hx0 : 0 < x) :
+    HasDerivAt quadAltKF
+      (Real.log x * Real.log (1 + x) ^ 2 / x
+        + Real.log x ^ 2 * Real.log (1 + x) / (1 + x)) x := by
+  have hx1 : (0:ℝ) < 1 + x := by linarith
+  have hlx : HasDerivAt (fun y : ℝ => Real.log y) (1 / x) x := by
+    simpa [one_div] using Real.hasDerivAt_log (ne_of_gt hx0)
+  have hlp : HasDerivAt (fun y : ℝ => Real.log (1 + y)) (1 / (1 + x)) x := by
+    have hinner : HasDerivAt (fun y : ℝ => 1 + y) 1 x := by
+      simpa using (hasDerivAt_id x).const_add (1 : ℝ)
+    have := (Real.hasDerivAt_log (ne_of_gt hx1)).comp x hinner
+    simpa [one_div] using this
+  have hmain := (((hlx.pow 2).mul (hlp.pow 2)).div_const 2)
+  convert hmain using 1
+  simp only [Pi.pow_apply]
+  have hxne : x ≠ 0 := ne_of_gt hx0
+  have hx1ne : (1:ℝ) + x ≠ 0 := ne_of_gt hx1
+  field_simp
+  ring
+
+/-- Left endpoint: `F → 0` as `x → 0⁺`, because `log(1+x) = O(x)` beats `log²x`. -/
+theorem quadAltKF_tendsto_zero_right :
+    Tendsto quadAltKF (𝓝[>] (0:ℝ)) (𝓝 0) := by
+  have hsq : Tendsto (fun x : ℝ => (Real.log x ^ 2 * x) * x / 2) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+    have h1 := logSq_mul_self_tendsto
+    have h2 : Tendsto (fun x : ℝ => x) (𝓝[>] (0:ℝ)) (𝓝 0) :=
+      tendsto_id.mono_left nhdsWithin_le_nhds
+    simpa using ((h1.mul h2).div_const 2)
+  refine squeeze_zero_norm' ?_ hsq
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hx0 : (0:ℝ) < x := hx
+  have hle : Real.log (1 + x) ≤ x := log_one_add_le_self (le_of_lt hx0)
+  have hnn : 0 ≤ Real.log (1 + x) := log_one_add_nonneg (le_of_lt hx0)
+  have hsqle : Real.log (1 + x) ^ 2 ≤ x ^ 2 := by nlinarith
+  have : ‖quadAltKF x‖ = Real.log x ^ 2 * Real.log (1 + x) ^ 2 / 2 := by
+    unfold quadAltKF
+    rw [Real.norm_eq_abs, abs_of_nonneg (by positivity)]
+  rw [this]
+  have hpos : (0:ℝ) ≤ Real.log x ^ 2 := sq_nonneg _
+  have : Real.log x ^ 2 * Real.log (1 + x) ^ 2 ≤ Real.log x ^ 2 * x ^ 2 :=
+    mul_le_mul_of_nonneg_left hsqle hpos
+  nlinarith [this]
+
+/-- Right endpoint: `F → 0` as `x → 1⁻`, because `log 1 = 0`. -/
+theorem quadAltKF_tendsto_zero_left :
+    Tendsto quadAltKF (𝓝[<] (1:ℝ)) (𝓝 0) := by
+  have hc : ContinuousAt quadAltKF 1 := by
+    unfold quadAltKF
+    have h1 : ContinuousAt Real.log 1 := Real.continuousAt_log (by norm_num)
+    have h2 : ContinuousAt (fun y : ℝ => Real.log (1 + y)) 1 := by
+      apply ContinuousAt.log (by fun_prop); norm_num
+    exact ((h1.pow 2).mul (h2.pow 2)).div_const 2
+  have hval : quadAltKF 1 = 0 := by unfold quadAltKF; simp
+  have := hc.tendsto
+  rw [hval] at this
+  exact this.mono_left nhdsWithin_le_nhds
+
+/-- `1 + log²x` is interval-integrable on `[0,1]`; it dominates both IBP pieces. -/
+theorem intervalIntegrable_one_add_logSq :
+    IntervalIntegrable (fun x : ℝ => 1 + Real.log x ^ 2) MeasureTheory.volume 0 1 :=
+  (intervalIntegrable_const (c := (1:ℝ))).add intervalIntegrable_logSq
+
+/-- The `A` piece `log x · log²(1+x) / x`, dominated by `|log x| ≤ 1 + log²x`. -/
+theorem quadAltKA_intervalIntegrable :
+    IntervalIntegrable (fun x : ℝ => Real.log x * Real.log (1 + x) ^ 2 / x)
+      MeasureTheory.volume 0 1 := by
+  refine intervalIntegrable_of_continuousOn_Ioo_of_le (by norm_num) ?_
+    intervalIntegrable_one_add_logSq ?_
+  · intro x hx
+    have hx0 : (0:ℝ) < x := hx.1
+    refine ContinuousAt.continuousWithinAt ?_
+    have h1 : ContinuousAt (fun y : ℝ => Real.log y) x := Real.continuousAt_log (ne_of_gt hx0)
+    have h2 : ContinuousAt (fun y : ℝ => Real.log (1 + y)) x := by
+      apply ContinuousAt.log (by fun_prop); linarith
+    exact (h1.mul (h2.pow 2)).div continuousAt_id (ne_of_gt hx0)
+  · intro x hx
+    have hx0 : (0:ℝ) < x := hx.1
+    have hx1 : x < 1 := hx.2
+    have hle : Real.log (1 + x) ≤ x := log_one_add_le_self (le_of_lt hx0)
+    have hnn : 0 ≤ Real.log (1 + x) := log_one_add_nonneg (le_of_lt hx0)
+    have hsq : Real.log (1 + x) ^ 2 ≤ x ^ 2 := by nlinarith
+    have habs : |Real.log x * Real.log (1 + x) ^ 2 / x|
+        = |Real.log x| * (Real.log (1 + x) ^ 2 / x) := by
+      rw [abs_div, abs_mul, abs_of_pos hx0,
+        abs_of_nonneg (sq_nonneg (Real.log (1 + x)))]
+      ring
+    rw [Real.norm_eq_abs, habs]
+    have hfrac : Real.log (1 + x) ^ 2 / x ≤ 1 := by
+      rw [div_le_one hx0]; nlinarith
+    have hfnn : 0 ≤ Real.log (1 + x) ^ 2 / x := by positivity
+    have hlog : |Real.log x| ≤ 1 + Real.log x ^ 2 := by
+      nlinarith [sq_abs (Real.log x), sq_nonneg (|Real.log x| - 1)]
+    nlinarith [abs_nonneg (Real.log x)]
+
+/-- The `B` piece is the `K` integrand itself, dominated by `log 2 · log²x`. -/
+theorem quadAltKB_intervalIntegrable :
+    IntervalIntegrable (fun x : ℝ => Real.log x ^ 2 * Real.log (1 + x) / (1 + x))
+      MeasureTheory.volume 0 1 := by
+  refine intervalIntegrable_of_continuousOn_Ioo_of_le (by norm_num) ?_
+    intervalIntegrable_one_add_logSq ?_
+  · intro x hx
+    have hx0 : (0:ℝ) < x := hx.1
+    refine ContinuousAt.continuousWithinAt ?_
+    have h1 : ContinuousAt (fun y : ℝ => Real.log y) x := Real.continuousAt_log (ne_of_gt hx0)
+    have h2 : ContinuousAt (fun y : ℝ => Real.log (1 + y)) x := by
+      apply ContinuousAt.log (by fun_prop); linarith
+    exact ((h1.pow 2).mul h2).div (by fun_prop) (by linarith)
+  · intro x hx
+    have hx0 : (0:ℝ) < x := hx.1
+    have hx1 : x < 1 := hx.2
+    have hnn : 0 ≤ Real.log (1 + x) := log_one_add_nonneg (le_of_lt hx0)
+    have hle : Real.log (1 + x) ≤ x := log_one_add_le_self (le_of_lt hx0)
+    have h1x : (0:ℝ) < 1 + x := by linarith
+    have habs : |Real.log x ^ 2 * Real.log (1 + x) / (1 + x)|
+        = Real.log x ^ 2 * (Real.log (1 + x) / (1 + x)) := by
+      rw [abs_div, abs_mul, abs_of_nonneg (sq_nonneg (Real.log x)),
+        abs_of_nonneg hnn, abs_of_pos h1x]
+      ring
+    rw [Real.norm_eq_abs, habs]
+    have hfrac : Real.log (1 + x) / (1 + x) ≤ 1 := by
+      rw [div_le_one h1x]; linarith
+    have hfnn : 0 ≤ Real.log (1 + x) / (1 + x) := by positivity
+    nlinarith [sq_nonneg (Real.log x)]
+
+/-- **The IBP step for `K`.**  Both boundary terms of
+`d[log²x · log²(1+x)/2] = log x log²(1+x)/x + log²x log(1+x)/(1+x)`
+vanish, so the two pieces are negatives of each other. -/
+theorem quadAltK_eq_neg_integral :
+    quadAltK = -∫ x in (0:ℝ)..1, Real.log x * Real.log (1 + x) ^ 2 / x := by
+  have hsum : IntervalIntegrable
+      (fun x : ℝ => Real.log x * Real.log (1 + x) ^ 2 / x
+        + Real.log x ^ 2 * Real.log (1 + x) / (1 + x)) MeasureTheory.volume 0 1 :=
+    quadAltKA_intervalIntegrable.add quadAltKB_intervalIntegrable
+  have hzero := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (by norm_num : (0:ℝ) < 1)
+    (fun x hx => quadAltKF_hasDerivAt hx.1) hsum
+    quadAltKF_tendsto_zero_right quadAltKF_tendsto_zero_left
+  rw [intervalIntegral.integral_add quadAltKA_intervalIntegrable
+    quadAltKB_intervalIntegrable] at hzero
+  simp only [sub_zero] at hzero
+  unfold quadAltK
+  linarith [hzero]
+
 end RamanujanChallenge.P24QuadAlt
