@@ -14,6 +14,7 @@ noncomputable section
 
 namespace RamanujanChallenge.P27
 
+-- Q6383 exact API probe, compiled by the isolated branch workflow.
 #check MeasureTheory.integral_integral_swap
 #check MeasureTheory.integral_tsum_of_summable_integral_norm
 #check MeasureTheory.hasSum_integral_of_summable_integral_norm
