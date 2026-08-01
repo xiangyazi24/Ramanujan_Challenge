@@ -2442,3 +2442,8 @@ monodromy 塔正式闭合 (全 h 条件悬于 CRIT/BG = 同一单变量族, 与 
 - 战役三总结: 能量墙未破 (3/2 立); 结构塔 h≤32 全定理化; 实证栈五层全绿;
   两侧 all-h/all-scale 残余均收束为"超出现有技术的一致性输入"——同一座山的
   两个面。下一战役入口三件 + [MESO-S1-2/3]∥[MIDPOINT-AC'] 已在墙图。
+
+§130 终记: W_h 证书 PASS 全 2≤h≤32 (不可约/W(0)≠0/squarefree, 八素数交集法,
+CODEX_WH_CERT_report.md + results.json 可复现) — 路线(b)单件通吃在 h≤32 兑现,
+与 BG 直接证书双保险。今日全部 codex 航班收官 (lastwall/CRIT2H/λmax/W_h/A_h/
+crosscorr/empirics/numerics/symbolic/irred 十班全落)。
