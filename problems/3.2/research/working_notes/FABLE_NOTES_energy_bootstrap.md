@@ -2402,3 +2402,16 @@ VERIFIED-32: C_h squarefree+C_h(0)≠0 h≤32; gcd(C_h,C_k)=1 全 465 对。
 + 精确局部惯性分解 + 双局部群本原性 + 低维不可约连通辛子群分类 + T₀³ Jordan 型
 (J_2^{h−1}⊕J_1^{2h}, rank(ν−1)=h−1); 先证 Sp-full, M₄=3 自动。
 ⟹ FLAT-LAW/Deligne 等分布在 h=2,3 是定理; 模板的 h-依赖 = 分类步 (q47 推广中)。
+
+## §126 — lastwall max 深攻终判 (08-02 凌晨)
+
+**NO UNBOUNDED L PROVED — 3/2 纪录未破。** 但完成逐寸测绘 (CODEX_LASTWALL_report.md):
+- V7: 一般纤维定理 PROVED (标量化后移动靶问题消失; 与 AR.6 一致); 作为
+  MESO 闭合机制 DEAD (指数不够)。cut-edge 污染完全分类且无害。
+- V8: primitive=首返回 PROVED; 精确分裂/renewal 恒等式 PROVED; 标量 bootstrap
+  =容量不等式复现 DEAD; 反射对称 no-go 词 PROVED — (4.8)/(4.9) 为精确条件逃生口。
+- 小 gap 算术: raw 证书不可能 DEAD; lc-apparition 无根界 DEAD; centered/
+  codegree-敏感替代 CONDITIONAL (需忽略孤立镜像边)。
+- §6: 其余 banked 路线 "以当前转换 DEAD, 未被反驳为定理"。
+战役三收官形态: 墙未破, 但赢面收束到三个命名条件件: (4.8)/(4.9) 逃生口 +
+codegree-敏感证书 + [MESO-S1-2/3] 一阶矩 census (并列 cron [MIDPOINT-AC'])。
