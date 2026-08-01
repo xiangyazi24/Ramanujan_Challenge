@@ -9,7 +9,8 @@ import Mathlib.MeasureTheory.Integral.Prod
 import Mathlib.NumberTheory.ZetaValues
 import Mathlib.Topology.Algebra.InfiniteSum.NatInt
 
-open Filter Set MeasureTheory
+open Filter Set MeasureTheory Topology
+open scoped Topology
 
 noncomputable section
 
@@ -24,16 +25,17 @@ private theorem integrableOn_pow_mul_exp_neg_mul27
       (s := (n : ℝ) + 1) (by positivity) using 1
     ext x
     rw [show (n : ℝ) + 1 - 1 = n by ring, Real.rpow_natCast]
+  have hbase0 :
+      IntegrableOn (fun x : ℝ => Real.exp (-x) * x ^ n) (Ioi (a * 0)) := by
+    simpa only [mul_zero] using hbase
   have hscaled :
       IntegrableOn
         (fun t : ℝ => Real.exp (-(a * t)) * (a * t) ^ n) (Ioi 0) := by
-    simpa using
-      ((integrableOn_Ioi_comp_mul_left_iff
-        (fun x : ℝ => Real.exp (-x) * x ^ n) 0 ha).2 hbase)
+    exact (integrableOn_Ioi_comp_mul_left_iff
+      (fun x : ℝ => Real.exp (-x) * x ^ n) 0 ha).2 hbase0
   have hc := hscaled.const_mul ((a ^ n)⁻¹)
   refine hc.congr ?_
   filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-  dsimp
   rw [mul_pow]
   field_simp [ha.ne']
   ring
@@ -61,7 +63,7 @@ private theorem integral_cexp_neg_mul_Ioi27
 private theorem tendsto_self_mul_exp_neg_mul27
     {a : ℝ} (ha : 0 < a) :
     Tendsto (fun t : ℝ => t * Real.exp (-(a * t))) atTop (𝓝 0) := by
-  have h := (tendsto_pow_mul_exp_neg_atTop_nhds_zero 1).comp
+  have h := (Real.tendsto_pow_mul_exp_neg_atTop_nhds_zero 1).comp
     (tendsto_id.const_mul_atTop' ha)
   have hc := h.const_mul a⁻¹
   convert hc using 1
@@ -86,15 +88,14 @@ private theorem integral_self_mul_cexp_neg_mul_Ioi27
   have hv (t : ℝ) : HasDerivAt v (Complex.exp (-z * (t : ℂ))) t := by
     have hlin :
         HasDerivAt (fun x : ℝ => -z * (x : ℂ)) (-z) t := by
-      convert (hasDerivAt_id t).ofReal_comp.const_mul (-z) using 1 <;> ring
+      convert (hasDerivAt_id t).ofReal_comp.const_mul (-z) using 1 <;> simp
     convert hlin.cexp.neg.div_const z using 1
     field_simp [hz0]
-    ring
   have huv' : IntegrableOn (u * v') (Ioi 0) := by
     simpa [u, v'] using integrableOn_cpow_mul_cexp_neg_mul27 1 hz
   have hu'v : IntegrableOn (u' * v) (Ioi 0) := by
     have h := (integrableOn_cpow_mul_cexp_neg_mul27 0 hz).neg.div_const z
-    simpa [u', v] using h
+    simpa only [Pi.mul_apply, one_mul, u', v] using h
   have hzero : Tendsto (u * v) (𝓝[>] (0 : ℝ)) (𝓝 0) := by
     have hc : ContinuousAt (u * v) 0 := by
       dsimp [u, v]
@@ -130,22 +131,30 @@ private theorem integral_laplace_poleBlock27
     (∫ t : ℝ in Ioi 0,
       ((1 + t / 2 : ℝ) : ℂ) * Complex.exp (-z * (t : ℂ))) =
       z⁻¹ + (z ^ 2)⁻¹ / 2 := by
-  have h0 := integrableOn_cpow_mul_cexp_neg_mul27 0 hz
-  have h1 := integrableOn_cpow_mul_cexp_neg_mul27 1 hz
+  have h0 : IntegrableOn
+      (fun t : ℝ => Complex.exp (-z * (t : ℂ))) (Ioi 0) := by
+    simpa using integrableOn_cpow_mul_cexp_neg_mul27 0 hz
+  have h1 : IntegrableOn
+      (fun t : ℝ => (t : ℂ) * Complex.exp (-z * (t : ℂ))) (Ioi 0) := by
+    simpa using integrableOn_cpow_mul_cexp_neg_mul27 1 hz
   calc
     (∫ t : ℝ in Ioi 0,
         ((1 + t / 2 : ℝ) : ℂ) * Complex.exp (-z * (t : ℂ))) =
-      (∫ t : ℝ in Ioi 0, Complex.exp (-z * (t : ℂ))) +
+      ∫ t : ℝ in Ioi 0,
+        Complex.exp (-z * (t : ℂ)) +
+          (1 / 2 : ℂ) * ((t : ℂ) * Complex.exp (-z * (t : ℂ))) := by
+            apply integral_congr_ae
+            filter_upwards with t
+            push_cast
+            ring
+    _ = (∫ t : ℝ in Ioi 0, Complex.exp (-z * (t : ℂ))) +
+        ∫ t : ℝ in Ioi 0,
+          (1 / 2 : ℂ) * ((t : ℂ) * Complex.exp (-z * (t : ℂ))) := by
+            rw [integral_add h0 (h1.const_mul (1 / 2 : ℂ))]
+    _ = (∫ t : ℝ in Ioi 0, Complex.exp (-z * (t : ℂ))) +
         (1 / 2 : ℂ) *
           ∫ t : ℝ in Ioi 0, (t : ℂ) * Complex.exp (-z * (t : ℂ)) := by
-            rw [← MeasureTheory.integral_const_mul]
-            rw [← integral_add]
-            · apply integral_congr_ae
-              filter_upwards with t
-              push_cast
-              ring
-            · simpa using h0
-            · exact h1.const_mul (1 / 2 : ℂ)
+            rw [MeasureTheory.integral_const_mul]
     _ = z⁻¹ + (z ^ 2)⁻¹ / 2 := by
       rw [integral_cexp_neg_mul_Ioi27 hz,
         integral_self_mul_cexp_neg_mul_Ioi27 hz]
