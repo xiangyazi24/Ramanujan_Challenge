@@ -17,6 +17,7 @@
 | 9 | 08-01 | [F] | `CODEX_SPEC_laststand_cocycle.md` / `CODEX_SPEC_laststand_norun.md` | 把单解的 two-time companion action 错套到 `xi_r=(b_r:c_r)`，故 fixed-point、2-run eigenvector、3-run curve 全部靶错 | 正确状态是 fundamental frame；return 当且仅当 `(T_{r,d})_{21}=0`（固定 Borel hit） | 闭 (`CODEX_LASTSTAND_COCYCLE_report.md` §1) |
 | 10 | 08-01 | [F] | laststand `[FR_eta]` 口径 | 把 shell incidence `sum_d |Z_d|`、dyadic union、primitive count 称为等价；且字面 `L -> infinity` 未写 slow/nonempty-window 限制 | 分开记 `S_B` 与 `U_B`，仅有 `U_B <= S_B`；能量链使用 `L=N^{o(1)}`, `D=o(N)` | 闭 (`CODEX_LASTSTAND_COCYCLE_report.md` §1.5) |
 | 11 | 08-01 | [P] | Q6730 “honest poles remain nonzero mod p” | 整数非零误推工作素数下非零；`N_3(-3)=584=8*73`，且 `gcd_F73(N_3,N_4)=X+3` | fixed-p correlation 必须先 saturation；不能直接用特征零 pole/resultant | 闭 (`CODEX_LASTSTAND_COCYCLE_report.md` §3.4) |
+| 12 | 08-01 | [F] | AT.71 / 初版 `CODEX_MARGINS_report.md` | 只检查每个有限高度的 far minimum 为正，就误报成随 `h` 一致的 FAR 下界，首版写 `TWO-REGIME CONFIRMED` | 固定 `k=1` band 实测按 `h^-1.088` 衰减；`h=52` 另有宏观 inner/outer 近碰撞；判决改为 `TWO-REGIME REFUTED` | 闭 (`bfc611c`) |
 
 ## [F] 2026-08-02 — §134 [NO-RUN] 推导整体作废 (codex 驳倒, 活反例)
 
