@@ -687,3 +687,22 @@ arithmetic (the would-be apparition law) lives in B_p = q·s_p² — the CFVZ
 square factor's discriminant/factorization data. This docks the cron program
 directly onto the modular–Padé/Smith-ledger program (§27): both are digging
 the p-saturation of the same level-6 integral lattice.
+
+## 29. cron wave 2: complete mod-p structure theorem (independently spot-checked)
+
+cron-Fable's refinement, our independent verification (sp_spotcheck.py, both
+character classes pass): the CFVZ square factorization is fully universal —
+- class split: χ(p) = (−6|p) (the Q(√−6)/Atkin–Lehner character; kernel
+  p mod 24 ∈ {1,5,7,11} = the perfect-square classes, matching CFVZ exactly);
+- BOTH square roots are truncations of FIXED Q-series:
+  χ=+1: s_p = [√F]_{(p−1)/2};  χ=−1: s_p = [√(F/q)]_{(p−3)/2}, q = 1−34x+x²
+  (cron verified coefficientwise p < 150; our spot-check p = 13, 29 ✓);
+- full-gap phenomenon: the fixed series' coefficients vanish mod p on the
+  whole segment ((p∓1)/2, p−1) — the (1−4x)^{(p−1)/2} classical gap pattern.
+**MASTER STRUCTURE THEOREM (cron appendix A): the entire mod-p structure of
+the Apéry sequence = 3 universal sequences (D_r, E_r, Ũ_r) + 2 fixed Q-series
+(√F, √(F/q)) + exactly 2 scalars per prime (χ(p), β_p).** The apparition
+hunting ground is final: p-divisibility patterns of the FIXED series'
+coefficients (one global object — the Mersenne-template "structure bits") +
+the arithmetic nature of β_p. Publication-grade structural theorem for the
+submission's vertical section; Smith-ledger program must stratify by χ(p).
