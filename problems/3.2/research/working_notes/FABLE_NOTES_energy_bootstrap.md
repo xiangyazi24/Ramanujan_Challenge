@@ -1850,3 +1850,23 @@ double-certified.
 - 派发: qFS1(均值O(1)+二阶矩自举可攻性), qFS2(素数平均定理组装,
   avenue b), qFS3(restart 恒等式+实验设计对抗审计)。扩展实验
   (H=√p 直接标度)后台。
+
+## §89 (08-01 18:45) FINAL STRIKE 一小时三连: N_m=U_m 同一, 根配对精确, 中心消没定理
+
+- **[THM-GAP-IS-CONTINUANT]**: gap 多项式=乘积矩阵 M_u=[[0,(u+1)⁶],
+  [−1,P(u)]] 的第二坐标, 满足与 U 相同的三项递推+初值 ⟹ **N_m(s)=U_m(s)
+  恰为 continuant 本身**(p=1009, m=3,5,8,12,20 根集 5/5 全 match)。
+  final-strike 对象化归经典 continuant 族; cron N̂_h 应同族(待对表)。
+- **[THM-ROOT-PAIRING]**: U_m(−s−m)=(−1)^m U_m(s) (Q6461 已证) ⟹ 根集
+  在 s↔−s−m 下闭合——实测 154/154 根全配对, 零未配对。
+- **[THM-CENTER-VANISHING], 一行证明**: 中心 s₀=−m/2 是对合不动点,
+  奇 m 时 U_m(s₀)=−U_m(s₀) ⟹ U_m(s₀)=0 **恒成立**(在 Q 上!)。
+  实测 3 素数×149m: 奇 m 100%, 偶 m 0% ✓✓。
+- **族分解定理**: R(p,H) = ⌈H/2⌉(确定性中心根) + 2·配对数。
+  实测均值 1.29–1.36 = 0.5 + 2×(0.4±0.05) ✓。根计数 tally
+  {0:38,1:39,2:18,3:19,4:3,5:2}: 奇计数=中心+对儿, 完全镜像 Z_p 的
+  偶数律+parity law 结构——**族与零点过程同构的又一层证据**。
+- 剩余靶心收窄: [CONJ-PAIR-MEAN] 配对体 Σ_{m≤H}(#非中心根) ≪ H·polylog
+  (实测 ~0.8H, 单 m max≤5) ⟹ |Z_p| ≪ √p·polylog。中心部分已定理化。
+- 在飞: qFS1(life1)/qFS2(life2)/qFS3(重试中) + fs_extended(H=√p 标度)
+  + codex marked-dec。
