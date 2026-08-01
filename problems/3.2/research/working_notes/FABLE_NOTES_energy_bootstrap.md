@@ -78,6 +78,21 @@ need a separate (structured) count.
 
 Symbolic check: Ψ_{d,d′} ≢ 0 over Q for all 2 ≤ d < d′ ≤ 10 (sympy, exact).
 
+Patches from self-audit (2026-07-31, later same session):
+- A_k is REGULAR at 0 with A_k(0) = b_k exactly (M(0) = [[5,0],[1,0]] is regular;
+  T_k(0)e₁ = M(k−1)···M(1)(5,1)ᵀ = (b_k, b_{k−1})ᵀ). No limit subtlety.
+- CLOSED FORM: B_k(x) = −x³/(x+1)³ · A_{k−1}(x+1) (second column of M(x) is
+  (−x³/(x+1)³, 0)ᵀ). Hence ord₀B_k = 3 exactly, and the cross term
+  B_δ(r+d)B_{d−1}(r) VANISHES to order 3 at r = −d — it contributes nothing to
+  the pole-3 coefficient; no extra nonvanishing condition needed.
+- Order-6 scare resolved: expanding (1−A_d)B_{d′} alone shows an order-6 pole,
+  but in Ψ = (B_{d′} − B_d) − K with K = A_dB_{d′} − A_{d′}B_d =
+  (r³/(r+d)³)B_δ(r+d), K is REGULAR at −d (pole³ × zero³), so the order-6
+  pieces cancel exactly and the pole-3 coefficient (b_δ − 1)·d³·b_{d−1} stands.
+- Boundary: transfers must not cross the singular index m = p−1; restrict the
+  counting to r + d₂ ≤ p−2 and absorb the ≤ D tail elements into the O(1)/N-4
+  slack (harmless in both regimes).
+
 ## 5. The counting (Markov/gap), candidate exponents
 
 Work on the reflection quotient [0,(p−1)/2) (halves N, kills reflection pairs).

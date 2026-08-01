@@ -123,3 +123,8 @@
   open weight-4 density-0, three-route-confirmed, numerically true (K=O(loglog n)), GRH-closable. All four
   technique classes at documented terminal verdicts. Campaign at genuine terminus (positive theorem + complete
   characterization of the exact open residual), NOT premature stop.
+
+## 2026-07-31 Fable campaign (life window, >=10 ChatGPT rounds mandate from Xiang)
+- R1a/b/c/d + R2a + PRO1/2/3 + R3a dispatched (Q6295-Q6302+). R1a: GK bounded-Gamma formula REFUTED; stationary phase dead (one-sample-per-disc). R1b: T-variable Stepanov dead at coefficient/index bridge. R1c: tech map + J-invariant blind spot (tested: REFUTED deg<=12, jtest.py).
+- Value law settled: D(p)=0.3935p Poisson-mod-FE (sqrt-p folding refuted); Rayleigh 1.2533; Gumbel max; E(p)=3p+O(sqrt p) w/ std 2sqrt2. All in FABLE_NOTES_vertical_value_law.md.
+- MAIN LINE: energy bootstrap (FABLE_NOTES_energy_bootstrap.md): image >= ((p-1)/4)^{1/3} (proved); collision => predecessor determination; two-lag elimination Psi; c_d = d^3 b_{d-1} closed form; CLEAN THEOREMS max_{c!=0}N(c) << p/log p, E(p) << p^2/log p (unconditional); candidates p^{3/4}/p^{7/4} pending exceptional-lag lemma. Under adversarial audit (R3a) + Pro grind (PRO1).
