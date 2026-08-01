@@ -247,9 +247,7 @@ theorem ctNumerator_factor27 {n m : ℕ} (hm1 : 1 ≤ m) (hmn : m ≤ n)
     omega
   unfold ctNumerator27 ctNumeratorWithout27
   rw [← Finset.mul_prod_erase _ _ hmem]
-  congr 2
-  push_cast
-  omega
+  simp [Nat.sub_add_cancel hm1]
 
 theorem ctPoleProduct_ne_zero_on_strip27 {n m : ℕ} (hm1 : 1 ≤ m)
     {t : ℂ} (ht : t ∈ halfIntegerStrip (m : ℤ)) :
@@ -313,6 +311,7 @@ theorem ctIntegrand_eq_extension27 {n m : ℕ} (hm1 : 1 ≤ m) (hmn : m ≤ n)
   rw [ctIntegrand27, ctR27, ctKernel27, ctNumerator_factor27 hm1 hmn,
     sinePi_eq_sub_mul_sineSlope (m : ℤ) t, ctExtension27, ctRemoved27]
   field_simp [sub_ne_zero.mpr htm, hs]
+  push_cast
   ring
 
 /-- Structural one-strip theorem. The two vertical integrability and two
