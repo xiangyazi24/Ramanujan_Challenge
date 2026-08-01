@@ -713,7 +713,7 @@ The checks are:
   $n=39$; exact one-Pochhammer contradictions.
 - `codex_max_zero_sets.py`: every relevant prime $p<3000$; factor-branch
   recurrence, reversal sign, exact eight-class quarter table, all $219$
-  ordinary double-root cases at (t=1), full zero-set census,
+  ordinary double-root cases at $t=1$, full zero-set census,
   discriminant-$-24$ representations, the verified eighth skeleton, and the
   $p=71$ counterexample to the stronger raw-both-branches reading.
 - `codex_max_convolution_beta.py`: both convolution identities through
