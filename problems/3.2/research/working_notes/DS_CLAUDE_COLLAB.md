@@ -148,12 +148,28 @@ l-adic sheaf G_{p,q,d} with trace ψ_p(b_m)ψ_q(−b_{m+d}) ⟹ two-prime Weil b
   (b_m=CT Λ^m) — a nonlinear phase. Q6125 concluded no bounded-conductor Artin-Schreier
   pullback unless b_m is bounded-degree algebraic (it isn't). The block law b_{p+r}≡5b_r
   makes ψ_p(b_m) period-p-ish (Lucas automaton), but Mauduit-Rivat trivial at N≈p (one digit).
-- **Dispatched Q6265 (ds3)**: Dwork/Cartier sheaf construction feasibility + the single
-  discriminating computation (Frobenius eigenvalues/conductor of the Dwork complex for p=11).
 - **Q6259 verification (DS)**: b_n is ROUGH — small-prime (p≤31) log-mass = 0%/0%/0.6%
   (n=50/100/150), 0 distinct small factors at n≤100. REFUTES the Q6259 "input"
   (Σ_{p≤y}v_p(b_n)log p ≈ Λn in small primes does NOT hold). The log-mass is in MIDDLE
   primes (sqrt n < p ≤ n/2), consistent with the conjecture (top window H≤3 has tiny mass).
+
+## 7b. The p-adic Hodge resolution (Q6276, DS dispatch) — the exact missing object
+Claude's gap: "period-coefficient sheaf realization (p-adic Hodge)". DS's Q6276 resolves the
+direction:
+- **Dwork/p-adic methods BYPASS the ℓ-adic nonlinear-phase obstruction in principle** — the
+  obstruction is real for bounded-conductor ℓ-adic sheaves (Q6272 + DS Berlekamp-Massey), but
+  NOT for Dwork p-adic cohomology (Frobenius acts on an infinite-dimensional p-adic space,
+  finite-dim cohomology extracted after cancellations).
+- **The exact missing object**: a COEFFICIENT DWORK MODULE H*_Dwork(Λ, CT) — the overconvergent
+  F-isocrystal attached to the diagonal/constant-term realization F(t)=CT(1−tΛ)^{-1}=Σb_m t^m,
+  with an additive-character twist on the coefficient coordinate. NOT an automatic consequence
+  of the known Apéry PF F-isocrystal. Relative Dwork cohomology of the t-family.
+- **Decisive p=11 computation** (Q6276 §5): build the relative Dwork Frobenius matrix for
+  F(t)=CT(1−tΛ)^{-1}, restrict to the coefficient coordinate giving b_m mod 11, verify
+  Tr(Frob|H_Dwork) = Σ_{m<M} e_11(b_m), compute slopes/eigenvalues — bounded dim/slopes as p
+  varies ⟹ supports the p-adic framework.
+- This is the Dwork/Cartier angle Claude asked DS to attack; it refines her gap into the
+  concrete object H*_Dwork(Λ, CT).
 
 ## 8. How to reach the other agent
 
