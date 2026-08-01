@@ -619,3 +619,37 @@ This is the right way to discharge the "carried hypotheses read and judged
 satisfiable" clause in UNDERSTANDING.md — instantiate what you have and let the
 kernel report the remainder, rather than reading the statement and forming an
 opinion.
+
+### The last two obligations contain no polylogarithm at all
+
+`I12` and `I21` follow from `(R12)`, `(R21)`, which as single integrals are
+
+```
+A := ∫₀¹ W0 (H1-H2)(1/(2-t) + 1/t) dt
+B := ∫₀¹ [ W0 H2 (1/(1-t) - 1/(2-t)) - 2 W0 (H1-H2)/t + (1/2) W0 H1/(1-t) ] dt
+```
+
+and their values are, exactly,
+
+```
+A = -η(2)² - ζ(4)          = -(13/20) ζ₂²
+B = (1/2) η(2)² + 2 ζ(4)   =  (37/40) ζ₂²
+```
+
+with `η(2) = ζ₂/2`.  **No `Li₄(1/2)`, no `log⁴2`, no `log2·ζ₃`, no polylogarithm
+of any kind** — only the alternating zeta value at 2 and `ζ(4) = π⁴/90`, the
+latter already proved here as `shifted_zeta_four_hasSum24`.
+
+The mechanism, which is why this is not luck: after the Möbius substitution `(A)`
+becomes an alternating OFF-DIAGONAL SQUARE, so its value is `(Σ(-1)ⁿ/n²)²`
+together with `ζ(4)`.  For `(B)` the same Möbius coordinate plus the
+endpoint-reversing involution `x ↦ (1-x)/(1+x)` makes the one possible
+half-endpoint weight-four period appear with the SAME coefficient in two
+logarithmic terms, so it cancels before integration rather than after.
+
+That distinction is the whole point for formalization: a proof that produces
+`Li₄(1/2)` and cancels it needs machinery this repo does not have (no `Li₄`
+derivative).  A proof that never produces it needs none.
+
+Both values verified exactly (agreement at 1e-31 against the recorded rows) and
+the integrals themselves to 15 digits.
