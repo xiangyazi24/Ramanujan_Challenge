@@ -35,9 +35,11 @@ After correcting those points, the exact route verdicts are:
 - **R2:** the requested positive-density family of shifted correlations below
   the Bezout scale already follows from the banked triangle estimate: at
   least half of the relevant gap pairs have correlation \(O(\log D)\).
-  This does not control the singleton stratum, which contributes nothing to
-  any such correlation.  Characteristic-zero coprimality and resultants also
-  have the wrong prime/gap quantifier order.
+  Such a correlation can meet a shell-singleton, but an upper bound on these
+  correlations gives no upper bound on the singleton first moment.  The
+  private-pair obstruction makes every correlation zero while retaining
+  \(D^{2-o(1)}\) singleton mass.  Characteristic-zero coprimality and
+  resultants also have the wrong prime/gap quantifier order.
 - **R3:** the raw companion matrices are nowhere slowly varying in the
   relevant \(p\)-adic sense.  An exact resultant shows that every adjacent
   pair has a unit-sized coefficient change and is noncommuting.  Except at
@@ -442,8 +444,24 @@ For the shell multiplicities from Section 1.5, put
 \[
 I_B=\sum_r\binom{m_r}{2}.
 \]
-Every shifted intersection or rank-drop correlation contributes only to
-\(I_B\).  For any integer \(K\ge2\), define
+This pair mass has the exact correlation decomposition
+\[
+I_B
+=\sum_{h<k\in B_D}|Z_h\cap Z_k|
+=\sum_{h<k\in B_D}C_p(h,k-h).                    \tag{3.6}
+\]
+It counts two shell returns from the same base.  This is not the same slice
+as \(\kappa_p(a,g)=C_p(a,g)\) with both \(a,g\in B_D\): the latter counts
+two consecutive shell edges whose total span lies in \((D,2D]\).  Such a
+triangle can meet shell-singletons.  For example, a fibre at positions
+\(\{0,a,a+g\}\), with \(a,g\in B_D\), has
+\(\kappa_p(a,g)=1\), while the bases \(0\) and \(a\) each have shell
+multiplicity one and \(I_B=0\).
+
+This distinction does not make an upper correlation bound control the first
+moment.  In the private-pair construction of Section 2.4 every fibre has
+only two positions, so every \(C_p(a,g)\) is zero while the singleton mass is
+\(D^{2-o(1)}\).  For any integer \(K\ge2\), define
 \[
 L_B(K)=\sum_{r:1\le m_r<K}m_r.
 \]
@@ -453,12 +471,14 @@ m\le\frac{2\binom m2}{K-1}\qquad(m\ge K),
 \]
 one has the exact decomposition
 \[
-S_B\le L_B(K)+\frac{2I_B}{K-1}.                  \tag{3.6}
+S_B\le L_B(K)+\frac{2I_B}{K-1}.                  \tag{3.7}
 \]
 In particular, the \(m_r=1\) mass is completely invisible to \(I_B\).
 Even the ideal conclusion \(I_B=0\) allows \(S_B=U_B=D^{2-o(1)}\), as the
 construction in Section 2.4 shows.  No bound on second-order correlations
-alone can prove the required first-order census.
+alone can prove the required first-order census: the same-base slice misses
+singletons identically, while the consecutive-edge slice may see some of
+them but can be zero on an arbitrarily large singleton family.
 
 ### 3.4 Characteristic-zero resultants have the wrong quantifiers
 
@@ -503,9 +523,9 @@ Two Apéry-specific specialization failures also matter:
    \]
    has the physical multiple root \(r=89\).
 
-The addition law is valuable, but after taking a norm/resultant its rank-two
-recurrence does not become a fixed-dimensional scalar recurrence: mixed
-polarized norms proliferate with \(\deg N_a=3a-3\).  The full-rank tests in
+The addition law is valuable, but its direct norm/resultant expansion does
+not close in a fixed-dimensional scalar state: mixed polarized norms
+proliferate with \(\deg N_a=3a-3\).  The full-rank tests in
 `CRON_LOWRANK_REPORT.md` are consistent with this obstruction.  They are
 negative evidence, not an impossibility theorem for every conceivable
 arithmetic structure.
@@ -652,7 +672,15 @@ The banked triangle bound controls the shell pair mass by
 \[
 I_B\le Q_D\le66D^2(1+\log D).                    \tag{7.1}
 \]
-Combining (7.1) with the exact decomposition (3.6) isolates one sufficient
+Indeed, by (3.6),
+\[
+I_B=\sum_{h<k\in B_D}C_p(h,k-h)\le Q_D.          \tag{7.1}
+\]
+The banked estimate gives
+\[
+I_B\le Q_D\le66D^2(1+\log D).                    \tag{7.2}
+\]
+Combining (7.2) with the exact decomposition (3.7) isolates one sufficient
 new input.
 
 > **`[LOWMULT(delta,epsilon)]`.**  For some fixed
@@ -663,12 +691,12 @@ new input.
 > \]
 > uniformly at the intended mesoscopic scale.
 
-Indeed, (3.6) and (7.1) then give
+Indeed, (3.7) and (7.2) then give
 \[
 S_B
 \ll D^{2-\epsilon}
 +\frac{D^2(1+\log D)}{D^\delta-1}
-=D^{2-\min(\delta,\epsilon)+o(1)}.                \tag{7.2}
+=D^{2-\min(\delta,\epsilon)+o(1)}.                \tag{7.3}
 \]
 Thus `[FR_eta]` follows for every
 \(\eta<\min(\delta,\epsilon)\).  Unlike another second-moment or resultant
