@@ -1870,3 +1870,21 @@ double-certified.
   (实测 ~0.8H, 单 m max≤5) ⟹ |Z_p| ≪ √p·polylog。中心部分已定理化。
 - 在飞: qFS1(life1)/qFS2(life2)/qFS3(重试中) + fs_extended(H=√p 标度)
   + codex marked-dec。
+
+## §90 (08-01 19:10) U 族因子定律 + cron 证书转移 + 平均定理骨架
+
+- **[FACT-LAW] U_m 在 Q 上的因子分解 (m≤12 机器验证)**: 奇 m:
+  U_m = (中心线性因子)×(3m−1 次不可约); 偶 m: U_m 不可约(3m 次)。
+  中心因子恰为 [THM-CENTER-VANISHING] 强制者——无其他因子, 族"极简"。
+  (m=1 例外微调: [1,2]。) ⟹ Q-不可约因子数 ≤ 2 uniformly(观测范围)。
+- **cron 证书转移**: cron N̂_h 不可约(h≤14) + Gal=S(h≤11) = 我方 U 族
+  本原部分的同一陈述(同族已通报待其确认)——(R) 的 Chebotarev 输入
+  在 m≤14 全证书化。
+- **Chebotarev 均值预测**: 每 m 平均根数(over p) = 因子数 = 奇2/偶1
+  ⟹ 混合均值 1.5; 实测固定 p 均值 1.29(1009)→1.42(8009) 趋势吻合。
+- **[THEOREM-AVERAGE-SMALLGAP] 骨架(自装, 与 qFS2 竞速)**:
+  (1/π(X))Σ_{p≤X}Σ_{m≤M}#roots(U_m mod p) = (3/2)M(1+o(1)),
+  对 M ≤ M(X)(无条件 M(X)~c√log X 级, 由 L-O 误差 vs disc(U_m)~
+  exp(cm log m) 增长; GRH 下幂级)——**首个 Apéry 零点族平均定律**,
+  待 qFS2 精化常数与引文后可入账。tail 平均无 handle(X/M 占优),
+  交付形态=small-gap 平均律单独成文。
