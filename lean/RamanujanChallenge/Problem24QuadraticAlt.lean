@@ -1635,7 +1635,7 @@ theorem quadAlt_tsum_eq_coeff_integral :
 /-! ## Layer D bricks grafted from the sandbox agent (verified numerically) -/
 
 /-- `W0'(t) = −2·log(t/(2−t))/t` for `0 < t < 1` (Q6047 (5.3)). -/
-theorem quadAltW0_hasDerivAt {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
+theorem quadAltW0_hasDerivAt {t : ℝ} (ht0 : 0 < t) (ht1 : t < 2) :
     HasDerivAt W0 (-2 * Real.log (t / (2 - t)) / t) t := by
   have hdlog : HasDerivAt (fun s : ℝ => dilog (s / 2)) (-Real.log (1 - t / 2) / (t / 2) * (1 / 2)) t := by
     have hmid0 : 0 < t / 2 := by positivity
@@ -1847,15 +1847,23 @@ theorem log_mul_self_tendsto :
   filter_upwards [self_mem_nhdsWithin] with x hx
   rw [Real.rpow_one]
 
+/-- If `f` is differentiable at `a` with `f a = 0`, the difference quotient
+`f x / (x - a)` converges to the derivative. -/
+theorem slope_tendsto_of_hasDerivAt_eq_zero (f : ℝ → ℝ) (a d : ℝ)
+    (h : HasDerivAt f d a) (h0 : f a = 0) :
+    Tendsto (fun x : ℝ => f x / (x - a)) (𝓝[≠] a) (𝓝 d) := by
+  refine (hasDerivAt_iff_tendsto_slope.mp h).congr ?_
+  intro x
+  rw [slope_def_field, h0]
+  ring
+
 /-- If `f` is differentiable at `0` with `f 0 = 0`, the difference quotient
 `f x / x` converges to the derivative. -/
 theorem slope_tendsto_of_hasDerivAt_zero (f : ℝ → ℝ) (d : ℝ)
     (h : HasDerivAt f d 0) (h0 : f 0 = 0) :
     Tendsto (fun x : ℝ => f x / x) (𝓝[≠] (0:ℝ)) (𝓝 d) := by
-  refine (hasDerivAt_iff_tendsto_slope.mp h).congr ?_
-  intro x
-  rw [slope_def_field, h0]
-  ring
+  have := slope_tendsto_of_hasDerivAt_eq_zero f 0 d h h0
+  simpa using this
 
 /-- `V x * x → 0` as `x → 0⁺`. -/
 theorem quadAltV_mul_self_tendsto :
@@ -1939,6 +1947,19 @@ theorem quadAltF_tendsto_zero_right :
   filter_upwards [self_mem_nhdsWithin] with x hx
   have hxne : x ≠ 0 := ne_of_gt hx
   field_simp
+
+
+/-- `W0` is differentiable at `1` with derivative `0` (the hypothesis of
+`quadAltW0_hasDerivAt` only ever needed `t < 2`, so `t = 1` is an interior point). -/
+theorem quadAltW0_hasDerivAt_one : HasDerivAt W0 0 1 := by
+  have h := quadAltW0_hasDerivAt (t := 1) (by norm_num) (by norm_num)
+  norm_num at h
+  exact h
+
+/-- `W0 t / (t - 1) → 0` as `t → 1`. -/
+theorem quadAltW0_slope_tendsto :
+    Tendsto (fun t : ℝ => W0 t / (t - 1)) (𝓝[≠] (1:ℝ)) (𝓝 0) :=
+  slope_tendsto_of_hasDerivAt_eq_zero W0 1 0 quadAltW0_hasDerivAt_one quadAltW0_one
 
 /-- Integration by parts (Q6047 (4.9)): with `F = −2V·J(−x)`, `F(1)=F(0)=0`
 (`V(1)=0`, `J(0)=0`), so `∫₀¹ (−log x)/x·Q(−x) = ∫₀¹ (−2V(x))·Dminus(x)`. -/
