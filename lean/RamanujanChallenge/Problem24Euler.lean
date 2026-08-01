@@ -7201,4 +7201,1377 @@ theorem quadAltHalfQuarticCoreIntegral24 :
         (1 / 4 : ℝ) * (Real.pi ^ 4 / 90) := by
   exact quarticCoreHalfIntegral24
 
+/-! ## Mixed logarithmic moment used by the remaining Layer E cross rows -/
+
+private def quadAltMixedRadialKernel24 (x : ℝ) : ℝ :=
+  Real.log x * Real.log (1 - x) * Real.log (1 + x) / x
+
+private def quadAltMixedPlusKernel24 (x : ℝ) : ℝ :=
+  Real.log x * Real.log (1 - x) * Real.log (1 + x) / (1 + x)
+
+private def quadAltSquarePullbackKernel24 (x : ℝ) : ℝ :=
+  Real.log x * Real.log (1 - x ^ 2) ^ 2 / x
+
+private theorem quadAltSquarePullbackKernel24_intervalIntegrable :
+    IntervalIntegrable quadAltSquarePullbackKernel24
+      MeasureTheory.volume 0 1 := by
+  let f : ℝ → ℝ := fun x => x ^ 2
+  let f' : ℝ → ℝ := fun x => 2 * x
+  have hf : ContinuousOn f [[(0 : ℝ), 1]] := by
+    unfold f
+    fun_prop
+  have hff' : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      HasDerivAt f (f' x) x := by
+    intro x hx
+    unfold f f'
+    convert (hasDerivAt_id x).pow 2 using 1
+    norm_num
+  have hf' : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      0 ≤ f' x := by
+    intro x hx
+    norm_num at hx
+    unfold f'
+    linarith [hx.1]
+  have hpull : IntervalIntegrable
+      (fun x : ℝ => (quarticCoreKernel24 ∘ f) x * f' x)
+      MeasureTheory.volume 0 1 := by
+    apply (intervalIntegral.integrable_comp_mul_deriv_iff_of_deriv_nonneg
+      (g := quarticCoreKernel24) hf hff' hf').mpr
+    simpa [f] using quarticCoreIntervalIntegrable24_export
+  have hscaled := hpull.const_mul (1 / 4 : ℝ)
+  apply hscaled.congr
+  intro x hx
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+  have hxne : x ≠ 0 := ne_of_gt hx'.1
+  dsimp [f, f', Function.comp_apply]
+  unfold quarticCoreKernel24 quadAltSquarePullbackKernel24
+  rw [Real.log_pow]
+  norm_num only [Nat.cast_ofNat]
+  field_simp [hxne]
+  ring
+
+private theorem quadAltSquarePullbackIntegral24 :
+    (∫ x : ℝ in 0..1, quadAltSquarePullbackKernel24 x) =
+      -(1 / 8 : ℝ) * (Real.pi ^ 4 / 90) := by
+  let f : ℝ → ℝ := fun x => x ^ 2
+  let f' : ℝ → ℝ := fun x => 2 * x
+  have hf : ContinuousOn f [[(0 : ℝ), 1]] := by
+    unfold f
+    fun_prop
+  have hff' : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      HasDerivAt f (f' x) x := by
+    intro x hx
+    unfold f f'
+    convert (hasDerivAt_id x).pow 2 using 1
+    norm_num
+  have hf' : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      0 ≤ f' x := by
+    intro x hx
+    norm_num at hx
+    unfold f'
+    linarith [hx.1]
+  have hsubst := intervalIntegral.integral_comp_mul_deriv_of_deriv_nonneg
+    (a := (0 : ℝ)) (b := 1) (g := quarticCoreKernel24) hf hff' hf'
+  have hpull :
+      (∫ x : ℝ in 0..1,
+        (quarticCoreKernel24 ∘ f) x * f' x) =
+        4 * ∫ x : ℝ in 0..1, quadAltSquarePullbackKernel24 x := by
+    rw [← intervalIntegral.integral_const_mul]
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (0 : ℝ)]
+      with x hxne hx
+    dsimp [f, f', Function.comp_apply]
+    unfold quarticCoreKernel24 quadAltSquarePullbackKernel24
+    rw [Real.log_pow]
+    norm_num only [Nat.cast_ofNat]
+    field_simp [hxne]
+    ring
+  have hsubst' :
+      (∫ x : ℝ in 0..1,
+        (quarticCoreKernel24 ∘ f) x * f' x) =
+        ∫ u : ℝ in 0..1, quarticCoreKernel24 u := by
+    simpa [f] using hsubst
+  rw [hpull, quarticCoreIntegral24] at hsubst'
+  linarith
+
+private theorem quadAltMixedRadialKernel24_intervalIntegrable :
+    IntervalIntegrable quadAltMixedRadialKernel24
+      MeasureTheory.volume 0 1 := by
+  have hcore : IntervalIntegrable quarticCoreKernel24
+      MeasureTheory.volume 0 1 := by
+    simpa [quarticCoreKernel24] using quarticCoreIntervalIntegrable24_export
+  have hcomb := ((quadAltSquarePullbackKernel24_intervalIntegrable.sub
+    hcore).sub
+    quarticPlusRadialKernel24_intervalIntegrable).const_mul (1 / 2 : ℝ)
+  apply hcomb.congr
+  intro x hx
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+  have hxne : x ≠ 0 := ne_of_gt hx'.1
+  by_cases hxone : x = 1
+  · subst x
+    simp [quadAltMixedRadialKernel24, quadAltSquarePullbackKernel24,
+      quarticCoreKernel24, quarticPlusRadialKernel24]
+  have hxlt : x < 1 := lt_of_le_of_ne hx'.2 hxone
+  have hminus : 1 - x ≠ 0 := ne_of_gt (sub_pos.mpr hxlt)
+  have hplus : 1 + x ≠ 0 := by linarith [hx'.1]
+  have hlog : Real.log (1 - x ^ 2) =
+      Real.log (1 - x) + Real.log (1 + x) := by
+    rw [show 1 - x ^ 2 = (1 - x) * (1 + x) by ring,
+      Real.log_mul hminus hplus]
+  unfold quadAltMixedRadialKernel24 quadAltSquarePullbackKernel24
+    quarticCoreKernel24 quarticPlusRadialKernel24
+  dsimp only
+  rw [hlog]
+  field_simp [hxne]
+  ring
+
+private theorem quadAltMixedRadialIntegral24 :
+    (∫ x : ℝ in 0..1, quadAltMixedRadialKernel24 x) =
+      (1 / 2 : ℝ) *
+          (∫ x : ℝ in 0..1, quarticPlusKernel24 x) +
+        (3 / 16 : ℝ) * (Real.pi ^ 4 / 90) := by
+  have hcore : IntervalIntegrable quarticCoreKernel24
+      MeasureTheory.volume 0 1 := by
+    simpa [quarticCoreKernel24] using quarticCoreIntervalIntegrable24_export
+  have hdecomp :
+      (∫ x : ℝ in 0..1, quadAltMixedRadialKernel24 x) =
+        (1 / 2 : ℝ) *
+          ((∫ x : ℝ in 0..1, quadAltSquarePullbackKernel24 x) -
+            (∫ x : ℝ in 0..1, quarticCoreKernel24 x) -
+            (∫ x : ℝ in 0..1, quarticPlusRadialKernel24 x)) := by
+    rw [← intervalIntegral.integral_sub
+        quadAltSquarePullbackKernel24_intervalIntegrable
+        hcore,
+      ← intervalIntegral.integral_sub
+        (quadAltSquarePullbackKernel24_intervalIntegrable.sub
+          hcore)
+        quarticPlusRadialKernel24_intervalIntegrable,
+      ← intervalIntegral.integral_const_mul]
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (0 : ℝ),
+      MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+      with x hxzero hxone hx
+    have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    have hx0 : 0 < x := hx'.1
+    have hx1 : x < 1 := lt_of_le_of_ne hx'.2 hxone
+    have hminus : 1 - x ≠ 0 := ne_of_gt (sub_pos.mpr hx1)
+    have hplus : 1 + x ≠ 0 := by linarith
+    have hlog : Real.log (1 - x ^ 2) =
+        Real.log (1 - x) + Real.log (1 + x) := by
+      rw [show 1 - x ^ 2 = (1 - x) * (1 + x) by ring,
+        Real.log_mul hminus hplus]
+    unfold quadAltMixedRadialKernel24 quadAltSquarePullbackKernel24
+      quarticCoreKernel24 quarticPlusRadialKernel24
+    rw [hlog]
+    field_simp [ne_of_gt hx0]
+    ring
+  rw [hdecomp, quadAltSquarePullbackIntegral24, quarticCoreIntegral24,
+    quarticPlusIntegral_eq_neg_radial24]
+  ring
+
+private def quadAltPlusCubeRadialKernel24 (x : ℝ) : ℝ :=
+  Real.log (1 + x) ^ 3 / x
+
+private theorem quadAltPlusCubeRadialKernel24_intervalIntegrable :
+    IntervalIntegrable quadAltPlusCubeRadialKernel24
+      MeasureTheory.volume 0 1 := by
+  have haux :
+      ContinuousOn
+        (fun x : ℝ =>
+          x ^ 2 * RamanujanChallenge.P26.logOnePlusSlope26 x ^ 3)
+        (Icc (0 : ℝ) 1) :=
+    (continuousOn_id.pow 2).mul
+      (RamanujanChallenge.P26.logOnePlusSlope26_continuousOn.pow 3)
+  have hcont :
+      ContinuousOn quadAltPlusCubeRadialKernel24
+        (Icc (0 : ℝ) 1) := by
+    apply haux.congr
+    intro x _
+    by_cases hxzero : x = 0
+    · subst x
+      simp [quadAltPlusCubeRadialKernel24]
+    · simp [quadAltPlusCubeRadialKernel24,
+        RamanujanChallenge.P26.logOnePlusSlope26, hxzero]
+      field_simp [hxzero]
+  apply ContinuousOn.intervalIntegrable
+  rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+  exact hcont
+
+private theorem quadAltPlusCubeMobiusChange24
+    {t : ℝ} (ht0 : 0 ≤ t) (hthalf : t ≤ 1 / 2) :
+    (quadAltPlusCubeRadialKernel24 ∘ quarticHalfMobiusMap24) t *
+        quarticHalfMobiusMapDeriv24 t =
+      -halfLogCubeOneSubKernel24 t -
+        quarticLogFourthHalfKernel24 t := by
+  rcases ht0.eq_or_lt with rfl | ht0
+  · norm_num [quadAltPlusCubeRadialKernel24,
+      quarticHalfMobiusMap24, quarticHalfMobiusMapDeriv24,
+      halfLogCubeOneSubKernel24, quarticLogFourthHalfKernel24]
+  have htne : t ≠ 0 := ne_of_gt ht0
+  have h1t0 : 0 < 1 - t := by linarith
+  have h1tne : 1 - t ≠ 0 := ne_of_gt h1t0
+  have honeplus : 1 + quarticHalfMobiusMap24 t = 1 / (1 - t) := by
+    unfold quarticHalfMobiusMap24
+    field_simp [h1tne]
+    ring
+  have hlog : Real.log (1 + quarticHalfMobiusMap24 t) =
+      -Real.log (1 - t) := by
+    rw [honeplus, one_div, Real.log_inv]
+  simp only [Function.comp_apply]
+  unfold quadAltPlusCubeRadialKernel24 quarticHalfMobiusMapDeriv24
+    halfLogCubeOneSubKernel24 quarticLogFourthHalfKernel24
+  rw [hlog]
+  unfold quarticHalfMobiusMap24
+  field_simp [htne, h1tne]
+  ring
+
+private theorem quadAltPlusCubeRadialIntegral24 :
+    (∫ x : ℝ in 0..1, quadAltPlusCubeRadialKernel24 x) =
+      -(∫ t : ℝ in 0..(1 / 2), halfLogCubeOneSubKernel24 t) +
+        (1 / 4 : ℝ) * Real.log 2 ^ 4 := by
+  have hmapCont :
+      ContinuousOn quarticHalfMobiusMap24
+        (Set.uIcc (0 : ℝ) (1 / 2)) := by
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)]
+    unfold quarticHalfMobiusMap24
+    apply ContinuousOn.div continuousOn_id
+      (continuousOn_const.sub continuousOn_id)
+    intro t ht
+    exact ne_of_gt (show 0 < 1 - t by linarith [ht.2])
+  have hderiv :
+      ∀ t ∈ Ioo (min (0 : ℝ) (1 / 2)) (max (0 : ℝ) (1 / 2)),
+        HasDerivAt quarticHalfMobiusMap24
+          (quarticHalfMobiusMapDeriv24 t) t := by
+    intro t ht
+    norm_num at ht
+    exact quarticHalfMobiusMap24_hasDerivAt ht.1 ht.2
+  have hnonneg :
+      ∀ t ∈ Ioo (min (0 : ℝ) (1 / 2)) (max (0 : ℝ) (1 / 2)),
+        0 ≤ quarticHalfMobiusMapDeriv24 t := by
+    intro t _
+    unfold quarticHalfMobiusMapDeriv24
+    positivity
+  have hsubst :=
+    intervalIntegral.integral_comp_mul_deriv_of_deriv_nonneg
+      (a := (0 : ℝ)) (b := (1 / 2 : ℝ))
+      (f := quarticHalfMobiusMap24)
+      (f' := quarticHalfMobiusMapDeriv24)
+      (g := quadAltPlusCubeRadialKernel24)
+      hmapCont hderiv hnonneg
+  have hs :
+      (∫ t : ℝ in 0..(1 / 2),
+        (quadAltPlusCubeRadialKernel24 ∘ quarticHalfMobiusMap24) t *
+          quarticHalfMobiusMapDeriv24 t) =
+        ∫ x : ℝ in 0..1, quadAltPlusCubeRadialKernel24 x := by
+    convert hsubst using 1 <;>
+      norm_num [quarticHalfMobiusMap24]
+  have hcongr :
+      (∫ t : ℝ in 0..(1 / 2),
+        (quadAltPlusCubeRadialKernel24 ∘ quarticHalfMobiusMap24) t *
+          quarticHalfMobiusMapDeriv24 t) =
+        ∫ t : ℝ in 0..(1 / 2),
+          (-halfLogCubeOneSubKernel24 t -
+            quarticLogFourthHalfKernel24 t) := by
+    apply intervalIntegral.integral_congr
+    intro t ht
+    have ht' : t ∈ Icc (0 : ℝ) (1 / 2) := by
+      simpa [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)] using ht
+    exact quadAltPlusCubeMobiusChange24 ht'.1 ht'.2
+  calc
+    (∫ x : ℝ in 0..1, quadAltPlusCubeRadialKernel24 x) =
+        ∫ t : ℝ in 0..(1 / 2),
+          (quadAltPlusCubeRadialKernel24 ∘ quarticHalfMobiusMap24) t *
+            quarticHalfMobiusMapDeriv24 t := hs.symm
+    _ = ∫ t : ℝ in 0..(1 / 2),
+          (-halfLogCubeOneSubKernel24 t -
+            quarticLogFourthHalfKernel24 t) := hcongr
+    _ = _ := by
+      change (∫ t : ℝ in 0..(1 / 2),
+        (-halfLogCubeOneSubKernel24) t -
+          quarticLogFourthHalfKernel24 t) = _
+      rw [intervalIntegral.integral_sub
+          halfLogCubeOneSubKernel24_intervalIntegrable.neg
+          (by
+            unfold quarticLogFourthHalfKernel24
+            apply ContinuousOn.intervalIntegrable
+            rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)]
+            apply ContinuousOn.div
+            · apply ((continuousOn_const.sub continuousOn_id).log
+                (fun x hx => ne_of_gt
+                  (show 0 < 1 - x by linarith [hx.2]))).pow
+            · fun_prop
+            · intro x hx
+              exact ne_of_gt (show 0 < 1 - x by linarith [hx.2]))]
+      change (∫ t : ℝ in 0..(1 / 2),
+        -halfLogCubeOneSubKernel24 t) -
+          (∫ t : ℝ in 0..(1 / 2),
+            quarticLogFourthHalfKernel24 t) = _
+      rw [intervalIntegral.integral_neg,
+        quarticLogFourthHalfIntegral24]
+      ring
+
+private def quadAltLogPlusSqDenomKernel24 (x : ℝ) : ℝ :=
+  Real.log x * Real.log (1 + x) ^ 2 / (1 + x)
+
+private theorem quadAltLogPlusSqDenomKernel24_intervalIntegrable :
+    IntervalIntegrable quadAltLogPlusSqDenomKernel24
+      MeasureTheory.volume 0 1 := by
+  have haux :
+      ContinuousOn
+        (fun x : ℝ =>
+          ((x * Real.log x) * x *
+            RamanujanChallenge.P26.logOnePlusSlope26 x ^ 2) /
+              (1 + x))
+        (Icc (0 : ℝ) 1) := by
+    apply ContinuousOn.div
+    · exact ((Real.continuous_mul_log.continuousOn.mul continuousOn_id).mul
+        (RamanujanChallenge.P26.logOnePlusSlope26_continuousOn.pow 2))
+    · fun_prop
+    · intro x hx
+      exact ne_of_gt (show 0 < 1 + x by linarith [hx.1])
+  have hcont :
+      ContinuousOn quadAltLogPlusSqDenomKernel24
+        (Icc (0 : ℝ) 1) := by
+    apply haux.congr
+    intro x _
+    by_cases hxzero : x = 0
+    · subst x
+      simp [quadAltLogPlusSqDenomKernel24]
+    · simp [quadAltLogPlusSqDenomKernel24,
+        RamanujanChallenge.P26.logOnePlusSlope26, hxzero]
+      field_simp [hxzero]
+  apply ContinuousOn.intervalIntegrable
+  rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+  exact hcont
+
+private def quadAltLogPlusCubePrimitive24 (x : ℝ) : ℝ :=
+  (1 / 3 : ℝ) * Real.log x * Real.log (1 + x) ^ 3
+
+private theorem quadAltLogPlusCubePrimitive24_continuousOn :
+    ContinuousOn quadAltLogPlusCubePrimitive24
+      (Icc (0 : ℝ) 1) := by
+  have haux :
+      ContinuousOn
+        (fun x : ℝ =>
+          (1 / 3 : ℝ) *
+            ((x * Real.log x) * x ^ 2 *
+              RamanujanChallenge.P26.logOnePlusSlope26 x ^ 3))
+        (Icc (0 : ℝ) 1) :=
+    continuousOn_const.mul
+      ((Real.continuous_mul_log.continuousOn.mul (continuousOn_id.pow 2)).mul
+        (RamanujanChallenge.P26.logOnePlusSlope26_continuousOn.pow 3))
+  apply haux.congr
+  intro x _
+  by_cases hxzero : x = 0
+  · subst x
+    simp [quadAltLogPlusCubePrimitive24]
+  · simp [quadAltLogPlusCubePrimitive24,
+      RamanujanChallenge.P26.logOnePlusSlope26, hxzero]
+    field_simp [hxzero]
+
+private theorem quadAltLogPlusCubePrimitive24_hasDerivAt
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt quadAltLogPlusCubePrimitive24
+      ((1 / 3 : ℝ) * quadAltPlusCubeRadialKernel24 x +
+        quadAltLogPlusSqDenomKernel24 x) x := by
+  have hxne : x ≠ 0 := ne_of_gt hx0
+  have h1pxne : 1 + x ≠ 0 := by linarith
+  have hlogx := Real.hasDerivAt_log hxne
+  have hinner : HasDerivAt (fun y : ℝ => 1 + y) 1 x := by
+    convert (hasDerivAt_const x 1).add (hasDerivAt_id x) using 1
+    simp
+  have hlogplus :
+      HasDerivAt (fun y : ℝ => Real.log (1 + y))
+        (1 / (1 + x)) x := by
+    convert hinner.log h1pxne using 1
+  unfold quadAltLogPlusCubePrimitive24
+  convert (hlogx.mul (hlogplus.pow 3)).const_mul (1 / 3 : ℝ) using 1
+  · funext y
+    simp only [Pi.mul_apply, Pi.pow_apply]
+    ring
+  · unfold quadAltPlusCubeRadialKernel24
+      quadAltLogPlusSqDenomKernel24
+    simp only [Pi.pow_apply]
+    field_simp [hxne, h1pxne]
+    ring
+
+private theorem quadAltLogPlusSqDenomIntegral24 :
+    (∫ x : ℝ in 0..1, quadAltLogPlusSqDenomKernel24 x) =
+      (1 / 3 : ℝ) *
+          (∫ t : ℝ in 0..(1 / 2), halfLogCubeOneSubKernel24 t) -
+        (1 / 12 : ℝ) * Real.log 2 ^ 4 := by
+  have hint :=
+    quadAltPlusCubeRadialKernel24_intervalIntegrable.const_mul
+      (1 / 3 : ℝ) |>.add
+      quadAltLogPlusSqDenomKernel24_intervalIntegrable
+  have hzero :
+      (∫ x : ℝ in 0..1,
+        ((1 / 3 : ℝ) * quadAltPlusCubeRadialKernel24 x +
+          quadAltLogPlusSqDenomKernel24 x)) = 0 := by
+    rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+      (f := quadAltLogPlusCubePrimitive24)
+      (f' := fun x : ℝ =>
+        (1 / 3 : ℝ) * quadAltPlusCubeRadialKernel24 x +
+          quadAltLogPlusSqDenomKernel24 x)
+      (by norm_num)
+      quadAltLogPlusCubePrimitive24_continuousOn
+      (fun x hx => quadAltLogPlusCubePrimitive24_hasDerivAt hx.1 hx.2)
+      hint]
+    norm_num [quadAltLogPlusCubePrimitive24]
+  rw [intervalIntegral.integral_add
+      (quadAltPlusCubeRadialKernel24_intervalIntegrable.const_mul
+        (1 / 3 : ℝ))
+      quadAltLogPlusSqDenomKernel24_intervalIntegrable,
+    intervalIntegral.integral_const_mul,
+    quadAltPlusCubeRadialIntegral24] at hzero
+  linarith
+
+private def quadAltMinusSimpleUpperKernel24 (x : ℝ) : ℝ :=
+  Real.log (1 - x) / x
+
+private theorem quadAltMinusSimpleUpperKernel24_intervalIntegrable :
+    IntervalIntegrable quadAltMinusSimpleUpperKernel24
+      MeasureTheory.volume (1 / 2) 1 := by
+  have hlog :
+      IntervalIntegrable (fun x : ℝ => Real.log (1 - x))
+        MeasureTheory.volume (1 / 2) 1 := by
+    have h := (intervalIntegral.intervalIntegrable_log'
+      (a := (0 : ℝ)) (b := (1 / 2 : ℝ))).comp_sub_left 1
+    convert h.symm using 1 <;> norm_num
+  have hfac :
+      ContinuousOn (fun x : ℝ => 1 / x)
+        (Set.uIcc (1 / 2 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    apply continuousOn_const.div continuousOn_id
+    intro x hx
+    exact ne_of_gt (show 0 < x by linarith [hx.1])
+  have hint := hlog.continuousOn_mul hfac
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ => (1 / x) * Real.log (1 - x)) ?_ hint
+  intro x _
+  unfold quadAltMinusSimpleUpperKernel24
+  ring
+
+private theorem quadAltMinusSimpleUpperIntegral24 :
+    (∫ x : ℝ in (1 / 2)..1, quadAltMinusSimpleUpperKernel24 x) =
+      -(1 / 2 : ℝ) * (Real.pi ^ 2 / 6) -
+        (1 / 2 : ℝ) * Real.log 2 ^ 2 := by
+  let F : ℝ → ℝ := fun x => -dilog x
+  have hcont : ContinuousOn F (Icc (1 / 2 : ℝ) 1) := by
+    unfold F
+    exact (dilog_continuousOn_unit.mono (by
+      intro x hx
+      constructor <;> linarith [hx.1, hx.2])).neg
+  have hderiv : ∀ x ∈ Ioo (1 / 2 : ℝ) 1,
+      HasDerivAt F (quadAltMinusSimpleUpperKernel24 x) x := by
+    intro x hx
+    unfold F quadAltMinusSimpleUpperKernel24
+    convert (dilog_hasDerivAt (by linarith [hx.1]) hx.2).neg using 1
+    ring
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+    (f := F) (f' := quadAltMinusSimpleUpperKernel24)
+    (by norm_num) hcont hderiv
+    quadAltMinusSimpleUpperKernel24_intervalIntegrable]
+  dsimp [F]
+  rw [dilog_one, RamanujanChallenge.P26.dilog26_half]
+  ring
+
+private theorem quadAltMinusRadialHalfIntegral24 :
+    (∫ x : ℝ in 0..(1 / 2), minusRadialKernel24 x) =
+      (7 / 8 : ℝ) * zeta3_24 -
+        (1 / 3 : ℝ) * Real.log 2 ^ 3 := by
+  have hint : IntervalIntegrable minusRadialKernel24
+      MeasureTheory.volume 0 (1 / 2) := by
+    apply minusRadialKernel24_intervalIntegrable.mono_set
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2),
+      Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    intro x hx
+    exact ⟨hx.1, hx.2.trans (by norm_num)⟩
+  have hhalfCont : ContinuousAt minusRadialPrimitive24 (1 / 2) := by
+    have hd : ContinuousAt dilog (1 / 2 : ℝ) :=
+      dilog_continuousOn_unit.continuousAt
+        (Icc_mem_nhds (by norm_num) (by norm_num))
+    have ht : ContinuousAt RamanujanChallenge.P26.trilog26 (1 / 2 : ℝ) :=
+      RamanujanChallenge.P26.trilog26_continuousOn_unit.continuousAt
+        (Icc_mem_nhds (by norm_num) (by norm_num))
+    have hl : ContinuousAt Real.log (1 / 2 : ℝ) :=
+      Real.continuousAt_log (by norm_num)
+    unfold minusRadialPrimitive24
+    exact (hl.mul hd).neg.add ht
+  have htend : Tendsto minusRadialPrimitive24
+      (𝓝[<] (1 / 2 : ℝ))
+      (𝓝 (minusRadialPrimitive24 (1 / 2))) :=
+    tendsto_nhdsWithin_of_tendsto_nhds hhalfCont.tendsto
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (f := minusRadialPrimitive24)
+    (fa := (0 : ℝ)) (fb := minusRadialPrimitive24 (1 / 2))
+    (by norm_num)
+    (fun x hx => minusRadialPrimitive24_hasDerivAt hx.1
+      (by linarith [hx.2]))
+    hint minusRadialPrimitive24_tendsto_zero htend]
+  have hloghalf : Real.log (1 / 2 : ℝ) = -Real.log 2 := by
+    rw [one_div, Real.log_inv]
+  unfold minusRadialPrimitive24
+  rw [hloghalf, RamanujanChallenge.P26.dilog26_half,
+    RamanujanChallenge.P26.trilog26_half]
+  unfold RamanujanChallenge.P26.zeta3 zeta3_24
+  ring
+
+private theorem quadAltMinusRadialUpperIntegral24 :
+    (∫ x : ℝ in (1 / 2)..1, minusRadialKernel24 x) =
+      (1 / 8 : ℝ) * zeta3_24 +
+        (1 / 3 : ℝ) * Real.log 2 ^ 3 := by
+  have hlower : IntervalIntegrable minusRadialKernel24
+      MeasureTheory.volume 0 (1 / 2) := by
+    apply minusRadialKernel24_intervalIntegrable.mono_set
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2),
+      Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    intro x hx
+    exact ⟨hx.1, hx.2.trans (by norm_num)⟩
+  have hupper : IntervalIntegrable minusRadialKernel24
+      MeasureTheory.volume (1 / 2) 1 := by
+    apply minusRadialKernel24_intervalIntegrable.mono_set
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1),
+      Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    intro x hx
+    exact ⟨(by linarith [hx.1]), hx.2⟩
+  have hsplit :=
+    intervalIntegral.integral_add_adjacent_intervals hlower hupper
+  rw [quadAltMinusRadialHalfIntegral24, minusRadialIntegral24] at hsplit
+  linarith
+
+private theorem quadAltUpperLogRadialIntegral24 :
+    (∫ x : ℝ in (1 / 2)..1, Real.log x / x) =
+      -(1 / 2 : ℝ) * Real.log 2 ^ 2 := by
+  let F : ℝ → ℝ := fun x => (1 / 2 : ℝ) * Real.log x ^ 2
+  have hcont : ContinuousOn F (Icc (1 / 2 : ℝ) 1) := by
+    unfold F
+    apply continuousOn_const.mul
+    apply (continuousOn_id.log (by
+      intro x hx
+      exact ne_of_gt (show 0 < x by linarith [hx.1]))).pow
+  have hderiv : ∀ x ∈ Ioo (1 / 2 : ℝ) 1,
+      HasDerivAt F (Real.log x / x) x := by
+    intro x hx
+    have hxne : x ≠ 0 := by linarith [hx.1]
+    unfold F
+    convert (Real.hasDerivAt_log hxne).pow 2 |>.const_mul (1 / 2 : ℝ) using 1
+    field_simp [hxne]
+    ring
+  have hint : IntervalIntegrable (fun x : ℝ => Real.log x / x)
+      MeasureTheory.volume (1 / 2) 1 := by
+    apply ContinuousOn.intervalIntegrable
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    apply ContinuousOn.div
+    · apply continuousOn_id.log
+      intro x hx
+      exact ne_of_gt (show 0 < x by linarith [hx.1])
+    · exact continuousOn_id
+    · intro x hx
+      exact ne_of_gt (show 0 < x by linarith [hx.1])
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+    (f := F) (f' := fun x : ℝ => Real.log x / x)
+    (by norm_num) hcont hderiv hint]
+  have hloghalf : Real.log (1 / 2 : ℝ) = -Real.log 2 := by
+    rw [one_div, Real.log_inv]
+  norm_num [F]
+  rw [hloghalf]
+  ring
+
+private theorem quadAltUpperLogSqRadialIntegral24 :
+    (∫ x : ℝ in (1 / 2)..1, Real.log x ^ 2 / x) =
+      (1 / 3 : ℝ) * Real.log 2 ^ 3 := by
+  let F : ℝ → ℝ := fun x => (1 / 3 : ℝ) * Real.log x ^ 3
+  have hcont : ContinuousOn F (Icc (1 / 2 : ℝ) 1) := by
+    unfold F
+    apply continuousOn_const.mul
+    apply (continuousOn_id.log (by
+      intro x hx
+      exact ne_of_gt (show 0 < x by linarith [hx.1]))).pow
+  have hderiv : ∀ x ∈ Ioo (1 / 2 : ℝ) 1,
+      HasDerivAt F (Real.log x ^ 2 / x) x := by
+    intro x hx
+    have hxne : x ≠ 0 := by linarith [hx.1]
+    unfold F
+    convert (Real.hasDerivAt_log hxne).pow 3 |>.const_mul (1 / 3 : ℝ) using 1
+    field_simp [hxne]
+    ring
+  have hint : IntervalIntegrable (fun x : ℝ => Real.log x ^ 2 / x)
+      MeasureTheory.volume (1 / 2) 1 := by
+    apply ContinuousOn.intervalIntegrable
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    apply ContinuousOn.div
+    · apply (continuousOn_id.log (by
+        intro x hx
+        exact ne_of_gt (show 0 < x by linarith [hx.1]))).pow
+    · exact continuousOn_id
+    · intro x hx
+      exact ne_of_gt (show 0 < x by linarith [hx.1])
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+    (f := F) (f' := fun x : ℝ => Real.log x ^ 2 / x)
+    (by norm_num) hcont hderiv hint]
+  have hloghalf : Real.log (1 / 2 : ℝ) = -Real.log 2 := by
+    rw [one_div, Real.log_inv]
+  norm_num [F]
+  rw [hloghalf]
+  ring
+
+private def quadAltUpperComplementKernel24 (x : ℝ) : ℝ :=
+  Real.log x ^ 2 * Real.log (1 - x) / x
+
+private theorem quadAltUpperComplementKernel24_intervalIntegrable :
+    IntervalIntegrable quadAltUpperComplementKernel24
+      MeasureTheory.volume (1 / 2) 1 := by
+  have hlog : IntervalIntegrable (fun x : ℝ => Real.log (1 - x))
+      MeasureTheory.volume (1 / 2) 1 := by
+    have h := (intervalIntegral.intervalIntegrable_log'
+      (a := (0 : ℝ)) (b := (1 / 2 : ℝ))).comp_sub_left 1
+    convert h.symm using 1 <;> norm_num
+  have hfac : ContinuousOn (fun x : ℝ => Real.log x ^ 2 / x)
+      (Set.uIcc (1 / 2 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    apply ContinuousOn.div
+    · apply (continuousOn_id.log (by
+        intro x hx
+        exact ne_of_gt (show 0 < x by linarith [hx.1]))).pow
+    · exact continuousOn_id
+    · intro x hx
+      exact ne_of_gt (show 0 < x by linarith [hx.1])
+  have hint := hlog.continuousOn_mul hfac
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ => (Real.log x ^ 2 / x) * Real.log (1 - x))
+    ?_ hint
+  intro x _
+  unfold quadAltUpperComplementKernel24
+  ring
+
+private theorem quadAltUpperComplementIntegral24 :
+    (∫ x : ℝ in (1 / 2)..1, quadAltUpperComplementKernel24 x) =
+      (1 / 3 : ℝ) *
+          (∫ x : ℝ in 0..(1 / 2), halfLogCubeOneSubKernel24 x) -
+        (1 / 3 : ℝ) * Real.log 2 ^ 4 := by
+  calc
+    (∫ x : ℝ in (1 / 2)..1, quadAltUpperComplementKernel24 x) =
+        ∫ u : ℝ in 0..(1 / 2),
+          quadAltUpperComplementKernel24 (1 - u) := by
+      have h := intervalIntegral.integral_comp_sub_left
+        (a := (0 : ℝ)) (b := (1 / 2 : ℝ))
+        quadAltUpperComplementKernel24 1
+      convert h.symm using 1 <;> norm_num
+    _ = ∫ u : ℝ in 0..(1 / 2), quarticMixedHalfKernel24 u := by
+      apply intervalIntegral.integral_congr_ae
+      filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+        with u huone hu
+      have hu' : u ∈ Ioc (0 : ℝ) (1 / 2) := by
+        simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)] using hu
+      have h1une : 1 - u ≠ 0 := by linarith [hu'.2]
+      unfold quadAltUpperComplementKernel24 quarticMixedHalfKernel24
+      rw [show 1 - (1 - u) = u by ring]
+      field_simp [h1une]
+    _ = _ := quarticMixedHalfIntegral24
+
+private def quadAltCrossPlusSqKernel24 (x : ℝ) : ℝ :=
+  Real.log (1 - x) * Real.log (1 + x) ^ 2 / (1 + x)
+
+private theorem quadAltCrossPlusSqKernel24_intervalIntegrable :
+    IntervalIntegrable quadAltCrossPlusSqKernel24
+      MeasureTheory.volume 0 1 := by
+  have hlog : IntervalIntegrable (fun x : ℝ => Real.log (1 - x))
+      MeasureTheory.volume 0 1 := by
+    have h := (intervalIntegral.intervalIntegrable_log'
+      (a := (0 : ℝ)) (b := 1)).comp_sub_left 1
+    simpa using h.symm
+  have hfac : ContinuousOn
+      (fun x : ℝ => Real.log (1 + x) ^ 2 / (1 + x))
+      (Set.uIcc (0 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    apply ContinuousOn.div
+    · apply ((continuousOn_const.add continuousOn_id).log (by
+        intro x hx
+        exact ne_of_gt (show 0 < 1 + x by linarith [hx.1]))).pow
+    · fun_prop
+    · intro x hx
+      exact ne_of_gt (show 0 < 1 + x by linarith [hx.1])
+  have hint := hlog.continuousOn_mul hfac
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ =>
+      (Real.log (1 + x) ^ 2 / (1 + x)) * Real.log (1 - x))
+    ?_ hint
+  intro x _
+  unfold quadAltCrossPlusSqKernel24
+  ring
+
+private theorem quadAltCrossPlusSqIntegral24 :
+    (∫ x : ℝ in 0..1, quadAltCrossPlusSqKernel24 x) =
+      (1 / 3 : ℝ) *
+          (∫ x : ℝ in 0..(1 / 2), halfLogCubeOneSubKernel24 x) +
+        (1 / 6 : ℝ) * Real.log 2 ^ 4 -
+        (1 / 2 : ℝ) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) +
+        (1 / 4 : ℝ) * Real.log 2 * zeta3_24 := by
+  let g : ℝ → ℝ := quadAltCrossPlusSqKernel24
+  have hsubst := intervalIntegral.smul_integral_comp_mul_sub
+    (a := (1 / 2 : ℝ)) (b := 1) g (2 : ℝ) 1
+  have hsubst' :
+      (2 : ℝ) • ∫ y : ℝ in (1 / 2)..1, g (2 * y - 1) =
+        ∫ x : ℝ in 0..1, g x := by
+    convert hsubst using 1 <;> norm_num
+  have hchange :
+      (∫ x : ℝ in 0..1, quadAltCrossPlusSqKernel24 x) =
+        ∫ y : ℝ in (1 / 2)..1,
+          ((Real.log 2 ^ 3 / y) +
+            2 * Real.log 2 ^ 2 * (Real.log y / y) +
+            Real.log 2 * (Real.log y ^ 2 / y) +
+            Real.log 2 ^ 2 * quadAltMinusSimpleUpperKernel24 y +
+            2 * Real.log 2 * minusRadialKernel24 y +
+            quadAltUpperComplementKernel24 y) := by
+    calc
+      (∫ x : ℝ in 0..1, quadAltCrossPlusSqKernel24 x) =
+          2 * ∫ y : ℝ in (1 / 2)..1, g (2 * y - 1) := by
+        change (∫ x : ℝ in 0..1, g x) = _
+        simpa only [smul_eq_mul] using hsubst'.symm
+      _ = ∫ y : ℝ in (1 / 2)..1, 2 * g (2 * y - 1) := by
+        rw [intervalIntegral.integral_const_mul]
+      _ = _ := by
+        apply intervalIntegral.integral_congr_ae
+        filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+          with y hyone hy
+        have hy' : y ∈ Ioc (1 / 2 : ℝ) 1 := by
+          rw [Set.uIoc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)] at hy
+          exact hy
+        have hy0 : 0 < y := by linarith [hy'.1]
+        have h1y0 : 0 < 1 - y := sub_pos.mpr
+          (lt_of_le_of_ne hy'.2 hyone)
+        have h2y : 0 < 2 * y := by positivity
+        have h2one : 0 < 2 * (1 - y) := by positivity
+        have hlogplus : Real.log (1 + (2 * y - 1)) =
+            Real.log 2 + Real.log y := by
+          rw [show 1 + (2 * y - 1) = 2 * y by ring,
+            Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) (ne_of_gt hy0)]
+        have hlogminus : Real.log (1 - (2 * y - 1)) =
+            Real.log 2 + Real.log (1 - y) := by
+          rw [show 1 - (2 * y - 1) = 2 * (1 - y) by ring,
+            Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) (ne_of_gt h1y0)]
+        dsimp [g]
+        unfold quadAltCrossPlusSqKernel24
+          quadAltMinusSimpleUpperKernel24 minusRadialKernel24
+          quadAltUpperComplementKernel24
+        rw [hlogplus, hlogminus]
+        have hyne : y ≠ 0 := ne_of_gt hy0
+        field_simp [hyne]
+        ring
+  have h0 : IntervalIntegrable (fun y : ℝ => Real.log 2 ^ 3 / y)
+      MeasureTheory.volume (1 / 2) 1 := by
+    apply ContinuousOn.intervalIntegrable
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    apply continuousOn_const.div continuousOn_id
+    intro y hy
+    exact ne_of_gt (show 0 < y by linarith [hy.1])
+  have h1 : IntervalIntegrable
+      (fun y : ℝ => 2 * Real.log 2 ^ 2 * (Real.log y / y))
+      MeasureTheory.volume (1 / 2) 1 := by
+    apply ContinuousOn.intervalIntegrable
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    apply continuousOn_const.mul
+    apply ContinuousOn.div
+    · apply continuousOn_id.log
+      intro y hy
+      exact ne_of_gt (show 0 < y by linarith [hy.1])
+    · exact continuousOn_id
+    · intro y hy
+      exact ne_of_gt (show 0 < y by linarith [hy.1])
+  have h2 : IntervalIntegrable
+      (fun y : ℝ => Real.log 2 * (Real.log y ^ 2 / y))
+      MeasureTheory.volume (1 / 2) 1 := by
+    apply ContinuousOn.intervalIntegrable
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    apply continuousOn_const.mul
+    apply ContinuousOn.div
+    · apply (continuousOn_id.log (by
+        intro y hy
+        exact ne_of_gt (show 0 < y by linarith [hy.1]))).pow
+    · exact continuousOn_id
+    · intro y hy
+      exact ne_of_gt (show 0 < y by linarith [hy.1])
+  have h3 := quadAltMinusSimpleUpperKernel24_intervalIntegrable.const_mul
+    (Real.log 2 ^ 2)
+  have h4 := minusRadialKernel24_intervalIntegrable.mono_set (c := (1 / 2 : ℝ))
+      (d := 1) (by
+        rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1),
+          Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+        intro y hy
+        exact ⟨(by linarith [hy.1]), hy.2⟩) |>.const_mul
+      (2 * Real.log 2)
+  have h0val :
+      (∫ y : ℝ in (1 / 2)..1, Real.log 2 ^ 3 / y) =
+        Real.log 2 ^ 4 := by
+    have hone :
+        (∫ y : ℝ in (1 / 2)..1, 1 / y) = Real.log 2 := by
+      have hcont : ContinuousOn Real.log (Icc (1 / 2 : ℝ) 1) := by
+        apply continuousOn_id.log
+        intro y hy
+        exact ne_of_gt (show 0 < y by linarith [hy.1])
+      have hderiv : ∀ y ∈ Ioo (1 / 2 : ℝ) 1,
+          HasDerivAt Real.log (1 / y) y := by
+        intro y hy
+        simpa [one_div] using Real.hasDerivAt_log
+          (show y ≠ 0 by linarith [hy.1])
+      have hint : IntervalIntegrable (fun y : ℝ => 1 / y)
+          MeasureTheory.volume (1 / 2) 1 := by
+        apply ContinuousOn.intervalIntegrable
+        rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+        apply continuousOn_const.div continuousOn_id
+        intro y hy
+        exact ne_of_gt (show 0 < y by linarith [hy.1])
+      rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+        (f := Real.log) (f' := fun y : ℝ => 1 / y)
+        (by norm_num) hcont hderiv hint]
+      have hloghalf : Real.log (1 / 2 : ℝ) = -Real.log 2 := by
+        rw [one_div, Real.log_inv]
+      norm_num
+      rw [hloghalf]
+      ring
+    calc
+      (∫ y : ℝ in (1 / 2)..1, Real.log 2 ^ 3 / y) =
+          Real.log 2 ^ 3 * ∫ y : ℝ in (1 / 2)..1, 1 / y := by
+        rw [← intervalIntegral.integral_const_mul]
+        apply intervalIntegral.integral_congr
+        intro y _
+        ring
+      _ = _ := by rw [hone]; ring
+  rw [hchange,
+    intervalIntegral.integral_add ((((h0.add h1).add h2).add h3).add h4)
+      quadAltUpperComplementKernel24_intervalIntegrable,
+    intervalIntegral.integral_add (((h0.add h1).add h2).add h3) h4,
+    intervalIntegral.integral_add ((h0.add h1).add h2) h3,
+    intervalIntegral.integral_add (h0.add h1) h2,
+    intervalIntegral.integral_add h0 h1]
+  rw [h0val,
+    intervalIntegral.integral_const_mul,
+    intervalIntegral.integral_const_mul,
+    intervalIntegral.integral_const_mul,
+    intervalIntegral.integral_const_mul,
+    quadAltUpperLogRadialIntegral24,
+    quadAltUpperLogSqRadialIntegral24,
+    quadAltMinusSimpleUpperIntegral24,
+    quadAltMinusRadialUpperIntegral24,
+    quadAltUpperComplementIntegral24]
+  ring
+
+private def quadAltLogPlusDenomKernel24 (x : ℝ) : ℝ :=
+  Real.log x * Real.log (1 + x) / (1 + x)
+
+private theorem quadAltLogPlusDenomKernel24_intervalIntegrable :
+    IntervalIntegrable quadAltLogPlusDenomKernel24
+      MeasureTheory.volume 0 1 := by
+  have haux : ContinuousOn
+      (fun x : ℝ =>
+        (x * Real.log x) *
+          RamanujanChallenge.P26.logOnePlusSlope26 x / (1 + x))
+      (Icc (0 : ℝ) 1) := by
+    apply ContinuousOn.div
+    · exact Real.continuous_mul_log.continuousOn.mul
+        RamanujanChallenge.P26.logOnePlusSlope26_continuousOn
+    · fun_prop
+    · intro x hx
+      exact ne_of_gt (show 0 < 1 + x by linarith [hx.1])
+  have hcont : ContinuousOn quadAltLogPlusDenomKernel24
+      (Icc (0 : ℝ) 1) := by
+    apply haux.congr
+    intro x _
+    by_cases hxzero : x = 0
+    · subst x
+      simp [quadAltLogPlusDenomKernel24]
+    · simp [quadAltLogPlusDenomKernel24,
+        RamanujanChallenge.P26.logOnePlusSlope26, hxzero]
+      field_simp [hxzero]
+  apply ContinuousOn.intervalIntegrable
+  rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+  exact hcont
+
+private def quadAltLogPlusSqPrimitive24 (x : ℝ) : ℝ :=
+  (1 / 2 : ℝ) * Real.log x * Real.log (1 + x) ^ 2
+
+private theorem quadAltLogPlusSqPrimitive24_continuousOn :
+    ContinuousOn quadAltLogPlusSqPrimitive24 (Icc (0 : ℝ) 1) := by
+  have haux : ContinuousOn
+      (fun x : ℝ =>
+        (1 / 2 : ℝ) *
+          ((x * Real.log x) * x *
+            RamanujanChallenge.P26.logOnePlusSlope26 x ^ 2))
+      (Icc (0 : ℝ) 1) :=
+    continuousOn_const.mul
+      ((Real.continuous_mul_log.continuousOn.mul continuousOn_id).mul
+        (RamanujanChallenge.P26.logOnePlusSlope26_continuousOn.pow 2))
+  apply haux.congr
+  intro x _
+  by_cases hxzero : x = 0
+  · subst x
+    simp [quadAltLogPlusSqPrimitive24]
+  · simp [quadAltLogPlusSqPrimitive24,
+      RamanujanChallenge.P26.logOnePlusSlope26, hxzero]
+    field_simp [hxzero]
+
+private theorem quadAltLogPlusSqPrimitive24_hasDerivAt
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt quadAltLogPlusSqPrimitive24
+      ((1 / 2 : ℝ) * plusLogSquareKernel24 x +
+        quadAltLogPlusDenomKernel24 x) x := by
+  have hxne : x ≠ 0 := ne_of_gt hx0
+  have h1pxne : 1 + x ≠ 0 := by linarith
+  have hlogx := Real.hasDerivAt_log hxne
+  have hinner : HasDerivAt (fun y : ℝ => 1 + y) 1 x := by
+    convert (hasDerivAt_const x 1).add (hasDerivAt_id x) using 1
+    simp
+  have hlogplus : HasDerivAt (fun y : ℝ => Real.log (1 + y))
+      (1 / (1 + x)) x := by
+    convert hinner.log h1pxne using 1
+  unfold quadAltLogPlusSqPrimitive24
+  convert (hlogx.mul (hlogplus.pow 2)).const_mul (1 / 2 : ℝ) using 1
+  · funext y
+    simp only [Pi.mul_apply, Pi.pow_apply]
+    ring
+  · unfold plusLogSquareKernel24 quadAltLogPlusDenomKernel24
+    simp only [Pi.pow_apply]
+    field_simp [hxne, h1pxne]
+    ring
+
+private theorem quadAltLogPlusDenomIntegral24 :
+    (∫ x : ℝ in 0..1, quadAltLogPlusDenomKernel24 x) =
+      -(1 / 8 : ℝ) * zeta3_24 := by
+  have hint := plusLogSquareKernel24_intervalIntegrable.const_mul
+    (1 / 2 : ℝ) |>.add quadAltLogPlusDenomKernel24_intervalIntegrable
+  have hzero :
+      (∫ x : ℝ in 0..1,
+        ((1 / 2 : ℝ) * plusLogSquareKernel24 x +
+          quadAltLogPlusDenomKernel24 x)) = 0 := by
+    rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+      (f := quadAltLogPlusSqPrimitive24)
+      (f' := fun x : ℝ =>
+        (1 / 2 : ℝ) * plusLogSquareKernel24 x +
+          quadAltLogPlusDenomKernel24 x)
+      (by norm_num) quadAltLogPlusSqPrimitive24_continuousOn
+      (fun x hx => quadAltLogPlusSqPrimitive24_hasDerivAt hx.1 hx.2)
+      hint]
+    norm_num [quadAltLogPlusSqPrimitive24]
+  rw [intervalIntegral.integral_add
+      (plusLogSquareKernel24_intervalIntegrable.const_mul (1 / 2 : ℝ))
+      quadAltLogPlusDenomKernel24_intervalIntegrable,
+    intervalIntegral.integral_const_mul] at hzero
+  have hplus :
+      (∫ x : ℝ in 0..1, plusLogSquareKernel24 x) =
+        (1 / 4 : ℝ) * zeta3_24 := by
+    simpa [plusLogSquarePrimitive24] using plusLogSquarePrimitive24_one
+  rw [hplus] at hzero
+  linarith
+
+private def quadAltPlusCubeDenomKernel24 (x : ℝ) : ℝ :=
+  Real.log (1 + x) ^ 3 / (1 + x)
+
+private theorem quadAltPlusCubeDenomKernel24_intervalIntegrable :
+    IntervalIntegrable quadAltPlusCubeDenomKernel24
+      MeasureTheory.volume 0 1 := by
+  apply ContinuousOn.intervalIntegrable
+  rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+  unfold quadAltPlusCubeDenomKernel24
+  apply ContinuousOn.div
+  · apply ((continuousOn_const.add continuousOn_id).log (by
+      intro x hx
+      exact ne_of_gt (show 0 < 1 + x by linarith [hx.1]))).pow
+  · fun_prop
+  · intro x hx
+    exact ne_of_gt (show 0 < 1 + x by linarith [hx.1])
+
+private theorem quadAltPlusCubeDenomIntegral24 :
+    (∫ x : ℝ in 0..1, quadAltPlusCubeDenomKernel24 x) =
+      (1 / 4 : ℝ) * Real.log 2 ^ 4 := by
+  let F : ℝ → ℝ := fun x => (1 / 4 : ℝ) * Real.log (1 + x) ^ 4
+  have hcont : ContinuousOn F (Icc (0 : ℝ) 1) := by
+    unfold F
+    apply continuousOn_const.mul
+    apply ((continuousOn_const.add continuousOn_id).log (by
+      intro x hx
+      exact ne_of_gt (show 0 < 1 + x by linarith [hx.1]))).pow
+  have hderiv : ∀ x ∈ Ioo (0 : ℝ) 1,
+      HasDerivAt F (quadAltPlusCubeDenomKernel24 x) x := by
+    intro x hx
+    have h1pxne : 1 + x ≠ 0 := by linarith [hx.1]
+    have hinner : HasDerivAt (fun y : ℝ => 1 + y) 1 x := by
+      convert (hasDerivAt_const x 1).add (hasDerivAt_id x) using 1
+      simp
+    have hlog : HasDerivAt (fun y : ℝ => Real.log (1 + y))
+        (1 / (1 + x)) x := by
+      convert hinner.log h1pxne using 1
+    unfold F
+    convert (hlog.pow 4).const_mul (1 / 4 : ℝ) using 1
+    unfold quadAltPlusCubeDenomKernel24
+    field_simp [h1pxne]
+    ring
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+    (f := F) (f' := quadAltPlusCubeDenomKernel24)
+    (by norm_num) hcont hderiv
+    quadAltPlusCubeDenomKernel24_intervalIntegrable]
+  norm_num [F]
+
+private theorem quadAltMixedPlusKernel24_intervalIntegrable :
+    IntervalIntegrable quadAltMixedPlusKernel24
+      MeasureTheory.volume 0 1 := by
+  have hlog : IntervalIntegrable (fun x : ℝ => Real.log (1 - x))
+      MeasureTheory.volume 0 1 := by
+    have h := (intervalIntegral.intervalIntegrable_log'
+      (a := (0 : ℝ)) (b := 1)).comp_sub_left 1
+    simpa using h.symm
+  have hfac : ContinuousOn
+      (fun x : ℝ =>
+        (x * Real.log x) *
+          RamanujanChallenge.P26.logOnePlusSlope26 x / (1 + x))
+      (Set.uIcc (0 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    apply ContinuousOn.div
+    · exact Real.continuous_mul_log.continuousOn.mul
+        RamanujanChallenge.P26.logOnePlusSlope26_continuousOn
+    · fun_prop
+    · intro x hx
+      exact ne_of_gt (show 0 < 1 + x by linarith [hx.1])
+  have hint := hlog.continuousOn_mul hfac
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ =>
+      ((x * Real.log x) *
+        RamanujanChallenge.P26.logOnePlusSlope26 x / (1 + x)) *
+          Real.log (1 - x)) ?_ hint
+  intro x hx
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+  have hxne : x ≠ 0 := ne_of_gt hx'.1
+  unfold quadAltMixedPlusKernel24
+  simp [RamanujanChallenge.P26.logOnePlusSlope26, hxne]
+  field_simp [hxne]
+
+private def quadAltMixedMobiusKernel24 (x : ℝ) : ℝ :=
+  (Real.log 2 ^ 2 * Real.log (1 - x) -
+      Real.log 2 ^ 2 * Real.log (1 + x) -
+      2 * Real.log 2 * Real.log (1 - x) * Real.log (1 + x) +
+      Real.log 2 * Real.log (1 - x) * Real.log x +
+      2 * Real.log 2 * Real.log (1 + x) ^ 2 -
+      Real.log 2 * Real.log (1 + x) * Real.log x +
+      Real.log (1 - x) * Real.log (1 + x) ^ 2 -
+      Real.log (1 - x) * Real.log (1 + x) * Real.log x -
+      Real.log (1 + x) ^ 3 +
+      Real.log (1 + x) ^ 2 * Real.log x) / (1 + x)
+
+private theorem quadAltMixedMobiusChange24
+    {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
+    (quadAltMixedPlusKernel24 ∘ mobiusMap24) t *
+        mobiusMapDeriv24 t =
+      -quadAltMixedMobiusKernel24 t := by
+  have htne : t ≠ 0 := ne_of_gt ht0
+  have h1mt0 : 0 < 1 - t := by linarith
+  have h1pt0 : 0 < 1 + t := by linarith
+  have h1ptne : 1 + t ≠ 0 := ne_of_gt h1pt0
+  have hphi0 : 0 < mobiusMap24 t := by
+    unfold mobiusMap24
+    positivity
+  have hlogPhi : Real.log (mobiusMap24 t) =
+      Real.log (1 - t) - Real.log (1 + t) := by
+    unfold mobiusMap24
+    rw [Real.log_div (ne_of_gt h1mt0) h1ptne]
+  have honePlusPhi : 1 + mobiusMap24 t = 2 / (1 + t) := by
+    unfold mobiusMap24
+    field_simp [h1ptne]
+    ring
+  have honeMinusPhi : 1 - mobiusMap24 t = 2 * t / (1 + t) := by
+    unfold mobiusMap24
+    field_simp [h1ptne]
+    ring
+  have hlogPlusPhi : Real.log (1 + mobiusMap24 t) =
+      Real.log 2 - Real.log (1 + t) := by
+    rw [honePlusPhi,
+      Real.log_div (by norm_num : (2 : ℝ) ≠ 0) h1ptne]
+  have hlogMinusPhi : Real.log (1 - mobiusMap24 t) =
+      Real.log 2 + Real.log t - Real.log (1 + t) := by
+    rw [honeMinusPhi,
+      Real.log_div (mul_ne_zero (by norm_num : (2 : ℝ) ≠ 0) htne) h1ptne,
+      Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) htne]
+  simp only [Function.comp_apply]
+  unfold quadAltMixedPlusKernel24 mobiusMapDeriv24
+    quadAltMixedMobiusKernel24
+  rw [hlogPhi, hlogMinusPhi, hlogPlusPhi, honePlusPhi]
+  field_simp [h1ptne]
+  ring
+
+private theorem quadAltMixedMobiusKernel24_intervalIntegrable :
+    IntervalIntegrable quadAltMixedMobiusKernel24
+      MeasureTheory.volume 0 1 := by
+  have hB0 : IntervalIntegrable plusDenomKernel24
+      MeasureTheory.volume 0 1 := by
+    apply ContinuousOn.intervalIntegrable
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    unfold plusDenomKernel24
+    apply ContinuousOn.div
+    · apply (continuousOn_const.add continuousOn_id).log
+      intro x hx
+      exact ne_of_gt (show 0 < 1 + x by linarith [hx.1])
+    · fun_prop
+    · intro x hx
+      exact ne_of_gt (show 0 < 1 + x by linarith [hx.1])
+  have hB2 : IntervalIntegrable plusSquareDenomKernel24
+      MeasureTheory.volume 0 1 := by
+    apply ContinuousOn.intervalIntegrable
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    unfold plusSquareDenomKernel24
+    apply ContinuousOn.div
+    · apply ((continuousOn_const.add continuousOn_id).log (by
+        intro x hx
+        exact ne_of_gt (show 0 < 1 + x by linarith [hx.1]))).pow
+    · fun_prop
+    · intro x hx
+      exact ne_of_gt (show 0 < 1 + x by linarith [hx.1])
+  have htotal :=
+    ((((((((minusDenomKernel24_intervalIntegrable.const_mul
+        (Real.log 2 ^ 2)).sub
+      (hB0.const_mul (Real.log 2 ^ 2))).sub
+      (crossPlusKernel24_intervalIntegrable.const_mul (2 * Real.log 2))).add
+      (crossAltKernel24_intervalIntegrable.const_mul (Real.log 2))).add
+      (hB2.const_mul (2 * Real.log 2))).sub
+      (quadAltLogPlusDenomKernel24_intervalIntegrable.const_mul
+        (Real.log 2))).add
+      quadAltCrossPlusSqKernel24_intervalIntegrable).sub
+      quadAltMixedPlusKernel24_intervalIntegrable).sub
+      quadAltPlusCubeDenomKernel24_intervalIntegrable |>.add
+      quadAltLogPlusSqDenomKernel24_intervalIntegrable
+  apply htotal.congr
+  intro x hx
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+  have h1pxne : 1 + x ≠ 0 := by linarith [hx'.1]
+  unfold quadAltMixedMobiusKernel24 minusDenomKernel24 plusDenomKernel24
+    crossPlusKernel24 crossAltKernel24 plusSquareDenomKernel24
+    quadAltLogPlusDenomKernel24 quadAltCrossPlusSqKernel24
+    quadAltMixedPlusKernel24 quadAltPlusCubeDenomKernel24
+    quadAltLogPlusSqDenomKernel24
+  field_simp [h1pxne]
+
+private theorem quadAltMixedPlus_eq_mobiusIntegral24 :
+    (∫ x : ℝ in 0..1, quadAltMixedPlusKernel24 x) =
+      ∫ x : ℝ in 0..1, quadAltMixedMobiusKernel24 x := by
+  have hmapCont : ContinuousOn mobiusMap24 (Set.uIcc (0 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    unfold mobiusMap24
+    apply ContinuousOn.div
+    · fun_prop
+    · fun_prop
+    · intro t ht
+      exact ne_of_gt (show 0 < 1 + t by linarith [ht.1])
+  have hderiv : ∀ t ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      HasDerivAt mobiusMap24 (mobiusMapDeriv24 t) t := by
+    intro t ht
+    norm_num at ht
+    exact mobiusMap24_hasDerivAt ht.1 ht.2
+  have hnonpos : ∀ t ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      mobiusMapDeriv24 t ≤ 0 := by
+    intro t _
+    unfold mobiusMapDeriv24
+    exact div_nonpos_of_nonpos_of_nonneg (by norm_num) (sq_nonneg _)
+  have hsubst := intervalIntegral.integral_comp_mul_deriv_of_deriv_nonpos
+    (a := (0 : ℝ)) (b := 1)
+    (f := mobiusMap24) (f' := mobiusMapDeriv24)
+    (g := quadAltMixedPlusKernel24) hmapCont hderiv hnonpos
+  have hcongr :
+      (∫ t : ℝ in 0..1,
+        (quadAltMixedPlusKernel24 ∘ mobiusMap24) t *
+          mobiusMapDeriv24 t) =
+        ∫ t : ℝ in 0..1, -quadAltMixedMobiusKernel24 t := by
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (0 : ℝ),
+      MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+      with t htzero htone ht
+    have ht' : t ∈ Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using ht
+    exact quadAltMixedMobiusChange24 ht'.1
+      (lt_of_le_of_ne ht'.2 htone)
+  have hs :
+      (∫ t : ℝ in 0..1,
+        (quadAltMixedPlusKernel24 ∘ mobiusMap24) t *
+          mobiusMapDeriv24 t) =
+        ∫ x : ℝ in 1..0, quadAltMixedPlusKernel24 x := by
+    simpa [mobiusMap24] using hsubst
+  have hrel :
+      (∫ t : ℝ in 0..1, -quadAltMixedMobiusKernel24 t) =
+        ∫ x : ℝ in 1..0, quadAltMixedPlusKernel24 x :=
+    hcongr.symm.trans hs
+  have hneg :
+      (∫ t : ℝ in 0..1, -quadAltMixedMobiusKernel24 t) =
+        -(∫ t : ℝ in 0..1, quadAltMixedMobiusKernel24 t) := by
+    rw [intervalIntegral.integral_neg]
+  have hsymm :
+      (∫ x : ℝ in 1..0, quadAltMixedPlusKernel24 x) =
+        -(∫ x : ℝ in 0..1, quadAltMixedPlusKernel24 x) := by
+    rw [intervalIntegral.integral_symm]
+  rw [hneg, hsymm] at hrel
+  linarith
+
+private theorem quadAltMixedPlusIntegral24 :
+    (∫ x : ℝ in 0..1, quadAltMixedPlusKernel24 x) =
+      (1 / 3 : ℝ) *
+          (∫ x : ℝ in 0..(1 / 2), halfLogCubeOneSubKernel24 x) -
+        (1 / 12 : ℝ) * Real.log 2 ^ 4 -
+        (3 / 4 : ℝ) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) +
+        (7 / 8 : ℝ) * Real.log 2 * zeta3_24 := by
+  have hB0 : IntervalIntegrable plusDenomKernel24
+      MeasureTheory.volume 0 1 := by
+    apply ContinuousOn.intervalIntegrable
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    unfold plusDenomKernel24
+    apply ContinuousOn.div
+    · apply (continuousOn_const.add continuousOn_id).log
+      intro x hx
+      exact ne_of_gt (show 0 < 1 + x by linarith [hx.1])
+    · fun_prop
+    · intro x hx
+      exact ne_of_gt (show 0 < 1 + x by linarith [hx.1])
+  have hB2 : IntervalIntegrable plusSquareDenomKernel24
+      MeasureTheory.volume 0 1 := by
+    apply ContinuousOn.intervalIntegrable
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    unfold plusSquareDenomKernel24
+    apply ContinuousOn.div
+    · apply ((continuousOn_const.add continuousOn_id).log (by
+        intro x hx
+        exact ne_of_gt (show 0 < 1 + x by linarith [hx.1]))).pow
+    · fun_prop
+    · intro x hx
+      exact ne_of_gt (show 0 < 1 + x by linarith [hx.1])
+  have hdecomp :
+      (∫ x : ℝ in 0..1, quadAltMixedMobiusKernel24 x) =
+        Real.log 2 ^ 2 * (∫ x : ℝ in 0..1, minusDenomKernel24 x) -
+        Real.log 2 ^ 2 * (∫ x : ℝ in 0..1, plusDenomKernel24 x) -
+        2 * Real.log 2 * (∫ x : ℝ in 0..1, crossPlusKernel24 x) +
+        Real.log 2 * (∫ x : ℝ in 0..1, crossAltKernel24 x) +
+        2 * Real.log 2 * (∫ x : ℝ in 0..1, plusSquareDenomKernel24 x) -
+        Real.log 2 * (∫ x : ℝ in 0..1, quadAltLogPlusDenomKernel24 x) +
+        (∫ x : ℝ in 0..1, quadAltCrossPlusSqKernel24 x) -
+        (∫ x : ℝ in 0..1, quadAltMixedPlusKernel24 x) -
+        (∫ x : ℝ in 0..1, quadAltPlusCubeDenomKernel24 x) +
+        (∫ x : ℝ in 0..1, quadAltLogPlusSqDenomKernel24 x) := by
+    let q : ℝ → ℝ := fun x =>
+      Real.log 2 ^ 2 * minusDenomKernel24 x -
+        Real.log 2 ^ 2 * plusDenomKernel24 x -
+        2 * Real.log 2 * crossPlusKernel24 x +
+        Real.log 2 * crossAltKernel24 x +
+        2 * Real.log 2 * plusSquareDenomKernel24 x -
+        Real.log 2 * quadAltLogPlusDenomKernel24 x +
+        quadAltCrossPlusSqKernel24 x -
+        quadAltMixedPlusKernel24 x -
+        quadAltPlusCubeDenomKernel24 x +
+        quadAltLogPlusSqDenomKernel24 x
+    have hpoint :
+        (∫ x : ℝ in 0..1, quadAltMixedMobiusKernel24 x) =
+          ∫ x : ℝ in 0..1, q x := by
+      apply intervalIntegral.integral_congr_ae
+      filter_upwards with x hx
+      have h1pxne : 1 + x ≠ 0 := by
+        have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+          simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+        linarith [hx'.1]
+      dsimp [q]
+      unfold quadAltMixedMobiusKernel24 minusDenomKernel24 plusDenomKernel24
+        crossPlusKernel24 crossAltKernel24 plusSquareDenomKernel24
+        quadAltLogPlusDenomKernel24 quadAltCrossPlusSqKernel24
+        quadAltMixedPlusKernel24 quadAltPlusCubeDenomKernel24
+        quadAltLogPlusSqDenomKernel24
+      field_simp [h1pxne]
+    have h0 := minusDenomKernel24_intervalIntegrable.const_mul
+      (Real.log 2 ^ 2)
+    have h1 := h0.sub (hB0.const_mul (Real.log 2 ^ 2))
+    have h2 := h1.sub
+      (crossPlusKernel24_intervalIntegrable.const_mul (2 * Real.log 2))
+    have h3 := h2.add
+      (crossAltKernel24_intervalIntegrable.const_mul (Real.log 2))
+    have h4 := h3.add (hB2.const_mul (2 * Real.log 2))
+    have h5 := h4.sub
+      (quadAltLogPlusDenomKernel24_intervalIntegrable.const_mul (Real.log 2))
+    have h6 := h5.add quadAltCrossPlusSqKernel24_intervalIntegrable
+    have h7 := h6.sub quadAltMixedPlusKernel24_intervalIntegrable
+    have h8 := h7.sub quadAltPlusCubeDenomKernel24_intervalIntegrable
+    rw [hpoint]
+    dsimp [q]
+    rw [intervalIntegral.integral_add h8
+        quadAltLogPlusSqDenomKernel24_intervalIntegrable,
+      intervalIntegral.integral_sub h7
+        quadAltPlusCubeDenomKernel24_intervalIntegrable,
+      intervalIntegral.integral_sub h6
+        quadAltMixedPlusKernel24_intervalIntegrable,
+      intervalIntegral.integral_add h5
+        quadAltCrossPlusSqKernel24_intervalIntegrable,
+      intervalIntegral.integral_sub h4
+        (quadAltLogPlusDenomKernel24_intervalIntegrable.const_mul (Real.log 2)),
+      intervalIntegral.integral_add h3 (hB2.const_mul (2 * Real.log 2)),
+      intervalIntegral.integral_add h2
+        (crossAltKernel24_intervalIntegrable.const_mul (Real.log 2)),
+      intervalIntegral.integral_sub h1
+        (crossPlusKernel24_intervalIntegrable.const_mul (2 * Real.log 2)),
+      intervalIntegral.integral_sub h0 (hB0.const_mul (Real.log 2 ^ 2))]
+    repeat' rw [intervalIntegral.integral_const_mul]
+  have hself := quadAltMixedPlus_eq_mobiusIntegral24
+  rw [hdecomp, minusDenomIntegral24, plusDenomIntegral24,
+    crossPlusIntegral24, crossAltIntegral24, plusSquareDenomIntegral24,
+    quadAltLogPlusDenomIntegral24, quadAltCrossPlusSqIntegral24,
+    quadAltPlusCubeDenomIntegral24, quadAltLogPlusSqDenomIntegral24] at hself
+  linarith
+
+/-- Integrability of the mixed logarithmic kernel needed by the Layer E cross rows. -/
+theorem quadAltMixedLogIntervalIntegrable24 :
+    IntervalIntegrable
+      (fun x : ℝ =>
+        Real.log x * Real.log (1 - x) * Real.log (1 + x) /
+          (x * (1 + x)))
+      MeasureTheory.volume 0 1 := by
+  have hdiff := quadAltMixedRadialKernel24_intervalIntegrable.sub
+    quadAltMixedPlusKernel24_intervalIntegrable
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ =>
+      quadAltMixedRadialKernel24 x - quadAltMixedPlusKernel24 x)
+    ?_ hdiff
+  intro x hx
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+  have hxne : x ≠ 0 := ne_of_gt hx'.1
+  have h1pxne : 1 + x ≠ 0 := by linarith [hx'.1]
+  unfold quadAltMixedRadialKernel24 quadAltMixedPlusKernel24
+  field_simp [hxne, h1pxne]
+  ring
+
+/-- The mixed weight-four logarithmic moment used to couple `I12` and `I21`. -/
+theorem quadAltMixedLogIntegral24 :
+    (∫ x : ℝ in 0..1,
+      Real.log x * Real.log (1 - x) * Real.log (1 + x) /
+        (x * (1 + x))) =
+      (3 / 4 : ℝ) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) -
+        (7 / 8 : ℝ) * Real.log 2 * zeta3_24 +
+        (1 / 8 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  calc
+    (∫ x : ℝ in 0..1,
+      Real.log x * Real.log (1 - x) * Real.log (1 + x) /
+        (x * (1 + x))) =
+        (∫ x : ℝ in 0..1, quadAltMixedRadialKernel24 x) -
+          ∫ x : ℝ in 0..1, quadAltMixedPlusKernel24 x := by
+      rw [← intervalIntegral.integral_sub
+        quadAltMixedRadialKernel24_intervalIntegrable
+        quadAltMixedPlusKernel24_intervalIntegrable]
+      apply intervalIntegral.integral_congr_ae
+      filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (0 : ℝ)]
+        with x hxzero hx
+      have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+        simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+      have h1pxne : 1 + x ≠ 0 := by linarith [hx'.1]
+      unfold quadAltMixedRadialKernel24 quadAltMixedPlusKernel24
+      field_simp [hxzero, h1pxne]
+      ring
+    _ = _ := by
+      rw [quadAltMixedRadialIntegral24, quadAltMixedPlusIntegral24,
+        quarticPlusIntegral24, halfLogCubeOneSubIntegral24]
+      ring
+
 end

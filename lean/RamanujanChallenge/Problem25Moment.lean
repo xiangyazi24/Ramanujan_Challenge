@@ -22,6 +22,8 @@ namespace RamanujanChallenge.P25
 
 open MeasureTheory Set Filter Topology
 
+set_option maxHeartbeats 0
+
 private theorem poly_integrable_01 {f : ℝ → ℝ} (hf : Continuous f) :
     IntervalIntegrable f MeasureTheory.volume 0 1 :=
   hf.intervalIntegrable 0 1
@@ -188,6 +190,281 @@ commonLimit = catalanConstant by uniqueness of limits. -/
 /-- The remaining connection certificate in its concrete sign form.  These
 two inequalities say that Catalan's constant is bracketed by two of the three
 rational approximants at every stage. -/
+private def ratioMinor (N : ℕ) : Fin 3 → ℝ :=
+  ![(positiveNumerator N 0 : ℝ) * (positiveDenominator N 1 : ℝ) -
+      (positiveNumerator N 1 : ℝ) * (positiveDenominator N 0 : ℝ),
+    (positiveNumerator N 0 : ℝ) * (positiveDenominator N 2 : ℝ) -
+      (positiveNumerator N 2 : ℝ) * (positiveDenominator N 0 : ℝ),
+    (positiveNumerator N 1 : ℝ) * (positiveDenominator N 2 : ℝ) -
+      (positiveNumerator N 2 : ℝ) * (positiveDenominator N 1 : ℝ)]
+
+/-- The second compound matrix of the positive challenge matrix.  Its three
+coordinates are indexed by the pairs `(0,1)`, `(0,2)`, `(1,2)`. -/
+private def compoundMatrix (n : ℕ) : Matrix (Fin 3) (Fin 3) ℝ :=
+  let A := positiveMatrix (n : ℤ)
+  !![(A 0 0 : ℝ) * A 1 1 - (A 0 1 : ℝ) * A 1 0,
+      (A 0 0 : ℝ) * A 1 2 - (A 0 2 : ℝ) * A 1 0,
+      (A 0 1 : ℝ) * A 1 2 - (A 0 2 : ℝ) * A 1 1;
+     (A 0 0 : ℝ) * A 2 1 - (A 0 1 : ℝ) * A 2 0,
+      (A 0 0 : ℝ) * A 2 2 - (A 0 2 : ℝ) * A 2 0,
+      (A 0 1 : ℝ) * A 2 2 - (A 0 2 : ℝ) * A 2 1;
+     (A 1 0 : ℝ) * A 2 1 - (A 1 1 : ℝ) * A 2 0,
+      (A 1 0 : ℝ) * A 2 2 - (A 1 2 : ℝ) * A 2 0,
+      (A 1 1 : ℝ) * A 2 2 - (A 1 2 : ℝ) * A 2 1]
+
+private theorem ratioMinor_succ (n : ℕ) (j : Fin 3) :
+    ratioMinor (n + 1) j =
+      ∑ i : Fin 3, ratioMinor n i * compoundMatrix n i j := by
+  fin_cases j <;> simp [ratioMinor]
+  all_goals
+    simp_rw [positiveNumerator_succ, positiveDenominator_succ]
+    push_cast
+    simp [Fin.sum_univ_three, compoundMatrix, ratioMinor]
+    ring
+
+/-- Balanced projective coordinates for the exterior-square row. -/
+private def wedgeX (n : ℕ) : ℝ :=
+  ((n : ℝ) + 1) * ratioMinor n 1 / ratioMinor n 0
+
+private def wedgeY (n : ℕ) : ℝ :=
+  ((n : ℝ) + 1) ^ 2 * ratioMinor n 2 / ratioMinor n 0
+
+private def wedgeStepCoefficient (n : ℕ) (x y : ℝ) (j : Fin 3) : ℝ :=
+  compoundMatrix n 0 j +
+    x / ((n : ℝ) + 1) * compoundMatrix n 1 j +
+    y / ((n : ℝ) + 1) ^ 2 * compoundMatrix n 2 j
+
+private theorem ratioMinor_succ_factor (n : ℕ) (j : Fin 3)
+    (hminor : ratioMinor n 0 ≠ 0) :
+    ratioMinor (n + 1) j =
+      ratioMinor n 0 * wedgeStepCoefficient n (wedgeX n) (wedgeY n) j := by
+  rw [ratioMinor_succ, Fin.sum_univ_three]
+  simp only [wedgeStepCoefficient, wedgeX, wedgeY]
+  field_simp [hminor]
+
+private theorem affine_rectangle_nonneg' (A B C x y : ℝ)
+    (hx₀ : 1 / 2 ≤ x) (hx₁ : x ≤ 3 / 2)
+    (hy₀ : 0 ≤ y) (hy₁ : y ≤ 2)
+    (h₀₀ : 0 ≤ A + B * (1 / 2) + C * 0)
+    (h₀₁ : 0 ≤ A + B * (1 / 2) + C * 2)
+    (h₁₀ : 0 ≤ A + B * (3 / 2) + C * 0)
+    (h₁₁ : 0 ≤ A + B * (3 / 2) + C * 2) :
+    0 ≤ A + B * x + C * y := by
+  rcases le_total 0 B with hB | hB <;>
+    rcases le_total 0 C with hC | hC <;> nlinarith
+
+private theorem wedge_linear_nonneg (n : ℕ) (x y a b c : ℝ)
+    (hx₀ : 1 / 2 ≤ x) (hx₁ : x ≤ 3 / 2)
+    (hy₀ : 0 ≤ y) (hy₁ : y ≤ 2)
+    (h₀₀ : 0 ≤ a * wedgeStepCoefficient n (1 / 2) 0 0 +
+      b * wedgeStepCoefficient n (1 / 2) 0 1 +
+      c * wedgeStepCoefficient n (1 / 2) 0 2)
+    (h₀₁ : 0 ≤ a * wedgeStepCoefficient n (1 / 2) 2 0 +
+      b * wedgeStepCoefficient n (1 / 2) 2 1 +
+      c * wedgeStepCoefficient n (1 / 2) 2 2)
+    (h₁₀ : 0 ≤ a * wedgeStepCoefficient n (3 / 2) 0 0 +
+      b * wedgeStepCoefficient n (3 / 2) 0 1 +
+      c * wedgeStepCoefficient n (3 / 2) 0 2)
+    (h₁₁ : 0 ≤ a * wedgeStepCoefficient n (3 / 2) 2 0 +
+      b * wedgeStepCoefficient n (3 / 2) 2 1 +
+      c * wedgeStepCoefficient n (3 / 2) 2 2) :
+    0 ≤ a * wedgeStepCoefficient n x y 0 +
+      b * wedgeStepCoefficient n x y 1 +
+      c * wedgeStepCoefficient n x y 2 := by
+  let A : ℝ := a * compoundMatrix n 0 0 + b * compoundMatrix n 0 1 +
+    c * compoundMatrix n 0 2
+  let B : ℝ := (a * compoundMatrix n 1 0 + b * compoundMatrix n 1 1 +
+    c * compoundMatrix n 1 2) / ((n : ℝ) + 1)
+  let C : ℝ := (a * compoundMatrix n 2 0 + b * compoundMatrix n 2 1 +
+    c * compoundMatrix n 2 2) / ((n : ℝ) + 1) ^ 2
+  have hrect : 0 ≤ A + B * x + C * y := by
+    apply affine_rectangle_nonneg' A B C x y hx₀ hx₁ hy₀ hy₁
+    · dsimp [A, B, C]
+      simp only [wedgeStepCoefficient] at h₀₀
+      convert h₀₀ using 1 <;> ring
+    · dsimp [A, B, C]
+      simp only [wedgeStepCoefficient] at h₀₁
+      convert h₀₁ using 1 <;> ring
+    · dsimp [A, B, C]
+      simp only [wedgeStepCoefficient] at h₁₀
+      convert h₁₀ using 1 <;> ring
+    · dsimp [A, B, C]
+      simp only [wedgeStepCoefficient] at h₁₁
+      convert h₁₁ using 1 <;> ring
+  convert hrect using 1 <;>
+    dsimp [A, B, C, wedgeStepCoefficient] <;> ring
+
+private theorem wedge_step_x_lower (n : ℕ) (x y : ℝ)
+    (hx₀ : 1 / 2 ≤ x) (hx₁ : x ≤ 3 / 2)
+    (hy₀ : 0 ≤ y) (hy₁ : y ≤ 2) :
+    wedgeStepCoefficient n x y 0 ≤
+      2 * ((n : ℝ) + 2) * wedgeStepCoefficient n x y 1 := by
+  suffices 0 ≤ (-1) * wedgeStepCoefficient n x y 0 +
+      (2 * ((n : ℝ) + 2)) * wedgeStepCoefficient n x y 1 +
+      0 * wedgeStepCoefficient n x y 2 by linarith
+  apply wedge_linear_nonneg n x y (-1) (2 * ((n : ℝ) + 2)) 0
+    hx₀ hx₁ hy₀ hy₁
+  all_goals
+    norm_num [wedgeStepCoefficient, compoundMatrix, positiveMatrix,
+      Matrix.cons_val_two]
+    field_simp
+    ring_nf
+    positivity
+
+private theorem wedge_step_x_upper (n : ℕ) (x y : ℝ)
+    (hx₀ : 1 / 2 ≤ x) (hx₁ : x ≤ 3 / 2)
+    (hy₀ : 0 ≤ y) (hy₁ : y ≤ 2) :
+    2 * ((n : ℝ) + 2) * wedgeStepCoefficient n x y 1 ≤
+      3 * wedgeStepCoefficient n x y 0 := by
+  suffices 0 ≤ 3 * wedgeStepCoefficient n x y 0 +
+      (-2 * ((n : ℝ) + 2)) * wedgeStepCoefficient n x y 1 +
+      0 * wedgeStepCoefficient n x y 2 by linarith
+  apply wedge_linear_nonneg n x y 3 (-2 * ((n : ℝ) + 2)) 0
+    hx₀ hx₁ hy₀ hy₁
+  all_goals
+    norm_num [wedgeStepCoefficient, compoundMatrix, positiveMatrix,
+      Matrix.cons_val_two]
+    field_simp
+    ring_nf
+    have hp : ∀ k : ℕ, 0 ≤ (n : ℝ) ^ k := by
+      intro k
+      positivity
+    nlinarith [hp 0, hp 1, hp 2, hp 3, hp 4, hp 5, hp 6, hp 7,
+      hp 8, hp 9, hp 10, hp 11, hp 12]
+
+private theorem wedge_step_y_lower (n : ℕ) (x y : ℝ)
+    (hx₀ : 1 / 2 ≤ x) (hx₁ : x ≤ 3 / 2)
+    (hy₀ : 0 ≤ y) (hy₁ : y ≤ 2) :
+    0 ≤ wedgeStepCoefficient n x y 2 := by
+  suffices 0 ≤ 0 * wedgeStepCoefficient n x y 0 +
+      0 * wedgeStepCoefficient n x y 1 +
+      1 * wedgeStepCoefficient n x y 2 by simpa using this
+  apply wedge_linear_nonneg n x y 0 0 1 hx₀ hx₁ hy₀ hy₁
+  all_goals
+    norm_num [wedgeStepCoefficient, compoundMatrix, positiveMatrix,
+      Matrix.cons_val_two]
+    field_simp
+    ring_nf
+    positivity
+
+private theorem wedge_step_y_upper (n : ℕ) (x y : ℝ)
+    (hx₀ : 1 / 2 ≤ x) (hx₁ : x ≤ 3 / 2)
+    (hy₀ : 0 ≤ y) (hy₁ : y ≤ 2) :
+    ((n : ℝ) + 2) ^ 2 * wedgeStepCoefficient n x y 2 ≤
+      2 * wedgeStepCoefficient n x y 0 := by
+  suffices 0 ≤ 2 * wedgeStepCoefficient n x y 0 +
+      0 * wedgeStepCoefficient n x y 1 +
+      (-((n : ℝ) + 2) ^ 2) * wedgeStepCoefficient n x y 2 by linarith
+  apply wedge_linear_nonneg n x y 2 0 (-((n : ℝ) + 2) ^ 2)
+    hx₀ hx₁ hy₀ hy₁
+  all_goals
+    norm_num [wedgeStepCoefficient, compoundMatrix, positiveMatrix,
+      Matrix.cons_val_two]
+    field_simp
+    ring_nf
+    have hp : ∀ k : ℕ, 0 ≤ (n : ℝ) ^ k := by
+      intro k
+      positivity
+    nlinarith [hp 0, hp 1, hp 2, hp 3, hp 4, hp 5, hp 6, hp 7,
+      hp 8, hp 9, hp 10, hp 11, hp 12, hp 13, hp 14]
+
+private theorem wedge_step_zero_pos (n : ℕ) (x y : ℝ)
+    (hx : 1 / 2 ≤ x) (hy : 0 ≤ y) :
+    0 < wedgeStepCoefficient n x y 0 := by
+  have hn : (0 : ℝ) < (n : ℝ) + 1 := by positivity
+  have hc10 : (0 : ℝ) < compoundMatrix n 1 0 := by
+    norm_num [compoundMatrix, positiveMatrix, Matrix.cons_val_two]
+    ring_nf
+    have hp : ∀ k : ℕ, 0 ≤ (n : ℝ) ^ k := by
+      intro k
+      positivity
+    nlinarith [hp 0, hp 1, hp 2, hp 3, hp 4, hp 5, hp 6, hp 7,
+      hp 8, hp 9, hp 10, hp 11, hp 12, hp 13, hp 14, hp 15]
+  have hc20 : (0 : ℝ) < compoundMatrix n 2 0 := by
+    norm_num [compoundMatrix, positiveMatrix, Matrix.cons_val_two]
+    ring_nf
+    have hp : ∀ k : ℕ, 0 ≤ (n : ℝ) ^ k := by
+      intro k
+      positivity
+    nlinarith [hp 0, hp 1, hp 2, hp 3, hp 4, hp 5, hp 6, hp 7,
+      hp 8, hp 9, hp 10, hp 11, hp 12, hp 13, hp 14, hp 15]
+  have hbase :
+      0 < compoundMatrix n 0 0 +
+        (1 / 2) / ((n : ℝ) + 1) * compoundMatrix n 1 0 := by
+    norm_num [compoundMatrix, positiveMatrix, Matrix.cons_val_two]
+    field_simp
+    ring_nf
+    positivity
+  simp only [wedgeStepCoefficient]
+  have hx' :
+      (1 / 2) / ((n : ℝ) + 1) * compoundMatrix n 1 0 ≤
+        x / ((n : ℝ) + 1) * compoundMatrix n 1 0 := by
+    gcongr
+  have hy' :
+      0 ≤ y / ((n : ℝ) + 1) ^ 2 * compoundMatrix n 2 0 := by
+    exact mul_nonneg (div_nonneg hy (sq_nonneg _)) hc20.le
+  linarith
+
+/-- The exterior-square analogue of the denominator projective cone.  It says
+in particular that the three positive challenge ratios stay ordered. -/
+private theorem ratioMinor_projective_cone (n : ℕ) :
+    0 < ratioMinor n 0 ∧
+      1 / 2 ≤ wedgeX n ∧ wedgeX n ≤ 3 / 2 ∧
+      0 ≤ wedgeY n ∧ wedgeY n ≤ 2 := by
+  induction n with
+  | zero =>
+      norm_num [ratioMinor, wedgeX, wedgeY, positiveNumerator,
+        positiveDenominator, numerator, denominator, approximants,
+        initialMatrix, coordinateSign, Matrix.cons_val_two]
+  | succ n ih =>
+      rcases ih with ⟨hm, hx₀, hx₁, hy₀, hy₁⟩
+      have hstep0 :
+          0 < wedgeStepCoefficient n (wedgeX n) (wedgeY n) 0 :=
+        wedge_step_zero_pos n _ _ hx₀ hy₀
+      have hm' : 0 < ratioMinor (n + 1) 0 := by
+        rw [ratioMinor_succ_factor n 0 hm.ne']
+        exact mul_pos hm hstep0
+      have hX :
+          wedgeX (n + 1) =
+            ((n : ℝ) + 2) *
+                wedgeStepCoefficient n (wedgeX n) (wedgeY n) 1 /
+              wedgeStepCoefficient n (wedgeX n) (wedgeY n) 0 := by
+        rw [wedgeX, ratioMinor_succ_factor n 1 hm.ne',
+          ratioMinor_succ_factor n 0 hm.ne']
+        field_simp [hm.ne', hstep0.ne']
+        norm_num [Nat.cast_add, Nat.cast_one]
+        ring
+      have hY :
+          wedgeY (n + 1) =
+            ((n : ℝ) + 2) ^ 2 *
+                wedgeStepCoefficient n (wedgeX n) (wedgeY n) 2 /
+              wedgeStepCoefficient n (wedgeX n) (wedgeY n) 0 := by
+        rw [wedgeY, ratioMinor_succ_factor n 2 hm.ne',
+          ratioMinor_succ_factor n 0 hm.ne']
+        field_simp [hm.ne', hstep0.ne']
+        norm_num [Nat.cast_add, Nat.cast_one]
+        ring
+      have hxl := wedge_step_x_lower n (wedgeX n) (wedgeY n)
+        hx₀ hx₁ hy₀ hy₁
+      have hxu := wedge_step_x_upper n (wedgeX n) (wedgeY n)
+        hx₀ hx₁ hy₀ hy₁
+      have hyl := wedge_step_y_lower n (wedgeX n) (wedgeY n)
+        hx₀ hx₁ hy₀ hy₁
+      have hyu := wedge_step_y_upper n (wedgeX n) (wedgeY n)
+        hx₀ hx₁ hy₀ hy₁
+      refine ⟨hm', ?_, ?_, ?_, ?_⟩
+      · rw [hX]
+        apply (le_div_iff₀ hstep0).2
+        nlinarith
+      · rw [hX]
+        apply (div_le_iff₀ hstep0).2
+        nlinarith
+      · rw [hY]
+        exact div_nonneg (mul_nonneg (sq_nonneg _) hyl) hstep0.le
+      · rw [hY]
+        apply (div_le_iff₀ hstep0).2
+        nlinarith
+
 theorem positiveCatalanError_brackets (N : ℕ) :
     positiveCatalanError N 0 ≤ 0 ∧ 0 ≤ positiveCatalanError N 2 := by
   sorry
