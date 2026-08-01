@@ -833,3 +833,17 @@ Diophantine/lattice routes after all.
   three — order-8 characters, still in the counting-lemma-harmless region);
   Jacobsthal linear-position and neighbor-constant fits NEGATIVE (the (x,y)
   parametrization hope dies; the law is characterial, not lattice-point).
+
+## 36. [GAP-BR] reduced to ONE atom; triple-confirmed
+
+cron's five-step reduction accepted (strong reflection ⟹ A_p palindrome ⟹
+(UFD) reciprocal square-root = ε·s ⟹ ε = leading coefficient ⟹ branch
+reflection law ⟹ central-zero criterion). The single remaining atom:
+  **lc(s_p) ≡ (−2|p) (mod p)**  [τ_{(p−1)/2} on χ=+1; σ_{(p−3)/2} on χ=−1]
+OUR INDEPENDENT VERIFICATION: 165/165, p < 1000 (leading_coeff_check.py;
+note the branch-to-class pairing — testing both branches on all classes fails
+by design). One Gauss-type evaluation; three routes (terminating-recurrence
+product / Dwork endpoint matching / finite-field 2F1 parameter matching);
+R18 dispatched. When it lands, the ENTIRE apparition package (quarter-point
+law + branch reflection + eighth-point skeleton) becomes a closed theorem
+chain rooted in the strong reflection theorem.

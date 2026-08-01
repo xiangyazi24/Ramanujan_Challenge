@@ -182,8 +182,14 @@ theorem integral_sechSq_cexp_eq_beta27 (ξ : ℝ) :
         4 * (scaledSigmoid27 y : ℂ) * (1 - scaledSigmoid27 y) := by
     exact_mod_cast (scaledSigmoid27_mul_one_sub y).symm
   rw [div_eq_mul_inv, ← one_div, hw]
+  change
+    Complex.exp (-(2 * (Real.pi : ℂ) * y * ξ) * Complex.I) *
+        (4 * (scaledSigmoid27 y : ℂ) * (1 - scaledSigmoid27 y)) =
+      (((2 * Real.pi) * scaledSigmoid27 y *
+          (1 - scaledSigmoid27 y) : ℝ) : ℂ) *
+        (((2 / Real.pi : ℝ) : ℂ) *
+          Complex.exp (-(2 * (Real.pi : ℂ) * y * ξ) * Complex.I))
   push_cast
-  rw [Complex.real_smul]
   field_simp [Real.pi_ne_zero]
   ring
 
@@ -216,13 +222,13 @@ private theorem betaIntegral_one_sub_I_mul_one_add_I_mul27
                 Complex.sin ((Real.pi : ℂ) * (Complex.I * ξ))) := by
               rw [hreflect]
         _ = ((Real.pi * ξ / Real.sinh (Real.pi * ξ) : ℝ) : ℂ) := by
+              push_cast
               rw [show (Real.pi : ℂ) * (Complex.I * ξ) =
                 ((Real.pi * ξ : ℝ) : ℂ) * Complex.I by push_cast; ring,
                 Complex.sin_mul_I]
-              have hs : Real.sinh (Real.pi * ξ) ≠ 0 :=
-                Real.sinh_ne_zero.mpr (mul_ne_zero Real.pi_ne_zero hξ)
-              field_simp [hs, Complex.I_ne_zero]
-              ring
+              field_simp [Complex.I_ne_zero]
+              rw [show (ξ : ℂ) * (Real.pi : ℂ) =
+                ((Real.pi * ξ : ℝ) : ℂ) by push_cast; ring]
     · norm_num
     · norm_num
 
