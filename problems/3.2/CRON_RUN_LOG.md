@@ -142,3 +142,8 @@
   **缺失环节定名**: 差观测量 V_{h,j+1}−V_{h,j}=κ_parity h^{−2}+O(h^{−3}), κ≠0,
   跨差余项 O(h^{−2−δ}) (靠两 cell 修正的相消, C²(cell 变量) 管不了 j 方向离散差分)。
   该立项书已派 6 tab (q47)。
+- 17:4x 接力派单（Xiang 指示）: 写 CRON_UNCONDITIONAL_BRIEF.md（全部无条件战果 §1 + 墙的
+  精确位置 §2 含五张死路图 + 唯一分析缺口 §3 + 突破优先级 §4）交 rc 窗口 Codex(sol ultra)
+  接力找突破，产出 RC_BREAKTHROUGH_report.md；同时 codex(sol max) 跑 per-pair margin anatomy
+  (CODEX_SPEC_CRON_margins.md) 验证两区制并拟合 κ_odd/κ_even/F″(1/2)；cron 10 tab 全部
+  派 q48（分区比较+一致混合导数界+h₀ 拼装）。三线角度错开、单写者纪律不变。
