@@ -101,3 +101,38 @@ Numerical note: the `/t` and `/(1-t)` rows need the substitution `t = e^{-u}`
 (resp. `1-t = e^{-u}`) to reach PSLQ precision — direct quadrature on `[0,1]`
 stalls around 14 digits near the log² endpoint and makes PSLQ report "no
 relation" for I10, which is an artifact, not a fact about the integral.
+
+## Layer E route: build on Problem24Euler's existing kernel library
+
+`Problem24Euler.lean` already contains a dozen-plus weight-3/4 integral
+evaluations built on a consistent template:
+
+```
+<name>Kernel24        the integrand
+<name>Primitive24     its antiderivative
+<name>Primitive24_tendsto_zero / _tendsto_one    the two ENDPOINT LIMITS
+<name>Kernel24_intervalIntegrable
+<name>Term24_hasSum_integral : HasSum term (∫ kernel)
+<name>Integral24      : ∫ kernel = closed form
+```
+
+Kernels present include `minusLogSquareKernel24 = log(1-x)²/x`,
+`plusLogSquareKernel24 = log(1+x)²/x`, `minusRadialKernel24 = log x log(1-x)/x`,
+plus paired/cross/radial variants. **The repo already uses the endpoint-limit
+form of the FTC** (`Primitive24_tendsto_zero/_one`) — the same move rediscovered
+in Layer D. Follow this template rather than inventing a new one.
+
+All of them are `private`. Reuse therefore needs de-privatization, for which
+there is precedent in this file (five declarations in `Problem24Euler` were made
+public so `Problem24QuadraticAlt` could use them).
+
+Relation to Layer E: those kernels are weight-3; substituting `u = 1-t` turns
+`I11` into `∫₀¹ [ζ2 - 2 Li₂((1-u)/2) - log²((1-u)/2)] · (-log u)/u du`, which is
+weight-4 with a half-argument dilog. So they are building blocks, not matches —
+but Layer E is extending an existing library, not starting from scratch.
+
+`cubicLinearEulerTerm24_hasSum : HasSum cubicLinearEulerTerm24 cubicLinearEulerValue24`
+is already proved (Problem24Euler.lean:3800) and `I11 = cubicLinearEulerValue24`
+exactly, so `I11` reduces to finding an integral representation of the
+cubic-linear sum that matches `I11`'s integrand — not to a fresh weight-4
+evaluation. Start there.
