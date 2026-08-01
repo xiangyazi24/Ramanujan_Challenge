@@ -1297,3 +1297,19 @@ double-certified.
   (bounded-object)/特殊点精确值(quarter-value)/零纤维奇偶(parity)。
   proof.tex 构建绿。
 - 战役收网态势: 武器审判全毕(§60), 定理群完璧(§61), 剩余=收网文档整理。
+
+## §62 (08-01) q18 勘误吸收 + 三源汇合 — cron 侧全收官
+
+- **[F] 勘误立即执行**: bounded-object 定理层归属句已改——正确基=deck 对合
+  本征降 A_± (rank 3, Artin 导手 9/11; Sym²E=11), 两全推前字面差经投影公式
+  恒零(codex-fm [NEGATIVE-PAIR] 与 Q6424 恒真式判词的精确机制), cron
+  codex-max 数值独立撞上同一坍缩指纹(T_G−T_{G_q} 支撑~0)。我们的"导手11"
+  数字保留且被细化。proof.tex 重建绿。
+- **Galois 轨道离婚**定理化: exact 零全轨道稳定 vs mod-𝔭 零仅分解群稳定——
+  轨道武器死因的结构根源, 与 [GAP-CHAR0-ZERO] 拼合。
+- (DRS)/(RLL) 接口引理成文(α<1/2 ⟸ k=2 关); Package A–F 施工图:
+  B=[GAP-2] 正式施工单, E=唯一触及 |Z_p| 者(无文献), **F=order-4 块已被
+  Q6360 完成**——四分点值定理在施工图里提前交付了一个 package。
+- **自扭排除三源闭合**: qD 定理(理论) + codex-fm 单值性表(层计算) + cron
+  codex-max ord≤30 数值(8素数×2迹唯平凡)——[GAP-2] 的经验地基交付。
+- cron 双雄×2 全收官。全场余量: q16/q19/q23 三发 tab + qB2/Q6416。
