@@ -2196,13 +2196,13 @@ theorem abs_log_le_rpow {x : ℝ} (hx0 : 0 < x) (hx1 : x ≤ 1) :
 
 /-- `(log x)^2` is interval-integrable on `[0,1]`: dominated by `16 x^(-1/2)`. -/
 theorem intervalIntegrable_logSq :
-    IntervalIntegrable (fun x : ℝ => Real.log x ^ 2) volume 0 1 := by
-  have hmaj : IntervalIntegrable (fun x : ℝ => 16 * x ^ (-(1:ℝ)/2)) volume 0 1 :=
-    (intervalIntegrable_rpow' (by norm_num)).const_mul 16
+    IntervalIntegrable (fun x : ℝ => Real.log x ^ 2) MeasureTheory.volume 0 1 := by
+  have hmaj : IntervalIntegrable (fun x : ℝ => 16 * x ^ (-(1:ℝ)/2)) MeasureTheory.volume 0 1 :=
+    (intervalIntegral.intervalIntegrable_rpow' (r := -(1:ℝ)/2) (by norm_num)).const_mul 16
   rw [intervalIntegrable_iff_integrableOn_Ioc_of_le (by norm_num : (0:ℝ) ≤ 1)] at hmaj ⊢
   refine hmaj.mono' ?_ ?_
   · exact (Real.measurable_log.pow_const 2).aestronglyMeasurable
-  · filter_upwards [ae_restrict_mem measurableSet_Ioc] with x hx
+  · filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_Ioc] with x hx
     have hx0 : 0 < x := hx.1
     have hx1 : x ≤ 1 := hx.2
     have h := abs_log_le_rpow hx0 hx1
