@@ -1,0 +1,34 @@
+CONTEXT (Apery mod-p collision project; everything below is machine-verified and has written proofs unless explicitly marked OPEN; ASCII math only in your answer, no tables).
+
+P(u) = (2u+1)(17u^2+17u+5) = 34u^3+51u^2+27u+5.
+Apery recurrence: (n+1)^3 y_{n+1} = P(n) y_n - n^3 y_{n-1}.
+b: b_0=1, b_1=5 (Apery numbers A_n). c: companion, c_0=0, c_1=1.
+Casoratian (proved): W_n = b_n c_{n-1} - b_{n-1} c_n = -1/n^3 (inverses mod p; p >= 7 prime; regular window only).
+I_p = {1,...,p-2}, M = p-2. Projective orbit pi(n) = [b_n : c_n] in P^1(F_p).
+m_p(v) = #{n in I_p : pi(n) = v}. Energy F_p = sum_v m_p(v)^2.
+PROVED (ENERGY-3/2): F_p <= 2*sqrt(3)*p^{3/2}(1+o(1)). Goal: any exponent < 3/2 is a new theorem; F_p << p^{1+eps} ("E1") is the grand target.
+
+Gap polynomials (proved): N_1 = 1, N_2(r) = P(r+1), N_{h+1}(r) = P(r+h) N_h(r) - (r+h)^6 N_{h-1}(r). deg N_h = 3(h-1).
+U_m: U_{-1}=0, U_0=1, U_{m+1}(s) = P(s+m) U_m(s) - (s+m)^6 U_{m-1}(s). N_h(r) = U_{h-1}(r+1).
+On a nonwrapping window: pi(r) = pi(r+h) iff N_h(r) = 0 in F_p.
+C_h = #{1 <= r <= M-h : N_h(r) = 0 in F_p}. Trivial: C_h <= 3(h-1). Chebotarev average (fixed h, p -> infty, proved): avg C_h = kappa_h + (p-2-h-kappa_h)/(p+1) + o(1), kappa_h = 1 for h even (forced mirror collision from the proved reflection theorem y_{p-1-n} = y_n), 0 for h odd.
+Transfer matrices: M_u = [[0, (u+1)^6], [-1, P(u)]], G_m(s) = M_{s+m-1}...M_s = [[-(s+m)^6 U_{m-2}(s+1), (s+m)^6 U_{m-1}(s)], [-U_{m-1}(s+1), U_m(s)]], det G_m(s) = prod_{j=1}^{m} (s+j)^6.
+Adjacent coprimality (proved): gcd(N_h, N_{h+1}) = 1 as polynomials (over Q).
+Factorization law (proved): for h even, N_h = (2r+h+1) M_h with M_h the primitive factor; for h odd N_h is irreducible over Q for all h <= 14 (verified).
+h=2 splitting law (proved): full root count of N_2 = 1 + 2*[(-51/p) = 1]. Same field Q(sqrt(-51)) appears in the proved annealed two-step return probability (2 + (-51/p))/(p-1).
+
+NEW REDUCTION derived this session (AUDIT TARGET — treat as claims, not facts):
+v_n = (b_n, c_n), Delta_{r,h} = det(v_r, v_{r+h}) = b_r c_{r+h} - b_{r+h} c_r in F_p.
+(D1) CLAIM: Delta_{r,h} = N_h(r) / prod_{j=1}^{h} (r+j)^3. (Derivation: z_h = Delta_{r,h} solves the recurrence in n = r+h; z_0 = 0, z_1 = -W_{r+1} = 1/(r+1)^3; clearing cubes matches the U-recurrence.)
+For H <= p: index set S_H = {(r,h) : 1 <= h <= H, 1 <= r <= M-h}, #S_H = sum_{h<=H}(M-h).
+B_t(H) = sum_{(r,h) in S_H} e_p(t * Delta_{r,h}), e_p(x) = exp(2 pi i x / p).
+(D2) Orthogonality: sum_{h<=H} C_h = #S_H/p + (1/p) sum_{t != 0} B_t(H).
+(D3) Parseval: sum_{t != 0} |B_t(H)|^2 = p * N_coinc(H) - (#S_H)^2, where N_coinc(H) = #{((r,h),(r',h')) in S_H^2 : Delta_{r,h} = Delta_{r',h'} in F_p}.
+(D4) [COINC] hypothesis: N_coinc(H) <= (#S_H)^2/p + K * #S_H for an absolute K. Then Cauchy-Schwarz on (D2)+(D3): sum_{h<=H} C_h <= #S_H/p + sqrt(K * #S_H) << H + sqrt(K p H).
+(D5) Pair count: Q_p(D) := #{collision pairs at gap <= D} <= sum_{h<=D} C_h. sigma-ladder (proved in our paper): Q_p(D) <<_eps D^{3-sigma} p^eps for all D ==> F_p <<_eps p^{2-1/(3-sigma)+eps}. So [COINC] at H = p^{2/3} would give sum C_h << p^{5/6} <= (p^{2/3})^{3/2}, i.e. sigma = 3/2, F_p << p^{4/3}: NEW THEOREM.
+(D6) Difference curves: for a pair (h,h'), X_{h,h'} : Delta_{r,h} = Delta_{r',h'}, a plane curve in (r,r') of bidegree about (3h, 3h') (as rational functions; poles at r = -1..-h etc.). N_coinc(H) = sum over pairs (h,h') of #X_{h,h'}(F_p restricted to windows). Per-pair Weil gives error ~ (h+h') sqrt(p), total ~ H^3 sqrt(p): only useful for H <= p^{1/4}, but the trivial bound sum C_h <= 1.5 H^2 is better for H < p^{1/3}. So PER-PAIR WEIL NEVER BEATS TRIVIAL: the crux is family-averaged cancellation of the Weil error terms over the discrete growing-genus family {X_{h,h'} : h,h' <= H}.
+
+DEAD ENDS with written death certificates (do NOT revisit): Katz equidistribution for the fixed-h horizontal problem; T-adic/eigencurve; Stickelberger valuations; Galois orbit norms; HGM/Hasse degree; mass formula (Fourier-diagonal aliases of |Z_p|); black-box bounded-conductor detector (constant-sheaf counterexample); dispersion k=2; row-resultant sign factorization. Also: jet linear leverage, St box St, affine Parseval on the FIBER side, Stepanov=Bezout no-surplus, resultants only control Q.
+
+[qAUDIT-ZWIN — cross-audit + production of the windowed restart lemma package (Q6632). life10]
+A parallel worker proved: (L1) windowed zero count Z(H) = #{n in any length-H window: b_n = 0 mod p} <= 1 + (3/2)(H-1)^{2/3} via the restart chain Z <= 1 + R_rel(p,Y) + H/(Y+1) with R_rel <= (3/2)Y^2 and Y ~ (H/3)^{1/3}; in particular |Z_p| <= 1 + (3/2)(p-3)^{2/3}, improving the paper's constant 3. (L2) Bad(H) = #{(h,j): j<=h<=H, p | b_{j-1}b_{h-j}} <= (9/5)H^{5/3} + 2H via Bad <= 2H*Z(H). (L3) N_h(-j) = N_j(-j)*N_{h-j+1}(-1) with N_q(-1) = ((q-1)!)^3 b_{q-1}. TASKS: 1. Audit each: does the restart telescoping really localize to an arbitrary window (the R_rel term counts U_m zeros over which s-range — global or window-shifted? if global R_rel is used the bound is valid but check the windowed R_rel would only help; the H/(Y+1) term: verify the between-consecutive-zeros spacing argument transfers when the window does not start at a zero); verify the optimization constants exactly; verify (L3) against the addition law. 2. If CONFIRMED: produce the merge-ready LaTeX block (plain-ASCII source, one fenced code block) stating L1 (as an improvement remark to the paper's |Z_p| bound with the new constant), L2 (the good-reduction stratification lemma with the O(H^{-1/3}) negligibility corollary), L3 (the endpoint factorization) — house style, label prefix lem:zwin-. 3. Note precisely what L1 does NOT give: the per-base analogue d_D(r) (companion-at-r) is a separate open lemma (under attack elsewhere) — one sentence.
