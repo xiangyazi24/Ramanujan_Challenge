@@ -692,3 +692,17 @@ mean_max 单调增、比值趋稳 ⟹ **半轨道极值律 μ_max ≈ 1.2·log p
 **AM.7 P 部分经验形状钉死【life [GAP-QRLL] 唯一无手段点的计数面】**：首返回 gap 分布（同 sweep）：小 gap 逐 gap 计数 data vs rand 匹配（偶 gap ~290/144素数、奇 gap ~145，基准奇偶翻转同 artifact）；**P_p(√p)/√p：data 1.4444 vs rand 1.4975——P_p(H) 线性于 H、常数 ≈1.5、无 p^ε 超额，data 比随机低 3.5%（轻微排斥）**。目标 P_p(H)≪Hp^ε 经验上以最强形式成立。**结构性对账（新观察）**：无条件工具仅 deg 界 R_h≤deg_r N_h=O(h) ⟹ P_p(H)≪H²；经验 R_h=O(1)。**H²→H 缺口 = family 相容性定理在计数面的微缩版**（固定 h 免费 O(h)=O(1)，跨 h 求和平方损失）——qN 已带数据派出攻此点。
 
 **AM.8 二维 Weyl 谱定格【attack #2 前置完成】**（CRON_weyl2d.py，全 (α,β) 谱 = 点集 2D DFT，p=211/499/1009/2003 + iid 随机对照）：(1) **仿射零超额精确定律**：Σ_x m(x)²(仿射 (b_n,c_n) 点重数) = 2N−2 四素数精确——仿射轨道恰镜像 2-对-1（(p−3)/2 对+2 单点，b,c 双回文），**仿射层无真碰撞；E^π 的生日超额 p 全部来自射影等同（差标量），非仿射重合**。(2) **max|T(α,β)|/√p**：orbit 4.78/5.25/5.57/5.44 vs iid 随机 3.02/3.79/3.77/3.78；Exp-尾极值基准 √(2 log p)=3.27/3.53/3.72/3.90（随机吻合✓）；镜像回文使相容频率相干加倍 ⟹ 预言 √2 因子：√2·√(2 log p)=4.62/4.99/5.26/5.51——orbit 逐点落线。**结论：max|T|≈√(4p log p)，平方根相消到尖锐极值常数，除镜像 √2 外无失真频率**——attack #2 目标 ≪p^{1/2+ε} 以最强经验形式成立（qO 已带数据派出）。（注：脚本内打印的 "√(2 log p²)" 基准公式错一倍——正确 Exp-尾基准如上，以本条为准。）
+
+---
+
+## 附录 AN（战役三续）：qO/Q6516 收获——Fourier 字典精确成文 + max-Weyl 四路线审计（缺失引理各自定名）+ 全路线独立收敛 GPRV【与 life qFS4 会师】
+
+**AN.1 Fourier 字典【精确恒等式，成文可引】**：E^π = (1/p)·Σ_{[u:v]} Σ_s |T(su,sv)|²——射影能量 = 每条射影方向上的**局部二阶矩**之和（不是 max 问题）。仿射 Parseval 侧我方 2N−2 定律（AM.8）在其框架下 = "仿射层只有回文 2-对-1"。C_h 的指数和表示 C_h=(1/p)Σ_sΣ_n e_p(s(b_nc_{n+h}−b_{n+h}c_n))；C_1=O(1) 由 Casoratian 刚性（相邻 gap 完全刚性——与 R_1 实测一致）。
+
+**AN.2 max-Weyl 四路线审计（每条缺失引理定名）**：(a) 变系数 cocycle：非交换矩阵乘积指数和无现成 Weil 理论（Shparlinski 常系数不覆盖）；**缺失引理 = Apéry transfer cocycle 的固定 conductor ℓ-adic sheaf realization（几何 monodromy 非平凡）**。(b) digit 路线：b 的 Lucas 积公式使 β=0 切片成 digit 和，但 automaton 状态空间随 p 增长，GMR 不能直接套；缺失 = O(1) 状态压缩+谱隙。(c) 低次曲线/Weil：仿射零超额（AM.8）反证无低次额外关系——低复杂度 Weil 曲线不可得（死因精确）。(d) van der Corput 二阶差分 → 四点相关 = **恰好落回 GPRV**。**结论：max-Weyl 未杀死但缺 rigid realization；GPRV 二阶 dispersion 为最值得继续路线——qO 与 life qFS4 独立收敛同一靶**。
+
+**AN.3 镜像 √2 = rank-one 相干因子**：T(α,β)≈2Σ_{n<(p−1)/2}——相干增益非损耗，但二阶平均中只是已知对称因子（不加随机复杂度、不给新相消）；正确利用 = 商掉镜像对后研究 primitive orbit。
+
+**AN.4 共同盲点提示（值得单列）**："n 当离散时间"可能是错参数化——Apéry 递推来自 Picard–Fuchs，真对象或是 **F-crystal 族的有限域点**；找对参数空间后变系数矩阵乘积可能退化为普通 trace-function 问题。与在飞 qM（深度层 Dwork 半线性）正面共振——qM 落地后合并研判。文献四条核对全真（Iwaniec–Kowalski Ch.16 dispersion；BFI Acta Math 156；Shparlinski；Deligne Weil II——后者明确标注"当前不可直接引用，缺固定 conductor sheaf"）。归档 chatgpt-answers/Q6516.md。其 dispatch-priority #1（G/p 稳定性数值）已执行 → AN.5。
+
+**AN.5 GPRV θ=0 经验定格【全战役最强经验陈述】**（CRON_gprv_stability.py，四波段 3k/10k/30k/100k 各 8 素数，μ_h=奇偶类经验均值口径）：**G/p = 1.069 / 1.087 / 1.093 / 1.082——p 跨 33 倍，G/p 钉死 ≈1.08**。μ_even≈1.50、μ_odd≈0.50（与 AM.6 全谱结构一致）。**即 E1 的精确充分统计量 [GPRV] Σ_h(C_h−μ_h)² ≤ Cp 以 θ=0、C≈1.08 经验成立、跨 1.5 个数量级无漂移**——(E1) 链条上从假设到充分统计量的每一环（E^π=3p、谱形、三阶矩、P 部分、GPRV）现已全部经验封顶。剩余 = 唯一数学缺口：证明 GPRV（或任何 θ<1 版本，θ<1 即超越 THM-ENERGY-3/2）。
