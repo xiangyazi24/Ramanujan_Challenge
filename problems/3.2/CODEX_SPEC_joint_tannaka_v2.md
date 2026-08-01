@@ -11,7 +11,7 @@ with the CORRECT normalization.
 
 ## The recipe (from Q6457; implement exactly)
 
-For good p > 3, eps = Legendre(2,p), A_p(t) = Apéry truncation
+For good p > 3, eps = Legendre(-3,p)   # CORRECTED 08-01: five-prime empirical certification (29,31,37,41,43); Q6457's (2|p) fails at 37,41,43 (missing the degree-six isogeny (-3)-twist in the gauge), A_p(t) = Apéry truncation
 sum_{k=0}^{p-1} b_k t^k mod p (b_k via recurrence mod p), for t in F_p^*:
 d = t^2-34t+1, s = Legendre(d,p).
 
@@ -26,7 +26,7 @@ d = t^2-34t+1, s = Legendre(d,p).
   the two methods at p=29 for all split u.
 - s = -1 (inert): build F_{p^2} = F_p[z]/(z^2-d), u = (1-t+z)/16;
   a2 = p^2+1-#E_u(F_{p^2}) (exact count over F_{p^2}, O(p^2) per t);
-  T_+ = eps*a2 - p; T_- = -T_+; P = 0.
+  T_+ = eps*a2 - p; T_- = -T_+; P = 0.   # eps = (-3|p)
 - s = 0 (rational branch point, exists iff Legendre(2,p)=1): u = (1-t)/16;
   a = p+1-#E_u(F_p); f = a^2-p; T_- = p; T_+ = f-p; P = f.
 
