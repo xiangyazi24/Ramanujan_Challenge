@@ -6,6 +6,11 @@ on:
     paths:
       - 'lean/RamanujanChallenge/Problem27PoleBlockScratch.lean'
       - '.github/workflows/q6383-pole-block.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'lean/RamanujanChallenge/Problem27PoleBlockScratch.lean'
+      - '.github/workflows/q6383-pole-block.yml'
 
 permissions:
   contents: write
@@ -36,6 +41,7 @@ jobs:
           printf 'cache_status=%s\nbuild_status=%s\n' "$cache_status" "$build_status" | tee q6383-status.out
           exit 0
       - name: Persist compiler output
+        if: github.event_name == 'push'
         shell: bash
         run: |
           git config user.name 'github-actions[bot]'
