@@ -1,0 +1,408 @@
+
+The formulas are finite, exact, and compatible with the known recurrences. However, the proposed positivity route does not survive calibration: the noncollapse expression has signs +,-,- at h=2,3,4. The critical values are complex, so the variance-looking expression is not positive definite.
+
+1. More importantly, [NONCOLLAPSE_h] has a much cheaper all-h proof under the standing critical-point Morse gate. If all squared critical values were equal, then all 4h-4 simple critical points would lie over only two values +t,-t. Reflection puts exactly 2h-2 critical points over each value, each with fiber multiplicity two. Since deg f_h=3h, this is impossible once
+
+
+i.e. for every h>=5. The exact W_h coefficients settle h=2,3,4. Thus [NONCOLLAPSE_h] is proved for every h>=2, conditional only on the same separability/Morse hypothesis already present in [PRIMITIVE-MORSE].
+
+1. [BLOCK-PRIMITIVE_h] has a very cheap two-prime certificate protocol. Let n=2h-2=deg A_h. One good prime at which A_h mod q is irreducible proves transitivity. A second good prime whose factorization contains one irreducible factor of prime degree
+
+
+proves primitivity. The remaining factor degrees may be arbitrary. Raising the Frobenius permutation to the lcm of the other cycle lengths isolates a pure p-cycle; such a cycle is incompatible with every nontrivial block system because both the block size and the number of blocks are at most n/2.
+
+1. If no large-prime factor appears quickly, there is an exact dynamic-programming compatibility test for every candidate block size. This gives a complete modular certification protocol, not merely a heuristic.
+
+1. There is not yet an all-h structural proof of primitivity from the h-recurrence. Irreducibility plus a squarefree or nearly squarefree discriminant is not enough. The recurrence is not a composition law, so it does not automatically exclude intermediate fields or block systems.
+
+The strategic consequence is:
+
+
+The independent route [W-IRRED] remains stronger: irreducibility of W_h over Q directly gives squarefreeness and distinct nonzero squared critical values in characteristic zero.
+
+---
+
+# 1. Normalization and exact bookkeeping
+
+Write
+
+
+Then
+
+
+Put
+
+
+After centering at z=X+(h+1)/2, the reflection quotient A_h(U) has degree m, with U=z^2. Its roots u_1,...,u_m parametrize the reflection pairs of critical points. For a critical point x above u_j, define
+
+
+This is independent of the choice between x and its reflection.
+
+Normalize the mirror critical-value polynomial to be monic:
+
+
+There are two critical points in each reflection block, with values t and -t. Hence
+
+
+Therefore the two-coefficient noncollapse certificate is
+
+
+Thus
+
+
+The converse also holds only in the expected direction for this particular quadratic statistic: Delta_h=0 does not force equality over an arbitrary complex configuration. For the intended use, only nonvanishing is needed.
+
+---
+
+# 2. Closed trace formula for T_r(h)
+
+Let
+
+
+Because C_h(-j) != 0 at every pole, one has
+
+
+For r>=1, let E_{r,h}(X) be the unique residue class of degree <d satisfying
+
+
+Define
+
+
+Then in K_h, R_{r,h} is exactly the class of f_h^(2r). Therefore
+
+
+There is a coefficient-only formula for this trace:
+
+
+Proof: if alpha runs over the roots of C_h, Lagrange interpolation gives
+
+
+Equations (2.1)-(2.4) are a closed exact formula using only polynomial remainder and extended Euclid operations. They give both requested traces by taking r=1,2.
+
+The recurrence-compatible algorithm is therefore:
+
+
+This is an exact recurrence-driven computation, but it is not a fixed-order scalar recurrence for T_r(h). The modular inverse is taken in a quotient algebra whose dimension grows linearly with h.
+
+---
+
+# 3. Closed pole-residue formula
+
+The same trace has a local formula that exposes exactly what the banked pole-value laws do and do not supply.
+
+Since the roots of C_h are the finite critical points,
+
+
+At infinity,
+
+
+so the residue at infinity is zero for every r>=1. The residue theorem gives
+
+
+Set
+
+
+Then Q_{h,j}(0)=q_h'(-j) != 0, and (3.2) becomes
+
+
+In particular,
+
+
+This is the requested residue closed form.
+
+It also identifies the limitation of using only the special value
+
+
+That value supplies only the constant term in the analytic factor in (3.3). The residues require the full finite jet through order 5 for T_1 and order 11 for T_2; because C_h contains N_h', a safe recurrence implementation propagates N_h jets through orders 7 and 13, respectively. These jets are obtainable by differentiating the known N_h recurrence, but the pole values alone do not collapse the trace to a product of Apéry numbers.
+
+Thus the residue route is exact and finite, but it does not presently produce a simple positive sum from the pole-value law alone.
+
+---
+
+# 4. Exact calibration at h=2,3,4
+
+The repository stores primitive integer V_h(T)=W_h(T^2) coefficients. Let L_h be the leading coefficient of the stored integer W_h, B_h its coefficient of S^(m-1), and C_h^{(2)} its coefficient of S^(m-2). Then
+
+
+## h=2
+
+Here m=2 and
+
+
+Therefore
+
+
+## h=3
+
+Here m=4. The three leading coefficients are
+
+
+Thus
+
+
+The inequality is an exact integer comparison using the displayed integers.
+
+## h=4
+
+Here m=6. The three leading coefficients are
+
+
+Therefore
+
+
+Again the sign is an exact integer comparison.
+
+The calibration pattern is therefore
+
+
+So there is no uniform real positivity statement of the form Delta_h>0. This is not surprising: the w_j are generally complex. Formula (1.3) resembles a variance, but it is a complex algebraic variance, not a Hermitian variance.
+
+The exact data nevertheless give Delta_h != 0 in all three residual base cases.
+
+---
+
+# 5. A complete all-h proof of NONCOLLAPSE under the Morse gate
+
+The trace computation is not needed for large h.
+
+## Theorem [NONCOLLAPSE-ALL | MORSE]
+
+Assume C_h is squarefree. Then the squared critical-value map on the reflection quotient is not constant for every h>=2.
+
+For h>=5, the conclusion is purely geometric. For h=2,3,4, it follows from (4.2)-(4.4).
+
+## Proof for h>=5
+
+Suppose all squared critical values equal a single number a.
+
+### Case 1: a=0
+
+Then all 4h-4 simple critical points lie in the fiber f_h=0. At every simple critical point, the local mapping degree is two, so this fiber has total multiplicity at least
+
+
+But deg f_h=3h, impossible for every h>=2.
+
+### Case 2: a=t^2 != 0
+
+Every critical value is either t or -t. Reflection exchanges the two values and pairs the 4h-4 critical points, so exactly
+
+
+critical points lie over each of t and -t. Each is a simple ramification point and therefore has multiplicity two in its fiber. Hence each of the two fibers has degree at least
+
+
+Since deg f_h=3h, one must have
+
+
+i.e. h<=4. This contradicts h>=5.
+
+Combining this with the exact base cases proves [NONCOLLAPSE_h] for every h>=2 under the same separability/Morse condition already used by [PRIMITIVE-MORSE].
+
+A useful strengthening is that no asymptotics, residue estimates, or Apéry-number inequalities are required.
+
+Also, the new finite data provide an independent check: W_h is irreducible for 2<=h<=7, and an irreducible polynomial of degree m>=2 over characteristic zero cannot be a pure power (S-a)^m.
+
+---
+
+# 6. Exact block-system compatibility criterion
+
+Let
+
+
+Suppose a permutation sigma in S_n has cycle lengths
+
+
+Fix a candidate block system consisting of
+
+
+where 1<k<n and 1<b<n.
+
+The following criterion is exact.
+
+## [CYCLE-BLOCK-COMPATIBILITY]
+
+The cycle type (lambda_1,...,lambda_r) is compatible with a block system of k blocks of size b if and only if the point-cycles can be partitioned into packets
+
+
+and for each packet P_a one can choose an integer d_a such that
+
+
+Interpretation: P_a consists of all point-cycles lying over one d_a-cycle of the induced permutation on blocks. A point-cycle of length lambda_i winds around those d_a blocks and contributes lambda_i/d_a points to each block.
+
+Necessity follows by projecting each point-cycle to the induced block cycle. Conversely, data satisfying (6.1) can be arranged cyclically across d_a blocks, so the condition is sufficient.
+
+This criterion is suitable for an exact dynamic program. For each proper divisor k|n, test whether any packet/divisor decomposition satisfying (6.1) exists. If not, that Frobenius cycle type excludes that block size.
+
+---
+
+# 7. Cheapest modular certificate protocol
+
+Every modular row must first pass the usual good-reduction checks:
+
+
+Then the irreducible factor degrees of A_h mod q are the cycle lengths of a Frobenius element in the characteristic-zero Galois group.
+
+## Protocol A: two-prime large-cycle certificate
+
+This is the preferred path.
+
+### Step A1: transitivity
+
+Find one good prime q_0 such that
+
+
+Then A_h is irreducible over Q, and its Galois group is transitive.
+
+### Step A2: primitivity
+
+Find a good prime q_1 whose factorization degree list contains a prime
+
+
+The other factor degrees may be arbitrary.
+
+Let sigma be the Frobenius permutation. Since all other cycles have total length n-p<p, none has length divisible by p. Raise sigma to the lcm of the other cycle lengths. The result is a pure p-cycle.
+
+A transitive imprimitive group has k blocks of size b, with
+
+
+A pure prime p-cycle can interact with a block system in only two ways:
+
+1. it acts trivially on blocks, so its support lies inside one block and p<=b;
+
+1. it induces a p-cycle on blocks, so p<=k.
+
+Both are impossible when p>n/2. Therefore the transitive group is primitive.
+
+This proves:
+
+
+The commonly quoted upper restriction p<=n-2 is not needed for primitivity. It becomes relevant only when applying stronger Jordan theorems to conclude containment of A_n. Once primitivity is known, a prime cycle with p<=n-3 gives the standard Jordan upgrade to A_n.
+
+A related free shortcut is the cycle type
+
+
+Any transitive group containing such a permutation is primitive, even when n-1 is composite: the block containing the fixed point is invariant under the (n-1)-cycle and hence can contain either none or all of its support.
+
+## Protocol B: complete divisor elimination
+
+If Protocol A does not find a large prime cycle quickly:
+
+1. Initialize the candidate set with every proper divisor k of n.
+
+1. For each good auxiliary prime, factor A_h mod q and record the degree partition lambda(q).
+
+1. For each surviving k, run the exact criterion (6.1) with b=n/k.
+
+1. Delete k whenever lambda(q) is incompatible with such a block system.
+
+1. Stop when no candidate remains.
+
+The machine certificate should store
+
+
+For independent verification, also store the modular factors or coefficient hashes.
+
+## Protocol C: 2-transitivity fallback
+
+A stronger but more expensive certificate is to prove that the point stabilizer is transitive. If alpha is a root of A_h, factor
+
+
+over Q(alpha). Irreducibility of the degree n-1 factor proves 2-transitivity and hence primitivity.
+
+Equivalently one can use an ordered-pair resolvent of degree n(n-1). This is deterministic but much more expensive than Protocol A or the divisor DP.
+
+---
+
+# 8. What discriminants and the recurrence do not prove
+
+## 8.1 Irreducibility is not primitivity
+
+The new exact result A_h irreducible for 2<=h<=7 proves transitivity only. A transitive group may preserve a nontrivial block system.
+
+## 8.2 A transposition is not enough
+
+A squarefree-discriminant or tame simple-ramification argument often produces a transposition in the Galois group. Transitivity plus a transposition does not imply primitivity. An imprimitive wreath product can contain transpositions supported inside its blocks.
+
+The graph formed by the conjugates of that transposition may have its connected components equal to the unknown blocks. Thus “discriminant-adjacent squarefreeness” does not by itself close [BLOCK-PRIMITIVE_h].
+
+## 8.3 The h-recurrence is not a composition law
+
+The recurrence
+
+
+propagates a fixed-rank marked state, but A_{h+1} is obtained after differentiation, centering, quotienting by reflection, and elimination. There is no known identity expressing A_{h+1} as a polynomial composition through A_h.
+
+Therefore the recurrence does not currently imply that the field Q(root(A_h)) has no proper intermediate fields. Any structural primitivity theorem would need a new ingredient, for example:
+
+
+The absence of any symmetry beyond reflection is strong evidence, but not a proof.
+
+---
+
+# 9. Interaction with W_h irreducibility
+
+The two single-variable routes should be kept distinct.
+
+## Quotient critical-point route
+
+
+After Section 5, the only missing item in this route is primitivity.
+
+## Critical-value route
+
+If W_h is irreducible over Q and deg W_h=m>=2, then in characteristic zero it is squarefree and cannot have zero constant term. Since its degree already equals the number of reflection blocks, its roots are exactly m distinct nonzero squared critical values. Thus
+
+
+No separate proof of A_h primitivity or noncollapse is needed on this route.
+
+The new exact results A_h irreducible and W_h irreducible for h=2,...,7 therefore support two genuinely independent all-h programs.
+
+---
+
+# 10. Recommended machine campaign
+
+For each h:
+
+1. Construct the primitive integer reflection quotient A_h and verify degree n=2h-2.
+
+1. Search small good primes for an irreducible reduction. This is a one-prime irreducibility certificate for A_h.
+
+1. Search good primes for a factor degree p, prime with p>n/2.
+
+1. If found, stop: primitivity is certified by (7.2).
+
+1. Otherwise accumulate factorization patterns and run the exact block-compatibility DP (6.1).
+
+1. In parallel, continue direct irreducibility tests for W_h; this route may close full Morse without any block analysis.
+
+The expected fast path is two primes per h, although that expectation is heuristic. The certificate verifier itself is completely deterministic.
+
+---
+
+# 11. Updated theorem status
+
+The result of this attack is:
+
+
+Thus the quotient-Galois theorem can be sharpened to
+
+
+because noncollapse no longer needs to be assumed separately.
+
+---
+
+# 12. Required self-audit
+
+## (a) Least-confident step
+
+The least-confident part is not the trace formula, the fiber-degree noncollapse proof, or the modular block criterion; those are exact. It is the prospect of deriving all-h primitivity structurally from the existing h-recurrence. I see no valid implication from the recurrence to the absence of intermediate fields. The proposed large-prime Frobenius protocol is a certification design, not an all-h existence theorem for the needed primes and cycle patterns.
+
+A secondary implementation risk is normalization of the centered quotient A_h when powers of 2 and primitive contents are removed. The modular verifier must check degree preservation and work with the exact primitive integer polynomial used by the irreducibility certificates.
+
+## (b) Likely blind spot
+
+The main blind spot was treating
+
+
+as though it were a positive variance. It is not: the w_j are complex, and the exact signs at h=2,3,4 are +,-,-. Any successful positivity argument would need Hermitian quantities such as sum |w_j|^2, which are not algebraic traces over Q and do not directly control the coefficient identity.
+
+A second blind spot to avoid is the false shortcut
