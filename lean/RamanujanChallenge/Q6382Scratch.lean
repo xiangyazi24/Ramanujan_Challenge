@@ -123,7 +123,8 @@ theorem verticalIntegral_eq_of_horizontal_tendsto
             F ((x : ℂ) - (T : ℂ) * Complex.I))))
       atTop (𝓝 0) := by
     simpa using tendsto_const_nhds.mul (htop.sub hbottom)
-  have hlhs_zero := hrhs.congr' hfinite_eventually.symm
+  have hlhs_zero := hrhs.congr'
+    (hfinite_eventually.mono fun _ h => h.symm)
   have hsub :
       (∫ y : ℝ, F (verticalPoint a y)) -
           (∫ y : ℝ, F (verticalPoint b y)) = 0 :=
@@ -165,10 +166,11 @@ private theorem sineSlope_at_int_ne_zero (m : ℤ) :
       deriv sinePi (m : ℂ) =
         (Real.pi : ℂ) *
           Complex.cos ((Real.pi : ℂ) * (m : ℂ)) := by
-    change deriv (fun z : ℂ => Complex.sin ((Real.pi : ℂ) * z)) (m : ℂ) =
-      (Real.pi : ℂ) * Complex.cos ((Real.pi : ℂ) * (m : ℂ))
-    simpa only [id_eq, mul_comm] using
+    have h :=
       (((hasDerivAt_id (m : ℂ)).const_mul (Real.pi : ℂ)).csin.deriv)
+    change deriv (fun z : ℂ => Complex.sin (z * (Real.pi : ℂ))) (m : ℂ) =
+      (Real.pi : ℂ) * Complex.cos ((Real.pi : ℂ) * (m : ℂ))
+    convert h using 1 <;> ring
   have harg :
       (Real.pi : ℂ) * (m : ℂ) =
         (((m : ℝ) * Real.pi : ℝ) : ℂ) := by
@@ -254,7 +256,7 @@ private theorem barnesExtension_differentiableOn
     (hP : DifferentiableOn ℂ P (halfIntegerStrip m)) :
     DifferentiableOn ℂ (barnesExtension κ m P) (halfIntegerStrip m) := by
   have hconst : DifferentiableOn ℂ (fun _ : ℂ => κ) (halfIntegerStrip m) :=
-    differentiableOn_const
+    differentiableOn_const κ
   have hnum : DifferentiableOn ℂ (fun z => κ * P z) (halfIntegerStrip m) :=
     hconst.mul hP
   have hden : DifferentiableOn ℂ (fun z => sineSlope m z ^ 2)
