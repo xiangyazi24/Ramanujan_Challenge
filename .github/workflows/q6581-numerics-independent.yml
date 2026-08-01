@@ -1,0 +1,103 @@
+name: Q6581 independent numerical verification
+
+on:
+  pull_request:
+    branches:
+      - chatgpt-drop
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compute from polynomial coefficient recurrence
+        shell: bash
+        run: |
+          node <<'NODE'
+          const primes = [101, 199, 499];
+          const gaps = [2, 3, 5, 8, 12];
+          const maxH = 12;
+
+          function mod(a, p) { const x = a % p; return x < 0 ? x + p : x; }
+          function mul(a, b, p) { return (a * b) % p; }
+          function pow(a, e, p) {
+            let x = mod(a, p), y = 1;
+            while (e) { if (e & 1) y = mul(y, x, p); x = mul(x, x, p); e >>= 1; }
+            return y;
+          }
+          function binom(n, k) {
+            let z = 1;
+            for (let i = 1; i <= k; i++) z = z * (n + 1 - i) / i;
+            return z;
+          }
+          function trim(a) {
+            while (a.length > 1 && a[a.length - 1] === 0) a.pop();
+            return a;
+          }
+          function add(a, b, sign, p) {
+            const n = Math.max(a.length, b.length);
+            const c = Array(n).fill(0);
+            for (let i = 0; i < n; i++) c[i] = mod((a[i] || 0) + sign * (b[i] || 0), p);
+            return trim(c);
+          }
+          function conv(a, b, p) {
+            const c = Array(a.length + b.length - 1).fill(0);
+            for (let i = 0; i < a.length; i++)
+              for (let j = 0; j < b.length; j++)
+                c[i + j] = mod(c[i + j] + mul(a[i], b[j], p), p);
+            return trim(c);
+          }
+          function evalPoly(a, x, p) {
+            let y = 0;
+            for (let i = a.length - 1; i >= 0; i--) y = mod(mul(y, x, p) + a[i], p);
+            return y;
+          }
+          function shiftPow(h, n, p) {
+            const a = Array(n + 1).fill(0);
+            for (let k = 0; k <= n; k++) a[k] = mod(binom(n, k) * pow(h, n - k, p), p);
+            return a;
+          }
+          function Pshift(h, p) {
+            const x = shiftPow(h, 1, p);
+            const x2 = shiftPow(h, 2, p);
+            const x3 = shiftPow(h, 3, p);
+            let out = [5];
+            out = add(out, x.map(v => mod(27 * v, p)), 1, p);
+            out = add(out, x2.map(v => mod(51 * v, p)), 1, p);
+            out = add(out, x3.map(v => mod(34 * v, p)), 1, p);
+            return out;
+          }
+
+          console.log('Q6581_INDEPENDENT_BEGIN');
+          for (const p of primes) {
+            const N = Array(maxH + 1);
+            N[0] = [0];
+            N[1] = [1];
+            for (let h = 1; h < maxH; h++) {
+              N[h + 1] = add(conv(Pshift(h, p), N[h], p), conv(shiftPow(h, 6, p), N[h - 1], p), -1, p);
+            }
+
+            for (const h of gaps) {
+              let maxAbs = -1, argmax = -1;
+              for (let t = 1; t < p; t++) {
+                let re = 0, im = 0;
+                for (let r = 0; r < p; r++) {
+                  let den = 1, pole = false;
+                  for (let j = 1; j <= h; j++) {
+                    const z = mod(r + j, p);
+                    if (z === 0) { pole = true; break; }
+                    den = mul(den, z, p);
+                  }
+                  if (pole) continue;
+                  const value = mul(evalPoly(N[h], r, p), pow(pow(den, 3, p), p - 2, p), p);
+                  const theta = 2 * Math.PI * ((t * value) % p) / p;
+                  re += Math.cos(theta);
+                  im += Math.sin(theta);
+                }
+                const z = Math.hypot(re, im);
+                if (z > maxAbs) { maxAbs = z; argmax = t; }
+              }
+              console.log(`p=${p} h=${h} argmax=${argmax} max_abs=${maxAbs.toFixed(12)} ratio=${(maxAbs/Math.sqrt(p)).toFixed(12)}`);
+            }
+          }
+          console.log('Q6581_INDEPENDENT_END');
+          NODE
