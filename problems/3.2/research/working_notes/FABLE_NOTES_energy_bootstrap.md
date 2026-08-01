@@ -1135,3 +1135,15 @@ double-certified.
   超几何识别 [SUSPECT](Apéry ODE 四奇点非超几何), 留 codex 按 2510.23298 核。
 - 全图终态: 唯一实质前沿 = [GAP-DCM] 的 Lang–Trotter 形式 #{r: 𝔭|M(r)}
   (M(r) = 真 Weil 数 Mellin 值)。qI 派出攻此。
+
+## §52 (08-01) qE2/Q6393: HGM ordinarity 重构 = 恒真式, 捷径判死
+
+- 正确识别: b_r 恒等式 = Katz 平衡超几何系统在 λ=1 (平衡 conifold 点) 的迹;
+  generic λ 秩-4 权-3 CY 型辛自对偶, λ=1 处单值幂幺伪反射 ⟹ 中间延拓秩 3;
+  **p|b_r 精确 = 该秩-3 对象在 conifold 的非常规性 (Hasse 标量 = b_r mod p)**。
+- **[DEAD: HGM-degree 捷径]**: 字符参数空间 𝒳_p 是长度 p−1 的零维有限 étale
+  概形, 非固定曲线; 万有 Hasse 截面的唯一 deg≤p−2 代表 = 原 Apéry 二项和
+  (unit part 1+min(r,p−1−r) 项, Stickelberger 精确核算)——无有界度数多项式,
+  不给 O(1)/O(log p)/p^{1−δ} 任何计数。与 Q6371 slope-0 块结论同构。
+- 净收获: motivic 身份第五次独立确认(HGM 坐标); 计数前沿唯一不变:
+  [GAP-LT-MELLIN] (qI 在飞)。

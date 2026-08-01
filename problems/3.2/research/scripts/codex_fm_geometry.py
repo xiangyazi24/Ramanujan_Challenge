@@ -44,23 +44,55 @@ def legendre(value: int, prime: int) -> int:
 
 
 def check_characteristic_zero_pullback() -> None:
-    x = sp.symbols("x")
     cutoff = 24
-    h = sum(sp.Integer(franel(n)) * x**n for n in range(cutoff))
-    f = sum(sp.Integer(apery(n)) * sp.symbols("t") ** n for n in range(cutoff))
-    phi = x * (1 - 8 * x) / (1 + x)
-    difference = sp.series(f.subs(sp.symbols("t"), phi) - (1 + x) * h**2, x, 0, cutoff)
-    assert difference.removeO().expand() == 0
+    left = [0] * cutoff
+    left[0] = apery(0)
+    # [x^m] phi(x)^n for phi=x(1-8x)/(1+x).
+    for n in range(1, cutoff):
+        for j in range(n + 1):
+            numerator = comb(n, j) * (-8) ** j
+            for k in range(cutoff - n - j):
+                degree = n + j + k
+                denominator_series = (-1) ** k * comb(n + k - 1, k)
+                left[degree] += apery(n) * numerator * denominator_series
+    h = [franel(n) for n in range(cutoff)]
+    square = [0] * cutoff
+    for i, first in enumerate(h):
+        for j, second in enumerate(h):
+            if i + j < cutoff:
+                square[i + j] += first * second
+    right = [square[index] + (square[index - 1] if index else 0) for index in range(cutoff)]
+    assert left == right
     print(f"VERIFIED characteristic-zero pullback through O(x^{cutoff})")
 
 
 def check_apery_laurent_model() -> None:
     u, v, w = sp.symbols("u v w")
-    lam = (u + v) * (w + 1) * (u + v + w) * (v + w + 1) / (u * v * w)
+    numerator = sp.Poly(
+        sp.expand((u + v) * (w + 1) * (u + v + w) * (v + w + 1)),
+        u,
+        v,
+        w,
+    )
+    lam = {
+        tuple(power - 1 for power in monomial): int(coefficient)
+        for monomial, coefficient in numerator.terms()
+    }
+    current = {(0, 0, 0): 1}
     for exponent in range(7):
-        expanded = sp.expand(lam**exponent)
-        constant_term = expanded.coeff(u, 0).coeff(v, 0).coeff(w, 0)
-        assert constant_term == apery(exponent)
+        assert current.get((0, 0, 0), 0) == apery(exponent)
+        product: dict[tuple[int, int, int], int] = {}
+        for left_monomial, left_coefficient in current.items():
+            for right_monomial, right_coefficient in lam.items():
+                monomial = tuple(
+                    left_monomial[index] + right_monomial[index]
+                    for index in range(3)
+                )
+                product[monomial] = (
+                    product.get(monomial, 0)
+                    + left_coefficient * right_coefficient
+                )
+        current = product
     print("VERIFIED CT Lambda_A^n=A_n for 0<=n<=6")
 
 
@@ -123,7 +155,7 @@ def check_explicit_elliptic_family() -> None:
     b6 = a3**2
     c4 = sp.expand(b2**2 - 24 * b4)
     discriminant = sp.factor(-8 * b4**3 - 27 * b6**2 + 9 * b2 * b4 * b6)
-    assert discriminant == u**6 * (u + 1) ** 2 * (1 - 8 * u)
+    assert sp.expand(discriminant - u**6 * (u + 1) ** 2 * (1 - 8 * u)) == 0
     assert c4.subs(u, 0) != 0
     assert c4.subs(u, -1) != 0
     assert c4.subs(u, sp.Rational(1, 8)) != 0
