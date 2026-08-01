@@ -2423,3 +2423,11 @@ codegree-敏感证书 + [MESO-S1-2/3] 一阶矩 census (并列 cron [MIDPOINT-AC
 候选 (Sp 自身 / SL₂ on Sym^{4h−3} / h=4 特例 Sp_6-ω₃) ⟹ 幂幺 Jordan 型 J₂^{h−1}
 排除真子候选。配 BG 证书 ⟹ **满辛群+M₄=3+FLAT-LAW+对拟正交 = h≤32 全范围定理**。
 monodromy 塔正式闭合 (全 h 条件悬于 CRIT/BG = 同一单变量族, 与 Morse 塔同源)。
+
+## §128 — λ_max 直测: [OP-OFF-0] 实证通过 (08-02 凌晨, CODEX_LAMBDAMAX_report.md)
+
+三素数 (997/1999/4001, H=p^{2/3}), 隐式 matvec 40 步幂迭代 + 固定步 Lanczos 双审:
+**λ₁/p² ∈ [1.76,2.42] (剥 h=1 立方行后 [1.76,1.90]), 随 p 无增长** — [OP-OFF-0]
+有界情景直接实证; ‖O‖/(√H·p^{3/2}) ∈ [3.04,3.29] 常数 — Wishart/随机框架尺度精确。
+正谱边主导; 立方行 outlier 剥离干净。至此: 终极对象在实证上全绿
+(K_emp/FLAT/PAIR-FLAT/壳统计/λ_max 五层全部随机地板), 只欠证明机制。
