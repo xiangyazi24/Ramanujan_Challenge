@@ -6819,4 +6819,276 @@ theorem quarticAlternatingComplementIntegral24 :
     · ring
   exact quarticAlternatingComplement_hasSum_integral.unique hSeries
 
+/-! ## A polylogarithmic primitive for the Layer E row `I20` -/
+
+private theorem trilog26_hasDerivAt_zero24 :
+    HasDerivAt RamanujanChallenge.P26.trilog26 1 0 := by
+  let r : ℝ := 1 / 2
+  have hr0 : 0 ≤ r := by dsimp [r]; norm_num
+  have hr1 : r < 1 := by dsimp [r]; norm_num
+  have hu : Summable (fun n : ℕ => r ^ n) :=
+    summable_geometric_of_lt_one hr0 hr1
+  have hterm : ∀ n : ℕ, ∀ y : ℝ, y ∈ Ioo (-r) r →
+      HasDerivAt
+        (fun y : ℝ =>
+          y ^ (n + 1) / ((n + 1 : ℕ) : ℝ) ^ 3)
+        (y ^ n / ((n + 1 : ℕ) : ℝ) ^ 2) y := by
+    intro n y _
+    convert
+      (hasDerivAt_pow (n + 1) y).div_const
+        (((n + 1 : ℕ) : ℝ) ^ 3) using 1
+    rw [Nat.add_sub_cancel]
+    simp only [Nat.cast_add, Nat.cast_one]
+    field_simp
+  have hbound : ∀ n : ℕ, ∀ y : ℝ, y ∈ Ioo (-r) r →
+      ‖y ^ n / ((n + 1 : ℕ) : ℝ) ^ 2‖ ≤ r ^ n := by
+    intro n y hy
+    rw [Real.norm_eq_abs, abs_div, abs_pow]
+    have hyr : |y| < r := (abs_lt).2 hy
+    have hden :
+        (1 : ℝ) ≤ |((n + 1 : ℕ) : ℝ) ^ 2| := by
+      rw [abs_of_nonneg
+        (by positivity : (0 : ℝ) ≤ ((n + 1 : ℕ) : ℝ) ^ 2)]
+      exact one_le_pow₀ (by norm_num)
+    calc
+      |y| ^ n / |((n + 1 : ℕ) : ℝ) ^ 2| ≤ |y| ^ n / 1 := by
+        gcongr
+      _ = |y| ^ n := by ring
+      _ ≤ r ^ n := pow_le_pow_left₀ (abs_nonneg y) hyr.le n
+  have hzero : Summable (fun n : ℕ =>
+      (0 : ℝ) ^ (n + 1) / ((n + 1 : ℕ) : ℝ) ^ 3) := by
+    simp [zero_pow (Nat.succ_ne_zero _)]
+  have hd :
+      HasDerivAt
+        (fun y : ℝ => ∑' n : ℕ,
+          y ^ (n + 1) / ((n + 1 : ℕ) : ℝ) ^ 3)
+        (∑' n : ℕ,
+          (0 : ℝ) ^ n / ((n + 1 : ℕ) : ℝ) ^ 2) 0 := by
+    exact hasDerivAt_tsum_of_isPreconnected hu isOpen_Ioo
+      (convex_Ioo (-r) r).isPreconnected hterm hbound
+      (show (0 : ℝ) ∈ Ioo (-r) r by constructor <;> norm_num [r])
+      hzero (show (0 : ℝ) ∈ Ioo (-r) r by
+        constructor <;> norm_num [r])
+  rw [show RamanujanChallenge.P26.trilog26 =
+      (fun y : ℝ => ∑' n : ℕ,
+        y ^ (n + 1) / ((n + 1 : ℕ) : ℝ) ^ 3) from rfl]
+  convert hd using 1
+  symm
+  calc
+    (∑' n : ℕ,
+        (0 : ℝ) ^ n / ((n + 1 : ℕ) : ℝ) ^ 2) =
+        ∑' n : ℕ, if n = 0 then (1 : ℝ) else 0 := by
+      apply tsum_congr
+      intro n
+      rcases n with _ | n
+      · norm_num
+      · simp [zero_pow (Nat.succ_ne_zero n)]
+    _ = 1 := tsum_ite_eq 0 1
+
+/-- An antiderivative of the raw `I20` kernel. -/
+def quadAltI20Primitive24 (t : ℝ) : ℝ :=
+  (Real.pi ^ 2 / 6) * dilog (t / 2) - dilog (t / 2) ^ 2 -
+    Real.log (t / 2) ^ 2 * dilog (t / 2) +
+    2 * Real.log (t / 2) * RamanujanChallenge.P26.trilog26 (t / 2) -
+    2 * polylog4 (t / 2)
+
+theorem quadAltI20Primitive24_hasDerivAt
+    {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
+    HasDerivAt quadAltI20Primitive24
+      ((Real.pi ^ 2 / 6 - 2 * dilog (t / 2) -
+          Real.log (t / 2) ^ 2) *
+        (-Real.log (1 - t / 2)) / t) t := by
+  have hy0 : 0 < t / 2 := by positivity
+  have hy1 : t / 2 < 1 := by linarith
+  have hyne : t / 2 ≠ 0 := ne_of_gt hy0
+  have htne : t ≠ 0 := ne_of_gt ht0
+  have hlin : HasDerivAt (fun s : ℝ => s / 2) (1 / 2) t := by
+    convert (hasDerivAt_id t).div_const 2 using 1 <;> norm_num
+  have hlog := (Real.hasDerivAt_log hyne).comp t hlin
+  have hd := (dilog_hasDerivAt hy0 hy1).comp t hlin
+  have htri :=
+    (RamanujanChallenge.P26.trilog26_hasDerivAt_of_abs_lt_one
+      (by rw [abs_of_pos hy0]; exact hy1) hyne).comp t hlin
+  have hfour :=
+    (polylog4_hasDerivAt24
+      (by rw [abs_of_pos hy0]; exact hy1) hyne).comp t hlin
+  unfold quadAltI20Primitive24
+  have htotal :=
+    ((hd.const_mul (Real.pi ^ 2 / 6)).sub (hd.pow 2)).sub
+      ((hlog.pow 2).mul hd) |>.add
+      ((hlog.mul htri).const_mul 2) |>.sub
+      (hfour.const_mul 2)
+  convert htotal using 1
+  · funext s
+    simp only [Function.comp_apply, Pi.add_apply, Pi.sub_apply,
+      Pi.mul_apply, Pi.pow_apply]
+    ring
+  · simp only [Function.comp_apply, Pi.pow_apply]
+    field_simp [htne, hyne]
+    ring
+
+private theorem logSquareMulSelf_tendsto_zero24 :
+    Tendsto (fun x : ℝ => Real.log x ^ 2 * x)
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have h := tendsto_log_mul_rpow_nhdsGT_zero
+    (r := (1 : ℝ) / 2) (by norm_num)
+  have hsq := h.mul h
+  simp only [mul_zero] at hsq
+  refine hsq.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hx0 : (0 : ℝ) < x := hx
+  have hh : x ^ ((1 : ℝ) / 2) * x ^ ((1 : ℝ) / 2) = x := by
+    rw [← Real.rpow_add hx0]
+    norm_num
+  calc
+    Real.log x * x ^ ((1 : ℝ) / 2) *
+        (Real.log x * x ^ ((1 : ℝ) / 2)) =
+        Real.log x ^ 2 *
+          (x ^ ((1 : ℝ) / 2) * x ^ ((1 : ℝ) / 2)) := by ring
+    _ = Real.log x ^ 2 * x := by rw [hh]
+
+private theorem halfMap_tendsto_zero_right24 :
+    Tendsto (fun t : ℝ => t / 2)
+      (𝓝[>] (0 : ℝ)) (𝓝[>] (0 : ℝ)) := by
+  rw [tendsto_nhdsWithin_iff]
+  constructor
+  · have hc : ContinuousAt (fun t : ℝ => t / 2) 0 := by fun_prop
+    simpa using tendsto_nhdsWithin_of_tendsto_nhds hc.tendsto
+  · filter_upwards [self_mem_nhdsWithin] with t ht
+    change 0 < t at ht
+    exact div_pos ht (by norm_num)
+
+theorem quadAltI20Primitive24_tendsto_zero :
+    Tendsto quadAltI20Primitive24
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hdSlope :
+      Tendsto (fun x : ℝ => x⁻¹ * dilog x)
+        (𝓝[>] (0 : ℝ)) (𝓝 1) := by
+    simpa [dilog_zero] using
+      RamanujanChallenge.P26.dilog_hasDerivAt_zero26.tendsto_slope_zero_right
+  have htriSlope :
+      Tendsto
+        (fun x : ℝ => x⁻¹ * RamanujanChallenge.P26.trilog26 x)
+        (𝓝[>] (0 : ℝ)) (𝓝 1) := by
+    simpa [RamanujanChallenge.P26.trilog26_zero] using
+      trilog26_hasDerivAt_zero24.tendsto_slope_zero_right
+  have hlogSelf :
+      Tendsto (fun x : ℝ => Real.log x * x)
+        (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa [Real.rpow_one] using
+      (tendsto_log_mul_rpow_nhdsGT_zero
+        (show (0 : ℝ) < 1 by norm_num))
+  have hlogSquareDilog :
+      Tendsto (fun x : ℝ => Real.log x ^ 2 * dilog x)
+        (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    have hraw := logSquareMulSelf_tendsto_zero24.mul hdSlope
+    have hraw' : Tendsto
+        (fun x : ℝ =>
+          (Real.log x ^ 2 * x) * (x⁻¹ * dilog x))
+        (𝓝[>] (0 : ℝ)) (𝓝 0) := by simpa using hraw
+    apply Filter.Tendsto.congr' _ hraw'
+    filter_upwards [self_mem_nhdsWithin] with x hx
+    have hxne : x ≠ 0 := ne_of_gt hx
+    field_simp [hxne]
+  have hlogTrilog :
+      Tendsto
+        (fun x : ℝ =>
+          Real.log x * RamanujanChallenge.P26.trilog26 x)
+        (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    have hraw := hlogSelf.mul htriSlope
+    have hraw' : Tendsto
+        (fun x : ℝ => (Real.log x * x) *
+          (x⁻¹ * RamanujanChallenge.P26.trilog26 x))
+        (𝓝[>] (0 : ℝ)) (𝓝 0) := by simpa using hraw
+    apply Filter.Tendsto.congr' _ hraw'
+    filter_upwards [self_mem_nhdsWithin] with x hx
+    have hxne : x ≠ 0 := ne_of_gt hx
+    field_simp [hxne]
+  have hdCont : ContinuousAt dilog 0 :=
+    dilog_continuousOn_unit.continuousAt
+      (Icc_mem_nhds (by norm_num : (-1 : ℝ) < 0)
+        (by norm_num : (0 : ℝ) < 1))
+  have hd : Tendsto dilog (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa [dilog_zero] using
+      tendsto_nhdsWithin_of_tendsto_nhds hdCont.tendsto
+  have hfourCont : ContinuousAt polylog4 0 :=
+    polylog4_continuousOn_unit24.continuousAt
+      (Icc_mem_nhds (by norm_num : (-1 : ℝ) < 0)
+        (by norm_num : (0 : ℝ) < 1))
+  have hfour : Tendsto polylog4 (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa using
+      tendsto_nhdsWithin_of_tendsto_nhds hfourCont.tendsto
+  have hbase : Tendsto
+      (fun x : ℝ =>
+        (Real.pi ^ 2 / 6) * dilog x - dilog x ^ 2 -
+          Real.log x ^ 2 * dilog x +
+          2 * Real.log x * RamanujanChallenge.P26.trilog26 x -
+          2 * polylog4 x)
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    convert
+      (((hd.const_mul (Real.pi ^ 2 / 6)).sub (hd.pow 2)).sub
+        hlogSquareDilog |>.add (hlogTrilog.const_mul 2)).sub
+        (hfour.const_mul 2) using 1 <;> ring
+  simpa [quadAltI20Primitive24] using
+    hbase.comp halfMap_tendsto_zero_right24
+
+theorem quadAltI20Primitive24_one :
+    quadAltI20Primitive24 1 =
+      -2 * polylog4 (1 / 2) -
+        (1 / 12 : ℝ) * Real.log 2 ^ 4 +
+        (1 / 2 : ℝ) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) -
+        (7 / 4 : ℝ) * Real.log 2 * zeta3_24 +
+        (1 / 4 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  have hloghalf : Real.log (1 / 2 : ℝ) = -Real.log 2 := by
+    rw [one_div, Real.log_inv]
+  unfold quadAltI20Primitive24
+  norm_num
+  rw [hloghalf, RamanujanChallenge.P26.dilog26_half,
+    RamanujanChallenge.P26.trilog26_half]
+  unfold RamanujanChallenge.P26.zeta3 zeta3_24
+  ring
+
+theorem quadAltI20Primitive24_tendsto_one :
+    Tendsto quadAltI20Primitive24 (𝓝[<] (1 : ℝ))
+      (𝓝 (-2 * polylog4 (1 / 2) -
+        (1 / 12 : ℝ) * Real.log 2 ^ 4 +
+        (1 / 2 : ℝ) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) -
+        (7 / 4 : ℝ) * Real.log 2 * zeta3_24 +
+        (1 / 4 : ℝ) * (Real.pi ^ 2 / 6) ^ 2)) := by
+  have harg : ContinuousAt (fun t : ℝ => t / 2) 1 :=
+    continuousAt_id.div_const 2
+  have hlog : ContinuousAt (fun t : ℝ => Real.log (t / 2)) 1 := by
+    have ho : ContinuousAt Real.log (1 / 2 : ℝ) :=
+      Real.continuousAt_log (by norm_num)
+    simpa [Function.comp_def] using
+      ho.comp_of_eq harg (by norm_num : (fun t : ℝ => t / 2) 1 = 1 / 2)
+  have hd : ContinuousAt (fun t : ℝ => dilog (t / 2)) 1 := by
+    have ho : ContinuousAt dilog (1 / 2 : ℝ) :=
+      dilog_continuousOn_unit.continuousAt
+        (Icc_mem_nhds (by norm_num) (by norm_num))
+    simpa [Function.comp_def] using
+      ho.comp_of_eq harg (by norm_num : (fun t : ℝ => t / 2) 1 = 1 / 2)
+  have htri : ContinuousAt
+      (fun t : ℝ => RamanujanChallenge.P26.trilog26 (t / 2)) 1 := by
+    have ho : ContinuousAt RamanujanChallenge.P26.trilog26
+        (1 / 2 : ℝ) :=
+      RamanujanChallenge.P26.trilog26_continuousOn_unit.continuousAt
+        (Icc_mem_nhds (by norm_num) (by norm_num))
+    simpa [Function.comp_def] using
+      ho.comp_of_eq harg (by norm_num : (fun t : ℝ => t / 2) 1 = 1 / 2)
+  have hfour : ContinuousAt (fun t : ℝ => polylog4 (t / 2)) 1 := by
+    have ho : ContinuousAt polylog4 (1 / 2 : ℝ) :=
+      polylog4_continuousOn_unit24.continuousAt
+        (Icc_mem_nhds (by norm_num) (by norm_num))
+    simpa [Function.comp_def] using
+      ho.comp_of_eq harg (by norm_num : (fun t : ℝ => t / 2) 1 = 1 / 2)
+  have hc : ContinuousAt quadAltI20Primitive24 1 := by
+    unfold quadAltI20Primitive24
+    fun_prop
+  have ht : Tendsto quadAltI20Primitive24 (𝓝[<] (1 : ℝ))
+      (𝓝 (quadAltI20Primitive24 1)) :=
+    tendsto_nhdsWithin_of_tendsto_nhds hc.tendsto
+  rw [quadAltI20Primitive24_one] at ht
+  simpa using ht
+
 end

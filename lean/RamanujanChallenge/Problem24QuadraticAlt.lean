@@ -4273,4 +4273,46 @@ theorem quadAltI11_eq :
     hFirst, quarticAlternatingComplementIntegral24]
   ring
 
+/-! ## Layer E, row `I20` -/
+
+theorem quadAltI20_eq :
+    I20 = -(1 / 2) * quadAltK -
+      (1 / 2) * (Real.pi ^ 2 / 6) ^ 2 := by
+  let value : ℝ :=
+    -2 * polylog4 (1 / 2) -
+      (1 / 12 : ℝ) * Real.log 2 ^ 4 +
+      (1 / 2 : ℝ) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) -
+      (7 / 4 : ℝ) * Real.log 2 * zeta3_24 +
+      (1 / 4 : ℝ) * (Real.pi ^ 2 / 6) ^ 2
+  have hint : IntervalIntegrable
+      (fun t : ℝ =>
+        (Real.pi ^ 2 / 6 - 2 * dilog (t / 2) -
+          Real.log (t / 2) ^ 2) *
+        (-Real.log (1 - t / 2)) / t)
+      MeasureTheory.volume 0 1 := by
+    simpa [W0, H2] using quadAltI20_kernel_intervalIntegrable
+  have hvalue :
+      (∫ t : ℝ in (0 : ℝ)..1,
+        (Real.pi ^ 2 / 6 - 2 * dilog (t / 2) -
+          Real.log (t / 2) ^ 2) *
+        (-Real.log (1 - t / 2)) / t) = value := by
+    rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+      (f := quadAltI20Primitive24)
+      (fa := (0 : ℝ)) (fb := value)
+      (by norm_num)
+      (fun t ht => quadAltI20Primitive24_hasDerivAt ht.1 ht.2)
+      hint quadAltI20Primitive24_tendsto_zero
+      (by simpa [value] using quadAltI20Primitive24_tendsto_one)]
+    ring
+  calc
+    I20 = value := by
+      unfold I20 W0 H2
+      exact hvalue
+    _ = -(1 / 2) * quadAltK -
+        (1 / 2) * (Real.pi ^ 2 / 6) ^ 2 := by
+      rw [quadAltK_eq]
+      unfold value alternatingCubicLinearEulerValue24
+        cubicLinearEulerValue24
+      ring
+
 end RamanujanChallenge.P24QuadAlt
