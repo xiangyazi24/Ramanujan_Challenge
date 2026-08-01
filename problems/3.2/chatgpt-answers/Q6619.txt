@@ -1,0 +1,324 @@
+R_d <= d                         for every d
+
+Q_H >> H^2 log H.
+
+Q_H = Theta_C(H^2 log H)
+
+S_1(D) = sum_(d<=D) R_d,
+
+Q_D <= (sqrt(2)/3) S_1(D)^(3/2).                  (0.1)
+
+S_1(Y) <= A Y
+
+Q_D << A^(3/2) D^(3/2).
+
+D=sqrt(N)L,
+
+[MESO-S1-2/3]
+S_1(D) << N^(2/3).                                (0.2)
+
+S_1(D) << D^(4/3)/L^(4/3).                        (0.3)
+
+Q_H <= 22 H^2 sum_(d=1)^H R_d/d^2.                (1.1)
+
+R_d <= C d
+
+ceil(sqrt(H)) <= s <= floor(H/4),
+
+q_s = floor(H/s),
+a_s = floor(phi(s) s/H),                           (1.2)
+
+b, b+s, b+2s, ..., b+q_s s.                       (1.3)
+
+q_s+1-d/s
+
+R_d
+ = sum_(s in the selected range, s|d)
+     a_s (q_s+1-d/s).                              (1.4)
+
+a_s <= phi(s)s/H
+
+q_s+1-d/s
+ <= H/s+1-d/s
+ = (H+s-d)/s.
+
+R_d
+ <= sum_(s|d) phi(s)(H+s-d)/H
+ <= ((H-d)/H) sum_(s|d) phi(s)
+    +(1/H) sum_(s|d) s phi(s).                     (1.5)
+
+sum_(s|d) phi(s)=d
+
+sum_(s|d) s phi(s)
+ <= d sum_(s|d) phi(s)
+ = d^2.
+
+R_d <= ((H-d)d+d^2)/H = d.                        (1.6)
+
+R_d <= d
+
+C(q_s+1,3)
+
+Q_H = sum_s a_s C(q_s+1,3).                        (1.7)
+
+q_s=floor(x)>=3x/4,
+
+x^3/20 <= C(q_s+1,3) <= x^3/3.                    (1.8)
+
+a_s >= phi(s)s/H-1.
+
+Q_H
+ >= (H^2/20) sum_(sqrt(H)<=s<=H/4) phi(s)/s^2
+    -(H^3/3) sum_(s>=sqrt(H)) 1/s^3.               (1.9)
+
+sum_(s<=X) phi(s)/s^2
+ = (6/pi^2) log X + O(1),                           (1.10)
+
+sum_(s>=sqrt(H)) 1/s^3 = O(1/H).                   (1.11)
+
+phi(n)/n = sum_(e|n) mu(e)/e
+
+sum_(e>=1) mu(e)/e^2 = 1/zeta(2)=6/pi^2.
+
+sum_(sqrt(H)<=s<=H/4) phi(s)/s^2
+ = (3/pi^2) log H + O(1).                           (1.12)
+
+Q_H >= (3/(20 pi^2)+o(1)) H^2 log H.               (1.13)
+
+> sup Q_H = Theta_C(H^2 log H).
+>
+
+> S_1(Y)=sum_(d<=Y)R_d <= A Y^(2-delta)
+>
+
+> Q_H <= 22 A (3+2/delta) H^2.                     (2.1)
+>
+
+sum_(d=1)^H R_d/d^2
+ = S_1(H)/H^2
+   +sum_(d=1)^(H-1)
+      S_1(d)(1/d^2-1/(d+1)^2).                     (2.2)
+
+1/d^2-1/(d+1)^2 <= 2/d^3,
+
+sum_(d=1)^H R_d/d^2
+ <= A H^(-delta)
+    +2A sum_(d=1)^(H-1) d^(-1-delta)
+ <= A(3+2/delta).                                  (2.3)
+
+v-u<=D
+
+x_u=x_v.
+
+|E(G_D)| = S_1(D).                                  (3.1)
+
+Q_D = number of triangles of G_D.                  (3.2)
+
+(sqrt(2)/3) E^(3/2)                                (3.3)
+
+6T = trace(A^3)
+   = sum_i lambda_i^3
+   <= lambda sum_i lambda_i^2
+   = 2E lambda
+   <= 2E sqrt(2E).
+
+boxed:
+Q_D <= (sqrt(2)/3) S_1(D)^(3/2).                   (3.4)
+
+B_j = [jD,(j+1)D),
+W_j = [jD,(j+2)D),                                  (4.1)
+
+m_(j,a) = #{n in W_j : x_n=a}.                     (4.2)
+
+sum_(j,a) m_(j,a) <= 2(N+1).                       (4.3)
+
+P_W(D)=sum_(j,a) C(m_(j,a),2).                     (4.4)
+
+S_1(D) <= P_W(D) <= 2 S_1(2D).                     (4.5)
+
+Q_D <= sum_(j,a) C(m_(j,a),3).                     (4.6)
+
+S_1(Y) <= A Y
+
+P_W(D) <= 4AD.                                      (4.7)
+
+#{(j,a):m_(j,a)>=t}
+ <= 2P_W(D)/(t(t-1))
+ << AD/t^2,                                         (4.8)
+
+max_(j,a) m_(j,a) << sqrt(AD).                     (4.9)
+
+C(m,3)=((m-2)/3)C(m,2),
+
+sum_(j,a) C(m_(j,a),3)
+ << (AD)^(3/2).                                     (4.10)
+
+sum_(d<=D) R_d/d^2 = O(A).
+
+P_W(D)=O(AD).
+
+D=sqrt(N)L,
+
+Q_D << A^(3/2) N^(3/4)L^(3/2).                     (4.11)
+
+L << N^(1/6).
+
+S_1(Y) <= A Y^(2-delta)                            (5.1)
+
+Q_D <<_(A,delta) D^2.                              (5.2)
+
+Q_D
+ << A^(3/2) D^(3-3delta/2).                        (5.3)
+
+boxed:
+Q_D << min(D^2, D^(3-3delta/2)),                   (5.4)
+
+delta=2/3.                                         (5.5)
+
+beta<4/3.                                          (5.6)
+
+S_1(D) << D^(4/3)/L^(4/3)=N^(2/3).                (5.7)
+
+b, b+t, b+2t.
+
+Q_Y
+ = sum_(t<=Y/2) t
+ = (1/8+o(1))Y^2,                                  (6.1)
+
+R_d <= (5/2)d.                                     (6.2)
+
+Q_Y << Y^2 for every Y
+
+Q_(2Y)/Q_Y -> 4.
+
+pair exponent beta
+    -> triangle exponent min(2,3beta/2).           (6.3)
+
+(i)  S_1(Y) <= A Y for every Y<=D.                 (7.1)
+
+Q_D <= (sqrt(2)/3)A^(3/2)D^(3/2).                 (7.2)
+
+0,m,2m,...,m^2
+
+S_1(Y) << Y,
+
+sum_r d_H(r)^2 asymp m^3=H^(3/2),                 (7.3)
+
+d_I(r)=sum_(h in I) 1[x_r=x_(r+h)],
+
+q_I(r)=#{h in I:r+h is admissible},
+mu_I(r)=q_I(r)/p.                                  (7.4)
+
+(ii) V_I:=sum_r (d_I(r)-mu_I(r))^2 <= B|I|.        (7.5)
+
+2Q_D=sum_r d_I(r)^2-sum_r d_I(r).                 (7.6)
+
+d_I(r)^2
+ <= 2(d_I(r)-mu_I(r))^2+2mu_I(r)^2
+
+sum_r mu_I(r)^2
+ <= (N+1)|I|^2/p^2
+ << |I|^2/N,                                       (7.7)
+
+Q_D <= V_I+O(D^2/N)
+     << BD+D^2/N.                                  (7.8)
+
+d_I(r) <= d_I(r)^2,
+
+sum_r d_I(r)
+ <= 2V_I+O(|I|^2/N)
+ << B|I|+|I|^2/N.                                  (7.9)
+
+(ii) => (i) => [MESO-PAIR].                        (7.10)
+
+[MESO-ROW-L2]
+sum_r (d_D(r)-mu_D(r))^2 << N.                    (7.11)
+
+(iii) sum_(j,a) C(m_(j,a),2)
+      << sum_(j,a)m_(j,a)
+      << N.                                        (7.12)
+
+e_(j,a)=C(m_(j,a),2),
+
+C(m_(j,a),3) asymp e_(j,a)^(3/2)                  (7.13)
+
+sqrt(D) <= s <= 2sqrt(D),
+
+q_s=floor(D/s),
+a_s=floor(3 phi(s)s/D).                            (7.14)
+
+R_d <= 3d.                                         (7.15)
+
+sum_(n in [X,2X]) phi(n)/n
+ = (6/pi^2)X+O(log X).
+
+Theta(sqrt(D)) positions,
+Theta(D) pairs,
+Theta(D^(3/2)) triples.                             (7.16)
+
+S_1(D)=Theta(D^(3/2)),
+Q_D=Theta(D^2),                                    (7.17)
+
+L^2=o(sqrt(D)),
+
+N=(1+o(1))D^2/L^2.
+
+Q_D=Theta(D^2)=Theta(NL^2) >> N.                  (7.18)
+
+sum_(j,a) C(m_(j,a),2)
+ <= 2S_1(2D)
+ = O(D^(3/2))
+ = o(N).                                           (7.19)
+
+(i) => (iii),
+(ii) => (i) => (iii),
+
+(iii) does not imply (i), (ii), or Q_D<<N.         (7.20)
+
+Q_D
+ <= (sqrt(2)/3)
+    (sum_(j,a) C(m_(j,a),2))^(3/2).                (8.1)
+
+sum_(j,a) C(m_(j,a),2) << N^(2/3)                 (8.2)
+
+[MESO-WIN-3/2]
+sum_(j,a) C(m_(j,a),2)^(3/2) << N.                (8.3)
+
+n_(j,a)=#{r in B_j:x_r=a}.
+
+d_D(r) <= m_(j,a)-1.
+
+Q_D
+ = sum_r C(d_D(r),2)
+ <= (1/2) sum_(j,a)
+      n_(j,a)(m_(j,a)-1)^2.                        (8.4)
+
+[MESO-PALM-WIN2]
+sum_(j,a) n_(j,a)(m_(j,a)-1)^2 << N               (8.5)
+
+[MESO-S1-2/3]
+S_1(D) << N^(2/3).                                 (9.1)
+
+S_1(D) << D^(4/3-eta)                              (9.2)
+
+sum_r (d_D(r)-q_D(r)/p)^2 << N                     (9.3)
+
+1. [MESO-S1-2/3]: S_1(D) << N^(2/3).
+   This is the weakest non-tautological scalar census target.
+
+2. Any prefix power S_1(Y) << Y^(4/3-eta).
+   This closes MESO and also removes the abstract logarithm.
+
+3. [MESO-WIN-3/2] or [MESO-PALM-WIN2].
+   Use these if the arithmetic naturally localizes by position/color windows.
+
+4. Full row variance V_I << |I|.
+   This is excellent but substantially stronger than necessary.
+
+sum_r mu_I(r)^2 << |I|^2/N.
+
+unweighted pair mass over window-color cells,
+row-wise second moment under a base/occurrence measure,
+and the third moment needed for triples.
+
+sum_(s|d) phi(s)=d
