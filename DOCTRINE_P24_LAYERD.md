@@ -291,3 +291,40 @@ The one genuinely new analytic step in the whole of Layer E remains the termwise
 integration behind `K` (expand `log(1+x)/(1+x)`, integrate `∫₀¹ xⁿ log²x = 2/(n+1)³`,
 reindex with `H_n = H_{n+1} - 1/(n+1)`). Everything else is rational arithmetic
 over constants this repo already owns.
+
+## The one remaining analytic step, stated exactly
+
+Numerically pinned (agreement to the truncation error of a 3000-term alternating
+series with the adjacent-average correction, 1.5e-13):
+
+```lean
+∫ x in (0:ℝ)..1, (Real.log x)^2 * Real.log (1+x) / (1+x)
+  = 2 * ∑' k : ℕ, (-1)^k * harmonicNumber (k+1) / ((k:ℝ)+2)^3
+```
+
+Nat-indexed from 0, no shift needed. Ingredients:
+`log(1+x)/(1+x) = Σ_{n≥1} (-1)^{n+1} H_n xⁿ` and `∫₀¹ xⁿ (log x)² dx = 2/(n+1)³`.
+
+The series is ALTERNATING, so Tonelli does not apply — the interchange needs
+`MeasureTheory.hasSum_integral_of_summable_integral_norm` (the same lemma Layer C
+already uses), whose hypotheses are per-term integrability plus summability of
+`∫‖·‖`. Here `∫₀¹ |xⁿ (log x)² H_n| dx = 2H_n/(n+1)³`, and `Σ H_n/(n+1)³`
+converges, so the norm-summability hypothesis is met.
+
+Then `K = 2(η(4) - A)` with `A = Σ (-1)^{n-1} H_n/n³`, and
+`A = Tminus + Tplus + (1/4)ζ2²` closes it against constants the repo owns.
+
+## Definition audit (done — numerics verified against the Lean objects)
+
+Every formula used in this session's numerical work was checked character by
+character against the Lean definitions: `dilog` (which is literally
+`∑' n, z^(n+1)/(n+1)^2`, i.e. Li₂), `W0`, `H1`, `H2`, `quadAltV`,
+`quadAltDminus`, `quadAltMclosed` (all seven terms including
+`- 2 * dilog ((1+x)/2)`), `quadAltJclosed`, `quadAltQclosed`, `quadAltR`,
+`quadAltFclosed`, and `alternatingQuadraticEulerValue24`.
+
+This matters because it is the error class a numerical check cannot catch: had
+the Python used a different branch, normalisation or endpoint convention, every
+digit could still have matched while the Lean statement said something else. It
+did not — the 25-to-60-digit agreements above are agreements about the Lean
+objects.
