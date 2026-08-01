@@ -393,3 +393,23 @@ The amplification question (multiplicity on the Ψ family) is with R5.
 - dm's 10⁷ scan (bn_bigscan_10M_report.md, d89add8): K(n) ≤ 4 all n ≤ 10⁷;
   mean |Z_p| = 1.0014 over 664579 primes, max |Z_p| = 12 — consistent with the
   Poisson vertical picture underlying all session theorems.
+
+## 17. MIRROR-ROOT IDENTITY discovered + verified (2026-08-01, phase 3/2)
+
+**Identity (30/30 verified at p = 101, 199, 4001; zero failures, zero
+odd-parity accidentals):** for h ≡ k (mod 2),
+   Ψ_{h,k}( (p−1−h−k)/2 ) ≡ 0 (mod p).
+Discovery path: the ρ=2 constant 0.72 exceeded Poisson 0.5; mirror stratification
+(2r+h+k ≡ p−1) showed EXACTLY 240 = #{h<k≤32: h≡k mod 2} forced pairs at both
+p = 4001 and 16001 — deterministic. Decomposition closes numerically:
+R_H ≈ H²/4 (mirror, forced) + H²/2 (Poisson generic) = 0.72H² ✓.
+
+Consequences for the ρ=2 program:
+- (M) Mirror lemma: provable via the reflection J-conjugation (the reflection
+  n ↦ p−1−n maps the triple {r*, r*+h, r*+k} to {r*+h+k, r*+k, r*+h}; the
+  reflected germ supplies the common kernel). One explicit root per same-parity
+  pair.
+- (G) Residual statement: Σ_{h<k≤H} (Z(Ψ_{h,k}) − 1[h≡k]) ≪ H² with measured
+  constant ≈ 0.48 ≈ random-polynomial expectation 1/2 per pair-ish. The 3/2
+  theorem = (M) + (G). (G) is the pure equidistribution core.
+Scripts: mirror_check.py, mirror_identity.py, rho_measure.py.
