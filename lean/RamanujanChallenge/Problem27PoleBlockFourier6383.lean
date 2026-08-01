@@ -82,7 +82,6 @@ theorem integral_fourierKernel {t : ℝ} (ht : 0 < t) :
               norm_cast
               dsimp only [ξ]
               field_simp [Real.pi_ne_zero]
-              ring
     _ = ((2 * ξ / Real.sinh (Real.pi * ξ) : ℝ) : ℂ) := h
     _ = ((t / (Real.pi * Real.sinh (t / 2)) : ℝ) : ℂ) := by
       norm_cast
