@@ -127,3 +127,16 @@ max_{t≠0} |S_h(t)|/√p, S_h(t)=Σ_{r∈F_p∖poles} e_p(t δ_h(r)), 完全和
 (pure part 有效维数 O(1)?) — qDWORK2 weight-collapse 情景的经验证据。
 注意: 这不直接给 σ>1 (逐 h 一致√p-相消恰好复现 3/2, 见 Q6570 判决), 但它是
 "family 在 t-侧完美混合"的最强单点证据, 且校准了 SHELL 目标的期望常数。
+
+## 20. 跨 gap 相关全谱实测 (codex crosscorr, 9 cells, p≤4001, H≤p^{0.66})
+
+- **[PAIR-FLAT] 新经验律**: 逐对 |E_{h,k}| ≈ (1.0–1.1)√p 一致 (mean|E|/p≈0.017@p=4001),
+  与 hk 无关——genus 6hk 的 Weil 上限完全不现身; FLAT-LAW 的对级下延。
+- **绝对值质量**: Σ_{h<k}|E| ≈ 0.5·H²√p (九格 rescale 稳定 [0.494,0.572]) ⟹
+  [ROWWISE]/Schur L1 路线被实证否决 (超 pH 于 H>√p), 与随机符号模型精确一致。
+- **符号壳统计**: max_d|A_d|/p ≤ 0.80, V(H) ≤ 0.049, 无稳定结构 d (top-d 随 p,H 漂移;
+  even/odd=1.08, k=2h/其他=1.75 无持续机制) ⟹ SHELL/GRAM 符号目标与数据相容。
+- census PASS (same-gap +p 主项, (E−p)/(h√p) 有界); h=1 立方根例外 PASS
+  (p≡1(3): E_{1,1}/p≈2, E_{1,k} 行放大; p≡2(3): ≈0)。
+- 结论: 经验定律三层塔 FLAT-LAW (逐h) → PAIR-FLAT (逐对) → 符号壳相消,
+  全部坐在随机模型地板; 绝对值路线死, 符号/谱路线活。
