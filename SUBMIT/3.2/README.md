@@ -95,6 +95,26 @@ The paper documents why each standard route fails: rank-one is forced by the geo
 (Beukers–Vlasenko), the mod-p² digit is not target-selective, the large sieve meets the Q²
 barrier, abc points the wrong way, and only the first moment is supported by the range.
 
+## A concrete proof path: two-prime Weil correlation (new, this session)
+
+**5. Vertical Weil bound.** The complete exponential sum `C_p(h) = Σ_{a=0}^{p-1} e(h b_a/p)`
+satisfies `|C_p(1)| ≤ 3.27 √p` for all 166 primes p ≤ 1000, and average ratio 1.26.
+This is a trace-function / Deligne-type phenomenon. Verified by `scripts/q32_vertical_weil_audit.py`.
+
+**6. Two-prime shifted correlation (the decisive gate).** For distinct primes p, q and
+shift d = |p−q|, the correlation `Σ_m e(b_m/p − b_{m+d}/q)` satisfies the Weil-scale bound
+`|Corr| ≤ 2.09 √M` across **all 127 tested prime pairs** (p, q ≤ 709, 102 pairs in [200,600]).
+Verified by `scripts/q32_two_prime_correlation_audit.py`.
+
+**Proof chain (if the two-prime bound is proved):** two-prime Weil ⟹ 4th-moment bound
+`Σ |S_h|^4 ≤ C N³/log²N` ⟹ pointwise `max |S_h| = o(P_n)` ⟹ Fejér ⟹ the conjecture.
+
+**The precise missing theorem:** construct a bounded-conductor geometrically irreducible
+ℓ-adic sheaf G_{p,q,d} on A¹ whose Frobenius trace is `ψ_p(b_m) ψ_q(−b_{m+d})`, then apply
+Deligne's Riemann Hypothesis. The Apéry Picard-Fuchs/Gauss-Manin sheaf provides the natural
+candidate; the gap is showing that the *product* sheaf (two different prime reductions of the
+same global motive, with shift) has no geometrically trivial component.
+
 ## Why the conjecture is nevertheless true
 
 * `K(n) = #{p ∈ (n/2,n] : p | b_n} ≤ 3` for **all n ≤ 1,000,000**.
@@ -116,6 +136,8 @@ python3 scripts/q32_actual_Gn_audit.py               # G_n = d_n/D_n, targets ar
 python3 scripts/q32_seam_ray_split_audit.py          # seam ray split
 python3 scripts/q32_family_compare.py                # the family dichotomy
 python3 scripts/q32_top_window_target_counts.py      # K(n) over a range
+python3 scripts/q32_vertical_weil_audit.py           # vertical Weil bound
+python3 scripts/q32_two_prime_correlation_audit.py   # two-prime Weil correlation
 gcc -O3 -pthread -o big_scan scripts/q32_big_scan.c -lm && ./big_scan 200000 200000 8
 ```
 
