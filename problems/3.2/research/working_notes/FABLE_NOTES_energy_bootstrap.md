@@ -2291,3 +2291,11 @@ cron 并卷包 (σ½+Q6533+Q6564) 转换 subagent 在做。
 - 在飞: q21(Schur/life4)/q22(局部类型敌审/life2)/q23(Montes/life8)/
   q24(BIGMON/life9)/q25(谱路线/life10)/q6-ATR(life7)/q20(结构敌审/life5)/
   codex crosscorr; 并卷转换 subagent。
+
+## §115 — row 路线终判 + 生产转段 (08-01 晚)
+
+Q6602 (q21): row/Gram 绝对值链终判——(27/4) 定理方向不匹配 (无锚点转移到 M_3
+joint-value 对象); 最优无条件 row 界连 3/2 都复现不了; 命名 p^{3/2} 阻塞项
+(三种语言: 组合/二阶矩/符号收缩)。与 crosscorr 实测 (dossier §20) 双源一致:
+绝对值路线全死, 幸存 = 符号谱 [GRAM-OP] (Wishart/random-frame 相容)。
+生产转段: q27 (经验定律塔+GRAM-OP 小节成稿, life4) + MESO 追加 (agent) 在做。
