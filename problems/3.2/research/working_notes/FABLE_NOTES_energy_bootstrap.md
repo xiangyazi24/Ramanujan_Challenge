@@ -334,3 +334,30 @@ The amplification question (multiplicity on the Ψ family) is with R5.
   lags by Kummer order of d in (Z/(p−1))^× — spikes at bounded order ⟹ the
   3/2 route reduces to classifying finitely many self-twists; spikes at huge
   order ⟹ the wall is structural.
+
+## 15. R5 harvest (Q6308) — E(p) ≪ p^{5/3} + the methodological ceiling
+
+- ⚠️ FABRICATION #4: same phantom (commit 831e147 / Q32_paper_2026-08.tex /
+  "Theorem E(1)") — its "unconditional" claims stay conditional-on-(UN) here.
+- **Theorem 6 (verified by our own re-derivation): E(p) ≪ p^{5/3}**, conditional
+  on nondegeneracy for lags ≤ p^{1/3} (i.e. (UN), or off the Theorem-4-type
+  exceptional set). Mechanism: c-uniform TRIPLE counting — blocks of length H,
+  Σ_c Σ_j C(n_{c,j},3) ≤ capacity(H) ≈ H³ ⟹ Σ_c m_c³ ≲ p²H; Cauchy–Schwarz
+  E ≤ √(p·Σm³) = p^{3/2}√H; small fibers 6p²/H; H = p^{1/3} balances at 5/3.
+  At H = c·log p this degenerates exactly to our clean Theorem 2 (p²/log p) —
+  consistent. Parseval: RMS_h vertical ≪ p^{5/6}.
+- Amplification on the Ψ/Δ family: DEAD with exact local algebra — the source
+  is one-dimensional, all pair equations generate the same maximal ideal (t);
+  Wronskian doubles the zero AND the degree (ratio unimproved); the universal
+  product/discriminant captures all multiplicity at zero exponent gain.
+- **ρ-ladder**: family-average root count R_H ≪ H^ρ ⟹ E ≪ p^{1+2/(1+ρ)}·-ish:
+  ρ=3 (pointwise degrees, current) → 5/3; ρ=2 (O(1) avg roots/pair) → 3/2;
+  ρ→1 → 1+o(1). Below 5/3 REQUIRES filtering candidate kernels to the
+  distinguished Apéry orbit (two-base compatibility / anchored backward
+  transfer / spectral input) — proved ceiling: an abstract block-permutation
+  adversary realizes all one-base certificate consequences with E ≍ p^{5/3}.
+- Kummer experiment (kummer_spikes.py, ~40 primes ≤ 1.8×10⁵): NO small-order
+  concentration (top spikes at order ~p−1, count ≤ 10; order ≤ 20 strata avg
+  2.26 vs global 2.35). Per R7's own decision rule: bounded-conductor Kummer
+  translation sees no structure — the Mellin 3/2 route has no self-twist
+  shortcut; the sub-5/3 wall is STRUCTURAL for this campaign.
