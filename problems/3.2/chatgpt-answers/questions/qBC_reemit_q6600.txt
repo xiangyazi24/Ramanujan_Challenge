@@ -1,0 +1,12 @@
+[P3.2 cron] REISSUE REQUEST — your last answer (the [CRIT-2H] audit, delivered as Q6600) arrived with every display formula STRIPPED and sections 3, 4, 5 entirely missing (known delivery-pipeline bug). Re-emit the COMPLETE answer in delivery-safe form: ALL mathematics inside ```text code fences, ASCII only (no $$, no \[ \], no LaTeX display), inline math also ASCII.
+
+Re-emit in full, with special care for the parts we never received:
+1. Section 0: the exact normalization (q_h definition, C_h reduced critical polynomial, V_h normalization, the reflection identities, the mirror quotient W_h and the even-degree statement s_h = 2 deg-type relation, and the cleaner equivalent target).
+2. Section 1: the two canonical shifted solutions (their defining recurrence and closed forms), the exact cell formula (1.7), the z=0 evaluation (1.8)-(1.9), and the exact derivative formula (1.10) with the harmonic numbers H_n — every one of these identities written out in full ASCII (we will machine-verify them).
+3. Section 2: keep brief (we received the prose): just re-state the universal cell map Phi definition and the [ARCH-CELL-ORDER] residual statement in ASCII.
+4. Section 3 (NEVER RECEIVED): the p-adic/Newton-slope analysis in full (the ell=7 unit statement, the ell=5 digit families, the evenness obstruction, and what "residual squarefreeness or angular components" would mean precisely).
+5. Section 4 (NEVER RECEIVED): the bounded-rank differential pencil (rank 3 pencil / rank 6 X-jet / rank 36 two-point tensor — the exact systems and why the projection to V_h forgets the marks).
+6. Section 5 (NEVER RECEIVED): the [COLL-2H] linear collision-degree bound — full statement and proof/derivation, and how it relates to [CRIT-2H].
+7. Your final (a) least-confident and (b) blind-spot answers.
+
+Pure re-serialization plus the missing sections — no new mathematics needed beyond what you already derived.
