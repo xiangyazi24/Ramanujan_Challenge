@@ -1562,3 +1562,15 @@ double-certified.
   结构残留——与八张死亡证书("已知结构对水平问题零污染", W.2)自洽。
 - 脚本+原始输出入库 research/scripts/(q32_residual_fourier.py,
   residual_fourier_results.txt)。
+
+## §74 (08-01 11:20) 记账去重 (cron 修正, 我复核采纳): §73 谱律 ≡ Test A 能量律
+
+- **cron 对, 已复核**: Parseval ⟹ Σ_v N(v)² = (p−1)²/p + (1/p)Σ_{u≠0}|S_p(u)|²,
+  代 E|S|²=2p 恰得 E_p=3p——§73 谱定律与 cron Test A 能量律是**同一条
+  定律的对偶坐标, 不构成独立双源**, 记账不叠计(修正 §73 的"与 Test A
+  互证"读法)。
+- 真正独立的增量: (a) cron 新测涨落 E_p=3p+O(√p)(θ=0.502 CLT 尺度,
+  1751 素数无离群) ⟺ **频率间方差级相消** Σ_{u≠0}(|S|²−2p)=O(p^{3/2})
+  ——比均值律深一层的新经验事实; (b) 我方 max|S|≈√(2p log p) 极值律
+  =谱侧独有。TE_{5/4} 经验余量确认巨大且稳定(3p vs p^{5/4})。
+- cron AE.5 (61c9daa) 已 pull; σ²=2p / max=√(2p log p) 双方互认引用。
