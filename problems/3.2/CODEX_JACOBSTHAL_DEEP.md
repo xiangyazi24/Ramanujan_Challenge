@@ -653,6 +653,12 @@ Adding the three pieces proves
  \boxed{\quad b_p\equiv5-\frac{14}{3}p^3B_{p-3}\pmod {p^4}.\quad}
 \]
 
+This congruence is also a specialization of Ji-Cai Liu's Theorem 1.1 in
+*An extension of Gauss congruences for Apéry numbers*: in his notation take
+\(A_n^{(r,s,t)}\) with \((r,s,t)=(2,2,0)\), and then \(n=m=1\).  The
+resulting universal Bernoulli correction is \(-14/3\).  Thus the formula has
+both the direct proof above and an independent general-theorem anchor.
+
 The machine check covers all $93$ primes $5\leq p<500$, rather than only
 the previously recorded $27/27$.
 
@@ -706,9 +712,10 @@ The checks are:
   Franel \({}_2F_1\) pullback, $q$-pullback, and Lagrange formula through
   $n=39$; exact one-Pochhammer contradictions.
 - `codex_max_zero_sets.py`: every relevant prime $p<3000$; factor-branch
-  recurrence, reversal sign, exact eight-class quarter table, full zero-set
-  census, discriminant-$-24$ representations, the verified eighth skeleton,
-  and the $p=71$ counterexample to the stronger raw-both-branches reading.
+  recurrence, reversal sign, exact eight-class quarter table, all $219$
+  ordinary double-root cases at (t=1), full zero-set census,
+  discriminant-$-24$ representations, the verified eighth skeleton, and the
+  $p=71$ counterexample to the stronger raw-both-branches reading.
 - `codex_max_convolution_beta.py`: both convolution identities through
   $n=59$; the beta formula for $93$ primes below $500$; $279$ harmonic
   congruences; $1032$ individual interior summand expansions; explicit
@@ -738,6 +745,10 @@ The checks are:
    Congruences*](https://doi.org/10.1007/BF02731955), Chinese Ann. Math. Ser. B
    21 (2000), 33--38, for the general inverse-power/Bernoulli congruences;
    the special cases needed for beta are also derived in Section 5 above.
+6. J.-C. Liu, [*An extension of Gauss congruences for Apéry
+   numbers*](https://arxiv.org/abs/2404.16636), arXiv:2404.16636 (2024),
+   Theorem 1.1.  Its \((r,s,t)=(2,2,0)\), \(n=m=1\) specialization gives
+   the same (b_p\bmod p^4) Bernoulli correction.
 
 ## 8. Final gap ledger
 
