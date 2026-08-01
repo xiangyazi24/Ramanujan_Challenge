@@ -1047,3 +1047,20 @@ double-certified.
   台账三行改 ✗ NEEDS-PASTE; qH 干净未派(择机重发); scratch 监视器在跑。
   恢复计划: tab 修复后按价值序重发 qE→qF→qH。
 - cron 原始五问全收割(Q6322 被抢答, Q6326/Q6343 moot); cron 换弹交接中。
+
+## §47 (08-01) qC/Q6371 收割: Stickelberger 账本 + [GAP-DCM] 正典化 + qD 定理入文
+
+- **qD/Q6372 self-twist 定理**(§46 后收割): 完整分类, conjugate-twist 表={1,δ},
+  order-4 上限(固定归一化后 order-2), Sym² 无扭, 3+1 仅对角。counting lemma 几何
+  前提无条件闭合。已写入 apparition_tower 节+机器验证, proof.tex 142 页绿。
+- **qC/Q6371**: (i) 公式(A) = Q6356 卷积的字符群形式——**非循环性定案**(纯 Jacobi
+  和, 无 A_p; 我方已三源数值验证); (ii) Stickelberger 赋值账本全算: slope-0 块
+  = ρ+1 个单位项, 其和 ≡ b_ρ ≡ b_r (ρ=min(r,p−1−r); 与强反射自洽)——p|b_r 是
+  等 slope 单位项抵消, 无唯一最小值论证可用; (iii) 负审计: Ax–Katz/Adolphson–
+  Sperber/Katz-Mellin/HB–Patterson/Wan 全部不适用(各自控制的对象精确列明);
+  (iv) 正典缺口 [GAP-DCM] 定式: #{χ: ord>(log p)^A, B_p(χ)=0 in F_p} ≪ p^{1−δ},
+  δ>1/4 才超 8p^{3/4}, δ>1/3 才超零纤维 2/3; random-scale 预测 O(1);
+  (v) 同报 circularity warning(与 qH 独立提出一致), F4=0 是跨素数反对齐,
+  单素数 p-adic 定理解释不了。
+- 补发: qE→life5, qF→life4 (ASK_AFFINITY 钉 channel 绕开 life1 黑洞)。
+- Q6379(cron, CFVZ 一手文献审计)落地待 cron 处理。

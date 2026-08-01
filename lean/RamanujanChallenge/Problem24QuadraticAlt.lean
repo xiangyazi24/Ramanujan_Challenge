@@ -3379,6 +3379,65 @@ theorem quadAltW0_mul_g11_tendsto_left :
   unfold H1
   field_simp
 
+/-- The first integration-by-parts summand tends to zero at the left endpoint. -/
+theorem quadAltA11_tendsto_right :
+    Tendsto (fun t : ℝ => W0 t * (H1 t / (1 - t))) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+  -- W0·t → 0 已有(藏在 quadAltW0_mul_g11_tendsto_right 的证明里), 这里独立重建
+  have hW0t : Tendsto (fun t : ℝ => W0 t * t) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+    have hid : Tendsto (fun t : ℝ => t) (𝓝[>] (0:ℝ)) (𝓝 0) :=
+      tendsto_id.mono_left nhdsWithin_le_nhds
+    have hdil : Tendsto (fun t : ℝ => dilog (t/2) * t) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+      have hd0 : ContinuousAt dilog ((fun t : ℝ => t/2) 0) := by
+        simpa using RamanujanChallenge.P26.dilog_hasDerivAt_zero26.continuousAt
+      have hc : ContinuousAt (fun t : ℝ => dilog (t/2)) 0 :=
+        ContinuousAt.comp (f := fun t : ℝ => t/2) (g := dilog) hd0 (by fun_prop)
+      have h1 := hc.tendsto.mono_left (nhdsWithin_le_nhds (a := (0:ℝ)) (s := Set.Ioi 0))
+      simpa [dilog_zero] using h1.mul hid
+    have hlogsq : Tendsto (fun t : ℝ => Real.log (t/2) ^ 2 * t) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+      have hh := ((logSq_mul_self_tendsto.sub
+        (log_mul_self_tendsto.const_mul (2 * Real.log 2))).add
+        (hid.const_mul (Real.log 2 ^ 2)))
+      simp only [sub_zero, add_zero, mul_zero] at hh
+      refine hh.congr' ?_
+      filter_upwards [self_mem_nhdsWithin] with t ht
+      rw [Real.log_div (ne_of_gt ht) (by norm_num)]
+      ring
+    have hh := ((hid.const_mul (Real.pi ^ 2 / 6)).sub (hdil.const_mul 2)).sub hlogsq
+    simp only [mul_zero, sub_zero] at hh
+    refine hh.congr ?_
+    intro t; unfold W0; ring
+  -- H1 t/(t(1-t)) → 1
+  have hq : Tendsto (fun t : ℝ => H1 t / (t * (1 - t))) (𝓝[>] (0:ℝ)) (𝓝 1) := by
+    have hslope : Tendsto (fun t : ℝ => H1 t / t) (𝓝[≠] (0:ℝ)) (𝓝 1) := by
+      have hd : HasDerivAt H1 1 0 := by
+        have hc : HasDerivAt (fun y : ℝ => 1 - y) (-1) 0 := by
+          simpa using (hasDerivAt_const (0:ℝ) (1:ℝ)).sub (hasDerivAt_id (0:ℝ))
+        have hlog : HasDerivAt Real.log (1 / (1 - (0:ℝ))) ((fun y : ℝ => 1 - y) 0) := by
+          norm_num
+          simpa using Real.hasDerivAt_log (by norm_num : (1:ℝ) ≠ 0)
+        have hcomp := HasDerivAt.comp (h := fun y : ℝ => 1 - y) (0:ℝ) hlog hc
+        unfold H1; simpa using hcomp.neg
+      exact slope_tendsto_of_hasDerivAt_zero H1 1 hd (by unfold H1; simp)
+    have hs' : Tendsto (fun t : ℝ => H1 t / t) (𝓝[>] (0:ℝ)) (𝓝 1) :=
+      hslope.mono_left (nhdsWithin_mono _ (fun x hx => ne_of_gt hx))
+    have hinv : Tendsto (fun t : ℝ => (1 - t)⁻¹) (𝓝[>] (0:ℝ)) (𝓝 1) := by
+      have hc : ContinuousAt (fun t : ℝ => (1 - t)⁻¹) 0 := by
+        exact ContinuousAt.inv₀ (by fun_prop) (by norm_num)
+      have h1 := hc.tendsto; norm_num at h1
+      exact h1.mono_left nhdsWithin_le_nhds
+    have := hs'.mul hinv
+    simp only [mul_one] at this
+    refine this.congr' ?_
+    filter_upwards [self_mem_nhdsWithin] with t ht
+    have h0 : t ≠ 0 := ne_of_gt ht
+    field_simp
+  have hmul := hW0t.mul hq
+  simp only [zero_mul] at hmul
+  refine hmul.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with t ht
+  have h0 : t ≠ 0 := ne_of_gt ht
+  field_simp
+
 /-- `I11` via the derivative certificate (Q6047 (6.6) with `g11 = H1²/2`):
 `I11 = ∫₀¹ r(t)·H1(t)²/t dt`. -/
 theorem quadAltI11_eq_integral :

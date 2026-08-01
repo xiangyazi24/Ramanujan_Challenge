@@ -23,11 +23,12 @@ The FAST-RECON outcome is mixed.
    \(t=x(1-8x)/(1+x)\).  No bounded-length compression was found or proved
    impossible.
 4. **[PARTIAL-HORIZONTAL]** Weil gives \(2\sqrt p\) for every generic fiber of
-   the Euler--Kummer lift.  This yields an unconditional \(O(p^{3/2})\) bound
-   for the linear split-cover Mellin sum, and an exact full-character-period
-   two-prime correlation with a genuine power saving.  The latter concerns a
-   complex lift of a split/quadratically-twisted *linear* coefficient, not the
-   zero indicator.
+   the Euler--Kummer lift.  Fiberwise summation first gives \(O(p^{3/2})\) for
+   the linear split-cover Mellin sum; Katz's irreducibility and local
+   pseudoreflection theorem, followed through the degree-three pullback,
+   upgrades this to \(O(p)\).  There is also an exact full-character-period
+   two-prime correlation with a genuine power saving.  These estimates concern
+   complex split/quadratically-twisted *linear* lifts, not zero indicators.
 5. **[NEGATIVE-ZERO-HORIZONTAL]** No new saving follows for the fixed shell
    pair count or \(F_4\).  Additive zero detection exponentiates the value of
    the whole Jacobi/Mellin sum and cannot move the additive character inside
@@ -428,7 +429,7 @@ p=29: branch=tau, all 15 coefficients; Jacobi/Gamma, 2F1 pullback, Mellin invers
 CRT averages: pair and four-prime complete periods factor exactly; pair/four sliding means and additive zero detector VERIFIED
 Apéry Mellin extraction and split quadratic-cover projection: p=13,29, every interior index VERIFIED
 linear Mellin full-period identity: p=13, q=29, gcd(p-1,q-1)=4, period=84, VERIFIED
-split-cover Euler-square two-prime correlation: Weil bound and 4-term DFT collapse VERIFIED
+split-cover Euler/Euler-square two-prime correlations: Weil bounds and 4-term DFT collapses VERIFIED
 nonlinear zero-detector interchange: explicit F_5 counterexample VERIFIED
 zero events over lcm(p-1,q-1): gcd-stratified identity VERIFIED
 ```
@@ -551,10 +552,38 @@ split-cover sum \(\mathscr C_{p,j}^{\tau}\) or
 \]
 
 This is a square-root saving over the raw \(p^2\) terms.  Deligne improves
-(5.7) to \(O(p)\) if the rank-two weight-one sheaf obtained after pushforward
-in \(y\), pullback in \(x\), and Kummer twisting has no geometrically constant
-constituent.  That irreducibility/local-monodromy audit is
-**[GAP-COVER-MONODROMY]**; rank two alone does not prove it.
+(5.7) to \(O(p)\) once the rank-two weight-one sheaf obtained after
+pushforward in \(y\), pullback in \(x\), and Kummer twisting has no
+geometrically constant constituent.  In this case that condition can be
+checked, rather than assumed.
+
+Up to a geometrically constant Gauss normalization, Greene's Euler sum (5.5)
+is Katz's type-\((2,2)\) hypergeometric sheaf with numerator characters
+\((\chi_p^{-1},\chi_p)\) and denominator characters \((\mathbf1,\mathbf1)\).
+The lists are disjoint.  Katz's theorem therefore makes the sheaf
+geometrically irreducible, and its local monodromy at \(z=1\) is a tame
+pseudoreflection.  Its determinant is
+\(\mathbf1/(\chi_p^{-1}\chi_p)=\mathbf1\), so this pseudoreflection is a
+nontrivial unipotent.
+
+Consequently the identity component of the geometric monodromy contains
+\(\mathrm{SL}_2\): an irreducible rank-two algebraic subgroup containing a
+nontrivial unipotent cannot be finite, a torus normalizer, or triangular.  On
+the complement of its ramification, the nonconstant map
+\(z(x)=27x^2/(1-2x)^3\) is finite étale.  Its fundamental group has finite
+index in that of the \(z\)-line, so the Zariski closure after pullback still
+contains the original identity component.  The pullback is therefore
+irreducible; tensoring by any branch/Mellin Kummer character preserves this.
+Thus \(H_c^2=0\), and Deligne gives the unconditional improvement
+
+\[
+ \boxed{|\mathscr C_{p,j}^{\bullet}|\ll p.}
+ \tag{5.7a}
+\]
+
+All omitted boundary terms are finite in number and are \(O(p)\) even by the
+raw one-variable bound, so they are absorbed.  This closes the
+cover-monodromy check; it does not supply descent to the \(t\)-line.
 
 The cover has another exact limitation.  Its reduction is, up to explicitly
 removed boundary points,
@@ -571,6 +600,19 @@ where
 deck-equivariant descent to the \(t\)-line, or an independent construction of
 the nonsplit part.  Equality of the reductions on the two sheets is weaker
 than such a sheaf descent.  This is **[GAP-DESCENT]**.
+
+If that descent is supplied, Deligne has one further precise target.  A
+rank-two weight-one lift \(\mathcal S_p\) makes the lift of (3.5) a Mellin sum
+of \(\mathcal S_p\otimes\mathcal S_p\), hence weight two.  Off geometrically
+constant constituents its complete sum is \(O(p^{3/2})\).  The determinant
+line in
+\(\mathcal S_p\otimes\mathcal S_p=\operatorname{Sym}^2\mathcal S_p\oplus
+\det\mathcal S_p\) gives an explicit exceptional character: if the Mellin
+twist cancels it, a \(p^2\) main term can occur.  Extra exceptional lines would
+require dihedral or finite projective monodromy, which the nontrivial unipotent
+and \(\mathrm{SL}_2\) identity component exclude here.  Thus the determinant
+is the only rank-one constituent.  This classification is about the complex
+lift; it still does not detect \(b_r\equiv0\pmod p\).
 
 ### The partial two-prime power saving that survives
 
@@ -622,6 +664,12 @@ Combining (5.6), the two-sheeted fibers, and (5.11) yields
  \le64Lgpq.}
  \tag{5.12}
 \]
+
+The unsquared rank-two branch lift has the same DFT identity with fiber bound
+\(4\sqrt p\), and therefore the sharper absolute bound
+\(16Lg\sqrt{pq}\).  The third verification script checks the underlying
+linear DFT identity coefficientwise at \(p=13,q=29\); (5.6) supplies the
+archimedean fiber estimate.
 
 The termwise bound for the left side is \(O(Lp^2q^2)\), so (5.12) saves a
 factor \(pq/g\); for \(p,q\asymp N\) this is at least one power of \(N\).
@@ -701,16 +749,15 @@ high-order defining-characteristic Mellin zero-density/dispersion theorem.
 
 ## 6. Final gap ledger
 
+The cover-monodromy nondegeneracy is closed by the type-\((2,2)\)
+hypergeometric argument leading to (5.7a).  The remaining gaps are:
+
 - **[GAP-BGK]** Compress (2.7)--(2.8) to \(O(1)\) Gauss/Jacobi monomials, or
   prove that no such compression exists.  Rank two alone is insufficient.
 - **[GAP-CARTIER]** A special bounded evaluation at a quarter character is not
   excluded.  It would require identifying the reverted local-coefficient
   functional with a controlled Cartier/Frobenius matrix entry; this is extra
   arithmetic, not a consequence of rank two.
-- **[GAP-COVER-MONODROMY]** Prove that the pulled-back rank-two Kummer sheaf in
-  (5.7) has no geometrically constant constituent after the branch/Mellin
-  twists.  This upgrades \(O(p^{3/2})\) to \(O(p)\); the displayed formula
-  alone does not.
 - **[GAP-DESCENT]** Construct a deck-equivariant cyclotomic/sheaf descent from
   the quadratic \(x\)-cover to the \(t\)-line.  Without it, the rigorous trace
   bound applies to the split-weighted combination (5.8), not the full branch
@@ -734,6 +781,13 @@ high-order defining-characteristic Mellin zero-density/dispersion theorem.
 - J. Greene, [*Hypergeometric functions over finite
   fields*](https://www.ams.org/tran/1987-301-01/S0002-9947-1987-0879564-8/S0002-9947-1987-0879564-8.pdf),
   *Transactions of the AMS* 301 (1987), 77--101.
+- N. Katz, [*Exponential Sums and Differential
+  Equations*](https://books.google.com/books/about/Exponential_Sums_and_Differential_Equati.html?id=eRuTokPwUa4C),
+  Annals of Mathematics Studies 124, Princeton University Press (1990),
+  Section 8.4; see also his explicit summary of irreducibility and local
+  monodromy in [*G2 and hypergeometric
+  sheaves*](https://web.math.princeton.edu/~nmk/g2hyper62finalcorrected.pdf),
+  pp. 3--4.
 - P. Deligne, [*La conjecture de Weil:
   II*](https://numdam.org/articles/10.1007/BF02684780/), *Publications
   Mathématiques de l'IHÉS* 52 (1980), 137--252.
