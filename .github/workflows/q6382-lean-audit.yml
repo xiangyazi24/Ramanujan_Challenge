@@ -1,0 +1,47 @@
+name: Q6382 Lean 4.29 audit
+
+on:
+  push:
+    branches: [q6382-audit-8efeab4d]
+    paths:
+      - '.github/workflows/q6382-lean-audit.yml'
+      - 'lean/RamanujanChallenge/Q6382Scratch.lean'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install pinned Lean toolchain
+        shell: bash
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch Mathlib cache and compile scratch
+        shell: bash
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          set +e
+          cd lean
+          lake exe cache get 2>&1 | tee ../q6382-cache.out
+          cache_status=${PIPESTATUS[0]}
+          lake build RamanujanChallenge.Q6382Scratch 2>&1 | tee ../q6382-build.out
+          build_status=${PIPESTATUS[0]}
+          cd ..
+          printf 'cache_status=%s\nbuild_status=%s\n' "$cache_status" "$build_status" | tee q6382-build.status
+          exit 0
+      - name: Persist audit output
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout q6382-audit-8efeab4d
+          git add q6382-cache.out q6382-build.out q6382-build.status
+          git commit -m 'Record Q6382 Lean 4.29 audit output' || exit 0
+          git push origin HEAD:q6382-audit-8efeab4d
