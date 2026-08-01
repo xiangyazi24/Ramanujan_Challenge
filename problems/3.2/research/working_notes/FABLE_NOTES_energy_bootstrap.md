@@ -1064,3 +1064,28 @@ double-certified.
   单素数 p-adic 定理解释不了。
 - 补发: qE→life5, qF→life4 (ASK_AFFINITY 钉 channel 绕开 life1 黑洞)。
 - Q6379(cron, CFVZ 一手文献审计)落地待 cron 处理。
+
+## §48 (08-01) 大汇聚: 五方审计同点 + codex 双份交货 + Phase-0 裁决
+
+- **qA/Q6369 (GAP-CARTIER 构造)**: 显式 Hesse 秩-2 源 + 反演=固定亏格-3 覆盖 +
+  两个对合的精确刻画 + 分支 Frobenius 恒等式 (Lem 4.1/4.2 split/nonsplit)。
+  **No-go 定理**: y²=q(t)、四次反演曲线、反射商——全部不是四分点系数的 HW 矩阵元。
+  但未证非 motivic; 2A 因子与有界导手几何相容。缺口 = [GAP-1] 局部 Cartier ↔
+  全局 crystalline/overconvergent Frobenius 认同。已 bank。
+- **codex-fm(high) 交货** (b3a9ce2, 515 行): Franel 周期 = 显式 toric 簇周期
+  [VERIFIED-0.2]; 我机复跑脚本三行全绿(Dwork 分解到 4p−1 阶 8 素数, toric
+  Hasse 同余 74 纤维, pushforward/Mellin 143 对)。[NEGATIVE-PAIR] 固定层对在
+  Grothendieck 群中冗余; [NEGATIVE-KATZ-p] Katz Mellin 只管纯 ℓ-adic 值;
+  [GAP-1..5] 其中 GAP-1 = 源层面算术比较——与 qA 的 [GAP-1] 同一。
+- **Q6377 (cron, Franel-Mellin sheaf 审计)**: 同判——type mismatch (F_p 值 vs
+  Q̄_ℓ 值) 三重障碍, CFVZ 不供给 ℓ-adic 实现。
+- **汇聚结论(五源: Q6349/Q6371/Q6369/codex-fm/Q6377)**: 有界对象在 F_p 点函数
+  层面完全成立且全部机器验证; 唯一缺口两层——(a) 把 F_p 函数提升为有界导手
+  crystalline/ℓ-adic 源对象 [GAP-CARTIER≡GAP-1], (b) defining-characteristic
+  零密度 [GAP-DCM]。
+- **codex-hgk(max) 新增** (6dbb336): 横向 power-saving——对 tensor-square
+  Deligne 基线 p^{3/2}, 全周期增益 √(pq)/g (g=gcd(p−1,q−1)), g=o(√pq) 时
+  非平凡; 行列式线例外模式已分类。**首个非平凡两素数省** [待我方复验]。
+- **Phase-0 裁决送出**: X^{2/3} 定理 = 例外集计数(F₄ 平凡界过 Markov), 非全局
+  M₂; GARQI-k2 需 α<1/2 (接口判据一致), 无捷径。
+- life1 连第五次吐陈旧片段(Q6396/qH), qH 已钉 life2 重发(qH2)。

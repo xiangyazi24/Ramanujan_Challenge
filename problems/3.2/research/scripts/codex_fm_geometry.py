@@ -77,6 +77,37 @@ def check_cover_discriminant() -> None:
     print("VERIFIED cover discriminant q(t)=t^2-34t+1 and its square pullback")
 
 
+def check_cfvz_rational_pullback() -> None:
+    """Check the rational identity after clearing its fixed denominator.
+
+    Lucas gives A_p(phi(x))=(1+x)^(1-p) H_p(x)^2.  Clearing the
+    denominator turns this into a polynomial identity of degree at most
+    2p-2, so the check is not restricted to F_p-rational evaluations.
+    """
+    for prime in [5, 7, 11, 13, 17, 19, 23, 29, 37]:
+        hp = [franel(n) % prime for n in range(prime)]
+        ap = [apery(n) % prime for n in range(prime)]
+        left = [0] * (2 * prime - 1)
+        for n, a_value in enumerate(ap):
+            for j in range(n + 1):
+                first = comb(n, j) * pow(-8, j, prime)
+                for k in range(prime - n):
+                    degree = n + j + k
+                    left[degree] = (
+                        left[degree]
+                        + a_value * first * comb(prime - 1 - n, k)
+                    ) % prime
+        right = [0] * (2 * prime - 1)
+        for i, left_value in enumerate(hp):
+            for j, right_value in enumerate(hp):
+                right[i + j] = (right[i + j] + left_value * right_value) % prime
+        assert left == right
+    print(
+        "VERIFIED A_p(phi)=(1+x)^(1-p)H_p^2 in F_p(x) "
+        "for p=5,7,11,13,17,19,23,29,37"
+    )
+
+
 def check_lucas_dwork() -> None:
     for prime in [5, 7, 11, 13, 17, 19, 29, 37]:
         coefficients = [franel(n) % prime for n in range(4 * prime)]
@@ -154,6 +185,7 @@ def main() -> None:
     check_characteristic_zero_pullback()
     check_apery_laurent_model()
     check_cover_discriminant()
+    check_cfvz_rational_pullback()
     check_lucas_dwork()
     check_toric_hasse_point_count()
     check_pushforward_and_mellin()

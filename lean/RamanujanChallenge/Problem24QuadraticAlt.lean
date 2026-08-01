@@ -3438,6 +3438,200 @@ theorem quadAltA11_tendsto_right :
   have h0 : t ≠ 0 := ne_of_gt ht
   field_simp
 
+/-- The first summand in the `I11` integration-by-parts derivative is
+integrable.  Near one it is dominated using only the first-order quotient
+`W0 t / (t - 1)`. -/
+theorem quadAltA11_intervalIntegrable : IntervalIntegrable
+    (fun y : ℝ => W0 y * (H1 y / (1 - y))) MeasureTheory.volume 0 1 := by
+  let A : ℝ → ℝ := fun y => W0 y * (H1 y / (1 - y))
+  have hAcont : ContinuousOn A (Set.Ioo 0 1) := by
+    intro y hy
+    exact ((quadAltW0_hasDerivAt hy.1 (by linarith [hy.2])).continuousAt.mul
+      ((quadAltH1_continuousAt hy.2).div (by fun_prop)
+        (sub_ne_zero.mpr (ne_of_gt hy.2)))).continuousWithinAt
+  have hAleft : ContinuousOn A (Set.Ioo 0 (3 / 4 : ℝ)) :=
+    hAcont.mono (by intro y hy; exact ⟨hy.1, by linarith [hy.2]⟩)
+  have hAmid : Tendsto A (𝓝[<] (3 / 4 : ℝ)) (𝓝 (A (3 / 4))) := by
+    have hAt : ContinuousAt A (3 / 4 : ℝ) :=
+      (hAcont (3 / 4) (by norm_num)).continuousAt
+        (Ioo_mem_nhds (by norm_num) (by norm_num))
+    exact hAt.tendsto.mono_left nhdsWithin_le_nhds
+  let Aleft : ℝ → ℝ := extendFrom (Set.Ioo 0 (3 / 4 : ℝ)) A
+  have hAleft_cont : ContinuousOn Aleft (Set.Icc 0 (3 / 4 : ℝ)) := by
+    exact continuousOn_Icc_extendFrom_Ioo hAleft quadAltA11_tendsto_right hAmid
+  obtain ⟨C0, hC0⟩ := isCompact_Icc.exists_bound_of_continuousOn hAleft_cont
+  let q : ℝ → ℝ := fun y => W0 y / (y - 1)
+  have hqcont : ContinuousOn q (Set.Ioo (1 / 2 : ℝ) 1) := by
+    intro y hy
+    have hW : ContinuousAt W0 y :=
+      (quadAltW0_hasDerivAt (by linarith [hy.1]) (by linarith [hy.2])).continuousAt
+    exact (hW.div (by fun_prop) (sub_ne_zero.mpr (ne_of_lt hy.2))).continuousWithinAt
+  have hqmid : Tendsto q (𝓝[>] (1 / 2 : ℝ)) (𝓝 (q (1 / 2))) := by
+    have hqt : ContinuousAt q (1 / 2 : ℝ) := by
+      dsimp [q]
+      have hW : ContinuousAt W0 (1 / 2 : ℝ) :=
+        (quadAltW0_hasDerivAt (by norm_num) (by norm_num)).continuousAt
+      exact hW.div (by fun_prop) (by norm_num)
+    exact hqt.tendsto.mono_left nhdsWithin_le_nhds
+  have hqone : Tendsto q (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    exact quadAltW0_slope_tendsto.mono_left
+      (nhdsWithin_mono _ (fun y hy => ne_of_lt hy))
+  let qright : ℝ → ℝ := extendFrom (Set.Ioo (1 / 2 : ℝ) 1) q
+  have hqright_cont : ContinuousOn qright (Set.Icc (1 / 2 : ℝ) 1) := by
+    exact continuousOn_Icc_extendFrom_Ioo hqcont hqmid hqone
+  obtain ⟨C1, hC1⟩ := isCompact_Icc.exists_bound_of_continuousOn hqright_cont
+  have hH1 : IntervalIntegrable H1 MeasureTheory.volume 0 1 := by
+    have hlog : IntervalIntegrable (fun y : ℝ => Real.log (1 - y))
+        MeasureTheory.volume 0 1 := by
+      simpa using ((intervalIntegral.intervalIntegrable_log' :
+        IntervalIntegrable Real.log MeasureTheory.volume 0 1).comp_sub_left 1).symm
+    simpa [H1] using hlog.neg
+  let C : ℝ := max |C0| |C1|
+  have hC0C : |C0| ≤ C := le_max_left _ _
+  have hC1C : |C1| ≤ C := le_max_right _ _
+  have hCnonneg : 0 ≤ C := (abs_nonneg C0).trans hC0C
+  let g : ℝ → ℝ := fun y => C * (1 + ‖H1 y‖)
+  have hg : IntervalIntegrable g MeasureTheory.volume 0 1 := by
+    exact (intervalIntegrable_const.add hH1.norm).const_mul C
+  apply intervalIntegrable_of_continuousOn_Ioo_of_le (by norm_num) hAcont hg
+  intro y hy
+  by_cases hyl : y < 3 / 4
+  · have hyleft : y ∈ Set.Ioo (0 : ℝ) (3 / 4) := ⟨hy.1, hyl⟩
+    have heq : Aleft y = A y := extendFrom_extends hAleft y hyleft
+    calc
+      ‖A y‖ = ‖Aleft y‖ := by rw [heq]
+      _ ≤ C0 := hC0 y ⟨hy.1.le, hyl.le⟩
+      _ ≤ |C0| := le_abs_self C0
+      _ ≤ C := hC0C
+      _ ≤ C * (1 + ‖H1 y‖) := by
+        have hfac : 1 ≤ 1 + ‖H1 y‖ := le_add_of_nonneg_right (norm_nonneg _)
+        simpa using (mul_le_mul_of_nonneg_left hfac hCnonneg)
+  · have hyr : (1 / 2 : ℝ) < y := by linarith
+    have hyright : y ∈ Set.Ioo (1 / 2 : ℝ) 1 := ⟨hyr, hy.2⟩
+    have heq : qright y = q y := extendFrom_extends hqcont y hyright
+    have hqbound : ‖q y‖ ≤ |C1| := by
+      calc
+        ‖q y‖ = ‖qright y‖ := by rw [heq]
+        _ ≤ C1 := hC1 y ⟨hyr.le, hy.2.le⟩
+        _ ≤ |C1| := le_abs_self C1
+    have hnorm : ‖A y‖ = ‖q y‖ * ‖H1 y‖ := by
+      dsimp [A, q]
+      rw [Real.norm_eq_abs, abs_mul, abs_div, Real.norm_eq_abs, abs_div,
+        Real.norm_eq_abs, abs_sub_comm y 1]
+      ring
+    calc
+      ‖A y‖ = ‖q y‖ * ‖H1 y‖ := hnorm
+      _ ≤ |C1| * ‖H1 y‖ := mul_le_mul_of_nonneg_right hqbound (norm_nonneg _)
+      _ ≤ C * ‖H1 y‖ := mul_le_mul_of_nonneg_right hC1C (norm_nonneg _)
+      _ ≤ C * (1 + ‖H1 y‖) := by
+        exact mul_le_mul_of_nonneg_left (le_add_of_nonneg_left (by norm_num)) hCnonneg
+
+/-- The second summand in the `I11` integration-by-parts derivative is
+integrable.  Its endpoint limits use `t * log t → 0` at zero and the simple
+zero of `quadAltR` at one; a single log-square majorant then works globally. -/
+theorem quadAltB11_intervalIntegrable : IntervalIntegrable
+    (fun y : ℝ => -2 * (quadAltR y / y) * (H1 y ^ 2 / 2))
+    MeasureTheory.volume 0 1 := by
+  let g11 : ℝ → ℝ := fun t => H1 t ^ 2 / 2
+  let B : ℝ → ℝ := fun y => -2 * (quadAltR y / y) * g11 y
+  have hBcont : ContinuousOn B (Set.Ioo 0 1) := by
+    intro y hy
+    have hratio : ContinuousAt (fun z : ℝ => z / (2 - z)) y :=
+      continuousAt_id.div (by fun_prop) (sub_ne_zero.mpr (by linarith [hy.2]))
+    have hR : ContinuousAt quadAltR y := by
+      unfold quadAltR
+      exact hratio.log (div_ne_zero (ne_of_gt hy.1)
+        (sub_ne_zero.mpr (by linarith [hy.2])))
+    have hg : ContinuousAt g11 y := by
+      dsimp [g11]
+      fun_prop
+    exact ((continuousAt_const.mul
+      (hR.div continuousAt_id (ne_of_gt hy.1))).mul hg).continuousWithinAt
+  have hB0 : Tendsto B (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    have hid : Tendsto (fun y : ℝ => y) (𝓝[>] (0 : ℝ)) (𝓝 0) :=
+      tendsto_id.mono_left nhdsWithin_le_nhds
+    have hlogden : Tendsto (fun y : ℝ => Real.log (2 - y))
+        (𝓝[>] (0 : ℝ)) (𝓝 (Real.log 2)) := by
+      have hc : ContinuousAt (fun y : ℝ => Real.log (2 - y)) 0 := by
+        exact (show ContinuousAt (fun y : ℝ => 2 - y) 0 by fun_prop).log (by norm_num)
+      simpa using hc.tendsto.mono_left nhdsWithin_le_nhds
+    have hRt : Tendsto (fun y : ℝ => quadAltR y * y)
+        (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+      have h := log_mul_self_tendsto.sub (hlogden.mul hid)
+      simp only [mul_zero, sub_zero] at h
+      refine h.congr' ?_
+      filter_upwards [self_mem_nhdsWithin,
+        (eventually_lt_nhds (show (0 : ℝ) < 2 by norm_num)).filter_mono
+          nhdsWithin_le_nhds] with y hy hy2
+      unfold quadAltR
+      rw [Real.log_div (ne_of_gt hy) (sub_ne_zero.mpr (ne_of_lt hy2))]
+    have h := (hRt.mul (quadAltH1_div_self_tendsto_zero_right.pow 2)).neg
+    simp only [zero_mul, neg_zero] at h
+    refine h.congr' ?_
+    filter_upwards [self_mem_nhdsWithin] with y hy
+    have hy0 : y ≠ 0 := ne_of_gt hy
+    dsimp [B, g11]
+    field_simp [hy0]
+    ring
+  have hRslope : Tendsto (fun y : ℝ => quadAltR y / (y - 1))
+      (𝓝[<] (1 : ℝ)) (𝓝 2) := by
+    have hden : HasDerivAt (fun y : ℝ => 2 - y) (-1) 1 := by
+      simpa using (hasDerivAt_const (1 : ℝ) 2).sub (hasDerivAt_id (1 : ℝ))
+    have hmob : HasDerivAt (fun y : ℝ => y / (2 - y)) 2 1 := by
+      convert (hasDerivAt_id (1 : ℝ)).div hden (by norm_num) using 1 <;> norm_num
+    have hlog : HasDerivAt quadAltR 2 1 := by
+      unfold quadAltR
+      have hlogAt : HasDerivAt Real.log 1 ((fun y : ℝ => y / (2 - y)) 1) := by
+        convert Real.hasDerivAt_log (by norm_num : (1 : ℝ) ≠ 0) using 1 <;>
+          norm_num [div_eq_mul_inv]
+      have h := HasDerivAt.comp (h := fun y : ℝ => y / (2 - y)) 1 hlogAt hmob
+      convert h using 1 <;> norm_num
+    have hR1 : quadAltR 1 = 0 := by unfold quadAltR; norm_num
+    exact (slope_tendsto_of_hasDerivAt_eq_zero quadAltR 1 2 hlog hR1).mono_left
+      (nhdsWithin_mono _ (fun y hy => ne_of_lt hy))
+  have hHsq : Tendsto (fun y : ℝ => (1 - y) * H1 y ^ 2)
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    simpa [H1, mul_comm] using oneSub_logSq_tendsto
+  have hinv : Tendsto (fun y : ℝ => y⁻¹) (𝓝[<] (1 : ℝ)) (𝓝 1) := by
+    have hc : ContinuousAt (fun y : ℝ => y⁻¹) 1 := continuousAt_id.inv₀ (by norm_num)
+    simpa using hc.tendsto.mono_left nhdsWithin_le_nhds
+  have hB1 : Tendsto B (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    have h := (hRslope.mul hHsq).mul hinv
+    simp only [mul_zero, zero_mul] at h
+    refine h.congr' ?_
+    filter_upwards [self_mem_nhdsWithin,
+      (eventually_gt_nhds (show (0 : ℝ) < 1 by norm_num)).filter_mono
+        nhdsWithin_le_nhds] with y hy1 hy0
+    have hyne : y ≠ 0 := ne_of_gt hy0
+    have hy1ne : y - 1 ≠ 0 := ne_of_lt (sub_neg.mpr hy1)
+    dsimp [B, g11]
+    field_simp [hyne, hy1ne]
+    ring
+  let Bext : ℝ → ℝ := extendFrom (Set.Ioo 0 1) B
+  have hBext_cont : ContinuousOn Bext (Set.Icc 0 1) := by
+    exact continuousOn_Icc_extendFrom_Ioo hBcont hB0 hB1
+  obtain ⟨C, hC⟩ := isCompact_Icc.exists_bound_of_continuousOn hBext_cont
+  have hOneSubLogSq : IntervalIntegrable (fun y : ℝ => Real.log (1 - y) ^ 2)
+      MeasureTheory.volume 0 1 := by
+    simpa using (intervalIntegrable_logSq.comp_sub_left 1).symm
+  let g : ℝ → ℝ := fun y => |C| *
+    (1 + Real.log y ^ 2 + Real.log (1 - y) ^ 2)
+  have hg : IntervalIntegrable g MeasureTheory.volume 0 1 := by
+    exact ((intervalIntegrable_const.add intervalIntegrable_logSq).add
+      hOneSubLogSq).const_mul |C|
+  have hBint : IntervalIntegrable B MeasureTheory.volume 0 1 := by
+    apply intervalIntegrable_of_continuousOn_Ioo_of_le (by norm_num) hBcont hg
+    intro y hy
+    have heq : Bext y = B y := extendFrom_extends hBcont y hy
+    calc
+      ‖B y‖ = ‖Bext y‖ := by rw [heq]
+      _ ≤ C := hC y ⟨hy.1.le, hy.2.le⟩
+      _ ≤ |C| := le_abs_self C
+      _ ≤ |C| * (1 + Real.log y ^ 2 + Real.log (1 - y) ^ 2) := by
+        have hfac : 1 ≤ 1 + Real.log y ^ 2 + Real.log (1 - y) ^ 2 := by positivity
+        simpa using mul_le_mul_of_nonneg_left hfac (abs_nonneg C)
+  simpa [B, g11] using hBint
+
 /-- `I11` via the derivative certificate (Q6047 (6.6) with `g11 = H1²/2`):
 `I11 = ∫₀¹ r(t)·H1(t)²/t dt`. -/
 theorem quadAltI11_eq_integral :
@@ -3485,10 +3679,15 @@ theorem quadAltI11_eq_integral :
     unfold g11; exact quadAltW0_mul_g11_tendsto_right
   have hlim1 : Tendsto (fun y : ℝ => W0 y * g11 y) (𝓝[<] (1:ℝ)) (𝓝 0) := by
     unfold g11; exact quadAltW0_mul_g11_tendsto_left
+  have hA : IntervalIntegrable (fun y : ℝ => W0 y * (H1 y / (1 - y)))
+      MeasureTheory.volume 0 1 := quadAltA11_intervalIntegrable
+  have hB : IntervalIntegrable (fun y : ℝ => -2 * (quadAltR y / y) * g11 y)
+      MeasureTheory.volume 0 1 := by
+    simpa [g11] using quadAltB11_intervalIntegrable
   have hint : IntervalIntegrable
       (fun y : ℝ => (W0 y * (H1 y / (1 - y))) + (-2 * (quadAltR y / y) * g11 y))
       MeasureTheory.volume 0 1 := by
-    sorry  -- TODO-stub
+    simpa using hA.add hB
   have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
     (a := 0) (b := 1)
     (f := fun y : ℝ => W0 y * g11 y)
@@ -3498,10 +3697,6 @@ theorem quadAltI11_eq_integral :
   -- ∫(W0·H1/(1−t)) + ∫(−2r/t·g11) = 0 → ∫W0·H1/(1−t) = ∫ 2r/t·g11 = ∫ r·H1²/t
   have hsplit : (∫ y : ℝ in (0 : ℝ)..1, (W0 y * (H1 y / (1 - y))) + (-2 * (quadAltR y / y) * g11 y)) = 0 := by
     exact hFTC
-  have hA : IntervalIntegrable (fun y : ℝ => W0 y * (H1 y / (1 - y))) MeasureTheory.volume 0 1 := by
-    sorry  -- TODO-stub
-  have hB : IntervalIntegrable (fun y : ℝ => -2 * (quadAltR y / y) * g11 y) MeasureTheory.volume 0 1 := by
-    sorry  -- TODO-stub
   have hsum := intervalIntegral.integral_add (μ := MeasureTheory.volume)
     (a := (0 : ℝ)) (b := 1)
     (f := fun y : ℝ => W0 y * (H1 y / (1 - y)))

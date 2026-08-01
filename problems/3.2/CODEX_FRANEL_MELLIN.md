@@ -65,6 +65,11 @@ The ledger conclusions are:
 - **[GAP-3]** Residual anti-concentration for the reductions of the Mellin
   traces is the actual missing zero-density input.  It is not a theorem in the
   cited Katz machinery.
+- **[GAP-4]** The first Hasse--Witt congruence has not been upgraded here to a
+  literal unit-root formula with a chosen Frobenius lift and higher Dwork
+  limit.
+- **[GAP-5]** Katz's extension-field equidistribution has not been replaced by
+  a uniform horizontal theorem for the varying-prime family in this problem.
 
 ## 1. Sheaf-theoretic normalization
 
@@ -114,10 +119,25 @@ Lucas--Dwork congruence
  h(x)=H_p(x)h(x)^p\quad\text{in }\mathbf F_p[[x]].              \tag{1.2}
 \]
 
-**[GAP-UNIT]** Equation (1.2) is the first Hasse--Witt congruence.  A literal
+**[GAP-4]** Equation (1.2) is the first Hasse--Witt congruence.  A literal
 unit-root formula requires a chosen Frobenius lift and the higher Dwork limit;
 it is not correct to call `H_p(x)` itself the `p`-adic unit root.  On the
 ordinary locus `H_p(x) != 0`, it is the first approximation to that unit root.
+
+Combining the two Lucas identities with
+`f_alpha(phi(x))=(1+x)h(x)^2` gives the stronger rational-function identity
+
+\[
+ A_p(\phi(x))=(1+x)^{1-p}H_p(x)^2\quad\text{in }\mathbf F_p(x). \tag{1.2a}
+\]
+
+The exponent `1-p` is forced by direct substitution and is checked after
+clearing denominators for nine primes.  (The display `(1+x)^{p-1}H^2` in the
+checked CFVZ source has the exponent sign reversed.)  For
+`x in F_p \ {-1}`, Fermat reduces (1.2a) to the inherited pointwise identity.
+It does not do so over arbitrary finite extensions, so that base-field
+identity is not being used here as evidence for an isomorphism of sheaves at
+all closed points; the geometric comparison remains **[GAP-1]**.
 
 Define the rank-six pushforward
 
@@ -147,6 +167,10 @@ A fixed toric model for the Apéry period is obtained from
  =\frac{(u+v)(w+1)(u+v+w)(v+w+1)}{uvw},\qquad
  A_n=\operatorname{CT}\Lambda_A^n.
 \]
+
+This constant-term realization is among the sporadic Apéry-like models proved
+by Gorodetsky; the script checks the displayed Laurent polynomial directly for
+`0 <= n <= 6` as a guard against convention changes.
 
 After compactification/resolution, `1-t Lambda_A=0` is the usual Apéry K3
 variation.  Denote its rank-three transcendental local system by `mathcal K`.
@@ -390,7 +414,8 @@ There is also a quantifier mismatch: the main theorem is an extension-field
 limit over a fixed base field.  The set requested here is the one field
 `E=F_p`, all `p-1` characters, followed implicitly by `p -> infinity`.
 A compatible cross-prime family plus a uniform horizontal theorem would be
-needed even for the complex version of that limit.
+needed even for the complex version of that limit.  No such theorem is
+supplied by the checked sources; this is **[GAP-5]**.
 
 ### 3.2 The defining-characteristic caveat
 
@@ -458,6 +483,7 @@ $ python3 problems/3.2/research/scripts/codex_fm_geometry.py
 VERIFIED characteristic-zero pullback through O(x^24)
 VERIFIED CT Lambda_A^n=A_n for 0<=n<=6
 VERIFIED cover discriminant q(t)=t^2-34t+1 and its square pullback
+VERIFIED A_p(phi)=(1+x)^(1-p)H_p^2 in F_p(x) for p=5,7,11,13,17,19,23,29,37
 VERIFIED h(x)=H_p(x)h(x)^p mod p through degree 4p-1 for p=5,7,11,13,17,19,29,37
 VERIFIED Franel toric Hasse/point-count congruence at 74 smooth fibers
 VERIFIED pushforward=(1+chi(q))A_p, virtual cancellation=-A_p, and Mellin=b_r for 143 (p,r) pairs
@@ -505,6 +531,10 @@ residual equidistribution theorem.
    [*On the Picard-Fuchs Equation and the Formal Brauer Group of Certain Elliptic K3-Surfaces*](https://doi.org/10.1007/BF01455990),
    for the Apéry Picard--Fuchs/K3 and formal-Brauer setting.  It is not used
    here as a citation for the unverified all-stalk isomorphism in **[GAP-1]**.
+5. O. Gorodetsky,
+   [*New representations for all sporadic Apéry-like sequences, with applications to congruences*](https://doi.org/10.1080/10586458.2021.1982080),
+   for the exact constant-term representations of the sporadic Apéry-like
+   sequences, including the Laurent-polynomial model used for `Lambda_A`.
 
 ## Least-confident step
 
