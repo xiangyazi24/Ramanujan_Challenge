@@ -277,3 +277,31 @@ The amplification question (multiplicity on the Ψ family) is with R5.
   (exceptional-set p^{3/4}, G-integers now tiny closed forms); (UN) ⟹ all-p
   N(c) ≤ 8p^{3/4} incl. c=0 via the block/Hölder count — awaiting R4b's
   self-contained proof of (UN) for machine verification.
+
+## 13. R8 harvest (Q6309) — downstream cashout audit + SECOND fabrication flag
+
+- ⚠️ FABRICATION #2: R8 cited commits eda609dd / 732d85a1 / 2336ac53 as repo
+  states — ALL THREE NONEXISTENT. Same consultant pattern as §11. All future
+  prompts must state "no repository citations — we check". Its MATH, however,
+  verifies independently:
+- E(p) enters the gcd chain ONLY through |Z_p| ≤ √E(p). So E ≤ p^{7/4} gives
+  |Z_p| ≤ p^{7/8} — WEAKER than the known zero-specific |Z_p| ≤ 3p^{2/3}.
+  **The session's energy theorems buy zero downstream improvement for P3.2.**
+  Their role: independent local value-distribution package.
+- Even E = p^{1+o(1)} (the conjectural truth) gives only an N^{1/2+o(1)}
+  exceptional set, NOT pointwise: the singleton-alignment countermodel (which
+  IS genuine repo content — HANDOFF_P32: "Z_p = {N−p} ... H(N) = P_N") shows
+  no per-prime vertical bound can cross the pointwise wall. Cross-prime k-th
+  moment budget: with |Z_p| ≤ p^α, need M_k with k > 1/(1−α): α=1/2 ⟹ 3rd
+  moment; α=2/3 ⟹ 4th; α=7/8 ⟹ 9th. The wall is horizontal, full stop.
+- ⚠️ INTERNAL DISCREPANCY (for dm/DS to adjudicate): Q3.2_density_theorem.md
+  §"E(p)=O(p^{1+o(1)}) suffices for mass X^{3/2} = URE = pointwise 3.2"
+  CONTRADICTS the countermodel unless URE carries extra non-vertical input.
+  One of the two claims must be corrected in the corpus.
+- Bookkeeping gems kept: weighted master sum removes a log (avg log G_n ≪
+  N^{2/3}, not N^{2/3}log N); d_n normalization (lcm³ vs lcm) needs unifying;
+  crude pointwise constant 6 vs 3 depends on which reduction is authoritative.
+- Recommended submission skeleton (adopted): Thm A (master sandwich) → Thm B
+  (density-one, X^{2/3+o(1)} exceptional) → Thm C (this session's local
+  package, explicitly labeled downstream-neutral) → Prop D (vertical-energy
+  limitation warning) → Interface E (cross-prime moment criterion).
