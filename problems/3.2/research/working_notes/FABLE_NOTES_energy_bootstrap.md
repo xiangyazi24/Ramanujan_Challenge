@@ -1115,3 +1115,23 @@ double-certified.
   M(r) ∈ Z[ζ_{p−1}] 纯权重对象。type-mismatch 障碍对椭圆平方部分实质消解
   (残余=账面比较+权重/gauge 簿记)。
 - 新一问 qI 派出: Lang–Trotter for Mellin values(见下)。
+
+## §51 (08-01) Q6394 descent 定理 — 与 codex-fm 双源闭合
+
+- **定理(二次伴随=有界导手 Mellin 对象)**: 存在 G_m 上整相容秩-3 系统
+  𝒢₂=𝒜₋, 绝对导手 ≤ 11, T(r) = 其 Mellin 迹 mod p (1≤r≤p−2)。与 codex-fm
+  §49 的 𝒢_T (cond=11) **独立双源一致**——ChatGPT R2 构造路线 vs codex 层
+  规范化路线, 同一数字。
+- 描述链: Beauville-IV 椭圆 (Q6380) → Sym² → 对合 descent 𝒜₊(不变)/𝒜₋(反
+  不变); 判别式三位一体(cron q15 同判): 分歧判别式 = χ₂ 修正宗量 = Apéry
+  奇点二次式 t²−34t+1。
+- **最强非循环陈述** (Q6394 §6): b_r = 固定秩-3 有界导手层的二维 Mellin
+  上同调迹的 defining-characteristic 归约。
+- 残余: [GAP-1: 显式 isogeny 公式]——标准模参数化对应, 未打印 Weierstrass
+  模型与有理映射; 单值性结论不依赖该显示。可机械补。
+- rank 簿记裁决(cron q15 疑问(i), 无需 codex): Franel 椭圆系统 rank 2
+  (二阶递推, Q6380 椭圆定案); Apéry F 满足三阶 ODE = Sym²(D_τ)(我们已验证
+  τ 满足二阶 D_τ) ⟹ rank 3 归于 Apéry/伴随对象; "F=₃F₂(1/3,2/3,1)"字面
+  超几何识别 [SUSPECT](Apéry ODE 四奇点非超几何), 留 codex 按 2510.23298 核。
+- 全图终态: 唯一实质前沿 = [GAP-DCM] 的 Lang–Trotter 形式 #{r: 𝔭|M(r)}
+  (M(r) = 真 Weil 数 Mellin 值)。qI 派出攻此。
