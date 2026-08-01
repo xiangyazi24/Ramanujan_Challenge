@@ -413,3 +413,39 @@ Consequences for the ρ=2 program:
   constant ≈ 0.48 ≈ random-polynomial expectation 1/2 per pair-ish. The 3/2
   theorem = (M) + (G). (G) is the pure equidistribution core.
 Scripts: mirror_check.py, mirror_identity.py, rho_measure.py.
+
+## 18. STRONG REFLECTION THEOREM + Mirror Lemma — PROVED (Fable solo, 2026-08-01)
+
+**Theorem (strong reflection).** Every solution germ y of the Apéry recurrence
+mod p (extended over the regular window [0, p−1]) satisfies y_{p−1−n} = y_n.
+The distinguished reflection FE b_{p−1−r} ≡ b_r is the special case y = b.
+
+_Proof (3 steps, complete)._
+(1) Central degeneration: at c ≡ −1/2, P(c) = 0 (the factor 2m+1 of P!) and
+(c+1)³ = −c³, so the recurrence at m = c reads y_{c+1} = y_{c−1} — for EVERY
+solution.
+(2) ỹ_n := y_{p−1−n} is a solution (index antisymmetry P(−1−n) = −P(n)), and
+ỹ_c = y_c, ỹ_{c+1} = y_{c−1} = y_{c+1} by (1): agreement at two consecutive
+indices.
+(3) Two consecutive values determine a solution throughout the regular window
+[1, p−2]: ỹ = y. ∎
+Machine check: 20 random germs × p ∈ {101,199,1009,4001} all symmetric
+(strong_reflection.py).
+
+**Corollary (Mirror Lemma, = §17 identity).** For h ≡ k (mod 2) and
+r* = (p−1−h−k)/2 (integer representative, non-wrapping window):
+p−1−(r*+h) = r*+k, so the h-return germ at r* satisfies
+y_{r*+k} = y_{r*+h} = y_{r*}: it also k-returns, hence
+σ_h(r*) = σ_k(r*) and Ψ_{h,k}(r*) = 0. The parity condition is exactly the
+integer non-wraparound condition (DS: 0/256 forced roots in the odd class at
+the wrapped point 2r+h+k = −1 — confirmed).
+
+**Status of ρ=2 after this:** R_H = (mirror term = #{h<k≤H: h≡k(2)} exactly,
+PROVED) + (residual). DS-measured residual = Poisson(0.5) per pair
+(0.4727/0.4980 at p=1009/2003), max ret 4. THE remaining gap for
+E(p) ≪ p^{3/2+o(1)} is the single statement:
+
+  (RES) Σ_{h<k≤H} ( Z(Ψ_{h,k}) − 1[h≡k mod 2] ) ≪ H².
+
+All structure identified; (RES) is pure family-equidistribution ("the Ψ family
+has random-polynomial root statistics after removing the one forced root").
