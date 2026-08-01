@@ -58,6 +58,29 @@ def check_pullback_of_rank_two_equation() -> None:
     print("VERIFIED S_-=S_+/sqrt(q) transforms the plus equation into the minus equation")
 
 
+def check_symmetric_square_apery_operator() -> None:
+    t = sp.symbols("t")
+    y0, y1 = sp.symbols("y0 y1")
+    q = t**2 - 34 * t + 1
+    y2 = -(4 * (2 * t**2 - 51 * t + 1) * y1 + (t - 10) * y0) / (4 * t * q)
+
+    def total_derivative(expression: sp.Expr) -> sp.Expr:
+        return sp.diff(expression, t) + sp.diff(expression, y0) * y1 + sp.diff(expression, y1) * y2
+
+    def theta(expression: sp.Expr) -> sp.Expr:
+        return sp.simplify(t * total_derivative(expression))
+
+    f0 = y0**2
+    f1 = theta(f0)
+    f2 = theta(f1)
+    f3 = theta(f2)
+    middle = 2 * (17 * f3 + 17 * f2 + 5 * f1) + (17 * f2 + 17 * f1 + 5 * f0)
+    shifted_cube = f3 + 3 * f2 + 3 * f1 + f0
+    residual = sp.factor(f3 - t * middle + t**2 * shifted_cube)
+    assert sp.simplify(residual) == 0
+    print("VERIFIED Sym^2(S_+) is annihilated by the third-order Apery operator")
+
+
 def check_local_exponents_and_conductors() -> None:
     x, t = sp.symbols("x t")
     franel_a = x * (x + 1) * (8 * x - 1)
@@ -103,6 +126,7 @@ def check_local_exponents_and_conductors() -> None:
 
 def main() -> None:
     check_pullback_of_rank_two_equation()
+    check_symmetric_square_apery_operator()
     check_local_exponents_and_conductors()
 
 

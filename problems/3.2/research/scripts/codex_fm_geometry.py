@@ -54,6 +54,16 @@ def check_characteristic_zero_pullback() -> None:
     print(f"VERIFIED characteristic-zero pullback through O(x^{cutoff})")
 
 
+def check_apery_laurent_model() -> None:
+    u, v, w = sp.symbols("u v w")
+    lam = (u + v) * (w + 1) * (u + v + w) * (v + w + 1) / (u * v * w)
+    for exponent in range(7):
+        expanded = sp.expand(lam**exponent)
+        constant_term = expanded.coeff(u, 0).coeff(v, 0).coeff(w, 0)
+        assert constant_term == apery(exponent)
+    print("VERIFIED CT Lambda_A^n=A_n for 0<=n<=6")
+
+
 def check_cover_discriminant() -> None:
     x, t = sp.symbols("x t")
     cover_polynomial = 8 * x**2 + (t - 1) * x + t
@@ -142,6 +152,7 @@ def check_pushforward_and_mellin() -> None:
 
 def main() -> None:
     check_characteristic_zero_pullback()
+    check_apery_laurent_model()
     check_cover_discriminant()
     check_lucas_dwork()
     check_toric_hasse_point_count()
