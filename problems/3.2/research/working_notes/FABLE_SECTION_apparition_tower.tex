@@ -182,6 +182,25 @@ below: all self-twist and tensor-decomposition exceptions lie in a fixed set
 of order $\le4$, so no high-order Mellin character can correlate with the
 column event through a hidden twist.
 
+\subsection{The parity law for the zero fibre}
+
+\begin{proposition}[parity law]\label{prop:parity}
+Let $Z_p=\{1\le r\le p-2:\ p\mid b_r\}$.  Then
+$|Z_p|\equiv\mathbf 1\bigl[p\mid b_{(p-1)/2}\bigr]\pmod 2$.  In particular
+$|Z_p|$ is even except at the non-ordinary primes of the level-8 weight-4
+newform $\eta(2z)^4\eta(4z)^4$ (Beukers' congruence), of which the only
+examples below $30000$ are $p=11,3137$.
+\end{proposition}
+
+\begin{proof}
+Strong reflection (Theorem~\ref{thm:strong-reflection}) gives the involution
+$r\mapsto p-1-r$ on $Z_p$, whose unique fixed point in range is the midpoint
+$r=(p-1)/2$.  (Empirical profile across $p<30000$, all $3242$ window primes:
+$|Z_p|=2\cdot\mathrm{Poisson}(\lambda\approx0.51)+\text{midpoint indicator}$,
+$\chi^2=2.47$ on 3 d.f., mean $1.0185$, max $8$; scan banked in the appendix-Q
+ledger.)
+\end{proof}
+
 \subsection{The character-order counting lemma and its consequence}
 
 \begin{lemma}[character-order counting]\label{lem:counting}
