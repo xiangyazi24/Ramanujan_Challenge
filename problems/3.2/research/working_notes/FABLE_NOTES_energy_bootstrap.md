@@ -2452,3 +2452,15 @@ crosscorr/empirics/numerics/symbolic/irred 十班全落)。
 真新机制; Selberg 检测器无相关性输入不省 L²log; 平凡 P_D≪D²。Q6690/92: cascade
 封闭与 k-run 结构定义层展开 (浅)。Q6694: TR6-HORIZONTAL 定义层。q51 补发中;
 q54 墙图/q56 Protocol-A 在深跑。主攻 = codex strike2 (max) 未回。
+
+## §132 — Strike 2 终判: 逃生口的最终刻画 (08-02)
+
+**NO UNBOUNDED L PROVED** (CODEX_STRIKE2_report.md)。但诊断决定性升级:
+1. 修正: no-go 词的 P·Q ~ q⁹ (我此前算 q⁸ 有误), 仍 /N²→0, 不反驳 (4.8)。
+2. **新反例 (padded word)**: 三角富核 + 大 k_r=1 primitive 层可共存于满足全部
+   词级输入 (反射/C_d≤3(d−1)/窗口2/3律/h=2律/renewal) 的词, P·Q/N²→∞ ⟹
+   **(4.8) 不可能从现有词级+团输入推出** — 必须用排除"富核×大primitive层
+   共存"的算术。
+3. 实测 union 节省仅 2.3–8.3% (顶壳), 低壳几乎无重复基 — cascade/union 路弱。
+4. 两矩检测器 (1.3) 含未知一阶矩, 不闭。无条件积界 P·Q ≤ 66N²L²(1+log D)。
+逃生口现精确悬于: [ANTI-COEXIST] 算术反共存陈述。验证器 CODEX_STRIKE2_verify.py。
