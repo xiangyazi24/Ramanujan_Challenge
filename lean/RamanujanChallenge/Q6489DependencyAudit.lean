@@ -1,17 +1,15 @@
-import RamanujanChallenge.Problem27BarnesInitial
-import RamanujanChallenge.Problem27BarnesTelescoper
+import RamanujanChallenge.Problem27BarnesClosure
 
 namespace RamanujanChallenge.P27
 
 #print axioms problem27_challenge_sequences
-#print axioms zudilinB_rec
-#print axioms zudilinM23_rec
-#print axioms zudilinSatisfiesRec_iff_ct27
 #print axioms zudilinBarnesErrorIntegral_tendsto_zero27
 #print axioms zudilinBarnesErrorIntegral_zero27
 #print axioms zudilinBarnesErrorIntegral_one27
 #print axioms zudilinBarnesErrorIntegral_two27
-#print axioms zudilinCombinedError_tendsto_of_barnes_representation27
-#print axioms problem27_zeta2_add_zeta3_of_barnes_representation
+#print axioms zudilinBarnesErrorIntegral_recC27
+#print axioms zudilinCombinedError_eq_barnes27
+#print axioms zudilinCombinedError_tendsto_zero_direct27
+#print axioms problem27_zeta2_add_zeta3_direct
 
 end RamanujanChallenge.P27
