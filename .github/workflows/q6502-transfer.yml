@@ -16,6 +16,8 @@ jobs:
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: q6502-audit-cd4797bb
       - name: Install pinned Lean toolchain
         shell: bash
         run: |
