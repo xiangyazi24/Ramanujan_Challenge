@@ -1892,6 +1892,54 @@ theorem quadAltV_mul_self_tendsto :
   unfold quadAltV
   ring
 
+
+/-- `J(-y)` is differentiable at `0` with derivative `0`, and vanishes there. -/
+theorem quadAltJneg_hasDerivAt_zero :
+    HasDerivAt (fun y : ℝ => quadAltJclosed (-y)) 0 0 := by
+  have hF0 : quadAltFclosed 0 = 0 := by
+    unfold quadAltFclosed; norm_num
+  have hM : HasDerivAt quadAltMclosed
+      (quadAltFclosed 0 - 2 * quadAltFclosed (-0)) 0 :=
+    quadAltMclosed_hasDerivAt' (by norm_num)
+  rw [neg_zero, hF0] at hM
+  norm_num at hM
+  have hMn : HasDerivAt (fun y : ℝ => quadAltMclosed (-y)) 0 0 := by
+    have hM' : HasDerivAt quadAltMclosed 0 ((fun r : ℝ => -r) 0) := by simpa using hM
+    have := HasDerivAt.comp 0 hM' (hasDerivAt_neg (0:ℝ))
+    simpa using this
+  have hsq : HasDerivAt (fun y : ℝ => y ^ 2) 0 0 := by
+    simpa using (hasDerivAt_pow 2 (0:ℝ))
+  have hdl0 : HasDerivAt dilog 1 0 := RamanujanChallenge.P26.dilog_hasDerivAt_zero26
+  have hdsq : HasDerivAt (fun y : ℝ => dilog (y ^ 2)) 0 0 := by
+    have hz : HasDerivAt dilog 1 ((fun y : ℝ => y ^ 2) 0) := by
+      show HasDerivAt dilog 1 ((0:ℝ) ^ 2)
+      rw [show ((0:ℝ)) ^ 2 = 0 from by norm_num]
+      exact hdl0
+    have hcomp := HasDerivAt.comp (h := fun y : ℝ => y ^ 2) (0:ℝ) hz hsq
+    simpa using hcomp
+  have hsum := hMn.add hdsq
+  simpa [quadAltJclosed] using hsum
+
+theorem quadAltJneg_zero : quadAltJclosed (-(0:ℝ)) = 0 := by
+  rw [neg_zero]
+  unfold quadAltJclosed
+  rw [quadAltMclosed_zero]
+  simp [dilog_zero]
+
+/-- `F x = -2 V x · J(-x) → 0` as `x → 0⁺`. -/
+theorem quadAltF_tendsto_zero_right :
+    Tendsto (fun x : ℝ => -2 * quadAltV x * quadAltJclosed (-x)) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+  have hq : Tendsto (fun x : ℝ => quadAltJclosed (-x) / x) (𝓝[≠] (0:ℝ)) (𝓝 0) :=
+    slope_tendsto_of_hasDerivAt_zero _ 0 quadAltJneg_hasDerivAt_zero quadAltJneg_zero
+  have hq' : Tendsto (fun x : ℝ => quadAltJclosed (-x) / x) (𝓝[>] (0:ℝ)) (𝓝 0) :=
+    hq.mono_left (nhdsWithin_mono _ (fun x hx => ne_of_gt hx))
+  have hprod := (quadAltV_mul_self_tendsto.const_mul (-2)).mul hq'
+  simp only [mul_zero, zero_mul] at hprod
+  refine hprod.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hxne : x ≠ 0 := ne_of_gt hx
+  field_simp
+
 /-- Integration by parts (Q6047 (4.9)): with `F = −2V·J(−x)`, `F(1)=F(0)=0`
 (`V(1)=0`, `J(0)=0`), so `∫₀¹ (−log x)/x·Q(−x) = ∫₀¹ (−2V(x))·Dminus(x)`. -/
 theorem quadAltCoeffIntegral_eq_neg2V_Dminus :
