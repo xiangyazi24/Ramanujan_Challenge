@@ -1,0 +1,1821 @@
+% SUMMARY AND AUDIT TRAIL
+% Target: standalone section for problems/3.2/proof.tex; no new packages
+% (amsmath/amssymb/amsthm assumed, as in the earlier section files).
+% Round-3 integration of five audited sources, in this order:
+%   1. Q6678 (Gram-operator / empirical-laws subsection; hostile audit Q6667)
+%      -- labels gram-*.  Kept verbatim, plus one dedup insertion defining
+%      R_{h,k}=J_{h,k}, N_coinc(H), and C_h (used but not defined there).
+%   2. Q6665 (windowed restart lemma package; audit Q6665) -- labels
+%      lem:zwin-*, wrapped in a subsection header.
+%   3. Q6661 (near-wall theorem, eta=3/7; audits Q6630/Q6657, integration
+%      audit Q6669) -- labels nw-*.  One wording fix applied to the prose
+%      description of K_p(H,D) (smaller gap above H, larger gap at most 2H,
+%      separation at most D).
+%   4. Q6666 (repaired conditional p^{1/6} coincidence theorem; audit Q6639)
+%      -- labels p16-*.  \documentclass wrapper and preamble stripped;
+%      macros \Fp and \Ncoinc inlined.
+%   5. Q6660 (window-return blocks; audit Q6675) -- labels thm:br-*.
+%      MANDATORY FRAMING EDIT applied: both statements presented as a SECOND
+%      PROOF (proposition/remark, not new theorems) of the banked sigma=1/3
+%      window multiplicity lemma; only the restart-transfer mechanism with
+%      homogeneous zero-fiber input is claimed as new.
+% Dedup decisions: I_h, L_h, \mathfrak q_h, f_h are defined once (in the
+% Gram subsection) and recalled elsewhere; J_{h,k}=R_{h,k} identified once;
+% \mathcal S_H=\sum_{h\le H}L_h used throughout (Q6666's S=S_H); Q6666's
+% q_h -> \mathfrak q_h, delta_h -> f_h, A_1,A_2,A_4 -> \Sigma_1,\Sigma_2,
+% \Sigma_4, error E -> Err (avoiding clashes with the fiber deviation q_h(a),
+% the shell sums A_d(H), and the pair matrix E_{h,k} of the Gram subsection);
+% \mathbf F_p/\mathbf P^1 -> \mathbb F_p/\mathbb P^1 (house style); Q6666's
+% corollary environment converted to proposition (no corollary env assumed).
+% External references to the main paper (sec:orbit-energy, sec:sigma-half,
+% eq:sh-onegap, thm:sh-sigma-half) remain as warnings in standalone compiles.
+
+\section{Further campaign results: spectral form, windowed lemmas, and
+conditional small-scale coincidence}
+\label{sec:campaign3-round3}
+
+This section collects five further campaign results: the spectral
+(Gram-operator) formulation of the growing-family compatibility problem
+together with its empirical laws; a windowed restart lemma package with
+a good-reduction census; an unconditional near-wall estimate for close
+pairs of collision gaps; a conditional $p^{1/6}$ coincidence theorem;
+and a second proof, via restart transfer, of the banked window
+multiplicity lemma.  The conventions of
+Sections~\ref{sec:orbit-energy} and~\ref{sec:sigma-half} are retained
+throughout: $p\ge7$ is prime, $M=p-2$, and
+$\pi(n)=[b_n:c_n]\in\mathbb P^1(\mathbb F_p)$.
+
+% ledger-sources: Q6547, Q6565, Q6570, Q6602, Q6603, and
+% problems/3.2/FABLE_SECTION_orbit_energy.tex.
+\subsection{Empirical flatness and the Gram-operator target}
+\label{gram-subsection}
+
+Let
+\[
+ I_h=\{1,\ldots,M-h\},\qquad L_h=|I_h|=M-h,
+\]
+and put
+\[
+ \mathfrak q_h(X)=\prod_{j=1}^h(X+j),\qquad
+ f_h(X)=\frac{N_h(X)}{\mathfrak q_h(X)^3}.
+\]
+On the regular nonwrapping window, the Casoratian identity gives
+\[
+ f_h(r)=\Delta_{r,h}
+ =b_rc_{r+h}-b_{r+h}c_r.
+\]
+For $a\in\mathbb F_p$, define
+\[
+ \nu_h(a)=\#\{r\in I_h:f_h(r)=a\},\qquad
+ q_h(a)=\nu_h(a)-\frac{L_h}{p}.
+\]
+Thus $\sum_aq_h(a)=0$.  For $t\in\mathbb F_p$, write
+\[
+ S_h(t)=\sum_{r\in I_h}e_p(tf_h(r)).
+\]
+For $1\le h,k\le H$, define
+\begin{align}
+ J_{h,k}
+ &=\sum_{a\in\mathbb F_p}\nu_h(a)\nu_k(a),
+ \label{gram-J-def}\\
+ E_{h,k}
+ &=\sum_{a\in\mathbb F_p}q_h(a)q_k(a)
+ =J_{h,k}-\frac{L_hL_k}{p},
+ \label{gram-E-def}\\
+ \Gamma_{h,k}
+ &=\sum_{t\in\mathbb F_p^\times}
+   S_h(t)\overline{S_k(t)}.
+ \label{gram-Gamma-def}
+\end{align}
+Additive orthogonality gives the exact normalization
+\begin{equation}
+ \boxed{\Gamma_{h,k}=pE_{h,k}.}
+ \label{gram-fourier-normalization}
+\end{equation}
+In particular, the $t=0$ contribution is the rank-one matrix
+$(L_hL_k)_{h,k}$ and is not part of $\Gamma$.
+
+% Dedup insertion (integration): these three quantities are used below and
+% in the p^{1/6} subsection; J_{h,k}=R_{h,k} is immediate from the fiber
+% expansion of \eqref{gram-J-def}.
+By~\eqref{gram-J-def},
+$J_{h,k}=\#\{(x,y)\in I_h\times I_k:f_h(x)=f_k(y)\}$.  We write
+\[
+ R_{h,k}=J_{h,k},
+ \qquad
+ N_{\mathrm{coinc}}(H)=\sum_{1\le h,k\le H}R_{h,k},
+\]
+\[
+ C_h=\nu_h(0)=\#\{r\in I_h:f_h(r)=0\},
+\]
+so that $C_h$ is the one-gap collision count at gap $h$.
+
+\paragraph{Good-reduction strata.}
+Set
+\[
+ \mathfrak C_h(X)
+ =\mathfrak q_h(X)N_h'(X)-3\mathfrak q_h'(X)N_h(X),
+\]
+so that $f_h'(X)=\mathfrak C_h(X)/\mathfrak q_h(X)^4$.
+We use the following two explicit strata.
+\begin{align*}
+ \mathrm{GOOD\mbox{-}POLE}_h(p):\quad
+ &N_h(-j)\not\equiv0\pmod p
+ \quad(1\le j\le h),\\
+ \mathrm{GOOD\mbox{-}CRIT}_h(p):\quad
+ &\deg N_h=3h-3,
+ \quad \deg\mathfrak C_h=4h-4,\\
+ &N_h\text{ and }\mathfrak C_h\text{ are squarefree},\\
+ &\gcd(\mathfrak C_h,N_h\mathfrak q_h)=1,\\
+ &x\ne y,\ \mathfrak C_h(x)=\mathfrak C_h(y)=0
+ \Longrightarrow f_h(x)\ne f_h(y)
+ \quad\text{over }\overline{\mathbb F}_p.
+\end{align*}
+Thus $\mathrm{GOOD\mbox{-}POLE}_h(p)$ says that all $h$ candidate
+poles remain genuine cubic poles, while
+$\mathrm{GOOD\mbox{-}CRIT}_h(p)$ gives the expected simple finite
+critical points, distinct nonzero critical values, and the generic
+ramification profile away from $0$ and $\infty$.
+Conditionally on the separate local Fourier calculation, the tame
+inertia type at $0$ is
+\[
+ \mathsf U(2)^{\oplus(h-1)}
+ \oplus \mathcal L_{\chi_3}^{\oplus h}
+ \oplus \mathcal L_{\chi_3^{-1}}^{\oplus h}.
+\]
+Thus $\chi_3$ and $\chi_3^{-1}$ occur with $h$ copies each, not as
+tensor powers.  Standard Gauss-twist normalizations are omitted below
+because all formulas are stated at the level of trace functions.
+
+\begin{remark}[Numerical laws]
+\label{gram-numerical-laws}
+The following observations are numerical only and are never used in a
+proof.
+
+\smallskip
+\noindent
+\textnormal{\rm(i) [FLAT-LAW].}
+For $h\le32$ and primes $p\le997$, the quantity
+\[
+ \max_{t\ne0}\frac{|S_h(t)|}{\sqrt p}
+\]
+is flat in $h$.  Its observed size is
+\[
+ \sqrt{2\log p},
+\]
+the Gumbel extreme-value scale for $p$ Gaussian samples.  In particular,
+the measured maximum is at the random-function floor rather than at the
+linear-conductor scale suggested by the worst-case bound.
+
+\smallskip
+\noindent
+\textnormal{\rm(ii) [PAIR-FLAT].}
+Across nine exact cells with $p\le4001$ and
+$h<k\le p^{0.66}$, one finds
+\[
+ \operatorname*{mean}_{h<k}|E_{h,k}|
+ =(1.0\text{--}1.1)\sqrt p.
+\]
+There is no visible $hk$ growth, although the generic normalized
+fiber-product genus is asymptotic to $6hk$.
+
+\smallskip
+\noindent
+\textnormal{\rm(iii) Signed shells.}
+For
+\[
+ A_d(H)=\sum_{h=1}^{H-d}E_{h,h+d},
+ \qquad 0\le d<H,
+\]
+and
+\[
+ V(H)=\frac{1}{p^2H}\sum_{d=0}^{H-1}|A_d(H)|^2,
+\]
+the exact computations give
+\[
+ \max_{0\le d<H}\frac{|A_d(H)|}{p}\le0.80,
+ \qquad V(H)\le0.049.
+\]
+No structured exceptional value of $d$ is visible.
+
+\smallskip
+\noindent
+\textnormal{\rm(iv) Absolute mass.}
+The same data give
+\[
+ \sum_{h,k\le H}|E_{h,k}|
+ =(0.49\text{--}0.57)H^2\sqrt p.
+\]
+Thus the absolute $L^1$/Schur route is empirically at generic noise
+scale.  Since a typical row then has size $H\sqrt p$, it cannot satisfy
+an $O(p)$ row bound once $H>\sqrt p$.
+\end{remark}
+
+The windowed trace is not the pure core trace.  This correction is
+small at the operator scale but must be kept explicitly.  Put
+\[
+ \mathfrak c_h=f_h(0)=-f_h(-h-1),
+\]
+where the second equality is the reflection antisymmetry of $f_h$, and
+let
+\[
+ T_h(t)=\sum_{x\in
+ \mathbb P^1(\mathbb F_p)\setminus\{-1,\ldots,-h\}}
+ e_p(tf_h(x)).
+\]
+The three points removed when one passes from the projective core to the
+nonwrapping window are $\infty,0,-h-1$, with values
+$0,\mathfrak c_h,-\mathfrak c_h$.  Hence
+\begin{equation}
+ S_h(t)=T_h(t)-\epsilon_h(t),\qquad
+ \epsilon_h(t)=1+e_p(t\mathfrak c_h)+e_p(-t\mathfrak c_h).
+ \label{gram-endpoint-trace}
+\end{equation}
+These are the three endpoint rank-one lines
+$\mathbf 1$, $\mathcal L_\psi(\mathfrak c_ht)$, and
+$\mathcal L_\psi(-\mathfrak c_ht)$.
+
+Let $\mathsf U$ and $\mathsf V$ be the $(p-1)\times H$ matrices
+\[
+ \mathsf U_{t,h}=T_h(t),\qquad
+ \mathsf V_{t,h}=-\epsilon_h(t)
+ \quad(t\ne0).
+\]
+Then
+\begin{align}
+ \Gamma
+ &=(\mathsf U+\mathsf V)^*(\mathsf U+\mathsf V)
+ =\Gamma^{\mathrm{core}}+\Gamma^{\mathrm{end}},
+ \label{gram-core-end-split}\\
+ \Gamma^{\mathrm{core}}
+ &=\mathsf U^*\mathsf U,
+ \label{gram-core-def}\\
+ \Gamma^{\mathrm{end}}
+ &=\mathsf U^*\mathsf V+\mathsf V^*\mathsf U
+   +\mathsf V^*\mathsf V.
+ \label{gram-end-def}
+\end{align}
+The endpoint block satisfies the explicit rank bound
+\begin{equation}
+ \operatorname{rank}\Gamma^{\mathrm{end}}
+ \le \operatorname{rank}(\mathsf U^*\mathsf V)
+   +\operatorname{rank}(\mathsf V^*\mathsf U)
+   +\operatorname{rank}(\mathsf V^*\mathsf V)
+ \le3\operatorname{rank}(\mathsf V)
+ \le3H.
+ \label{gram-endpoint-rank}
+\end{equation}
+Moreover,
+\begin{equation}
+ \sum_{t\ne0}e_p((\lambda-\mu)t)
+ =\begin{cases}
+ p-1,&\lambda=\mu,\\
+ -1,&\lambda\ne\mu,
+ \end{cases}
+ \label{gram-endpoint-inner-product}
+\end{equation}
+so all endpoint Gram entries are explicit structured sums.  In
+particular,
+\begin{equation}
+ \|\mathsf V\|_F^2\le9(p-1)H\le9pH,
+ \qquad
+ \|\mathsf V\|_{\mathrm{op}}\le3\sqrt{pH}.
+ \label{gram-endpoint-norm}
+\end{equation}
+
+\begin{proposition}[GRAM-OP criterion]
+\label{gram-op-proposition}
+Let $p\ge64$ be prime and let
+\[
+ H=\lceil p^{2/3}\rceil.
+\]
+Assume $H\le p-3$ and assume
+$\mathrm{GOOD\mbox{-}POLE}_h(p)$ and
+$\mathrm{GOOD\mbox{-}CRIT}_h(p)$ for every $1\le h\le H$.
+Suppose that
+\begin{equation}
+ \boxed{\|\Gamma\|_{\mathrm{op}}\le Cp^2.}
+ \tag{GRAM-OP}
+ \label{gram-op-hypothesis}
+\end{equation}
+Put
+\[
+ \mathcal S_H=\sum_{h=1}^HL_h=\#\{(r,h):1\le h\le H,
+ 1\le r\le M-h\}.
+\]
+Then
+\begin{equation}
+ N_{\mathrm{coinc}}(H)
+ \le\frac{\mathcal S_H^2}{p}+CpH
+ \le\frac{\mathcal S_H^2}{p}+2C\mathcal S_H.
+ \label{gram-coinc-conclusion}
+\end{equation}
+Consequently,
+\begin{equation}
+ \sum_{h\le H}C_h
+ \le\frac{\mathcal S_H}{p}+\sqrt{CpH},
+ \label{gram-small-gap-conclusion}
+\end{equation}
+and the block-energy inequality gives the explicit bound
+\begin{equation}
+ \boxed{\mathcal F_p
+ \le(10+4\sqrt{2C})p^{4/3}.}
+ \label{gram-energy-conclusion}
+\end{equation}
+
+A sufficient core form of \eqref{gram-op-hypothesis} is
+\begin{equation}
+ \|\Gamma^{\mathrm{core}}\|_{\mathrm{op}}
+ \le C_0p^2.
+ \label{gram-core-hypothesis}
+\end{equation}
+Indeed, the endpoint decomposition then gives
+\begin{equation}
+ \|\Gamma\|_{\mathrm{op}}
+ \le(\sqrt{C_0}+3)^2p^2,
+ \label{gram-core-to-total}
+\end{equation}
+so one may take
+\[
+ C=(\sqrt{C_0}+3)^2.
+\]
+The endpoint contribution to the all-ones quadratic form is separately
+bounded by
+\begin{equation}
+ \left|\mathbf 1^*\Gamma^{\mathrm{end}}\mathbf 1\right|
+ \le(6\sqrt{C_0}+9)p^2H.
+ \label{gram-endpoint-ones}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The matrix $\Gamma$ is positive semidefinite, since it is the Gram
+matrix of the vectors $(S_h(t))_{t\ne0}$.  Therefore
+\begin{equation}
+ \mathbf 1^*\Gamma\mathbf 1
+ \le\|\Gamma\|_{\mathrm{op}}\|\mathbf 1\|_2^2
+ \le Cp^2H.
+ \label{gram-ones-op}
+\end{equation}
+On the other hand, expanding the left-hand side and using additive
+orthogonality gives the exact centered variance identity
+\begin{align}
+ \mathbf 1^*\Gamma\mathbf 1
+ &=\sum_{t\ne0}\left|\sum_{h\le H}S_h(t)\right|^2
+ \notag\\
+ &=pN_{\mathrm{coinc}}(H)-\mathcal S_H^2.
+ \label{gram-centered-variance}
+\end{align}
+Combining \eqref{gram-ones-op} and
+\eqref{gram-centered-variance} proves the first inequality in
+\eqref{gram-coinc-conclusion}.  Since $H\le p/2-2$ for $p\ge64$, one has
+$L_h=p-2-h\ge p/2$ throughout the range, and hence
+\[
+ \mathcal S_H\ge\frac{pH}{2}.
+\]
+Thus $CpH\le2C\mathcal S_H$, proving the second inequality in
+\eqref{gram-coinc-conclusion}.
+
+The zero detector and Cauchy--Schwarz give
+\begin{align*}
+ \sum_{h\le H}C_h
+ &=\frac{\mathcal S_H}{p}
+   +\frac1p\sum_{t\ne0}\sum_{h\le H}S_h(t)\\
+ &\le\frac{\mathcal S_H}{p}
+   +\frac1p\sqrt{(p-1)
+      \sum_{t\ne0}\left|\sum_{h\le H}S_h(t)\right|^2}\\
+ &\le\frac{\mathcal S_H}{p}+\sqrt{CpH},
+\end{align*}
+which is \eqref{gram-small-gap-conclusion}.
+
+The proved block-energy inequality is
+\begin{equation}
+ \mathcal F_p
+ \le\left\lceil\frac{M}{H}\right\rceil
+ \left(M+2\sum_{1\le h<H}C_h\right).
+ \label{gram-block-energy}
+\end{equation}
+Now
+\[
+ H\le p^{2/3}+1\le2p^{2/3},\qquad
+ \left\lceil\frac{M}{H}\right\rceil\le2p^{1/3},
+ \qquad \mathcal S_H\le pH.
+\]
+Consequently,
+\begin{align*}
+ \mathcal F_p
+ &\le2p^{1/3}
+ \left(p+2H+2\sqrt{CpH}\right)\\
+ &\le2p^{1/3}
+ \left(p+4p^{2/3}+2\sqrt{2C}\,p^{5/6}\right)\\
+ &\le(10+4\sqrt{2C})p^{4/3},
+\end{align*}
+which proves \eqref{gram-energy-conclusion}.
+
+It remains to justify the sufficient core formulation and to track the
+endpoint block.  From \eqref{gram-core-hypothesis},
+\[
+ \|\mathsf U\|_{\mathrm{op}}\le\sqrt{C_0}\,p,
+\]
+while \eqref{gram-endpoint-norm} gives
+\[
+ \|\mathsf V\|_{\mathrm{op}}
+ \le3\sqrt{pH}\le3p.
+\]
+Therefore
+\[
+ \|\Gamma\|_{\mathrm{op}}^{1/2}
+ =\|\mathsf U+\mathsf V\|_{\mathrm{op}}
+ \le(\sqrt{C_0}+3)p,
+\]
+which proves \eqref{gram-core-to-total}.
+Finally,
+\begin{align*}
+ \left|\mathbf 1^*\Gamma^{\mathrm{end}}\mathbf 1\right|
+ &\le2\|\mathsf U\mathbf 1\|_2
+          \|\mathsf V\mathbf 1\|_2
+       +\|\mathsf V\mathbf 1\|_2^2\\
+ &\le2(\sqrt{C_0}\,p\sqrt H)(3\sqrt p\,H)
+       +9pH^2\\
+ &\le(6\sqrt{C_0}+9)p^2H,
+\end{align*}
+where the last line uses $H\le p$.  This proves
+\eqref{gram-endpoint-ones} and completes the proof.
+\end{proof}
+
+\begin{remark}[The rowwise ceiling and the spectral escape]
+\label{gram-blocking-terms}
+The exact obstruction to the rowwise Schur route has three linked
+formulations.  For fixed $h$, put
+\begin{align*}
+ R_h^{\mathrm{abs}}(H)
+ &=\sum_{\substack{k\le H\\k\ne h}}|E_{h,k}|,\\
+ \mathcal M_h^{\mathrm{off}}(H)
+ &=\sum_{\substack{k\le H\\k\ne h}}E_{h,k}^2,\\
+ M_{3,h}^{\mathrm{off}}(a,b)
+ &=\sum_{\substack{k\le H\\k\ne h}}\nu_k(a)\nu_k(b).
+\end{align*}
+Then
+\begin{equation}
+ R_h^{\mathrm{abs}}(H)
+ =\sum_{k\ne h}
+ \left|
+ \#\{(r,s)\in I_h\times I_k:f_h(r)=f_k(s)\}
+ -\frac{L_hL_k}{p}
+ \right|
+ \label{gram-block-combinatorial}
+\end{equation}
+is the combinatorial language,
+\begin{equation}
+ R_h^{\mathrm{abs}}(H)
+ \le\sqrt{H-1}\,
+ \bigl(\mathcal M_h^{\mathrm{off}}(H)\bigr)^{1/2}
+ \label{gram-block-second-moment}
+\end{equation}
+is the one-way second-moment reduction, and the exact centered
+contraction
+\begin{equation}
+ \mathcal M_h^{\mathrm{off}}(H)
+ =\sum_{a,b\in\mathbb F_p}
+ q_h(a)q_h(b)M_{3,h}^{\mathrm{off}}(a,b)
+ \label{gram-block-signed-contraction}
+\end{equation}
+is the signed joint-value language.  Thus the combinatorial formula and
+the signed contraction are exact identities, while
+\eqref{gram-block-second-moment} is a Cauchy--Schwarz implication rather
+than an equivalence.  Since $E_{h,h}\ge0$, the useful full-row split is
+\begin{equation}
+ \sum_{k\le H}|E_{h,k}|
+ =E_{h,h}+R_h^{\mathrm{abs}}(H)
+ \le E_{h,h}+\sqrt{H-1}\,
+ \bigl(\mathcal M_h^{\mathrm{off}}(H)\bigr)^{1/2}.
+ \label{gram-block-diagonal-split}
+\end{equation}
+The baseline terms disappear in
+\eqref{gram-block-signed-contraction} because $\sum_aq_h(a)=0$.
+The proved triple-return theorem controls a different orientation: two
+gaps at one base point and at the value zero.  It does not control
+\eqref{gram-block-signed-contraction}, which has one family index, two
+independent base points, and arbitrary values $(a,b)$.
+
+If
+\[
+ R_H=\max_{h\le H}\sum_{k\le H}|E_{h,k}|,
+\]
+then the exact row-to-energy ledger is
+\begin{equation}
+ \mathcal F_p
+ \ll\frac{p^2}{H}
+   +p\sqrt{\frac{R_H}{H}}+p.
+ \label{gram-row-energy-ledger}
+\end{equation}
+The best unconditional degree-and-mass estimate is
+\[
+ R_H\ll pH^2,
+\]
+which optimizes only to $\mathcal F_p\ll p^{5/3}$ and therefore does not
+even reproduce the proved $p^{3/2}$ theorem.  Even the individual
+fourth-moment hypothesis
+\[
+ \sum_{a\in\mathbb F_p}|q_k(a)|^4\ll p
+ \quad\text{uniformly in }k
+\]
+gives only $R_H\ll pH$, and then the middle term of
+\eqref{gram-row-energy-ledger} is exactly $p^{3/2}$.
+
+The sharp surviving row target is the Poisson-compatible mixed fourth
+moment
+\begin{equation}
+ \boxed{
+ \max_{h\le H}\mathcal M_h^{\mathrm{off}}(H)\ll pH.}
+ \tag{ROW-MIX4}
+ \label{gram-row-mix4}
+\end{equation}
+Together with the diagonal bound $E_{h,h}\ll p$,
+\eqref{gram-block-diagonal-split} gives
+\[
+ R_H\ll p+H\sqrt p.
+\]
+At $H=p^{2/3}$, substitution in
+\eqref{gram-row-energy-ledger} yields
+\[
+ \mathcal F_p\ll p^{4/3}.
+\]
+No unconditional estimate of the mixed form
+\eqref{gram-row-mix4} is presently available.  Thus the single rowwise
+blocking term is $R_h^{\mathrm{abs}}(H)$, or before the final Cauchy step
+$\mathcal M_h^{\mathrm{off}}(H)$, equivalently the failure to obtain
+extra cancellation in \eqref{gram-block-signed-contraction}.
+
+The following discussion is numerical and heuristic only and is not
+used in a proof.  The operator formulation escapes this absolute-value
+ceiling.  The measured off-diagonal entries have
+\[
+ |E_{h,k}|\asymp\sqrt p,
+ \qquad |\Gamma_{h,k}|\asymp p^{3/2}.
+\]
+A random-sign $H\times H$ matrix at this entry scale has operator norm
+\[
+ p^{3/2}\sqrt H\,(\log H)^{O(1)}.
+\]
+At $H=p^{2/3}$ this is
+\[
+ p^{11/6}(\log p)^{O(1)}\ll p^2.
+\]
+The diagonal entries naturally live at the $p^2$ scale, while the three
+endpoint lines have already been isolated in
+\eqref{gram-core-end-split}.  Hence \textup{[GRAM-OP]} is fully
+consistent with the observed entry sizes and signs.  The data support a
+two-stage picture: \textup{[PAIR-FLAT]} controls the entry size through
+$H\asymp\sqrt p$, and signed spectral cancellation, rather than
+absolute summation, must control the remaining range up to
+$H=p^{2/3}$.
+\end{remark}
+
+\paragraph{Relation to the other family-compatibility targets.}
+Let
+\[
+ B_t(H)=\sum_{h\le H}S_h(t).
+\]
+The pointwise target \textup{[GAP--2D--SQRT]} controls each $B_t(H)$;
+the shell target controls
+\[
+ \sum_{d<H}|A_d(H)|^2;
+\]
+and \textup{[GRAM-OP]} controls the full coefficient-space operator
+$(\Gamma_{h,k})_{h,k\le H}$.  The exact shell identity is
+\[
+ \sum_{h,k\le H}E_{h,k}
+ =A_0(H)+2\sum_{d=1}^{H-1}A_d(H),
+\]
+so the shell estimate
+\[
+ \sum_{d<H}|A_d(H)|^2\ll p^2H
+\]
+implies the same $O(pH)$ all-ones variance by Cauchy--Schwarz.
+Likewise, square-root control of every $B_t(H)$ implies the same variance
+after summing over $t$.  Conversely, \textup{[GRAM-OP]} immediately
+implies \textup{[COINC]} by
+\eqref{gram-centered-variance}, but it is not formally equivalent to
+either the pointwise or shell statement.  These are three complementary
+faces of the same growing-family compatibility problem: pointwise in the
+Fourier variable $t$, organized by difference shells $d$, and spectral
+in the family index $h$.
+
+% Ledger source: Q6665 (windowed restart lemma package; audit Q6665).
+\subsection{Windowed restart lemmas and the good-reduction census}
+\label{sec:zwin-window}
+
+The following package localizes the restart zero count to arbitrary
+windows and then quantifies, through the endpoint factorization, how
+often the good-reduction stratum
+$\mathrm{GOOD\mbox{-}POLE}_h(p)$ of
+Subsection~\ref{gram-subsection} can fail.
+
+\begin{lemma}[Capacitated gap count]\label{lem:zwin-capacity}
+Let $(n_m)_{m\geq1}$ be nonnegative real numbers such that
+\[
+ n_m\leq 3m
+ \qquad(m\geq1),
+ \qquad
+ S:=\sum_{m\geq1}(m+1)n_m<\infty.
+\]
+Then
+\[
+ \sum_{m\geq1}n_m\leq \frac32 S^{2/3}.
+\]
+The constant $3/2$ is asymptotically sharp under these two constraints.
+\end{lemma}
+
+\begin{proof}
+For $y\geq0$ put
+\[
+ B_y:=\sum_{m=1}^y3m=\frac32y(y+1),
+ \qquad
+ D_y:=\sum_{m=1}^y3m(m+1)=y(y+1)(y+2).
+\]
+Choose $y$ so that $D_y\leq S\leq D_{y+1}$.  Since the coefficients
+$m-y-1$ are negative for $m\leq y$ and nonnegative for $m>y$, the bounds
+$0\leq n_m\leq3m$ give
+\[
+ S-(y+2)\sum_m n_m
+ =\sum_m(m-y-1)n_m
+ \geq\sum_{m=1}^y(m-y-1)3m
+ =D_y-(y+2)B_y.
+\]
+Hence
+\[
+ \sum_m n_m\leq B_y+\frac{S-D_y}{y+2}.
+\]
+On $[D_y,D_{y+1}]$ the function
+\[
+ \frac32S^{2/3}-B_y-\frac{S-D_y}{y+2}
+\]
+is concave, so its minimum occurs at an endpoint.  At $S=D_y$ the required
+inequality is
+\[
+ B_y\leq\frac32D_y^{2/3},
+\]
+which is equivalent to $y(y+1)\leq(y+2)^2$; the other endpoint is the same
+inequality with $y+1$ in place of $y$.  This proves the bound.  At
+$S=D_y$ one has $B_y/D_y^{2/3}\to3/2$, proving sharpness.
+\end{proof}
+
+\begin{lemma}[Windowed Apery zero count]\label{lem:zwin-window}
+Let $p\geq7$ be prime, and let
+\[
+ I=\{a,a+1,\ldots,a+H-1\}\subseteq\{0,1,\ldots,p-2\}
+\]
+be an interval of regular indices.  Then
+\[
+ Z_p(I):=\#\{n\in I:b_n\equiv0\pmod p\}
+ \leq 1+\frac32(H-1)^{2/3}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let the zeros in $I$ be $z_1<\cdots<z_k$.  There is nothing to prove when
+$k\leq1$.  For $1\leq i<k$ put
+\[
+ s_i=z_i+1,
+ \qquad
+ m_i=z_{i+1}-z_i-1.
+\]
+There are no consecutive zeros, so $m_i\geq1$.  The restart dictionary gives
+$U_{m_i}(s_i)=0$.  For fixed $m$, the starts $s_i$ are distinct, while
+$U_m$ is nonzero in the banked regular range and has degree $3m$.  Thus, with
+\[
+ n_m:=\#\{i:m_i=m\},
+\]
+one has $n_m\leq3m$.  Moreover
+\[
+ \sum_{m\geq1}(m+1)n_m
+ =\sum_{i=1}^{k-1}(z_{i+1}-z_i)
+ =z_k-z_1
+ \leq H-1.
+\]
+Lemma~\ref{lem:zwin-capacity} therefore gives
+\[
+ k-1=\sum_mn_m\leq\frac32(H-1)^{2/3},
+\]
+which is the assertion.
+\end{proof}
+
+\begin{remark}[Improved full-window constant]\label{lem:zwin-global}
+Taking $I=\{1,\ldots,p-2\}$ in Lemma~\ref{lem:zwin-window} gives
+\[
+ |Z_p|\leq1+\frac32(p-3)^{2/3}.
+\]
+This improves the constant $3$ in the previously stated degree-only restart
+bound.  The constant $3/2$ uses the simultaneous all-gap optimization of
+Lemma~\ref{lem:zwin-capacity}; it does not follow from optimizing a single
+short-gap cutoff.
+\end{remark}
+
+\begin{lemma}[Endpoint factorization]\label{lem:zwin-endpoint}
+For integers $h\geq1$ and $1\leq j\leq h$ one has
+\[
+ N_h(-j)=N_j(-j)N_{h-j+1}(-1).
+\]
+Moreover
+\[
+ N_q(-1)=((q-1)!)^3b_{q-1}
+ \qquad(q\geq1),
+\]
+and hence
+\[
+ N_h(-j)
+ =(-1)^{j-1}((j-1)!(h-j)!)^3b_{j-1}b_{h-j}.
+\]
+In particular, if $h<p$, then
+\[
+ N_h(-j)\equiv0\pmod p
+ \quad\Longleftrightarrow\quad
+ p\mid b_{j-1}b_{h-j}.
+\]
+\end{lemma}
+
+\begin{proof}
+The case $j=1$ is immediate.  For $j\geq2$, apply the renewal identity with
+\[
+ s=1-j,
+ \qquad
+ m=j-2,
+ \qquad
+ g=h-j.
+\]
+The bridge factor is $(s+m+1)^6=0$, and therefore
+\[
+ U_{h-1}(1-j)=U_{j-1}(1-j)U_{h-j}(0).
+\]
+Using $N_q(r)=U_{q-1}(r+1)$ gives the first identity.  The recurrence at
+$s=0$ gives $U_m(0)=(m!)^3b_m$, hence the second identity.  Finally,
+continuant reflection gives
+\[
+ U_{j-1}(1-j)=(-1)^{j-1}U_{j-1}(0),
+\]
+which yields the displayed endpoint formula.  When $h<p$, both factorials
+are units modulo $p$, proving the final equivalence.
+\end{proof}
+
+\begin{lemma}[Good-reduction incidence census]\label{lem:zwin-good-reduction}
+Assume $1\leq H<p$, and define
+\[
+ \operatorname{Bad}_{\rm pole}(p,H)
+ :=\#\{(h,j):1\leq j\leq h\leq H,
+        \ p\mid b_{j-1}b_{h-j}\}.
+\]
+Then
+\[
+ \operatorname{Bad}_{\rm pole}(p,H)
+ \leq \frac95H^{5/3}+2H.
+\]
+Consequently
+\[
+ \frac{\operatorname{Bad}_{\rm pole}(p,H)}{H(H+1)/2}
+ \leq \frac{18}{5}H^{-1/3}+\frac4H
+ =O(H^{-1/3}).
+\]
+Equivalently, all but $O(H^{5/3})$ of the endpoint incidences
+$(h,j)$ with $1\leq j\leq h\leq H$ have good reduction.
+\end{lemma}
+
+\begin{proof}
+Let
+\[
+ A_H:=\{m:0\leq m<H,\ p\mid b_m\},
+ \qquad
+ Z(t):=\#\{0\leq m<t:\ p\mid b_m\}.
+\]
+Under the bijection $a=j-1$, $q=h-j$, the relevant pairs satisfy
+$a,q\geq0$ and $a+q\leq H-1$.  A union bound and discrete layer cake give
+\[
+ \operatorname{Bad}_{\rm pole}(p,H)
+ \leq2\sum_{m\in A_H}(H-m)
+ =2\sum_{t=1}^H Z(t).
+\]
+Lemma~\ref{lem:zwin-window}, applied to the prefix interval
+$\{0,\ldots,t-1\}$, gives
+\[
+ Z(t)\leq1+\frac32(t-1)^{2/3}.
+\]
+Therefore
+\[
+ \operatorname{Bad}_{\rm pole}(p,H)
+ \leq2H+3\sum_{u=0}^{H-1}u^{2/3}
+ \leq2H+3\int_0^H x^{2/3}\,dx
+ =2H+\frac95H^{5/3}.
+\]
+Division by $H(H+1)/2$ gives the density bound.
+\end{proof}
+
+% Ledger sources: Q6604 (original near-wall proof), Q6630 (hostile audit,
+% with the nu_D prose typo corrected), and Q6657 (independent audit in the
+% current one-based convention).  The only external inputs used below are
+% R_h<=3(h-1), Theorem~\ref{thm:sh-sigma-half}, and the previously proved
+% interval multiplicity estimate m_I(v)<=1+4|I|^{2/3}.
+
+\subsection{A near-wall estimate for close pairs of gaps}
+\label{sec:nw-near-wall}
+
+We retain the conventions of Sections~\ref{sec:orbit-energy}
+and~\ref{sec:sigma-half}: $p\ge7$ is prime,
+$I_p=\{1,\ldots,M\}$ with $M=p-2$, and
+$\pi(n)=[b_n:c_n]\in\mathbb P^1(\mathbb F_p)$.
+All counts below are nonwrapping.  Thus a condition involving
+$\pi(r+h)$ always includes $r+h\le M$.  For convenience set $R_h=0$
+when $h>M-1$.
+
+For $1\le a<b$ define
+\[
+ J_p(a,b)
+ =\#\{r\in I_p:r+b\le M,
+          \ \pi(r)=\pi(r+a)=\pi(r+b)\}.
+\]
+For integers $1\le D\le H$ put
+\begin{equation}\label{eq:nw-K-def}
+ K_p(H,D)
+ =\sum_{1\le d\le D}\ \sum_{H<h\le2H-d}J_p(h,h+d).
+\end{equation}
+Thus $K_p(H,D)$ counts same-base pairs of collision gaps whose smaller
+gap lies above $H$, whose larger gap is at most $2H$, and whose gap
+separation is at most $D$.
+
+For $d\ge1$ and $u\in I_p$ define
+\[
+ Z_d=\{u\in I_p:u+d\le M,\ \pi(u)=\pi(u+d)\},
+\]
+\[
+ \nu_D(u)
+ =\#\{1\le d\le D:u\in Z_d\},
+ \qquad
+ S_1(D)=\sum_{1\le d\le D}R_d=\sum_{u\in I_p}\nu_D(u).
+\]
+The ordinary same-base pair count is
+\begin{equation}\label{eq:nw-Q-def}
+ Q_p(D)=\sum_{u\in I_p}\binom{\nu_D(u)}2.
+\end{equation}
+For the backward window define
+\[
+ W_{H,d}(u)
+ =\#\{h:H<h\le2H-d,\ h\le u-1,
+          \ \pi(u-h)=\pi(u)\},
+\]
+\begin{equation}\label{eq:nw-W-def}
+ W_H(u)
+ =\#\{h:H<h\le2H,\ h\le u-1,
+          \ \pi(u-h)=\pi(u)\}.
+\end{equation}
+The endpoint condition $h\le u-1$ is the one-based nonwrapping condition
+$u-h\ge1$.
+
+\begin{lemma}[forward-window second moment]
+\label{thm:nw-nu-identity}
+For every integer $D\ge1$,
+\begin{equation}\label{eq:nw-nu-identity}
+ \sum_{u\in I_p}\nu_D(u)^2=S_1(D)+2Q_p(D).
+\end{equation}
+Consequently,
+\begin{equation}\label{eq:nw-nu-L2}
+ \sum_{u\in I_p}\nu_D(u)^2\le15D^{5/2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The pointwise identity $x^2=x+2\binom x2$, summed over $u$, gives
+\eqref{eq:nw-nu-identity}.  Here an unordered pair $d_1<d_2$ counted by
+$\binom{\nu_D(u)}2$ is exactly the same-base collision pair
+\[
+ \pi(u)=\pi(u+d_1)=\pi(u+d_2)
+\]
+with gaps $d_1,d_2\le D$.  No shift of the base point is involved.
+
+By~\eqref{eq:sh-onegap},
+\[
+ S_1(D)\le3\sum_{d=1}^{D}(d-1)
+          =\frac32D(D-1)\le\frac32D^{5/2}.
+\]
+Theorem~\ref{thm:sh-sigma-half} gives
+$Q_p(D)\le\frac{27}{4}D^{5/2}$, since its truncated gap parameter is at
+most $D$.  Substitution in~\eqref{eq:nw-nu-identity} yields
+\[
+ \sum_u\nu_D(u)^2
+ \le\left(\frac32+\frac{27}{2}\right)D^{5/2}
+ =15D^{5/2}.
+\]
+\end{proof}
+
+\begin{lemma}[backward-window injection]
+\label{thm:nw-w-injection}
+For every integer $H\ge1$,
+\begin{equation}\label{eq:nw-w-injection}
+ \sum_{u\in I_p}\binom{W_H(u)}2\le Q_p(2H).
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:nw-W-L2}
+ \sum_{u\in I_p}W_H(u)^2
+ \le\left(\frac92+54\sqrt2\right)H^{5/2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+An object counted by $\binom{W_H(u)}2$ is a uniquely ordered pair
+\[
+ H<h_1<h_2\le2H,
+ \qquad h_2\le u-1,
+ \qquad
+ \pi(u-h_1)=\pi(u)=\pi(u-h_2).
+\]
+Set
+\[
+ r=u-h_2,
+ \qquad
+ g_1=h_2-h_1,
+ \qquad
+ g_2=h_2.
+\]
+Then
+\[
+ r\ge1,
+ \qquad
+ 1\le g_1\le H-1,
+ \qquad
+ H<g_2\le2H,
+ \qquad
+ g_1<g_2,
+ \qquad
+ r+g_2=u\le M.
+\]
+Furthermore
+\[
+ r+g_1=u-h_1,
+ \qquad
+ r+g_2=u,
+\]
+so
+\[
+ \pi(r)=\pi(r+g_1)=\pi(r+g_2).
+\]
+Thus $(r,g_1,g_2)$ is a valid object counted by $Q_p(2H)$.  The map is
+injective because its image recovers the source through
+\[
+ u=r+g_2,
+ \qquad
+ h_2=g_2,
+ \qquad
+ h_1=g_2-g_1.
+\]
+This proves~\eqref{eq:nw-w-injection}, including the ordered-pair and
+nonwrapping conventions.
+
+The first moment is
+\[
+ \sum_{u\in I_p}W_H(u)
+ =\sum_{H<h\le2H}R_h
+ \le3\sum_{h=H+1}^{2H}(h-1)
+ =\frac{9H^2-3H}{2}
+ \le\frac92H^2.
+\]
+Using $x^2=x+2\binom x2$, the injection, and
+Theorem~\ref{thm:sh-sigma-half},
+\begin{align*}
+ \sum_uW_H(u)^2
+ &\le \frac92H^2+2Q_p(2H)\\
+ &\le \frac92H^2
+      +2\cdot\frac{27}{4}(2H)^{5/2}\\
+ &=\frac92H^2+54\sqrt2\,H^{5/2}\\
+ &\le\left(\frac92+54\sqrt2\right)H^{5/2},
+\end{align*}
+which is~\eqref{eq:nw-W-L2}.
+\end{proof}
+
+\begin{theorem}[near-wall bound with $\eta=3/7$]
+\label{thm:nw-near-wall}
+For every prime $p\ge7$ and all integers $1\le D\le H$,
+\begin{equation}\label{eq:nw-main-explicit}
+ K_p(H,D)
+ \le C_{\rm nw}\,H D^{11/7},
+ \qquad
+ C_{\rm nw}
+ =\sqrt{15\left(\frac92+54\sqrt2\right)}.
+\end{equation}
+In particular,
+\[
+ K_p(H,D)\ll H D^{11/7}=H D^{2-3/7}
+\]
+uniformly in $p,H,D$, with no factor $p^\varepsilon$.
+\end{theorem}
+
+\begin{proof}
+We first rewrite the count at its midpoint.  A term of
+$K_p(H,D)$ consists of $(r,h,d)$ satisfying
+\[
+ 1\le d\le D,
+ \qquad
+ H<h\le2H-d,
+ \qquad
+ r+h+d\le M,
+\]
+and
+\[
+ \pi(r)=\pi(r+h)=\pi(r+h+d).
+\]
+Put $u=r+h$.  Then
+\[
+ r=u-h,
+ \qquad
+ r+h+d=u+d,
+\]
+and the event becomes
+\[
+ \pi(u-h)=\pi(u)=\pi(u+d).
+\]
+The boundary conditions become $u+d\le M$ and $h\le u-1$.  Conversely,
+these conditions recover the unique base $r=u-h$.  Hence
+\begin{equation}\label{eq:nw-midpoint-identity}
+ K_p(H,D)
+ =\sum_{1\le d\le D}\ \sum_{u\in Z_d}W_{H,d}(u).
+\end{equation}
+Since all summands are nonnegative and
+$W_{H,d}(u)\le W_H(u)$,
+\begin{equation}\label{eq:nw-midpoint-envelope}
+ K_p(H,D)\le\sum_{u\in I_p}\nu_D(u)W_H(u).
+\end{equation}
+
+Cauchy--Schwarz, Lemma~\ref{thm:nw-nu-identity}, and
+Lemma~\ref{thm:nw-w-injection} give
+\begin{align}
+ K_p(H,D)
+ &\le
+ \left(\sum_u\nu_D(u)^2\right)^{1/2}
+ \left(\sum_uW_H(u)^2\right)^{1/2}\notag\\
+ &\le
+ \sqrt{15\left(\frac92+54\sqrt2\right)}
+ H^{5/4}D^{5/4}\notag\\
+ &=C_{\rm nw}H^{5/4}D^{5/4}.
+ \label{eq:nw-cauchy-branch}
+\end{align}
+
+There is also a pointwise branch.  For fixed $u$, all positions counted by
+$W_H(u)$ lie in the interval
+\[
+ [\max(1,u-2H),\,u-H-1],
+\]
+which contains at most $H$ integers, all of projective color $\pi(u)$.
+The previously proved interval multiplicity estimate therefore gives
+\[
+ W_H(u)\le1+4H^{2/3}\le5H^{2/3}.
+\]
+Together with~\eqref{eq:nw-midpoint-envelope} and
+$S_1(D)\le\frac32D(D-1)$, this yields
+\begin{equation}\label{eq:nw-pointwise-branch}
+ K_p(H,D)
+ \le\left(1+4H^{2/3}\right)S_1(D)
+ \le\frac{15}{2}H^{2/3}D^2.
+\end{equation}
+
+The two powers cross at $D=H^{7/9}$.  If $D\le H^{7/9}$, then
+$D^{3/7}\le H^{1/3}$, and~\eqref{eq:nw-pointwise-branch} gives
+\[
+ K_p(H,D)
+ \le\frac{15}{2}H^{2/3}D^2
+ \le\frac{15}{2}H D^{11/7}.
+\]
+If $D\ge H^{7/9}$, then $D^{9/28}\ge H^{1/4}$, and
+\eqref{eq:nw-cauchy-branch} gives
+\[
+ K_p(H,D)
+ \le C_{\rm nw}H^{5/4}D^{5/4}
+ \le C_{\rm nw}H D^{11/7}.
+\]
+Since $C_{\rm nw}>15/2$, the two cases prove
+\eqref{eq:nw-main-explicit}.
+\end{proof}
+
+\begin{remark}[position on the wall map]
+\label{rem:nw-wall-map}
+The proof retains the sharper two-branch estimate
+\begin{equation}\label{eq:nw-sharp-min}
+ K_p(H,D)
+ \le\min\left\{
+ \frac{15}{2}H^{2/3}D^2,
+ \ C_{\rm nw}H^{5/4}D^{5/4}
+ \right\}.
+\end{equation}
+The theorem packages this minimum into the near-wall form
+$H D^{2-\eta}$ with the unconditional gain $\eta=3/7$.
+
+There are also the global containments
+\[
+ K_p(H,D)\le Q_p(2H)
+ \le\frac{27}{4}(2H)^{5/2}
+ =27\sqrt2\,H^{5/2},
+\]
+and, from the abstract $H^2\log H$ theorem with $R_d\le3d$,
+\[
+ K_p(H,D)\le Q_p(2H)
+ \le66(2H)^2\bigl(1+\log(2H)\bigr)
+ =264H^2\bigl(1+\log(2H)\bigr).
+\]
+Thus the near-wall theorem is a local strip estimate, not a replacement
+for the sharp global bound.  At the power scale $D=H^\alpha$, its exponent
+is $1+11\alpha/7$.  It improves on the $H^{5/2}$ global exponent for
+$\alpha<21/22$, and it gives a power saving over $H^2\log H$ for
+$\alpha<7/11$; at $\alpha=7/11$ it gives $O(H^2)$ and removes the global
+logarithm.  For larger $\alpha$, the $H^2\log H$ theorem is the stronger
+global estimate.  The new information is therefore concentrated exactly
+in the near-diagonal regime where two collision gaps are close.
+\end{remark}
+
+% Ledger source: Q6666 (repaired conditional p^{1/6} coincidence theorem
+% after the qP16 audit; audit Q6639).  The \documentclass wrapper and
+% preamble of the source are stripped; its macros \Fp and \Ncoinc are
+% inlined as \mathbb F_p and N_{\mathrm{coinc}}; its q_h, delta_h, S=S_H,
+% A_1,A_2,A_4, and error E are renamed \mathfrak q_h, f_h, \mathcal S_H,
+% \Sigma_1,\Sigma_2,\Sigma_4, and Err to match the shared notation of this
+% section (see the audit-trail header).
+\subsection{A conditional $p^{1/6}$ coincidence theorem}
+\label{sec:p16-coincidence}
+
+Recall from Subsection~\ref{gram-subsection} the nonwrapping windows
+$I_h=\{1,\ldots,M-h\}$ with $L_h=|I_h|=p-2-h$, the pole product
+$\mathfrak q_h(X)=\prod_{j=1}^h(X+j)$, the normalized gap function
+$f_h=N_h/\mathfrak q_h^3$ (denoted $\delta_h$ in the source), the
+coincidence counts $R_{h,k}$ and
+$N_{\mathrm{coinc}}(H)=\sum_{1\le h,k\le H}R_{h,k}$, and
+$\mathcal S_H=\sum_{h=1}^HL_h$.  From $L_h=p-2-h$,
+\[
+ \mathcal S_H=pH-\frac{H^2+5H}{2}.
+\]
+Clearing denominators in $f_h(x)=f_k(y)$ gives the affine curve
+\[
+ F_{h,k}(X,Y)=N_h(X)\,\mathfrak q_k(Y)^3-N_k(Y)\,\mathfrak q_h(X)^3=0,
+\]
+of bidegree at most $(3h,3k)$.
+
+\paragraph{The census hypothesis.}
+\textbf{CENSUS$_H$:}
+\begin{itemize}
+\item For all $1\le h<k\le H$, $F_{h,k}$ is absolutely irreducible over
+$\mathbb F_p$.
+\item For all $2\le h\le H$, $F_{h,h}$ has exactly two components:
+the diagonal $X=Y$ and an absolutely irreducible component
+$\mathcal H_h$.
+\item For every $h\le H$, all finite critical points of $f_h$ are
+simple and have distinct critical values; for $h\ne k$, the finite
+branch loci of $f_h$ and $f_k$ are disjoint away from $\{0,\infty\}$.
+\item $p>p_0(H)$, so all degrees, separability, and local singularity
+types are as in characteristic zero.
+\end{itemize}
+The census refines the per-gap strata
+$\mathrm{GOOD\mbox{-}POLE}_h(p)$ and
+$\mathrm{GOOD\mbox{-}CRIT}_h(p)$ of
+Subsection~\ref{gram-subsection} to pairwise data.
+
+\begin{remark}[the $h=1$ exception]\label{rem:p16-h1}
+For $h=1$ one has $(Y+1)^3=(X+1)^3$, which splits into three lines.
+Thus $h=1$ is handled separately and not included in the census
+clause.
+\end{remark}
+
+\paragraph{Complete generic singularity census and genus bounds.}
+A curve of bidegree $(a,b)$ in $\mathbb P^1\times\mathbb P^1$ has
+arithmetic genus $(a-1)(b-1)$.  For the distinct-gap curve $F_{h,k}$,
+$(a,b)=(3h,3k)$, so
+\[
+ g_{\mathrm{arith}}=(3h-1)(3k-1).
+\]
+There are $hk$ finite pole-pole points $(X=-i,\,Y=-j)$.  Writing local
+parameters $u=X+i$ and $v=Y+j$, the local equation has the form
+\[
+ u^3A(u,v)-v^3B(u,v)=0,
+ \qquad A(0,0)B(0,0)\ne0.
+\]
+Because $p\ne3$ and the reduction is good, its tangent cone is the
+product of three distinct lines.  Thus every finite pole-pole point is
+an ordinary triple point and has delta-invariant $3$.
+
+There is one further singular point at infinity, namely
+$([1:0],[1:0])$ in $\mathbb P^1\times\mathbb P^1$.  With local
+parameters $u=1/X$ and $v=1/Y$, the exact order-three zeros of $f_h$
+and $f_k$ at infinity give
+\[
+ a_hu^3-a_kv^3+\text{terms of order at least four}=0,
+ \qquad a_ha_k\ne0.
+\]
+This is again an ordinary triple point, with delta-invariant $3$.
+Under CENSUS$_H$ there are no other singularities: a regular affine
+singularity would give critical points of $f_h$ and $f_k$ with a
+common finite branch value.
+
+Consequently the total singular delta contribution is $3hk+3$, and the
+normalization genus is
+\[
+\begin{aligned}
+ g_{h,k}
+ &=(3h-1)(3k-1)-3hk-3\\
+ &=6hk-3h-3k-2\\
+ &\le6hk.
+\end{aligned}
+\]
+This agrees with the exact Riemann--Hurwitz genus calculation.
+
+For the same-gap nonlinear component $\mathcal H_h$, division by the
+diagonal lowers the bidegree to $(3h-1,3h-1)$, so its arithmetic genus
+is $(3h-2)^2$.  Its complete generic singularity census is as follows.
+\begin{itemize}
+\item At the $h(h-1)$ finite pole-pole points with $i\ne j$, the
+diagonal is absent and $\mathcal H_h$ has an ordinary triple point, of
+delta-invariant $3$.
+\item At the $h$ diagonal pole points $(-i,-i)$, the full tangent cone
+is proportional to $u^3-v^3$.  Removing the diagonal factor $u-v$
+leaves two distinct tangent lines, so $\mathcal H_h$ has an ordinary
+node, of delta-invariant $1$.
+\item At $([1:0],[1:0])$, removing the diagonal factor from the
+ordinary triple point likewise leaves an ordinary node, of
+delta-invariant $1$.
+\item At each of the $4h-4$ simple finite critical points, the
+diagonal and $\mathcal H_h$ meet transversely.  These are ordinary
+nodes of the full reducible curve $F_{h,h}=0$, but they are smooth
+points of $\mathcal H_h$.  There are no further singularities under
+CENSUS$_H$.
+\end{itemize}
+Thus $\mathcal H_h$ has exactly $h(h-1)$ ordinary triple points and
+$h+1$ ordinary nodes, and
+\[
+\begin{aligned}
+ g(\mathcal H_h)
+ &=(3h-2)^2-3h(h-1)-(h+1)\\
+ &=6h^2-10h+3\\
+ &\le6h^2.
+\end{aligned}
+\]
+
+\begin{lemma}[complete point count via normalization]
+\label{lem:p16-pointcount}
+Let $\mathcal C$ be a distinct-gap component, or let
+$\mathcal C=\mathcal H_h$ with $k=h$, and let
+$\nu:\widetilde{\mathcal C}\to\mathcal C$ be its smooth projective
+normalization.  Then
+\[
+ \#\mathcal C(\mathbb F_p)
+ \le p+1+12hk\sqrt p+36(hk)^2 .
+\]
+\end{lemma}
+
+\begin{proof}
+The normalization genus satisfies
+$g(\widetilde{\mathcal C})\le6hk$.  Therefore Weil on the smooth
+projective normalization gives
+\[
+ \#\widetilde{\mathcal C}(\mathbb F_p)
+ \le p+1+2g(\widetilde{\mathcal C})\sqrt p
+ \le p+1+12hk\sqrt p .
+\]
+The normalization map is an isomorphism over the smooth locus of
+$\mathcal C$.  Hence
+\[
+ \#\mathcal C(\mathbb F_p)
+ \le\#\widetilde{\mathcal C}(\mathbb F_p)
+   +\#\operatorname{Sing}(\mathcal C)(\mathbb F_p).
+\]
+A Bezout bound gives fewer than $36(hk)^2$ geometric singular points,
+and therefore also
+$\#\operatorname{Sing}(\mathcal C)(\mathbb F_p)<36(hk)^2$.  Combining
+the two inequalities proves the claim.
+\end{proof}
+
+\paragraph{Pairwise bounds.}
+For $h\ne k$,
+\[
+ R_{h,k}
+ \le\frac{L_hL_k}{p}
+ +12hk\sqrt p
+ +36(hk)^2
+ +4hk .
+\]
+For $2\le h\le H$,
+\[
+ R_{h,h}
+ \le\frac{L_h^2}{p}
+ +L_h
+ +12h^2\sqrt p
+ +36h^4
+ +5h .
+\]
+For $h=1$,
+\[
+ R_{1,1}\le3L_1\le\frac{L_1^2}{p}+L_1+p .
+\]
+
+\paragraph{Summation.}
+Let
+\[
+ \Sigma_1=\sum_{h\le H}h=\frac{H(H+1)}2,
+ \qquad
+ \Sigma_2=\sum_{h\le H}h^2=\frac{H(H+1)(2H+1)}6 .
+\]
+Summing the pairwise bounds gives
+\[
+ N_{\mathrm{coinc}}(H)
+ \le\frac{\mathcal S_H^2}{p}+\mathcal S_H+p
+ +12\Sigma_1^2\sqrt p
+ +36\Sigma_2^2
+ +4\Sigma_1^2
+ +5\Sigma_1 .
+\]
+Using $\Sigma_1\le H^2$ and $\Sigma_2\le H^3$,
+\[
+ N_{\mathrm{coinc}}(H)
+ \le\frac{\mathcal S_H^2}{p}+\mathcal S_H+p
+ +12H^4\sqrt p
+ +36H^6
+ +4H^4
+ +5H^2 .
+\]
+
+\begin{theorem}[conditional $p^{1/6}$ coincidence bound]
+\label{thm:p16-main}
+Assume CENSUS$_H$.  For
+\[
+ H\le c_0\,p^{1/6},
+ \qquad c_0=\tfrac14,
+ \qquad p\ge4096,
+\]
+one has
+\[
+ \boxed{\
+ N_{\mathrm{coinc}}(H)\le\frac{\mathcal S_H^2}{p}+4\mathcal S_H.\ }
+\]
+\end{theorem}
+
+\begin{proof}
+Write
+$\mathrm{Err}=12\Sigma_1^2\sqrt p+36\Sigma_2^2+4\Sigma_1^2+5\Sigma_1$
+for the total error term above.  Since $\mathcal S_H\ge pH/2$,
+\[
+ \frac{\mathrm{Err}}{\mathcal S_H}
+ \le24\frac{H^3}{\sqrt p}
+ +72\frac{H^5}{p}
+ +8\frac{H^3}{p}
+ +10\frac{H}{p}.
+\]
+For $H\le p^{1/6}/4$ this is $<1/2$.  Also $p\le2\mathcal S_H$.  Thus
+\[
+ N_{\mathrm{coinc}}(H)
+ \le\frac{\mathcal S_H^2}{p}+\mathcal S_H+p+\mathrm{Err}
+ \le\frac{\mathcal S_H^2}{p}+4\mathcal S_H. \qedhere
+\]
+\end{proof}
+
+\paragraph{Additive-completion audit (with logs).}
+This paragraph concerns only the off-diagonal pairs $h\ne k$.  For an
+interval $I\subset\mathbb F_p$, with the standard unnormalized Fourier
+transform,
+\[
+ \sum_a|\widehat{1_I}(a)|\le p(2+\log p).
+\]
+For a distinct-gap normalization $\widetilde X_{h,k}$, assume the
+following standard conductor hypotheses for every nonzero completion
+frequency $(a,b)$:
+\begin{itemize}
+\item $\widetilde X_{h,k}$ has good geometrically irreducible
+reduction;
+\item the pulled-back additive phase $aX+bY$ is nonconstant and is not
+of Artin--Schreier form $G^p-G+c$ in
+$\mathbb F_p(\widetilde X_{h,k})$;
+\item the total conductor of the corresponding rank-one additive sheaf
+is at most $40hk$.
+\end{itemize}
+Under these hypotheses the Bombieri--Weil estimate gives
+\[
+ \left|\sum_{P\in\widetilde X_{h,k}(\mathbb F_p)}
+ e_p\bigl(aX(P)+bY(P)\bigr)\right|
+ \le40hk\sqrt p .
+\]
+After transferring between the normalization and the singular model
+and accounting for the boundary points, additive completion gives, for
+$h\ne k$,
+\[
+ R_{h,k}
+ \le\frac{L_hL_k}{p}
+ +64hk\sqrt p\,(2+\log p)^2
+ +72(hk)^2 .
+\]
+The diagonal terms are not covered by this irreducible off-diagonal
+completion formula.  They are restored separately from the direct
+pairwise bounds:
+\[
+ R_{h,h}
+ \le\frac{L_h^2}{p}
+ +L_h
+ +12h^2\sqrt p
+ +36h^4
+ +5h
+ \qquad(2\le h\le H),
+\]
+and $R_{1,1}\le L_1^2/p+L_1+p$.  Thus, writing
+$\Sigma_4=\sum_{h\le H}h^4$, the completed off-diagonal sum plus the
+restored diagonal contribution satisfies
+\[
+\begin{aligned}
+ N_{\mathrm{coinc}}(H)
+ \le{}&\frac{\mathcal S_H^2}{p}+\mathcal S_H+p
+ +64\Sigma_1^2\sqrt p\,(2+\log p)^2
+ +72\Sigma_2^2\\
+ &+12\Sigma_2\sqrt p+36\Sigma_4+5\Sigma_1 .
+\end{aligned}
+\]
+In particular, using $\Sigma_1\le H^2$, $\Sigma_2\le H^3$, and
+$\Sigma_4\le H^5$, the dominant completion error is
+\[
+ \ll H^4\sqrt p\,(2+\log p)^2+H^6 .
+\]
+Comparing with $\mathcal S_H\asymp pH$, we require
+\[
+ H^3(2+\log p)^2/\sqrt p\ll1 .
+\]
+Thus the honest completion range is
+\[
+ \boxed{\
+ H\le c\,p^{1/6}/(2+\log p)^{2/3}.\ }
+\]
+
+\begin{remark}\label{rem:p16-log}
+Adjusting numerical constants alone cannot remove the logarithmic
+loss; smoothing, an $L^2$ large-sieve input, or cancellation among
+frequencies could alter it.  The full $p^{1/6}$ range of
+Theorem~\ref{thm:p16-main} holds because the windows are co-short and
+can be enlarged directly.
+\end{remark}
+
+\begin{proposition}[small-gap corollary]\label{thm:p16-smallgap}
+Under Theorem~\ref{thm:p16-main},
+\[
+ \sum_{h\le H}C_h
+ \le\frac{\mathcal S_H}{p}+2\sqrt{\mathcal S_H}
+ \le H+2\sqrt{pH}.
+\]
+Hence
+\[
+ \sum_{h\le H}C_h\le H+\sqrt{(4+o(1))\,pH}.
+\]
+\end{proposition}
+
+\begin{remark}[limitation]\label{rem:p16-limitation}
+The trivial bound gives $\sum_{h\le H}C_h\le\frac32H^2$.  This
+dominates until $H\sim p^{1/3}$.  Since
+Theorem~\ref{thm:p16-main} only holds up to $p^{1/6}$, it does not
+improve the exponent.  Its value is structural: it certifies the
+$\mathcal S_H^2/p+O(\mathcal S_H)$ coincidence shape.
+\end{remark}
+
+\paragraph{Assumptions beyond CENSUS$_H$.}
+\begin{enumerate}
+\item Casoratian identity linking $\Delta_{r,h}$ and $f_h(r)$.
+\item Degree data $\deg N_h=3(h-1)$.
+\item Honest order-three finite poles and the order-three zero at
+infinity.
+\item The complete generic singularity census used in the genus
+calculation.
+\item Good reduction threshold $p_0(H)$.
+\item Weil bound for smooth projective normalizations over
+$\mathbb F_p$.
+\item Bezout bound on singularities.
+\item (Audit only) Bombieri additive bound, the stated conductor
+hypotheses, and the interval Fourier bound.
+\item Explicit handling of $h=1$ outside the census.
+\end{enumerate}
+
+% Ledger source: Q6660 (window-return blocks; audit Q6675).
+% MANDATORY FRAMING EDIT: the two statements below are a SECOND PROOF of
+% the banked sigma=1/3 window multiplicity lemma; they are propositions,
+% not new theorems, and only the restart-transfer mechanism is claimed
+% as new.
+\subsection{A second proof of the window multiplicity lemma via restart
+transfer}
+\label{sec:br-second-proof}
+
+The window multiplicity lemma -- the $\sigma=1/3$ estimate of
+Section~\ref{sec:orbit-energy}, in the form
+\[
+ \#\{n\in J:\pi(n)=v\}\le1+4|J|^{2/3}
+\]
+for every interval $J$ of regular indices and every
+$v\in\mathbb P^1(\mathbb F_p)$ -- is already banked in the main text,
+where it received its first proof.  This subsection records a
+\emph{second, independent proof} of that lemma.  Nothing below is
+claimed as a new theorem: the two statements are the banked lemma and
+its base-point specialization, recovered with the slightly smaller
+leading constant $3^{4/3}/2=2.163\ldots$ in place of $4$.  What is
+claimed as new is only the \emph{mechanism}: the restart transfer is
+applied to an arbitrary nonzero homogeneous solution
+$y_n=\alpha c_n-\beta b_n$ of the Ap\'ery recurrence, whose zero set is
+exactly the fiber $\{n:\pi(n)=v\}$ -- a homogeneous zero-fiber input
+which requires no base point on the fiber and no companion-orbit
+bookkeeping.  The quantity $d_D(r)$ below is the window multiplicity
+denoted $d_\Delta(r)$ in the main text and $\nu_D(u)$ in
+Subsection~\ref{sec:nw-near-wall}.
+
+\begin{proposition}[uniform return multiplicity from a fixed base; second proof]
+\label{thm:br-base-return}
+Let $p\geq 7$ be prime, let
+\[
+ I_p=\{1,\ldots,p-2\},
+ \qquad
+ \pi(n)=[b_n:c_n]\in\mathbb P^1(\mathbb F_p),
+\]
+and suppose that
+\[
+ 1\leq r,
+ \qquad
+ 1\leq D,
+ \qquad
+ r+D\leq p-2.
+\]
+Put
+\[
+ d_D(r)=\#\{1\leq d\leq D:\pi(r+d)=\pi(r)\}.
+\]
+Then
+\begin{equation}
+ d_D(r)
+ \leq
+ \min_{1\leq Y\leq D}
+ \left\{
+   \frac32Y(Y-1)
+   +\left\lfloor\frac{D}{Y+1}\right\rfloor
+ \right\}.
+ \label{eq:br-base-min}
+\end{equation}
+In particular,
+\begin{equation}
+ d_D(r)
+ \leq
+ \frac{3^{4/3}}2D^{2/3}
+ +\frac{3^{2/3}}2D^{1/3},
+ \label{eq:br-base-explicit}
+\end{equation}
+and hence
+\[
+ \max_{1\leq r\leq p-2-D}d_D(r)\ll D^{2/3}
+\]
+with an absolute implied constant.
+\end{proposition}
+
+\begin{proof}
+For the fixed base $r$, define an absolute-index solution
+\[
+ y^{(r)}_n=b_r c_n-c_r b_n.
+\]
+It satisfies the Apery recurrence because it is a fixed linear
+combination of the two solutions $b$ and $c$.  Moreover,
+\[
+ y^{(r)}_r=0,
+ \qquad
+ y^{(r)}_{r+1}
+ =b_r c_{r+1}-b_{r+1}c_r
+ =\frac1{(r+1)^3}\neq0,
+\]
+where the last equality is the Casoratian identity.  Thus
+$y^{(r)}$ is not the zero solution.  Since $(b_n,c_n)$ is nonzero on
+$I_p$, one also has
+\begin{equation}
+ y^{(r)}_n=0
+ \quad\Longleftrightarrow\quad
+ \pi(n)=\pi(r).
+ \label{eq:br-return-zero}
+\end{equation}
+
+For any nonzero homogeneous solution $y$, put
+\[
+ X_n(y)=[n^3y_{n-1}:y_n].
+\]
+A direct use of the recurrence gives
+\begin{equation}
+ X_{n+1}(y)=M_nX_n(y),
+ \qquad
+ M_n=
+ \begin{pmatrix}
+ 0&(n+1)^6\\
+ -1&P(n)
+ \end{pmatrix}.
+ \label{eq:br-state-transfer}
+\end{equation}
+Indeed,
+\[
+ M_n
+ \binom{n^3y_{n-1}}{y_n}
+ =
+ \binom{(n+1)^6y_n}{-n^3y_{n-1}+P(n)y_n}
+ =
+ \binom{(n+1)^6y_n}{(n+1)^3y_{n+1}},
+\]
+which represents $[(n+1)^3y_n:y_{n+1}]$.
+All matrices used below are invertible because their determinants are
+$(n+1)^6\neq0$ in the regular nonwrapping range.  Consequently a
+nonzero solution cannot have two consecutive zeros.  If $y_z=0$ and
+there is a later zero in the regular range, then
+\[
+ X_z(y)=[1:0],
+ \qquad
+ X_{z+1}(y)=M_z[1:0]=[0:1].
+\]
+Thus every zero resets the state to the fixed point $[0:1]$ one step
+later.
+
+Let two consecutive zeros occur at $z$ and $z+h$.  Then $h\geq2$, and
+using the proved transfer formula with the absolute start $z+1$ gives
+\begin{align*}
+ X_{z+h}(y)
+ &=G_{h-1}(z+1)[0:1]\\
+ &=\bigl[(z+h)^6U_{h-2}(z+1):U_{h-1}(z+1)\bigr].
+\end{align*}
+The left side is $[1:0]$.  Since the transfer product is invertible,
+the displayed top coordinate is nonzero, and therefore
+\begin{equation}
+ U_{h-1}(z+1)=0.
+ \label{eq:br-U-gap}
+\end{equation}
+By the identity $N_h(X)=U_{h-1}(X+1)$, this is
+\begin{equation}
+ N_h(z)=0.
+ \label{eq:br-N-gap}
+\end{equation}
+Notice that all indices here are absolute indices.
+
+List the zeros of $y^{(r)}$ in $[r,r+D]$ as
+\[
+ r=n_0<n_1<\cdots<n_q,
+\]
+so that $q=d_D(r)$ by \eqref{eq:br-return-zero}.  Write
+\[
+ e_i=n_i-r,
+ \qquad
+ h_i=n_{i+1}-n_i=e_{i+1}-e_i.
+\]
+For a fixed gap length $h$, equation \eqref{eq:br-N-gap} says that each
+corresponding relative start $e_i$ is a root of
+\[
+ F_{r,h}(E)=N_h(r+E).
+\]
+Translation is an automorphism of $\mathbb F_p[E]$.  Hence the proved
+nonvanishing of $N_h$ in the range $h<p$ implies that $F_{r,h}$ is not
+the zero polynomial, and
+\[
+ \deg F_{r,h}\leq3(h-1).
+\]
+Thus, for each fixed $h$, at most $3(h-1)$ of the gaps can have length
+$h$.
+
+Fix $Y$ with $1\leq Y\leq D$.  The number of gaps with $h_i\leq Y$ is
+at most
+\[
+ \sum_{h=2}^Y3(h-1)=\frac32Y(Y-1).
+\]
+Every remaining gap has length at least $Y+1$, while
+\[
+ \sum_{i=0}^{q-1}h_i=n_q-r\leq D.
+\]
+Hence the number of remaining gaps is at most
+\[
+ \left\lfloor\frac{D}{Y+1}\right\rfloor.
+\]
+Since $q$ is exactly the total number of gaps, this proves
+\eqref{eq:br-base-min}.  This argument includes $D=1$: take $Y=1$,
+which gives $d_1(r)=0$.
+
+For the explicit estimate, put
+\[
+ x=(D/3)^{1/3},
+ \qquad
+ Y=\lceil x\rceil.
+\]
+Then $1\leq Y\leq D$, $Y(Y-1)\leq x(x+1)$, and $Y+1>x$.  Therefore
+\begin{align*}
+ d_D(r)
+ &\leq\frac32x(x+1)+\frac{D}{x}\\
+ &=\frac92x^2+\frac32x\\
+ &=\frac{3^{4/3}}2D^{2/3}
+   +\frac{3^{2/3}}2D^{1/3}.
+\end{align*}
+This proves \eqref{eq:br-base-explicit}.
+\end{proof}
+
+\begin{proposition}[window multiplicity lemma; second proof via restart transfer]
+\label{thm:br-projective-fiber}
+Let $p\geq7$ be prime, let $J$ be an interval of $H$ consecutive
+integers contained in $I_p$, and let $v\in\mathbb P^1(\mathbb F_p)$.
+If $H=1$, then
+\[
+ \#\{n\in J:\pi(n)=v\}\leq1.
+\]
+If $H\geq2$, then
+\begin{equation}
+ \#\{n\in J:\pi(n)=v\}
+ \leq
+ 1+
+ \min_{1\leq Y\leq H-1}
+ \left\{
+   \frac32Y(Y-1)
+   +\left\lfloor\frac{H-1}{Y+1}\right\rfloor
+ \right\}.
+ \label{eq:br-fiber-min}
+\end{equation}
+Consequently,
+\begin{equation}
+ \#\{n\in J:\pi(n)=v\}
+ \leq
+ 1+\frac{3^{4/3}}2(H-1)^{2/3}
+  +\frac{3^{2/3}}2(H-1)^{1/3},
+ \label{eq:br-fiber-explicit}
+\end{equation}
+and in particular the fiber size is $O(H^{2/3})$, uniformly in
+$p$, $J$, and $v$.
+\end{proposition}
+
+\begin{proof}
+Write the projective point in the same coordinate order as the orbit:
+\[
+ v=[\alpha:\beta],
+ \qquad
+ \pi(n)=[b_n:c_n].
+\]
+Define
+\[
+ y_n=\alpha c_n-\beta b_n.
+\]
+This is a homogeneous solution of the Apery recurrence.  It is not the
+zero solution, since
+\[
+ y_0=-\beta,
+ \qquad
+ y_1=\alpha-5\beta,
+\]
+and simultaneous vanishing would imply $\alpha=\beta=0$.  Also the
+Casoratian identity implies $(b_n,c_n)\neq(0,0)$ on $I_p$.  Therefore
+\begin{equation}
+ y_n=0
+ \quad\Longleftrightarrow\quad
+ \alpha c_n-\beta b_n=0
+ \quad\Longleftrightarrow\quad
+ \pi(n)=v.
+ \label{eq:br-fiber-zero}
+\end{equation}
+This includes the two extreme fibers: $v=[1:0]$ gives $y=c$, while
+$v=[0:1]$ gives $y=-b$.
+
+List the zeros of $y$ in $J$ as
+\[
+ z_1<z_2<\cdots<z_k.
+\]
+If $k\leq1$, the result is immediate.  For each $1\leq i<k$, put
+\[
+ h_i=z_{i+1}-z_i.
+\]
+The absolute-index reset computation in the proof of
+Proposition~\ref{thm:br-base-return} applies to this arbitrary nonzero
+homogeneous solution and gives
+\[
+ h_i\geq2,
+ \qquad
+ N_{h_i}(z_i)=0.
+\]
+For a fixed $h$, the starts $z_i$ are distinct roots of the nonzero
+polynomial $N_h$, whose degree is at most $3(h-1)$.  Thus at most
+$3(h-1)$ gaps have length $h$.
+
+Fix $Y$ with $1\leq Y\leq H-1$.  The number of gaps of length at most
+$Y$ is at most
+\[
+ \sum_{h=2}^Y3(h-1)=\frac32Y(Y-1).
+\]
+Every other gap has length at least $Y+1$, and
+\[
+ \sum_{i=1}^{k-1}h_i=z_k-z_1\leq H-1.
+\]
+Hence the number of long gaps is at most
+\[
+ \left\lfloor\frac{H-1}{Y+1}\right\rfloor.
+\]
+Since $k$ is one plus the number of gaps, this proves
+\eqref{eq:br-fiber-min}.  The argument does not require the left endpoint
+of $J$ to be a zero; the additive $1$ accounts for the first zero of the
+fiber wherever it occurs in $J$.  A zero at the right endpoint of $J$
+or at $p-2$ is harmless, since no reset after the terminal zero is used.
+
+Finally apply the explicit estimate from
+Proposition~\ref{thm:br-base-return} with $D=H-1$ and add $1$.  This gives
+\eqref{eq:br-fiber-explicit}.
+\end{proof}
+
+\begin{remark}[byproducts of the second proof]\label{rem:br-byproducts}
+The restart-transfer proof yields four small refinements over the first
+proof, all visible in the statements above: (i) it exposes the absolute
+shift $F_{r,h}(E)=N_h(r+E)$, so the gap polynomial enters through a
+translation automorphism of $\mathbb F_p[E]$ rather than through
+relative re-indexing; (ii) the minimum over $Y$ permits $Y=1$, and the
+argument includes $D=1$; (iii) it separates the base-row count
+$d_D(r)$, which carries no additive $+1$, from the general fiber
+count, which does; and (iv) it gives the leading constant $3^{4/3}/2$.
+\end{remark}
