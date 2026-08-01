@@ -1589,5 +1589,182 @@ theorem quadAlt_tsum_eq_coeff_integral :
     exact (hterm n).symm
   rw [← hfinal.tsum_eq]
 
+/-! ## Layer D bricks grafted from the sandbox agent (verified numerically) -/
+
+theorem quadAltW0_hasDerivAt {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
+    HasDerivAt W0 (-2 * Real.log (t / (2 - t)) / t) t := by
+  have hdlog : HasDerivAt (fun s : ℝ => dilog (s / 2)) (-Real.log (1 - t / 2) / (t / 2) * (1 / 2)) t := by
+    have hmid0 : 0 < t / 2 := by positivity
+    have hmid1 : t / 2 < 1 := by linarith
+    have hd := dilog_hasDerivAt hmid0 hmid1
+    have hhalf : HasDerivAt (fun s : ℝ => s / 2) (1 / 2) t := by
+      simpa using (hasDerivAt_id t).div_const 2
+    have hcomp := HasDerivAt.comp (h := fun s : ℝ => s / 2) t hd hhalf
+    convert hcomp using 1
+  have hlog2 : HasDerivAt (fun s : ℝ => Real.log (s / 2) ^ 2) (2 * Real.log (t / 2) * (1 / t)) t := by
+    have hlogd : HasDerivAt (fun s : ℝ => Real.log (s / 2)) (1 / t) t := by
+      have hd1 : HasDerivAt (fun s : ℝ => s / 2) (1 / 2) t := by
+        simpa using (hasDerivAt_id t).div_const 2
+      have hl := Real.hasDerivAt_log (ne_of_gt (by positivity : 0 < t / 2))
+      have hcomp := HasDerivAt.comp (h := fun s : ℝ => s / 2) t hl hd1
+      convert hcomp using 1
+      field_simp
+    have hp := hlogd.pow 2
+    convert hp using 1
+    all_goals norm_num
+    all_goals field_simp
+    all_goals ring
+  unfold W0
+  have hconst : HasDerivAt (fun _ : ℝ => Real.pi ^ 2 / 6) 0 t := hasDerivAt_const _ _
+  have hmain : HasDerivAt (fun s : ℝ => Real.pi ^ 2 / 6 - 2 * dilog (s / 2) - Real.log (s / 2) ^ 2)
+      (0 - 2 * (-Real.log (1 - t / 2) / (t / 2) * (1 / 2)) - 2 * Real.log (t / 2) * (1 / t)) t := by
+    convert (hconst.sub (hdlog.const_mul 2)).sub hlog2 using 1
+  have hlogcomb : Real.log (1 - t / 2) - Real.log (t / 2) = -Real.log (t / (2 - t)) := by
+    rw [← Real.log_div (by linarith : 1 - t / 2 ≠ 0) (ne_of_gt (by positivity : 0 < t / 2))]
+    have hdiv' : (1 - t / 2) / (t / 2) = (t / (2 - t))⁻¹ := by
+      rw [← inv_div]
+      field_simp [ne_of_gt ht0, ne_of_gt (by positivity : 0 < t / 2),
+        ne_of_gt (by linarith : 0 < 2 - t)]
+    rw [hdiv']
+    exact Real.log_inv (t / (2 - t))
+  have hD : 0 - 2 * (-Real.log (1 - t / 2) / (t / 2) * (1 / 2)) - 2 * Real.log (t / 2) * (1 / t)
+      = -2 * Real.log (t / (2 - t)) / t := by
+    have hA' : (t / 2)⁻¹ * (1 / 2) = t⁻¹ := by
+      ring_nf
+    have hlogA : (-Real.log (1 - t / 2)) / (t / 2) * (1 / 2) = (-Real.log (1 - t / 2)) / t := by
+      calc
+        (-Real.log (1 - t / 2)) / (t / 2) * (1 / 2) = (-Real.log (1 - t / 2)) * ((t / 2)⁻¹ * (1 / 2)) := by
+          rw [div_eq_mul_inv]
+          rw [mul_assoc]
+        _ = (-Real.log (1 - t / 2)) * t⁻¹ := by rw [hA']
+        _ = (-Real.log (1 - t / 2)) / t := by
+          simp [div_eq_mul_inv]
+    have hlogB : Real.log (t / 2) * (1 / t) = Real.log (t / 2) / t := by
+      simp [div_eq_mul_inv]
+    rw [hlogA]
+    rw [mul_assoc]
+    rw [hlogB]
+    field_simp [ne_of_gt ht0]
+    rw [show (2 - t) / 2 = 1 - t / 2 by ring]
+    calc
+      0 * t - -(2 * Real.log (1 - t / 2)) - 2 * Real.log (t / 2)
+          = 2 * (Real.log (1 - t / 2) - Real.log (t / 2)) := by
+            ring
+      _ = -(2 * Real.log (t / (2 - t))) := by
+            rw [hlogcomb]
+            ring
+  exact hmain.congr_deriv hD
+
+
+/-- `V(x) = log(x)²/2 − log(x)·log(1+x) − Li2(−x) − Z2/2` (Q6047 (4.1)). -/
+def quadAltV (x : ℝ) : ℝ :=
+  Real.log x ^ 2 / 2 - Real.log x * Real.log (1 + x) - dilog (-x) - Real.pi ^ 2 / 12
+
+/-- `V(1) = 0` (Q6047 (4.4), since `Li2(−1) = −Z2/2`). -/
+theorem quadAltV_one : quadAltV 1 = 0 := by
+  unfold quadAltV
+  rw [show Real.log (1 : ℝ) = 0 by norm_num]
+  have hneg : dilog (-1) = -Real.pi ^ 2 / 12 := by
+    exact RamanujanChallenge.P26.dilog_neg_one26
+  rw [hneg]
+  ring
+
+
+/-- `V'(x) = log(x)/(x(1+x))` for `0 < x < 1` (Q6047 (4.2)). -/
+theorem quadAltV_hasDerivAt {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt quadAltV (Real.log x / (x * (1 + x))) x := by
+  have hxne : x ≠ 0 := ne_of_gt hx0
+  have h1px : 0 < 1 + x := by positivity
+  -- log x 的导数
+  have hl := Real.hasDerivAt_log hxne
+  -- log(1+x) 的导数
+  have hl1 : HasDerivAt (fun y : ℝ => Real.log (1 + y)) (1 / (1 + x)) x := by
+    have hc : HasDerivAt (fun y : ℝ => 1 + y) 1 x := by
+      convert (hasDerivAt_const x 1).add (hasDerivAt_id x) using 1
+      simp
+    have hlog := Real.hasDerivAt_log (ne_of_gt h1px)
+    have hD : HasDerivAt (fun y : ℝ => Real.log (1 + y)) ((1 + x)⁻¹ * 1) x :=
+      HasDerivAt.comp (h := fun y : ℝ => 1 + y) x hlog hc
+    convert hD using 1
+    field_simp
+  -- dilog(−x) 的导数：dilog'(−x)·(−1) = −log(1+x)/x
+  have hdneg : HasDerivAt (fun y : ℝ => dilog (-y)) (-Real.log (1 + x) / x) x := by
+    have habs : |x| < 1 := by
+      rw [abs_of_pos hx0]
+      exact hx1
+    have hd2a : HasDerivAt dilog (Real.log (1 + x) / x) (-x) := by
+      simpa using dilog_hasDerivAt_of_abs_lt_one (by simpa using habs) (neg_ne_zero.mpr hxne)
+    have hneg : HasDerivAt (fun y : ℝ => -y) (-1) x := by
+      simpa using (hasDerivAt_id x).neg
+    have hc := HasDerivAt.comp (h := fun y : ℝ => -y) x hd2a hneg
+    convert hc using 1
+    field_simp
+  -- 组合：V = log²/2 − log·log(1+x) − dilog(−x) − π²/12
+  have h1 : HasDerivAt (fun y : ℝ => Real.log y ^ 2 / 2) (Real.log x / x) x := by
+    convert (hl.pow 2).div_const 2 using 1
+    all_goals norm_num
+    all_goals field_simp [hxne]
+    all_goals ring
+  have h2 : HasDerivAt (fun y : ℝ => Real.log y * Real.log (1 + y))
+      (Real.log (1 + x) / x + Real.log x / (1 + x)) x := by
+    convert (hl.mul hl1) using 1
+    field_simp [hxne]
+  have h3 : HasDerivAt (fun y : ℝ => dilog (-y)) (-Real.log (1 + x) / x) x := hdneg
+  have hconst : HasDerivAt (fun _ : ℝ => Real.pi ^ 2 / 12) 0 x := hasDerivAt_const _ _
+  unfold quadAltV
+  have hmain : HasDerivAt (fun y : ℝ => Real.log y ^ 2 / 2 - Real.log y * Real.log (1 + y) -
+        dilog (-y) - Real.pi ^ 2 / 12)
+      (Real.log x / x - (Real.log (1 + x) / x + Real.log x / (1 + x)) -
+        (-Real.log (1 + x) / x) - 0) x := by
+    convert (((h1.sub h2).sub h3).sub hconst) using 1
+  convert hmain using 1
+  field_simp [hxne, ne_of_gt h1px]
+  ring
+
+/-! ## Möbius bridge recovered from sandbox commit b766f72 (agent deleted it in 093d60c) -/
+
+def quadAltDminus (x : ℝ) : ℝ :=
+  -(Real.log (1 + x) + 2 * Real.log (1 - x)) / (1 + x) +
+    2 * (Real.log (1 - x) + 2 * Real.log (1 + x)) / (1 - x) +
+    2 * (Real.log (1 - x) + Real.log (1 + x)) / x
+
+/-- The Möbius identity (Q6047 (5.4)): `Dminus(t/(2−t))·2/(2−t)²`
+equals the `H1`/`H2` combination.  Pure algebra once the logarithms are
+expanded; used to transport the coefficient integral to the six `I_ab`. -/
+theorem quadAltMobius_identity {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
+    quadAltDminus (t / (2 - t)) * 2 / (2 - t) ^ 2 =
+      H1 t * (-2 / t - 2 / (1 - t) + 2 / (2 - t)) +
+      H2 t * (4 / t + 6 / (1 - t) - 5 / (2 - t)) := by
+  have h2mt : 2 - t ≠ 0 := by linarith
+  have h1mt : 1 - t ≠ 0 := by linarith
+  have htm1 : t - 1 ≠ 0 := by linarith
+  unfold quadAltDminus H1 H2
+  -- x = t/(2−t)；1−x = 2(1−t)/(2−t)；1+x = 2/(2−t)
+  have h1mx : 1 - t / (2 - t) = 2 * (1 - t) / (2 - t) := by
+    field_simp [h2mt]
+    ring
+  have h1px : 1 + t / (2 - t) = 2 / (2 - t) := by
+    field_simp [h2mt]
+    ring
+  -- 展开 log(1−x)、log(1+x) 的对数组合
+  have hlog1mx : Real.log (2 * (1 - t) / (2 - t)) = Real.log 2 + Real.log (1 - t) - Real.log (2 - t) := by
+    have h21 : 2 * (1 - t) ≠ 0 := by
+      exact mul_ne_zero (by norm_num) (ne_of_gt (by linarith : 0 < 1 - t))
+    have hdiv := Real.log_div h21 h2mt
+    have hmul := Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) h1mt
+    rw [hdiv, hmul]
+  have hlog1px : Real.log (2 / (2 - t)) = Real.log 2 - Real.log (2 - t) := by
+    have hdiv := Real.log_div (by norm_num : (2 : ℝ) ≠ 0) h2mt
+    rw [hdiv]
+  have hlog2mt : Real.log (2 - t) = Real.log 2 + Real.log (1 - t / 2) := by
+    have hdiv' : 2 - t = 2 * (1 - t / 2) := by ring
+    rw [hdiv']
+    rw [Real.log_mul]
+    · norm_num
+    · exact ne_of_gt (by linarith : 0 < 1 - t / 2)
+  rw [h1mx, h1px, hlog1mx, hlog1px, hlog2mt]
+  field_simp [h2mt, h1mt, ne_of_gt ht0, htm1]
+  ring
+
 end RamanujanChallenge.P24QuadAlt
 
