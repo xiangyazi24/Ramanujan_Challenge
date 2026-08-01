@@ -2299,3 +2299,15 @@ joint-value 对象); 最优无条件 row 界连 3/2 都复现不了; 命名 p^{3
 (三种语言: 组合/二阶矩/符号收缩)。与 crosscorr 实测 (dossier §20) 双源一致:
 绝对值路线全死, 幸存 = 符号谱 [GRAM-OP] (Wishart/random-frame 相容)。
 生产转段: q27 (经验定律塔+GRAM-OP 小节成稿, life4) + MESO 追加 (agent) 在做。
+
+## §116 — 最后一墙总攻部署 (08-01 夜)
+
+爸爸令: 攻最后一道墙。墙 = 超临界归一化 S_D/Q_D ≪ N @ D=√N·L (任意无界 L 即破 3/2)。
+双 session 五角度错开: cron=[MIDPOINT-AC]+clock-compression+box复核+NEAR-WALL审;
+life=restart推广到一般fiber(逐基 d_D(r))+primitive分解bootstrap+小d算术
+(codex sol max: CODEX_SPEC_lastwall.md; high: 地基实测 max_r d_D(r)/P_D/小d R_d)。
+cron 回赠 Abel: S_1(Y)≪Y^{2−δ} 全Y ⟹ ΣR_d/d²=O(1) ⟹ 去log; L²因子=窗口耦合层,
+组合内不可破 (Q6623 REFUTED), 需 variance 输入 = 分布式 d_D(r)。
+q22 判决: G_h 核心包 CONFIRMED, GRAM 需投影 3 端点线 + [GOOD-POLE]/[GOOD-CRIT]
+分层 (q28 在证: 窗口化 restart ⟹ Z(H)≪H^{2/3} ⟹ Bad(H)≪H^{5/3} 负担可忽略)。
+cron 第四定理 [NEAR-WALL-3/7]: K_p(H,D)≪HD^{11/7}; H²logH 敌审零缺陷可并卷。
