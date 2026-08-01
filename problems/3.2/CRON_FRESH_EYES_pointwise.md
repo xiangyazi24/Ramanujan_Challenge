@@ -529,3 +529,27 @@ b_r ≡ −(1/N)·Σ_{t=0}^{N−1} J(φψ^{t+r}, ψ^{N/2−t})²·J(φψ^{t−r}
 **AA.3 VERIFIED**：纤维数公式全 t 全 p；修正拉回 A_p(t)=H²/(1+x)^{p−1} 含非分裂纤维（F_p[√q]，x=(1−t+√q)/16；naive failures 表证明 (1+x)^{p−1} 因子真必需）；Mellin 反演对全部 r 复现 b_r，**端点混叠约定**成文（r≡0 处见 b_0+b_N，需减法修正——字符混叠非归一化错误）；**自扭排除：G 与 G_q 两迹在全部 8 素数 order ≤30 的 t-Kummer 自扭唯平凡**（[GAP-2]/Package B 经验地基交付；qD 定理 + codex-fm 单值性表的第三源）；χ₂(q(t)) 确证非 t 的乘法字符（graph 案例地位坐实）；反演位移唯一 **c=0**（b_{p−1−r}=b_r 的字符空间形式）。
 
 **AA.4 仍 [待验]**（与 Q6413 Package B 对齐）：rank-6/8 推前的完整 Tannakian 群、层级局部单值性、全阶自扭排除、generic Mellin L-度、特征零相容系统比较——即 Package A/B 的正式施工内容。cron 二轮双雄全部收官。
+
+---
+
+## 附录 AB（2026-08-01 续）：q23/Q6429 终判——符号因子化 DEAD（四判据全灭）+ 规范化勘误（行结式≠值循环阵）；q20-mass 线全线关闭
+
+**AB.1 判决**：Apéry 特定符号因子化（q20 mass 唯一残存线）在四条资格判据下**全灭**，且带一条比预期更强的**规范化勘误**：我方 q23 派单里写的多项式是**行多项式**（系数=Apéry 行 b_r），其结式 R_row = ∏_{t≠0} A_row(t) 是 **Circ(b) 的行列式**；而目标 |Z_p| 的载体是 **Diag(b)**，即值循环阵（系数=A_row 在 F_p^× 的值的逆 Mellin）。两者 **Fourier 对偶而不相似**——援引其间变换恰是判据(iv)禁止的 Fourier 别名（Q6417 塌缩定理的另一面）。**决定性见证 p=17**：R_row=2（单位）而修正结式 R_correct=0（|Z_17|=2）；A_row 在 F_17^× 上**无零点**。
+
+**AB.2 我方复验（verify-don't-transcribe）**：`CRON_q6429_verify.py` 纯 Python 全套 **49/49 PASS**（p=13,17,29）：回文含端点、端点缺陷恒等式 X^N A_row(1/X)=A_row+X^N−1（截断行**非**互反，对称中心=(p−1)/2 非 (p−2)/2）、转置恒等式 C(g^{−r})=N·b_r、R_correct=N^N∏b_r、行侧 Chebyshev 因子化 R_row=(−1)^m·Res(D_m−2,Q−1)·Res(D_m+2,Q+1)、值侧奇偶因子化 R_correct=even·odd（= N·b_r 按 r 奇偶分积）、CFVZ 平方 B_p/q^ε 完全平方（ε 按 p mod 24）——**全部数值与 Q6429 宣称逐位一致**。
+
+**AB.3 四判据死因（每条落在已验证恒等式上）**：(i) 行侧 Chebyshev/CFVZ 因子化真实但因子化**错误行列式**；值侧奇偶因子化=Fourier 对角化+反射配对的**精确别名**（判据(iv) 禁），且各因子仍含 m≍p 个扭值——顺带**解释经验律"2×Poisson+中点指示"**（∏=中点因子×∏配对平方）。(ii) 双层比 W_p=V/U 的可用范数是长度 p−1 分裂代数上的同义反复；**迹之比非 Frobenius 本征值**，tensor/dual/推拉不生成——有界秩替代=缺失的 cross-tame 定理本身。(iii) 宽-3 递推控制**系数序列**不控制 **Smith 零度**：转移积记终态不记中途撞零次数——恰死在 Q6267 划出的"值的递推 vs 零度的递推"边界；现行可提取物=gap-continuant 的 |Z_p|≪p^{2/3}（我们已有）。(iv) 已知矩阵全部尺寸≥p 级；Q3151 约化零因子多项式 deg=(|Z_p|+c_p)/2 但构造需先知 Z_p——循环。**GK/Stickelberger 补刀**：普适 Gauss 含量约去后 Stickelberger 残余下包络=0（p=17 的 r=3,13：逐项 min=0 但单位首项和相消）——**小质量与 Stickelberger 完全相容，Poisson 模型无张力**；(5.5)=Q6417 Smith 质量恒等式非新公式。
+
+**AB.4 复活三条件（=下一战役的精确靶）**：(a) 跨全 tame r 的 W_p(r) 有界次代数关系（→Package B Tannakian）；(b) 独立构造的 cross-r Hasse/Cartier 矩阵、尺寸 p^{1/2−ε}、核=非常规集（→Package E 相位模）；(c) 非自治 Apéry 递推→保零击自治低复杂度对象的定理。回文、Franel 平方、二次 deck 对合、CFVZ、GK、Stickelberger、τ/σ 递推**均推不出任一条**。
+
+**AB.5 战役后果**：q20-mass 支线**全线关闭**（附录 U 唯一残存→今日判死）= 死亡证书第 9 张。存活前沿定格三件：**Package B（[GAP-2] Tannakian + Katz 27.1）、Package E（(DRS)/(RLL) 残差局部极限，唯一触 |Z_p|）、Package C（坏对角逆定理）**。全文归档 chatgpt-answers/Q6429.md；正面资产（行侧 Chebyshev 因子化、CFVZ 平方范数、分支范数 Salem/Pell 显式值 L_N 递推）留档备用。
+
+---
+
+## 附录 AC（2026-08-01 续）：Q6438（cron1 意外自审）——Q6375 正式撤回声明入账；Q6375 降级为"仅机器验证部分可引"
+
+**AC.1 来源说明**：本 session 误把 `--status` 当问题文本发到 cron1（ask-gpt.py 无 status 子命令——教训入档），cron1（Q6375 原 tab）返回一份自审报告：**Q6375 的 in-chat 答案未按要求投递**（GitHub drop 404，仅 chat 输出），且其六项主张（Franel 层 SL₃ 几何单值群、推前 rank 18+恰四奇点、t²−34t+1 两根处 Jordan 行为、FFK O(1) 零计数、自扭群 ≤4 阶、条件性 n^{1−δ} 水平界）**"未从仓库状态或精确定理引用中建立，不应被引用或构建"**——tab 自己出具的正式撤回。
+
+**AC.2 与我方已有裁决的汇合**：此撤回与 (1) 附录 P 审计拒收（exact/mod-𝔭 混淆）、(2) 附录 AA.2 rank-18 数值驳斥（张量方推前 rank 8/Sym² rank 6）、(3) 附录 Z.2 FFK 正式撤回（三分法）**完全对齐**——Q6375 六主张至此全部有独立死因或撤回。**账本口径更新：Q6375 仅其 sympy 验证过的分歧三位一体（附录 P 已验部分）可引，其余一律不可引。**
+
+**AC.3 副产品**：报告附带的 7 步"正经单值性审计工作单"（确定 CFVZ 层的秩/行列式/权/奇异轨迹、t(x)=x(1−8x)/(1+x) 的几何、中间扩张直像 vs t_!/t_*/Sym² 区分、各奇异值处惯性表示+刚性/Goursat/Katz 分类定单值群、2109.11961 逐定理适用性、Kummer 自扭/射影自同构/对偶/反演/伴侣同构六分、只导可证的零计数推论）——**恰是 Package A/B 的施工清单**，已吸收进下一战役派单。全文归档 chatgpt-answers/Q6438.md。
