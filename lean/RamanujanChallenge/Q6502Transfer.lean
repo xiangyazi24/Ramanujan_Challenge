@@ -23,7 +23,12 @@ theorem abs_harmonic_sub_log_succ_sub_gamma_le (m : ℕ) :
           Real.eulerMascheroniConstant ≤ 0 := by
     linarith
   rw [abs_of_nonpos hneg]
-  linarith
+  have hbound :
+      -(((harmonic m : ℚ) : ℝ) - Real.log ((m : ℝ) + 1) -
+          Real.eulerMascheroniConstant) <
+        (((m : ℝ) + 1)⁻¹) := by
+    linarith
+  simpa only [one_div] using hbound.le
 
 /-- Lipschitz bound for the logarithm on a positive interval. -/
 theorem abs_log_sub_log_le_abs_sub_div_min
