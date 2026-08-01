@@ -2539,6 +2539,91 @@ theorem quadAltCoeffIntegral_eq_six :
 /-- `r(t) = log(t/(2−t))` (Q6047 §5). -/
 def quadAltR (t : ℝ) : ℝ := Real.log (t / (2 - t))
 
+/-- `W0 t · (H1 t)²/2 → 0` as `t → 0⁺`: `H1 t ~ t` beats `W0 t ~ -(log(t/2))²`. -/
+theorem quadAltW0_mul_g11_tendsto_right :
+    Tendsto (fun t : ℝ => W0 t * (H1 t ^ 2 / 2)) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+  -- H1 t / t → 1, so H1 t ^2/2 = t * (t * (H1 t/t)^2/2)
+  have hH1slope : Tendsto (fun t : ℝ => H1 t / t) (𝓝[≠] (0:ℝ)) (𝓝 1) := by
+    have hd : HasDerivAt H1 1 0 := by
+      have hc : HasDerivAt (fun y : ℝ => 1 - y) (-1) 0 := by
+        simpa using (hasDerivAt_const (0:ℝ) (1:ℝ)).sub (hasDerivAt_id (0:ℝ))
+      have hlog : HasDerivAt Real.log (1 / (1 - (0:ℝ))) ((fun y : ℝ => 1 - y) 0) := by
+        norm_num
+        simpa using Real.hasDerivAt_log (by norm_num : (1:ℝ) ≠ 0)
+      have hcomp := HasDerivAt.comp (h := fun y : ℝ => 1 - y) (0:ℝ) hlog hc
+      unfold H1
+      simpa using hcomp.neg
+    have h0 : H1 0 = 0 := by unfold H1; simp
+    exact slope_tendsto_of_hasDerivAt_zero H1 1 hd h0
+  have hH1slope' : Tendsto (fun t : ℝ => H1 t / t) (𝓝[>] (0:ℝ)) (𝓝 1) :=
+    hH1slope.mono_left (nhdsWithin_mono _ (fun x hx => ne_of_gt hx))
+  -- W0 t · t → 0
+  have hW0t : Tendsto (fun t : ℝ => W0 t * t) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+    have hid : Tendsto (fun t : ℝ => t) (𝓝[>] (0:ℝ)) (𝓝 0) :=
+      tendsto_id.mono_left nhdsWithin_le_nhds
+    have hdil : Tendsto (fun t : ℝ => dilog (t/2) * t) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+      have hc : ContinuousAt (fun t : ℝ => dilog (t/2)) 0 := by
+        have hd0 : ContinuousAt dilog ((fun t : ℝ => t/2) 0) := by
+          simpa using RamanujanChallenge.P26.dilog_hasDerivAt_zero26.continuousAt
+        exact ContinuousAt.comp (f := fun t : ℝ => t/2) (g := dilog) hd0 (by fun_prop)
+      have h1 := hc.tendsto.mono_left (nhdsWithin_le_nhds (a := (0:ℝ)) (s := Set.Ioi 0))
+      simpa [dilog_zero] using h1.mul hid
+    have hlogsq : Tendsto (fun t : ℝ => Real.log (t/2) ^ 2 * t) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+      have hA := logSq_mul_self_tendsto
+      have hB := log_mul_self_tendsto
+      have := ((hA.sub (hB.const_mul (2 * Real.log 2))).add (hid.const_mul (Real.log 2 ^ 2)))
+      simp only [sub_zero, add_zero, mul_zero] at this
+      refine this.congr' ?_
+      filter_upwards [self_mem_nhdsWithin] with t ht
+      have ht0 : (0:ℝ) < t := ht
+      rw [Real.log_div (ne_of_gt ht0) (by norm_num)]
+      ring
+    have := ((hid.const_mul (Real.pi ^ 2 / 6)).sub (hdil.const_mul 2)).sub hlogsq
+    simp only [mul_zero, sub_zero] at this
+    refine this.congr ?_
+    intro t
+    unfold W0
+    ring
+  -- t · (H1 t/t)^2/2 → 0
+  have hrest : Tendsto (fun t : ℝ => t * (H1 t / t) ^ 2 / 2) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+    have hid : Tendsto (fun t : ℝ => t) (𝓝[>] (0:ℝ)) (𝓝 0) :=
+      tendsto_id.mono_left nhdsWithin_le_nhds
+    have := ((hid.mul (hH1slope'.pow 2)).div_const 2)
+    simpa using this
+  have hmul := hW0t.mul hrest
+  simp only [mul_zero] at hmul
+  refine hmul.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with t ht
+  have ht0 : (0:ℝ) < t := ht
+  field_simp
+
+/-- `W0 t · (H1 t)²/2 → 0` as `t → 1⁻`: `W0`'s double zero at `1` beats the
+`log(1-t)²` growth of `H1²`. -/
+theorem quadAltW0_mul_g11_tendsto_left :
+    Tendsto (fun t : ℝ => W0 t * (H1 t ^ 2 / 2)) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+  -- W0 t = (W0 t/(t-1)) * (t-1), and (t-1)*log(1-t)^2 → 0
+  have hslope : Tendsto (fun t : ℝ => W0 t / (t - 1)) (𝓝[<] (1:ℝ)) (𝓝 0) :=
+    quadAltW0_slope_tendsto.mono_left
+      (nhdsWithin_mono _ (fun x hx => by
+        simp only [Set.mem_compl_iff, Set.mem_singleton_iff]
+        exact ne_of_lt hx))
+  have hlog : Tendsto (fun t : ℝ => (t - 1) * (Real.log (1 - t) ^ 2 / 2))
+      (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    have h := oneSub_logSq_tendsto
+    have := (h.const_mul (-(1:ℝ)/2))
+    simp only [mul_zero] at this
+    refine this.congr ?_
+    intro t
+    ring
+  have hmul := hslope.mul hlog
+  simp only [mul_zero] at hmul
+  refine hmul.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with t ht
+  have ht1 : t < 1 := ht
+  have hne : t - 1 ≠ 0 := by linarith
+  unfold H1
+  field_simp
+
 /-- `I11` via the derivative certificate (Q6047 (6.6) with `g11 = H1²/2`):
 `I11 = ∫₀¹ r(t)·H1(t)²/t dt`. -/
 theorem quadAltI11_eq_integral :
@@ -2582,20 +2667,20 @@ theorem quadAltI11_eq_integral :
     convert hprod using 1
     unfold quadAltR
     ring
-  have hcont : ContinuousOn (fun y : ℝ => W0 y * g11 y) (Set.Icc (0 : ℝ) 1) := by
-    sorry  -- TODO-stub: continuity of W0·g11 on [0,1]
+  have hlim0 : Tendsto (fun y : ℝ => W0 y * g11 y) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+    unfold g11; exact quadAltW0_mul_g11_tendsto_right
+  have hlim1 : Tendsto (fun y : ℝ => W0 y * g11 y) (𝓝[<] (1:ℝ)) (𝓝 0) := by
+    unfold g11; exact quadAltW0_mul_g11_tendsto_left
   have hint : IntervalIntegrable
       (fun y : ℝ => (W0 y * (H1 y / (1 - y))) + (-2 * (quadAltR y / y) * g11 y))
       MeasureTheory.volume 0 1 := by
     sorry  -- TODO-stub
-  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
     (a := 0) (b := 1)
     (f := fun y : ℝ => W0 y * g11 y)
     (f' := fun y : ℝ => (W0 y * (H1 y / (1 - y))) + (-2 * (quadAltR y / y) * g11 y))
-    (by norm_num) hcont hprod' hint
-  have h0 : (fun y : ℝ => W0 y * g11 y) 0 = 0 := by simp [hg11_0]
-  have h1 : (fun y : ℝ => W0 y * g11 y) 1 = 0 := by simp [hg11_1]
-  rw [h0, h1] at hFTC
+    (by norm_num) hprod' hint hlim0 hlim1
+  simp only [sub_self] at hFTC
   -- ∫(W0·H1/(1−t)) + ∫(−2r/t·g11) = 0 → ∫W0·H1/(1−t) = ∫ 2r/t·g11 = ∫ r·H1²/t
   have hsplit : (∫ y : ℝ in (0 : ℝ)..1, (W0 y * (H1 y / (1 - y))) + (-2 * (quadAltR y / y) * g11 y)) = 0 := by
     convert hFTC using 1
