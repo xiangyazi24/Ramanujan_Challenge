@@ -1,0 +1,390 @@
+C_p(a)=T(a+p-1)...T(a)
+
+image C_p(a) = kernel C_p(a).
+
+pi(a)=[b_a:c_a].
+
+x_a
+ = span((a!)^3 b_a, ((a-1)!)^3 b_(a-1)).
+
+x_0
+ = span((p!)^3 b_p, ((p-1)!)^3 b_(p-1)) mod p
+ = span(0,-1)
+ = span(e_2).
+
+C_p(r+1)=T(r)C_p(r)T(r)^(-1)
+
+x_(a+1)=T(a)x_a,       a=1,...,p-1,
+
+12=p-1.
+
+[[11,12],
+ [12,11]].
+
+L_infty=span(e_2)
+
+pi(r)=pi(r+h)
+  <=>
+T_h(r)L_infty=L_infty.
+
+T_h(r)L_infty
+ = [N_h(r):N_(h-1)(r)].
+
+The nilpotent line field is an exact and useful structural normal form, but
+its canonical reduced degree is already p-1 at p=13, and the actual collision
+return map has degree 3h-3. It reproduces the within-digit wall rather than
+bypassing it.
+
+- the b-state p-curvature line;
+- the constant state-frame line L_infty;
+- the evaluation line pi(r) in the two-dimensional solution-coordinate space.
+
+T(n) = [[P(n),-n^6],
+        [1,       0]],
+
+P(n)=34n^3+51n^2+27n+5.
+
+q_n(y)=(n!)^3 y_n.
+
+q_(n+1)(y)=P(n)q_n(y)-n^6q_(n-1)(y),
+
+(q_(n+1)(y),q_n(y))^T
+  = T(n)(q_n(y),q_(n-1)(y))^T.
+
+B_n=(n!)^3 b_n,
+D_n=(n!)^3 c_n.
+
+B_0=1, B_1=5,
+D_0=0, D_1=1.
+
+F_n = [[B_n,D_n],
+       [B_(n-1),D_(n-1)]].
+
+F_(n+1)=T(n)F_n,
+F_1=[[5,1],[1,0]].
+
+det F_n
+ = (n!)^3((n-1)!)^3
+   (b_n c_(n-1)-b_(n-1)c_n)
+ = -((n-1)!)^6.                                  (1.1)
+
+T(0)=F_1 E_11,
+E_11=[[1,0],[0,0]].                               (1.2)
+
+C_p(a)
+ = T(a-1)...T(1)T(0)T(p-1)...T(a).               (1.3)
+
+T(a-1)...T(1)T(0)=F_a E_11.                       (1.4)
+
+R_a=T(p-1)...T(a).
+
+F_a^(-1) C_p(a) F_a = E_11 F_p.                  (1.5)
+
+B_p=0,
+B_(p-1)=-1 mod p.                                 (1.6)
+
+det F_p=-1 mod p.
+
+F_p=[[B_p,D_p],[B_(p-1),D_(p-1)]]
+
+D_p=-1.                                           (1.7)
+
+E_11 F_p=[[0,-1],[0,0]]=-E_12,                   (1.8)
+
+C_p(a)=F_a(-E_12)F_a^(-1),
+1<=a<=p-1.                                        (1.9)
+
+x_a=(B_a,B_(a-1))^T,
+z_a=(D_a,D_(a-1))^T.
+
+C_p(a)x_a=0,
+C_p(a)z_a=-x_a.                                   (1.10)
+
+image C_p(a)=kernel C_p(a)=span(x_a).             (1.11)
+
+companion state -> minus b-state -> 0.
+
+C_p(a)
+ = (1/d_a)
+   [[ B_a B_(a-1), -B_a^2],
+    [ B_(a-1)^2,  -B_a B_(a-1)]].                 (1.12)
+
+C_p(a)
+ = (1/d_a)
+   x_a (B_(a-1),-B_a).                            (1.13)
+
+C_p(0)
+ = T(p-1)...T(1)T(0)
+ = F_p E_11
+ = [[0,0],[-1,0]].                                (1.14)
+
+x_0=kernel C_p(0)=image C_p(0)=span(e_2).         (1.15)
+
+x_0=span(B_p,B_(p-1))=span(0,-1).                 (1.16)
+
+x_a = span(B_a,B_(a-1)),       1<=a<=p-1,
+x_0 = span(B_p,B_(p-1)).                          (1.17)
+
+C_p(r+1)=T(r)C_p(r)T(r)^(-1).                     (1.18)
+
+x_(a+1)=T(a)x_a.                                  (1.19)
+
+T(0)x_0=T(0)e_2=0.                                (1.20)
+
+x_1=image T(0)=span(5,1).                         (1.21)
+
+x_1 --T(1)--> x_2 -- ... --T(p-1)--> x_0
+
+and
+
+x_0 --T(0)--> 0, while image T(0)=x_1.
+
+P(n)=8n^3-n^2+n+5 mod 13.
+
+B_0=1,
+B_1=5,
+B_(n+1)=P(n)B_n-n^6B_(n-1) mod 13.               (2.1)
+
+n^6= 1  if n is a quadratic residue mod 13,
+n^6=-1  otherwise.
+
+5,0,2,7,11,10,0,3,2,6,11,0,8.                   (2.2)
+
+n     0  1  2  3  4  5  6  7  8  9 10 11 12 13
+B_n   1  5 12  3  9  5  7  5  9 10 12  5 12  0. (2.3)
+
+n     0  1  2  3  4  5  6  7  8  9 10 11 12 13
+D_n   0  1  0  1  7 11  0 11  7 12  0  1  0 12. (2.4)
+
+x_a=[B_a:B_(a-1)]
+
+pi(a)=[B_a:D_a]=[b_a:c_a].
+
+a    representative [B_a:B_(a-1)]    affine slope
+
+0    [0:12]=[0:1]                     0
+1    [5:1]                             5
+2    [12:5]                            5
+3    [3:12]                           10
+4    [9:3]=[3:1]                       3
+5    [5:9]                             2
+6    [7:5]                             4
+7    [5:7]                            10
+8    [9:5]                             7
+9    [10:9]                            4
+10   [12:10]                           9
+11   [5:12]                            8
+12   [12:5]                            5.        (2.5)
+
+a   C11 C12 C21 C22
+
+0    0   0  12   0
+1    8  12  12   5
+2    5   1   1   8
+3   10   4   1   3
+4    1  10   9  12
+5    6   1   3   7
+6    4  10   1   9
+7    9   1  10   4
+8    7   3   1   6
+9   12   4   3   1
+10   3  12   9  10
+11   8   1   1   5
+12   5   1   1   8.                         (2.6)
+
+trace C_13(a)=0,
+det C_13(a)=0,
+C_13(a)^2=0.
+
+C_13(r) mod (r^13-r)
+ = [[A(r),B(r)],
+    [G(r),-A(r)]].                                (2.7)
+
+A(r)
+ = 11r + 11r^3 + 5r^5 + 12r^7 + 12r^9 + 9r^11,
+                                                        (2.8)
+
+B(r)
+ = 9r + 7r^3 + 6r^4 + 7r^5 + 6r^7 + 3r^8
+   + 12r^9 + 12r^10 + 10r^11 + 5r^12,
+                                                        (2.9)
+
+G(r)
+ = 12 + 6r + 10r^2 + 12r^3 + r^4 + 10r^5
+   + 8r^6 + 9r^7 + 7r^9 + 7r^10 + 7r^11 + r^12.
+                                                        (2.10)
+
+deg A=11,
+deg B=12,
+deg G=12,
+deg(-A)=11.                                      (2.11)
+
+-sum_(a in F_13) f(a).
+
+sum A(a)=0,
+sum B(a)=8,
+sum G(a)=12,
+
+0,5,1.
+
+-sum a A(a)=9,
+
+gcd(A,G)=1 in F_13[r].                            (2.12)
+
+r -> [A(r):G(r)]
+
+z(a)=A(a)/G(a).
+
+0,5,5,10,3,2,4,10,7,4,9,8,5,
+
+r^p-r=0.
+
+Spec F_p[r]/(r^p-r),
+
+state coordinates = (q_r,q_(r-1)).
+
+pi(r)=[b_r:c_r]=[B_r:D_r].
+
+x_r = line of the first column of F_r,
+pi(r)=line of the first row of F_r.               (3.1)
+
+L_infty=span(e_2),
+e_2=(0,1)^T.
+
+F_(r+h)=T_h(r)F_r.                                (3.2)
+
+e_1^T F_r=(B_r,D_r),
+e_1^T F_(r+h)=e_1^T T_h(r)F_r.                    (3.3)
+
+det([e_1^T;e_1^T T_h(r)]F_r)
+ = (T_h(r))_(1,2) det F_r.                        (3.4)
+
+pi(r)=pi(r+h)
+  <=>
+(T_h(r))_(1,2)=0.                                 (3.5)
+
+T_h(r)e_2 is proportional to e_2.
+
+pi(r)=pi(r+h)
+  <=>
+T_h(r)L_infty=L_infty.                            (3.6)
+
+T_h(r)=
+[[U_h(r),      -r^6 U_(h-1)(r+1)],
+ [U_(h-1)(r),  -r^6 U_(h-2)(r+1)]].               (3.7)
+
+T_h(r)L_infty
+ = [U_(h-1)(r+1):U_(h-2)(r+1)]
+ = [N_h(r):N_(h-1)(r)].                           (3.8)
+
+gcd(N_h,N_(h-1))=1.                               (3.9)
+
+deg N_h=3h-3,
+deg N_(h-1)=3h-6,
+
+g_h : r -> [N_h(r):N_(h-1)(r)]                    (3.10)
+
+deg g_h=3h-3.                                     (3.11)
+
+g_h^(-1)(L_infty)={N_h=0}.                        (3.12)
+
+N_h is squarefree over Q for every h>=2.
+
+S_r=F_r^(-1)L_infty.                              (3.13)
+
+S_r=[-D_r:B_r]=[-c_r:b_r].                        (3.14)
+
+T_h(r)L_infty=L_infty
+  <=>
+S_r=S_(r+h).                                      (3.15)
+
+x_r=F_r e_1               uses the first column of F_r,
+S_r=F_r^(-1)L_infty       uses the first row of F_r.
+
+x_(r+h)=T_h(r)x_r.                                 (3.16)
+
+x_r=x_(r+h)
+
+pi(r)=pi(r+h).
+
+det(e_2,T_h(r)e_2),                               (3.17)
+
+g_h(r)=N_h(r)/N_(h-1)(r).                        (4.1)
+
+deg g_h=3h-3,
+
+N_h' N_(h-1)-N_h N_(h-1)',                       (4.2)
+
+L_a=image C_p(a)=kernel C_p(a).                   (5.1)
+
+L_(a+1)=T(a)L_a,
+a!=0.                                             (5.2)
+
+(B_a,B_(a-1)).                                    (5.3)
+
+z(r+1)=P(r)-r^6/z(r).                             (5.4)
+
+- the rank-two additive difference module in the coefficient index n;
+- the differential Picard-Fuchs/Gauss-Manin module in the generating-function
+  variable z;
+- a p-adic Frobenius or unit-root subcrystal on an ordinary locus.
+
+- Katz's geometric p-curvature is a differential p-curvature;
+- a unit-root line is Frobenius-stable with unit eigenvalue;
+- C_p(a) is a nilpotent additive-difference curvature with zero eigenvalues.
+
+The line is a discrete mod-p b-solution line. It is suggestive of geometric
+Frobenius filtrations, but no canonical comparison has been proved here.
+
+image=kernel.
+
+0 < L_a < V_a,                                    (5.5)
+
+V_a/L_a -> L_a.
+
+F_a^(-1)C_p(a)F_a=-E_12.                          (5.6)
+
+F_(a+1)^(-1)T(a)F_a=I.                            (5.7)
+
+tr C_p,
+det C_p
+
+(tr,det)=(0,0).                                    (5.8)
+
+J=[[0,1],[-1,0]],
+
+T(r)^T J T(r)=det(T(r))J=r^6J.                    (5.9)
+
+- the explicit annihilator row in (1.13);
+- the determinant of F_n;
+- the dual line S_r=[-c_r:b_r];
+- the normalization of Delta_(r,h).
+
+det(e_2,T_h(r)e_2),                               (5.10)
+
+C_p(a)=F_a(-E_12)F_a^(-1),
+image C_p(a)=kernel C_p(a)=b-state line.
+
+r -> [N_h(r):N_(h-1)(r)],
+
+p-1     for the full-period framed line at p=13,
+3h-3    for the h-gap fixed-line return.
+
+Study the family of Weyl/Riccati maps
+
+    g_h=N_h/N_(h-1)
+
+as a family of convergents of the tridiagonal pencil, and seek averaged
+finite-field cancellation specific to that continued-fraction structure.
+
+The p-curvature line field reproduces the wall. It does not currently give
+independent leverage on collisions.
+
+deg reduced line lift=12=p-1.
+
+- degrees of the four reduced C_p entries;
+- gcd and degree of a canonical nonzero column;
+- minimal rational interpolation degree of the line values;
+- dimension of the translate/Cartier span of the line coordinate.
+
+g_h=N_h/N_(h-1).
