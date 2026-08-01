@@ -129,3 +129,11 @@
 - Value law settled: D(p)=0.3935p Poisson-mod-FE (sqrt-p folding refuted); Rayleigh 1.2533; Gumbel max; E(p)=3p+O(sqrt p) w/ std 2sqrt2. All in FABLE_NOTES_vertical_value_law.md.
 - MAIN LINE: energy bootstrap (FABLE_NOTES_energy_bootstrap.md): image >= ((p-1)/4)^{1/3} (proved); collision => predecessor determination; two-lag elimination Psi; c_d = d^3 b_{d-1} closed form; CLEAN THEOREMS max_{c!=0}N(c) << p/log p, E(p) << p^2/log p (unconditional); candidates p^{3/4}/p^{7/4} pending exceptional-lag lemma. Under adversarial audit (R3a) + Pro grind (PRO1).
 - 2026-08-01 传输层教训: bridge 空闲检测在 SOL 长答期间假阳性 → auto-router 把 R3a 派进仍在答的 cron2, 可能截断 Q6322。规避: 派 SOL tab 前额外核对该 tab 最近落地时间(<90min 未落地视为在答)。
+
+## Run 2026-08-01 ~12:00 (campaign 3 — σ-ladder strike, life 窗口)
+- doctrine: DOCTRINE_SIGMA_STRIKE.md (new)
+- approval: 爸爸 TG "最后的攻破猜想的 session... 尽我们最大的努力" + handoff automode:yes
+- starting avenue: (a) COINC 曲线族攻坚 (second-moment 归约, session 起点自推)
+- 并行: (b) rank-4 Dwork 奖品线 (ChatGPT), codex sol 双开数值/符号验证
+- end: <fill on close>
+- final result: <fill on close>
