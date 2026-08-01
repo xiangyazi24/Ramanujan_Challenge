@@ -69,6 +69,7 @@ def main():
     size_distributions = defaultdict(Counter)
     extra_tau = []
     p23_examples = []
+    p13_examples = []
     raw_exceptions = []
 
     for p in primes_below(LIMIT):
@@ -100,9 +101,14 @@ def main():
             assert representation(p, "nonprincipal") is None
             if len(p23_examples) < 4:
                 p23_examples.append((p, forced, zeros))
+        if residue == 13:
+            forced = [(p - 5) // 8, (3 * p - 7) // 8]
+            assert all(j in zeros for j in forced)
+            if len(p13_examples) < 4:
+                p13_examples.append((p, forced, zeros))
 
-        # Stronger raw-series check, not used in the theorem: at the natural
-        # floor-quarter indices, only tau/5 and sigma/23 vanish below LIMIT.
+        # Audit a stronger raw-series interpretation, not used in the theorem.
+        # It is false: p=71 already gives an additional tau floor-quarter zero.
         tau_index = (p - 1) // 4
         sigma_index = (p - 3) // 4
         tau_raw = branch_sequence("tau", tau_index, p)[tau_index]
@@ -117,7 +123,6 @@ def main():
             assert representation(p, "principal") is None
             assert representation(p, "nonprincipal") is not None
 
-    assert not raw_exceptions
     # The two non-vanishing-centre recurrence coefficients in the proof.
     for p in primes_below(LIMIT):
         if p > 3 and p % 4 == 1:
@@ -139,7 +144,11 @@ def main():
     print("First p = 23 mod 24 forced-eighth examples (forced, complete):")
     for row in p23_examples:
         print(" ", row)
-    print("Raw tau/sigma floor-quarter iff check: no exceptions")
+    print("First p = 13 mod 24 forced-eighth examples (forced, complete):")
+    for row in p13_examples:
+        print(" ", row)
+    print("Counterexamples to the stronger raw-both-series floor interpretation:")
+    print(" ", raw_exceptions[:20])
     print("Discriminant -24 form classification and p=23 non-representability: VERIFIED")
 
 

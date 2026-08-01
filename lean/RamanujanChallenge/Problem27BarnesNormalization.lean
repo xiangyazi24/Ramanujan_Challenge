@@ -221,8 +221,8 @@ private theorem betaIntegral_one_sub_I_mul_one_add_I_mul27
               ((Real.pi : ℂ) /
                 Complex.sin ((Real.pi : ℂ) * (Complex.I * ξ))) := by
               rw [hreflect]
-        _ = ((Real.pi * ξ / Real.sinh (Real.pi * ξ) : ℝ) : ℂ) := by
-              push_cast
+        _ = (Real.pi : ℂ) * (ξ : ℂ) /
+              Complex.sinh ((Real.pi : ℂ) * (ξ : ℂ)) := by
               rw [show (Real.pi : ℂ) * (Complex.I * ξ) =
                 ((Real.pi * ξ : ℝ) : ℂ) * Complex.I by push_cast; ring,
                 Complex.sin_mul_I]

@@ -847,3 +847,18 @@ product / Dwork endpoint matching / finite-field 2F1 parameter matching);
 R18 dispatched. When it lands, the ENTIRE apparition package (quarter-point
 law + branch reflection + eighth-point skeleton) becomes a closed theorem
 chain rooted in the strong reflection theorem.
+
+## 37. y4 closed; the MASTER CORNER IDENTITY (independently verified 21/21)
+
+**b_p − 5 ≡ −7·p²·H^{(2)}_{p−1} (mod p⁵)** (cron/Q6333, 25/25; ours 21/21,
+harmonic_p5_check.py). One harmonic identity carries the entire five-digit
+Frobenius corner law: it subsumes Beukers mod p³, β_p ≡ −(14/3)B_{p−3}, and
+y₄ = first Kummer quotient of the weight-3 Bernoulli branch (via the Kummer
+expansion of H^{(2)}_{p−1} mod p³; load-bearing lemma Xia–Cai 2010 triple
+reciprocal sums; y₄ zeros at 13/19/23 = Kummer carry cancellations).
+**THE TOWER IS THE DIGIT-EXPANSION MACHINE OF THE ζ_p WEIGHT-3 BRANCH** —
+higher layers predicted to be deeper Kummer digits (testable). No
+B_{p−5}/Fermat-quotient/weight-5 invariants exist through p⁵.
+VERTICAL PROGRAM STATUS: structure theorem + tower (now one-line master
+identity) + apparition chain (one nail: [GAP-BR] atom, R18/R3a dual attack)
++ value-distribution package = a complete standalone theory of Apéry mod p.
