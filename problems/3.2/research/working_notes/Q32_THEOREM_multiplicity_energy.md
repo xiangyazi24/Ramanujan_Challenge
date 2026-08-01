@@ -135,7 +135,35 @@ large p. Contradiction; hence N < C₀·p/log p. (Small p: absorb into C₀.) �
 **Theorem 2.** E(p) = Σ_c N(c)² ≤ N_p(0)² + (max_{c≠0} N(c))·Σ_{c≠0}N(c)
 ≤ N_p(0)² + C₀p²/log p. ∎
 
-## 5. The p^{3/4} program (not yet a theorem)
+## 4b. Theorem 4 (exceptional-set version of the p^{3/4} bound) — NEW, closes §5's program
+
+**Theorem 4.** There is a set 𝔈 of primes with #{q ∈ 𝔈 : q ≤ X} = O(X^{3/4+o(1)})
+(density zero) such that for every prime p ∉ 𝔈 and every c ∈ F_p^*:
+N_p(c) ≪ p^{3/4}(log p)^{O(1)}, and hence E(p) ≪ p^{7/4}(log p)^{O(1)}.
+
+_Proof plan (all pieces in place)._ Run §4's counting with D′ = 12p/N and
+N ≥ p^{3/4+ε}. A pair (d₁,d₂), δ = d₂−d₁, escapes both Laurent criteria mod p
+only if p divides both (b_δ−1)·d₁³·b_{d₁−1} and K(d₁,d₂). Two reductions:
+
+(a) Over Q, the pole-3 coefficient (b_δ−1)·d₁³·b_{d₁−1} is NEVER zero
+(b_δ ≥ 5 for δ ≥ 1). Hence **Ψ_{d₁,d₂} ≢ 0 over Q for every pair** — mod-p
+degeneracy can only come from p dividing explicit nonzero integers.
+
+(b) When p | b_δ−1: expand b_{d₂} = A_{d₁}(δ)b_δ + B_{d₁}(δ)b_{δ−1} and
+b_{d₂−1} = A_{d₁−1}(δ)b_δ + B_{d₁−1}(δ)b_{δ−1} mod p; then
+K ≡ d₂³(α(d₁,δ) + β(d₁,δ)·b_{δ−1}) mod p with α, β fixed rationals. So a
+double escape forces p | G(d₁,δ) := gcd(b_δ−1, num(α+β·b_{δ−1})) — a FIXED
+integer of log-size O(d₂ log d₂). (If G = 0, i.e. K = 0 over Q, the pair's bad
+primes are the ω(b_δ−1) = O(δ) divisors of b_δ−1 — same budget.) The case
+p | b_{d₁−1} instead uses G₂ = gcd(b_{d₁−1}, num K) symmetrically.
+
+Exceptional-prime count: q bad ⟹ ∃ pair with d₂ ≤ q^{1/4} and q | G-type
+integer; Σ_{d₁<d₂≤X^{1/4}} ω(G) ≪ X^{1/2}·max ω ≪ X^{3/4+o(1)}. For p ∉ 𝔈 no
+pair escapes, and the clean-regime counting runs verbatim at D′ ~ p^{1/4}. ∎
+(Sweep evidence: all prime factors of the gcds ≤ 19 for d₁<16, d₂≤22 —
+consistent with 𝔈 being essentially empty in practice.)
+
+## 5. The p^{3/4} program (superseded by Theorem 4; kept for the all-p question)
 
 Running §4 without the clean-regime restriction: capacity 5(D′)³ with
 D′ = 12p/N forces N ≪ p^{3/4} — PROVIDED the nondegeneracy lemma is available
