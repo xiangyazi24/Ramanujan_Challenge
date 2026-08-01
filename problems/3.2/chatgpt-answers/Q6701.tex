@@ -1,0 +1,51 @@
+\begin{theorem}[Right degree exclusion: degrees 4, 5, 6]
+Let $f_h=N_h/q_h^3$ have degree $3h$, with $h$ poles of exact order $3$, and assume $N_h$ is squarefree, so that the finite zero fibre consists of $3h-3$ simple zeros. The pole/zero profile alone does not kill all right degrees $a\in\{4,5,6\}$ uniformly, but reduces each case to explicit ramification types.
+
+If $f_h=g\circ u$ with $\deg u=a$, every finite zero of $g$ must be simple. Hence every point above a zero of $g$ is a simple zero of $f_h$ and has local degree $1$. The zero fibre therefore contributes exactly the same number of points as the corresponding fibre of $g$ and cannot absorb ramification.
+
+The point at infinity is forced by the polynomial degree balance: the unique point over infinity of the target coordinate must have $e_u(\infty)=3$ in the same way as in the degree $2,3$ exclusion argument.
+\end{theorem}
+
+\begin{proof}[Proof sketch and bookkeeping]
+The remaining restriction comes from the $h$ poles of $f_h$, all of order exactly $3$. A pole of $g$ pulls back under $u$ to a fibre whose ramification indices satisfy
+\[
+\sum_i e_i=a,\qquad 3e_i=3\cdot(\text{pole order of }g\text{ at the image}),
+\]
+so the indices must be compatible with producing only order-$3$ poles of the composite.
+
+For $a=4$, the possible fibre partitions are
+\[
+4,\quad 3+1,\quad 2+2,\quad 2+1+1,\quad 1+1+1+1.
+\]
+The order-three pole condition excludes partitions requiring a pole of $g$ to create non-multiple pole orders. The surviving cases require the ramification budget to be concentrated in either one index-$4$ fibre or an index-$3$ fibre plus an unramified point. Together with the forced $e_u(\infty)=3$, Riemann--Hurwitz leaves only finitely many ramification profiles. Since $4\mid 3h$ is necessary, only $h\equiv0\pmod4$ can occur.
+
+For $a=5$, the partitions are
+\[
+5,\quad 4+1,\quad 3+2,\quad 3+1+1,\quad 2+2+1,\quad 2+1+1+1,\quad 1^5.
+\]
+The same pole-order condition eliminates any profile whose nontrivial indices create incompatible pole multiplicities. The remaining possibilities have total ramification forced into a finite list after adding the index-$3$ point at infinity. Since $5\mid3h$, this case only occurs for $h\equiv0\pmod5$.
+
+For $a=6$, the partitions are
+\[
+6,\ 5+1,\ 4+2,\ 4+1+1,\ 3+3,\ 3+2+1,\ 3+1^3,\ 2+2+2,\ 2+2+1+1,\ 2+1^4,\ 1^6.
+\]
+Here the divisibility condition is automatic for $h$ even because $6\mid3h$. The pole bookkeeping plus the forced infinity ramification again reduces the possibilities to a finite collection of Nielsen ramification types, rather than giving an immediate contradiction.
+
+The exact machine step for the certificate range $h\le40$ is therefore: enumerate the surviving degree-$4$, degree-$5$, and degree-$6$ ramification types from these partitions, compute the corresponding branch-cycle compatibility conditions, and reject every type against the stored squarefree-zero-fibre certificates. The output is a finite exclusion check, not a new analytic estimate.
+
+Thus:
+\begin{itemize}
+\item degree $4$ is reduced to the classes $h\equiv0\pmod4$ and a finite ramification list;
+\item degree $5$ is reduced to $h\equiv0\pmod5$ and a finite ramification list;
+\item degree $6$ is reduced to even $h$ and a finite ramification list.
+\end{itemize}
+For $h\le40$ these finite lists are certificate-checkable. The all-$h$ exclusion of degrees $4,5,6$ remains open without a uniform argument eliminating the residual ramification types.
+\end{proof}
+
+\begin{remark}[Least-confident point]
+The least-confident part is not the partition enumeration itself, but the final conversion from surviving fibre partitions to a complete Nielsen-class elimination. The pole and zero budgets are rigid, but branch-cycle compatibility is the remaining global input.
+\end{remark}
+
+\begin{remark}[Blind spot]
+The main blind spot is assuming that stronger local pole bookkeeping automatically forces indecomposability. Degrees $4,5,6$ have enough room for exceptional ramification profiles that are invisible to the basic pole/zero count and require either a finite certificate check or a genuinely new uniform monodromy argument.
+\end{remark}
