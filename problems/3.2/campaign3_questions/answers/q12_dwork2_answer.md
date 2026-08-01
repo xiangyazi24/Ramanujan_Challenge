@@ -1,0 +1,27 @@
+[ask-gpt] context affinity: keeping follow-up on life4
+[ask-gpt] → life4 (window: life)
+[ask-gpt] github repo: xiangyazi24/Ramanujan_Challenge@chatgpt-drop (from config rule)
+[ask-gpt] delivery: GITHUB → xiangyazi24/Ramanujan_Challenge | rotation batch=7
+═══ BRIDGE Q6565 →life4 SUBMITTED via GITHUB (fallback: NOTION → DOM) | "CONTEXT (Apery mod-p collision project; everything below is machine-ve…" | task 965c8ab7 ═══
+[ask-gpt Q6565 life4 tid=965c8ab7 +0s] dispatched, polling ALL channels (GITHUB primary)
+[ask-gpt Q6565 life4 tid=965c8ab7 +0s] SATURATION: ⚠️ 空闲 tab: life1, life3, life5, life7 → 立刻补高价值问题填满（除非 ChatGPT 坏了）
+[ask-gpt Q6565 life4 tid=965c8ab7 +21s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +42s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +63s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +84s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +105s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +126s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +147s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +168s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +190s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +211s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +232s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +253s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +274s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +295s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +316s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +337s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +358s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +380s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +401s] waiting (status=processing +GITHUB)
+[ask-gpt Q6565 life4 tid=965c8ab7 +422s] waiting (status=processing +GITHUB)

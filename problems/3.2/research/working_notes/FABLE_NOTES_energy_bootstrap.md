@@ -2232,3 +2232,29 @@ qLOWGENUS(life8); family 机制(非自治 Möbius 走动混合/block-glueing) �
 **风险登记 (两问)**: (a) 最没信心: [COINC] 与"仿射 Parseval"死亡证书的关系
 未对表原文 (q7/life8 在查); (b) 盲角: β∈(1/2,2/3) 是否存在比 2/3 更便宜的
 中间 rung 未系统扫描 (q1 第4问在查)。
+
+## §112 — 分量定理架构 (Jordan/Goursat, 自推) + 战果汇合 (08-01 下午)
+
+**收获汇总**: (i) Q6547 sheaf 纲领: F_h=FT_ψ(R(f_h)_!), COINC ⟺ (a)几何不可约
+(b)Hom_geom(F_h,F_k)=0 (c)非Tate迹 O(p²H); 新无条件界 |S_h(t)|≤(4h+1)√p (rigid,
+Swan@三阶极点)。weight 预算泛型卡 H⁴p^{3/2} → p^{1/6}, 需 End-collapse。
+(ii) codex-max: 加法律 δ_{h+d}(x)=(x+h+1)³(δ_{h+1}(x)δ_d(x+h)−δ_h(x)δ_{d−1}(x+h+1))
+[U1/U2/F-update, 36/36]; census h≤8: c(h,h)=2 (对角+H_h), c(h,k)=1, 无镜像分量,
+h=1 立方根例外; gcd(C_h,C_k)=1 (分歧值两两不交)。(iii) Q6546: master-variety 死于
+rank 增长, 需 dynamical large sieve → q14 在飞; 跨相关测量协议 → codex 在跑。
+(iv) Q6551: 命名引理 APERY GENERIC-COVER COMPATIBILITY ⟹ COINC@p^{2/3} ⟹ p^{4/3}。
+(v) 方法学教训: fiber-product 点计数波动测的是两纤维序列相关性 (随机对照 std≈1),
+**不测 genus**; 低亏格坍缩未确立 (Sage 精确计算在跑), RH 泛型 O(hk) 大概率成立。
+
+**分量定理架构 (我推的, 待 codex-max 交叉验证)**:
+1. 极点 3-cycle 无条件: N_h(−j)=±((j−1)!)³b_{j−1}((h−j)!)³b_{h−j} ≠ 0 (Apéry 正性)。
+2. 本原性: C_h 不可约 (deg 4h−4) + N_h squarefree ⟹ δ_h 无复合分解
+   (外层 crit 值=小 Galois 稳定集 vs C_h 不可约; x^m 逃逸被 N_h 非幂封死; h=1 例外=1/(x+1)³ 真立方)。
+3. Jordan: 本原+3-cycle ⟹ ⊇A_{3h}; +对换 (C_h squarefree ⟹ 简单 crit) ⟹ =S_{3h}。
+4. Goursat: h≠k: 公共商仅 Z/2, A×A 已传递 ⟹ 不可约; h=k: 2-传递 ⟹ 恰好 对角+H_h。
+⟹ 全部分量控制归结为一元族 **C_h 不可约性** (≤8 已验, codex 扩到 16)。
+配合窗口 completion (log² 代价) ⟹ 无条件 COINC_β, β≤1/6 (第四靶首个已证实例,
+不改能量指数, 但把靶的形状钉死)。q15(life9) 在写全证明。
+
+**在飞**: life2(q2)/4(qDWORK2)/5(qSELFREC)/7(q6)/10(q9)/3(q14-DLS)/9(q15-THIN),
+life1 疑卡; codex: crosscorr(high)+irred-theorem(max); Sage genus X_{2,3}。
