@@ -305,3 +305,32 @@ The amplification question (multiplicity on the Ψ family) is with R5.
   (density-one, X^{2/3+o(1)} exceptional) → Thm C (this session's local
   package, explicitly labeled downstream-neutral) → Prop D (vertical-energy
   limitation warning) → Interface E (cross-prime moment criterion).
+
+## 14. R7 harvest (Q6310) — the Mellin/Kummer lag reduction + closures
+
+- ⚠️ FABRICATION #3: same phantom "commit 831e147 / Q32_paper_2026-08.tex" cited
+  again (persistent confabulated repo state; ALL its repo citations = null;
+  its EXTERNAL citation CFVZ Bull.Aust.Math.Soc 114 (2026) is real).
+- **THE ONE GENUINE LAG REDUCTION**: b_{r+d} ≡ b_r (p) ⟺ the Mellin transform
+  of the fixed K3 point-count trace, tensored by the Kummer twist χ_d − 1,
+  vanishes at χ_r. χ_d has conductor O(1) INDEPENDENT of d: transfer degree
+  O(d) → sheaf complexity O(1). Obstruction relocated to a NEW theorem: uniform
+  two-point mod-p local limit for Kummer translates of the Apéry Mellin family.
+  Per-translation √p-error ⟹ E(p) ≪ p^{3/2}; pay threshold needs AVERAGED
+  error p^{1+o(1)} over all translates.
+- Folding route: closed with proofs (θ does not descend past T^d−1 — the ideal
+  is not differential; jet closure = Vandermonde = zero compression; 4-state
+  block variant gives N⁵ ≪ d⁴ per digit ⟹ global p^{9/5} — worse than 7/4).
+- Square-root convolution route: KILLED by counterexample, WE VERIFIED in one
+  line: h_n = 4^{−n}C(2n,n) has (h*h)_M = 4^{−M}Σ C(2i,i)C(2M−2i,M−i) ≡ 1 for
+  all M (classical identity) — E(h) small, E(h*h) maximal. No abstract
+  energy-transfer inequality g → g*g can exist.
+- Reflection/Lucas group: infinite dihedral, lag-invariant — PROVED closed.
+  KEEP the one-end reflection tail lemma: collisions with d ≥ p−H reduce to
+  collisions among the first H indices (extreme-tail removal at cost O(H²)).
+- Exponent verdict: 7/4 stands this month; E ≪ p^{3/2} is the credible next
+  target CONDITIONAL on the Mellin two-point local limit; p^{1+o(1)} needs the
+  averaged version. Discriminating experiment (launching): stratify collision
+  lags by Kummer order of d in (Z/(p−1))^× — spikes at bounded order ⟹ the
+  3/2 route reduces to classifying finitely many self-twists; spikes at huge
+  order ⟹ the wall is structural.
