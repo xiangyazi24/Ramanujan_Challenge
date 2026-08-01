@@ -470,3 +470,43 @@ template eats.  One of the six pieces, `2 log2 · ∫ H1 R/t`, is only weight th
 This is an alternative to the row-by-row route, not a replacement: keep whichever
 lands first.  Row-by-row already has `I20` and `I10` in closed form and `I11`
 under way.
+
+### The Φ-route ledger, closed
+
+Writing `P = ∫₀¹ Φ R/t = -2P1 - P2 + 4P3 - (5/2)P4 + 2P5 + 2L·P6` with
+
+```
+P1 = ∫₀¹ Li₂(t) R/t        P2 = ∫₀¹ H1² R/t       P3 = ∫₀¹ Li₂(t/2) R/t
+P4 = ∫₀¹ H2² R/t           P5 = ∫₀¹ log(1-t)log(2-t) R/t
+P6 = ∫₀¹ H1 R/t            (weight three)
+```
+
+every piece is in the basis `(Li₄(½), L⁴, L²ζ₂, Lζ₃, ζ₂²)`:
+
+```
+P1 = (-1,  -1/24, -1/2,  -7/8,   1/20)
+P2 = ( 0,   0,     0,    -7/2,   3/4  )     = I11
+P3 = (-1,  -1/24,  1/4,  -7/8,   1/8  )
+P4 = (-6,  -1/4,   3/2, -21/4,  23/10 )     = I22
+P5 = (-6,  -1/4,   9/4, -35/8,  87/40 )
+P6 = -(3/2) L ζ₂                            (weight three)
+```
+
+`P2` and `P4` are `I11` and `I22` in their post-IBP form, which is a consistency
+check, not new information.  `P5` was obtained by solving the linear relation and
+then confirmed against its own direct quadrature to 16 digits — independent, not
+circular.  `P1` likewise cross-checks to 17 digits.
+
+`P1` has a short derivation worth keeping: the inner sum has a closed form,
+`Σ_{m≥1} 1/(m²(m+n)) = ζ₂/n - H_n/n²`, so
+`P1 = -ζ₄ - Lζ₃ + ζ₂ Li₂(½) - V₂` with `V₂ = Σ H_n/(2ⁿn³)`.
+
+**Method warning, paid for the hard way.**  A first pass PSLQ'd `P1, P3, P5, P6`
+straight from quadrature and reported NO RELATION for all four.  That was a
+precision artifact: two different quadrature schemes for the same integral
+disagreed at the 17th digit, so the input never had the ~40 digits a five-term
+relation needs.  Recomputing by series — using the closed form above for the
+inner sum — gave clean relations immediately.  This is the same trap already
+recorded in UNDERSTANDING.md under "substitute before trusting PSLQ"; the lesson
+generalises past substitution to *any* claim that a constant is not in a basis.
+Cross-check two independent evaluations before believing a negative.
