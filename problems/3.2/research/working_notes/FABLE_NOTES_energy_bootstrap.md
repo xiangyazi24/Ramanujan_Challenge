@@ -882,3 +882,38 @@ identity) + apparition chain (one nail: [GAP-BR] atom, R18/R3a dual attack)
   estimate — academic for pointwise (counting lemma already renders the low-
   order structure harmless), but closes the last conceptual loop of the
   apparition program.
+
+## 39. R17: THE CANONICAL STATEMENT (campaign endpoint)
+
+- **Canonical final object: HIGH-ORDER DEFINING-CHARACTERISTIC MELLIN DIAGONAL
+  ZERO-DENSITY** — the character-coordinate form of [GAP-FROB]; (EH4) is one
+  analytic realization; (MG) is the geometric prerequisite, not the conclusion.
+  All four coordinate systems (FROB/EH4/MG/inverse) officially unify.
+- Correct inverse-theorem shape: positive-density bad diagonal ⟹ positive
+  fraction lies in ONE bounded Kummer packet (χ^a = ξ, a bounded, ξ in the
+  finite self-twist group) ⟹ bounded order ⟹ counting-lemma contradiction.
+- Honest tool audit: V_p = defining-characteristic Frobenius zero sets, NOT
+  known to be reductions of a fixed subvariety ⟹ Manin–Mumford/BMZ/
+  Pila–Zannier do not apply (the unlikely-intersection ANALOGY is right, the
+  tools don't transfer — new mathematics required, as expected).
+- NEW unconditional reduction: H(n) = H_high(n; n^{1−δ}) + O(n^{1−δ+o(1)})
+  for every fixed δ > 0 — pointwise ⟺ zero density of the almost-full-order
+  Mellin bad diagonal.
+- Monodromy prerequisite (next Codex high+max target): "self-twists only from
+  inversion and quartic Kummer translation; non-equivalent twists have product
+  geometric monodromy" — Goursat–Kolchin–Ribet reduction standard; the
+  parameter-side self-twist classification is the accessible new theorem. Even
+  complete, it does not yield pointwise — the residue-scale local-limit
+  conversion remains the irreducible core.
+
+### CAMPAIGN LEDGER (three nights):
+Vertical theory COMPLETE: strong reflection; (UN); value distribution
+(image p^{1/3}, N_p(c) ≤ 8p^{3/4}, E ≪ p^{5/3} + 5/3 ceiling); structure
+theorem (3 universal seqs + 2 fixed series + 2 scalars); five-layer tower =
+one harmonic identity (b_p − 5 ≡ −7p²H⁽²⁾_{p−1} mod p⁵, theorem-status
+β_p); apparition chain (branch reflection + quarter/eighth-point laws, one
+atom from closure); counting lemma (low-order harmless). Pointwise frontier:
+ONE canonical statement, three sufficient realizations, precise monodromy
+prerequisite, all standard tools audited dead with proofs. ~65 commits, every
+claim machine-verified, four fabrications caught, zero unverified claims
+banked.
