@@ -27,13 +27,15 @@ Efficient Rational Approximation of Catalan's Constant~$G$}
 \begin{abstract}
 We prove, for every one of the three terminal columns, that the
 matrix quotient in Problem~2.5 tends to Catalan's constant.  The
-proof is exact.  A Meijer--$G$ trajectory is related to the printed
-matrix by an explicit inverse-transpose identity.  A positive
-fourfold integral identifies the unique recessive solution, and an
-exact Barnes-moment calculation evaluates its initial vector.  We
-also give the exact inverse Delannoy transform and the requested
-finite integral formula for its coefficient error.  No finite-prefix
-guess, decimal recognition, or non-effective sign argument is used.
+paper contains two exact proofs.  The first relates a Meijer--$G$
+trajectory to the printed matrix by an explicit inverse-transpose
+identity.  The second is independent of that special-function
+connection: an elementary positive triple integral produces a fast
+adjoint solution, while a rational companion and a contracting Miller
+cone select its projective limit.  We also give the exact inverse
+Delannoy transform and the requested finite integral formula for its
+coefficient error.  No finite-prefix guess or decimal recognition is
+used.
 \end{abstract}
 
 \section{The matrix and the assertion}
@@ -748,6 +750,15 @@ the equality of the hatted and original ratios in
 \eqref{eq:hats-all} proves all three assertions of
 Theorem~\ref{thm:main-statement}.
 \end{proof}
+
+\input{independent_miller}
+
+\begin{remark}[Provenance of the two proofs]
+The Meijer--$G$ route above was reconstructed after publication of the
+official solutions and uses their special-function trajectory.  The proof in
+Section~\ref{sec:miller-independent} was developed independently from the
+printed challenge matrix.  It uses no Meijer--$G$ or Barnes connection data.
+\end{remark}
 
 \begin{thebibliography}{9}
 

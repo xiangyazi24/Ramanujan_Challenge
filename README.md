@@ -35,7 +35,7 @@ lean/                          Lean 4 formalization (v4.29.0 + Mathlib v4.29.0)
     Problem22*.lean            P2.2: Rivoal construction → γ (4 files)
     Problem23.lean             P2.3: tensor annihilation → π + e
     Problem24*.lean            P2.4: polylogarithm identity (2 files)
-    Problem25*.lean            P2.5: CMF → Catalan's G (8 files, ~3800 lines)
+    Problem25*.lean            P2.5: CMF → Catalan's G (33 modules, ~13k lines)
     Problem26*.lean            P2.6: Ore factorization → ζ(2)+ζ(3) (7 files)
     Problem27*.lean            P2.7: Barnes contour → ζ(2)+ζ(3) (12 files)
     Problem28_SUBMIT/          P2.8: Chudnovsky CM extraction (27 files, from Ripple)
@@ -52,12 +52,13 @@ scripts/                       Verification scripts (Python, Sage)
 
 ## Key Techniques
 
-- **Projective contraction** (Hilbert metric on positive cones): P2.5
+- **Positive adjoint moments + contracting Miller cone**: P2.5
+- **Projective contraction** (explicit positive cone): P2.5
 - **Ore factorization / reduction of order**: P2.6
 - **Barnes contour integrals + gauge transfer**: P2.7
 - **CM evaluation / period bridge** (from [Ripple](https://github.com/xiangyazi24/Ripple)): P2.8
 - **Bloch-Wigner dilogarithm / rational reconstruction**: P3.1
-- **Delannoy basis decomposition + exact integral representation**: P2.5
+- **Meijer-G connection and Delannoy analysis** (post-official comparison route): P2.5
 - **Tensor annihilation / Lambert CF**: P2.3
 - **Cohen Entry 5.3.22 sign-flip**: P2.1
 - **Harmonic concentration / positive cone**: P2.2

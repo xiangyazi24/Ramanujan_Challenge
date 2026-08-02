@@ -1,0 +1,416 @@
+\section{An independent proof by an elementary Miller cone}
+\label{sec:miller-independent}
+
+This section gives a second proof of the main assertion.  It uses only
+the printed matrix, elementary real integrals, rational identities, and a
+uniform contraction argument.  In particular, it does not use a
+Meijer--$G$ function, a Barnes integral, or a special-function connection
+formula.
+
+\subsection{The common projective limit}
+
+Put $S=\operatorname{diag}(1,-1,1)$ and
+\[
+        B_n=-SM(n)S.
+\]
+Every entry of $B_n$ is positive for $n\geq0$.  If
+$\boldsymbol p_n,\boldsymbol q_n$ are the original numerator and
+denominator rows, define
+\[
+ \widetilde{\boldsymbol p}_n=(-1)^n\boldsymbol p_nS,\qquad
+ \widetilde{\boldsymbol q}_n=(-1)^n\boldsymbol q_nS.
+\]
+Then
+\[
+  \widetilde{\boldsymbol p}_{n+1}
+       =\widetilde{\boldsymbol p}_nB_n,\qquad
+  \widetilde{\boldsymbol q}_{n+1}
+       =\widetilde{\boldsymbol q}_nB_n,
+\]
+and the signs cancel in the quotient:
+\[
+ \frac{\widetilde p_{n,j}}{\widetilde q_{n,j}}
+       =\frac{P_{n,j}}{Q_{n,j}}.
+\]
+
+The following elementary contraction will also be used at the end.
+
+\begin{lemma}[Common-limit lemma]\label{lem:miller-common-limit}
+There is a real number $L$ such that
+\[
+       \frac{P_{n,j}}{Q_{n,j}}\longrightarrow L
+       \qquad(j=1,2,3).
+\]
+More precisely, all three ratios lie in an interval whose length is
+$O((2/3)^n)$.
+\end{lemma}
+
+\begin{proof}
+Set
+\[
+ X_n=(n+1)\frac{\widetilde q_{n,2}}{\widetilde q_{n,1}},
+ \qquad
+ Y_n=(n+1)^3\frac{\widetilde q_{n,3}}{\widetilde q_{n,1}}.
+\]
+Direct substitution of the entries of $B_n$ gives the invariant rectangle
+\begin{equation}\label{eq:miller-den-cone}
+          1\leq X_n\leq\frac32,\qquad 0\leq Y_n\leq2.
+\end{equation}
+Here is a short exact way to check the induction.  After the common positive
+factor $\widetilde q_{n,1}$ is removed, each new coordinate is affine in
+$(X_n,Y_n)$.  Each of the four required inequalities is therefore checked at
+the four corners
+\[
+       (1,0),\ (1,2),\ (3/2,0),\ (3/2,2).
+\]
+After clearing the positive denominators, the resulting expressions are
+polynomials in $n$ with nonnegative coefficients.
+
+Let $r_{n,i}=\widetilde p_{n,i}/\widetilde q_{n,i}$.  Positivity of $B_n$
+writes each $r_{n+1,j}$ as a convex combination of the three $r_{n,i}$.
+Using \eqref{eq:miller-den-cone}, the normalized weights of both
+$r_{n,1}$ and $r_{n,2}$ are at least $1/6$.  Thus, if
+$\ell_n\leq r_{n,i}\leq u_n$ for all $i$, then
+\[
+\frac{r_{n,1}+r_{n,2}}6+\frac23\ell_n
+ \leq r_{n+1,j}\leq
+\frac{r_{n,1}+r_{n,2}}6+\frac23u_n .
+\]
+Defining the next enclosing interval by these two endpoints gives
+$u_{n+1}-\ell_{n+1}=(2/3)(u_n-\ell_n)$.  The nested lower and upper
+endpoints consequently have one common limit, and they squeeze every
+$r_{n,j}$.
+\end{proof}
+
+\subsection{A positive adjoint moment}
+
+For $p,q,v\in(0,1)$ put
+\[
+       D=pq(1+v^2)+2v
+\]
+and define
+\begin{align}
+ I_n(A,B,C;k)
+   =\iiint_{(0,1)^3}
+   \frac{16p^{2n+6+A}q^{2n+5+B}
+      (1-p^2)^n(1-q^2)^{n+1}v^{2n+3+C}}
+        {D^{\,2n+4+k}}\,dp\,dq\,dv .        \label{eq:miller-moment}
+\end{align}
+All these integrals are finite and positive.  Define
+\begin{equation}\label{eq:miller-w}
+\begin{split}
+ w_{n,1}&=I_n(0,0,0;0),\\
+ w_{n,2}&=2(n+2)I_n(0,0,1;1),\\
+ w_{n,3}&=-(n+2)I_n(0,0,1;1)
+       +2(n+2)(2n+5)I_n(0,0,2;2).
+\end{split}
+\end{equation}
+The last component is also positive.  One proof is to integrate in $v$
+after applying integration by parts to a multiple of
+$v^{2n+4}(1-v^2)/D^{2n+5}$; the boundary terms vanish and the remaining
+integrand is positive.
+
+\begin{lemma}[Adjoint recurrence]\label{lem:miller-adjoint}
+For
+\[
+ \lambda_n=(n+1)(n+2)^2(n+3)^2(2n+7)^2
+\]
+the vector in \eqref{eq:miller-w} satisfies
+\begin{equation}\label{eq:miller-adjoint}
+                 B_nw_{n+1}=\lambda_nw_n .
+\end{equation}
+Moreover
+\begin{equation}\label{eq:miller-fast-bound}
+             0<w_{n,1}\leq \frac{512}{64^n}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The recurrence has a three-variable divergence certificate.  To state the
+certificate compactly, for a polynomial $H=H(n,p,q,v)$ define
+\begin{align*}
+\mathcal L_p(H)
+={}&D\{p(1-p^2)H_p+[(2n+7)-(4n+9)p^2]H\}\\
+ &-(2n+7)p(1-p^2)q(1+v^2)H,\\
+\mathcal L_q(H)
+={}&D\{q(1-q^2)H_q+[(2n+6)-(4n+10)q^2]H\}\\
+ &-(2n+7)q(1-q^2)p(1+v^2)H,\\
+\mathcal L_v(H)
+={}&D\{v(1-v^2)H_v+[(2n+4)-(2n+6)v^2]H\}\\
+ &-(2n+7)v(1-v^2)(2pqv+2)H.
+\end{align*}
+For each of the three rows there are explicit polynomials
+$H_{i,p},H_{i,q},H_{i,v}\in\mathbb Z[n,p,q,v]$ such that, after the base
+integrand in \eqref{eq:miller-moment} is factored out,
+\begin{equation}\label{eq:miller-certificate}
+ 4(2n+3)(n+2)
+ \left(\sum_{j=1}^3(B_n)_{ij}W_{n+1,j}
+                  -\lambda_nW_{n,i}\right)
+ =
+ \mathcal L_p(H_{i,p})+\mathcal L_q(H_{i,q})
+                         +\mathcal L_v(H_{i,v}).
+\end{equation}
+Here $W_{n,i}$ denotes the rational factor which produces the $i$th
+integrand in \eqref{eq:miller-w}.  The sparse integer coefficient lists for
+the nine polynomials are included in the accompanying Lean source.  Its
+kernel checks \eqref{eq:miller-certificate} as a polynomial identity, not by
+sampling.  Integration of the right side is zero: the three antiderivatives
+contain, respectively, $p(1-p^2)$, $q(1-q^2)$, and $v(1-v^2)$, so both
+endpoint terms vanish.  This proves \eqref{eq:miller-adjoint}.
+
+For \eqref{eq:miller-fast-bound}, rewrite the first integrand as
+\[
+\frac{512}{64^n}\,p(1-q^2)
+ [4p^2(1-p^2)]^n[4q^2(1-q^2)]^n
+ \left(\frac{pq}{D}\right)^5
+ \left(\frac{2v}{D}\right)^{2n+3}
+ \left(\frac D4\right)^4 .
+\]
+Every factor after $512/64^n$ belongs to $[0,1]$ on the unit cube.
+The cube has volume one, giving the required bound.
+\end{proof}
+
+At the initial index the same moments select Catalan's constant exactly.
+Writing
+\[
+ \widetilde{\boldsymbol p}_0=(30921,32972,8240),\qquad
+ \widetilde{\boldsymbol q}_0=(33750,36000,9000),
+\]
+one has
+\begin{equation}\label{eq:miller-initial-pair}
+       \widetilde{\boldsymbol q}_0\cdot w_0=75,\qquad
+       \widetilde{\boldsymbol p}_0\cdot w_0=75G .
+\end{equation}
+These are elementary integral evaluations.  Expanding
+\eqref{eq:miller-w}, the two coefficient triples are
+\[
+ (33750,126000,180000),\qquad
+ (30921,115408,164800).
+\]
+Fubini reduction first gives $75/16$ and $75G/16$ before the outer factor
+$16$ in \eqref{eq:miller-moment}.  The remaining one-variable substitution
+$t=2v/(1+v^2)$ reduces the second evaluation to
+\[
+              G=\int_0^1\frac{-\log t}{1+t^2}\,dt.
+\]
+All endpoint terms are rational functions and logarithms; hence
+\eqref{eq:miller-initial-pair} is an exact evaluation, not numerical
+recognition.
+
+\subsection{A rational companion and its Miller graph}
+
+Let
+\[
+\sigma_n=-2(n+2)^2(n+3)^2(2n+5)(2n+7)^2,\qquad
+        T_n=\sigma_nM(n)^{-T}.
+\]
+Thus $T_n^TM(n)=\sigma_nI$.  With $e_1=(1,0,0)^T$, form the Krylov matrix
+\[
+       K_n=[\,e_1,\ T_ne_1,\ T_nT_{n+1}e_1\,].
+\]
+Direct rational simplification gives
+\begin{equation}\label{eq:miller-companion}
+       T_nK_{n+1}=K_nC_n,\qquad
+ C_n=\begin{pmatrix}0&0&c_{0,n}\\1&0&c_{1,n}\\0&1&c_{2,n}\end{pmatrix}.
+\end{equation}
+For completeness, the coefficients are
+\begin{align}
+c_{0,n}&=\frac{(n+2)^2(2n+7)d(n+1)}
+ {(n+4)(n+5)(2n+9)d(n)},\nonumber\\
+c_{1,n}&=-\frac{\pi(n)}
+ {(n+4)(n+5)(2n+5)(2n+9)d(n)},\label{eq:miller-coefficients}\\
+c_{2,n}&=\frac{\omega(n)}
+ {4(n+3)(n+5)(2n+7)(2n+9)d(n)},\nonumber
+\end{align}
+where
+\begin{align*}
+d(n)={}&3072n^7+61824n^6+531184n^5+2525522n^4\\
+ &+7175793n^3+12183785n^2+11446123n+4589916,\\
+\pi(n)={}&430080n^{11}+15954432n^{10}+267573056n^9\\
+&\quad+2677696216n^8\\
+&+17764567836n^7+82030514302n^6+269008975593n^5\\
+&+626475469357n^4+1015303508704n^3+1090544343906n^2\\
+&+698695833276n+202285840752,\\
+\omega(n)={}&1720320n^{11}+62195712n^{10}+1017208064n^9\\
+&\quad+9933863520n^8\\
+&+64362354608n^7+290489793800n^6+931925873076n^5\\
+&+2125092069586n^4+3375535586927n^3+3557018693358n^2\\
+&+2237964273360n+636907494879.
+\end{align*}
+Clearing the positive denominators in \eqref{eq:miller-coefficients} gives
+polynomials with nonnegative coefficients and proves, for every $n\geq0$,
+\begin{equation}\label{eq:miller-coeff-bounds}
+ 1\leq c_{0,n}\leq\frac43,\quad
+ -49\leq c_{1,n}\leq-35,\quad
+ 35\leq c_{2,n}\leq37.
+\end{equation}
+Set
+\[
+ A_n=-\frac{c_{1,n}}{c_{0,n}},\qquad
+ B_n'=-\frac{c_{2,n}}{c_{0,n}},\qquad
+ R_n=\frac1{c_{0,n}}.
+\]
+Then
+\begin{equation}\label{eq:miller-pull-bounds}
+ \frac{105}{4}\leq A_n\leq49,\qquad
+ -37\leq B_n'\leq-\frac{105}{4},\qquad
+ \frac34\leq R_n\leq1.
+\end{equation}
+
+Let
+\[
+ {\cal K}=[0,1/16]\times[0,1/256]
+\]
+and define the backward projective map
+\begin{equation}\label{eq:miller-pull}
+ {\cal P}_n(u,v)=
+ \left(\frac1{A_n+B_n'u+R_nv},
+       \frac{u}{A_n+B_n'u+R_nv}\right).
+\end{equation}
+Equations \eqref{eq:miller-pull-bounds} imply
+\[
+ 23\leq A_n+B_n'u+R_nv\leq50
+       \qquad((u,v)\in{\cal K}).
+\]
+Consequently ${\cal P}_n({\cal K})\subseteq{\cal K}$, and a direct
+difference estimate gives
+\begin{equation}\label{eq:miller-contraction}
+ \|{\cal P}_n(x)-{\cal P}_n(y)\|_\infty
+       \leq\frac18\|x-y\|_\infty .
+\end{equation}
+Thus there is a unique infinite pullback graph
+$z_n={\cal P}_n(z_{n+1})$ with $z_n\in{\cal K}$; truncating at depth $h$
+changes $z_n$ by at most $8^{-h}$ times the diameter of ${\cal K}$.
+
+It remains to show that the positive moment is precisely the solution on
+this graph.  Put $r_n=Sw_n$ and
+\[
+ s_n=-\frac{\sigma_n}{\lambda_n}
+       =\frac{2(2n+5)}{n+1}\leq10,\qquad
+ a_0=1,\quad a_{n+1}=a_ns_n,\quad f_n=a_nw_{n,1}.
+\]
+The adjoint identity and \eqref{eq:miller-companion} imply that
+\[
+             F_n=(f_n,f_{n+1},f_{n+2})
+\]
+obeys the companion evolution $F_{n+1}=F_nC_n$.  Moreover
+\begin{equation}\label{eq:miller-f-fast}
+             |f_n|\leq512(5/32)^n.
+\end{equation}
+
+For any companion solution $X=(X_0,X_1,X_2)$ define its defect from the
+graph by
+\[
+ \delta_n(X)=(X_1-z_{n,1}X_0,\ X_2-z_{n,2}X_0).
+\]
+Using $z_n={\cal P}_n(z_{n+1})$ and \eqref{eq:miller-companion},
+\begin{align*}
+\delta_{n+1,1}&=-z_{n+1,1}\delta_{n,1}+\delta_{n,2},\\
+\delta_{n+1,2}&=(c_{1,n}-z_{n+1,2})\delta_{n,1}
+                         c_{2,n}\delta_{n,2}.
+\end{align*}
+The bounds above give
+\begin{equation}\label{eq:miller-defect-growth}
+             \|\delta_{n+1}(X)\|_\infty
+                  \geq\frac12\|\delta_n(X)\|_\infty.
+\end{equation}
+On the other hand \eqref{eq:miller-f-fast} gives
+\[
+ 2^n\|\delta_n(F_n)\|_\infty
+       \leq544(5/16)^n\longrightarrow0.
+\]
+Iterating \eqref{eq:miller-defect-growth} backwards forces
+$\delta_0(F_0)=0$:
+\begin{equation}\label{eq:miller-selected}
+              F_0=f_0(1,z_{0,1},z_{0,2}).
+\end{equation}
+This is the elementary Miller selection theorem needed here.
+
+\subsection{Initial selection and the literal terminal column}
+
+The initial Krylov matrix and two fixed covectors are
+\[
+K_0=\begin{pmatrix}
+1&152/5&195477/175\\
+0&1723/90&1963751/2800\\
+0&-143/18&-165201/560
+\end{pmatrix},
+\]
+\[
+\ell_P=\begin{pmatrix}30102216645\\-19896711516\\525137760\end{pmatrix},
+\qquad
+\ell_Q=\begin{pmatrix}32863650750\\-21712357800\\573048000\end{pmatrix}.
+\]
+Exact multiplication gives
+\begin{equation}\label{eq:miller-covectors}
+ K_0\ell_P=382493\,\boldsymbol p_0^T,\qquad
+ K_0\ell_Q=382493\,\boldsymbol q_0^T.
+\end{equation}
+Together with \eqref{eq:miller-initial-pair} and
+\eqref{eq:miller-selected}, this yields
+\begin{equation}\label{eq:miller-graph-value}
+ \frac{\ell_P\cdot(1,z_{0,1},z_{0,2})}
+      {\ell_Q\cdot(1,z_{0,1},z_{0,2})}=G.
+\end{equation}
+The denominator is positive throughout ${\cal K}$; this is immediate by
+checking the two relevant endpoints of its affine expression.
+
+We finally connect the abstract pullback to an actual column of the
+challenge product.  Put $A_n=C_n^{-T}$.  The identities already proved give
+the exact telescope
+\begin{equation}\label{eq:miller-telescope}
+ K_0^T\mathcal M_N
+   =\Sigma_N(A_0A_1\cdots A_{N-1})K_N^T
+\end{equation}
+for a nonzero scalar $\Sigma_N$.  For $N=h+2$, direct rational
+simplification gives
+\begin{equation}\label{eq:miller-terminal}
+ A_hA_{h+1}K_N^Te_3
+       =\kappa_N(1,\tau_N,0)^T,\qquad \kappa_N>0,
+\end{equation}
+where
+\[
+\begin{aligned}
+V_N={}&N^2(2N+1)(2N+3)
+ (48N^4+306N^3+715N^2+729N+275),\\
+R_N={}&6528N^8+54480N^7+187144N^6+344616N^5\\
+ &+371338N^4+239883N^3+91396N^2+19200N+1800,
+\qquad \tau_N=\frac{V_N}{R_N}.
+\end{aligned}
+\]
+Clearly $\tau_N\geq0$, while $\tau_N\leq1/16$ follows after clearing the
+positive denominator from
+\begin{align*}
+&R_N-16V_N\\
+&\quad=3456N^8+28752N^7+99912N^6+191752N^5+226106N^4\\
+&\qquad\quad+169691N^3+78196N^2+19200N+1800\geq0,
+\end{align*}
+where $R_N$ is the denominator displayed in $\tau_N$.  Hence
+$(\tau_N,0)\in{\cal K}$.
+
+Applying \eqref{eq:miller-telescope} to $e_3$ and cancelling its nonzero
+scalar factors gives
+\[
+\frac{P_{h+2,3}}{Q_{h+2,3}}
+=
+\frac{\ell_P\cdot
+ (1,{\cal P}_0{\cal P}_1\cdots{\cal P}_{h-1}(\tau_{h+2},0))}
+{\ell_Q\cdot
+ (1,{\cal P}_0{\cal P}_1\cdots{\cal P}_{h-1}(\tau_{h+2},0))}.
+\]
+By \eqref{eq:miller-contraction}, its chart tends to $z_0$; by
+\eqref{eq:miller-graph-value}, the quotient tends to $G$.
+Lemma~\ref{lem:miller-common-limit} then promotes the third-column limit to
+all three columns.  This proves the main assertion independently.
+
+\paragraph{Formal verification.}
+The accompanying Lean development proves every analytic estimate,
+polynomial certificate, matrix identity, and limit used in this section.
+Its final theorem is
+\[
+       \texttt{problem25\_solved : Problem25Claim}.
+\]
+It contains no \texttt{sorry}.  Its axiom audit is
+\[
+ \{\texttt{propext},\ \texttt{Classical.choice},\ \texttt{Quot.sound}\}.
+\]

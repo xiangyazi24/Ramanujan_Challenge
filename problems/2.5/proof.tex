@@ -10,23 +10,22 @@
 \title{Solution to Ramanujan Challenge Problem 2.5:\\
 Efficient Rational Approximation of Catalan's Constant~$G$}
 \author{Xiang Huang}
-\date{July 2026}
+\date{August 2026}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
 We prove that the $3\times3$ CMF in Problem~2.5 converges to
-Catalan's constant~$G$.
-The proof identifies the correct rank-three differential module
-as the \emph{integrated elliptic period system}
-$\mathcal{Y}'(k) = K(k)$, not the symmetric square of the
-Delannoy recurrence.
-The Brafman identity reduces the Catalan integral to
-$G = \frac{1}{2}\int_0^1 K(k)\,dk$,
-and the spectral data of the CMF matches this module exactly.
-Numerical verification confirms all three column ratios
-to 80+ decimal digits.
+Catalan's constant~$G$.  The exploratory part identifies the
+integrated elliptic-period module and an exact Delannoy transform.
+The proof is closed by a separate elementary Miller argument: a
+positive triple integral satisfies the adjoint matrix recurrence,
+an explicit rational companion has a uniformly contracting backward
+cone, and an exact terminal certificate connects this selected
+solution to a literal column of the challenge product.  This route
+uses no Meijer--$G$ function, Barnes integral, or official
+special-function connection formula.
 \end{abstract}
 
 \section{Setup and numerical verification}
@@ -718,6 +717,8 @@ Taking $N\to\infty$ then $K\to\infty$:
 \]
 \end{proof}
 
+\input{independent_miller}
+
 \section{Enhanced numerical verification}
 
 \begin{itemize}
@@ -736,22 +737,29 @@ Taking $N\to\infty$ then $K\to\infty$:
 
 \section{Status}
 
-\textbf{Problem~2.5 is solved.}
+\textbf{Problem~2.5 is solved unconditionally.}
 
-The limit $L = G$ (Catalan's constant) is proved
-unconditionally by Theorem~\ref{thm:limit-G}, which relies on:
+The proof is the independent construction in
+Section~\ref{sec:miller-independent}.  Its exact ingredients are:
 \begin{enumerate}
-\item Delannoy basis decomposition
-  (Theorem~\ref{thm:delannoy-decomp});
-\item positivity $f(k)>0$ for all~$k$
-  (Theorem~\ref{thm:fk-pos}, via exact verification
-  for $k \le 400$ and Poincar\'e asymptotics for $k>400$);
-\item convergence $g(k)/f(k) \to G$ at geometric rate $-1/8$
-  (Theorem~\ref{thm:eps-conv}, via the common annihilator
-  $\operatorname{LCLM}(L_f,L_g)$).
+\item the positive adjoint triple moment and its kernel-checked
+  divergence certificate;
+\item the rational companion, invariant Miller box, and uniform
+  $1/8$ backward contraction;
+\item the fast-solution selection argument and exact initial
+  Catalan pairings;
+\item the third-column terminal certificate, followed by the
+  $2/3$ common-projective-limit squeeze.
 \end{enumerate}
+The accompanying Lean theorem
+\texttt{problem25\_solved : Problem25Claim} has no
+\texttt{sorry} and uses only the standard axioms
+\texttt{propext}, \texttt{Classical.choice}, and
+\texttt{Quot.sound}.
 
-Additional established results:
+The earlier elliptic/Delannoy sections are retained as independent
+structural analysis and computational evidence.  Additional established
+results:
 scalar $N$-recurrence (order~3, degree pattern $(7,14,21,28)$,
 Poincar\'e roots $-16$, $-16(17\pm 12\sqrt{2})$);
 $k$-recurrence (order~8, degree~42, Poincar\'e roots
