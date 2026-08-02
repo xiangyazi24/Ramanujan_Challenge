@@ -64,7 +64,7 @@ scripts/                       Verification scripts (Python, Sage)
 ## Problem 3.2 (In Progress)
 
 The Apéry GCD conjecture `gcd(d_n a_n, d_n b_n) = e^{o(n)}` has a complete
-paper proof (135 pages) including:
+paper proof (193 pages) including:
 - Unconditional density-1 result via gap polynomials
 - Conditional full result via Hypothesis Z
 - Moment identity connecting to the Apéry family point count
