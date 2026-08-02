@@ -1,0 +1,43 @@
+name: Q889 Padé family gcd
+
+on:
+  push:
+    branches:
+      - 'agent/q889-pade-family-gcd-fast'
+    paths:
+      - 'problems/3.2/research/scripts/q32_pade_family_gcd_fast.cpp'
+      - 'problems/3.2/research/scripts/q32_pade_family_gcd_fast_report.py'
+      - '.github/workflows/q889-pade-family-gcd.yml'
+  pull_request:
+    paths:
+      - 'problems/3.2/research/scripts/q32_pade_family_gcd_fast.cpp'
+      - 'problems/3.2/research/scripts/q32_pade_family_gcd_fast_report.py'
+      - '.github/workflows/q889-pade-family-gcd.yml'
+  workflow_dispatch:
+
+jobs:
+  first-targets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install exact arithmetic dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgmp-dev
+          python3 -m pip install --disable-pip-version-check sympy
+      - name: Compile shared-elimination scanner
+        run: |
+          g++ -O3 -std=c++17 \
+            problems/3.2/research/scripts/q32_pade_family_gcd_fast.cpp \
+            -lgmpxx -lgmp \
+            -o /tmp/q32_pade_family_gcd_fast
+      - name: Validate small heights and first later targets
+        run: |
+          python3 problems/3.2/research/scripts/q32_pade_family_gcd_fast_report.py \
+            /tmp/q32_pade_family_gcd_fast 10 20 40 50 74 80 \
+            | tee q889-first-targets.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q889-first-targets
+          path: q889-first-targets.txt
