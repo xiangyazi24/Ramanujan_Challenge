@@ -25,3 +25,35 @@ STATUS.md
 lean/specs/
 problems/*/AUDIT*.md
 *.sage.py
+
+# Scratch/debug Lean files
+lean/Scratch*.lean
+lean/Audit*.lean
+lean/Check*.lean
+lean/Debug*.lean
+lean/*Debug*.lean
+lean/DualPrefix*.lean
+lean/Row0*.lean
+
+# Temporary Python/Sage/C++ scripts in lean/
+lean/p25_*.py
+lean/p25_*.sage
+lean/p25_*.cpp
+lean/p25_*.txt
+
+# P3.2 internal working files
+problems/3.2/CRON_*.md
+problems/3.2/CRON_*.py
+problems/3.2/RC_*.md
+problems/3.2/RC_*.py
+problems/3.2/CODEX_*.md
+problems/3.2/CODEX_*.py
+problems/3.2/research/working_notes/
+problems/3.2/chatgpt-answers/
+
+# General internal
+*_HANDOFF*.md
+*_DOCTRINE*.md
+*_tmp.*
+*_tmp_*
+*.DS_Store
