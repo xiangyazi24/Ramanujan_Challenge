@@ -4,6 +4,8 @@ Solutions to all 10 problems from [The Ramanujan Challenge for AI](https://www.r
 
 Each problem asks to prove that a specific recurrence-generated sequence converges to a named mathematical constant (π, e, γ, Catalan's G, ζ(2), ζ(3), etc.).
 
+**Official proofs** released by the challenge organizers: [Ramanujan Challenge Proofs (PDF)](https://www.ramanujanmachine.com/wp-content/uploads/2026/08/Ramanujan_Challenge_Proofs_02_08.pdf)
+
 ## Results
 
 | # | Constant | Lean | Paper | Status |
