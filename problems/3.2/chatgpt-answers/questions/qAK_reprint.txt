@@ -1,1 +1,0 @@
-[P3.2 cron] Your previous answer (the null-model prediction table for the supercritical Q_D experiment, delivered as "Q6597") went to a Notion page we cannot access. Re-print the COMPLETE answer here IN-CHANNEL as plain text (ASCII, ```text blocks for formulas). Do not deliver to Notion; do not attach; just print the full content in the chat reply.

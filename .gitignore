@@ -2,11 +2,12 @@
 *.log
 *.out
 *.synctex.gz
+*.fdb_latexmk
+*.fls
 __pycache__/
 *.py[cod]
 
-# Lean build products and local scratch files.  Commit Lean sources,
-# manifests, and specifications, but never the generated dependency tree.
+# Lean build products
 lean/.lake/
 SUBMIT/*/lean/.lake/
 lean/.rogers-scratch/
@@ -14,3 +15,13 @@ lean/.rogers-scratch/
 *.ilean
 *.trace
 *.orig
+
+# Internal working files — not for public release
+chatgpt-answers/
+DOCTRINE*.md
+HANDOFF*.md
+RUN_LOG.md
+STATUS.md
+lean/specs/
+problems/*/AUDIT*.md
+*.sage.py
