@@ -63,3 +63,19 @@ for n, (p, q) in enumerate(data[:20]):
     print(n,
           "lo/qterm", [float(x/(q[j]*scale)) for j, x in enumerate(lo)],
           "up/qterm", [float(x/(q[j]*scale)) for j, x in enumerate(up)])
+
+print("\nendpoint movements / Lima interval movements")
+for n in range(20):
+    p, q = data[n]
+    pn, qn = data[n+1]
+    lowmove = p[2]/q[2]
+    lowmove = pn[2]/qn[2]-lowmove
+    highmove = p[0]/q[0]-pn[0]/qn[0]
+    m = 2*n+4
+    lower_increment = partials[m+2]-partials[m]
+    upper_decrement = partials[m+1]-partials[m+3]
+    r0, r2 = p[0]/q[0], p[2]/q[2]
+    theta_lower = (partials[m]-r2)/(r0-r2)
+    theta_upper = (partials[m+1]-r2)/(r0-r2)
+    print(n, float(lowmove/lower_increment), float(highmove/upper_decrement),
+          "theta", float(theta_lower), float(theta_upper))

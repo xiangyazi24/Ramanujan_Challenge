@@ -10,6 +10,7 @@ import RamanujanChallenge.Problem23
 import RamanujanChallenge.Problem24
 import RamanujanChallenge.Problem25
 import RamanujanChallenge.Problem25Connection
+import RamanujanChallenge.Problem25Moment
 import RamanujanChallenge.Problem26
 import RamanujanChallenge.Problem26Generating
 import RamanujanChallenge.Problem26Nested

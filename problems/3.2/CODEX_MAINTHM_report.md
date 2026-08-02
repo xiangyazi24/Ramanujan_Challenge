@@ -29,6 +29,12 @@ remains open for every \(n\). The rigorous outcomes are:
    \]
    This does not settle any exceptional \(n\).
 7. A cross-prime reduction is proved below: an aggregate saving over the degree count for the growing family of gap polynomials would yield the first improvement for \(\sum_{p\le X}|Z_p|\). That uniform prime-aspect estimate remains open.
+8. The master-sum formulation also has a fixed-integer form.  The \(n\)-smooth
+   radical of \(b_n\), and more economically the large-prime core carrier
+   \(C_n^{\mathrm{core}}\), differ logarithmically from \(M(n)\) by only
+   \(O(n^{2/3})\).  This is an exact equivalent reformulation, not a proof of
+   sublinear height; both fixed-value quantities do inherit the
+   \(O_\varepsilon((\log X)^2)\) exceptional-set bound.
 
 Every finite datum and exact identity used below is independently gated by CODEX_MAINTHM_verify.py; its final line is PASS.
 
@@ -251,21 +257,41 @@ Thus any fixed power saving closes some [FR_eta]; a logarithmic saving does not.
 Extend the table cyclically and set
 
 \[
-A_t(d)=\sum_r e_p(t\det(u_r,u_{r+d})),\qquad
-F_t(\xi)=\sum_dA_t(d)e_p(\xi d).
+\widetilde A_t(d)=\sum_{r\in\mathbb F_p}
+ e_p(t\det(u_r,u_{r+d})),\qquad
+F_t(\xi)=\sum_{d\in\mathbb F_p}\widetilde A_t(d)e_p(\xi d).
 \]
 
 For nonnegative \(W\ge\mathbf1_{J_D}\),
 
 \[
-B_W(t)=\frac1p\sum_\xi\widehat W(-\xi)F_t(\xi). \tag{2.10}
+\widetilde B_W(t):=\sum_dW(d)\widetilde A_t(d)
+=\frac1p\sum_\xi\widehat W(-\xi)F_t(\xi). \tag{2.10}
 \]
+
+This is a cyclic weighted sum, not the physical-strip sum in (2.4).  Put
+
+\[
+\widetilde S_W:=\sum_{r,d\in\mathbb F_p}W(d)
+ \mathbf1_{\det(u_r,u_{r+d})=0}.
+\]
+
+Because \(W\ge0\), \(W=1\) on \(J_D\), and the physical strip is a
+subset of the cyclic domain,
+
+\[
+S_B\le\widetilde S_W
+=\sum_dW(d)+\frac1p\sum_{t\ne0}\widetilde B_W(t). \tag{2.10a}
+\]
+
+Thus completion controls a genuine nonnegative majorant of the physical
+incidence count; no cyclic/physical identification is being made.
 
 The sharp interval has \(\sum|\widehat W|=O(p\log p)\), so
 
 \[
 \max_{t\ne0,\xi}|F_t(\xi)|\ll p
-\Longrightarrow |B_W(t)|\ll p\log p. \tag{2.11}
+\Longrightarrow |\widetilde B_W(t)|\ll p\log p. \tag{2.11}
 \]
 
 The premise is open; the repository has experiments, not a bounded-conductor theorem. The specification's “currently proved” claim is refuted.
@@ -546,6 +572,125 @@ equivalently
 
 The verifier constructs a reflection-symmetric row model aligning 60 quotient-\(2\) primes at \(N=10000\), while every induced quotient-\(1\) target has load at most one. It is not an Apéry counterexample; it shows row cardinality, reflection, and Lucas reindexing alone cannot promote a top-window theorem to (4.3).
 
+## 4.2a Smooth-radical equivalence
+
+There is a useful every-\(n\) reformulation with no zero-set notation.  Put
+
+\[
+ \mathcal P_n=\prod_{p\le n}p,
+ \qquad
+ \mathcal S(n)=\log\operatorname{rad}\gcd(b_n,\mathcal P_n)
+ =\sum_{\substack{p\le n\\p\mid b_n}}\log p.
+\]
+
+Then, for every \(n\ge8\),
+
+\[
+ \boxed{0\le \mathcal S(n)-M(n)\le12n^{2/3}.} \tag{4.2a}
+\]
+
+Indeed, if \(p>\sqrt n\) and \(n=qp+r\), then Gessel's congruence gives
+
+\[
+ p\mid b_n\quad\Longleftrightarrow\quad
+ p\mid b_q\ \text{ or }\ p\mid b_r.                  \tag{4.2b}
+\]
+
+The lower-digit channel is exactly \(M(n)\).  For the leading-digit channel,
+split at \(Q=\lfloor n^{1/3}\rfloor\).  The binomial formula gives
+
+\[
+ b_q\le(q+1)64^q,
+ \qquad \log b_q\le q\log128.
+\]
+
+For \(q\le Q\), the logarithmic mass of the relevant primes is at most
+
+\[
+ \sum_{q\le Q}\log b_q
+ \le \frac{Q(Q+1)}2\log128<4n^{2/3}.
+\]
+
+For \(q>Q\), every associated prime satisfies \(p<n^{2/3}\), so Chebyshev's
+elementary bound \(\vartheta(x)\le4x\) contributes at most \(4n^{2/3}\).
+Finally \(p\le\sqrt n\) contributes at most \(4\sqrt n\le4n^{2/3}\).
+This proves (4.2a).
+
+Consequently
+
+\[
+ \mathcal S(n)=o(n)
+ \quad\Longleftrightarrow\quad M(n)=o(n)
+ \quad\Longleftrightarrow\quad \log G_n=o(n).          \tag{4.2c}
+\]
+
+There is also a cutoff fixed-index carrier.  Define
+
+\[
+ C_n^{\mathrm{core}}
+ =\gcd\!\left(\operatorname{rad}(b_n),
+              \prod_{n^{2/3}<p\le n}p\right).
+\]
+
+Put \(y=n^{2/3}\).  Master primes omitted by the cutoff have total
+logarithmic weight at most \(\vartheta(y)\le4y\).  Conversely, if
+\(p\mid C_n^{\mathrm{core}}\) is not a master prime, then \(p>y\),
+\(p\mid b_{\lfloor n/p\rfloor}\), and \(\lfloor n/p\rfloor<n^{1/3}\).
+The total logarithmic weight of these leading-digit contaminants is less
+than \(4y\).  Hence
+
+\[
+ \left|M(n)-\log C_n^{\mathrm{core}}\right|
+ \le8n^{2/3}.                                        \tag{4.2d}
+\]
+
+Thus \(\log C_n^{\mathrm{core}}=o(n)\) is another exact equivalent of the
+MAIN theorem.  The carrier is explicit, positive, and supported on one fixed
+Apéry value, but its sublinear-height estimate is precisely the missing
+arithmetic theorem; the construction alone supplies no saving.
+
+These are exact reformulations, not shortcuts.  General \(P\)-recursive,
+G-function, diagonal, or Lucas-congruence structure cannot imply such a
+smooth-radical theorem: for example, the algebraic diagonal
+\(u_n=\binom{2n}{n}\) satisfies
+
+\[
+ v_p(u_n)=1\qquad(n/2<p\le2n/3),
+\]
+
+and hence its corresponding \(n\)-smooth radical has logarithm
+\(\gg n\).  Any proof must use arithmetic special to the Apéry
+sequence and couple the varying primes.
+
+A clean sufficient strengthening can be written dyadically.  Define
+
+\[
+ T_>(N,P)=
+ \sum_{\max(P,\sqrt N)<p\le\min(2P,N)}\log p\,
+          \mathbf1_{p\mid b_{N\bmod p}}.
+\]
+
+For \(P_j=N/2^{j+1}\), over the indices for which
+\(2P_j>\sqrt N\), these half-open intervals partition the master range and
+
+\[
+ M(N)=\sum_jT_>(N,P_j).
+\]
+
+It would therefore suffice to prove, uniformly for every \(N\) and
+\(\sqrt N/2<P\le N/2\),
+
+\[
+ T_>(N,P)\le P/\omega(P)
+ \quad\text{for some }\omega(P)\longrightarrow\infty. \tag{4.2e}
+\]
+
+Writing
+\(\omega_*(x)=\inf_{y\ge x}\omega(y)\), dyadic summation gives
+\(M(N)\ll N/\omega_*(\sqrt N/2)=o(N)\).  This dyadic condition is stronger
+than the MAIN theorem, not an equivalent restatement.  No such uniform
+quenched anti-alignment theorem is currently known.
+
 ## 4.3 Correct [AVG-ZERO] identity
 
 Let
@@ -563,7 +708,8 @@ For \(p>5\), (4.2) and \(n=p+r\) give
 \]
 
 Put \(R(X)=\#\{(p,r):r\in Z_p,\ 1\le r,\ p+r\le X\}\), now including
-the small primes. The supplied identity_check.py did not check the left side:
+the small primes. The supplied `scratchpad_laststand/identity_check.py` did
+not check the left side:
 it tested \(p\mid b_{n-p}\). At \(p=5\), \(b_1\equiv0\), so division by
 \(5\) is invalid. In fact \(Z_5=\{1,3\}\), also refuting the proof.tex claim
 \(Z(5)=0\). The exact endpoint correction is
@@ -624,38 +770,47 @@ Write
 \]
 
 and partition \(1,\ldots,p-1\) into consecutive cells of length \(H\), where
-\(2\le H\le P\). If a cell contains \(q\) zeros, then
+\(2\le H\le P\).  Define the safely enlarged physical root count
 
 \[
-q\le1+\binom q2.
+ \rho_h^{\mathrm{phys}}(p)
+ =\#\{0\le x\le p-1-h:N_h(x)=0\pmod p\}.
 \]
 
-Every pair \(r<s\) in the same cell has \(h=s-r<H\), and the gap
-Casoratian gives \(N_h(r)=0\pmod p\). Consequently, with
+The formal orbit starts actually satisfy \(1\le x\le p-2-h\); the two
+extra endpoints only make the count larger.  In each cell, map every
+nonfirst zero to its preceding zero.  The gap is \(2\le h<H\) (consecutive
+zeros are impossible), and the gap Casoratian gives \(N_h(x)=0\pmod p\).
+Consequently, with
 
 \[
-\rho_h(p)=\#\{x\in\mathbf F_p:N_h(x)=0\},
-\qquad
-\mathcal R(P,H)=\sum_{2\le h<H}\sum_{P<p\le2P}\rho_h(p),
+\mathcal R_{\mathrm{phys}}(P,H)
+=\sum_{2\le h<H}\sum_{P<p\le2P}\rho_h^{\mathrm{phys}}(p),
 \]
 
 one has the unconditional reduction
 
 \[
-\boxed{\Delta S(P)\ll {P^2\over H\log P}+\mathcal R(P,H).} \tag{4.10}
+\boxed{\Delta S(P)\ll {P^2\over H\log P}
+       +\mathcal R_{\mathrm{phys}}(P,H).} \tag{4.10}
 \]
 
 This is a scalar cross-prime statement. It has no mesoscopic strip and no
 ordered-orbit cancellation. The finite verifier checks the per-cell injection,
-the gap-polynomial certificate for every actual close pair, and (4.10) at four
-independent scales.
+the exact formal endpoints, the gap-polynomial certificate for every actual
+close pair, and (4.10), including the endpoint case \(H=P\).
 
-The banked content lemma says \(N_h\not\equiv0\pmod p\) for \(h<p\).
+The self-contained Continuant Lemma 3 in
+`research/working_notes/Q3.2_density_theorem.md`, Section 2, proves
+\(N_h\not\equiv0\pmod p\) for \(p\ge7\) and \(1\le h<p\); the finitely many
+cases at \(p=5\) are checked there directly.  Only large primes occur in the
+present asymptotic application.
 Together with \(\deg N_h=3(h-1)\), this gives
-\(\rho_h(p)\le3(h-1)\) throughout \(h<H\le P<p\), and hence
+\(\rho_h^{\mathrm{phys}}(p)\le3(h-1)\) throughout
+\(h<H\le P<p\), and hence
 
 \[
-\mathcal R(P,H)\ll {PH^2\over\log P}.
+\mathcal R_{\mathrm{phys}}(P,H)\ll {PH^2\over\log P}.
 \]
 
 Balancing at \(H=P^{1/3}\) recovers exactly
@@ -663,7 +818,7 @@ Balancing at \(H=P^{1/3}\) recovers exactly
 More generally, the growing-height average-root estimate
 
 \[
-\sum_{P<p\le2P}\rho_h(p)
+\sum_{P<p\le2P}\rho_h^{\mathrm{phys}}(p)
 \ll {P\over\log P}h^\alpha
 \quad(2\le h<H),\qquad \alpha<1, \tag{4.11}
 \]
@@ -676,9 +831,85 @@ would give
 \]
 
 a strict power improvement over \(5/3\). Equivalently, a bound
-\(\mathcal R(P,H)\ll PH^{2-\delta}/\log P\) optimizes at
+\(\mathcal R_{\mathrm{phys}}(P,H)\ll PH^{2-\delta}/\log P\) optimizes at
 \(H=P^{1/(3-\delta)}\) and gives exponent
 \(2-1/(3-\delta)<5/3\).
+
+Two sources of algebraic pollution can be removed unconditionally.  First,
+let
+
+\[
+ \rho_h^{\mathrm{cut}}(p)
+ =\#\{p-h\le x\le p-1:N_h(x)=0\pmod p\}.
+\]
+
+For \(1\le j\le h<p\), the exact pole formula is
+
+\[
+ N_h(-j)=(-1)^{j-1}((j-1)!)^3((h-j)!)^3b_{j-1}b_{h-j}. \tag{4.12a}
+\]
+
+The factorials are \(p\)-units.  More explicitly,
+
+\[
+ \rho_h^{\mathrm{cut}}(p)
+ \le2\sum_{0\le m<h}\mathbf1_{p\mid b_m}.
+\]
+
+Reversing the \((h,m,p)\) sums and using \(\log b_m=O(m)\) gives
+
+\[
+ \sum_{2\le h<H}\sum_{P<p\le2P}\rho_h^{\mathrm{cut}}(p)
+ \ll {H^3\over\log P}.                               \tag{4.12b}
+\]
+
+Second, let \(\widetilde N_h\) be the primitive part of \(N_h\), and call
+\((h,p)\) bad if
+
+\[
+ p\mid\operatorname{lc}(\widetilde N_h)
+          \operatorname{Disc}(\widetilde N_h).
+\]
+
+Write \(\rho_h(p)=\#\{x\in\mathbf F_p:N_h(x)=0\}\) for the full root count.
+
+The all-height squarefreeness theorem proved in `CODEX_CRIT2H_report.md`,
+Section 3, equation (3.10), makes this a nonzero integer.  If \(d=3(h-1)\),
+the coefficient recurrence and Hadamard's
+inequality give
+
+\[
+ \log\|\widetilde N_h\|_1\ll h\log(2h),\qquad
+ |\operatorname{lc}(\widetilde N_h)\operatorname{Disc}(\widetilde N_h)|
+ \le d^d\|\widetilde N_h\|_1^{2d-1}.
+\]
+
+Since the reduction of \(N_h\) is nonzero for \(h<p\), even a bad prime
+contributes at most \(d\) distinct roots.  Therefore
+
+\[
+ \sum_{2\le h<H}
+ \sum_{\substack{P<p\le2P\\p\ \mathrm{bad\ for}\ h}}\rho_h(p)
+ \ll {H^4\log(2H)\over\log P}.                       \tag{4.12c}
+\]
+
+Finally, reflection forces the physical center
+\(x=(p-1-h)/2\) for every even \(h\).  Since then \(h\le p-3\), it lies in
+the formal range \(1\le x\le p-2-h\).  At the optimizing scale
+\(H=P^{1/(3-\delta)}\), (4.12b) is negligible for \(\delta<1\), and
+(4.12c) is negligible for \(\delta<1/2\).  Thus the sharpened remaining
+target is a uniform unramified, noncentral estimate such as
+
+\[
+ \sum_{2\le h<H}
+ \sum_{\substack{P<p\le2P\\p\ \mathrm{not\ bad\ for}\ h}}
+ \bigl(\rho_h^{\mathrm{phys}}(p)-\mathbf1_{2\mid h}\bigr)
+ \ll {PH^{2-\delta}\over\log P}                     \tag{4.12d}
+\]
+
+for one fixed \(0<\delta<1/2\).  No currently banked Frobenius or
+Chebotarev theorem is uniform in this growing family, so these refinements do
+not themselves improve the exponent.
 
 This is the cleanest target for the first unconditional movement on
 [AVG-ZERO]. Fixed-height Chebotarev information is insufficient: the estimate
@@ -705,7 +936,7 @@ and companion height:
 Here is the complete repaired argument. For \(n\in(N,2N]\), let
 
 \[
-t(n)=\#\{p>\sqrt n:p\mid b_{\,n\bmod p}\}.
+t(n)=\#\{\sqrt n<p\le n:p\mid b_{\,n\bmod p}\}.
 \]
 
 Equations (1.2), (1.4), and (1.8) imply, for sufficiently large \(N\),
@@ -770,6 +1001,30 @@ the exact dominance identity (4.15), positive continuants and their height
 majorant over independent ranges, both wrap certificates, and the exact
 pair-incidence/Cauchy algebra.
 
+Combining (4.2a), (1.8), and (4.13) gives the fixed-value radical corollary
+
+\[
+ \#\{n\le X:\mathcal S(n)>\varepsilon n\}
+ =O_\varepsilon((\log X)^2).                         \tag{4.17a}
+\]
+
+Indeed, for sufficiently large \(n\), the inequality
+\(\mathcal S(n)>\varepsilon n\) forces
+\(M(n)>\varepsilon n/2\), and then
+\(\log G_n>\varepsilon n/3\).  This corollary still permits isolated
+exceptional integers.
+
+The core carrier has the same quantitative exceptional-set bound:
+
+\[
+ \#\{n\le X:\log C_n^{\mathrm{core}}>\varepsilon n\}
+ =O_\varepsilon((\log X)^2).                        \tag{4.17b}
+\]
+
+Indeed, (4.2d) turns the displayed inequality into
+\(M(n)>\varepsilon n/2\) for all sufficiently large \(n\), after which the
+same implication to (4.13) applies.
+
 This theorem permits a zero-density exceptional sequence; it does not bound a
 single prescribed \(n\).
 
@@ -811,8 +1066,8 @@ Using the unconditional \(\lambda_X\ll X^{2/3}/\log X\), (4.19) implies
 
 Thus any fixed \(k>6\), applied dyadically to
 \(\sqrt n<p\le n\), proves \(M(n)=o(n)\) and hence the main theorem.
-The proved case \(k=2\) reaches only the boundary exponent \(5/3\) after the
-corresponding first-moment conversion and supplies no pointwise saving.
+The proved case \(k=2\) supplies no pointwise saving (its direct maximum
+bound is even weaker than the trivial bound by the number of primes).
 No independence-scale theorem for any fixed \(k>2\) is currently proved.
 
 This formulation is a family of prescribed single-residue tests, one for each
@@ -874,10 +1129,18 @@ PROVED in this report:
   identity;
 - the master-sum formula (1.7), digit criterion, and corrected top-window
   averaging identity;
-- the cross-prime reduction (4.10);
-- the exceptional-set theorem (4.13);
-- the conditional implications (2.9), (4.12), and
-  \(\mathrm{(HM)}_k\Rightarrow\) MAIN for \(k>6\).
+- the smooth-radical comparison (4.2a) and core-carrier comparison (4.2d);
+- the fixed-value radical exceptional-set corollaries (4.17a)--(4.17b);
+- the cross-prime reduction (4.10), the cut-root estimate (4.12b), the
+  bad-prime estimate (4.12c), and the forced even-height center;
+- the exceptional-set theorem (4.13).
+
+CONDITIONAL GATEWAYS (the implications are proved; their hypotheses are
+open):
+
+- the determinant implication (2.9);
+- the growing-height root-saving implication (4.12);
+- \(\mathrm{(HM)}_k\Rightarrow\) MAIN for \(k>6\).
 
 REFUTED as stated:
 
@@ -915,8 +1178,11 @@ The script recomputes exact Apéry data, rational Wronskians and gcds,
 modular continuants, all-frequency determinant transforms, moment identities,
 vector multiplicities and full spectra, saturation counterexamples,
 digit/top-window counts, the cross-prime gap-root injection, codegree
-certificates, CRT factorial moments, and every displayed exponent comparison.
-Every gate is an assertion; there is no placeholder success branch. The final
+certificates, pole/cut identities, primitive discriminant and Hadamard bounds,
+smooth-radical/core-carrier routing, the central-binomial obstruction, CRT
+factorial moments, and every displayed exponent comparison.
+Every gate uses an explicit failure check; there is no placeholder success
+branch. The final
 line of a successful run is
 
 ~~~text

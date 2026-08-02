@@ -1,0 +1,69 @@
+We need a genuinely exact proof for Ramanujan Challenge Problem 2.5 (Catalan).
+Do not offer numerical matching, finite verification, Poincare-root matching, or
+an unsupported "underlying module" assertion. We need an explicit identity that
+can be checked symbolically and ultimately formalized in Lean.
+
+New provenance lead: Hila Barkan's public repository hilabarkan1/CMF_SCANNER,
+file cmf_search/experiments/catalan4f3.py, fixes the rank-3 pFq(4,3,z=1) CMF at
+
+  x=(4,4,-1/2,0), y=(7/2,7/2,4)
+
+and evaluates the dominant inverse-transpose walk column c by
+
+  (4915*c1 + 754*c2)/(6930*c1 + 1260*c2) = Catalan.
+
+Its search seed trajectory is
+
+  x-direction (11,9,-2,-11), y-direction (-1,0,2),
+
+but this seed does NOT have the Problem 2.5 projective spectrum. An exact/numeric
+direction search found that the simple y-only trajectories
+
+  x-direction (0,0,0,0), y-direction (-2,-1,2)
+  x-direction (0,0,0,0), y-direction (-2,1,2)
+
+have limiting eigenvalue ratios exactly compatible with
+17+12sqrt(2) : 1 : 17-12sqrt(2). Their direct matrices are triangular with
+first row (1,0,0), however, so spectral compatibility alone is insufficient.
+
+The Problem 2.5 matrix M(n) is the explicit 3x3 polynomial matrix with first row
+
+  -(2n+5)(n+3)^2(136n^4+1424n^3+5548n^2+9551n+6141),
+  384n^6+6384n^5+44168n^4+162698n^3+336377n^2+369933n+169011,
+  -(480n^4+4980n^3+19210n^2+32690n+20730),
+
+and initial numerator/denominator rows
+
+  p=(30921,-32972,8240), q=(33750,-36000,9000).
+
+After the standard scalar normalization its exponential characters are
+{17+12sqrt(2),1,17-12sqrt(2)} and formal powers {0,-3,0}. Low-degree rational
+gauges to Sym^2 Delannoy and to the obvious 3F2 systems have failed. The only
+Lean gap is the all-n sign bracket
+
+  q_n,0*G-p_n,0 <= 0 <= q_n,2*G-p_n,2.
+
+We also know exact Wilson/Pade Catalan endpoints L_n<G<U_n, with a positive 2x2
+transition whose limiting matrix is [[5,12],[12,29]]. Exact computation gives
+the stronger interlacing r_n,2 < L_n < r_n,1 < U_n < r_n,0 for many n, but no
+invariant rational box/cone has closed. The Lima-Guillera accelerated partial
+sums give the analogous exact coupling but have formal character 1/64 and no
+rational gauge to the challenge module.
+
+Task: investigate whether the public 4F3 datum supplies the missing exact
+certificate. Prefer one of:
+
+1. Recover an exact trajectory, orientation (raw/dual), scalar normalization,
+   index shift, and rational/algebraic gauge linking its inverse-transpose
+   dominant functional to M(n), including the initial-vector identity.
+2. Derive the exact 4F3/Wilson Pade identity behind the coefficients
+   (4915,754;6930,1260), then give a finite-sum/integral identity whose sign
+   directly proves r_n,2 <= L_n and U_n <= r_n,0.
+3. Derive an explicit hypergeometric or positive integral formula for each of
+   the two cross-products. A WZ/telescoping certificate is acceptable.
+
+You may use symbolic reasoning and propose Mathematica/SymPy checks, but print
+all load-bearing formulas. Audit orientation carefully. If the 4F3 lead cannot
+possibly connect for a precise invariant reason, prove that scoped no-go and
+identify the smallest concrete exact identity still missing. Do not label a
+finite computation or asymptotic observation as a proof.

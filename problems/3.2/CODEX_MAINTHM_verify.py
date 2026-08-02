@@ -15,12 +15,12 @@ from __future__ import annotations
 
 from collections import Counter
 from fractions import Fraction
-import cmath
 import math
 import sys
 import traceback
 
 import numpy as np
+import sympy as sp
 
 
 class GateFailure(RuntimeError):
@@ -235,7 +235,8 @@ def chart_free_algebra_gate() -> None:
             if union < incidence:
                 strict_union_example = (p, D, union, incidence)
 
-    check(strict_union_example is not None, "no strict U<S live example found")
+    check(strict_union_example == (11, 6, 3, 4),
+          "locked strict U<S example")
     print(
         "CHART-FREE-ALGEBRA",
         f"checks={checks} strict-U<S={strict_union_example} factor=6",
@@ -270,6 +271,13 @@ def determinant_full_frequency_gate() -> None:
         16001: 1125.078759647026,
     }
     records = []
+    # Exercise the odd-D branch of the exact physical pair formula.
+    odd_N, odd_D = 97 - 2, 17
+    odd_hist, odd_pairs = physical_histogram(97, odd_D)
+    odd_m = odd_D // 2
+    odd_formula = (odd_m + 1) * odd_N - (odd_m + 1) * (3 * odd_m + 2) // 2
+    check(odd_pairs == int(odd_hist.sum()) == odd_formula,
+          "odd-D physical pair formula")
     for p, wanted in expected.items():
         N = p - 2
         D = 2 * math.isqrt(N)
@@ -349,29 +357,41 @@ def positive_completion_gate() -> None:
     error = float(np.max(np.abs(direct - completed)))
     check(error < 1e-7, "completion normalization")
 
-    # The exact clock-twisted Weyl identity, independently at a small prime.
+    # Completion applies to the cyclic weighted majorant, not directly to the
+    # physical strip.  Check both the domination and weighted orthogonality.
+    physical, _ = physical_histogram(p, D)
+    weighted_zero = float(W @ phase_hist[:, 0])
+    check(weighted_zero + 1e-12 >= float(physical[0]),
+          "cyclic weighted zeros dominate physical zeros")
+    reconstructed_zero = float(W.sum() + direct[1:].sum().real / p)
+    check(abs(weighted_zero - reconstructed_zero) < 1e-9,
+          "weighted cyclic zero orthogonality")
+
+    # Exact clock-twisted Weyl identity at a small prime.  Compare the full
+    # exponent histograms on both sides in Z/pZ; no complex approximation is
+    # used.  The bijection is u=x+gap.
     ps, t = 17, 5
     bs, cs = modular_orbit(ps, full=True)
-    zeta = cmath.exp(2j * math.pi / ps)
-    At = []
-    for gap in range(ps):
-        At.append(sum(
-            zeta ** ((t * (int(bs[x]) * int(cs[(x + gap) % ps])
-                           - int(bs[(x + gap) % ps]) * int(cs[x]))) % ps)
-            for x in range(ps)
-        ))
-    Ft = [sum(At[gap] * zeta ** ((xi * gap) % ps) for gap in range(ps))
-          for xi in range(ps)]
     for xi in range(ps):
-        rhs = 0j
+        lhs_hist = [0] * ps
+        rhs_hist = [0] * ps
+        for gap in range(ps):
+            for x in range(ps):
+                u = (x + gap) % ps
+                exponent = (
+                    t * (int(bs[x]) * int(cs[u]) - int(bs[u]) * int(cs[x]))
+                    + xi * gap
+                ) % ps
+                lhs_hist[exponent] += 1
         for x in range(ps):
-            alpha, beta = (-t * int(cs[x])) % ps, (t * int(bs[x])) % ps
-            twisted = sum(
-                zeta ** ((alpha * int(bs[u]) + beta * int(cs[u]) + xi * u) % ps)
-                for u in range(ps)
-            )
-            rhs += zeta ** ((-xi * x) % ps) * twisted
-        check(abs(Ft[xi] - rhs) < 1e-8, f"twisted Weyl xi={xi}")
+            for u in range(ps):
+                exponent = (
+                    -t * int(cs[x]) * int(bs[u])
+                    + t * int(bs[x]) * int(cs[u])
+                    + xi * (u - x)
+                ) % ps
+                rhs_hist[exponent] += 1
+        check(lhs_hist == rhs_hist, f"exact twisted Weyl xi={xi}")
 
     print(
         "POSITIVE-COMPLETION",
@@ -398,8 +418,28 @@ def determinant_moment_gate() -> None:
         lhs4 = float(np.sum(np.abs(spectrum[1:]) ** 4))
         rhs2 = p * e2 - M * M
         rhs4 = p * e4 - M**4
-        check(abs(lhs2 - rhs2) < 2e-8 * max(1, rhs2), f"second moment p={p}")
-        check(abs(lhs4 - rhs4) < 3e-8 * max(1, rhs4), f"fourth moment p={p}")
+        lhs2_exact = sum(
+            nu[a]
+            * nu[b]
+            * ((p - 1) if a == b else -1)
+            for a in range(p)
+            for b in range(p)
+        )
+        lhs4_exact = sum(
+            conv[a]
+            * conv[b]
+            * ((p - 1) if a == b else -1)
+            for a in range(p)
+            for b in range(p)
+        )
+        check(lhs2_exact == rhs2, f"exact second moment p={p}")
+        check(lhs4_exact == rhs4, f"exact fourth moment p={p}")
+        # These FFT equalities are numerical regressions.  The integer
+        # right-hand sides and row covariance decomposition below are exact.
+        check(abs(lhs2 - rhs2) < 2e-8 * max(1, rhs2),
+              f"second-moment FFT regression p={p}")
+        check(abs(lhs4 - rhs4) < 3e-8 * max(1, rhs4),
+              f"fourth-moment FFT regression p={p}")
 
         # Exact row/cross-gap centered-variance decomposition.
         b, c = modular_orbit(p)
@@ -421,7 +461,7 @@ def determinant_moment_gate() -> None:
                 cross_v += 2 * (p * int(row @ other) - mr * mo)
         check(rhs2 == row_v + cross_v, f"row covariance decomposition p={p}")
         records.append((p, M, rhs2, rhs4))
-    print("DET-MOMENTS", records)
+    print("DET-MOMENTS FFT-regressions+exact-row-decomposition", records)
 
 
 def primitive_root(p: int) -> int:
@@ -518,6 +558,10 @@ def vector_parseval_and_full_spectrum_gate() -> None:
             extra.append((p, square_mass - forced, max(mult.values())))
     check(len(extra) == 17, "extra vector-collision prime count through 1000")
     check(any(p == 73 and mx == 4 for p, _, mx in extra), "p=73 vector collision")
+    b73, c73 = modular_orbit(73)
+    witness_vectors = [(int(b73[r]), int(c73[r])) for r in (1, 4, 68, 71)]
+    check(len(set(witness_vectors)) == 1 and witness_vectors[0] == (5, 6),
+          "p=73 explicit fourfold vector witness")
     check(any(p == 997 and mx == 4 for p, _, mx in extra), "p=997 vector collision")
 
     expected = {
@@ -652,17 +696,34 @@ def saturation_counterexample_gate() -> None:
 def cross_prime_gap_root_gate(b: list[int]) -> None:
     """Finite exact gates for [CROSS-PRIME-GAP-ROOT]."""
     records = []
-    for P, H in ((20, 5), (50, 7), (100, 9), (200, 12)):
+    for P, H in ((20, 5), (20, 20), (50, 7), (100, 9), (200, 12)):
         left = 0
         block_cost = 0
-        root_cost = 0
+        physical_root_cost = 0
+        cut_root_cost = 0
+        cut_reverse_cost = 0
         for p in primes_upto(2 * P):
             if not (P < p <= 2 * P):
                 continue
             z = {r for r in range(1, p) if b[r] % p == 0}
+            check(b[p - 1] % p == 1, f"terminal Apéry value p={p}")
             continuants = modular_continuants(p, H - 1)
             rho = {
                 h: sum(poly_evaluate(continuants[h], x, p) == 0 for x in range(p))
+                for h in range(2, H)
+            }
+            rho_physical = {
+                h: sum(
+                    poly_evaluate(continuants[h], x, p) == 0
+                    for x in range(0, p - h)
+                )
+                for h in range(2, H)
+            }
+            rho_cut = {
+                h: sum(
+                    poly_evaluate(continuants[h], x, p) == 0
+                    for x in range(p - h, p)
+                )
                 for h in range(2, H)
             }
             for h in range(2, H):
@@ -670,6 +731,36 @@ def cross_prime_gap_root_gate(b: list[int]) -> None:
                       f"gap polynomial nonzero P={P},p={p},h={h}")
                 check(len(continuants[h]) - 1 <= 3 * (h - 1),
                       f"gap polynomial degree P={P},p={p},h={h}")
+                check(rho[h] == rho_physical[h] + rho_cut[h],
+                      f"physical/cut root partition P={P},p={p},h={h}")
+
+                # Exact cut-value formula N_h(-j).  This independently
+                # identifies every excluded residue p-j with an integer
+                # whose prime divisors can be charged by height.
+                for j in range(1, h + 1):
+                    pole_value = (
+                        (-1) ** (j - 1)
+                        * math.factorial(j - 1) ** 3
+                        * math.factorial(h - j) ** 3
+                        * b[j - 1]
+                        * b[h - j]
+                    )
+                    check(
+                        poly_evaluate(continuants[h], p - j, p)
+                        == pole_value % p,
+                        f"cut-value formula P={P},p={p},h={h},j={j}",
+                    )
+
+                if h % 2 == 0:
+                    center = (p - 1 - h) // 2
+                    check(1 <= center <= p - 2 - h,
+                          f"forced center formal range P={P},p={p},h={h}")
+                    check(poly_evaluate(continuants[h], center, p) == 0,
+                          f"forced center root P={P},p={p},h={h}")
+
+                reverse_bound = 2 * sum(b[m] % p == 0 for m in range(h))
+                check(rho_cut[h] <= reverse_bound,
+                      f"cut reverse bound P={P},p={p},h={h}")
             # Check the load-bearing per-prime block inequality directly,
             # including every close zero pair and its gap-continuant root.
             pair_count = 0
@@ -681,21 +772,88 @@ def cross_prime_gap_root_gate(b: list[int]) -> None:
                         h = s - r
                         check(1 <= h < H, "cell-pair gap range")
                         check(h != 1, "consecutive Apéry zeros")
+                        check(1 <= r <= p - 2 - h,
+                              f"formal collision range P={P},p={p},h={h},r={r}")
                         check(poly_evaluate(continuants[h], r, p) == 0,
                               f"gap-root implication P={P},p={p},h={h}")
             cells = (p - 1 + H - 1) // H
             check(len(z) <= cells + pair_count,
                   f"cell singleton/pair inequality P={P},p={p}")
-            check(pair_count <= sum(rho.values()),
-                  f"pair-to-rho injection P={P},p={p}")
-            check(len(z) <= cells + sum(rho.values()),
+            check(pair_count <= sum(rho_physical.values()),
+                  f"pair-to-physical-rho injection P={P},p={p}")
+            check(len(z) <= cells + sum(rho_physical.values()),
                   f"gap-root per-prime inequality P={P},p={p}")
             left += len(z)
             block_cost += cells
-            root_cost += sum(rho.values())
-        check(left <= block_cost + root_cost, f"aggregate gap-root P={P}")
-        records.append((P, H, left, block_cost, root_cost))
+            physical_root_cost += sum(rho_physical.values())
+            cut_root_cost += sum(rho_cut.values())
+            cut_reverse_cost += sum(
+                2 * sum(b[m] % p == 0 for m in range(h))
+                for h in range(2, H)
+            )
+        check(left <= block_cost + physical_root_cost,
+              f"aggregate physical gap-root P={P}")
+        check(cut_root_cost <= cut_reverse_cost,
+              f"aggregate cut reversal P={P},H={H}")
+        records.append(
+            (P, H, left, block_cost, physical_root_cost,
+             cut_root_cost, cut_reverse_cost)
+        )
+
+    c73 = modular_continuants(73, 3)
+    check(poly_evaluate(c73[3], 70, 73) == 0,
+          "p=73 cut-root witness N3(-3)")
     print("CROSS-PRIME-GAP-ROOT", records)
+
+
+def gap_bad_prime_gate() -> None:
+    """Exact small-height audit of squarefreeness and the bad-prime budget."""
+    X = sp.symbols("X")
+    continuants = [sp.Integer(0), sp.Integer(1)]
+    for h in range(1, 8):
+        continuants.append(sp.expand(
+            apery_coefficient(X + h) * continuants[h]
+            - (X + h) ** 6 * continuants[h - 1]
+        ))
+
+    squarefree_checks = 0
+    bad_prime_checks = 0
+    for h in range(2, 9):
+        original = sp.Poly(continuants[h], X, domain=sp.ZZ)
+        content, primitive = original.primitive()
+        degree = primitive.degree()
+        check(degree == 3 * (h - 1), f"primitive gap degree h={h}")
+        check(sp.gcd(primitive, primitive.diff()).degree() == 0,
+              f"primitive gap squarefreeness h={h}")
+
+        discriminant = int(sp.discriminant(primitive.as_expr(), X))
+        leading = int(primitive.LC())
+        resultant = int(sp.resultant(primitive.as_expr(), primitive.diff().as_expr(), X))
+        check(discriminant != 0 and abs(resultant) == abs(leading * discriminant),
+              f"discriminant/resultant identity h={h}")
+        norm_one = sum(abs(int(coefficient)) for coefficient in primitive.all_coeffs())
+        check(abs(resultant) <= degree**degree * norm_one ** (2 * degree - 1),
+              f"Sylvester-Hadamard bound h={h}")
+        squarefree_checks += 1
+
+        bad_integer = abs(leading * discriminant)
+        coefficients_low = [int(c) for c in reversed(primitive.all_coeffs())]
+        for p in primes_upto(400):
+            if p <= h or bad_integer % p != 0:
+                continue
+            check(int(content) % p != 0,
+                  f"gap content bad-prime exclusion h={h},p={p}")
+            reduced = [coefficient % p for coefficient in coefficients_low]
+            check(any(reduced), f"zero primitive reduction h={h},p={p}")
+            roots = sum(poly_evaluate(reduced, x, p) == 0 for x in range(p))
+            check(roots <= degree, f"bad-prime root bound h={h},p={p}")
+            bad_prime_checks += 1
+
+    print(
+        "GAP-BAD-PRIMES small-height-regression",
+        f"squarefree/discriminant/Hadamard={squarefree_checks}",
+        f"bad-root-checks={bad_prime_checks}",
+    )
 
 
 def integer_continuant_value(m: int, h: int) -> int:
@@ -922,6 +1080,8 @@ def master_digit_and_average_gate(b: list[int], a: list[Fraction], d: list[int])
     check((actual_top_sum(600), actual_top_sum(600, True), A_count(600),
            A_count(600, True), S_count(600), A_count(1200))
           == (85, 80, 82, 80, 109, 137), "X=600 averaging data")
+    check(S_count(600) == len([p for p in primes_upto(600)]),
+          "S(600)=pi(600)")
 
     # A finite reflection-symmetric row model: all selected q=2 primes align
     # at N, while every induced q=1 target has load at most one.
@@ -944,6 +1104,133 @@ def master_digit_and_average_gate(b: list[int], a: list[Fraction], d: list[int])
         f"mapping={mapping_checks} digit={digit_checks} top={top_checks} ",
         "R31(101)=[8,39] middle=(n,p,q,r)=(37,17,2,3) ",
         "X600=(TOPall85,TOP>5=80,A=82,S=109) q2-model=60/topload1",
+    )
+
+
+def smooth_radical_gate(b: list[int]) -> None:
+    """Exact support audit plus numerical checks of the analytic budgets."""
+    primes = primes_upto(1200)
+    records = []
+    routed_extras = 0
+    core_checks = 0
+    dyadic_checks = 0
+
+    # Check the elementary height estimate as an integer inequality,
+    # independently of the recurrence construction.
+    for q in range(1, 101):
+        binomial_value = sum(
+            math.comb(q, k) ** 2 * math.comb(q + k, k) ** 2
+            for k in range(q + 1)
+        )
+        check(binomial_value == b[q], f"smooth gate binomial formula q={q}")
+        check(b[q] <= (q + 1) * 64**q, f"smooth gate height q={q}")
+        check(q + 1 <= 2**q, f"smooth gate logarithmic height q={q}")
+
+    for n in range(8, 1001):
+        master = {
+            p for p in primes
+            if p <= n and p * p > n and b[n % p] % p == 0
+        }
+        smooth = {p for p in primes if p <= n and b[n] % p == 0}
+        check(master <= smooth, f"master not contained in smooth support n={n}")
+
+        for p in smooth - master:
+            if p * p <= n:
+                continue
+            q, r = divmod(n, p)
+            check(b[r] % p != 0 and b[q] % p == 0,
+                  f"leading-digit routing n={n},p={p}")
+            routed_extras += 1
+
+        # Exact cutoff test p > n^(2/3), avoiding floating-point support
+        # decisions.  The two set differences are routed into precisely the
+        # two error terms used in the written proof.
+        core = {p for p in smooth if p**3 > n**2}
+        check(all(p**3 <= n**2 for p in master - core),
+              f"omitted-master cutoff routing n={n}")
+        for p in core - master:
+            check(p * p > n, f"core contaminant not large n={n},p={p}")
+            q, r = divmod(n, p)
+            check(b[r] % p != 0 and b[q] % p == 0 and q**3 < n,
+                  f"core leading-digit routing n={n},p={p}")
+        check({p for p in master if p**3 > n**2} <= core,
+              f"large master prime missing from core n={n}")
+
+        # These logarithmic comparisons are numerical regressions only; the
+        # constants 12 and 8 are proved analytically in the report.
+        master_mass = math.fsum(math.log(p) for p in master)
+        smooth_mass = math.fsum(math.log(p) for p in smooth)
+        check(-1e-12 <= smooth_mass - master_mass <= 12 * n ** (2 / 3) + 1e-12,
+              f"smooth-radical numerical budget n={n}")
+        core_mass = math.fsum(math.log(p) for p in core)
+        check(abs(master_mass - core_mass) <= 8 * n ** (2 / 3) + 1e-12,
+              f"core-carrier numerical budget n={n}")
+
+        # Exact half-open dyadic partition of the master support.
+        if n in (16, 37, 100, 101, 500, 1000):
+            scale = Fraction(n, 2)
+            scales = []
+            while 4 * scale * scale > n:
+                scales.append(scale)
+                scale /= 2
+            assigned = Counter()
+            for p in master:
+                matches = [P for P in scales if Fraction(p) > P and Fraction(p) <= 2 * P]
+                check(len(matches) == 1,
+                      f"dyadic master assignment n={n},p={p},matches={matches}")
+                assigned[p] += 1
+            check(set(assigned) == master and all(v == 1 for v in assigned.values()),
+                  f"dyadic support partition n={n}")
+            check(sum(scales, Fraction(0)) < n,
+                  f"dyadic geometric budget n={n}")
+            dyadic_checks += 1
+
+        core_checks += 1
+        if n in (8, 37, 100, 500, 1000):
+            records.append((n, len(master), len(smooth), len(core)))
+
+    master16 = {
+        p for p in primes if p <= 16 and p * p > 16 and b[16 % p] % p == 0
+    }
+    smooth16 = {p for p in primes if p <= 16 and b[16] % p == 0}
+    core16 = {p for p in smooth16 if p**3 > 16**2}
+    check(master16 == {5, 11} and core16 == {11},
+          "n=16 master/core cutoff regression")
+
+    # Regression for the condition p>r in the moving-gcd formulation.
+    raw31 = [
+        r for r in range(101)
+        if b[r] % 31 == 0 and (101 - r) % 31 == 0
+    ]
+    admissible31 = [
+        r for r in raw31
+        if 2 * r < 101 and 31 > r and 31 * 31 > 101
+    ]
+    check(raw31 == [8, 39, 70] and admissible31 == [8],
+          "moving-gcd p>r regression n=101,p=31")
+
+    # An exact diagonal/Lucas counterexample to any structural theorem that
+    # would force every such smooth radical to be sublinear.
+    central_checks = 0
+    central_mass = 0.0
+    n = 1200
+    for p in primes:
+        if 2 * p > n and 3 * p <= 2 * n:
+            exponent = sum(
+                (2 * n) // (p**j) - 2 * (n // (p**j))
+                for j in range(1, 10) if p**j <= 2 * n
+            )
+            check(exponent == 1, f"central-binomial valuation p={p}")
+            central_mass += math.log(p)
+            central_checks += 1
+    check(central_checks > 0 and central_mass > 0,
+          "central-binomial obstruction not exercised")
+
+    print(
+        "SMOOTH-RADICAL",
+        f"n-checks={core_checks} routed-extras={routed_extras} dyadic={dyadic_checks}",
+        f"central-primes={central_checks} central-logmass={central_mass:.6f}",
+        f"samples={records} raw31={raw31}/admissible={admissible31}",
     )
 
 
@@ -1046,10 +1333,21 @@ def exponent_budget_gate() -> None:
     # HM_k closes the worst-case lambda_X budget exactly when k>6.
     check(Q(2, 3) + Q(2, 7) < 1 and Q(2, 3) + Q(2, 6) == 1,
           "high-moment threshold k>6")
+    # At H=P^(1/(3-delta)), compare the cut H^3 and bad H^4 budgets
+    # with the target P H^(2-delta).  The exact margins are respectively
+    # 2(1-delta)/(3-delta) and (1-2delta)/(3-delta).
+    delta = Q(2, 5)
+    h_exp = 1 / (3 - delta)
+    target_exp = 1 + (2 - delta) * h_exp
+    check(target_exp - 3 * h_exp == 2 * (1 - delta) / (3 - delta) > 0,
+          "cut-root exponent margin delta<1")
+    check(target_exp - 4 * h_exp == (1 - 2 * delta) / (3 - delta) > 0,
+          "bad-prime exponent margin delta<1/2")
     print(
         "EXPONENT-BUDGET",
         "sqrt-ratio=N^(-1/4+eta/2)L^(-3/2+eta); ",
-        "power-ratio=N^(eta/2-kappa)L^(eta-2); HM threshold k>6",
+        "power-ratio=N^(eta/2-kappa)L^(eta-2); HM threshold k>6; ",
+        "cut/bad delta=2/5 strict",
     )
 
 
@@ -1058,6 +1356,7 @@ def main() -> None:
     chart_free_algebra_gate()
     saturation_counterexample_gate()
     cross_prime_gap_root_gate(b)
+    gap_bad_prime_gate()
     codegree_polylog_gate(b)
     determinant_full_frequency_gate()
     positive_completion_gate()
@@ -1065,6 +1364,7 @@ def main() -> None:
     vector_parseval_and_full_spectrum_gate()
     hyperbola_clock_gate()
     master_digit_and_average_gate(b, a, d)
+    smooth_radical_gate(b)
     factorial_moment_gate(b)
     zero_set_statistics_gate()
     exponent_budget_gate()

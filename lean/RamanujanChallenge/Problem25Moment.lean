@@ -14,6 +14,9 @@
 -/
 import RamanujanChallenge.Problem25Connection
 import RamanujanChallenge.Problem25Integral
+import RamanujanChallenge.Problem25DualAlgebra
+import RamanujanChallenge.Problem25DualRecurrence
+import RamanujanChallenge.Problem25DualInitialMoment
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
 noncomputable section
@@ -467,7 +470,71 @@ private theorem ratioMinor_projective_cone (n : ℕ) :
 
 theorem positiveCatalanError_brackets (N : ℕ) :
     positiveCatalanError N 0 ≤ 0 ∧ 0 ≤ positiveCatalanError N 2 := by
-  sorry
+  have hpairSum := positiveCatalanError_pairing_zero_of_adjoint
+    dualVector (fun n => dualCertLambda (n : ℝ)) dualVector_adjoint
+      dualVector_initial_error_pair N
+  have hpair :
+      positiveCatalanError N 0 * dualVector N 0 +
+          positiveCatalanError N 1 * dualVector N 1 +
+        positiveCatalanError N 2 * dualVector N 2 = 0 := by
+    simpa only [Fin.sum_univ_three] using hpairSum
+  rcases ratioMinor_projective_cone N with
+    ⟨hm0, hxLower, hxUpper, hyLower, hyUpper⟩
+  have hm1 : 0 < ratioMinor N 1 := by
+    by_contra h
+    have hm1le : ratioMinor N 1 ≤ 0 := le_of_not_gt h
+    have hnum : ((N : ℝ) + 1) * ratioMinor N 1 ≤ 0 :=
+      mul_nonpos_of_nonneg_of_nonpos (by positivity) hm1le
+    have hquot :
+        ((N : ℝ) + 1) * ratioMinor N 1 / ratioMinor N 0 ≤ 0 :=
+      div_nonpos_of_nonpos_of_nonneg hnum hm0.le
+    unfold wedgeX at hxLower
+    linarith
+  have hm2 : 0 ≤ ratioMinor N 2 := by
+    by_contra h
+    have hm2neg : ratioMinor N 2 < 0 := lt_of_not_ge h
+    have hnum : ((N : ℝ) + 1) ^ 2 * ratioMinor N 2 < 0 :=
+      mul_neg_of_pos_of_neg (sq_pos_of_pos (by positivity)) hm2neg
+    have hquot :
+        ((N : ℝ) + 1) ^ 2 * ratioMinor N 2 / ratioMinor N 0 < 0 :=
+      div_neg_of_neg_of_pos hnum hm0
+    unfold wedgeY at hyLower
+    linarith
+  have h01 :
+      0 < positiveCatalanError N 1 * (positiveDenominator N 0 : ℝ) -
+        positiveCatalanError N 0 * (positiveDenominator N 1 : ℝ) := by
+    calc
+      _ = ratioMinor N 0 := by
+        simp [positiveCatalanError_eq, ratioMinor]
+        ring
+      _ > 0 := hm0
+  have h02 :
+      0 < positiveCatalanError N 2 * (positiveDenominator N 0 : ℝ) -
+        positiveCatalanError N 0 * (positiveDenominator N 2 : ℝ) := by
+    calc
+      _ = ratioMinor N 1 := by
+        simp [positiveCatalanError_eq, ratioMinor]
+        ring
+      _ > 0 := hm1
+  have h12 :
+      0 ≤ positiveCatalanError N 2 * (positiveDenominator N 1 : ℝ) -
+        positiveCatalanError N 1 * (positiveDenominator N 2 : ℝ) := by
+    calc
+      _ = ratioMinor N 2 := by
+        simp [positiveCatalanError_eq, ratioMinor, Matrix.cons_val_two]
+        ring
+      _ ≥ 0 := hm2
+  have hq0 : 0 < (positiveDenominator N 0 : ℝ) := by
+    exact_mod_cast positiveDenominator_pos N 0
+  have hq1 : 0 < (positiveDenominator N 1 : ℝ) := by
+    exact_mod_cast positiveDenominator_pos N 1
+  have hq2 : 0 < (positiveDenominator N 2 : ℝ) := by
+    exact_mod_cast positiveDenominator_pos N 2
+  exact endpoint_bracket_of_positive_pair
+    (positiveCatalanError N) (fun j => (positiveDenominator N j : ℝ))
+      (dualVector N) hq0 hq1 hq2
+      (dualVector_zero_pos N) (dualVector_one_pos N) (dualVector_two_pos N)
+      hpair h01 h02 h12
 
 private theorem catalanConstant_mem_envelope (N : ℕ) :
     lowerEnvelope N ≤ catalanConstant ∧
