@@ -61,16 +61,17 @@ scripts/                       Verification scripts (Python, Sage)
 - **Harmonic concentration / positive cone**: P2.2
 - **Creative telescoping / WZ certificates**: P2.4, P3.2
 
-## Problem 3.2 (In Progress)
+## Problem 3.2
 
-The Apéry GCD conjecture `gcd(d_n a_n, d_n b_n) = e^{o(n)}` has a complete
-paper proof (193 pages) including:
+The Apéry GCD conjecture `gcd(d_n a_n, d_n b_n) = e^{o(n)}` remains open.
+Our 193-page investigation (`problems/3.2/proof.tex`) includes:
 - Unconditional density-1 result via gap polynomials
-- Conditional full result via Hypothesis Z
+- Conditional full result under Hypothesis Z̄ (Cesàro mean of Z(p))
+- Cartier–Frobenius block law for the Apéry pair
 - Moment identity connecting to the Apéry family point count
-- Palindromy from N_p(t) = N_p(1/t)
+- Reduction of the full conjecture to a two-prime dispersion input
 
-Lean formalization has 3 sorry remaining (WZ identity, gap polynomial bound, main theorem).
+The full unconditional conjecture is not proved.
 
 ## Building
 
