@@ -1,0 +1,32 @@
+name: Q3448 repeated-node audit
+
+on:
+  push:
+    branches: [agent/q3448-repeated-scan]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: [self-hosted, uisai2]
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/q3448-repeated-scan
+      - name: Run exact repeated-node audit
+        run: |
+          python3 problems/3.2/research/scripts/q3448_repeated_nodes_audit.py \
+            | tee problems/3.2/research/working_notes/Q3448_repeated_nodes_output.txt
+      - name: Commit output
+        if: github.event_name == 'push'
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add problems/3.2/research/working_notes/Q3448_repeated_nodes_output.txt
+          git commit -m "Record Q3448 repeated-node audit output [skip ci]"
+          git push origin HEAD:agent/q3448-repeated-scan
