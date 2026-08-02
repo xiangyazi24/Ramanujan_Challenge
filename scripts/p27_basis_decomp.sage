@@ -3,7 +3,7 @@
 # Replicate the P2.5 strategy: decompose q_n = sum_k f(k) * Phi(n,k) over several
 # triangular bases, invert triangularly for f(k), and try ore_algebra.guess on f.
 #
-# Run: sage /Users/huangx/repos/Ramanujan_Challenge/scripts/p27_basis_decomp.sage
+# Run (from the repository root): sage scripts/p27_basis_decomp.sage
 
 import time
 from ore_algebra import OreAlgebra, guess

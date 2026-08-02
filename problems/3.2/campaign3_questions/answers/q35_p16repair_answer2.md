@@ -21,5 +21,5 @@
 [ask-gpt Q6666 life3 tid=12b2985f +280s] waiting (status=processing +GITHUB)
 [ask-gpt Q6666 life3 tid=12b2985f +282s] [GITHUB] commit landed 8ebd859d5 — done
 ═══ BRIDGE Q6666 →life3 ✅ GIT-DROP (commit 8ebd859d5, 4m42s) — answer is in the commit, not this reply | "CONTEXT (Apery mod-p collision project; everything below is machine-ve…" | task 12b2985f ═══
-[ask-gpt] archived -> /Users/huangx/repos/Ramanujan_Challenge/chatgpt-answers/Q6666-3634dc87.md
+[ask-gpt] archived -> <repo>/chatgpt-answers/Q6666-3634dc87.md
 [GITHUB] OK [VERIFIED] 8ebd859d5 xiangyazi24/Ramanujan_Challenge@chatgpt-drop:drops/Q6666-3634dc87.md | CODE→/tmp/gpt/life/Q6666.tex [9.9KB] (read this; prose/reasoning in /tmp/gpt/life/Q6666.md [9.9KB])

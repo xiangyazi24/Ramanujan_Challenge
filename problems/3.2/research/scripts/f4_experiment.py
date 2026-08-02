@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """R14's decisive experiment: actual cross-prime factorial moments F_2,F_3,F_4 from the Z_p census
 + reflection-preserving null model. Data: data_zp_pairs.bin (uint32 p, uint32 r pairs, LE)."""
-import struct, random
+import struct, random, os
 from collections import defaultdict
 
+# repo root = four levels up from problems/3.2/research/scripts/
+REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..'))
+
 pairs = []
-with open('/Users/huangx/repos/Ramanujan_Challenge/problems/3.2/data_zp_pairs.bin','rb') as f:
+with open(os.path.join(REPO, 'problems/3.2/data_zp_pairs.bin'), 'rb') as f:
     data = f.read()
 n_rec = len(data)//8
 for i in range(n_rec):

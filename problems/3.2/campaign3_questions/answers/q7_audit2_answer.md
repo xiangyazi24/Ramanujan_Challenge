@@ -47,5 +47,5 @@
 [ask-gpt Q6550 life8 tid=36da406d +854s] waiting (status=processing +NOTION)
 [ask-gpt Q6550 life8 tid=36da406d +854s] [NOTION] page landed 3af7a6c4-fa8 — done
 ═══ BRIDGE Q6550 →life8 ✅ NOTION-DROP (3af7a6c4-fa8, 14m14s) — answer in Notion page | "CONTEXT (Apery mod-p collision project; everything below is machine-ve…" | task 36da406d ═══
-[ask-gpt] archived -> /Users/huangx/repos/Ramanujan_Challenge/chatgpt-answers/Q6550-9b3fb310.md
+[ask-gpt] archived -> <repo>/chatgpt-answers/Q6550-9b3fb310.md
 [NOTION] OK [VERIFIED] 3af7a6c4-fa8 | CODE→/tmp/gpt/life/Q6550.txt [11.0KB] (prose in /tmp/gpt/life/Q6550.md [18.4KB])

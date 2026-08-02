@@ -51,5 +51,5 @@
 [ask-gpt Q6580 life5 tid=bd57c516 +956s] waiting (status=processing +GITHUB)
 [ask-gpt Q6580 life5 tid=bd57c516 +970s] [GITHUB] commit landed 83c6f1b45 — done
 ═══ BRIDGE Q6580 →life5 ✅ GIT-DROP (commit 83c6f1b45, 16m10s) — answer is in the commit, not this reply | "CONTEXT (Apery mod-p collision project; everything below is machine-ve…" | task bd57c516 ═══
-[ask-gpt] archived -> /Users/huangx/repos/Ramanujan_Challenge/chatgpt-answers/Q6580-5f3df20c.md
+[ask-gpt] archived -> <repo>/chatgpt-answers/Q6580-5f3df20c.md
 [GITHUB] OK [VERIFIED] 83c6f1b45 xiangyazi24/Ramanujan_Challenge@chatgpt-drop:drops/Q6580-5f3df20c.md | CODE→/tmp/gpt/life/Q6580.txt [6.7KB] (read this; prose/reasoning in /tmp/gpt/life/Q6580.md [18.6KB])

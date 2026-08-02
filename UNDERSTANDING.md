@@ -128,7 +128,7 @@ stale `.olean` rather than elaborating from scratch.
 Use `lake env lean` for fast iteration on a *scratch* file only. The gate is
 
 ```
-/Users/huangx/.elan/toolchains/leanprover--lean4---v4.29.0/bin/lake build \
+~/.elan/toolchains/leanprover--lean4---v4.29.0/bin/lake build \
   RamanujanChallenge.<Module>
 ```
 

@@ -16,5 +16,5 @@
 [ask-gpt Q6661 life5 tid=f53afee3 +167s] terminal: status=completed but no GITHUB yet; grace-polling
 [ask-gpt Q6661 life5 tid=f53afee3 +173s] [GITHUB] commit landed bdade57d3 — done
 ═══ BRIDGE Q6661 →life5 ✅ GIT-DROP (commit bdade57d3, 2m53s) — answer is in the commit, not this reply | "CONTEXT (Apery mod-p collision project; everything below is machine-ve…" | task f53afee3 ═══
-[ask-gpt] archived -> /Users/huangx/repos/Ramanujan_Challenge/chatgpt-answers/Q6661-1636c719.md
+[ask-gpt] archived -> <repo>/chatgpt-answers/Q6661-1636c719.md
 [GITHUB] OK [VERIFIED] bdade57d3 xiangyazi24/Ramanujan_Challenge@chatgpt-drop:drops/Q6661-1636c719.md | CODE→/tmp/gpt/life/Q6661.tex [7.8KB] (read this; prose/reasoning in /tmp/gpt/life/Q6661.md [7.8KB])

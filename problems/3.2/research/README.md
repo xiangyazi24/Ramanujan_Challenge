@@ -20,9 +20,9 @@ Ramanujan Challenge Problem 3.2.
 On 2026-07-23 the active research files were found in two non-authoritative
 locations:
 
-1. `~/.openclaw/workspace/working_notes/`;
-2. `~/.openclaw/workspace/projects/Q-series-and-Chan-s-work/`, a stale
-   gitlink without an active repository checkout.
+1. a local scratch `working_notes/` directory;
+2. a local `Q-series-and-Chan-s-work/` gitlink, stale and without an active
+   repository checkout.
 
 They were copied here without deleting the source copies.  The canonical
 GitHub repository is now `xiangyazi24/Ramanujan_Challenge`; new Problem 3.2

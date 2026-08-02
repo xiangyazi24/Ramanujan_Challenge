@@ -34,6 +34,7 @@ This script:
 5. Reports the full certificate in human-readable form
 """
 
+import os
 import sys
 import time
 import numpy as np
@@ -41,7 +42,7 @@ from fractions import Fraction
 from math import gcd, isqrt
 
 # Import the search module
-sys.path.insert(0, '/Users/huangx/repos/Ramanujan_Challenge/scripts')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from p25_az_correct import (
     solve_config, full_vector_for_P, build_terms, make_sup,
     Mmat, deltaH, PHIG, G, GVGT, GUGT, GUGV, GU, GV, GT,

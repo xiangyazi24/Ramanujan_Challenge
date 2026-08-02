@@ -45,8 +45,7 @@ pairedAlternatingHarmonic(@871)、quadraticLinear(@3047)、alternatingQuadraticL
 
 ## 当前工作
 
-- 工作副本：`~/.openclaw/workspace/Ramanujan_Challenge/`（APFS clone + rsync，原
-  `~/repos/Ramanujan_Challenge` 对本 session 只读）
+- 工作副本：本地 clone（APFS clone + rsync；canonical checkout 对本 session 只读）
 - 新文件：`lean/RamanujanChallenge/Problem24QuadraticAlt.lean` — Q6047 六积分证书
   的对象定义（W0/H1/H2/I10..I22/bridgeValue）+ 目标定理占位
 - 依赖：6 个线性定理 public 可用；K=quarticPlusIntegral24、B3=halfLogCubeOneSubIntegral24

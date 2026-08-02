@@ -99,7 +99,7 @@ theorem dualCert_identity_one_poly :
       dualCertOpPPoly dualCertPp1Poly +
         dualCertOpQPoly dualCertPq1Poly +
         dualCertOpVPoly dualCertPv1Poly) := by
-  native_decide
+  rfl
 
 def dualCertPp1 (n p q v : ℝ) : ℝ :=
   dualCertEval dualCertPp1Poly n p q v

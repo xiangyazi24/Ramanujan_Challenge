@@ -17,5 +17,5 @@
 [ask-gpt Q6581 life1 tid=0a557ec0 +190s] waiting (status=processing +GITHUB)
 [ask-gpt Q6581 life1 tid=0a557ec0 +211s] grace elapsed — using browser capture
 ═══ BRIDGE Q6581 →life1 ✅ DOM-CAPTURE (885B, 3m31s) — connectors unavailable, answer from DOM | "CONTEXT (Apery mod-p collision project; everything below is machine-ve…" | task 0a557ec0 ═══
-[ask-gpt] archived -> /Users/huangx/repos/Ramanujan_Challenge/chatgpt-answers/Q6581-333c4cdb.md
+[ask-gpt] archived -> <repo>/chatgpt-answers/Q6581-333c4cdb.md
 [DOM-CAPTURE] /tmp/gpt/life/Q6581.md [885B] — Read /tmp/gpt/life/Q6581.md

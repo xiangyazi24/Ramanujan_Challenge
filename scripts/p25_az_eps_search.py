@@ -16,9 +16,10 @@ Search plan:
   3. eps=generic (random prime-field element)
 """
 
+import os
 import sys
 import time
-sys.path.insert(0, '/Users/huangx/repos/Ramanujan_Challenge/scripts')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from p25_az_correct import solve_config, PRIME1, PRIME2, describe_P
 
 def search(dP, dC, eps_mode, Pu=(0,2), Pv=(0,2), Pt=(0,2),

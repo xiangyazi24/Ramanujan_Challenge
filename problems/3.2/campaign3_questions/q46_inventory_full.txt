@@ -106,7 +106,7 @@ joint-value 对象); 最优无条件 row 界连 3/2 都复现不了; 命名 p^{3
 
 ## §116 — 最后一墙总攻部署 (08-01 夜)
 
-爸爸令: 攻最后一道墙。墙 = 超临界归一化 S_D/Q_D ≪ N @ D=√N·L (任意无界 L 即破 3/2)。
+部署: 攻最后一道墙。墙 = 超临界归一化 S_D/Q_D ≪ N @ D=√N·L (任意无界 L 即破 3/2)。
 双 session 五角度错开: cron=[MIDPOINT-AC]+clock-compression+box复核+NEAR-WALL审;
 life=restart推广到一般fiber(逐基 d_D(r))+primitive分解bootstrap+小d算术
 (codex sol max: CODEX_SPEC_lastwall.md; high: 地基实测 max_r d_D(r)/P_D/小d R_d)。
