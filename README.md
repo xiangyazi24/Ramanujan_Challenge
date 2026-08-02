@@ -17,9 +17,11 @@ Each problem asks to prove that a specific recurrence-generated sequence converg
 | 2.7 | ζ(2) + ζ(3) | 0 sorry ✅ | ✅ | **Proved unconditionally** |
 | 2.8 | √10005/π | 0 sorry ✅ | ✅ | **Proved unconditionally** |
 | 3.1 | 4π²/85 | 0 sorry ✅ | ✅ | **Proved unconditionally** |
-| 3.2 | e^{o(n)} | 3 sorry 🔨 | ✅ | **Paper proof complete; Lean in progress** |
+| 3.2 | e^{o(n)} | 3 sorry | ✅ | **Paper proof complete; Lean partial** |
 
 **9 of 10 problems fully formalized in Lean 4 with 0 sorry.**
+Problem 3.2 has a complete paper proof (135 pages) but the Lean formalization
+is partial: 3 sorry remain (WZ identity, gap polynomial bound, main theorem).
 All non-sorry theorems depend only on `{propext, Classical.choice, Quot.sound}`.
 
 ## Repository Structure
