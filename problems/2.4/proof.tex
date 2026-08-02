@@ -302,22 +302,65 @@ its primitive is the M\"obius pullback of the integrand of
 $W_0' = -2R/t$ therefore reverses the substitution that produced it and
 returns \eqref{eq:coeff}.  Nothing is evaluated.
 
-\subsection{Verification status}
+\section{The non-alternating companion}\label{sec:nonalt}
 
-Formulas \eqref{eq:coeff}, \eqref{eq:six}, \eqref{eq:K}, the reduction of
-$K$ to the two cubic-linear sums, and the rows $I_{1t}$, $I_{1,1-t}$,
-$I_{2t}$, $I_{2,2-t}$ are proved in Lean~4 (toolchain \texttt{v4.29.0})
-and depend only on \texttt{propext}, \texttt{Classical.choice} and
-\texttt{Quot.sound}.  The relations \eqref{eq:R12}--\eqref{eq:R21}, hence
-the two remaining rows, are at present verified exactly over $\mathbb{Q}$
-against the four proved rows and numerically to fifteen digits, but are
-not yet formalized.  The six row values were additionally obtained by
-three mutually independent analytic derivations and cross-checked against
-high-precision quadrature.
+The seventh evaluation is
+\begin{equation}\label{eq:Sna}
+\sum_{m\ge1} \frac{P_m^2 - H_m^{(2)}}{m^2}
+ = 20\,\mathrm{Li}_4(\tfrac12) + \tfrac56\log^4 2
+   + 7\log^2\!2\,\zeta(2) - \tfrac{59}{10}\zeta(2)^2 .
+\end{equation}
+Note the absence of a $\log 2\,\zeta(3)$ term, in contrast with \eqref{eq:S}.
 
-We note the scope precisely: \eqref{eq:S} is one of the seven scalar
-evaluations that Stage 2 requires.  Three of the others are likewise
-proved in the formalization; the remaining three are not.
+It is \emph{not} \eqref{eq:S} with a sign changed.  The coefficient integral
+\eqref{eq:coeff} evaluates the generating function at $-x$, so its argument
+stays in $(-1,0)$; the non-alternating version evaluates it at $+x$ and runs
+into the pole of $Q(x) = 2J(x)/(1-x)$ at $x=1$.  Only half of that pole
+cancels: $-\log x \sim 1-x$ removes the $1/(1-x)$, but $J$ itself grows like
+$\log^2(1-x)$, leaving an integrable $\log^2$ singularity at the right
+endpoint which the alternating integrand does not have.
+
+Integrating by parts with
+\[
+U(x) = \tfrac12\log^2 x + \mathrm{Li}_2(1-x),
+\qquad
+D^{+}(x) = J'(x)
+\]
+gives
+\[
+\sum_{m\ge1} \frac{P_m^2 - H_m^{(2)}}{m^2}
+ = 5K + 12\log^2\!2\,\zeta(2) - \tfrac{35}{2}\log 2\,\zeta(3)
+   + \tfrac85\zeta(2)^2 ,
+\]
+and substituting \eqref{eq:K} makes the $\log 2\,\zeta(3)$ term cancel
+identically.  That cancellation is the reason \eqref{eq:Sna} carries no
+$\zeta(3)$: the generator $K$ contributes $5\cdot\tfrac72 = \tfrac{35}{2}$,
+exactly offsetting the explicit term.
+
+\section{Verification status}
+
+Everything displayed in Sections~\ref{sec:alt} and~\ref{sec:nonalt} is proved
+in Lean~4 (toolchain \texttt{leanprover/lean4:v4.29.0}, Mathlib pinned in
+\texttt{lake-manifest.json}): the coefficient integrals \eqref{eq:coeff},
+the six-integral reduction \eqref{eq:six}, the generator \eqref{eq:K} and its
+reduction to the two cubic-linear sums, all six rows, the two M\"obius
+relations \eqref{eq:R12}--\eqref{eq:R21}, and both \eqref{eq:S} and
+\eqref{eq:Sna}.
+
+All seven scalar evaluations that Stage 2 requires are therefore available, and
+\[
+\texttt{problem24\_unconditional} : \texttt{problem24Statement}
+\]
+typechecks.  Its transitive axiom closure is \texttt{propext},
+\texttt{Classical.choice}, \texttt{Quot.sound}; the development contains no
+\texttt{sorry} and introduces no axiom of its own.
+
+Independently of the formalization, the six row values were obtained by three
+mutually independent analytic derivations and cross-checked against
+high-precision quadrature, and the two M\"obius relations were verified exactly
+over $\mathbb{Q}$ against those rows before being formalized.
+
+\begin{thebibliography}{10}
 \bibitem{Schneider2007}
 C.~Schneider,
 \emph{Symbolic summation assists combinatorics},

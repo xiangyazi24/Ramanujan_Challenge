@@ -8574,4 +8574,217 @@ theorem quadAltMixedLogIntegral24 :
         quarticPlusIntegral24, halfLogCubeOneSubIntegral24]
       ring
 
+/-- Integrability of the radial mixed logarithmic moment. -/
+theorem quadAltMixedRadialIntervalIntegrable24 :
+    IntervalIntegrable
+      (fun x : ℝ =>
+        Real.log x * Real.log (1 - x) * Real.log (1 + x) / x)
+      MeasureTheory.volume 0 1 := by
+  exact quadAltMixedRadialKernel24_intervalIntegrable
+
+/-- The radial mixed logarithmic moment in terms of the common generator. -/
+theorem quadAltMixedRadialIntegral24_export :
+    (∫ x : ℝ in 0..1,
+      Real.log x * Real.log (1 - x) * Real.log (1 + x) / x) =
+      (1 / 2 : ℝ) *
+          (∫ x : ℝ in 0..1,
+            Real.log x ^ 2 * Real.log (1 + x) / (1 + x)) +
+        (3 / 16 : ℝ) * (Real.pi ^ 4 / 90) := by
+  exact quadAltMixedRadialIntegral24
+
+/-- Public name for the primitive of `log^3 x / (1-x)`. -/
+noncomputable def logCubeOneSubPrimitive24_export (x : ℝ) : ℝ :=
+  -Real.log x ^ 3 * Real.log (1 - x) -
+    3 * Real.log x ^ 2 * dilog x +
+    6 * Real.log x * RamanujanChallenge.P26.trilog26 x -
+    6 * polylog4 x
+
+theorem logCubeOneSubPrimitive24_hasDerivAt_export
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt logCubeOneSubPrimitive24_export
+      (Real.log x ^ 3 / (1 - x)) x := by
+  simpa only [logCubeOneSubPrimitive24_export,
+    logCubeOneSubPrimitive24] using
+    logCubeOneSubPrimitive24_hasDerivAt hx0 hx1
+
+theorem logCubeOneSubPrimitive24_tendsto_one_export :
+    Tendsto logCubeOneSubPrimitive24_export
+      (𝓝[<] (1 : ℝ)) (𝓝 (-(6 : ℝ) * (Real.pi ^ 4 / 90))) := by
+  simpa only [logCubeOneSubPrimitive24_export,
+    logCubeOneSubPrimitive24] using
+    logCubeOneSubPrimitive24_tendsto_one
+
+/-! ## Radial part of the positive-kernel Möbius transform -/
+
+/-- The part of the Möbius numerator for the non-alternating quadratic sum
+that is already covered by the logarithmic integral table.  The omitted term
+is `log(1-x) * log(1+x)^2 / x`. -/
+def quadNonAltMobiusRadialRemainder24 (x : ℝ) : ℝ :=
+  (Real.log 2 ^ 2 * Real.log (1 - x) -
+      Real.log 2 ^ 2 * Real.log (1 + x) -
+      2 * Real.log 2 * Real.log (1 - x) * Real.log (1 + x) +
+      Real.log 2 * Real.log (1 - x) * Real.log x +
+      2 * Real.log 2 * Real.log (1 + x) ^ 2 -
+      Real.log 2 * Real.log (1 + x) * Real.log x -
+      Real.log (1 - x) * Real.log (1 + x) * Real.log x -
+      Real.log (1 + x) ^ 3 +
+      Real.log (1 + x) ^ 2 * Real.log x) / x
+
+theorem quadNonAltMobiusRadialRemainder24_intervalIntegrable :
+    IntervalIntegrable quadNonAltMobiusRadialRemainder24
+      MeasureTheory.volume 0 1 := by
+  have h0 := minusSimpleKernel24_intervalIntegrable.const_mul (Real.log 2 ^ 2)
+  have h1 := h0.sub
+    (plusSimpleKernel24_intervalIntegrable.const_mul (Real.log 2 ^ 2))
+  have h2 := h1.sub
+    (crossRadialKernel24_intervalIntegrable.const_mul (2 * Real.log 2))
+  have h3 := h2.add
+    (minusRadialKernel24_intervalIntegrable.const_mul (Real.log 2))
+  have h4 := h3.add
+    (plusLogSquareKernel24_intervalIntegrable.const_mul (2 * Real.log 2))
+  have h5 := h4.sub
+    (RamanujanChallenge.P26.radialWeightThreeKernel_intervalIntegrable26.const_mul
+      (Real.log 2))
+  have h6 := h5.sub quadAltMixedRadialKernel24_intervalIntegrable
+  have h7 := h6.sub quadAltPlusCubeRadialKernel24_intervalIntegrable
+  have h8 := h7.add quarticPlusRadialKernel24_intervalIntegrable
+  apply h8.congr
+  intro x _
+  unfold quadNonAltMobiusRadialRemainder24 minusSimpleKernel24
+    plusSimpleKernel24 crossRadialKernel24 minusRadialKernel24
+    plusLogSquareKernel24 RamanujanChallenge.P26.radialWeightThreeKernel26
+    quadAltMixedRadialKernel24 quadAltPlusCubeRadialKernel24
+    quarticPlusRadialKernel24
+  ring
+
+theorem quadNonAltMobiusRadialRemainder24_integral :
+    (∫ x : ℝ in 0..1, quadNonAltMobiusRadialRemainder24 x) =
+      -(3 / 2 : ℝ) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) +
+        (7 / 2 : ℝ) * Real.log 2 * zeta3_24 -
+        (9 / 40 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  have h0 := minusSimpleKernel24_intervalIntegrable.const_mul (Real.log 2 ^ 2)
+  have h1 := h0.sub
+    (plusSimpleKernel24_intervalIntegrable.const_mul (Real.log 2 ^ 2))
+  have h2 := h1.sub
+    (crossRadialKernel24_intervalIntegrable.const_mul (2 * Real.log 2))
+  have h3 := h2.add
+    (minusRadialKernel24_intervalIntegrable.const_mul (Real.log 2))
+  have h4 := h3.add
+    (plusLogSquareKernel24_intervalIntegrable.const_mul (2 * Real.log 2))
+  have h5 := h4.sub
+    (RamanujanChallenge.P26.radialWeightThreeKernel_intervalIntegrable26.const_mul
+      (Real.log 2))
+  have h6 := h5.sub quadAltMixedRadialKernel24_intervalIntegrable
+  have h7 := h6.sub quadAltPlusCubeRadialKernel24_intervalIntegrable
+  have hplusSq :
+      (∫ x : ℝ in 0..1, plusLogSquareKernel24 x) =
+        (1 / 4 : ℝ) * zeta3_24 := by
+    simpa [plusLogSquareKernel24, RamanujanChallenge.P26.zeta3, zeta3_24] using
+      RamanujanChallenge.P26.logSquareOnePlusIntegral26
+  have hradial :
+      (∫ x : ℝ in 0..1,
+        RamanujanChallenge.P26.radialWeightThreeKernel26 x) =
+        -(3 / 4 : ℝ) * zeta3_24 := by
+    have h := RamanujanChallenge.P26.radialWeightThreeIntegral26
+    rw [h]
+    unfold RamanujanChallenge.P26.zeta3 zeta3_24
+    ring
+  have hquarticRadial :
+      (∫ x : ℝ in 0..1, quarticPlusRadialKernel24 x) =
+        -(4 * polylog4 (1 / 2) +
+          (1 / 6 : ℝ) * Real.log 2 ^ 4 -
+          Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) +
+          (7 / 2 : ℝ) * Real.log 2 * zeta3_24 -
+          (15 / 4 : ℝ) * (Real.pi ^ 4 / 90)) := by
+    have h := quarticPlusIntegral_eq_neg_radial24
+    rw [quarticPlusIntegral24] at h
+    linarith
+  let q : ℝ → ℝ := fun x =>
+    Real.log 2 ^ 2 * minusSimpleKernel24 x -
+      Real.log 2 ^ 2 * plusSimpleKernel24 x -
+      2 * Real.log 2 * crossRadialKernel24 x +
+      Real.log 2 * minusRadialKernel24 x +
+      2 * Real.log 2 * plusLogSquareKernel24 x -
+      Real.log 2 * RamanujanChallenge.P26.radialWeightThreeKernel26 x -
+      quadAltMixedRadialKernel24 x -
+      quadAltPlusCubeRadialKernel24 x +
+      quarticPlusRadialKernel24 x
+  have hdecomp :
+      (∫ x : ℝ in 0..1, quadNonAltMobiusRadialRemainder24 x) =
+        Real.log 2 ^ 2 * (∫ x : ℝ in 0..1, minusSimpleKernel24 x) -
+        Real.log 2 ^ 2 * (∫ x : ℝ in 0..1, plusSimpleKernel24 x) -
+        2 * Real.log 2 * (∫ x : ℝ in 0..1, crossRadialKernel24 x) +
+        Real.log 2 * (∫ x : ℝ in 0..1, minusRadialKernel24 x) +
+        2 * Real.log 2 * (∫ x : ℝ in 0..1, plusLogSquareKernel24 x) -
+        Real.log 2 * (∫ x : ℝ in 0..1,
+          RamanujanChallenge.P26.radialWeightThreeKernel26 x) -
+        (∫ x : ℝ in 0..1, quadAltMixedRadialKernel24 x) -
+        (∫ x : ℝ in 0..1, quadAltPlusCubeRadialKernel24 x) +
+        (∫ x : ℝ in 0..1, quarticPlusRadialKernel24 x) := by
+    have hpoint :
+        (∫ x : ℝ in 0..1, quadNonAltMobiusRadialRemainder24 x) =
+          ∫ x : ℝ in 0..1, q x := by
+      apply intervalIntegral.integral_congr
+      intro x _
+      dsimp [q]
+      unfold quadNonAltMobiusRadialRemainder24 minusSimpleKernel24
+        plusSimpleKernel24 crossRadialKernel24 minusRadialKernel24
+        plusLogSquareKernel24 RamanujanChallenge.P26.radialWeightThreeKernel26
+        quadAltMixedRadialKernel24 quadAltPlusCubeRadialKernel24
+        quarticPlusRadialKernel24
+      ring
+    rw [hpoint]
+    dsimp [q]
+    rw [intervalIntegral.integral_add h7
+        quarticPlusRadialKernel24_intervalIntegrable,
+      intervalIntegral.integral_sub h6
+        quadAltPlusCubeRadialKernel24_intervalIntegrable,
+      intervalIntegral.integral_sub h5
+        quadAltMixedRadialKernel24_intervalIntegrable,
+      intervalIntegral.integral_sub h4
+        (RamanujanChallenge.P26.radialWeightThreeKernel_intervalIntegrable26.const_mul
+          (Real.log 2)),
+      intervalIntegral.integral_add h3
+        (plusLogSquareKernel24_intervalIntegrable.const_mul (2 * Real.log 2)),
+      intervalIntegral.integral_add h2
+        (minusRadialKernel24_intervalIntegrable.const_mul (Real.log 2)),
+      intervalIntegral.integral_sub h1
+        (crossRadialKernel24_intervalIntegrable.const_mul (2 * Real.log 2)),
+      intervalIntegral.integral_sub h0
+        (plusSimpleKernel24_intervalIntegrable.const_mul (Real.log 2 ^ 2))]
+    repeat' rw [intervalIntegral.integral_const_mul]
+  rw [hdecomp, minusSimpleIntegral24, plusSimpleIntegral24,
+    crossRadialIntegral24, minusRadialIntegral24, hplusSq, hradial,
+    quadAltMixedRadialIntegral24, quadAltPlusCubeRadialIntegral24,
+    quarticPlusIntegral24, hquarticRadial,
+    halfLogCubeOneSubIntegral24]
+  ring
+
+/-- The denominator-`1+x` companion to
+`quadNonAltMobiusRadialRemainder24`, including its omitted cross term. -/
+def quadNonAltMobiusPlus24 (x : ℝ) : ℝ :=
+  (Real.log 2 ^ 2 * Real.log (1 - x) -
+      Real.log 2 ^ 2 * Real.log (1 + x) -
+      2 * Real.log 2 * Real.log (1 - x) * Real.log (1 + x) +
+      Real.log 2 * Real.log (1 - x) * Real.log x +
+      2 * Real.log 2 * Real.log (1 + x) ^ 2 -
+      Real.log 2 * Real.log (1 + x) * Real.log x +
+      Real.log (1 - x) * Real.log (1 + x) ^ 2 -
+      Real.log (1 - x) * Real.log (1 + x) * Real.log x -
+      Real.log (1 + x) ^ 3 +
+      Real.log (1 + x) ^ 2 * Real.log x) / (1 + x)
+
+theorem quadNonAltMobiusPlus24_intervalIntegrable :
+    IntervalIntegrable quadNonAltMobiusPlus24
+      MeasureTheory.volume 0 1 := by
+  simpa [quadNonAltMobiusPlus24, quadAltMixedMobiusKernel24] using
+    quadAltMixedMobiusKernel24_intervalIntegrable
+
+theorem quadNonAltMobiusPlus24_integral_eq_mixed :
+    (∫ x : ℝ in 0..1, quadNonAltMobiusPlus24 x) =
+      ∫ x : ℝ in 0..1,
+        Real.log x * Real.log (1 - x) * Real.log (1 + x) / (1 + x) := by
+  simpa [quadNonAltMobiusPlus24, quadAltMixedMobiusKernel24,
+    quadAltMixedPlusKernel24] using quadAltMixedPlus_eq_mobiusIntegral24.symm
+
 end

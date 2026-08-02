@@ -40,6 +40,7 @@ import RamanujanChallenge.Problem24Euler
 import RamanujanChallenge.Dilogarithm
 import RamanujanChallenge.Problem26WeightThree
 import Mathlib.Analysis.Calculus.LHopital
+import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 noncomputable section
 
@@ -6912,5 +6913,3534 @@ theorem alternatingQuadraticEulerTerm24_hasSum :
         bridgeValue_eq_alternatingQuadraticEulerValue24
   rw [← htsum]
   exact summable_quadAlt.hasSum
+
+/-! ## The non-outer-alternating quadratic Euler sum -/
+
+def quadNonAltCoeffMoment (n : ℕ) (x : ℝ) : ℝ :=
+  (-Real.log x) / x * quadAltS n * x ^ (n + 1)
+
+theorem quadNonAltCoeffMoment_hasSum_pointwise
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasSum (fun n : ℕ => quadNonAltCoeffMoment n x)
+      ((-Real.log x) / x * quadAltQclosed x) := by
+  have hS := quadAltS_generating_hasSum (y := x)
+    (by simpa [abs_of_pos hx0] using hx1) (ne_of_gt hx0)
+  have hmul := hS.mul_left ((-Real.log x) / x * x)
+  convert hmul using 1
+  · funext n
+    unfold quadNonAltCoeffMoment
+    rw [pow_succ]
+    field_simp [ne_of_gt hx0]
+  · field_simp [ne_of_gt hx0]
+
+theorem quadNonAltCoeffMoment_integral (n : ℕ) :
+    (∫ x : ℝ in (0 : ℝ)..1, quadNonAltCoeffMoment n x) =
+      quadraticEulerTerm24 n := by
+  unfold quadNonAltCoeffMoment quadraticEulerTerm24
+  have hfun : (fun x : ℝ =>
+      (-Real.log x) / x * quadAltS n * x ^ (n + 1)) =
+      (fun x => quadAltS n * (x ^ n * (-Real.log x))) := by
+    funext x
+    by_cases hx : x = 0
+    · subst x
+      simp
+    · rw [pow_succ]
+      field_simp [hx]
+  rw [hfun]
+  rw [intervalIntegral.integral_const_mul]
+  have hlog :
+      (∫ x : ℝ in (0 : ℝ)..1, x ^ n * (-Real.log x)) =
+        1 / (n + 1 : ℝ) ^ 2 := by
+    have h := RamanujanChallenge.P26.integral_pow_mul_log26 n
+    have hneg :
+        (∫ x : ℝ in (0 : ℝ)..1, x ^ n * (-Real.log x)) =
+          -∫ x : ℝ in (0 : ℝ)..1, x ^ n * Real.log x := by
+      rw [← intervalIntegral.integral_neg]
+      congr 1
+      funext x
+      ring
+    rw [hneg, h]
+    ring
+  rw [hlog]
+  unfold quadAltS
+  ring
+
+theorem quadNonAlt_tsum_eq_coeff_integral :
+    (∑' n : ℕ, quadraticEulerTerm24 n) =
+      ∫ x : ℝ in (0 : ℝ)..1,
+        (-Real.log x) / x * quadAltQclosed x := by
+  have hint : ∀ n : ℕ, MeasureTheory.Integrable (quadNonAltCoeffMoment n)
+      (MeasureTheory.volume.restrict (Set.Ioc (0 : ℝ) 1)) := by
+    intro n
+    have hlogI : IntervalIntegrable
+        (fun x : ℝ => x ^ n * Real.log x)
+        MeasureTheory.volume 0 1 :=
+      (intervalIntegral.intervalIntegrable_log').continuousOn_mul
+        (continuousOn_pow n)
+    have hlogI' : IntervalIntegrable
+        (fun x : ℝ => (-Real.log x) * x ^ n)
+        MeasureTheory.volume 0 1 := by
+      simpa [mul_comm] using hlogI.neg
+    have hEq (x : ℝ) : quadNonAltCoeffMoment n x =
+        quadAltS n * ((-Real.log x) * x ^ n) := by
+      unfold quadNonAltCoeffMoment
+      by_cases hx : x = 0
+      · subst x
+        simp
+      · rw [pow_succ]
+        field_simp [hx]
+    have hconst := hlogI'.const_mul (quadAltS n)
+    have hI : IntervalIntegrable (quadNonAltCoeffMoment n)
+        MeasureTheory.volume 0 1 := by
+      convert hconst using 1
+      funext x
+      rw [hEq]
+    exact hI.1.integrable
+  have hnorm_sum : Summable (fun n : ℕ =>
+      ∫ t : ℝ in Set.Ioc (0 : ℝ) 1,
+        ‖quadNonAltCoeffMoment n t‖) := by
+    have hnorm (n : ℕ) :
+        (∫ t : ℝ in Set.Ioc (0 : ℝ) 1,
+          ‖quadNonAltCoeffMoment n t‖) =
+          |quadraticEulerTerm24 n| := by
+      have hEq (t : ℝ) (ht0 : 0 < t) :
+          ‖quadNonAltCoeffMoment n t‖ =
+            |quadAltS n| * ‖(-Real.log t) * t ^ n‖ := by
+        unfold quadNonAltCoeffMoment
+        rw [Real.norm_eq_abs, Real.norm_eq_abs]
+        simp only [abs_mul, abs_div, abs_pow, abs_neg]
+        rw [abs_of_pos ht0, pow_succ]
+        field_simp [ne_of_gt ht0]
+      have hlog :
+          (∫ x : ℝ in (0 : ℝ)..1,
+            (-Real.log x) * x ^ n) =
+            1 / (n + 1 : ℝ) ^ 2 := by
+        have h := RamanujanChallenge.P26.integral_pow_mul_log26 n
+        have hneg :
+            (∫ x : ℝ in (0 : ℝ)..1,
+              x ^ n * (-Real.log x)) =
+              -∫ x : ℝ in (0 : ℝ)..1,
+                x ^ n * Real.log x := by
+          rw [← intervalIntegral.integral_neg]
+          congr 1
+          funext x
+          ring
+        have hswap :
+            (∫ x : ℝ in (0 : ℝ)..1,
+              (-Real.log x) * x ^ n) =
+              ∫ x : ℝ in (0 : ℝ)..1,
+                x ^ n * (-Real.log x) := by
+          apply intervalIntegral.integral_congr_ae
+          filter_upwards with x hx
+          ring
+        rw [hswap, hneg, h]
+        ring
+      calc
+        (∫ t : ℝ in Set.Ioc (0 : ℝ) 1,
+            ‖quadNonAltCoeffMoment n t‖) =
+            ∫ t : ℝ in (0 : ℝ)..1,
+              ‖quadNonAltCoeffMoment n t‖ := by
+              rw [intervalIntegral.integral_of_le
+                (by norm_num : (0 : ℝ) ≤ 1)]
+        _ = ∫ t : ℝ in (0 : ℝ)..1,
+              |quadAltS n| * ‖(-Real.log t) * t ^ n‖ := by
+              apply intervalIntegral.integral_congr_ae
+              filter_upwards [
+                MeasureTheory.Measure.ae_ne
+                  MeasureTheory.volume (1 : ℝ)] with t htne ht
+              exact hEq t (by simpa using ht.1)
+        _ = |quadAltS n| *
+              (∫ t : ℝ in (0 : ℝ)..1,
+                ‖(-Real.log t) * t ^ n‖) := by
+              rw [intervalIntegral.integral_const_mul]
+        _ = |quadAltS n| * (1 / (n + 1 : ℝ) ^ 2) := by
+              congr 1
+              have hnonneg : ∀ t ∈ Set.Ioc (0 : ℝ) 1,
+                  0 ≤ (-Real.log t) * t ^ n := by
+                intro t ht
+                rcases Set.mem_Ioc.mp ht with ⟨ht0, ht1⟩
+                have hlogt : Real.log t ≤ 0 :=
+                  Real.log_nonpos ht0.le ht1
+                exact mul_nonneg (by linarith)
+                  (pow_nonneg ht0.le n)
+              rw [← hlog]
+              apply intervalIntegral.integral_congr_ae
+              filter_upwards [
+                MeasureTheory.Measure.ae_ne
+                  MeasureTheory.volume (1 : ℝ)] with t htne ht
+              rw [Real.norm_eq_abs]
+              congr 1
+              rw [abs_of_nonneg (hnonneg t
+                ⟨by simpa using ht.1, by simpa using ht.2⟩)]
+        _ = |quadraticEulerTerm24 n| := by
+              unfold quadraticEulerTerm24 quadAltS
+              rw [abs_div, abs_pow]
+              rw [abs_of_pos (by positivity : (0 : ℝ) < (n + 1 : ℝ))]
+              ring
+    exact summable_quadraticEulerTerm24.norm.congr
+      (fun n => (hnorm n).symm)
+  have hsum := MeasureTheory.hasSum_integral_of_summable_integral_norm
+    (μ := MeasureTheory.volume.restrict (Set.Ioc (0 : ℝ) 1))
+    hint hnorm_sum
+  have hterm (n : ℕ) :
+      (∫ t : ℝ in Set.Ioc (0 : ℝ) 1,
+        quadNonAltCoeffMoment n t) =
+        quadraticEulerTerm24 n := by
+    rw [← intervalIntegral.integral_of_le
+      (by norm_num : (0 : ℝ) ≤ 1),
+      quadNonAltCoeffMoment_integral n]
+  have hlim :
+      (∫ t : ℝ in Set.Ioc (0 : ℝ) 1,
+        ∑' n : ℕ, quadNonAltCoeffMoment n t) =
+        ∫ x : ℝ in (0 : ℝ)..1,
+          (-Real.log x) / x * quadAltQclosed x := by
+    rw [← intervalIntegral.integral_of_le
+      (by norm_num : (0 : ℝ) ≤ 1)]
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [
+      MeasureTheory.Measure.ae_ne
+        MeasureTheory.volume (1 : ℝ)] with x hxne hx
+    have hx0 : 0 < x := by simpa using hx.1
+    have hx1 : x < 1 :=
+      lt_of_le_of_ne (by simpa using hx.2) hxne
+    exact (quadNonAltCoeffMoment_hasSum_pointwise hx0 hx1).tsum_eq
+  have hsum' : HasSum
+      (fun n : ℕ => ∫ t : ℝ in Set.Ioc (0 : ℝ) 1,
+        quadNonAltCoeffMoment n t)
+      (∫ x : ℝ in (0 : ℝ)..1,
+        (-Real.log x) / x * quadAltQclosed x) := by
+    simpa [hlim] using hsum
+  have hfinal : HasSum quadraticEulerTerm24
+      (∫ x : ℝ in (0 : ℝ)..1,
+        (-Real.log x) / x * quadAltQclosed x) := by
+    convert hsum' using 1
+    funext n
+    exact (hterm n).symm
+  rw [← hfinal.tsum_eq]
+
+/-! ### The positive kernel and its six-row ledger -/
+
+/-- The primitive whose derivative is `log x / (x(1-x))`. -/
+def quadNonAltU (x : ℝ) : ℝ :=
+  Real.log x ^ 2 / 2 + dilog (1 - x)
+
+/-- The derivative of `J(x)` on the positive unit interval. -/
+def quadNonAltDplus (x : ℝ) : ℝ :=
+  -(Real.log (1 - x) + 2 * Real.log (1 + x)) / (1 - x) +
+    2 * (Real.log (1 + x) + 2 * Real.log (1 - x)) / (1 + x) -
+    2 * (Real.log (1 - x) + Real.log (1 + x)) / x
+
+theorem quadNonAltU_hasDerivAt {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt quadNonAltU (Real.log x / (x * (1 - x))) x := by
+  have hxne : x ≠ 0 := ne_of_gt hx0
+  have h1x : 0 < 1 - x := by linarith
+  have hlog := Real.hasDerivAt_log hxne
+  have hsq : HasDerivAt (fun y : ℝ => Real.log y ^ 2 / 2)
+      (Real.log x / x) x := by
+    convert (hlog.pow 2).div_const 2 using 1
+    field_simp [hxne]
+    ring
+  have hsub : HasDerivAt (fun y : ℝ => 1 - y) (-1) x := by
+    simpa using (hasDerivAt_const x (1 : ℝ)).sub (hasDerivAt_id x)
+  have hd : HasDerivAt (fun y : ℝ => dilog (1 - y))
+      (Real.log x / (1 - x)) x := by
+    convert (dilog_hasDerivAt h1x (by linarith)).comp x hsub using 1
+    field_simp [ne_of_gt h1x]
+    ring
+  unfold quadNonAltU
+  convert hsq.add hd using 1
+  field_simp [hxne, ne_of_gt h1x]
+  ring
+
+theorem quadNonAltJclosed_hasDerivAt {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt quadAltJclosed (quadNonAltDplus x) x := by
+  have hM := quadAltMclosed_hasDerivAt' (x := x) (by
+    rw [abs_of_pos hx0]
+    exact hx1)
+  have hxne : x ≠ 0 := ne_of_gt hx0
+  have hsq0 : 0 < x ^ 2 := sq_pos_of_pos hx0
+  have hsq1 : x ^ 2 < 1 := by nlinarith
+  have hpow : HasDerivAt (fun y : ℝ => y ^ 2) (2 * x) x := by
+    simpa using (hasDerivAt_id x).pow 2
+  have hd : HasDerivAt (fun y : ℝ => dilog (y ^ 2))
+      (-2 * Real.log (1 - x ^ 2) / x) x := by
+    have hd2 := dilog_hasDerivAt hsq0 hsq1
+    have hcomp := HasDerivAt.comp (h := fun y : ℝ => y ^ 2) x hd2 hpow
+    convert hcomp using 1
+    field_simp [hxne]
+  have hJ := hM.add hd
+  unfold quadAltJclosed
+  convert hJ using 1
+  unfold quadNonAltDplus quadAltFclosed
+  have hlog : Real.log (1 - x ^ 2) =
+      Real.log (1 - x) + Real.log (1 + x) := by
+    rw [show 1 - x ^ 2 = (1 - x) * (1 + x) by ring,
+      Real.log_mul (by linarith : 1 - x ≠ 0) (by linarith : 1 + x ≠ 0)]
+  rw [hlog]
+  norm_num
+  ring
+
+theorem quadNonAltU_intervalIntegrable :
+    IntervalIntegrable quadNonAltU MeasureTheory.volume 0 1 := by
+  have hd : IntervalIntegrable (fun x : ℝ => dilog (1 - x))
+      MeasureTheory.volume 0 1 := by
+    have hsub : ContinuousOn (fun x : ℝ => 1 - x) (Set.Icc (0 : ℝ) 1) := by
+      fun_prop
+    have hmaps : MapsTo (fun x : ℝ => 1 - x)
+        (Set.Icc (0 : ℝ) 1) (Set.Icc (-1 : ℝ) 1) := by
+      intro x hx
+      constructor <;> linarith [hx.1, hx.2]
+    exact (dilog_continuousOn_unit.comp hsub hmaps).intervalIntegrable_of_Icc
+      (by norm_num)
+  unfold quadNonAltU
+  exact (intervalIntegrable_logSq.div_const 2).add hd
+
+private def quadNonAltLogMinusSlope (x : ℝ) : ℝ :=
+  Function.update (fun y : ℝ => Real.log (1 - y) / y) 0 (-1) x
+
+private theorem quadNonAltLogMinusSlope_continuousOn :
+    ContinuousOn quadNonAltLogMinusSlope (Set.Icc (0 : ℝ) (1 / 2)) := by
+  intro x hx
+  by_cases hxzero : x = 0
+  · subst x
+    have hlog : HasDerivAt (fun y : ℝ => Real.log (1 - y)) (-1) 0 := by
+      have hone : HasDerivAt (fun y : ℝ => 1 - y) (-1) 0 := by
+        simpa using (hasDerivAt_const (0 : ℝ) 1).sub (hasDerivAt_id 0)
+      simpa [Function.comp_def] using
+        (HasDerivAt.comp (h := fun y : ℝ => 1 - y) 0
+          (Real.hasDerivAt_log (by norm_num)) hone)
+    have hc := hlog.continuousAt_div
+    have hc' : ContinuousAt quadNonAltLogMinusSlope 0 := by
+      convert hc using 1
+      funext y
+      simp [quadNonAltLogMinusSlope]
+    exact hc'.continuousWithinAt
+  · have hbase : ContinuousAt
+        (fun y : ℝ => Real.log (1 - y) / y) x := by
+      exact ((Real.continuousAt_log (by linarith [hx.2] : 1 - x ≠ 0)).comp
+        (by fun_prop)).div continuousAt_id hxzero
+    have heq : quadNonAltLogMinusSlope =ᶠ[𝓝 x]
+        (fun y : ℝ => Real.log (1 - y) / y) := by
+      filter_upwards [eventually_ne_nhds hxzero] with y hy
+      simp [quadNonAltLogMinusSlope, hy]
+    exact (hbase.congr_of_eventuallyEq heq).continuousWithinAt
+
+private def quadNonAltUSlope (x : ℝ) : ℝ :=
+  Function.update (fun y : ℝ => quadNonAltU y / (1 - y)) 1 1 x
+
+private theorem quadNonAltU_hasDerivAt_one :
+    HasDerivAt quadNonAltU (-1) 1 := by
+  have hlog := Real.hasDerivAt_log (by norm_num : (1 : ℝ) ≠ 0)
+  have hsq : HasDerivAt (fun y : ℝ => Real.log y ^ 2 / 2) 0 1 := by
+    convert (hlog.pow 2).div_const 2 using 1 <;> norm_num
+  have hsub : HasDerivAt (fun y : ℝ => 1 - y) (-1) 1 := by
+    simpa using (hasDerivAt_const (1 : ℝ) 1).sub (hasDerivAt_id 1)
+  have hd : HasDerivAt (fun y : ℝ => dilog (1 - y)) (-1) 1 := by
+    have hout : HasDerivAt dilog 1 ((fun y : ℝ => 1 - y) 1) := by
+      simpa using RamanujanChallenge.P26.dilog_hasDerivAt_zero26
+    have hcomp := HasDerivAt.comp (h := fun y : ℝ => 1 - y) 1 hout hsub
+    convert hcomp using 1 <;> norm_num
+  unfold quadNonAltU
+  convert hsq.add hd using 1 <;> norm_num
+
+private theorem quadNonAltUSlope_continuousOn :
+    ContinuousOn quadNonAltUSlope (Set.Icc (1 / 2 : ℝ) 1) := by
+  intro x hx
+  by_cases hxone : x = 1
+  · subst x
+    have hc := quadNonAltU_hasDerivAt_one.continuousAt_div
+    have hcneg : ContinuousAt
+        (Function.update
+          (fun y : ℝ => -(quadNonAltU y / (y - 1))) 1 1) 1 := by
+      convert hc.neg using 1
+      funext y
+      by_cases hy : y = 1
+      · subst y
+        simp
+      · simp [hy, quadNonAltU, dilog_zero]
+    have heq : quadNonAltUSlope =
+        Function.update
+          (fun y : ℝ => -(quadNonAltU y / (y - 1))) 1 1 := by
+      funext y
+      by_cases hy : y = 1
+      · subst y
+        simp [quadNonAltUSlope]
+      · simp [quadNonAltUSlope, hy]
+        field_simp [sub_ne_zero.mpr hy, sub_ne_zero.mpr (Ne.symm hy)]
+        ring
+    rw [heq]
+    exact hcneg.continuousWithinAt
+  · have hx0 : 0 < x := by linarith [hx.1]
+    have hx1 : x < 1 := lt_of_le_of_ne hx.2 hxone
+    have hbase : ContinuousAt (fun y : ℝ => quadNonAltU y / (1 - y)) x := by
+      exact (quadNonAltU_hasDerivAt hx0 hx1).continuousAt.div
+        (by fun_prop) (sub_ne_zero.mpr (Ne.symm hxone))
+    have heq : quadNonAltUSlope =ᶠ[𝓝 x]
+        (fun y : ℝ => quadNonAltU y / (1 - y)) := by
+      filter_upwards [eventually_ne_nhds hxone] with y hy
+      simp [quadNonAltUSlope, hy]
+    exact (hbase.congr_of_eventuallyEq heq).continuousWithinAt
+
+private theorem quadNonAltU_continuousOn_half_one :
+    ContinuousOn quadNonAltU (Set.Icc (1 / 2 : ℝ) 1) := by
+  have hlog : ContinuousOn Real.log (Set.Icc (1 / 2 : ℝ) 1) := by
+    exact continuousOn_id.log (fun x hx => by
+      show x ≠ 0
+      exact ne_of_gt (by linarith [hx.1]))
+  have hsub : ContinuousOn (fun x : ℝ => 1 - x)
+      (Set.Icc (1 / 2 : ℝ) 1) := by fun_prop
+  have hmaps : MapsTo (fun x : ℝ => 1 - x)
+      (Set.Icc (1 / 2 : ℝ) 1) (Set.Icc (-1 : ℝ) 1) := by
+    intro x hx
+    constructor <;> linarith [hx.1, hx.2]
+  unfold quadNonAltU
+  exact (hlog.pow 2 |>.div_const 2).add
+    (dilog_continuousOn_unit.comp hsub hmaps)
+
+private def quadNonAltA (x : ℝ) : ℝ :=
+  quadNonAltU x * Real.log (1 - x) / (1 - x)
+
+private def quadNonAltB (x : ℝ) : ℝ :=
+  quadNonAltU x * Real.log (1 + x) / (1 - x)
+
+private def quadNonAltC (x : ℝ) : ℝ :=
+  quadNonAltU x * Real.log (1 - x) / (1 + x)
+
+private def quadNonAltD (x : ℝ) : ℝ :=
+  quadNonAltU x * Real.log (1 + x) / (1 + x)
+
+private def quadNonAltE (x : ℝ) : ℝ :=
+  quadNonAltU x * Real.log (1 - x) / x
+
+private def quadNonAltF (x : ℝ) : ℝ :=
+  quadNonAltU x * Real.log (1 + x) / x
+
+private theorem quadNonAlt_log_oneSub_intervalIntegrable_half_one :
+    IntervalIntegrable (fun x : ℝ => Real.log (1 - x))
+      MeasureTheory.volume (1 / 2) 1 := by
+  have h := (intervalIntegral.intervalIntegrable_log'
+    (a := (0 : ℝ)) (b := (1 / 2 : ℝ))).comp_sub_left 1
+  convert h.symm using 1 <;> norm_num
+
+private theorem quadNonAltA_intervalIntegrable :
+    IntervalIntegrable quadNonAltA MeasureTheory.volume 0 1 := by
+  have hUleft := quadNonAltU_intervalIntegrable.mono_set
+    (c := (0 : ℝ)) (d := (1 / 2 : ℝ)) (by
+      rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2),
+        Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+      intro x hx
+      exact ⟨hx.1, by linarith [hx.2]⟩)
+  have hqleft : ContinuousOn (fun x : ℝ => Real.log (1 - x) / (1 - x))
+      (Set.uIcc (0 : ℝ) (1 / 2)) := by
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)]
+    apply ContinuousOn.div
+    · exact (continuousOn_const.sub continuousOn_id).log
+        (fun x hx => by
+          show 1 - x ≠ 0
+          linarith [hx.2])
+    · fun_prop
+    · intro x hx
+      show 1 - x ≠ 0
+      linarith [hx.2]
+  have hleft : IntervalIntegrable quadNonAltA MeasureTheory.volume 0 (1 / 2) := by
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ =>
+        (Real.log (1 - x) / (1 - x)) * quadNonAltU x) ?_
+      (hUleft.continuousOn_mul hqleft)
+    intro x _
+    unfold quadNonAltA
+    ring
+  have hslope : ContinuousOn quadNonAltUSlope
+      (Set.uIcc (1 / 2 : ℝ) 1) := by
+    simpa only [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)] using
+      quadNonAltUSlope_continuousOn
+  have hright0 := quadNonAlt_log_oneSub_intervalIntegrable_half_one.continuousOn_mul
+    hslope
+  have hright : IntervalIntegrable quadNonAltA MeasureTheory.volume (1 / 2) 1 := by
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ => quadNonAltUSlope x * Real.log (1 - x)) ?_ hright0
+    intro x hx
+    by_cases hxone : x = 1
+    · subst x
+      simp [quadNonAltA, quadNonAltUSlope, quadNonAltU]
+    · simp [quadNonAltA, quadNonAltUSlope, hxone]
+      field_simp [sub_ne_zero.mpr (Ne.symm hxone)]
+  exact hleft.trans hright
+
+private theorem quadNonAltB_intervalIntegrable :
+    IntervalIntegrable quadNonAltB MeasureTheory.volume 0 1 := by
+  have hUleft := quadNonAltU_intervalIntegrable.mono_set
+    (c := (0 : ℝ)) (d := (1 / 2 : ℝ)) (by
+      rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2),
+        Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+      intro x hx
+      exact ⟨hx.1, by linarith [hx.2]⟩)
+  have hqleft : ContinuousOn (fun x : ℝ => Real.log (1 + x) / (1 - x))
+      (Set.uIcc (0 : ℝ) (1 / 2)) := by
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)]
+    apply ContinuousOn.div
+    · exact (continuousOn_const.add continuousOn_id).log
+        (fun x hx => by
+          show 1 + x ≠ 0
+          linarith [hx.1])
+    · fun_prop
+    · intro x hx
+      show 1 - x ≠ 0
+      linarith [hx.2]
+  have hleft : IntervalIntegrable quadNonAltB MeasureTheory.volume 0 (1 / 2) := by
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ =>
+        (Real.log (1 + x) / (1 - x)) * quadNonAltU x) ?_
+      (hUleft.continuousOn_mul hqleft)
+    intro x _
+    unfold quadNonAltB
+    ring
+  have hlogplus : ContinuousOn (fun x : ℝ => Real.log (1 + x))
+      (Set.uIcc (1 / 2 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    exact (continuousOn_const.add continuousOn_id).log
+      (fun x hx => by
+        show 1 + x ≠ 0
+        linarith [hx.1])
+  have hslope : ContinuousOn quadNonAltUSlope
+      (Set.uIcc (1 / 2 : ℝ) 1) := by
+    simpa only [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)] using
+      quadNonAltUSlope_continuousOn
+  have hlogplusInt : IntervalIntegrable (fun x : ℝ => Real.log (1 + x))
+      MeasureTheory.volume (1 / 2) 1 := by
+    apply ContinuousOn.intervalIntegrable
+    exact hlogplus
+  have hright0 := hlogplusInt.continuousOn_mul hslope
+  have hright : IntervalIntegrable quadNonAltB MeasureTheory.volume (1 / 2) 1 := by
+    apply hright0.congr_ae
+    filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_uIoc,
+      MeasureTheory.Measure.ae_ne
+        (MeasureTheory.volume.restrict (Set.uIoc (1 / 2 : ℝ) 1)) 1]
+      with x hx hxone
+    have hxone' : x ≠ 1 := by exact hxone
+    simp [quadNonAltB, quadNonAltUSlope, hxone']
+    field_simp [sub_ne_zero.mpr (Ne.symm hxone')]
+  exact hleft.trans hright
+
+private theorem quadNonAltC_intervalIntegrable :
+    IntervalIntegrable quadNonAltC MeasureTheory.volume 0 1 := by
+  have hUleft := quadNonAltU_intervalIntegrable.mono_set
+    (c := (0 : ℝ)) (d := (1 / 2 : ℝ)) (by
+      rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2),
+        Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+      intro x hx
+      exact ⟨hx.1, by linarith [hx.2]⟩)
+  have hqleft : ContinuousOn (fun x : ℝ => Real.log (1 - x) / (1 + x))
+      (Set.uIcc (0 : ℝ) (1 / 2)) := by
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)]
+    apply ContinuousOn.div
+    · exact (continuousOn_const.sub continuousOn_id).log
+        (fun x hx => by
+          show 1 - x ≠ 0
+          linarith [hx.2])
+    · fun_prop
+    · intro x hx
+      show 1 + x ≠ 0
+      linarith [hx.1]
+  have hleft : IntervalIntegrable quadNonAltC MeasureTheory.volume 0 (1 / 2) := by
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ =>
+        (Real.log (1 - x) / (1 + x)) * quadNonAltU x) ?_
+      (hUleft.continuousOn_mul hqleft)
+    intro x _
+    unfold quadNonAltC
+    ring
+  have hfac : ContinuousOn (fun x : ℝ => quadNonAltU x / (1 + x))
+      (Set.uIcc (1 / 2 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    exact quadNonAltU_continuousOn_half_one.div
+      (by fun_prop) (fun x hx => by
+        show 1 + x ≠ 0
+        linarith [hx.1])
+  have hright0 := quadNonAlt_log_oneSub_intervalIntegrable_half_one.continuousOn_mul
+    hfac
+  have hright : IntervalIntegrable quadNonAltC MeasureTheory.volume (1 / 2) 1 := by
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ =>
+        (quadNonAltU x / (1 + x)) * Real.log (1 - x)) ?_ hright0
+    intro x _
+    unfold quadNonAltC
+    ring
+  exact hleft.trans hright
+
+private theorem quadNonAltD_intervalIntegrable :
+    IntervalIntegrable quadNonAltD MeasureTheory.volume 0 1 := by
+  have hfac : ContinuousOn (fun x : ℝ => Real.log (1 + x) / (1 + x))
+      (Set.uIcc (0 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    apply ContinuousOn.div
+    · exact (continuousOn_const.add continuousOn_id).log
+        (fun x hx => by
+          show 1 + x ≠ 0
+          linarith [hx.1])
+    · fun_prop
+    · intro x hx
+      show 1 + x ≠ 0
+      linarith [hx.1]
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ =>
+      (Real.log (1 + x) / (1 + x)) * quadNonAltU x) ?_
+    (quadNonAltU_intervalIntegrable.continuousOn_mul hfac)
+  intro x _
+  unfold quadNonAltD
+  ring
+
+private theorem quadNonAltE_intervalIntegrable :
+    IntervalIntegrable quadNonAltE MeasureTheory.volume 0 1 := by
+  have hUleft := quadNonAltU_intervalIntegrable.mono_set
+    (c := (0 : ℝ)) (d := (1 / 2 : ℝ)) (by
+      rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2),
+        Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+      intro x hx
+      exact ⟨hx.1, by linarith [hx.2]⟩)
+  have hleft : IntervalIntegrable quadNonAltE MeasureTheory.volume 0 (1 / 2) := by
+    have hslope : ContinuousOn quadNonAltLogMinusSlope
+        (Set.uIcc (0 : ℝ) (1 / 2)) := by
+      simpa only [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)] using
+        quadNonAltLogMinusSlope_continuousOn
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ => quadNonAltLogMinusSlope x * quadNonAltU x) ?_
+      (hUleft.continuousOn_mul hslope)
+    intro x hx
+    have hx0 : x ≠ 0 := by
+      rw [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)] at hx
+      exact ne_of_gt hx.1
+    simp [quadNonAltE, quadNonAltLogMinusSlope, hx0]
+    ring
+  have hfac : ContinuousOn (fun x : ℝ => quadNonAltU x / x)
+      (Set.uIcc (1 / 2 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    exact quadNonAltU_continuousOn_half_one.div continuousOn_id
+      (fun x hx => by
+        show x ≠ 0
+        exact ne_of_gt (by linarith [hx.1]))
+  have hright0 := quadNonAlt_log_oneSub_intervalIntegrable_half_one.continuousOn_mul
+    hfac
+  have hright : IntervalIntegrable quadNonAltE MeasureTheory.volume (1 / 2) 1 := by
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ => (quadNonAltU x / x) * Real.log (1 - x)) ?_ hright0
+    intro x _
+    unfold quadNonAltE
+    ring
+  exact hleft.trans hright
+
+private theorem quadNonAltF_intervalIntegrable :
+    IntervalIntegrable quadNonAltF MeasureTheory.volume 0 1 := by
+  have hslope : ContinuousOn RamanujanChallenge.P26.logOnePlusSlope26
+      (Set.uIcc (0 : ℝ) 1) := by
+    simpa only [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using
+      RamanujanChallenge.P26.logOnePlusSlope26_continuousOn
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ => RamanujanChallenge.P26.logOnePlusSlope26 x *
+      quadNonAltU x) ?_
+    (quadNonAltU_intervalIntegrable.continuousOn_mul
+      hslope)
+  intro x hx
+  have hx0 : x ≠ 0 := by
+    rw [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] at hx
+    exact ne_of_gt hx.1
+  simp [quadNonAltF, RamanujanChallenge.P26.logOnePlusSlope26, hx0]
+  ring
+
+private theorem quadNonAltU_div_oneSub_tendsto_one :
+    Tendsto (fun x : ℝ => quadNonAltU x / (1 - x))
+      (𝓝[<] (1 : ℝ)) (𝓝 1) := by
+  have hUone : quadNonAltU 1 = 0 := by
+    simp [quadNonAltU, dilog_zero]
+  have hslope := slope_tendsto_of_hasDerivAt_eq_zero quadNonAltU 1 (-1)
+    quadNonAltU_hasDerivAt_one hUone
+  have hleft := hslope.mono_left
+    (nhdsWithin_mono _ (fun x hx => ne_of_lt hx))
+  have hneg := hleft.neg
+  norm_num at hneg
+  refine hneg.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hxne : x - 1 ≠ 0 := sub_ne_zero.mpr (ne_of_lt hx)
+  have h1x : 1 - x ≠ 0 := sub_ne_zero.mpr (ne_of_gt hx)
+  field_simp [hxne, h1x]
+  ring
+
+private theorem quadNonAltU_mul_self_tendsto_zero :
+    Tendsto (fun x : ℝ => quadNonAltU x * x)
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hid : Tendsto (fun x : ℝ => x) (𝓝[>] (0 : ℝ)) (𝓝 0) :=
+    tendsto_id.mono_left nhdsWithin_le_nhds
+  have hmap : Tendsto (fun x : ℝ => 1 - x)
+      (𝓝[>] (0 : ℝ)) (𝓝[<] (1 : ℝ)) := by
+    rw [tendsto_nhdsWithin_iff]
+    constructor
+    · simpa using (tendsto_const_nhds.sub hid)
+    · filter_upwards [self_mem_nhdsWithin] with x hx
+      have hx0 : 0 < x := by simpa only [Set.mem_Ioi] using hx
+      exact sub_lt_self 1 hx0
+  have hd := i10_dilog_tendsto_one.comp hmap
+  have hsum := (logSq_mul_self_tendsto.div_const 2).add (hd.mul hid)
+  norm_num at hsum
+  refine hsum.congr' ?_
+  filter_upwards with x
+  unfold quadNonAltU
+  ring
+
+private theorem quadNonAltA_boundary_zero :
+    Tendsto (fun x : ℝ => quadNonAltU x * Real.log (1 - x) ^ 2 / 2)
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have haDeriv : HasDerivAt (fun x : ℝ => Real.log (1 - x)) (-1) 0 := by
+    have hsub : HasDerivAt (fun x : ℝ => 1 - x) (-1) 0 := by
+      simpa using (hasDerivAt_const (0 : ℝ) 1).sub (hasDerivAt_id 0)
+    convert hsub.log (by norm_num) using 1 <;> norm_num
+  have haSlope : Tendsto (fun x : ℝ => Real.log (1 - x) / x)
+      (𝓝[>] (0 : ℝ)) (𝓝 (-1)) := by
+    simpa [smul_eq_mul, div_eq_mul_inv, mul_comm] using
+      haDeriv.tendsto_slope_zero_right
+  have hid : Tendsto (fun x : ℝ => x) (𝓝[>] (0 : ℝ)) (𝓝 0) :=
+    tendsto_id.mono_left nhdsWithin_le_nhds
+  have h := ((quadNonAltU_mul_self_tendsto_zero.mul (haSlope.pow 2)).mul hid).div_const 2
+  norm_num at h
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hxne : x ≠ 0 := ne_of_gt hx
+  field_simp [hxne]
+
+private theorem quadNonAltA_boundary_one :
+    Tendsto (fun x : ℝ => quadNonAltU x * Real.log (1 - x) ^ 2 / 2)
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+  have h := quadNonAltU_div_oneSub_tendsto_one.mul oneSub_logSq_tendsto
+  norm_num at h
+  have h' := h.div_const 2
+  norm_num at h'
+  refine h'.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hne : 1 - x ≠ 0 := sub_ne_zero.mpr (ne_of_gt hx)
+  field_simp [hne]
+
+private def quadNonAltAPrimitive (x : ℝ) : ℝ :=
+  quadNonAltU x * Real.log (1 - x) ^ 2 / 2
+
+private theorem quadNonAltAPrimitive_hasDerivAt
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt quadNonAltAPrimitive
+      ((1 / 2 : ℝ) *
+          (Real.log x * Real.log (1 - x) ^ 2 / x +
+            Real.log x * Real.log (1 - x) ^ 2 / (1 - x)) -
+        quadNonAltA x) x := by
+  have h1x : 1 - x ≠ 0 := by linarith
+  have ha : HasDerivAt (fun y : ℝ => Real.log (1 - y))
+      (-1 / (1 - x)) x := by
+    have hsub : HasDerivAt (fun y : ℝ => 1 - y) (-1) x := by
+      simpa using (hasDerivAt_const x (1 : ℝ)).sub (hasDerivAt_id x)
+    convert hsub.log h1x using 1
+  unfold quadNonAltAPrimitive
+  convert ((quadNonAltU_hasDerivAt hx0 hx1).mul (ha.pow 2)).div_const 2 using 1
+  unfold quadNonAltA
+  simp only [Pi.pow_apply]
+  field_simp [ne_of_gt hx0, h1x]
+  ring
+
+private theorem quadNonAlt_reflected_quartic_intervalIntegrable :
+    IntervalIntegrable
+      (fun x : ℝ => Real.log x * Real.log (1 - x) ^ 2 / (1 - x))
+      MeasureTheory.volume 0 1 := by
+  have hbase : IntervalIntegrable
+      (fun x : ℝ => Real.log x ^ 2 * Real.log (1 - x) / x)
+      MeasureTheory.volume 0 1 := by
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ => -(Real.log x ^ 2 * H1 x / x)) ?_
+      i10LogSqH1Div_intervalIntegrable.neg
+    intro x _
+    unfold H1
+    ring
+  have href : IntervalIntegrable
+      (fun x : ℝ => Real.log (1 - x) ^ 2 * Real.log x / (1 - x))
+      MeasureTheory.volume 0 1 := by
+    simpa using (hbase.comp_sub_left 1).symm
+  convert href using 1
+  funext x
+  ring
+
+private theorem quadNonAlt_reflected_quartic_integral :
+    (∫ x : ℝ in 0..1,
+      Real.log x * Real.log (1 - x) ^ 2 / (1 - x)) =
+      -2 * (Real.pi ^ 4 / 90) := by
+  let f : ℝ → ℝ := fun x =>
+    Real.log x ^ 2 * Real.log (1 - x) / x
+  have href : (∫ x : ℝ in 0..1, f (1 - x)) =
+      ∫ x : ℝ in 0..1, f x := by
+    simpa using intervalIntegral.integral_comp_sub_left
+      (a := (0 : ℝ)) (b := 1) f 1
+  have hbase : (∫ x : ℝ in 0..1, f x) =
+      -2 * (Real.pi ^ 4 / 90) := by
+    have h := congrArg Neg.neg i10LogSqH1Div_integral
+    rw [← intervalIntegral.integral_neg] at h
+    unfold f
+    unfold H1 at h
+    convert h using 1 <;> ring
+  rw [show (∫ x : ℝ in 0..1,
+      Real.log x * Real.log (1 - x) ^ 2 / (1 - x)) =
+      ∫ x : ℝ in 0..1, f (1 - x) by
+        apply intervalIntegral.integral_congr
+        intro x _
+        dsimp [f]
+        ring,
+    href, hbase]
+
+private theorem quadNonAltA_integral :
+    (∫ x : ℝ in 0..1, quadNonAltA x) =
+      -(1 / 2 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  let q : ℝ → ℝ := fun x =>
+    (1 / 2 : ℝ) *
+      (Real.log x * Real.log (1 - x) ^ 2 / x +
+        Real.log x * Real.log (1 - x) ^ 2 / (1 - x))
+  have hq : IntervalIntegrable q MeasureTheory.volume 0 1 := by
+    exact (quarticCoreIntervalIntegrable24_export.add
+      quadNonAlt_reflected_quartic_intervalIntegrable).const_mul (1 / 2 : ℝ)
+  have hint : IntervalIntegrable (fun x : ℝ => q x - quadNonAltA x)
+      MeasureTheory.volume 0 1 := hq.sub quadNonAltA_intervalIntegrable
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (a := (0 : ℝ)) (b := 1) (f := quadNonAltAPrimitive)
+    (f' := fun x : ℝ => q x - quadNonAltA x)
+    (by norm_num)
+    (fun x hx => by
+      simpa [q] using quadNonAltAPrimitive_hasDerivAt hx.1 hx.2)
+    hint quadNonAltA_boundary_zero quadNonAltA_boundary_one
+  norm_num at hFTC
+  rw [intervalIntegral.integral_sub hq quadNonAltA_intervalIntegrable,
+    show (∫ x : ℝ in 0..1, q x) =
+        (1 / 2 : ℝ) *
+          ((∫ x : ℝ in 0..1,
+            Real.log x * Real.log (1 - x) ^ 2 / x) +
+           (∫ x : ℝ in 0..1,
+            Real.log x * Real.log (1 - x) ^ 2 / (1 - x))) by
+      dsimp [q]
+      rw [intervalIntegral.integral_const_mul,
+        intervalIntegral.integral_add quarticCoreIntervalIntegrable24_export
+          quadNonAlt_reflected_quartic_intervalIntegrable],
+    quarticCoreIntegral24_export,
+    quadNonAlt_reflected_quartic_integral] at hFTC
+  have hzeta : Real.pi ^ 4 / 90 =
+      (2 / 5 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by ring
+  rw [hzeta] at hFTC
+  linarith
+
+private theorem quadNonAlt_dilog_logMinus_intervalIntegrable :
+    IntervalIntegrable (fun x : ℝ => dilog x * Real.log (1 - x) / x)
+      MeasureTheory.volume 0 1 := by
+  have hbase : IntervalIntegrable (fun x : ℝ => Real.log (1 - x) / x)
+      MeasureTheory.volume 0 1 := by
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ => -(H1 x / x)) ?_ i10H1Div_intervalIntegrable.neg
+    intro x _
+    unfold H1
+    ring
+  have hd : ContinuousOn dilog (Set.uIcc (0 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    exact dilog_continuousOn_unit.mono (by
+      intro x hx
+      constructor <;> linarith [hx.1, hx.2])
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ => dilog x * (Real.log (1 - x) / x)) ?_
+    (hbase.continuousOn_mul hd)
+  intro x _
+  ring
+
+private theorem quadNonAlt_dilog_logMinus_integral :
+    (∫ x : ℝ in 0..1, dilog x * Real.log (1 - x) / x) =
+      -(1 / 2 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  let F : ℝ → ℝ := fun x => -(dilog x ^ 2 / 2)
+  have hderiv : ∀ x ∈ Set.Ioo (0 : ℝ) 1,
+      HasDerivAt F (dilog x * Real.log (1 - x) / x) x := by
+    intro x hx
+    unfold F
+    convert ((dilog_hasDerivAt hx.1 hx.2).pow 2).div_const 2 |>.neg using 1
+    field_simp [ne_of_gt hx.1]
+    ring
+  have hzero : Tendsto F (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    have h : Tendsto dilog (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+      simpa [dilog_zero] using
+        RamanujanChallenge.P26.dilog_hasDerivAt_zero26.continuousAt.tendsto
+          |>.mono_left nhdsWithin_le_nhds
+    have ht := (h.pow 2).neg.div_const 2
+    have ht' : Tendsto F (𝓝[>] (0 : ℝ)) (𝓝 (-0 ^ 2 / 2)) := by
+      convert ht using 1
+      funext x
+      unfold F
+      ring
+    simpa using ht'
+  have hone : Tendsto F (𝓝[<] (1 : ℝ))
+      (𝓝 (-(1 / 2 : ℝ) * (Real.pi ^ 2 / 6) ^ 2)) := by
+    have h := (i10_dilog_tendsto_one.pow 2).neg.div_const 2
+    have h' : Tendsto F (𝓝[<] (1 : ℝ))
+        (𝓝 (-((Real.pi ^ 2 / 6) ^ 2) / 2)) := by
+      simpa only [F, neg_div] using h
+    convert h' using 1
+    ring
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (a := (0 : ℝ)) (b := 1) (f := F)
+    (f' := fun x : ℝ => dilog x * Real.log (1 - x) / x)
+    (fa := 0) (fb := -(1 / 2 : ℝ) * (Real.pi ^ 2 / 6) ^ 2)
+    (by norm_num) hderiv quadNonAlt_dilog_logMinus_intervalIntegrable
+    hzero hone]
+  ring
+
+private theorem quadNonAlt_spence_integral :
+    (∫ x : ℝ in 0..1,
+      Real.log (1 - x) * dilog (1 - x) / x) =
+      -(1 / 2 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 +
+        (1 / 2 : ℝ) * (Real.pi ^ 4 / 90) := by
+  let s : ℝ → ℝ := fun x => Real.log (1 - x) / x
+  have hs : IntervalIntegrable s MeasureTheory.volume 0 1 := by
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ => -(H1 x / x)) ?_ i10H1Div_intervalIntegrable.neg
+    intro x _
+    dsimp [s]
+    unfold H1
+    ring
+  let sd : ℝ → ℝ := fun x => Real.log (1 - x) * dilog x / x
+  have hsd : IntervalIntegrable sd MeasureTheory.volume 0 1 := by
+    simpa [sd, mul_comm] using quadNonAlt_dilog_logMinus_intervalIntegrable
+  let sc : ℝ → ℝ := fun x =>
+    Real.log x * Real.log (1 - x) ^ 2 / x
+  have hsc : IntervalIntegrable sc MeasureTheory.volume 0 1 := by
+    simpa [sc] using quarticCoreIntervalIntegrable24_export
+  have htarget : IntervalIntegrable
+      (fun x : ℝ => Real.log (1 - x) * dilog (1 - x) / x)
+      MeasureTheory.volume 0 1 := by
+    have hcomb := (hs.const_mul (Real.pi ^ 2 / 6)).sub hsd |>.sub hsc
+    apply hcomb.congr
+    intro x hx
+    have hx' : x ∈ Set.Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    by_cases hxone : x = 1
+    · subst x
+      simp [s, sd, sc]
+    · have hx1 : x < 1 := lt_of_le_of_ne hx'.2 hxone
+      have hrefl := dilog_reflection hx'.1 hx1
+      have hrefl' : dilog (1 - x) = Real.pi ^ 2 / 6 -
+          Real.log x * Real.log (1 - x) - dilog x := by
+        linarith [hrefl]
+      dsimp [s, sd, sc]
+      rw [hrefl']
+      field_simp [ne_of_gt hx'.1]
+      ring
+  have hsplit :
+      (∫ x : ℝ in 0..1,
+        Real.log (1 - x) * dilog (1 - x) / x) =
+        (Real.pi ^ 2 / 6) * (∫ x : ℝ in 0..1, s x) -
+          (∫ x : ℝ in 0..1, sd x) -
+          (∫ x : ℝ in 0..1, sc x) := by
+    rw [← intervalIntegral.integral_const_mul,
+      ← intervalIntegral.integral_sub (hs.const_mul (Real.pi ^ 2 / 6)) hsd,
+      ← intervalIntegral.integral_sub
+        ((hs.const_mul (Real.pi ^ 2 / 6)).sub hsd) hsc]
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+      with x hxone hx
+    have hx' : x ∈ Set.Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    have hx1 : x < 1 := lt_of_le_of_ne hx'.2 hxone
+    have hrefl := dilog_reflection hx'.1 hx1
+    have hrefl' : dilog (1 - x) = Real.pi ^ 2 / 6 -
+        Real.log x * Real.log (1 - x) - dilog x := by
+      linarith [hrefl]
+    dsimp [s, sd, sc]
+    rw [hrefl']
+    field_simp [ne_of_gt hx'.1]
+    ring
+  rw [hsplit]
+  have hsval : (∫ x : ℝ in 0..1, s x) = -(Real.pi ^ 2 / 6) := by
+    have h := congrArg Neg.neg i10H1Div_integral
+    rw [← intervalIntegral.integral_neg] at h
+    dsimp [s]
+    unfold H1 at h
+    convert h using 1 <;> ring
+  have hsdval : (∫ x : ℝ in 0..1, sd x) =
+      -(1 / 2 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+    simpa [sd, mul_comm] using quadNonAlt_dilog_logMinus_integral
+  rw [hsval, hsdval]
+  dsimp [sc]
+  rw [quarticCoreIntegral24_export]
+  ring
+
+private theorem quadNonAlt_logDilog_oneSub_intervalIntegrable :
+    IntervalIntegrable (fun x : ℝ => Real.log x * dilog x / (1 - x))
+      MeasureTheory.volume 0 1 := by
+  have hbase : IntervalIntegrable
+      (fun x : ℝ => Real.log (1 - x) * dilog (1 - x) / x)
+      MeasureTheory.volume 0 1 := by
+    let s : ℝ → ℝ := fun x => Real.log (1 - x) / x
+    have hs : IntervalIntegrable s MeasureTheory.volume 0 1 := by
+      apply IntervalIntegrable.congr
+        (f := fun x : ℝ => -(H1 x / x)) ?_ i10H1Div_intervalIntegrable.neg
+      intro x _
+      dsimp [s]
+      unfold H1
+      ring
+    have hd : ContinuousOn (fun x : ℝ => dilog (1 - x))
+        (Set.uIcc (0 : ℝ) 1) := by
+      rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+      apply dilog_continuousOn_unit.comp (by fun_prop)
+      intro x hx
+      constructor <;> linarith [hx.1, hx.2]
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ => dilog (1 - x) * s x) ?_
+      (hs.continuousOn_mul hd)
+    intro x _
+    dsimp [s]
+    ring
+  have href : IntervalIntegrable
+      (fun x : ℝ => Real.log x * dilog x / (1 - x))
+      MeasureTheory.volume 0 1 := by
+    simpa using (hbase.comp_sub_left 1).symm
+  exact href
+
+private theorem quadNonAlt_logDilog_oneSub_integral :
+    (∫ x : ℝ in 0..1, Real.log x * dilog x / (1 - x)) =
+      -(1 / 2 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 +
+        (1 / 2 : ℝ) * (Real.pi ^ 4 / 90) := by
+  let f : ℝ → ℝ := fun x =>
+    Real.log (1 - x) * dilog (1 - x) / x
+  have href : (∫ x : ℝ in 0..1, f (1 - x)) =
+      ∫ x : ℝ in 0..1, f x := by
+    simpa using intervalIntegral.integral_comp_sub_left
+      (a := (0 : ℝ)) (b := 1) f 1
+  rw [show (∫ x : ℝ in 0..1, Real.log x * dilog x / (1 - x)) =
+      ∫ x : ℝ in 0..1, f (1 - x) by
+        apply intervalIntegral.integral_congr
+        intro x _
+        dsimp [f]
+        ring,
+    href]
+  exact quadNonAlt_spence_integral
+
+private def quadNonAltEPrimitive (x : ℝ) : ℝ :=
+  quadNonAltU x * dilog x
+
+private theorem quadNonAltEPrimitive_hasDerivAt
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt quadNonAltEPrimitive
+      (Real.log x * dilog x / x +
+        Real.log x * dilog x / (1 - x) - quadNonAltE x) x := by
+  have h := (quadNonAltU_hasDerivAt hx0 hx1).mul
+    (dilog_hasDerivAt hx0 hx1)
+  unfold quadNonAltEPrimitive
+  convert h using 1
+  unfold quadNonAltE
+  field_simp [ne_of_gt hx0, (by linarith : 1 - x ≠ 0)]
+  ring
+
+private theorem quadNonAltE_boundary_zero :
+    Tendsto quadNonAltEPrimitive (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hslope : Tendsto (fun x : ℝ => dilog x / x)
+      (𝓝[>] (0 : ℝ)) (𝓝 1) := by
+    simpa [dilog_zero, smul_eq_mul, div_eq_mul_inv, mul_comm] using
+      RamanujanChallenge.P26.dilog_hasDerivAt_zero26.tendsto_slope_zero_right
+  have h := quadNonAltU_mul_self_tendsto_zero.mul hslope
+  norm_num at h
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hxne : x ≠ 0 := ne_of_gt hx
+  unfold quadNonAltEPrimitive
+  field_simp [hxne]
+
+private theorem quadNonAltE_boundary_one :
+    Tendsto quadNonAltEPrimitive (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+  have hone : Tendsto (fun x : ℝ => 1 - x)
+      (𝓝[<] (1 : ℝ)) (𝓝 0) :=
+    tendsto_nhdsWithin_iff.mp tendsto_one_sub_nhdsWithin |>.1
+  have h := quadNonAltU_div_oneSub_tendsto_one.mul (hone.mul i10_dilog_tendsto_one)
+  norm_num at h
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hne : 1 - x ≠ 0 := sub_ne_zero.mpr (ne_of_gt hx)
+  unfold quadNonAltEPrimitive
+  field_simp [hne]
+
+private theorem quadNonAltE_integral :
+    (∫ x : ℝ in 0..1, quadNonAltE x) =
+      -(7 / 10 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  let q : ℝ → ℝ := fun x =>
+    Real.log x * dilog x / x + Real.log x * dilog x / (1 - x)
+  have hfirst : IntervalIntegrable
+      (fun x : ℝ => Real.log x * dilog x / x)
+      MeasureTheory.volume 0 1 := by
+    simpa only [mul_comm] using testDilogRadialKernel_intervalIntegrable
+  have hq : IntervalIntegrable q MeasureTheory.volume 0 1 :=
+    hfirst.add quadNonAlt_logDilog_oneSub_intervalIntegrable
+  have hint : IntervalIntegrable (fun x : ℝ => q x - quadNonAltE x)
+      MeasureTheory.volume 0 1 := hq.sub quadNonAltE_intervalIntegrable
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (a := (0 : ℝ)) (b := 1) (f := quadNonAltEPrimitive)
+    (f' := fun x : ℝ => q x - quadNonAltE x)
+    (by norm_num)
+    (fun x hx => by simpa [q] using
+      quadNonAltEPrimitive_hasDerivAt hx.1 hx.2)
+    hint quadNonAltE_boundary_zero quadNonAltE_boundary_one
+  norm_num at hFTC
+  have hcomm :
+      (∫ x : ℝ in 0..1, Real.log x * dilog x / x) =
+        ∫ x : ℝ in 0..1, dilog x * Real.log x / x := by
+    apply intervalIntegral.integral_congr
+    intro x _
+    ring
+  rw [intervalIntegral.integral_sub hq quadNonAltE_intervalIntegrable,
+    show (∫ x : ℝ in 0..1, q x) =
+        (∫ x : ℝ in 0..1, dilog x * Real.log x / x) +
+          (∫ x : ℝ in 0..1, Real.log x * dilog x / (1 - x)) by
+      dsimp [q]
+      rw [intervalIntegral.integral_add
+        hfirst
+        quadNonAlt_logDilog_oneSub_intervalIntegrable]
+      rw [hcomm],
+    testDilogRadialIntegral,
+    quadNonAlt_logDilog_oneSub_integral] at hFTC
+  have hzeta : Real.pi ^ 4 / 90 =
+      (2 / 5 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by ring
+  rw [hzeta] at hFTC
+  linarith
+
+/-- Expansion of `2 U J'` into the six rational-letter rows. -/
+theorem quadNonAlt_U_Dplus_ledger (x : ℝ) :
+    2 * quadNonAltU x * quadNonAltDplus x =
+      -2 * quadNonAltU x * Real.log (1 - x) / (1 - x) -
+      4 * quadNonAltU x * Real.log (1 + x) / (1 - x) +
+      8 * quadNonAltU x * Real.log (1 - x) / (1 + x) +
+      4 * quadNonAltU x * Real.log (1 + x) / (1 + x) -
+      4 * quadNonAltU x * Real.log (1 - x) / x -
+      4 * quadNonAltU x * Real.log (1 + x) / x := by
+  unfold quadNonAltDplus
+  ring
+
+private theorem quadNonAlt_logCube_oneSub_intervalIntegrable :
+    IntervalIntegrable (fun x : ℝ => Real.log x ^ 3 / (1 - x))
+      MeasureTheory.volume 0 1 := by
+  have hdom : IntervalIntegrable (fun x : ℝ => 432 * x ^ (-1 / 2 : ℝ))
+      MeasureTheory.volume 0 (1 / 2) :=
+    (intervalIntegral.intervalIntegrable_rpow'
+      (a := (0 : ℝ)) (b := (1 / 2 : ℝ))
+      (by norm_num : -1 < (-1 / 2 : ℝ))).const_mul 432
+  have hleft : IntervalIntegrable
+      (fun x : ℝ => Real.log x ^ 3 / (1 - x))
+      MeasureTheory.volume 0 (1 / 2) := by
+    refine intervalIntegrable_of_continuousOn_Ioo_of_le
+      (by norm_num) ?_ hdom ?_
+    · intro x hx
+      apply ContinuousAt.continuousWithinAt
+      exact ((Real.continuousAt_log (ne_of_gt hx.1)).pow 3).div
+        (by fun_prop) (by linarith [hx.2] : 1 - x ≠ 0)
+    · intro x hx
+      have hx0 : 0 < x := hx.1
+      have hx1 : x ≤ 1 := by linarith [hx.2]
+      have hlog := Real.abs_log_mul_self_rpow_lt x (1 / 6 : ℝ)
+        hx0 hx1 (by norm_num)
+      have hrpos : 0 < x ^ (1 / 6 : ℝ) := Real.rpow_pos_of_pos hx0 _
+      have hcube : |Real.log x| ^ 3 * x ^ (1 / 2 : ℝ) < 216 := by
+        have hp : |Real.log x * x ^ (1 / 6 : ℝ)| ^ 3 < 6 ^ 3 := by
+          rw [abs_mul, abs_of_pos hrpos] at hlog
+          norm_num at hlog
+          let q := |Real.log x| * x ^ (1 / 6 : ℝ)
+          have hq0 : 0 ≤ q := mul_nonneg (abs_nonneg _) hrpos.le
+          have hfac : 0 < (6 - q) * (q ^ 2 + 6 * q + 36) := by
+            apply mul_pos
+            · exact sub_pos.mpr hlog
+            · nlinarith [sq_nonneg (q + 3)]
+          have hp' : q ^ 3 < 6 ^ 3 := by
+            have hid : 6 ^ 3 - q ^ 3 =
+                (6 - q) * (q ^ 2 + 6 * q + 36) := by ring
+            nlinarith
+          simpa only [q, abs_mul, abs_of_pos hrpos] using hp'
+        rw [abs_mul, abs_of_pos hrpos, mul_pow] at hp
+        have hr : (x ^ (1 / 6 : ℝ)) ^ 3 = x ^ (1 / 2 : ℝ) := by
+          rw [← Real.rpow_natCast]
+          rw [← Real.rpow_mul (le_of_lt hx0)]
+          norm_num
+        rw [hr] at hp
+        norm_num at hp ⊢
+        exact hp
+      have hneg : x ^ (-1 / 2 : ℝ) =
+          (x ^ (1 / 2 : ℝ))⁻¹ := by
+        convert Real.rpow_neg (le_of_lt hx0) (1 / 2 : ℝ) using 1 <;> ring
+      rw [Real.norm_eq_abs, abs_div, abs_pow,
+        abs_of_pos (by linarith [hx.2] : 0 < 1 - x), hneg]
+      have hden : (1 - x)⁻¹ ≤ 2 := by
+        apply (inv_le_iff_one_le_mul₀
+          (by linarith [hx.2] : 0 < 1 - x)).2
+        linarith [hx.2]
+      have hrnonneg : 0 ≤ x ^ (1 / 2 : ℝ) :=
+        (Real.rpow_pos_of_pos hx0 _).le
+      have hlogbound : |Real.log x| ^ 3 ≤
+          216 * (x ^ (1 / 2 : ℝ))⁻¹ := by
+        rw [← div_eq_mul_inv]
+        exact (le_div_iff₀ (Real.rpow_pos_of_pos hx0 _)).2 hcube.le
+      calc
+        |Real.log x| ^ 3 / (1 - x) =
+            |Real.log x| ^ 3 * (1 - x)⁻¹ := by rw [div_eq_mul_inv]
+        _ ≤ (216 * (x ^ (1 / 2 : ℝ))⁻¹) * 2 :=
+          mul_le_mul hlogbound hden
+            (inv_nonneg.mpr (by linarith [hx.2]))
+            (mul_nonneg (by norm_num) (inv_nonneg.mpr hrnonneg))
+        _ = 432 * (x ^ (1 / 2 : ℝ))⁻¹ := by ring
+  have hright : IntervalIntegrable
+      (fun x : ℝ => Real.log x ^ 3 / (1 - x))
+      MeasureTheory.volume (1 / 2) 1 := by
+    have hcont : ContinuousOn
+        (fun x : ℝ => Real.log x ^ 3 / (1 - x))
+        (Set.Ioo (1 / 2 : ℝ) 1) := by
+      intro x hx
+      exact ((Real.continuousAt_log (by linarith [hx.1] : x ≠ 0)).pow 3).div
+        (by fun_prop) (by linarith [hx.2] : 1 - x ≠ 0) |>.continuousWithinAt
+    have hhalf : Tendsto (fun x : ℝ => Real.log x ^ 3 / (1 - x))
+        (𝓝[>] (1 / 2 : ℝ))
+        (𝓝 (Real.log (1 / 2 : ℝ) ^ 3 / (1 - 1 / 2))) := by
+      have hc : ContinuousAt (fun x : ℝ => Real.log x ^ 3 / (1 - x))
+          (1 / 2 : ℝ) :=
+        ((Real.continuousAt_log (by norm_num)).pow 3).div
+          (by fun_prop) (by norm_num)
+      exact hc.tendsto.mono_left nhdsWithin_le_nhds
+    have hratio : Tendsto (fun x : ℝ => Real.log x / (1 - x))
+        (𝓝[<] (1 : ℝ)) (𝓝 (-1)) := by
+      have hslopeWithin : HasDerivWithinAt Real.log 1 (Iio (1 : ℝ)) 1 := by
+        simpa using (Real.hasDerivAt_log (by norm_num : (1 : ℝ) ≠ 0)).hasDerivWithinAt
+      have hslope :=
+        (hasDerivWithinAt_iff_tendsto_slope'
+          (show (1 : ℝ) ∉ Iio 1 by simp)).1 hslopeWithin
+      apply hslope.neg.congr'
+      filter_upwards [self_mem_nhdsWithin] with x hx
+      have hxne : x ≠ 1 := ne_of_lt hx
+      simp only [slope, vsub_eq_sub, smul_eq_mul, Real.log_one, sub_zero]
+      field_simp [sub_ne_zero.mpr hxne,
+        sub_ne_zero.mpr hxne.symm]
+      ring
+    have hlog : Tendsto Real.log (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+      simpa using (Real.continuousAt_log (by norm_num : (1 : ℝ) ≠ 0)).tendsto
+        |>.mono_left nhdsWithin_le_nhds
+    have hone := hratio.mul (hlog.pow 2)
+    have hone' : Tendsto (fun x : ℝ => Real.log x ^ 3 / (1 - x))
+        (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+      have hc : Tendsto
+          (fun x : ℝ => Real.log x / (1 - x) * Real.log x ^ 2)
+          (𝓝[<] (1 : ℝ)) (𝓝 ((-1) * 0 ^ 2)) := hone
+      have hc' : Tendsto (fun x : ℝ => Real.log x ^ 3 / (1 - x))
+          (𝓝[<] (1 : ℝ)) (𝓝 ((-1) * 0 ^ 2)) := by
+        refine hc.congr' ?_
+        filter_upwards [self_mem_nhdsWithin] with x hx
+        ring
+      norm_num at hc'
+      exact hc'
+    exact intervalIntegrable_of_continuousOn_Ioo_of_tendsto
+      (by norm_num) hcont hhalf hone'
+  exact hleft.trans hright
+
+private theorem quadNonAlt_logCube_mul_self_tendsto :
+    Tendsto (fun x : ℝ => Real.log x ^ 3 * x)
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hraw :=
+    (isLittleO_abs_log_rpow_rpow_nhdsGT_zero 3
+      (by norm_num : (-1 : ℝ) < 0)).tendsto_div_nhds_zero
+  have habs : Tendsto (fun x : ℝ => |Real.log x| ^ 3 * x)
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    refine hraw.congr' ?_
+    filter_upwards [self_mem_nhdsWithin] with x hx
+    have hx0 : 0 < x := hx
+    rw [show (-1 : ℝ) = -(1 : ℝ) by ring,
+      Real.rpow_neg hx0.le, Real.rpow_one, div_inv_eq_mul]
+    exact congrArg (fun y : ℝ => y * x)
+      (Real.rpow_natCast |Real.log x| 3)
+  rw [tendsto_zero_iff_norm_tendsto_zero]
+  refine habs.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hx0 : 0 < x := hx
+  rw [Real.norm_eq_abs, abs_mul, abs_pow, abs_of_pos hx0]
+
+private theorem quadNonAlt_logCube_primitive_tendsto_zero :
+    Tendsto logCubeOneSubPrimitive24_export
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hminusDeriv : HasDerivAt (fun x : ℝ => Real.log (1 - x)) (-1) 0 := by
+    have hsub : HasDerivAt (fun x : ℝ => 1 - x) (-1) 0 := by
+      simpa using (hasDerivAt_const (0 : ℝ) 1).sub (hasDerivAt_id 0)
+    simpa using (Real.hasDerivAt_log (by norm_num)).comp 0 hsub
+  have hminusSlope : Tendsto (fun x : ℝ => Real.log (1 - x) / x)
+      (𝓝[>] (0 : ℝ)) (𝓝 (-1)) :=
+    (slope_tendsto_of_hasDerivAt_zero _ _ hminusDeriv (by norm_num)).mono_left
+      (nhdsWithin_mono _ (fun x hx => ne_of_gt hx))
+  have hfirstRaw := quadNonAlt_logCube_mul_self_tendsto.mul hminusSlope
+  have hfirst : Tendsto
+      (fun x : ℝ => -Real.log x ^ 3 * Real.log (1 - x))
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa only [zero_mul, neg_zero] using hfirstRaw.neg.congr' (by
+      filter_upwards [self_mem_nhdsWithin] with x hx
+      have hx0 : 0 < x := hx
+      field_simp [ne_of_gt hx0])
+  have hdSlope : Tendsto (fun x : ℝ => dilog x / x)
+      (𝓝[>] (0 : ℝ)) (𝓝 1) := by
+    simpa [dilog_zero, div_eq_mul_inv, mul_comm] using
+      RamanujanChallenge.P26.dilog_hasDerivAt_zero26.tendsto_slope_zero_right
+  have hsecondRaw := logSq_mul_self_tendsto.mul hdSlope
+  have hsecond : Tendsto (fun x : ℝ => -3 * Real.log x ^ 2 * dilog x)
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa only [zero_mul, mul_zero] using hsecondRaw.const_mul (-3) |>.congr' (by
+      filter_upwards [self_mem_nhdsWithin] with x hx
+      have hx0 : 0 < x := hx
+      field_simp [ne_of_gt hx0])
+  have htSlope : Tendsto
+      (fun x : ℝ => RamanujanChallenge.P26.trilog26 x / x)
+      (𝓝[>] (0 : ℝ)) (𝓝 1) := by
+    simpa [RamanujanChallenge.P26.trilog26_zero, div_eq_mul_inv, mul_comm] using
+      trilog26_hasDerivAt_zero24_export.tendsto_slope_zero_right
+  have hthirdRaw := log_mul_self_tendsto.mul htSlope
+  have hthird : Tendsto
+      (fun x : ℝ => 6 * Real.log x * RamanujanChallenge.P26.trilog26 x)
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa only [zero_mul, mul_zero] using hthirdRaw.const_mul 6 |>.congr' (by
+      filter_upwards [self_mem_nhdsWithin] with x hx
+      have hx0 : 0 < x := hx
+      field_simp [ne_of_gt hx0])
+  have hfourth : Tendsto (fun x : ℝ => -6 * polylog4 x)
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    simpa [polylog4_zero24_export] using
+      (polylog4_continuousAt_zero24_export.tendsto.const_mul (-6)).mono_left
+        nhdsWithin_le_nhds
+  unfold logCubeOneSubPrimitive24_export
+  have hsum := ((hfirst.add hsecond).add hthird).add hfourth
+  convert hsum using 1
+  · funext x
+    ring
+  · norm_num
+
+private theorem quadNonAlt_logCube_oneSub_integral :
+    (∫ x : ℝ in 0..1, Real.log x ^ 3 / (1 - x)) =
+      -(6 : ℝ) * (Real.pi ^ 4 / 90) := by
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (a := (0 : ℝ)) (b := 1) (f := logCubeOneSubPrimitive24_export)
+    (f' := fun x : ℝ => Real.log x ^ 3 / (1 - x))
+    (by norm_num)
+    (fun x hx => logCubeOneSubPrimitive24_hasDerivAt_export hx.1 hx.2)
+    quadNonAlt_logCube_oneSub_intervalIntegrable
+    quadNonAlt_logCube_primitive_tendsto_zero
+    logCubeOneSubPrimitive24_tendsto_one_export]
+  ring
+
+private def quadNonAltLogCubePlus (x : ℝ) : ℝ :=
+  Real.log x ^ 3 / (1 + x)
+
+private def quadNonAltLogCubeReflected (x : ℝ) : ℝ :=
+  Real.log (1 - x) ^ 3 / x
+
+private def quadNonAltLogCubeSquare (x : ℝ) : ℝ :=
+  x * Real.log x ^ 3 / (1 - x ^ 2)
+
+private theorem quadNonAlt_logCube_plus_intervalIntegrable :
+    IntervalIntegrable quadNonAltLogCubePlus MeasureTheory.volume 0 1 := by
+  have hfac : ContinuousOn (fun x : ℝ => (1 - x) / (1 + x))
+      (Set.uIcc (0 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    intro x hx
+    exact (continuousAt_const.sub continuousAt_id).div
+      (continuousAt_const.add continuousAt_id)
+      (by linarith [hx.1] : 1 + x ≠ 0) |>.continuousWithinAt
+  have hprod := quadNonAlt_logCube_oneSub_intervalIntegrable.continuousOn_mul hfac
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ => ((1 - x) / (1 + x)) *
+      (Real.log x ^ 3 / (1 - x))) ?_ hprod
+  intro x hx
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+  by_cases hxone : x = 1
+  · subst x
+    simp [quadNonAltLogCubePlus]
+  · have hm : 1 - x ≠ 0 := sub_ne_zero.mpr (Ne.symm hxone)
+    have hp : 1 + x ≠ 0 := by linarith [hx'.1]
+    unfold quadNonAltLogCubePlus
+    field_simp [hm, hp]
+
+private theorem quadNonAlt_logCube_reflected_intervalIntegrable :
+    IntervalIntegrable quadNonAltLogCubeReflected MeasureTheory.volume 0 1 := by
+  have h := quadNonAlt_logCube_oneSub_intervalIntegrable.comp_sub_left 1
+  have h' := h.symm
+  norm_num at h'
+  apply h'.congr
+  intro x hx
+  unfold quadNonAltLogCubeReflected
+  ring
+
+private theorem quadNonAlt_logCube_reflected_integral :
+    (∫ x : ℝ in 0..1, quadNonAltLogCubeReflected x) =
+      -(6 : ℝ) * (Real.pi ^ 4 / 90) := by
+  calc
+    (∫ x : ℝ in 0..1, quadNonAltLogCubeReflected x) =
+        ∫ x : ℝ in 0..1,
+          Real.log (1 - x) ^ 3 / (1 - (1 - x)) := by
+      apply intervalIntegral.integral_congr
+      intro x _
+      unfold quadNonAltLogCubeReflected
+      ring
+    _ = ∫ x : ℝ in 0..1, Real.log x ^ 3 / (1 - x) := by
+      simpa using intervalIntegral.integral_comp_sub_left
+        (a := (0 : ℝ)) (b := 1)
+        (fun x : ℝ => Real.log x ^ 3 / (1 - x)) 1
+    _ = _ := quadNonAlt_logCube_oneSub_integral
+
+private theorem quadNonAlt_logCube_square_intervalIntegrable :
+    IntervalIntegrable quadNonAltLogCubeSquare MeasureTheory.volume 0 1 := by
+  let f : ℝ → ℝ := fun x => x ^ 2
+  let f' : ℝ → ℝ := fun x => 2 * x
+  have hf : ContinuousOn f (Set.uIcc (0 : ℝ) 1) := by
+    unfold f
+    fun_prop
+  have hderiv : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      HasDerivAt f (f' x) x := by
+    intro x _
+    unfold f f'
+    simpa using (hasDerivAt_id x).pow 2
+  have hnonneg : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      0 ≤ f' x := by
+    intro x hx
+    norm_num at hx
+    unfold f'
+    linarith [hx.1]
+  have hpull :=
+    (intervalIntegral.integrable_comp_mul_deriv_iff_of_deriv_nonneg
+      (g := fun x : ℝ => Real.log x ^ 3 / (1 - x))
+      hf hderiv hnonneg).2 (by
+        simpa [f] using quadNonAlt_logCube_oneSub_intervalIntegrable)
+  have hscaled := hpull.const_mul (1 / 16 : ℝ)
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ => (1 / 16 : ℝ) *
+      (((fun y : ℝ => Real.log y ^ 3 / (1 - y)) ∘ f) x * f' x))
+    ?_ hscaled
+  intro x hx
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+  have hx0 : 0 < x := hx'.1
+  by_cases hxone : x = 1
+  · subst x
+    simp [quadNonAltLogCubeSquare, f, f']
+  · have hxlt : x < 1 := lt_of_le_of_ne hx'.2 hxone
+    have hden : 1 - x ^ 2 ≠ 0 := by
+      have hprod : 0 < (1 - x) * (1 + x) :=
+        mul_pos (sub_pos.mpr hxlt) (by linarith [hx0])
+      nlinarith
+    unfold quadNonAltLogCubeSquare f f'
+    simp only [Function.comp_apply]
+    rw [Real.log_pow]
+    norm_num only [Nat.cast_ofNat]
+    field_simp [hden]
+    ring
+
+private theorem quadNonAlt_logCube_square_integral :
+    (∫ x : ℝ in 0..1, quadNonAltLogCubeSquare x) =
+      -(3 / 8 : ℝ) * (Real.pi ^ 4 / 90) := by
+  let f : ℝ → ℝ := fun x => x ^ 2
+  let f' : ℝ → ℝ := fun x => 2 * x
+  have hf : ContinuousOn f (Set.uIcc (0 : ℝ) 1) := by
+    unfold f
+    fun_prop
+  have hderiv : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      HasDerivAt f (f' x) x := by
+    intro x _
+    unfold f f'
+    simpa using (hasDerivAt_id x).pow 2
+  have hnonneg : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      0 ≤ f' x := by
+    intro x hx
+    norm_num at hx
+    unfold f'
+    linarith [hx.1]
+  have hsubst := intervalIntegral.integral_comp_mul_deriv_of_deriv_nonneg
+    (a := (0 : ℝ)) (b := 1) (f := f) (f' := f')
+    (g := fun x : ℝ => Real.log x ^ 3 / (1 - x)) hf hderiv hnonneg
+  have hpull :
+      (∫ x : ℝ in 0..1,
+        (((fun y : ℝ => Real.log y ^ 3 / (1 - y)) ∘ f) x * f' x)) =
+        16 * ∫ x : ℝ in 0..1, quadNonAltLogCubeSquare x := by
+    rw [← intervalIntegral.integral_const_mul]
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (0 : ℝ),
+      MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+      with x hxzero hxone hx
+    have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    have hx0 : 0 < x := hx'.1
+    have hxlt : x < 1 := lt_of_le_of_ne hx'.2 hxone
+    have hden : 1 - x ^ 2 ≠ 0 := by
+      have hp : 0 < (1 - x) * (1 + x) :=
+        mul_pos (sub_pos.mpr hxlt) (by linarith [hx0])
+      nlinarith
+    unfold quadNonAltLogCubeSquare f f'
+    simp only [Function.comp_apply]
+    rw [Real.log_pow]
+    norm_num only [Nat.cast_ofNat]
+    field_simp [hden]
+    ring
+  have hsubst' :
+      (∫ x : ℝ in 0..1,
+        (((fun y : ℝ => Real.log y ^ 3 / (1 - y)) ∘ f) x * f' x)) =
+        ∫ x : ℝ in 0..1, Real.log x ^ 3 / (1 - x) := by
+    simpa [f] using hsubst
+  rw [hpull, quadNonAlt_logCube_oneSub_integral] at hsubst'
+  linarith
+
+private theorem quadNonAlt_logCube_plus_integral :
+    (∫ x : ℝ in 0..1, quadNonAltLogCubePlus x) =
+      -(21 / 4 : ℝ) * (Real.pi ^ 4 / 90) := by
+  have hdecomp :
+      (∫ x : ℝ in 0..1, quadNonAltLogCubePlus x) =
+        (∫ x : ℝ in 0..1, Real.log x ^ 3 / (1 - x)) -
+          2 * ∫ x : ℝ in 0..1, quadNonAltLogCubeSquare x := by
+    rw [← intervalIntegral.integral_const_mul,
+      ← intervalIntegral.integral_sub
+        quadNonAlt_logCube_oneSub_intervalIntegrable
+        (quadNonAlt_logCube_square_intervalIntegrable.const_mul 2)]
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+      with x hxone hx
+    have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    have hp : 1 + x ≠ 0 := by linarith [hx'.1]
+    have hm : 1 - x ≠ 0 := sub_ne_zero.mpr (Ne.symm hxone)
+    have hxlt : x < 1 := lt_of_le_of_ne hx'.2 hxone
+    have hs : 1 - x ^ 2 ≠ 0 := by
+      have hprod : 0 < (1 - x) * (1 + x) :=
+        mul_pos (sub_pos.mpr hxlt) (by linarith [hx'.1])
+      nlinarith
+    unfold quadNonAltLogCubePlus quadNonAltLogCubeSquare
+    field_simp [hp, hm, hs]
+    ring
+  rw [hdecomp, quadNonAlt_logCube_oneSub_integral,
+    quadNonAlt_logCube_square_integral]
+  ring
+
+private def quadNonAltLogCubeSum (x : ℝ) : ℝ :=
+  (Real.log (1 - x) + Real.log (1 + x)) ^ 3 / x
+
+private theorem quadNonAlt_logCube_sum_intervalIntegrable :
+    IntervalIntegrable quadNonAltLogCubeSum MeasureTheory.volume 0 1 := by
+  let f : ℝ → ℝ := fun x => x ^ 2
+  let f' : ℝ → ℝ := fun x => 2 * x
+  have hf : ContinuousOn f (Set.uIcc (0 : ℝ) 1) := by
+    unfold f
+    fun_prop
+  have hderiv : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      HasDerivAt f (f' x) x := by
+    intro x _
+    unfold f f'
+    simpa using (hasDerivAt_id x).pow 2
+  have hnonneg : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      0 ≤ f' x := by
+    intro x hx
+    norm_num at hx
+    unfold f'
+    linarith [hx.1]
+  have hpull :=
+    (intervalIntegral.integrable_comp_mul_deriv_iff_of_deriv_nonneg
+      (g := quadNonAltLogCubeReflected) hf hderiv hnonneg).2 (by
+      simpa [f] using quadNonAlt_logCube_reflected_intervalIntegrable)
+  have hscaled := hpull.const_mul (1 / 2 : ℝ)
+  apply hscaled.congr_ae
+  filter_upwards [MeasureTheory.ae_restrict_of_ae
+      (MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)),
+    MeasureTheory.ae_restrict_mem measurableSet_uIoc] with x hxone hx
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+  have hx0 : 0 < x := hx'.1
+  have hm : 1 - x ≠ 0 := sub_ne_zero.mpr (Ne.symm hxone)
+  have hp : 1 + x ≠ 0 := by linarith [hx0]
+  unfold quadNonAltLogCubeSum quadNonAltLogCubeReflected f f'
+  simp only [Function.comp_apply]
+  have hlog : Real.log (1 - x ^ 2) =
+      Real.log (1 - x) + Real.log (1 + x) := by
+    rw [show 1 - x ^ 2 = (1 - x) * (1 + x) by ring,
+      Real.log_mul hm hp]
+  rw [hlog]
+  field_simp [ne_of_gt hx0]
+
+private theorem quadNonAlt_logCube_sum_integral :
+    (∫ x : ℝ in 0..1, quadNonAltLogCubeSum x) =
+      -(3 : ℝ) * (Real.pi ^ 4 / 90) := by
+  let f : ℝ → ℝ := fun x => x ^ 2
+  let f' : ℝ → ℝ := fun x => 2 * x
+  have hf : ContinuousOn f (Set.uIcc (0 : ℝ) 1) := by
+    unfold f
+    fun_prop
+  have hderiv : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      HasDerivAt f (f' x) x := by
+    intro x _
+    unfold f f'
+    simpa using (hasDerivAt_id x).pow 2
+  have hnonneg : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      0 ≤ f' x := by
+    intro x hx
+    norm_num at hx
+    unfold f'
+    linarith [hx.1]
+  have hsubst := intervalIntegral.integral_comp_mul_deriv_of_deriv_nonneg
+    (a := (0 : ℝ)) (b := 1) (f := f) (f' := f')
+    (g := quadNonAltLogCubeReflected) hf hderiv hnonneg
+  have hpull :
+      (∫ x : ℝ in 0..1,
+        ((quadNonAltLogCubeReflected ∘ f) x * f' x)) =
+        2 * ∫ x : ℝ in 0..1, quadNonAltLogCubeSum x := by
+    rw [← intervalIntegral.integral_const_mul]
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (0 : ℝ),
+      MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+      with x hxzero hxone hx
+    have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    have hx0 : 0 < x := hx'.1
+    have hm : 1 - x ≠ 0 := sub_ne_zero.mpr (Ne.symm hxone)
+    have hp : 1 + x ≠ 0 := by linarith
+    unfold quadNonAltLogCubeSum quadNonAltLogCubeReflected f f'
+    simp only [Function.comp_apply]
+    have hlog : Real.log (1 - x ^ 2) =
+        Real.log (1 - x) + Real.log (1 + x) := by
+      rw [show 1 - x ^ 2 = (1 - x) * (1 + x) by ring,
+        Real.log_mul hm hp]
+    rw [hlog]
+    field_simp [ne_of_gt hx0]
+  have hsubst' :
+      (∫ x : ℝ in 0..1,
+        ((quadNonAltLogCubeReflected ∘ f) x * f' x)) =
+        ∫ x : ℝ in 0..1, quadNonAltLogCubeReflected x := by
+    simpa [f] using hsubst
+  rw [hpull, quadNonAlt_logCube_reflected_integral] at hsubst'
+  linarith
+
+private def quadNonAltMobius (x : ℝ) : ℝ :=
+  (1 - x) / (1 + x)
+
+private def quadNonAltMobiusDeriv (x : ℝ) : ℝ :=
+  -2 / (1 + x) ^ 2
+
+private theorem quadNonAltMobius_continuousOn :
+    ContinuousOn quadNonAltMobius (Set.uIcc (0 : ℝ) 1) := by
+  rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+  intro x hx
+  unfold quadNonAltMobius
+  exact (continuousAt_const.sub continuousAt_id).div
+    (continuousAt_const.add continuousAt_id)
+    (by linarith [hx.1] : 1 + x ≠ 0) |>.continuousWithinAt
+
+private theorem quadNonAltMobius_hasDerivAt
+    {x : ℝ} (hx0 : 0 < x) :
+    HasDerivAt quadNonAltMobius (quadNonAltMobiusDeriv x) x := by
+  have hp : 1 + x ≠ 0 := by linarith
+  have h := ((hasDerivAt_const x (1 : ℝ)).sub (hasDerivAt_id x)).div
+    ((hasDerivAt_const x (1 : ℝ)).add (hasDerivAt_id x)) hp
+  unfold quadNonAltMobius quadNonAltMobiusDeriv
+  convert h using 1
+  · simp only [Pi.sub_apply, Pi.add_apply, id_eq]
+    field_simp [hp]
+    ring
+
+private theorem quadNonAltMobius_deriv_nonpos (x : ℝ) :
+    quadNonAltMobiusDeriv x ≤ 0 := by
+  unfold quadNonAltMobiusDeriv
+  exact div_nonpos_of_nonpos_of_nonneg (by norm_num) (sq_nonneg _)
+
+private def quadNonAltLogCubeDiffRadial (x : ℝ) : ℝ :=
+  (Real.log (1 - x) - Real.log (1 + x)) ^ 3 / x
+
+private def quadNonAltLogCubeDiffPlus (x : ℝ) : ℝ :=
+  (Real.log (1 - x) - Real.log (1 + x)) ^ 3 / (1 + x)
+
+private theorem quadNonAlt_logCube_diff_parts :
+    IntervalIntegrable quadNonAltLogCubeDiffRadial MeasureTheory.volume 0 1 ∧
+      IntervalIntegrable quadNonAltLogCubeDiffPlus MeasureTheory.volume 0 1 := by
+  have hderiv : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      HasDerivAt quadNonAltMobius (quadNonAltMobiusDeriv x) x := by
+    intro x hx
+    exact quadNonAltMobius_hasDerivAt (by norm_num at hx; exact hx.1)
+  have hnonpos : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      quadNonAltMobiusDeriv x ≤ 0 := fun x _ => quadNonAltMobius_deriv_nonpos x
+  have hpullMinus :=
+    (intervalIntegral.integrable_comp_mul_deriv_iff_of_deriv_nonpos
+      (g := fun x : ℝ => Real.log x ^ 3 / (1 - x))
+      quadNonAltMobius_continuousOn hderiv hnonpos).2
+      (by simpa [quadNonAltMobius] using
+        quadNonAlt_logCube_oneSub_intervalIntegrable.symm)
+  have hpullPlus :=
+    (intervalIntegral.integrable_comp_mul_deriv_iff_of_deriv_nonpos
+      (g := quadNonAltLogCubePlus)
+      quadNonAltMobius_continuousOn hderiv hnonpos).2
+      (by simpa [quadNonAltMobius] using
+        quadNonAlt_logCube_plus_intervalIntegrable.symm)
+  constructor
+  · have hsum := hpullMinus.neg.add hpullPlus.neg
+    apply hsum.congr_ae
+    filter_upwards [MeasureTheory.ae_restrict_of_ae
+        (MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)),
+      MeasureTheory.ae_restrict_mem measurableSet_uIoc] with x hxone hx
+    have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    have hx0 : 0 < x := hx'.1
+    have hm : 1 - x ≠ 0 := sub_ne_zero.mpr (Ne.symm hxone)
+    have hp : 1 + x ≠ 0 := by linarith
+    have hlog : Real.log (quadNonAltMobius x) =
+        Real.log (1 - x) - Real.log (1 + x) := by
+      unfold quadNonAltMobius
+      rw [Real.log_div hm hp]
+    unfold quadNonAltLogCubeDiffRadial quadNonAltLogCubePlus
+      quadNonAltMobiusDeriv
+    simp only [Pi.add_apply, Pi.neg_apply, Function.comp_apply]
+    rw [hlog]
+    unfold quadNonAltMobius
+    field_simp [ne_of_gt hx0, hp, hm]
+    ring
+  · have hneg := hpullPlus.neg
+    apply hneg.congr_ae
+    filter_upwards [MeasureTheory.ae_restrict_of_ae
+        (MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)),
+      MeasureTheory.ae_restrict_mem measurableSet_uIoc] with x hxone hx
+    have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    have hm : 1 - x ≠ 0 := sub_ne_zero.mpr (Ne.symm hxone)
+    have hp : 1 + x ≠ 0 := by linarith [hx'.1]
+    have hlog : Real.log (quadNonAltMobius x) =
+        Real.log (1 - x) - Real.log (1 + x) := by
+      unfold quadNonAltMobius
+      rw [Real.log_div hm hp]
+    unfold quadNonAltLogCubeDiffPlus quadNonAltLogCubePlus
+      quadNonAltMobiusDeriv
+    simp only [Pi.neg_apply, Function.comp_apply]
+    rw [hlog]
+    unfold quadNonAltMobius
+    field_simp [hp, hm]
+    ring
+
+private theorem quadNonAlt_logCube_diff_radial_integral :
+    (∫ x : ℝ in 0..1, quadNonAltLogCubeDiffRadial x) =
+      -(45 / 4 : ℝ) * (Real.pi ^ 4 / 90) := by
+  have hderiv : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      HasDerivAt quadNonAltMobius (quadNonAltMobiusDeriv x) x := by
+    intro x hx
+    exact quadNonAltMobius_hasDerivAt (by norm_num at hx; exact hx.1)
+  have hnonpos : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      quadNonAltMobiusDeriv x ≤ 0 := fun x _ => quadNonAltMobius_deriv_nonpos x
+  have hm := intervalIntegral.integral_comp_mul_deriv_of_deriv_nonpos
+    (a := (0 : ℝ)) (b := 1) (f := quadNonAltMobius)
+    (f' := quadNonAltMobiusDeriv)
+    (g := fun x : ℝ => Real.log x ^ 3 / (1 - x))
+    quadNonAltMobius_continuousOn hderiv hnonpos
+  have hp := intervalIntegral.integral_comp_mul_deriv_of_deriv_nonpos
+    (a := (0 : ℝ)) (b := 1) (f := quadNonAltMobius)
+    (f' := quadNonAltMobiusDeriv) (g := quadNonAltLogCubePlus)
+    quadNonAltMobius_continuousOn hderiv hnonpos
+  have hm' :
+      (∫ x : ℝ in 0..1,
+        (Real.log (1 - x) - Real.log (1 + x)) ^ 3 / (x * (1 + x))) =
+        ∫ x : ℝ in 0..1, Real.log x ^ 3 / (1 - x) := by
+    have hleft :
+        (∫ x : ℝ in 0..1,
+          (((fun y : ℝ => Real.log y ^ 3 / (1 - y)) ∘
+            quadNonAltMobius) x * quadNonAltMobiusDeriv x)) =
+          -(∫ x : ℝ in 0..1,
+            (Real.log (1 - x) - Real.log (1 + x)) ^ 3 /
+              (x * (1 + x))) := by
+      rw [← intervalIntegral.integral_neg]
+      apply intervalIntegral.integral_congr_ae
+      filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+        with x hxone hx
+      have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+        simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+      have hx0 : 0 < x := hx'.1
+      have hm0 : 1 - x ≠ 0 := sub_ne_zero.mpr (Ne.symm hxone)
+      have hp0 : 1 + x ≠ 0 := by linarith
+      have hlog : Real.log (quadNonAltMobius x) =
+          Real.log (1 - x) - Real.log (1 + x) := by
+        unfold quadNonAltMobius
+        rw [Real.log_div hm0 hp0]
+      unfold quadNonAltMobiusDeriv
+      simp only [Function.comp_apply]
+      rw [hlog]
+      unfold quadNonAltMobius
+      field_simp [ne_of_gt hx0, hp0, hm0]
+      ring
+    have hends : quadNonAltMobius 0 = 1 ∧ quadNonAltMobius 1 = 0 := by
+      constructor <;> norm_num [quadNonAltMobius]
+    rw [hleft, hends.1, hends.2] at hm
+    have hsymm := intervalIntegral.integral_symm (μ := MeasureTheory.volume)
+      (f := fun x : ℝ => Real.log x ^ 3 / (1 - x)) (0 : ℝ) 1
+    rw [hsymm] at hm
+    linarith
+  have hp' :
+      (∫ x : ℝ in 0..1, quadNonAltLogCubeDiffPlus x) =
+        ∫ x : ℝ in 0..1, quadNonAltLogCubePlus x := by
+    have hleft :
+        (∫ x : ℝ in 0..1,
+          ((quadNonAltLogCubePlus ∘ quadNonAltMobius) x *
+            quadNonAltMobiusDeriv x)) =
+          -(∫ x : ℝ in 0..1, quadNonAltLogCubeDiffPlus x) := by
+      rw [← intervalIntegral.integral_neg]
+      apply intervalIntegral.integral_congr_ae
+      filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+        with x hxone hx
+      have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+        simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+      have hm0 : 1 - x ≠ 0 := sub_ne_zero.mpr (Ne.symm hxone)
+      have hp0 : 1 + x ≠ 0 := by linarith [hx'.1]
+      have hlog : Real.log (quadNonAltMobius x) =
+          Real.log (1 - x) - Real.log (1 + x) := by
+        unfold quadNonAltMobius
+        rw [Real.log_div hm0 hp0]
+      unfold quadNonAltLogCubeDiffPlus quadNonAltLogCubePlus
+        quadNonAltMobiusDeriv
+      simp only [Function.comp_apply]
+      rw [hlog]
+      unfold quadNonAltMobius
+      field_simp [hp0, hm0]
+      ring
+    have hends : quadNonAltMobius 0 = 1 ∧ quadNonAltMobius 1 = 0 := by
+      constructor <;> norm_num [quadNonAltMobius]
+    rw [hleft, hends.1, hends.2] at hp
+    have hsymm := intervalIntegral.integral_symm (μ := MeasureTheory.volume)
+      (f := quadNonAltLogCubePlus) (0 : ℝ) 1
+    rw [hsymm] at hp
+    linarith
+  have hdecomp :
+      (∫ x : ℝ in 0..1, quadNonAltLogCubeDiffRadial x) =
+        (∫ x : ℝ in 0..1,
+          (Real.log (1 - x) - Real.log (1 + x)) ^ 3 / (x * (1 + x))) +
+          ∫ x : ℝ in 0..1, quadNonAltLogCubeDiffPlus x := by
+    have hfirst : IntervalIntegrable
+        (fun x : ℝ =>
+          (Real.log (1 - x) - Real.log (1 + x)) ^ 3 / (x * (1 + x)))
+        MeasureTheory.volume 0 1 := by
+      have hdiff := quadNonAlt_logCube_diff_parts.1.sub
+        quadNonAlt_logCube_diff_parts.2
+      apply IntervalIntegrable.congr
+        (f := fun x : ℝ => quadNonAltLogCubeDiffRadial x -
+          quadNonAltLogCubeDiffPlus x) ?_ hdiff
+      intro x hx
+      have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+        simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+      have hx0 : x ≠ 0 := ne_of_gt hx'.1
+      have hp0 : 1 + x ≠ 0 := ne_of_gt (by linarith [hx'.1])
+      unfold quadNonAltLogCubeDiffRadial quadNonAltLogCubeDiffPlus
+      field_simp [hx0, hp0]
+      ring
+    rw [← intervalIntegral.integral_add hfirst
+      quadNonAlt_logCube_diff_parts.2]
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (0 : ℝ)]
+      with x hxzero hx
+    have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    have hp0 : 1 + x ≠ 0 := ne_of_gt (by linarith [hx'.1])
+    unfold quadNonAltLogCubeDiffRadial quadNonAltLogCubeDiffPlus
+    field_simp [hxzero, hp0]
+  rw [hdecomp, hm', hp', quadNonAlt_logCube_oneSub_integral,
+    quadNonAlt_logCube_plus_integral]
+  ring
+
+private def quadNonAltCrossPlusSqRadial (x : ℝ) : ℝ :=
+  Real.log (1 - x) * Real.log (1 + x) ^ 2 / x
+
+private theorem quadNonAlt_crossPlusSq_radial_intervalIntegrable :
+    IntervalIntegrable quadNonAltCrossPlusSqRadial MeasureTheory.volume 0 1 := by
+  have hcomb := ((quadNonAlt_logCube_sum_intervalIntegrable.add
+    quadNonAlt_logCube_diff_parts.1).sub
+    (quadNonAlt_logCube_reflected_intervalIntegrable.const_mul 2)).div_const 6
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ =>
+      (quadNonAltLogCubeSum x + quadNonAltLogCubeDiffRadial x -
+        2 * quadNonAltLogCubeReflected x) / 6) ?_ hcomb
+  intro x hx
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+  unfold quadNonAltCrossPlusSqRadial quadNonAltLogCubeSum
+    quadNonAltLogCubeDiffRadial quadNonAltLogCubeReflected
+  field_simp [ne_of_gt hx'.1]
+  ring
+
+private theorem quadNonAlt_crossPlusSq_radial_integral :
+    (∫ x : ℝ in 0..1, quadNonAltCrossPlusSqRadial x) =
+      -(3 / 8 : ℝ) * (Real.pi ^ 4 / 90) := by
+  have hdecomp :
+      6 * (∫ x : ℝ in 0..1, quadNonAltCrossPlusSqRadial x) =
+        (∫ x : ℝ in 0..1, quadNonAltLogCubeSum x) +
+          (∫ x : ℝ in 0..1, quadNonAltLogCubeDiffRadial x) -
+          2 * ∫ x : ℝ in 0..1, quadNonAltLogCubeReflected x := by
+    rw [← intervalIntegral.integral_const_mul,
+      ← intervalIntegral.integral_const_mul,
+      ← intervalIntegral.integral_add
+        quadNonAlt_logCube_sum_intervalIntegrable
+        quadNonAlt_logCube_diff_parts.1,
+      ← intervalIntegral.integral_sub
+        (quadNonAlt_logCube_sum_intervalIntegrable.add
+          quadNonAlt_logCube_diff_parts.1)
+        (quadNonAlt_logCube_reflected_intervalIntegrable.const_mul 2)]
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (0 : ℝ)]
+      with x hxzero hx
+    unfold quadNonAltCrossPlusSqRadial quadNonAltLogCubeSum
+      quadNonAltLogCubeDiffRadial quadNonAltLogCubeReflected
+    field_simp [hxzero]
+    ring
+  rw [quadNonAlt_logCube_sum_integral,
+    quadNonAlt_logCube_diff_radial_integral,
+    quadNonAlt_logCube_reflected_integral] at hdecomp
+  linarith
+
+private def quadNonAltMixedPlusSimple (x : ℝ) : ℝ :=
+  Real.log x * Real.log (1 - x) * Real.log (1 + x) / (1 + x)
+
+private theorem quadNonAltMixedPlusSimple_intervalIntegrable :
+    IntervalIntegrable quadNonAltMixedPlusSimple
+      MeasureTheory.volume 0 1 := by
+  have hdiff := quadAltMixedRadialIntervalIntegrable24.sub
+    quadAltMixedLogIntervalIntegrable24
+  apply hdiff.congr
+  intro x hx
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+  have hx0 : x ≠ 0 := ne_of_gt hx'.1
+  have hp : 1 + x ≠ 0 := ne_of_gt (by linarith [hx'.1])
+  unfold quadNonAltMixedPlusSimple
+  field_simp [hx0, hp]
+  ring
+
+private def quadNonAltMobiusRadialFull (x : ℝ) : ℝ :=
+  quadNonAltMobiusRadialRemainder24 x +
+    quadNonAltCrossPlusSqRadial x
+
+private theorem quadNonAltMobiusRadialFull_intervalIntegrable :
+    IntervalIntegrable quadNonAltMobiusRadialFull
+      MeasureTheory.volume 0 1 := by
+  unfold quadNonAltMobiusRadialFull
+  exact quadNonAltMobiusRadialRemainder24_intervalIntegrable.add
+    quadNonAlt_crossPlusSq_radial_intervalIntegrable
+
+private def quadNonAltMobiusBoth (x : ℝ) : ℝ :=
+  quadNonAltMobiusRadialFull x - quadNonAltMobiusPlus24 x
+
+private theorem quadNonAltMobiusBoth_intervalIntegrable :
+    IntervalIntegrable quadNonAltMobiusBoth MeasureTheory.volume 0 1 := by
+  unfold quadNonAltMobiusBoth
+  exact quadNonAltMobiusRadialFull_intervalIntegrable.sub
+    quadNonAltMobiusPlus24_intervalIntegrable
+
+private def quadNonAltMixedMinus (x : ℝ) : ℝ :=
+  Real.log x * Real.log (1 - x) * Real.log (1 + x) / (1 - x)
+
+private theorem quadNonAltMixedMinus_mobius
+    {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
+    (quadNonAltMixedMinus ∘ quadNonAltMobius) t *
+        quadNonAltMobiusDeriv t =
+      -quadNonAltMobiusBoth t := by
+  have htne : t ≠ 0 := ne_of_gt ht0
+  have h1mt0 : 0 < 1 - t := by linarith
+  have h1pt0 : 0 < 1 + t := by linarith
+  have h1ptne : 1 + t ≠ 0 := ne_of_gt h1pt0
+  have hlogPhi : Real.log (quadNonAltMobius t) =
+      Real.log (1 - t) - Real.log (1 + t) := by
+    unfold quadNonAltMobius
+    rw [Real.log_div (ne_of_gt h1mt0) h1ptne]
+  have honePlusPhi : 1 + quadNonAltMobius t = 2 / (1 + t) := by
+    unfold quadNonAltMobius
+    field_simp [h1ptne]
+    ring
+  have honeMinusPhi : 1 - quadNonAltMobius t = 2 * t / (1 + t) := by
+    unfold quadNonAltMobius
+    field_simp [h1ptne]
+    ring
+  have hlogPlusPhi : Real.log (1 + quadNonAltMobius t) =
+      Real.log 2 - Real.log (1 + t) := by
+    rw [honePlusPhi,
+      Real.log_div (by norm_num : (2 : ℝ) ≠ 0) h1ptne]
+  have hlogMinusPhi : Real.log (1 - quadNonAltMobius t) =
+      Real.log 2 + Real.log t - Real.log (1 + t) := by
+    rw [honeMinusPhi,
+      Real.log_div (mul_ne_zero (by norm_num : (2 : ℝ) ≠ 0) htne) h1ptne,
+      Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) htne]
+  simp only [Function.comp_apply]
+  unfold quadNonAltMixedMinus quadNonAltMobiusDeriv
+  rw [hlogPhi, hlogMinusPhi, hlogPlusPhi, honeMinusPhi]
+  unfold quadNonAltMobiusBoth quadNonAltMobiusRadialFull
+    quadNonAltMobiusRadialRemainder24 quadNonAltCrossPlusSqRadial
+    quadNonAltMobiusPlus24
+  field_simp [htne, h1ptne]
+  ring
+
+private theorem quadNonAltMixedMinus_intervalIntegrable :
+    IntervalIntegrable quadNonAltMixedMinus MeasureTheory.volume 0 1 := by
+  have hderiv : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      HasDerivAt quadNonAltMobius (quadNonAltMobiusDeriv x) x := by
+    intro x hx
+    exact quadNonAltMobius_hasDerivAt (by norm_num at hx; exact hx.1)
+  have hnonpos : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      quadNonAltMobiusDeriv x ≤ 0 := fun x _ => quadNonAltMobius_deriv_nonpos x
+  have hpull : IntervalIntegrable
+      (fun x : ℝ => (quadNonAltMixedMinus ∘ quadNonAltMobius) x *
+        quadNonAltMobiusDeriv x) MeasureTheory.volume 0 1 := by
+    apply quadNonAltMobiusBoth_intervalIntegrable.neg.congr_ae
+    filter_upwards [
+      MeasureTheory.Measure.ae_ne
+        (MeasureTheory.volume.restrict (Set.uIoc (0 : ℝ) 1)) (0 : ℝ),
+      MeasureTheory.Measure.ae_ne
+        (MeasureTheory.volume.restrict (Set.uIoc (0 : ℝ) 1)) (1 : ℝ),
+      MeasureTheory.ae_restrict_mem measurableSet_uIoc]
+      with x hxzero hxone hx
+    have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    exact (quadNonAltMixedMinus_mobius
+      hx'.1
+      (lt_of_le_of_ne hx'.2 hxone)).symm
+  have h :=
+    (intervalIntegral.integrable_comp_mul_deriv_iff_of_deriv_nonpos
+      (g := quadNonAltMixedMinus) quadNonAltMobius_continuousOn
+      hderiv hnonpos).1 hpull
+  have h' := h.symm
+  norm_num [quadNonAltMobius] at h'
+  exact h'
+
+private theorem quadNonAltMixedMinus_integral_eq_both :
+    (∫ x : ℝ in 0..1, quadNonAltMixedMinus x) =
+      ∫ x : ℝ in 0..1, quadNonAltMobiusBoth x := by
+  have hderiv : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      HasDerivAt quadNonAltMobius (quadNonAltMobiusDeriv x) x := by
+    intro x hx
+    exact quadNonAltMobius_hasDerivAt (by norm_num at hx; exact hx.1)
+  have hnonpos : ∀ x ∈ Ioo (min (0 : ℝ) 1) (max (0 : ℝ) 1),
+      quadNonAltMobiusDeriv x ≤ 0 := fun x _ => quadNonAltMobius_deriv_nonpos x
+  have hsubst := intervalIntegral.integral_comp_mul_deriv_of_deriv_nonpos
+    (a := (0 : ℝ)) (b := 1) (f := quadNonAltMobius)
+    (f' := quadNonAltMobiusDeriv) (g := quadNonAltMixedMinus)
+    quadNonAltMobius_continuousOn hderiv hnonpos
+  have hleft :
+      (∫ x : ℝ in 0..1,
+        (quadNonAltMixedMinus ∘ quadNonAltMobius) x *
+          quadNonAltMobiusDeriv x) =
+        -(∫ x : ℝ in 0..1, quadNonAltMobiusBoth x) := by
+    rw [← intervalIntegral.integral_neg]
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (0 : ℝ),
+      MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+      with x hxzero hxone hx
+    have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    exact quadNonAltMixedMinus_mobius
+      hx'.1
+      (lt_of_le_of_ne hx'.2 hxone)
+  have hs :
+      (∫ x : ℝ in 0..1,
+        (quadNonAltMixedMinus ∘ quadNonAltMobius) x *
+          quadNonAltMobiusDeriv x) =
+        ∫ x : ℝ in 1..0, quadNonAltMixedMinus x := by
+    simpa [quadNonAltMobius] using hsubst
+  have hsymm :
+      (∫ x : ℝ in 1..0, quadNonAltMixedMinus x) =
+        -(∫ x : ℝ in 0..1, quadNonAltMixedMinus x) := by
+    rw [intervalIntegral.integral_symm]
+  linarith [hleft, hs, hsymm]
+
+private theorem quadNonAltJ_intervalIntegrable :
+    IntervalIntegrable
+      (fun x : ℝ =>
+        Real.log x * Real.log (1 - x) * Real.log (1 + x) /
+          (x * (1 - x))) MeasureTheory.volume 0 1 := by
+  have hsum := quadAltMixedRadialIntervalIntegrable24.add
+    quadNonAltMixedMinus_intervalIntegrable
+  apply hsum.congr_ae
+  filter_upwards [
+    MeasureTheory.Measure.ae_ne
+      (MeasureTheory.volume.restrict (Set.uIoc (0 : ℝ) 1)) (0 : ℝ),
+    MeasureTheory.Measure.ae_ne
+      (MeasureTheory.volume.restrict (Set.uIoc (0 : ℝ) 1)) (1 : ℝ)]
+    with x hxzero hxone
+  unfold quadNonAltMixedMinus
+  field_simp [hxzero, sub_ne_zero.mpr (Ne.symm hxone)]
+  ring
+
+private theorem quadNonAltJ_integral :
+    (∫ x : ℝ in 0..1,
+      Real.log x * Real.log (1 - x) * Real.log (1 + x) /
+        (x * (1 - x))) =
+      -(3 / 4 : ℝ) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) +
+        (21 / 8 : ℝ) * Real.log 2 * zeta3_24 -
+        (1 / 4 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  have hmix :
+      (∫ x : ℝ in 0..1, quadNonAltMixedPlusSimple x) =
+        (∫ x : ℝ in 0..1,
+          Real.log x * Real.log (1 - x) * Real.log (1 + x) / x) -
+        (∫ x : ℝ in 0..1,
+          Real.log x * Real.log (1 - x) * Real.log (1 + x) /
+            (x * (1 + x))) := by
+    rw [← intervalIntegral.integral_sub
+      quadAltMixedRadialIntervalIntegrable24
+      quadAltMixedLogIntervalIntegrable24]
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (0 : ℝ)]
+      with x hxzero hx
+    have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    have hp : 1 + x ≠ 0 := ne_of_gt (by linarith [hx'.1])
+    unfold quadNonAltMixedPlusSimple
+    field_simp [hxzero, hp]
+    ring
+  have hfull :
+      (∫ x : ℝ in 0..1, quadNonAltMobiusRadialFull x) =
+        (∫ x : ℝ in 0..1, quadNonAltMobiusRadialRemainder24 x) +
+          ∫ x : ℝ in 0..1, quadNonAltCrossPlusSqRadial x := by
+    unfold quadNonAltMobiusRadialFull
+    rw [intervalIntegral.integral_add
+      quadNonAltMobiusRadialRemainder24_intervalIntegrable
+      quadNonAlt_crossPlusSq_radial_intervalIntegrable]
+  have hboth :
+      (∫ x : ℝ in 0..1, quadNonAltMobiusBoth x) =
+        (∫ x : ℝ in 0..1, quadNonAltMobiusRadialFull x) -
+          ∫ x : ℝ in 0..1, quadNonAltMixedPlusSimple x := by
+    unfold quadNonAltMobiusBoth
+    rw [intervalIntegral.integral_sub
+      quadNonAltMobiusRadialFull_intervalIntegrable
+      quadNonAltMobiusPlus24_intervalIntegrable,
+      quadNonAltMobiusPlus24_integral_eq_mixed]
+    rfl
+  have hsplit :
+      (∫ x : ℝ in 0..1,
+        Real.log x * Real.log (1 - x) * Real.log (1 + x) /
+          (x * (1 - x))) =
+        (∫ x : ℝ in 0..1,
+          Real.log x * Real.log (1 - x) * Real.log (1 + x) / x) +
+          ∫ x : ℝ in 0..1, quadNonAltMixedMinus x := by
+    rw [← intervalIntegral.integral_add
+      quadAltMixedRadialIntervalIntegrable24
+      quadNonAltMixedMinus_intervalIntegrable]
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (0 : ℝ),
+      MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+      with x hxzero hxone hx
+    unfold quadNonAltMixedMinus
+    field_simp [hxzero, sub_ne_zero.mpr (Ne.symm hxone)]
+    ring
+  rw [hsplit, quadNonAltMixedMinus_integral_eq_both, hboth, hfull, hmix,
+    quadNonAltMobiusRadialRemainder24_integral,
+    quadNonAlt_crossPlusSq_radial_integral, quadAltMixedLogIntegral24]
+  ring
+
+private theorem quadNonAltQ_integral :
+    (∫ x : ℝ in 0..1,
+      Real.log x * Real.log (1 - x) * Real.log (1 + x) / x) =
+      (1 / 2 : ℝ) * quadAltK +
+        (3 / 40 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  rw [quadAltMixedRadialIntegral24_export]
+  unfold quadAltK
+  ring
+
+private theorem quadNonAltMixedPlusSimple_integral :
+    (∫ x : ℝ in 0..1, quadNonAltMixedPlusSimple x) =
+      (∫ x : ℝ in 0..1,
+        Real.log x * Real.log (1 - x) * Real.log (1 + x) / x) -
+      (∫ x : ℝ in 0..1,
+        Real.log x * Real.log (1 - x) * Real.log (1 + x) /
+          (x * (1 + x))) := by
+  rw [← intervalIntegral.integral_sub
+    quadAltMixedRadialIntervalIntegrable24
+    quadAltMixedLogIntervalIntegrable24]
+  apply intervalIntegral.integral_congr_ae
+  filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (0 : ℝ)]
+    with x hxzero hx
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+  have hp : 1 + x ≠ 0 := ne_of_gt (by linarith [hx'.1])
+  unfold quadNonAltMixedPlusSimple
+  field_simp [hxzero, hp]
+  ring
+
+private def quadNonAltDilogPlusLog (x : ℝ) : ℝ :=
+  dilog x * Real.log (1 + x) / (1 + x)
+
+private def quadNonAltDilogPlusLogPrimitive (x : ℝ) : ℝ :=
+  dilog x * Real.log (1 + x) ^ 2 / 2
+
+private theorem quadNonAltDilogPlusLog_intervalIntegrable :
+    IntervalIntegrable quadNonAltDilogPlusLog
+      MeasureTheory.volume 0 1 := by
+  apply ContinuousOn.intervalIntegrable
+  rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+  unfold quadNonAltDilogPlusLog
+  apply ContinuousOn.div
+  · exact (dilog_continuousOn_unit.mono (by
+      intro x hx
+      constructor <;> linarith [hx.1, hx.2])).mul
+        ((continuousOn_const.add continuousOn_id).log (by
+          intro x hx
+          exact ne_of_gt (by linarith [hx.1] : 0 < 1 + x)))
+  · fun_prop
+  · intro x hx
+    exact ne_of_gt (by linarith [hx.1] : 0 < 1 + x)
+
+private theorem quadNonAltDilogPlusLogPrimitive_continuousOn :
+    ContinuousOn quadNonAltDilogPlusLogPrimitive (Icc (0 : ℝ) 1) := by
+  unfold quadNonAltDilogPlusLogPrimitive
+  exact ((dilog_continuousOn_unit.mono (by
+    intro x hx
+    constructor <;> linarith [hx.1, hx.2])).mul
+      (((continuousOn_const.add continuousOn_id).log (by
+        intro x hx
+        exact ne_of_gt (by linarith [hx.1] : 0 < 1 + x))).pow 2)).div_const 2
+
+private theorem quadNonAltDilogPlusLogPrimitive_hasDerivAt
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt quadNonAltDilogPlusLogPrimitive
+      (-(1 / 2 : ℝ) * quadNonAltCrossPlusSqRadial x +
+        quadNonAltDilogPlusLog x) x := by
+  have hxne : x ≠ 0 := ne_of_gt hx0
+  have hp : 1 + x ≠ 0 := ne_of_gt (by linarith : 0 < 1 + x)
+  have hb : HasDerivAt (fun y : ℝ => Real.log (1 + y))
+      (1 / (1 + x)) x := by
+    have hinner : HasDerivAt (fun y : ℝ => 1 + y) 1 x := by
+      simpa using (hasDerivAt_const x (1 : ℝ)).add (hasDerivAt_id x)
+    convert hinner.log hp using 1
+  have h := (dilog_hasDerivAt hx0 hx1).mul (hb.pow 2) |>.div_const 2
+  unfold quadNonAltDilogPlusLogPrimitive
+  convert h using 1
+  unfold quadNonAltCrossPlusSqRadial quadNonAltDilogPlusLog
+  simp only [Pi.pow_apply]
+  field_simp [hxne, hp]
+  ring
+
+private theorem quadNonAltDilogPlusLog_integral :
+    (∫ x : ℝ in 0..1, quadNonAltDilogPlusLog x) =
+      (1 / 2 : ℝ) * (Real.pi ^ 2 / 6) * Real.log 2 ^ 2 -
+        (3 / 16 : ℝ) * (Real.pi ^ 4 / 90) := by
+  have hint :=
+    quadNonAlt_crossPlusSq_radial_intervalIntegrable.const_mul (-(1 / 2 : ℝ))
+      |>.add quadNonAltDilogPlusLog_intervalIntegrable
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+    (f := quadNonAltDilogPlusLogPrimitive)
+    (f' := fun x : ℝ =>
+      -(1 / 2 : ℝ) * quadNonAltCrossPlusSqRadial x +
+        quadNonAltDilogPlusLog x)
+    (by norm_num) quadNonAltDilogPlusLogPrimitive_continuousOn
+    (fun x hx => quadNonAltDilogPlusLogPrimitive_hasDerivAt hx.1 hx.2)
+    hint
+  rw [intervalIntegral.integral_add
+      (quadNonAlt_crossPlusSq_radial_intervalIntegrable.const_mul
+        (-(1 / 2 : ℝ)))
+      quadNonAltDilogPlusLog_intervalIntegrable,
+    intervalIntegral.integral_const_mul,
+    quadNonAlt_crossPlusSq_radial_integral] at hFTC
+  norm_num [quadNonAltDilogPlusLogPrimitive, dilog_one] at hFTC
+  linarith
+
+private theorem quadNonAlt_logPlus_denom_intervalIntegrable :
+    IntervalIntegrable (fun x : ℝ => Real.log (1 + x) / (1 + x))
+      MeasureTheory.volume 0 1 := by
+  apply ContinuousOn.intervalIntegrable
+  rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+  apply ContinuousOn.div
+  · exact (continuousOn_const.add continuousOn_id).log (by
+      intro x hx
+      exact ne_of_gt (by linarith [hx.1] : 0 < 1 + x))
+  · fun_prop
+  · intro x hx
+    exact ne_of_gt (by linarith [hx.1] : 0 < 1 + x)
+
+private theorem quadNonAlt_logPlus_denom_integral :
+    (∫ x : ℝ in 0..1, Real.log (1 + x) / (1 + x)) =
+      (1 / 2 : ℝ) * Real.log 2 ^ 2 := by
+  let f : ℝ → ℝ := fun x => Real.log (1 + x) ^ 2 / 2
+  have hf : ContinuousOn f (Icc (0 : ℝ) 1) := by
+    unfold f
+    exact (((continuousOn_const.add continuousOn_id).log (by
+      intro x hx
+      exact ne_of_gt (by linarith [hx.1] : 0 < 1 + x))).pow 2).div_const 2
+  have hd : ∀ x ∈ Ioo (0 : ℝ) 1,
+      HasDerivAt f (Real.log (1 + x) / (1 + x)) x := by
+    intro x hx
+    have hp : 1 + x ≠ 0 := ne_of_gt (by linarith [hx.1] : 0 < 1 + x)
+    have hi : HasDerivAt (fun y : ℝ => 1 + y) 1 x := by
+      simpa using (hasDerivAt_const x (1 : ℝ)).add (hasDerivAt_id x)
+    unfold f
+    convert ((hi.log hp).pow 2).div_const 2 using 1
+    field_simp [hp]
+    ring
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+    (f := f) (f' := fun x : ℝ => Real.log (1 + x) / (1 + x))
+    (by norm_num) hf hd quadNonAlt_logPlus_denom_intervalIntegrable]
+  norm_num [f]
+  ring
+
+private theorem quadNonAltD_integral :
+    (∫ x : ℝ in 0..1, quadNonAltD x) =
+      (3 / 4 : ℝ) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) -
+        (7 / 8 : ℝ) * Real.log 2 * zeta3_24 +
+        (1 / 8 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  let q : ℝ → ℝ := fun x =>
+    (1 / 2 : ℝ) *
+        (Real.log x ^ 2 * Real.log (1 + x) / (1 + x)) +
+      (Real.pi ^ 2 / 6) * (Real.log (1 + x) / (1 + x)) -
+      quadNonAltMixedPlusSimple x - quadNonAltDilogPlusLog x
+  have hq : IntervalIntegrable q MeasureTheory.volume 0 1 :=
+    (((quadAltKB_intervalIntegrable.const_mul (1 / 2 : ℝ)).add
+      (quadNonAlt_logPlus_denom_intervalIntegrable.const_mul
+        (Real.pi ^ 2 / 6))).sub
+      quadNonAltMixedPlusSimple_intervalIntegrable).sub
+      quadNonAltDilogPlusLog_intervalIntegrable
+  have hpoint :
+      (∫ x : ℝ in 0..1, quadNonAltD x) = ∫ x : ℝ in 0..1, q x := by
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+      with x hxone hx
+    have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    have hxlt : x < 1 := lt_of_le_of_ne hx'.2 hxone
+    have hrefl := dilog_reflection hx'.1 hxlt
+    have hrefl' : dilog (1 - x) = Real.pi ^ 2 / 6 -
+        Real.log x * Real.log (1 - x) - dilog x := by
+      linarith [hrefl]
+    unfold quadNonAltD quadNonAltU
+    dsimp [q, quadNonAltMixedPlusSimple, quadNonAltDilogPlusLog]
+    rw [hrefl']
+    ring
+  rw [hpoint]
+  dsimp [q]
+  rw [intervalIntegral.integral_sub
+      (((quadAltKB_intervalIntegrable.const_mul (1 / 2 : ℝ)).add
+        (quadNonAlt_logPlus_denom_intervalIntegrable.const_mul
+          (Real.pi ^ 2 / 6))).sub
+        quadNonAltMixedPlusSimple_intervalIntegrable)
+      quadNonAltDilogPlusLog_intervalIntegrable,
+    intervalIntegral.integral_sub
+      ((quadAltKB_intervalIntegrable.const_mul (1 / 2 : ℝ)).add
+        (quadNonAlt_logPlus_denom_intervalIntegrable.const_mul
+          (Real.pi ^ 2 / 6)))
+      quadNonAltMixedPlusSimple_intervalIntegrable,
+    intervalIntegral.integral_add
+      (quadAltKB_intervalIntegrable.const_mul (1 / 2 : ℝ))
+      (quadNonAlt_logPlus_denom_intervalIntegrable.const_mul
+        (Real.pi ^ 2 / 6))]
+  repeat' rw [intervalIntegral.integral_const_mul]
+  rw [show (∫ x : ℝ in 0..1,
+      Real.log x ^ 2 * Real.log (1 + x) / (1 + x)) = quadAltK by rfl]
+  rw [quadNonAlt_logPlus_denom_integral,
+    quadNonAltMixedPlusSimple_integral, quadNonAltQ_integral,
+    quadAltMixedLogIntegral24, quadNonAltDilogPlusLog_integral]
+  ring
+
+private def quadNonAltBBridge (x : ℝ) : ℝ :=
+  Real.log x / (x * (1 - x)) * quadAltV (quadNonAltMobius x)
+
+private theorem quadNonAltBBridge_intervalIntegrable :
+    IntervalIntegrable quadNonAltBBridge MeasureTheory.volume 0 1 := by
+  let r : ℝ → ℝ := fun t => (1 / 2 : ℝ) *
+    (W0 t * H1 t / t + W0 t * H1 t / (1 - t))
+  have hr : IntervalIntegrable r MeasureTheory.volume 0 1 := by
+    dsimp [r]
+    exact (quadAltI10_kernel_intervalIntegrable.add
+      quadAltI11_kernel_intervalIntegrable).const_mul (1 / 2 : ℝ)
+  have href : IntervalIntegrable (fun x : ℝ => r (1 - x))
+      MeasureTheory.volume 0 1 := by
+    simpa using (hr.comp_sub_left 1).symm
+  apply href.congr
+  intro x hx
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+  by_cases hxone : x = 1
+  · subst x
+    simp [quadNonAltBBridge, quadNonAltMobius, r, W0, H1,
+      quadAltV, dilog_zero]
+  · have hx0 : 0 < x := hx'.1
+    have hx1 : x < 1 := lt_of_le_of_ne hx'.2 hxone
+    have hp : 1 + x ≠ 0 := ne_of_gt (by linarith)
+    have hy0 : 0 < quadNonAltMobius x := by
+      unfold quadNonAltMobius
+      exact div_pos (sub_pos.mpr hx1) (by linarith)
+    have hy1 : quadNonAltMobius x < 1 := by
+      unfold quadNonAltMobius
+      rw [div_lt_one (by linarith : 0 < 1 + x)]
+      linarith
+    have hnorm :
+        2 * quadNonAltMobius x / (1 + quadNonAltMobius x) = 1 - x := by
+      unfold quadNonAltMobius
+      field_simp [hp, sub_ne_zero.mpr (Ne.symm hxone)]
+      ring
+    have hW := quadAlt_neg2V_eq_W0 hy0 hy1
+    rw [hnorm] at hW
+    dsimp [r]
+    unfold quadNonAltBBridge H1
+    rw [← hW]
+    field_simp [ne_of_gt hx0, sub_ne_zero.mpr (Ne.symm hxone)]
+    ring
+
+private theorem quadNonAltBBridge_integral :
+    (∫ x : ℝ in 0..1, quadNonAltBBridge x) =
+      (1 / 2 : ℝ) * (I10 + I11) := by
+  let r : ℝ → ℝ := fun t => (1 / 2 : ℝ) *
+    (W0 t * H1 t / t + W0 t * H1 t / (1 - t))
+  have hpoint :
+      (∫ x : ℝ in 0..1, quadNonAltBBridge x) =
+        ∫ x : ℝ in 0..1, r (1 - x) := by
+    apply intervalIntegral.integral_congr
+    intro x hx
+    have hx' : x ∈ Icc (0 : ℝ) 1 := by
+      simpa [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    by_cases hxzero : x = 0
+    · subst x
+      simp [quadNonAltBBridge, quadNonAltMobius, r, W0, H1,
+        quadAltV, dilog_zero]
+    by_cases hxone : x = 1
+    · subst x
+      simp [quadNonAltBBridge, quadNonAltMobius, r, W0, H1,
+        quadAltV, dilog_zero]
+    · have hx0 : 0 < x := lt_of_le_of_ne hx'.1 (Ne.symm hxzero)
+      have hx1 : x < 1 := lt_of_le_of_ne hx'.2 hxone
+      have hp : 1 + x ≠ 0 := ne_of_gt (by linarith)
+      have hy0 : 0 < quadNonAltMobius x := by
+        unfold quadNonAltMobius
+        exact div_pos (sub_pos.mpr hx1) (by linarith)
+      have hy1 : quadNonAltMobius x < 1 := by
+        unfold quadNonAltMobius
+        rw [div_lt_one (by linarith : 0 < 1 + x)]
+        linarith
+      have hnorm :
+          2 * quadNonAltMobius x / (1 + quadNonAltMobius x) = 1 - x := by
+        unfold quadNonAltMobius
+        field_simp [hp, sub_ne_zero.mpr (Ne.symm hxone)]
+        ring
+      have hW := quadAlt_neg2V_eq_W0 hy0 hy1
+      rw [hnorm] at hW
+      dsimp [r]
+      unfold quadNonAltBBridge H1
+      rw [← hW]
+      field_simp [ne_of_gt hx0, sub_ne_zero.mpr (Ne.symm hxone)]
+      ring
+  rw [hpoint]
+  have href := intervalIntegral.integral_comp_sub_left
+    (a := (0 : ℝ)) (b := 1) r 1
+  rw [show (1 : ℝ) - 1 = 0 by norm_num,
+    show (1 : ℝ) - 0 = 1 by norm_num] at href
+  rw [href]
+  dsimp [r]
+  rw [intervalIntegral.integral_const_mul,
+    intervalIntegral.integral_add quadAltI10_kernel_intervalIntegrable
+      quadAltI11_kernel_intervalIntegrable]
+  rfl
+
+private def quadNonAltBPrimitive (x : ℝ) : ℝ :=
+  quadNonAltU x * quadAltV (quadNonAltMobius x)
+
+private theorem quadNonAltBPrimitive_hasDerivAt
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt quadNonAltBPrimitive
+      (quadNonAltBBridge x + quadNonAltB x - quadNonAltA x) x := by
+  have hp : 1 + x ≠ 0 := ne_of_gt (by linarith : 0 < 1 + x)
+  have hy0 : 0 < quadNonAltMobius x := by
+    unfold quadNonAltMobius
+    exact div_pos (sub_pos.mpr hx1) (by linarith)
+  have hy1 : quadNonAltMobius x < 1 := by
+    unfold quadNonAltMobius
+    rw [div_lt_one (by linarith : 0 < 1 + x)]
+    linarith
+  have hcomp := (quadAltV_hasDerivAt hy0 hy1).comp x
+    (quadNonAltMobius_hasDerivAt hx0)
+  have hV : HasDerivAt (fun y : ℝ => quadAltV (quadNonAltMobius y))
+      ((Real.log (1 + x) - Real.log (1 - x)) / (1 - x)) x := by
+    convert hcomp using 1
+    have hlog : Real.log (quadNonAltMobius x) =
+        Real.log (1 - x) - Real.log (1 + x) := by
+      unfold quadNonAltMobius
+      rw [Real.log_div (sub_ne_zero.mpr (Ne.symm (ne_of_lt hx1))) hp]
+    rw [hlog]
+    unfold quadNonAltMobius quadNonAltMobiusDeriv
+    field_simp [hp, sub_ne_zero.mpr (Ne.symm (ne_of_lt hx1))]
+    ring
+  unfold quadNonAltBPrimitive
+  convert (quadNonAltU_hasDerivAt hx0 hx1).mul hV using 1
+  unfold quadNonAltBBridge quadNonAltA quadNonAltB
+  field_simp [ne_of_gt hx0, sub_ne_zero.mpr (Ne.symm (ne_of_lt hx1))]
+  ring
+
+private theorem quadNonAltMobius_tendsto_zero_one :
+    Tendsto quadNonAltMobius (𝓝[>] (0 : ℝ)) (𝓝[<] (1 : ℝ)) := by
+  rw [tendsto_nhdsWithin_iff]
+  constructor
+  · have hc : ContinuousAt quadNonAltMobius 0 := by
+      unfold quadNonAltMobius
+      exact (continuousAt_const.sub continuousAt_id).div
+        (continuousAt_const.add continuousAt_id) (by norm_num)
+    simpa [quadNonAltMobius] using hc.tendsto.mono_left nhdsWithin_le_nhds
+  · filter_upwards [self_mem_nhdsWithin] with x hx
+    have hx0 : 0 < x := hx
+    show quadNonAltMobius x < 1
+    unfold quadNonAltMobius
+    rw [div_lt_one (by linarith [hx0] : 0 < 1 + x)]
+    linarith [hx0]
+
+private theorem quadNonAltMobius_tendsto_one_zero :
+    Tendsto quadNonAltMobius (𝓝[<] (1 : ℝ)) (𝓝[>] (0 : ℝ)) := by
+  rw [tendsto_nhdsWithin_iff]
+  constructor
+  · have hc : ContinuousAt quadNonAltMobius 1 := by
+      unfold quadNonAltMobius
+      exact (continuousAt_const.sub continuousAt_id).div
+        (continuousAt_const.add continuousAt_id) (by norm_num)
+    simpa [quadNonAltMobius] using hc.tendsto.mono_left nhdsWithin_le_nhds
+  · filter_upwards [self_mem_nhdsWithin,
+      (eventually_gt_nhds (show (0 : ℝ) < 1 by norm_num)).filter_mono
+        nhdsWithin_le_nhds] with x hx1 hx0
+    show 0 < quadNonAltMobius x
+    unfold quadNonAltMobius
+    exact div_pos (sub_pos.mpr hx1) (by linarith)
+
+private theorem quadNonAltBPrimitive_tendsto_zero :
+    Tendsto quadNonAltBPrimitive (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hV := quadAltV_slope_tendsto_one.comp
+    quadNonAltMobius_tendsto_zero_one
+  have hratio : Tendsto
+      (fun x : ℝ => (quadNonAltMobius x - 1) / x)
+      (𝓝[>] (0 : ℝ)) (𝓝 (-2)) := by
+    have hcont : Tendsto (fun x : ℝ => -2 / (1 + x))
+        (𝓝[>] (0 : ℝ)) (𝓝 (-2)) := by
+      have hc : ContinuousAt (fun x : ℝ => -2 / (1 + x)) 0 := by
+        exact continuousAt_const.div (continuousAt_const.add continuousAt_id)
+          (by norm_num)
+      simpa using hc.tendsto.mono_left nhdsWithin_le_nhds
+    refine hcont.congr' ?_
+    filter_upwards [self_mem_nhdsWithin] with x hx
+    have hx0 : 0 < x := hx
+    have hxne : x ≠ 0 := ne_of_gt hx0
+    have hp : 1 + x ≠ 0 := ne_of_gt (by linarith [hx0] : 0 < 1 + x)
+    unfold quadNonAltMobius
+    field_simp [hxne, hp]
+    ring
+  have h := (quadNonAltU_mul_self_tendsto_zero.mul hV).mul hratio
+  norm_num at h
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hx0 : 0 < x := hx
+  have hxne : x ≠ 0 := ne_of_gt hx0
+  have hp : 0 < 1 + x := by linarith [hx0]
+  have hmne : quadNonAltMobius x - 1 ≠ 0 := by
+    unfold quadNonAltMobius
+    rw [sub_ne_zero]
+    exact ne_of_lt ((div_lt_one hp).mpr (by linarith))
+  unfold quadNonAltBPrimitive
+  field_simp [hxne, hmne]
+
+private theorem quadNonAltBPrimitive_tendsto_one :
+    Tendsto quadNonAltBPrimitive (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+  have hV := quadAltV_mul_self_tendsto.comp
+    quadNonAltMobius_tendsto_one_zero
+  have hratio : Tendsto
+      (fun x : ℝ => (1 - x) / quadNonAltMobius x)
+      (𝓝[<] (1 : ℝ)) (𝓝 2) := by
+    have hc : ContinuousAt (fun x : ℝ => 1 + x) 1 := by fun_prop
+    have hcont : Tendsto (fun x : ℝ => 1 + x)
+        (𝓝[<] (1 : ℝ)) (𝓝 2) := by
+      convert hc.tendsto.mono_left
+        (nhdsWithin_le_nhds (a := (1 : ℝ)) (s := Iio 1)) using 1 <;>
+        norm_num
+    refine hcont.congr' ?_
+    filter_upwards [self_mem_nhdsWithin,
+      (eventually_gt_nhds (show (0 : ℝ) < 1 by norm_num)).filter_mono
+        nhdsWithin_le_nhds] with x hx1 hx0
+    have hxlt : x < 1 := hx1
+    have hmne : quadNonAltMobius x ≠ 0 := by
+      unfold quadNonAltMobius
+      exact div_ne_zero (sub_ne_zero.mpr (Ne.symm (ne_of_lt hxlt)))
+        (by linarith)
+    unfold quadNonAltMobius
+    field_simp [hmne, (by linarith : 1 + x ≠ 0),
+      sub_ne_zero.mpr (Ne.symm (ne_of_lt hxlt))]
+  have h := (quadNonAltU_div_oneSub_tendsto_one.mul hV).mul hratio
+  norm_num at h
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin,
+      (eventually_gt_nhds (show (0 : ℝ) < 1 by norm_num)).filter_mono
+      nhdsWithin_le_nhds] with x hx1 hx0
+  have hxlt : x < 1 := hx1
+  have h1x : 1 - x ≠ 0 := sub_ne_zero.mpr (Ne.symm (ne_of_lt hxlt))
+  have hmne : quadNonAltMobius x ≠ 0 := by
+    unfold quadNonAltMobius
+    exact div_ne_zero h1x (by linarith)
+  unfold quadNonAltBPrimitive
+  field_simp [h1x, hmne]
+
+private theorem quadNonAltB_integral :
+    (∫ x : ℝ in 0..1, quadNonAltB x) =
+      (1 / 4 : ℝ) * quadAltK +
+        (3 / 4 : ℝ) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) +
+        (7 / 4 : ℝ) * Real.log 2 * zeta3_24 -
+        (11 / 20 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  have hint := (quadNonAltBBridge_intervalIntegrable.add
+    quadNonAltB_intervalIntegrable).sub quadNonAltA_intervalIntegrable
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (a := (0 : ℝ)) (b := 1) (f := quadNonAltBPrimitive)
+    (f' := fun x : ℝ =>
+      quadNonAltBBridge x + quadNonAltB x - quadNonAltA x)
+    (by norm_num)
+    (fun x hx => quadNonAltBPrimitive_hasDerivAt hx.1 hx.2)
+    hint quadNonAltBPrimitive_tendsto_zero quadNonAltBPrimitive_tendsto_one
+  norm_num at hFTC
+  rw [intervalIntegral.integral_sub
+      (quadNonAltBBridge_intervalIntegrable.add
+        quadNonAltB_intervalIntegrable)
+      quadNonAltA_intervalIntegrable,
+    intervalIntegral.integral_add quadNonAltBBridge_intervalIntegrable
+      quadNonAltB_intervalIntegrable,
+    quadNonAltBBridge_integral, quadNonAltA_integral,
+    quadAltI10_eq, quadAltI11_eq] at hFTC
+  linarith
+
+private def quadNonAltCPrimitive (x : ℝ) : ℝ :=
+  quadNonAltU x * Real.log (1 - x) * Real.log (1 + x)
+
+private theorem quadNonAltCPrimitive_hasDerivAt
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt quadNonAltCPrimitive
+      (Real.log x * Real.log (1 - x) * Real.log (1 + x) /
+          (x * (1 - x)) - quadNonAltB x + quadNonAltC x) x := by
+  have hm : HasDerivAt (fun y : ℝ => Real.log (1 - y))
+      (-1 / (1 - x)) x := by
+    have hi := (hasDerivAt_const x (1 : ℝ)).sub (hasDerivAt_id x)
+    convert hi.log (by linarith : 1 - x ≠ 0) using 1 <;>
+      simp only [Pi.sub_apply, id_eq] <;> ring
+  have hp : HasDerivAt (fun y : ℝ => Real.log (1 + y))
+      (1 / (1 + x)) x := by
+    have hi := (hasDerivAt_const x (1 : ℝ)).add (hasDerivAt_id x)
+    convert hi.log (by linarith : 1 + x ≠ 0) using 1 <;>
+      simp only [Pi.add_apply, id_eq] <;> ring
+  unfold quadNonAltCPrimitive
+  convert ((quadNonAltU_hasDerivAt hx0 hx1).mul hm).mul hp using 1
+  unfold quadNonAltB quadNonAltC
+  simp only [Pi.mul_apply]
+  field_simp [ne_of_gt hx0, (by linarith : 1 - x ≠ 0),
+    (by linarith : 1 + x ≠ 0)]
+  ring
+
+private theorem quadNonAltCPrimitive_tendsto_zero :
+    Tendsto quadNonAltCPrimitive (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have ha : Tendsto (fun x : ℝ => Real.log (1 - x) / x)
+      (𝓝[>] (0 : ℝ)) (𝓝 (-1)) := by
+    have hd : HasDerivAt (fun x : ℝ => Real.log (1 - x)) (-1) 0 := by
+      have hi := (hasDerivAt_const (0 : ℝ) (1 : ℝ)).sub
+        (hasDerivAt_id (0 : ℝ))
+      convert hi.log (by norm_num) using 1 <;> norm_num
+    simpa [smul_eq_mul, div_eq_mul_inv, mul_comm] using
+      hd.tendsto_slope_zero_right
+  have hb : Tendsto (fun x : ℝ => Real.log (1 + x))
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    have hc : ContinuousAt (fun x : ℝ => Real.log (1 + x)) 0 := by
+      exact ContinuousAt.log (by fun_prop) (by norm_num)
+    simpa using hc.tendsto.mono_left nhdsWithin_le_nhds
+  have h := (quadNonAltU_mul_self_tendsto_zero.mul ha).mul hb
+  norm_num at h
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hxne : x ≠ 0 := ne_of_gt hx
+  unfold quadNonAltCPrimitive
+  field_simp [hxne]
+
+private theorem quadNonAltCPrimitive_tendsto_one :
+    Tendsto quadNonAltCPrimitive (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+  have hplus : Tendsto (fun x : ℝ => Real.log (1 + x))
+      (𝓝[<] (1 : ℝ)) (𝓝 (Real.log 2)) := by
+    have hc : ContinuousAt (fun x : ℝ => Real.log (1 + x)) 1 := by
+      exact ContinuousAt.log (by fun_prop) (by norm_num)
+    convert hc.tendsto.mono_left
+      (nhdsWithin_le_nhds (a := (1 : ℝ)) (s := Iio 1)) using 1 <;>
+      norm_num
+  have h := (quadNonAltU_div_oneSub_tendsto_one.mul
+    oneSub_log_tendsto).mul hplus
+  norm_num at h
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have h1x : 1 - x ≠ 0 := sub_ne_zero.mpr (Ne.symm (ne_of_lt hx))
+  unfold quadNonAltCPrimitive
+  field_simp [h1x]
+
+private theorem quadNonAltC_integral :
+    (∫ x : ℝ in 0..1, quadNonAltC x) =
+      (1 / 4 : ℝ) * quadAltK +
+        (3 / 2 : ℝ) * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) -
+        (7 / 8 : ℝ) * Real.log 2 * zeta3_24 -
+        (3 / 10 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  let j : ℝ → ℝ := fun x =>
+    Real.log x * Real.log (1 - x) * Real.log (1 + x) /
+      (x * (1 - x))
+  have hj : IntervalIntegrable j MeasureTheory.volume 0 1 := by
+    simpa [j] using quadNonAltJ_intervalIntegrable
+  have hint := (hj.sub quadNonAltB_intervalIntegrable).add
+    quadNonAltC_intervalIntegrable
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (a := (0 : ℝ)) (b := 1) (f := quadNonAltCPrimitive)
+    (f' := fun x : ℝ => j x - quadNonAltB x + quadNonAltC x)
+    (by norm_num)
+    (fun x hx => by simpa [j] using
+      quadNonAltCPrimitive_hasDerivAt hx.1 hx.2)
+    hint quadNonAltCPrimitive_tendsto_zero quadNonAltCPrimitive_tendsto_one
+  norm_num at hFTC
+  rw [intervalIntegral.integral_add
+      (hj.sub quadNonAltB_intervalIntegrable)
+      quadNonAltC_intervalIntegrable,
+    intervalIntegral.integral_sub hj quadNonAltB_intervalIntegrable,
+    show (∫ x : ℝ in 0..1, j x) =
+        ∫ x : ℝ in 0..1,
+          Real.log x * Real.log (1 - x) * Real.log (1 + x) /
+            (x * (1 - x)) by rfl,
+    quadNonAltJ_integral, quadNonAltB_integral] at hFTC
+  linarith
+
+/-! ### The radial plus row -/
+
+private def quadNonAltLogSqPlusMoment (n : ℕ) (x : ℝ) : ℝ :=
+  ((-1 : ℝ) ^ n / ((n : ℝ) + 1)) * (x ^ n * Real.log x ^ 2)
+
+private theorem quadNonAltLogSqPlusMoment_intervalIntegrable (n : ℕ) :
+    IntervalIntegrable (quadNonAltLogSqPlusMoment n)
+      MeasureTheory.volume 0 1 := by
+  unfold quadNonAltLogSqPlusMoment
+  exact (intervalIntegrable_logSq.continuousOn_mul
+    (continuousOn_pow n)).const_mul
+      ((-1 : ℝ) ^ n / ((n : ℝ) + 1))
+
+private theorem quadNonAltLogSqPlusMoment_integral (n : ℕ) :
+    (∫ x : ℝ in 0..1, quadNonAltLogSqPlusMoment n x) =
+      2 * (-1 : ℝ) ^ n / ((n : ℝ) + 1) ^ 4 := by
+  unfold quadNonAltLogSqPlusMoment
+  rw [intervalIntegral.integral_const_mul, integral_pow_mul_logSq]
+  have hn : (n : ℝ) + 1 ≠ 0 := by positivity
+  field_simp [hn]
+
+private theorem quadNonAltLogSqPlusMoment_integral_norm (n : ℕ) :
+    (∫ x : ℝ in 0..1, ‖quadNonAltLogSqPlusMoment n x‖) =
+      2 / ((n : ℝ) + 1) ^ 4 := by
+  calc
+    (∫ x : ℝ in 0..1, ‖quadNonAltLogSqPlusMoment n x‖) =
+        ∫ x : ℝ in 0..1,
+          (1 / ((n : ℝ) + 1)) * (x ^ n * Real.log x ^ 2) := by
+      apply intervalIntegral.integral_congr
+      intro x hx
+      rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)] at hx
+      unfold quadNonAltLogSqPlusMoment
+      change |(-1 : ℝ) ^ n / ((n : ℝ) + 1) *
+          (x ^ n * Real.log x ^ 2)| =
+        (1 / ((n : ℝ) + 1)) * (x ^ n * Real.log x ^ 2)
+      rw [abs_mul, abs_div, abs_pow, abs_neg,
+        abs_one, one_pow, abs_of_nonneg (by positivity : (0 : ℝ) ≤ (n : ℝ) + 1),
+        abs_of_nonneg (mul_nonneg (pow_nonneg hx.1 n) (sq_nonneg _))]
+    _ = 2 / ((n : ℝ) + 1) ^ 4 := by
+      rw [intervalIntegral.integral_const_mul, integral_pow_mul_logSq]
+      have hn : (n : ℝ) + 1 ≠ 0 := by positivity
+      field_simp [hn]
+
+private theorem quadNonAltLogSqPlusMoment_hasSum_pointwise
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasSum (fun n : ℕ => quadNonAltLogSqPlusMoment n x)
+      (Real.log x ^ 2 * Real.log (1 + x) / x) := by
+  have hxabs : |x| < 1 := by rw [abs_of_pos hx0]; exact hx1
+  have hs :=
+    (Real.hasSum_pow_div_log_of_abs_lt_one
+      (show |-x| < 1 by simpa using hxabs)).neg
+  have hmul := hs.mul_right (Real.log x ^ 2 / x)
+  convert hmul using 1
+  · funext n
+    unfold quadNonAltLogSqPlusMoment
+    rw [neg_pow]
+    field_simp [ne_of_gt hx0]
+    ring
+  · rw [show 1 - -x = 1 + x by ring]
+    ring
+
+private theorem quadNonAltLogSqPlus_integral :
+    (∫ x : ℝ in 0..1,
+      Real.log x ^ 2 * Real.log (1 + x) / x) =
+      (7 / 10 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  have hInt : ∀ n : ℕ, MeasureTheory.Integrable
+      (quadNonAltLogSqPlusMoment n)
+      (MeasureTheory.volume.restrict (Set.Ioc (0 : ℝ) 1)) :=
+    fun n => (quadNonAltLogSqPlusMoment_intervalIntegrable n).1
+  have hNorm : Summable (fun n : ℕ =>
+      ∫ x : ℝ in Set.Ioc (0 : ℝ) 1,
+        ‖quadNonAltLogSqPlusMoment n x‖) := by
+    have hs : Summable (fun n : ℕ => 2 / ((n : ℝ) + 1) ^ 4) := by
+      exact (shifted_zeta_four_hasSum24.summable.mul_left 2).congr
+        (fun n => by ring)
+    simpa only [← intervalIntegral.integral_of_le
+      (by norm_num : (0 : ℝ) ≤ 1)] using
+      hs.congr
+        (fun n => (quadNonAltLogSqPlusMoment_integral_norm n).symm)
+  have hsum := MeasureTheory.hasSum_integral_of_summable_integral_norm
+    (μ := MeasureTheory.volume.restrict (Set.Ioc (0 : ℝ) 1)) hInt hNorm
+  have hseries : HasSum
+      (fun n : ℕ => 2 * (-1 : ℝ) ^ n / ((n : ℝ) + 1) ^ 4)
+      (∫ x : ℝ in 0..1,
+        Real.log x ^ 2 * Real.log (1 + x) / x) := by
+    have h' : HasSum
+        (fun n : ℕ => 2 * (-1 : ℝ) ^ n / ((n : ℝ) + 1) ^ 4)
+        (∫ x : ℝ in Set.Ioc (0 : ℝ) 1,
+          ∑' n : ℕ, quadNonAltLogSqPlusMoment n x) := by
+      convert hsum using 1
+      funext n
+      rw [← intervalIntegral.integral_of_le
+        (by norm_num : (0 : ℝ) ≤ 1)]
+      exact (quadNonAltLogSqPlusMoment_integral n).symm
+    convert h' using 1
+    rw [intervalIntegral.integral_of_le
+      (by norm_num : (0 : ℝ) ≤ 1)]
+    apply MeasureTheory.setIntegral_congr_ae measurableSet_Ioc
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+      with x hxone hx
+    exact (quadNonAltLogSqPlusMoment_hasSum_pointwise hx.1
+      (lt_of_le_of_ne hx.2 hxone)).tsum_eq.symm
+  have hvalue : HasSum
+      (fun n : ℕ => 2 * (-1 : ℝ) ^ n / ((n : ℝ) + 1) ^ 4)
+      ((7 / 4 : ℝ) * (Real.pi ^ 4 / 90)) := by
+    convert alternatingZetaFour_hasSum24.mul_left (-2) using 1
+    · funext n
+      ring
+    · ring
+  rw [hseries.unique hvalue]
+  ring
+
+private theorem quadNonAltLogPlusRadial_intervalIntegrable :
+    IntervalIntegrable (fun x : ℝ => Real.log (1 + x) / x)
+      MeasureTheory.volume 0 1 := by
+  have h : IntervalIntegrable RamanujanChallenge.P26.logOnePlusSlope26
+      MeasureTheory.volume 0 1 := by
+    apply ContinuousOn.intervalIntegrable
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    exact RamanujanChallenge.P26.logOnePlusSlope26_continuousOn
+  apply IntervalIntegrable.congr
+    (f := RamanujanChallenge.P26.logOnePlusSlope26) ?_ h
+  intro x hx
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+  simp [RamanujanChallenge.P26.logOnePlusSlope26, ne_of_gt hx'.1]
+
+private theorem quadNonAltLogPlusRadial_integral :
+    (∫ x : ℝ in 0..1, Real.log (1 + x) / x) =
+      (1 / 2 : ℝ) * (Real.pi ^ 2 / 6) := by
+  let f : ℝ → ℝ := fun x => -dilog (-x)
+  have hcont : ContinuousOn f (Icc (0 : ℝ) 1) := by
+    unfold f
+    apply ContinuousOn.neg
+    apply dilog_continuousOn_unit.comp (by fun_prop)
+    intro x hx
+    constructor <;> linarith [hx.1, hx.2]
+  have hderiv : ∀ x ∈ Ioo (0 : ℝ) 1,
+      HasDerivAt f (Real.log (1 + x) / x) x := by
+    intro x hx
+    have hxne : x ≠ 0 := ne_of_gt hx.1
+    have hd :=
+      (dilog_hasDerivAt_of_abs_lt_one
+        (show |-x| < 1 by rw [abs_neg, abs_of_pos hx.1]; exact hx.2)
+        (neg_ne_zero.mpr hxne)).comp x (hasDerivAt_neg x)
+    unfold f
+    convert hd.neg using 1
+    rw [show 1 - -x = 1 + x by ring]
+    field_simp [hxne]
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+    (f := f) (f' := fun x : ℝ => Real.log (1 + x) / x)
+    (by norm_num) hcont hderiv quadNonAltLogPlusRadial_intervalIntegrable]
+  simp [f, RamanujanChallenge.P26.dilog_neg_one26, dilog_zero]
+  ring
+
+private def quadNonAltDilogNegLogMinus (x : ℝ) : ℝ :=
+  dilog (-x) * Real.log (1 - x) / x
+
+private theorem quadNonAltDilogNegLogMinus_intervalIntegrable :
+    IntervalIntegrable quadNonAltDilogNegLogMinus
+      MeasureTheory.volume 0 1 := by
+  have hd : ContinuousOn (fun x : ℝ => dilog (-x))
+      (Set.uIcc (0 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    apply dilog_continuousOn_unit.comp (by fun_prop)
+    intro x hx
+    constructor <;> linarith [hx.1, hx.2]
+  have ha : IntervalIntegrable (fun x : ℝ => Real.log (1 - x) / x)
+      MeasureTheory.volume 0 1 := by
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ => -(H1 x / x)) ?_ i10H1Div_intervalIntegrable.neg
+    intro x _
+    unfold H1
+    ring
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ => dilog (-x) * (Real.log (1 - x) / x)) ?_
+    (ha.continuousOn_mul hd)
+  intro x _
+  unfold quadNonAltDilogNegLogMinus
+  ring
+
+private theorem quadNonAltDilogNegLogMinus_integral :
+    (∫ x : ℝ in 0..1, quadNonAltDilogNegLogMinus x) =
+      -(1 / 2 : ℝ) * quadAltK +
+        (7 / 20 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  let a : ℝ → ℝ := fun x => Real.log (1 - x) / x
+  let s : ℝ → ℝ := fun x => Real.log x ^ 2 * Real.log (1 - x) / x
+  let q : ℝ → ℝ := fun x =>
+    (1 / 2 : ℝ) * s x -
+      Real.log x * Real.log (1 - x) * Real.log (1 + x) / x -
+      quadNonAltDilogNegLogMinus x -
+      (Real.pi ^ 2 / 12) * a x
+  have ha : IntervalIntegrable a MeasureTheory.volume 0 1 := by
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ => -(H1 x / x)) ?_ i10H1Div_intervalIntegrable.neg
+    intro x _
+    dsimp [a]
+    unfold H1
+    ring
+  have hs : IntervalIntegrable s MeasureTheory.volume 0 1 := by
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ => -(Real.log x ^ 2 * H1 x / x)) ?_
+      i10LogSqH1Div_intervalIntegrable.neg
+    intro x _
+    dsimp [s]
+    unfold H1
+    ring
+  have hq : IntervalIntegrable q MeasureTheory.volume 0 1 :=
+    (((hs.const_mul (1 / 2 : ℝ)).sub
+      quadAltMixedRadialIntervalIntegrable24).sub
+      quadNonAltDilogNegLogMinus_intervalIntegrable).sub
+      (ha.const_mul (Real.pi ^ 2 / 12))
+  have hVint : IntervalIntegrable
+      (fun x : ℝ => quadAltV x * Real.log (1 - x) / x)
+      MeasureTheory.volume 0 1 := by
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ => -(quadAltV x * H1 x / x)) ?_
+      testVH1Div_intervalIntegrable.neg
+    intro x _
+    unfold H1
+    ring
+  have hpoint :
+      (∫ x : ℝ in 0..1,
+        quadAltV x * Real.log (1 - x) / x) =
+        ∫ x : ℝ in 0..1, q x := by
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (0 : ℝ)]
+      with x hxzero hx
+    dsimp [q, s, a]
+    unfold quadAltV quadNonAltDilogNegLogMinus
+    field_simp [hxzero]
+  have hVval :
+      (∫ x : ℝ in 0..1,
+        quadAltV x * Real.log (1 - x) / x) =
+        -(13 / 40 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+    rw [testVLogIntegral_eq_dilogDerivative, testDilogDerivativeIntegral]
+    ring
+  have hsval : (∫ x : ℝ in 0..1, s x) =
+      -(4 / 5 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+    have h := congrArg Neg.neg i10LogSqH1Div_integral
+    rw [← intervalIntegral.integral_neg] at h
+    dsimp [s]
+    unfold H1 at h
+    convert h using 1 <;> ring
+  have haval : (∫ x : ℝ in 0..1, a x) =
+      -(Real.pi ^ 2 / 6) := by
+    have h := congrArg Neg.neg i10H1Div_integral
+    rw [← intervalIntegral.integral_neg] at h
+    dsimp [a]
+    unfold H1 at h
+    convert h using 1 <;> ring
+  rw [hpoint] at hVval
+  dsimp [q] at hVval
+  rw [intervalIntegral.integral_sub
+      (((hs.const_mul (1 / 2 : ℝ)).sub
+        quadAltMixedRadialIntervalIntegrable24).sub
+        quadNonAltDilogNegLogMinus_intervalIntegrable)
+      (ha.const_mul (Real.pi ^ 2 / 12)),
+    intervalIntegral.integral_sub
+      ((hs.const_mul (1 / 2 : ℝ)).sub
+        quadAltMixedRadialIntervalIntegrable24)
+      quadNonAltDilogNegLogMinus_intervalIntegrable,
+    intervalIntegral.integral_sub (hs.const_mul (1 / 2 : ℝ))
+      quadAltMixedRadialIntervalIntegrable24,
+    intervalIntegral.integral_const_mul,
+    intervalIntegral.integral_const_mul,
+    hsval, quadNonAltQ_integral, haval] at hVval
+  linarith
+
+private def quadNonAltDilogPosLogPlus (x : ℝ) : ℝ :=
+  dilog x * Real.log (1 + x) / x
+
+private theorem quadNonAltDilogPosLogPlus_intervalIntegrable :
+    IntervalIntegrable quadNonAltDilogPosLogPlus
+      MeasureTheory.volume 0 1 := by
+  have hd : ContinuousOn dilog (Set.uIcc (0 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    exact dilog_continuousOn_unit.mono (by
+      intro x hx
+      constructor <;> linarith [hx.1, hx.2])
+  apply IntervalIntegrable.congr
+    (f := fun x : ℝ => dilog x * (Real.log (1 + x) / x)) ?_
+    (quadNonAltLogPlusRadial_intervalIntegrable.continuousOn_mul hd)
+  intro x _
+  unfold quadNonAltDilogPosLogPlus
+  ring
+
+private def quadNonAltDilogProduct (x : ℝ) : ℝ :=
+  dilog x * dilog (-x)
+
+private theorem quadNonAltDilogProduct_continuousOn :
+    ContinuousOn quadNonAltDilogProduct (Icc (0 : ℝ) 1) := by
+  unfold quadNonAltDilogProduct
+  apply ContinuousOn.mul
+  · exact dilog_continuousOn_unit.mono (by
+      intro x hx
+      constructor <;> linarith [hx.1, hx.2])
+  · apply dilog_continuousOn_unit.comp (by fun_prop)
+    intro x hx
+    constructor <;> linarith [hx.1, hx.2]
+
+private theorem quadNonAltDilogProduct_hasDerivAt
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt quadNonAltDilogProduct
+      (-quadNonAltDilogNegLogMinus x - quadNonAltDilogPosLogPlus x) x := by
+  have hxne : x ≠ 0 := ne_of_gt hx0
+  have hpos := dilog_hasDerivAt hx0 hx1
+  have hnegRaw :=
+    (dilog_hasDerivAt_of_abs_lt_one
+      (show |-x| < 1 by rw [abs_neg, abs_of_pos hx0]; exact hx1)
+      (neg_ne_zero.mpr hxne)).comp x (hasDerivAt_neg x)
+  have hneg : HasDerivAt (fun y : ℝ => dilog (-y))
+      (-Real.log (1 + x) / x) x := by
+    convert hnegRaw using 1
+    rw [show 1 - -x = 1 + x by ring]
+    field_simp [hxne]
+  unfold quadNonAltDilogProduct
+  convert hpos.mul hneg using 1
+  unfold quadNonAltDilogNegLogMinus quadNonAltDilogPosLogPlus
+  ring
+
+private theorem quadNonAltDilogPosLogPlus_integral :
+    (∫ x : ℝ in 0..1, quadNonAltDilogPosLogPlus x) =
+      (1 / 2 : ℝ) * quadAltK +
+        (3 / 20 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  have hint := quadNonAltDilogNegLogMinus_intervalIntegrable.neg.sub
+    quadNonAltDilogPosLogPlus_intervalIntegrable
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+    (f := quadNonAltDilogProduct)
+    (f' := fun x : ℝ =>
+      -quadNonAltDilogNegLogMinus x - quadNonAltDilogPosLogPlus x)
+    (by norm_num) quadNonAltDilogProduct_continuousOn
+    (fun x hx => quadNonAltDilogProduct_hasDerivAt hx.1 hx.2) hint
+  change (∫ x : ℝ in 0..1,
+      -quadNonAltDilogNegLogMinus x - quadNonAltDilogPosLogPlus x) =
+    quadNonAltDilogProduct 1 - quadNonAltDilogProduct 0 at hFTC
+  have hsplit : (∫ x : ℝ in 0..1,
+        -quadNonAltDilogNegLogMinus x - quadNonAltDilogPosLogPlus x) =
+      (∫ x : ℝ in 0..1, -quadNonAltDilogNegLogMinus x) -
+        ∫ x : ℝ in 0..1, quadNonAltDilogPosLogPlus x := by
+    simpa only [Pi.neg_apply] using
+      intervalIntegral.integral_sub
+        quadNonAltDilogNegLogMinus_intervalIntegrable.neg
+        quadNonAltDilogPosLogPlus_intervalIntegrable
+  have hnegint : (∫ x : ℝ in 0..1, -quadNonAltDilogNegLogMinus x) =
+      -(∫ x : ℝ in 0..1, quadNonAltDilogNegLogMinus x) := by
+    simpa only [Pi.neg_apply] using
+      intervalIntegral.integral_neg
+        (f := quadNonAltDilogNegLogMinus) (a := (0 : ℝ)) (b := 1)
+  rw [hsplit, hnegint, quadNonAltDilogNegLogMinus_integral] at hFTC
+  norm_num [quadNonAltDilogProduct, dilog_one, dilog_zero,
+    RamanujanChallenge.P26.dilog_neg_one26] at hFTC
+  linarith
+
+private theorem quadNonAltF_integral :
+    (∫ x : ℝ in 0..1, quadNonAltF x) =
+      -quadAltK + (5 / 8 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  let s : ℝ → ℝ := fun x =>
+    Real.log x ^ 2 * Real.log (1 + x) / x
+  let b : ℝ → ℝ := fun x => Real.log (1 + x) / x
+  let q : ℝ → ℝ := fun x =>
+    (1 / 2 : ℝ) * s x + (Real.pi ^ 2 / 6) * b x -
+      Real.log x * Real.log (1 - x) * Real.log (1 + x) / x -
+      quadNonAltDilogPosLogPlus x
+  have hs : IntervalIntegrable s MeasureTheory.volume 0 1 := by
+    have hp : ContinuousOn RamanujanChallenge.P26.logOnePlusSlope26
+        (Set.uIcc (0 : ℝ) 1) := by
+      simpa only [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using
+        RamanujanChallenge.P26.logOnePlusSlope26_continuousOn
+    apply IntervalIntegrable.congr
+      (f := fun x : ℝ => RamanujanChallenge.P26.logOnePlusSlope26 x *
+        Real.log x ^ 2) ?_ (intervalIntegrable_logSq.continuousOn_mul hp)
+    intro x hx
+    have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    dsimp [s]
+    simp [RamanujanChallenge.P26.logOnePlusSlope26, ne_of_gt hx'.1]
+    ring
+  have hb : IntervalIntegrable b MeasureTheory.volume 0 1 := by
+    simpa [b] using quadNonAltLogPlusRadial_intervalIntegrable
+  have hq : IntervalIntegrable q MeasureTheory.volume 0 1 :=
+    (((hs.const_mul (1 / 2 : ℝ)).add
+      (hb.const_mul (Real.pi ^ 2 / 6))).sub
+      quadAltMixedRadialIntervalIntegrable24).sub
+      quadNonAltDilogPosLogPlus_intervalIntegrable
+  have hpoint :
+      (∫ x : ℝ in 0..1, quadNonAltF x) =
+        ∫ x : ℝ in 0..1, q x := by
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [MeasureTheory.Measure.ae_ne MeasureTheory.volume (1 : ℝ)]
+      with x hxone hx
+    have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+    have hxlt : x < 1 := lt_of_le_of_ne hx'.2 hxone
+    have hrefl := dilog_reflection hx'.1 hxlt
+    have hrefl' : dilog (1 - x) = Real.pi ^ 2 / 6 -
+        Real.log x * Real.log (1 - x) - dilog x := by
+      linarith [hrefl]
+    dsimp [q, s, b]
+    unfold quadNonAltF quadNonAltU quadNonAltDilogPosLogPlus
+    rw [hrefl']
+    field_simp [ne_of_gt hx'.1]
+    ring
+  rw [hpoint]
+  dsimp [q]
+  rw [intervalIntegral.integral_sub
+      (((hs.const_mul (1 / 2 : ℝ)).add
+        (hb.const_mul (Real.pi ^ 2 / 6))).sub
+        quadAltMixedRadialIntervalIntegrable24)
+      quadNonAltDilogPosLogPlus_intervalIntegrable,
+    intervalIntegral.integral_sub
+      ((hs.const_mul (1 / 2 : ℝ)).add
+        (hb.const_mul (Real.pi ^ 2 / 6)))
+      quadAltMixedRadialIntervalIntegrable24,
+    intervalIntegral.integral_add (hs.const_mul (1 / 2 : ℝ))
+      (hb.const_mul (Real.pi ^ 2 / 6))]
+  repeat' rw [intervalIntegral.integral_const_mul]
+  rw [show (∫ x : ℝ in 0..1, s x) =
+        (7 / 10 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 by
+      simpa [s] using quadNonAltLogSqPlus_integral,
+    show (∫ x : ℝ in 0..1, b x) =
+        (1 / 2 : ℝ) * (Real.pi ^ 2 / 6) by
+      simpa [b] using quadNonAltLogPlusRadial_integral,
+    quadNonAltQ_integral, quadNonAltDilogPosLogPlus_integral]
+  ring
+
+/-! ### Positive-kernel integration by parts -/
+
+private theorem quadNonAltJ_hasDerivAt_zero :
+    HasDerivAt quadAltJclosed 0 0 := by
+  have hout : HasDerivAt (fun y : ℝ => quadAltJclosed (-y)) 0 (-(0 : ℝ)) := by
+    simpa using quadAltJneg_hasDerivAt_zero
+  have h := hout.comp 0 (hasDerivAt_neg (0 : ℝ))
+  simpa [Function.comp_def] using h
+
+private theorem quadNonAltJ_zero : quadAltJclosed 0 = 0 := by
+  simpa using quadAltJneg_zero
+
+private theorem quadNonAltJ_slope_tendsto_zero :
+    Tendsto (fun x : ℝ => quadAltJclosed x / x)
+      (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  exact (slope_tendsto_of_hasDerivAt_zero _ 0
+    quadNonAltJ_hasDerivAt_zero quadNonAltJ_zero).mono_left
+      (nhdsWithin_mono _ (fun x hx => ne_of_gt hx))
+
+private theorem quadNonAltJ_mul_oneSub_tendsto_zero :
+    Tendsto (fun x : ℝ => (1 - x) * quadAltJclosed x)
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+  have hone : Tendsto (fun x : ℝ => 1 - x)
+      (𝓝[<] (1 : ℝ)) (𝓝 0) :=
+    tendsto_nhdsWithin_iff.mp tendsto_one_sub_nhdsWithin |>.1
+  have hplus : Tendsto (fun x : ℝ => Real.log (1 + x))
+      (𝓝[<] (1 : ℝ)) (𝓝 (Real.log 2)) := by
+    have hc : ContinuousAt (fun x : ℝ => Real.log (1 + x)) 1 := by
+      exact ContinuousAt.log (by fun_prop) (by norm_num)
+    convert hc.tendsto.mono_left nhdsWithin_le_nhds using 1 <;> norm_num
+  have hdhalf : Tendsto (fun x : ℝ => dilog ((1 + x) / 2))
+      (𝓝[<] (1 : ℝ)) (𝓝 (Real.pi ^ 2 / 6)) := by
+    have hin : Tendsto (fun x : ℝ => (1 + x) / 2)
+        (𝓝[<] (1 : ℝ)) (𝓝 1) := by
+      have hc : ContinuousAt (fun x : ℝ => (1 + x) / 2) 1 := by fun_prop
+      convert hc.tendsto.mono_left nhdsWithin_le_nhds using 1 <;> norm_num
+    have hcd : ContinuousWithinAt dilog (Icc (-1 : ℝ) 1) 1 :=
+      dilog_continuousOn_unit 1 (by norm_num)
+    have hev : ∀ᶠ x in 𝓝[<] (1 : ℝ), (1 + x) / 2 ∈ Icc (-1 : ℝ) 1 := by
+      filter_upwards [self_mem_nhdsWithin,
+        (eventually_gt_nhds (show (-1 : ℝ) < 1 by norm_num)).filter_mono
+          nhdsWithin_le_nhds] with x hx1 hxm
+      have hx1' : x < 1 := hx1
+      have hxm' : -1 < x := hxm
+      constructor <;> linarith
+    simpa [dilog_one] using hcd.tendsto.comp
+      (tendsto_nhdsWithin_iff.mpr ⟨hin, hev⟩)
+  have hdsq : Tendsto (fun x : ℝ => dilog (x ^ 2))
+      (𝓝[<] (1 : ℝ)) (𝓝 (Real.pi ^ 2 / 6)) := by
+    have hin : Tendsto (fun x : ℝ => x ^ 2)
+        (𝓝[<] (1 : ℝ)) (𝓝 1) := by
+      have hc : ContinuousAt (fun x : ℝ => x ^ 2) 1 := by fun_prop
+      convert hc.tendsto.mono_left nhdsWithin_le_nhds using 1 <;> norm_num
+    have hcd : ContinuousWithinAt dilog (Icc (-1 : ℝ) 1) 1 :=
+      dilog_continuousOn_unit 1 (by norm_num)
+    have hev : ∀ᶠ x in 𝓝[<] (1 : ℝ), x ^ 2 ∈ Icc (-1 : ℝ) 1 := by
+      filter_upwards [self_mem_nhdsWithin,
+        (eventually_gt_nhds (show (-1 : ℝ) < 1 by norm_num)).filter_mono
+          nhdsWithin_le_nhds] with x hx1 hxm
+      have hx1' : x < 1 := hx1
+      have hxm' : -1 < x := hxm
+      constructor <;> nlinarith
+    simpa [dilog_one] using hcd.tendsto.comp
+      (tendsto_nhdsWithin_iff.mpr ⟨hin, hev⟩)
+  have t1 := oneSub_logSq_tendsto.div_const 2
+  have t2 : Tendsto
+      (fun x : ℝ => (1 - x) * Real.log (1 + x) ^ 2)
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    simpa using hone.mul (hplus.pow 2)
+  have t3 : Tendsto
+      (fun x : ℝ => (1 - x) *
+        (2 * Real.log (1 - x) * Real.log (1 + x)))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    have h := (oneSub_log_tendsto.const_mul 2).mul hplus
+    simpa [mul_assoc, mul_left_comm, mul_comm] using h
+  have t4 : Tendsto
+      (fun x : ℝ => (1 - x) * (2 * Real.log 2 * Real.log (1 + x)))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    simpa [mul_assoc, mul_left_comm, mul_comm] using
+      hone.mul ((hplus.const_mul (2 * Real.log 2)))
+  have t5 : Tendsto
+      (fun x : ℝ => (1 - x) * (Real.pi ^ 2 / 6 - Real.log 2 ^ 2))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    simpa using hone.mul_const (Real.pi ^ 2 / 6 - Real.log 2 ^ 2)
+  have t6 : Tendsto
+      (fun x : ℝ => (1 - x) * (-2 * dilog ((1 + x) / 2)))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    simpa using hone.mul (hdhalf.const_mul (-2))
+  have t7 : Tendsto (fun x : ℝ => (1 - x) * dilog (x ^ 2))
+      (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+    simpa using hone.mul hdsq
+  have hsum := ((((((t1.add t2).add t3).add t4).add t5).add t6).add t7)
+  norm_num at hsum
+  refine hsum.congr' ?_
+  filter_upwards with x
+  unfold quadAltJclosed quadAltMclosed
+  ring
+
+private theorem quadNonAltCoeffKernel_eq_UJ
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    (-Real.log x) / x * quadAltQclosed x =
+      -2 * (Real.log x / (x * (1 - x))) * quadAltJclosed x := by
+  unfold quadAltQclosed
+  field_simp [ne_of_gt hx0,
+    sub_ne_zero.mpr (Ne.symm (ne_of_lt hx1))]
+
+private theorem quadNonAltCoeffUJ_continuousOn :
+    ContinuousOn
+      (fun x : ℝ =>
+        -2 * (Real.log x / (x * (1 - x))) * quadAltJclosed x)
+      (Ioo (0 : ℝ) 1) := by
+  intro x hx
+  have hlog := Real.continuousAt_log (ne_of_gt hx.1)
+  have hJ := quadAltJclosed_continuousAt
+    (show x ∈ Ioo (-1 : ℝ) 1 by constructor <;> linarith [hx.1, hx.2])
+  have hxne : x ≠ 0 := ne_of_gt hx.1
+  have h1x : 1 - x ≠ 0 := sub_ne_zero.mpr (Ne.symm (ne_of_lt hx.2))
+  have hden : x * (1 - x) ≠ 0 := mul_ne_zero hxne h1x
+  exact ((hlog.div (by fun_prop)
+    hden).const_mul (-2)).mul hJ
+    |>.continuousWithinAt
+
+private theorem quadNonAltJ_intervalIntegrable_half_one :
+    IntervalIntegrable quadAltJclosed MeasureTheory.volume (1 / 2) 1 := by
+  have ha : IntervalIntegrable (fun x : ℝ => Real.log (1 - x))
+      MeasureTheory.volume (1 / 2) 1 :=
+    quadNonAlt_log_oneSub_intervalIntegrable_half_one
+  have ha2 : IntervalIntegrable (fun x : ℝ => Real.log (1 - x) ^ 2)
+      MeasureTheory.volume (1 / 2) 1 := by
+    have hfull : IntervalIntegrable (fun x : ℝ => Real.log (1 - x) ^ 2)
+        MeasureTheory.volume 0 1 := by
+      simpa using (intervalIntegrable_logSq.comp_sub_left 1).symm
+    exact hfull.mono_set (by
+      rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1),
+        Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+      intro x hx
+      exact ⟨by linarith [hx.1], hx.2⟩)
+  have hb : ContinuousOn (fun x : ℝ => Real.log (1 + x))
+      (Set.uIcc (1 / 2 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    exact (continuousOn_const.add continuousOn_id).log (by
+      intro x hx
+      exact ne_of_gt (by linarith [hx.1] : 0 < 1 + x))
+  have hdhalf : ContinuousOn (fun x : ℝ => dilog ((1 + x) / 2))
+      (Set.uIcc (1 / 2 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    apply dilog_continuousOn_unit.comp (by fun_prop)
+    intro x hx
+    constructor <;> linarith [hx.1, hx.2]
+  have hdsq : ContinuousOn (fun x : ℝ => dilog (x ^ 2))
+      (Set.uIcc (1 / 2 : ℝ) 1) := by
+    rw [Set.uIcc_of_le (by norm_num : (1 / 2 : ℝ) ≤ 1)]
+    apply dilog_continuousOn_unit.comp (by fun_prop)
+    intro x hx
+    constructor <;> nlinarith [hx.1, hx.2]
+  have hM : IntervalIntegrable quadAltMclosed MeasureTheory.volume (1 / 2) 1 := by
+    let q : ℝ → ℝ := fun x =>
+      Real.log (1 - x) ^ 2 / 2 + Real.log (1 + x) ^ 2 +
+        2 * (Real.log (1 + x) * Real.log (1 - x)) +
+        (2 * Real.log 2) * Real.log (1 + x) +
+        (Real.pi ^ 2 / 6) - Real.log 2 ^ 2 -
+        2 * dilog ((1 + x) / 2)
+    have hbI : IntervalIntegrable (fun x : ℝ => Real.log (1 + x))
+        MeasureTheory.volume (1 / 2) 1 := ContinuousOn.intervalIntegrable hb
+    have hb2I : IntervalIntegrable (fun x : ℝ => Real.log (1 + x) ^ 2)
+        MeasureTheory.volume (1 / 2) 1 := ContinuousOn.intervalIntegrable (hb.pow 2)
+    have hcross : IntervalIntegrable
+        (fun x : ℝ => Real.log (1 + x) * Real.log (1 - x))
+        MeasureTheory.volume (1 / 2) 1 := ha.continuousOn_mul hb
+    have hdI : IntervalIntegrable (fun x : ℝ => dilog ((1 + x) / 2))
+        MeasureTheory.volume (1 / 2) 1 := ContinuousOn.intervalIntegrable hdhalf
+    have hcZ : IntervalIntegrable (fun _ : ℝ => Real.pi ^ 2 / 6)
+        MeasureTheory.volume (1 / 2) 1 := intervalIntegrable_const
+    have hcL : IntervalIntegrable (fun _ : ℝ => Real.log 2 ^ 2)
+        MeasureTheory.volume (1 / 2) 1 := intervalIntegrable_const
+    have hq : IntervalIntegrable q MeasureTheory.volume (1 / 2) 1 :=
+      ((((((ha2.div_const 2).add hb2I).add
+        (hcross.const_mul 2)).add
+        (hbI.const_mul (2 * Real.log 2))).add hcZ).sub hcL).sub
+        (hdI.const_mul 2)
+    apply IntervalIntegrable.congr (f := q) ?_ hq
+    intro x _
+    dsimp [q]
+    unfold quadAltMclosed
+    ring
+  unfold quadAltJclosed
+  exact hM.add (ContinuousOn.intervalIntegrable hdsq)
+
+private theorem quadNonAltCoeffKernel_intervalIntegrable :
+    IntervalIntegrable
+      (fun x : ℝ => (-Real.log x) / x * quadAltQclosed x)
+      MeasureTheory.volume 0 1 := by
+  let q : ℝ → ℝ := fun x => (-2 / (1 - x)) * (quadAltJclosed x / x)
+  have hqcont : ContinuousOn q (Ioo (0 : ℝ) 1) := by
+    intro x hx
+    have hJ := quadAltJclosed_continuousAt
+      (show x ∈ Ioo (-1 : ℝ) 1 by constructor <;> linarith [hx.1, hx.2])
+    exact ((continuousAt_const.div (by fun_prop)
+      (sub_ne_zero.mpr (Ne.symm (ne_of_lt hx.2)))).mul
+      (hJ.div continuousAt_id (ne_of_gt hx.1))).continuousWithinAt
+  have hq0 : Tendsto q (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    have hfac : Tendsto (fun x : ℝ => -2 / (1 - x))
+        (𝓝[>] (0 : ℝ)) (𝓝 (-2)) := by
+      have hc : ContinuousAt (fun x : ℝ => -2 / (1 - x)) 0 := by
+        exact continuousAt_const.div (by fun_prop) (by norm_num)
+      simpa using hc.tendsto.mono_left nhdsWithin_le_nhds
+    simpa [q] using hfac.mul quadNonAltJ_slope_tendsto_zero
+  have hmid := (hqcont (1 / 2) (by norm_num)).continuousAt
+    (Ioo_mem_nhds (by norm_num) (by norm_num))
+  have hleft0 : IntervalIntegrable (fun x : ℝ => Real.log x * q x)
+      MeasureTheory.volume 0 (1 / 2) :=
+    IntervalIntegrable.mul_of_continuousOn_Ioo_of_tendsto (by norm_num)
+      (intervalIntegral.intervalIntegrable_log' :
+        IntervalIntegrable Real.log MeasureTheory.volume 0 (1 / 2))
+      (hqcont.mono (by intro x hx; exact ⟨hx.1, by linarith [hx.2]⟩))
+      hq0 (hmid.tendsto.mono_left nhdsWithin_le_nhds)
+  have hleft : IntervalIntegrable
+      (fun x : ℝ => -2 * (Real.log x / (x * (1 - x))) * quadAltJclosed x)
+      MeasureTheory.volume 0 (1 / 2) := by
+    apply hleft0.congr_ae
+    filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_uIoc] with x hx
+    have hx' : x ∈ Ioc (0 : ℝ) (1 / 2) := by
+      simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1 / 2)] using hx
+    have hx0 : 0 < x := hx'.1
+    have hx1 : x < 1 := by linarith [hx'.2]
+    unfold q
+    field_simp [ne_of_gt hx0,
+      sub_ne_zero.mpr (Ne.symm (ne_of_lt hx1))]
+  let g : ℝ → ℝ := fun x => -2 * Real.log x / (x * (1 - x))
+  have hgcont : ContinuousOn g (Ioo (1 / 2 : ℝ) 1) := by
+    intro x hx
+    have hx0 : 0 < x := by linarith [hx.1]
+    have hxne : x ≠ 0 := ne_of_gt hx0
+    have h1x : 1 - x ≠ 0 := sub_ne_zero.mpr (Ne.symm (ne_of_lt hx.2))
+    have hden : x * (1 - x) ≠ 0 := mul_ne_zero hxne h1x
+    have hdencont : ContinuousAt (fun y : ℝ => y * (1 - y)) x := by fun_prop
+    exact ((Real.continuousAt_log hxne).const_mul
+      (-2)).div hdencont
+      hden |>.continuousWithinAt
+  have hgmid' : Tendsto g (𝓝[>] (1 / 2 : ℝ))
+      (𝓝 (-2 * Real.log (1 / 2) / ((1 / 2) * (1 - 1 / 2)))) := by
+    have hc : ContinuousAt g (1 / 2) := by
+      unfold g
+      exact ((Real.continuousAt_log (by norm_num)).const_mul (-2)).div
+        (by fun_prop) (by norm_num)
+    exact hc.tendsto.mono_left nhdsWithin_le_nhds
+  have hgone : Tendsto g (𝓝[<] (1 : ℝ)) (𝓝 2) := by
+    have hslope : Tendsto (fun x : ℝ => Real.log x / (x - 1))
+        (𝓝[<] (1 : ℝ)) (𝓝 1) := by
+      exact (slope_tendsto_of_hasDerivAt_eq_zero Real.log 1 1
+        (by simpa using Real.hasDerivAt_log (by norm_num : (1 : ℝ) ≠ 0))
+        Real.log_one).mono_left (nhdsWithin_mono _ (fun x hx => ne_of_lt hx))
+    have hxlim : Tendsto (fun x : ℝ => x) (𝓝[<] (1 : ℝ)) (𝓝 1) :=
+      tendsto_id.mono_left nhdsWithin_le_nhds
+    have h := hslope.div hxlim (by norm_num) |>.const_mul 2
+    norm_num at h
+    refine h.congr' ?_
+    filter_upwards [self_mem_nhdsWithin,
+      (eventually_gt_nhds (show (0 : ℝ) < 1 by norm_num)).filter_mono
+        nhdsWithin_le_nhds] with x hx1 hx0
+    have hx1' : x < 1 := hx1
+    have hxne : x ≠ 0 := ne_of_gt hx0
+    have hm : x - 1 ≠ 0 := sub_ne_zero.mpr (ne_of_lt hx1')
+    have h1m : 1 - x ≠ 0 := sub_ne_zero.mpr (Ne.symm (ne_of_lt hx1'))
+    unfold g
+    field_simp [hxne, hm, h1m]
+    ring
+  have hright0 : IntervalIntegrable
+      (fun x : ℝ => quadAltJclosed x * g x)
+      MeasureTheory.volume (1 / 2) 1 :=
+    IntervalIntegrable.mul_of_continuousOn_Ioo_of_tendsto (by norm_num)
+      quadNonAltJ_intervalIntegrable_half_one hgcont hgmid' hgone
+  have hright : IntervalIntegrable
+      (fun x : ℝ => g x * quadAltJclosed x)
+      MeasureTheory.volume (1 / 2) 1 := by
+    simpa only [mul_comm] using hright0
+  have hUJ : IntervalIntegrable
+      (fun x : ℝ => -2 * (Real.log x / (x * (1 - x))) * quadAltJclosed x)
+      MeasureTheory.volume 0 1 := by
+    apply hleft.trans
+    convert hright using 1
+    funext x
+    unfold g
+    ring
+  apply hUJ.congr_ae
+  filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_uIoc,
+    MeasureTheory.Measure.ae_ne
+      (MeasureTheory.volume.restrict (Set.uIoc (0 : ℝ) 1)) (0 : ℝ),
+    MeasureTheory.Measure.ae_ne
+      (MeasureTheory.volume.restrict (Set.uIoc (0 : ℝ) 1)) (1 : ℝ)]
+      with x hx hx0 hx1
+  have hx' : x ∈ Ioc (0 : ℝ) 1 := by
+    simpa [Set.uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using hx
+  exact (quadNonAltCoeffKernel_eq_UJ hx'.1
+    (lt_of_le_of_ne hx'.2 hx1)).symm
+
+private theorem quadNonAltUD_intervalIntegrable :
+    IntervalIntegrable (fun x : ℝ => 2 * quadNonAltU x * quadNonAltDplus x)
+      MeasureTheory.volume 0 1 := by
+  let q : ℝ → ℝ := fun x =>
+    -2 * quadNonAltA x - 4 * quadNonAltB x +
+      8 * quadNonAltC x + 4 * quadNonAltD x -
+      4 * quadNonAltE x - 4 * quadNonAltF x
+  have hq : IntervalIntegrable q MeasureTheory.volume 0 1 :=
+    (((((quadNonAltA_intervalIntegrable.const_mul (-2)).sub
+      (quadNonAltB_intervalIntegrable.const_mul 4)).add
+      (quadNonAltC_intervalIntegrable.const_mul 8)).add
+      (quadNonAltD_intervalIntegrable.const_mul 4)).sub
+      (quadNonAltE_intervalIntegrable.const_mul 4)).sub
+      (quadNonAltF_intervalIntegrable.const_mul 4)
+  apply IntervalIntegrable.congr (f := q) ?_ hq
+  intro x _
+  dsimp [q]
+  rw [quadNonAlt_U_Dplus_ledger]
+  unfold quadNonAltA quadNonAltB quadNonAltC quadNonAltD quadNonAltE
+    quadNonAltF
+  ring
+
+private def quadNonAltIBPPrimitive (x : ℝ) : ℝ :=
+  -2 * quadNonAltU x * quadAltJclosed x
+
+private theorem quadNonAltIBPPrimitive_hasDerivAt
+    {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    HasDerivAt quadNonAltIBPPrimitive
+      ((-Real.log x) / x * quadAltQclosed x -
+        2 * quadNonAltU x * quadNonAltDplus x) x := by
+  have hU := (quadNonAltU_hasDerivAt hx0 hx1).const_mul (-2)
+  have hJ := quadNonAltJclosed_hasDerivAt hx0 hx1
+  unfold quadNonAltIBPPrimitive
+  convert hU.mul hJ using 1
+  rw [quadNonAltCoeffKernel_eq_UJ hx0 hx1]
+  ring
+
+private theorem quadNonAltIBPPrimitive_tendsto_zero :
+    Tendsto quadNonAltIBPPrimitive (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have h := (quadNonAltU_mul_self_tendsto_zero.mul
+    quadNonAltJ_slope_tendsto_zero).const_mul (-2)
+  norm_num at h
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hxne : x ≠ 0 := ne_of_gt hx
+  unfold quadNonAltIBPPrimitive
+  field_simp [hxne]
+
+private theorem quadNonAltIBPPrimitive_tendsto_one :
+    Tendsto quadNonAltIBPPrimitive (𝓝[<] (1 : ℝ)) (𝓝 0) := by
+  have h := (quadNonAltU_div_oneSub_tendsto_one.mul
+    quadNonAltJ_mul_oneSub_tendsto_zero).const_mul (-2)
+  norm_num at h
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with x hx
+  have hne : 1 - x ≠ 0 := sub_ne_zero.mpr (ne_of_gt hx)
+  unfold quadNonAltIBPPrimitive
+  field_simp [hne]
+
+private theorem quadNonAltCoeffIntegral_eq_UD :
+    (∫ x : ℝ in 0..1, (-Real.log x) / x * quadAltQclosed x) =
+      ∫ x : ℝ in 0..1, 2 * quadNonAltU x * quadNonAltDplus x := by
+  have hint := quadNonAltCoeffKernel_intervalIntegrable.sub
+    quadNonAltUD_intervalIntegrable
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (a := (0 : ℝ)) (b := 1) (f := quadNonAltIBPPrimitive)
+    (f' := fun x : ℝ =>
+      (-Real.log x) / x * quadAltQclosed x -
+        2 * quadNonAltU x * quadNonAltDplus x)
+    (by norm_num)
+    (fun x hx => quadNonAltIBPPrimitive_hasDerivAt hx.1 hx.2)
+    hint quadNonAltIBPPrimitive_tendsto_zero quadNonAltIBPPrimitive_tendsto_one
+  norm_num at hFTC
+  rw [intervalIntegral.integral_sub quadNonAltCoeffKernel_intervalIntegrable
+    quadNonAltUD_intervalIntegrable] at hFTC
+  linarith
+
+private theorem quadNonAltUD_integral :
+    (∫ x : ℝ in 0..1, 2 * quadNonAltU x * quadNonAltDplus x) =
+      5 * quadAltK +
+        12 * Real.log 2 ^ 2 * (Real.pi ^ 2 / 6) -
+        (35 / 2 : ℝ) * Real.log 2 * zeta3_24 +
+        (8 / 5 : ℝ) * (Real.pi ^ 2 / 6) ^ 2 := by
+  let q : ℝ → ℝ := fun x =>
+    -2 * quadNonAltA x - 4 * quadNonAltB x +
+      8 * quadNonAltC x + 4 * quadNonAltD x -
+      4 * quadNonAltE x - 4 * quadNonAltF x
+  have h0 := quadNonAltA_intervalIntegrable.const_mul (-2)
+  have h1 := h0.sub (quadNonAltB_intervalIntegrable.const_mul 4)
+  have h2 := h1.add (quadNonAltC_intervalIntegrable.const_mul 8)
+  have h3 := h2.add (quadNonAltD_intervalIntegrable.const_mul 4)
+  have h4 := h3.sub (quadNonAltE_intervalIntegrable.const_mul 4)
+  have hq := h4.sub (quadNonAltF_intervalIntegrable.const_mul 4)
+  have heq :
+      (∫ x : ℝ in 0..1, 2 * quadNonAltU x * quadNonAltDplus x) =
+        ∫ x : ℝ in 0..1, q x := by
+    apply intervalIntegral.integral_congr
+    intro x _
+    dsimp [q]
+    rw [quadNonAlt_U_Dplus_ledger]
+    unfold quadNonAltA quadNonAltB quadNonAltC quadNonAltD quadNonAltE
+      quadNonAltF
+    ring
+  rw [heq]
+  dsimp [q]
+  rw [intervalIntegral.integral_sub h4
+      (quadNonAltF_intervalIntegrable.const_mul 4),
+    intervalIntegral.integral_sub h3
+      (quadNonAltE_intervalIntegrable.const_mul 4),
+    intervalIntegral.integral_add h2
+      (quadNonAltD_intervalIntegrable.const_mul 4),
+    intervalIntegral.integral_add h1
+      (quadNonAltC_intervalIntegrable.const_mul 8),
+    intervalIntegral.integral_sub h0
+      (quadNonAltB_intervalIntegrable.const_mul 4)]
+  repeat' rw [intervalIntegral.integral_const_mul]
+  rw [quadNonAltA_integral, quadNonAltB_integral, quadNonAltC_integral,
+    quadNonAltD_integral, quadNonAltE_integral, quadNonAltF_integral]
+  ring
+
+private theorem quadNonAltCoeffIntegral_eq_value :
+    (∫ x : ℝ in 0..1, (-Real.log x) / x * quadAltQclosed x) =
+      quadraticEulerValue24 := by
+  rw [quadNonAltCoeffIntegral_eq_UD, quadNonAltUD_integral, quadAltK_eq]
+  unfold quadraticEulerValue24 alternatingCubicLinearEulerValue24
+    cubicLinearEulerValue24
+  ring
+
+theorem quadraticEulerTerm24_hasSum :
+    HasSum quadraticEulerTerm24 quadraticEulerValue24 := by
+  have htsum : (∑' n : ℕ, quadraticEulerTerm24 n) = quadraticEulerValue24 := by
+    rw [quadNonAlt_tsum_eq_coeff_integral, quadNonAltCoeffIntegral_eq_value]
+  rw [← htsum]
+  exact summable_quadraticEulerTerm24.hasSum
 
 end RamanujanChallenge.P24QuadAlt
