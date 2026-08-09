@@ -464,7 +464,7 @@ $c$ & $k$ needed & status \\
 \midrule
 $2/3$ & $7$ & proved (gap polynomial) \\
 $3/5$ & $6$ & proved (corank + First Lemma) \\
-$1/2$ & 5 & conditional on $\mathrm{GM}^{\mathrm{tr}}$ (\S\ref{ssec:quadcorank}) \\
+$1/2$ & 5 & conditional on $\mathrm{AC}^{\mathrm{tr}}$ (\S\ref{ssec:quadcorank}) \\
 $o(1)$ & $3$ & requires parity-breaking \\
 \bottomrule
 \end{tabular}
@@ -483,9 +483,14 @@ $S_{h_1,h_2}$ with $S_{h_1,h_2+h_3}$.  This removes the literal
 self-gcd, but a second degeneracy remains when $h_3=h_1$: if $h_2$
 is even, the central factor of $N_{h_2}$ propagates into both
 resultants (Proposition~\ref{prop:meso-center-recurrence}).  The
-transverse formulation below deflates that linear factor.  The still
-more singular arithmetic-progression case $h_1=h_2=h_3$ has only one
-gap parameter and is handled directly by a single resultant.
+transverse formulation below deflates that linear factor.  It then
+replaces the scalar gcd of two resultants by the coefficient content of
+one pencil resultant.  This aligned content records that the \emph{same}
+starting point is a root of all three gap polynomials, rather than merely
+that the same prime divides two resultants for possibly unrelated roots.
+The still more singular arithmetic-progression case
+$h_1=h_2=h_3$ has only one gap parameter and is handled directly by a
+single resultant.
 The separate obstruction at the triple level is that
 $U_{h_1,h_2}
 = \operatorname{Res}(N_{h_1}, N_{h_1+h_2})$ factors as
@@ -592,6 +597,114 @@ consecutive inside one partition interval is also consecutive in the
 full zero set, proving the asserted global uniqueness.
 \end{proof}
 
+\begin{definition}[Aligned pencil content]\label{def:qc-aligned}
+For $a,b,c\ge2$ that are not all equal, define three
+polynomials in $\mathbb Z[x]$ by
+\[
+ (F_{a,b,c},G_{a,b,c},J_{a,b,c})=
+ \begin{cases}
+ \bigl(N_a(x),N_b(x+a),N_{b+c}(x+a)\bigr),&c\ne a,\\
+ \bigl(N_a(x),N_b^\circ(x+a),N_{a+b}(x+a)\bigr),
+     &c=a,\ a\ne b.
+ \end{cases}
+\]
+Put
+\[
+ \mathcal R_{a,b,c}(T)
+  =\operatorname{Res}_x\bigl(F_{a,b,c},G_{a,b,c}+T J_{a,b,c}\bigr)
+  \in\mathbb Z[T],
+ \qquad
+ \mathcal C_{a,b,c}=\operatorname{cont}_T\mathcal R_{a,b,c},
+\]
+where $\operatorname{cont}_T$ denotes the positive gcd of all integer
+coefficients.  Relative to an ambient height~$H$, let
+$\mathcal C^*_{a,b,c}$ be obtained from $\mathcal C_{a,b,c}$ by
+removing its full prime-power part supported on~$\mathfrak U_H$.
+\end{definition}
+
+\begin{lemma}[Aligned-content valuation]\label{lem:qc-aligned}
+Let $F,G,J\in\mathbb Z[x]$ have positive generic degrees, let
+\[
+ \mathcal R(T)=\operatorname{Res}_x(F,G+TJ)\ne0,
+ \qquad \mathcal C=\operatorname{cont}_T\mathcal R,
+\]
+and suppose that $\overline F\ne0$ in $\mathbb F_p[x]$.  If
+$\overline F,\overline G,\overline J$ have $t$ distinct common roots
+in~$\mathbb F_p$, then
+\begin{equation}\label{eq:qc-aligned-valuation}
+ t\le v_p(\mathcal C).
+\end{equation}
+No simplicity assumption on those roots is required.
+
+Moreover, every pencil in Definition~\ref{def:qc-aligned} is nonzero,
+and after saturation one has
+\begin{equation}\label{eq:qc-aligned-divisibility}
+ \mathcal C^*_{a,b,c}\mid
+ \begin{cases}
+  \gcd(S^*_{a,b},S^*_{a,b+c}),&c\ne a,\\
+  \gcd(D^*_{a,b},S^*_{a,a+b}),&c=a,\ a\ne b.
+ \end{cases}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Equip $K=\mathbb Q_p(T)$ with the Gauss valuation
+\[
+ v_{\mathrm G}\!\left(\sum_jq_jT^j\right)=\min_jv_p(q_j)
+\]
+and extend it to rational functions.  Its valuation ring is a discrete
+valuation ring with uniformizer~$p$ and residue field
+$k=\mathbb F_p(T)$.  Write $m=\deg F$ and
+$n=\max(\deg G,\deg J)$.  Over this valuation ring the generic
+Sylvester map is
+\[
+ \Phi:\mathcal O[x]_{<n}\oplus\mathcal O[x]_{<m}
+ \longrightarrow\mathcal O[x]_{<m+n},
+ \qquad (A,B)\longmapsto AF+B(G+TJ),
+\]
+and its determinant is $\pm\mathcal R(T)$.
+
+Let $\alpha_1,\ldots,\alpha_t$ be the common roots in~$\mathbb F_p$.
+Evaluation at each~$\alpha_i$ defines a $k$-linear functional on the
+target of $\overline\Phi$, and all these functionals annihilate its
+image.  They are linearly independent: since $\overline F\ne0$, one
+has $t\le\deg\overline F\le m$, and Lagrange interpolation separates
+the $t$ evaluation maps on $k[x]_{<m+n}$.  Thus
+$\overline\Phi$ has corank at least~$t$.  Smith normal form over the
+Gauss valuation ring gives
+\[
+ v_{\mathrm G}(\det\Phi)\ge t.
+\]
+If $\mathcal R(T)=\sum_jr_jT^j$, then
+\[
+ v_{\mathrm G}(\mathcal R)=\min_jv_p(r_j)
+ =v_p\!\left(\gcd_jr_j\right)=v_p(\mathcal C),
+\]
+which proves~\eqref{eq:qc-aligned-valuation}.  Notice that the
+Sylvester matrix has its generic size before reduction; a drop of a
+leading coefficient modulo~$p$ cannot invalidate this corank argument.
+
+For the pencils in Definition~\ref{def:qc-aligned}, put
+$d_F=\deg F_{a,b,c}$, $d_G=\deg G_{a,b,c}$, and
+$d_J=\deg J_{a,b,c}$.  In both cases $d_J>d_G$, and specialization of
+the generic-degree resultant gives
+\[
+ \mathcal R_{a,b,c}(0)
+ =\operatorname{lc}(F_{a,b,c})^{d_J-d_G}
+   \operatorname{Res}_x(F_{a,b,c},G_{a,b,c}),
+\]
+whereas the coefficient of $T^{d_F}$ is
+$\operatorname{Res}_x(F_{a,b,c},J_{a,b,c})$.  The former resultant is
+$S_{a,b}$ off the palindromic slice and $D_{a,b}$ on that slice, up to
+sign; the latter is $S_{a,b+c}$, again up to sign.  They are nonzero by
+Corollary~\ref{cor:atomtail-firstlemma} and
+Lemma~\ref{lem:qc-deflation}.  Hence the pencil resultant is nonzero.
+Its content divides both displayed endpoint coefficients.  Finally,
+$\operatorname{lc}(F_{a,b,c})=V_a$, whose prime support is included in
+$\mathfrak U_H$.  Removing all $\mathfrak U_H$-supported prime powers
+therefore gives~\eqref{eq:qc-aligned-divisibility}.
+\end{proof}
+
 \begin{lemma}[Rank of apparition]\label{lem:qc-rank}
 For $p\nmid6$, put $\chi(p)=(2/p)$.  Then
 $p\mid V_n\iff\rho(p)\mid n$ for an integer
@@ -641,22 +754,25 @@ least $\log X$ to the logarithm of this product, which proves the
 result.
 \end{proof}
 
-\begin{hypothesis}[Transverse reduced gcd-mass, $\mathrm{GM}^{\mathrm{tr}}$]
-\label{hyp:qc-gm}
+\begin{hypothesis}[Transverse aligned-content mass,
+$\mathrm{AC}^{\mathrm{tr}}$]\label{hyp:qc-ac}
 With
 \[
-\begin{split}
- \mathcal M_{\mathrm{tr}}(H)
- := {}&
- \sum_{\substack{a,b,c\ge2,\ a+b+c\le H\\c\ne a}}
- \log\gcd(S^*_{a,b},S^*_{a,b+c})\\
- &+
- \sum_{\substack{a,b\ge2,\ 2a+b\le H\\a\ne b}}
- \log\gcd(D^*_{a,b},S^*_{a,a+b}),
-\end{split}
+ \mathcal A_{\mathrm{tr}}(H)
+ :=
+ \sum_{\substack{a,b,c\ge2,\ a+b+c\le H\\
+                   \neg(a=b=c)}}
+ \log \mathcal C^*_{a,b,c},
 \]
-one has $\mathcal M_{\mathrm{tr}}(H)\ll H^{3+o(1)}$.
+one has $\mathcal A_{\mathrm{tr}}(H)\ll H^{3+o(1)}$.
 \end{hypothesis}
+
+By~\eqref{eq:qc-aligned-divisibility}, this hypothesis is no stronger
+than the earlier scalar reduced gcd-mass hypothesis
+$\mathrm{GM}^{\mathrm{tr}}$: the latter implies
+$\mathrm{AC}^{\mathrm{tr}}$ term by term.  The aligned formulation is the
+one actually used below because it retains common-root multiplicity
+without charging coincidences at unrelated roots.
 
 \begin{remark}[Computational support]
 The exact audit in \texttt{quadcorank\_verify.py} exposes the diagonal
@@ -666,16 +782,23 @@ $H^3$ is already $3.842321$.  The na\"ive skipped-triple repair also
 fails its scaling gate: its $c=a$ slice divided by $H^4$ is
 $0.004833$ at $H=32$, exactly where the propagated central factors
 occur.  After central deflation and removal of the one-parameter
-arithmetic-progression slice, the ratio
-$\mathcal M_{\mathrm{tr}}(H)/H^3$ is $0.005569$ at $H=20$ and
-$0.014732$ at $H=32$.  The separately treated progression certificate
-mass, divided by $H^3$, is respectively $0.183084$ and $0.262265$.
-These exact finite computations support, but of course do not prove,
-$\mathrm{GM}^{\mathrm{tr}}$.
+arithmetic-progression slice, the scalar ratio is $0.005569$ at $H=20$
+and $0.014732$ at $H=32$.
+
+The independent exact audit in
+\texttt{aligned\_corank\_verify.py} computes the full polynomial
+$\mathcal R_{a,b,c}(T)\in\mathbb Z[T]$, not a gcd of sampled values.
+It finds $\mathcal C^*_{a,b,c}=1$ for every triple through $H=14$.
+At $H=20$, only two of the $675$ non-arithmetic-progression triples
+have nontrivial reduced content, both equal to~$653$, and
+$\mathcal A_{\mathrm{tr}}(20)/20^3=0.001620394$.  At $H=24$, only
+$18$ of $1323$ triples are nontrivial and the corresponding ratio is
+$0.007248253$.  These finite computations support, but of course do
+not prove, $\mathrm{AC}^{\mathrm{tr}}$.
 \end{remark}
 
 \begin{theorem}[Quadruple corank bound]\label{thm:qc-main}
-Assume $\mathrm{GM}^{\mathrm{tr}}$.  Then
+Assume $\mathrm{AC}^{\mathrm{tr}}$.  Then
 $\sum_{X<p\le2X}Z(p)\ll X^{3/2+o(1)}$,
 i.e., average $Z(p)\ll p^{1/2+o(1)}$.
 \end{theorem}
@@ -709,27 +832,30 @@ would make $N_h$ the zero polynomial modulo~$p$.
 For completeness, if two integer polynomials $f,g$, both nonzero
 modulo~$p$, have $t$ distinct common roots modulo~$p$, evaluation at
 those roots gives $t$ independent linear functionals annihilating the
-image of the Sylvester map.  Hence its reduction modulo~$p$ has corank
-at least~$t$.  Smith normal form then gives
-$v_p(\operatorname{Res}(f,g))\ge t$ whenever the integer resultant is
-nonzero.  This argument remains valid when a leading coefficient drops
-modulo~$p$; a projective root at infinity can only increase the
-corank.
+image of the fixed, characteristic-zero-size Sylvester map.  Hence its
+reduction modulo~$p$ has corank at least~$t$.  Smith normal form then
+gives $v_p(\operatorname{Res}(f,g))\ge t$ whenever the integer
+resultant is nonzero.  A leading-coefficient drop after reduction does
+not change this fixed matrix or destroy any of the evaluation
+functionals.
 
 Fix $p\notin\mathcal E_H$, write a gap triple as $(a,b,c)$, and let
 $t_p(a,b,c)$ be the number of its selected starting points.  If
-$c\ne a$, Lemma~\ref{lem:qc-cert} and the preceding corank argument
-give
+$c\ne a$, every such starting point is a common root of the three
+polynomials in the first line of Definition~\ref{def:qc-aligned}.
+Lemma~\ref{lem:qc-aligned} gives
 \[
  t_p(a,b,c)
- \le v_p\!\left(\gcd(S_{a,b},S_{a,b+c})\right).
+ \le v_p(\mathcal C_{a,b,c}).
 \]
 If $c=a$ and $a\ne b$, let $e_p(a,b)$ be the number of those starts
 that satisfy~\eqref{eq:qc-central-start}.  Lemma~\ref{lem:qc-deflation}
-and the corank argument give
+shows that every remaining start is a common root of the three
+polynomials in the second line of Definition~\ref{def:qc-aligned}, so
+the aligned-content lemma gives
 \[
  t_p(a,b,a)-e_p(a,b)
- \le v_p\!\left(\gcd(D_{a,b},S_{a,a+b})\right),
+ \le v_p(\mathcal C_{a,b,a}),
  \qquad
  \sum_{a,b}e_p(a,b)\le1.
 \]
@@ -737,14 +863,11 @@ Finally, if $a=b=c$, the first three zeros already make every start a
 common root of $N_a(x)$ and $N_a(x+a)$, whence
 $t_p(a,a,a)\le v_p(S_{a,a})$.  Summing the three classes yields
 \begin{equation}\label{eq:qc-valuation}
- \begin{split}
- Q_p(H)-1\le{}&
- \sum_{\substack{a,b,c\ge2,\ a+b+c\le H\\c\ne a}}
- v_p\!\left(\gcd(S_{a,b},S_{a,b+c})\right)\\
- &+\sum_{\substack{a,b\ge2,\ 2a+b\le H\\a\ne b}}
- v_p\!\left(\gcd(D_{a,b},S_{a,a+b})\right)
+ Q_p(H)-1\le
+ \sum_{\substack{a,b,c\ge2,\ a+b+c\le H\\
+                  \neg(a=b=c)}}
+ v_p(\mathcal C_{a,b,c})
  +\sum_{\substack{a\ge2\\3a\le H}}v_p(S_{a,a}).
- \end{split}
 \end{equation}
 
 It remains to retain this valuation information at primes dividing the
@@ -768,14 +891,11 @@ Equations~\eqref{eq:qc-block-lower} and~\eqref{eq:qc-valuation}
 therefore imply, uniformly for
 $p\in\mathcal P_X(T)\setminus\mathcal E_H$,
 \begin{equation}\label{eq:qc-level-certificates}
- \begin{split}
- \frac T3\le{}&
- \sum_{\substack{a,b,c\ge2,\ a+b+c\le H\\c\ne a}}
- v_p\!\left(\gcd(S_{a,b},S_{a,b+c})\right)\\
- &+\sum_{\substack{a,b\ge2,\ 2a+b\le H\\a\ne b}}
- v_p\!\left(\gcd(D_{a,b},S_{a,a+b})\right)
+ \frac T3\le
+ \sum_{\substack{a,b,c\ge2,\ a+b+c\le H\\
+                  \neg(a=b=c)}}
+ v_p(\mathcal C_{a,b,c})
  +\sum_{\substack{a\ge2\\3a\le H}}v_p(S_{a,a}).
- \end{split}
 \end{equation}
 
 For $p\notin\mathcal E_H$, saturation changes none of the
@@ -789,7 +909,7 @@ the general resultant-height estimate quoted above gives
 Summing over
 $\mathcal P_X(T)\setminus\mathcal E_H$, then using
 $\sum_{X<p\le2X}v_p(M)\le\log|M|/\log X$ and
-$\mathrm{GM}^{\mathrm{tr}}$, gives
+$\mathrm{AC}^{\mathrm{tr}}$, gives
 \[
  \frac T3\,|\mathcal P_X(T)\setminus\mathcal E_H|
  \ll\frac{H^{3+o(1)}}{\log X}.
@@ -820,7 +940,7 @@ Together with~\eqref{eq:qc-low-level}, this proves the theorem.
 \end{proof}
 
 \begin{corollary}[Moment threshold $k=5$]
-Under $\mathrm{GM}^{\mathrm{tr}}$, $(\mathrm{HM})_5$ implies
+Under $\mathrm{AC}^{\mathrm{tr}}$, $(\mathrm{HM})_5$ implies
 $G_n=e^{o(n)}$ for every~$n$.
 \end{corollary}
 
@@ -848,8 +968,10 @@ The quadruple is the first configuration supplying two potentially
 transverse certificates.  The adjacent self-gcd, the propagated
 palindromic center, and the one-parameter arithmetic-progression slice
 must all be removed as above.  The remaining input is precisely the
-arithmetic gcd-mass estimate $\mathrm{GM}^{\mathrm{tr}}$; higher tuples
-give strictly weaker exponents within the same corank bookkeeping.
+aligned-content estimate $\mathrm{AC}^{\mathrm{tr}}$; the older scalar
+gcd-mass estimate is a sufficient but unnecessarily strong version.
+Higher tuples give strictly weaker exponents within the same corank
+bookkeeping.
 \end{remark}
 
 \subsection{The parity barrier and the central open problem}

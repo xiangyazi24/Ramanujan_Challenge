@@ -45,38 +45,43 @@ such centered configuration per prime.  The remaining slice
 \(a=b=c\) has only one parameter and is controlled unconditionally by
 \(\sum_{3a\le H}\log|S_{a,a}|\ll H^3\log H\).
 
-The new live hypothesis is the genuinely transverse mass
+The scalar repair still charges a prime that divides its two resultants at
+unrelated roots.  The exact same-root invariant is instead
 
 \[
- \mathrm{GM}^{\mathrm{tr}}:\quad
- \sum_{\substack{a+b+c\le H\\c\ne a}}
- \log\gcd(S^*_{a,b},S^*_{a,b+c})
- +\sum_{\substack{2a+b\le H\\a\ne b}}
- \log\gcd(D^*_{a,b},S^*_{a,a+b})
- \ll H^{3+o(1)}.
+ \mathcal C_{a,b,c}=\operatorname{cont}_T
+ \operatorname{Res}_x(F_{a,b,c},G_{a,b,c}+T J_{a,b,c}),
 \]
 
-The exact ratio of this mass to \(H^3\) is \(0.005569\) at \(H=20\)
-and \(0.014732\) at \(H=32\).  This is evidence, not a proof.  The full
-conditional implication has been repaired around
-\(\mathrm{GM}^{\mathrm{tr}}\); proving this mass bound remains the live
+where off the palindromic slice
+\((F,G,J)=(N_a,N_b(\cdot+a),N_{b+c}(\cdot+a))\), while on
+\(c=a\ne b\) the middle polynomial is
+\(N_b^\circ(\cdot+a)\).  A Gauss-DVR Sylvester argument proves that
+\(t\) distinct common roots force \(v_p(\mathcal C)\ge t\).  Moreover
+\(\mathcal C^*\) divides the corresponding saturated scalar gcd, because
+the constant and top coefficients of the pencil resultant are the two old
+resultants (up to a leading-coefficient power supported on
+\(\mathfrak U_H\)).
+
+The new live hypothesis is therefore the weaker, correctly aligned mass
+
+\[
+ \mathrm{AC}^{\mathrm{tr}}:\quad
+ \sum_{\substack{a,b,c\ge2,\ a+b+c\le H\\\neg(a=b=c)}}
+ \log \mathcal C^*_{a,b,c}\ll H^{3+o(1)}.
+\]
+
+Exact \(\mathbb Z[T]\) computation gives zero reduced mass through
+\(H=14\).  At \(H=20\), only 2 of 675 terms are nontrivial and the ratio
+of the mass to \(H^3\) is \(0.001620394\); at \(H=24\), only 18 of 1323
+terms are nontrivial and the ratio is \(0.007248253\).  This is evidence, not a
+proof.  The full conditional implication is now written around
+\(\mathrm{AC}^{\mathrm{tr}}\); proving this content bound remains the live
 arithmetic problem.
 
-Replace the prime-support saturation
-
-\[
-S^*_{h,k}=S_{h,k}/\gcd(S_{h,k},\mathfrak U_H^\infty)
-\]
-
-by an exact valuation-level factorization.  Determine whether four actual
-Apéry zeros force a (p)-adic valuation strictly above the predictable
-factorial/Apéry/Lucas content in both adjacent resultants.  This would retain
-the detecting prime after structural factors are divided out.
-
-- Success: prove a primitive quadruple certificate whose total logarithmic
-  gcd mass is (H^{3+o(1)}), including primes dividing the structural carrier,
-  and derive the full (X^{3/2+o(1)}) dyadic zero-mass bound with every step
-  written in `atom_tail_section.tex`.
+- Success: prove the aligned-content mass is \(H^{3+o(1)}\), or dominate it
+  by a global carrier of that height.  The level-adaptive proof then gives
+  the full \(X^{3/2+o(1)}\) dyadic zero-mass bound.
 - Proof-of-failure: exhibit an infinite or parametrically growing family in
   which an actual four-zero witness contributes no excess valuation beyond
   structural content, or prove that the primitive valuation statement is
@@ -95,7 +100,7 @@ Then the exceptional-prime count gives level mass
 
 whose sum over $T=2^k\sqrt X$ is $O(X^{3/2}/\log X)$.  The
 generic part is $O(H^{3+o(1)}/\log X)$ under
-$\mathrm{GM}^{\mathrm{tr}}$, and its level sum is $X^{3/2+o(1)}$.
+$\mathrm{AC}^{\mathrm{tr}}$, and its level sum is $X^{3/2+o(1)}$.
 This closes the exceptional-mass gap in the conditional implication; the
 complete proof is now in `atom_tail_section.tex`.
 
@@ -118,6 +123,21 @@ summand is $Z(p)$.
   problem.
 
 ### (c) Unbounded Cartier--Frobenius compression
+
+**Fixed-depth subavenue: terminal failure (Q7104, 2026-08-09).**  Lucas
+gives the exact Boolean-OR law
+
+\[
+ b_{\sum_i n_ip^i}\equiv0\pmod p
+ \quad\Longleftrightarrow\quad
+ \text{some }n_i\in Z(p),
+\]
+
+and hence zero density \(1-(1-Z(p)/p)^d\) at depth~\(d\).  Singular
+blocks are entirely zero and regular blocks merely copy the base atom.
+Thus every fixed-depth Cartier tower describes descendants of the atom but
+places no restriction on the base set \(Z(p)\).  Only an unbounded-order
+compression could still be new.
 
 Search the full block jet, not another fixed (p)-adic digit, for a determinant
 or Casoratian eliminating the one new local coordinate introduced at each
@@ -143,7 +163,7 @@ branch has a low-height cross-prime carrier beyond pair certificates.
 
 ## Fallback after all four terminal verdicts
 
-Keep the conditional ($\mathrm{GM}^{\mathrm{tr}}$) statement only with a complete proof of
+Keep the conditional ($\mathrm{AC}^{\mathrm{tr}}$) statement only with a complete proof of
 its implication, correct any unconditional wording, and record the exact
 weighted-exceptional or unbounded-grade lemma that remains.  Do not replace the
 full conjecture by the weaker (p^{1/2}) average-zero milestone.

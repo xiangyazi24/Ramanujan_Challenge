@@ -381,3 +381,51 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   Its new canonical H=20 digest is
   6f7ba2a8f3542da4d0a051c698432a9c32124a1811ad8601837dfc1d87968b1a,
   and the exact check passes.
+
+### Same-root refinement: aligned content AC-tr (2026-08-09)
+
+- The scalar GM-tr gcd can still charge the same prime at unrelated roots.
+  For every non-AP gap triple define
+  `C_(a,b,c) = cont_T Res_x(F,G+T*J)`, using the center-deflated `G` on
+  `c=a!=b`.
+- Rigorous valuation lemma: over the Gauss DVR of `Q_p(T)`, `t` distinct
+  common roots of `F,G,J` give Sylvester corank at least `t`, hence
+  `v_p(C)>=t`.  The residue field is `F_p(T)`; this is not a specialization
+  at `T=0` and requires no root-simplicity assumption.
+- Degree-padding audit: since `deg J>deg G`, the constant coefficient is
+  `lc(F)^(deg J-deg G) Res(F,G)` and the top coefficient is `Res(F,J)`.
+  Since `lc(F)=V_a` is supported on the structural carrier, `C*` divides
+  the old saturated scalar gcd term by term.  AC-tr is therefore strictly
+  no stronger than GM-tr and is the exact same-root input needed by corank.
+- Added `aligned_corank_verify.py`, which computes exact resultants in
+  `ZZ[T]` and checks both endpoint identities and the divisibility into the
+  scalar gcd.  Canonical H=20 digest:
+  `c7174f329e889bbb1f999a235015042987e14575a2a9bff111fe2ed4e180af4f`.
+- Exact data: all reduced contents are 1 through H=14.  At H=20, only
+  `(2,4,14)` and `(14,4,2)` are nontrivial, both equal to 653, and
+  `sum log(C*)/H^3 = 0.001620394`.  At H=24, 18 of 1323 terms are
+  nontrivial and the ratio is `0.007248253276`.
+- A faster consecutive-segment pencil replaces `N_(b+c)(x+a)` by the
+  directly forced `N_c(x+a+b)`.  Its reduced contents agree termwise at
+  H=20.  An exact H=28 scan has only 22 nontrivial terms among 2292 and
+  mass ratio `0.005780475`; the residual support is `{131,157,653}`.
+  The continuant composition identity relates the two pencils, but its
+  cut-edge multiplier can vanish at primes dividing values
+  `N_a(-a-j)` that are not all supported on the present carrier.  Thus the
+  observed equality does not yet give a uniform reduced-content theorem,
+  and the direct pencil has not been used in the paper.
+- Replaced the paper's conditional hypothesis by AC-tr and rewrote the
+  aggregate valuation proof around aligned contents.  Arithmetic
+  progressions and the globally unique removed center remain treated as
+  before.
+
+### Q7104: fixed-depth Cartier zero lifting is terminally insufficient
+
+- Lucas gives the exact Boolean-OR law on base-p digits, with depth-d zero
+  density `1-(1-Z(p)/p)^d`.
+- Singular blocks are entirely zero; regular blocks only copy the base atom.
+  The p^4 companion law applies only on regular blocks and adds no atom
+  restriction on singular blocks.
+- Therefore every fixed-depth Cartier/Frobenius tower controls descendants
+  of `Z(p)` but cannot bound the base atom itself.  This closes the
+  fixed-depth branch; only an unbounded-order compression could differ.
