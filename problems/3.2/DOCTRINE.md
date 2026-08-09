@@ -65,3 +65,40 @@ Time-boxed one design pass. Structural insight only.
 
 Paper has density-1 + gap analysis. New results to add regardless:
 Theorem A, Lemma 1, the (AT″) collapse, the (HM)_3 reduction.
+
+## Active Lean run (2026-08-09, tmux prompt 12:52:29)
+
+### Goal
+
+Continue the faithful formalization in
+`lean/RamanujanChallenge/Problem32/Main.lean`: inspect its three real `sorry`
+declarations and close the easiest next dependency-frontier theorem without
+adding axioms or strengthening statements beyond the mathematics proved in
+`proof.tex`.  The immediate context is the completed aligned-corank and
+mesoscopic-census work.
+
+### Ranked avenues
+
+1. **(a) Dependency-frontier closure.** Audit the actual theorem dependency
+   graph and attack the earliest remaining `sorry` whose paper proof and Lean
+   prerequisites are already present, starting with consequences of aligned
+   corank and the mesoscopic census.  Search the repository and Mathlib before
+   building new infrastructure.
+2. **(b) Faithful arithmetic bridge.** If the frontier lemma is missing a
+   genuine bridge, isolate the exact statement from `proof.tex`, prove it as a
+   documented reusable lemma, and reconnect the existing downstream theorem.
+3. **(c) Obstruction theorem / narrower reduction.** If a target cannot follow
+   from the encoded hypotheses, prove a checked counterexample or reduce it to
+   one strictly narrower explicit arithmetic interface; do not hide the gap in
+   a carried hypothesis.
+
+### Terminal conditions
+
+- **Success:** the selected frontier `sorry` is gone, the single-file Lean
+  check passes with one fewer warning, and its downstream theorem is
+  axiom-audited.
+- **Avenue failure:** a checked counterexample, dependency-cycle proof, or
+  precise reduction shows the avenue cannot close the next frontier theorem;
+  record it and continue with the next ranked avenue.
+- **Hard stop:** only a destructive/external action outside the repository or
+  genuinely missing owner-only information blocks further work.

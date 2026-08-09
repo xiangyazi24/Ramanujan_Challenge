@@ -23,7 +23,7 @@ P2.2 and P2.3 have since been **rebuilt with real content** — see below.
 
 ## Status
 
-- **Genuine `sorry`s** (declared-hard statements): P24 (1), P25 (1), P28 (1), P32 (3).
+- **Genuine `sorry`s** (declared-hard statements): P24 (1), P25 (1), P28 (1), P32 (2).
 - **Genuinely proved**: P2.1, P2.2, P2.3, and P2.6 (all unconditional),
   plus the P3.1 and P3.2 layers.
 - **Conditionally proved**: P2.5 (`problem25_solved : Problem25Claim` modulo
@@ -31,7 +31,7 @@ P2.2 and P2.3 have since been **rebuilt with real content** — see below.
   The Catalan integral identity `G = ∫₀¹(-log t)/(1+t²)dt` is now fully proved.
 - **Not formalized**: the main limit of P2.7.
 
-Build warnings are exactly the six `sorry` declarations (P24×1, P25×1, P28×1, P32×3).
+Build warnings are exactly the five `sorry` declarations (P24×1, P25×1, P28×1, P32×2).
 All non-`sorry` theorems axiom-clean: {propext, Classical.choice, Quot.sound}.
 
 ## Module Structure
@@ -54,7 +54,7 @@ All non-`sorry` theorems axiom-clean: {propext, Classical.choice, Quot.sound}.
 | P2.7 | Problem27.lean + Problem27Barnes.lean | 0 | ~2800 lines. Full 3×3 rational gauge (column identities all proved), analytic transfer complete, Barnes midpoint ≤ 2·(1/4)^n, Euler cosh product, integrable envelope, **Barnes error integral → 0 proved**. **Gap: source normalization (Zudilin recurrence error = Barnes contour integral).** |
 | P2.8 | **Problem28_SUBMIT/** | 0 ✅ | **Complete formalization synced from SUBMIT** (30080 lines, 27 files, Lean v4.29). Full Ripple CM extraction: j(τ₁₆₃) = −640320³, Chudnovsky hypergeometric, period bridge. `Problem28.lean` (107 lines, 1 sorry) is the old stub. |
 | P3.1 | **Problem31_SUBMIT/** | 0 ✅ | **Complete formalization synced from SUBMIT** (4724 lines, 28 files, Lean v4.29). Bloch-Wigner four-shape vanishing, rational reconstruction. `Problem31/` is the old stub. See `SUBMIT/3.1/lean/UNDERSTANDING.md` for atom checklist. |
-| P3.2 | Problem32/ | 3 🔨 | IN PROGRESS — Apéry GCD conjecture |
+| P3.2 | Problem32/ | 2 🔨 | IN PROGRESS — Apéry GCD conjecture |
 
 **Synced SUBMIT packages (2026-08-01):** `Problem28_SUBMIT/` and `Problem31_SUBMIT/` are verbatim copies of `SUBMIT/2.8/lean/Ripple/` and `SUBMIT/3.1/lean/Ramanujan31/` respectively. Both are complete, 0-sorry formalizations on Lean v4.29. The old `Problem28.lean` and `Problem31/` stubs remain for reference but are superseded.
 
@@ -68,23 +68,26 @@ Problem32/AperyDef.lean    ← Apéry recurrence, b_n, a_n, d_n, Z(p) ✅ (0 sor
     ↓
 Problem32/Wronskian.lean   ← W_n = 6/n³ ✅ (0 sorry, all axiom-clean)
     ↓
-Problem32/Main.lean        ← Main theorem (3 sorry)
+Problem32/WZCertificate.lean ← closed-form b_n satisfies the recurrence ✅ (0 sorry)
+    ↓
+Problem32/Main.lean        ← zero-count bound and main theorem (2 sorry)
 ```
 
-### P3.2 Sorry Census (3 sorry)
-1. `aperyB_recurrence_int` — b_n (closed form) satisfies the Apéry recurrence (WZ identity)
-2. `zero_count_sublinear` — Z(p) = O(p^{2/3}) (gap polynomial argument)
-3. `problem32_polylog_exceptional` — Main theorem
+### P3.2 Sorry Census (2 sorry)
+1. `zero_count_sublinear` — Z(p) = O(p^{2/3}) (gap polynomial argument)
+2. `problem32_polylog_exceptional` — Main theorem
 
 ### P3.2 Proved Results
 - **aperyB_zero/one/two**: b_0 = 1, b_1 = 5, b_2 = 73 ✅
 - **aperyA_zero/one**: a_0 = 0, a_1 = 6 ✅
 - **aperyA/BQ_recurrence**: definitional from recurrence construction ✅
+- **aperyB_recurrence_shifted/aperyB_recurrence_int**: closed-form Apéry numbers satisfy
+  the integer recurrence by a division-free Zeilberger certificate and finite telescoping ✅
 - **wronskian_one**: W_1 = 6 ✅
 - **wronskian_step**: (n+1)³W_{n+1} = n³W_n via `linear_combination` ✅
 - **wronskian_mul**: W_n·n³ = 6 by induction ✅
 - **wronskian_eq**: W_n = 6/n³ ✅
-- **no_consecutive_zeros**: b_j, b_{j+1} can't both vanish mod p (modulo aperyB_recurrence_int) ✅
+- **no_consecutive_zeros**: b_j, b_{j+1} can't both vanish mod p ✅
 - **aperyP_zero/one**: P(0) = 5, P(1) = 117 ✅
 
 ## Build & Verify

@@ -7,8 +7,8 @@
   FORMALIZED:
   - Apéry sequences defined by recurrence (0 sorry) ✅
   - Wronskian W_n = 6/n³ (0 sorry) ✅
-  - No consecutive zeros (proved modulo aperyB_recurrence_int) ✅
-  - aperyB_recurrence_int (sorry — WZ identity)
+  - Integer Apéry recurrence via a telescoping WZ certificate (0 sorry) ✅
+  - No consecutive zeros (0 sorry) ✅
   - Z(p) = O(p^{2/3}) (sorry — gap polynomial argument)
   - Main theorem (sorry — requires full proof chain)
 
@@ -16,6 +16,7 @@
   The Apéry GCD Conjecture", July 2026.
 -/
 import RamanujanChallenge.Problem32.Wronskian
+import RamanujanChallenge.Problem32.WZCertificate
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
 noncomputable section
@@ -45,7 +46,10 @@ theorem aperyB_recurrence_int (n : ℕ) (hn : n ≥ 1) :
     ((n : ℤ) + 1) ^ 3 * aperyB (n + 1) =
       (34 * (n : ℤ) ^ 3 + 51 * (n : ℤ) ^ 2 + 27 * (n : ℤ) + 5) * aperyB n -
       (n : ℤ) ^ 3 * aperyB (n - 1) := by
-  sorry
+  cases n with
+  | zero => omega
+  | succ m =>
+      simpa [Nat.succ_sub_one] using aperyB_recurrence_shifted m
 
 /-! ## No consecutive zeros (Lemma 5)
 
