@@ -300,3 +300,9 @@ Strip theorem gives: Res(N_{h₂}, N_g(·+h₀)) ≠ 0 for h₀ ≥ 1, g ≠ h�
 Exceptions at h₀=0 (self-resultant) expected.
 This gives codegree certificates for the mesoscopic program.
 Verified for h₂,g ≤ 4, h₀ ≤ 5.
+
+### ChatGPT answer triage (via Xiang, 2026-08-09):
+- Q7100: CRT triple anti-concentration — my question, content-matched
+- Q7101: consecutive-quadruple linear corank inequality CONFIRMED ✓
+- Q7103: transfer identity FALSE (j=0,h=1 gives -48≠1/8) — DISCARDED
+- Note: shared rc channels can cross waiter tags; future matching by content checksum
