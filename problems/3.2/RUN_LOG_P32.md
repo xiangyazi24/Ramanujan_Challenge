@@ -293,3 +293,10 @@ Fable R26 identifies medium-ℓ regime as genuine open core of GM*.
 
 ### Diagonal transport identity: proved for ALL h (first-row expansion)
 N_{h+1}(x-1) = P(x)·N_h(x) - (x+1)⁶·N_{h-1}(x+1)
+
+### DUAL GAP POLYNOMIALS: Ñ_g(h₀;x) = N_g(x+h₀) — self-duality of incidence variety
+The dual certificates are SHIFTED original gap polynomials.
+Strip theorem gives: Res(N_{h₂}, N_g(·+h₀)) ≠ 0 for h₀ ≥ 1, g ≠ h₂.
+Exceptions at h₀=0 (self-resultant) expected.
+This gives codegree certificates for the mesoscopic program.
+Verified for h₂,g ≤ 4, h₀ ≤ 5.
