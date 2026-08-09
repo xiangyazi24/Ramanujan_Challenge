@@ -599,3 +599,22 @@ information gain.
 \textup{(vi)} Tensor constructions (symmetric powers) dilute parity
 rather than breaking it.
 \end{remark}
+
+\begin{proposition}[Diagonal transport identity]
+\label{prop:diagonal-transport}
+For all $h \ge 1$,
+\[
+  N_{h+1}(x{-}1) = P(x)\,N_h(x) - (x{+}1)^6\,N_{h-1}(x{+}1).
+\]
+Equivalently, the gap-polynomial family satisfies a
+\emph{shift relation}: the polynomial triples
+$(N_{h+1}(x{-}1),\, N_h(x),\, N_{h-1}(x{+}1))$ are connected by the
+\emph{same} coefficients $P(x)$ and $(x{+}1)^6$ independently of~$h$.
+\end{proposition}
+
+\begin{proof}
+The standard $h$-recurrence expands
+$\det D_{h+1}(x)$ along the last row;
+the present identity expands $\det D_{h+1}(x{-}1)$
+along the \emph{first} row.
+\end{proof}
