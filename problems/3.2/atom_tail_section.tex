@@ -480,3 +480,76 @@ The obstruction is that the triple certificate $U_{h_1,h_2}
 $U = \pm S_{h_1,h_2} \cdot \operatorname{Res}(N_{h_1}, N_{h_1+1})
 \cdot (\text{leading-coefficient})$,
 so certificates within one triple are algebraically dependent.
+
+\subsection{The quadruple corank argument: average $Z(p)\ll p^{1/2}$}
+\label{ssec:quadcorank}
+
+Let $\varepsilon=17+12\sqrt2$ and
+$V_n=(\varepsilon^n-\varepsilon^{-n})/(\varepsilon-\varepsilon^{-1})$
+the Lucas sequence with $V_{n+1}=34V_n-V_{n-1}$, $V_0=0$, $V_1=1$,
+so that $V_{n}=U_{n-1}(17)$ is the leading coefficient of $N_{n}$.
+
+\begin{definition}[Structural content and reduced resultants]
+For $H\ge2$ put
+$\mathfrak U_H=\prod_{j\le H} j!\cdot b_j\cdot V_{j+1}$,
+and define the saturated reduced resultant
+$S^*_{h_1,h_2}$ as $S_{h_1,h_2}$ with all content shared with
+$\mathfrak U_H$ removed:
+$S^*=S/\gcd(S,\mathfrak U_H^\infty)$.
+\end{definition}
+
+\begin{lemma}[Quadruple certificate]\label{lem:qc-cert}
+If $p$ has four zeros
+$r<r{+}h_1<r{+}h_1{+}h_2<r{+}h_1{+}h_2{+}h_3\le p{-}1$
+in $\mathcal Z_p$, then
+$p\mid\gcd(S_{h_1,h_2},\,S_{h_2,h_3})$.
+\end{lemma}
+
+\begin{lemma}[Rank of apparition]
+For $p\nmid6$, $p\mid V_n\iff\rho(p)\mid n$ where
+$\rho(p)\mid p-\chi(p)$.  Hence
+$\#\{p\in\mathcal P_X:\rho(p)\le R\}\ll R^2/\log X$.
+\end{lemma}
+
+\begin{lemma}[Exceptional classes]
+$\#\{p\in\mathcal P_X:p\mid\mathfrak U_H\}\ll H^2/\log X$.
+\end{lemma}
+
+\begin{hypothesis}[Reduced gcd-mass, $\mathrm{GM}^*$]
+\label{hyp:qc-gm}
+$\displaystyle
+ \sum_{\substack{h_1,h_2,h_3\ge2\\ h_1+h_2+h_3\le H}}
+ \log\gcd(S^*_{h_1,h_2},\,S^*_{h_2,h_3})
+ \ll H^{3+o(1)}$.
+\end{hypothesis}
+
+\begin{remark}[Computational support]
+The unreduced gcd mass grows linearly per triple
+(measured slope $\approx17.5$), which saturation identifies
+as entirely structural: stripping $\{2,3,5,17\}$ reduces the
+slope to~$0.43$, and full saturation by $\mathfrak U_H$
+to~$-0.030$, with $\gcd(S^*,S^{*\prime})=1$ at the majority
+of gap triples ($h_1{+}h_2{+}h_3\le26$).
+\end{remark}
+
+\begin{theorem}[Quadruple corank bound]\label{thm:qc-main}
+Assume $\mathrm{GM}^*$.  Then
+$\sum_{X<p\le2X}Z(p)\ll X^{3/2+o(1)}$,
+i.e., average $Z(p)\ll p^{1/2+o(1)}$.
+\end{theorem}
+
+\begin{corollary}[Moment threshold $k=5$]
+Under $\mathrm{GM}^*$, $(\mathrm{HM})_5$ implies
+$G_n=e^{o(n)}$ for every~$n$.
+\end{corollary}
+
+\begin{remark}[The corank ladder terminates at $1/2$]
+Within a single triple of zeros the certificates are
+algebraically dependent:
+$N_{h_1+h_2}(x)\equiv N_{h_2}(x{+}h_1)\,N_{h_1+1}(x)
+\pmod{N_{h_1}(x)}$,
+so the triple level cannot improve beyond $3/5$.
+The quadruple is the first configuration with two
+independent certificates, and higher tuples give
+strictly weaker exponents.
+\end{remark}
