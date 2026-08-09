@@ -85,3 +85,31 @@ Triple bound unconditional for gaps h₁+h₂ ≤ 41.
 
 ### Paper writing: sent to Codex p32, awaiting output
 ### Dispersion assembly: sent to Fable, awaiting R10
+
+### Palindrome symmetry for ALL λ: VERIFIED + proof identified (2026-08-09)
+b_r(λ) ≡ b_{p-1-r}(λ) mod p for ALL p ≥ 5, ALL r, ALL λ.
+Key identity: P(-1-n) = -P(n) (the middle coefficient is odd under reflection).
+Proof via Cartier diagonal: involution (x,y,z,w) → (1/x,...) on the torus.
+NEW THEOREM for the paper.
+
+### λ-resultant coprimality: ALL 36 pairs nonzero (2026-08-09)
+R_{r,r'} = Res_λ(b_r(λ), b_{r'}(λ)) ≠ 0 for 1 ≤ r < r' ≤ 9.
+Fable R14: redundant for pair events (dominated by gap poly), but is the
+TRANSVERSALITY FOUNDATION for fiber-genericity program.
+Certificate parity meta-lemma: explains why all algebraic routes hit same wall.
+
+### Fiber statistics: palindrome holds at ALL λ values tested (2026-08-09)
+λ=1,2,3,-1,5: all palindromic. Mean Z varies (0.68-1.48).
+λ=-1 has odd Z values (central fixed point) — EXPECTED from P(-1-n)=-P(n).
+
+### ChatGPT 8 tabs: ALL FILLED (2026-08-09)
+Questions: transversality, certificate parity, unlikely intersection, large sieve,
+palindrome proof, repeated indices, no-consecutive sieve, discriminants.
+
+### ChatGPT 8-tab parallel sweep (2026-08-09)
+20+ questions processed. All confirm certificate parity obstruction.
+Confirmed DEAD: separated sieve, cofactor, Wronskian, palindromic CRT,
+BMZ unlikely intersection, third moment sieve, product counting.
+ALIVE: palindrome theorem for all λ (Cartier proof complete).
+EXPLORING: Artin-for-Hecke multiplicative order → Z(p) bound.
+NEW RESULT: discriminants all nonzero (b_r(λ) squarefree, r ≤ 10).
