@@ -1,0 +1,646 @@
+% New material for proof.tex.
+% The bibliography entry Straub2014, printed at the end of this file as a
+% comment, should be inserted into the main thebibliography environment.
+
+\section{A diagonal Cartier representation}
+\label{sec:cartier-diagonal}
+
+Put
+\[
+ \mathscr F(x,y,z,w)
+  =(1-x-y)(1-z-w)-xyzw.
+\]
+The following observation places every truncated Ap\'ery zero set inside
+one fixed algebraic family.
+
+\begin{theorem}[Diagonal Cartier representation]
+\label{thm:cartier-diagonal}
+Let \(p\ge5\) be prime.  For every \(0\le r\le p-1\),
+\[
+ b_r\equiv
+ [x^ry^rz^rw^r]\,\mathscr F(x,y,z,w)^{p-1}
+ \pmod p.
+\]
+\end{theorem}
+
+\begin{proof}
+Straub's diagonal formula~\cite[Theorem~1.1]{Straub2014} gives
+\[
+ b_r=[x^ry^rz^rw^r]\,\frac1{\mathscr F(x,y,z,w)}.
+\]
+In \(\mathbb F_p[[x,y,z,w]]\), the freshman's dream gives
+\[
+ \mathscr F^{p-1}
+ =\frac{\mathscr F^p}{\mathscr F}
+ =\frac{\mathscr F(x^p,y^p,z^p,w^p)}{\mathscr F(x,y,z,w)}.
+\]
+Every nonconstant monomial in the numerator on the right has at least
+one exponent at least \(p\).  Since \(0\le r<p\), only its constant
+term contributes to \([x^ry^rz^rw^r]\).  The asserted congruence
+follows.
+\end{proof}
+
+\begin{remark}
+The first displayed identity can also be checked directly by expanding
+\[
+ \frac1{\mathscr F}
+ =\sum_{j\ge0}
+ \frac{(xyzw)^j}
+ {(1-x-y)^{j+1}(1-z-w)^{j+1}}.
+\]
+Its diagonal coefficient is
+\[
+ \sum_{j=0}^r
+ \left(\frac{(2r-j)!}{j!(r-j)!^2}\right)^2
+ =\sum_{k=0}^r
+ \binom rk^2\binom{r+k}{k}^2=b_r.
+\]
+The proof of Theorem~\ref{thm:cartier-diagonal} is the corresponding
+one-digit Cartier extraction.
+\end{remark}
+
+
+\section{Fourier non-concentration of the Ap\'ery zero sets}
+\label{sec:fourier-nonconcentration}
+
+For a prime \(p\ge7\), write
+\[
+ \mathcal Z_p=\{0\le r<p:b_r\equiv0\pmod p\},
+ \qquad Z(p)=|\mathcal Z_p|,
+\]
+and define
+\[
+ F_p(k)=\sum_{r\in\mathcal Z_p}e_p(kr),
+ \qquad e_p(t)=e^{2\pi i t/p}.
+\]
+
+\begin{lemma}[Fourier non-concentration]
+\label{lem:fourier-nonconcentration}
+For every prime \(p\ge7\) and every integer \(1\le K\le p\),
+\[
+ \sum_{1\le |k|\le K}|F_p(k)|^2
+ \le
+ 4\pi^2\left(KZ(p)+\frac{p^2}{K}\right).
+\]
+Here \(k\) ranges over ordinary integers and \(F_p\) is extended
+periodically modulo \(p\).
+\end{lemma}
+
+\begin{proof}
+For \(1\le h<p\), let
+\[
+ A_p(h)
+ =\#\{r:0\le r<r+h<p,\ r,r+h\in\mathcal Z_p\}.
+\]
+Lemma~\ref{lem:no-consec} gives \(A_p(1)=0\).  For \(h\ge2\),
+every pair counted by \(A_p(h)\) makes \(r\) a root modulo \(p\) of
+the nonzero gap polynomial \(N_h\).  Lemmas~\ref{lem:gap-poly} and
+\ref{lem:nonvanish} therefore give
+\begin{equation}
+ A_p(h)\le3(h-1).
+ \label{eq:new-fourier-gap}
+\end{equation}
+
+Suppose first that \(K\le p/8\), and put
+\[
+ H=\left\lfloor\frac{p}{4K}\right\rfloor.
+\]
+Since \(p/(4K)\ge2\),
+\begin{equation}
+ \frac{p}{8K}\le H\le\frac{p}{4K},
+ \qquad \frac{HK}{p}\le\frac14.
+ \label{eq:new-fourier-H}
+\end{equation}
+Split \(\mathcal Z_p=Z_0\sqcup Z_1\), where
+\[
+ Z_0\subseteq[0,(p-1)/2],
+ \qquad
+ Z_1\subseteq[(p+1)/2,p-1],
+\]
+and set \(F_i(k)=\sum_{r\in Z_i}e_p(kr)\).  Then
+\begin{equation}
+ |F_p(k)|^2\le2|F_0(k)|^2+2|F_1(k)|^2.
+ \label{eq:new-fourier-halves}
+\end{equation}
+This division into half intervals removes cyclic wrap-around: within
+either half, a congruence \(s-r\equiv h\pmod p\) with
+\(|h|<H\le p/4\) is the ordinary equality \(s-r=h\).
+
+Consider the finite Fej\'er kernel
+\[
+ \mathcal F_H(k)
+ =\frac1H\left|\sum_{u=0}^{H-1}e_p(ku)\right|^2
+ =\sum_{|h|<H}
+ \left(1-\frac{|h|}{H}\right)e_p(kh).
+\]
+For \(1\le|k|\le K\), the sine formula and
+\eqref{eq:new-fourier-H} imply
+\[
+ \left|\sum_{u=0}^{H-1}e_p(ku)\right|
+ =\frac{|\sin(\pi Hk/p)|}{|\sin(\pi k/p)|}
+ \ge\frac{2H}{\pi}.
+\]
+Indeed, \(\sin(\pi x)\ge2x\) for \(0\le x\le1/4\), while
+\(\sin(\pi x)\le\pi x\) for \(x\ge0\).  Consequently
+\begin{equation}
+ \mathbf1_{\{1\le|k|\le K\}}
+ \le\frac{\pi^2}{4H}\mathcal F_H(k).
+ \label{eq:new-fourier-majorant}
+\end{equation}
+
+For \(i=0,1\), let
+\[
+ A_i(h)=\#\{r:r,r+h\in Z_i\},
+\]
+where ordinary integer representatives are used.  Finite Fourier
+orthogonality and \eqref{eq:new-fourier-majorant} give
+\begin{align*}
+ \sum_{1\le|k|\le K}|F_i(k)|^2
+ &\le\frac{\pi^2}{4H}
+   \sum_{k\bmod p}\mathcal F_H(k)|F_i(k)|^2\\
+ &=\frac{\pi^2p}{4H}
+   \left(
+     |Z_i|+
+     2\sum_{h=1}^{H-1}
+       \left(1-\frac hH\right)A_i(h)
+   \right).
+\end{align*}
+Summing this inequality over \(i\), using
+\eqref{eq:new-fourier-halves}, and observing that
+\(A_0(h)+A_1(h)\le A_p(h)\), we obtain
+\begin{align*}
+ \sum_{1\le|k|\le K}|F_p(k)|^2
+ &\le\frac{\pi^2p}{2H}
+   \left(Z(p)+2\sum_{h=1}^{H-1}A_p(h)\right)\\
+ &\le\frac{\pi^2p}{2H}\left(Z(p)+3H^2\right).
+\end{align*}
+The last step follows from \eqref{eq:new-fourier-gap}, since
+\[
+ \sum_{h=2}^{H-1}3(h-1)
+ =\frac32(H-1)(H-2)\le\frac32H^2.
+\]
+Using \eqref{eq:new-fourier-H} now yields
+\[
+ \sum_{1\le|k|\le K}|F_p(k)|^2
+ \le
+ 4\pi^2KZ(p)+\frac{3\pi^2}{8}\frac{p^2}{K},
+\]
+which is stronger than the claimed estimate.
+
+It remains to treat \(p/8<K\le p\).  Each residue modulo \(p\)
+occurs at most twice among the integers \(k\) with
+\(1\le|k|\le K\).  Parseval therefore gives
+\[
+ \sum_{1\le|k|\le K}|F_p(k)|^2
+ \le2\sum_{a\bmod p}|F_p(a)|^2
+ =2pZ(p)
+ <16KZ(p).
+\]
+Since \(16<4\pi^2\), this is again bounded by the asserted
+right-hand side.
+\end{proof}
+
+\begin{remark}
+Applying the Fej\'er expansion directly to \(\mathcal Z_p\) would
+also count ordinary gaps \(p-h\) at the coefficient indexed by a
+small cyclic gap \(h\).  The degree bound
+\(A_p(h)\le3(h-1)\) does not control those wrap-around pairs.
+The two-half partition in the proof is therefore essential.
+\end{remark}
+
+
+\section{Moment collapse and a strong anti-tail hypothesis}
+\label{sec:moment-collapse}
+
+For a dyadic block
+\[
+ \mathcal P_X=\{p\text{ prime}:X<p\le2X\},
+\]
+recall
+\[
+ K_X(m)
+ =\#\{p\in\mathcal P_X:m\bmod p\in\mathcal Z_p\},
+ \qquad
+ \lambda_X=\sum_{p\in\mathcal P_X}\frac{Z(p)}p,
+\]
+and put
+\[
+ M_X=\max_{0\le m<X^2}K_X(m).
+\]
+For an integer \(u\ge0\), write
+\((u)_j=u(u-1)\cdots(u-j+1)\).
+
+\begin{proposition}[Moment collapse]
+\label{prop:moment-collapse}
+For every fixed integer \(j\ge2\),
+\[
+ \sum_{0\le m<X^2}(K_X(m))_j
+ \le
+ M_X^{j-2}
+ \sum_{0\le m<X^2}(K_X(m))_2
+ \le
+ 5X^2\lambda_X^2M_X^{j-2}.
+\]
+\end{proposition}
+
+\begin{proof}
+For every nonnegative integer \(u\),
+\[
+ (u)_j=(u)_2(u-2)_{j-2}
+ \le (u)_2u^{j-2}
+ \le (u)_2M_X^{j-2}
+\]
+whenever \(u=K_X(m)\).  Sum over \(m<X^2\), and apply
+Proposition~\ref{prop:hm2}.
+\end{proof}
+
+\begin{hypothesis}[Strong anti-tail bound \((\mathrm{AT}'')\)]
+\label{hyp:anti-tail-strong}
+Uniformly over dyadic \(X\),
+\[
+ M_X\ll \lambda_X X^{o(1)}.
+\]
+Equivalently, for every \(\varepsilon>0\) there are
+\(C_\varepsilon,X_\varepsilon>0\) such that
+\[
+ M_X\le C_\varepsilon X^\varepsilon\lambda_X
+\]
+for every dyadic \(X\ge X_\varepsilon\).  If \(\lambda_X=0\),
+then \(M_X=0\), so this convention causes no ambiguity.
+\end{hypothesis}
+
+\begin{corollary}[\((\mathrm{AT}'')\) collapses the moment hierarchy]
+\label{cor:anti-tail-full}
+Assume Hypothesis~\ref{hyp:anti-tail-strong}.  Then
+\((\mathrm{HM})_j\) holds for every fixed \(j\ge2\).  In particular,
+\[
+ G_n=e^{o(n)}
+\qquad(n\to\infty)
+\]
+for every positive integer \(n\).
+\end{corollary}
+
+\begin{proof}
+For fixed \(j\), Proposition~\ref{prop:moment-collapse} gives
+\[
+ \sum_{m<X^2}(K_X(m))_j
+ \ll
+ X^2\lambda_X^2
+ \bigl(\lambda_XX^{o(1)}\bigr)^{j-2}
+ =X^{2+o(1)}\lambda_X^j.
+\]
+This is precisely \((\mathrm{HM})_j\).  Taking any fixed
+\(j>6\), for example \(j=8\), and applying
+Theorem~\ref{thm:hm-pointwise} gives
+\[
+ \log G_n
+ \ll n^{2/3+2/j+o(1)}
+ =o(n).
+\]
+\end{proof}
+
+\begin{remark}
+Hypothesis~\((\mathrm{AT}'')\) is substantially stronger than any
+fixed high-moment estimate, but it has the advantage that the complete
+factorial-moment hierarchy follows from the already proved case
+\(j=2\) in one line.  No independence assumption is used in
+Proposition~\ref{prop:moment-collapse}.
+\end{remark}
+
+
+\section{An honest conditional reduction for the third moment}
+\label{sec:honest-hm3-reduction}
+
+We next isolate the two distinct inputs required by the complete
+\(E_2\)-dispersion strategy.  Set
+\[
+ \Sigma_j(X)=\sum_{0\le m<X^2}(K_X(m))_j.
+\]
+For \(k,k'\in\mathbb F_p^\times\), define the multiplicative
+correlation
+\[
+ M_p(k,k')
+ =\#\{(r,r')\in\mathcal Z_p^2:kr=k'r'\}.
+\]
+It is the line-section statistic of the incidence cloud
+\[
+ \mathcal C_p
+ =\{(r,h)\in\mathbb F_p^2:
+       r\in\mathcal Z_p,\ r+h\in\mathcal Z_p\}.
+\]
+Indeed, writing \(r'=r+h\) gives the exact dictionary
+\begin{equation}
+ M_p(k,k')
+ =\#\{(r,h)\in\mathcal C_p:
+        k'h=(k-k')r\}.
+ \label{eq:new-line-section-dictionary}
+\end{equation}
+The same kernel appears when a complete multiplicative square is
+opened:
+\begin{equation}
+ \sum_{u\in\mathbb F_p^\times}
+ F_p(ku)\overline{F_p(k'u)}
+ =pM_p(k,k')-Z(p)^2.
+ \label{eq:new-complete-multiplicative}
+\end{equation}
+
+For orientation, the scalar random-scale estimate suggested by
+\eqref{eq:new-line-section-dictionary} is
+\begin{equation}
+ \sum_{\substack{k,k'\in\mathscr K\\k\ne k'}}
+ M_p(k,k')
+ \ll p^{o(1)}
+ \left(
+   |\mathscr K|Z(p)
+   +\frac{|\mathscr K|^2Z(p)^2}{p}
+ \right)
+ \label{eq:new-mc-scalar}
+\end{equation}
+for short signed intervals \(\mathscr K\subset\mathbb F_p^\times\).
+The complete \(E_2\)-dispersion argument requires a weighted,
+operator-level version of \eqref{eq:new-mc-scalar}, because its
+coefficients depend simultaneously on the Fourier frequency and on
+the two auxiliary primes.  We record precisely the output required
+from that weighted estimate.
+
+\begin{hypothesis}[Weighted multiplicative CED estimate \((\mathrm{MC})\)]
+\label{hyp:mc-ced}
+Uniformly over dyadic \(X\),
+\begin{equation}
+ \Sigma_3(X)
+ \ll
+ X^{2+o(1)}\lambda_X^3
+ +X^{-2/3+o(1)}M_X\Sigma_2(X).
+ \label{eq:new-mc-ced}
+\end{equation}
+Here \((\mathrm{MC})\) means that the off-diagonal weighted form
+arising from complete \(E_2\)-dispersion, whose complete local kernel
+is \(pM_p(k,k')-Z(p)^2\) by
+\eqref{eq:new-complete-multiplicative}, satisfies
+\eqref{eq:new-mc-ced}.  Thus this is an operator-level
+multiplicative-correlation hypothesis on the actual Ap\'ery zero sets,
+not merely the unweighted scalar estimate
+\eqref{eq:new-mc-scalar}.
+\end{hypothesis}
+
+\begin{hypothesis}[Anti-tail bound \((\mathrm{AT})\)]
+\label{hyp:anti-tail-two-thirds}
+Uniformly over dyadic \(X\),
+\[
+ M_X\ll X^{2/3+o(1)}\lambda_X.
+\]
+\end{hypothesis}
+
+\begin{theorem}[\((\mathrm{MC})+(\mathrm{AT})\Rightarrow
+ \mathrm{(HM)}_3\)]
+\label{thm:mc-at-implies-hm3}
+Hypotheses~\ref{hyp:mc-ced} and
+\ref{hyp:anti-tail-two-thirds} imply
+\[
+ \Sigma_3(X)\ll X^{2+o(1)}\lambda_X^3.
+\]
+In other words, they imply \((\mathrm{HM})_3\).
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:hm2},
+\(\Sigma_2(X)\le5X^2\lambda_X^2\).  Substitution into
+\eqref{eq:new-mc-ced}, followed by
+Hypothesis~\ref{hyp:anti-tail-two-thirds}, gives
+\begin{align*}
+ \Sigma_3(X)
+ &\ll X^{2+o(1)}\lambda_X^3
+   +X^{-2/3+o(1)}
+      \bigl(X^{2/3+o(1)}\lambda_X\bigr)
+      \bigl(5X^2\lambda_X^2\bigr)\\
+ &\ll X^{2+o(1)}\lambda_X^3.
+\end{align*}
+\end{proof}
+
+\subsection{The complete \(E_2\)-dispersion architecture}
+
+We explain why the multiplicative kernel
+\eqref{eq:new-complete-multiplicative} is the natural one.  Let
+\(L=X^2\), let \(p,q,\ell\in\mathcal P_X\) be distinct, and set
+\(n=pq\ell\).  With
+\[
+ D_L(\alpha)=\sum_{0\le m<L}e(m\alpha),
+\]
+finite Fourier inversion gives
+\begin{align}
+ &\#\{0\le m<L:
+       m\bmod p\in\mathcal Z_p,\
+       m\bmod q\in\mathcal Z_q,\
+       m\bmod\ell\in\mathcal Z_\ell\}\notag\\
+ &\quad=
+ \frac1{pq\ell}
+ \sum_{a\bmod p}\sum_{b\bmod q}\sum_{c\bmod\ell}
+ F_p(a)F_q(b)F_\ell(c)
+ D_L\!\left(-\frac ap-\frac bq-\frac c\ell\right).
+ \label{eq:new-trilinear-fourier}
+\end{align}
+The zero-frequency contribution, summed over ordered distinct prime
+triples, is at most \(X^2\lambda_X^3\).
+
+If \(m=m(r,s,t)\) is the CRT lift of
+\((r\bmod p,s\bmod q,t\bmod\ell)\), then
+\begin{equation}
+ e(km/n)
+ =
+ e_p\!\left(k(r-s)(q\ell)^{-1}\right)
+ e_\ell\!\left(k(t-s)(pq)^{-1}\right)
+ e(ks/n).
+ \label{eq:new-two-flip}
+\end{equation}
+Indeed, the integer
+\[
+ s+(r-s)q\ell(q\ell)^{-1}_{p}
+   +(t-s)pq(pq)^{-1}_{\ell}
+\]
+has reductions \(r,s,t\) modulo \(p,q,\ell\), respectively.
+Formula~\eqref{eq:new-two-flip} is the two-flip reciprocity step.
+
+One now fixes the output prime \(p\), groups the other two primes
+through the \(E_2\)-variable \(v=q\ell\), and applies Linnik's
+dispersion method.  Opening the resulting square produces the
+complete local correlation
+\eqref{eq:new-complete-multiplicative}.  The diagonal frequencies are
+controlled by Lemma~\ref{lem:fourier-nonconcentration}; the
+off-diagonal frequencies are line sections
+\eqref{eq:new-line-section-dictionary}.  Hypothesis~\((\mathrm{MC})\)
+is exactly the weighted estimate needed to save the factor
+\(X^{2/3}\) in this off-diagonal form, while
+Hypothesis~\((\mathrm{AT})\) prevents the \(E_2\)-weights from
+concentrating on a small exceptional set.  This is the same
+diagonal/off-diagonal architecture as in Linnik dispersion and its
+bilinear trace-function refinements; see
+\cite{FouvryKM2014,KMS2017,Drappeau2017}.
+
+\begin{remark}[Why the operator-level formulation is necessary]
+\label{rem:new-ced-honesty}
+The variable \(v=q\ell\) ranges over a sparse set of semiprimes, not
+over a complete residue system, and the coefficient multiplying
+\(F_p(k\bar v)\) depends on both \(v\) and \(k\).  Thus interval length
+alone does not justify replacing the \(v\)-sum by
+\eqref{eq:new-complete-multiplicative}, and a scalar Cauchy--Schwarz
+argument cannot pull the remaining \(q,\ell\)-factor outside the
+\(k\)-sum.  These are precisely the two losses absorbed into the
+weighted hypothesis \((\mathrm{MC})\).  In particular,
+\eqref{eq:new-mc-scalar} by itself is not claimed here to imply
+\((\mathrm{HM})_3\).
+\end{remark}
+
+\subsection{The anchored-star obstruction}
+
+\begin{proposition}[Anchored reflected star]
+\label{prop:new-anchored-star}
+For every sufficiently large integral \(X\), there is a family of
+reflected, nonadjacent doublets
+\(\mathcal Z_p^*\subset\mathbb F_p\), \(p\in\mathcal P_X\), such that
+\[
+ \lambda_X^*\asymp\frac1{\log X},
+ \qquad
+ M_X^*\asymp\frac{X}{\log X},
+\]
+and
+\[
+ \sum_{m<X^2}(K_X^*(m))_3
+ \gg\frac{X^3}{(\log X)^3}.
+\]
+Consequently this family violates both \((\mathrm{AT})\) and
+\((\mathrm{HM})_3\), and hence also violates the weighted conclusion
+\((\mathrm{MC})\).
+\end{proposition}
+
+\begin{proof}
+Choose \(m_0=\lfloor3X^2/4\rfloor\).  Apart from \(O(1)\) primes
+dividing
+\[
+ (m_0-1)m_0(m_0+1)(m_0+2)(2m_0+1),
+\]
+put
+\[
+ \mathcal Z_p^*
+ =\{m_0\bmod p,\ p-1-(m_0\bmod p)\},
+\]
+and use the empty set at the excluded primes.  The exclusions make
+each nonempty set a reflected, nonadjacent doublet avoiding the
+endpoint residues.  Every active prime marks \(m_0\), and the prime
+number theorem and Mertens' theorem give
+\[
+ K_X^*(m_0)\asymp\frac X{\log X},
+ \qquad
+ \lambda_X^*=2\sum_{X<p\le2X}\frac1p+O(X^{-1})
+ \asymp\frac1{\log X}.
+\]
+Therefore
+\[
+ \sum_{m<X^2}(K_X^*(m))_3
+ \ge(K_X^*(m_0))_3
+ \gg\frac{X^3}{(\log X)^3}.
+\]
+This exceeds \(X^{2+o(1)}(\lambda_X^*)^3\) by
+\(X^{1-o(1)}\), while
+\[
+ \frac{M_X^*}
+ {X^{2/3+o(1)}\lambda_X^*}
+ =X^{1/3-o(1)}.
+\]
+Moreover, Proposition~\ref{prop:hm2} gives
+\[
+ \Sigma_2^*(X)\ll\frac{X^2}{(\log X)^2}.
+\]
+Hence the right-hand side of \eqref{eq:new-mc-ced}, evaluated on this
+family, is at most
+\[
+ \frac{X^{2+o(1)}}{(\log X)^3}
+ +X^{-2/3+o(1)}
+   \frac{X}{\log X}\frac{X^2}{(\log X)^2}
+ \ll\frac{X^{7/3+o(1)}}{(\log X)^3},
+\]
+which is \(o(X^3/(\log X)^3)\).  Thus the family also violates
+\((\mathrm{MC})\).
+\end{proof}
+
+\begin{remark}
+The anchored star satisfies reflection symmetry, has uniformly bounded
+column size, and obeys the universal second-factorial-moment estimate.
+Thus neither vertical zero-count bounds nor local palindromic
+line-section information can replace the horizontal weighted content
+of \((\mathrm{MC})\) and \((\mathrm{AT})\).
+\end{remark}
+
+
+\section{Computational evidence for the anti-tail hypotheses}
+\label{sec:anti-tail-computation}
+
+For each \(X=2^j\), \(4\le j\le12\), the following computation
+enumerated every integer \(0\le m<X^2\) and every prime
+\(X<p\le2X\).  The zero sets were generated by the division-free
+recurrence for \((n!)^3b_n\).  The column \(m_X^{\mathrm{Pois}}\)
+is the median of the maximum of \(X^2\) independent
+\(\operatorname{Poisson}(\lambda_X)\) variables; explicitly, it is
+the least integer \(t\) such that
+\[
+ \Pr\{\operatorname{Poisson}(\lambda_X)\le t\}^{X^2}\ge\frac12.
+\]
+
+\begin{center}
+\begin{tabular}{rrrrrrrr}
+\toprule
+\(X\) & \(\lambda_X\) & \(M_X\) &
+\(X^{2/3}\lambda_X\) &
+\(\dfrac{M_X}{X^{2/3}\lambda_X}\) &
+\(X\lambda_X\) &
+\(\dfrac{M_X}{X\lambda_X}\) &
+\(m_X^{\mathrm{Pois}}\)\\
+\midrule
+16   & 0.287426 & 2 & 1.825  & 1.096 & 4.599   & 0.435  & 3\\
+32   & 0.169520 & 2 & 1.709  & 1.171 & 5.425   & 0.369  & 3\\
+64   & 0.048016 & 2 & 0.768  & 2.603 & 3.073   & 0.651  & 2\\
+128  & 0.157665 & 3 & 4.004  & 0.749 & 20.181  & 0.149  & 3\\
+256  & 0.126286 & 3 & 5.092  & 0.589 & 32.329  & 0.0928 & 3\\
+512  & 0.092772 & 3 & 5.937  & 0.505 & 47.499  & 0.0632 & 4\\
+1024 & 0.082244 & 4 & 8.355  & 0.479 & 84.218  & 0.0475 & 4\\
+2048 & 0.077521 & 4 & 12.502 & 0.320 & 158.763 & 0.0252 & 4\\
+4096 & 0.076828 & 4 & 19.668 & 0.203 & 314.689 & 0.0127 & 4\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For the Poisson comparison, if \(Y_1,\ldots,Y_{X^2}\) are independent
+\(\operatorname{Poisson}(\lambda_X)\) variables, the extreme-value
+threshold \(t_X\) is determined by
+\[
+ X^2\Pr(Y_1\ge t_X)\asymp1.
+\]
+When \(\lambda_X\) stays bounded away from zero this gives
+\[
+ t_X\sim\frac{2\log X}{\log\log X};
+\]
+when \(\lambda_X\asymp1/\log X\), as suggested by the present data,
+the same calculation gives
+\[
+ t_X\asymp\frac{\log X}{\log\log X}.
+\]
+Both scales are \(X^{o(1)}\), and therefore are compatible with
+\((\mathrm{AT}'')\).  At the largest tested block the observed maximum
+is \(M_X=4\), compared with the Poisson median \(4\);
+it is \(4.92\) times smaller than \(X^{2/3}\lambda_X\) and
+\(78.7\) times smaller than \(X\lambda_X\).
+
+\begin{remark}
+These finite computations support both \((\mathrm{AT})\) and the
+stronger \((\mathrm{AT}'')\), but they do not prove either asymptotic
+hypothesis.  Their main structural message is that the observed maximum
+behaves like a sparse-occupancy extreme value rather than a power of
+\(X\).
+\end{remark}
+
+% Required bibliography entry for proof.tex:
+%
+% \bibitem{Straub2014}
+% A.~Straub,
+% \emph{Multivariate Ap\'ery numbers and supercongruences of rational
+% functions},
+% Algebra Number Theory \textbf{8} (2014), no.~8, 1985--2008.

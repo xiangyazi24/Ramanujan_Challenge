@@ -55,3 +55,15 @@ Hot Fable agent: a9c82b2ecf78808da (resume via SendMessage, has R1-R10 context).
 - RUN_LOG_P32.md: session log
 - ORACLE_COMM/: Codex communication + results
 - WZCertificate.lean: Lean proof skeleton (sorry #1, deferred)
+
+## Next attack angles (post-R10, post-consolidation)
+
+1. **Function field** (avenue d): Mason-Stothers over F_q(t) for the Apéry pencil. Untried.
+2. **Projective orbit equidistribution**: Non-autonomous matrix products on P¹(F_p), 
+   Lyapunov exponents → effective equidistribution → atom constraint?
+3. **Multiplicative structure of b_m**: ω(b_m; X, 2X) pointwise bounds via 
+   the specific algebraic structure of b_m = Σ C(m,k)²C(m+k,k)²
+4. **CRT-level sharpening**: the exact Poisson prediction X²λ^T/T! is the 
+   CRT main term. Need to show DECORRELATION that brings the actual count below.
+5. **New algebraic relation**: find a polynomial relation between b_r values 
+   at different r that constrains simultaneous divisibility
