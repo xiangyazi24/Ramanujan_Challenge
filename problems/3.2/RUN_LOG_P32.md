@@ -204,3 +204,19 @@ Fable R19 parity-breaking problem formalized (LaTeX ready).
 - Triple corank: DEAD RUNG (certificates algebraically dependent)
 - Quadruple corank: avg Z ≪ p^{1/2} REACHABLE (conditional on gcd-mass lemma)
 - Below p^{1/2}: UNREACHABLE on this ladder
+
+### QUADRUPLE RUNG: COLLAPSED (2026-08-09)
+H-scaling gate: avg log κ ≈ 17.5·H (LINEAR, not flat).
+Total mass ≈ 17.5·H³ — exceeds budget H³·polylog by factor H.
+Quadruple corank gives same O(H⁴) as pair corank. No improvement over 3/5.
+Corank ladder FINAL: 3/5 proved, NOTHING below 3/5 reachable.
+
+p⁵ tangent law: PARITY-NEUTRAL (Fable R20 — digit ladder conservation).
+Each depth adds 1 relation + 1 unknown. Net info = 0.
+
+CAMPAIGN FINAL POSITION:
+- Certificate theory: COMPLETE, unconditional
+- avg Z: ≪ p^{3/5} (proved, tight for corank methods)
+- Atom tail (AT″): OPEN, single named conjecture above parity line
+- k threshold: 6 (proved), cannot improve further without parity-breaking
+- Parity-breaking problem: formally posed (Open Problem in paper)
