@@ -143,3 +143,16 @@ all certificate algebras require ≥2 coincidences at one prime,
 but atoms have 1 coincidence per prime.
 
 PAPER CONTRIBUTIONS: 8 new theorems, ~1000 lines LaTeX, 1 named frontier conjecture.
+
+### BREAKTHROUGH: λ=1 algebraic specialness confirmed (2026-08-09)
+1. b_r(λ) satisfies ORDER 4 recurrence for general λ (Zeilberger)
+2. At λ=1: order 4 DEGENERATES to order 2 (the Apéry recurrence)
+3. The difference (r+1)³b_{r+1} - P(r)b_r + r³b_{r-1} has factor (λ-1) EXACTLY
+4. Z^{(λ=1)} systematically smaller than Z^{(generic λ)}
+5. Gap polynomial proof uses the order-2 recurrence → λ=1 specific
+
+THIS IS THE STRUCTURAL REASON why Z_p is well-behaved at λ=1:
+the recurrence order drops, gap polynomials have lower degree,
+and the zero set is more constrained.
+
+NEXT: exploit this order-drop to prove something about the atom tail.
