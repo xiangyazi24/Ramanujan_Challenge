@@ -414,6 +414,12 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   `N_a(-a-j)` that are not all supported on the present carrier.  Thus the
   observed equality does not yet give a uniform reduced-content theorem,
   and the direct pencil has not been used in the paper.
+- Naively adjoining all distinct cut-edge values does not repair this:
+  reflection gives `N_a(-a-j)=+/-N_a(j-1)`, and the triangular product over
+  `a+j<=H` has logarithmic height `Theta(H^3 log H)`.  At a dyadic level
+  `H~X/T` its exceptional mass is `T H^3/log X`, which is `X^2` at
+  `T~sqrt(X)`, above the `X^(3/2+o(1))` target.  Any useful replacement
+  would need a genuinely compressed carrier, not this product.
 - Replaced the paper's conditional hypothesis by AC-tr and rewrote the
   aggregate valuation proof around aligned contents.  Arithmetic
   progressions and the globally unique removed center remain treated as
@@ -429,3 +435,16 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
 - Therefore every fixed-depth Cartier/Frobenius tower controls descendants
   of `Z(p)` but cannot bound the base atom itself.  This closes the
   fixed-depth branch; only an unbounded-order compression could differ.
+
+### Mesoscopic census recovered through p=20000
+
+- The completed single-pass `meso_census.py 20000` output was recovered
+  from the Claude task log; no rerun was needed.
+- For `H=floor(sqrt(p))` and every prime through 20000: maximum separated
+  collision multiplicity `m_(d,r)` is 2, maximum left-pair codegree is 3,
+  and total collision energy is at most 24.  Twelve primes have some
+  `m>=2`; none has `m>=3`.
+- Uniform `m=O(1)` and codegree `O(1)` would imply `O(H^(3/2))` support by
+  Kővári--Sós--Turán and hence the desired mesoscopic energy bound.  The
+  census is strong evidence for exactly these two inputs, but supplies no
+  proof of either uniform statement.
