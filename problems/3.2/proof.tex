@@ -5690,6 +5690,8 @@ set $\{0 \le m < X^2 : m \bmod p \in \mathcal Z_p\}$.)
 
 \input{hm3_result}
 
+\input{atom_tail_section}
+
 \section{Conclusion}
 
 The principal unconditional result is the quantitative
@@ -5877,6 +5879,38 @@ Duke--Friedlander--Iwaniec (``bilinear forms
 with Kloosterman fractions'') requires
 a fixed numerator, which the moving-target
 zero-sets do not provide.
+
+A sharper reduction emerges from the moment collapse
+(Proposition~\ref{prop:atomtail-collapse}):
+the full moment hierarchy $(\mathrm{HM})_k$
+for \emph{every}~$k$ follows from a single pointwise bound
+\[
+  \max_{m < X^2} K_X(m) \;\le\; \lambda_X \cdot X^{o(1)}
+  \qquad (\text{Hypothesis~(AT$''$)}).
+\]
+The concentration theorem
+(Theorem~\ref{thm:atomtail-conc})
+shows this is equivalent to the atom-tail bound
+$n_T \ll X^{2+o(1)}\lambda_X^3/T^3$,
+improving Chebyshev's unconditional
+$n_T \le 5X^2\lambda_X^2/T^2$
+by a single factor~$T/\lambda_X$.
+Every ensemble method examined---large-sieve dispersion,
+Linnik dispersion with completed CRT sums, variance
+layer-cake, codegree-weighted pair dispersion---either
+requires this atom bound at its diagonal or is subsumed
+by the moment collapse.
+The Cartier diagonal representation
+(Theorem~\ref{thm:atomtail-cartier}) places~$\mathcal{Z}_p$
+inside one fixed algebraic family,
+and the codegree dichotomy
+(Theorem~\ref{thm:atomtail-twin}) repairs the
+wrap gap in the separated-block codegree proof;
+neither alone closes the atom tail,
+because every certificate algebra controls
+pairwise coincidences at a single prime,
+while atoms consist of~$T$ primes
+each contributing a single coincidence.
 
 Transfer of the null-model theorem
 to the actual Ap\'ery zeros
@@ -6354,6 +6388,11 @@ L.~Xiao,
 \emph{Greatest common divisors of integral points of
 numerically equivalent divisors},
 Math.\ Z.\ \textbf{306} (2024), article 61.
+
+\bibitem{Straub2014}
+A.~Straub,
+Multivariate Ap\'ery numbers and supercongruences of rational functions,
+\textit{Algebra Number Theory} \textbf{8} (2014), no.~8, 1985--2008.
 
 \bibitem{Zudilin2004}
 W.~Zudilin,
