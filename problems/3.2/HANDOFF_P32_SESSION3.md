@@ -48,3 +48,20 @@ Fable message queued asking for precise mesoscopic setup.
 - problems/3.2/UNDERSTANDING_P32.md — campaign state
 - problems/3.2/DOCTRINE.md — automode doctrine
 - Hot Fable agent: a9c82b2ecf78808da (has R1-R25 context)
+
+## LATEST: Self-duality of incidence variety (commit 11d7b88)
+
+Dual gap polynomials Ñ_g(h₀;x) = N_g(x+h₀) — SHIFTED original N_g.
+Res(N_{h₂}, N_g(·+h₀)) ≠ 0 for h₀ ≥ 1, g ≠ h₂ (strip theorem).
+This gives CODEGREE CERTIFICATES for the mesoscopic program.
+
+Exceptional mass gap CLOSED (level stratification, commit 17220e1).
+Diagonal transport identity proved for all h (commit f72f927).
+
+FABLE R27 TASKS (unstarted):
+(i) Measure log|S*| vs log|S| scaling (α exponent) — same day
+(ii) KST codegree census on Γ_p(H) with dual certificates
+(iii) Mesoscopic program: collision energy E_p(H) ≪ H^{3/2}
+
+Total session: 193→200 pages, 21 commits, First Lemma proved,
+10+ theorems integrated, two named hypotheses (AT″, GM*) above parity line.
