@@ -161,10 +161,12 @@ def main():
     print(hdr)
     print("-" * len(hdr))
 
+    all_recs = []
     for p in primes:
         rec = census(p)
         if rec is None:
             continue
+        all_recs.append(rec)
         r = rec
         H15 = r['H'] ** 1.5
         if (p <= 100 or p % 500 < 10 or r['max_m'] >= 3
@@ -174,18 +176,16 @@ def main():
                   f"{r['max_m']:4d} {r['m_ge2']:4d} {r['m_ge3']:4d} "
                   f"{r['max_ldeg']:4d} {r['max_rdeg']:4d} {r['max_codeg']:5d}")
 
-    # Summary
-    all_recs = [census(p) for p in primes]
-    all_recs = [r for r in all_recs if r is not None]
-    max_E = max(r['E'] for r in all_recs)
-    max_m_all = max(r['max_m'] for r in all_recs)
-    max_codeg_all = max(r['max_codeg'] for r in all_recs)
-    print(f"\nSummary (p <= {limit}):")
-    print(f"  max E = {max_E}")
-    print(f"  max m_{'{d,r}'} = {max_m_all}")
-    print(f"  max codegree = {max_codeg_all}")
-    print(f"  #{'{'}m>=2{'}'} primes: {sum(1 for r in all_recs if r['m_ge2'] > 0)}")
-    print(f"  #{'{'}m>=3{'}'} primes: {sum(1 for r in all_recs if r['m_ge3'] > 0)}")
+    if all_recs:
+        max_E = max(r['E'] for r in all_recs)
+        max_m_all = max(r['max_m'] for r in all_recs)
+        max_codeg_all = max(r['max_codeg'] for r in all_recs)
+        print(f"\nSummary (p <= {limit}):")
+        print(f"  max E = {max_E}")
+        print(f"  max m = {max_m_all}")
+        print(f"  max codegree = {max_codeg_all}")
+        print(f"  #(m>=2) primes: {sum(1 for r in all_recs if r['m_ge2'] > 0)}")
+        print(f"  #(m>=3) primes: {sum(1 for r in all_recs if r['m_ge3'] > 0)}")
 
 
 if __name__ == "__main__":
