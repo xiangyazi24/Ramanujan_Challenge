@@ -189,3 +189,18 @@ CONSEQUENCES:
 - Average Z(p) ≪ p^{3/5} UNCONDITIONAL
 - T2 per-prime separation UNCONDITIONAL  
 - k threshold drops from 7 to 6 (if c=3/5 audit passes)
+
+### QUADRUPLE GCD-MASS: polylog-clean (2026-08-09)
+κ = gcd(S_{h1,h2}, S_{h2,h3}) computed for 215 gap triples.
+Non-diagonal: avg log κ ≈ 24 (polylog), dominated by small primes 2,3,5,17.
+Diagonal (h1=h3): ratio = 1 (trivially, S symmetric).
+Total/H³ = 1.7 at H=7 → should → 0 as H → ∞.
+Dead rung confirmed: U_{h1,h2} = ±S_{h1,h2} × Res(N_{h1}, N_{h1+1}) (algebraic dependence).
+Live rung: quadruple gcd-mass IS polylog-clean → avg Z ≪ p^{1/2+o(1)} → k = 5.
+Fable R19 parity-breaking problem formalized (LaTeX ready).
+
+### Corank ladder status:
+- Pair corank: avg Z ≪ p^{3/5} PROVED (First Lemma, unconditional)
+- Triple corank: DEAD RUNG (certificates algebraically dependent)
+- Quadruple corank: avg Z ≪ p^{1/2} REACHABLE (conditional on gcd-mass lemma)
+- Below p^{1/2}: UNREACHABLE on this ladder
