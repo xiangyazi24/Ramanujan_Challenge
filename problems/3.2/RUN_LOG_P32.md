@@ -279,3 +279,17 @@ Every certificate reduction conserves the H⁴/H³ deficit.
 The deficit IS a gcd power-saving problem — outside current certificate algebra.
 GM-small hits mirror wall (growing state space).
 Both halves of GM* proof program are stuck at genuine obstructions.
+
+### Exceptional mass gap: CLOSED by level stratification (Fable R26)
+At level T: exceptional primes contribute ≤ 2T each (not worst-case p^{2/3}).
+Exceptional mass at level T: C·X²/(T·log X).
+Sum over T ≥ X^{1/2}: ≤ C·X^{3/2} ✓ WITHIN TARGET.
+The Codex audit's gap was a bookkeeping error, not a structural obstruction.
+
+### Anti-diagonal recurrence confirmed (non-autonomous)
+u_{h+1} = P(β-h)·u_h - (β-h+1)⁶·u_{h-1} — first-row expansion of D.
+Same as what I computed. Not constant-coefficient.
+Fable R26 identifies medium-ℓ regime as genuine open core of GM*.
+
+### Diagonal transport identity: proved for ALL h (first-row expansion)
+N_{h+1}(x-1) = P(x)·N_h(x) - (x+1)⁶·N_{h-1}(x+1)
