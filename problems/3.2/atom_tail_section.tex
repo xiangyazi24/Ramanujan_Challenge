@@ -450,3 +450,33 @@ divisor structure of the Ap\'ery sequence: no integer
 $m<X^2$ may lie in the zero fibre of
 $X^{\varepsilon}$ distinct window primes.
 \end{remark}
+
+\subsection{The corank ladder and its ceiling}
+
+The average exponent $c$ in $\sum_{p \le x} Z(p) \ll x^{1+c}/\log x$
+determines the moment order needed for the full conjecture via the
+trade-off $c + 2/k < 1$.
+
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+$c$ & $k$ needed & status \\
+\midrule
+$2/3$ & $7$ & proved (gap polynomial) \\
+$3/5$ & $6$ & proved (corank + First Lemma) \\
+$1/2$ & $5$ & unreachable on the corank ladder \\
+$o(1)$ & $3$ & requires parity-breaking \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The pair corank argument (Gershgorin root-strip,
+Corollary~\ref{cor:atomtail-firstlemma}) gives $c = 3/5$.
+The quadruple corank, using $\gcd(S_{h_1,h_2}, S_{h_2,h_3})$,
+does not improve this: the gcd mass grows linearly with the
+total gap, giving the same $O(H^4)$ budget as the pair argument.
+The obstruction is that the triple certificate $U_{h_1,h_2}
+= \operatorname{Res}(N_{h_1}, N_{h_1+h_2})$ factors as
+$U = \pm S_{h_1,h_2} \cdot \operatorname{Res}(N_{h_1}, N_{h_1+1})
+\cdot (\text{leading-coefficient})$,
+so certificates within one triple are algebraically dependent.
