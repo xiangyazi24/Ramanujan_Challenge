@@ -329,3 +329,30 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
      Sample: p=503, H=22: 8 edges vs H^{3/2}=103, max codeg=1.
      Needs larger range computation for conclusive data.
      The dual gap polynomials Ñ_g = N_g(·+h₀) provide codegree certificates.
+
+### Adjacent-pair GM* refuted; skipped-triple GM-dagger repair (2026-08-09)
+
+- The advertised adjacent mass was missing the forced diagonal.  Absolute
+  resultant symmetry gives |S_(a,b)| = |S_(b,a)|, so every triple with a=c
+  contributes a self-gcd.  With full structural saturation, the exact census
+  at H=32 gives diagonal mass / H^4 = 0.252843087, off-diagonal mass / H^3 =
+  0.132500201, and total mass / H^3 = 8.223478989.  The old finite-slope
+  claim and the corresponding GM* formulation are therefore withdrawn.
+- For four zeros r, r+a, r+a+b, r+a+b+c, the usual first triple gives
+  p | S_(a,b), while the skipped triple (z1,z2,z4) gives p | S_(a,b+c).
+  The same t starting points are common roots in both Sylvester problems,
+  hence outside the structural carrier
+  t <= v_p(gcd(S_(a,b), S_(a,b+c))).  Because c>=2, the two unordered
+  parameter pairs can never agree; the forced self-gcd is gone.
+- Replaced GM* by the precise live hypothesis
+  GM-dagger: sum log gcd(S*_(a,b),S*_(a,b+c)) <= H^(3+o(1)), and repaired
+  every certificate and valuation step in atom_tail_section.tex.
+- Added quadcorank_verify.py, an exact Sage audit with canonical H=20 digest
+  e1b61c3e46dc326e8a214af08d53a1fea0ec24fae2bfc552bc8f42472e8c1a93.
+  It passes.  The new mass / H^3 and mean log-gcd are respectively
+  0.123287036, 1.450435723 at H=20, and
+  0.168729913, 1.513120356 at H=32.
+- tmux 11 independently checked the skipped-triple certificate and confirmed
+  the diagonal diagnosis.  It was also warned that its meso_census.py 20000
+  run computes every prime twice and was still consuming one core after
+  twelve minutes.

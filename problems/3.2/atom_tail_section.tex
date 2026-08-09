@@ -464,7 +464,7 @@ $c$ & $k$ needed & status \\
 \midrule
 $2/3$ & $7$ & proved (gap polynomial) \\
 $3/5$ & $6$ & proved (corank + First Lemma) \\
-$1/2$ & 5 & conditional on $\mathrm{GM}^*$ (\S\ref{ssec:quadcorank}) \\
+$1/2$ & 5 & conditional on $\mathrm{GM}^{\dagger}$ (\S\ref{ssec:quadcorank}) \\
 $o(1)$ & $3$ & requires parity-breaking \\
 \bottomrule
 \end{tabular}
@@ -472,10 +472,17 @@ $o(1)$ & $3$ & requires parity-breaking \\
 
 The pair corank argument (Gershgorin root-strip,
 Corollary~\ref{cor:atomtail-firstlemma}) gives $c = 3/5$.
-The quadruple corank, using $\gcd(S_{h_1,h_2}, S_{h_2,h_3})$,
-does not improve this: the gcd mass grows linearly with the
-total gap, giving the same $O(H^4)$ budget as the pair argument.
-The obstruction is that the triple certificate $U_{h_1,h_2}
+The na\"ive adjacent-pair quadruple certificate
+$\gcd(S_{h_1,h_2},S_{h_2,h_3})$ is not transverse: when
+$h_1=h_3$, the symmetry
+$|S_{h_1,h_2}|=|S_{h_2,h_1}|$ makes it a self-gcd.  In
+particular, the previously reported numerical decay for this mass
+had inadvertently omitted its diagonal.  The skipped triple formed by
+the first, second, and fourth zeros instead pairs
+$S_{h_1,h_2}$ with $S_{h_1,h_2+h_3}$; since $h_3\ge2$, this pair
+can never be a self-gcd, even after using the symmetry of~$S$.
+The separate obstruction at the triple level is that
+$U_{h_1,h_2}
 = \operatorname{Res}(N_{h_1}, N_{h_1+h_2})$ factors as
 $U = \pm S_{h_1,h_2} \cdot \operatorname{Res}(N_{h_1}, N_{h_1+1})
 \cdot (\text{leading-coefficient})$,
@@ -498,28 +505,29 @@ $\mathfrak U_H$ removed:
 $S^*=S/\gcd(S,\mathfrak U_H^\infty)$.
 \end{definition}
 
-\begin{lemma}[Quadruple certificate]\label{lem:qc-cert}
+\begin{lemma}[Skipped-triple quadruple certificate]\label{lem:qc-cert}
 If $p$ has four zeros
 $r<r{+}h_1<r{+}h_1{+}h_2<r{+}h_1{+}h_2{+}h_3\le p{-}1$
 in $\mathcal Z_p$, then
-$p\mid\gcd(S_{h_1,h_2},\,S_{h_2,h_3})$.
+$p\mid\gcd(S_{h_1,h_2},\,S_{h_1,h_2+h_3})$.
 \end{lemma}
 
 \begin{proof}
 No two of the displayed zeros are consecutive
 (Lemma~\ref{lem:no-consec}), so $h_i\ge2$.  Applying the gap-polynomial
-identity to the first three successive pairs gives
+identity to the first, second, and third zeros, and then to the first,
+second, and fourth zeros, gives
 \[
  N_{h_1}(r)=N_{h_2}(r+h_1)
- =N_{h_3}(r+h_1+h_2)=0\pmod p.
+ =N_{h_2+h_3}(r+h_1)=0\pmod p.
 \]
 There is no denominator problem because every index involved lies in
 $[0,p-1]$.  Thus $r$ is a common root of
-$N_{h_1}(x)$ and $N_{h_2}(x+h_1)$, while $r+h_1$ is a common root of
-$N_{h_2}(x)$ and $N_{h_3}(x+h_2)$.  Each common root makes the
+$N_{h_1}(x)$ and $N_{h_2}(x+h_1)$, and also of
+$N_{h_1}(x)$ and $N_{h_2+h_3}(x+h_1)$.  Each common root makes the
 corresponding Sylvester determinant vanish modulo~$p$.  The two
 determinants are the nonzero integers $S_{h_1,h_2}$ and
-$S_{h_2,h_3}$ by Corollary~\ref{cor:atomtail-firstlemma}, proving the
+$S_{h_1,h_2+h_3}$ by Corollary~\ref{cor:atomtail-firstlemma}, proving the
 claim.
 \end{proof}
 
@@ -572,25 +580,28 @@ least $\log X$ to the logarithm of this product, which proves the
 result.
 \end{proof}
 
-\begin{hypothesis}[Reduced gcd-mass, $\mathrm{GM}^*$]
+\begin{hypothesis}[Skipped-triple reduced gcd-mass, $\mathrm{GM}^{\dagger}$]
 \label{hyp:qc-gm}
 $\displaystyle
  \sum_{\substack{h_1,h_2,h_3\ge2\\ h_1+h_2+h_3\le H}}
- \log\gcd(S^*_{h_1,h_2},\,S^*_{h_2,h_3})
+ \log\gcd(S^*_{h_1,h_2},\,S^*_{h_1,h_2+h_3})
  \ll H^{3+o(1)}$.
 \end{hypothesis}
 
 \begin{remark}[Computational support]
-The unreduced gcd mass grows linearly per triple
-(measured slope $\approx17.5$), which saturation identifies
-as entirely structural: stripping $\{2,3,5,17\}$ reduces the
-slope to~$0.43$, and full saturation by $\mathfrak U_H$
-to~$-0.030$, with $\gcd(S^*,S^{*\prime})=1$ at the majority
-of gap triples ($h_1{+}h_2{+}h_3\le26$).
+The exact audit in \texttt{quadcorank\_verify.py} exposes the diagonal
+error in the adjacent-pair formulation: at $H=20$, its diagonal mass
+divided by $H^4$ is $0.187534$, whereas its total mass divided by
+$H^3$ is already $3.842321$.  For the skipped-triple mass in
+Hypothesis~\ref{hyp:qc-gm}, the ratio to $H^3$ is $0.123287$ and the
+average logarithmic gcd is $1.450436$ at $H=20$; at $H=32$ the
+corresponding values are $0.168730$ and $1.513120$.  These exact finite
+computations support, but of course do not prove,
+$\mathrm{GM}^{\dagger}$.
 \end{remark}
 
 \begin{theorem}[Quadruple corank bound]\label{thm:qc-main}
-Assume $\mathrm{GM}^*$.  Then
+Assume $\mathrm{GM}^{\dagger}$.  Then
 $\sum_{X<p\le2X}Z(p)\ll X^{3/2+o(1)}$,
 i.e., average $Z(p)\ll p^{1/2+o(1)}$.
 \end{theorem}
@@ -609,22 +620,32 @@ Every selected quadruple has a gap triple
 $\boldsymbol h=(h_1,h_2,h_3)$ with $h_i\ge2$ and
 $h_1+h_2+h_3<H$.
 
-Fix such a triple and let $t_p(\boldsymbol h)$ be the number of its
-selected starting points.  These are distinct common roots modulo~$p$
-of $N_{h_1}(x)$ and $N_{h_2}(x+h_1)$.  The shifted points obtained by
-adding $h_1$ are likewise distinct common roots of $N_{h_2}(x)$ and
-$N_{h_3}(x+h_2)$.  For completeness, if two integer polynomials
-$f,g$ have $t$ distinct common roots modulo~$p$, evaluation at those
-roots gives $t$ independent linear functionals annihilating the image
-of the Sylvester map.  Hence its reduction modulo~$p$ has corank at
-least~$t$.  Smith normal form then gives
+Put $\mathcal E_H=\{p\in\mathcal P_X:p\mid\mathfrak U_H\}$.
+Fix such a triple and a prime $p\notin\mathcal E_H$, and let
+$t_p(\boldsymbol h)$ be the number of its selected starting points.
+These are distinct common roots modulo~$p$ of $N_{h_1}(x)$ and
+$N_{h_2}(x+h_1)$.  The same starting points are likewise distinct
+common roots of $N_{h_1}(x)$ and
+$N_{h_2+h_3}(x+h_1)$.  The endpoint identity
+\[
+ N_h(-1)=((h-1)!)^3b_{h-1}
+\]
+and the definition of $\mathfrak U_H$ show that
+$N_{h_1}$, $N_{h_2}$, and $N_{h_2+h_3}$ all have nonzero reduction
+modulo~$p$.
+
+For completeness, if two integer polynomials $f,g$, both nonzero
+modulo~$p$, have $t$ distinct common roots modulo~$p$, evaluation at
+those roots gives $t$ independent linear functionals annihilating the
+image of the Sylvester map.  Hence its reduction modulo~$p$ has corank
+at least~$t$.  Smith normal form then gives
 $v_p(\operatorname{Res}(f,g))\ge t$ whenever the integer resultant is
 nonzero.  This argument remains valid when a leading coefficient drops
 modulo~$p$; a projective root at infinity can only increase the
-corank.  We conclude that
+corank.  We conclude, for $p\notin\mathcal E_H$, that
 \begin{equation}\label{eq:qc-valuation}
  t_p(\boldsymbol h)
- \le v_p\!\left(\gcd(S_{h_1,h_2},S_{h_2,h_3})\right).
+ \le v_p\!\left(\gcd(S_{h_1,h_2},S_{h_1,h_2+h_3})\right).
 \end{equation}
 
 It remains to retain this valuation information at primes dividing the
@@ -645,19 +666,19 @@ For all sufficiently large~$X$, one has $8\le H<p$ and
  \le \frac{3T}{8}+3.
 \]
 Equations~\eqref{eq:qc-block-lower} and~\eqref{eq:qc-valuation}
-therefore imply, uniformly for $p\in\mathcal P_X(T)$,
+therefore imply, uniformly for
+$p\in\mathcal P_X(T)\setminus\mathcal E_H$,
 \begin{equation}\label{eq:qc-level-certificates}
  \frac T2\le Q_p(H)
  \le\sum_{\substack{h_1,h_2,h_3\ge2\\h_1+h_2+h_3\le H}}
- v_p\!\left(\gcd(S_{h_1,h_2},S_{h_2,h_3})\right).
+ v_p\!\left(\gcd(S_{h_1,h_2},S_{h_1,h_2+h_3})\right).
 \end{equation}
 
-Let $\mathcal E_H=\{p\in\mathcal P_X:p\mid\mathfrak U_H\}$.
 For $p\notin\mathcal E_H$, saturation changes neither of the two
 $p$-adic valuations in~\eqref{eq:qc-level-certificates}.  Summing over
 $\mathcal P_X(T)\setminus\mathcal E_H$, then using
 $\sum_{X<p\le2X}v_p(M)\le\log|M|/\log X$ and
-$\mathrm{GM}^*$, gives
+$\mathrm{GM}^{\dagger}$, gives
 \[
  \frac T2\,|\mathcal P_X(T)\setminus\mathcal E_H|
  \ll\frac{H^{3+o(1)}}{\log X}.
@@ -688,7 +709,7 @@ Together with~\eqref{eq:qc-low-level}, this proves the theorem.
 \end{proof}
 
 \begin{corollary}[Moment threshold $k=5$]
-Under $\mathrm{GM}^*$, $(\mathrm{HM})_5$ implies
+Under $\mathrm{GM}^{\dagger}$, $(\mathrm{HM})_5$ implies
 $G_n=e^{o(n)}$ for every~$n$.
 \end{corollary}
 
@@ -712,9 +733,11 @@ algebraically dependent:
 $N_{h_1+h_2}(x)\equiv N_{h_2}(x{+}h_1)\,N_{h_1+1}(x)
 \pmod{N_{h_1}(x)}$,
 so the triple level cannot improve beyond $3/5$.
-The quadruple is the first configuration with two
-independent certificates, and higher tuples give
-strictly weaker exponents.
+The quadruple is the first configuration supplying two certificates
+that can be paired without a forced self-gcd.  The remaining input is
+precisely the arithmetic gcd-mass estimate
+$\mathrm{GM}^{\dagger}$; higher tuples give strictly weaker exponents
+within the same corank bookkeeping.
 \end{remark}
 
 \subsection{The parity barrier and the central open problem}

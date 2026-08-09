@@ -884,21 +884,23 @@ $\Gamma_p(H)$: left vertices are gap lengths~$d$, right
 vertices are gap lengths~$r$, with an edge when
 $N_d$ and~$N_r(\cdot + d)$ share a root
 over~$\mathbb{F}_p$.
-Each edge certifies a triple collision, so
-$\mathcal{E}_p(H) = e(\Gamma_p(H))$.
-A uniform fiber bound $\deg_L(d) \le C$ (the number of
-$r$-partners for each~$d$) and a uniform codegree
-bound (at most~$C$ common right neighbors for any
-two left vertices) would place $\Gamma_p(H)$ in the
-regime of the K\H{o}v\'ari--S\'os--Tur\'an theorem,
-giving $\mathcal{E}_p(H) \ll H^{3/2}$---the
-collision-energy scale needed for the
-mesoscopic target $R_p(\sqrt{p}) = O(\sqrt{p})$.
+Its edge count is the simple support $W_p(H)$, not
+$\mathcal E_p(H)$: an edge with $m_{d,r}(p)$ witnesses
+has weight $m_{d,r}(p)$ in the energy.  A uniform
+codegree bound would place the simple graph in the
+regime of the K\H{o}v\'ari--S\'os--Tur\'an theorem and
+give $W_p(H)\ll H^{3/2}$, but this does not control the
+parallel root witnesses.  To reach
+$\mathcal E_p(H)\ll H^{3/2}$ one needs a weighted
+codegree or split-gcd multiplicity-tail estimate.  Even
+that energy estimate must be supplemented by the
+low-fiber amplification recorded below before it yields
+the mesoscopic target $R_p(\sqrt p)=O(\sqrt p)$.
 The Dodgson identity
 (Remark~\ref{rem:dodgson}) restricts local
 configurations in~$\Gamma_p$, but by itself controls
 $O(H)$~pairs out of~$O(H^2)$; upgrading it to a
-global codegree bound is the key missing step.
+weighted global estimate is the key missing step.
 \end{remark}
 
 \subsection{Value fibers: the bordered certificate}

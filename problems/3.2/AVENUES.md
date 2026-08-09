@@ -8,7 +8,40 @@ and then attacking the pointwise atom tail with genuinely transverse data.
 
 ## Ranked avenues
 
-### (a) Exact structural saturation of quadruple certificates
+### (a) Skipped-triple structural saturation of quadruple certificates
+
+**Terminal outcome for the certificate architecture (2026-08-09): repaired.**
+The former adjacent-pair mass
+
+\[
+ \sum_{a+b+c\le H}\log\gcd(S^*_{a,b},S^*_{b,c})
+\]
+
+contains a forced self-gcd whenever \(a=c\), because
+\(|S_{a,b}|=|S_{b,a}|\).  The earlier decreasing-slope computation had
+silently excluded this diagonal; an exact recomputation shows the total
+mass at \(H=32\) is \(8.22348H^3\), with the diagonal alone equal to
+\(0.252843H^4\).  Thus this is not the transverse mass required by the
+corank argument.
+
+Four zeros at gaps \((a,b,c)\) instead force the two resultants
+\(S_{a,b}\) and \(S_{a,b+c}\).  They share the same starting roots, so
+the Sylvester-corank valuation certificate is unchanged, while \(c\ge2\)
+prevents a self-gcd even after swapping the resultant parameters.  The new
+live hypothesis is
+
+\[
+ \mathrm{GM}^{\dagger}:\qquad
+ \sum_{a+b+c\le H}\log\gcd(S^*_{a,b},S^*_{a,b+c})
+ \ll H^{3+o(1)}.
+\]
+
+The exact ratio of this mass to \(H^3\) is \(0.123287\) at \(H=20\) and
+\(0.168730\) at \(H=32\); the mean logarithmic gcd is respectively
+\(1.450436\) and \(1.513120\).  This is evidence, not a proof.  The full
+conditional implication has been repaired around
+\(\mathrm{GM}^{\dagger}\); proving this new mass bound remains the live
+arithmetic problem.
 
 Replace the prime-support saturation
 
@@ -43,7 +76,7 @@ Then the exceptional-prime count gives level mass
 
 whose sum over $T=2^k\sqrt X$ is $O(X^{3/2}/\log X)$.  The
 generic part is $O(H^{3+o(1)}/\log X)$ under
-$\mathrm{GM}^*$, and its level sum is $X^{3/2+o(1)}$.
+$\mathrm{GM}^{\dagger}$, and its level sum is $X^{3/2+o(1)}$.
 This closes the exceptional-mass gap in the conditional implication; the
 complete proof is now in `atom_tail_section.tex`.
 
@@ -91,7 +124,7 @@ branch has a low-height cross-prime carrier beyond pair certificates.
 
 ## Fallback after all four terminal verdicts
 
-Keep the conditional (mathrm{GM}^*) statement only with a complete proof of
+Keep the conditional ($\mathrm{GM}^{\dagger}$) statement only with a complete proof of
 its implication, correct any unconditional wording, and record the exact
 weighted-exceptional or unbounded-grade lemma that remains.  Do not replace the
 full conjecture by the weaker (p^{1/2}) average-zero milestone.
