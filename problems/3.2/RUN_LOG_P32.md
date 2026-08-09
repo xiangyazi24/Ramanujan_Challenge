@@ -306,3 +306,10 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
 - Q7101: consecutive-quadruple linear corank inequality CONFIRMED ✓
 - Q7103: transfer identity FALSE (j=0,h=1 gives -48≠1/8) — DISCARDED
 - Note: shared rc channels can cross waiter tags; future matching by content checksum
+
+### Mesoscopic Tasks (2026-08-09 late):
+(i) α exponent: log|S*| ~ (d+r)^2 (same as original). No budget improvement.
+(ii) KST codegree: graph extremely sparse (edges ≪ H^{3/2}, max codeg ≤ 1).
+     Sample: p=503, H=22: 8 edges vs H^{3/2}=103, max codeg=1.
+     Needs larger range computation for conclusive data.
+     The dual gap polynomials Ñ_g = N_g(·+h₀) provide codegree certificates.
