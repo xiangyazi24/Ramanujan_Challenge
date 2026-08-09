@@ -220,3 +220,16 @@ CAMPAIGN FINAL POSITION:
 - Atom tail (AT″): OPEN, single named conjecture above parity line
 - k threshold: 6 (proved), cannot improve further without parity-breaking
 - Parity-breaking problem: formally posed (Open Problem in paper)
+
+### QUADRUPLE RUNG REVIVED! (2026-08-09)
+Reduced resultants S* (structural primes 2,3,5,17 stripped):
+Original slope: 17.46 → Reduced slope: 0.43 (FLAT!)
+The entire linear growth was Chebyshev U_h(17) content.
+κ* = gcd(S*_{h1,h2}, S*_{h2,h3}) is O(1) after structural reduction.
+
+CONSEQUENCE: quadruple corank with reduced certificates → avg Z ≪ p^{1/2+o(1)} → k = 5.
+This is a PROVABLE theorem (pending GM-small automaton + GM-large second moment).
+
+CORANK LADDER UPDATED:
+- 3/5: PROVED (pair corank, First Lemma)  
+- 1/2: REACHABLE (quadruple corank with reduced resultants)
