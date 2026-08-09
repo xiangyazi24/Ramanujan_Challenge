@@ -156,3 +156,9 @@ the recurrence order drops, gap polynomials have lower degree,
 and the zero set is more constrained.
 
 NEXT: exploit this order-drop to prove something about the atom tail.
+
+### UNIQUENESS THEOREM (2026-08-09): λ=1 is the unique Apéry fiber
+gcd(Q_1,...,Q_7) = 1 → no other rational λ₀ makes all defects vanish.
+λ=1 is uniquely determined by the order-2 recurrence property.
+Q_r(1) ≠ 0 → (λ-1) is exactly first-order in each defect.
+NEW THEOREM for the paper.
