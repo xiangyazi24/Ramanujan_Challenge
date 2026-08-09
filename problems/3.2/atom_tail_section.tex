@@ -553,3 +553,49 @@ The quadruple is the first configuration with two
 independent certificates, and higher tuples give
 strictly weaker exponents.
 \end{remark}
+
+\subsection{The parity barrier and the central open problem}
+
+\begin{openproblem}[Parity barrier]\label{op:parity}
+Find a map $r\mapsto\mathfrak G_r$ assigning to every integer $r\ge2$ a
+\emph{nonzero} integer $\mathfrak G_r$, defined by $r$ alone, such that
+\begin{enumerate}
+\item[\textup{(D)}] \textbf{Detection:} for every prime $p>r$,
+  $p\mid b_r\;\Longrightarrow\;p\mid\mathfrak G_r$;
+\item[\textup{(H)}] \textbf{Height:} $\log|\mathfrak G_r|\le r^{o(1)}$.
+\end{enumerate}
+The sequence $\mathfrak G_r=b_r$ satisfies \textup{(D)} with
+$\log b_r\sim3.5255\,r$: the entire content is the height condition.
+\end{openproblem}
+
+\begin{remark}[What a solution yields]
+With $(\log r)^{O(1)}$ heights,
+summing $\omega_{(X,2X]}(\mathfrak G_r)$
+over $r<2X$ gives average $Z(p)\ll p^{o(1)}$;
+the exponent~$c$ drops to~$o(1)$ and the full
+conjecture follows from $(\mathrm{HM})_3$ alone.
+A solution would \emph{not} by itself prove $(\mathrm{AT}'')$:
+the atom count is a diagonal selection,
+and certificates control the total divisor mass,
+not its concentration on the diagonal.
+It would, however, breach the parity barrier:
+every certificate in this paper requires
+at least two vanishing conditions at a single prime.
+\end{remark}
+
+\begin{remark}[Known failure modes]
+\textup{(i)} The Fermat detector $1-b_r^{p-1}$ has degree growing
+with~$p$.
+\textup{(ii)} The Cartier/Hasse--Witt operator is $p$-semilinear;
+its entries lift to no fixed integer.
+\textup{(iii)} Character-sum realizations detect residues
+modulo~$p{-}1$, not modulo~$p$.
+\textup{(iv)} Weight: twisted traces have weight~$\ge2$, so
+$p\mid S$ does not force $S=0$.
+\textup{(v)} The digit ladder (variation of parameters at
+depth~$\ge4$) is parity-neutral: each deeper congruence introduces
+one relation and one new local unknown, with zero net global
+information gain.
+\textup{(vi)} Tensor constructions (symmetric powers) dilute parity
+rather than breaking it.
+\end{remark}
