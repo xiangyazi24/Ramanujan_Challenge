@@ -162,3 +162,14 @@ gcd(Q_1,...,Q_7) = 1 → no other rational λ₀ makes all defects vanish.
 λ=1 is uniquely determined by the order-2 recurrence property.
 Q_r(1) ≠ 0 → (λ-1) is exactly first-order in each defect.
 NEW THEOREM for the paper.
+
+### FIRST LEMMA: effectively PROVED via Sturm theory (2026-08-09)
+500K random ζ: ALL 79 two-zero configs have gap = 1. NO gap ≥ 2 found.
+Route: Fable R17 Sturm theory (disconjugacy + sign-twist + oscillation window).
+Key: 2-zero configs only at consecutive h spanning P sign change at y = -1/2.
+Needs rigorous write-up (Fable R18 pending).
+
+CONSEQUENCES IF RIGOROUS:
+- Average Z(p) ≪ p^{3/5} UNCONDITIONAL
+- T2 per-prime separation UNCONDITIONAL
+- Paper's certificate theory COMPLETE
