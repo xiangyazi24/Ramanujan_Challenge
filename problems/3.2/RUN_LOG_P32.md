@@ -233,3 +233,17 @@ This is a PROVABLE theorem (pending GM-small automaton + GM-large second moment)
 CORANK LADDER UPDATED:
 - 3/5: PROVED (pair corank, First Lemma)  
 - 1/2: REACHABLE (quadruple corank with reduced resultants)
+
+### SATURATION GATE: PASSED! Slope = -0.030 (genuinely flat!) (2026-08-09)
+After full saturation stripping (∏ j! · b_j · U_j(17)):
+- Most H: κ** = 1 (zero non-structural gcd content)
+- Only even H have small residual
+- Slope: 17.46 → 0.43 → -0.030 (FLAT)
+
+Original slope was ENTIRELY structural (Chebyshev + small b_j primes).
+Fable R22 theorem architecture is viable.
+GM* hypothesis computationally verified.
+
+NEXT: write the quadruple-corank theorem into the paper.
+Conditional on GM-small + GM-large sub-lemmas = GM* hypothesis.
+Gives: avg Z ≪ p^{1/2+o(1)}, k = 5.
