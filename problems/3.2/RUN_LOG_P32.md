@@ -113,3 +113,33 @@ BMZ unlikely intersection, third moment sieve, product counting.
 ALIVE: palindrome theorem for all λ (Cartier proof complete).
 EXPLORING: Artin-for-Hecke multiplicative order → Z(p) bound.
 NEW RESULT: discriminants all nonzero (b_r(λ) squarefree, r ≤ 10).
+
+### Artin/multiplicative order: DEAD (2026-08-09)
+ord_p(a_p) is NOT usually close to p-1. Data: p=61 has ord=1, p=17 has ord=2.
+Frobenius eigenvalue lives in quadratic extension, not F_p*.
+Artin's conjecture inapplicable to varying Hecke eigenvalues.
+
+### ALL AVENUES EXHAUSTED with terminal verdicts:
+- (a1) Twin-atom: bounds pair sharing but can't count atoms (Chebyshev dominates)
+- (a2) Mellin twist: kill (continuum |S̃|)
+- (a3) Shell restriction: confirmed OK but doesn't help
+- (b) CED: subsumed by atom problem (Fable R10)
+- (c) Vertical + (HM)_6: needs (HM)_6 which has same CRT gap
+- (d) Function field: 3 kill shots (Fable R13)
+- Sidon: trivially true for doublets, too strong to prove generally
+- Large sieve separation: constant improvement only
+- Cofactor/product: no power saving
+- Wronskian: doesn't separate locals
+- Palindromic CRT: no sign cancellation
+- BMZ unlikely intersection: wrong framework
+- Artin/order: inapplicable to varying Hecke eigenvalues
+
+### FINAL STATUS:
+The full conjecture G_n = e^{o(n)} for ALL n reduces to (AT″): max K ≪ λ·X^{o(1)}.
+This is a single pointwise derandomization statement.
+Every algebraic, analytic, and combinatorial route has been exhausted.
+The certificate parity obstruction (Fable R14) explains why:
+all certificate algebras require ≥2 coincidences at one prime,
+but atoms have 1 coincidence per prime.
+
+PAPER CONTRIBUTIONS: 8 new theorems, ~1000 lines LaTeX, 1 named frontier conjecture.
