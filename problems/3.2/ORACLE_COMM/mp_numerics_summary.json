@@ -1,0 +1,53 @@
+{
+  "limit": 5000,
+  "primes_checked_p_ge_7": 666,
+  "active_primes": 246,
+  "sqrt": {
+    "observed_off": 974,
+    "task_prediction": 28217.679571567987,
+    "off_over_task": 0.034517366941164015,
+    "fixed_off_prediction": 1064.20554275837,
+    "off_over_fixed": 0.9152367290584096,
+    "observed_total": 27512,
+    "fixed_total_prediction": 27602.205542762385,
+    "total_over_fixed": 0.9967319443867398,
+    "zero_off_primes": 79,
+    "median_off_over_task": 0.019617639427649998
+  },
+  "cuberoot": {
+    "observed_off": 60,
+    "task_prediction": 7244.986089285044,
+    "off_over_task": 0.008281589399976471,
+    "fixed_off_prediction": 81.11259274901211,
+    "off_over_fixed": 0.7397125152398825,
+    "observed_total": 7164,
+    "fixed_total_prediction": 7185.112592749377,
+    "total_over_fixed": 0.9970616197760517,
+    "zero_off_primes": 225,
+    "median_off_over_task": 0.0
+  },
+  "multiplicative_energy": {
+    "observed": 2856,
+    "task_pZ2_prediction": 3975216.0,
+    "observed_over_task": 0.0007184515256529457,
+    "occupancy_prediction": 2864.898224591192,
+    "observed_over_occupancy": 0.9968940521115853,
+    "fixed_subset_prediction": 2861.2120682739924,
+    "observed_over_fixed_subset": 0.9981783705123485,
+    "sidon_primes": 245,
+    "non_sidon_primes": 1,
+    "max_M_k1": 8,
+    "max_M_k1_nonidentity": 2,
+    "exceptions": [
+      {
+        "p": 3727,
+        "Z": 8,
+        "E_mult": 124,
+        "minimum": 120,
+        "excess": 4,
+        "max_M_k1": 8,
+        "max_M_k1_nonidentity": 2
+      }
+    ]
+  }
+}

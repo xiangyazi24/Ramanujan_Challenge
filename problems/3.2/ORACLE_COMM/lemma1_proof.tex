@@ -1,0 +1,132 @@
+% Codex Task 002(B): formal proof of Fourier non-concentration.
+
+\begin{lemma}[Fourier non-concentration]
+\label{lem:oracle-comm-fourier-nonconcentration}
+Let \(p\ge 7\) be prime, let
+\(\mathcal Z_p=\{0\le r<p:b_r\equiv0\pmod p\}\), and put
+\[
+ F_p(k)=\sum_{r\in\mathcal Z_p}e_p(kr),
+ \qquad Z(p)=|\mathcal Z_p|.
+\]
+For every integer \(1\le K\le(p-1)/2\),
+\[
+ \sum_{1\le |k|\le K}|F_p(k)|^2
+ \le 4\pi^2\left(KZ(p)+\frac{p^2}{K}\right).
+\]
+In particular the asserted estimate holds with an absolute constant.
+\end{lemma}
+
+\begin{proof}
+For \(1\le h<p\), write
+\[
+ A_p(h)=\#\{r:0\le r<r+h<p,\ r,r+h\in\mathcal Z_p\}.
+\]
+The no-consecutive-zeros lemma gives \(A_p(1)=0\). If \(h\ge2\),
+every pair counted by \(A_p(h)\) makes \(r\) a root of the nonzero gap
+polynomial \(N_h\bmod p\), of degree \(3(h-1)\). Hence
+\begin{equation}
+ A_p(h)\le3(h-1).
+ \label{eq:oracle-comm-gap-count}
+\end{equation}
+
+We first treat \(K\le p/8\). Set
+\[
+ H=\left\lfloor\frac{p}{4K}\right\rfloor.
+\]
+Then
+\begin{equation}
+ \frac{p}{8K}\le H\le\frac{p}{4K},
+ \qquad HK/p\le1/4.
+ \label{eq:oracle-comm-H-range}
+\end{equation}
+Partition \(\mathcal Z_p=Z_0\sqcup Z_1\), where
+\[
+ Z_0\subseteq[0,(p-1)/2],\qquad
+ Z_1\subseteq[(p+1)/2,p-1],
+\]
+and put \(F_i(k)=\sum_{r\in Z_i}e_p(kr)\). Thus
+\begin{equation}
+ |F_p(k)|^2\le2|F_0(k)|^2+2|F_1(k)|^2.
+ \label{eq:oracle-comm-half-cauchy}
+\end{equation}
+The split into two half intervals is needed to remove the cyclic
+wrap-around pairs: within either half, a congruence
+\(s-r\equiv h\pmod p\), with \(|h|<H\le p/4\), is the ordinary
+integer equality \(s-r=h\).
+
+Use the finite Fej\'er kernel
+\[
+ \mathcal F_H(k)
+ =\frac1H\left|\sum_{u=0}^{H-1}e_p(ku)\right|^2
+ =\sum_{|h|<H}\left(1-\frac{|h|}{H}\right)e_p(kh).
+\]
+For \(1\le |k|\le K\), the sine formula and
+\eqref{eq:oracle-comm-H-range} give
+\[
+ \left|\sum_{u=0}^{H-1}e_p(ku)\right|
+ =\frac{|\sin(\pi Hk/p)|}{|\sin(\pi k/p)|}
+ \ge\frac{2H}{\pi}.
+\]
+Indeed, \(\sin(\pi x)\ge2x\) for \(0\le x\le1/4\), while
+\(\sin(\pi x)\le\pi x\) for \(x\ge0\). Consequently
+\begin{equation}
+ \mathbf1_{\{1\le|k|\le K\}}
+ \le\frac{\pi^2}{4H}\mathcal F_H(k).
+ \label{eq:oracle-comm-fejer-majorant}
+\end{equation}
+
+Let \(A_i(h)=\#\{r:r,r+h\in Z_i\}\), with the inequalities interpreted
+in the ordinary integer representatives. Finite Fourier orthogonality,
+the half-interval observation above, and
+\eqref{eq:oracle-comm-fejer-majorant} yield
+\begin{align*}
+ \sum_{1\le|k|\le K}|F_i(k)|^2
+ &\le \frac{\pi^2}{4H}
+ \sum_{k\bmod p}\mathcal F_H(k)|F_i(k)|^2\\
+ &=\frac{\pi^2p}{4H}
+ \left(
+ |Z_i|+2\sum_{h=1}^{H-1}
+ \left(1-\frac hH\right)A_i(h)
+ \right).
+\end{align*}
+Summing over \(i\), using
+\eqref{eq:oracle-comm-half-cauchy}, and observing that
+\(A_0(h)+A_1(h)\le A_p(h)\), gives
+\begin{align*}
+ \sum_{1\le|k|\le K}|F_p(k)|^2
+ &\le\frac{\pi^2p}{2H}
+ \left(Z(p)+2\sum_{h=1}^{H-1}A_p(h)\right)\\
+ &\le\frac{\pi^2p}{2H}
+ \left(Z(p)+3H^2\right),
+\end{align*}
+where the last step follows from
+\eqref{eq:oracle-comm-gap-count} and
+\[
+ \sum_{h=2}^{H-1}3(h-1)
+ =\frac32(H-1)(H-2)\le\frac32H^2.
+\]
+By \eqref{eq:oracle-comm-H-range}, \(p/H\le8K\) and
+\(H\le p/(4K)\). Therefore
+\[
+ \sum_{1\le|k|\le K}|F_p(k)|^2
+ \le4\pi^2KZ(p)+\frac{3\pi^2}{4}\frac{p^2}{K}
+ \le4\pi^2\left(KZ(p)+\frac{p^2}{K}\right).
+\]
+
+It remains to consider \(p/8<K\le(p-1)/2\). Finite Parseval gives
+\[
+ \sum_{k\bmod p}|F_p(k)|^2=pZ(p).
+\]
+The residues represented by \(1\le|k|\le K\) are distinct, so their
+sum is at most \(pZ(p)\le8KZ(p)\), which is smaller than the asserted
+right-hand side. This completes the proof.
+\end{proof}
+
+\begin{remark}
+If one applies the Fej\'er expansion directly to all of
+\(\mathcal Z_p\), its short cyclic correlations also contain ordinary
+gaps \(p-h\), for which the bound \(A_p(h)\le3(h-1)\) is unavailable.
+The two-half partition above is the required wrap-around correction to
+the informal expression
+\(2K[Z(p)+\sum_{h\le p/K}A_p(h)(1-hK/p)]\).
+\end{remark}

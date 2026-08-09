@@ -1,0 +1,122 @@
+% CED (Complete E₂-Dispersion) Proof Sketch
+% Target: (HM)_3 via bilinear decorrelation
+
+\section{The CED argument}
+
+\subsection{Setup}
+Fix a dyadic block $\mathcal{P} = \{p \text{ prime} : X < p \le 2X\}$.
+For $m \in \mathbb{Z}$, set
+\[
+  K(m) = \#\{p \in \mathcal{P} : m \bmod p \in \mathcal{Z}_p\},
+  \qquad \lambda = \sum_{p \in \mathcal{P}} Z(p)/p.
+\]
+
+\textbf{Target (HM)$_3$:}
+\[
+  \Sigma_3 := \sum_{m < X^2} (K(m))_3 \ll X^{2+o(1)} \lambda^3.
+\]
+
+\subsection{CRT expansion}
+For distinct $p, q, \ell \in \mathcal{P}$, set $n = pq\ell$.
+Each CRT triple $(r_p, r_q, r_\ell) \in \mathcal{Z}_p \times \mathcal{Z}_q \times \mathcal{Z}_\ell$
+determines a unique $m \in [0, n)$ with $m \equiv r_p \pmod{p}$, etc.
+For $X^2 < n$ (which holds since $n > X^3 > X^2$),
+each such $m$ contributes at most $\mathbf{1}_{m < X^2}$ to $\Sigma_3$.
+Thus
+\[
+  \Sigma_3 = \sum_{\substack{p,q,\ell \text{ distinct}}}
+  \sum_{\substack{r_p \in \mathcal{Z}_p \\ r_q \in \mathcal{Z}_q \\ r_\ell \in \mathcal{Z}_\ell}}
+  \mathbf{1}_{m(r_p,r_q,r_\ell) < X^2},
+\]
+where $m(r_p,r_q,r_\ell)$ is the CRT lift.
+
+\subsection{Fourier expansion of the indicator}
+Write $\mathbf{1}_{m < X^2} = \frac{X^2}{n} + \frac{1}{n}\sum_{0 < |k| < n/2}
+\hat{I}(k) \, e_n(km)$, with $|\hat{I}(k)| \le \min(X^2, 1/(2\|k/n\|))$.
+The main term gives
+\[
+  \text{Main} = \frac{X^2}{n} \cdot Z(p) Z(q) Z(\ell) \cdot |\mathcal{P}|^3_{*}
+  = X^2 \lambda^3 + \text{lower}.
+\]
+The error is
+\[
+  E = \frac{1}{n} \sum_{0 < |k| < n/2} \hat{I}(k)
+  \underbrace{F_p(k\overline{q\ell})}_{=: \alpha_p}
+  \underbrace{F_q(k\overline{p\ell})}_{=: \alpha_q}
+  \underbrace{F_\ell(k\overline{pq})}_{=: \alpha_\ell},
+\]
+where $F_p(a) = \sum_{r \in \mathcal{Z}_p} e_p(ar)$.
+
+\subsection{CED: fix $p$, disperse over $v = q\ell$}
+Fix the ``output'' prime $p$. Set $v = q\ell \in (X^2, 4X^2]$.
+By reciprocity: $k\overline{q\ell} \bmod p = k\overline{v} \bmod p$.
+
+\textbf{Key step:} Apply Cauchy--Schwarz in $v$, keeping $k$ and $p$ cross:
+\[
+  |E_p|^2 \le \Bigl(\sum_v |\beta_v|^2\Bigr)
+  \cdot \Bigl(\sum_v \Big|\sum_{k} \hat{I}(k) \, F_p(k\overline{v}) \Big|^2\Bigr),
+\]
+where $\beta_v = F_q(k\overline{p\ell}) F_\ell(k\overline{pq})$ carries the
+$q,\ell$-dependence.
+
+\subsection{Opening the square: complete sums}
+The inner sum, after opening the square over $(k, k')$:
+\[
+  \sum_v \Big|\sum_k \hat{I}(k) F_p(k\overline{v})\Big|^2
+  = \sum_{k,k'} \hat{I}(k) \overline{\hat{I}(k')}
+  \sum_v F_p(k\overline{v}) \overline{F_p(k'\overline{v})}.
+\]
+
+For $v$ ranging over a segment of length $\ge X^2$, and
+the modulus $p^2 \le 4X^2$, the $v$-sum
+\[
+  S(k,k';p) := \sum_{X^2 < v \le 4X^2} F_p(k\overline{v}) \overline{F_p(k'\overline{v})}
+\]
+is a \emph{complete} (or near-complete) sum modulo~$p$.
+
+\textbf{For} $k = k'$: $S(k,k;p) = |v\text{-range}| \cdot Z(p)/p + O(\sqrt{p})$
+(by Weil, if $F_p$ has algebraic structure; or by the Ramanujan bound).
+
+\textbf{For} $k \ne k'$: $S(k,k';p) = |v\text{-range}| \cdot M_p(k,k')/p + O(\sqrt{p})$,
+where $M_p(k,k') = \#\{(r,r') \in \mathcal{Z}_p^2 : kr \equiv k'r' \pmod{p}\}$.
+
+The $O(\sqrt{p})$ Weil error summed over $|k|, |k'| \le K_0$ with
+$K_0 \approx X$ gives a contribution of size $K_0^2 \sqrt{p} \approx X^2 \sqrt{X}$,
+which is $\ll X^{5/2}$.
+
+\subsection{The diagonal $k = k'$ contribution}
+The $k = k'$ terms contribute $\sim \sum_k |\hat{I}(k)|^2 \cdot Z(p) \cdot X^2/p$.
+By Parseval for $\hat{I}$: $\sum |\hat{I}(k)|^2 = X^2$.
+So this is $\sim X^4 Z(p) / p$.
+
+Summed over $p$: $X^4 \lambda \approx X^4 \cdot X^{2/3}/\log X = X^{14/3}/\log X$.
+The target after squaring is $X^4 \lambda^2 \approx X^{16/3}/\log^2 X$.
+
+The ratio: $X^{14/3} / X^{16/3} = X^{-2/3}$. \textbf{The diagonal is under control.}
+
+\subsection{The off-diagonal $k \ne k'$: the crux}
+The $k \ne k'$ terms involve $M_p(k,k')$.
+
+\textbf{If $M_p(k,k')$ is random-like} (i.e., $M_p(k,k') \approx Z(p)^2/p$ for most $k \ne k'$),
+then the off-diagonal is the same order as the diagonal, and the bound closes.
+
+\textbf{This is the precise numerical question for Codex Task 003.}
+
+\subsection{The M_p(k,k') connection to Mellin/K3}
+By Theorem A and the Mellin reformulation:
+$b_r \equiv -\sum_u N(u) u^{-r} \pmod{p}$,
+where $N(u) = \#\{F = 0, xyzw = u\}$ on $T^4$.
+
+So $F_p(a) = \sum_{r \in \mathcal{Z}_p} e_p(ar)$ relates to the
+twisted character sums $S(\chi) = \sum_{F=0} \chi(xyzw)$.
+
+The multiplicative correlation $M_p(k,k')$ is a second moment of
+these twisted sums, which connects to the Katz framework for
+the K3 surface $\{F = 0\}$.
+
+\textbf{If the monodromy group is $\mathrm{Sp}_4$ (as expected for the Apéry family),
+then the second moments satisfy a specific Haar-average formula,
+which should give $M_p(k,k') = Z(p)^2/p + O(p^{-1/2})$ on average.}
+
+This is the final input needed for the proof.
+\end{content}

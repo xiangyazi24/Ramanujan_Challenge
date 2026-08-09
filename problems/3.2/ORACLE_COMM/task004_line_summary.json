@@ -1,0 +1,60 @@
+{
+  "limit": 2000,
+  "active_primes": 115,
+  "total_line_energy": 1304,
+  "total_forced_diagonal_prediction": 1314.4734887254403,
+  "aggregate_forced_diagonal_ratio": 0.9920321795644613,
+  "total_nonzero_line_energy": 512,
+  "total_nonzero_prediction": 522.4734887254402,
+  "aggregate_nonzero_ratio": 0.9799540283833539,
+  "max_nonzero_line": 1,
+  "finite_slope_distribution": {
+    "0": 102356,
+    "1": 512,
+    "2": 94,
+    "4": 17,
+    "6": 4
+  },
+  "full_pencil_distribution": {
+    "0": 102471,
+    "1": 512,
+    "2": 94,
+    "4": 17,
+    "6": 4
+  },
+  "by_Z": [
+    {
+      "Z": 2,
+      "primes": 94,
+      "energy": 564,
+      "forced_prediction": 564.8482290043402,
+      "ratio": 0.9984983063400317,
+      "nonzero_energy": 188,
+      "nonzero_prediction": 188.84822900433994,
+      "nonzero_ratio": 0.9955084090075292,
+      "max_nonzero_line": 1
+    },
+    {
+      "Z": 4,
+      "primes": 17,
+      "energy": 476,
+      "forced_prediction": 479.9207486398,
+      "ratio": 0.9918304248130295,
+      "nonzero_energy": 204,
+      "nonzero_prediction": 207.92074863980002,
+      "nonzero_ratio": 0.9811430621260782,
+      "max_nonzero_line": 1
+    },
+    {
+      "Z": 6,
+      "primes": 4,
+      "energy": 264,
+      "forced_prediction": 269.7045110813,
+      "ratio": 0.9788490334906544,
+      "nonzero_energy": 120,
+      "nonzero_prediction": 125.7045110813,
+      "nonzero_ratio": 0.9546196788625145,
+      "max_nonzero_line": 1
+    }
+  ]
+}

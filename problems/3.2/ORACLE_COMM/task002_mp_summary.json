@@ -1,0 +1,37 @@
+{
+  "limit": 10000,
+  "prime_count_p_ge_7": 1226,
+  "primes_with_Z_ge_2": 468,
+  "summaries": [
+    {
+      "scale": "sqrt",
+      "active_primes": 468,
+      "sum_literal_offdiag": 8740,
+      "sum_task_prediction": 78308.61200094801,
+      "aggregate_literal_over_task": 0.11160969115241365,
+      "median_literal_over_task": 0.0640215912089,
+      "sum_signed_total": 158624,
+      "sum_signed_total_poisson_prediction": 163350.44800380486,
+      "aggregate_signed_total_poisson_ratio": 0.9710655950959206,
+      "sum_signed_total_fixed_margin_prediction": 158690.63532474247,
+      "aggregate_signed_total_fixed_margin_ratio": 0.9995800928983232,
+      "sum_fixed_margin_off_prediction": 8806.635324741303,
+      "aggregate_off_fixed_margin_ratio": 0.9924335092479534
+    },
+    {
+      "scale": "cuberoot",
+      "active_primes": 468,
+      "sum_literal_offdiag": 544,
+      "sum_task_prediction": 18066.66593889125,
+      "aggregate_literal_over_task": 0.030110702319953633,
+      "median_literal_over_task": 0.0,
+      "sum_signed_total": 36228,
+      "sum_signed_total_poisson_prediction": 36582.66375556893,
+      "aggregate_signed_total_poisson_ratio": 0.9903051413112327,
+      "sum_signed_total_fixed_margin_prediction": 36247.11666068941,
+      "aggregate_signed_total_fixed_margin_ratio": 0.9994726018935971,
+      "sum_fixed_margin_off_prediction": 563.1166606944371,
+      "aggregate_off_fixed_margin_ratio": 0.9660520420921974
+    }
+  ]
+}
