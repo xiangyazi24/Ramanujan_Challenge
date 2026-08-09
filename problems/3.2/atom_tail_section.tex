@@ -464,7 +464,7 @@ $c$ & $k$ needed & status \\
 \midrule
 $2/3$ & $7$ & proved (gap polynomial) \\
 $3/5$ & $6$ & proved (corank + First Lemma) \\
-$1/2 & 5 & conditional on $\mathrm{GM}^*$ (\S\ref{ssec:quadcorank}) \\
+$1/2$ & 5 & conditional on $\mathrm{GM}^*$ (\S\ref{ssec:quadcorank}) \\
 $o(1)$ & $3$ & requires parity-breaking \\
 \bottomrule
 \end{tabular}
@@ -505,15 +505,72 @@ in $\mathcal Z_p$, then
 $p\mid\gcd(S_{h_1,h_2},\,S_{h_2,h_3})$.
 \end{lemma}
 
-\begin{lemma}[Rank of apparition]
-For $p\nmid6$, $p\mid V_n\iff\rho(p)\mid n$ where
+\begin{proof}
+No two of the displayed zeros are consecutive
+(Lemma~\ref{lem:no-consec}), so $h_i\ge2$.  Applying the gap-polynomial
+identity to the first three successive pairs gives
+\[
+ N_{h_1}(r)=N_{h_2}(r+h_1)
+ =N_{h_3}(r+h_1+h_2)=0\pmod p.
+\]
+There is no denominator problem because every index involved lies in
+$[0,p-1]$.  Thus $r$ is a common root of
+$N_{h_1}(x)$ and $N_{h_2}(x+h_1)$, while $r+h_1$ is a common root of
+$N_{h_2}(x)$ and $N_{h_3}(x+h_2)$.  Each common root makes the
+corresponding Sylvester determinant vanish modulo~$p$.  The two
+determinants are the nonzero integers $S_{h_1,h_2}$ and
+$S_{h_2,h_3}$ by Corollary~\ref{cor:atomtail-firstlemma}, proving the
+claim.
+\end{proof}
+
+\begin{lemma}[Rank of apparition]\label{lem:qc-rank}
+For $p\nmid6$, put $\chi(p)=(2/p)$.  Then
+$p\mid V_n\iff\rho(p)\mid n$ for an integer
 $\rho(p)\mid p-\chi(p)$.  Hence
 $\#\{p\in\mathcal P_X:\rho(p)\le R\}\ll R^2/\log X$.
 \end{lemma}
 
-\begin{lemma}[Exceptional classes]
+\begin{proof}
+Work in $\mathbb F_p(\sqrt2)$ and write
+$\bar\varepsilon=17+12\sqrt2$.  Since
+$\bar\varepsilon-\bar\varepsilon^{-1}=24\sqrt2\ne0$, one has
+\[
+ p\mid V_n\quad\Longleftrightarrow\quad
+ \bar\varepsilon^{\,2n}=1.
+\]
+Let $\rho(p)$ be the multiplicative order of
+$\bar\varepsilon^2$.  Frobenius fixes $\bar\varepsilon$ when
+$\chi(p)=1$ and sends it to $\bar\varepsilon^{-1}$ when
+$\chi(p)=-1$.  Consequently
+$\bar\varepsilon^{p-\chi(p)}=1$, and hence
+$\rho(p)\mid p-\chi(p)$.
+
+If $\rho(p)\le R$, then $p$ divides the nonzero integer
+$\prod_{n\le R}V_n$.  Since $\log V_n\ll n$,
+\[
+ \#\{p\in\mathcal P_X:\rho(p)\le R\}\,\log X
+ \le \sum_{n\le R}\log V_n\ll R^2,
+\]
+which is the asserted estimate.
+\end{proof}
+
+\begin{lemma}[Exceptional classes]\label{lem:qc-exceptional}
 $\#\{p\in\mathcal P_X:p\mid\mathfrak U_H\}\ll H^2/\log X$.
 \end{lemma}
+
+\begin{proof}
+For $H\ge\sqrt X$ this follows from the trivial estimate
+$|\mathcal P_X|\ll X/\log X$.  Suppose that $H<\sqrt X$.
+Then every $p\in\mathcal P_X$ exceeds~$H$ and hence divides none of
+the factorials occurring in $\mathfrak U_H$.  The elementary growth
+bounds $\log b_j\ll j$ and $\log V_{j+1}\ll j$ give
+\[
+ \log\prod_{j\le H}b_jV_{j+1}\ll H^2.
+\]
+Every window prime dividing $\mathfrak U_H$ therefore contributes at
+least $\log X$ to the logarithm of this product, which proves the
+result.
+\end{proof}
 
 \begin{hypothesis}[Reduced gcd-mass, $\mathrm{GM}^*$]
 \label{hyp:qc-gm}
@@ -538,10 +595,116 @@ $\sum_{X<p\le2X}Z(p)\ll X^{3/2+o(1)}$,
 i.e., average $Z(p)\ll p^{1/2+o(1)}$.
 \end{theorem}
 
+\begin{proof}
+We first record the valuation form of
+Lemma~\ref{lem:qc-cert}.  Partition $[0,p-1]$ into consecutive blocks
+of length at most~$H$, and suppose that one block contains the ordered
+zeros $z_1<\cdots<z_m$.  Select the $m-3$ consecutive quadruples
+$(z_i,z_{i+1},z_{i+2},z_{i+3})$ when $m\ge4$.  Thus the total number
+$Q_p(H)$ of selected quadruples satisfies
+\begin{equation}\label{eq:qc-block-lower}
+ Q_p(H)\ge Z(p)-3\left\lceil\frac pH\right\rceil.
+\end{equation}
+Every selected quadruple has a gap triple
+$\boldsymbol h=(h_1,h_2,h_3)$ with $h_i\ge2$ and
+$h_1+h_2+h_3<H$.
+
+Fix such a triple and let $t_p(\boldsymbol h)$ be the number of its
+selected starting points.  These are distinct common roots modulo~$p$
+of $N_{h_1}(x)$ and $N_{h_2}(x+h_1)$.  The shifted points obtained by
+adding $h_1$ are likewise distinct common roots of $N_{h_2}(x)$ and
+$N_{h_3}(x+h_2)$.  For completeness, if two integer polynomials
+$f,g$ have $t$ distinct common roots modulo~$p$, evaluation at those
+roots gives $t$ independent linear functionals annihilating the image
+of the Sylvester map.  Hence its reduction modulo~$p$ has corank at
+least~$t$.  Smith normal form then gives
+$v_p(\operatorname{Res}(f,g))\ge t$ whenever the integer resultant is
+nonzero.  This argument remains valid when a leading coefficient drops
+modulo~$p$; a projective root at infinity can only increase the
+corank.  We conclude that
+\begin{equation}\label{eq:qc-valuation}
+ t_p(\boldsymbol h)
+ \le v_p\!\left(\gcd(S_{h_1,h_2},S_{h_2,h_3})\right).
+\end{equation}
+
+It remains to retain this valuation information at primes dividing the
+structural carrier.  We do so by choosing the block length separately
+on each zero-count level.  The primes with $Z(p)\le\sqrt X$ contribute
+at most
+\begin{equation}\label{eq:qc-low-level}
+ \sqrt X\,|\mathcal P_X|\ll\frac{X^{3/2}}{\log X}.
+\end{equation}
+For dyadic $T=2^k\sqrt X$ with $T<2X$, put
+\[
+ \mathcal P_X(T)=\{p\in\mathcal P_X:T<Z(p)\le2T\},
+ \qquad H=\left\lceil\frac{16X}{T}\right\rceil.
+\]
+For all sufficiently large~$X$, one has $8\le H<p$ and
+\[
+ 3\left\lceil\frac pH\right\rceil
+ \le \frac{3T}{8}+3.
+\]
+Equations~\eqref{eq:qc-block-lower} and~\eqref{eq:qc-valuation}
+therefore imply, uniformly for $p\in\mathcal P_X(T)$,
+\begin{equation}\label{eq:qc-level-certificates}
+ \frac T2\le Q_p(H)
+ \le\sum_{\substack{h_1,h_2,h_3\ge2\\h_1+h_2+h_3\le H}}
+ v_p\!\left(\gcd(S_{h_1,h_2},S_{h_2,h_3})\right).
+\end{equation}
+
+Let $\mathcal E_H=\{p\in\mathcal P_X:p\mid\mathfrak U_H\}$.
+For $p\notin\mathcal E_H$, saturation changes neither of the two
+$p$-adic valuations in~\eqref{eq:qc-level-certificates}.  Summing over
+$\mathcal P_X(T)\setminus\mathcal E_H$, then using
+$\sum_{X<p\le2X}v_p(M)\le\log|M|/\log X$ and
+$\mathrm{GM}^*$, gives
+\[
+ \frac T2\,|\mathcal P_X(T)\setminus\mathcal E_H|
+ \ll\frac{H^{3+o(1)}}{\log X}.
+\]
+Since $Z(p)\le2T$ on this level,
+\begin{equation}\label{eq:qc-generic-level}
+ \sum_{p\in\mathcal P_X(T)\setminus\mathcal E_H}Z(p)
+ \ll\frac{H^{3+o(1)}}{\log X}
+ \ll\frac{(X/T)^{3+o(1)}}{\log X}.
+\end{equation}
+On the exceptional part, Lemma~\ref{lem:qc-exceptional} and the same
+level upper bound give
+\begin{equation}\label{eq:qc-exceptional-level}
+ \sum_{p\in\mathcal P_X(T)\cap\mathcal E_H}Z(p)
+ \le2T|\mathcal E_H|
+ \ll\frac{TH^2}{\log X}
+ \ll\frac{X^2}{T\log X}.
+\end{equation}
+Finally, summing~\eqref{eq:qc-generic-level} and
+\eqref{eq:qc-exceptional-level} over the dyadic values
+$T\ge\sqrt X$ yields convergent geometric sums:
+\[
+ \sum_{T\ge\sqrt X}\frac{(X/T)^{3+o(1)}}{\log X}
+ +\sum_{T\ge\sqrt X}\frac{X^2}{T\log X}
+ \ll X^{3/2+o(1)}.
+\]
+Together with~\eqref{eq:qc-low-level}, this proves the theorem.
+\end{proof}
+
 \begin{corollary}[Moment threshold $k=5$]
 Under $\mathrm{GM}^*$, $(\mathrm{HM})_5$ implies
 $G_n=e^{o(n)}$ for every~$n$.
 \end{corollary}
+
+\begin{proof}
+The theorem gives
+$\lambda_X\le X^{-1}\sum_{p\in\mathcal P_X}Z(p)
+\ll X^{1/2+o(1)}$.  Repeating the proof of
+Theorem~\ref{thm:hm-pointwise} with this improved estimate and $k=5$
+gives
+\[
+ \max_{m<X^2}K_X(m)\ll X^{2/5+o(1)}\lambda_X+1
+ \ll X^{9/10+o(1)}.
+\]
+The same dyadic decomposition used there now yields
+$\log G_n\ll n^{9/10+o(1)}=o(n)$.
+\end{proof}
 
 \begin{remark}[The corank ladder terminates at $1/2$]
 Within a single triple of zeros the certificates are

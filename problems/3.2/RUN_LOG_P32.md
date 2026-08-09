@@ -307,6 +307,22 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
 - Q7103: transfer identity FALSE (j=0,h=1 gives -48≠1/8) — DISCARDED
 - Note: shared rc channels can cross waiter tags; future matching by content checksum
 
+### Automode avenue (b): TERMINAL SUCCESS by adaptive level absorption
+- Independent reconstruction of Fable R26 passed.
+- For $T<Z(p)\le2T$, choose $H=\lceil16X/T\rceil$.  Consecutive
+  quadruples give $Q_p(H)\ge T/2$.
+- Generic level mass under GM*: $O(H^{3+o(1)}/\log X)$.
+- Exceptional level mass: $2T\,O(H^2/\log X)=O(X^2/(T\log X))$.
+- Dyadic summation from $T=\sqrt X$ gives $X^{3/2+o(1)}$ for both
+  parts; $Z(p)\le\sqrt X$ is trivial at the same scale.
+- Added complete proofs of the quadruple certificate, Lucas
+  rank-of-apparition lemma, exceptional-class lemma, conditional main
+  theorem, and $k=5$ corollary to `atom_tail_section.tex`.
+- Strengthened the corank step: distinct affine common roots imply Sylvester
+  corank and resultant valuation even when leading coefficients drop.
+- Full `latexmk -pdf -halt-on-error proof.tex`: PASS, 202 pages.
+- Conditional status is unchanged: GM* itself remains open.
+
 ### Mesoscopic Tasks (2026-08-09 late):
 (i) α exponent: log|S*| ~ (d+r)^2 (same as original). No budget improvement.
 (ii) KST codegree: graph extremely sparse (edges ≪ H^{3/2}, max codeg ≤ 1).
