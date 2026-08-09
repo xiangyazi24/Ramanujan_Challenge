@@ -24,23 +24,42 @@ mass at \(H=32\) is \(8.22348H^3\), with the diagonal alone equal to
 \(0.252843H^4\).  Thus this is not the transverse mass required by the
 corank argument.
 
-Four zeros at gaps \((a,b,c)\) instead force the two resultants
-\(S_{a,b}\) and \(S_{a,b+c}\).  They share the same starting roots, so
-the Sylvester-corank valuation certificate is unchanged, while \(c\ge2\)
-prevents a self-gcd even after swapping the resultant parameters.  The new
-live hypothesis is
+Four zeros at gaps \((a,b,c)\) also force the two resultants
+\(S_{a,b}\) and \(S_{a,b+c}\).  This removes the literal self-gcd, but
+does not yet remove algebraic dependence.  On the slice \(c=a\), every
+even \(b\) contributes the propagated center factor
+\(T_a^{(b)}\) to both resultants.  Its exact mass is \(H^4\)-scale:
+at \(H=32\), the \(c=a\) slice alone has mass
+\(0.00483348H^4\).  Thus the intermediate
+\(\mathrm{GM}^{\dagger}\) formulation is also withdrawn.
+
+For even \(b\), divide the central linear factor from the polynomial,
+\[
+ N_b^\circ(x)=N_b(x)/(2x+b+1),\qquad
+ D_{a,b}=\operatorname{Res}(N_a(x),N_b^\circ(x+a));
+\]
+for odd \(b\), put \(N_b^\circ=N_b\).  A palindromic four-zero
+configuration not detected by \(D_{a,b}\) has endpoints summing to
+\(p-1\); among globally consecutive zero quadruples there is at most one
+such centered configuration per prime.  The remaining slice
+\(a=b=c\) has only one parameter and is controlled unconditionally by
+\(\sum_{3a\le H}\log|S_{a,a}|\ll H^3\log H\).
+
+The new live hypothesis is the genuinely transverse mass
 
 \[
- \mathrm{GM}^{\dagger}:\qquad
- \sum_{a+b+c\le H}\log\gcd(S^*_{a,b},S^*_{a,b+c})
+ \mathrm{GM}^{\mathrm{tr}}:\quad
+ \sum_{\substack{a+b+c\le H\\c\ne a}}
+ \log\gcd(S^*_{a,b},S^*_{a,b+c})
+ +\sum_{\substack{2a+b\le H\\a\ne b}}
+ \log\gcd(D^*_{a,b},S^*_{a,a+b})
  \ll H^{3+o(1)}.
 \]
 
-The exact ratio of this mass to \(H^3\) is \(0.123287\) at \(H=20\) and
-\(0.168730\) at \(H=32\); the mean logarithmic gcd is respectively
-\(1.450436\) and \(1.513120\).  This is evidence, not a proof.  The full
+The exact ratio of this mass to \(H^3\) is \(0.005569\) at \(H=20\)
+and \(0.014732\) at \(H=32\).  This is evidence, not a proof.  The full
 conditional implication has been repaired around
-\(\mathrm{GM}^{\dagger}\); proving this new mass bound remains the live
+\(\mathrm{GM}^{\mathrm{tr}}\); proving this mass bound remains the live
 arithmetic problem.
 
 Replace the prime-support saturation
@@ -76,7 +95,7 @@ Then the exceptional-prime count gives level mass
 
 whose sum over $T=2^k\sqrt X$ is $O(X^{3/2}/\log X)$.  The
 generic part is $O(H^{3+o(1)}/\log X)$ under
-$\mathrm{GM}^{\dagger}$, and its level sum is $X^{3/2+o(1)}$.
+$\mathrm{GM}^{\mathrm{tr}}$, and its level sum is $X^{3/2+o(1)}$.
 This closes the exceptional-mass gap in the conditional implication; the
 complete proof is now in `atom_tail_section.tex`.
 
@@ -124,7 +143,7 @@ branch has a low-height cross-prime carrier beyond pair certificates.
 
 ## Fallback after all four terminal verdicts
 
-Keep the conditional ($\mathrm{GM}^{\dagger}$) statement only with a complete proof of
+Keep the conditional ($\mathrm{GM}^{\mathrm{tr}}$) statement only with a complete proof of
 its implication, correct any unconditional wording, and record the exact
 weighted-exceptional or unbounded-grade lemma that remains.  Do not replace the
 full conjecture by the weaker (p^{1/2}) average-zero milestone.

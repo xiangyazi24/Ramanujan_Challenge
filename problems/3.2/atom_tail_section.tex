@@ -464,7 +464,7 @@ $c$ & $k$ needed & status \\
 \midrule
 $2/3$ & $7$ & proved (gap polynomial) \\
 $3/5$ & $6$ & proved (corank + First Lemma) \\
-$1/2$ & 5 & conditional on $\mathrm{GM}^{\dagger}$ (\S\ref{ssec:quadcorank}) \\
+$1/2$ & 5 & conditional on $\mathrm{GM}^{\mathrm{tr}}$ (\S\ref{ssec:quadcorank}) \\
 $o(1)$ & $3$ & requires parity-breaking \\
 \bottomrule
 \end{tabular}
@@ -479,8 +479,13 @@ $|S_{h_1,h_2}|=|S_{h_2,h_1}|$ makes it a self-gcd.  In
 particular, the previously reported numerical decay for this mass
 had inadvertently omitted its diagonal.  The skipped triple formed by
 the first, second, and fourth zeros instead pairs
-$S_{h_1,h_2}$ with $S_{h_1,h_2+h_3}$; since $h_3\ge2$, this pair
-can never be a self-gcd, even after using the symmetry of~$S$.
+$S_{h_1,h_2}$ with $S_{h_1,h_2+h_3}$.  This removes the literal
+self-gcd, but a second degeneracy remains when $h_3=h_1$: if $h_2$
+is even, the central factor of $N_{h_2}$ propagates into both
+resultants (Proposition~\ref{prop:meso-center-recurrence}).  The
+transverse formulation below deflates that linear factor.  The still
+more singular arithmetic-progression case $h_1=h_2=h_3$ has only one
+gap parameter and is handled directly by a single resultant.
 The separate obstruction at the triple level is that
 $U_{h_1,h_2}
 = \operatorname{Res}(N_{h_1}, N_{h_1+h_2})$ factors as
@@ -503,6 +508,18 @@ and define the saturated reduced resultant
 $S^*_{h_1,h_2}$ as $S_{h_1,h_2}$ with all content shared with
 $\mathfrak U_H$ removed:
 $S^*=S/\gcd(S,\mathfrak U_H^\infty)$.
+For $b\ge2$ put
+\[
+ N_b^\circ(x)=
+ \begin{cases}
+  N_b(x)/(2x+b+1),&b\ \text{even},\\
+  N_b(x),&b\ \text{odd},
+ \end{cases}
+ \qquad
+ D_{a,b}=\operatorname{Res}_x
+ \bigl(N_a(x),N_b^\circ(x+a)\bigr),
+\]
+and define $D^*_{a,b}$ by the same saturation.
 \end{definition}
 
 \begin{lemma}[Skipped-triple quadruple certificate]\label{lem:qc-cert}
@@ -529,6 +546,50 @@ corresponding Sylvester determinant vanish modulo~$p$.  The two
 determinants are the nonzero integers $S_{h_1,h_2}$ and
 $S_{h_1,h_2+h_3}$ by Corollary~\ref{cor:atomtail-firstlemma}, proving the
 claim.
+\end{proof}
+
+\begin{lemma}[Central deflation]\label{lem:qc-deflation}
+The polynomial $N_b^\circ$ belongs to $\mathbb Z[x]$, and
+$D_{a,b}\ne0$ for all $a,b\ge2$.  Consider any partition of
+$[0,p-1]$, for an odd prime~$p$, into intervals and select
+consecutive quadruples of zeros
+inside those intervals.  Among all selected quadruples with
+palindromic gap vector $(a,b,a)$, at most one has
+\begin{equation}\label{eq:qc-central-start}
+ b\ \text{even},\qquad 2(r+a)+b+1\equiv0\pmod p.
+\end{equation}
+Every other such quadruple has $r$ as a common root modulo~$p$ of
+$N_a(x)$ and $N_b^\circ(x+a)$, as well as of $N_a(x)$ and
+$N_{a+b}(x+a)$.
+\end{lemma}
+
+\begin{proof}
+When $b$ is even, the reflection identity
+$N_b(-x-b-1)=(-1)^{b-1}N_b(x)$ makes
+$-(b+1)/2$ a root of~$N_b$.  The primitive polynomial
+$2x+b+1$ therefore divides $N_b$ in $\mathbb Z[x]$ by Gauss's
+lemma.  Every root of $N_b^\circ(x+a)$ is a root of
+$N_b(x+a)$, so the root-strip theorem gives $D_{a,b}\ne0$.
+
+For a palindromic quadruple, the gap identities give
+\[
+ N_a(r)=N_b(r+a)=N_{a+b}(r+a)=0\pmod p.
+\]
+Unless~\eqref{eq:qc-central-start} holds, the factor
+$2(r+a)+b+1$ is a unit, so $N_b^\circ(r+a)=0$ as well.
+If~\eqref{eq:qc-central-start} does hold, then its endpoints satisfy
+\[
+ 2r+2a+b\equiv-1\pmod p.
+\]
+Both endpoints lie in $[0,p-1]$, hence
+$r+(r+2a+b)=p-1$.  By
+Corollary~\ref{cor:atomtail-palindrome-lambda}, the Ap\'ery zero set is
+invariant under $z\mapsto p-1-z$.  If its elements are
+$u_1<\cdots<u_{Z(p)}$, a consecutive quadruple
+$u_i,\ldots,u_{i+3}$ with $u_i+u_{i+3}=p-1$ must satisfy
+$i=Z(p)-i-2$, which determines~$i$ uniquely.  A quadruple
+consecutive inside one partition interval is also consecutive in the
+full zero set, proving the asserted global uniqueness.
 \end{proof}
 
 \begin{lemma}[Rank of apparition]\label{lem:qc-rank}
@@ -580,28 +641,41 @@ least $\log X$ to the logarithm of this product, which proves the
 result.
 \end{proof}
 
-\begin{hypothesis}[Skipped-triple reduced gcd-mass, $\mathrm{GM}^{\dagger}$]
+\begin{hypothesis}[Transverse reduced gcd-mass, $\mathrm{GM}^{\mathrm{tr}}$]
 \label{hyp:qc-gm}
-$\displaystyle
- \sum_{\substack{h_1,h_2,h_3\ge2\\ h_1+h_2+h_3\le H}}
- \log\gcd(S^*_{h_1,h_2},\,S^*_{h_1,h_2+h_3})
- \ll H^{3+o(1)}$.
+With
+\[
+\begin{split}
+ \mathcal M_{\mathrm{tr}}(H)
+ := {}&
+ \sum_{\substack{a,b,c\ge2,\ a+b+c\le H\\c\ne a}}
+ \log\gcd(S^*_{a,b},S^*_{a,b+c})\\
+ &+
+ \sum_{\substack{a,b\ge2,\ 2a+b\le H\\a\ne b}}
+ \log\gcd(D^*_{a,b},S^*_{a,a+b}),
+\end{split}
+\]
+one has $\mathcal M_{\mathrm{tr}}(H)\ll H^{3+o(1)}$.
 \end{hypothesis}
 
 \begin{remark}[Computational support]
 The exact audit in \texttt{quadcorank\_verify.py} exposes the diagonal
 error in the adjacent-pair formulation: at $H=20$, its diagonal mass
 divided by $H^4$ is $0.187534$, whereas its total mass divided by
-$H^3$ is already $3.842321$.  For the skipped-triple mass in
-Hypothesis~\ref{hyp:qc-gm}, the ratio to $H^3$ is $0.123287$ and the
-average logarithmic gcd is $1.450436$ at $H=20$; at $H=32$ the
-corresponding values are $0.168730$ and $1.513120$.  These exact finite
-computations support, but of course do not prove,
-$\mathrm{GM}^{\dagger}$.
+$H^3$ is already $3.842321$.  The na\"ive skipped-triple repair also
+fails its scaling gate: its $c=a$ slice divided by $H^4$ is
+$0.004833$ at $H=32$, exactly where the propagated central factors
+occur.  After central deflation and removal of the one-parameter
+arithmetic-progression slice, the ratio
+$\mathcal M_{\mathrm{tr}}(H)/H^3$ is $0.005569$ at $H=20$ and
+$0.014732$ at $H=32$.  The separately treated progression certificate
+mass, divided by $H^3$, is respectively $0.183084$ and $0.262265$.
+These exact finite computations support, but of course do not prove,
+$\mathrm{GM}^{\mathrm{tr}}$.
 \end{remark}
 
 \begin{theorem}[Quadruple corank bound]\label{thm:qc-main}
-Assume $\mathrm{GM}^{\dagger}$.  Then
+Assume $\mathrm{GM}^{\mathrm{tr}}$.  Then
 $\sum_{X<p\le2X}Z(p)\ll X^{3/2+o(1)}$,
 i.e., average $Z(p)\ll p^{1/2+o(1)}$.
 \end{theorem}
@@ -621,18 +695,16 @@ $\boldsymbol h=(h_1,h_2,h_3)$ with $h_i\ge2$ and
 $h_1+h_2+h_3<H$.
 
 Put $\mathcal E_H=\{p\in\mathcal P_X:p\mid\mathfrak U_H\}$.
-Fix such a triple and a prime $p\notin\mathcal E_H$, and let
-$t_p(\boldsymbol h)$ be the number of its selected starting points.
-These are distinct common roots modulo~$p$ of $N_{h_1}(x)$ and
-$N_{h_2}(x+h_1)$.  The same starting points are likewise distinct
-common roots of $N_{h_1}(x)$ and
-$N_{h_2+h_3}(x+h_1)$.  The endpoint identity
+The endpoint identity
 \[
  N_h(-1)=((h-1)!)^3b_{h-1}
 \]
-and the definition of $\mathfrak U_H$ show that
-$N_{h_1}$, $N_{h_2}$, and $N_{h_2+h_3}$ all have nonzero reduction
-modulo~$p$.
+and the definition of $\mathfrak U_H$ show that every $N_h$ with
+$h\le H$ has nonzero reduction modulo every
+$p\notin\mathcal E_H$.  The same holds for $N_h^\circ$: this is
+immediate for odd~$h$, while for even~$h$ the factorization
+$N_h=(2x+h+1)N_h^\circ$ shows that a zero reduction of $N_h^\circ$
+would make $N_h$ the zero polynomial modulo~$p$.
 
 For completeness, if two integer polynomials $f,g$, both nonzero
 modulo~$p$, have $t$ distinct common roots modulo~$p$, evaluation at
@@ -642,10 +714,37 @@ at least~$t$.  Smith normal form then gives
 $v_p(\operatorname{Res}(f,g))\ge t$ whenever the integer resultant is
 nonzero.  This argument remains valid when a leading coefficient drops
 modulo~$p$; a projective root at infinity can only increase the
-corank.  We conclude, for $p\notin\mathcal E_H$, that
+corank.
+
+Fix $p\notin\mathcal E_H$, write a gap triple as $(a,b,c)$, and let
+$t_p(a,b,c)$ be the number of its selected starting points.  If
+$c\ne a$, Lemma~\ref{lem:qc-cert} and the preceding corank argument
+give
+\[
+ t_p(a,b,c)
+ \le v_p\!\left(\gcd(S_{a,b},S_{a,b+c})\right).
+\]
+If $c=a$ and $a\ne b$, let $e_p(a,b)$ be the number of those starts
+that satisfy~\eqref{eq:qc-central-start}.  Lemma~\ref{lem:qc-deflation}
+and the corank argument give
+\[
+ t_p(a,b,a)-e_p(a,b)
+ \le v_p\!\left(\gcd(D_{a,b},S_{a,a+b})\right),
+ \qquad
+ \sum_{a,b}e_p(a,b)\le1.
+\]
+Finally, if $a=b=c$, the first three zeros already make every start a
+common root of $N_a(x)$ and $N_a(x+a)$, whence
+$t_p(a,a,a)\le v_p(S_{a,a})$.  Summing the three classes yields
 \begin{equation}\label{eq:qc-valuation}
- t_p(\boldsymbol h)
- \le v_p\!\left(\gcd(S_{h_1,h_2},S_{h_1,h_2+h_3})\right).
+ \begin{split}
+ Q_p(H)-1\le{}&
+ \sum_{\substack{a,b,c\ge2,\ a+b+c\le H\\c\ne a}}
+ v_p\!\left(\gcd(S_{a,b},S_{a,b+c})\right)\\
+ &+\sum_{\substack{a,b\ge2,\ 2a+b\le H\\a\ne b}}
+ v_p\!\left(\gcd(D_{a,b},S_{a,a+b})\right)
+ +\sum_{\substack{a\ge2\\3a\le H}}v_p(S_{a,a}).
+ \end{split}
 \end{equation}
 
 It remains to retain this valuation information at primes dividing the
@@ -669,18 +768,30 @@ Equations~\eqref{eq:qc-block-lower} and~\eqref{eq:qc-valuation}
 therefore imply, uniformly for
 $p\in\mathcal P_X(T)\setminus\mathcal E_H$,
 \begin{equation}\label{eq:qc-level-certificates}
- \frac T2\le Q_p(H)
- \le\sum_{\substack{h_1,h_2,h_3\ge2\\h_1+h_2+h_3\le H}}
- v_p\!\left(\gcd(S_{h_1,h_2},S_{h_1,h_2+h_3})\right).
+ \begin{split}
+ \frac T3\le{}&
+ \sum_{\substack{a,b,c\ge2,\ a+b+c\le H\\c\ne a}}
+ v_p\!\left(\gcd(S_{a,b},S_{a,b+c})\right)\\
+ &+\sum_{\substack{a,b\ge2,\ 2a+b\le H\\a\ne b}}
+ v_p\!\left(\gcd(D_{a,b},S_{a,a+b})\right)
+ +\sum_{\substack{a\ge2\\3a\le H}}v_p(S_{a,a}).
+ \end{split}
 \end{equation}
 
-For $p\notin\mathcal E_H$, saturation changes neither of the two
-$p$-adic valuations in~\eqref{eq:qc-level-certificates}.  Summing over
+For $p\notin\mathcal E_H$, saturation changes none of the
+$p$-adic valuations in~\eqref{eq:qc-level-certificates}.  Moreover,
+the general resultant-height estimate quoted above gives
+\[
+ \sum_{\substack{a\ge2\\3a\le H}}\log|S^*_{a,a}|
+ \le \sum_{\substack{a\ge2\\3a\le H}}\log|S_{a,a}|
+ \ll H^3\log H=H^{3+o(1)}.
+\]
+Summing over
 $\mathcal P_X(T)\setminus\mathcal E_H$, then using
 $\sum_{X<p\le2X}v_p(M)\le\log|M|/\log X$ and
-$\mathrm{GM}^{\dagger}$, gives
+$\mathrm{GM}^{\mathrm{tr}}$, gives
 \[
- \frac T2\,|\mathcal P_X(T)\setminus\mathcal E_H|
+ \frac T3\,|\mathcal P_X(T)\setminus\mathcal E_H|
  \ll\frac{H^{3+o(1)}}{\log X}.
 \]
 Since $Z(p)\le2T$ on this level,
@@ -709,7 +820,7 @@ Together with~\eqref{eq:qc-low-level}, this proves the theorem.
 \end{proof}
 
 \begin{corollary}[Moment threshold $k=5$]
-Under $\mathrm{GM}^{\dagger}$, $(\mathrm{HM})_5$ implies
+Under $\mathrm{GM}^{\mathrm{tr}}$, $(\mathrm{HM})_5$ implies
 $G_n=e^{o(n)}$ for every~$n$.
 \end{corollary}
 
@@ -733,11 +844,12 @@ algebraically dependent:
 $N_{h_1+h_2}(x)\equiv N_{h_2}(x{+}h_1)\,N_{h_1+1}(x)
 \pmod{N_{h_1}(x)}$,
 so the triple level cannot improve beyond $3/5$.
-The quadruple is the first configuration supplying two certificates
-that can be paired without a forced self-gcd.  The remaining input is
-precisely the arithmetic gcd-mass estimate
-$\mathrm{GM}^{\dagger}$; higher tuples give strictly weaker exponents
-within the same corank bookkeeping.
+The quadruple is the first configuration supplying two potentially
+transverse certificates.  The adjacent self-gcd, the propagated
+palindromic center, and the one-parameter arithmetic-progression slice
+must all be removed as above.  The remaining input is precisely the
+arithmetic gcd-mass estimate $\mathrm{GM}^{\mathrm{tr}}$; higher tuples
+give strictly weaker exponents within the same corank bookkeeping.
 \end{remark}
 
 \subsection{The parity barrier and the central open problem}

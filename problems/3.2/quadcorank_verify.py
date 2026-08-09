@@ -1,17 +1,24 @@
 #!/usr/bin/env python3
-"""Exact audit of the two quadruple-corank gcd masses.
+"""Exact audit of the quadruple-corank certificate repairs.
 
 The adjacent certificate pair
 
     gcd(S^*_(a,b), S^*_(b,c))
 
-has a self-gcd diagonal when ``a == c``.  This script separates that
-diagonal from the off-diagonal mass and compares it with the skipped-triple
-pair
+has a self-gcd diagonal when a == c.  The naive skipped-triple pair
 
     gcd(S^*_(a,b), S^*_(a,b+c)).
 
-Here ``S_(d,r) = |Res_x(N_d(x), N_r(x+d))|`` and ``S^*`` is obtained by
+removes the literal self-gcd but still has a propagated center factor on
+c == a when b is even.  For that slice define
+
+    N^o_b(x) = N_b(x)/(2*x+b+1),  D_(a,b) = Res(N_a(x),N^o_b(x+a)).
+
+The transverse mass uses gcd(D^*_(a,b),S^*_(a,a+b)) on c == a,
+except that the one-parameter progression slice a == b == c is
+recorded separately through the single certificate S^*_(a,a).
+
+Here S_(d,r) = |Res_x(N_d(x), N_r(x+d))| and S^* is obtained by
 removing every prime supported on
 
     U_H = product_(j<=H) j! b_j V_(j+1).
@@ -52,7 +59,7 @@ import meso_explore as me  # noqa: E402
 
 DEFAULT_MAX_HEIGHT = 20
 EXPECTED_HEIGHT_20_DIGEST = (
-    "e1b61c3e46dc326e8a214af08d53a1fea0ec24fae2bfc552bc8f42472e8c1a93"
+    "6f7ba2a8f3542da4d0a051c698432a9c32124a1811ad8601837dfc1d87968b1a"
 )
 
 
@@ -89,6 +96,23 @@ def exact_log(value) -> RR:
     return RR(value).log()
 
 
+def center_deflated_resultants(polynomials: list, maximum: int) -> dict:
+    """Return the needed D_(a,b) with even b exactly."""
+
+    result: dict[tuple[int, int], int] = {}
+    for a in range(2, maximum):
+        for b in range(2, maximum - 2 * a + 1, 2):
+            if a == b:
+                continue
+            divisor = 2 * me.X + b + 1
+            quotient, remainder = polynomials[b].quo_rem(divisor)
+            assert remainder == 0
+            result[a, b] = abs(
+                int(polynomials[a].resultant(me.shifted(quotient, a)))
+            )
+    return result
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--max-height", type=int, default=DEFAULT_MAX_HEIGHT)
@@ -103,6 +127,7 @@ def main() -> None:
 
     polynomials = me.build_gap_polynomials(maximum)
     resultants = me.exact_resultants(polynomials, maximum)
+    deflated_resultants = center_deflated_resultants(polynomials, maximum)
     apery = me.apery_values(maximum)
     pell = me.pell_values(maximum + 1)
 
@@ -114,8 +139,9 @@ def main() -> None:
             assert forward == reverse == me.lookup_resultant(resultants, d, r)
 
     print(
-        "H triples diag old_diag/H^4 old_off/H^3 "
-        "old_all/H^3 skip/H^3 skip_avg skip_nontrivial"
+        "H triples old_diag/H^4 old_all/H^3 skip_pal/H^4 "
+        "skip_all/H^3 transverse/H^3 progression/H^3 "
+        "repaired/H^3 transverse_nontrivial"
     )
     maximum_payload: list[str] = []
     for height in range(8, maximum + 1):
@@ -132,13 +158,20 @@ def main() -> None:
             )
             for pair in needed_pairs
         }
+        reduced_deflated = {
+            pair: remove_supported_part(value, carrier)
+            for pair, value in deflated_resultants.items()
+            if 2 * pair[0] + pair[1] <= height
+        }
 
         old_diagonal = RR.zero()
         old_off_diagonal = RR.zero()
         skipped_mass = RR.zero()
-        skipped_nontrivial = 0
+        skipped_palindromic = RR.zero()
+        transverse_mass = RR.zero()
+        progression_mass = RR.zero()
+        transverse_nontrivial = 0
         payload: list[str] = []
-        diagonal_count = 0
         for a, b, c in triples:
             first = reduced[a, b]
             adjacent = reduced[b, c]
@@ -152,24 +185,49 @@ def main() -> None:
             if a == c:
                 assert first == adjacent and old_gcd == first
                 old_diagonal += exact_log(old_gcd)
-                diagonal_count += 1
             else:
                 old_off_diagonal += exact_log(old_gcd)
             skipped_mass += exact_log(skipped_gcd)
-            skipped_nontrivial += int(skipped_gcd > 1)
-            payload.append(f"{a},{b},{c},{old_gcd},{skipped_gcd}")
+            if c == a:
+                skipped_palindromic += exact_log(skipped_gcd)
+
+            if c != a:
+                certificate_kind = "off"
+                repaired_certificate = skipped_gcd
+                transverse_mass += exact_log(repaired_certificate)
+                transverse_nontrivial += int(repaired_certificate > 1)
+            elif a != b:
+                certificate_kind = "pal"
+                deflated_first = (
+                    reduced_deflated[a, b] if b % 2 == 0 else first
+                )
+                repaired_certificate = gcd(deflated_first, skipped)
+                transverse_mass += exact_log(repaired_certificate)
+                transverse_nontrivial += int(repaired_certificate > 1)
+            else:
+                certificate_kind = "progression"
+                repaired_certificate = first
+                progression_mass += exact_log(repaired_certificate)
+
+            payload.append(
+                f"{a},{b},{c},{old_gcd},{skipped_gcd},"
+                f"{certificate_kind},{repaired_certificate}"
+            )
 
         if height == maximum:
             maximum_payload = payload
         old_all = old_diagonal + old_off_diagonal
+        repaired_mass = transverse_mass + progression_mass
         print(
-            f"{height:2d} {len(triples):7d} {diagonal_count:4d} "
+            f"{height:2d} {len(triples):7d} "
             f"{float(old_diagonal / height**4):.9f} "
-            f"{float(old_off_diagonal / height**3):.9f} "
             f"{float(old_all / height**3):.9f} "
+            f"{float(skipped_palindromic / height**4):.9f} "
             f"{float(skipped_mass / height**3):.9f} "
-            f"{float(skipped_mass / len(triples)):.9f} "
-            f"{skipped_nontrivial:5d}"
+            f"{float(transverse_mass / height**3):.9f} "
+            f"{float(progression_mass / height**3):.9f} "
+            f"{float(repaired_mass / height**3):.9f} "
+            f"{transverse_nontrivial:5d}"
         )
 
     digest = sha256("\n".join(maximum_payload).encode("ascii")).hexdigest()

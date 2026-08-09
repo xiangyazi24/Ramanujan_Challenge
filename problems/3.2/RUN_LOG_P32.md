@@ -356,3 +356,28 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   the diagonal diagnosis.  It was also warned that its meso_census.py 20000
   run computes every prime twice and was still consuming one core after
   twelve minutes.
+
+### GM-dagger also refuted; central deflation gives GM-tr (2026-08-09)
+
+- Full factor inspection found a second forced degeneration that the
+  no-self-gcd check missed.  On c=a with even b, the odd part of the center
+  value T_a^(b) divides both S_(a,b) and S_(a,a+b), exactly as predicted by
+  Proposition meso-center-recurrence.  At H=32 this palindromic slice alone
+  has log mass / H^4 = 0.004833476.  Hence GM-dagger is withdrawn.
+- Put N^o_b=N_b/(2x+b+1) for even b and N^o_b=N_b for odd b, and define
+  D_(a,b)=Res(N_a(x),N^o_b(x+a)).  For a four-zero pattern (a,b,a), every
+  noncentral start remains a common root for D_(a,b) and S_(a,a+b).
+  A removed central start satisfies z1+z4=p-1; reflection and global
+  consecutiveness show that at most one selected quadruple per prime is
+  lost.
+- The residual all-equal slice a=b=c is one-parameter.  Its multiplicity is
+  detected directly by S_(a,a), and
+  sum_(3a<=H) log|S_(a,a)| = O(H^3 log H), already within budget.
+- The precise live hypothesis GM-tr is the sum of skipped gcds over c!=a
+  plus deflated gcds gcd(D*_(a,b),S*_(a,a+b)) over c=a, a!=b.  Its exact
+  mass / H^3 is 0.005568648 at H=20 and 0.014732048 at H=32.  The separate
+  progression mass / H^3 is 0.183084461 and 0.262264680.
+- quadcorank_verify.py now audits all three failed/repaired formulations.
+  Its new canonical H=20 digest is
+  6f7ba2a8f3542da4d0a051c698432a9c32124a1811ad8601837dfc1d87968b1a,
+  and the exact check passes.
