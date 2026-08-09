@@ -247,3 +247,35 @@ GM* hypothesis computationally verified.
 NEXT: write the quadruple-corank theorem into the paper.
 Conditional on GM-small + GM-large sub-lemmas = GM* hypothesis.
 Gives: avg Z ≪ p^{1/2+o(1)}, k = 5.
+
+## Run 2026-08-09 08:28 (automode continuation, tmux 12 with tmux 11)
+
+- doctrine: `AVENUES.md` sha256 `4bc2790ae714`
+- approval: tmux prompt at 2026-08-09 08:28 CDT; no Telegram message id
+- starting avenue: (a), exact structural saturation of quadruple certificates
+- coordination: Task 008 findings and the weighted-exceptional warning sent to
+  tmux 11; its long computation remains active and will be audited on return
+- initial audit: `thm:qc-main` currently has no proof in
+  `atom_tail_section.tex`; the bound
+  `#\{p:p\mid\mathfrak U_H\}\ll H^2/\log X` does not control the required
+  weighted mass `sum Z(p)` on that set
+- end: <fill on close>
+- final result: <fill on close>
+
+### Diagonal transport identity: N_{h+1}(x-1) = P(x)·N_h(x) - (x+1)⁶·N_{h-1}(x+1)
+Holds for ALL h ≥ 1 (verified symbolically h=1..11).
+As polynomial identity: A=P(x), B=-(x+1)⁶ are h-independent. ✓
+But when evaluated at x=β-h: coefficients DEPEND on h. NOT constant-coefficient.
+Does NOT give the finite-field periodicity needed for GM-large.
+Still a new useful identity (shift relation in the gap-polynomial family).
+
+### Codex audit gap (exceptional mass): CONFIRMED as real obstruction
+#E(H) ≪ H²/log X counts primes, but Σ_{p∈E} Z(p) could be X^{5/3}.
+Saturation deletes p-content entirely for p | 𝔘_H → no residual certificate.
+GM* stays conditional. Quadruple corank stays conditional.
+
+### Fable R25: GM-large is parity-adjacent (BCZ-class gcd power-saving)
+Every certificate reduction conserves the H⁴/H³ deficit.
+The deficit IS a gcd power-saving problem — outside current certificate algebra.
+GM-small hits mirror wall (growing state space).
+Both halves of GM* proof program are stuck at genuine obstructions.
