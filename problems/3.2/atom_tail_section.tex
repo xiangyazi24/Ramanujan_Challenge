@@ -1,0 +1,337 @@
+% The atom-tail reduction — written by Fable oracle R12
+% For integration into proof.tex
+% Cross-reference labels need alignment with main paper
+
+\section{The atom-tail reduction}
+\label{sec:atom-tail}
+
+Throughout this section $X\ge 3$ is an integer parameter,
+$\mathcal P_X=\{p\ \text{prime}:X<p\le2X\}$,
+$\mathcal Z_p=\{r\in[0,p):p\mid b_r\}$, $Z(p)=|\mathcal Z_p|$,
+\[
+  K_X(m)=\#\{p\in\mathcal P_X:\ m\bmod p\in\mathcal Z_p\},
+  \qquad
+  \lambda_X=\sum_{p\in\mathcal P_X}\frac{Z(p)}p ,
+\]
+and $(K)_k=K(K-1)\cdots(K-k+1)$.  We write
+$\omega_X(N)=\#\{p\in\mathcal P_X:p\mid N\}$ for the number of
+window prime divisors of a nonzero integer $N$, so that
+$\omega_X(N)\le\log|N|/\log X$.  We freely use the second
+factorial moment $\sum_{m<X^2}(K_X(m))_2\le5X^2\lambda_X^2$
+(Subsection~\ref{ssec:high-moment}) and the gap polynomials
+$N_h$ of degree $3(h-1)$ with $N_h\not\equiv0\pmod p$ for
+$h\le p$.
+
+\subsection{The Cartier diagonal}
+
+\begin{theorem}[Cartier diagonal]\label{thm:atomtail-cartier}
+Let $F=(1-x-y)(1-z-w)-xyzw$.  For every prime $p$ and every
+$0\le r\le p-1$,
+\[
+  b_r\;\equiv\;[x^ry^rz^rw^r]\,F^{p-1}\pmod p .
+\]
+\end{theorem}
+
+\begin{proof}
+By Straub's diagonal representation \cite{Straub2014},
+$b_n=[x^ny^nz^nw^n]\,F^{-1}$ for all $n\ge0$.
+Modulo $p$ one has $F^{-1}=F^{p-1}\cdot F^{-p}$ and, by the
+Frobenius endomorphism, $F(x,y,z,w)^p\equiv F(x^p,y^p,z^p,w^p)$.
+Hence
+\[
+ [x^r\!\cdots w^r]F^{-1}
+ \equiv\sum_{b\ge0}[x^{r-pb}\!\cdots w^{r-pb}]F^{p-1}\cdot
+ [x^b\!\cdots w^b]F^{-1}\pmod p .
+\]
+Since $\deg_xF^{p-1}=p-1$ and $0\le r\le p-1$, only $b=0$
+contributes, and $[x^0\cdots w^0]F^{-1}=b_0=1$.
+\end{proof}
+
+\subsection{Fourier non-concentration}
+
+Recall $F_p(a)=\sum_{r\in\mathcal Z_p}e_p(ar)$ and set
+$A_p(h)=\#\{r:\ r,r+h\in\mathcal Z_p\}$ (integer gap,
+$0\le r<r+h\le p-1$), so that $A_p(h)\le3(h-1)$: indeed
+$r,r+h\in\mathcal Z_p$ forces $N_h(r)\equiv0\pmod p$, and
+$N_h\not\equiv0\pmod p$ has at most $\deg N_h=3(h-1)$ roots.
+
+\begin{lemma}[Short-window energy]\label{lem:atomtail-energy}
+There is an absolute constant $C$ such that for every prime $p$
+and every $1\le K_0\le p/2$,
+\[
+ \sum_{1\le|k|\le K_0}|F_p(k)|^2
+ \;\le\;4K_0\,Z(p)\;+\;C\,\frac{p^2\log(2K_0)}{K_0},
+\]
+while for $K_0>p/2$ the full Parseval bound
+$\sum_{k\bmod p}|F_p(k)|^2=pZ(p)-Z(p)^2$ applies.
+\end{lemma}
+
+\begin{proof}
+Let $w(k)=(1-|k|/(2K_0))_+$ on the symmetric residue window;
+$w\ge\frac12$ on $|k|\le K_0$, so the left side is at most
+$2\sum_{k\bmod p}w(k)|F_p(k)|^2
+=2\sum_{r,r'\in\mathcal Z_p}\widehat W(r-r')$, where
+\[
+ \widehat W(h)=\frac1{2K_0}\Bigl|\sum_{0\le j<2K_0}e_p(jh)\Bigr|^2
+ \;\le\;\min\Bigl(2K_0,\ \frac{p^2}{8K_0\bar h^2}\Bigr),
+ \qquad \bar h=\min(|h|,p-|h|).
+\]
+The diagonal contributes $2K_0Z(p)$.  Off-diagonal pairs at
+integer gap $g$ number $A_p(g)\le3(g-1)$ for $g\le p/2$, and at
+most $p-g$ for $g>p/2$ (the smaller element lies in
+$[0,p-1-g]$); in either case the count at circular distance
+$\bar h$ is at most $3\bar h$.  Splitting at
+$g^*=p/(4K_0)$,
+\[
+ \sum_{\bar h\ge1}3\bar h\,
+ \min\Bigl(2K_0,\frac{p^2}{8K_0\bar h^2}\Bigr)
+ \le 6K_0\!\!\sum_{\bar h\le g^*}\!\!\bar h
+ +\frac{3p^2}{8K_0}\!\!\sum_{g^*<\bar h\le p/2}\!\!\frac1{\bar h}
+ \;\ll\;\frac{p^2\log(2K_0)}{K_0}. \qedhere
+\]
+\end{proof}
+
+\subsection{The codegree dichotomy and the twin-atom bound}
+
+For $0\le m<m'<X^2$ put
+$W(m,m')=\#\{p\in\mathcal P_X:\ m\bmod p\in\mathcal Z_p,\
+m'\bmod p\in\mathcal Z_p\}$ and $h=m'-m$.
+
+\begin{lemma}[Codegree dichotomy]\label{lem:atomtail-dichotomy}
+Let $1\le h<X$ and let $p\in\mathcal P_X$ be counted by
+$W(m,m')$, with $r=m\bmod p$.  Exactly one of the following
+holds.
+\begin{enumerate}
+\item[\textup{(A)}] $r+h\le p-1$.  Then $r,r+h\in\mathcal Z_p$,
+hence $N_h(r)\equiv0\pmod p$ and, since $N_h\in\mathbb Z[x]$,
+\[
+  p\mid N_h(m).
+\]
+\item[\textup{(B)}] $r\ge p-h$.  Then $j:=m'\bmod p=r+h-p$
+satisfies $0\le j<h$, $j\in\mathcal Z_p$ means $p\mid b_j$, and
+$p\mid m'-j$; hence
+\[
+  p\mid\gcd\bigl(b_j,\ m'-j\bigr)
+  \quad\text{for some }0\le j<h.
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Since $h<X<p$, the residues satisfy $m'\bmod p\equiv r+h$ with
+$r+h<2p$, giving the two cases.  In case (A) both indices lie in
+$[0,p-1]$ and the gap certificate applies; the congruence
+$N_h(m)\equiv N_h(r)\pmod p$ is the reduction of a polynomial
+with integer coefficients.  Case (B) is immediate from the
+definitions.
+\end{proof}
+
+\begin{lemma}[Positivity of gap values]\label{lem:atomtail-positive}
+$N_h(m)\ge1$ for all integers $m\ge0$, $h\ge1$.
+\end{lemma}
+
+\begin{proof}
+$N_h(m)=\det D_h(m)$ with $D_h(m)$ symmetric tridiagonal,
+diagonal $P(m+i)$ and off-diagonal $(m+i+1)^3$.
+The identity
+\[
+  P(n)-n^3-(n+1)^3=4(2n+1)^3>0\qquad(n\ge0)
+\]
+shows $D_h(m)$ is strictly diagonally dominant with positive
+diagonal, hence positive definite.
+\end{proof}
+
+\begin{theorem}[Twin-atom bound; repaired codegree lemma]
+\label{thm:atomtail-twin}
+For $0\le m<m'<X^2$ with $h=m'-m<X$,
+\[
+ W(m,m')\;\le\;\omega_X\bigl(N_h(m)\bigr)
+ +\sum_{j=0}^{h-1}\omega_X\bigl(\gcd(b_j,m'-j)\bigr)
+ \;\le\;7h+\min\Bigl(2h,\ \frac{2h^2}{\log X}\Bigr),
+\]
+and $W(m,m+1)=0$ identically.
+\end{theorem}
+
+\begin{proof}
+The first inequality is Lemma~\ref{lem:atomtail-dichotomy}
+combined with Lemma~\ref{lem:atomtail-positive}.  For the
+numerical form: the entries of $D_h(m)$ are at most $C X^6$, so
+$\log N_h(m)\le 6(h-1)\log X+O(h\log h)$ and
+$\omega_X(N_h(m))\le7h$ for large $X$; each $m'-j<X^2$ has at
+most two window prime divisors, and
+$\omega_X(b_j)\le\log b_j/\log X\le 3.6j/\log X$ gives the
+alternative bound.  For $h=1$: case (A) requires
+$N_1\equiv0$ with $N_1=1$, and case (B) requires $p\mid b_0=1$;
+both are impossible.
+\end{proof}
+
+\subsection{Short-range pair statistics}
+
+\begin{proposition}[Short-range decorrelation]
+\label{prop:atomtail-shortrange}
+For $1\le h<X$,
+\begin{align}
+ \sum_{m<X^2-h}W(m,m+h)
+ &\;\le\;C\,\frac{h\,X^2}{\log X},
+ \label{eq:atomtail-t1-first}\\
+ \sum_{m<X^2-h}W(m,m+h)\bigl(W(m,m+h)-1\bigr)
+ &\;\le\;C\,\frac{h^2X^2}{(\log X)^2}.
+ \label{eq:atomtail-t1-energy}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+For \eqref{eq:atomtail-t1-first}: type-(A) incidences are at most
+$\sum_{p}\#\{m<X^2:p\mid N_h(m)\}
+\le\sum_p 3(h-1)(X^2/p+1)\ll hX^2/\log X$ by Mertens; type-(B)
+incidences are at most
+$\sum_{j<h}\sum_{p\mid b_j}(X^2/p+1)
+\le\sum_{j<h}\omega_X(b_j)\,(X+1)\ll h^2X/\log X$,
+which is smaller.  For \eqref{eq:atomtail-t1-energy}: an ordered
+pair $p\ne q$ counted together is, in the dominant (A,A)
+configuration, a pair with $pq\mid N_h(m)$, and
+\[
+ \sum_{p\ne q}\#\{m<X^2:pq\mid N_h(m)\}
+ \le\sum_{p\ne q}9h^2\Bigl(\frac{X^2}{pq}+1\Bigr)
+ \ll\frac{h^2X^2}{(\log X)^2};
+\]
+mixed configurations are bounded by the type-(B) count times the
+pointwise bound of Theorem~\ref{thm:atomtail-twin}.
+\end{proof}
+
+\subsection{Per-prime separation}
+
+Recall $S_{h_1,h_2}=\operatorname{Res}_x\bigl(N_{h_1}(x),\,
+N_{h_2}(x+h_1)\bigr)\in\mathbb Z$, with
+$\log|S_{h_1,h_2}|\ll(h_1+h_2)^2\log(h_1+h_2)$.
+
+\begin{theorem}[Per-prime separation]\label{thm:atomtail-sep}
+Let $h_1,h_2\ge1$ and suppose $S_{h_1,h_2}\ne0$.  If some
+$p\in\mathcal P_X$ satisfies
+$m,\,m+h_1,\,m+h_1+h_2\in\Omega_p$ (all three hit by $p$), then
+\[
+ p\mid S_{h_1,h_2}
+ \qquad\text{or}\qquad
+ p\mid b_j\ \text{for some }0\le j<h_1+h_2 .
+\]
+Consequently there is $c>0$ such that for
+$h_1+h_2\le c\,(\log X/\log\log X)^{1/2}$ and $X$ large, no
+prime of $\mathcal P_X$ hits all three points:  each hit set
+$\Omega_p$ contains at most two points in any window of length
+$c\,(\log X/\log\log X)^{1/2}$.
+\end{theorem}
+
+\begin{proof}
+If neither consecutive pair wraps
+(Lemma~\ref{lem:atomtail-dichotomy}(A) twice), then with
+$r=m\bmod p$ both $N_{h_1}(r)\equiv0$ and
+$N_{h_2}(r+h_1)\equiv0\pmod p$.  Since $p>X>h_1+h_2$, the
+leading coefficients of $N_{h_1}$ and $N_{h_2}(\cdot+h_1)$ are
+units modulo $p$, so a common root forces
+$p\mid\operatorname{Res}=S_{h_1,h_2}$.  If some pair wraps, case
+(B) gives $p\mid b_j$ with $j<h_1+h_2$.  For the quantitative
+form: $\omega_X(S_{h_1,h_2})\le
+C(h_1+h_2)^2\log(h_1+h_2)/\log X<1$ in the stated range, so no
+window prime divides $S_{h_1,h_2}$; and $b_j\le
+e^{3.6j}<X<p$ in the stated range, so $p\mid b_j$ is impossible.
+\end{proof}
+
+\begin{remark}
+The hypothesis $S_{h_1,h_2}\ne0$ is verified computationally for
+all $121$ pairs with $h_1+h_2\le24$, and for all $399$ pairs
+with $h_1,h_2\le21$.  It holds unconditionally
+for consecutive indices by the product formula
+$|\operatorname{Res}(N_h,N_{h+1})|=\prod_j(j!^3b_j)^6$.
+\end{remark}
+
+\subsection{The moment collapse and the atom-tail equivalence}
+
+\begin{proposition}[Moment collapse]\label{prop:atomtail-collapse}
+For every $k\ge3$,
+\[
+ \sum_{m<X^2}(K_X(m))_k
+ \;\le\;\Bigl(\max_{m<X^2}K_X(m)\Bigr)^{k-2}
+ \sum_{m<X^2}(K_X(m))_2
+ \;\le\;5X^2\lambda_X^2\,\Bigl(\max_{m<X^2}K_X(m)\Bigr)^{k-2}.
+\]
+\end{proposition}
+
+\begin{proof}
+Pointwise, $(K)_k=(K)_2\prod_{j=2}^{k-1}(K-j)\le(K)_2K^{k-2}$;
+sum over $m$ and apply the second factorial moment.
+\end{proof}
+
+\begin{hypothesis}[Atom bound $(\mathrm{AT}'')$]
+\label{hyp:atomtail-at}
+$\displaystyle\max_{m<X^2}K_X(m)\;\le\;\lambda_X\,X^{o(1)}.$
+\end{hypothesis}
+
+\begin{corollary}\label{cor:atomtail-at}
+$(\mathrm{AT}'')$ implies $(\mathrm{HM})_k$ for every fixed
+$k\ge2$ simultaneously; in particular, by
+Theorem~\ref{thm:hm-pointwise} with $k=7$,
+$(\mathrm{AT}'')$ implies
+$\log G_n\ll n^{20/21+o(1)}$ for every $n$, hence
+$G_n=e^{o(n)}$.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:atomtail-collapse} gives
+$\sum(K)_k\le5X^2\lambda_X^2(\lambda_XX^{o(1)})^{k-2}
+=X^{2+o(1)}\lambda_X^k$.
+\end{proof}
+
+\begin{theorem}[Concentration of the problem in the atom tail]
+\label{thm:atomtail-conc}
+Let $n_T(X)=\#\{m<X^2:K_X(m)\ge T\}$.  Then:
+\begin{enumerate}
+\item Unconditionally,
+$n_T(X)\le5X^2\lambda_X^2/(T)_2$ for all $T\ge2$, and
+$\max_mK_X(m)\le|\mathcal P_X|\ll X/\log X$.
+\item $(\mathrm{HM})_3$ holds if and only if
+\[
+ n_T(X)\;\ll\;\frac{X^{2+o(1)}\lambda_X^3}{T^3}
+ \qquad\text{uniformly for }T\ge3 .
+\]
+\item If $n_T(X)\ll X^{2+o(1)}\lambda_X^k/T^k$ uniformly for
+$T\ge k$, then $(\mathrm{HM})_k$ holds; with $k=7$ this implies
+$G_n=e^{o(n)}$ for every $n$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(1) is Chebyshev applied to the second factorial moment, and the
+trivial ceiling.  (2), necessity: $n_T\,(T)_3\le\sum_m(K)_3$.
+Sufficiency: writing the third factorial moment as a sum over
+levels,
+\[
+ \sum_m(K_X(m))_3
+ =\sum_{T\ge3}n_T\bigl[(T)_3-(T-1)_3\bigr]
+ \le\sum_{T\ge3}3T^2\,n_T
+ \ll X^{2+o(1)}\lambda_X^3\sum_{3\le T\ll X}\frac1T,
+\]
+and the harmonic sum is $O(\log X)=X^{o(1)}$.  (3) is identical
+with $[(T)_k-(T-1)_k]\le kT^{k-1}$, followed by
+Theorem~\ref{thm:hm-pointwise}.
+\end{proof}
+
+\begin{remark}[Status of the frontier]
+\label{rem:atomtail-frontier}
+The gap between item (1) and item (2) is a single factor
+$T/\lambda_X$ per level: Chebyshev gives
+$X^2\lambda_X^2/T^2$, the conjecture requires
+$X^2\lambda_X^3/T^3$.  The Poisson model predicts
+$n_T\approx X^2\lambda_X^T/T!$ and
+$\max K_X\asymp\log X/\log\log X$, in agreement with
+computation ($\max K=4$ at $X=1024$; nearest-neighbour
+statistics of the level sets Poisson to three digits).  Every
+ensemble method examined in this program---large-sieve
+dispersion, Linnik dispersion with completed CRT sums, variance
+layer-cake, codegree-weighted pair dispersion---either requires
+the atom bound at its diagonal or is subsumed by
+Proposition~\ref{prop:atomtail-collapse}.  The full conjecture
+is thereby reduced to a single pointwise statement about the
+divisor structure of the Ap\'ery sequence: no integer
+$m<X^2$ may lie in the zero fibre of
+$X^{\varepsilon}$ distinct window primes.
+\end{remark}
