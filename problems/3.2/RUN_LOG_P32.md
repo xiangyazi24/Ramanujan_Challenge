@@ -259,8 +259,13 @@ Gives: avg Z ≪ p^{1/2+o(1)}, k = 5.
   `atom_tail_section.tex`; the bound
   `#\{p:p\mid\mathfrak U_H\}\ll H^2/\log X` does not control the required
   weighted mass `sum Z(p)` on that set
-- end: <fill on close>
-- final result: <fill on close>
+- end: 2026-08-09 10:45 CDT
+- final result: the conditional quadruple-corank implication is complete and
+  sharpened from scalar GM-tr to the same-root aligned-content hypothesis
+  AC-tr, with an exact verifier and level-adaptive exceptional absorption.
+  The full conjecture remains open: AC-tr is a genuine BCZ-class content
+  bound, while fixed-depth Cartier lifting, naive cut-edge carrier expansion,
+  and the present mesoscopic codegree tools all reached terminal obstructions.
 
 ### Diagonal transport identity: N_{h+1}(x-1) = P(x)·N_h(x) - (x+1)⁶·N_{h-1}(x+1)
 Holds for ALL h ≥ 1 (verified symbolically h=1..11).
