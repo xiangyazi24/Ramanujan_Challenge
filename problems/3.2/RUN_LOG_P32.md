@@ -564,3 +564,50 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   Kővári--Sós--Turán and hence the desired mesoscopic energy bound.  The
   census is strong evidence for exactly these two inputs, but supplies no
   proof of either uniform statement.
+
+## Run 2026-08-09 23:57 CDT (automode continuation)
+
+- doctrine: `AVENUES.md`, SHA-256
+  `50ca74804c57ca1ae44144c9b95bc502ccaa00f2b8ffbbcdbfea317b450246ce`
+- approval: direct instruction, `继续。 与 chatgpt 配合。`
+- starting avenue: (e0), distinguished-orbit coupling after phantom removal
+- Pair-cap route: terminal negative.  `pair_cap_extremal.tex` constructs
+  reflection-symmetric endpoint-free sets with all pair caps but
+  `H^2/7200-4` short off-center windows.  Its strengthened prescribed-prime
+  corollary gives artificially labeled quotient separated energy
+  `asymp p^(4/3)` for every sufficiently large prime and dyadic mass
+  `>> X^(7/3)/log X`.  This is a logical countermodel for the local
+  set-theoretic axioms, not an actual Apéry orbit or a lower bound for its
+  variance; Q7195 caught and audited this necessary distinction.
+  A direct synthetic check at `p=2000003,m=100` gave quotient
+  `k=98`, overlap `576`, separated `8930`, exactly as proved.
+- Hasse-square route: terminal negative as a formal input.
+  `hasse_square_no_go.tex` proves that for `m<d/2` the first `m`
+  coefficients of `Delta^epsilon B^2` are triangular coordinates with
+  diagonal `2`; arbitrary clustered zeros and their reciprocal reflections
+  occur in the abstract reciprocal-square family.
+- Projective-variance reduction: proved in
+  `projective_variance_reduction.tex`.  Reflection is free on off-center
+  chains; filtered primitive chains are sliding four-occurrence windows;
+  each quotient orbit has at most six overlapping quotient neighbors.
+  Thus `Vbar_p <= 7 Mbar_p + Esep_p`, and only separated distinct
+  nonreflection orbit pairs require arithmetic control.
+- Exact computation: the local single-process scan and the independent
+  16-shard GitHub scan both checked all `41,535` primes through `500000`.
+  Both found raw mass `20`, quotient mass `10`, quotient maximum `1`, zero
+  nonreflection collisions, and zero actual-fiber chains.  The separate
+  fixed-record verifier passed on all 20 phantoms.  The C++ scanner now
+  decomposes quotient energy into diagonal/overlap/separated parts with
+  exact assertions and passes strict compilation plus the `p<=5000`
+  regression.
+- Index-first actual scan and marked-label regressions pass.  The former has
+  zero off-center quadruples at `(max-index,max-span)=(1100,100)`; the latter
+  verifies the actual, phantom, and nonreflection label witnesses.
+- Exact remaining obstruction: prove the dyadic separated energy bound
+  `sum Esep_p << X^(2+o(1))/log X` using Apéry-specific long-transfer or
+  carrier information.  ChatGPT Q7177 independently audited the
+  reflection/overlap constants.  Q7185 confirmed that an exact elimination
+  certificate necessarily retains the long bridge `N_L`; generic
+  Casoratian/Pluecker identities do not compress it to the six short gaps.
+- end: pending
+- final result: pending

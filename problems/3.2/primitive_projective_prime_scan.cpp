@@ -6,13 +6,19 @@
 // exact primitive return chain.  The scan removes centered adjacent pairs,
 // the all-equal gap slice, and primes supported on U_s.  It therefore audits
 // QPRS directly, without a resultant superset or a factorization cutoff.
+// It also restricts to span <= floor(sqrt(p)), computes the raw projective
+// chain variance and its fixed-point-free reflection quotient, and reports
+// every state supporting at least two quotient chains.
 //
 // Example:
 //   clang++ -std=c++20 -O3 -Wall -Wextra -Wpedantic -Werror \
 //     primitive_projective_prime_scan.cpp -o /tmp/primitive_projective_scan
 //   /tmp/primitive_projective_scan --limit 200000
 
+#include <algorithm>
+#include <cmath>
 #include <cstdint>
+#include <iomanip>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -61,6 +67,23 @@ struct Record {
     bool actual;
 };
 
+struct DplsBin {
+    std::uint64_t prime_count = 0;
+    std::uint64_t raw_mass = 0;
+    std::uint64_t raw_energy = 0;
+    std::uint64_t quotient_mass = 0;
+    std::uint64_t quotient_energy = 0;
+    std::uint64_t quotient_overlap_energy = 0;
+    std::uint64_t quotient_separated_energy = 0;
+    std::uint64_t raw_collision_states = 0;
+    std::uint64_t quotient_collision_states = 0;
+    std::uint64_t actual_raw = 0;
+    long double raw_variance = 0.0L;
+    long double quotient_variance = 0.0L;
+    int max_raw_count = 0;
+    int max_quotient_count = 0;
+};
+
 struct Summary {
     std::uint64_t primitive_off_center = 0;
     std::uint64_t ratio_above_one = 0;
@@ -75,6 +98,9 @@ struct Summary {
     bool saw_7411_reverse = false;
     bool saw_128047_forward = false;
     bool saw_128047_reverse = false;
+    bool saw_dpls_1297_pair = false;
+    std::vector<DplsBin> dpls_bins = std::vector<DplsBin>(32);
+    std::vector<Record> quotient_collision_records;
 };
 
 void consider_record(const Record& record, Summary& summary) {
@@ -115,6 +141,64 @@ void consider_record(const Record& record, Summary& summary) {
     summary.saw_128047_reverse |=
         record.prime == 128047 && record.start == 85507 && record.a == 37 &&
         record.b == 86 && record.c == 41;
+}
+
+int integer_square_root(int value) {
+    int root = static_cast<int>(std::sqrt(static_cast<double>(value)));
+    while (static_cast<i64>(root + 1) * (root + 1) <= value) ++root;
+    while (static_cast<i64>(root) * root > value) --root;
+    return root;
+}
+
+int dyadic_index(int value) {
+    int index = 0;
+    while (value > 1) {
+        value >>= 1;
+        ++index;
+    }
+    return index;
+}
+
+bool closed_intervals_meet(int left_a, int right_a,
+                           int left_b, int right_b) {
+    return std::max(left_a, left_b) <= std::min(right_a, right_b);
+}
+
+bool reflection_orbits_overlap(const Record& left, const Record& right) {
+    const int prime = left.prime;
+    if (right.prime != prime) {
+        throw std::runtime_error("compared records from different primes");
+    }
+    const int left_end = left.start + left.a + left.b + left.c;
+    const int right_end = right.start + right.a + right.b + right.c;
+    const int reflected_left_start = prime - 1 - left_end;
+    const int reflected_left_end = prime - 1 - left.start;
+    const int reflected_right_start = prime - 1 - right_end;
+    const int reflected_right_end = prime - 1 - right.start;
+    return
+        closed_intervals_meet(
+            left.start, left_end, right.start, right_end) ||
+        closed_intervals_meet(
+            left.start, left_end,
+            reflected_right_start, reflected_right_end) ||
+        closed_intervals_meet(
+            reflected_left_start, reflected_left_end,
+            right.start, right_end) ||
+        closed_intervals_meet(
+            reflected_left_start, reflected_left_end,
+            reflected_right_start, reflected_right_end);
+}
+
+void audit_reflection_orbit_overlap() {
+    const Record left{101, 10, 2, 2, 2, 5, false};
+    const Record overlapping{101, 15, 2, 2, 2, 5, false};
+    const Record separated{101, 30, 2, 2, 2, 5, false};
+    if (!reflection_orbits_overlap(left, overlapping)) {
+        throw std::runtime_error("synthetic quotient-overlap regression failed");
+    }
+    if (reflection_orbits_overlap(left, separated)) {
+        throw std::runtime_error("synthetic quotient-separation regression failed");
+    }
 }
 
 void scan_prime(int prime, Summary& summary) {
@@ -173,6 +257,9 @@ void scan_prime(int prime, Summary& summary) {
     std::vector<int> last0(prime + 1, 0);
     std::vector<int> last1(prime + 1, 0);
     std::vector<int> last2(prime + 1, 0);
+    std::vector<int> short_count(prime + 1, 0);
+    std::vector<Record> short_records;
+    const int short_cutoff = integer_square_root(prime);
 
     for (int index = 0; index < prime; ++index) {
         if (apery[index] == 0 && companion[index] == 0) {
@@ -199,8 +286,14 @@ void scan_prime(int prime, Summary& summary) {
                 x2 + index != prime - 1;
             if (valid_gaps && non_progression && off_center &&
                 !carrier_bad[span]) {
-                consider_record(
-                    Record{prime, x0, a, b, c, state, state == 0}, summary);
+                const Record record{
+                    prime, x0, a, b, c, state, state == 0
+                };
+                consider_record(record, summary);
+                if (span <= short_cutoff) {
+                    ++short_count[state];
+                    short_records.push_back(record);
+                }
             }
         }
 
@@ -218,6 +311,116 @@ void scan_prime(int prime, Summary& summary) {
             last1[state] = last2[state];
             last2[state] = index;
         }
+    }
+
+    std::uint64_t raw_mass = 0;
+    std::uint64_t raw_energy = 0;
+    std::uint64_t quotient_mass = 0;
+    std::uint64_t quotient_energy = 0;
+    std::uint64_t raw_collision_states = 0;
+    std::uint64_t quotient_collision_states = 0;
+    std::uint64_t quotient_overlap_energy = 0;
+    std::uint64_t quotient_separated_energy = 0;
+    int max_raw_count = 0;
+    int max_quotient_count = 0;
+
+    // Store exactly one representative of each reflection orbit.  Freeness
+    // implies that the two reflected starts are distinct, so the smaller
+    // start is a canonical choice.  Linked lists group representatives by
+    // state without allocating one vector object per projective point.
+    std::vector<Record> canonical_records;
+    canonical_records.reserve(short_records.size() / 2);
+    std::vector<int> canonical_head(prime + 1, -1);
+    std::vector<int> canonical_next;
+    canonical_next.reserve(short_records.size() / 2);
+    for (const Record& record : short_records) {
+        const int span = record.a + record.b + record.c;
+        const int reflected_start = prime - 1 - record.start - span;
+        if (record.start >= reflected_start) continue;
+        const int record_index = static_cast<int>(canonical_records.size());
+        canonical_records.push_back(record);
+        canonical_next.push_back(canonical_head[record.state]);
+        canonical_head[record.state] = record_index;
+    }
+
+    for (int state = 0; state <= prime; ++state) {
+        const int raw_count = short_count[state];
+        if (raw_count % 2 != 0) {
+            throw std::runtime_error(
+                "off-center short-chain count is not reflection-paired");
+        }
+        const int quotient_count = raw_count / 2;
+        raw_mass += static_cast<std::uint64_t>(raw_count);
+        raw_energy += static_cast<std::uint64_t>(raw_count) * raw_count;
+        quotient_mass += static_cast<std::uint64_t>(quotient_count);
+        quotient_energy +=
+            static_cast<std::uint64_t>(quotient_count) * quotient_count;
+        if (raw_count >= 2) ++raw_collision_states;
+        if (quotient_count >= 2) ++quotient_collision_states;
+        if (raw_count > max_raw_count) max_raw_count = raw_count;
+        if (quotient_count > max_quotient_count) {
+            max_quotient_count = quotient_count;
+        }
+        if (quotient_count >= 2 &&
+            summary.quotient_collision_records.size() < 100) {
+            for (const Record& record : short_records) {
+                if (record.state == state &&
+                    summary.quotient_collision_records.size() < 100) {
+                    summary.quotient_collision_records.push_back(record);
+                }
+            }
+        }
+
+        for (int left = canonical_head[state]; left != -1;
+             left = canonical_next[left]) {
+            for (int right = canonical_next[left]; right != -1;
+                 right = canonical_next[right]) {
+                // Energies count ordered distinct pairs.
+                if (reflection_orbits_overlap(
+                        canonical_records[left], canonical_records[right])) {
+                    quotient_overlap_energy += 2;
+                } else {
+                    quotient_separated_energy += 2;
+                }
+            }
+        }
+    }
+    if (canonical_records.size() != quotient_mass) {
+        throw std::runtime_error("reflection-orbit canonicalization failed");
+    }
+    if (quotient_energy != quotient_mass + quotient_overlap_energy +
+            quotient_separated_energy) {
+        throw std::runtime_error("quotient energy decomposition failed");
+    }
+    if (raw_mass > static_cast<std::uint64_t>(prime)) {
+        throw std::runtime_error("short-chain mass exceeds number of starts");
+    }
+    const int bin_index = dyadic_index(prime);
+    DplsBin& bin = summary.dpls_bins[bin_index];
+    ++bin.prime_count;
+    bin.raw_mass += raw_mass;
+    bin.raw_energy += raw_energy;
+    bin.quotient_mass += quotient_mass;
+    bin.quotient_energy += quotient_energy;
+    bin.quotient_overlap_energy += quotient_overlap_energy;
+    bin.quotient_separated_energy += quotient_separated_energy;
+    bin.raw_collision_states += raw_collision_states;
+    bin.quotient_collision_states += quotient_collision_states;
+    bin.actual_raw += static_cast<std::uint64_t>(short_count[0]);
+    bin.raw_variance += static_cast<long double>(raw_energy) -
+        static_cast<long double>(raw_mass) * raw_mass / (prime + 1);
+    bin.quotient_variance += static_cast<long double>(quotient_energy) -
+        static_cast<long double>(quotient_mass) * quotient_mass / (prime + 1);
+    if (max_raw_count > bin.max_raw_count) {
+        bin.max_raw_count = max_raw_count;
+    }
+    if (max_quotient_count > bin.max_quotient_count) {
+        bin.max_quotient_count = max_quotient_count;
+    }
+    if (prime == 1297) {
+        summary.saw_dpls_1297_pair =
+            short_count[454] == 2 && max_raw_count == 2 &&
+            max_quotient_count == 1;
     }
 }
 
@@ -239,6 +442,7 @@ int parse_limit(int argc, char** argv) {
 
 int main(int argc, char** argv) {
     try {
+        audit_reflection_orbit_overlap();
         const int limit = parse_limit(argc, argv);
         const std::vector<int> primes = primes_up_to(limit);
         Summary summary;
@@ -253,6 +457,10 @@ int main(int argc, char** argv) {
         if (limit >= 1297 &&
             !(summary.saw_1297_forward && summary.saw_1297_reverse)) {
             throw std::runtime_error("missing the canonical p=1297 regression pair");
+        }
+        if (limit >= 1297 && !summary.saw_dpls_1297_pair) {
+            throw std::runtime_error(
+                "p=1297 raw/quotient DPLS regression failed");
         }
         if (limit >= 7411 &&
             !(summary.saw_7411_forward && summary.saw_7411_reverse)) {
@@ -285,6 +493,96 @@ int main(int argc, char** argv) {
                       << " gaps=" << record.a << ',' << record.b << ',' << record.c
                       << " span=" << span << " state=" << record.state
                       << " orbit=" << (record.actual ? "actual" : "phantom") << '\n';
+        }
+        std::cout << std::setprecision(12);
+        DplsBin aggregate;
+        for (const DplsBin& bin : summary.dpls_bins) {
+            aggregate.prime_count += bin.prime_count;
+            aggregate.raw_mass += bin.raw_mass;
+            aggregate.raw_energy += bin.raw_energy;
+            aggregate.quotient_mass += bin.quotient_mass;
+            aggregate.quotient_energy += bin.quotient_energy;
+            aggregate.quotient_overlap_energy +=
+                bin.quotient_overlap_energy;
+            aggregate.quotient_separated_energy +=
+                bin.quotient_separated_energy;
+            aggregate.raw_collision_states += bin.raw_collision_states;
+            aggregate.quotient_collision_states +=
+                bin.quotient_collision_states;
+            aggregate.actual_raw += bin.actual_raw;
+            aggregate.raw_variance += bin.raw_variance;
+            aggregate.quotient_variance += bin.quotient_variance;
+            if (bin.max_raw_count > aggregate.max_raw_count) {
+                aggregate.max_raw_count = bin.max_raw_count;
+            }
+            if (bin.max_quotient_count > aggregate.max_quotient_count) {
+                aggregate.max_quotient_count = bin.max_quotient_count;
+            }
+        }
+        std::cout << "dpls_aggregate"
+                  << " primes=" << aggregate.prime_count
+                  << " raw_M=" << aggregate.raw_mass
+                  << " raw_E=" << aggregate.raw_energy
+                  << " raw_V="
+                  << static_cast<double>(aggregate.raw_variance)
+                  << " raw_maxC=" << aggregate.max_raw_count
+                  << " raw_collision_states="
+                  << aggregate.raw_collision_states
+                  << " quotient_M=" << aggregate.quotient_mass
+                  << " quotient_E=" << aggregate.quotient_energy
+                  << " quotient_E_overlap="
+                  << aggregate.quotient_overlap_energy
+                  << " quotient_E_separated="
+                  << aggregate.quotient_separated_energy
+                  << " quotient_V="
+                  << static_cast<double>(aggregate.quotient_variance)
+                  << " quotient_maxC="
+                  << aggregate.max_quotient_count
+                  << " quotient_collision_states="
+                  << aggregate.quotient_collision_states
+                  << " actual_raw=" << aggregate.actual_raw << '\n';
+        for (std::size_t index = 0; index < summary.dpls_bins.size(); ++index) {
+            const DplsBin& bin = summary.dpls_bins[index];
+            if (bin.prime_count == 0) continue;
+            const std::uint64_t lower = std::uint64_t{1} << index;
+            const std::uint64_t upper =
+                (std::uint64_t{1} << (index + 1)) - 1;
+            const long double raw_ratio = bin.raw_mass == 0
+                ? 0.0L : bin.raw_variance / bin.raw_mass;
+            const long double quotient_ratio = bin.quotient_mass == 0
+                ? 0.0L : bin.quotient_variance / bin.quotient_mass;
+            std::cout
+                << "dpls range=[" << lower << ',' << upper << "]"
+                << " primes=" << bin.prime_count
+                << " raw_M=" << bin.raw_mass
+                << " raw_E=" << bin.raw_energy
+                << " raw_V=" << static_cast<double>(bin.raw_variance)
+                << " raw_V_over_M=" << static_cast<double>(raw_ratio)
+                << " raw_maxC=" << bin.max_raw_count
+                << " raw_collision_states=" << bin.raw_collision_states
+                << " quotient_M=" << bin.quotient_mass
+                << " quotient_E=" << bin.quotient_energy
+                << " quotient_E_overlap=" << bin.quotient_overlap_energy
+                << " quotient_E_separated="
+                << bin.quotient_separated_energy
+                << " quotient_V="
+                << static_cast<double>(bin.quotient_variance)
+                << " quotient_V_over_M="
+                << static_cast<double>(quotient_ratio)
+                << " quotient_maxC=" << bin.max_quotient_count
+                << " quotient_collision_states="
+                << bin.quotient_collision_states
+                << " actual_raw=" << bin.actual_raw << '\n';
+        }
+        for (const Record& record : summary.quotient_collision_records) {
+            std::cout << "dpls_quotient_collision p=" << record.prime
+                      << " state=" << record.state
+                      << " x=" << record.start
+                      << " gaps=" << record.a << ',' << record.b << ','
+                      << record.c
+                      << " span=" << record.a + record.b + record.c
+                      << " orbit="
+                      << (record.actual ? "actual" : "phantom") << '\n';
         }
         return 0;
     } catch (const std::exception& error) {

@@ -1,0 +1,192 @@
+\begin{proposition}[Reduction of projective variance to separated chains]
+\label{prop:projective-variance-reduction}
+Fix an odd prime~$p$, and let
+\[
+ \pi_p\colon\{0,\ldots,p-1\}\longrightarrow
+ \mathbf P^1(\mathbf F_p)
+\]
+be a projective orbit satisfying
+\[
+ \pi_p(p-1-n)=\pi_p(n)
+ \qquad(0\le n<p).
+\]
+For each $q\in\mathbf P^1(\mathbf F_p)$, let $\Gamma_p(q)$ be any
+collection of quadruples
+\[
+ \gamma=(z_0,z_1,z_2,z_3),
+ \qquad 0\le z_0<z_1<z_2<z_3<p,
+\]
+with the following properties:
+\begin{enumerate}
+ \item the $z_i$ are four consecutive occurrences of~$q$ in the
+ ordered fiber $\pi_p^{-1}(q)$;
+ \item membership in $\Gamma_p(q)$ is preserved by
+ \[
+  R(z_0,z_1,z_2,z_3)
+  =(p-1-z_3,p-1-z_2,p-1-z_1,p-1-z_0);
+ \]
+ \item no member has a reflection-centered adjacent pair, that is,
+ $z_i+z_{i+1}\ne p-1$ for $i=0,1,2$.
+\end{enumerate}
+Put
+\[
+ C_p(q)=|\Gamma_p(q)|,
+ \qquad M_p=\sum_q C_p(q),
+ \qquad
+ V_p=\sum_q\left(C_p(q)-\frac{M_p}{p+1}\right)^2.
+\]
+Then $R$ acts freely on every $\Gamma_p(q)$.  If
+$\overline\Gamma_p(q)=\Gamma_p(q)/\langle R\rangle$ and
+\[
+ \overline C_p(q)=|\overline\Gamma_p(q)|,
+ \quad \overline M_p=\sum_q\overline C_p(q),
+ \quad
+ \overline V_p=
+ \sum_q\left(\overline C_p(q)-\frac{\overline M_p}{p+1}\right)^2,
+\]
+then
+\[
+ C_p(q)=2\overline C_p(q),\qquad
+ M_p=2\overline M_p,\qquad
+ V_p=4\overline V_p.
+\]
+
+Call two distinct reflection orbits \emph{overlapping} if some oriented
+representative of one has closed interval $[z_0,z_3]$ meeting the closed
+interval of some oriented representative of the other.  Let
+\[
+ \begin{aligned}
+ E_p^{\mathrm{sep}}
+ =\#\bigl\{(\overline\gamma,\overline\delta):{}&
+  \overline\gamma\ne\overline\delta,\quad
+  \overline\gamma,\overline\delta\in\overline\Gamma_p(q)
+  \text{ for some }q,\\[-2pt]
+ &\overline\gamma,\overline\delta\text{ are not overlapping}
+ \bigr\}.
+ \end{aligned}
+\]
+where ordered pairs are counted.  Then
+\[
+ \sum_q\overline C_p(q)^2
+ \le 7\overline M_p+E_p^{\mathrm{sep}},
+ \qquad
+ \overline V_p\le7\overline M_p+E_p^{\mathrm{sep}}.
+\]
+If, moreover, a member of $\Gamma_p(q)$ is uniquely determined by its
+first index, then $M_p\le p$ and hence $\overline M_p\le p/2$.
+Consequently, for every $X\ge2$,
+\[
+ \sum_{X<p\le2X}\overline V_p
+ \ll \frac{X^2}{\log X}
+      +\sum_{X<p\le2X}E_p^{\mathrm{sep}}.
+\]
+In particular, the weak projective-dispersion estimate follows once the
+separated energy on the right is
+$O(X^{2+o(1)}/\log X)$.
+\end{proposition}
+
+\begin{proof}
+The reflection identity for~$\pi_p$ shows that $R$ preserves the fiber.
+It also preserves consecutiveness: an occurrence of~$q$ strictly between
+two reflected indices would reflect to an occurrence strictly between the
+corresponding original indices.  Thus condition~2 makes $R$ an involution
+of $\Gamma_p(q)$.  If $R\gamma=\gamma$, comparison of the two middle
+coordinates gives $z_1=p-1-z_2$, contrary to condition~3.  The action is
+therefore free, which proves the three scaling identities, including
+\[
+ \begin{split}
+ V_p
+ &=\sum_q\left(2\overline C_p(q)
+       -\frac{2\overline M_p}{p+1}\right)^2
+ =4\overline V_p.
+ \end{split}
+\]
+
+Fix a state~$q$, and write its ordered occurrence list as
+\[
+ r_1<r_2<\cdots<r_t.
+\]
+Every primitive chain in $\Gamma_p(q)$ is one of the filtered sliding
+windows
+\[
+ \gamma_i=(r_i,r_{i+1},r_{i+2},r_{i+3}).
+\]
+If $i<j$ and the closed intervals of $\gamma_i$ and $\gamma_j$ meet,
+then $r_j\le r_{i+3}$, and hence $j-i\le3$.  The same argument with the
+two indices reversed shows that a fixed oriented window overlaps at most
+six other oriented windows.  Notice that this remains true after imposing
+arbitrary filters: deleting windows cannot create a new overlapping pair.
+
+Choose one oriented representative~$\gamma$ of a fixed reflection orbit
+$\overline\gamma$.  If another orbit~$\overline\delta$ overlaps it, then,
+after applying~$R$ simultaneously to both representatives when necessary,
+one of the two representatives of $\overline\delta$ overlaps~$\gamma$.
+The preceding sliding-window bound therefore gives at most six overlapping
+orbits $\overline\delta$ for each $\overline\gamma$.  Summing first over
+$\overline\gamma$ and then over~$q$, the number of ordered distinct
+overlapping orbit pairs is at most $6\overline M_p$.
+
+The square energy $\sum_q\overline C_p(q)^2$ counts the diagonal orbit
+pairs, the distinct overlapping pairs, and the distinct separated pairs.
+The three contributions are respectively $\overline M_p$, at most
+$6\overline M_p$, and $E_p^{\mathrm{sep}}$.  This proves the asserted
+energy bound.  Since
+\[
+ \overline V_p
+ =\sum_q\overline C_p(q)^2
+  -\frac{\overline M_p^2}{p+1},
+\]
+the variance bound follows as well.
+
+If the first index determines the chain, the map
+$\gamma\mapsto z_0$ injects $\bigcup_q\Gamma_p(q)$ into
+$\{0,\ldots,p-1\}$, so $M_p\le p$.  Finally,
+\[
+ \sum_{X<p\le2X}\overline M_p
+ \le X\bigl(\pi(2X)-\pi(X)\bigr)
+ \ll\frac{X^2}{\log X}.
+\]
+Summing the pointwise variance bound completes the proof.
+\end{proof}
+
+\begin{corollary}[Distinguished-fiber consequence]
+\label{cor:projective-variance-distinguished}
+Retain the notation and hypotheses of
+Proposition~\ref{prop:projective-variance-reduction}.  Fix
+$q_0\in\mathbf P^1(\mathbf F_p)$ and put
+$\overline A_p=\overline C_p(q_0)$.  If
+\[
+ \sum_{X<p\le2X}E_p^{\mathrm{sep}}
+ \ll\frac{X^{2+o(1)}}{\log X},
+\]
+then
+\[
+ \sum_{X<p\le2X}\overline A_p
+ \ll\frac{X^{3/2+o(1)}}{\log X}.
+\]
+The corresponding oriented count $A_p=C_p(q_0)$ is exactly twice
+$\overline A_p$.
+\end{corollary}
+
+\begin{proof}
+For primes in the dyadic interval, Cauchy--Schwarz gives
+\[
+ \begin{split}
+ \sum_{X<p\le2X}\overline A_p
+ &\le
+ \sum_{X<p\le2X}\frac{\overline M_p}{p+1}
+ +\sum_{X<p\le2X}
+  \left|\overline C_p(q_0)-\frac{\overline M_p}{p+1}\right| \\
+ &\le
+ \sum_{X<p\le2X}\frac{\overline M_p}{p+1}
+ +\left(
+   \bigl(\pi(2X)-\pi(X)\bigr)
+   \sum_{X<p\le2X}\overline V_p
+  \right)^{1/2}.
+ \end{split}
+\]
+The first term is $O(X/\log X)$ because
+$\overline M_p\le p/2$, while the proposition bounds the second by
+$X^{3/2+o(1)}/\log X$.  Finally, $A_p=2\overline A_p$ by freeness of
+reflection.
+\end{proof}

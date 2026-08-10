@@ -1,0 +1,68 @@
+\begin{proposition}[Triangular freedom of reciprocal squares]
+\label{prop:hasse-square-no-go}
+Let $K$ be a field of characteristic different from~$2$, let $d\ge1$, and
+put
+\[
+ \Delta(t)=t^2-34t+1.
+\]
+For a normalized reciprocal polynomial
+\[
+ B(t)=1+x_1t+\cdots+x_{d-1}t^{d-1}+t^d,
+ \qquad x_{d-j}=x_j,
+\]
+and $\varepsilon\in\{0,1\}$, write
+\[
+ \Delta(t)^\varepsilon B(t)^2
+ =\sum_{j=0}^{2d+2\varepsilon}H_jt^j.
+\]
+If $m<d/2$, then the coefficient map
+\[
+ (x_1,\ldots,x_m)\longmapsto(H_1,\ldots,H_m),
+\]
+with the remaining free coefficients of~$B$ held fixed arbitrarily, is a
+triangular polynomial automorphism of $K^m$.  In particular, every vector
+in $K^m$ occurs as $(H_1,\ldots,H_m)$ for some normalized reciprocal
+polynomial~$B$.
+
+Consequently, the factorization
+\[
+ H(t)=\Delta(t)^\varepsilon B(t)^2
+\]
+and reciprocity alone impose no restriction on a zero pattern contained in
+the first $m<d/2$ coefficients of~$H$: any such pattern, together with its
+reciprocal reflection, can occur.
+\end{proposition}
+
+\begin{proof}
+For $1\le j\le m$, the inequality $j<d/2$ ensures that reciprocity has not
+identified $x_j$ with any of $x_1,\ldots,x_{j-1}$.  The coefficient of
+$t^j$ in the square is
+\[
+ [t^j]B(t)^2
+ =2x_j+\sum_{i=1}^{j-1}x_ix_{j-i}.
+\]
+Since $\Delta(0)=1$, multiplication by $\Delta^\varepsilon$ gives
+\[
+ H_j=2x_j+Q_j(x_1,\ldots,x_{j-1})
+\]
+for a polynomial $Q_j\in K[x_1,\ldots,x_{j-1}]$; coefficients of~$B$
+with index greater than~$j$ do not occur.  Thus the displayed map is
+triangular with diagonal entries~$2$.  Given arbitrary
+$(a_1,\ldots,a_m)\in K^m$, one obtains its unique preimage recursively from
+\[
+ x_j=\frac{a_j-Q_j(x_1,\ldots,x_{j-1})}{2}.
+\]
+After choosing any still-free middle coefficients, set $x_{d-j}=x_j$ to
+complete~$B$.  This proves surjectivity and the polynomial inverse formula.
+
+Both $B^2$ and~$\Delta^\varepsilon$ are reciprocal, so their product is
+reciprocal of degree $2d+2\varepsilon$:
+\[
+ H_{2d+2\varepsilon-j}=H_j.
+\]
+Prescribing $a_j=0$ on an arbitrary subset of $\{1,\ldots,m\}$ therefore
+realizes that zero pattern and its reflected copy.  The conclusion concerns
+the full abstract family of reciprocal squares; it does not assert that the
+arithmetically distinguished square root attached to the Ap\'ery motive is
+generic in that family.
+\end{proof}

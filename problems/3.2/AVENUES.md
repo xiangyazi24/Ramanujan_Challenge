@@ -178,6 +178,255 @@ Moreover, the random-fiber occupancy heuristic gives an expected
 eventually fail.  This is not a proof against QPRS, but it removes the
 formal-projective condition from the favored route.
 
+The companion-label refinement is now terminal in its basis-covariant form.
+Let \(B=(1,5)^t\), \(C=(0,1)^t\), let \(M_r\) transport the initial state to
+index \(r\), and put \(R_r=e_1^tM_r\) and
+\(L(x,y)=y-5x\).  At a distinguished zero, \(R_rB=b_r=0\), while the
+Wronskian gives \(R_rC=c_r\ne0\).  Since \((B,C)\) is a basis and
+\(L(B)=0,L(C)=1\), one has the exact marked row identity
+\[
+ R_r=c_rL.
+\]
+For two returns \(r,r+h\), composing the intervening transfer block recovers
+only
+\[
+ \frac{c_{r+h}}{c_r}
+ =-\frac{\prod_{j=1}^{h-1}(r+j)^3}
+ {(r+h)^3N_{h-1}(r)}.
+\]
+For four returns, every direct-versus-segmented comparison is the cocycle
+law for these ratios.  It is independent of the finite projective fiber
+\(b-qc\).  Differentiation in the marked coordinate adds only
+\(\partial_q(b_r-qc_r)|_{q=0}=-c_r\ne0\): the distinguished fiber is a
+simple root for each fixed return equation, but no further relation among
+the return indices follows.  More precisely, for four evaluation pairs
+\((B_i,C_i)\), localization at \(C_0\) gives
+\[
+ (B_i-qC_i:0\le i\le3)
+ =
+ (C_0q-B_0,\ B_iC_0-B_0C_i:1\le i\le3).
+\]
+Thus marking contributes exactly the pin \(B_0=0\), followed by the three
+ordinary projective-return minors; the nonzero \(q\)-derivative supplies no
+fifth equation.  The carrier-clean certificate
+\(p=709,q=67,r=282,300\) is especially sharp: the complete normalized pair
+\((b_r,c_r)\) repeats across a nonreflection gap \(18<\sqrt{709}\), with the
+reflected repeat at \(408,426\).  Thus neither companion ratios nor equality
+of normalized labels can distinguish the Ap\'ery fiber; any successful
+marked argument must import arithmetic information beyond fixed-return
+transfer algebra.
+
+An independent index-first computation gives a finite, prime-unbounded
+check of the actual rather than projective statement.  Computing the exact
+integers \(b_0,\ldots,b_{5000}\), factoring every
+\(\gcd(b_i,b_j)\) with \(2\le j-i\le500\), and reconstructing every relevant
+zero prefix produces \(197\) candidate primes and \(22\) consecutive
+four-zero windows.  Every window contains a centered adjacent pair; there
+is no off-center window in this box.  The smaller \((3000,300)\) run also
+records \(46\) four-subsets inside short blocks but only \(16\) consecutive
+windows, quantifying the overcount in an all-four-subsets statistic.  This is
+a useful complement to the prime-first census, but it is a finite certificate
+rather than an asymptotic input.
+
+The deterministic pair caps and reflection symmetry cannot by themselves
+prove any subquadratic bound for the short off-center windows.  The explicit
+construction in `pair_cap_extremal.tex` takes \(H=12m\), repeats the gap word
+\(3m,3m+1,\ldots,4m-1\) for \(m/100\) periods, places its reflection beyond
+a central gap, and chooses a prime \(p>4(L+1)+1>H^2\).  It omits both
+endpoints, has no adjacent points,
+obeys \(A(h)\le3(h-1)\) for every gap, but has exactly
+\[
+ 2\left(\frac{m^2}{100}-2\right)
+ =\frac{H^2}{7200}-4
+\]
+consecutive short off-center windows.  For \(h<m^2\), every admissible block
+has length below one period and each length represents \(h\) at most \(2R\)
+times, giving \(A(h)\le h/75\).  For \(h\ge m^2\), the trivial one-endpoint
+per start bound is already below \(3(h-1)\); the cross-half differences have
+the same property.  Therefore a proof of the short-window principle must use
+an Ap\'ery-specific four-point constraint, not just reflection, endpoint
+exclusion, no adjacency, and the individual continuant degree bounds.
+
+The same construction gives a sharper negative result for any argument that
+uses only these set-theoretic constraints and treats the state labels as
+otherwise unconstrained.
+For every sufficiently large prescribed prime \(p\), one may take a multiple
+\(m\asymp p^{1/3}\) of \(100\) small enough that the two reflected packets
+fit inside \([0,p-1]\).  Declaring the entire set to be one abstract state,
+the \(2(N-2)\) short windows form \(k=N-2\asymp p^{2/3}\) reflection
+orbits.  Two orbit supports overlap exactly when their left-window indices
+differ by at most three, and hence
+\[
+ E_p^{\mathrm{sep}}=k(k-1)-(6k-12)=(k-3)(k-4)\asymp p^{4/3}.
+\]
+Doing this independently at every \(p\in(X,2X]\) permits abstract dyadic
+separated energy \(\gg X^{7/3}/\log X\).  This is not an actual Ap\'ery
+orbit and therefore gives no lower bound for the genuine weak-DPLS variance:
+the common label was assigned artificially, rather than produced by the
+Ap\'ery cocycle.  Its precise conclusion is that pair caps, reflection, no
+adjacency, off-centeredness, and the non-AP filter cannot suffice without a
+state-realizability axiom.  The exact construction and proof are in
+`pair_cap_extremal.tex`; an Ap\'ery-specific carrier or transfer constraint
+is indispensable.  ChatGPT audit Q7195 identified this distinction and
+confirmed the packet geometry and pair-cap calculation.
+
+The leading prime-averaged formulation is now a projective variance problem
+that retains exact primitivity.  For each state
+\(q\in\mathbf P^1(\mathbf F_p)\), let \(C_p(q)\) count the exact
+carrier-clean, non-all-equal, off-center primitive chains in that state with
+span at most \(\lfloor\sqrt p\rfloor\), and put
+\[
+ M_p=\sum_q C_p(q),\qquad
+ V_p=\sum_q\left(C_p(q)-\frac{M_p}{p+1}\right)^2.
+\]
+Each start supports at most one such chain, so \(M_p\le p\).  The actual
+Ap\'ery contribution is \(A_p=C_p(0)\), and hence
+\[
+ \sum_{X<p\le2X}A_p
+ \le \sum_{X<p\le2X}\frac{M_p}{p+1}
+ +\left(\frac{X}{\log X}\sum_{X<p\le2X}V_p\right)^{1/2}.
+\]
+Consequently the absolute weak-DPLS estimate
+\[
+ \sum_{X<p\le2X}V_p\ll\frac{X^{2+o(1)}}{\log X}
+\]
+already suffices; the relative diagonal estimate
+\(\sum V_p\ll X^{o(1)}\sum M_p\) is stronger than necessary.
+
+It is cleaner to remove the automatic reflection diagonal before attacking
+this estimate.  The involution
+\[
+ (x;a,b,c)\longmapsto(p-1-x-a-b-c;c,b,a)
+\]
+preserves the projective state by the exact orbit reflection
+\(\pi(n)=\pi(p-1-n)\).  It has no fixed point on the off-center chains:
+a fixed chain would have \(a=c\) and \(2x+a+b+c=p-1\), making its middle
+adjacent pair centered.  If \(\bar C_p(q)\) counts reflection orbits and
+\(\bar M_p,\bar V_p,\bar A_p\) denote the corresponding statistics, then
+\[
+ C_p(q)=2\bar C_p(q),\qquad
+ M_p=2\bar M_p,\qquad V_p=4\bar V_p,\qquad A_p=2\bar A_p.
+\]
+Thus weak-DPLS is equivalent, up to an absolute factor, to the same estimate
+for \(\bar V_p\).
+
+The exact overlap contribution is already within budget.  If
+\(r_1<\cdots<r_t\) are the occurrences of a fixed state, every primitive
+chain is a filtered sliding window
+\(\gamma_i=(r_i,r_{i+1},r_{i+2},r_{i+3})\).  A fixed \(\gamma_i\) can have
+overlapping closed return interval only with
+\(\gamma_{i+j}\), \(0<|j|\le3\).  Hence the ordered distinct overlap energy
+is at most \(6M_p\), and the diagonal plus overlap contribution over
+\(X<p\le2X\) is
+\[
+ \le7\sum_{X<p\le2X}M_p\ll\frac{X^2}{\log X}.
+\]
+The same constant survives the reflection quotient: after fixing one
+oriented representative of an orbit, any overlapping second orbit has a
+representative among those same six neighboring windows.  Thus the quotient
+square energy is at most
+\(7\bar M_p+E_p^{\mathrm{sep}}\), where the last term counts ordered pairs
+of distinct reflection orbits for which no two representatives have
+intersecting closed intervals.  The complete statement, including the
+Cauchy--Schwarz reduction of the distinguished fiber, is proved in
+`projective_variance_reduction.tex`.
+Unlike the distinguished value, the variance is invariant under a change
+of solution basis, so formal projective tools are legitimate here.  After
+the reflection quotient and overlap estimate, the exact obstruction is only
+the energy of separated distinct chains.  Such a pair adds the long return
+\(N_L(x)=0\), with \(L\) as large as \(p\); this defeats all currently
+bounded-gap continuant certificates.
+
+The optimized exact census in
+\`primitive_projective_prime_scan.cpp\` groups both raw and
+reflection-quotient statistics in \(O(p)\) operations per prime; its exact
+pair decomposition takes an additional \(O(E_p)\) operations.  An exact
+16-shard census through \(p\le500000\) checks all \(41{,}535\) primes in
+the range and finds only \(20\) raw short chains, forming ten reflected
+phantom pairs.  Every quotient state has count at most one, there is no
+nonreflection same-state pair, and \(\bar A_p=0\) throughout.  The local
+single-process implementation independently reproduced the same 20 records
+and aggregate, and `primitive_projective_prime_verify.py` recomputed all 20
+from fixed inputs using a separate recurrence and carrier check.  The local
+scanner independently enforces the first raw pair
+\[
+ p=1297,\quad q=454,\quad
+ (360;5,20,10)\longleftrightarrow(901;10,20,5).
+\]
+It also decomposes the quotient energy exactly into the diagonal, overlapping,
+and separated parts and asserts that the three contributions sum to the full
+energy; both distinct-pair contributions vanish throughout this census.
+The random-fiber parameter count predicts one quotient chain with mean
+\(p^{-1/2+o(1)}\).  Two overlapping windows can share three returns and
+have heuristic mass \(p^{-1+o(1)}\), but their total energy is already
+covered by the six-partner lemma.  Two separated chain orbits in one state
+have heuristic mass \(p^{-2+o(1)}\), summable over primes.  This makes a
+summability theorem for the separated energy a sharper target than
+pointwise uniqueness of all chain orbits.  The census is unusually strong
+evidence for projective dispersion, but remains a finite certificate;
+weak-DPLS is not a consequence of the existing local algebra.
+
+A separate toric calculation closes the bounded-degree interpolation
+shortcut.  Let \(d_p\) be the degree of the reduced polynomial representing
+\(r\mapsto b_r\) on \(\mathbb F_p\).  The fixed Laurent polynomial
+\(\Lambda\) in \`oracleC_result.tex\` has nonnegative integral coefficients,
+\(\operatorname{CT}\Lambda^n=b_n\), constant coefficient \(5\), and
+\(\Lambda(1,1,1)=40\).  Hence \(\Lambda-1\) is still coefficientwise
+nonnegative, with constant coefficient \(4\).  If \(d_p<p-1\), put
+\(m=d_p+1\).  Finite differences give
+\[
+ p\mid\Delta^m b_0=\operatorname{CT}(\Lambda-1)^m,
+ \qquad
+ 0<4^m\le\operatorname{CT}(\Lambda-1)^m\le39^m,
+\]
+and therefore
+\[
+ d_p\ge\frac{\log p}{\log39}-1.
+\]
+This rules out bounded interpolation degree but is only logarithmic and
+gives no useful upper bound for the zero set.  The square/twisted-square
+Hasse factorization is also terminal as a purely formal input.  If
+\(B(t)=1+x_1t+\cdots+x_{d-1}t^{d-1}+t^d\) is reciprocal and
+\(H=\Delta^\varepsilon B^2\), then for every \(m<d/2\)
+\[
+ H_j=2x_j+Q_j(x_1,\ldots,x_{j-1})\qquad(1\le j\le m).
+\]
+In odd characteristic this triangular map is a polynomial automorphism, so
+one can prescribe an arbitrary clustered zero pattern in the first \(m\)
+coefficients; reciprocity supplies its reflected copy.  The proof is in
+`hasse_square_no_go.tex`.  Thus squareness and reciprocity alone give no
+short-window exclusion.  Any use of the actual Hasse square root needs new
+arithmetic information distinguishing its coefficient vector from the full
+reciprocal-square parameter space.
+
+There is an equivalent marked arithmetic observable.  The endpoint identity
+\[
+ N_{x+1}(-1)=(x!)^3b_x
+\]
+shows that, for \(p>x+a+b+c\), an actual four-zero tuple at gaps
+\((a,b,c)\) is exactly detected by the large-prime part of
+\[
+ \gcd\!\left(
+ N_{x+1}(-1),\,N_a(x),\,N_b(x+a),\,N_c(x+a+b)
+ \right).
+\]
+The full addition identity is
+\[
+ N_{x+1+h}(-1)
+ =N_{x+2}(-1)N_h(x)
+ -(x+1)^6N_{x+1}(-1)N_{h-1}(x+1).
+\]
+After imposing \(p\mid N_{x+1}(-1)\), the first factor on the right is
+a unit because consecutive Ap\'ery zeros are impossible.  Hence this
+addition law proves the exact support equivalence but supplies no additional
+congruence or height saving.
+This removes every phantom before elimination, but the first entry has depth
+\(x+1\asymp p\).  A direct height estimate therefore does not save a gap
+parameter.  The missing arithmetic input can be stated as a uniform
+\(1/X\)-thinning of the fully deflated short-chain content after imposing
+this long endpoint divisor; it is the anchored moving-gcd counterpart of
+weak-DPLS.
+
 - Success: prove the short-window reflection principle, or construct a
   bounded-height orbit-coupled module whose local corank dominates actual
   primitive starts and whose aggregate height is \(H^{3+o(1)}\).  A proof of
