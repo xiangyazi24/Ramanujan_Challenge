@@ -1,0 +1,178 @@
+\begin{proposition}[The moving-gap Green kernel]
+\label{prop:gap-kernel-green}
+Let
+\[
+ P(t)=(2t+1)(17t^2+17t+5),
+\]
+and let $U_m(a)$ be the restart continuants defined by
+\[
+ U_{-1}(a)=0,\qquad U_0(a)=1,\qquad
+ U_{m+1}(a)=P(a+m)U_m(a)-(a+m)^6U_{m-1}(a).
+\]
+For an indeterminate~$a$, put
+\[
+ V_m(a)=\frac{U_m(a)}{(a+1)_m^3},\qquad
+ (a+1)_m=\prod_{j=1}^m(a+j),\qquad V_{-1}(a)=0,
+\]
+and set
+\[
+ F_a(z)=\sum_{m\geq0}V_m(a)z^m,
+ \qquad \theta=z\frac{d}{dz}.
+\]
+Then the following assertions hold in $\mathbb Q(a)[[z]]$.
+
+\begin{enumerate}
+\item The normalized continuants satisfy
+\begin{equation}
+ (a+m+1)^3V_{m+1}(a)
+ =P(a+m)V_m(a)-(a+m)^3V_{m-1}(a)
+ \qquad(m\geq0).
+ \label{eq:green-normalized-recurrence}
+\end{equation}
+
+\item If
+\begin{equation}
+ \mathscr D_a
+ = (\theta+a)^3-zP(\theta+a)
+   +z^2(\theta+a+1)^3,
+ \label{eq:green-operator}
+\end{equation}
+then
+\begin{equation}
+ \boxed{\mathscr D_aF_a=a^3.}
+ \label{eq:green-inhomogeneous}
+\end{equation}
+Equivalently, if
+\[
+ \mathscr L_0=\theta^3-zP(\theta)+z^2(\theta+1)^3,
+\]
+then, formally under the conjugation
+$\theta z^a=z^a(\theta+a)$,
+\begin{equation}
+ \boxed{\mathscr L_0\bigl(z^aF_a(z)\bigr)=a^3z^a.}
+ \label{eq:green-conjugated}
+\end{equation}
+Thus $z^aF_a$ is a Green-kernel column with monomial source, not an
+eigenfunction of~$\mathscr L_0$.
+
+\item The coefficient of $\theta^3$ in~$\mathscr D_a$ is
+\[
+ Q(z)=1-34z+z^2.
+\]
+Consequently~\eqref{eq:green-inhomogeneous}, after adjoining the constant
+solution~$1$, is a homogeneous first-order system of rank four whose pole
+divisor on the $z$-line is contained in
+\begin{equation}
+ z=0,\qquad z^2-34z+1=0,\qquad z=\infty,
+ \label{eq:green-singular-divisor}
+\end{equation}
+independently of~$a$.  Its coefficients have bounded degree in~$a$.
+
+\item Let $b,c$ be the two solutions of the Ap\'ery recurrence with
+$(b_0,b_1)=(1,5)$ and $(c_0,c_1)=(0,1)$.  For every integer $a\geq1$ and
+$m\geq0$,
+\begin{equation}
+ \boxed{
+ V_m(a)=a^3\bigl(b_{a-1}c_{a+m}-c_{a-1}b_{a+m}\bigr).}
+ \label{eq:green-casoratian}
+\end{equation}
+In particular,
+\[
+ V_m(0)=b_m,\qquad V_m(1)=c_{m+1}.
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Dividing the recurrence for $U_{m+1}(a)$ by
+$(a+1)_{m+1}^3$ gives~\eqref{eq:green-normalized-recurrence}; the second
+term uses
+\[
+ \frac{(a+m)^6(a+1)_{m-1}^3}{(a+1)_{m+1}^3}
+ =\frac{(a+m)^3}{(a+m+1)^3}.
+\]
+
+Multiply~\eqref{eq:green-normalized-recurrence} by $z^{m+1}$ and sum over
+$m\geq0$.  Since $V_0=1$ and $V_{-1}=0$, the three resulting sums are
+\begin{align*}
+ \sum_{m\geq0}(a+m+1)^3V_{m+1}z^{m+1}
+  &=(\theta+a)^3F_a-a^3,\\
+ \sum_{m\geq0}P(a+m)V_mz^{m+1}
+  &=zP(\theta+a)F_a,\\
+ \sum_{m\geq0}(a+m)^3V_{m-1}z^{m+1}
+  &=z^2(\theta+a+1)^3F_a.
+\end{align*}
+This proves~\eqref{eq:green-inhomogeneous}.  Conjugating by $z^a$ gives
+\eqref{eq:green-conjugated}.
+
+The leading coefficient in~$\theta$ is
+$1-34z+z^2$, because the leading coefficient of $P$ is~$34$.
+Writing
+\[
+ Y=(1,F_a,\theta F_a,\theta^2F_a)^{\mathsf T}
+\]
+and solving~\eqref{eq:green-inhomogeneous} for $\theta^3F_a$ gives a
+first-order equation $\theta Y=A(a,z)Y$ with entries in
+$\mathbb Q(a,z)$ and denominators dividing~$Q(z)$.  Passing from
+$\theta$ to $d/dz$ introduces only the additional factor~$z$; this proves
+the pole-divisor assertion.  The bounded-degree assertion is immediate
+from~\eqref{eq:green-operator}.
+
+For the final identity, define
+\[
+ K_m=a^3\bigl(b_{a-1}c_{a+m}-c_{a-1}b_{a+m}\bigr).
+\]
+The Ap\'ery recurrence at index $a+m$ shows that $K_m$ satisfies
+\eqref{eq:green-normalized-recurrence}.  The companion Casoratian gives
+\[
+ b_{a-1}c_a-c_{a-1}b_a=\frac1{a^3},
+\]
+so $K_0=1$; the recurrence at index~$a$, together with
+$K_{-1}=0$, gives $K_1=P(a)/(a+1)^3$.  These are the initial values of
+$V_m(a)$, proving~\eqref{eq:green-casoratian}.  Finally,
+$U_m(0)=(m!)^3b_m$ gives $V_m(0)=b_m$, while
+\eqref{eq:green-casoratian} at $a=1$ gives $V_m(1)=c_{m+1}$.
+\end{proof}
+
+\begin{corollary}[Long gaps as coefficients of the Green kernel]
+\label{cor:long-gap-green}
+For integers $G\geq1$ and $u\geq0$,
+\begin{equation}
+ N_G(u)=U_{G-1}(u+1)
+ =\bigl((u+2)_{G-1}\bigr)^3V_{G-1}(u+1).
+ \label{eq:long-gap-green}
+\end{equation}
+If $0\leq u<u+G<p$, all factors in the rising factorial are units
+modulo~$p$, and hence
+\[
+ N_G(u)=0\pmod p
+ \quad\Longleftrightarrow\quad
+ [z^{G-1}]F_{u+1}(z)=0\pmod p.
+\]
+Equivalently,
+\[
+ \frac{N_G(u)}{\prod_{j=1}^G(u+j)^3}
+ =b_uc_{u+G}-c_ub_{u+G}.
+\]
+\end{corollary}
+
+\begin{proof}
+The first identity is the restart dictionary and the definition of~$V$.
+The nonwrapping assumption makes every factor $u+2,\ldots,u+G$ nonzero
+modulo~$p$, proving the equivalence.  The final identity follows from
+\eqref{eq:green-casoratian} with $a=u+1$ and $m=G-1$ after multiplying by
+the missing factor $(u+1)^3$.
+\end{proof}
+
+\begin{remark}[What the differential compression does not supply]
+\label{rem:green-jet-barrier}
+The operator~\eqref{eq:green-operator} has fixed order and fixed singular
+support, but the bridge length~$G$ remains the coefficient index
+$[z^{G-1}]$.  Algebraizing this coefficient by a naive jet construction
+has order growing with~$G$.  Thus Proposition~\ref{prop:gap-kernel-green}
+does not by itself give a bounded-conductor finite-field family or an
+estimate for the long-bridge incidence sum.  It instead isolates the
+remaining geometric task: realize the two-index coefficients of this
+inhomogeneous Green kernel by a fixed-dimensional arithmetic family, or
+prove the required prime-averaged coefficient nonconcentration directly.
+\end{remark}

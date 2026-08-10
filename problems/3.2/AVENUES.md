@@ -643,6 +643,47 @@ operator whose cleared numerators have \(r\le8,d\le30\) is scalar.  This does
 not exclude a gauge whose conjugated cleared numerators exceed the degree
 bound, or operators of larger order.
 
+There is nevertheless an exact fixed-order differential compression of one
+moving gap, but it is an inhomogeneous Green kernel rather than a bispectral
+eigenfunction.  Put
+\[
+ V_m(a)=\frac{U_m(a)}{(a+1)_m^3},\qquad
+ F_a(z)=\sum_{m\ge0}V_m(a)z^m,
+ \qquad \theta=z\frac{d}{dz}.
+\]
+Then
+\[
+ (a+m+1)^3V_{m+1}=P(a+m)V_m-(a+m)^3V_{m-1}
+\]
+and exact summation, including the initial term, gives
+\[
+ \bigl((\theta+a)^3-zP(\theta+a)
+       +z^2(\theta+a+1)^3\bigr)F_a=a^3.
+\]
+Thus, for the usual Ap\'ery operator
+\(\mathscr L_0=\theta^3-zP(\theta)+z^2(\theta+1)^3\),
+\[
+ \mathscr L_0(z^aF_a)=a^3z^a.
+\]
+The homogeneous eigenfunction equation proposed in ChatGPT Q7231 is false:
+it omitted the boundary term at \(m=0\).  After adjoining the constant
+solution, the corrected equation is a rank-four system with fixed singular
+support
+\(z(1-34z+z^2)=0\), independent of \(a\).  Moreover
+\[
+ V_m(a)=a^3(b_{a-1}c_{a+m}-c_{a-1}b_{a+m}),
+\]
+so it is exactly the two-point Green--Casoratian kernel.  For a long bridge,
+\[
+ N_G(u)=((u+2)_{G-1})^3V_{G-1}(u+1).
+\]
+This identifies a fixed differential object, but does not yet control the
+moving coefficient \([z^{G-1}]F_{u+1}\): a naive coefficient-jet
+algebraization still has order growing with \(G\).  The corrected theorem and
+proof are in `gap_kernel_green.tex`; `gap_kernel_green_verify.py` checks the
+symbolic recurrence, every differential coefficient through degree seven,
+the rejected eigenfunction equation, and 110 exact Casoratian values.
+
 The optimized exact census in
 \`primitive_projective_prime_scan.cpp\` groups both raw and
 reflection-quotient statistics in \(O(p)\) operations per prime; its exact

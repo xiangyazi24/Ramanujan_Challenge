@@ -769,5 +769,19 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   mass at `H~sqrt(X)` would only give `X^(9/4+o(1))/log X` energy.  This
   pins the remaining mass input to average polylogarithmic short-chain
   sparsity, not ordinary three-gap content control.
+- Moving-gap Green kernel: with
+  `V_m(a)=U_m(a)/(a+1)_m^3` and `F_a=sum_m V_m(a) z^m`, exact summation gives
+  `D_a F_a=a^3`, where
+  `D_a=(theta+a)^3-zP(theta+a)+z^2(theta+a+1)^3`.  Equivalently,
+  `L_0(z^a F_a)=a^3 z^a`.  This corrects ChatGPT Q7231, whose claimed
+  homogeneous eigenfunction equation dropped the `m=0` boundary term.
+  Adjoining the constant solution gives a rank-four system with fixed
+  singular support `z(1-34z+z^2)=0`, and the exact Casoratian formula is
+  `V_m(a)=a^3(b_(a-1)c_(a+m)-c_(a-1)b_(a+m))`.  The bridge dictionary is
+  `N_G(u)=((u+2)_(G-1))^3 V_(G-1)(u+1)`.  This is a genuine fixed-order
+  differential compression, but coefficient extraction at `G-1` remains a
+  growing jet and supplies no long-bridge estimate by itself.  Proof:
+  `gap_kernel_green.tex`.  Exact verifier digest:
+  `8b27017ed37134278861b3460f86814e796916a432138233bad49359fa5a65ca`.
 - end: pending
 - final result: pending
