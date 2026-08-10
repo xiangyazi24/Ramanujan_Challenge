@@ -684,6 +684,40 @@ proof are in `gap_kernel_green.tex`; `gap_kernel_green_verify.py` checks the
 symbolic recurrence, every differential coefficient through degree seven,
 the rejected eigenfunction equation, and 110 exact Casoratian values.
 
+The starting index and gap index can be compressed simultaneously at the
+formal level.  If
+\[
+ \mathcal G(s,z)=\sum_{a\ge1,m\ge0}V_m(a)s^az^m
+\]
+and
+\[
+ \mathcal K(X,Z)=X\bigl((\theta_X+1)^3B(X)C(Z)
+                  -(\theta_X+1)^3C(X)B(Z)\bigr),
+\]
+then coefficientwise
+\[
+ \mathcal G(s,z)=\mathcal P_z^{\ge0}\mathcal K(s/z,z)
+ =\operatorname{CT}_u\frac{\mathcal K(su/z,z/u)}{1-u}.
+\]
+Writing \(\Theta=\theta_s+\theta_z\), it also satisfies the exact PDE
+\[
+ \bigl(\Theta^3-zP(\Theta)+z^2(\Theta+1)^3\bigr)\mathcal G
+ =\frac{s(1+4s+s^2)}{(1-s)^4}.
+\]
+This is a genuine fixed formal two-index encoding, but not a rational-period
+shortcut.  For every prime \(p\ge5\), reflection and the recurrence at
+\(p-1\) give
+\[
+ v_p(c_p)=-3,\qquad p^3c_p\equiv1\pmod p.
+\]
+Since \([s z^{p-1}]\mathcal G=c_p\), infinitely many new denominator primes
+occur.  Hence neither \(C\) nor \(\mathcal G\) is globally bounded, and
+\(\mathcal G\) cannot be the ordinary diagonal or constant term of a fixed
+rational function regular at the expansion point.  This does not exclude a
+mixed/regulator realization or a characteristic-dependent finite-field
+model.  The proof is in `gap_kernel_bivariate.tex`; the exact verifier and an
+independent tmux-11 audit both pass.
+
 The optimized exact census in
 \`primitive_projective_prime_scan.cpp\` groups both raw and
 reflection-quotient statistics in \(O(p)\) operations per prime; its exact

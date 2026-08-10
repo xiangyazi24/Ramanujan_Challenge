@@ -783,5 +783,19 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   growing jet and supplies no long-bridge estimate by itself.  Proof:
   `gap_kernel_green.tex`.  Exact verifier digest:
   `8b27017ed37134278861b3460f86814e796916a432138233bad49359fa5a65ca`.
+- Bivariate Green compression: for
+  `G(s,z)=sum_(a>=1,m>=0) V_m(a) s^a z^m`, the exact Casoratian formula gives
+  `G=P_z^{>=0} K(s/z,z)=CT_u K(su/z,z/u)/(1-u)`, where
+  `K=X((theta_X+1)^3 B(X)C(Z)-(theta_X+1)^3 C(X)B(Z))`.  With
+  `Theta=theta_s+theta_z`, the exact PDE is
+  `(Theta^3-zP(Theta)+z^2(Theta+1)^3)G=s(1+4s+s^2)/(1-s)^4`.
+  This compresses both indices formally.  It cannot be an ordinary rational
+  diagonal: reflection plus the recurrence gives `v_p(c_p)=-3` and
+  `p^3 c_p=1 mod p` for every prime `p>=5`, while
+  `[s z^(p-1)]G=c_p`; thus infinitely many denominator primes occur.
+  `gap_kernel_bivariate_verify.py` checks 110 Casoratian, 110 positive-part,
+  110 PDE, 160 operator, and 19 prime-denominator cases.  Full-paper
+  compilation and the independent tmux-11 four-point audit pass.  Verifier
+  digest: `12fe7bb087e5adfff4bc667c3789a3ca511121734e0f95eaccb90bf0b63df91b`.
 - end: pending
 - final result: pending

@@ -1,0 +1,169 @@
+\begin{proposition}[The bivariate moving-gap kernel]
+\label{prop:gap-kernel-bivariate}
+Let
+\[
+ B(x)=\sum_{n\geq0}b_nx^n,
+ \qquad
+ C(x)=\sum_{n\geq0}c_nx^n,
+\]
+where $(b_0,b_1)=(1,5)$ and $(c_0,c_1)=(0,1)$, and retain the
+normalized restart coefficients $V_m(a)$ from
+Proposition~\ref{prop:gap-kernel-green}.  Put
+\[
+ \mathcal G(s,z)=\sum_{a\geq1}\sum_{m\geq0}V_m(a)s^az^m
+\]
+and, with \(\theta_x=x\,d/dx\), define
+\begin{equation}
+ \mathcal K(X,Z)
+ =X\left(
+   (\theta_X+1)^3B(X)C(Z)
+   -(\theta_X+1)^3C(X)B(Z)
+  \right).
+ \label{eq:bivariate-K}
+\end{equation}
+Then the following formal identities hold.
+
+\begin{enumerate}
+\item If \(\mathcal P_z^{\geq0}\) denotes extraction of the nonnegative
+  powers of~$z$, then
+  \begin{equation}
+   \boxed{
+   \mathcal G(s,z)
+    =\mathcal P_z^{\geq0}\mathcal K(s/z,z)
+    =\operatorname{CT}_u
+      \frac{\mathcal K(su/z,z/u)}{1-u}.}
+   \label{eq:bivariate-positive-part}
+  \end{equation}
+  The constant term is well defined coefficientwise in~$s$: for a fixed
+  power~$s^a$, only finitely many negative powers of~$z$ occur before
+  applying~$\mathcal P_z^{\geq0}$.
+
+\item Let
+  \[
+   \Theta=\theta_s+\theta_z,
+   \qquad
+   \mathscr D_{s,z}
+    =\Theta^3-zP(\Theta)+z^2(\Theta+1)^3.
+  \]
+  Then
+  \begin{equation}
+   \boxed{
+   \mathscr D_{s,z}\mathcal G(s,z)
+    =\sum_{a\geq1}a^3s^a
+    =\frac{s(1+4s+s^2)}{(1-s)^4}.}
+   \label{eq:bivariate-PDE}
+  \end{equation}
+  The two boundary slices are
+  \begin{equation}
+   [s]\mathcal G(s,z)=\frac{C(z)}z,
+   \qquad
+   [z^0]\mathcal G(s,z)=\frac{s}{1-s}.
+   \label{eq:bivariate-boundary-slices}
+  \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The companion generating functions satisfy
+\begin{equation}
+ \mathscr L_0B=0,
+ \qquad
+ \mathscr L_0C=z,
+ \qquad
+ \mathscr L_0=\theta^3-zP(\theta)+z^2(\theta+1)^3.
+ \label{eq:companion-generating-equations}
+\end{equation}
+Indeed, the coefficients of degree at least two are exactly the Ap\'ery
+recurrence, while the coefficient of~$z$ in the second equation is
+$c_1-P(0)c_0=1$.
+
+The coefficient of $X^{r+1}Z^n$ in~\eqref{eq:bivariate-K} is
+\[
+ (r+1)^3\bigl(b_rc_n-c_rb_n\bigr).
+\]
+After substituting $X=s/z$ and $Z=z$, this term becomes
+\[
+ (r+1)^3\bigl(b_rc_n-c_rb_n\bigr)
+ s^{r+1}z^{n-r-1}.
+\]
+Its $z$-power is nonnegative exactly when $n\geq r+1$.  Setting
+$a=r+1$ and $m=n-r-1$, the Casoratian formula
+\eqref{eq:green-casoratian} identifies the coefficient with~$V_m(a)$.
+This proves the first equality in~\eqref{eq:bivariate-positive-part}.
+For a Laurent series $A(t)=\sum_{k\in\mathbb Z}A_kt^k$ one has
+\[
+ \operatorname{CT}_u\frac{A(z/u)}{1-u}
+ =\sum_{k\geq0}A_kz^k.
+\]
+Applying this identity to $A(t)=\mathcal K(s/t,t)$ proves the constant-term
+formula.
+
+For each fixed~$a$, Proposition~\ref{prop:gap-kernel-green} gives
+\[
+ \bigl((\theta_z+a)^3-zP(\theta_z+a)
+       +z^2(\theta_z+a+1)^3\bigr)F_a(z)=a^3.
+\]
+Multiplication by~$s^a$ followed by summation over $a\geq1$ replaces
+$a$ by~$\theta_s$ and proves~\eqref{eq:bivariate-PDE}.  Finally,
+$V_m(1)=c_{m+1}$ and $V_0(a)=1$, which give
+\eqref{eq:bivariate-boundary-slices}.
+\end{proof}
+
+\begin{proposition}[Infinite-denominator obstruction]
+\label{prop:gap-kernel-denominator-obstruction}
+For every prime $p\geq5$,
+\begin{equation}
+ v_p(c_p)=-3,
+ \qquad
+ p^3c_p\equiv1\pmod p.
+ \label{eq:companion-prime-denominator}
+\end{equation}
+Consequently neither $C(z)$ nor $\mathcal G(s,z)$ is globally bounded:
+no fixed rescaling of its variables and of the whole series makes all its
+coefficients integral.  In particular, $\mathcal G$ cannot be obtained as
+an ordinary diagonal or constant term of a fixed rational function over
+$\mathbb Q$ that is regular at the expansion point.
+\end{proposition}
+
+\begin{proof}
+The values $c_0,\ldots,c_{p-1}$ are $p$-integral because every recurrence
+denominator used to construct them is a unit modulo~$p$.  Reflection of a
+$p$-integral solution gives
+\[
+ c_{p-1}\equiv c_0=0,
+ \qquad
+ c_{p-2}\equiv c_1=1
+ \pmod p.
+\]
+The recurrence at index $p-1$ is
+\[
+ p^3c_p=P(p-1)c_{p-1}-(p-1)^3c_{p-2}.
+\]
+Reduction modulo~$p$ gives $p^3c_p\equiv1$, proving
+\eqref{eq:companion-prime-denominator}.
+
+By~\eqref{eq:bivariate-boundary-slices},
+\[
+ [s z^{p-1}]\mathcal G(s,z)=c_p.
+\]
+Thus infinitely many distinct primes occur in coefficient denominators of
+both $C$ and~$\mathcal G$, and a fixed integral rescaling cannot remove
+them.  On the other hand, after multiplying a rational function over
+$\mathbb Q$ by one fixed integer, the coefficients of its expansion at a
+regular point lie in $\mathbb Z[1/N]$ for one fixed~$N$.  Any diagonal or
+constant-term extraction preserves this finite set of denominator primes.
+The asserted rational-diagonal obstruction follows.
+\end{proof}
+
+\begin{remark}[Scope of the obstruction]
+\label{rem:bivariate-kernel-scope}
+Formula~\eqref{eq:bivariate-positive-part} compresses the starting index
+and bridge length into one fixed formal construction, but it necessarily
+uses the inhomogeneous companion series~$C$.  Proposition
+\ref{prop:gap-kernel-denominator-obstruction} rules out the most direct
+globally bounded rational-diagonal realization.  It does not rule out a
+mixed-motive or regulator-valued realization, nor a characteristic-$p$
+construction whose arithmetic model varies with~$p$.  In particular, the
+constant-term formula alone supplies no uniform conductor bound and no
+nonconcentration estimate for the coefficients~$V_m(a)$ modulo~$p$.
+\end{remark}
