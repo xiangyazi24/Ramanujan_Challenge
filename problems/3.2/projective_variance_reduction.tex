@@ -149,6 +149,125 @@ $\{0,\ldots,p-1\}$, so $M_p\le p$.  Finally,
 Summing the pointwise variance bound completes the proof.
 \end{proof}
 
+\begin{proposition}[Unconditional short-chain energy cap]
+\label{prop:projective-short-chain-energy}
+Let $p\ge7$ be prime, let $\pi_p$ be the projective Ap\'ery orbit, and
+fix an integer $2\le H<p$.  For each
+$q\in\mathbf P^1(\mathbf F_p)$, let $\Gamma_p(q)$ be any collection of
+four-consecutive-occurrence windows in the fiber $\pi_p^{-1}(q)$, every
+one of span at most~$H$, and put
+\[
+ C_p(q)=|\Gamma_p(q)|.
+\]
+Then
+\begin{equation}
+ \sum_{q\in\mathbf P^1(\mathbf F_p)}C_p(q)^2\le30pH.
+\label{eq:projective-short-chain-energy}
+\end{equation}
+Under the reflection hypotheses of
+Proposition~\ref{prop:projective-variance-reduction}, this implies
+\[
+ E_p^{\mathrm{sep}}
+ \le\sum_q\overline C_p(q)^2
+ \le\frac{15}{2}pH.
+\]
+Consequently, for $H=\lfloor\sqrt p\rfloor$,
+\[
+ \sum_{X<p\le2X}E_p^{\mathrm{sep}}
+ \ll\frac{X^{5/2}}{\log X}.
+\]
+\end{proposition}
+
+\begin{proof}
+Write the occurrence list of~$q$ as
+$r_1<\cdots<r_m$, and let $e_q(h)$ be the number of consecutive
+occurrence gaps $r_{i+1}-r_i$ equal to~$h$.  Put
+\[
+ E_q(H)=\sum_{1\le h\le H}e_q(h).
+\]
+Fibers with $m\le1$ have $E_q(H)=C_p(q)=0$ and may be discarded.
+Every window counted by $C_p(q)$ contains three consecutive fiber edges,
+all of length at most~$H$.  Conversely, one fiber edge belongs to at most
+three sliding four-point windows.  Counting window--edge incidences gives
+\begin{equation}
+ C_p(q)\le E_q(H).
+\label{eq:projective-window-edge-charge}
+\end{equation}
+
+The exact gap criterion, Lemma~\ref{lem:nonvanish}, and
+$\deg N_h=3(h-1)$ give
+\begin{equation}
+ \sum_q e_q(h)
+ \le\#\{0\le x<p-h:N_h(x)=0\}
+ \le3(h-1).
+\label{eq:projective-global-edge-cap}
+\end{equation}
+Here the case $h=1$ follows directly from $N_1=1$.
+Moreover, for each~$q$,
+\begin{equation}
+ \sum_{1\le h\le H}h e_q(h)
+ \le r_m-r_1\le p-1.
+\label{eq:projective-fiber-edge-length}
+\end{equation}
+In particular,
+\begin{equation}
+ \sum_qE_q(H)
+ \le3\sum_{h=1}^H(h-1)
+ =\frac32H(H-1).
+\label{eq:projective-total-short-edges}
+\end{equation}
+
+We use a level-set estimate.  Let
+\[
+ T=\frac{4p}{H},\qquad
+ n(t)=\#\{q:E_q(H)\ge t\}.
+\]
+For $T\le t\le p$, put $L=\lfloor2p/t\rfloor$.
+Then $L\le H/2$.  By~\eqref{eq:projective-fiber-edge-length}, a fiber
+has fewer than
+\[
+ \frac{p-1}{L+1}<\frac t2
+\]
+short edges of length greater than~$L$.  Thus every fiber counted by
+$n(t)$ has more than $t/2$ edges of length at most~$L$.  Summing
+\eqref{eq:projective-global-edge-cap} up to~$L$ yields
+\[
+ \frac t2n(t)
+ \le\frac32L(L-1)
+ \le\frac{6p^2}{t^2},
+ \qquad
+ n(t)\le\frac{12p^2}{t^3}.
+\label{eq:projective-edge-level-set}
+\]
+
+The fibers with $E_q(H)<T$ contribute, by
+\eqref{eq:projective-total-short-edges}, at most
+\[
+ T\sum_qE_q(H)\le6pH
+\]
+to $\sum_qE_q(H)^2$.  Partition the remaining fibers into the dyadic
+classes
+\[
+ 2^jT\le E_q(H)<2^{j+1}T.
+\]
+Using~\eqref{eq:projective-edge-level-set}, their total contribution is
+at most
+\[
+ \sum_{\substack{j\ge0\\2^jT\le p}}
+ (2^{j+1}T)^2n(2^jT)
+ \le48p^2\sum_{j\ge0}\frac1{2^jT}
+ =\frac{96p^2}{T}
+ =24pH.
+\]
+Together with~\eqref{eq:projective-window-edge-charge}, this proves
+\eqref{eq:projective-short-chain-energy}.
+
+Under reflection, $C_p(q)=2\overline C_p(q)$, while the separated energy
+is part of $\sum_q\overline C_p(q)^2$.  This proves the second assertion.
+The last follows by summing $pH\le p^{3/2}$ over the primes in the dyadic
+interval.
+\end{proof}
+
 \begin{corollary}[Distinguished-fiber consequence]
 \label{cor:projective-variance-distinguished}
 Retain the notation and hypotheses of

@@ -412,6 +412,36 @@ $3\sum_{h\le\sqrt p}(h-1)\le3p/2$, this proves
 This improves the raw $X^3/\log X$ degree bound, but remains a factor
 $X^{2/3}$ above the separated-energy budget.
 
+Keeping the two short four-windows gives a better unconditional energy
+bound.  If \(e_q(h)\) counts consecutive fiber edges of length \(h\le H\)
+and \(E_q=\sum_{h\le H}e_q(h)\), then every selected sliding four-window
+charges three edges and every edge is charged at most three times.  Hence
+\(C_p(q)\le E_q\).  The global gap caps and the total length of one fiber
+give
+\[
+ \sum_qe_q(h)\le3(h-1),\qquad
+ \sum_{h\le H}he_q(h)\le p-1.
+\]
+For \(t\ge4p/H\), splitting at \(L=\lfloor2p/t\rfloor\) shows that
+\[
+ \#\{q:E_q\ge t\}\le\frac{12p^2}{t^3}.
+\]
+A dyadic level decomposition then proves
+\[
+ \sum_qC_p(q)^2\le30pH,\qquad
+ E_p^{\rm sep}\le\frac{15}{2}pH.
+\]
+At \(H=\lfloor\sqrt p\rfloor\), this gives the dyadic bound
+\[
+ \sum_{X<p\le2X}E_p^{\rm sep}
+ \ll\frac{X^{5/2}}{\log X}.
+\]
+This is stronger than the three-point \(X^{8/3}/\log X\) majorant, but
+still exceeds the required scale by \(X^{1/2}\).  The proof is in
+projective_variance_reduction.tex.  A direct regression through all
+92 primes \(7\le p\le499\) has fail-closed digest
+0796e0f34777aba4a631767076dbedb71503eef4422e19553ad09e702be6566c.
+
 Direct full-cycle multiplication supplies no further bridge equation.
 For the factorially renormalized solution row
 \(\mathbf v_n=(n!^3u_n,n!^3w_n)\), a return \(N_h(x)=0\) has the exact

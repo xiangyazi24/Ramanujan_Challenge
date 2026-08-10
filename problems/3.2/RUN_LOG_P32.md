@@ -636,6 +636,17 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   `A_nw,p(K)<=6p^(5/3)` and hence the unconditional dyadic bound
   `sum A_nw,p(K)<<X^(8/3)/log X`.  This improves the termwise degree bound
   by `X^(1/3)` but remains `X^(2/3)` above the target.
+- Short-chain energy cap: if `e_q(h)` counts consecutive fiber edges of
+  length at most `H` and `E_q=sum_h e_q(h)`, window--edge charging gives
+  `C_p(q)<=E_q`.  The fixed-gap caps and per-fiber total length imply the
+  level estimate `#{q:E_q>=t}<=12p^2/t^3` for `t>=4p/H`.  Dyadic
+  summation proves `sum_q C_p(q)^2<=30pH` and, after the reflection
+  quotient, `Esep_p<=(15/2)pH`.  At `H=floor(sqrt(p))` this gives the
+  unconditional dyadic bound `sum Esep_p<<X^(5/2)/log X`, still
+  `X^(1/2)` above target.  The proof is in
+  `projective_variance_reduction.tex`; the 92-prime direct regression has
+  SHA-256
+  `0796e0f34777aba4a631767076dbedb71503eef4422e19553ad09e702be6566c`.
 - Full-cycle bridge audit: for a return `N_h(x)=0`, the renormalized row has
   multiplier `mu_h(x)=-(x+1)^6 N_(h-1)(x+1)`.  Reflection gives
   `mu_h(x) mu_h(p-1-x-h)=(-1)^h prod_(j=1)^h(x+j)^6`.  Hence multiplying a
