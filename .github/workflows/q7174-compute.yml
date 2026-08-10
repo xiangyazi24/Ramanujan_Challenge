@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     steps:
       - uses: actions/checkout@v4
       - name: Compile exact scanner
@@ -30,8 +30,8 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          /tmp/q7174_scan --limit 100000 --shard ${{ matrix.shard }} \
-            --shards 8 --threads 2 | tee q7174-shard-${{ matrix.shard }}.txt
+          /tmp/q7174_scan --limit 500000 --shard ${{ matrix.shard }} \
+            --shards 16 --threads 2 | tee q7174-shard-${{ matrix.shard }}.txt
       - name: Hash output
         shell: bash
         run: sha256sum q7174-shard-${{ matrix.shard }}.txt
