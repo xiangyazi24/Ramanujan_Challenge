@@ -396,6 +396,47 @@ the corresponding full-\(\mathbf F_p\) common-root mass.  In particular,
 it can also count nonsplit irreducible factors.  The complete proof is in
 `far_bridge_incidence.tex`.
 
+There is a stronger unconditional bound than the termwise degree estimate.
+For one projective fiber, let $e_h$ count consecutive occurrence gaps of
+length $h$.  Then $e_h\le3(h-1)$ and
+$\sum_h h e_h\le p-1$.  Splitting at $h=p^{1/3}$ gives
+$\max_q|\pi_p^{-1}(q)|\le4p^{2/3}$.  Since the total number of
+same-fiber pairs of gap at most $\sqrt p$ is at most
+$3\sum_{h\le\sqrt p}(h-1)\le3p/2$, this proves
+\[
+ A_p^{\rm nw}(K)\le6p^{5/3},
+ \qquad
+ \sum_{X<p\le2X}A_p^{\rm nw}(K)
+ \ll \frac{X^{8/3}}{\log X}.
+\]
+This improves the raw $X^3/\log X$ degree bound, but remains a factor
+$X^{2/3}$ above the separated-energy budget.
+
+Direct full-cycle multiplication supplies no further bridge equation.
+For the factorially renormalized solution row
+\(\mathbf v_n=(n!^3u_n,n!^3w_n)\), a return \(N_h(x)=0\) has the exact
+affine multiplier
+\[
+ \mathbf v_{x+h}=\mu_h(x)\mathbf v_x,\qquad
+ \mu_h(x)=-(x+1)^6N_{h-1}(x+1).
+\]
+Writing \(x^\vee=p-1-x-h\), reflection and Wilson's theorem give
+\[
+ \mu_h(x)\mu_h(x^\vee)
+ =(-1)^h\left(\prod_{j=1}^h(x+j)\right)^6.
+\]
+Thus the bridge and its reflected bridge multiply to the determinant unit
+already prescribed by the factorial gauge, rather than to a second
+vanishing condition.  The transfer step across \(n=0\) is rank one, so it
+cannot be inverted to turn this identity into a complementary-gap return.
+This rules out the direct reflection/full-cycle rank-amplification attempt;
+it does not rule out an Apéry-specific relation carrying genuinely new
+higher-order data.  The proof is in full_cycle_bridge_reciprocity.tex.
+The independent verifier checks every return for the 24 primes
+\(5\le p\le101\) and all four known return offsets at
+\((p,x)=(1297,360)\); its fail-closed digest is
+4faf19b270b89c14f9e6e584fd2631bd79a242fc65704f902e9dfbcd78f98b07.
+
 The occurrence-list identity makes these majorants directly computable.
 For a fiber \(r_0<\cdots<r_t\), put
 \[

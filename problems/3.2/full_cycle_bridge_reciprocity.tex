@@ -1,0 +1,115 @@
+\begin{proposition}[Reflection reciprocity gives no second bridge condition]
+\label{prop:bridge-reflection-reciprocity}
+Let $p\ge5$ be prime, and let $u,w$ be two $p$-integral solutions of the
+Ap\'ery recurrence whose reductions have nonzero Casoratian.  Put
+\[
+ \mathbf v_n=(n!^3u_n,n!^3w_n)\in\mathbf F_p^2
+ \qquad(0\le n<p).
+\]
+Extend the gap-polynomial convention by $N_0=0$.  For
+$0\le x<x+h<p$, one has
+\begin{equation}
+ \mathbf v_{x+h}
+ =N_h(x)\mathbf v_{x+1}
+  -(x+1)^6N_{h-1}(x+1)\mathbf v_x.
+\label{eq:bridge-return-expansion}
+\end{equation}
+Consequently, if $N_h(x)=0$, then
+\begin{equation}
+ \mathbf v_{x+h}=\mu_h(x)\mathbf v_x,
+ \qquad
+ \mu_h(x)=-(x+1)^6N_{h-1}(x+1)\ne0.
+\label{eq:bridge-return-multiplier}
+\end{equation}
+
+Define
+\[
+ \rho_n=(-1)^{n+1}(n!)^{-6}\in\mathbf F_p^\times.
+\]
+The pointwise reflection theorem gives
+\begin{equation}
+ \mathbf v_{p-1-n}=\rho_n\mathbf v_n.
+\label{eq:bridge-row-reflection}
+\end{equation}
+If $x^\vee=p-1-x-h$ is the start of the reflected interval, then
+$N_h(x^\vee)=0$ and
+\begin{equation}
+ \boxed{
+ \mu_h(x)\mu_h(x^\vee)
+ =\frac{\rho_x}{\rho_{x+h}}
+ =(-1)^h\left(\prod_{j=1}^h(x+j)\right)^6.}
+\label{eq:bridge-multiplier-reciprocity}
+\end{equation}
+In particular, multiplying a bridge transfer by its reflected bridge
+transfer produces a prescribed unit, not an additional vanishing
+condition.
+\end{proposition}
+
+\begin{proof}
+After the factorial renormalization, each coordinate of $\mathbf v_n$
+satisfies
+\[
+ \mathbf v_{n+1}=P(n)\mathbf v_n-n^6\mathbf v_{n-1}.
+\]
+Equation~\eqref{eq:bridge-return-expansion} follows by induction from this
+recurrence and the defining recurrence for $N_h$.  The cases $h=1,2$ are
+immediate from $N_0=0$, $N_1=1$, and $N_2(x)=P(x+1)$; the induction step
+uses
+\[
+ N_{h+1}(x)=P(x+h)N_h(x)-(x+h)^6N_{h-1}(x)
+\]
+for the coefficient of $\mathbf v_{x+1}$, and the same identity with
+$x$ replaced by $x+1$ for the coefficient of $\mathbf v_x$.
+If $N_h(x)=0$, this proves~\eqref{eq:bridge-return-multiplier}.
+The multiplier is nonzero because the Casoratian of the two solutions is
+nonzero throughout the nonwrapping range, so the row $\mathbf v_{x+h}$
+cannot vanish.
+
+Proposition~\ref{prop:reflection} gives
+$u_{p-1-n}=u_n$ and $w_{p-1-n}=w_n$.  Wilson's theorem gives
+\[
+ (p-1-n)!\,n!\equiv(-1)^{n+1}\pmod p,
+\]
+which proves~\eqref{eq:bridge-row-reflection} after cubing and comparing
+with the normalization of $\mathbf v_n$.
+
+Write $y=x+h$.  Reflection of
+$\mathbf v_y=\mu_h(x)\mathbf v_x$ gives
+\[
+ \mathbf v_{p-1-y}=\rho_y\mu_h(x)\mathbf v_x,
+ \qquad
+ \mathbf v_{p-1-x}=\rho_x\mathbf v_x.
+\]
+The reflected interval runs from $x^\vee=p-1-y$ to
+$x^\vee+h=p-1-x$, so its return multiplier satisfies
+\[
+ \rho_x\mathbf v_x
+ =\mu_h(x^\vee)\rho_y\mu_h(x)\mathbf v_x.
+\]
+Cancelling the nonzero row and the units proves the first equality in
+\eqref{eq:bridge-multiplier-reciprocity}.  The second follows directly
+from the displayed formula for~$\rho_n$.
+\end{proof}
+
+\begin{remark}[Full-cycle multiplication is tautological]
+\label{rem:bridge-full-cycle-tautology}
+For two separated reflection orbits of short return chains, the bridge from
+the first chain to the second and the bridge from the reflected second chain
+to the reflected first chain form a reflected pair.  Formula
+\eqref{eq:bridge-multiplier-reciprocity} shows that their multipliers
+cancel up to the determinant unit already forced by the factorial gauge.
+The connections pairing either chain with its reflected copy are themselves
+instances of~\eqref{eq:bridge-row-reflection}.  If one writes a full-period
+factorization, the remaining step crosses the singular index~$0$ and is
+rank one; it cannot be inverted to manufacture another condition.  Direct
+substitution therefore recovers the pointwise reflection identity.  It
+neither removes the bridge length nor supplies a new zero congruence or a
+new Sylvester-nullity factor.
+
+Retaining the short span at both ends still yields the aligned determinant
+formed from three polynomials in the long-bridge reduction; that
+legitimate construction lowers the height for one fixed bridge label but
+continues to depend on that label.  Reflection reciprocity offers only an
+absolute-factor duplication and therefore cannot supply the missing
+power-of-$X$ saving in the far-bridge sum.
+\end{remark}

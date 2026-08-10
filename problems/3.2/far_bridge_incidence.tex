@@ -48,8 +48,8 @@ $z_3-z_0\le H_p$.  Finally, define the nonwrapping triple incidence
  A_p^{\mathrm{nw}}(K)=
  \#\left\{(x,y,z):
  \begin{array}{c}
- 0\le x<y<z<p,\quad 2\le y-x\le H_p,\quad z-y>K,\\
- \pi_p(x)=\pi_p(y)=\pi_p(z)
+ 0\le x<y<z<p,\quad 2\le y-x\le H_p,\\
+ z-y>K,\quad \pi_p(x)=\pi_p(y)=\pi_p(z)
  \end{array}
  \right\}.
 \]
@@ -167,6 +167,65 @@ bound for the corresponding summand in
 proposition.
 \end{proof}
 
+\begin{lemma}[Uniform projective-fiber cap]
+\label{lem:far-projective-fiber-cap}
+For every prime $p\ge5$ and every
+$q\in\mathbf P^1(\mathbf F_p)$,
+\[
+ m_p(q):=\#\{0\le n<p:\pi_p(n)=q\}\le4p^{2/3}.
+\]
+Consequently, uniformly in~$K$,
+\begin{equation}
+ A_p^{\mathrm{nw}}(K)\le6p^{5/3}.
+\label{eq:far-fiber-cap-incidence}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For $p=5$, the first conclusion follows from $m_p(q)\le p$.
+The second follows from
+$A_p^{\mathrm{nw}}(K)\le\binom p3$.
+Hence assume $p\ge7$.
+
+Write the occurrence list of~$q$ as
+$r_1<\cdots<r_m$, and let $e_h$ be the number of its consecutive gaps
+$r_{i+1}-r_i$ that equal~$h$.  The exact gap criterion and the
+nonvanishing of~$N_h$ modulo~$p$ give
+\[
+ e_h\le\#\{0\le x<p-h:N_h(x)=0\}\le3(h-1).
+\]
+Moreover,
+\[
+ \sum_{h=1}^{p-1}e_h=m-1,
+ \qquad
+ \sum_{h=1}^{p-1}he_h=r_m-r_1\le p-1.
+\]
+Put $T=\lfloor p^{1/3}\rfloor$.  Splitting the gaps at~$T$ gives
+\[
+ \begin{split}
+ m-1
+ &\le \sum_{h\le T}3(h-1)
+      +\frac1{T+1}\sum_{h>T}he_h\\
+ &\le\frac32T(T-1)+\frac{p-1}{T+1}
+ <\frac52p^{2/3}.
+ \end{split}
+\]
+The stated bound follows.
+
+The number of pairs $x<y$ in a common projective fiber with
+$y-x\le H_p$ is at most
+\[
+ \sum_{h=2}^{H_p}\#\{0\le x<p-h:N_h(x)=0\}
+ \le3\sum_{h=2}^{H_p}(h-1)
+ \le\frac32p.
+\]
+After such a pair is fixed, there are at most
+$\max_q m_p(q)\le4p^{2/3}$ possible later points in its fiber.  Dropping
+the lower bound on the second gap can only enlarge
+$A_p^{\mathrm{nw}}(K)$, and proves
+\eqref{eq:far-fiber-cap-incidence}.
+\end{proof}
+
 \begin{remark}[Scale of the remaining arithmetic input]
 By Lemma~\ref{lem:nonvanish}, for $s,G<p$ neither gap polynomial vanishes
 identically modulo~$p$.  The actual common-root count is at most the degree
@@ -178,7 +237,14 @@ the elementary degree estimate gives only
 \]
 After summing over $X<p\le2X$, this is
 $O(X^3/\log X)$, one full power of~$X$ above the required separated-energy
-budget.  Thus~\eqref{eq:far-incidence-hierarchy} is useful only together
-with an average arithmetic estimate for the actual affine roots, or with
-the sharper conditioning retained in~$B_p(K)$.
+budget.  Lemma~\ref{lem:far-projective-fiber-cap} improves this elementary
+estimate to
+\[
+ \sum_{X<p\le2X}A_p^{\mathrm{nw}}(K)
+ \ll\frac{X^{8/3}}{\log X}.
+\]
+This remains a factor $X^{2/3}$ above the target.  Thus
+\eqref{eq:far-incidence-hierarchy} still requires an average arithmetic
+estimate for the actual affine roots, or the sharper conditioning retained
+in~$B_p^{[4]}(K)$.
 \end{remark}

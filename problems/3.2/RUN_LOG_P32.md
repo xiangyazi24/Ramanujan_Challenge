@@ -629,6 +629,24 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   by full-`F_p` common roots.  A polynomial gcd degree is not the observable,
   because nonsplit irreducible factors contribute to the degree but no
   `F_p` root.
+- Uniform fiber cap: if `e_h` counts consecutive gaps of length `h` in one
+  projective fiber, then `e_h<=3(h-1)` and `sum h e_h<=p-1`.  Splitting at
+  `p^(1/3)` gives `max_q |pi_p^(-1)(q)|<=4p^(2/3)`.  Combining this with
+  the at most `3p/2` same-fiber pairs of gap at most `sqrt(p)` proves
+  `A_nw,p(K)<=6p^(5/3)` and hence the unconditional dyadic bound
+  `sum A_nw,p(K)<<X^(8/3)/log X`.  This improves the termwise degree bound
+  by `X^(1/3)` but remains `X^(2/3)` above the target.
+- Full-cycle bridge audit: for a return `N_h(x)=0`, the renormalized row has
+  multiplier `mu_h(x)=-(x+1)^6 N_(h-1)(x+1)`.  Reflection gives
+  `mu_h(x) mu_h(p-1-x-h)=(-1)^h prod_(j=1)^h(x+j)^6`.  Hence multiplying a
+  bridge by its reflected bridge recovers a prescribed unit, not an
+  independent zero condition; the rank-one transfer step at `n=0` prevents
+  inversion across the period boundary.  This is a no-go only for the direct
+  reflection/full-cycle construction.  The proof is in
+  `full_cycle_bridge_reciprocity.tex`.  The verifier checks all returns for
+  the 24 primes through `101` and the four known offsets at `(1297,360)`;
+  SHA-256
+  `4faf19b270b89c14f9e6e584fd2631bd79a242fc65704f902e9dfbcd78f98b07`.
 - Exact long-bridge census: `long_bridge_incidence_scan.cpp` groups the
   projective orbit by state and counts the occurrence-list formula directly.
   For `X=1000,5000,10000,20000,50000,100000`, the far nonwrapping masses are
