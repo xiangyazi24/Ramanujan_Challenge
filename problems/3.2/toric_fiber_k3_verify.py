@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Exact finite-field checks for toric_fiber_k3.tex."""
 
+from fractions import Fraction
 from itertools import product
 from math import comb
 
@@ -187,6 +188,113 @@ def matrix_rank(matrix, prime: int) -> int:
     return rank
 
 
+def rational_rank(matrix) -> int:
+    work = [[Fraction(entry) for entry in row] for row in matrix]
+    rank = 0
+    if not work:
+        return 0
+    for column in range(len(work[0])):
+        pivot = next(
+            (row for row in range(rank, len(work)) if work[row][column]),
+            None,
+        )
+        if pivot is None:
+            continue
+        work[rank], work[pivot] = work[pivot], work[rank]
+        pivot_value = work[rank][column]
+        work[rank] = [entry / pivot_value for entry in work[rank]]
+        for row in range(len(work)):
+            if row == rank or not work[row][column]:
+                continue
+            multiplier = work[row][column]
+            work[row] = [
+                entry - multiplier * pivot_entry
+                for entry, pivot_entry in zip(work[row], work[rank])
+            ]
+        rank += 1
+    return rank
+
+
+def rational_determinant(matrix) -> Fraction:
+    assert matrix and len(matrix) == len(matrix[0])
+    work = [[Fraction(entry) for entry in row] for row in matrix]
+    determinant = Fraction(1)
+    for column in range(len(work)):
+        pivot = next(
+            (row for row in range(column, len(work)) if work[row][column]),
+            None,
+        )
+        if pivot is None:
+            return Fraction(0)
+        if pivot != column:
+            work[column], work[pivot] = work[pivot], work[column]
+            determinant = -determinant
+        pivot_value = work[column][column]
+        determinant *= pivot_value
+        for row in range(column + 1, len(work)):
+            if not work[row][column]:
+                continue
+            multiplier = work[row][column] / pivot_value
+            for entry in range(column, len(work)):
+                work[row][entry] -= multiplier * work[column][entry]
+    return determinant
+
+
+def principal_submatrix(matrix, indices):
+    return [[matrix[row][column] for column in indices] for row in indices]
+
+
+def boundary_resolution_matrix(central_a2: bool, open_a1: bool):
+    """Gram matrix of all boundary and ADE curves in the stated ordering."""
+
+    # C_1,...,C_16; E_1,...,E_4; F_1,F_2; G_1,G_2;
+    # then one central A_1 or two central A_2 curves; finally the open A_1.
+    size = 16 + 4 + 4 + (2 if central_a2 else 1) + int(open_a1)
+    matrix = [[0] * size for _ in range(size)]
+    for index in range(size):
+        matrix[index][index] = -2
+
+    def edge(left: int, right: int) -> None:
+        assert left != right
+        matrix[left][right] += 1
+        matrix[right][left] += 1
+
+    for left, right in (
+        (3, 7), (2, 6), (3, 4), (4, 15), (1, 12), (7, 8),
+        (8, 13), (11, 14), (12, 13), (5, 10), (9, 16),
+        (10, 15), (9, 11), (10, 12),
+    ):
+        edge(left - 1, right - 1)
+
+    for exceptional, components in zip(
+        range(16, 20),
+        ((2, 4, 16), (1, 2), (6, 8, 14), (5, 6)),
+    ):
+        for component in components:
+            edge(exceptional, component - 1)
+
+    for first, second, first_components, second_components in (
+        (20, 21, (1, 11), (3,)),
+        (22, 23, (5, 9), (7,)),
+    ):
+        edge(first, second)
+        for component in first_components:
+            edge(first, component - 1)
+        for component in second_components:
+            edge(second, component - 1)
+
+    if central_a2:
+        edge(24, 25)
+        for component in (13, 16):
+            edge(24, component - 1)
+        for component in (14, 15):
+            edge(25, component - 1)
+    else:
+        for component in (13, 14, 15, 16):
+            edge(24, component - 1)
+    return matrix
+
+
 def hessian_rank(polynomial, prime: int) -> int:
     coefficient = lambda degree: polynomial.get(degree, 0)
     hessian = [
@@ -243,10 +351,43 @@ def point(value, prime: int):
 
 
 def main() -> None:
+    lattice_checks = 0
     boundary_checks = 0
     fiber_checks = 0
     singularity_checks = 0
     trace_checks = 0
+
+    basis = list(range(12)) + [13, 15] + list(range(16, 21))
+    assert len(basis) == 19
+
+    generic_matrix = boundary_resolution_matrix(False, False)
+    assert rational_rank(generic_matrix) == 19
+    assert rational_determinant(
+        principal_submatrix(generic_matrix, basis)
+    ) == 48
+    lattice_checks += 1
+
+    central_a2_matrix = boundary_resolution_matrix(True, False)
+    assert rational_rank(central_a2_matrix) == 20
+    assert rational_determinant(
+        principal_submatrix(central_a2_matrix, basis + [24])
+    ) == -32
+    lattice_checks += 1
+
+    open_a1_matrix = boundary_resolution_matrix(False, True)
+    assert rational_rank(open_a1_matrix) == 20
+    assert rational_determinant(
+        principal_submatrix(open_a1_matrix, basis + [25])
+    ) == -96
+    lattice_checks += 1
+
+    expected_boundary_intersections = {
+        (3, 7), (2, 6), (3, 4), (4, 15), (2, 4, 16),
+        (1, 3, 11), (1, 12), (1, 2), (7, 8), (8, 13),
+        (6, 8, 14), (13, 14, 15, 16), (11, 14), (12, 13),
+        (5, 7, 9), (5, 10), (5, 6), (9, 16), (10, 15),
+        (9, 11), (10, 12),
+    }
 
     for prime in primes_through(23):
         if prime < 5:
@@ -255,17 +396,27 @@ def main() -> None:
         multiplicities = {}
         component_sizes = [0] * 16
         boundary = set()
+        boundary_intersections = set()
         for u, v, w in product(line, repeat=3):
             memberships = boundary_memberships(u, v, w, prime)
             multiplicity = sum(memberships)
             if multiplicity:
                 boundary.add((u, v, w))
+                if multiplicity >= 2:
+                    boundary_intersections.add(
+                        tuple(
+                            index + 1
+                            for index, belongs in enumerate(memberships)
+                            if belongs
+                        )
+                    )
                 multiplicities[multiplicity] = (
                     multiplicities.get(multiplicity, 0) + 1
                 )
                 for index, belongs in enumerate(memberships):
                     component_sizes[index] += int(belongs)
         assert component_sizes == [prime + 1] * 16
+        assert boundary_intersections == expected_boundary_intersections
         assert multiplicities == {
             1: 16 * prime - 32,
             2: 16,
@@ -359,10 +510,17 @@ def main() -> None:
                 trace - (21 + epsilon + delta) * prime + 8
             )
             assert abs(trace) <= 22 * prime
-            deflated_trace = trace - (12 + epsilon + delta) * prime
-            assert character_sum == deflated_trace - 9 * prime + 8
-            assert abs(deflated_trace) <= (10 - epsilon - delta) * prime
-            assert abs(character_sum) <= 19 * prime + 8
+            transcendental_trace = (
+                trace - (19 + epsilon + delta) * prime
+            )
+            assert open_count == (
+                prime * prime - 6 * prime + 12 + transcendental_trace
+            )
+            assert character_sum == transcendental_trace - 2 * prime + 8
+            assert abs(transcendental_trace) <= (
+                3 - epsilon - delta
+            ) * prime
+            assert abs(character_sum) <= (5 - epsilon - delta) * prime + 8
             assert not (epsilon and delta)
             trace_checks += 1
 
@@ -370,6 +528,7 @@ def main() -> None:
             assert direct[parameter] == direct[pow(parameter, prime - 2, prime)]
 
     print("toric_fiber_k3_verify: PASS")
+    print(f"lattice_checks={lattice_checks}")
     print(f"boundary_checks={boundary_checks}")
     print(f"fiber_checks={fiber_checks}")
     print(f"singularity_checks={singularity_checks}")

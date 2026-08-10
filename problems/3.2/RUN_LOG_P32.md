@@ -830,23 +830,25 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   `4bac89d1f73a192f727f2d9b65c3120df22f434e490e091a584aabf08873b95a`.
   The independent tmux-11 six-point audit also passes.
 - K3 fiber collapse: the nonzero toric fiber compactifies to an explicit
-  anticanonical `(2,2,2)` surface in `(P1)^3`.  Its 16 boundary lines have
+  anticanonical `(2,2,2)` surface in `(P1)^3`.  Its 16 boundary curves have
   `16p-11` rational points.  The fixed singularity ledger is `4 A1 + 2 A2`
   plus a central `A1` (`A2` at `a=1`), with one further `A1` iff
   `a^2-34a+1=0`; every ADE configuration is split.  After resolution,
   `#Xtilde=#X+(9+epsilon_a+delta_a)p`, and the quadratic character sum is
-  exactly `tau_p(a)-(21+epsilon_a+delta_a)p+8`.  The three ambient ruling
-  classes and the split exceptional root lattice remove
-  `12+epsilon_a+delta_a` explicit eigenvalues `p`; the remaining trace has
-  dimension `10-epsilon_a-delta_a`, and the sum becomes `sigma_p(a)-9p+8`.
-  This gives the uniform bound `19p+8`, rather than the termwise
+  exactly `tau_p(a)-(21+epsilon_a+delta_a)p+8`.  The strict transforms of
+  the boundary and split exceptional curves have exact nonzero Gram minors
+  `48`, `-32`, and `-96`, giving a split algebraic subspace of rank
+  `19+epsilon_a+delta_a`.  Its complement has dimension
+  `3-epsilon_a-delta_a`; writing its trace as `theta_p(a)` gives
+  `mu_p(a)=p^2-6p+12+theta_p(a)` and character sum
+  `theta_p(a)-2p+8`.  This gives the uniform bound `5p+8`, rather than the termwise
   `O(p^(3/2))` bound.  It remains a
   pointwise fiber theorem and gives no defining-characteristic Mellin
-  anti-concentration by itself.  `toric_fiber_k3_verify.py` passes 7
-  boundary ledgers, 88 complete fibers, 622 singularity classifications,
-  and 88 trace formulas; SHA-256
-  `8323863e48796d10195bcc48bdf0847823e6e3b1665d927d1027a2461d2ae8c7`.
-  A temporary full-paper build produced 219 pages, and the independent
+  anti-concentration by itself.  `toric_fiber_k3_verify.py` passes 3 exact
+  lattice, 7 boundary, 88 complete-fiber, 622 singularity, and 88 trace
+  checks; SHA-256
+  `09ef179d2343166323b21c1365db6765dfd9058489aa266c38c456c33a1bf169`.
+  A temporary full-paper build produced 217 pages, and the independent
   tmux-11 seven-point audit found no issue.
 - end: pending
 - final result: pending

@@ -796,21 +796,26 @@ then the character sum in the quadratic fiber formula is exactly
 \[
  \tau_p(a)-(21+\varepsilon_a+\delta_a)p+8.
 \]
-The three ambient ruling classes and the full split exceptional root lattice
-form a nondegenerate Frobenius-fixed subspace of rank
-\(12+\varepsilon_a+\delta_a\).  Removing it leaves a weight-two trace
-\(\sigma_p(a)\) of dimension \(10-\varepsilon_a-\delta_a\), and the same sum
-is
+The strict transforms of the sixteen boundary curves together with the
+split ADE exceptional curves have an explicit intersection graph.  A
+nineteen-class principal minor has determinant \(48\); adjoining one central
+\(A_2\) component at \(a=1\), or the open exceptional curve when
+\(a^2-34a+1=0\), gives determinants \(-32\) and \(-96\), respectively.
+Thus they contain a nondegenerate Frobenius-fixed subspace of rank
+\(19+\varepsilon_a+\delta_a\).  Removing it leaves a weight-two trace
+\(\theta_p(a)\) of dimension \(3-\varepsilon_a-\delta_a\), and
 \[
- \sigma_p(a)-9p+8.
+ \mu_p(a)=p^2-6p+12+\theta_p(a),\qquad
+ \mu_p(a)-(p-2)^2=\theta_p(a)-2p+8.
 \]
-Deligne therefore gives the uniform bound \(19p+8\), improving the termwise
+Deligne therefore gives the uniform bound \(5p+8\), improving the termwise
 elliptic bound \(O(p^{3/2})\) to \(O(p)\).  This still does not control the vanishing
 defining-characteristic Mellin coefficients: pointwise trace bounds allow
 exact cancellation modulo \(p\).  The full compactification and correction
 ledger are in `toric_fiber_k3.tex`; the standard-library verifier checks all
-fibers and singularities for the 88 pairs \((p,a)\) with \(5\le p\le23\).
-The full-paper compile and two independent seven-point audits pass.
+fibers and singularities for the 88 pairs \((p,a)\) with \(5\le p\le23\),
+as well as the three exact lattice minors.  The full-paper compile and the
+independent tmux-11 seven-point audit pass.
 
 The optimized exact census in
 \`primitive_projective_prime_scan.cpp\` groups both raw and

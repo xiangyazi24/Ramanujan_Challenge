@@ -28,13 +28,15 @@ Equivalently, the character sum in
  \tau_p(a)-(21+\varepsilon_a+\delta_a)p+8.}
  \label{eq:toric-K3-character-sum}
 \end{equation}
-More precisely, there is a weight-two Frobenius trace $\sigma_p(a)$ of
-dimension $10-\varepsilon_a-\delta_a$ for which the same character sum is
+More precisely, there is a weight-two Frobenius trace $\theta_p(a)$ of
+dimension $3-\varepsilon_a-\delta_a$ for which
 \begin{equation}
- \boxed{\sigma_p(a)-9p+8.}
+ \boxed{
+  \mu_p(a)=p^2-6p+12+\theta_p(a),\qquad
+  \mu_p(a)-(p-2)^2=\theta_p(a)-2p+8.}
  \label{eq:toric-K3-deflated-trace}
 \end{equation}
-Consequently its absolute value is at most $19p+8$, uniformly in
+Consequently the character sum has absolute value at most $5p+8$, uniformly in
 $a\in\mathbb F_p^\times$.
 \end{theorem}
 
@@ -182,31 +184,70 @@ Combining this identity with~\eqref{eq:toric-K3-boundary-count} and
 $(p-2)^2$ in~\eqref{eq:toric-fiber-quadratic} proves
 \eqref{eq:toric-K3-character-sum}.
 
-There is a useful unconditional deflation inside $H^2$.  Let
-$L_1,L_2,L_3$ be the pullbacks of the three ruling classes of
-$(\mathbb P^1)^3$.  Their intersection matrix on $\widetilde X_a$ is
+We now use the boundary configuration to deflate all but three of the
+generic cohomology classes.  Number the curves in
+\eqref{eq:toric-K3-boundary-curves} as $C_1,\ldots,C_{16}$ in the displayed
+order, and write $\widetilde C_i$ for their strict transforms.  Each
+$\widetilde C_i$ is a smooth rational curve, hence has self-intersection
+$-2$.  Away from the rational double points, the nonzero pairwise
+intersections are the fourteen transverse pairs
+\begin{equation}
+\begin{gathered}
+ (3,7),\ (2,6),\ (3,4),\ (4,15),\ (1,12),\ (7,8),\ (8,13),\\
+ (11,14),\ (12,13),\ (5,10),\ (9,16),\ (10,15),\ (9,11),\ (10,12),
+\end{gathered}
+\label{eq:toric-K3-smooth-intersection-edges}
+\end{equation}
+where, for example, $(3,7)$ denotes the edge
+$\widetilde C_3\mathbin{-}\widetilde C_7$.
+
+The resolution graph at the four fixed $A_1$ points has exceptional curves
+$E_1,\ldots,E_4$ attached respectively to
+\begin{equation}
+ \{C_2,C_4,C_{16}\},\quad \{C_1,C_2\},\quad
+ \{C_6,C_8,C_{14}\},\quad \{C_5,C_6\}.
+ \label{eq:toric-K3-A1-attachments}
+\end{equation}
+At $(0,\infty,0)$ the $A_2$ chain $F_1-F_2$ has $F_1$ attached to
+$C_1,C_{11}$ and $F_2$ attached to~$C_3$; at
+$(\infty,0,0)$ the chain $G_1-G_2$ has $G_1$ attached to $C_5,C_9$ and
+$G_2$ attached to~$C_7$.  For $a\ne1$, the central exceptional curve is
+attached to $C_{13},C_{14},C_{15},C_{16}$.  For $a=1$, it is replaced by
+an $A_2$ chain $J_1-J_2$, where $J_1$ is attached to $C_{13},C_{16}$ and
+$J_2$ to $C_{14},C_{15}$.  The extra $A_1$ exceptional curve when
+$a^2-34a+1=0$ is disjoint from this boundary configuration.  These
+attachments follow by blowing up the quadratic tangent cones displayed
+above.  For instance, at $(0,\infty,0)$ the two exceptional lines are the
+two factors of $s(at-r)$; the tangent directions of $C_1,C_{11}$ lie on
+$s=0$, whereas that of $C_3$ lies on $at-r=0$.  The other cases are
+symmetric, and at $a=1$ the central tangent cone is
+$-(r+t)(s+t)$.
+
+This explicit graph already contains a nondegenerate lattice of the needed
+rank.  Indeed, put
 \[
- \begin{pmatrix}0&2&2\\2&0&2\\2&2&0\end{pmatrix},
+ \mathcal B=\{\widetilde C_1,\ldots,\widetilde C_{12},
+ \widetilde C_{14},\widetilde C_{16},E_1,E_2,E_3,E_4,F_1\}.
 \]
-of determinant~$16$, so they span a nondegenerate three-dimensional
-subspace on which Frobenius acts by~$p$.  The split exceptional curves span
-the nondegenerate root lattice
+Using diagonal entries $-2$ and the edges just listed, its $19\times19$
+Gram determinant is~$48$.  If $a=1$, the Gram determinant of
+$\mathcal B\cup\{J_1\}$ is $-32$; if
+$a^2-34a+1=0$, adjoining the open exceptional curve gives determinant
+$-96$.  Thus the divisor classes contain a nondegenerate, Frobenius-stable
+subspace of dimension $19+\varepsilon_a+\delta_a$.  Every curve in the
+chosen basis is defined over $\mathbb F_p$, so Frobenius acts on this
+subspace by~$p$.
+
+Let $\theta_p(a)$ be the Frobenius trace on its orthogonal complement in
+$H^2$.  The complement has dimension $3-\varepsilon_a-\delta_a$, and the
+Weil bound gives
 \[
- A_1^4\oplus A_2^2\oplus A_{1+\varepsilon_a}
- \oplus A_1^{\delta_a},
-\]
-of rank $9+\varepsilon_a+\delta_a$.  This lattice is orthogonal to the
-ruling classes by the projection formula.  Its Frobenius eigenvalues are
-also all~$p$.  The orthogonal complement therefore has dimension
-$10-\varepsilon_a-\delta_a$; define $\sigma_p(a)$ to be its Frobenius
-trace.  Then
-\[
- \tau_p(a)=(12+\varepsilon_a+\delta_a)p+\sigma_p(a),
+ \tau_p(a)=(19+\varepsilon_a+\delta_a)p+\theta_p(a),
  \qquad
- |\sigma_p(a)|\leq(10-\varepsilon_a-\delta_a)p.
+ |\theta_p(a)|\leq(3-\varepsilon_a-\delta_a)p.
 \]
 Substitution proves~\eqref{eq:toric-K3-deflated-trace} and the uniform bound
-$19p+8$.  Finally, $a=1$ cannot also satisfy
+$5p+8$.  Finally, $a=1$ cannot also satisfy
 $a^2-34a+1=0$ because the latter value is $-32\ne0$ for $p\geq5$.
 \end{proof}
 
@@ -214,7 +255,8 @@ $a^2-34a+1=0$ because the latter value is $-32\ne0$ for $p\geq5$.
 anti-concentration]
 \label{rem:toric-K3-Mellin-limit}
 Theorem~\ref{thm:toric-fiber-K3} improves the elementary termwise Weil
-bound for~\eqref{eq:toric-fiber-quadratic} from $O(p^{3/2})$ to $O(p)$.
+bound for~\eqref{eq:toric-fiber-quadratic} from $O(p^{3/2})$ to the explicit
+bound $5p+8$.
 It does not bound the number of vanishing Ap\'ery coefficients.  Indeed,
 for $1\leq j\leq p-2$,
 \[
