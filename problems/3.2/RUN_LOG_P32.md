@@ -293,8 +293,107 @@ GM-small hits mirror wall (growing state space).
 - coordination: tmux 11 is retained as an independent worker; ChatGPT bridge
   channels are to be kept occupied by tactical and strategic audits while the
   local exact computation proceeds
-- end: pending
-- final result: pending
+- end: 2026-08-09 23:52 CDT
+- final result: the normalization-length formula, fully deflated certificate,
+  and the conditional implications under FDAC-tr, SWR, and QPRS are proved.
+  Exact audits close the formal computations through height 36, span 84,
+  actual primes five million, and projective primes 500,000.  The formal
+  census disproves QPRS with `C=2` but not QPRS with an unspecified constant;
+  its random-fiber growth makes distinguished-orbit/SWR coupling the remaining
+  primary input.  No unconditional square-root average is claimed.
+
+### Breakthrough-run milestones (20:17 continuation)
+
+- Proved the exact local normalization formula
+  `v(cont_T Res(F,G+TJ)) = sum m_i length(O_i/(G(alpha_i),J(alpha_i)))`
+  over a complete characteristic-zero DVR with perfect residue field and
+  unit leading coefficient.
+  The invariant is a length on the normalization, not generally on the
+  order `R[x]/(F)`; the discrepancy is verified by
+  `F=x^2-pi^2, G=x-pi, J=x+pi`.
+- Added the fully deflated adjacent pencil and conditional hypothesis
+  FDAC-tr.  Every selected actual quadruple survives all three deflations
+  except those containing the globally unique centered adjacent pair, so
+  the total loss is at most three.  The adaptive-level proof gives the same
+  conditional `sum Z(p) << X^(3/2+o(1))` conclusion as AC-tr.
+- Exact `ZZ[T]` computation through ambient height 32: thirteen nontrivial
+  reduced contents, supported only at 157, 431, and 653; mass/H^3 is
+  `0.002569880`, digest
+  `437f7328a4ea7d78a62b3e781165a76a31f277f7ec6983f9f6c3a4e67ee05efa`.
+  The value 24649 in one record is `157^2`, not a new prime.
+- The complete extension through height 36 has nineteen nontrivial records,
+  support `{157,431,499,653,1297}`, mass/H^3 `0.002595232`, and digest
+  `196327788a7ea9adbbb141a5c6161ae96125ea5b8242bc6603352080b32aac76`.
+  Independent finite-field reconstruction classifies the p=431, p=499,
+  p=157, and p=1297 reflected pairs as primitive phantoms; every other record
+  is a skipped chain whose full return list contains a centered adjacent pair.
+- Exact finite-field classification through height 36: among the nine
+  endpoint-gcd candidates with `p>(a+b+c)^2`, three are endpoint false
+  positives, four are nonprimitive, and two are primitive phantoms.  The new
+  reflected phantom pair is `(5,20,10,p,r)=(5,20,10,1297,360)` and
+  `(10,20,5,1297,901)`; its span is 35, but the independently checked actual
+  zero set is `Z_1297=(459,530,766,837)`.  No short candidate is an actual
+  Apéry-zero start.  Some p=653 nonprimitive roots are also in the short
+  range, so both primitivity and distinguished-orbit coupling are essential.
+- The extended 350104-pair census through p<=5,000,000 contains 43366
+  sliding actual-zero quadruples and 1418 off-center windows, but no
+  off-center window of span at most sqrt(p).  Its SHA-256 is
+  `5739c6e7fee4210678bc50bdda7d0a7c2f9fa082ab392e050556ebdc62ecac8b`;
+  a second fail-closed run with that expected digest passed.  The closest
+  scale and first unrestricted example remain p=3727, with exact
+  `span^2/p=1428025/3727`.
+- Isolated the short-window reflection hypothesis (SWR).  It suffices that
+  the reflection statement hold below `eta sqrt(p)` for any one fixed
+  `eta>0`; the empirical `eta=1` version is stronger than necessary.
+  Unconditionally,
+  `Z(p)<3 eta^(-1)sqrt(p)+6+E_sw(p;eta)`.  Under SWR, blocks of size
+  `floor(eta sqrt(p))+1` give
+  `Z(p)<=3 ceil(p/(floor(eta sqrt(p))+1))+3
+       <3 eta^(-1)sqrt(p)+6`,
+  and hence the desired prime-window average.  ChatGPT Q7139 independently
+  verified the `eta=1` ceiling and block-consecutiveness steps; the same
+  calculation is uniform in every fixed `eta`.
+- Isolated the alternative quadratic primitive-return support hypothesis
+  QPRS: outside `U_s`, every primitive off-center four-return chain with a
+  non-all-equal gap vector need only satisfy `p<=C s^2` for some absolute
+  `C`.  Taking the low
+  zero-count cutoff
+  `K sqrt(X)` with `K>>sqrt(C)` makes `C H^2<X<p` on every higher adaptive
+  level, so no generic selected quadruple survives; the structural primes are
+  absorbed by the existing `O(H^2/log X)` exceptional count.  This gives a
+  complete conditional square-root average without any content-mass
+  hypothesis.  This implication remains correct for any fixed `C`; the
+  computations below concern the plausibility of the hypothesis itself.
+- Exact endpoint scans verify QPRS with `C=2` for every non-all-equal gap
+  triple of span at most 84.  The incremental block digests for maxima
+  40,44,52,60,68,76,84 are hard-coded fail-closed in
+  `primitive_fd_candidate_verify.py`.  Beyond span 36 the tested cases are
+  five endpoint false positives, eight p=8941 nonprimitive roots, and the
+  primitive phantom pair `(3,40,31,p,x)=(3,40,31,7411,4681)` and
+  `(31,40,3,7411,2655)`.  Its ratio is exactly `7411/74^2`, and the
+  independent recurrence check gives `Z_7411=empty`.
+- Added a direct prime-first projective-orbit scanner and an independent
+  standard-library verifier.  The exact scan of every prime `7<=p<=500000`
+  and every projective fiber examines 13,695,120 carrier-free primitive
+  off-center windows: 20 have `p>s^2`, four have `p>2s^2`, and all are
+  phantoms.  The maximum is `128047/164^2=4.760819...`, at
+  `(p,x;a,b,c)=(128047,42375;41,86,37)` and its reflection.  The scan-output
+  SHA-256 is
+  `8eeb4d6d4a6f371d8f8d87facadff137f66dfa476a28db1a3af8892625032bf9`.
+  Thus `C=2` is false, although no finite scan disproves existence of some
+  absolute QPRS constant.  The random-fiber estimate `s^3/p^2` per prime
+  predicts cumulative size `sqrt(P)/(C^(3/2) log P)` at
+  `s=sqrt(p/C)`, so QPRS is now secondary to distinguished-orbit/SWR input.
+- Generic product-formula/Fitting summation and generic codegree/KST routes
+  are terminal: direct-sum heights retain all labelled triples, and even
+  codegree one permits quadratic deep energy in the affine-plane abstract
+  obstruction.  Only an Apéry-specific weighted split-gcd estimate remains
+  live on that branch.
+- The fully deflated height-36 audit, endpoint scan through span 84,
+  actual-zero census through five million, and formal prime-first census
+  through 500,000 are complete.  The active target is SWR or an equivalent
+  distinguished-orbit coupling; QPRS is retained only as a proved
+  conditional implication.  FDAC-tr and AC-tr remain hypotheses.
 Both halves of GM* proof program are stuck at genuine obstructions.
 
 ### Exceptional mass gap: CLOSED by level stratification (Fable R26)

@@ -464,7 +464,9 @@ $c$ & $k$ needed & status \\
 \midrule
 $2/3$ & $7$ & proved (gap polynomial) \\
 $3/5$ & $6$ & proved (corank + First Lemma) \\
-$1/2$ & 5 & conditional on $\mathrm{AC}^{\mathrm{tr}}$ (\S\ref{ssec:quadcorank}) \\
+$1/2$ & 5 & conditional on $\mathrm{AC}^{\mathrm{tr}}$,
+$\mathrm{FDAC}^{\mathrm{tr}}$, \textup{(SWR)}, or \textup{(QPRS)}
+(\S\ref{ssec:quadcorank}) \\
 $o(1)$ & $3$ & requires parity-breaking \\
 \bottomrule
 \end{tabular}
@@ -705,6 +707,82 @@ $\mathfrak U_H$.  Removing all $\mathfrak U_H$-supported prime powers
 therefore gives~\eqref{eq:qc-aligned-divisibility}.
 \end{proof}
 
+\begin{proposition}[Normalization length of pencil content]
+\label{prop:qc-normalization-length}
+Let $R$ be a complete discrete valuation ring of characteristic zero
+with perfect residue field, fraction field~$K$, and valuation~$v_R$.
+Let $F,G,J\in R[x]$,
+assume that the leading coefficient of~$F$ is a unit, and suppose
+$\operatorname{Res}_x(F,G+TJ)\ne0$.  Let $\widehat F$ be the monic
+polynomial obtained from~$F$ by dividing by its leading coefficient, and
+factor it over~$K$ as
+\[
+ \widehat F=\prod_i f_i^{m_i},
+\]
+where the $f_i$ are distinct monic irreducibles.  Put
+$L_i=K[x]/(f_i)$, let $\mathcal O_i$ be the valuation ring of~$L_i$,
+and write $\alpha_i$ for the image of~$x$.  Then
+\begin{equation}\label{eq:qc-normalization-length}
+ v_R\!\left(\operatorname{cont}_T
+       \operatorname{Res}_x(F,G+TJ)\right)
+ =\sum_i m_i\,
+   \ell_R\!\left(
+    \mathcal O_i/(G(\alpha_i),J(\alpha_i))
+   \right).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The unit leading coefficient makes no contribution to the valuation.
+Multiplicativity of the resultant gives, up to a unit of~$R$,
+\[
+ \operatorname{Res}_x(F,G+TJ)
+ =\prod_i
+   \operatorname N_{L_i/K}
+       \bigl(G(\alpha_i)+T J(\alpha_i)\bigr)^{m_i}.
+\]
+Let $e_i$ and $f_i^{\mathrm{res}}$ denote the ramification index and
+residue degree of $L_i/K$, and normalize the integral valuation
+$v_i$ on~$L_i$ by $v_i|_K=e_i v_R$.  The Gauss valuation is
+multiplicative.  After passing to an algebraic closure of~$K$, every
+conjugate of the linear polynomial
+$G(\alpha_i)+TJ(\alpha_i)$ has Gauss valuation
+\[
+ \frac1{e_i}\min\{v_i(G(\alpha_i)),v_i(J(\alpha_i))\}.
+\]
+There are $e_i f_i^{\mathrm{res}}$ conjugates, so
+\[
+ v_R\!\left(
+  \operatorname N_{L_i/K}(G(\alpha_i)+TJ(\alpha_i))
+ \right)
+ =f_i^{\mathrm{res}}
+  \min\{v_i(G(\alpha_i)),v_i(J(\alpha_i))\}.
+\]
+The right-hand side is exactly the $R$-length of
+$\mathcal O_i/(G(\alpha_i),J(\alpha_i))$.  Summing over the branches
+with multiplicities~$m_i$ proves~\eqref{eq:qc-normalization-length},
+because the Gauss valuation of a polynomial over~$K$ is the minimum
+valuation of its coefficients.
+\end{proof}
+
+\begin{remark}
+Formula~\eqref{eq:qc-normalization-length} is a length on the
+normalization of the reduced $K$-algebra defined by~$F$, with the
+scheme-theoretic multiplicities of~$F$ restored.  It is not, in
+general, the length of $R[x]/(F,G,J)$: the order $R[x]/(F)$ need not
+be integrally closed, and normalization can change the local length.
+The two descriptions agree, for example, when $R[x]/(F)$ is finite
+\'{e}tale over~$R$.  A concrete discrepancy is obtained, for odd
+residue characteristic, from
+\[
+ F=x^2-\varpi^2,\qquad G=x-\varpi,\qquad J=x+\varpi.
+\]
+Here
+$\operatorname{Res}_x(F,G+TJ)=-4\varpi^2T$, so the content valuation
+and the sum of the two normalized branch lengths are both~$2$,
+whereas $R[x]/(F,G,J)\cong R/(2\varpi)$ has length~$1$.
+\end{remark}
+
 \begin{lemma}[Rank of apparition]\label{lem:qc-rank}
 For $p\nmid6$, put $\chi(p)=(2/p)$.  Then
 $p\mid V_n\iff\rho(p)\mid n$ for an integer
@@ -789,7 +867,7 @@ The independent exact audit in
 \texttt{aligned\_corank\_verify.py} computes the full polynomial
 $\mathcal R_{a,b,c}(T)\in\mathbb Z[T]$, not a gcd of sampled values.
 It finds $\mathcal C^*_{a,b,c}=1$ for every triple through $H=14$.
-At $H=20$, only two of the $675$ non-arithmetic-progression triples
+At $H=20$, only two of the $675$ non-all-equal gap triples
 have nontrivial reduced content, both equal to~$653$, and
 $\mathcal A_{\mathrm{tr}}(20)/20^3=0.001620394$.  At $H=24$, only
 $18$ of $1323$ triples are nontrivial and the corresponding ratio is
@@ -939,13 +1017,543 @@ $T\ge\sqrt X$ yields convergent geometric sums:
 Together with~\eqref{eq:qc-low-level}, this proves the theorem.
 \end{proof}
 
+\subsubsection{A fully deflated adjacent certificate}
+
+The aligned pencil above deliberately uses a skipped endpoint.  There is a
+second, more literal certificate which keeps all three adjacent gaps and
+removes the reflection-center factor from each of them.
+
+\begin{definition}[Fully deflated adjacent content]
+\label{def:qc-fd}
+For $a,b,c\ge2$, put
+\[
+ F^{\mathrm{fd}}_{a,b,c}=N_a^\circ(x),\qquad
+ G^{\mathrm{fd}}_{a,b,c}=N_b^\circ(x+a),\qquad
+ J^{\mathrm{fd}}_{a,b,c}=N_c^\circ(x+a+b),
+\]
+and define
+\[
+ \mathcal R^{\mathrm{fd}}_{a,b,c}(T)
+ =\operatorname{Res}_x\!\left(
+ F^{\mathrm{fd}}_{a,b,c},
+ G^{\mathrm{fd}}_{a,b,c}+T J^{\mathrm{fd}}_{a,b,c}
+ \right),
+ \qquad
+ \mathcal C^{\mathrm{fd}}_{a,b,c}
+ =\operatorname{cont}_T\mathcal R^{\mathrm{fd}}_{a,b,c}.
+\]
+Relative to height~$H$, let
+$(\mathcal C^{\mathrm{fd}}_{a,b,c})^*$ denote removal of the full
+prime-power part supported on~$\mathfrak U_H$.
+\end{definition}
+
+\begin{lemma}[Fully deflated quadruple certificate]
+\label{lem:qc-fd}
+Every polynomial $\mathcal R^{\mathrm{fd}}_{a,b,c}(T)$ is nonzero.
+Let an odd prime~$p$ be fixed, partition $[0,p-1]$ into intervals,
+and select sliding quadruples of consecutive zeros inside the intervals.
+Apart from at most three selected quadruples in total, every selected
+quadruple with gap vector $(a,b,c)$ has its start as a common root of
+\[
+ F^{\mathrm{fd}}_{a,b,c},\quad
+ G^{\mathrm{fd}}_{a,b,c},\quad
+ J^{\mathrm{fd}}_{a,b,c}\pmod p.
+\]
+\end{lemma}
+
+\begin{proof}
+Every root of $N_h^\circ$ is a root of~$N_h$.  The root-strip theorem
+therefore places the roots of $F^{\mathrm{fd}}_{a,b,c}$ in
+$-a<\operatorname{Re}x<-1$, while the roots of
+$G^{\mathrm{fd}}_{a,b,c}$ lie in
+$-a-b<\operatorname{Re}x<-a-1$.  These strips are disjoint, so
+\[
+ \mathcal R^{\mathrm{fd}}_{a,b,c}(0)
+ =\operatorname{lc}(F^{\mathrm{fd}}_{a,b,c})^{(d-d_G)}
+   \operatorname{Res}_x(F^{\mathrm{fd}}_{a,b,c},
+                         G^{\mathrm{fd}}_{a,b,c})\ne0,
+\]
+where $d_G=\deg G^{\mathrm{fd}}_{a,b,c}$ and
+$d=\max(d_G,\deg J^{\mathrm{fd}}_{a,b,c})$.
+This proves nonvanishing of the pencil.
+
+Let $u<v$ be one of the three adjacent zero pairs in a selected
+quadruple, and put $h=v-u$.  The gap identity gives $N_h(u)=0$.
+If $h$ is odd, this is already $N_h^\circ(u)=0$.  If $h$ is even,
+the integral factorization
+$N_h(x)=(2x+h+1)N_h^\circ(x)$ shows the same unless
+\[
+ 2u+h+1=u+v+1\equiv0\pmod p.
+\]
+Because $0\le u<v\le p-1$, the exceptional congruence is equivalent
+to $u+v=p-1$; call such an adjacent pair centered.  There is at most
+one centered adjacent pair in any increasing zero set.  Indeed, two
+different such pairs would cross: if $u_1<u_2$ and
+$u_1+v_1=u_2+v_2=p-1$, then $u_1<u_2<v_2<v_1$, contradicting the
+adjacency of $u_1,v_1$.  A fixed
+adjacent pair occurs in at most three sliding quadruples, according as
+it is their first, second, or third pair.  Thus at most three selected
+quadruples are lost.  Every other selected quadruple survives all
+three deflations and gives the asserted common root.
+\end{proof}
+
+\begin{hypothesis}[Fully deflated adjacent-content mass,
+$\mathrm{FDAC}^{\mathrm{tr}}$]
+\label{hyp:qc-fdac}
+With
+\[
+ \mathcal A_{\mathrm{fd}}(H)
+ :=\sum_{\substack{a,b,c\ge2,\ a+b+c\le H\\
+                    \neg(a=b=c)}}
+ \log (\mathcal C^{\mathrm{fd}}_{a,b,c})^*,
+\]
+one has $\mathcal A_{\mathrm{fd}}(H)\ll H^{3+o(1)}$.
+\end{hypothesis}
+
+\begin{theorem}[Fully deflated quadruple corank bound]
+\label{thm:qc-fd-main}
+Assume $\mathrm{FDAC}^{\mathrm{tr}}$.  Then
+$\sum_{X<p\le2X}Z(p)\ll X^{3/2+o(1)}$.
+\end{theorem}
+
+\begin{proof}
+Use the same block selection as in the proof of
+Theorem~\ref{thm:qc-main}.  For $p\notin\mathcal E_H$, all three
+fully deflated polynomials have nonzero reduction.  Lemmas
+\ref{lem:qc-fd} and~\ref{lem:qc-aligned} give
+\[
+ Q_p(H)-3\le
+ \sum_{\substack{a,b,c\ge2,\ a+b+c\le H\\
+                   \neg(a=b=c)}}
+ v_p(\mathcal C^{\mathrm{fd}}_{a,b,c})
+ +\sum_{\substack{a\ge2\\3a\le H}}v_p(S_{a,a}).
+\]
+The arithmetic-progression term is unchanged.  On the dyadic level
+$T<Z(p)\le2T$, the choice $H=\lceil16X/T\rceil$ and
+\eqref{eq:qc-block-lower} give, for $p\le2X$,
+\[
+ Q_p(H)-3
+ >T-3\left\lceil\frac pH\right\rceil-3
+ \ge \frac{5T}{8}-6\ge\frac T2
+\]
+for all sufficiently large~$X$.  Thus one obtains the analogue of
+\eqref{eq:qc-level-certificates}, with $T/2$ on the left.  Hypothesis
+$\mathrm{FDAC}^{\mathrm{tr}}$, the unconditional
+$H^{3+o(1)}$ bound for the progression resultants, and
+Lemma~\ref{lem:qc-exceptional} then give exactly
+\eqref{eq:qc-generic-level} and~\eqref{eq:qc-exceptional-level}.
+The same dyadic summation completes the proof.
+\end{proof}
+
+\begin{remark}[Exact fully deflated audit]
+\label{rem:qc-fd-computation}
+The script \texttt{fully\_deflated\_corank\_verify.py} computes the
+entire polynomial resultant over~$\mathbb Z[T]$.  It finds
+$(\mathcal C^{\mathrm{fd}}_{a,b,c})^*=1$ for every non-progression
+triple through $H=23$.  At $H=32$ there are thirteen nontrivial
+records, supported at $157$, $431$, or~$653$, and
+$\mathcal A_{\mathrm{fd}}(32)/32^3=0.002569880$; the exact-content
+SHA-256 is
+\[
+ \begin{gathered}
+  \texttt{437f7328a4ea7d78a62b3e781165a76a}\\
+  \texttt{31f277f7ec6983f9f6c3a4e67ee05efa}.
+ \end{gathered}
+\]
+Extending the same full-content computation to $H=36$ gives nineteen
+nontrivial records, supported at $157$, $431$, $499$, $653$, or~$1297$, and
+\[
+ \frac{\mathcal A_{\mathrm{fd}}(36)}{36^3}=0.002595232.
+\]
+Its exact-content SHA-256 is
+\[
+ \begin{gathered}
+  \texttt{196327788a7ea9adbbb141a5c6161ae9}\\
+  \texttt{6125ea5b8242bc6603352080b32aac76}.
+ \end{gathered}
+\]
+The independent script \texttt{centered\_residual\_verify.py}
+reconstructs all the common roots.  The roots at $157$ and~$653$ skip
+an intermediate return, and their refined return-time lists contain a
+centered adjacent pair.  (One reduced content is
+$24649=157^2$, not a new characteristic.)  The two roots at~$431$,
+for gap vectors $(13,3,15)$ and $(15,3,13)$, are primitive and
+off-center; nevertheless they are not Ap\'ery zeros, since
+$\mathcal Z_{431}=\{56,374\}$.  Thus none of the height-$32$
+residual roots is an actual primitive four-zero obstruction.  This
+finite observation is not used in Theorem~\ref{thm:qc-fd-main}.
+
+Primitive saturation does not remove every algebraic phantom.  The new
+$p=499$ records at $H=33$ have reflected triples $(6,14,13)$ and
+$(13,14,6)$, roots $417$ and~$48$, and exact return-offset lists
+$(0,6,20,33)$ and $(0,13,27,33)$.  Both are primitive and off-center, but
+\[
+ \mathcal Z_{499}=\{67,170,203,295,328,431\},
+\]
+so neither root belongs to the distinguished fiber.  At $H=35$ the full
+content audit also verifies
+\[
+ (\mathcal C^{\mathrm{fd}}_{17,14,4})^*=157,
+ \qquad
+ \gcd_{\mathbb F_{157}[x]}
+  (F^{\mathrm{fd}}_{17,14,4},G^{\mathrm{fd}}_{17,14,4},
+   J^{\mathrm{fd}}_{17,14,4})=x+119.
+\]
+The root $x=38$ has precisely the return offsets
+$0,17,31,35$ in the selected span, so it is primitive and no adjacent
+pair is centered; its reflected triple $(4,14,17)$ has root~$83$ and
+offsets $(0,4,18,35)$.  Nevertheless the two independent recurrence
+implementations both give $\mathcal Z_{157}=\varnothing$; the algebraic
+roots are not zeros of the distinguished Ap\'ery orbit.  Thus even a
+primitive common-root carrier can strictly overcount the starts needed
+in the application.
+
+The unit-scale formal short-window analogue also fails.  The exact endpoint-resultant
+superset scan in \texttt{primitive\_fd\_candidate\_verify.py}, followed by
+an actual three-polynomial gcd over each candidate finite field, finds at
+height~$36$ the reflected pair
+\[
+ (a,b,c,p,x)=(5,20,10,1297,360),
+ \qquad (10,20,5,1297,901).
+\]
+In both cases the four displayed return offsets are the complete list in
+the selected span, namely $(0,5,25,35)$ and $(0,10,30,35)$ respectively,
+and none of their adjacent pairs is centered.  Here
+$1297\nmid\mathfrak U_{35}$ and $1297>35^2$, so these are genuinely
+primitive short-span common roots outside the structural carrier.
+They are still phantoms: the divided and cleared recurrences independently
+give
+\[
+ \mathcal Z_{1297}=\{459,530,766,837\}.
+\]
+Among all nine saturated endpoint candidates with $p>(a+b+c)^2$ through
+height~$36$, the other seven consist of three endpoint false positives and
+four nonprimitive roots; none starts at an actual Ap\'ery zero.  The exact
+short-range payload SHA-256 is
+\[
+ \begin{gathered}
+  \texttt{7279c7675994a3709a2039a0b04073f8}\\
+ \texttt{8e3fca346d08fe94a39f5fa4a3ee76e9}.
+ \end{gathered}
+\]
+The endpoint superset does not miss a chain defined only by its raw return
+set.  Indeed, applying the continuant congruence in
+Remark~\ref{rem:qc-corank-terminal} first with $(u,v)=(a,b)$ and then with
+$(u,v)=(a+b,c)$ shows that exactness of the four-return set makes the two
+intervening multipliers nonzero and forces the shifted adjacent gap
+polynomials to vanish.
+
+Incremental endpoint scans in eight-span blocks extend the exact calculation
+through span~$84$.  Beyond span~$36$, the blocks contain five endpoint false
+positives, eight nonprimitive roots at $p=8941$, and one new reflected pair of
+primitive phantoms,
+\[
+ (a,b,c,p,x)=(3,40,31,7411,4681),\qquad
+ (31,40,3,7411,2655).
+\]
+Their exact return-offset lists are $(0,3,43,74)$ and $(0,31,71,74)$,
+respectively; neither has a centered adjacent pair,
+$7411\nmid\mathfrak U_{74}$, and the two recurrence implementations give
+$\mathcal Z_{7411}=\varnothing$.  The final span block $77$--$84$ has two
+tested primes above $s^2$, both endpoint false positives.  Every untested
+prime already satisfies $p\le s^2$, so the combined endpoint scan is an exact
+verification of \textup{(QPRS)} with $C=2$ for every gap triple of span at
+most~$84$ outside the all-equal slice.  The exact block digests are hard-coded
+in \texttt{primitive\_fd\_candidate\_verify.py}.
+
+A complementary prime-first audit shows that the constant~$2$ does not
+persist.  The C++ program
+\texttt{primitive\_projective\_prime\_scan.cpp} computes the two independent
+Ap\'ery recurrence solutions for every prime $7\le p\le500000$, groups all
+indices by their point in $\mathbb P^1(\mathbb F_p)$, and tests every sliding
+quadruple of consecutive occurrences in each fiber.  It checks the carrier,
+center, nonwrapping, and non-all-equal conditions directly.  Among
+$13{,}695{,}120$ primitive off-center windows, twenty have $p>s^2$ and four
+have $p>2s^2$; all twenty belong to nondistinguished fibers.  The largest
+ratio is
+\[
+ \frac{p}{s^2}=\frac{128047}{164^2}=4.760819\ldots,
+\]
+attained at
+\[
+ (p,x;a,b,c)=(128047,42375;41,86,37)
+\]
+and its reflection.  Its raw return-offset set is exactly
+$(0,41,127,164)$, one has $128047\nmid\mathfrak U_{164}$, and none of the
+three adjacent pairs is centered.  The independent standard-library program
+\texttt{primitive\_projective\_prime\_verify.py} reconstructs all twenty
+records both from projective states and from the scalar continuant recurrence.
+The complete scan output has SHA-256
+\[
+ \begin{gathered}
+  \texttt{8eeb4d6d4a6f371d8f8d87facadff137}\\
+  \texttt{f66dfa476a28db1a3af8892625032bf9}.
+ \end{gathered}
+\]
+This finite result disproves $C=2$, not the existence of some absolute
+constant in \textup{(QPRS)}.
+
+There is, however, a reason not to treat the formal support hypothesis as the
+main orbit-coupling target.  In the random palindromic-orbit model, the
+expected number at one prime of four-equal-state windows of span at most~$s$
+has order $s^3/p^2$.  At $s=\sqrt{p/C}$, summation over $p\le P$ therefore
+has heuristic order $\sqrt P/(C^{3/2}\log P)$, which diverges for every fixed
+$C$.  The carrier and center exclusions have lower-order random densities.
+This occupancy calculation is only a heuristic and does not disprove
+\textup{(QPRS)}, but the growing formal phantoms show why a distinguished-orbit
+input is structurally preferable.
+
+Thus primitivity alone does not prove the unit-scale short-window statement:
+coupling to the distinguished Ap\'ery orbit is indispensable.  The weaker
+fixed-$\eta$ formulation below remains sufficient for the application.
+
+The separate script \texttt{primitive\_chain\_census.py} audits the
+generated $350{,}104$ pairs $(p,r)$ through $p\le5\cdot10^6$.  The
+little-endian pair file has SHA-256
+\[
+ \begin{gathered}
+  \texttt{5739c6e7fee4210678bc50bdda7d0a7c}\\
+  \texttt{2f9fa082ab392e050556ebdc62ecac8b}.
+ \end{gathered}
+\]
+Among $43{,}366$ sliding quadruples in the full ordered zero sets,
+$1{,}418$ do not contain a centered adjacent pair, but none of those
+$1{,}418$ has total span at most~$\sqrt p$.  In fact the closest observed
+squared scale ratio is still the exact value
+\[
+ \frac{s^2}{p}=\frac{1428025}{3727}=383.156694\ldots.
+\]
+The unrestricted statement is false: this closest example, which is also
+the first by absolute span, occurs at $p=3727$, with consecutive zeros
+\[
+ 99<868<1011<1294
+ \quad\text{and gaps}\quad (769,143,283).
+\]
+Thus any conjectural primitive-return strengthening must retain the
+mesoscopic short-span condition used by the block argument.
+\end{remark}
+
+\begin{definition}[Short off-center window count]
+\label{def:qc-short-window}
+For an odd prime~$p$ and $0<\eta\le1$, write the full ordered Ap\'ery
+zero set as $z_1<\cdots<z_{Z(p)}$, and let
+$E_{\mathrm{sw}}(p;\eta)$ be the number of
+indices $1\le i\le Z(p)-3$ such that
+\[
+ z_{i+3}-z_i\le\eta\sqrt p
+\]
+and none of the three adjacent pairs in
+$z_i,z_{i+1},z_{i+2},z_{i+3}$ is centered.
+\end{definition}
+
+\begin{proposition}[Short-window reduction]
+\label{prop:qc-short-window}
+For every odd prime~$p$ and $0<\eta\le1$,
+\[
+ Z(p)<3\eta^{-1}\sqrt p+6+E_{\mathrm{sw}}(p;\eta).
+\]
+Consequently, for every fixed~$\eta$,
+\[
+ \sum_{X<p\le2X}Z(p)
+ \ll_\eta \frac{X^{3/2}}{\log X}
+     +\sum_{X<p\le2X}E_{\mathrm{sw}}(p;\eta).
+\]
+\end{proposition}
+
+\begin{proof}
+Put $q=Z(p)$ and $E=E_{\mathrm{sw}}(p;\eta)$; there is nothing to prove
+when $q\le6+E$.  For
+$1\le i\le q-3$, let $s_i=z_{i+3}-z_i$.  There is at most one
+centered adjacent pair in the full increasing zero set, and a fixed
+adjacent pair belongs to at most three sliding quadruples.  Apart from
+the $E$ short off-center windows, at most three further $s_i$ can be at
+most~$\eta\sqrt p$.  Hence at least $q-6-E$ of the sliding spans satisfy
+$s_i>\eta\sqrt p$.  On the other hand, writing
+$d_j=z_{j+1}-z_j$, each $d_j$ occurs in at most three of the sums
+$s_i=d_i+d_{i+1}+d_{i+2}$, so
+\[
+ (q-6-E)\eta\sqrt p
+ <\sum_{i=1}^{q-3}s_i
+ \le3\sum_{j=1}^{q-1}d_j
+ =3(z_q-z_1)<3p.
+\]
+This proves the pointwise inequality.  Summing it over the primes in
+$(X,2X]$ and using the elementary prime-counting bound proves the
+second assertion.
+\end{proof}
+
+\begin{hypothesis}[Short-window reflection, \textup{(SWR)}]
+\label{hyp:qc-swr}
+There is an absolute constant $0<\eta\le1$ such that
+$E_{\mathrm{sw}}(p;\eta)=0$ for every odd prime~$p$; equivalently,
+every four consecutive Ap\'ery zeros of total span at most
+$\eta\sqrt p$ contain a centered adjacent pair.
+\end{hypothesis}
+
+\begin{corollary}[Square-root bound under short-window reflection]
+\label{cor:qc-swr}
+Assume \textup{(SWR)} with the fixed constant~$\eta$.  Then, for every
+odd prime~$p$,
+\[
+ Z(p)\le
+ 3\left\lceil
+   \frac{p}{\lfloor\eta\sqrt p\rfloor+1}
+  \right\rceil+3
+ <3\eta^{-1}\sqrt p+6.
+\]
+Consequently
+$\sum_{X<p\le2X}Z(p)\ll X^{3/2}/\log X$.
+\end{corollary}
+
+\begin{proof}
+The case $p=3$ is immediate from
+$(b_0,b_1,b_2)\equiv(1,2,1)\pmod3$.  Suppose that $p\ge5$, put
+$n=\lfloor\eta\sqrt p\rfloor$ and $H=n+1$, and partition
+$\{0,\ldots,p-1\}$ into
+$B=\lceil p/H\rceil$ consecutive blocks of cardinality at most~$H$.
+If the blocks contain respectively $m_1,\ldots,m_B$ zeros, select all
+sliding quadruples of consecutive zeros within each block.  Their total
+number~$Q$ satisfies
+\[
+ Q=\sum_{\nu=1}^{B}(m_\nu-3)_+
+ \ge Z(p)-3B.
+\]
+Every selected quadruple is consecutive in the full zero set and has
+span at most $H-1=n\le\eta\sqrt p$, so \textup{(SWR)} makes it contain
+a centered adjacent pair.  There is at most one such pair in the full zero set,
+and it belongs to at most three sliding quadruples.  Hence $Q\le3$ and
+\[
+ Z(p)\le3B+3
+ =3\left\lceil\frac{p}{n+1}\right\rceil+3.
+\]
+Since $n+1>\eta\sqrt p$, the ceiling is strictly less than
+$\eta^{-1}\sqrt p+1$, proving the second pointwise bound.  The asserted
+prime-window average follows from that bound and the standard estimate
+$\#\{X<p\le2X\}\ll X/\log X$.
+\end{proof}
+
+\begin{hypothesis}[Quadratic primitive-return support,
+\textup{(QPRS)}]
+\label{hyp:qc-qprs}
+There is an absolute constant $C\ge1$ with the following property.  Let
+$p$ be an odd prime, let $a,b,c\ge2$ be not all equal, put
+$s=a+b+c<p$, and let $x$ be an integer with $0\le x$ and $x+s<p$.
+Define the return-offset set
+\[
+ \mathcal T_{p,s}(x)
+ :=\{0\}\cup\{1\le h\le s:N_h(x)\equiv0\pmod p\}.
+\]
+If
+\[
+ p\nmid\mathfrak U_s,
+ \qquad
+ \mathcal T_{p,s}(x)=\{0,a,a+b,s\},
+\]
+and none of the three adjacent pairs with offsets
+$0,a,a+b,s$ is centered, then
+\[
+ p\le C s^2.
+\]
+\end{hypothesis}
+
+\begin{theorem}[Quadratic primitive support implies the square-root average]
+\label{thm:qc-qprs}
+Assume \textup{(QPRS)}.  Then
+\[
+ \sum_{X<p\le2X}Z(p)\ll_C X^{3/2}.
+\]
+\end{theorem}
+
+\begin{proof}
+Fix $K=64\sqrt C$.  The primes with $Z(p)\le K\sqrt X$ contribute
+$O_C(X^{3/2}/\log X)$.  For dyadic $T\ge K\sqrt X$, put
+\[
+ \mathcal P_X(T)=\{p\in\mathcal P_X:T<Z(p)\le2T\},
+ \qquad H=\left\lceil\frac{16X}{T}\right\rceil,
+\]
+and use the block selection from the proof of
+Theorem~\ref{thm:qc-main}.  For all sufficiently large~$X$,
+\[
+ H\le\frac{16\sqrt X}{K}+1
+ \le\frac{\sqrt X}{2\sqrt C},
+ \qquad CH^2<X.
+\]
+Put $\mathcal E_H=\{p\in\mathcal P_X:p\mid\mathfrak U_H\}$.
+
+Suppose that $p\in\mathcal P_X(T)$ does not divide
+$\mathfrak U_H$, and consider a selected consecutive quadruple with
+start~$x$ and gap vector $(a,b,c)$.  Its span $s=a+b+c$ is less
+than~$H$, so $p\nmid\mathfrak U_s$.  By the projective-orbit gap
+identity in Remark~\ref{rem:orbit}, because $b_x\equiv0\pmod p$ one has
+\[
+ N_h(x)\equiv0\pmod p
+ \quad\Longleftrightarrow\quad
+ b_{x+h}\equiv0\pmod p
+ \qquad(0\le h\le s).
+\]
+The global consecutiveness of the quadruple therefore gives
+$\mathcal T_{p,s}(x)=\{0,a,a+b,s\}$.  If it contained no centered
+adjacent pair and $a,b,c$ were not all equal,
+\textup{(QPRS)} would imply
+\[
+ p\le Cs^2<CH^2<X<p,
+\]
+a contradiction.
+
+Let $A_p(H)$ be the number of selected quadruples with $a=b=c$.
+The preceding paragraph and the uniqueness of the centered adjacent pair
+give
+\[
+ Q_p(H)\le A_p(H)+3.
+\]
+Every progression start counted by $A_p(H)$ is a common root of
+$N_a(x)$ and $N_a(x+a)$ for some $3a<H$.  The fixed Sylvester-corank
+argument therefore gives
+\[
+ A_p(H)\le\sum_{\substack{a\ge2\\3a<H}}v_p(S_{a,a}).
+\]
+
+On the other hand,
+\[
+ Q_p(H)\ge Z(p)-3\left\lceil\frac pH\right\rceil
+ >T-3\left(\frac T8+1\right)
+ =\frac{5T}{8}-3.
+\]
+Consequently, for all sufficiently large~$X$ and every
+$p\in\mathcal P_X(T)\setminus\mathcal E_H$,
+\[
+ \frac T2\le\sum_{\substack{a\ge2\\3a<H}}v_p(S_{a,a}).
+\]
+Summing over these generic primes and using
+$\sum_{3a<H}\log|S_{a,a}|\ll H^3\log H$ gives
+\[
+ \sum_{p\in\mathcal P_X(T)\setminus\mathcal E_H}Z(p)
+ \le2T\,|\mathcal P_X(T)\setminus\mathcal E_H|
+ \ll\frac{H^3\log H}{\log X}
+ \ll H^3.
+\]
+On the exceptional part, Lemma~\ref{lem:qc-exceptional} gives
+\[
+ \sum_{p\in\mathcal P_X(T)\cap\mathcal E_H}Z(p)
+ \le2T\,\#\{p\in\mathcal P_X:p\mid\mathfrak U_H\}
+ \ll\frac{TH^2}{\log X}
+ \ll\frac{X^2}{T\log X}.
+\]
+Since $H\ll X/T$, summing both geometric series over
+$T\ge K\sqrt X$ and adding the low range proves the theorem.
+\end{proof}
+
 \begin{corollary}[Moment threshold $k=5$]
-Under $\mathrm{AC}^{\mathrm{tr}}$, $(\mathrm{HM})_5$ implies
+Under any of $\mathrm{AC}^{\mathrm{tr}}$,
+$\mathrm{FDAC}^{\mathrm{tr}}$, \textup{(SWR)}, or \textup{(QPRS)},
+$(\mathrm{HM})_5$ implies
 $G_n=e^{o(n)}$ for every~$n$.
 \end{corollary}
 
 \begin{proof}
-The theorem gives
+Theorem~\ref{thm:qc-main}, Theorem~\ref{thm:qc-fd-main},
+Theorem~\ref{thm:qc-qprs}, or Corollary~\ref{cor:qc-swr}, as appropriate,
+gives
 $\lambda_X\le X^{-1}\sum_{p\in\mathcal P_X}Z(p)
 \ll X^{1/2+o(1)}$.  Repeating the proof of
 Theorem~\ref{thm:hm-pointwise} with this improved estimate and $k=5$
@@ -959,6 +1567,7 @@ $\log G_n\ll n^{9/10+o(1)}=o(n)$.
 \end{proof}
 
 \begin{remark}[The corank ladder terminates at $1/2$]
+\label{rem:qc-corank-terminal}
 Within a single triple of zeros the certificates are
 algebraically dependent:
 $N_{h_1+h_2}(x)\equiv N_{h_2}(x{+}h_1)\,N_{h_1+1}(x)
@@ -967,9 +1576,14 @@ so the triple level cannot improve beyond $3/5$.
 The quadruple is the first configuration supplying two potentially
 transverse certificates.  The adjacent self-gcd, the propagated
 palindromic center, and the one-parameter arithmetic-progression slice
-must all be removed as above.  The remaining input is precisely the
-aligned-content estimate $\mathrm{AC}^{\mathrm{tr}}$; the older scalar
-gcd-mass estimate is a sufficient but unnecessarily strong version.
+must all be removed as above.  The remaining input can be formulated
+either as the aligned-content estimate $\mathrm{AC}^{\mathrm{tr}}$ or
+as the fully deflated adjacent estimate
+$\mathrm{FDAC}^{\mathrm{tr}}$; the older scalar gcd-mass estimate is a
+sufficient but unnecessarily strong version of the first formulation.
+The short-window condition \textup{(SWR)} and the quadratic support condition
+\textup{(QPRS)} instead bypass aggregate content mass by ruling out generic
+primitive windows at a suitably chosen block scale.
 Higher tuples give strictly weaker exponents within the same corank
 bookkeeping.
 \end{remark}

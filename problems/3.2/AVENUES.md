@@ -14,6 +14,19 @@ after exact algebraic or computational re-verification.
 
 ### (a0) Local-algebra formula for aligned content
 
+**Exact formula proved; compression outcome negative (2026-08-09).**  Over a
+complete DVR with perfect residue field and unit leading coefficient, factor
+\(F=\prod_i f_i^{m_i}\), let \(L_i=K[x]/(f_i)\), and let \(\mathcal O_i\)
+be its valuation ring.  Then
+\[
+ v\!\left(\operatorname{cont}_T\operatorname{Res}(F,G+TJ)\right)
+ =\sum_i m_i\,\ell_R\bigl(\mathcal O_i/(G(\alpha_i),J(\alpha_i))\bigr).
+\]
+This is a length on the normalization, not generally on the order
+\(R[x]/(F)\).  It identifies the local invariant exactly but supplies no
+cross-triple cancellation: primitive off-center phantom roots already occur
+at \((a,b,c,p,r)=(17,14,4,157,38)\), while \(Z(157)=\varnothing\).
+
 Regard
 \[
  \operatorname{cont}_T\operatorname{Res}_x(F,G+TJ)
@@ -33,6 +46,12 @@ formula is summed over \((a,b,c)\).
 
 ### (b0) Residual-prime rank amplification
 
+**Terminal negative outcome (2026-08-09).**  The paper's \(\rho(p)\) is the
+Lucas leading-coefficient rank, not an Ap\'ery zero rank.  Reflection only
+adds the reversed collision chain and has order two; the exact residual
+examples show no \(H\)-scale proliferation.  The attempted rank argument was
+therefore based on a category error and cannot compress the mass.
+
 For every residual prime found by the exact aligned pencils, compute its
 rank of apparition and its entire collision graph up to several multiples of
 that rank.  Test and then prove whether one aligned four-zero collision forces
@@ -46,6 +65,14 @@ current \(H^4\)-parameter census into an \(H^3\)-scale carrier.
   isolated aligned collisions with no such orbit proliferation.
 
 ### (c0) Arithmetic-intersection height compression
+
+**Generic route exhausted (2026-08-09).**  Prime-first Fitting/Smith
+invariants can remove excess pencil valuation, but direct sums over the
+\(\asymp H^3\) labelled triples still add their heights.  Product-formula,
+Ekedahl-sieve, large-sieve, and block-diagonal determinant arguments do not
+save a gap parameter without an Ap\'ery-specific cross-gap identity.  The
+fully deflated adjacent pencil is retained as a cleaner alternative mass
+hypothesis, not as an unconditional content-one theorem.
 
 Combine the complex root-strip separation already used for the First Lemma
 with the non-archimedean intersection lengths from (a0).  Look for an
@@ -61,19 +88,109 @@ the full triangular product of cut-edge values.
 
 ### (d0) Transfer-matrix codegree theorem
 
+**Generic codegree route exhausted; Ap\'ery-specific gcd tail remains open
+(2026-08-09).**  The affine-plane construction in
+`gcdtail_result.tex` shows that the available row-degree and column bounds,
+even strengthened to codegree one, still permit \(\asymp H^2\) deep pairs.
+The scalar resultant-gcd formulation also loses the common-root label, while
+the aligned second moment misses singleton fibers.  Thus a uniform codegree
+bound by itself cannot supply the required saving.  What remains meaningful
+is the strictly stronger, arithmetic split affine gcd-tail estimate displayed
+in that file, together with a separate estimate for the complementary
+annulus.
+
 Translate repeated common roots and left-pair codegrees into identities among
 the \(\mathrm{PGL}_2\) continuant transfer matrices.  Use the recurrence and
 reflection involution to seek a uniform bound on separated collision
 multiplicity or codegree, matching the exhaustive census through \(p=20000\).
 
-- Success: prove uniform \(m=O(1)\) and codegree \(O(1)\), or directly prove
+- Success: prove the Ap\'ery-specific weighted split affine gcd-tail bound
+  (and the complementary-annulus estimate) strong enough to give
   \(E_p(H)\ll H^{3/2+o(1)}\).
-- Proof-of-failure: construct modular examples with unbounded multiplicity or
-  codegree, or derive a precise reduction to the original zero-set problem.
+- Proof-of-failure: construct an Ap\'ery realization of the abstract
+  affine-plane obstruction, or derive a quantifier-preserving reduction to
+  the original zero-set problem.
 
-If all four avenues terminate negatively, retain the fully verified
-conditional theorem under \(\mathrm{AC}^{\mathrm{tr}}\), state the exact local
-intersection lemma still open, and continue with genuinely new invariants;
+### (e0) Distinguished-orbit coupling after phantom removal
+
+**Current active avenue.**  Fully deflating all three adjacent gaps gives a
+rigorous alternative hypothesis \(\mathrm{FDAC}^{\mathrm{tr}}\) and loses at
+most three centered sliding quadruples per prime.  The height-36 endpoint-gcd
+classification finds a primitive reflected phantom pair
+\[
+ (a,b,c,p,r)=(5,20,10,1297,360),\quad(10,20,5,1297,901).
+\]
+Here the span is \(35\) and \(1297>35^2\), but the actual zero set is
+\(\{459,530,766,837\}\).  Thus even the primitive formal-projective analogue
+of the short-window statement is false; the distinguished-orbit condition is
+essential.  Among all nine height-36 endpoint candidates in the short range,
+the remaining cases are three endpoint false positives and four nonprimitive
+roots, and none is an actual Ap\'ery-zero start.
+
+The sharper active subtarget is the **short-window reflection principle**:
+there is a fixed \(\eta>0\) such that four consecutive actual Ap\'ery zeros
+of span \(s\le\eta\sqrt p\) contain a centered adjacent pair.  The extended
+\(350{,}104\)-pair census verifies the stronger choice \(\eta=1\) through
+\(p\le5\cdot10^6\); among its \(1{,}418\) off-center windows, the minimum
+observed \(s^2/p\) is still \(1428025/3727>383\).  For any such fixed
+\(\eta\), partition into blocks of
+cardinality \(\lfloor\eta\sqrt p\rfloor+1\) to obtain
+\[
+ Z(p)\le
+ 3\left\lceil
+   \frac{p}{\lfloor\eta\sqrt p\rfloor+1}
+  \right\rceil+3
+ <3\eta^{-1}\sqrt p+6.
+\]
+Indeed, at most three selected sliding quadruples can contain the unique
+centered adjacent pair.  Without assuming the principle, the same span count
+gives the exact reduction
+\(Z(p)<3\eta^{-1}\sqrt p+6+E_{\mathrm{sw}}(p;\eta)\), where
+\(E_{\mathrm{sw}}(p;\eta)\) counts off-center windows of span at most
+\(\eta\sqrt p\).  Thus the
+orbit-coupling problem can be
+replaced by this precise actual-zero statement; it cannot be replaced by the
+unit-scale formal-projective statement even after retaining primitivity.
+
+There is also an alternative purely algebraic target, **quadratic primitive-return
+support (QPRS)**.  It asks only for an absolute \(C\) such that every
+primitive off-center return chain with a non-all-equal gap vector outside
+\(\mathfrak U_s\) satisfies \(p\le Cs^2\).  The constant need not be~1:
+on zero-count levels
+\(T\ge K\sqrt X\), take \(K\gg\sqrt C\) and
+\(H=\lceil16X/T\rceil\).  Then \(CH^2<X<p\), so QPRS rules out every
+generic selected quadruple; the remaining \(\mathfrak U_H\)-supported primes
+have level mass \(O(X^2/(T\log X))\), whose dyadic sum is at the target
+scale.  Hence QPRS alone implies the square-root prime average.
+
+The formal evidence now makes this a secondary conditional target rather
+than the main avenue.  An exact prime-first census of all projective fibers
+for every \(p\le500000\) finds twenty primitive off-center chains with
+\(p>s^2\), four with \(p>2s^2\), and maximum
+\[
+ \frac{p}{s^2}=\frac{128047}{164^2}=4.760819\ldots
+\]
+at gaps \((41,86,37)\); all twenty are phantoms.  Thus \(C=2\) is false.
+Moreover, the random-fiber occupancy heuristic gives an expected
+\(s^3/p^2\) short four-collisions per prime.  At
+\(s=\sqrt{p/C}\), its sum through \(P\) has order
+\(\sqrt P/(C^{3/2}\log P)\), suggesting that every fixed \(C\) may
+eventually fail.  This is not a proof against QPRS, but it removes the
+formal-projective condition from the favored route.
+
+- Success: prove the short-window reflection principle, or construct a
+  bounded-height orbit-coupled module whose local corank dominates actual
+  primitive starts and whose aggregate height is \(H^{3+o(1)}\).  A proof of
+  QPRS would still suffice, but the formal census makes it less credible.
+- Proof-of-failure: either construct primitive formal chains with unbounded
+  \(p/s^2\), thereby retiring QPRS, or give a quantifier-preserving reduction
+  showing that every distinguished-orbit coupling is equivalent to the
+  parity-barrier atom problem.
+
+If all live avenues terminate negatively, retain the fully verified
+conditional implications under the four stated hypotheses, record the
+aggregate content and distinguished-orbit inputs that remain open, and
+continue with genuinely new invariants;
 finite-depth Cartier lifting and the two withdrawn scalar gcd formulations
 remain closed and are not to be revived.
 
@@ -234,10 +351,10 @@ branch has a low-height cross-prime carrier beyond pair certificates.
 
 ## Fallback after all four terminal verdicts
 
-Keep the conditional ($\mathrm{AC}^{\mathrm{tr}}$) statement only with a complete proof of
-its implication, correct any unconditional wording, and record the exact
-weighted-exceptional or unbounded-grade lemma that remains.  Do not replace the
-full conjecture by the weaker (p^{1/2}) average-zero milestone.
+Keep only conditional statements whose implications are proved completely,
+correct any unconditional wording, and record the exact aggregate-content or
+orbit-coupling hypothesis that remains.  Do not replace the full conjecture by
+the weaker ($p^{1/2}$) average-zero milestone.
 
 ## Existing terminal facts that constrain every avenue
 
