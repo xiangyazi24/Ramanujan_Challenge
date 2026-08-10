@@ -468,6 +468,29 @@ projective_variance_reduction.tex.  A direct regression through all
 92 primes \(7\le p\le499\) has fail-closed digest
 0796e0f34777aba4a631767076dbedb71503eef4422e19553ad09e702be6566c.
 
+There is a mass-sensitive interpolation, but it identifies a substantially
+stronger missing estimate rather than closing the gap.  If
+\(M_p=\sum_qC_p(q)\), the same cubic level-set bound gives
+\[
+ \sum_qC_p(q)^2\le20p\sqrt{M_p},\qquad
+ E_p^{\rm sep}\le8p\sqrt{\bar M_p}.
+\]
+Consequently, with
+\(S_X=\sum_{X<p\le2X}\bar M_p\),
+\[
+ \sum_{X<p\le2X}E_p^{\rm sep}
+ \le16X\sqrt{\#\mathcal P_X\,S_X}.
+\]
+This reaches the target if
+\(S_X\ll X^{1+o(1)}/\log X\), namely if the average number of selected
+short chains is \(X^{o(1)}\).  By contrast, even a natural
+\(H^{3+o(1)}\)-scale prime-averaged certificate bound at
+\(H\asymp\sqrt X\) would give only
+\(S_X\ll X^{3/2+o(1)}/\log X\) and hence separated energy
+\(X^{9/4+o(1)}/\log X\).  Thus ordinary three-gap content control is still
+a factor \(X^{1/2}\) too weak at the mass level; the required statement is
+genuine short-chain sparsity.
+
 This exponent cannot be improved from the preceding set-theoretic inputs.
 For infinitely many primes, `pair_cap_extremal.tex` constructs a complete
 reflection-invariant coloring satisfying every global fixed-gap cap

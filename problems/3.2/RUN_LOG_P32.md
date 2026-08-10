@@ -760,5 +760,14 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   bit height is irrelevant to this upper-bound problem; the needed input is
   a dyadic `(X,2X]` valuation/nonconcentration estimate for the long
   resultants or an equivalent Apéry-cocycle correlation theorem.
+- Mass-sensitive interpolation: if `M_p=sum_q C_p(q)` is the selected raw
+  short-chain mass, the cubic edge-level tail gives
+  `sum_q C_p(q)^2 <= 20 p sqrt(M_p)` and, after reflection,
+  `Esep_p <= 8 p sqrt(Mbar_p)`.  Hence
+  `sum_p Esep_p <= 16 X sqrt(#P_X * sum_p Mbar_p)`.  The target therefore
+  follows from `sum_p Mbar_p <= X^(1+o(1))/log X`; an `H^3` certificate
+  mass at `H~sqrt(X)` would only give `X^(9/4+o(1))/log X` energy.  This
+  pins the remaining mass input to average polylogarithmic short-chain
+  sparsity, not ordinary three-gap content control.
 - end: pending
 - final result: pending

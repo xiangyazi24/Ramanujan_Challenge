@@ -268,6 +268,116 @@ The last follows by summing $pH\le p^{3/2}$ over the primes in the dyadic
 interval.
 \end{proof}
 
+\begin{proposition}[Mass-sensitive short-chain energy]
+\label{prop:projective-short-chain-mass}
+Retain the notation and hypotheses of
+Proposition~\ref{prop:projective-short-chain-energy}, and put
+\[
+ M_p=\sum_q C_p(q).
+\]
+If $M_p>0$, then
+\begin{equation}
+ \sum_q C_p(q)^2\le20p\sqrt{M_p}.
+\label{eq:projective-short-chain-mass}
+\end{equation}
+Under the reflection hypotheses of
+Proposition~\ref{prop:projective-variance-reduction}, one consequently has
+\begin{equation}
+ E_p^{\mathrm{sep}}
+ \le8p\sqrt{\overline M_p}.
+\label{eq:projective-separated-mass}
+\end{equation}
+Thus, if
+\[
+ S_X=\sum_{X<p\le2X}\overline M_p,
+ \qquad
+ \Pi_X=\#\{p:X<p\le2X\},
+\]
+then
+\begin{equation}
+ \sum_{X<p\le2X}E_p^{\mathrm{sep}}
+ \le16X\sqrt{\Pi_XS_X}.
+\label{eq:projective-separated-mass-dyadic}
+\end{equation}
+In particular, the separated-energy target follows from the average
+short-chain sparsity estimate
+\begin{equation}
+ S_X\ll \frac{X^{1+o(1)}}{\log X}.
+\label{eq:projective-short-chain-sparsity-target}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Use the edge counts $E_q(H)$ from the proof of
+Proposition~\ref{prop:projective-short-chain-energy}.  We have
+\[
+ C_p(q)\le E_q(H),
+ \qquad
+ \sum_qE_q(H)\le\frac32H(H-1),
+\]
+and, for $t\ge4p/H$,
+\begin{equation}
+ \#\{q:C_p(q)\ge t\}
+ \le\#\{q:E_q(H)\ge t\}
+ \le\frac{12p^2}{t^3}.
+\label{eq:projective-chain-level-set}
+\end{equation}
+In particular,
+$M_p\le\frac32H(H-1)<\frac32H^2$.
+
+If $1\le M_p\le100$, then $C_p(q)<p$ for every~$q$, since a
+fiber in a set of $p$ indices has at most $p-3$ sliding four-windows.
+Therefore
+\[
+ \sum_qC_p(q)^2\le p\sum_qC_p(q)=pM_p
+ \le10p\sqrt{M_p}.
+\]
+Suppose now that $M_p>100$ and put
+\[
+ U=\frac{10p}{\sqrt{M_p}}.
+\]
+Then $U<p$, while the preceding bound for~$M_p$ gives
+\[
+ U>\frac{8p}{H}>\frac{4p}{H}.
+\]
+The fibers with $C_p(q)<U$ contribute at most $UM_p$ to the
+square energy.  Divide the remaining fibers into the dyadic classes
+$2^jU\le C_p(q)<2^{j+1}U$.  By
+\eqref{eq:projective-chain-level-set}, their total contribution is at
+most
+\[
+ \sum_{j\ge0}(2^{j+1}U)^2
+       \frac{12p^2}{(2^jU)^3}
+ \le\frac{96p^2}{U}.
+\]
+Consequently
+\[
+ \sum_qC_p(q)^2
+ \le UM_p+\frac{96p^2}{U}
+ <20p\sqrt{M_p},
+\]
+which proves~\eqref{eq:projective-short-chain-mass}.
+
+Under reflection, $C_p(q)=2\overline C_p(q)$ and
+$M_p=2\overline M_p$.  Hence
+\[
+ E_p^{\mathrm{sep}}
+ \le\sum_q\overline C_p(q)^2
+ \le5p\sqrt{2\overline M_p}
+ <8p\sqrt{\overline M_p},
+\]
+proving~\eqref{eq:projective-separated-mass}.  Summing over
+$X<p\le2X$ and applying Cauchy--Schwarz gives
+\[
+ \sum_{X<p\le2X}E_p^{\mathrm{sep}}
+ \le16X\sum_{X<p\le2X}\sqrt{\overline M_p}
+ \le16X\sqrt{\Pi_XS_X},
+\]
+which is~\eqref{eq:projective-separated-mass-dyadic}.  Finally use
+$\Pi_X\ll X/\log X$ together with
+\eqref{eq:projective-short-chain-sparsity-target}.
+\end{proof}
+
 \begin{corollary}[Distinguished-fiber consequence]
 \label{cor:projective-variance-distinguished}
 Retain the notation and hypotheses of
