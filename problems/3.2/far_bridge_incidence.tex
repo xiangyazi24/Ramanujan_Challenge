@@ -21,7 +21,29 @@ Define the conditioned incidence
                    \gamma=(x_0,x_1,x_2,x_3)\in\Gamma_p(q)}}
  \#\{z:x_3+K<z<p,\ \pi_p(z)=\pi_p(x_3)\},
 \]
-and the nonwrapping triple incidence
+and put
+\[
+ \operatorname{Supp}(\overline\gamma)
+ =\{x_0,x_1,x_2,x_3,
+     p-1-x_3,p-1-x_2,p-1-x_1,p-1-x_0\}.
+\]
+The external conditioned incidence is
+\[
+ B_p^\circ(K)=
+ \sum_{\substack{q\in\mathbf P^1(\mathbf F_p)\\
+                   \gamma=(x_0,x_1,x_2,x_3)\in\Gamma_p(q)}}
+ \#\left\{z:
+ \begin{array}{c}
+ x_3+K<z<p,\quad \pi_p(z)=\pi_p(x_3),\\
+ z\notin\operatorname{Supp}(\overline\gamma)
+ \end{array}
+ \right\}.
+\]
+For an occurrence~$z$ of a projective state, let
+$z=z_0<z_1<z_2<z_3$ denote that occurrence and the next three occurrences
+of the same state, when they exist.  Define $B_p^{[4]}(K)$ by retaining in
+$B_p^\circ(K)$ only those~$z$ for which these successors exist and
+$z_3-z_0\le H_p$.  Finally, define the nonwrapping triple incidence
 \[
  A_p^{\mathrm{nw}}(K)=
  \#\left\{(x,y,z):
@@ -33,8 +55,15 @@ and the nonwrapping triple incidence
 \]
 Then
 \begin{equation}
- E_p^{\mathrm{far}}(K)\le B_p(K)\le A_p^{\mathrm{nw}}(K).
+ E_p^{\mathrm{far}}(K)\le B_p^{[4]}(K)
+ \le B_p^\circ(K)
+ \le B_p(K)\le A_p^{\mathrm{nw}}(K).
 \label{eq:far-incidence-hierarchy}
+\end{equation}
+If $M_p=\sum_q|\Gamma_p(q)|$ is the selected raw mass, then also
+\begin{equation}
+ 0\le B_p(K)-B_p^\circ(K)\le4M_p.
+\label{eq:far-reflection-baseline}
 \end{equation}
 Moreover, if $N_h$ denotes the positional-gap continuant, then
 \begin{equation}
@@ -78,11 +107,19 @@ orbit.  Given $y_0$, the next three occurrences of
 $\pi_p(y_0)$ are uniquely determined by the ordered fiber.  Hence there is
 at most one four-consecutive-occurrence window beginning at~$y_0$, and, when
 the image comes from a selected pair, it is precisely~$\delta$.  Thus the
-second reflection orbit is recovered as well.  The image is among the
-incidences counted by~$B_p(K)$, proving the first inequality in
+second reflection orbit is recovered as well.  Separation implies that
+$y_0$ is not in the reflection-invariant support of the first orbit.
+Moreover, $\delta$ supplies the next three occurrences after~$y_0$, and its
+span is at most~$H_p$.  The image is therefore counted by~$B_p^{[4]}(K)$.
+This proves the first inequality in
 \eqref{eq:far-incidence-hierarchy}.  No factor of two is lost here: the
 canonical choice assigns one oriented pair to each ordered pair of quotient
-orbits, whereas $B_p(K)$ already sums over all selected orientations.
+orbits, whereas $B_p^{[4]}(K)$ already sums over all selected orientations.
+The inequalities $B_p^{[4]}(K)\le B_p^\circ(K)\le B_p(K)$ are immediate.
+For a fixed raw window, the two incidences differ only at later indices among
+the four reflected indices
+$p-1-x_3,p-1-x_2,p-1-x_1,p-1-x_0$.  Thus their difference is at most four
+per selected raw window, proving~\eqref{eq:far-reflection-baseline}.
 
 For an incidence $(\gamma,z)$ counted by~$B_p(K)$, set
 \[

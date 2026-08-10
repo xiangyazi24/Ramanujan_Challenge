@@ -14,9 +14,15 @@
 // finally the subset whose first four-occurrence chain passes the actual
 // off-center/non-AP/carrier filters.  The latter two still do not require a
 // second selected chain, so they are explicit upper-bound incidences rather
-// than the canonical separated energy itself.
+// than the canonical separated energy itself.  For selected first chains,
+// the scan also removes every later point in that chain's own reflection
+// orbit; a distinct separated quotient chain cannot start at such a point.
+// A final column retains only external points that themselves begin a
+// four-consecutive-occurrence window of span at most floor(sqrt(p)), a
+// necessary condition for the second selected chain.
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
@@ -75,6 +81,8 @@ struct BridgeBin {
     u64 all_short = 0;
     u64 four_gap_valid = 0;
     u64 selected_first = 0;
+    u64 selected_external = 0;
+    u64 selected_to_external_short_four = 0;
 };
 
 struct PrimeStats {
@@ -202,11 +210,23 @@ PrimeStats scan_prime(int prime, const std::vector<BridgeBin>& template_bins) {
         if (states[index] != states[prime - 1 - index]) {
             throw std::runtime_error("projective reflection regression failed");
         }
+        if (index + 1 < prime && states[index] == states[index + 1]) {
+            throw std::runtime_error("adjacent projective return regression failed");
+        }
     }
 
     PrimeStats stats;
     stats.bins = template_bins;
     for (const std::vector<int>& list : occurrences) {
+        std::vector<unsigned char> short_four_start(list.size(), 0);
+        std::vector<u64> short_four_prefix(list.size() + 1, 0);
+        for (std::size_t index = 0; index < list.size(); ++index) {
+            short_four_start[index] = static_cast<unsigned char>(
+                index + 3 < list.size() &&
+                list[index + 3] - list[index] <= short_cutoff);
+            short_four_prefix[index + 1] =
+                short_four_prefix[index] + short_four_start[index];
+        }
         for (std::size_t middle = 0; middle < list.size(); ++middle) {
             const int y = list[middle];
             const auto prior_begin = std::lower_bound(
@@ -220,6 +240,7 @@ PrimeStats scan_prime(int prime, const std::vector<BridgeBin>& template_bins) {
 
             bool four_gap_valid = false;
             bool selected_first = false;
+            std::array<int, 4> reflected_support{};
             if (middle >= 3) {
                 const int x0 = list[middle - 3];
                 const int x1 = list[middle - 2];
@@ -233,6 +254,12 @@ PrimeStats scan_prime(int prime, const std::vector<BridgeBin>& template_bins) {
                 selected_first = four_gap_valid && !(a == b && b == c) &&
                     x0 + x1 != prime - 1 && x1 + x2 != prime - 1 &&
                     x2 + y != prime - 1 && !carrier_bad[span];
+                reflected_support = {
+                    prime - 1 - y,
+                    prime - 1 - x2,
+                    prime - 1 - x1,
+                    prime - 1 - x0,
+                };
             }
             stats.four_gap_valid_chains += static_cast<u64>(four_gap_valid);
             stats.selected_first_chains += static_cast<u64>(selected_first);
@@ -246,7 +273,46 @@ PrimeStats scan_prime(int prime, const std::vector<BridgeBin>& template_bins) {
                 const u64 later_count = static_cast<u64>(later_end - later_begin);
                 bin.all_short += prior_count * later_count;
                 if (four_gap_valid) bin.four_gap_valid += later_count;
-                if (selected_first) bin.selected_first += later_count;
+                if (selected_first) {
+                    bin.selected_first += later_count;
+                    u64 external_count = later_count;
+                    const std::size_t later_begin_index = static_cast<std::size_t>(
+                        later_begin - list.begin());
+                    const std::size_t later_end_index = static_cast<std::size_t>(
+                        later_end - list.begin());
+                    u64 external_short_four =
+                        short_four_prefix[later_end_index] -
+                        short_four_prefix[later_begin_index];
+                    for (const int reflected : reflected_support) {
+                        const int gap = reflected - y;
+                        if (bin.lower <= gap && gap <= bin.upper) {
+                            if (external_count == 0) {
+                                throw std::runtime_error(
+                                    "reflected-support subtraction underflow");
+                            }
+                            --external_count;
+                            const auto reflected_position = std::lower_bound(
+                                list.begin(), list.end(), reflected);
+                            if (reflected_position == list.end() ||
+                                *reflected_position != reflected) {
+                                throw std::runtime_error(
+                                    "reflected support left its projective fiber");
+                            }
+                            const std::size_t reflected_index =
+                                static_cast<std::size_t>(
+                                    reflected_position - list.begin());
+                            if (short_four_start[reflected_index]) {
+                                if (external_short_four == 0) {
+                                    throw std::runtime_error(
+                                        "short-four subtraction underflow");
+                                }
+                                --external_short_four;
+                            }
+                        }
+                    }
+                    bin.selected_external += external_count;
+                    bin.selected_to_external_short_four += external_short_four;
+                }
             }
         }
     }
@@ -278,6 +344,10 @@ int main(int argc, char** argv) {
                     stats.bins[bin].four_gap_valid;
                 aggregate.bins[bin].selected_first +=
                     stats.bins[bin].selected_first;
+                aggregate.bins[bin].selected_external +=
+                    stats.bins[bin].selected_external;
+                aggregate.bins[bin].selected_to_external_short_four +=
+                    stats.bins[bin].selected_to_external_short_four;
             }
             if (options.verbose &&
                 (stats.selected_first_chains > 0 || index < 10)) {
@@ -308,7 +378,10 @@ int main(int argc, char** argv) {
             std::cout << "bridge_bin=[" << bin.lower << ',' << bin.upper << ']'
                       << " all_short=" << bin.all_short
                       << " four_gap_valid=" << bin.four_gap_valid
-                      << " selected_first=" << bin.selected_first << '\n';
+                      << " selected_first=" << bin.selected_first
+                      << " selected_external=" << bin.selected_external
+                      << " selected_to_external_short_four="
+                      << bin.selected_to_external_short_four << '\n';
         }
         return 0;
     } catch (const std::exception& error) {

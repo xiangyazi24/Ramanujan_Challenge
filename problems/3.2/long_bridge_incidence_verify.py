@@ -27,6 +27,8 @@ class Bin:
     all_short: int = 0
     four_gap_valid: int = 0
     selected_first: int = 0
+    selected_external: int = 0
+    selected_to_external_short_four: int = 0
 
 
 def primes_in_dyadic_interval(scale: int) -> list[int]:
@@ -133,10 +135,13 @@ def locate_bin(bins: list[Bin], gap: int) -> Bin | None:
     return None
 
 
-def scan_prime_direct(prime: int, template: list[Bin]) -> tuple[int, int, int, list[Bin]]:
+def scan_prime_direct(
+    prime: int, template: list[Bin], *, check_continuants: bool = True
+) -> tuple[int, int, int, list[Bin]]:
     apery, companion = solution_pair(prime)
     states = projective_states(prime, apery, companion)
-    check_gap_continuants(prime, states)
+    if check_continuants:
+        check_gap_continuants(prime, states)
     height = math.isqrt(prime)
     carrier_bad = carrier_prefix(prime, apery, height)
     bins = [Bin(item.lower, item.upper) for item in template]
@@ -157,6 +162,7 @@ def scan_prime_direct(prime: int, template: list[Bin]) -> tuple[int, int, int, l
 
         four_gap_valid = False
         selected_first = False
+        reflected_support: set[int] = set()
         if len(prior) >= 3:
             x0, x1, x2 = prior[-3:]
             a, b, c = x1 - x0, x2 - x1, middle - x2
@@ -170,6 +176,12 @@ def scan_prime_direct(prime: int, template: list[Bin]) -> tuple[int, int, int, l
                 and x2 + middle != prime - 1
                 and not carrier_bad[span]
             )
+            reflected_support = {
+                prime - 1 - middle,
+                prime - 1 - x2,
+                prime - 1 - x1,
+                prime - 1 - x0,
+            }
         four_chains += int(four_gap_valid)
         selected_chains += int(selected_first)
 
@@ -181,6 +193,19 @@ def scan_prime_direct(prime: int, template: list[Bin]) -> tuple[int, int, int, l
             bridge_bin.all_short += len(short_starts)
             bridge_bin.four_gap_valid += int(four_gap_valid)
             bridge_bin.selected_first += int(selected_first)
+            bridge_bin.selected_external += int(
+                selected_first and later not in reflected_support
+            )
+            if selected_first and later not in reflected_support:
+                following = []
+                for candidate in range(later + 1, prime):
+                    if states[candidate] == state:
+                        following.append(candidate)
+                        if len(following) == 3:
+                            break
+                bridge_bin.selected_to_external_short_four += int(
+                    len(following) == 3 and following[-1] - later <= height
+                )
         prior.append(middle)
 
     return short_pairs, four_chains, selected_chains, bins
@@ -213,6 +238,10 @@ def main() -> None:
             total_bin.all_short += prime_bin.all_short
             total_bin.four_gap_valid += prime_bin.four_gap_valid
             total_bin.selected_first += prime_bin.selected_first
+            total_bin.selected_external += prime_bin.selected_external
+            total_bin.selected_to_external_short_four += (
+                prime_bin.selected_to_external_short_four
+            )
 
     result = {
         "X": args.x,
@@ -238,6 +267,8 @@ def main() -> None:
                     "all_short": 17,
                     "four_gap_valid": 0,
                     "selected_first": 0,
+                    "selected_external": 0,
+                    "selected_to_external_short_four": 0,
                 },
                 {
                     "lower": 6,
@@ -245,6 +276,8 @@ def main() -> None:
                     "all_short": 21,
                     "four_gap_valid": 0,
                     "selected_first": 0,
+                    "selected_external": 0,
+                    "selected_to_external_short_four": 0,
                 },
                 {
                     "lower": 12,
@@ -252,6 +285,8 @@ def main() -> None:
                     "all_short": 41,
                     "four_gap_valid": 0,
                     "selected_first": 0,
+                    "selected_external": 0,
+                    "selected_to_external_short_four": 0,
                 },
                 {
                     "lower": 24,
@@ -259,6 +294,8 @@ def main() -> None:
                     "all_short": 73,
                     "four_gap_valid": 1,
                     "selected_first": 0,
+                    "selected_external": 0,
+                    "selected_to_external_short_four": 0,
                 },
                 {
                     "lower": 48,
@@ -266,6 +303,8 @@ def main() -> None:
                     "all_short": 60,
                     "four_gap_valid": 0,
                     "selected_first": 0,
+                    "selected_external": 0,
+                    "selected_to_external_short_four": 0,
                 },
                 {
                     "lower": 96,
@@ -273,10 +312,28 @@ def main() -> None:
                     "all_short": 10,
                     "four_gap_valid": 0,
                     "selected_first": 0,
+                    "selected_external": 0,
+                    "selected_to_external_short_four": 0,
                 },
             ],
         }
         print("regression=PASS")
+
+        known = scan_prime_direct(
+            1297, make_bins(1000), check_continuants=False
+        )
+        assert known[2] == 2
+        assert sum(item.selected_first for item in known[3]) == 4
+        assert sum(item.selected_external for item in known[3]) == 0
+        assert sum(
+            item.selected_to_external_short_four for item in known[3]
+        ) == 0
+        print(
+            "known_selected_regression=PASS"
+            " prime=1297 selected_chains=2"
+            " selected_first=4 selected_external=0"
+            " selected_to_external_short_four=0"
+        )
 
 
 if __name__ == "__main__":

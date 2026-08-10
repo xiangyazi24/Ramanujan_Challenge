@@ -617,12 +617,16 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   bridges remain.  The independent tmux-11 audit passed the orientation,
   injectivity, degree-drop, and height arguments.
 - Far-incidence hierarchy: proved in `far_bridge_incidence.tex`, with exact
-  injections `Efar_p(K) <= B_p(K) <= A_nw,p(K)`.  Here `B_p` retains the
-  selected first four-return chain and drops only the second chain, whereas
-  `A_nw,p` counts all nonwrapping triples `x<y<z` in one projective fiber
-  with `2<=y-x<=sqrt(p)` and `z-y>K`.  The exact continuant formula keeps
-  `0<=x<=p-1-s-G`; removing this restriction gives only an upper bound by
-  full-`F_p` common roots.  A polynomial gcd degree is not the observable,
+  injections
+  `Efar_p(K) <= B4_p(K) <= Bcirc_p(K) <= B_p(K) <= A_nw,p(K)`.
+  Here `B_p` retains the selected first four-return chain and drops only the
+  second chain.  `Bcirc_p` removes the first chain's own reflection support,
+  with `0<=B_p-Bcirc_p<=4M_p`; `B4_p` also requires the external point to
+  begin a four-consecutive-occurrence window of span at most `sqrt(p)`.
+  Finally, `A_nw,p` counts all nonwrapping triples `x<y<z` in one projective
+  fiber with `2<=y-x<=sqrt(p)` and `z-y>K`.  The exact continuant formula
+  keeps `0<=x<=p-1-s-G`; removing this restriction gives only an upper bound
+  by full-`F_p` common roots.  A polynomial gcd degree is not the observable,
   because nonsplit irreducible factors contribute to the degree but no
   `F_p` root.
 - Exact long-bridge census: `long_bridge_incidence_scan.cpp` groups the
@@ -632,16 +636,26 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   `(# dyadic primes)*sqrt(X)` the ratios are
   `1.9573,2.0460,2.0764,2.0967,2.1062,2.1157`.  The corresponding conditioned
   masses `B(K)` are only `4,6,12,0,8,16`, from raw selected-chain counts
-  `2,2,4,0,2,4`.  These are complete finite dyadic data, not an asymptotic
-  estimate.  Source SHA-256 is
-  `0f9058790265c68ddc05a78be82b31d18cd0e7b118f9c1762a3967ae900e19c2`;
+  `2,2,4,0,2,4`.  Removing the automatic reflection support gives
+  `Bcirc(K)=0,2,4,0,4,8`; the still weaker-than-energy second-short-window
+  count `B4(K)` is zero throughout.  These are complete finite dyadic data,
+  not an asymptotic estimate.  Source SHA-256 is
+  `8a9b8614e27d0a841a70a692daa77bd25b331c930666d646cc9b2bae493191d6`;
   strict compilation and ASan/UBSan pass.
 - Independent long-bridge regression: `long_bridge_incidence_verify.py`
   directly enumerates all pairs/triples instead of using occurrence-list
   binary searches.  It also evaluates every nonwrapping gap continuant and
   verifies `N_h(x)=0 iff pi_p(x)=pi_p(x+h)`.  The default `X=70` regression
   exactly matches the C++ aggregate and has output digest
-  `34dae2b3051dc6063aef27f9c1357530c6e79b9e325ea646b85eb5e1a7df52c2`.
+  `9125a62abc9121a31e4190f0a10c1650fd7742b0360b79036345ace34a410fe4`.
+- Fixed selected-record extension: `long_bridge_selected_extension_verify.py`
+  recomputes the projective fibers for all 20 raw selected records in the
+  complete `p<=500000` census.  After deleting each first chain's reflection
+  support it finds 22 external later occurrences, but none begins another
+  four-consecutive-occurrence window of span at most `sqrt(p)`.  Thus the
+  one-sided relaxed quantity `B4` is also zero throughout the census.  The
+  fail-closed digest is
+  `13f2f869de772d2f30de9d78a1818ad149e9cef4f92adec9ec2eef7c4e25ea1b`.
 - ChatGPT audit triage: Q7215 independently found the occurrence-list
   enumeration, but its identification of actual `F_p` roots with polynomial
   gcd degree was corrected.  Q7212's full-cycle argument was rejected because

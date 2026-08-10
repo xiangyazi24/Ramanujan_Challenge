@@ -370,9 +370,20 @@ than~\(K\), and let \(A_p^{\rm nw}(K)\) count nonwrapping triples
 Canonical orientation and consecutiveness give injective maps, with no
 reflection factor,
 \[
- E_p^{\rm far}(K)\le B_p(K)\le A_p^{\rm nw}(K).
+ E_p^{\rm far}(K)\le B_p^{[4]}(K)\le B_p^\circ(K)
+ \le B_p(K)\le A_p^{\rm nw}(K).
 \]
-The last quantity is exactly
+Here \(B_p^\circ\) removes every later point in the first chain's own
+reflection-invariant support, and \(B_p^{[4]}\) further requires the external
+point to begin a four-consecutive-occurrence window of span at most
+\(\lfloor\sqrt p\rfloor\).  Both restrictions are necessary for the second
+member of a separated quotient pair.  Moreover,
+\[
+ 0\le B_p(K)-B_p^\circ(K)\le4M_p,
+\]
+so the removed automatic reflection baseline is already within the diagonal
+mass budget.
+The final majorant is exactly
 \[
  \sum_{s=2}^{\lfloor\sqrt p\rfloor}
  \sum_{G=K+1}^{p-1-s}
@@ -385,7 +396,7 @@ the corresponding full-\(\mathbf F_p\) common-root mass.  In particular,
 it can also count nonsplit irreducible factors.  The complete proof is in
 `far_bridge_incidence.tex`.
 
-The occurrence-list identity makes the two majorants directly computable.
+The occurrence-list identity makes these majorants directly computable.
 For a fiber \(r_0<\cdots<r_t\), put
 \[
  L_i=\#\{j<i:2\le r_i-r_j\le\lfloor\sqrt p\rfloor\},
@@ -395,29 +406,38 @@ For a fiber \(r_0<\cdots<r_t\), put
 Then its contribution to \(A_p^{\rm nw}(K)\) is
 \(\sum_iL_iR_i(K)\), while its contribution to \(B_p(K)\) is
 \(\sum_i\mathbf1_{\{(r_{i-3},\ldots,r_i)\ \mathrm{selected}\}}R_i(K)\).
+Deleting the at most four positions in the same reflection orbit gives
+\(B_p^\circ(K)\); retaining only external positions \(r_j\) with
+\(j+3\le t\) and \(r_{j+3}-r_j\le\lfloor\sqrt p\rfloor\) gives
+\(B_p^{[4]}(K)\).
 The exact C++ implementation `long_bridge_incidence_scan.cpp` gives the
 following complete dyadic data, with
 \(H=\lfloor\sqrt{2X}\rfloor\) and
 \(K=\lfloor H/\sqrt{\log X}\rfloor\):
 
-| \(X\) | primes | \(K\) | \(A^{\rm nw}(K)\) | \(B(K)\) | selected raw chains | \(A^{\rm nw}(K)/(\#p\sqrt X)\) |
-|---:|---:|---:|---:|---:|---:|---:|
-| 1,000 | 135 | 16 | 8,356 | 4 | 2 | 1.9573 |
-| 5,000 | 560 | 34 | 81,018 | 6 | 2 | 2.0460 |
-| 10,000 | 1,033 | 46 | 214,495 | 12 | 4 | 2.0764 |
-| 20,000 | 1,941 | 63 | 575,531 | 0 | 0 | 2.0967 |
-| 50,000 | 4,459 | 96 | 2,099,977 | 8 | 2 | 2.1062 |
-| 100,000 | 8,392 | 131 | 5,614,535 | 16 | 4 | 2.1157 |
+| \(X\) | primes | \(K\) | \(A^{\rm nw}(K)\) | \(B(K)\) | \(B^\circ(K)\) | \(B^{[4]}(K)\) | raw chains | \(A^{\rm nw}/(\#p\sqrt X)\) |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1,000 | 135 | 16 | 8,356 | 4 | 0 | 0 | 2 | 1.9573 |
+| 5,000 | 560 | 34 | 81,018 | 6 | 2 | 0 | 2 | 2.0460 |
+| 10,000 | 1,033 | 46 | 214,495 | 12 | 4 | 0 | 4 | 2.0764 |
+| 20,000 | 1,941 | 63 | 575,531 | 0 | 0 | 0 | 0 | 2.0967 |
+| 50,000 | 4,459 | 96 | 2,099,977 | 8 | 4 | 0 | 2 | 2.1062 |
+| 100,000 | 8,392 | 131 | 5,614,535 | 16 | 8 | 0 | 4 | 2.1157 |
 
 The source digest is
-`0f9058790265c68ddc05a78be82b31d18cd0e7b118f9c1762a3967ae900e19c2`.
+`8a9b8614e27d0a841a70a692daa77bd25b331c930666d646cc9b2bae493191d6`.
 It passes strict `clang++` compilation and ASan/UBSan.  The independent
 quadratic verifier `long_bridge_incidence_verify.py` does not use the
 occurrence-list counting algorithm: it enumerates every pair and triple and
 also checks pointwise, for every nonwrapping \((x,h)\) in its default dyad,
 that \(N_h(x)=0\) if and only if \(\pi_p(x)=\pi_p(x+h)\).  Its \(X=70\)
 regression passes with output digest
-`34dae2b3051dc6063aef27f9c1357530c6e79b9e325ea646b85eb5e1a7df52c2`.
+`9125a62abc9121a31e4190f0a10c1650fd7742b0360b79036345ace34a410fe4`.
+Finally, `long_bridge_selected_extension_verify.py` recomputes the fibers of
+all 20 selected raw records in the complete \(p\le500000\) census.  It finds
+22 external later occurrences after reflection-support deletion, but none
+begins another short four-occurrence window; its fail-closed digest is
+`13f2f869de772d2f30de9d78a1818ad149e9cef4f92adec9ec2eef7c4e25ea1b`.
 The stable normalization in the table is consistent with
 \(A^{\rm nw}(K)\asymp(\#p)\sqrt X\), already far below the required budget,
 and the conditioned count is much smaller still.  This remains finite
