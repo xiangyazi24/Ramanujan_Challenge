@@ -359,6 +359,43 @@ remaining theorem concerns only genuinely long bridges.  An independent
 tmux-11 audit confirmed the canonical orientation, the Smith-nullity
 inequality under degree drop, and the resultant-height calculation.
 
+Two possible height/compression shortcuts have now been audited exactly.
+First, `separated_resultant_deflation_probe.py` distinguishes the full
+resultant, the resultant after deleting every forced even center factor, and
+the remaining integer after deleting the maximal part supported on the
+structural carrier.  At \(H=12\) and \(2\le G\le36\), the aggregate bit
+lengths are respectively
+
+\[
+ 2699303,\qquad 2604380,\qquad 2113651.
+\]
+
+Thus the tested residual retains \(0.7830\) of the full bit length, uniformly
+across the three bridge buckets, and no tested resultant is removed
+completely.  On the diagonal \(2\le h\le12\), the formal root-product term
+\(\operatorname{lc}(N_h)^{2\deg N_h}\) never divides the integer resultant;
+it is an archimedean decomposition, not a removable carrier factor.  The
+center-and-carrier residual has
+\(\log|R^*_{h,h}|/(h^2\log h)=10.26,10.47,10.69\) at \(h=8,10,12\).
+These are finite exact data, not an asymptotic lower bound, and bit length
+alone gives no information about support on primes \(p\asymp X\).
+
+Second, a hidden low-order polynomial bispectral operator is absent in a
+large explicit ansatz.  If
+
+\[
+ L=\sum_{j=-r}^{r}A_j(x)T^j,qquad \deg A_j\le d,qquad
+ LN_h=\lambda_hN_h,
+\]
+
+then the exact coefficient system for \(1\le h\le20\), reduced modulo
+\(1000003\), has rank \(546\) in \(547\) columns for \(r=8,d=30\).
+Its kernel is therefore exactly the scalar identity over \(\mathbb Q\), which
+also excludes every sub-ansatz \(r\le8,d\le30\).  The reproducible certificate
+is `bispectral_operator_scan.py`.  This does not exclude rational-coefficient
+operators with nonconstant denominators, gauges, or larger order; it only
+closes the most direct classical-polynomial compression shortcut.
+
 The optimized exact census in
 \`primitive_projective_prime_scan.cpp\` groups both raw and
 reflection-quotient statistics in \(O(p)\) operations per prime; its exact

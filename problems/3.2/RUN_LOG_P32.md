@@ -616,5 +616,38 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   `K=H/sqrt(log X)` meets the full `X^2/log X` budget.  Only longer
   bridges remain.  The independent tmux-11 audit passed the orientation,
   injectivity, degree-drop, and height arguments.
+- Carrier/center deflation was separated into exact stages in
+  `separated_resultant_deflation_probe.py`.  At `H=12,Gmax=36`, the full,
+  center-deflated, and carrier-deflated aggregate bit lengths are
+  `2699303`, `2604380`, and `2113651`; SHA-256
+  `4416c8495689693651c36a53dea7a41f21a32f8900218bc6b1d2cdc14466bae0`.
+  The residual fraction is stable near `0.783` in every bridge bucket, and
+  no term vanishes.  The independent extension `H=14,Gmax=42` retains
+  fraction `0.777555633`, with digest
+  `030ad11c148a8433e009f017cb7e5a3dcd7bc4a7b0586b48d98f7782bde7a988`.
+  On every diagonal `2<=h<=12`, the formal factor
+  `lc(N_h)^(2 deg N_h)` fails to divide the integer resultant.  After exact
+  center plus maximal `U_h`-supported deflation,
+  `log|R*_(h,h)|/(h^2 log h)` is `10.26,10.47,10.69` at `h=8,10,12`.
+  This is finite evidence only; it neither proves an asymptotic lower bound
+  nor locates prime factors in `(X,2X]`.  tmux 11 retracted its earlier
+  divisibility/proof claim and corrected a second table-label error that had
+  confused full carrier deflation with center-plus-carrier deflation.
+- A direct low-order bispectral shortcut is rigorously excluded within a
+  finite polynomial ansatz.  `bispectral_operator_scan.py` forms the integer
+  coefficient system for
+  `L=sum_(|j|<=r) A_j(x)T^j`, `deg A_j<=d`, and
+  `L N_h=lambda_h N_h`.  For `r=8,d=30,1<=h<=20`, reduction modulo
+  `1000003` has shape `1190x547`, rank `546`, and nullity one; SHA-256
+  `6fcb4e496ac5a583466a9e779c87fb94c239a5c7feab85f9d30af93bc03fe31a`.
+  Since the scalar identity supplies that kernel, the rational kernel is
+  exactly scalar and every sub-ansatz is excluded.  Rational denominators,
+  nontrivial gauges, and higher-order operators remain outside the claim.
+- Correct far range: `s<=H~sqrt(X)` but the canonical bridge can satisfy
+  `G~p~X`.  The generic height sum over all `s,G` is `X^(3+o(1))`, one
+  factor `X` above the raw `X^(2+o(1))` budget.  A lower bound for residual
+  bit height is irrelevant to this upper-bound problem; the needed input is
+  a dyadic `(X,2X]` valuation/nonconcentration estimate for the long
+  resultants or an equivalent Apéry-cocycle correlation theorem.
 - end: pending
 - final result: pending
