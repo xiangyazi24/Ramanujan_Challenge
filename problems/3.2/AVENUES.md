@@ -813,6 +813,29 @@ bound.  The exact derivation is in `toric_mellin_square.tex`;
 tmux-11 audit checked the coordinate exclusions, both minus signs, the
 middle endpoint, and the absence of a spurious \((-1)^j\) factor.
 
+The corresponding termwise same-characteristic calculation is also exact,
+but it closes a slope-only shortcut rather than proving anti-concentration.
+Morita's gamma function gives
+\[
+ b_j=\sum_{k=0}^j p^{2\mathbf 1_{j+k\ge p}}
+ \left(
+ \frac{\Gamma_p(j+k+1)}
+ {\Gamma_p(k+1)^2\Gamma_p(j-k+1)}
+ \right)^2.
+\]
+Hence the hypergeometric summands have only valuations zero and two, with
+\(\min(j,p-1-j)+1\) slope-zero terms.  Every interior index therefore has
+a minimal-slope collision.  Vanishing is instead the cancellation of the
+normalized unit residues.  This distinction is genuine: at \(j=5\), all
+six summands have valuation zero for both \(p=11\) and \(p=13\), but their
+residue sums are respectively zero and five.  Thus the exact carry polygon
+cannot distinguish \(11\mid b_5\) from \(13\nmid b_5\).  It is not the
+Newton polygon of the full twisted crystal; a crystalline route must
+control the residual slope-zero trace itself.  The elementary theorem and
+finite audit are apery_mellin_carry_polygon.tex and
+apery_mellin_carry_polygon_verify.py; all 14,064 exact checks and the
+independent six-point audit pass.
+
 The same toric coordinates also improve the pointwise fiber estimate.  The
 closure of a nonzero fiber in \((\mathbb P^1)^3\) is the explicit
 anticanonical \((2,2,2)\) surface

@@ -1,0 +1,121 @@
+\begin{proposition}[The exact carry polygon does not detect Ap\'ery zeros]
+\label{prop:apery-mellin-carry-polygon}
+Let $p$ be an odd prime, let $0\leq j\leq p-1$, and define Morita's
+$p$-adic gamma function at positive integers by
+\[
+ \Gamma_p(n)=(-1)^n
+ \prod_{\substack{1\leq r<n\\p\nmid r}}r.
+\]
+For $0\leq k\leq j$, put
+\[
+ \epsilon_{j,k}=\mathbf 1_{\{j+k\geq p\}},
+ \qquad
+ U_{p,j,k}=
+ \frac{\Gamma_p(j+k+1)}
+ {\Gamma_p(k+1)^2\Gamma_p(j-k+1)}\in\mathbb Z_p^\times.
+\]
+Then one has the exact identity in $\mathbb Z_p$
+\begin{equation}
+ \boxed{
+ b_j=\sum_{k=0}^j p^{2\epsilon_{j,k}}U_{p,j,k}^2.}
+ \label{eq:apery-Morita-exact}
+\end{equation}
+Consequently, if
+\[
+ u_j=\min(j,p-1-j)+1,
+ \qquad
+ h_j=j+1-u_j=\max(0,2j+1-p),
+\]
+then the sorted valuations of the $j+1$ summands in
+\eqref{eq:apery-Morita-exact} are
+\begin{equation}
+ \underbrace{0,\ldots,0}_{u_j\ \mathrm{times}},
+ \quad
+ \underbrace{2,\ldots,2}_{h_j\ \mathrm{times}}.
+ \label{eq:apery-carry-slopes}
+\end{equation}
+In particular, every interior index $1\leq j\leq p-2$ has at least two
+minimal-valuation summands.
+
+Reduction of~\eqref{eq:apery-Morita-exact} gives the exact unit-residue
+criterion
+\begin{equation}
+ p\mid b_j
+ \quad\Longleftrightarrow\quad
+ \Theta_{p,j}:=
+ \sum_{k=0}^{\min(j,p-1-j)}\overline{U}_{p,j,k}^{\,2}=0
+ \quad\text{in }\mathbb F_p.
+ \label{eq:apery-unit-residue-criterion}
+\end{equation}
+The valuation data in~\eqref{eq:apery-carry-slopes} do not determine this
+event.  Indeed, at $j=5$ the six summands have valuation vector
+$(0,0,0,0,0,0)$ both for $p=11$ and for $p=13$, whereas their respective
+residue vectors are
+\[
+ (1,9,1,1,9,1)\in\mathbb F_{11}^6,
+ \qquad
+ (1,3,4,1,10,12)\in\mathbb F_{13}^6.
+\]
+The first vector sums to zero and the second to~$5$.  Thus
+$11\mid b_5$ but $13\nmid b_5$ despite the identical complete carry
+polygon.
+\end{proposition}
+
+\begin{proof}
+For $0\leq N\leq2p-2$, there is at most one multiple of~$p$ in $N!$,
+and the definition of $\Gamma_p$ gives
+\[
+ N!=(-1)^{N+1}p^{\lfloor N/p\rfloor}\Gamma_p(N+1).
+\]
+The elementary cancellation
+\[
+ \binom jk\binom{j+k}{k}
+ =\frac{(j+k)!}{k!^2(j-k)!}
+\]
+and the preceding factorial identity therefore give
+\[
+ \binom jk\binom{j+k}{k}
+ =p^{\epsilon_{j,k}}U_{p,j,k};
+\]
+all signs cancel because the numerator and denominator sign exponents
+differ by~$2$.  Squaring and summing over~$k$ proves
+\eqref{eq:apery-Morita-exact}.
+
+The no-carry range is $0\leq k\leq\min(j,p-1-j)$, which has $u_j$
+elements.  Every other summand has exactly one factorial carry and hence
+valuation~$2$.  This proves~\eqref{eq:apery-carry-slopes}.  Since
+$u_j\geq2$ for $1\leq j\leq p-2$, the minimal valuation is never unique
+in the interior.  Reducing the exact identity modulo~$p$ proves
+\eqref{eq:apery-unit-residue-criterion}.  Finally, direct reduction of the
+six integer summands
+\[
+ \binom5k^2\binom{5+k}{k}^2\qquad(0\leq k\leq5)
+\]
+gives the two displayed vectors and completes the counterexample.
+\end{proof}
+
+\begin{remark}[Scope of the obstruction]
+\label{rem:apery-carry-polygon-scope}
+The polygon in~\eqref{eq:apery-carry-slopes} is the exact termwise
+Gross--Koblitz--Stickelberger carry polygon of the finite hypergeometric
+sum.  It is not being identified with the Newton polygon of Frobenius on a
+Kummer-twisted rigid cohomology group.  The proposition proves that this
+termwise polygon, even with every summand labelled, cannot decide the
+coefficient-zero event.  A successful crystalline argument must control
+the reduction of the normalized slope-zero trace
+$\Theta_{p,j}$, rather than only its slopes, rank, determinant, or
+conductor.
+\end{remark}
+
+\begin{remark}[Finite audit]
+\label{rem:apery-carry-polygon-audit}
+An exact audit of all primes $p\leq200$, independently comparing the
+division-free recurrence with the defining binomial sum, finds
+\[
+ \max_{p\leq200}Z(p)=4,
+\]
+attained at $p=181$ and~$193$.  No nonwrapping interval of width
+$\sqrt p$ contains more than two zeros in this range.  This is a finite
+certificate only; the carry polygon gives no asymptotic improvement over
+the available zero-count bounds.
+\end{remark}

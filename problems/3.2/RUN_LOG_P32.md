@@ -851,6 +851,22 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   tautology checks; SHA-256
   `4bac89d1f73a192f727f2d9b65c3120df22f434e490e091a584aabf08873b95a`.
   The independent tmux-11 six-point audit also passes.
+- Exact Ap\'ery carry polygon: Morita's integer gamma identity rewrites each
+  hypergeometric summand as a p-adic unit times p^(2*carry).  The complete
+  valuation vector has min(j,p-1-j)+1 zeros and max(0,2j+1-p) twos, so
+  every interior Mellin index already has a minimal-slope collision.
+  Actual vanishing is cancellation of the normalized unit residue
+  Theta_(p,j).  At j=5, primes 11 and 13 have the identical all-zero
+  valuation vector, but the residue sums are 0 and 5.  Therefore this exact
+  termwise Gross--Koblitz--Stickelberger polygon cannot imply
+  anti-concentration.  The verifier also cross-checks every prime through
+  200: max Z(p)=4 at 181 and 193, while the maximum in a nonwrapping
+  square-root window is 2; these are finite facts only.
+  apery_mellin_carry_polygon_verify.py passes 12798 gamma, 837 polygon, 279
+  unit-residue, 7 counterexample, and 143 finite-audit checks; SHA-256
+  a05b203231d4e7a113c27ea2ae072de551f76293effe205c41ab6e9bae1a35eb.
+  The temporary full-paper build produced 216 pages, and the independent
+  tmux-11 six-point audit found no issue.
 - K3 fiber collapse: the nonzero toric fiber compactifies to an explicit
   anticanonical `(2,2,2)` surface in `(P1)^3`.  Its 16 boundary curves have
   `16p-11` rational points.  The fixed singularity ledger is `4 A1 + 2 A2`
