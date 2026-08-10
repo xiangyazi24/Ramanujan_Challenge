@@ -359,7 +359,10 @@ def main() -> None:
                 trace - (21 + epsilon + delta) * prime + 8
             )
             assert abs(trace) <= 22 * prime
-            assert abs(character_sum) <= (43 + epsilon + delta) * prime + 8
+            deflated_trace = trace - (12 + epsilon + delta) * prime
+            assert character_sum == deflated_trace - 9 * prime + 8
+            assert abs(deflated_trace) <= (10 - epsilon - delta) * prime
+            assert abs(character_sum) <= 19 * prime + 8
             assert not (epsilon and delta)
             trace_checks += 1
 

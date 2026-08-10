@@ -818,14 +818,17 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   plus a central `A1` (`A2` at `a=1`), with one further `A1` iff
   `a^2-34a+1=0`; every ADE configuration is split.  After resolution,
   `#Xtilde=#X+(9+epsilon_a+delta_a)p`, and the quadratic character sum is
-  exactly `tau_p(a)-(21+epsilon_a+delta_a)p+8`.  Since the K3 `H^2` trace
-  satisfies `|tau_p(a)|<=22p`, this gives `43p+8` generically and `44p+8`
-  uniformly, rather than the termwise `O(p^(3/2))` bound.  It remains a
+  exactly `tau_p(a)-(21+epsilon_a+delta_a)p+8`.  The three ambient ruling
+  classes and the split exceptional root lattice remove
+  `12+epsilon_a+delta_a` explicit eigenvalues `p`; the remaining trace has
+  dimension `10-epsilon_a-delta_a`, and the sum becomes `sigma_p(a)-9p+8`.
+  This gives the uniform bound `19p+8`, rather than the termwise
+  `O(p^(3/2))` bound.  It remains a
   pointwise fiber theorem and gives no defining-characteristic Mellin
   anti-concentration by itself.  `toric_fiber_k3_verify.py` passes 7
   boundary ledgers, 88 complete fibers, 622 singularity classifications,
   and 88 trace formulas; SHA-256
-  `ab414714566eee0e73e951f9fe9ef3da712eddae0155fa2bff6a7d95b5139ba3`.
+  `8323863e48796d10195bcc48bdf0847823e6e3b1665d927d1027a2461d2ae8c7`.
   A temporary full-paper build produced 219 pages, and the independent
   tmux-11 seven-point audit found no issue.
 - end: pending

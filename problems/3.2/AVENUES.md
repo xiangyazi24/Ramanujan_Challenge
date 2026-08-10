@@ -766,14 +766,21 @@ then the character sum in the quadratic fiber formula is exactly
 \[
  \tau_p(a)-(21+\varepsilon_a+\delta_a)p+8.
 \]
-Deligne's \(|\tau_p(a)|\le22p\) therefore gives \(43p+8\) away from the two
-exceptional loci and \(44p+8\) uniformly, improving the termwise elliptic
-bound \(O(p^{3/2})\) to \(O(p)\).  This still does not control the vanishing
+The three ambient ruling classes and the full split exceptional root lattice
+form a nondegenerate Frobenius-fixed subspace of rank
+\(12+\varepsilon_a+\delta_a\).  Removing it leaves a weight-two trace
+\(\sigma_p(a)\) of dimension \(10-\varepsilon_a-\delta_a\), and the same sum
+is
+\[
+ \sigma_p(a)-9p+8.
+\]
+Deligne therefore gives the uniform bound \(19p+8\), improving the termwise
+elliptic bound \(O(p^{3/2})\) to \(O(p)\).  This still does not control the vanishing
 defining-characteristic Mellin coefficients: pointwise trace bounds allow
 exact cancellation modulo \(p\).  The full compactification and correction
 ledger are in `toric_fiber_k3.tex`; the standard-library verifier checks all
 fibers and singularities for the 88 pairs \((p,a)\) with \(5\le p\le23\).
-The full-paper compile and an independent tmux-11 seven-point audit pass.
+The full-paper compile and two independent seven-point audits pass.
 
 The optimized exact census in
 \`primitive_projective_prime_scan.cpp\` groups both raw and
