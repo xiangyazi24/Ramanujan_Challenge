@@ -12,8 +12,10 @@
   Architecture:
     AperyDef.lean      — Apéry recurrence, b_n closed form, d_n, G_n
     Wronskian.lean     — W_n = 6/n³, valuation bound, no consecutive zeros
+    GapPolynomial.lean — canonical gap numerators and their degree bound
     Main.lean          — Main theorem statements
 -/
 import RamanujanChallenge.Problem32.AperyDef
 import RamanujanChallenge.Problem32.Wronskian
+import RamanujanChallenge.Problem32.GapPolynomial
 import RamanujanChallenge.Problem32.Main

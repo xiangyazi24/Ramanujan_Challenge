@@ -102,3 +102,47 @@ mesoscopic-census work.
   record it and continue with the next ranked avenue.
 - **Hard stop:** only a destructive/external action outside the repository or
   genuinely missing owner-only information blocks further work.
+
+## Active formalization campaign (2026-08-09, `/lean` + `/automode`)
+
+### Main goal
+
+Build a faithful, modular Lean formalization of the proved results in the
+current P3.2 manuscript, with every conjectural atom-tail input kept visibly
+conditional, beginning from the two remaining `sorry`s in
+`Problem32/Main.lean`.
+
+### Ranked avenues
+
+1. **(a) Unconditional zero-count chain.** Formalize the paper's gap
+   polynomials `N_h`, their exact degree/leading coefficient, the evaluations
+   at `-1` and `-2`, nonvanishing modulo `p`, the polynomial root bound, and
+   the block-partition optimization.  Success means
+   `zero_count_sublinear` is sorry-free and axiom-clean.  Proof-of-failure
+   means a kernel-checked counterexample to the Lean statement or a verified
+   mismatch with the manuscript's constants; then correct the statement and
+   continue in the same avenue.
+2. **(b) Cartier--Frobenius structural layer.** Formalize the exact Lucas
+   digit law, block law, and valuation/GCD consequences that are unconditional
+   and independent of the atom-tail conjecture.  Success means a documented,
+   axiom-clean module whose public declarations correspond line-by-line to the
+   manuscript section.  Failure requires a checked false source atom, which is
+   retained as an explicit source-gap/corrected pair.
+3. **(c) Exceptional-set theorem.** Audit the exact current manuscript
+   statement against `problem32_polylog_exceptional`, then formalize the
+   dyadic counting and prime-sum chain from the preceding modules.  Success is
+   a faithful sorry-free theorem; a stale or stronger Lean statement is
+   corrected rather than silently assumed.
+4. **(d) Conditional atom-tail/HM assembly.** Encode the atom-tail and
+   factorial-moment interfaces and prove every downstream conditional
+   implication, without treating those hypotheses as unconditional results.
+   Success is an honest conditional capstone plus a precise residual list.
+
+### Fallback and global terminal conditions
+
+If a headline avenue reaches a checked source gap, continue section-by-section
+on independent proved lemmas so that the formalized prefix keeps growing.  The
+campaign succeeds when all proved manuscript claims in scope are represented
+by faithful, axiom-clean Lean declarations and the remaining conjectural
+inputs are exactly identified; it fails only through checked false statements
+or exhausted avenues recorded with concrete terminal evidence.
