@@ -134,6 +134,160 @@ Varying~$m$ through sufficiently large multiples of~$100$ completes the
 construction.
 \end{proof}
 
+\begin{proposition}[Sharpness of the short-chain energy cap]
+\label{prop:colored-pair-cap-energy-sharp}
+There are infinitely many primes~$p$, integers
+$H<\sqrt p$, and reflection-invariant colorings
+\[
+ \kappa_p:\{0,\ldots,p-1\}\longrightarrow\mathscr Q_p
+\]
+with the following properties.  For every $1\le h<p$,
+\begin{equation}
+ A_{\kappa_p}(h)
+ :=\#\{0\le x<p-h:\kappa_p(x)=\kappa_p(x+h)\}
+ \le3(h-1).
+\label{eq:colored-global-pair-cap}
+\end{equation}
+There is a reflection-invariant collection of four-consecutive-occurrence
+windows in the color fibers such that every selected window
+\begin{enumerate}
+\item has all three gaps at least~$3$ and has span less than~$H$;
+\item has a nonconstant gap triple;
+\item has no reflection-centered adjacent pair.
+\end{enumerate}
+After quotienting the selected windows by reflection, their ordered
+separated energy satisfies
+\begin{equation}
+ E_p^{\mathrm{sep}}\ge\frac{pH}{1920}.
+\label{eq:colored-energy-lower}
+\end{equation}
+Thus the upper bound $E_p^{\mathrm{sep}}\ll pH$ in
+Proposition~\ref{prop:projective-short-chain-energy} is optimal up to an
+absolute constant under the global pair caps and the listed set-theoretic
+window conditions.
+\end{proposition}
+
+\begin{proof}
+Let $Q\ge19$ be prime, put
+\[
+ R=Q-2,\qquad H=6Q,\qquad D=1,\qquad L=RQ,
+\]
+and choose by Bertrand's postulate a prime
+\[
+ 40Q^2<p<80Q^2.
+\]
+Then $H^2=36Q^2<p$, and
+$p-1>4(D+L)$.  For $0\le i<R$, define residues
+$S_i\in\mathbf F_Q$ by
+\[
+ S_0=0,\qquad S_{i+1}=S_i+i+3
+ \quad(0\le i<R-1).
+\]
+For $q\in\mathbf F_Q$, let $\langle q\rangle_Q$ denote its standard
+representative in $\{0,\ldots,Q-1\}$ and set
+\[
+ z_{i,q}=D+iQ+\langle q+S_i\rangle_Q.
+\]
+For fixed~$i$, the points $z_{i,q}$ fill the $i$-th row of the left
+packet
+\[
+ \mathcal P=[D,D+L-1]\cap\mathbf Z.
+\]
+Give $z_{i,q}$ and its reflection $p-1-z_{i,q}$ the common color~$q$.
+The two packets are disjoint.  On their reflection-invariant complement,
+give each two-point reflection orbit a new color, and give the center
+$(p-1)/2$ its own color.  This defines the reflection-invariant
+coloring~$\kappa_p$.
+
+We first prove the global pair cap.  Fix a row separation
+$1\le k<R$ and rows $i,i+k$.  Their relative cyclic shift is
+\[
+ S_{i+k}-S_i
+ \equiv ki+\frac{k(k+5)}2\pmod Q.
+\]
+Since $k\not\equiv0\pmod Q$, this residue is an injective function of~$i$.
+Write its standard representative as~$\sigma$.  As $q$ varies, the
+same-color differences between the two rows are
+\[
+ kQ+\sigma\quad\hbox{with multiplicity }Q-\sigma,
+ \qquad
+ (k-1)Q+\sigma\quad\hbox{with multiplicity }\sigma.
+\]
+For a fixed positive difference~$h$, there is therefore at most one
+contributing row pair of each of these two types, and their multiplicities
+sum to at most~$Q$.  If $h<Q$, only the second type can occur; then
+$k=1$, $\sigma=i+3=h$, and its multiplicity is exactly~$h$.  Hence the
+within-packet count satisfies
+\begin{equation}
+ A_{\mathcal P}(h)\le
+ \begin{cases}
+ 0,&h=1,2,\\
+ h,&3\le h<Q,\\
+ Q,&h\ge Q.
+ \end{cases}
+\label{eq:colored-one-packet-cap}
+\end{equation}
+The reflected packet contributes the same amount.
+
+A color outside the two packets occurs either once or in one reflection
+pair.  Thus all outside colors together contribute at most one pair at
+any fixed~$h$; their nonzero differences are even.  Finally, a same-color
+cross-packet pair has
+\[
+ h\ge p-1-2(D+L-1)>2(D+L).
+\]
+For fixed~$h$, its left endpoint determines its right endpoint, so there
+are at most $L$ such pairs.  The within-packet and cross-packet difference
+ranges are disjoint.  We may now check
+\eqref{eq:colored-global-pair-cap} by ranges.  For $h=1$ the count is
+zero, and for $h=2$ it is at most one.  At $h=3$ it is at most
+$2h=6=3(h-1)$ because the outside differences are even.  For
+$4\le h<Q$ it is at most
+\[
+ 2h+1\le3(h-1).
+\]
+For $Q\le h<L$ it is at most
+$2Q+1\le3(h-1)$.  Between the within-packet and cross-packet ranges it is
+at most one, while in the cross-packet range it is at most
+\[
+ L+1<3(h-1).
+\]
+This proves the pair cap for every~$h$.
+
+It remains to count the short windows.  Consecutive occurrences of
+color~$q$ in successive left-packet rows have gap
+\[
+ i+3\quad\hbox{or}\quad Q+i+3
+ \qquad(0\le i<R-1).
+\]
+These gaps are at least~$3$.  Three successive gaps are pairwise distinct:
+the shifts $i+3$ are distinct, and the two possible value ranges
+$[3,Q-1]$ and $[Q+3,2Q-1]$ are disjoint.  Their sum is at most
+$3(2Q-1)<H$.  Hence every four-row sliding window in either packet has
+the first two asserted properties.  A pair inside the left packet has
+sum less than~$p-1$, while a pair inside the right packet has sum greater
+than~$p-1$; thus the windows are also off-center.
+
+Each color has $R-3=Q-5$ left-packet windows, paired bijectively by
+reflection with the same number of right-packet windows.  Let
+$k=Q-5$ be the number of quotient windows of one color.  Two quotient
+windows have overlapping reflection-invariant supports only if their
+left-packet start rows differ by at most~$3$.  Consequently their ordered
+separated energy is
+\[
+ k(k-1)-2\bigl((k-1)+(k-2)+(k-3)\bigr)
+ =(k-3)(k-4).
+\]
+Summing over the $Q$ packet colors gives
+\[
+ E_p^{\mathrm{sep}}
+ =Q(Q-8)(Q-9)\ge\frac{Q^3}{4}.
+\]
+Since $pH<80Q^2\cdot6Q=480Q^3$, this proves
+\eqref{eq:colored-energy-lower}.  Letting~$Q$ range over the primes
+produces infinitely many examples.
+\end{proof}
+
 \begin{corollary}[Local set constraints do not control labeled separated energy]
 \label{cor:pair-cap-separated-energy}
 For every sufficiently large odd prime~$p$, there is a set

@@ -442,6 +442,24 @@ projective_variance_reduction.tex.  A direct regression through all
 92 primes \(7\le p\le499\) has fail-closed digest
 0796e0f34777aba4a631767076dbedb71503eef4422e19553ad09e702be6566c.
 
+This exponent cannot be improved from the preceding set-theoretic inputs.
+For infinitely many primes, `pair_cap_extremal.tex` constructs a complete
+reflection-invariant coloring satisfying every global fixed-gap cap
+\[
+ \sum_q\#\{x:\kappa_p(x)=\kappa_p(x+h)=q\}\le3(h-1)
+\]
+and selected four-consecutive-occurrence windows with gaps at least~\(3\),
+nonconstant gap triples, and no centered adjacent pair, but with
+\[
+ E_p^{\rm sep}\ge \frac{pH}{1920}.
+\]
+Thus any saving over \(pH\) must use Ap\'ery-specific arithmetic, not only
+the global pair caps and local window axioms.  The row-shift construction
+and all-pair verification have fail-closed digest
+34d156702c31bdde3b7f3d11ae9e8e5cca394a8dddc7b73128de7d1de459b273;
+an independent tmux-11 audit checked the partition, every gap range,
+reflection quotient, and constant.
+
 Direct full-cycle multiplication supplies no further bridge equation.
 For the factorially renormalized solution row
 \(\mathbf v_n=(n!^3u_n,n!^3w_n)\), a return \(N_h(x)=0\) has the exact

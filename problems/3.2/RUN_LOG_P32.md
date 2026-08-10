@@ -647,6 +647,16 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   `projective_variance_reduction.tex`; the 92-prime direct regression has
   SHA-256
   `0796e0f34777aba4a631767076dbedb71503eef4422e19553ad09e702be6566c`.
+- Sharpness of the short-chain cap: `pair_cap_extremal.tex` gives infinitely
+  many complete reflection-invariant colorings satisfying every global
+  fixed-gap cap and all local selected-window conditions, but with
+  `Esep_p>=pH/1920`.  Hence the `O(pH)` estimate cannot be improved from
+  those abstract inputs; further saving must use the Apéry recurrence.
+  `colored_pair_cap_energy_verify.py` checks the partition, all pair gaps,
+  quotient separation, and lower-bound constant for 11 parameters, with
+  SHA-256
+  `34d156702c31bdde3b7f3d11ae9e8e5cca394a8dddc7b73128de7d1de459b273`.
+  An independent tmux-11 proof audit passed every component.
 - Full-cycle bridge audit: for a return `N_h(x)=0`, the renormalized row has
   multiplier `mu_h(x)=-(x+1)^6 N_(h-1)(x+1)`.  Reflection gives
   `mu_h(x) mu_h(p-1-x-h)=(-1)^h prod_(j=1)^h(x+j)^6`.  Hence multiplying a
