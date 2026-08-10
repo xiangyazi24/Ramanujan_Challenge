@@ -718,6 +718,36 @@ mixed/regulator realization or a characteristic-dependent finite-field
 model.  The proof is in `gap_kernel_bivariate.tex`; the exact verifier and an
 independent tmux-11 audit both pass.
 
+Distributing the necessary three factorial Borel orders between the gap and
+total-degree directions does not remove this denominator.  The four natural
+gauges are
+\[
+ W_m^{(r)}(a)=
+ \frac{U_m(a)}{(m!)^{3-r}(a+1)_m^r}
+ =\binom{a+m}{m}^{3-r}V_m(a),\qquad0\le r\le3.
+\]
+They are mutually unit-equivalent on every strict triangle \(a+m<p\), but
+\[
+ W_p^{(r)}(1)=(p+1)^{3-r}c_{p+1},
+ \qquad v_p(c_{p+1})=-3
+\]
+for every prime \(p\ge7\).  Hence none is globally bounded, algebraic, or an
+ordinary rational diagonal/constant term regular at the origin.  This no-go
+is not universal.  With \(\lambda_n=\operatorname{lcm}(1,\ldots,n)\), the
+arithmetic gauge
+\[
+ \Xi_m(a)=6\lambda_{a+m}^3V_m(a)
+\]
+is integral, has only exponential growth, and is still unit-equivalent to
+\(U_m(a)\) whenever \(a+m<p\).  Its lcm multiplier is not a finite
+Gamma/Borel gauge, since \(\lambda_{n+1}/\lambda_n\) equals one off prime
+powers and has a prime spike at every prime power.  Thus an integral
+positive-radius encoding of the exact nonwrapping zero relation exists, but
+its D-finiteness and finite-dimensional arithmetic realization remain open;
+integrality alone gives no far-bridge estimate.  The theorem and verifier are
+`gap_kernel_borel_gauges.tex` and `gap_kernel_borel_gauges_verify.py`; an
+independent eight-point tmux-11 audit passes.
+
 The toric fiber admits a second exact collapse, now in the coefficient
 variable.  For
 \[

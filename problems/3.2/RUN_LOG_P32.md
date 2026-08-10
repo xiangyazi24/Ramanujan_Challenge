@@ -797,6 +797,23 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   110 PDE, 160 operator, and 19 prime-denominator cases.  Full-paper
   compilation and the independent tmux-11 four-point audit pass.  Verifier
   digest: `12fe7bb087e5adfff4bc667c3789a3ca511121734e0f95eaccb90bf0b63df91b`.
+- Borel gauges and lcm escape: the integral two-index kernel satisfies
+  `(1-zP(Theta)+z^2(Theta+1)^6)U=s/(1-s)`.  The four balanced gauges
+  `W_m^(r)=U_m/[m!^(3-r)(a+1)_m^r]=binom(a+m,m)^(3-r)V_m` are all
+  unit-equivalent on `a+m<p`, but
+  `W_p^(r)(1)=(p+1)^(3-r)c_(p+1)` has exact valuation `-3` for every
+  `p>=7`; the propagation identity is `p^3 c_(p+t)=b_t mod p`.
+  Consequently no gauge is globally bounded, algebraic, or an ordinary
+  rational diagonal/CT.  In contrast,
+  `Xi_m(a)=6*lcm(1,...,a+m)^3*V_m(a)` is integral, exponentially bounded,
+  and strict-triangle unit-equivalent to `U_m(a)`.  Its prime-power jump
+  ratio is non-hypergeometric, so it lies outside the finite Borel/Gamma
+  family; no D-finiteness or incidence estimate is claimed.
+  `gap_kernel_borel_gauges_verify.py` passes 120 recurrence, 480 gauge, 232
+  denominator, 210 integrality, and 3974 strict-triangle checks; SHA-256
+  `367814c40e140f5fda1c10f699850697a50b0f5dc7f24fa1ce0264b8f4004c26`.
+  The temporary full-paper build produced 220 pages, and the independent
+  tmux-11 eight-point audit found no issue.
 - Toric Mellin quadratic collapse: eliminating the nonzero fiber of the
   fixed Laurent polynomial gives an exact `(p-2)^2` baseline plus a
   two-variable quadratic-character sum.  Its inner Mellin transform is
