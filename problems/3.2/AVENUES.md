@@ -718,6 +718,31 @@ mixed/regulator realization or a characteristic-dependent finite-field
 model.  The proof is in `gap_kernel_bivariate.tex`; the exact verifier and an
 independent tmux-11 audit both pass.
 
+The finite nonwrapping truncation has an exact Frobenius-boundary law.  For
+\[
+ F_{p,a}^{\triangle}(z)=
+ \sum_{m=0}^{p-a-1}V_m(a)z^m,
+\]
+reduced on the strict triangle, one has
+\[
+ \mathscr D_aF_{p,a}^{\triangle}
+ =a^3-a^3b_{a-1}z^{p-a},\qquad
+ \mathscr L_0(z^aF_{p,a}^{\triangle})
+ =a^3z^a-a^3b_{a-1}z^p.
+\]
+Thus one Cartier extraction reads back \(-a^3b_{a-1}z\).  Summing over
+\(a\) places the entire differentiated Hasse polynomial on total degree
+\(p\).  On a marked fiber \(d_{a-1}=0\), the same Green column is exactly
+\(d_{a+m}/d_a\), so disappearance of the boundary is the original future
+zero problem, not a new condition.  Complete Mellin and Cartier extraction
+are exact but use a moving character/frame, while
+\(\deg F_{p,a}^{\triangle}\ge p-a-2\).  This proves that the natural
+rank-four Green/Dwork compression is circular at its first Frobenius
+boundary; it does not exclude a genuinely new characteristic-dependent
+mixed crystal.  The theorem and its independent verifier are
+`gap_kernel_cartier_defect.tex` and
+`gap_kernel_cartier_defect_verify.py`.
+
 Distributing the necessary three factorial Borel orders between the gap and
 total-degree directions does not remove this denominator.  The four natural
 gauges are

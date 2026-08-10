@@ -797,6 +797,22 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   110 PDE, 160 operator, and 19 prime-denominator cases.  Full-paper
   compilation and the independent tmux-11 four-point audit pass.  Verifier
   digest: `12fe7bb087e5adfff4bc667c3789a3ca511121734e0f95eaccb90bf0b63df91b`.
+- Strict-triangle Cartier defect: for
+  `F_triangle(p,a)=sum_(m=0)^(p-a-1) V_m(a)z^m`,
+  `D_a F_triangle=a^3-a^3*b_(a-1)z^(p-a)` and, after conjugation,
+  `L_0(z^a F_triangle)=a^3z^a-a^3*b_(a-1)z^p`.  Hence one Cartier
+  extraction recovers `-a^3*b_(a-1)z`.  The bivariate sum stores the whole
+  differentiated Hasse section on total degree `p`.  If a marked solution
+  `d=b-qc` has `d_(a-1)=0`, then `V_m(a)=d_(a+m)/d_a` exactly; the clean
+  boundary is therefore tautological.  Mellin/Cartier coefficient
+  extraction is exact but uses all moving indices, and the direct
+  truncation degree is at least `p-a-2`.
+  `gap_kernel_cartier_defect_verify.py` passes 4512 defect, 264 boundary,
+  3571 marked-fiber, 7968 extraction, 756 degree, and 515 bivariate checks;
+  SHA-256
+  `e6e6de426c90a20a783b7e46c2207c184dbd8c611c91eedc6b05d08431c10b9f`.
+  The temporary full-paper build produced 216 pages; the independent
+  tmux-11 audit found no issue.
 - Borel gauges and lcm escape: the integral two-index kernel satisfies
   `(1-zP(Theta)+z^2(Theta+1)^6)U=s/(1-s)`.  The four balanced gauges
   `W_m^(r)=U_m/[m!^(3-r)(a+1)_m^r]=binom(a+m,m)^(3-r)V_m` are all
