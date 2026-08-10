@@ -35,3 +35,65 @@ jobs:
       - name: Hash output
         shell: bash
         run: sha256sum q7174-shard-${{ matrix.shard }}.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q7174-shard-${{ matrix.shard }}
+          path: q7174-shard-${{ matrix.shard }}.txt
+          if-no-files-found: error
+          retention-days: 1
+
+  aggregate:
+    needs: scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: q7174-shard-*
+          merge-multiple: true
+      - name: Verify and aggregate exact outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(find . -maxdepth 1 -name 'q7174-shard-*.txt' | wc -l)" -eq 16
+          test "$(grep -h '^Q7174_FIRST_NONREFLECTION none$' q7174-shard-*.txt | wc -l)" -eq 16
+          if grep -h '^Q7174_FIRST_NONREFLECTION ' q7174-shard-*.txt | grep -v ' none$'; then
+            echo 'unexpected nonreflection witness' >&2
+            exit 1
+          fi
+          grep -h '^Q7174_SUMMARY' q7174-shard-*.txt | sort -V | tee q7174-summaries.txt
+          awk '
+            /^Q7174_SUMMARY/ {
+              for (i=1; i<=NF; ++i) {
+                split($i,a,"=")
+                if (a[1]=="primes") primes+=a[2]
+                if (a[1]=="raw_total") raw+=a[2]
+                if (a[1]=="orbit_total") orbits+=a[2]
+                if (a[1]=="max_raw" && a[2]>maxraw) maxraw=a[2]
+                if (a[1]=="max_reflection_quotient" && a[2]>maxq) maxq=a[2]
+              }
+            }
+            END {
+              printf("Q7174_AGGREGATE primes=%d raw_total=%d orbit_total=%d max_raw=%d max_reflection_quotient=%d nonreflection_witnesses=0\n", primes, raw, orbits, maxraw, maxq)
+            }
+          ' q7174-summaries.txt | tee q7174-aggregate.txt
+          grep -h '^Q7174_FIRST_RAW p=' q7174-shard-*.txt \
+            | sed -E 's/^Q7174_FIRST_RAW p=([0-9]+).*/\1 &/' \
+            | sort -n | head -n 1 | cut -d' ' -f2- | tee q7174-first-raw.txt
+          grep -h '^Q7174_FIRST_RAW orbit=' q7174-shard-*.txt \
+            | grep -E 'canonical start=360 |reflected start=901 ' \
+            | sort | tee q7174-first-raw-chains.txt
+          sha256sum q7174-shard-*.txt | sort -k2 | tee q7174-manifest.sha256
+          sha256sum q7174-summaries.txt q7174-aggregate.txt q7174-first-raw.txt \
+            q7174-first-raw-chains.txt q7174-manifest.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q7174-aggregate
+          path: |
+            q7174-summaries.txt
+            q7174-aggregate.txt
+            q7174-first-raw.txt
+            q7174-first-raw-chains.txt
+            q7174-manifest.sha256
+          if-no-files-found: error
+          retention-days: 1
