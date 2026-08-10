@@ -807,13 +807,19 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   rational diagonal/CT.  In contrast,
   `Xi_m(a)=6*lcm(1,...,a+m)^3*V_m(a)` is integral, exponentially bounded,
   and strict-triangle unit-equivalent to `U_m(a)`.  Its prime-power jump
-  ratio is non-hypergeometric, so it lies outside the finite Borel/Gamma
-  family; no D-finiteness or incidence estimate is claimed.
+  ratio is non-hypergeometric.  A CRT plus Dirichlet isolation proves that
+  `6*lcm(1,...,n)^3` is not P-recursive, hence the bivariate gauged series
+  is not D-finite.  Direct interpolation of its zeroth gap slice modulo `p`
+  has degree at least `p-P(p)=p-O(p/log p)`.  The gauge therefore has no
+  fixed holonomic or bounded-degree finite-field complexity, and, being a
+  strict-triangle unit, leaves all far-bridge and selected-chain incidences
+  exactly unchanged.
   `gap_kernel_borel_gauges_verify.py` passes 120 recurrence, 480 gauge, 232
-  denominator, 210 integrality, and 3974 strict-triangle checks; SHA-256
-  `367814c40e140f5fda1c10f699850697a50b0f5dc7f24fa1ce0264b8f4004c26`.
-  The temporary full-paper build produced 220 pages, and the independent
-  tmux-11 eight-point audit found no issue.
+  denominator, 210 integrality, 3974 strict-triangle, and 106
+  prime-power/interpolation checks; SHA-256
+  `ec9b9b72d25a6d80350b9da47036c62c4d87c72707b2638496132914acb421f9`.
+  The temporary full-paper build produced 218 pages, and the independent
+  tmux-11 audit found no issue.
 - Toric Mellin quadratic collapse: eliminating the nonzero fiber of the
   fixed Laurent polynomial gives an exact `(p-2)^2` baseline plus a
   two-variable quadratic-character sum.  Its inner Mellin transform is

@@ -67,6 +67,34 @@ def lcm_through(index: int) -> int:
     return result
 
 
+def prime_power_base(value: int):
+    if value < 2:
+        return None
+    for prime in primes_through(value):
+        power = prime
+        while power < value:
+            power *= prime
+        if power == value:
+            return prime
+    return None
+
+
+def interpolation_degree(values, prime: int) -> int:
+    """Degree of the unique polynomial of degree < p on F_p."""
+
+    assert len(values) == prime
+    differences = [value % prime for value in values]
+    degree = -1
+    for order in range(prime):
+        if differences[0]:
+            degree = order
+        differences = [
+            (differences[index + 1] - differences[index]) % prime
+            for index in range(len(differences) - 1)
+        ]
+    return degree
+
+
 def valuation_integer(value: int, prime: int) -> int:
     if value == 0:
         raise ValueError("valuation of zero")
@@ -96,6 +124,7 @@ def main() -> None:
     denominator_checks = 0
     integrality_checks = 0
     triangle_checks = 0
+    complexity_checks = 0
 
     for start in range(1, 11):
         values = restart_values(start, 12)
@@ -176,12 +205,33 @@ def main() -> None:
                 )
                 triangle_checks += 1
 
+    previous_lcm = lcm_through(1)
+    for index in range(2, 91):
+        current_lcm = lcm_through(index)
+        base = prime_power_base(index)
+        assert current_lcm // previous_lcm == (base if base else 1)
+        previous_lcm = current_lcm
+        complexity_checks += 1
+
+    for prime in primes_through(73):
+        if prime < 11:
+            continue
+        values = [6 * lcm_through(index) ** 3 for index in range(prime)]
+        degree = interpolation_degree(values, prime)
+        prime_powers = sum(
+            prime_power_base(index) is not None
+            for index in range(2, prime)
+        )
+        assert degree >= prime - prime_powers
+        complexity_checks += 1
+
     print("gap_kernel_borel_gauges_verify: PASS")
     print(f"recurrence_checks={recurrence_checks}")
     print(f"gauge_checks={gauge_checks}")
     print(f"denominator_checks={denominator_checks}")
     print(f"integrality_checks={integrality_checks}")
     print(f"triangle_checks={triangle_checks}")
+    print(f"complexity_checks={complexity_checks}")
 
 
 if __name__ == "__main__":

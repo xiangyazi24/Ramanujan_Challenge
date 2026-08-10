@@ -79,6 +79,32 @@ The following statements hold.
   a finite product of fixed shifted factorials and a rational prefactor.
   Hence this construction lies outside the finite Borel/Gamma family; it
   shows that the denominator obstruction in part~(3) is not universal.
+
+\item The arithmetic escape in part~(4) is not holonomic.  More precisely,
+  \[
+   \mathcal X(s,z)\quad\hbox{is not D-finite over }\mathbb Q(s,z).
+  \]
+  Consequently it is not an ordinary diagonal of a fixed rational
+  function, nor a period germ of a fixed finite-rank algebraic
+  Gauss--Manin system.
+
+  This failure persists quantitatively after reduction.  Put
+  \[
+   \mathcal P(p)=
+   \#\{q^e: q\text{ prime},\ e\geq1,\ 2\leq q^e\leq p-1\}.
+  \]
+  If \(p\geq11\) and \(Q_p\in\mathbb F_p[X]\) satisfies
+  \[
+   Q_p(n)=6\lambda_n^3\qquad(0\leq n<p),
+  \]
+  then
+  \begin{equation}
+   \deg Q_p\geq p-\mathcal P(p)
+   =p-O\!\left(\frac p{\log p}\right).
+   \label{eq:lcm-gauge-interpolation-degree}
+  \end{equation}
+  Thus even the zeroth \(z\)-slice has asymptotically full direct
+  polynomial complexity modulo~\(p\).
 \end{enumerate}
 \end{proposition}
 
@@ -171,16 +197,102 @@ If this ratio were a rational function of~$n$, its equality to~$1$ at
 infinitely many integers would force it to be identically~$1$, contrary to
 the infinitely many prime-power spikes.  A finite product of fixed shifted
 Gamma factors has rational consecutive ratio.  This proves the final
-scope statement.
+scope statement in part~(4).
+
+It remains to prove part~(5).  Put $A_n=6\lambda_n^3$.  We first show
+that $(A_n)$ is not P-recursive.  Suppose to the contrary that
+\begin{equation}
+ \sum_{j=0}^r R_j(n)A_{n+j}=0
+ \qquad(n\geq n_0)
+ \label{eq:lcm-hypothetical-recurrence}
+\end{equation}
+for polynomials $R_0,\ldots,R_r\in\mathbb Q[X]$, not all zero.  The case
+$r=0$ is immediate, so assume $r\geq1$.
+
+For each $1\leq i\leq r$, choose two distinct primes
+$\ell_i,\ell_i'$, with all $2r$ primes distinct, and impose
+\[
+ n\equiv-i\pmod{\ell_i\ell_i'}.
+\]
+The Chinese remainder theorem supplies infinitely many such positive
+integers~$n$.  Every $n+i$ is divisible by two distinct primes and is
+therefore not a prime power.  For all sufficiently large members of the
+progression,
+\[
+ A_n=A_{n+1}=\cdots=A_{n+r}.
+\]
+Substitution in~\eqref{eq:lcm-hypothetical-recurrence} shows that
+\[
+ S(X):=\sum_{j=0}^rR_j(X)
+\]
+vanishes at infinitely many integers, and hence $S=0$.
+
+Fix $1\leq k\leq r$.  For each nonzero integer
+$d\in\{1-k,\ldots,r-k\}$, choose two new distinct primes
+$\ell_d,\ell_d'>r+1$, all mutually distinct, and impose
+\[
+ q\equiv-d\pmod{\ell_d\ell_d'}.
+\]
+The resulting residue class is coprime to its modulus.  Dirichlet's theorem
+therefore gives infinitely many primes~$q$ in that class.  Put $n=q-k$.
+Every $q+d$ in the recurrence window, except $q$ itself, is divisible
+by two distinct primes and is not a prime power.  Since
+\[
+ \frac{A_t}{A_{t-1}}=
+ \begin{cases}
+  q^3,&t=q^e\text{ for a prime }q,\\
+  1,&t\text{ is not a prime power},
+ \end{cases}
+\]
+there is a nonzero common value $B$ such that
+\[
+ A_{n+j}=B\quad(j<k),\qquad
+ A_{n+j}=q^3B\quad(j\geq k).
+\]
+Using $S=0$, equation~\eqref{eq:lcm-hypothetical-recurrence} becomes
+\[
+ (q^3-1)\sum_{j=k}^rR_j(q-k)=0.
+\]
+It holds for infinitely many primes~$q$, so
+$\sum_{j=k}^rR_j=0$ as a polynomial.  Descending from $k=r$ to~$1$
+gives $R_r=\cdots=R_1=0$, and then $S=0$ gives $R_0=0$, a
+contradiction.  Hence $(A_n)$ is not P-recursive.
+
+The zeroth $z$-slice of the arithmetic gauge is
+\[
+ [z^0]\mathcal X(s,z)=6\sum_{a\geq1}\lambda_a^3s^a.
+\]
+Coefficient extraction from a multivariate D-finite series preserves
+D-finiteness, whereas a univariate series is D-finite precisely when its
+coefficient sequence is P-recursive.  Thus $\mathcal X$ is not D-finite.
+Ordinary rational diagonals and finite-rank algebraic Gauss--Manin period
+germs are D-finite, giving the two stated consequences.
+
+Finally, let $D_p(X)=Q_p(X)-Q_p(X-1)$.  If
+$1\leq n<p$ is not a prime power, then
+$\lambda_n=\lambda_{n-1}$, so $D_p(n)=0$.  On the other hand,
+\[
+ D_p(2)=6(\lambda_2^3-\lambda_1^3)=42\ne0\pmod p
+ \qquad(p\geq11).
+\]
+Thus $D_p$ is nonzero and has at least
+$(p-1)-\mathcal P(p)$ distinct roots.  Since
+$\deg D_p\leq\deg Q_p-1$, this proves the first inequality in
+\eqref{eq:lcm-gauge-interpolation-degree}.  The number of prime powers of
+exponent at least two below~$p$ is $O(\sqrt p\log p)$, while
+$\pi(p)=O(p/\log p)$; the displayed asymptotic follows.
 \end{proof}
 
 \begin{remark}[What the lcm gauge does not yet provide]
 \label{rem:lcm-gap-gauge-scope}
 The series $\mathcal X$ is an integral positive-radius encoding of the exact
 nonwrapping zero relation.  Proposition~\ref{prop:gap-kernel-borel-gauges}
-does not show that it is D-finite, algebraic, or a fixed rational period.
-Nor does integrality alone bound its reductions modulo~$p$.  The lcm gauge
-therefore identifies a genuine escape from the denominator obstruction,
-but it does not yet estimate the far-bridge incidence or the selected
-short-chain mass.
+shows that it is not D-finite and that direct polynomial models of its
+reductions have degree $p-O(p/\log p)$.  It does not decide differential
+algebraicity, and it does not exclude every nonlinear or
+characteristic-dependent trace realization.  More importantly, on the
+strict triangle the gauge only multiplies every gap equation by a unit, so
+all far-bridge incidences and selected short-chain windows are exactly
+unchanged.  The lcm gauge therefore identifies a genuine escape from the
+denominator obstruction, but not an incidence estimate.
 \end{remark}

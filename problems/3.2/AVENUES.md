@@ -741,12 +741,21 @@ arithmetic gauge
 is integral, has only exponential growth, and is still unit-equivalent to
 \(U_m(a)\) whenever \(a+m<p\).  Its lcm multiplier is not a finite
 Gamma/Borel gauge, since \(\lambda_{n+1}/\lambda_n\) equals one off prime
-powers and has a prime spike at every prime power.  Thus an integral
-positive-radius encoding of the exact nonwrapping zero relation exists, but
-its D-finiteness and finite-dimensional arithmetic realization remain open;
-integrality alone gives no far-bridge estimate.  The theorem and verifier are
+powers and has a prime spike at every prime power.  These spikes give a
+strict obstruction: a CRT--Dirichlet isolation argument proves that
+\((6\lambda_n^3)\) is not P-recursive, so the bivariate lcm-gauged series is
+not D-finite.  Moreover, any polynomial over \(\mathbb F_p\) representing
+its zeroth gap slice has degree at least
+\[
+ p-\#\{q^e:2\le q^e<p\}=p-O(p/\log p).
+\]
+Thus an integral positive-radius encoding of the exact nonwrapping zero
+relation exists, but it has asymptotically full direct finite-field
+complexity.  Since the gauge is a unit on the strict triangle, it leaves
+every far-bridge incidence and selected short-chain window exactly
+unchanged.  The theorem and verifier are
 `gap_kernel_borel_gauges.tex` and `gap_kernel_borel_gauges_verify.py`; an
-independent eight-point tmux-11 audit passes.
+independent audit passes.
 
 The toric fiber admits a second exact collapse, now in the coefficient
 variable.  For
