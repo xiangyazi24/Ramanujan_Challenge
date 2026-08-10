@@ -6,11 +6,24 @@ For the positional-gap continuants ``N_h``, form the exact linear system for
     L = sum_{j=-r}^r A_j(x) T^j,       deg A_j <= d,
     L N_h = lambda_h N_h               (1 <= h <= m).
 
-The system has integer coefficients.  If its reduction modulo one prime has
-one-dimensional kernel, then its rational kernel is also one-dimensional;
-the scalar identity operator already spans that kernel.  Thus the computation
-is a rigorous exclusion for the displayed finite ansatz, not evidence about
-arbitrary rational-coefficient or higher-order operators.
+The first system has integer coefficients.  If its reduction modulo one
+prime has one-dimensional kernel, then its rational kernel is also
+one-dimensional; the scalar identity operator already spans that kernel.
+
+The script also applies the necessary divisibility condition for a rational
+operator with a common denominator ``D(x)``.  After clearing denominators,
+
+    sum_j A_j(x) N_h(x+j) = lambda_h D(x) N_h(x)
+
+forces ``N_h`` to divide the left side.  The modular remainder system checks
+that the only bounded-degree numerators with this property are the obvious
+multiplication operators ``A_0(x)``.  Polynomial remainders use inverses of
+the leading coefficients; the chosen prime is checked not to divide them, so
+the modular matrix is a valid reduction of the rational remainder system.
+
+Thus the computation is a rigorous exclusion for the displayed finite
+ansatz.  It says nothing about cleared numerator degrees beyond the chosen
+bound or about higher-order operators.
 """
 
 from __future__ import annotations
@@ -123,6 +136,57 @@ def main() -> None:
         print("verdict=SCALAR_IDENTITY_ONLY_OVER_Q")
     else:
         print("verdict=INCONCLUSIVE_NONTRIVIAL_MODULAR_KERNEL")
+
+    for height in range(2, args.height + 1):
+        assert polynomials[height].degree() == 3 * (height - 1)
+        assert polynomials[height].leading_coefficient() != 0
+
+    divisibility_columns = []
+    for shift, degree in operator_terms:
+        column = []
+        for height in range(2, args.height + 1):
+            polynomial = polynomials[height]
+            remainder = (
+                variable**degree * polynomial(variable + shift)
+            ).mod(polynomial)
+            column.extend(
+                remainder[power] if power <= remainder.degree() else field.zero()
+                for power in range(polynomial.degree())
+            )
+        divisibility_columns.append(column)
+
+    divisibility_system = matrix(field, divisibility_columns).transpose()
+    for degree in range(args.degree + 1):
+        multiplication = vector(field, len(operator_terms))
+        multiplication[operator_column[0, degree]] = 1
+        assert divisibility_system * multiplication == 0
+
+    divisibility_digest = hashlib.sha256()
+    divisibility_digest.update(
+        f"{args.prime},{args.radius},{args.degree},{args.height}\n".encode("ascii")
+    )
+    for row in divisibility_system.rows():
+        divisibility_digest.update(
+            ",".join(str(int(entry)) for entry in row).encode("ascii")
+        )
+        divisibility_digest.update(b"\n")
+
+    divisibility_rank = int(divisibility_system.rank())
+    divisibility_nullity = int(
+        divisibility_system.ncols() - divisibility_rank
+    )
+    print(
+        "RATIONAL_DIVISIBILITY_SCAN"
+        f" rows={divisibility_system.nrows()}"
+        f" cols={divisibility_system.ncols()}"
+        f" rank={divisibility_rank} nullity={divisibility_nullity}"
+        f" multiplication_dimension={args.degree + 1}"
+    )
+    print(f"divisibility_sha256={divisibility_digest.hexdigest()}")
+    if divisibility_nullity == args.degree + 1:
+        print("rational_verdict=MULTIPLICATION_NUMERATORS_ONLY_OVER_Q")
+    else:
+        print("rational_verdict=INCONCLUSIVE_EXTRA_DIVISIBILITY_KERNEL")
 
 
 if __name__ == "__main__":

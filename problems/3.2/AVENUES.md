@@ -359,6 +359,70 @@ remaining theorem concerns only genuinely long bridges.  An independent
 tmux-11 audit confirmed the canonical orientation, the Smith-nullity
 inequality under degree drop, and the resultant-height calculation.
 
+The long part admits a sharper exact reduction before any resultant is
+introduced.  Let \(B_p(K)\) count a selected oriented first chain together
+with an arbitrary later occurrence of its endpoint state at bridge greater
+than~\(K\), and let \(A_p^{\rm nw}(K)\) count nonwrapping triples
+\[
+ x<y<z,\qquad 2\le y-x\le\lfloor\sqrt p\rfloor,\qquad z-y>K,
+ \qquad \pi_p(x)=\pi_p(y)=\pi_p(z).
+\]
+Canonical orientation and consecutiveness give injective maps, with no
+reflection factor,
+\[
+ E_p^{\rm far}(K)\le B_p(K)\le A_p^{\rm nw}(K).
+\]
+The last quantity is exactly
+\[
+ \sum_{s=2}^{\lfloor\sqrt p\rfloor}
+ \sum_{G=K+1}^{p-1-s}
+ \#\{0\le x\le p-1-s-G:
+       N_s(x)=N_G(x+s)=0\pmod p\}.
+\]
+Only after dropping the displayed interval restriction may it be bounded by
+the corresponding full-\(\mathbf F_p\) common-root mass.  In particular,
+\(\deg\gcd_{\mathbf F_p[x]}(N_s(x),N_G(x+s))\) is not the exact observable:
+it can also count nonsplit irreducible factors.  The complete proof is in
+`far_bridge_incidence.tex`.
+
+The occurrence-list identity makes the two majorants directly computable.
+For a fiber \(r_0<\cdots<r_t\), put
+\[
+ L_i=\#\{j<i:2\le r_i-r_j\le\lfloor\sqrt p\rfloor\},
+ \qquad
+ R_i(K)=\#\{k>i:r_k-r_i>K\}.
+\]
+Then its contribution to \(A_p^{\rm nw}(K)\) is
+\(\sum_iL_iR_i(K)\), while its contribution to \(B_p(K)\) is
+\(\sum_i\mathbf1_{\{(r_{i-3},\ldots,r_i)\ \mathrm{selected}\}}R_i(K)\).
+The exact C++ implementation `long_bridge_incidence_scan.cpp` gives the
+following complete dyadic data, with
+\(H=\lfloor\sqrt{2X}\rfloor\) and
+\(K=\lfloor H/\sqrt{\log X}\rfloor\):
+
+| \(X\) | primes | \(K\) | \(A^{\rm nw}(K)\) | \(B(K)\) | selected raw chains | \(A^{\rm nw}(K)/(\#p\sqrt X)\) |
+|---:|---:|---:|---:|---:|---:|---:|
+| 1,000 | 135 | 16 | 8,356 | 4 | 2 | 1.9573 |
+| 5,000 | 560 | 34 | 81,018 | 6 | 2 | 2.0460 |
+| 10,000 | 1,033 | 46 | 214,495 | 12 | 4 | 2.0764 |
+| 20,000 | 1,941 | 63 | 575,531 | 0 | 0 | 2.0967 |
+| 50,000 | 4,459 | 96 | 2,099,977 | 8 | 2 | 2.1062 |
+| 100,000 | 8,392 | 131 | 5,614,535 | 16 | 4 | 2.1157 |
+
+The source digest is
+`0f9058790265c68ddc05a78be82b31d18cd0e7b118f9c1762a3967ae900e19c2`.
+It passes strict `clang++` compilation and ASan/UBSan.  The independent
+quadratic verifier `long_bridge_incidence_verify.py` does not use the
+occurrence-list counting algorithm: it enumerates every pair and triple and
+also checks pointwise, for every nonwrapping \((x,h)\) in its default dyad,
+that \(N_h(x)=0\) if and only if \(\pi_p(x)=\pi_p(x+h)\).  Its \(X=70\)
+regression passes with output digest
+`34dae2b3051dc6063aef27f9c1357530c6e79b9e325ea646b85eb5e1a7df52c2`.
+The stable normalization in the table is consistent with
+\(A^{\rm nw}(K)\asymp(\#p)\sqrt X\), already far below the required budget,
+and the conditioned count is much smaller still.  This remains finite
+evidence: neither scanner supplies the missing uniform arithmetic estimate.
+
 Two possible height/compression shortcuts have now been audited exactly.
 First, `separated_resultant_deflation_probe.py` distinguishes the full
 resultant, the resultant after deleting every forced even center factor, and
@@ -384,7 +448,7 @@ Second, a hidden low-order polynomial bispectral operator is absent in a
 large explicit ansatz.  If
 
 \[
- L=\sum_{j=-r}^{r}A_j(x)T^j,qquad \deg A_j\le d,qquad
+ L=\sum_{j=-r}^{r}A_j(x)T^j,\qquad \deg A_j\le d,\qquad
  LN_h=\lambda_hN_h,
 \]
 
@@ -392,9 +456,18 @@ then the exact coefficient system for \(1\le h\le20\), reduced modulo
 \(1000003\), has rank \(546\) in \(547\) columns for \(r=8,d=30\).
 Its kernel is therefore exactly the scalar identity over \(\mathbb Q\), which
 also excludes every sub-ansatz \(r\le8,d\le30\).  The reproducible certificate
-is `bispectral_operator_scan.py`.  This does not exclude rational-coefficient
-operators with nonconstant denominators, gauges, or larger order; it only
-closes the most direct classical-polynomial compression shortcut.
+is `bispectral_operator_scan.py`.  The same script also handles a common
+rational denominator without solving a bilinear system.  After clearing the
+denominator, any rational eigenoperator must satisfy
+\[
+ N_h(x)\mid\sum_{j=-r}^{r}A_j(x)N_h(x+j).
+\]
+The corresponding modular remainder matrix has shape \(570\)-by-\(527\),
+rank \(496\), and kernel dimension \(31=d+1\), exactly the subspace of
+multiplication numerators \(A_0(x)\).  Hence every common-denominator rational
+operator whose cleared numerators have \(r\le8,d\le30\) is scalar.  This does
+not exclude a gauge whose conjugated cleared numerators exceed the degree
+bound, or operators of larger order.
 
 The optimized exact census in
 \`primitive_projective_prime_scan.cpp\` groups both raw and

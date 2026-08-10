@@ -616,6 +616,41 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   `K=H/sqrt(log X)` meets the full `X^2/log X` budget.  Only longer
   bridges remain.  The independent tmux-11 audit passed the orientation,
   injectivity, degree-drop, and height arguments.
+- Far-incidence hierarchy: proved in `far_bridge_incidence.tex`, with exact
+  injections `Efar_p(K) <= B_p(K) <= A_nw,p(K)`.  Here `B_p` retains the
+  selected first four-return chain and drops only the second chain, whereas
+  `A_nw,p` counts all nonwrapping triples `x<y<z` in one projective fiber
+  with `2<=y-x<=sqrt(p)` and `z-y>K`.  The exact continuant formula keeps
+  `0<=x<=p-1-s-G`; removing this restriction gives only an upper bound by
+  full-`F_p` common roots.  A polynomial gcd degree is not the observable,
+  because nonsplit irreducible factors contribute to the degree but no
+  `F_p` root.
+- Exact long-bridge census: `long_bridge_incidence_scan.cpp` groups the
+  projective orbit by state and counts the occurrence-list formula directly.
+  For `X=1000,5000,10000,20000,50000,100000`, the far nonwrapping masses are
+  respectively `8356,81018,214495,575531,2099977,5614535`; after division by
+  `(# dyadic primes)*sqrt(X)` the ratios are
+  `1.9573,2.0460,2.0764,2.0967,2.1062,2.1157`.  The corresponding conditioned
+  masses `B(K)` are only `4,6,12,0,8,16`, from raw selected-chain counts
+  `2,2,4,0,2,4`.  These are complete finite dyadic data, not an asymptotic
+  estimate.  Source SHA-256 is
+  `0f9058790265c68ddc05a78be82b31d18cd0e7b118f9c1762a3967ae900e19c2`;
+  strict compilation and ASan/UBSan pass.
+- Independent long-bridge regression: `long_bridge_incidence_verify.py`
+  directly enumerates all pairs/triples instead of using occurrence-list
+  binary searches.  It also evaluates every nonwrapping gap continuant and
+  verifies `N_h(x)=0 iff pi_p(x)=pi_p(x+h)`.  The default `X=70` regression
+  exactly matches the C++ aggregate and has output digest
+  `34dae2b3051dc6063aef27f9c1357530c6e79b9e325ea646b85eb5e1a7df52c2`.
+- ChatGPT audit triage: Q7215 independently found the occurrence-list
+  enumeration, but its identification of actual `F_p` roots with polynomial
+  gcd degree was corrected.  Q7212's full-cycle argument was rejected because
+  it again propagated the row of two scalar solutions `(B_n,D_n)` by the
+  one-solution companion matrix; the asserted rank-one monodromy therefore
+  does not apply to the projective orbit.  Q7217 supplied no long-bridge
+  estimate, and its proposed per-`(p,s)` bound had a summation error: it gives
+  `p^(3/2) log p` per prime, not the claimed dyadic target.  None of these
+  claims is used in the proof or in the census.
 - Carrier/center deflation was separated into exact stages in
   `separated_resultant_deflation_probe.py`.  At `H=12,Gmax=36`, the full,
   center-deflated, and carrier-deflated aggregate bit lengths are
@@ -641,8 +676,15 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   `1000003` has shape `1190x547`, rank `546`, and nullity one; SHA-256
   `6fcb4e496ac5a583466a9e779c87fb94c239a5c7feab85f9d30af93bc03fe31a`.
   Since the scalar identity supplies that kernel, the rational kernel is
-  exactly scalar and every sub-ansatz is excluded.  Rational denominators,
-  nontrivial gauges, and higher-order operators remain outside the claim.
+  exactly scalar and every sub-ansatz is excluded.  The common-denominator
+  rational extension reduces linearly to the necessary divisibilities
+  `N_h | sum_j A_j(x)N_h(x+j)`.  Its modular remainder matrix has shape
+  `570x527`, rank `496`, and kernel dimension `31=d+1`, exactly the
+  multiplication numerators; digest
+  `fc02fe448531fc2b6625f709342bb1b6736bfabda7bcf2a737ecd41f63f8bfd3`.
+  Thus rational operators are also scalar whenever their cleared numerators
+  fit `r<=8,d<=30`.  Gauges whose conjugated numerators exceed this bound and
+  higher-order operators remain outside the claim.
 - Correct far range: `s<=H~sqrt(X)` but the canonical bridge can satisfy
   `G~p~X`.  The generic height sum over all `s,G` is `X^(3+o(1))`, one
   factor `X` above the raw `X^(2+o(1))` budget.  A lower bound for residual

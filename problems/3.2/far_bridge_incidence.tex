@@ -1,0 +1,147 @@
+\begin{proposition}[Far-bridge incidence majorants]
+\label{prop:far-bridge-incidence}
+Fix an odd prime~$p$.  Let $\pi_p$ be the projective Ap\'ery orbit on
+$\{0,\ldots,p-1\}$, and let $\Gamma_p(q)$ be a reflection-invariant
+collection of filtered four-consecutive-occurrence windows as in
+Proposition~\ref{prop:projective-variance-reduction}.  Assume that every
+selected window has span at most
+\[
+ H_p=\lfloor\sqrt p\rfloor.
+\]
+For each ordered separated pair of distinct reflection orbits, make the
+deterministic choice of oriented representatives used in
+Proposition~\ref{prop:near-bridge-energy}, and write its bridge as~$G$.
+Let $E_p^{\mathrm{far}}(K)$ count the pairs for which $G>K$, where
+$1\le K<p$ is an integer.
+
+Define the conditioned incidence
+\[
+ B_p(K)=
+ \sum_{\substack{q\in\mathbf P^1(\mathbf F_p)\\
+                   \gamma=(x_0,x_1,x_2,x_3)\in\Gamma_p(q)}}
+ \#\{z:x_3+K<z<p,\ \pi_p(z)=\pi_p(x_3)\},
+\]
+and the nonwrapping triple incidence
+\[
+ A_p^{\mathrm{nw}}(K)=
+ \#\left\{(x,y,z):
+ \begin{array}{c}
+ 0\le x<y<z<p,\quad 2\le y-x\le H_p,\quad z-y>K,\\
+ \pi_p(x)=\pi_p(y)=\pi_p(z)
+ \end{array}
+ \right\}.
+\]
+Then
+\begin{equation}
+ E_p^{\mathrm{far}}(K)\le B_p(K)\le A_p^{\mathrm{nw}}(K).
+\label{eq:far-incidence-hierarchy}
+\end{equation}
+Moreover, if $N_h$ denotes the positional-gap continuant, then
+\begin{equation}
+\begin{split}
+ A_p^{\mathrm{nw}}(K)
+ ={}&\sum_{s=2}^{H_p}\ \sum_{G=K+1}^{p-1-s}
+ \#\bigl\{x\in\mathbf Z:
+ 0\le x\le p-1-s-G,\\[-2pt]
+ &\hspace{105pt}
+ N_s(x)\equiv N_G(x+s)\equiv0\pmod p\bigr\}.
+\end{split}
+\label{eq:far-incidence-continuants}
+\end{equation}
+In particular, it is bounded above by the unrestricted affine-root mass
+\begin{equation}
+ \widetilde A_p(K)=
+ \sum_{s=2}^{H_p}\ \sum_{G=K+1}^{p-1-s}
+ \#\{u\in\mathbf F_p:
+       N_s(u)=N_G(u+s)=0\}.
+\label{eq:far-incidence-affine}
+\end{equation}
+The summands in~\eqref{eq:far-incidence-affine} count actual
+$\mathbf F_p$-roots; they are not degrees of polynomial greatest common
+divisors.
+\end{proposition}
+
+\begin{proof}
+Take an ordered separated pair counted by
+$E_p^{\mathrm{far}}(K)$.  Its deterministic representatives have the form
+\[
+ \gamma=(x_0,x_1,x_2,x_3),\qquad
+ \delta=(y_0,y_1,y_2,y_3),
+ \qquad x_3<y_0,\qquad y_0-x_3>K.
+\]
+Both windows belong to the same projective fiber, so
+$\pi_p(y_0)=\pi_p(x_3)$.  Map the ordered quotient pair to
+$(\gamma,y_0)$.
+
+This map is injective.  Indeed, $\gamma$ determines the first reflection
+orbit.  Given $y_0$, the next three occurrences of
+$\pi_p(y_0)$ are uniquely determined by the ordered fiber.  Hence there is
+at most one four-consecutive-occurrence window beginning at~$y_0$, and, when
+the image comes from a selected pair, it is precisely~$\delta$.  Thus the
+second reflection orbit is recovered as well.  The image is among the
+incidences counted by~$B_p(K)$, proving the first inequality in
+\eqref{eq:far-incidence-hierarchy}.  No factor of two is lost here: the
+canonical choice assigns one oriented pair to each ordered pair of quotient
+orbits, whereas $B_p(K)$ already sums over all selected orientations.
+
+For an incidence $(\gamma,z)$ counted by~$B_p(K)$, set
+\[
+ x=x_0,\qquad y=x_3.
+\]
+The selected-window hypotheses give
+$2\le y-x\le H_p$, and
+\[
+ \pi_p(x)=\pi_p(y)=\pi_p(z),\qquad z-y>K.
+\]
+The map $(\gamma,z)\mapsto(x,y,z)$ is injective, because the two internal
+indices of a four-consecutive-occurrence window are the first two
+occurrences of $\pi_p(x)$ strictly between its endpoints.  This proves
+$B_p(K)\le A_p^{\mathrm{nw}}(K)$.
+
+It remains only to reparametrize the latter set.  Put
+\[
+ s=y-x,\qquad G=z-y.
+\]
+Then
+\[
+ 2\le s\le H_p,\qquad K+1\le G\le p-1-s,\qquad
+ 0\le x\le p-1-s-G.
+\]
+All two-time intervals are nonwrapping.  The exact gap criterion therefore
+gives
+\[
+ \pi_p(x)=\pi_p(x+s)
+ \iff N_s(x)\equiv0\pmod p
+\]
+and
+\[
+ \pi_p(x+s)=\pi_p(x+s+G)
+ \iff N_G(x+s)\equiv0\pmod p.
+\]
+This proves~\eqref{eq:far-incidence-continuants}.  Dropping the interval
+condition on the standard representative of~$x$ gives
+$A_p^{\mathrm{nw}}(K)\le\widetilde A_p(K)$.
+
+Finally, a degree such as
+$\deg\gcd_{\mathbf F_p[x]}(N_s(x),N_G(x+s))$ also counts common irreducible
+factors having no root in~$\mathbf F_p$.  It is therefore only an upper
+bound for the corresponding summand in
+\eqref{eq:far-incidence-affine}, not the exact observable in this
+proposition.
+\end{proof}
+
+\begin{remark}[Scale of the remaining arithmetic input]
+By Lemma~\ref{lem:nonvanish}, for $s,G<p$ neither gap polynomial vanishes
+identically modulo~$p$.  The actual common-root count is at most the degree
+of the greatest common divisor, and hence at most $3(s-1)$.  Consequently
+the elementary degree estimate gives only
+\[
+ \widetilde A_p(K)
+ \le\sum_{s\le H_p}\sum_{G<p}3(s-1)\ll pH_p^2\ll p^2.
+\]
+After summing over $X<p\le2X$, this is
+$O(X^3/\log X)$, one full power of~$X$ above the required separated-energy
+budget.  Thus~\eqref{eq:far-incidence-hierarchy} is useful only together
+with an average arithmetic estimate for the actual affine roots, or with
+the sharper conditioning retained in~$B_p(K)$.
+\end{remark}
