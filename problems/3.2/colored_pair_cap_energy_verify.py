@@ -10,7 +10,7 @@ import math
 
 
 Q_LIMIT = 61
-EXPECTED_SHA256 = "34d156702c31bdde3b7f3d11ae9e8e5cca394a8dddc7b73128de7d1de459b273"
+EXPECTED_SHA256 = "707f006bbafe1da79d69fb859f76b78b885d238c9bacda97e47043981600e39e"
 
 
 def is_prime(value: int) -> bool:
@@ -44,6 +44,7 @@ def audit_parameter(row_prime: int) -> list[int]:
     height = 6 * row_prime
     packet_length = rows * row_prime
     prime = next_prime(40 * row_prime**2)
+    orbit_height = math.isqrt(prime)
     assert prime < 80 * row_prime**2
     assert height * height < prime
     assert prime - 1 > 4 * (1 + packet_length)
@@ -80,6 +81,8 @@ def audit_parameter(row_prime: int) -> list[int]:
     fibers: dict[int, list[int]] = defaultdict(list)
     for index, color in enumerate(colors):
         fibers[color].append(index)
+    fiber_energy = sum(len(occurrences) ** 2 for occurrences in fibers.values())
+    assert fiber_energy**2 <= prime**3
 
     pair_counts = [0] * prime
     for occurrences in fibers.values():
@@ -91,8 +94,11 @@ def audit_parameter(row_prime: int) -> list[int]:
 
     quotient_windows = row_prime - 5
     separated_energy = 0
+    conditioned_incidence = 0
+    far_cutoff = int(orbit_height / math.sqrt(math.log(prime)))
     for color, left_occurrences in enumerate(left_by_color):
         assert len(left_occurrences) == rows
+        assert fibers[color][:rows] == left_occurrences
         windows = []
         for start in range(quotient_windows):
             window = tuple(left_occurrences[start : start + 4])
@@ -109,6 +115,27 @@ def audit_parameter(row_prime: int) -> list[int]:
             reflected = tuple(prime - 1 - item for item in reversed(window))
             assert all(colors[item] == color for item in window + reflected)
             windows.append((window[0], window[-1], reflected[0], reflected[-1]))
+
+        for first_start in range(quotient_windows):
+            first = tuple(left_occurrences[first_start : first_start + 4])
+            reflected_first = {
+                prime - 1 - item for item in first
+            }
+            support = set(first) | reflected_first
+            for second_start in range(first_start + 1, quotient_windows):
+                second = tuple(
+                    left_occurrences[second_start : second_start + 4]
+                )
+                external = second[0]
+                if external <= first[-1] + far_cutoff:
+                    continue
+                assert external not in support
+                assert tuple(
+                    fibers[color][second_start : second_start + 4]
+                ) == second
+                assert second[-1] - second[0] < height <= orbit_height
+                assert all(colors[item] == color for item in second)
+                conditioned_incidence += 1
 
         color_energy = 0
         for first_index, first in enumerate(windows):
@@ -127,12 +154,15 @@ def audit_parameter(row_prime: int) -> list[int]:
 
     assert separated_energy == row_prime * (row_prime - 8) * (row_prime - 9)
     assert 1920 * separated_energy >= prime * height
+    assert 3840 * conditioned_incidence >= prime * height
     return [
         row_prime,
         prime,
         height,
         max(pair_counts),
         separated_energy,
+        conditioned_incidence,
+        fiber_energy,
         next_color,
     ]
 
@@ -145,10 +175,12 @@ def main() -> None:
     encoded = json.dumps(rows, separators=(",", ":")).encode()
     digest = hashlib.sha256(encoded).hexdigest()
     assert digest == EXPECTED_SHA256
-    min_ratio = min(row[4] / (row[1] * row[2]) for row in rows)
+    min_energy_ratio = min(row[4] / (row[1] * row[2]) for row in rows)
+    min_conditioned_ratio = min(row[5] / (row[1] * row[2]) for row in rows)
     print(
         "COLORED_PAIR_CAP_ENERGY_VERIFY"
-        f" parameters={len(rows)} min_energy_ratio={min_ratio:.9f}"
+        f" parameters={len(rows)} min_energy_ratio={min_energy_ratio:.9f}"
+        f" min_conditioned_ratio={min_conditioned_ratio:.9f}"
     )
     print(f"sha256={digest}")
 

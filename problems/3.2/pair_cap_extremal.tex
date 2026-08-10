@@ -288,6 +288,102 @@ Since $pH<80Q^2\cdot6Q=480Q^3$, this proves
 produces infinitely many examples.
 \end{proof}
 
+\begin{corollary}[Sharpness of the conditioned far incidence]
+\label{cor:colored-far-incidence-sharp}
+The colorings in Proposition~\ref{prop:colored-pair-cap-energy-sharp} may
+be chosen so that, in addition,
+\begin{equation}
+ \sum_{q\in\mathscr Q_p}\bigl|\kappa_p^{-1}(q)\bigr|^2\ll p^{3/2}.
+\label{eq:colored-full-fiber-energy}
+\end{equation}
+Let $\Gamma_{\kappa_p}(q)$ be the reflection-invariant collection of all
+four-row windows of color~$q$ selected in that construction.  For
+$\gamma=(x_0,x_1,x_2,x_3)$, put
+\[
+ \operatorname{Supp}(\overline\gamma)
+ =\{x_0,x_1,x_2,x_3,
+     p-1-x_3,p-1-x_2,p-1-x_1,p-1-x_0\}.
+\]
+For an occurrence~$z$, write $z=z_0<z_1<z_2<z_3$ for it and the next
+three occurrences of its color, when they exist, and put
+\[
+ H_p=\lfloor\sqrt p\rfloor,
+\]
+and
+\[
+ \mathcal I_{\gamma,q}(K)
+ =\left\{z:
+  \begin{array}{c}
+   x_3+K<z<p,\quad \kappa_p(z)=q,\quad
+   z\notin\operatorname{Supp}(\overline\gamma),\\
+   z_1,z_2,z_3\text{ exist},\quad z_3-z_0\le H_p
+  \end{array}
+  \right\}.
+\]
+Define the abstract conditioned incidence by
+\[
+ B_{\kappa_p}^{[4]}(K)
+ =\sum_q\ \sum_{\gamma\in\Gamma_{\kappa_p}(q)}
+  \#\mathcal I_{\gamma,q}(K).
+\]
+For
+\[
+ K=\left\lfloor\frac{H_p}{\sqrt{\log p}}\right\rfloor
+\]
+one has, along the infinite family,
+\begin{equation}
+ B_{\kappa_p}^{[4]}(K)\ge\frac{pH}{3840}\gg p^{3/2}.
+\label{eq:colored-conditioned-incidence-lower}
+\end{equation}
+Thus reflection, all fixed-gap caps, full fiber-square energy at exponent
+$3/2$, and short-window conditioning at both ends do not imply a saving
+below the $p^{3/2}$ scale.
+\end{corollary}
+
+\begin{proof}
+Use the row-shift construction with $Q$ sufficiently large.  Its $Q$
+packet colors each occur $2R=2(Q-2)$ times.  Every other noncentral color
+occurs twice and the central color occurs once.  Hence
+\[
+ \sum_q\bigl|\kappa_p^{-1}(q)\bigr|^2
+ =4Q(Q-2)^2+2\bigl(p-2Q(Q-2)-1\bigr)+1
+ \ll p^{3/2},
+\]
+which proves~\eqref{eq:colored-full-fiber-energy}.
+
+There are $k=Q-5$ left-packet windows of each packet color, indexed by
+their start rows $0\le i<k$.  Fix such a window starting at row~$i$, and
+take for~$z$ the occurrence of the same color in a row~$j$ with
+$j-i\ge5$.  Since the first window ends in row $i+3$, the row-coordinate
+description gives
+\[
+ z-x_3
+ \ge (j-i-3)Q-(Q-1)
+ =(j-i-4)Q+1\ge Q+1.
+\]
+Since $H_p<\sqrt{80}\,Q$, one has $K<Q$ for sufficiently large~$Q$.
+The point~$z$ is outside the reflection-invariant support of the
+first window.  Moreover $j\le k-1=Q-6$, so its next three same-color
+occurrences are precisely those in rows $j+1,j+2,j+3$; they form another
+selected window and have span less than $H\le H_p$.
+
+For one color the number of pairs $(i,j)$ just counted is
+\[
+ \sum_{d=5}^{k-1}(k-d)=\frac{(k-5)(k-4)}2.
+\]
+These incidences use raw left-packet windows and are therefore counted
+directly, without a reflection-quotient factor.  Summing over the $Q$
+packet colors gives
+\[
+ B_{\kappa_p}^{[4]}(K)
+ \ge\frac{Q(Q-10)(Q-9)}2
+ \ge\frac{Q^3}{8}
+\]
+for all sufficiently large~$Q$.  Since $pH<480Q^3$, this proves
+\eqref{eq:colored-conditioned-incidence-lower}.  Finally,
+$p<80Q^2$ shows that the same lower bound is $\gg p^{3/2}$.
+\end{proof}
+
 \begin{corollary}[Local set constraints do not control labeled separated energy]
 \label{cor:pair-cap-separated-energy}
 For every sufficiently large odd prime~$p$, there is a set

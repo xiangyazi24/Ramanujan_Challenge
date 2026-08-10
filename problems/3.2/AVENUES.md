@@ -482,9 +482,25 @@ nonconstant gap triples, and no centered adjacent pair, but with
 Thus any saving over \(pH\) must use Ap\'ery-specific arithmetic, not only
 the global pair caps and local window axioms.  The row-shift construction
 and all-pair verification have fail-closed digest
-34d156702c31bdde3b7f3d11ae9e8e5cca394a8dddc7b73128de7d1de459b273;
+707f006bbafe1da79d69fb859f76b78b885d238c9bacda97e47043981600e39e;
 an independent tmux-11 audit checked the partition, every gap range,
 reflection quotient, and constant.
+
+The same complete coloring also closes the purely combinatorial route
+through the strongest conditioned far majorant.  Its full fiber-square
+energy is $O(p^{3/2})$.  With
+$H_p=\lfloor\sqrt p\rfloor$ and
+$K=\lfloor H_p/\sqrt{\log p}\rfloor$, take a left-packet selected window
+and a later left-packet occurrence, at least five start rows away, which
+begins another selected window.  These raw incidences are external to the
+first reflection support and give
+\[
+ B_{\kappa_p}^{[4]}(K)
+ \ge \frac{pH}{3840}\gg p^{3/2}.
+\]
+Thus retaining a short four-window at both ends, the global pair caps, and
+the full $p^{3/2}$ fiber energy still cannot yield a sub-$p^{3/2}$ bound
+without Ap\'ery-specific arithmetic.
 
 Direct full-cycle multiplication supplies no further bridge equation.
 For the factorially renormalized solution row

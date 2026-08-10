@@ -660,10 +660,19 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   `Esep_p>=pH/1920`.  Hence the `O(pH)` estimate cannot be improved from
   those abstract inputs; further saving must use the Apéry recurrence.
   `colored_pair_cap_energy_verify.py` checks the partition, all pair gaps,
-  quotient separation, and lower-bound constant for 11 parameters, with
+  quotient separation, conditioned far incidence, full fiber energy, and
+  both lower-bound constants for 11 parameters, with
   SHA-256
-  `34d156702c31bdde3b7f3d11ae9e8e5cca394a8dddc7b73128de7d1de459b273`.
+  `707f006bbafe1da79d69fb859f76b78b885d238c9bacda97e47043981600e39e`.
   An independent tmux-11 proof audit passed every component.
+- Conditioned-far sharpness: the same row-shift coloring has full fiber
+  energy `O(p^(3/2))`.  At
+  `K=floor(floor(sqrt(p))/sqrt(log p))`, choosing two
+  left-packet window starts at least five rows apart gives raw external
+  incidences counted by `B4_kappa(K)`, with
+  `B4_kappa(K)>=pH/3840=Omega(p^(3/2))`.  Hence even the second-short-window
+  condition does not improve the exponent from abstract pair caps and
+  energy alone.
 - Full-cycle bridge audit: for a return `N_h(x)=0`, the renormalized row has
   multiplier `mu_h(x)=-(x+1)^6 N_(h-1)(x+1)`.  Reflection gives
   `mu_h(x) mu_h(p-1-x-h)=(-1)^h prod_(j=1)^h(x+j)^6`.  Hence multiplying a
