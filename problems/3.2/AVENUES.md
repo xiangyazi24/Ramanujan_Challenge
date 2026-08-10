@@ -749,6 +749,32 @@ bound.  The exact derivation is in `toric_mellin_square.tex`;
 tmux-11 audit checked the coordinate exclusions, both minus signs, the
 middle endpoint, and the absence of a spurious \((-1)^j\) factor.
 
+The same toric coordinates also improve the pointwise fiber estimate.  The
+closure of a nonzero fiber in \((\mathbb P^1)^3\) is the explicit
+anticanonical \((2,2,2)\) surface
+\[
+ U_1V_1(W_1-W_0)(U_0V_0W_0-U_1V_1W_1)
+ -aU_0V_0W_0W_1(U_1-U_0)(V_1-V_0)=0.
+\]
+Its boundary is a union of sixteen rational curves with exactly \(16p-11\)
+rational points.  It has four fixed \(A_1\)'s, two fixed \(A_2\)'s, a central
+\(A_1\) which becomes \(A_2\) at \(a=1\), and one additional \(A_1\) exactly
+when \(a^2-34a+1=0\).  Resolving these split ADE points gives a K3 surface
+\(\widetilde X_a\).  If \(\tau_p(a)\) is its \(H^2\) Frobenius trace and
+\(\varepsilon_a,\delta_a\) are the two displayed exceptional indicators,
+then the character sum in the quadratic fiber formula is exactly
+\[
+ \tau_p(a)-(21+\varepsilon_a+\delta_a)p+8.
+\]
+Deligne's \(|\tau_p(a)|\le22p\) therefore gives \(43p+8\) away from the two
+exceptional loci and \(44p+8\) uniformly, improving the termwise elliptic
+bound \(O(p^{3/2})\) to \(O(p)\).  This still does not control the vanishing
+defining-characteristic Mellin coefficients: pointwise trace bounds allow
+exact cancellation modulo \(p\).  The full compactification and correction
+ledger are in `toric_fiber_k3.tex`; the standard-library verifier checks all
+fibers and singularities for the 88 pairs \((p,a)\) with \(5\le p\le23\).
+The full-paper compile and an independent tmux-11 seven-point audit pass.
+
 The optimized exact census in
 \`primitive_projective_prime_scan.cpp\` groups both raw and
 reflection-quotient statistics in \(O(p)\) operations per prime; its exact

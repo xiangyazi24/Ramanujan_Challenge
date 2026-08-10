@@ -1,0 +1,202 @@
+\begin{theorem}[K3 collapse of the nonzero toric fibers]
+\label{thm:toric-fiber-K3}
+Let $p\geq5$ be prime and $a\in\mathbb F_p^\times$.  Retain the
+notation $\mu_p(a)$ from Proposition~\ref{prop:toric-mellin-square}, and put
+\[
+ \varepsilon_a=\mathbf 1_{a=1},\qquad
+ \delta_a=\mathbf 1_{a^2-34a+1=0}.
+\]
+There is a K3 surface $\widetilde X_a/\mathbb F_p$ such that, if
+\[
+ \tau_p(a)=\operatorname {Tr}\!\left(
+  \operatorname {Frob}_p\mid
+  H^2_{\mathrm{et}}(\widetilde X_{a,\overline{\mathbb F}_p},
+                    \mathbb Q_\ell)
+ \right)
+ \qquad(\ell\ne p),
+\]
+then
+\begin{equation}
+ \boxed{
+  \mu_p(a)=p^2-(25+\varepsilon_a+\delta_a)p+12+\tau_p(a).}
+ \label{eq:toric-K3-fiber-count}
+\end{equation}
+Equivalently, the character sum in
+\eqref{eq:toric-fiber-quadratic} is
+\begin{equation}
+ \boxed{
+  \tau_p(a)-(21+\varepsilon_a+\delta_a)p+8.}
+ \label{eq:toric-K3-character-sum}
+\end{equation}
+Consequently it has absolute value at most $43p+8$ away from
+\[
+ a=1\quad\text{and}\quad a^2-34a+1=0,
+\]
+and at most $44p+8$ for every $a\ne0$.
+\end{theorem}
+
+\begin{proof}
+We give the compactification and all point-count corrections explicitly.
+On a nonzero fiber the coordinates used in
+Proposition~\ref{prop:toric-mellin-square} identify the original torus fiber
+with
+\begin{equation}
+ \mathcal U_a:\quad
+ uv(w-1)(1-uvw)-aw(u-1)(v-1)=0
+ \label{eq:toric-K3-affine}
+\end{equation}
+inside the locus
+\[
+ u,v,w\ne0,\qquad u,v,w\ne1,\qquad uvw\ne1.
+\]
+Indeed, the inverse map is
+\[
+ y=(u-1)^{-1},\qquad z=(v-1)^{-1},\qquad x=-uvw,
+\]
+and the two remaining exclusions correspond to the factors $1+x$ and
+$((1+y)(1+z)+xyz)$ of~$\Lambda$.  Thus
+$\#\mathcal U_a(\mathbb F_p)=\mu_p(a)$.
+
+Write $u=U_1/U_0$, $v=V_1/V_0$, and $w=W_1/W_0$.  The closure $X_a$ of
+\eqref{eq:toric-K3-affine} in $(\mathbb P^1)^3$ is the multidegree
+$(2,2,2)$ hypersurface
+\begin{align}
+ \mathcal F_a={}&
+ U_1V_1(W_1-W_0)(U_0V_0W_0-U_1V_1W_1) \notag\\
+ &-aU_0V_0W_0W_1(U_1-U_0)(V_1-V_0)=0.
+ \label{eq:toric-K3-homogeneous}
+\end{align}
+
+In the shorthand $0,1,\infty$ for points of $\mathbb P^1$, the reduced
+boundary $X_a\setminus\mathcal U_a$ consists of the following sixteen
+rational curves:
+\begin{equation}
+\begin{array}{llll}
+ u=0,\ v=\infty,&u=0,\ w=\infty,&u=0,\ w=0,&u=0,\ v=1,\\
+ v=0,\ u=\infty,&v=0,\ w=\infty,&v=0,\ w=0,&v=0,\ u=1,\\
+ u=\infty,\ w=0,&u=\infty,\ w=1,
+ &v=\infty,\ w=0,&v=\infty,\ w=1,\\
+ u=1,\ w=1,&u=1,\ vw=1,
+ &v=1,\ w=1,&v=1,\ uw=1.
+\end{array}
+\label{eq:toric-K3-boundary-curves}
+\end{equation}
+Each has $p+1$ rational points.  Their incidence locus contains sixteen
+points lying on exactly two components, four points lying on exactly three,
+and the single point $(1,1,1)$ lying on four.  There are no other
+intersections.  Hence
+\begin{equation}
+ \#(X_a\setminus\mathcal U_a)(\mathbb F_p)
+ =16(p+1)-16-2\cdot4-3=16p-11.
+ \label{eq:toric-K3-boundary-count}
+\end{equation}
+
+For completeness, we record the full singularity calculation.  The fixed
+boundary singularities are
+\begin{equation}
+\begin{array}{c|c}
+\text{points}&\text{type}\\ \hline
+ (0,1,\infty),(0,\infty,\infty),
+ (1,0,\infty),(\infty,0,\infty)&4A_1,\\
+ (0,\infty,0),(\infty,0,0)&2A_2,\\
+ (1,1,1)&A_1\ (a\ne1),\quad A_2\ (a=1).
+\end{array}
+\label{eq:toric-K3-fixed-singularities}
+\end{equation}
+Here is a local check that also fixes the types in every characteristic
+$p\geq5$.  At the first four points, suitable affine coordinates give a
+quadratic Hessian of determinant $2a^2$.  At $(0,\infty,0)$ the quadratic
+part is
+\[
+ s(at-r),
+\]
+and its null direction $(r,s,t)=(az,0,z)$ has cubic coefficient $a^2z^3$;
+the other fixed $A_2$ point is symmetric.  At $(1,1,1)$ the quadratic part
+is
+\[
+ -ars-rt-st-t^2,
+\]
+whose Hessian determinant is $2a(a-1)$.  At $a=1$ it factors as
+$-(r+t)(s+t)$, and its null direction $(-z,-z,z)$ has cubic coefficient
+$-2z^3$.
+
+It remains to find singularities in the open torus.  Put $q=uvw$ and take
+logarithmic derivatives of
+\[
+ \Lambda=\frac{uv(w-1)(1-uvw)}{w(u-1)(v-1)}.
+\]
+The three critical equations reduce to
+\[
+ q(2-u)=q(2-v)=1,
+ \qquad qw=1.
+\]
+They give either the excluded point $(u,v,w)=(1,1,1)$ or
+\begin{equation}
+ u=v,\qquad w=2-u,\qquad u^2-2u-1=0.
+ \label{eq:toric-K3-open-critical-point}
+\end{equation}
+At the latter point
+\[
+ a=12u+5,
+\]
+so such a rational point exists exactly when $a^2-34a+1=0$, and it is
+\[
+ (u,v,w)=\left(\frac{a-5}{12},\frac{a-5}{12},
+                         \frac{29-a}{12}\right).
+\]
+The logarithmic Hessian determinant at~\eqref{eq:toric-K3-open-critical-point}
+is $(u-1)/2$, hence this additional singularity is an $A_1$.  This also
+shows directly that the displayed list is complete.
+
+All tangent cones of the $A_2$ points split over $\mathbb F_p$; the
+exceptional conic above each rational $A_1$ point has an
+$\mathbb F_p$-point and is therefore a rational projective line.  Thus all
+the displayed ADE configurations are split over~$\mathbb F_p$.  Resolving
+an $A_n$ replaces one rational point by a chain with
+\[
+ n(p+1)-(n-1)=np+1
+\]
+rational points, for a net gain of $np$.  If $\widetilde X_a$ denotes the
+minimal resolution, then
+\begin{equation}
+ \#\widetilde X_a(\mathbb F_p)
+ =\#X_a(\mathbb F_p)+(9+\varepsilon_a+\delta_a)p.
+ \label{eq:toric-K3-resolution-count}
+\end{equation}
+
+The hypersurface~\eqref{eq:toric-K3-homogeneous} is anticanonical in
+$(\mathbb P^1)^3$ and has only rational double points.  It is normal and
+geometrically connected, and the hypersurface exact sequence gives
+$H^1(X_a,\mathcal O_{X_a})=0$.  Its ADE resolution is crepant, so
+$\widetilde X_a$ is a K3 surface.  Therefore
+\[
+ \#\widetilde X_a(\mathbb F_p)=1+p^2+\tau_p(a),
+ \qquad |\tau_p(a)|\leq22p.
+\]
+Combining this identity with~\eqref{eq:toric-K3-boundary-count} and
+\eqref{eq:toric-K3-resolution-count} proves
+\eqref{eq:toric-K3-fiber-count}.  Subtracting the baseline
+$(p-2)^2$ in~\eqref{eq:toric-fiber-quadratic} proves
+\eqref{eq:toric-K3-character-sum}.  Finally,
+$a=1$ cannot also satisfy $a^2-34a+1=0$ because the latter value is
+$-32\ne0$ for $p\geq5$.  The two stated bounds follow.
+\end{proof}
+
+\begin{remark}[Pointwise fiber cancellation is not Mellin
+anti-concentration]
+\label{rem:toric-K3-Mellin-limit}
+Theorem~\ref{thm:toric-fiber-K3} improves the elementary termwise Weil
+bound for~\eqref{eq:toric-fiber-quadratic} from $O(p^{3/2})$ to $O(p)$.
+It does not bound the number of vanishing Ap\'ery coefficients.  Indeed,
+for $1\leq j\leq p-2$,
+\[
+ b_j=-\sum_{a\ne0}\mu_p(a)a^j
+\]
+is the defining-characteristic multiplicative Mellin coefficient of the
+entire fiber-count function.  The constant baseline has zero nontrivial
+Mellin transform, while an $O(p)$ pointwise bound on the remaining trace
+function does not prevent exact cancellation modulo~$p$.  The example
+$(p,j)=(11,5)$ already gives such a cancellation.  Thus the K3 collapse is
+a genuine pointwise theorem, but the missing input remains crystalline
+Mellin anti-concentration.
+\end{remark}
