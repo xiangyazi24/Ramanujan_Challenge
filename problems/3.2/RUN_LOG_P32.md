@@ -797,5 +797,20 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   110 PDE, 160 operator, and 19 prime-denominator cases.  Full-paper
   compilation and the independent tmux-11 four-point audit pass.  Verifier
   digest: `12fe7bb087e5adfff4bc667c3789a3ca511121734e0f95eaccb90bf0b63df91b`.
+- Toric Mellin quadratic collapse: eliminating the nonzero fiber of the
+  fixed Laurent polynomial gives an exact `(p-2)^2` baseline plus a
+  two-variable quadratic-character sum.  Its inner Mellin transform is
+  `S_(p,j)(t)=-A_(p-1-j)(t)`, where
+  `A_j(t)=sum_k binom(j,k)^2 t^k`, and hence
+  `b_j=-sum_(t!=0) t^j A_j(t) A_(p-1-j)(t)`.  For
+  `1<=j<=(p-1)/2`, the exact polynomial duality is
+  `A_(p-1-j)=(1-t)^(p-1-2j) A_j`, with no `(-1)^j` factor, so `b_j` is an
+  indefinite weighted-square pairing.  Expanding the pairing recovers the
+  original Apéry binomial formula exactly; this is a coordinate
+  reformulation, not a zero-set saving.  `toric_mellin_square_verify.py`
+  passes 66 fiber, 7440 inner-sum, 252 pairing, 132 duality, and 252
+  tautology checks; SHA-256
+  `4bac89d1f73a192f727f2d9b65c3120df22f434e490e091a584aabf08873b95a`.
+  The independent tmux-11 six-point audit also passes.
 - end: pending
 - final result: pending

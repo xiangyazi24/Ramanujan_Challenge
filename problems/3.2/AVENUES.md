@@ -718,6 +718,37 @@ mixed/regulator realization or a characteristic-dependent finite-field
 model.  The proof is in `gap_kernel_bivariate.tex`; the exact verifier and an
 independent tmux-11 audit both pass.
 
+The toric fiber admits a second exact collapse, now in the coefficient
+variable.  For
+\[
+ A_j(t)=\sum_{k=0}^j\binom jk^2t^k
+\]
+and \(1\le j\le p-2\), direct elimination of two torus coordinates gives
+\[
+ b_j=-\sum_{t\in\mathbb F_p^\times}
+       t^jA_j(t)A_{p-1-j}(t).
+\]
+The one-dimensional character sum behind this formula is exactly
+\[
+ \sum_{r\ne0}r^j
+ \chi\bigl((t-1)^2r^2-2(t+1)r+1\bigr)
+ =-A_{p-1-j}(t).
+\]
+For \(1\le j\le(p-1)/2\), Legendre duality has no extra sign and yields
+\[
+ A_{p-1-j}(t)=(1-t)^{p-1-2j}A_j(t),
+ \qquad
+ b_j=-\sum_{t\ne0}t^j(1-t)^{p-1-2j}A_j(t)^2.
+\]
+This is an indefinite finite-field square pairing, not a positive norm.
+Expanding the \(t\)-sum recovers the original Ap\'ery binomial formula
+coefficient by coefficient, so the collapse alone supplies no new zero-set
+bound.  The exact derivation is in `toric_mellin_square.tex`;
+`toric_mellin_square_verify.py` checks 66 fibers, 7440 inner character sums,
+252 pairings, 132 dualities, and 252 tautology expansions.  An independent
+tmux-11 audit checked the coordinate exclusions, both minus signs, the
+middle endpoint, and the absence of a spurious \((-1)^j\) factor.
+
 The optimized exact census in
 \`primitive_projective_prime_scan.cpp\` groups both raw and
 reflection-quotient statistics in \(O(p)\) operations per prime; its exact

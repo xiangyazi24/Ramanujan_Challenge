@@ -1,0 +1,199 @@
+\begin{proposition}[Quadratic collapse of the toric Mellin coefficient]
+\label{prop:toric-mellin-square}
+Let $p\geq5$ be prime, let $\chi$ be the quadratic character of
+$\mathbb F_p$ extended by $\chi(0)=0$, and let
+\[
+ \mu_p(a)=\#\{(x,y,z)\in(\mathbb F_p^\times)^3:
+                   \Lambda(x,y,z)=a\}
+ \qquad(a\in\mathbb F_p^\times),
+\]
+where $\Lambda$ is the Laurent polynomial in
+\eqref{eq:oracleC-Lambda}.  Put
+\[
+ A_j(t)=\sum_{k=0}^j\binom jk^2t^k
+\]
+and, for $1\leq j\leq p-2$, put
+\[
+ S_{p,j}(t)=\sum_{r\in\mathbb F_p^\times}r^j
+ \chi\bigl((t-1)^2r^2-2(t+1)r+1\bigr).
+\]
+Then the fiber formula below is an integer equality, and the remaining
+identities hold in~$\mathbb F_p$.
+
+\begin{enumerate}
+\item For every $a\ne0$,
+  \begin{equation}
+   \mu_p(a)=(p-2)^2+
+   \sum_{\substack{t,w\in\mathbb F_p^\times\\
+                    w\ne1,\ tw\ne1}}
+   \chi\!\left(
+    \left(t+1-\frac{t(w-1)(1-tw)}{aw}\right)^2-4t
+   \right).
+   \label{eq:toric-fiber-quadratic}
+  \end{equation}
+
+\item The inner quadratic Mellin transform collapses exactly:
+  \begin{equation}
+   \boxed{S_{p,j}(t)=-A_{p-1-j}(t).}
+   \label{eq:toric-inner-collapse}
+  \end{equation}
+  Consequently
+  \begin{equation}
+   \boxed{
+   b_j=-\sum_{t\in\mathbb F_p^\times}
+       t^jA_j(t)A_{p-1-j}(t).}
+   \label{eq:toric-Mellin-pairing}
+  \end{equation}
+
+\item If $1\leq j\leq(p-1)/2$, then the polynomial identity
+  \begin{equation}
+   A_{p-1-j}(t)=(1-t)^{p-1-2j}A_j(t)
+   \qquad\text{in }\mathbb F_p[t]
+   \label{eq:toric-Legendre-duality}
+  \end{equation}
+  turns~\eqref{eq:toric-Mellin-pairing} into the weighted-square formula
+  \begin{equation}
+   \boxed{
+   b_j=-\sum_{t\in\mathbb F_p^\times}
+       t^j(1-t)^{p-1-2j}A_j(t)^2.}
+   \label{eq:toric-weighted-square}
+  \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+On a nonzero fiber of~$\Lambda$, the change of variables
+\[
+ u=\frac{1+y}{y},\qquad
+ v=\frac{1+z}{z},\qquad
+ w=-\frac{x}{uv}
+\]
+is invertible and has
+\[
+ u,v,w\in\mathbb F_p^\times,qquad
+ u,v\ne1,qquad w\ne1,qquad uvw\ne1.
+\]
+Writing $t=uv$ and $s=u+v$, direct substitution gives
+\[
+ \Lambda=\frac{t(w-1)(1-tw)}{w(u-1)(v-1)},
+ \qquad
+ (u-1)(v-1)=t-s+1.
+\]
+Thus $\Lambda=a$ determines
+\[
+ s=t+1-\frac{t(w-1)(1-tw)}{aw}.
+\]
+For fixed $t,w$, the number of ordered pairs $(u,v)$ with product~$t$
+and sum~$s$ is $1+\chi(s^2-4t)$.  The conditions $u,v\ne1$ are automatic:
+the excluded equality $s=t+1$ would force $(w-1)(1-tw)=0$.
+There are
+\[
+ (p-2)+(p-2)(p-3)=(p-2)^2
+\]
+admissible pairs $(t,w)$; the first summand is the slice $t=1$, where the
+two excluded values of~$w$ coincide.  This proves
+\eqref{eq:toric-fiber-quadratic}.
+
+Set
+\[
+ Q_t(R)=(t-1)^2R^2-2(t+1)R+1.
+\]
+The classical Legendre generating identity is
+\begin{equation}
+ Q_t(R)^{-1/2}=\sum_{n\geq0}A_n(t)R^n.
+ \label{eq:toric-Legendre-generating}
+\end{equation}
+Since $Q_t(0)=1$, fractional powers are unambiguously defined in
+$\mathbb F_p[[R]]$.  Frobenius gives
+\[
+ Q_t(R)^{(p-1)/2}
+ =Q_t(R)^{-1/2}\bigl(Q_t(R)^p\bigr)^{1/2}
+ =Q_t(R)^{-1/2}Q_t(R^p)^{1/2}
+ \equiv Q_t(R)^{-1/2}\pmod{R^p}.
+\]
+Euler's criterion and multiplicative orthogonality therefore give
+\begin{align*}
+ S_{p,j}(t)
+ &=\sum_{r\ne0}r^jQ_t(r)^{(p-1)/2}\\
+ &=-[R^{p-1-j}]Q_t(R)^{(p-1)/2}
+  =-A_{p-1-j}(t),
+\end{align*}
+which proves~\eqref{eq:toric-inner-collapse}.
+
+For $1\leq j\leq p-2$, torus orthogonality and the exponent range in
+Lemma~\ref{lem:oracleC-constant-term} give
+\begin{equation}
+ \sum_{a\ne0}\mu_p(a)a^j
+ =\sum_{(x,y,z)\in(\mathbb F_p^\times)^3}\Lambda(x,y,z)^j
+ =-b_j.
+ \label{eq:toric-fiber-Mellin}
+\end{equation}
+The constant term $(p-2)^2$ in~\eqref{eq:toric-fiber-quadratic} has zero
+$j$-th Mellin coefficient.  For
+\[
+ \kappa(t,w)=\frac{t(w-1)(1-tw)}w,
+\]
+multiplication by $a^2$ inside the quadratic character followed by the
+bijection $a=\kappa r$ gives
+\[
+ \sum_{a\ne0}a^j
+ \chi\!\left(\left(t+1-\frac\kappa a\right)^2-4t\right)
+ =\kappa^jS_{p,j}(t).
+\]
+Because $j\geq1$, the values $w=1,t^{-1}$ may now be restored: their
+$\kappa^j$ is zero.  If
+\[
+ L_t(w)=\frac{(w-1)(1-tw)}w=1+t-tw-w^{-1},
+\]
+then every exponent in $L_t(w)^j$ lies in $[-j,j]$, so
+\[
+ \sum_{w\ne0}\kappa(t,w)^j
+ =-t^j\operatorname{CT}_w L_t(w)^j
+ =-t^jA_j(t).
+\]
+Combining this with~\eqref{eq:toric-inner-collapse} and
+\eqref{eq:toric-fiber-Mellin} proves
+\eqref{eq:toric-Mellin-pairing}.
+
+Finally, if $P_n$ denotes the Legendre polynomial, then
+\[
+ A_n(t)=(1-t)^nP_n\!\left(\frac{1+t}{1-t}\right).
+\]
+The hypergeometric expression
+$P_n(X)={}_2F_1(-n,n+1;1;(1-X)/2)$ shows, for
+$0\leq j\leq(p-1)/2$, that
+\[
+ P_{p-1-j}(X)=P_j(X)\qquad\text{in }\mathbb F_p[X]:
+\]
+the two upper parameters are the same unordered pair modulo~$p$, and the
+series truncates at degree~$j$.  Clearing the powers of $1-t$ proves the
+polynomial identity~\eqref{eq:toric-Legendre-duality}, including $t=1$.
+Substitution in~\eqref{eq:toric-Mellin-pairing} gives
+\eqref{eq:toric-weighted-square}.
+\end{proof}
+
+\begin{remark}[The collapse is an exact reformulation, not yet a saving]
+\label{rem:toric-Mellin-tautology}
+Expanding~\eqref{eq:toric-Mellin-pairing} and summing over~$t$ gives
+\[
+ -\sum_{t\ne0}t^jA_j(t)A_{p-1-j}(t)
+ =\sum_{\substack{0\leq k\leq j,\ 0\leq\ell\leq p-1-j\\
+                   j+k+\ell=p-1}}
+   \binom jk^2\binom{p-1-j}{\ell}^2.
+\]
+Putting $\ell=p-1-j-k$ and using
+\[
+ \binom{p-1-j}{k}\equiv(-1)^k\binom{j+k}{k}\pmod p
+\]
+recovers exactly
+\[
+ b_j=\sum_{k=0}^j\binom jk^2\binom{j+k}{k}^2.
+\]
+For $k>p-1-j$, both sides vanish modulo~$p$ by the same carry.  Thus the
+quadratic fiber sum, the Legendre pairing, and the original Ap\'ery
+coefficient are coefficientwise equivalent.  In particular,
+\eqref{eq:toric-weighted-square} is a square in an indefinite finite-field
+pairing, not a positive norm; it can vanish, for example at $(p,j)=(11,5)$.
+Any zero-set bound still requires arithmetic information beyond this exact
+collapse.
+\end{remark}
