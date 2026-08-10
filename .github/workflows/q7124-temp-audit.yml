@@ -1,0 +1,269 @@
+name: Q7124 temporary zero-window audit
+on:
+  push:
+    branches: [chatgpt-drop]
+    paths:
+      - '.github/workflows/q7124-temp-audit.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit consecutive Apéry-zero quadruples
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          import csv
+          import hashlib
+          import io
+          import struct
+          from collections import Counter, defaultdict
+          from pathlib import Path
+
+          LIMIT = 1_000_000
+          DATA = Path('problems/3.2/data_zp_pairs.bin')
+          EXPECTED_SHA256 = '8746d0b400c1b669b001eae955c602908a10c9ee4cb3cac62c6676ea2ddd874d'
+
+          raw = DATA.read_bytes()
+          data_sha = hashlib.sha256(raw).hexdigest()
+          assert data_sha == EXPECTED_SHA256, (data_sha, EXPECTED_SHA256)
+          assert len(raw) % 8 == 0
+          records_all = list(struct.iter_unpack('<II', raw))
+          assert records_all == sorted(records_all)
+          assert len(records_all) == len(set(records_all))
+          records = [(p, r) for p, r in records_all if p <= LIMIT]
+          prefix_bytes = b''.join(struct.pack('<II', p, r) for p, r in records)
+          prefix_sha = hashlib.sha256(prefix_bytes).hexdigest()
+
+          # Sieve, both to count zero-free primes and to validate every record key.
+          is_prime = bytearray(b'\x01') * (LIMIT + 1)
+          is_prime[0:2] = b'\x00\x00'
+          for q in range(2, int(LIMIT ** 0.5) + 1):
+              if is_prime[q]:
+                  is_prime[q*q:LIMIT+1:q] = b'\x00' * (((LIMIT - q*q) // q) + 1)
+          primes = [p for p in range(2, LIMIT + 1) if is_prime[p]]
+          assert len(primes) == 78498
+
+          zeros = defaultdict(list)
+          for p, r in records:
+              assert p >= 7 and is_prime[p]
+              assert 0 <= r < p
+              zeros[p].append(r)
+          # The repository binary starts at p=7. These tiny direct values complete p<=10^6.
+          zeros[2] = []
+          zeros[3] = []
+          zeros[5] = [1, 3]
+
+          for p in primes:
+              zs = zeros[p]
+              assert zs == sorted(set(zs))
+              # Reflection check for every nonempty zero set.
+              assert zs == [p - 1 - z for z in reversed(zs)]
+
+          hist = Counter(len(zeros[p]) for p in primes)
+          active = [p for p in primes if len(zeros[p]) >= 4]
+
+          # Small prime factors suffice for n<=1,000,001.
+          trial_primes = [q for q in primes if q*q <= LIMIT + 1]
+
+          def distinct_prime_factors(n: int) -> list[int]:
+              out = []
+              for q in trial_primes:
+                  if q*q > n:
+                      break
+                  if n % q == 0:
+                      out.append(q)
+                      while n % q == 0:
+                          n //= q
+                  if n == 1:
+                      break
+              if n > 1:
+                  out.append(n)
+              return out
+
+          def mul_pair(x: tuple[int, int], y: tuple[int, int], p: int) -> tuple[int, int]:
+              # (a+b*sqrt(2))*(c+d*sqrt(2)).
+              a, b = x
+              c, d = y
+              return ((a*c + 2*b*d) % p, (a*d + b*c) % p)
+
+          def pow_pair(x: tuple[int, int], n: int, p: int) -> tuple[int, int]:
+              y = (1, 0)
+              while n:
+                  if n & 1:
+                      y = mul_pair(y, x, p)
+                  x = mul_pair(x, x, p)
+                  n >>= 1
+              return y
+
+          rho_cache = {}
+          def rho(p: int) -> int:
+              if p in rho_cache:
+                  return rho_cache[p]
+              chi = 1 if pow(2, (p - 1)//2, p) == 1 else -1
+              n = p - chi
+              g = (577 % p, 408 % p)  # (17+12*sqrt(2))^2
+              assert pow_pair(g, n, p) == (1, 0)
+              order = n
+              for q in distinct_prime_factors(n):
+                  while order % q == 0 and pow_pair(g, order // q, p) == (1, 0):
+                      order //= q
+              assert order >= 2
+              rho_cache[p] = order
+              return order
+
+          header = [
+              'p','Z','start_index','z0','z1','z2','z3','a','b','c','H',
+              'centered_pair_slot','has_centered_adjacent','palindromic_gap',
+              'all_equal_gap','rho','b_carrier','V_carrier','in_U_H',
+              'aligned_middle_mode','aligned_middle_forced_after_deflation'
+          ]
+          rows = []
+          fail_rows = []
+          failure_primes = set()
+          window_count_by_Z = Counter()
+          pass_count_by_Z = Counter()
+          fail_count_by_Z = Counter()
+          pal_windows = 0
+          pal_central_exceptions = 0
+          pal_surviving_deflation = 0
+          diagonal_windows = 0
+          failure_pal = 0
+          failure_diag = 0
+          failure_in_U = 0
+          failure_outside_U = 0
+          failure_deflated_equations = 0
+
+          for p in active:
+              zs = zeros[p]
+              rp = rho(p)
+              for i in range(len(zs) - 3):
+                  z0, z1, z2, z3 = zs[i:i+4]
+                  a, b, c = z1-z0, z2-z1, z3-z2
+                  H = z3-z0
+                  assert a >= 2 and b >= 2 and c >= 2
+                  centered_slots = [j for j, (u, v) in enumerate(((z0,z1),(z1,z2),(z2,z3))) if u+v == p-1]
+                  assert len(centered_slots) <= 1
+                  centered_slot = centered_slots[0] if centered_slots else -1
+                  has_center = centered_slot >= 0
+                  pal = a == c
+                  diag = a == b == c
+                  b_carrier = zs[0] <= H
+                  v_carrier = rp <= H + 1
+                  in_U = b_carrier or v_carrier  # H<p, so no factorial factor contributes p.
+
+                  if pal and not diag:
+                      pal_windows += 1
+                      middle_factor_zero = (2*z1 + b + 1) % p == 0
+                      assert middle_factor_zero == (z1 + z2 == p-1)
+                      if middle_factor_zero:
+                          pal_central_exceptions += 1
+                          aligned_forced = False
+                      else:
+                          pal_surviving_deflation += 1
+                          aligned_forced = True
+                      aligned_mode = 'N_b_circ'
+                  elif diag:
+                      diagonal_windows += 1
+                      aligned_mode = 'diagonal_S_aa'
+                      aligned_forced = True
+                  else:
+                      aligned_mode = 'raw_nonpalindromic'
+                      aligned_forced = True
+
+                  row = [
+                      p,len(zs),i,z0,z1,z2,z3,a,b,c,H,centered_slot,int(has_center),
+                      int(pal),int(diag),rp,int(b_carrier),int(v_carrier),int(in_U),
+                      aligned_mode,int(aligned_forced)
+                  ]
+                  rows.append(row)
+                  window_count_by_Z[len(zs)] += 1
+                  if has_center:
+                      pass_count_by_Z[len(zs)] += 1
+                  else:
+                      fail_rows.append(row)
+                      failure_primes.add(p)
+                      fail_count_by_Z[len(zs)] += 1
+                      failure_pal += int(pal)
+                      failure_diag += int(diag)
+                      failure_in_U += int(in_U)
+                      failure_outside_U += int(not in_U)
+                      # Every one of the three adjacent factors is a unit at a no-center window,
+                      # so all three raw gap roots remain roots after individual central deflation.
+                      for x, h in ((z0,a),(z1,b),(z2,c)):
+                          assert (2*x + h + 1) % p != 0
+                          failure_deflated_equations += 1
+                      assert aligned_forced
+
+          assert len(active) == 7132
+          assert len(rows) == 9606
+          assert len(fail_rows) == 300
+          assert len(failure_primes) == 136
+          assert failure_deflated_equations == 900
+
+          # Canonical, complete enumeration. UTF-8, LF, csv.writer lineterminator='\n'.
+          sio = io.StringIO(newline='')
+          w = csv.writer(sio, lineterminator='\n')
+          w.writerow(header)
+          w.writerows(rows)
+          csv_bytes = sio.getvalue().encode('utf-8')
+          csv_sha = hashlib.sha256(csv_bytes).hexdigest()
+
+          smallest_p = min(r[0] for r in fail_rows)
+          smallest_rows = [r for r in rows if r[0] == smallest_p]
+          smallest_fail = [r for r in fail_rows if r[0] == smallest_p]
+          outside_rows = [r for r in fail_rows if not r[18]]
+
+          print('Q7124_AUDIT_BEGIN')
+          print('source_commit=6ba7ed097a2f6823e873f7a62904189a526b24ec')
+          print(f'data_path={DATA}')
+          print(f'data_size_bytes={len(raw)}')
+          print(f'data_records_all={len(records_all)}')
+          print(f'data_sha256={data_sha}')
+          print(f'prefix_records_p_le_1000000={len(records)}')
+          print(f'prefix_binary_sha256={prefix_sha}')
+          print(f'canonical_windows_csv_rows={len(rows)}')
+          print(f'canonical_windows_csv_bytes={len(csv_bytes)}')
+          print(f'canonical_windows_csv_sha256={csv_sha}')
+          print(f'prime_count_p_le_1000000={len(primes)}')
+          print(f'histogram={dict(sorted(hist.items()))}')
+          print(f'active_primes_Z_ge_4={len(active)}')
+          print(f'window_count_by_Z={dict(sorted(window_count_by_Z.items()))}')
+          print(f'pass_count_by_Z={dict(sorted(pass_count_by_Z.items()))}')
+          print(f'fail_count_by_Z={dict(sorted(fail_count_by_Z.items()))}')
+          print(f'windows_total={len(rows)}')
+          print(f'windows_with_centered_adjacent={len(rows)-len(fail_rows)}')
+          print(f'windows_without_centered_adjacent={len(fail_rows)}')
+          print(f'failure_primes={len(failure_primes)}')
+          print(f'palindromic_nondiagonal_windows={pal_windows}')
+          print(f'palindromic_central_exceptions={pal_central_exceptions}')
+          print(f'palindromic_surviving_middle_deflation={pal_surviving_deflation}')
+          print(f'diagonal_windows={diagonal_windows}')
+          print(f'failure_palindromic={failure_pal}')
+          print(f'failure_diagonal={failure_diag}')
+          print(f'failure_in_U_H={failure_in_U}')
+          print(f'failure_outside_U_H={failure_outside_U}')
+          print(f'failure_individual_deflated_equations_surviving={failure_deflated_equations}')
+          print(f'smallest_failure_prime={smallest_p}')
+          print(f'smallest_failure_zero_set={zeros[smallest_p]}')
+          print(f'smallest_failure_rho={rho(smallest_p)}')
+          print('smallest_prime_all_windows:')
+          for r in smallest_rows:
+              print(tuple(r))
+          print('smallest_prime_failure_windows:')
+          for r in smallest_fail:
+              print(tuple(r))
+          if outside_rows:
+              print('smallest_failure_outside_U_H:')
+              first_out = min(outside_rows, key=lambda r: (r[0], r[2]))
+              print(tuple(first_out))
+              print(f'zero_set={zeros[first_out[0]]}')
+          else:
+              print('smallest_failure_outside_U_H=NONE')
+          print('Q7124_AUDIT_END')
+          PY
