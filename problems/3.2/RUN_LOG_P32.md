@@ -636,6 +636,13 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   `A_nw,p(K)<=6p^(5/3)` and hence the unconditional dyadic bound
   `sum A_nw,p(K)<<X^(8/3)/log X`.  This improves the termwise degree bound
   by `X^(1/3)` but remains `X^(2/3)` above the target.
+- Reciprocal-gap triple bound: for consecutive gaps `g_(q,i)`, the global
+  budget `sum_(q,i) g_(q,i)^(-2)<=3 log p`, blockwise Hölder, and the full
+  energy `sum_q m_q^2<<p^(3/2)` give
+  `A_nw,p(K)<<p^(3/2) log(2p)` uniformly in `K`.  Hence the dyadic total is
+  `O(X^(5/2))`, still `X^(1/2) log X` above target.  The complete proof,
+  including the two endpoint occurrences omitted from the original energy
+  theorem, is in `far_bridge_incidence.tex`.
 - Short-chain energy cap: if `e_q(h)` counts consecutive fiber edges of
   length at most `H` and `E_q=sum_h e_q(h)`, window--edge charging gives
   `C_p(q)<=E_q`.  The fixed-gap caps and per-fiber total length imply the

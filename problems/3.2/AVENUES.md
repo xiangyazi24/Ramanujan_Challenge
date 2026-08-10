@@ -412,6 +412,32 @@ $3\sum_{h\le\sqrt p}(h-1)\le3p/2$, this proves
 This improves the raw $X^3/\log X$ degree bound, but remains a factor
 $X^{2/3}$ above the separated-energy budget.
 
+The full orbit-energy theorem and a reciprocal-gap refinement improve this
+three-point majorant further.  If the consecutive gaps in the $q$-fiber are
+$g_{q,i}$, put
+\[
+ T_q=\sum_i g_{q,i}^{-2}.
+\]
+The global fixed-gap caps give
+$\sum_qT_q\le3\log p$, while H\"older gives
+$m_q-1\le p^{2/3}T_q^{1/3}$.  Partitioning the index interval into blocks
+of length $H=\lfloor\sqrt p\rfloor$ and applying the same inequality inside
+each block controls the number $P_q(H)$ of short pairs by
+\[
+ P_q(H)\le3m_q
+   +3H^{4/3}\lceil p/H\rceil^{1/3}T_q^{2/3}.
+\]
+Together with the full fiber-square estimate
+$\sum_qm_q^2\ll p^{3/2}$, this proves, uniformly in~$K$,
+\[
+ A_p^{\rm nw}(K)\ll p^{3/2}\log(2p),
+ \qquad
+ \sum_{X<p\le2X}A_p^{\rm nw}(K)\ll X^{5/2}.
+\]
+The proof is in `far_bridge_incidence.tex`.  This is still a factor
+$X^{1/2}\log X$ above the target and is one logarithm weaker than the
+direct short-chain energy estimate below.
+
 Keeping the two short four-windows gives a better unconditional energy
 bound.  If \(e_q(h)\) counts consecutive fiber edges of length \(h\le H\)
 and \(E_q=\sum_{h\le H}e_q(h)\), then every selected sliding four-window

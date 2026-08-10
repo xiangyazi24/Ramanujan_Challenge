@@ -226,6 +226,129 @@ $A_p^{\mathrm{nw}}(K)$, and proves
 \eqref{eq:far-fiber-cap-incidence}.
 \end{proof}
 
+\begin{lemma}[Reciprocal-gap triple bound]
+\label{lem:far-reciprocal-gap-triples}
+For every prime $p\ge7$, uniformly in~$K$,
+\begin{equation}
+ A_p^{\mathrm{nw}}(K)\ll p^{3/2}\log(2p).
+\label{eq:far-reciprocal-gap-triples}
+\end{equation}
+Consequently,
+\begin{equation}
+ \sum_{X<p\le2X}A_p^{\mathrm{nw}}(K)\ll X^{5/2},
+\label{eq:far-reciprocal-gap-dyadic}
+\end{equation}
+uniformly for any prime-dependent choice of~$K$.
+\end{lemma}
+
+\begin{proof}
+For a projective state~$q$, write its full occurrence list as
+\[
+ r_{q,1}<\cdots<r_{q,m_q}
+\]
+and put
+\[
+ g_{q,i}=r_{q,i+1}-r_{q,i},\qquad
+ T_q=\sum_{i=1}^{m_q-1}g_{q,i}^{-2},\qquad
+ L_p=\sum_qT_q.
+\]
+Empty sums are understood as zero.  The orbit-energy theorem
+\ref{thm:oe-energy-three-halves} is stated on
+$\{1,\ldots,p-2\}$.  If $m_q^\circ$ denotes the corresponding fiber
+sizes and $a_q=m_q-m_q^\circ$, then
+$\sum_qa_q=2$ and $\sum_qa_q^2\le4$.  The triangle inequality in
+$\ell^2$ therefore gives
+\begin{equation}
+ \mathcal F_p^{\mathrm{full}}
+ :=\sum_qm_q^2
+ \le\left(\left(\sum_q(m_q^\circ)^2\right)^{1/2}+2\right)^2
+ \ll p^{3/2}.
+\label{eq:far-full-fiber-energy}
+\end{equation}
+
+Let $e_q(h)$ count consecutive gaps of length~$h$ in the $q$-fiber.
+The exact gap criterion and $\deg N_h=3(h-1)$ give
+\[
+ \sum_qe_q(h)\le3(h-1).
+\]
+It follows that
+\begin{equation}
+ L_p
+ =\sum_{h=2}^{p-1}\frac{\sum_qe_q(h)}{h^2}
+ \le3\sum_{h=2}^{p-1}\frac{h-1}{h^2}
+ \le3\log p.
+\label{eq:far-reciprocal-gap-budget}
+\end{equation}
+For a fiber of size at least two, H\"older's inequality gives
+\begin{equation}
+ m_q-1
+ =\sum_i g_{q,i}^{2/3}g_{q,i}^{-2/3}
+ \le\left(\sum_i g_{q,i}\right)^{2/3}T_q^{1/3}
+ \le p^{2/3}T_q^{1/3}.
+\label{eq:far-fiber-size-reciprocal}
+\end{equation}
+Consequently,
+$m_q\le1+p^{2/3}T_q^{1/3}$ for every fiber, including those of size at
+most one.
+
+Put $H=H_p$ and let $P_q(H)$ be the number of pairs of occurrences in
+the $q$-fiber whose positive difference is at most~$H$.  Partition
+$\{0,\ldots,p-1\}$ into
+$J=\lceil p/H\rceil$ consecutive blocks of cardinality at most~$H$, and
+let $t_{q,j}$ count the $q$-occurrences in the $j$-th block.  Every pair
+counted by $P_q(H)$ lies in one block or in two adjacent blocks.  Hence
+\begin{equation}
+ P_q(H)
+ \le\sum_j\binom{t_{q,j}}2+\sum_jt_{q,j}t_{q,j+1}
+ \le\frac32\sum_jt_{q,j}^2.
+\label{eq:far-near-pair-blocks}
+\end{equation}
+For a nonempty block, let $T_{q,j}$ be the sum of $g_{q,i}^{-2}$ over
+the consecutive fiber gaps having both endpoints in that block.  Its
+$t_{q,j}$ points have total internal span at most~$H$, so the argument
+of~\eqref{eq:far-fiber-size-reciprocal} inside this block gives
+\[
+ t_{q,j}-1\le H^{2/3}T_{q,j}^{1/3},\qquad
+ t_{q,j}^2\le2+2H^{4/3}T_{q,j}^{2/3}.
+\]
+There are at most $m_q$ nonempty blocks, the sets of internal gaps are
+disjoint, and $\sum_jT_{q,j}\le T_q$.  By concavity,
+\begin{equation}
+ P_q(H)
+ \le3m_q+3H^{4/3}J^{1/3}T_q^{2/3}.
+\label{eq:far-near-pair-reciprocal}
+\end{equation}
+
+After a near pair in a fiber is fixed, dropping the requirements that the
+third occurrence be later and that its gap exceed~$K$ leaves at most
+$m_q$ choices.  Thus
+\begin{equation}
+ A_p^{\mathrm{nw}}(K)
+ \le\sum_qm_qP_q(H)
+ \le3\mathcal F_p^{\mathrm{full}}
+ +3H^{4/3}J^{1/3}\sum_qm_qT_q^{2/3}.
+\label{eq:far-triple-before-budget}
+\end{equation}
+By~\eqref{eq:far-fiber-size-reciprocal}, and using the fact that at most
+$p$ fibers are nonempty,
+\begin{align}
+ \sum_qm_qT_q^{2/3}
+ &\le\sum_qT_q^{2/3}+p^{2/3}\sum_qT_q \notag\\
+ &\le p^{1/3}L_p^{2/3}+p^{2/3}L_p.
+\label{eq:far-weighted-reciprocal-budget}
+\end{align}
+Finally, $J\le2p/H$, so
+$H^{4/3}J^{1/3}\le2^{1/3}Hp^{1/3}$.  Combining
+\eqref{eq:far-full-fiber-energy},
+\eqref{eq:far-reciprocal-gap-budget},
+\eqref{eq:far-triple-before-budget}, and
+\eqref{eq:far-weighted-reciprocal-budget}, and using
+$H\le\sqrt p$, proves~\eqref{eq:far-reciprocal-gap-triples}.
+Summing this estimate over $X<p\le2X$ and using
+$\pi(2X)-\pi(X)\ll X/\log X$ proves
+\eqref{eq:far-reciprocal-gap-dyadic}.
+\end{proof}
+
 \begin{remark}[Scale of the remaining arithmetic input]
 By Lemma~\ref{lem:nonvanish}, for $s,G<p$ neither gap polynomial vanishes
 identically modulo~$p$.  The actual common-root count is at most the degree
@@ -237,13 +360,13 @@ the elementary degree estimate gives only
 \]
 After summing over $X<p\le2X$, this is
 $O(X^3/\log X)$, one full power of~$X$ above the required separated-energy
-budget.  Lemma~\ref{lem:far-projective-fiber-cap} improves this elementary
+budget.  Lemma~\ref{lem:far-reciprocal-gap-triples} improves this elementary
 estimate to
 \[
  \sum_{X<p\le2X}A_p^{\mathrm{nw}}(K)
- \ll\frac{X^{8/3}}{\log X}.
+ \ll X^{5/2}.
 \]
-This remains a factor $X^{2/3}$ above the target.  Thus
+This remains a factor $X^{1/2}\log X$ above the target.  Thus
 \eqref{eq:far-incidence-hierarchy} still requires an average arithmetic
 estimate for the actual affine roots, or the sharper conditioning retained
 in~$B_p^{[4]}(K)$.
