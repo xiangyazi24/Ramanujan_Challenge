@@ -609,5 +609,12 @@ Verified for h₂,g ≤ 4, h₀ ≤ 5.
   reflection/overlap constants.  Q7185 confirmed that an exact elimination
   certificate necessarily retains the long bridge `N_L`; generic
   Casoratian/Pluecker identities do not compress it to the six short gaps.
+- Near-bridge range: proved unconditionally in `near_bridge_energy.tex`.
+  Consecutiveness makes `(p,x,s,G)` injective, so the second chain span is
+  not a certificate parameter.  The nonzero separated-block resultant and
+  Smith nullity give `sum Enear_p(K) << H^2 K^2`; taking
+  `K=H/sqrt(log X)` meets the full `X^2/log X` budget.  Only longer
+  bridges remain.  The independent tmux-11 audit passed the orientation,
+  injectivity, degree-drop, and height arguments.
 - end: pending
 - final result: pending

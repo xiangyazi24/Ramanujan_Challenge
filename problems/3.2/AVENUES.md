@@ -337,6 +337,28 @@ the energy of separated distinct chains.  Such a pair adds the long return
 \(N_L(x)=0\), with \(L\) as large as \(p\); this defeats all currently
 bounded-gap continuant certificates.
 
+The near part of this obstruction is nevertheless unconditional.  For a
+separated ordered orbit pair, choose canonically a representative of the
+first orbit lying before a representative of the second and write \(s\) for
+the first span and \(G\) for the intervening bridge.  Consecutiveness makes
+\((p,x,s,G)\) injective: the second chain, including its span, is already
+determined by its start \(x+s+G\).  Hence it is enough to count common roots
+of
+\[
+ N_s(x),\qquad N_G(x+s).
+\]
+Their integer resultant is nonzero by the disjoint complex root strips, and
+its logarithmic height is \(O(sG\log H)\).  Summing Smith nullities proves
+\[
+ \sum_{X<p\le2X}E_p^{\mathrm{near}}(K)\ll H^2K^2,
+ \qquad H=\lfloor\sqrt{2X}\rfloor.
+\]
+Thus the full weak-DPLS budget is already met for
+\(G\le H/\sqrt{\log X}\).  The proof is in `near_bridge_energy.tex`; the
+remaining theorem concerns only genuinely long bridges.  An independent
+tmux-11 audit confirmed the canonical orientation, the Smith-nullity
+inequality under degree drop, and the resultant-height calculation.
+
 The optimized exact census in
 \`primitive_projective_prime_scan.cpp\` groups both raw and
 reflection-quotient statistics in \(O(p)\) operations per prime; its exact

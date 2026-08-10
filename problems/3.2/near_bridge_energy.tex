@@ -1,0 +1,155 @@
+\begin{proposition}[Near-bridge separated energy]
+\label{prop:near-bridge-energy}
+Let \(X\) be sufficiently large, put
+\[
+ H=\lfloor\sqrt{2X}\rfloor,\qquad 2\le K\le H,
+\]
+and, for every prime \(X<p\le2X\), let \(\pi_p\) be the projective
+Ap\'ery orbit on \(\{0,\ldots,p-1\}\).  For each projective state, select
+any reflection-invariant collection of four consecutive occurrences whose
+span is at most \(\lfloor\sqrt p\rfloor\), and quotient the selected windows
+by reflection.  Call two quotient orbits separated if the closed interval
+of every oriented representative of one is disjoint from the closed interval
+of every oriented representative of the other.
+
+For an ordered separated pair of distinct quotient orbits, choose
+deterministically an oriented representative
+\[
+ \gamma=(x,z_1,z_2,x+s)
+\]
+of the first orbit and an oriented representative
+\[
+ \delta=(y,w_1,w_2,y+t)
+\]
+of the second orbit such that \(x+s<y\), minimizing first
+\(G=y-x-s\) and then the pair \((x,y)\) lexicographically.  Let
+\(E_p^{\mathrm{near}}(K)\) count the ordered separated orbit pairs for
+which this selected bridge satisfies \(G\le K\).  Then
+\[
+ \sum_{X<p\le2X}E_p^{\mathrm{near}}(K)\ll H^2K^2.
+\]
+In particular, for
+\[
+ K=\left\lfloor\frac{H}{\sqrt{\log X}}\right\rfloor
+\]
+one has
+\[
+ \sum_{X<p\le2X}E_p^{\mathrm{near}}(K)
+ \ll\frac{X^2}{\log X}.
+\]
+\end{proposition}
+
+\begin{proof}
+Write \(R(I)=[p-1-v,p-1-u]\) for the reflection of an interval
+\(I=[u,v]\).  The four cross-orbit intervals attached to a separated
+orbit pair are pairwise disjoint across the two orbits.  There is always
+a representative of the first orbit lying strictly to the left of a
+representative of the second.  Indeed, if an interval of the second lies
+to the left of an interval of the first, applying \(R\) reverses their
+order and supplies the required representatives.  The deterministic
+choice in the statement is therefore well-defined.
+
+The map from an ordered orbit pair to
+\begin{equation}
+ (p,x,s,G)
+ \label{eq:near-bridge-tuple}
+\end{equation}
+is injective.  To see this, put \(q=\pi_p(x)\) and
+\(y=x+s+G\).  Since \(\gamma\) consists of four consecutive occurrences
+of \(q\), its two internal indices are the first two occurrences of \(q\)
+after \(x\), and hence are uniquely determined by \(p\) and \(x\).
+The endpoint \(x+s\) verifies which third return is selected.  The same
+argument at \(y\) uniquely determines \(\delta\), including its span
+\(t\).  Thus the second span need not be retained as a certificate
+parameter.  This use of consecutiveness is essential; the assertion would
+be false for arbitrary four-element subsets of a fiber.
+
+Retain the positional-gap continuants
+\[
+ \begin{aligned}
+ N_1(u)&=1,\qquad N_2(u)=P(u+1),\\
+ N_{h+1}(u)&=P(u+h)N_h(u)-(u+h)^6N_{h-1}(u).
+ \end{aligned}
+\]
+By Lemma~\ref{lem:gap-poly}, the exact return criterion on a
+nonwrapping interval is
+\[
+ \pi_p(u)=\pi_p(u+h)\quad\Longleftrightarrow\quad
+ N_h(u)\equiv0\pmod p.
+\]
+Consequently the tuple in \eqref{eq:near-bridge-tuple} supplies a common
+root \(x\in\mathbf F_p\) of
+\[
+ N_s(x),\qquad N_G(x+s).
+\]
+The second chain also gives \(N_t(x+s+G)=0\), but dropping this third
+equation only enlarges the set being counted.
+
+For \(s,G\ge2\), put
+\[
+ \mathcal R_{s,G}
+ =\operatorname{Res}_x\bigl(N_s(x),N_G(x+s)\bigr)\in\mathbf Z.
+\]
+Proposition~\ref{prop:meso-root-strip} states that every complex root of
+\(N_s(x)\) has real part in \((-s,-1)\), whereas every complex root of
+\(N_G(x+s)\) has real part in \((-s-G,-s-1)\).  The strips are disjoint,
+so
+\[
+ \mathcal R_{s,G}\ne0.
+\]
+
+Let \(\nu_p(s,G)\) be the number of common roots of these two polynomials
+in \(\mathbf F_p\).  Since \(s,G\le H<p\),
+Lemma~\ref{lem:nonvanish} ensures that neither reduced polynomial is zero.
+The reduction modulo \(p\) of their Sylvester matrix has nullity at least
+\(\nu_p(s,G)\): the reduced greatest common divisor has degree at least
+the number of distinct common roots.  Smith normal form over \(\mathbf Z\)
+therefore gives
+\begin{equation}
+ \nu_p(s,G)\le v_p(\mathcal R_{s,G}).
+ \label{eq:near-bridge-smith}
+\end{equation}
+This remains valid if a leading coefficient vanishes modulo \(p\), since
+degree loss can only increase the Sylvester nullity.
+
+It remains to bound the height.  The polynomial \(N_h\) is the determinant
+of an \((h-1)\)-by-\((h-1)\) tridiagonal matrix whose nonzero entries have
+coefficient \(\ell^1\)-norm \(O(h^3)\).  The Leibniz expansion therefore
+gives
+\[
+ \log\lVert N_h\rVert_2\ll h\log(2h).
+\]
+Translation satisfies
+\[
+ \lVert f(x+s)\rVert_1
+ \le \lVert f\rVert_1(1+s)^{\deg f}.
+\]
+Since \(\deg N_h=3(h-1)\), the standard resultant norm inequality yields,
+uniformly for \(s,G\le H\),
+\begin{equation}
+ \log|\mathcal R_{s,G}|
+ \ll sG\log(2H).
+ \label{eq:near-bridge-height}
+\end{equation}
+
+Injectivity, \eqref{eq:near-bridge-smith}, and
+\eqref{eq:near-bridge-height} now give
+\[
+ \begin{aligned}
+ \sum_{X<p\le2X}E_p^{\mathrm{near}}(K)
+ &\le
+ \sum_{s\le H}\sum_{G\le K}\sum_{X<p\le2X}
+ v_p(\mathcal R_{s,G})\\
+ &\le
+ \frac1{\log X}
+ \sum_{s\le H}\sum_{G\le K}\log|\mathcal R_{s,G}|\\
+ &\ll
+ \frac{\log(2H)}{\log X}
+ \left(\sum_{s\le H}s\right)
+ \left(\sum_{G\le K}G\right)
+ \ll H^2K^2.
+ \end{aligned}
+\]
+Here pairs with \(s=1\) or \(G=1\) do not occur because \(N_1=1\).
+The final assertion follows from \(H^2\le2X\).
+\end{proof}
