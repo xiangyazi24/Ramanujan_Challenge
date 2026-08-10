@@ -1,0 +1,247 @@
+\begin{theorem}[Exact elliptic trace formula for the toric fibers]
+\label{thm:toric-fiber-sym2}
+Let $p\geq5$ be prime and $a\in\mathbb F_p^\times$.  Put
+\[
+ D_a=a^2-34a+1,
+ \qquad \epsilon_a=\mathbf 1_{a=1},
+\]
+and let $\theta_p(a)$ be the primitive weight-two trace in
+Theorem~\ref{thm:toric-fiber-K3}.  On the quadratic cover
+\begin{equation}
+ 8x^2+(a-1)x+a=0
+ \label{eq:toric-sym2-cover}
+\end{equation}
+consider the elliptic curve
+\begin{equation}
+ E_x:\quad Y^2+(1-2x)XY+x^2Y=X^3.
+ \label{eq:toric-sym2-elliptic-curve}
+\end{equation}
+For an elliptic curve $E/\mathbb F_q$, write
+\[
+ A_q(E)=q+1-\#E(\mathbb F_q),
+\]
+and write $\chi_p$ for the quadratic character of~$\mathbb F_p$.
+Then the following integer identities hold.
+
+\begin{enumerate}
+\item If $D_a$ is a nonzero square and $x\in\mathbb F_p$ is either
+root of~\eqref{eq:toric-sym2-cover}, then
+\begin{equation}
+ \boxed{\theta_p(a)=A_p(E_x)^2-p-\epsilon_a p.}
+ \label{eq:toric-sym2-split}
+\end{equation}
+
+\item If $D_a$ is a nonsquare and $x\in\mathbb F_{p^2}$ is either
+root of~\eqref{eq:toric-sym2-cover}, then
+\begin{equation}
+ \boxed{\theta_p(a)=
+ \chi_p(-3)A_{p^2}(E_x)-p-\epsilon_a p.}
+ \label{eq:toric-sym2-inert}
+\end{equation}
+
+\item If $D_a=0$ and $x\in\mathbb F_p$ is the double root, then
+\begin{equation}
+ \boxed{\theta_p(a)=
+ A_p(E_x)^2-p-\chi_p(-6)p.}
+ \label{eq:toric-sym2-branch}
+\end{equation}
+\end{enumerate}
+In particular, each right-hand side is independent of the chosen root, and
+\begin{equation}
+ \mu_p(a)=p^2-6p+12+\theta_p(a)
+ \label{eq:toric-sym2-mu}
+\end{equation}
+is an exact elliptic-curve expression for every nonzero toric fiber.
+\end{theorem}
+
+\begin{proof}
+We first identify the surface and its Shioda--Inose cover algebraically.  The
+Beukers--Peters affine model~\cite{BeukersPeters1984} is
+\begin{equation}
+ 1-(1-\mathsf X\mathsf Y)\mathsf Z
+ -a\mathsf X\mathsf Y\mathsf Z
+       (1-\mathsf X)(1-\mathsf Y)(1-\mathsf Z)=0.
+ \label{eq:toric-sym2-BP-model}
+\end{equation}
+Under the birational change of variables
+\begin{equation}
+ \mathsf X=\frac{y}{1+y},\qquad
+ \mathsf Y=\frac{z}{1+z},\qquad
+ \mathsf Z=\frac{x}{1+x},
+ \label{eq:toric-sym2-BP-change}
+\end{equation}
+one has the rational-function identity
+\begin{equation}
+ \begin{aligned}
+ \frac{1-(1-\mathsf X\mathsf Y)\mathsf Z}
+ {\mathsf X\mathsf Y\mathsf Z
+  (1-\mathsf X)(1-\mathsf Y)(1-\mathsf Z)}
+ &=\frac{(1+x)(1+y)(1+z)}{xyz}\\
+ &\hspace{2em}\cdot\bigl((1+y)(1+z)+xyz\bigr)
+ =\Lambda(x,y,z).
+ \end{aligned}
+ \label{eq:toric-sym2-BP-identity}
+\end{equation}
+Thus~\eqref{eq:toric-sym2-BP-model} is precisely the fiber
+$\Lambda=a$, and hence is birational to the surface in
+\eqref{eq:toric-K3-affine}; this is stronger than a comparison of
+Picard--Fuchs equations.
+
+Peters--Stienstra~\cite{PetersStienstra1989} identify the base change
+$a=s^2$ of this pencil with the Ap\'ery--Fermi pencil.  The
+Morrison--Nikulin quotient of fibration~$\#16$ in
+Bertin--Lecacheux~\cite[Corollary~4.1]{BertinLecacheux2020} is the Kummer
+surface of a pair of $6$-isogenous elliptic curves.  Their displayed rational
+maps are defined over the corresponding quadratic cover, so their graphs give
+the Shioda--Inose correspondence in $\ell$-adic cohomology after reduction at
+every $p\geq5$.  We now identify the two elliptic factors, including the
+arithmetic twist.
+
+The deck involution of~\eqref{eq:toric-sym2-cover} is
+\begin{equation}
+ \sigma(x)=\frac{1-8x}{8(1+x)},
+ \qquad
+ \frac{x(1-8x)}{1+x}
+ =\frac{\sigma(x)(1-8\sigma(x))}{1+\sigma(x)}=a.
+ \label{eq:toric-sym2-deck}
+\end{equation}
+The two standard symmetric functions of the modular invariants are
+\begin{align}
+ j(E_x)j(E_{\sigma(x)})
+ &=\frac{(a+1)^3}{a^7}
+   (a^3-21a^2+219a+1)^3,
+ \label{eq:toric-sym2-j-product}\\
+ (j(E_x)-1728)(j(E_{\sigma(x)})-1728)
+ &=\frac{(a^2+14a+1)^2}{a^7}\notag\\
+ &\hspace{2em}\cdot
+ (a^4-44a^3+198a^2-548a+1)^2.
+ \label{eq:toric-sym2-j-shifted-product}
+\end{align}
+These are exactly the two formulas for the elliptic factors of the
+Morrison--Nikulin quotient, after the harmless choice $s^2=a^{-1}$;
+the Fermi parameter $s+s^{-1}$ is unchanged by $s\mapsto s^{-1}$.
+Equations~\eqref{eq:toric-sym2-j-product} and
+\eqref{eq:toric-sym2-j-shifted-product} determine the unordered pair of
+$j$-invariants, since they determine both its product and its sum.
+
+The twist can be fixed without an appeal to periods.  On $E_x$ the point
+\[
+ Q=(x,-x)
+\]
+has exact order six; its successive nonzero multiples have coordinates
+\begin{align*}
+ Q&=(x,-x),& 2Q&=(0,-x^2),&3Q&=(-x^2,-x^3),\\
+ 4Q&=(0,0),&5Q&=(x,x^2).&&
+\end{align*}
+V\'elu's formulas give the quotient $C_x=E_x/\langle Q\rangle$ as
+\begin{align}
+ C_x:\quad Y^2+(1-2x)XY+x^2Y
+ ={}&X^3+c_4^{\flat}(x)X+c_6^{\flat}(x),
+ \label{eq:toric-sym2-Velu-quotient}\\
+ c_4^{\flat}(x)={}&-5x^4-5x^3-20x^2-5x,\notag\\
+ c_6^{\flat}(x)={}&3x^6+7x^5-41x^4-24x^3-14x^2-x.\notag
+\end{align}
+Here the superscript $\flat$ is only a label; these are the Weierstrass
+coefficients $a_4,a_6$, not the usual invariants.  If $\omega^2=-3$, put
+\begin{align*}
+ q&=\frac{4(1+x)\omega}{3},
+ &r&=-\frac{13x^2+5x+1}{3},\\
+ s_0&=\frac{4x\omega+2x+\omega-1}{2},
+ &t_0&=-\frac{64x^3\omega+78x^3+48x^2\omega
+ -15x\omega-9x+\omega-3}{18}.
+\end{align*}
+The standard Weierstrass change
+\[
+ X_C=q^2X_{\sigma}+r,qquad
+ Y_C=q^3Y_{\sigma}+q^2s_0X_{\sigma}+t_0
+\]
+identifies $E_{\sigma(x)}$ with $C_x$ over
+$\mathbb Q(x,\sqrt{-3})$.  Equivalently,
+\begin{align}
+ \frac{c_4(C_x)}{c_4(E_{\sigma(x)})}
+ &=\frac{256}{9}(1+x)^4,\notag\\
+ \frac{c_6(C_x)}{c_6(E_{\sigma(x)})}
+ &=-\frac{4096}{27}(1+x)^6,\notag\\
+ \frac{\Delta(C_x)}{\Delta(E_{\sigma(x)})}
+ &=\frac{2^{24}}{3^6}(1+x)^{12}.
+ \label{eq:toric-sym2-twist-invariants}
+\end{align}
+Thus the twist square class is the constant $-3$.  In particular, whenever
+$x,\sigma(x)\in\mathbb F_p$,
+\begin{equation}
+ A_p(E_{\sigma(x)})=\chi_p(-3)A_p(E_x).
+ \label{eq:toric-sym2-trace-twist}
+\end{equation}
+
+We recall the resulting cohomological calculation.  Let $V_x$ be
+$H^1_{\mathrm{et}}(E_{x,\overline{\mathbb F}_p},\mathbb Q_\ell)$.
+For $D_a\ne0$, the rank-four Kummer summand is
+\begin{equation}
+ \chi_p(-3)\otimes
+ \operatorname {As}^{+}_{\mathbb F_p[x]/\mathbb F_p}(V_x).
+ \label{eq:toric-sym2-Asai}
+\end{equation}
+The graph of the six-isogeny contributes a rational Tate line
+$\mathbb Q_\ell(-1)$ to this summand.  Its orthogonal complement is the
+generic rank-three transcendental part of the K3 surface.  If the quadratic
+algebra splits, the trace of~\eqref{eq:toric-sym2-Asai} is
+\[
+ \chi_p(-3)A_p(E_x)A_p(E_{\sigma(x)})=A_p(E_x)^2
+\]
+by~\eqref{eq:toric-sym2-trace-twist}.  If it is the field
+$\mathbb F_{p^2}$, the elementary tensor-induction trace identity gives
+\[
+ \operatorname {Tr}(\operatorname {Frob}_p\mid
+ \operatorname {As}^{+}V_x)=A_{p^2}(E_x),
+\]
+because Frobenius interchanges the two tensor factors.  Removing the Tate
+line therefore gives respectively
+\[
+ A_p(E_x)^2-p,
+ \qquad
+ \chi_p(-3)A_{p^2}(E_x)-p.
+\]
+At $a=1$ the explicit divisor calculation in
+Theorem~\ref{thm:toric-fiber-K3} supplies one additional rational Tate line;
+this accounts for the term $-\epsilon_ap$ in
+\eqref{eq:toric-sym2-split} and~\eqref{eq:toric-sym2-inert}.
+
+It remains to check the ramification points of the quadratic cover.  There
+$\sigma(x)=x$, so
+\begin{equation}
+ 8x^2+16x-1=0,
+ \qquad (1+x)^2=\frac98.
+ \label{eq:toric-sym2-branch-fixed}
+\end{equation}
+The six-isogeny followed by the displayed twist isomorphism is now an
+endomorphism $\alpha$ of $E_x$.  Since the V\'elu isogeny is normalized, its
+action on the invariant differential is multiplication by~$q$, and
+\[
+ q^2=-\frac{16}{3}(1+x)^2=-6.
+\]
+Consequently $\alpha^2=[-6]$ and $E_x$ has complex multiplication by the
+order of discriminant $-24$.  Equivalently, its modular invariant satisfies
+\[
+ j(E_x)^2-4834944j(E_x)+14670139392=0.
+\]
+The trace-zero CM endomorphism contributes an algebraic line, namely
+\[
+ \mathbb Q_\ell(-1)\otimes\chi_p(-6).
+\]
+Its Frobenius trace is $\chi_p(-6)p$.  Removing it from the specialized
+rank-three trace
+$A_p(E_x)^2-p$ proves~\eqref{eq:toric-sym2-branch}.
+Finally, substituting the three formulas into
+\eqref{eq:toric-K3-deflated-trace} proves
+\eqref{eq:toric-sym2-mu}.
+\end{proof}
+
+\begin{remark}[What the elliptic formula does not prove]
+\label{rem:toric-sym2-Mellin-limit}
+Theorem~\ref{thm:toric-fiber-sym2} replaces every primitive K3 trace by an
+exact symmetric-square or inert Asai trace.  It does not by itself give
+Mellin anti-concentration in the parameter~$a$.  In particular, a bound for
+the number of vanishing Ap\'ery coefficients still requires cancellation
+among the multiplicative Mellin transforms of these traces; the pointwise
+Hasse bound alone cannot provide such cancellation.
+\end{remark}
