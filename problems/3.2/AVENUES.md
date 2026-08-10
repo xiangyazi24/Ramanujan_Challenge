@@ -6,6 +6,77 @@ Prove the full Apéry GCD conjecture (G_n=e^{o(n)}), beginning by either
 closing or rigorously refuting the live saturated quadruple-corank mechanism
 and then attacking the pointwise atom tail with genuinely transverse data.
 
+## Breakthrough run begun 2026-08-09
+
+The present run keeps the live target \(\mathrm{AC}^{\mathrm{tr}}\) fixed and ranks
+four new attack avenues.  Claims inherited from earlier runs are inputs only
+after exact algebraic or computational re-verification.
+
+### (a0) Local-algebra formula for aligned content
+
+Regard
+\[
+ \operatorname{cont}_T\operatorname{Res}_x(F,G+TJ)
+\]
+as a Fitting invariant of the finite \(\mathbf Z_p\)-algebra
+\(\mathbf Z_p[x]/(F)\).  Derive an exact local formula, including inseparable
+and non-monic cases, in terms of the simultaneous ideal \((G,J)\), and then
+use the continuant identities to seek cancellation or compression when the
+formula is summed over \((a,b,c)\).
+
+- Success: prove the \(H^{3+o(1)}\) total aligned-content bound, or reduce it
+  to a strictly lower-dimensional height sum of that size.
+- Proof-of-failure: produce a verified family showing that local intersection
+  lengths can have \(H^4\)-scale total mass even after the existing structural
+  saturation, or prove that the Fitting reformulation is tautologically
+  equivalent to the uncompressed content sum.
+
+### (b0) Residual-prime rank amplification
+
+For every residual prime found by the exact aligned pencils, compute its
+rank of apparition and its entire collision graph up to several multiples of
+that rank.  Test and then prove whether one aligned four-zero collision forces
+many pair collisions, a large rank, or a long orbit under the Ap\'ery transfer
+matrix.  Any amplification by a factor comparable to \(H\) would convert the
+current \(H^4\)-parameter census into an \(H^3\)-scale carrier.
+
+- Success: prove a uniform amplification/rank lemma strong enough to charge
+  every residual valuation to \(O(H^{3+o(1)})\) orbit data.
+- Proof-of-failure: give an infinite or parametrically growing family of
+  isolated aligned collisions with no such orbit proliferation.
+
+### (c0) Arithmetic-intersection height compression
+
+Combine the complex root-strip separation already used for the First Lemma
+with the non-archimedean intersection lengths from (a0).  Look for an
+adelic/product-formula estimate, arithmetic B\'ezout inequality, or determinant
+normalization that bounds the total finite-place overlap without paying for
+the full triangular product of cut-edge values.
+
+- Success: obtain a global height carrier with logarithmic height
+  \(H^{3+o(1)}\) that dominates all aligned local lengths.
+- Proof-of-failure: prove that every such direct product-formula carrier must
+  retain \(\Omega(H^3\log H)\) height and cannot be absorbed at the critical
+  dyadic level.
+
+### (d0) Transfer-matrix codegree theorem
+
+Translate repeated common roots and left-pair codegrees into identities among
+the \(\mathrm{PGL}_2\) continuant transfer matrices.  Use the recurrence and
+reflection involution to seek a uniform bound on separated collision
+multiplicity or codegree, matching the exhaustive census through \(p=20000\).
+
+- Success: prove uniform \(m=O(1)\) and codegree \(O(1)\), or directly prove
+  \(E_p(H)\ll H^{3/2+o(1)}\).
+- Proof-of-failure: construct modular examples with unbounded multiplicity or
+  codegree, or derive a precise reduction to the original zero-set problem.
+
+If all four avenues terminate negatively, retain the fully verified
+conditional theorem under \(\mathrm{AC}^{\mathrm{tr}}\), state the exact local
+intersection lemma still open, and continue with genuinely new invariants;
+finite-depth Cartier lifting and the two withdrawn scalar gcd formulations
+remain closed and are not to be revived.
+
 ## Ranked avenues
 
 ### (a) Skipped-triple structural saturation of quadruple certificates

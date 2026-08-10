@@ -283,6 +283,18 @@ GM* stays conditional. Quadruple corank stays conditional.
 Every certificate reduction conserves the H⁴/H³ deficit.
 The deficit IS a gcd power-saving problem — outside current certificate algebra.
 GM-small hits mirror wall (growing state space).
+
+## Run 2026-08-09 20:17 (automode breakthrough continuation)
+
+- doctrine: `AVENUES.md` sha256 `b613076e8d2c`
+- approval: user prompt "卡住就找突破，不要放弃。用 chatgpt 配合。";
+  commentary notice at 2026-08-09 20:17 CDT; no Telegram message id
+- starting avenue: (a0), local-algebra formula for aligned content
+- coordination: tmux 11 is retained as an independent worker; ChatGPT bridge
+  channels are to be kept occupied by tactical and strategic audits while the
+  local exact computation proceeds
+- end: pending
+- final result: pending
 Both halves of GM* proof program are stuck at genuine obstructions.
 
 ### Exceptional mass gap: CLOSED by level stratification (Fable R26)
