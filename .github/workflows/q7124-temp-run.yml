@@ -1,0 +1,35 @@
+name: Q7124 temporary source-commit audit runner
+on:
+  push:
+    branches: [chatgpt-drop]
+    paths:
+      - '.github/workflows/q7124-temp-run.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Materialize data at audited commit
+        shell: bash
+        run: |
+          git fetch --depth=1 origin 6ba7ed097a2f6823e873f7a62904189a526b24ec
+          mkdir -p problems/3.2
+          git show 6ba7ed097a2f6823e873f7a62904189a526b24ec:problems/3.2/data_zp_pairs.bin > problems/3.2/data_zp_pairs.bin
+      - name: Extract and run the pinned audit program
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          src = Path('.github/workflows/q7124-temp-audit.yml').read_text()
+          marker = "          python3 - <<'PY'\n"
+          start = src.index(marker) + len(marker)
+          end = src.index("\n          PY", start)
+          lines = src[start:end].splitlines()
+          assert all((not line) or line.startswith('          ') for line in lines)
+          code = '\n'.join(line[10:] if line else '' for line in lines) + '\n'
+          Path('/tmp/q7124_audit.py').write_text(code)
+          PY
+          python3 /tmp/q7124_audit.py
