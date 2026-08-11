@@ -1,42 +1,10 @@
-name: Q7311 centered CRT Fourier audit
+name: Q7311 centered CRT Fourier audit (archived)
 on:
-  push:
-    branches: [q7311-audit]
-    paths:
-      - '.github/workflows/q7311-audit.yml'
-      - 'problems/3.2/research/scripts/q7311_centered_crt_fourier.py'
+  workflow_dispatch:
 permissions:
-  contents: write
-concurrency:
-  group: q7311-centered-crt-fourier
-  cancel-in-progress: true
+  contents: read
 jobs:
-  audit:
+  archived:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: q7311-audit
-          fetch-depth: 0
-      - name: Install high-precision dependency
-        run: python -m pip install --disable-pip-version-check mpmath
-      - name: Run exact verifier
-        run: |
-          python problems/3.2/research/scripts/q7311_centered_crt_fourier.py \
-            --xs 32 64 128 256 \
-            --output q7311-output \
-            --random-reps 64 \
-            --mode-random-reps 4 \
-            --mode-triples 3 \
-            --top-triples 25 \
-            --top-modes 12 \
-            --mode-max-scan 2000000 \
-            --full-fourier-max-M 350000
-      - name: Persist raw tables and report
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add Q7311_RESULTS.md q7311-output
-          git commit -m 'Record Q7311 exact Fourier audit output' || exit 0
-          git push origin HEAD:q7311-audit
+      - run: echo 'Initial Q7311 audit completed; use q7311-finalize.yml for the audited rerun.'
