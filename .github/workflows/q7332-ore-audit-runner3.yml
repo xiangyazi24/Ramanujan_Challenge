@@ -1,0 +1,43 @@
+name: Q7332 exact Ore audit runner 3
+
+on:
+  pull_request:
+    branches:
+      - chatgpt-drop
+    paths:
+      - '.github/workflows/q7332-ore-audit-runner3.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Extract Sage script and ore_algebra source
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL \
+            'https://raw.githubusercontent.com/xiangyazi24/Ramanujan_Challenge/q7332-ore-audit/.github/workflows/q7332-ore-audit.yml' \
+            -o source-workflow.yml
+          awk '
+            /cat > q7332[.]sage/ { inside=1; next }
+            inside && /^[[:space:]]*SAGE$/ { exit }
+            inside { sub(/^          /, ""); print }
+          ' source-workflow.yml > q7332.sage
+          test -s q7332.sage
+          curl -fsSL \
+            'https://github.com/mkauers/ore_algebra/archive/refs/heads/master.zip' \
+            -o ore_algebra.zip
+          unzip -q ore_algebra.zip
+          test -f ore_algebra-master/src/ore_algebra/ore_algebra.py
+
+      - name: Run exact Sage computation
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --rm --entrypoint /bin/bash \
+            -v "$PWD:/work" -w /work sagemath/sagemath:latest \
+            -lc 'PYTHONPATH=/work/ore_algebra-master/src sage q7332.sage'
