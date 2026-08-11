@@ -1,0 +1,80 @@
+name: Q7306 temporary exact scanner audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/q7306-main-audit.yml'
+permissions:
+  contents: write
+concurrency:
+  group: q7306-exact-scanner
+  cancel-in-progress: true
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch isolated scanner source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin q7306-audit
+          git show origin/q7306-audit:problems/3.2/research/q7306_highload_scan.cpp > /tmp/q7306_highload_scan.cpp
+          sha256sum /tmp/q7306_highload_scan.cpp | awk '{print $1}' > /tmp/q7306-source.sha256
+      - name: Compile and run exact scan
+        shell: bash
+        run: |
+          set +e
+          g++ -std=c++17 -O3 -DNDEBUG -Wall -Wextra -Wpedantic \
+            /tmp/q7306_highload_scan.cpp -o /tmp/q7306_scan \
+            > /tmp/q7306-build.log 2>&1
+          build_status=$?
+          echo "$build_status" > /tmp/q7306-build.status
+          if [ "$build_status" -eq 0 ]; then
+            /tmp/q7306_scan --source-sha256 "$(cat /tmp/q7306-source.sha256)" \
+              256 512 1024 2048 \
+              > /tmp/q7306-output.json 2> /tmp/q7306-summary.txt
+            run_status=$?
+          else
+            : > /tmp/q7306-output.json
+            cp /tmp/q7306-build.log /tmp/q7306-summary.txt
+            run_status=125
+          fi
+          echo "$run_status" > /tmp/q7306-run.status
+          if [ "$run_status" -eq 0 ]; then
+            jq empty /tmp/q7306-output.json > /tmp/q7306-json.log 2>&1
+            json_status=$?
+          else
+            : > /tmp/q7306-json.log
+            json_status=125
+          fi
+          echo "$json_status" > /tmp/q7306-json.status
+          exit 0
+      - name: Persist source, exact output, and logs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout q7306-audit
+          mkdir -p problems/3.2/research/q7306
+          cp /tmp/q7306-output.json problems/3.2/research/q7306/output.json
+          cp /tmp/q7306-summary.txt problems/3.2/research/q7306/summary.txt
+          cp /tmp/q7306-build.log problems/3.2/research/q7306/build.log
+          cp /tmp/q7306-json.log problems/3.2/research/q7306/json-validation.log
+          cp /tmp/q7306-source.sha256 problems/3.2/research/q7306/source.sha256
+          cp /tmp/q7306-build.status problems/3.2/research/q7306/build.status
+          cp /tmp/q7306-run.status problems/3.2/research/q7306/run.status
+          cp /tmp/q7306-json.status problems/3.2/research/q7306/json.status
+          git add problems/3.2/research/q7306
+          git commit -m 'Record Q7306 exact scanner run' || true
+          git push origin HEAD:q7306-audit
+      - name: Enforce successful build, run, and JSON validation
+        shell: bash
+        run: |
+          test "$(cat /tmp/q7306-build.status)" = 0
+          test "$(cat /tmp/q7306-run.status)" = 0
+          test "$(cat /tmp/q7306-json.status)" = 0
