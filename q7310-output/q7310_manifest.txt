@@ -1,0 +1,7 @@
+xs=32,64,128
+qs=1,2,3
+widths=1,2,4,8
+all_candidate_rows=False
+raw_record_count=760
+summary_record_count=36
+gamma_cache_entries=188
