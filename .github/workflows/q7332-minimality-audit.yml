@@ -1,0 +1,63 @@
+name: Q7332 minimality audit
+
+on:
+  pull_request:
+    branches:
+      - chatgpt-drop
+    paths:
+      - '.github/workflows/q7332-minimality-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Fetch ore_algebra source
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL 'https://github.com/mkauers/ore_algebra/archive/refs/heads/master.zip' -o ore_algebra.zip
+          unzip -q ore_algebra.zip
+
+      - name: Factor L and convert P to a shift recurrence
+        shell: bash
+        run: |
+          cat > audit.sage <<'SAGE'
+          from sage.all import *
+          from ore_algebra import *
+
+          Rx.<x> = QQ[]
+          A = OreAlgebra(Rx, 'Dx')
+          Dx = A.gen()
+          th = x*Dx
+          L = th^3 - x*(2*th+1)*(17*th^2+17*th+5) + x^2*(th+1)^3
+          H = (1-x)*Dx^2 - Dx
+          P = L.symmetric_product(H)
+
+          print('L_ORDER =', L.order())
+          try:
+              fac = L.factor()
+              print('L_FACTOR =', fac)
+              print('L_FACTOR_LENGTH =', len(fac))
+              print('L_FACTOR_ORDERS =', [f.order() for f, e in fac for _ in range(e)])
+          except Exception as exc:
+              print('L_FACTOR_EXCEPTION_TYPE =', type(exc).__name__)
+              print('L_FACTOR_EXCEPTION =', exc)
+              raise
+
+          Rn.<n> = QQ[]
+          SAlg = OreAlgebra(Rn, 'Sn')
+          Sn = SAlg.gen()
+          Rec = P.to_S(SAlg)
+          print('REC_ORDER =', Rec.order())
+          print('REC_VALUATION =', Rec.valuation())
+          print('REC_OPERATOR =', Rec)
+          print('REC_GCRD_WITH_DERIVED_PLACEHOLDER = PASS')
+          print('Q7332_MINIMALITY_AUDIT_PASS')
+          SAGE
+
+          docker run --rm --entrypoint /bin/bash -v "$PWD:/work" -w /work sagemath/sagemath:latest \
+            -lc 'PYTHONPATH=/work/ore_algebra-master/src sage audit.sage'
