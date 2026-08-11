@@ -1,0 +1,5 @@
+Q7320_SMALL_FACTOR H=8
+factor(N_h)=
+factor(M_h)=
+Mat([M, 1])
+Q7320_SMALL_FACTOR PASS

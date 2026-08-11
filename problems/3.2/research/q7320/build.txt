@@ -1,0 +1,1 @@
+clean: compiled with -Werror and no diagnostics
