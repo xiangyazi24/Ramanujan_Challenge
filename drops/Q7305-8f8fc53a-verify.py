@@ -198,6 +198,11 @@ def main():
     universal_tests = [
         ("Apery reflection b[p-1-m] == b[m] (mod p)", all_pm,
          lambda p, m: (b[p - 1 - m] - b[m]) % p == 0),
+        ("Apery coupled shift/reflection b[p+m]+5*b[p-1-m]-10*b[m] == 0 (mod p^2)",
+         all_pm,
+         lambda p, m: (b[p + m] + 5 * b[p - 1 - m] - 10 * b[m]) % (p * p) == 0),
+        ("Apery coupled shift/reflection lifts to mod p^3, p>=5", all_pm_ge5,
+         lambda p, m: (b[p + m] + 5 * b[p - 1 - m] - 10 * b[m]) % (p**3) == 0),
         ("Apery one-digit shift b[p+m] == 5*b[m] (mod p^2), p>=5", all_pm_ge5,
          lambda p, m: (b[p + m] - 5 * b[m]) % (p * p) == 0),
         ("Apery one-digit shift b[p+m] == 5*b[m] (mod p^3), p>=5", all_pm_ge5,
@@ -206,6 +211,9 @@ def main():
          lambda p, m: (f[p + m] - 2 * f[m]) % p == 0),
         ("Franel one-digit shift f[p+m] == 2*f[m] (mod p^2), p>=5", all_pm_ge5,
          lambda p, m: (f[p + m] - 2 * f[m]) % (p * p) == 0),
+        ("Franel naive coupled analog f[p+m]+2*f[p-1-m]-4*f[m] == 0 (mod p^2), p>=5",
+         all_pm_ge5,
+         lambda p, m: (f[p + m] + 2 * f[p - 1 - m] - 4 * f[m]) % (p * p) == 0),
         ("Apery reflection lifts to mod p^2 on zero positions", zero_pm,
          lambda p, m: (b[p - 1 - m] - b[m]) % (p * p) == 0),
     ]
@@ -219,6 +227,8 @@ def main():
     # Natural first-order quantities on an Apéry zero b_m = 0 (mod p).
     # Every equality below is interpreted modulo the row prime p.
     candidate_tests = [
+        ("qplus+5*qref == 10*q0", lambda r: r["qplus"] + 5 * r["qref"] - 10 * r["q0"]),
+        ("shift_b == -5*refl_b", lambda r: r["shift_b"] + 5 * r["refl_b"]),
         ("qplus == 5*q0", lambda r: r["qplus"] - 5 * r["q0"]),
         ("qref == q0", lambda r: r["qref"] - r["q0"]),
         ("d == q0", lambda r: r["d"] - r["q0"]),
