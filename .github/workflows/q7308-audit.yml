@@ -1,0 +1,34 @@
+name: Q7308 independent scatter audit
+on:
+  push:
+    branches: [q7308-audit-9adec1f8]
+    paths:
+      - 'q7308_reference.py'
+      - '.github/workflows/q7308-audit.yml'
+permissions:
+  contents: write
+concurrency:
+  group: q7308-independent-scatter
+  cancel-in-progress: true
+jobs:
+  reference:
+    runs-on: ubuntu-slim
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run exact standard-library reference scanner
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 q7308_reference.py --markdown q7308-output.md --json q7308-output.json
+      - name: Persist exact certificates on audit branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add q7308-output.md q7308-output.json
+          git commit -m 'Record Q7308 independent scatter certificates' || exit 0
+          git push origin HEAD:q7308-audit-9adec1f8
