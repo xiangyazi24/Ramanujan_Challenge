@@ -48,8 +48,9 @@ jobs:
         run: |
           set -euo pipefail
           gp -q problems/3.2/research/q7320_small_factor.gp \
-            > /tmp/q7320-factor.txt
+            > /tmp/q7320-factor.txt 2>&1
           grep -q '^Q7320_SMALL_FACTOR PASS$' /tmp/q7320-factor.txt
+          ! grep -q '\*\*\*' /tmp/q7320-factor.txt
       - name: Persist exact outputs
         shell: bash
         run: |
