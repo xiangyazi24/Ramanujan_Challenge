@@ -1,0 +1,1981 @@
+{
+  "scales": [
+    {
+      "K_histogram": {
+        "3": 10
+      },
+      "X": 256,
+      "aggregate_invariants": {
+        "automatic_reflection_collisions": 0,
+        "collision_events": 2,
+        "collision_type_labels": 2,
+        "nonempty_continuant_supports": 2,
+        "nonreflection_collisions": 2,
+        "quotient_gap_count": 56,
+        "quotient_generated_extra_returns": 1,
+        "quotient_zero_ones": 0,
+        "residue_offdiagonal_distinct_digit": 0,
+        "residue_offdiagonal_raw": 0,
+        "residue_zero_ones": 30,
+        "shared_continuant_supports": 0,
+        "shared_nonreflection_continuant_supports": 0
+      },
+      "selected_rows": [
+        {
+          "K": 3,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 6,
+              "hit_index": 0,
+              "p": 379,
+              "q": 33,
+              "r": 171,
+              "rho": 171
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 443,
+              "q": 28,
+              "r": 274,
+              "rho": 168
+            },
+            {
+              "Zp": 6,
+              "hit_index": 2,
+              "p": 499,
+              "q": 25,
+              "r": 203,
+              "rho": 203
+            }
+          ],
+          "n": 12678,
+          "nonreflection_quotient_generated_extra_returns": [
+            {
+              "direction": "down",
+              "h": 33,
+              "hit_index": 2,
+              "other_zero": 170,
+              "p": 499,
+              "sources": [
+                {
+                  "hit_indices": [
+                    0
+                  ],
+                  "kind": "q"
+                }
+              ],
+              "x": 170,
+              "y": 203
+            }
+          ],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 3,
+          "continuant_supports": [
+            {
+              "h": 20,
+              "nonreflection_prime_product": "499",
+              "nonreflection_primes": [
+                499
+              ],
+              "prime_product": "499",
+              "primes": [
+                499
+              ],
+              "reflection_primes": [],
+              "s": 61,
+              "t": 81,
+              "types": [
+                "QQ"
+              ]
+            }
+          ],
+          "hits": [
+            {
+              "Zp": 6,
+              "hit_index": 0,
+              "p": 379,
+              "q": 81,
+              "r": 171,
+              "rho": 171
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 439,
+              "q": 70,
+              "r": 140,
+              "rho": 140
+            },
+            {
+              "Zp": 6,
+              "hit_index": 2,
+              "p": 499,
+              "q": 61,
+              "r": 431,
+              "rho": 67
+            }
+          ],
+          "n": 30870,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": [
+            {
+              "automatic_reflection": false,
+              "h": 20,
+              "hit_index": 2,
+              "minor": 0,
+              "p": 499,
+              "s": 61,
+              "t": 81,
+              "types": [
+                "QQ"
+              ]
+            }
+          ]
+        },
+        {
+          "K": 3,
+          "continuant_supports": [
+            {
+              "h": 72,
+              "nonreflection_prime_product": "271",
+              "nonreflection_primes": [
+                271
+              ],
+              "prime_product": "271",
+              "primes": [
+                271
+              ],
+              "reflection_primes": [],
+              "s": 99,
+              "t": 171,
+              "types": [
+                "QQ"
+              ]
+            }
+          ],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 257,
+              "q": 171,
+              "r": 184,
+              "rho": 72
+            },
+            {
+              "Zp": 4,
+              "hit_index": 1,
+              "p": 271,
+              "q": 162,
+              "r": 229,
+              "rho": 41
+            },
+            {
+              "Zp": 2,
+              "hit_index": 2,
+              "p": 443,
+              "q": 99,
+              "r": 274,
+              "rho": 168
+            }
+          ],
+          "n": 44131,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": [
+            {
+              "automatic_reflection": false,
+              "h": 72,
+              "hit_index": 1,
+              "minor": 0,
+              "p": 271,
+              "s": 99,
+              "t": 171,
+              "types": [
+                "QQ"
+              ]
+            }
+          ]
+        }
+      ],
+      "self_checks": {
+        "baseline_available": true,
+        "baseline_passed": true,
+        "canonical_hit_checks": 30,
+        "cleared_divided_positions": 16467,
+        "clique_groups_checked": 447,
+        "clique_memberships_checked": 904,
+        "continuant_minor_checks": 726,
+        "direct_binomial_positions": 559,
+        "direct_scatter_canonical_triples": 10,
+        "direct_scatter_hit_events": 8275,
+        "direct_scatter_pair_records": 467,
+        "direct_scatter_passed": true,
+        "direct_scatter_performed": true,
+        "direct_scatter_rows": 10,
+        "extra_return_zero_equivalence_checks": 291,
+        "nonadjacent_zero_positions": 92,
+        "recurrence_primes_checked": 43,
+        "reflection_gap_tests_excluded": 1,
+        "reflection_positions": 16467,
+        "reflection_zero_positions": 46,
+        "status": "PASS",
+        "wronskian_positions": 16424
+      }
+    },
+    {
+      "K_histogram": {
+        "3": 25
+      },
+      "X": 512,
+      "aggregate_invariants": {
+        "automatic_reflection_collisions": 0,
+        "collision_events": 0,
+        "collision_type_labels": 0,
+        "nonempty_continuant_supports": 0,
+        "nonreflection_collisions": 0,
+        "quotient_gap_count": 149,
+        "quotient_generated_extra_returns": 0,
+        "quotient_zero_ones": 3,
+        "residue_offdiagonal_distinct_digit": 0,
+        "residue_offdiagonal_raw": 2,
+        "residue_zero_ones": 77,
+        "shared_continuant_supports": 0,
+        "shared_nonreflection_continuant_supports": 0
+      },
+      "selected_rows": [
+        {
+          "K": 3,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 593,
+              "q": 156,
+              "r": 162,
+              "rho": 162
+            },
+            {
+              "Zp": 4,
+              "hit_index": 1,
+              "p": 907,
+              "q": 102,
+              "r": 156,
+              "rho": 156
+            },
+            {
+              "Zp": 2,
+              "hit_index": 2,
+              "p": 977,
+              "q": 94,
+              "r": 832,
+              "rho": 144
+            }
+          ],
+          "n": 92670,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [
+            {
+              "column_hit_index": 0,
+              "quotient": 156,
+              "row_hit_index": 1,
+              "row_prime": 907
+            }
+          ],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 3,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 631,
+              "q": 162,
+              "r": 112,
+              "rho": 112
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 887,
+              "q": 115,
+              "r": 329,
+              "rho": 329
+            },
+            {
+              "Zp": 4,
+              "hit_index": 2,
+              "p": 907,
+              "q": 112,
+              "r": 750,
+              "rho": 156
+            }
+          ],
+          "n": 102334,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [
+            {
+              "column_hit_index": 2,
+              "quotient": 112,
+              "row_hit_index": 0,
+              "row_prime": 631
+            }
+          ],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 3,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 4,
+              "hit_index": 0,
+              "p": 599,
+              "q": 252,
+              "r": 272,
+              "rho": 272
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 769,
+              "q": 196,
+              "r": 496,
+              "rho": 272
+            },
+            {
+              "Zp": 2,
+              "hit_index": 2,
+              "p": 937,
+              "q": 161,
+              "r": 363,
+              "rho": 363
+            }
+          ],
+          "n": 151220,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [
+            {
+              "canonical_residue": 272,
+              "column_hit_index": 1,
+              "row_hit_index": 0,
+              "row_prime": 599,
+              "same_canonical_digit": true
+            },
+            {
+              "canonical_residue": 272,
+              "column_hit_index": 0,
+              "row_hit_index": 1,
+              "row_prime": 769,
+              "same_canonical_digit": true
+            }
+          ],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 3,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 691,
+              "q": 358,
+              "r": 353,
+              "rho": 337
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 733,
+              "q": 337,
+              "r": 710,
+              "rho": 22
+            },
+            {
+              "Zp": 2,
+              "hit_index": 2,
+              "p": 937,
+              "q": 264,
+              "r": 363,
+              "rho": 363
+            }
+          ],
+          "n": 247731,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [
+            {
+              "column_hit_index": 1,
+              "quotient": 337,
+              "row_hit_index": 0,
+              "row_prime": 691
+            }
+          ],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        }
+      ],
+      "self_checks": {
+        "baseline_available": true,
+        "baseline_passed": true,
+        "canonical_hit_checks": 75,
+        "cleared_divided_positions": 57641,
+        "clique_groups_checked": 1045,
+        "clique_memberships_checked": 2115,
+        "continuant_minor_checks": 1835,
+        "direct_binomial_positions": 975,
+        "direct_scatter_canonical_triples": 0,
+        "direct_scatter_hit_events": 0,
+        "direct_scatter_pair_records": 0,
+        "direct_scatter_passed": false,
+        "direct_scatter_performed": false,
+        "direct_scatter_rows": 0,
+        "extra_return_zero_equivalence_checks": 770,
+        "nonadjacent_zero_positions": 140,
+        "recurrence_primes_checked": 75,
+        "reflection_gap_tests_excluded": 0,
+        "reflection_positions": 57641,
+        "reflection_zero_positions": 70,
+        "status": "PASS",
+        "wronskian_positions": 57566
+      }
+    },
+    {
+      "K_histogram": {
+        "3": 77,
+        "4": 1
+      },
+      "X": 1024,
+      "aggregate_invariants": {
+        "automatic_reflection_collisions": 0,
+        "collision_events": 6,
+        "collision_type_labels": 6,
+        "nonempty_continuant_supports": 6,
+        "nonreflection_collisions": 6,
+        "quotient_gap_count": 452,
+        "quotient_generated_extra_returns": 3,
+        "quotient_zero_ones": 0,
+        "residue_offdiagonal_distinct_digit": 1,
+        "residue_offdiagonal_raw": 1,
+        "residue_zero_ones": 236,
+        "shared_continuant_supports": 0,
+        "shared_nonreflection_continuant_supports": 0
+      },
+      "selected_rows": [
+        {
+          "K": 4,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 6,
+              "hit_index": 0,
+              "p": 1069,
+              "q": 14,
+              "r": 502,
+              "rho": 502
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 1381,
+              "q": 11,
+              "r": 277,
+              "rho": 277
+            },
+            {
+              "Zp": 4,
+              "hit_index": 2,
+              "p": 1847,
+              "q": 8,
+              "r": 692,
+              "rho": 692
+            },
+            {
+              "Zp": 4,
+              "hit_index": 3,
+              "p": 2011,
+              "q": 7,
+              "r": 1391,
+              "rho": 619
+            }
+          ],
+          "n": 15468,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 3,
+          "continuant_supports": [
+            {
+              "h": 528,
+              "nonreflection_prime_product": "1153",
+              "nonreflection_primes": [
+                1153
+              ],
+              "prime_product": "1153",
+              "primes": [
+                1153
+              ],
+              "reflection_primes": [],
+              "s": 227,
+              "t": 755,
+              "types": [
+                "QR"
+              ]
+            }
+          ],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 1153,
+              "q": 227,
+              "r": 936,
+              "rho": 216
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 1381,
+              "q": 190,
+              "r": 277,
+              "rho": 277
+            },
+            {
+              "Zp": 2,
+              "hit_index": 2,
+              "p": 1559,
+              "q": 168,
+              "r": 755,
+              "rho": 755
+            }
+          ],
+          "n": 262667,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": [
+            {
+              "automatic_reflection": false,
+              "h": 528,
+              "hit_index": 0,
+              "minor": 0,
+              "p": 1153,
+              "s": 227,
+              "t": 755,
+              "types": [
+                "QR"
+              ]
+            }
+          ]
+        },
+        {
+          "K": 3,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 6,
+              "hit_index": 0,
+              "p": 1049,
+              "q": 372,
+              "r": 504,
+              "rho": 504
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 1097,
+              "q": 356,
+              "r": 200,
+              "rho": 200
+            },
+            {
+              "Zp": 4,
+              "hit_index": 2,
+              "p": 1129,
+              "q": 346,
+              "r": 98,
+              "rho": 98
+            }
+          ],
+          "n": 390732,
+          "nonreflection_quotient_generated_extra_returns": [
+            {
+              "direction": "down",
+              "h": 10,
+              "hit_index": 0,
+              "other_zero": 494,
+              "p": 1049,
+              "sources": [
+                {
+                  "hit_indices": [
+                    1,
+                    2
+                  ],
+                  "kind": "abs_quotient_difference"
+                }
+              ],
+              "x": 494,
+              "y": 504
+            }
+          ],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 3,
+          "continuant_supports": [
+            {
+              "h": 129,
+              "nonreflection_prime_product": "1931",
+              "nonreflection_primes": [
+                1931
+              ],
+              "prime_product": "1931",
+              "primes": [
+                1931
+              ],
+              "reflection_primes": [],
+              "s": 76,
+              "t": 205,
+              "types": [
+                "QR"
+              ]
+            }
+          ],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 1471,
+              "q": 269,
+              "r": 1394,
+              "rho": 76
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 1657,
+              "q": 239,
+              "r": 1070,
+              "rho": 586
+            },
+            {
+              "Zp": 2,
+              "hit_index": 2,
+              "p": 1931,
+              "q": 205,
+              "r": 1238,
+              "rho": 692
+            }
+          ],
+          "n": 397093,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": [
+            {
+              "automatic_reflection": false,
+              "h": 129,
+              "hit_index": 2,
+              "minor": 0,
+              "p": 1931,
+              "s": 76,
+              "t": 205,
+              "types": [
+                "QR"
+              ]
+            }
+          ]
+        },
+        {
+          "K": 3,
+          "continuant_supports": [
+            {
+              "h": 81,
+              "nonreflection_prime_product": "1709",
+              "nonreflection_primes": [
+                1709
+              ],
+              "prime_product": "1709",
+              "primes": [
+                1709
+              ],
+              "reflection_primes": [],
+              "s": 255,
+              "t": 336,
+              "types": [
+                "QQ"
+              ]
+            }
+          ],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 1259,
+              "q": 336,
+              "r": 97,
+              "rho": 97
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 1657,
+              "q": 255,
+              "r": 586,
+              "rho": 586
+            },
+            {
+              "Zp": 4,
+              "hit_index": 2,
+              "p": 1709,
+              "q": 247,
+              "r": 998,
+              "rho": 710
+            }
+          ],
+          "n": 423121,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": [
+            {
+              "automatic_reflection": false,
+              "h": 81,
+              "hit_index": 2,
+              "minor": 0,
+              "p": 1709,
+              "s": 255,
+              "t": 336,
+              "types": [
+                "QQ"
+              ]
+            }
+          ]
+        },
+        {
+          "K": 3,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 6,
+              "hit_index": 0,
+              "p": 1049,
+              "q": 441,
+              "r": 540,
+              "rho": 508
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 1741,
+              "q": 266,
+              "r": 43,
+              "rho": 43
+            },
+            {
+              "Zp": 4,
+              "hit_index": 2,
+              "p": 2011,
+              "q": 230,
+              "r": 619,
+              "rho": 619
+            }
+          ],
+          "n": 463149,
+          "nonreflection_quotient_generated_extra_returns": [
+            {
+              "direction": "up",
+              "h": 36,
+              "hit_index": 0,
+              "other_zero": 544,
+              "p": 1049,
+              "sources": [
+                {
+                  "hit_indices": [
+                    1,
+                    2
+                  ],
+                  "kind": "abs_quotient_difference"
+                }
+              ],
+              "x": 508,
+              "y": 544
+            }
+          ],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 3,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 6,
+              "hit_index": 0,
+              "p": 1049,
+              "q": 566,
+              "r": 544,
+              "rho": 504
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 1433,
+              "q": 414,
+              "r": 1016,
+              "rho": 416
+            },
+            {
+              "Zp": 2,
+              "hit_index": 2,
+              "p": 1447,
+              "q": 410,
+              "r": 1008,
+              "rho": 438
+            }
+          ],
+          "n": 594278,
+          "nonreflection_quotient_generated_extra_returns": [
+            {
+              "direction": "up",
+              "h": 4,
+              "hit_index": 0,
+              "other_zero": 508,
+              "p": 1049,
+              "sources": [
+                {
+                  "hit_indices": [
+                    1,
+                    2
+                  ],
+                  "kind": "abs_quotient_difference"
+                }
+              ],
+              "x": 504,
+              "y": 508
+            }
+          ],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 3,
+          "continuant_supports": [
+            {
+              "h": 222,
+              "nonreflection_prime_product": "1069",
+              "nonreflection_primes": [
+                1069
+              ],
+              "prime_product": "1069",
+              "primes": [
+                1069
+              ],
+              "reflection_primes": [],
+              "s": 423,
+              "t": 645,
+              "types": [
+                "QQ"
+              ]
+            }
+          ],
+          "hits": [
+            {
+              "Zp": 6,
+              "hit_index": 0,
+              "p": 1069,
+              "q": 725,
+              "r": 196,
+              "rho": 196
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 1201,
+              "q": 645,
+              "r": 576,
+              "rho": 576
+            },
+            {
+              "Zp": 4,
+              "hit_index": 2,
+              "p": 1831,
+              "q": 423,
+              "r": 708,
+              "rho": 708
+            }
+          ],
+          "n": 775221,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": [
+            {
+              "automatic_reflection": false,
+              "h": 222,
+              "hit_index": 0,
+              "minor": 0,
+              "p": 1069,
+              "s": 423,
+              "t": 645,
+              "types": [
+                "QQ"
+              ]
+            }
+          ]
+        },
+        {
+          "K": 3,
+          "continuant_supports": [
+            {
+              "h": 234,
+              "nonreflection_prime_product": "1621",
+              "nonreflection_primes": [
+                1621
+              ],
+              "prime_product": "1621",
+              "primes": [
+                1621
+              ],
+              "reflection_primes": [],
+              "s": 203,
+              "t": 437,
+              "types": [
+                "RR"
+              ]
+            },
+            {
+              "h": 31,
+              "nonreflection_prime_product": "1489",
+              "nonreflection_primes": [
+                1489
+              ],
+              "prime_product": "1489",
+              "primes": [
+                1489
+              ],
+              "reflection_primes": [],
+              "s": 562,
+              "t": 593,
+              "types": [
+                "QQ"
+              ]
+            }
+          ],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 1489,
+              "q": 645,
+              "r": 1051,
+              "rho": 437
+            },
+            {
+              "Zp": 4,
+              "hit_index": 1,
+              "p": 1621,
+              "q": 593,
+              "r": 203,
+              "rho": 203
+            },
+            {
+              "Zp": 4,
+              "hit_index": 2,
+              "p": 1709,
+              "q": 562,
+              "r": 998,
+              "rho": 710
+            }
+          ],
+          "n": 961456,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [
+            {
+              "canonical_residue": 437,
+              "column_hit_index": 0,
+              "row_hit_index": 1,
+              "row_prime": 1621,
+              "same_canonical_digit": false
+            }
+          ],
+          "typed_projective_state_collisions": [
+            {
+              "automatic_reflection": false,
+              "h": 31,
+              "hit_index": 0,
+              "minor": 0,
+              "p": 1489,
+              "s": 562,
+              "t": 593,
+              "types": [
+                "QQ"
+              ]
+            },
+            {
+              "automatic_reflection": false,
+              "h": 234,
+              "hit_index": 1,
+              "minor": 0,
+              "p": 1621,
+              "s": 203,
+              "t": 437,
+              "types": [
+                "RR"
+              ]
+            }
+          ]
+        }
+      ],
+      "self_checks": {
+        "baseline_available": true,
+        "baseline_passed": true,
+        "canonical_hit_checks": 235,
+        "cleared_divided_positions": 208987,
+        "clique_groups_checked": 3288,
+        "clique_memberships_checked": 6655,
+        "continuant_minor_checks": 5840,
+        "direct_binomial_positions": 1781,
+        "direct_scatter_canonical_triples": 0,
+        "direct_scatter_hit_events": 0,
+        "direct_scatter_pair_records": 0,
+        "direct_scatter_passed": false,
+        "direct_scatter_performed": false,
+        "direct_scatter_rows": 0,
+        "extra_return_zero_equivalence_checks": 2308,
+        "nonadjacent_zero_positions": 240,
+        "recurrence_primes_checked": 137,
+        "reflection_gap_tests_excluded": 1,
+        "reflection_positions": 208987,
+        "reflection_zero_positions": 120,
+        "status": "PASS",
+        "wronskian_positions": 208850
+      }
+    },
+    {
+      "K_histogram": {
+        "3": 272,
+        "4": 8
+      },
+      "X": 2048,
+      "aggregate_invariants": {
+        "automatic_reflection_collisions": 0,
+        "collision_events": 4,
+        "collision_type_labels": 4,
+        "nonempty_continuant_supports": 4,
+        "nonreflection_collisions": 4,
+        "quotient_gap_count": 1689,
+        "quotient_generated_extra_returns": 3,
+        "quotient_zero_ones": 2,
+        "residue_offdiagonal_distinct_digit": 0,
+        "residue_offdiagonal_raw": 0,
+        "residue_zero_ones": 848,
+        "shared_continuant_supports": 0,
+        "shared_nonreflection_continuant_supports": 0
+      },
+      "selected_rows": [
+        {
+          "K": 3,
+          "continuant_supports": [
+            {
+              "h": 1018,
+              "nonreflection_prime_product": "2383",
+              "nonreflection_primes": [
+                2383
+              ],
+              "prime_product": "2383",
+              "primes": [
+                2383
+              ],
+              "reflection_primes": [],
+              "s": 54,
+              "t": 1072,
+              "types": [
+                "QR"
+              ]
+            }
+          ],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 2383,
+              "q": 69,
+              "r": 545,
+              "rho": 545
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 2857,
+              "q": 57,
+              "r": 2123,
+              "rho": 733
+            },
+            {
+              "Zp": 4,
+              "hit_index": 2,
+              "p": 3019,
+              "q": 54,
+              "r": 1946,
+              "rho": 1072
+            }
+          ],
+          "n": 164972,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": [
+            {
+              "automatic_reflection": false,
+              "h": 1018,
+              "hit_index": 0,
+              "minor": 0,
+              "p": 2383,
+              "s": 54,
+              "t": 1072,
+              "types": [
+                "QR"
+              ]
+            }
+          ]
+        },
+        {
+          "K": 4,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 2087,
+              "q": 101,
+              "r": 2007,
+              "rho": 79
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 2399,
+              "q": 88,
+              "r": 1682,
+              "rho": 716
+            },
+            {
+              "Zp": 4,
+              "hit_index": 2,
+              "p": 3413,
+              "q": 62,
+              "r": 1188,
+              "rho": 1188
+            },
+            {
+              "Zp": 2,
+              "hit_index": 3,
+              "p": 4019,
+              "q": 52,
+              "r": 3806,
+              "rho": 212
+            }
+          ],
+          "n": 212794,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 3,
+          "continuant_supports": [
+            {
+              "h": 1006,
+              "nonreflection_prime_product": "3733",
+              "nonreflection_primes": [
+                3733
+              ],
+              "prime_product": "3733",
+              "primes": [
+                3733
+              ],
+              "reflection_primes": [],
+              "s": 132,
+              "t": 1138,
+              "types": [
+                "QR"
+              ]
+            }
+          ],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 2333,
+              "q": 212,
+              "r": 1194,
+              "rho": 1138
+            },
+            {
+              "Zp": 8,
+              "hit_index": 1,
+              "p": 3727,
+              "q": 133,
+              "r": 99,
+              "rho": 99
+            },
+            {
+              "Zp": 4,
+              "hit_index": 2,
+              "p": 3733,
+              "q": 132,
+              "r": 3034,
+              "rho": 698
+            }
+          ],
+          "n": 495790,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": [
+            {
+              "automatic_reflection": false,
+              "h": 1006,
+              "hit_index": 2,
+              "minor": 0,
+              "p": 3733,
+              "s": 132,
+              "t": 1138,
+              "types": [
+                "QR"
+              ]
+            }
+          ]
+        },
+        {
+          "K": 3,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 2333,
+              "q": 218,
+              "r": 1138,
+              "rho": 1138
+            },
+            {
+              "Zp": 4,
+              "hit_index": 1,
+              "p": 2411,
+              "q": 211,
+              "r": 1011,
+              "rho": 1011
+            },
+            {
+              "Zp": 4,
+              "hit_index": 2,
+              "p": 3413,
+              "q": 149,
+              "r": 1195,
+              "rho": 1195
+            }
+          ],
+          "n": 509732,
+          "nonreflection_quotient_generated_extra_returns": [
+            {
+              "direction": "down",
+              "h": 7,
+              "hit_index": 2,
+              "other_zero": 1188,
+              "p": 3413,
+              "sources": [
+                {
+                  "hit_indices": [
+                    0,
+                    1
+                  ],
+                  "kind": "abs_quotient_difference"
+                }
+              ],
+              "x": 1188,
+              "y": 1195
+            }
+          ],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 4,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 4,
+              "hit_index": 0,
+              "p": 2341,
+              "q": 463,
+              "r": 2219,
+              "rho": 121
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 2383,
+              "q": 455,
+              "r": 1837,
+              "rho": 545
+            },
+            {
+              "Zp": 4,
+              "hit_index": 2,
+              "p": 2557,
+              "q": 424,
+              "r": 1934,
+              "rho": 622
+            },
+            {
+              "Zp": 2,
+              "hit_index": 3,
+              "p": 3347,
+              "q": 324,
+              "r": 1674,
+              "rho": 1672
+            }
+          ],
+          "n": 1086102,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 4,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 2459,
+              "q": 731,
+              "r": 179,
+              "rho": 179
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 2539,
+              "q": 708,
+              "r": 96,
+              "rho": 96
+            },
+            {
+              "Zp": 6,
+              "hit_index": 2,
+              "p": 2693,
+              "q": 667,
+              "r": 1477,
+              "rho": 1215
+            },
+            {
+              "Zp": 8,
+              "hit_index": 3,
+              "p": 3727,
+              "q": 482,
+              "r": 1294,
+              "rho": 1294
+            }
+          ],
+          "n": 1797708,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 3,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 2399,
+              "q": 795,
+              "r": 1682,
+              "rho": 716
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 2663,
+              "q": 716,
+              "r": 2179,
+              "rho": 483
+            },
+            {
+              "Zp": 2,
+              "hit_index": 2,
+              "p": 3449,
+              "q": 553,
+              "r": 1590,
+              "rho": 1590
+            }
+          ],
+          "n": 1908887,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [
+            {
+              "column_hit_index": 1,
+              "quotient": 716,
+              "row_hit_index": 0,
+              "row_prime": 2399
+            }
+          ],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 4,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 2423,
+              "q": 790,
+              "r": 130,
+              "rho": 130
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 3089,
+              "q": 619,
+              "r": 2209,
+              "rho": 879
+            },
+            {
+              "Zp": 2,
+              "hit_index": 2,
+              "p": 3697,
+              "q": 517,
+              "r": 2951,
+              "rho": 745
+            },
+            {
+              "Zp": 4,
+              "hit_index": 3,
+              "p": 3877,
+              "q": 493,
+              "r": 2939,
+              "rho": 937
+            }
+          ],
+          "n": 1914300,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 4,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 2477,
+              "q": 982,
+              "r": 855,
+              "rho": 855
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 2731,
+              "q": 890,
+              "r": 2679,
+              "rho": 51
+            },
+            {
+              "Zp": 2,
+              "hit_index": 2,
+              "p": 2797,
+              "q": 869,
+              "r": 2676,
+              "rho": 120
+            },
+            {
+              "Zp": 2,
+              "hit_index": 3,
+              "p": 2879,
+              "q": 845,
+              "r": 514,
+              "rho": 514
+            }
+          ],
+          "n": 2433269,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 3,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 2399,
+              "q": 1079,
+              "r": 716,
+              "rho": 716
+            },
+            {
+              "Zp": 4,
+              "hit_index": 1,
+              "p": 3613,
+              "q": 716,
+              "r": 2329,
+              "rho": 1283
+            },
+            {
+              "Zp": 2,
+              "hit_index": 2,
+              "p": 3943,
+              "q": 656,
+              "r": 2629,
+              "rho": 1313
+            }
+          ],
+          "n": 2589237,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [
+            {
+              "column_hit_index": 1,
+              "quotient": 716,
+              "row_hit_index": 0,
+              "row_prime": 2399
+            }
+          ],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 3,
+          "continuant_supports": [
+            {
+              "h": 206,
+              "nonreflection_prime_product": "2341",
+              "nonreflection_primes": [
+                2341
+              ],
+              "prime_product": "2341",
+              "primes": [
+                2341
+              ],
+              "reflection_primes": [],
+              "s": 1067,
+              "t": 1273,
+              "types": [
+                "QR"
+              ]
+            }
+          ],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 2083,
+              "q": 1431,
+              "r": 1539,
+              "rho": 543
+            },
+            {
+              "Zp": 4,
+              "hit_index": 1,
+              "p": 2341,
+              "q": 1273,
+              "r": 2219,
+              "rho": 121
+            },
+            {
+              "Zp": 4,
+              "hit_index": 2,
+              "p": 3331,
+              "q": 895,
+              "r": 1067,
+              "rho": 1067
+            }
+          ],
+          "n": 2982312,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": [
+            {
+              "automatic_reflection": false,
+              "h": 206,
+              "hit_index": 1,
+              "minor": 0,
+              "p": 2341,
+              "s": 1067,
+              "t": 1273,
+              "types": [
+                "QR"
+              ]
+            }
+          ]
+        },
+        {
+          "K": 4,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 2477,
+              "q": 1339,
+              "r": 1621,
+              "rho": 855
+            },
+            {
+              "Zp": 2,
+              "hit_index": 1,
+              "p": 2579,
+              "q": 1286,
+              "r": 1730,
+              "rho": 848
+            },
+            {
+              "Zp": 4,
+              "hit_index": 2,
+              "p": 3581,
+              "q": 926,
+              "r": 2318,
+              "rho": 1262
+            },
+            {
+              "Zp": 8,
+              "hit_index": 3,
+              "p": 3727,
+              "q": 890,
+              "r": 1294,
+              "rho": 1294
+            }
+          ],
+          "n": 3318324,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 3,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 4,
+              "hit_index": 0,
+              "p": 2137,
+              "q": 1639,
+              "r": 1812,
+              "rho": 324
+            },
+            {
+              "Zp": 4,
+              "hit_index": 1,
+              "p": 2341,
+              "q": 1496,
+              "r": 2219,
+              "rho": 121
+            },
+            {
+              "Zp": 2,
+              "hit_index": 2,
+              "p": 4019,
+              "q": 871,
+              "r": 3806,
+              "rho": 212
+            }
+          ],
+          "n": 3504355,
+          "nonreflection_quotient_generated_extra_returns": [
+            {
+              "direction": "up",
+              "h": 1496,
+              "hit_index": 0,
+              "other_zero": 1820,
+              "p": 2137,
+              "sources": [
+                {
+                  "hit_indices": [
+                    1
+                  ],
+                  "kind": "q"
+                }
+              ],
+              "x": 324,
+              "y": 1820
+            }
+          ],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 3,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 2179,
+              "q": 1612,
+              "r": 1646,
+              "rho": 532
+            },
+            {
+              "Zp": 6,
+              "hit_index": 1,
+              "p": 2693,
+              "q": 1304,
+              "r": 2522,
+              "rho": 170
+            },
+            {
+              "Zp": 4,
+              "hit_index": 2,
+              "p": 3413,
+              "q": 1029,
+              "r": 2217,
+              "rho": 1195
+            }
+          ],
+          "n": 3514194,
+          "nonreflection_quotient_generated_extra_returns": [
+            {
+              "direction": "up",
+              "h": 1029,
+              "hit_index": 2,
+              "other_zero": 2224,
+              "p": 3413,
+              "sources": [
+                {
+                  "hit_indices": [
+                    2
+                  ],
+                  "kind": "q"
+                }
+              ],
+              "x": 1195,
+              "y": 2224
+            }
+          ],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 3,
+          "continuant_supports": [
+            {
+              "h": 802,
+              "nonreflection_prime_product": "2333",
+              "nonreflection_primes": [
+                2333
+              ],
+              "prime_product": "2333",
+              "primes": [
+                2333
+              ],
+              "reflection_primes": [],
+              "s": 765,
+              "t": 1567,
+              "types": [
+                "QR"
+              ]
+            }
+          ],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 2333,
+              "q": 1567,
+              "r": 1138,
+              "rho": 1138
+            },
+            {
+              "Zp": 4,
+              "hit_index": 1,
+              "p": 3019,
+              "q": 1211,
+              "r": 940,
+              "rho": 940
+            },
+            {
+              "Zp": 2,
+              "hit_index": 2,
+              "p": 3109,
+              "q": 1176,
+              "r": 765,
+              "rho": 765
+            }
+          ],
+          "n": 3656949,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": [
+            {
+              "automatic_reflection": false,
+              "h": 802,
+              "hit_index": 0,
+              "minor": 0,
+              "p": 2333,
+              "s": 765,
+              "t": 1567,
+              "types": [
+                "QR"
+              ]
+            }
+          ]
+        },
+        {
+          "K": 4,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 2843,
+              "q": 1292,
+              "r": 1302,
+              "rho": 1302
+            },
+            {
+              "Zp": 4,
+              "hit_index": 1,
+              "p": 2917,
+              "q": 1259,
+              "r": 1955,
+              "rho": 961
+            },
+            {
+              "Zp": 2,
+              "hit_index": 2,
+              "p": 3209,
+              "q": 1145,
+              "r": 153,
+              "rho": 153
+            },
+            {
+              "Zp": 4,
+              "hit_index": 3,
+              "p": 3877,
+              "q": 947,
+              "r": 2939,
+              "rho": 937
+            }
+          ],
+          "n": 3674458,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        },
+        {
+          "K": 4,
+          "continuant_supports": [],
+          "hits": [
+            {
+              "Zp": 2,
+              "hit_index": 0,
+              "p": 2069,
+              "q": 1821,
+              "r": 1351,
+              "rho": 717
+            },
+            {
+              "Zp": 4,
+              "hit_index": 1,
+              "p": 2293,
+              "q": 1643,
+              "r": 1601,
+              "rho": 691
+            },
+            {
+              "Zp": 2,
+              "hit_index": 2,
+              "p": 2521,
+              "q": 1495,
+              "r": 105,
+              "rho": 105
+            },
+            {
+              "Zp": 2,
+              "hit_index": 3,
+              "p": 3079,
+              "q": 1224,
+              "r": 304,
+              "rho": 304
+            }
+          ],
+          "n": 3769000,
+          "nonreflection_quotient_generated_extra_returns": [],
+          "quotient_zero_edges": [],
+          "residue_offdiagonal_edges": [],
+          "typed_projective_state_collisions": []
+        }
+      ],
+      "self_checks": {
+        "baseline_available": true,
+        "baseline_passed": true,
+        "canonical_hit_checks": 848,
+        "cleared_divided_positions": 780915,
+        "clique_groups_checked": 11821,
+        "clique_memberships_checked": 23930,
+        "continuant_minor_checks": 21627,
+        "direct_binomial_positions": 3315,
+        "direct_scatter_canonical_triples": 0,
+        "direct_scatter_hit_events": 0,
+        "direct_scatter_pair_records": 0,
+        "direct_scatter_passed": false,
+        "direct_scatter_performed": false,
+        "direct_scatter_rows": 0,
+        "extra_return_zero_equivalence_checks": 8596,
+        "nonadjacent_zero_positions": 462,
+        "recurrence_primes_checked": 255,
+        "reflection_gap_tests_excluded": 3,
+        "reflection_positions": 780915,
+        "reflection_zero_positions": 231,
+        "status": "PASS",
+        "wronskian_positions": 780660
+      }
+    }
+  ],
+  "schema": "q7306-event-catalog-v1",
+  "source_sha256": "e43c6b626ed9ec2cef5e199eca0856e7c2c14024c81312439ee785490c6b3073"
+}
