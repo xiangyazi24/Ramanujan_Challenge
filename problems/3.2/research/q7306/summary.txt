@@ -1,0 +1,10 @@
+Q7306 exact high-load invariant scanner
+source_sha256 e43c6b626ed9ec2cef5e199eca0856e7c2c14024c81312439ee785490c6b3073
+synthetic_clique_decoder PASS
+X primes active sumZ pairrec rows K3 K4 maxK Q1 Roff* coll(nonrefl/refl) sharedNR extra checks
+256 43 17 46 467 10 10 0 3 0 0 2/0 0 1 PASS
+512 75 30 70 1095 25 25 0 3 3 0 0/0 0 0 PASS
+1024 137 47 120 3447 78 77 1 4 0 1 6/0 0 3 PASS
+2048 255 94 231 12405 280 272 8 4 2 0 4/0 0 3 PASS
+Roff* excludes off-diagonal columns that repeat the row prime's own canonical digit.
+All reported extra returns exclude the automatic reflection gap.
