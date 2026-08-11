@@ -1,0 +1,45 @@
+name: Q7310 temporary fixed-q scan
+on:
+  push:
+    branches: [q7310-compute-09d333b1]
+    paths:
+      - '.github/workflows/q7310-compute.yml'
+      - 'problems/3.2/research/scripts/q7310_fixed_q_intersections_scan.py'
+permissions:
+  contents: write
+concurrency:
+  group: q7310-compute-09d333b1
+  cancel-in-progress: true
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact event-supported scan
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cd problems/3.2/research/scripts
+          python q7310_fixed_q_intersections_scan.py \
+            --xs 32,64,128 \
+            --qs 1,2,3 \
+            --widths 1,2,4,8 \
+            --output-dir "$RUNNER_TEMP/q7310-output" \
+            2>&1 | tee "$RUNNER_TEMP/q7310-run.log"
+      - name: Persist raw tables on temporary branch
+        if: always()
+        shell: bash
+        run: |
+          set -euxo pipefail
+          rm -rf q7310-output
+          mkdir -p q7310-output
+          if [ -d "$RUNNER_TEMP/q7310-output" ]; then
+            cp -a "$RUNNER_TEMP/q7310-output/." q7310-output/
+          fi
+          cp "$RUNNER_TEMP/q7310-run.log" q7310-output/q7310-run.log || true
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add q7310-output
+          git commit -m 'Record Q7310 exact fixed-q scan tables' || exit 0
+          git push origin HEAD:q7310-compute-09d333b1
