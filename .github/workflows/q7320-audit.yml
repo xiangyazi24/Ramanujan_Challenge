@@ -1,0 +1,71 @@
+name: Q7320 exact anti-diagonal audit
+on:
+  push:
+    branches: [q7320-audit]
+    paths:
+      - '.github/workflows/q7320-audit.yml'
+      - 'problems/3.2/research/q7320_antidiagonal_audit.cpp'
+      - 'problems/3.2/research/q7320_small_factor.gp'
+permissions:
+  contents: write
+concurrency:
+  group: q7320-antidiagonal-audit
+  cancel-in-progress: true
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: q7320-audit
+      - name: Compile exact C++ audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O3 -Wall -Wextra -Wpedantic -Werror \
+            problems/3.2/research/q7320_antidiagonal_audit.cpp \
+            -o /tmp/q7320_audit 2> /tmp/q7320-build.txt
+      - name: Run polynomial and prime audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          /tmp/q7320_audit --poly-max 20 --prime-max 10000 \
+            > /tmp/q7320-audit.txt
+          grep -q '^POLYNOMIAL_AUDIT PASS$' /tmp/q7320-audit.txt
+          grep -q '^PRIME_AUDIT PASS$' /tmp/q7320-audit.txt
+          grep -q '^Q7320_AUDIT PASS$' /tmp/q7320-audit.txt
+      - name: Run exact PARI factorization probe
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq pari-gp > /tmp/q7320-apt.txt
+          gp -q problems/3.2/research/q7320_small_factor.gp \
+            > /tmp/q7320-factor.txt
+          grep -q '^Q7320_SMALL_FACTOR PASS$' /tmp/q7320-factor.txt
+      - name: Persist exact outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          mkdir -p problems/3.2/research/q7320
+          cp /tmp/q7320-audit.txt problems/3.2/research/q7320/audit.txt
+          cp /tmp/q7320-factor.txt problems/3.2/research/q7320/factor.txt
+          if [ -s /tmp/q7320-build.txt ]; then
+            cp /tmp/q7320-build.txt problems/3.2/research/q7320/build.txt
+          else
+            echo 'clean: compiled with -Werror and no diagnostics' \
+              > problems/3.2/research/q7320/build.txt
+          fi
+          sha256sum problems/3.2/research/q7320_antidiagonal_audit.cpp \
+            > problems/3.2/research/q7320/source.sha256
+          sha256sum problems/3.2/research/q7320/audit.txt \
+            > problems/3.2/research/q7320/audit.sha256
+          sha256sum problems/3.2/research/q7320/factor.txt \
+            > problems/3.2/research/q7320/factor.sha256
+          git add problems/3.2/research/q7320
+          git commit -m 'Record Q7320 exact anti-diagonal audit' || true
+          git push origin HEAD:q7320-audit
