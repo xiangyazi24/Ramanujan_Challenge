@@ -1,0 +1,183 @@
+\begin{proposition}[Franel pullback and cover-adapted coordinates]
+\label{prop:hasse-franel-pullback}
+Let
+\[
+ \mathcal A(a)=\sum_{n\geq0}b_na^n,
+ \qquad
+ \mathcal F(x)=\sum_{n\geq0}f_nx^n,
+ \qquad
+ f_n=\sum_{k=0}^n\binom nk^3,
+\]
+and, for a prime $p$, let
+\[
+ A_p(a)=\sum_{m=0}^{p-1}b_ma^m,
+ \qquad
+ K_p(x)=\sum_{m=0}^{p-1}f_mx^m
+ \quad\text{in }\mathbb F_p[a]\text{ and }\mathbb F_p[x],
+\]
+respectively.  Put
+\[
+ \phi(x)=\frac{x(1-8x)}{1+x}
+ \quad\text{and}\quad
+ \Psi_{p,m}(x)=x^m(1-8x)^m(1+x)^{p-1-m}.
+\]
+Then the following identity holds in $\mathbb F_p[x]$:
+\begin{equation}
+ \boxed{K_p(x)^2=(1+x)^{p-1}A_p(\phi(x))
+       =\sum_{m=0}^{p-1}b_m\Psi_{p,m}(x).}
+ \label{eq:hasse-franel-pullback}
+\end{equation}
+The $p$ polynomials $\Psi_{p,0},\ldots,\Psi_{p,p-1}$ are linearly
+independent.  Consequently, if $[P]_{\Psi_{p,m}}$ denotes the $m$th
+coordinate of a polynomial $P$ in their span, then
+\begin{equation}
+ [K_p^2]_{\Psi_{p,m}}=b_m
+ \quad(0\leq m<p),
+ \qquad
+ Z(p)=\#\{m:[K_p^2]_{\Psi_{p,m}}=0\}.
+ \label{eq:hasse-franel-coordinates}
+\end{equation}
+In particular, this statement concerns coordinates in the
+cover-adapted basis, not the monomial coefficients of~$K_p^2$.
+\end{proposition}
+
+\begin{proof}
+The quadratic transformation used in
+\cite[Section~2]{CFVZ2026} is the characteristic-zero formal identity
+\begin{equation}
+ \mathcal A(\phi(x))=(1+x)\mathcal F(x)^2.
+ \label{eq:hasse-franel-characteristic-zero}
+\end{equation}
+Both coefficient sequences have the $p$-Lucas property.  Hence, in
+$\mathbb F_p[[a]]$ and $\mathbb F_p[[x]]$,
+\[
+ \mathcal A(a)=A_p(a)\mathcal A(a)^p,
+ \qquad
+ \mathcal F(x)=K_p(x)\mathcal F(x)^p.
+\]
+Substitute $a=\phi(x)$ into the first congruence and use
+\eqref{eq:hasse-franel-characteristic-zero}.  On the one hand,
+\[
+ (1+x)\mathcal F(x)^2
+ =A_p(\phi(x))(1+x)^p\mathcal F(x)^{2p};
+\]
+on the other hand it equals
+$(1+x)K_p(x)^2\mathcal F(x)^{2p}$.  Cancellation in the integral domain
+$\mathbb F_p[[x]]$ proves the first equality in
+\eqref{eq:hasse-franel-pullback}.  Clearing the powers of $1+x$ gives the
+displayed polynomial expansion; both sides have degree at most $2p-2$.
+
+Finally, $\Psi_{p,m}$ has $x$-adic order exactly $m$ and leading
+coefficient~$1$.  The transition matrix from
+$(\Psi_{p,0},\ldots,\Psi_{p,p-1})$ to the monomials is therefore triangular
+with diagonal entries~$1$.  This proves linear independence and the
+coordinate identities.
+\end{proof}
+
+\begin{proposition}[The two normalized Ap\'ery square roots]
+\label{prop:hasse-apery-square-roots}
+Let $\Delta(a)=a^2-34a+1$ and let $C_+(a)=\sum_{r\geq0}c_ra^r$ and
+$C_-(a)=\sum_{r\geq0}d_ra^r$ be defined by $c_{-1}=d_{-1}=0$,
+$c_0=d_0=1$, and
+\begin{align}
+ 4(r+1)^2c_{r+1}
+ &=2(68r^2+34r+5)c_r-(2r-1)^2c_{r-1},
+ \label{eq:hasse-square-root-plus}\\
+ 4(r+1)^2d_{r+1}
+ &=2(68r^2+102r+39)d_r-(2r+1)^2d_{r-1}.
+ \label{eq:hasse-square-root-minus}
+\end{align}
+Thus $c_1=5/2$ and $d_1=39/2$.  In $\mathbb Q[[a]]$ one has
+\begin{equation}
+ \mathcal A(a)=C_+(a)^2=\Delta(a)C_-(a)^2.
+ \label{eq:hasse-universal-square-roots}
+\end{equation}
+
+For every prime $p\geq5$, put
+\[
+ \varepsilon_p=\frac{1-\left(\frac{-6}{p}\right)}2.
+\]
+The factorization theorem of
+Caruso--F\"urnsinn--Vargas-Montoya--Zudilin
+\cite[Theorem~1.2]{CFVZ2026} gives a unique polynomial $B_p$ normalized by
+$B_p(0)=1$ such that
+\begin{equation}
+ A_p(a)=\Delta(a)^{\varepsilon_p}B_p(a)^2.
+ \label{eq:hasse-CFVZ-factorization}
+\end{equation}
+It is explicitly the indicated truncation of a universal series:
+\begin{equation}
+ B_p(a)=
+ \begin{cases}
+  \displaystyle\sum_{r=0}^{(p-1)/2}\overline{c_r}a^r,
+   &\left(\frac{-6}{p}\right)=1,\medskip\\
+  \displaystyle\sum_{r=0}^{(p-3)/2}\overline{d_r}a^r,
+   &\left(\frac{-6}{p}\right)=-1.
+ \end{cases}
+ \label{eq:hasse-square-root-truncations}
+\end{equation}
+Here the bars denote reduction modulo~$p$; the displayed rational
+coefficients have denominators prime to~$p$ in the stated ranges.
+\end{proposition}
+
+\begin{proof}
+The recurrences are the coefficient forms of the two second-order
+operators
+\begin{align*}
+ L_+&=4\vartheta^2
+ -2a(68\vartheta^2+34\vartheta+5)+a^2(2\vartheta+1)^2,\\
+ L_-&=4\vartheta^2
+ -2a(68\vartheta^2+102\vartheta+39)+a^2(2\vartheta+3)^2,
+ \qquad \vartheta=a\frac{d}{da}.
+\end{align*}
+A direct symmetric-square calculation shows that $C_+^2$ is annihilated by
+the Ap\'ery operator
+\[
+ \vartheta^3-a(2\vartheta+1)(17\vartheta^2+17\vartheta+5)
+ +a^2(\vartheta+1)^3.
+\]
+Its constant and linear coefficients are $1$ and~$5$, so uniqueness of the
+formal solution gives $C_+^2=\mathcal A$.  Conjugating $L_+$ by
+$\Delta^{-1/2}$ gives $L_-$; equivalently,
+$C_-=C_+/\sqrt\Delta$, with constant term~$1$.  This proves
+\eqref{eq:hasse-universal-square-roots} and
+\eqref{eq:hasse-square-root-minus}.
+
+It remains only to identify the normalized factor in
+\eqref{eq:hasse-CFVZ-factorization}.  In the square branch, comparison of
+the coefficients of degrees at most $(p-1)/2$ with
+$\mathcal A=C_+^2$ determines the coefficients of $B_p$ successively,
+because the square-root map with constant term~$1$ is triangular with
+diagonal coefficient~$2$.  This gives the first line of
+\eqref{eq:hasse-square-root-truncations}.  Apply the same argument to
+$\mathcal A/\Delta=C_-^2$ in the defect branch.  All divisions occurring
+in the recurrences have index strictly below~$p$, so reduction modulo~$p$
+is legitimate.
+\end{proof}
+
+\begin{remark}[Exact algebraic reduction versus the GCD conjecture]
+\label{rem:hasse-franel-logical-status}
+Equations~\eqref{eq:hasse-franel-coordinates} show that the assertion
+\[
+ \#\{m:[K_p^2]_{\Psi_{p,m}}=0\}=O(1)
+\]
+is exactly Hypothesis~\ref{hyp:Z}.  It is not equivalent to the pointwise
+Ap\'ery GCD conjecture.  Indeed, Remark~\ref{rem:pointwise-gap} shows that
+even abstract zero sets of cardinality one can align adversarially across
+different primes, whereas the full conjecture is equivalent to the
+pointwise radical estimate in Remark~\ref{rem:rainbow-open}.  Conversely,
+no converse implication is known: the pointwise radical formulation permits
+the individual cardinalities~$Z(p)$ to grow provided their positions do not
+align across primes.  Moreover, the Poisson model of
+Remark~\ref{rem:Zfalse} predicts that Hypothesis~\ref{hyp:Z} is false.
+
+The pullback nevertheless gives an exact, Ap\'ery-specific residual
+coefficient problem.  General $\ell$-adic trace bounds, monodromy, and
+Dwork unit-root congruences do not by themselves imply anti-concentration
+of these defining-characteristic coordinates.  This is a limitation of the
+currently available general theorems, not a claim that Cartier or Dwork
+methods cannot contribute after additional Ap\'ery-specific input.  For
+the average results in this paper, the natural single-prime target is the
+weaker estimate $\sum_{p\leq X}Z(p)\ll\pi(X)$; the all-index conjecture also
+requires the cross-prime dispersion described above.
+\end{remark}

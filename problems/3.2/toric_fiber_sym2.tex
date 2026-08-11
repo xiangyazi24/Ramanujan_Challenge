@@ -18,7 +18,7 @@ consider the elliptic curve
 \end{equation}
 For an elliptic curve $E/\mathbb F_q$, write
 \[
- A_q(E)=q+1-\#E(\mathbb F_q),
+ a_q(E)=q+1-\#E(\mathbb F_q),
 \]
 and write $\chi_p$ for the quadratic character of~$\mathbb F_p$.
 Then the following integer identities hold.
@@ -27,7 +27,7 @@ Then the following integer identities hold.
 \item If $D_a$ is a nonzero square and $x\in\mathbb F_p$ is either
 root of~\eqref{eq:toric-sym2-cover}, then
 \begin{equation}
- \boxed{\theta_p(a)=A_p(E_x)^2-p-\epsilon_a p.}
+ \boxed{\theta_p(a)=a_p(E_x)^2-p-\epsilon_a p.}
  \label{eq:toric-sym2-split}
 \end{equation}
 
@@ -35,14 +35,14 @@ root of~\eqref{eq:toric-sym2-cover}, then
 root of~\eqref{eq:toric-sym2-cover}, then
 \begin{equation}
  \boxed{\theta_p(a)=
- \chi_p(-3)A_{p^2}(E_x)-p-\epsilon_a p.}
+ \chi_p(-3)a_{p^2}(E_x)-p-\epsilon_a p.}
  \label{eq:toric-sym2-inert}
 \end{equation}
 
 \item If $D_a=0$ and $x\in\mathbb F_p$ is the double root, then
 \begin{equation}
  \boxed{\theta_p(a)=
- A_p(E_x)^2-p-\chi_p(-6)p.}
+ a_p(E_x)^2-p-\chi_p(-6)p.}
  \label{eq:toric-sym2-branch}
 \end{equation}
 \end{enumerate}
@@ -95,7 +95,10 @@ surface of a pair of $6$-isogenous elliptic curves.  Their displayed rational
 maps are defined over the corresponding quadratic cover, so their graphs give
 the Shioda--Inose correspondence in $\ell$-adic cohomology after reduction at
 every $p\geq5$.  We now identify the two elliptic factors, including the
-arithmetic twist.
+arithmetic twist.  The intermediate changes from the Ap\'ery--Fermi model to
+fibrations~$\#9$ and~$\#16$, and the Nikulin quotient of~$\#16$, are the cited
+rational maps of Bertin--Lecacheux; they are not being inferred merely from
+the Picard--Fuchs equation.
 
 The deck involution of~\eqref{eq:toric-sym2-cover} is
 \begin{equation}
@@ -142,7 +145,24 @@ V\'elu's formulas give the quotient $C_x=E_x/\langle Q\rangle$ as
  c_6^{\flat}(x)={}&3x^6+7x^5-41x^4-24x^3-14x^2-x.\notag
 \end{align}
 Here the superscript $\flat$ is only a label; these are the Weierstrass
-coefficients $a_4,a_6$, not the usual invariants.  If $\omega^2=-3$, put
+coefficients $a_4,a_6$, not the usual invariants.
+For clarity, the kernel sums in V\'elu's formula may be checked using the
+three representatives $Q,2Q,3Q$.  With V\'elu's notation they are
+\begin{align*}
+ v_Q&=x(x+1)(2x+1),&
+ v_{2Q}&=x^2(1-2x),&
+ v_{3Q}&=x^3(x+1),\\
+ w_Q&=3x^4+5x^3+2x^2,&
+ w_{2Q}&=x^4,&
+ w_{3Q}&=-x^6-x^5.
+\end{align*}
+Thus $v=x^4+x^3+4x^2+x$ and
+$w=-x^6-x^5+4x^4+5x^3+2x^2$; the identities
+$a_4(C_x)=-5v$ and
+$a_6(C_x)=-(a_1^2+4a_2)v-7w$, with $a_1=1-2x$ and $a_2=0$, give exactly
+the coefficients in~\eqref{eq:toric-sym2-Velu-quotient}.
+
+If $\omega^2=-3$, put
 \begin{align*}
  q&=\frac{4(1+x)\omega}{3},
  &r&=-\frac{13x^2+5x+1}{3},\\
@@ -166,14 +186,27 @@ $\mathbb Q(x,\sqrt{-3})$.  Equivalently,
  &=\frac{2^{24}}{3^6}(1+x)^{12}.
  \label{eq:toric-sym2-twist-invariants}
 \end{align}
-Thus the twist square class is the constant $-3$.  In particular, whenever
+Thus the twist square class is the constant $-3$.
+Moreover, $\overline\Phi=\Phi\circ[-1]$ for the displayed
+isomorphism~$\Phi$; hence its
+descent cocycle is precisely the quadratic twist cocycle of~$-3$.  In other
+words,
+\begin{equation}
+ C_x\simeq E_{\sigma(x)}^{(-3)}
+ \quad\text{over }\mathbb Q(x).
+ \label{eq:toric-sym2-twisted-factor}
+\end{equation}
+In particular, whenever
 $x,\sigma(x)\in\mathbb F_p$,
 \begin{equation}
- A_p(E_{\sigma(x)})=\chi_p(-3)A_p(E_x).
+ a_p(E_{\sigma(x)})=\chi_p(-3)a_p(E_x).
  \label{eq:toric-sym2-trace-twist}
 \end{equation}
 
-We recall the resulting cohomological calculation.  Let $V_x$ be
+We recall the resulting cohomological calculation.  The Kummer target over
+the quadratic cover is
+$\operatorname {Kum}(E_x\times E_{\sigma(x)}^{(-3)})$, not the untwisted
+product.  Let $V_x$ be
 $H^1_{\mathrm{et}}(E_{x,\overline{\mathbb F}_p},\mathbb Q_\ell)$.
 For $D_a\ne0$, the rank-four Kummer summand is
 \begin{equation}
@@ -186,20 +219,20 @@ $\mathbb Q_\ell(-1)$ to this summand.  Its orthogonal complement is the
 generic rank-three transcendental part of the K3 surface.  If the quadratic
 algebra splits, the trace of~\eqref{eq:toric-sym2-Asai} is
 \[
- \chi_p(-3)A_p(E_x)A_p(E_{\sigma(x)})=A_p(E_x)^2
+ \chi_p(-3)a_p(E_x)a_p(E_{\sigma(x)})=a_p(E_x)^2
 \]
 by~\eqref{eq:toric-sym2-trace-twist}.  If it is the field
 $\mathbb F_{p^2}$, the elementary tensor-induction trace identity gives
 \[
  \operatorname {Tr}(\operatorname {Frob}_p\mid
- \operatorname {As}^{+}V_x)=A_{p^2}(E_x),
+ \operatorname {As}^{+}V_x)=a_{p^2}(E_x),
 \]
 because Frobenius interchanges the two tensor factors.  Removing the Tate
 line therefore gives respectively
 \[
- A_p(E_x)^2-p,
+ a_p(E_x)^2-p,
  \qquad
- \chi_p(-3)A_{p^2}(E_x)-p.
+ \chi_p(-3)a_{p^2}(E_x)-p.
 \]
 At $a=1$ the explicit divisor calculation in
 Theorem~\ref{thm:toric-fiber-K3} supplies one additional rational Tate line;
@@ -230,7 +263,7 @@ The trace-zero CM endomorphism contributes an algebraic line, namely
 \]
 Its Frobenius trace is $\chi_p(-6)p$.  Removing it from the specialized
 rank-three trace
-$A_p(E_x)^2-p$ proves~\eqref{eq:toric-sym2-branch}.
+$a_p(E_x)^2-p$ proves~\eqref{eq:toric-sym2-branch}.
 Finally, substituting the three formulas into
 \eqref{eq:toric-K3-deflated-trace} proves
 \eqref{eq:toric-sym2-mu}.

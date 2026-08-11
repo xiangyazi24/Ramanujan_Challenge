@@ -94,11 +94,11 @@ under Hypothesis~$\bar{Z}$.
 A prime-wise decomposition of the
 residual $L^2$-norm
 $\|\eta\|^2 = D + O$ (diagonal~$+$~off-diagonal)
-shows that
-$D = T + O(1/\ln N)$ unconditionally,
-reducing the all-$n$ conjecture $G_n = e^{o(n)}$
-to a two-prime dispersion input:
-the cross-prime interaction~$O$ is~$o(T)$.
+shows, under the natural second-mass condition
+$\sum_{N<p\le2N}Z(p)^2=O(N/\log N)$, that
+$D = T + O(1/\ln N)$.  The all-$n$ conjecture
+would then follow from the sufficient two-prime dispersion input
+$O=o(T)$.
 Computation through $N = 262{,}144$ confirms
 $|O/T| < 2 \times 10^{-3}$.
 Two structural reductions further localize the gap:
@@ -2419,7 +2419,7 @@ sequence agrees with their empirical findings.
 
 \item In the standard toric coordinate, the truncated
 polynomial
-$H_p(t) = \sum_{j=0}^{p-1} b_j\, t^j \in \mathbb{F}_p[t]$
+$A_p(t) = \sum_{j=0}^{p-1} b_j\, t^j \in \mathbb{F}_p[t]$
 is the scalar Hasse--Witt invariant of the
 Ap\'ery K3 pencil.
 Its \emph{roots} in~$\mathbb{F}_p$ are the
@@ -2427,9 +2427,9 @@ nonordinary fibers; because the family
 has generic Picard rank~$19$, nonordinary
 implies supersingular at good primes.
 Our statistic $Z(p)$ counts vanishing
-\emph{coefficients} of~$H_p$, equivalently
+\emph{coefficients} of~$A_p$, equivalently
 the vanishing finite Mellin coefficients
-$b_j = -\sum_{t \in \mathbb{F}_p^\times} H_p(t)\, t^{-j}$
+$b_j = -\sum_{t \in \mathbb{F}_p^\times} A_p(t)\, t^{-j}$
 for $1 \le j \le p - 2$.
 Thus $Z(p)$ is a spectral sparsity statistic
 for the global Hasse/point-count function,
@@ -2529,15 +2529,15 @@ bounded-complexity sheaves.
 
 \item \textbf{Linear-complexity obstruction.}
 The Sym$^2$ factorization
-$H_p(t) = \Delta(t)^{\varepsilon_p}\cdot B_p(t)^2$
-with $B_p$ squarefree of degree
+$A_p(t) = \Delta(t)^{\varepsilon_p}\cdot B_p(t)^2$
+with $B_p$ of degree
 $\lfloor(p{-}1{-}2\varepsilon_p)/2\rfloor$
-implies that $H_p$ has at most
+implies that $A_p$ has at most
 $\lfloor(p{-}1)/2\rfloor + 2$ distinct zeros
 in~$\mathbb{F}_p^\times$.
 Choosing a primitive root~$g$ and forming the
 canonical character interpolation
-$Q(X) = -\sum_{r=1}^{p-2} H_p(g^r)\, X^r$,
+$Q(X) = -\sum_{r=1}^{p-2} A_p(g^r)\, X^r$,
 whose values $Q(g^j) = b_j$
 for $1 \le j \le p{-}2$, we find that~$Q$
 has at least $(p{-}5)/2$ nonzero coefficients.
@@ -2572,8 +2572,8 @@ The extra terms of~$b_j$ when $j > (p{-}1)/2$
 (i.e., $k > p{-}1{-}j$) likewise vanish:
 $\binom{j{+}k}{k} \equiv \binom{j{+}k{-}p}{k}
 \equiv 0$ since $j{+}k{-}p < k$.
-Equivalently, $H_p(t)$ is palindromic:
-$t^{p-1}\, H_p(1/t) \equiv H_p(t)$.
+Equivalently, $A_p(t)$ is palindromic:
+$t^{p-1}\, A_p(1/t) \equiv A_p(t)$.
 This explains the observed pairing:
 whenever $b_j \equiv 0$, also
 $b_{p-1-j} \equiv 0$, so zeros of~$b_j$
@@ -2598,31 +2598,26 @@ Caruso, F\"urnsinn, Vargas-Montoya, and
 Zudilin~\cite{CFVZ2026} proved the mod-$p$
 squareness rigorously: for every prime $p \ge 5$,
 setting $\varepsilon_p = \frac{1}{2}(1 - \bigl(\frac{-6}{p}\bigr))$,
-there exists a unique (up to sign) polynomial
-$B_p \in \mathbb{F}_p[t]$ such that
+there exists a unique polynomial $B_p \in \mathbb{F}_p[t]$ normalized by
+$B_p(0)=1$ such that
 \[
-  H_p(t) \;=\; \Delta(t)^{\varepsilon_p}\cdot B_p(t)^2,
+  A_p(t) \;=\; \Delta(t)^{\varepsilon_p}\cdot B_p(t)^2,
 \]
 where $\Delta(t) = t^2 - 34t + 1$ is the
-conifold discriminant and
-$B_p$ is squarefree and coprime to~$\Delta$.
-(A caveat on attribution: Theorem~1.2
-of~\cite{CFVZ2026} establishes the
-quadratic-times-square \emph{factorization};
-the squarefreeness and coprimality-to-$\Delta$
-assertions used here are verified computationally
+conifold discriminant.  Theorem~1.2
+of~\cite{CFVZ2026} establishes precisely this
+quadratic-times-square factorization.  It does not assert
+that $B_p$ is squarefree or coprime to~$\Delta$;
+those two additional properties are verified computationally
 for all $p \le 20{,}000$
-(Subsection~\ref{ssec:oracleB-result}) but are not
-formulated in~\cite{CFVZ2026} as a Hasse-invariant,
-Picard-group, or elliptic-pencil statement, and a
-separate reference or proof is needed for their use
+(Subsection~\ref{ssec:oracleB-result}) but remain unproved
 in full generality.
 Crucially, $\mathcal{Z}_p$ is the set of vanishing
-\emph{coefficients} of $H_p$
+\emph{coefficients} of $A_p$
 (the finite Mellin transform), \emph{not} the
-evaluation roots of $H_p$ or of~$B_p$; the two loci
+evaluation roots of $A_p$ or of~$B_p$; the two loci
 are genuinely different---e.g.\ at $p = 7$,
-$H_7 = (t{-}1)^2(t^2{+}1)^2$ has the evaluation root
+$A_7 = (t{-}1)^2(t^2{+}1)^2$ has the evaluation root
 $t = 1$ yet no vanishing coefficient, so
 $\mathcal{Z}_7 = \varnothing$
 (Proposition~\ref{prop:oracleB-two-zero-loci}).
@@ -2636,6 +2631,10 @@ property of both sequences, and a quadratic-descent
 argument through the covering
 $\mathbb{F}_p(x)/\mathbb{F}_p(t)$ where
 $t = x(1-8x)/(1+x)$.
+Proposition~\ref{prop:hasse-franel-pullback} below records the resulting
+finite-field identity and its exact cover-adapted coordinates;
+Proposition~\ref{prop:hasse-apery-square-roots} records the two normalized
+square-root recurrences.
 The deck-transformation character $(-6/p)$ determines
 whether $\varepsilon_p = 0$ or~$1$:
 \[
@@ -3953,7 +3952,7 @@ The actual Ap\'ery matrix is statistically
 indistinguishable from its random palindromic surrogate.
 \end{remark}
 
-\subsection{AMTD: the precise remaining conjecture}
+\subsection{AMTD: a concrete sufficient conjecture}
 \label{ssec:amtd}
 
 The dispersion target (Hypothesis~\ref{hyp:ap-bdh}) is
@@ -4273,6 +4272,19 @@ palindromic symmetry improves only absolute constants.
 \input{oracleB_result}
 
 \input{oracleC_result}
+
+\subsection{Exact toric fibers and the cover-adapted descent}
+\label{ssec:exact-toric-cover-descent}
+
+\input{toric_mellin_square}
+
+\input{toric_fiber_k3}
+
+\input{toric_fiber_sym2}
+
+\input{hasse_franel_descent}
+
+\input{hasse_square_no_go}
 
 \input{lemmaA_result}
 
@@ -4889,16 +4901,15 @@ $|\langle \rho, \eta \rangle|
 \le \rho_{\max} \cdot T$
 where $\rho_{\max} = \max_{m} \rho(m)
 = \sum_p A_p/(2N{-}p)$.
-Since $\rho_{\max}/(T/N)$ stabilizes
-near~$1.8$ (Table~\ref{tab:residual}),
-$|\langle \rho, \eta \rangle|
-\le 1.8\,T^2/N = o(T)$.
-The unconditional collision theorem
-$F = O(T)$ is therefore equivalent to
-the shot-noise estimate
-$\|\eta\|_2^2 = O(T)$,
-which is the residualized AMTD
-(Hypothesis~\ref{hyp:amtd}).
+The data show that $\rho_{\max}/(T/N)$ stabilizes
+near~$1.8$ (Table~\ref{tab:residual}); under the corresponding
+uniform profile bound $\rho_{\max}=O(T/N)$, this gives
+$|\langle \rho, \eta \rangle|=O(T^2/N)=o(T)$.
+Together with $\|\rho\|^2=O(T^2/N)$, that auxiliary profile
+input makes the collision estimate $F=O(T)$ equivalent to the
+shot-noise estimate $\|\eta\|_2^2=O(T)$.  The numerical
+stabilization itself is evidence, not a proof of the uniform
+profile bound.
 \end{remark}
 
 \begin{table}[ht]
@@ -5061,7 +5072,8 @@ $F = O(T)$, exactly the BFM2 bound.
 The estimate $\|\eta\|^2 = O(T)$---that
 is, shot-noise-scale fluctuations of the
 actual zero positions around the
-triangular profile---is the sole gap.
+triangular profile---is the sole gap in this
+second-moment route.
 \end{remark}
 
 \begin{remark}[Prime-wise decomposition of $\|\eta\|^2$]
@@ -5127,8 +5139,8 @@ $\sum_p Z(p)^2 \le
 \bigl(\max Z(p)\bigr)\cdot\sum_p Z(p)$
 and $\max Z(p) = O(1)$ (empirically)
 give both corrections $O(K/N) = O(1/\ln N)$.
-Thus $D = T + O(1/\ln N)$ unconditionally
-under $\sum_p Z(p)^2 = O(K)$.
+Thus $D = T + O(1/\ln N)$ under the
+second-mass hypothesis $\sum_p Z(p)^2 = O(K)$.
 Under the null model, $E[O] = 0$.
 
 Computation confirms this structure
@@ -5156,13 +5168,10 @@ Together,
 proving $\|\eta\|^2/T \to 1$ in
 $L^2$ and in probability within
 the null model.
-The unconditional statement
-$\|\eta\|^2 = O(T)$ for the
-actual Ap\'ery zero-sets is equivalent
-to a \emph{two-prime dispersion} input:
-the zero positions of distinct primes
-are equidistributed modulo~$pq$
-in the short interval~$[1,N]$.
+For the actual Ap\'ery zero-sets, the desired statement
+$\|\eta\|^2 = O(T)$ would follow from a suitable
+\emph{two-prime dispersion} estimate for the zero positions
+of distinct primes in the short interval~$[1,N]$.
 
 \begin{table}[ht]
 \centering\small
@@ -5187,15 +5196,14 @@ $N$ & $T$ & $D$ & $O$ & $O/T$ \\
 \end{tabular}
 \end{table}
 Note the structural identity
-$O = F - \|\rho\|^2 - 2\langle\rho,\eta\rangle$,
-so $O = o(T)$ is equivalent to
-$F = o(T)$ (since $\|\rho\|^2 = O(T^2/N)
-= o(T)$),
-and the prime-wise decomposition
-reduces the BFM2 bound to the
-assertion that the cross-prime
-interaction is asymptotically
-negligible.
+$O = F - \|\rho\|^2 - 2\langle\rho,\eta\rangle$.
+Under the profile and cross-term estimates stated above,
+$\|\rho\|^2+2\langle\rho,\eta\rangle=o(T)$, so
+$O=o(T)$ is then equivalent to $F=o(T)$.
+Without those auxiliary estimates, the identity alone gives
+no converse.  In particular, negligibility of the cross-prime
+interaction is a sufficient strengthening of the BFM2 bound,
+not an unconditional equivalent formulation of it.
 \end{remark}
 
 \begin{remark}[Higher factorial moments]
@@ -5299,11 +5307,11 @@ are independent uniform elements of~$\mathbb{F}_p$
 probability~$1/p$.
 \end{proof}
 
-The Ap\'ery Hasse polynomial $H_p(t) = \sum b_k t^k$
+The Ap\'ery Hasse polynomial $A_p(t) = \sum b_k t^k$
 is a specific element of~$V_p^+$ with additional
-algebraic structure ($H_p = \Delta^\varepsilon B_p^2$).
+algebraic structure ($A_p = \Delta^\varepsilon B_p^2$).
 The conjecture that $Z(p) \sim 2\,\mathrm{Poisson}(1/2)$
-is equivalent to asserting that $H_p$ behaves, for
+is equivalent to asserting that $A_p$ behaves, for
 the spectral-zero statistic, like a generic element
 of~$V_p^+$.
 
@@ -5683,8 +5691,8 @@ so $\log G_n = o(n)$.
 \end{proof}
 
 \begin{remark}
-Among all sufficient conditions collected in this paper
-(Hypothesis~Z, $\bar{Z}$, Poisson, AP--BDH, AMTD),
+Among the cross-prime sufficient conditions collected in this paper
+(Poisson, AP--BDH, AMTD, and the higher-moment hypotheses),
 Hypothesis~$(\mathrm{HM})_8$ appears to be the weakest that
 still closes the full conjecture: it requires no pointwise
 information about any single prime, no short-window
@@ -5725,7 +5733,7 @@ The arithmetic engine is the uniform interval
 estimate $Z(p) \ll p^{2/3}$, proved by the
 gap-polynomial and separated-block method.
 
-The all-$n$ theorem reduces to the block
+The all-$n$ theorem would follow from the block
 second-factorial-moment estimate
 \begin{equation}\label{eq:bfm2-concl}
   F_N \;\ll\; T_N + \frac{T_N^2}{N},
@@ -5742,11 +5750,11 @@ $|\langle\rho,\eta\rangle|
 \le \rho_{\max}\,T = O(T^2/N)$,
 and the residual shot-noise term
 $\|\eta\|^2$.
-Since $T^2/N = O(T)$, the
-estimate~\eqref{eq:bfm2-concl} is
-equivalent to the shot-noise bound
-$\|\eta\|^2 = O(T)$,
-and computation through $N = 262{,}144$
+Under the profile and cross-term bounds of
+Remark~\ref{rem:orthogonal}, the
+estimate~\eqref{eq:bfm2-concl} is equivalent to the
+shot-noise bound $\|\eta\|^2=O(T)$.
+Computation through $N = 262{,}144$
 gives $\|\eta\|^2/T \approx 1.0$.
 
 This gap is genuine.
@@ -5764,6 +5772,23 @@ sheaf $R^2f_*\mathbb{Q}_\ell$
 has bounded rank and conductor, but
 the event $p \mid b_j$ is a
 same-characteristic crystalline condition.
+Theorems~\ref{thm:toric-fiber-K3}
+and~\ref{thm:toric-fiber-sym2} make the geometry explicit:
+the primitive toric-fiber trace is a rank-three
+symmetric-square/Asai trace of the elliptic curve
+\eqref{eq:toric-sym2-elliptic-curve}, and the cyclic
+$6$-isogeny carries the constant quadratic twist~$-3$.
+Proposition~\ref{prop:hasse-franel-pullback} gives the exact
+defining-characteristic counterpart,
+\[
+ K_p(x)^2
+ =\sum_{m=0}^{p-1}b_m
+ x^m(1-8x)^m(1+x)^{p-1-m}.
+\]
+Thus $Z(p)$ is exactly the number of zero coordinates of
+$K_p^2$ in this cover-adapted basis.  It is not the monomial
+support of $K_p^2$, nor does this identity turn coefficient
+vanishing into an evaluation-root problem.
 The Jacobi counterexample shows that
 a rank-one sheaf with the same formal
 properties can have $\gg p$ bad tame
@@ -5807,6 +5832,11 @@ Bounded tame Hasse degree would
 require a nontrivial Gauss/Jacobi
 normalization of the first
 Frobenius block.
+Even such a uniform single-prime bound would not, by itself,
+settle the all-index GCD conjecture: the pointwise gap is the
+possible synchronization of zero positions across distinct primes.
+Moreover, the observed Poisson tail predicts that
+Hypothesis~$Z$ itself is false.
 
 Computation through all $78{,}496$ primes
 $p \le 10^6$ gives $Z(p) \le 12$ and
@@ -5824,8 +5854,9 @@ The prime-wise decomposition
 (Remark~\ref{rem:prime-decomposition})
 provides a structural reduction:
 $\|\eta\|^2 = D + O$ where
-$D = \sum_p D_p \approx T$ is an
-explicit diagonal and
+$D = \sum_p D_p$ is an explicit diagonal
+($D=T+O(1/\log N)$ under
+$\sum_pZ(p)^2=O(N/\log N)$) and
 $O = \sum_{p \ne q} C_{pq}$
 is the cross-prime interaction.
 Under the independent
@@ -5979,28 +6010,34 @@ p \ne q}} |C_{pq}|
 \end{conjecture}
 
 \noindent
-This is equivalent to
-the BFM2 bound~\eqref{eq:bfm2-concl}
-and hence to the all-$n$
-conjecture $G_n = e^{o(n)}$.
+This absolute centered-correlation estimate is stronger than
+the BFM2 bound~\eqref{eq:bfm2-concl}; in particular, it is a
+sufficient condition for the all-$n$ conjecture
+$G_n=e^{o(n)}$.  No converse implication is proved; in particular,
+the pointwise GCD conjecture does not presently yield an
+$O(T_N)$ second factorial-moment estimate.
 
 \begin{remark}[Anatomy-of-integers formulation]
 \label{rem:anatomy}
 For each $j \le N$, define
 $\omega(j) = \#\{p \in (N, 2N] : p \mid b_j\}$.
-Then $\sum_j \omega(j) = T + F$
-(counting primes that divide some~$b_j$
+Then $\sum_j \omega(j) = T$
+(counting incidences between the integers and the primes
 in the top block), and
 \[
 \sum_{p \ne q} \!\sum_{j \le N}\!
 \mathbf{1}[pq \mid b_j]
-\;=\; \sum_{j \le N} \binom{\omega(j)}{2}.
+\;=\; \sum_{j \le N}\omega(j)(\omega(j)-1).
 \]
-The two-prime dispersion is equivalent
-to $\sum_j \omega(j)(\omega(j){-}1) = o(T)$:
+Thus $\sum_j \omega(j)(\omega(j){-}1)=O(T)$ is the raw
+second-factorial-moment bound.  The sharper estimate
+$\sum_j \omega(j)(\omega(j){-}1)=o(T)$ says that
 at most $o(T)$ indices~$j$ are
 divisible by two or more primes
 from the same dyadic window.
+The absolute centered-correlation conjecture above is a
+sufficient route to such control; it is not equivalent to this
+uncentered factorial-moment statement.
 Since $\log b_N \sim N\log(17 + 12\sqrt{2})
 \approx 3.53\,N$ while
 $\sum_{p \in (N,2N]} \log p \sim N$,
@@ -6213,12 +6250,13 @@ in arithmetic progressions using new estimates
 for trilinear Kloosterman sums---still
 requiring a multiplicative character
 structure absent from the Ap\'ery setting.
-In summary, the two-prime dispersion
+In summary, this sufficient two-prime dispersion route
 for Ap\'ery numbers falls in the gap
 between what sieve methods can reach
 (targets with global algebraic structure)
 and what the Ap\'ery recurrence provides
-(a local, $p$-dependent set of size~$O(1)$).
+(a small-on-average, $p$-dependent set with only the
+unconditional bound $Z(p)\ll p^{2/3}$).
 
 The Diophantine-approximation approach to GCDs of
 recurrence terms---the Subspace-Theorem framework
@@ -6241,21 +6279,19 @@ is exponentially large when~$m \mid n$.
 Therefore no existing Subspace-Theorem
 argument yields $G_n = e^{o(n)}$ for all~$n$.
 
-The most direct computational path
-is an explicit Hasse--Witt calculation
-for the rank-three transcendental
-crystal, determining the slope-zero
-multiplicity of the Kummer-twisted
-compactly supported cohomology
-as a function of the character parameter.
-The Galois-group analysis of reductions
-of Ap\'ery-like series by
-Caruso--F\"urnsinn--Vargas-Montoya--Zudilin~\cite{CFVZ2026}
-may provide algebraic input, though
-their results concern the fiber
-parameter and do not directly control
-the character-twisted Mellin structure
-or the two-prime dispersion.
+The exact Franel pullback now gives a concrete single-prime
+coefficient problem, and
+Proposition~\ref{prop:hasse-apery-square-roots} reduces its
+distinguished factor to two universal three-term recurrences.
+This is useful for the average target
+$\sum_{p\le X}Z(p)\ll\pi(X)$ and for testing genuinely
+Ap\'ery-specific Cartier identities.  It does not couple two
+different residue characteristics.  Consequently, the
+highest-value target for the full all-index conjecture remains
+cross-prime dispersion---for example the fixed high-moment
+condition $(\mathrm{HM})_8$ of
+Theorem~\ref{thm:hm-pointwise}---rather than a uniform
+$O(1)$ bound for the cover-adapted coordinates.
 
 On the single-prime side, the bordered-certificate
 analysis (Section~\ref{ssec:value-fibers}) settles the
@@ -6322,6 +6358,16 @@ F.~Beukers,
 \emph{Another congruence for the Ap\'ery numbers},
 J.~Number Theory \textbf{25} (1987), 201--210.
 
+\bibitem{BeukersPeters1984}
+F.~Beukers and C.~A.~M.~Peters,
+\emph{A family of $K3$ surfaces and $\zeta(3)$},
+J.~Reine Angew.~Math.\ \textbf{351} (1984), 42--54.
+
+\bibitem{BertinLecacheux2020}
+M.-J.~Bertin and O.~Lecacheux,
+\emph{Ap\'ery--Fermi pencil of $K3$-surfaces and $2$-isogenies},
+J.~Math.~Soc.~Japan \textbf{72} (2020), no.~2, 599--637.
+
 \bibitem{BCZ2003}
 Y.~Bugeaud, P.~Corvaja, and U.~Zannier,
 \emph{An upper bound for the G.C.D.\ of $a^n - 1$ and $b^n - 1$},
@@ -6330,7 +6376,8 @@ Math.\ Z.\ \textbf{243} (2003), 79--84.
 \bibitem{CFVZ2026}
 X.~Caruso, F.~F\"urnsinn, D.~Vargas-Montoya, and W.~Zudilin,
 \emph{Galois groups of Ap\'ery-like series modulo primes},
-arXiv preprint, 2026.
+Bull.~Aust.~Math.~Soc.\ \textbf{114} (2026), no.~1, 65--78,
+doi:10.1017/S0004972725100932.
 
 \bibitem{DFI1995}
 W.~Duke, J.~B.~Friedlander, and H.~Iwaniec,
@@ -6413,6 +6460,13 @@ Amer.\ Math.\ Monthly \textbf{99} (1992), 231--238.
 Y.~Mimura,
 \emph{Congruence properties of Ap\'ery numbers},
 J.~Number Theory \textbf{16} (1983), 138--146.
+
+\bibitem{PetersStienstra1989}
+C.~A.~M.~Peters and J.~Stienstra,
+\emph{A pencil of $K3$-surfaces related to Ap\'ery's recurrence for
+$\zeta(3)$ and Fermi surfaces for potential zero},
+in \emph{Arithmetic of Complex Manifolds}, Lecture Notes in Math.\
+\textbf{1399}, Springer, Berlin, 1989, 110--127.
 
 \bibitem{RowlandYassawi2015}
 E.~Rowland and R.~Yassawi,

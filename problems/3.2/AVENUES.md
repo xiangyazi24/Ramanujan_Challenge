@@ -1156,9 +1156,10 @@ the weaker ($p^{1/2}$) average-zero milestone.
 
 ### Main goal
 
-Prove the residual coefficient anti-concentration estimate needed for the
-Ap\'ery GCD conjecture by exploiting the exact Hasse--Franel descent, rather
-than complex Mellin equidistribution.
+Separate the exact single-prime Hasse--Franel coefficient problem from the
+cross-prime statement needed for the all-index Ap\'ery GCD conjecture.  The
+former may improve \(Z(p)\) or its prime average; it is not by itself the
+remaining all-index problem.
 
 The three new ChatGPT reports are inputs only after independent symbolic,
 finite-field, and source verification.  In particular, the mutually different
@@ -1170,9 +1171,10 @@ until their normalizations are reconciled.
 Verify from the defining constant term and elliptic Hasse invariant the exact
 identity
 \[
- H_p(x)^2=(1+x)^{p-1}A_p\!\left(\frac{x(1-8x)}{1+x}\right),
+ K_p(x)^2=(1+x)^{p-1}A_p\!\left(\frac{x(1-8x)}{1+x}\right),
 \]
-the factorization \(A_p(a)=\Delta(a)^{\varepsilon_p}B_p(a)^2\), and the two
+where \(K_p\) is the Franel truncation.  Also verify the
+factorization \(A_p(a)=\Delta(a)^{\varepsilon_p}B_p(a)^2\) and the two
 claimed three-term recurrences for the coefficients of \(B_p\).  Then attack
 the recurrence itself through its Riccati form, Casoratians, singular indices,
 and reduction modulo \(p\), with the target
@@ -1181,8 +1183,9 @@ and reduction modulo \(p\), with the target
 \]
 
 - Success: prove a uniform power-saving zero bound (pointwise or in the prime
-  average actually consumed by the atom-tail argument), and integrate the
-  complete implication into the paper.
+  average consumed by the averaged theorems), and state exactly which
+  consequence it yields.  Do not infer the all-index conjecture from
+  cardinality alone.
 - Proof-of-failure: exhibit a verified infinite structural family, or a
   quantifier-preserving construction within the claimed recurrence class,
   having \(p^{1-o(1)}\) coefficient zeros; a finite computation is diagnostic
@@ -1223,10 +1226,35 @@ not a complex moment estimate and not a finite-prime census.
   \(X^{3/2}\)-scale height mass as the original Ap\'ery values, or give a
   quantifier-preserving reduction back to the unbounded atom problem.
 
+### (d) Cross-prime high moment for the all-index conjecture
+
+This is the highest-value target for the full conjecture.  Put
+\[
+ K_X(m)=\#\{X<p\le2X:b_{m\bmod p}\equiv0\pmod p\},
+ \qquad
+ \lambda_X=\sum_{X<p\le2X}\frac{Z(p)}p.
+\]
+Attack the concrete eighth-factorial-moment estimate
+\[
+ \sum_{m<X^2}(K_X(m))_8
+ \ll X^{2+o(1)}\lambda_X^8.
+\]
+Theorem \((\mathrm{HM})_k\) in the paper proves that any fixed \(k>6\),
+and hence this \(k=8\) case, implies the all-index GCD conjecture.  This is a
+sufficient condition, not an equivalent reformulation.
+
+The Franel/Sym\(^{2}\) structure helps this avenue only if it yields a genuine
+mixed-characteristic correlation for the residual zero indicators.  Its
+single-prime coordinate identity alone supplies no such coupling.  A valid
+next lemma must therefore either bound a mixed \(p,q\) (and ultimately
+eight-prime) correlation, or explicitly introduce a new arithmetic carrier
+shared across the different characteristics.
+
 ### Fallback after terminal verdicts
 
 Bank the now-explicit Shioda--Inose descent and V\'elu computation in the
 trace-formula section, state the complex \(p^{3/2}\) Mellin theorem only after
 its local conductor is computed, and isolate the residual Hasse--Franel
-coefficient theorem as the sole named arithmetic hypothesis.  This fallback
-does not count as proving the GCD conjecture.
+coefficient problem as a single-prime hypothesis alongside the separate
+cross-prime moment hypothesis.  This fallback does not count as proving the
+GCD conjecture.

@@ -14,7 +14,7 @@ horizontal obstruction}
 Put
 \[
  \mathcal Z_p=\{0\leq j<p:b_j\equiv0\pmod p\},
- \qquad H_p(t)=\sum_{j=0}^{p-1}b_jt^j.
+ \qquad A_p(t)=\sum_{j=0}^{p-1}b_jt^j.
 \]
 The requested AMTD estimate is not proved here.  There is nevertheless an
 unconditional answer to the literal fixed-target question in goal~G2.  It is
@@ -121,23 +121,23 @@ false.  The following elementary calculation makes the distinction exact.
 \label{prop:oracleB-two-zero-loci}
 For $1\leq j\leq p-2$, the following identity holds in~$\mathbb F_p$:
 \begin{equation}
- b_j=-\sum_{t\in\mathbb F_p^\times}H_p(t)t^{-j}.
+ b_j=-\sum_{t\in\mathbb F_p^\times}A_p(t)t^{-j}.
  \label{eq:oracleB-mellin}
 \end{equation}
 Consequently,
 \[
- \mathcal Z_p=\{j:[t^j]H_p(t)=0\}
+ \mathcal Z_p=\{j:[t^j]A_p(t)=0\}
 \]
 is a coefficient, or finite-Mellin, zero-set.  It is not the evaluation
-root locus of $H_p$ or of the square root in
+root locus of $A_p$ or of the square root in
 Remark~\ref{rem:squareness}.
 \end{proposition}
 
 \begin{proof}
-After inserting $H_p(t)=\sum_{k=0}^{p-1}b_kt^k$, multiplicative
+After inserting $A_p(t)=\sum_{k=0}^{p-1}b_kt^k$, multiplicative
 orthogonality gives
 \[
- \sum_{t\in\mathbb F_p^\times}H_p(t)t^{-j}
+ \sum_{t\in\mathbb F_p^\times}A_p(t)t^{-j}
  =\sum_{k=0}^{p-1}b_k\sum_{t\in\mathbb F_p^\times}t^{k-j}
  =-b_j,
 \]
@@ -145,12 +145,12 @@ because $1\leq j\leq p-2$ and the inner sum vanishes unless $k=j$.
 
 For a concrete separation, exact reduction at $p=7$ gives
 \begin{align*}
- H_7(t)
+ A_7(t)
  &=1+5t+3t^2+3t^3+3t^4+5t^5+t^6\\
  &=(t-1)^2(t^2+1)^2\pmod7.
 \end{align*}
 No coefficient is zero, so $\mathcal Z_7=\varnothing$, whereas $t=1$
-is an evaluation root of both $H_7$ and its square root.
+is an evaluation root of both $A_7$ and its square root.
 \end{proof}
 
 In particular, if $\rho_p=\min\mathcal Z_p$, then $\rho_p$ need not be
@@ -176,7 +176,7 @@ Let $\Delta(t)=t^2-34t+1$.  The factorization stated in
 Remark~\ref{rem:squareness} and proved, at the level of factorization, by
 Caruso--F\"urnsinn--Vargas-Montoya--Zudilin~\cite{CFVZ2026} is
 \begin{equation}
- H_p(t)=\Delta(t)^{\varepsilon_p}B_p(t)^2,
+ A_p(t)=\Delta(t)^{\varepsilon_p}B_p(t)^2,
  \qquad
  \deg B_p=\frac{p-1-2\varepsilon_p}{2}.
  \label{eq:oracleB-square}
