@@ -1,0 +1,33 @@
+name: Q7305 exact audit
+
+on:
+  push:
+    branches: [chatgpt-drop]
+    paths:
+      - 'drops/Q7305-8f8fc53a-verify.py'
+      - '.github/workflows/q7305-exact-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  exact-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: chatgpt-drop
+      - name: Run exact standard-library verifier
+        run: |
+          python3 drops/Q7305-8f8fc53a-verify.py | tee drops/Q7305-8f8fc53a-audit.txt
+      - name: Commit deterministic audit output
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add drops/Q7305-8f8fc53a-audit.txt
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record Q7305 exact audit output [skip ci]'
+            git push origin HEAD:chatgpt-drop
+          fi
