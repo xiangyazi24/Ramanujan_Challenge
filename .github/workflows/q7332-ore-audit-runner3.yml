@@ -28,6 +28,8 @@ jobs:
             inside { sub(/^          /, ""); print }
           ' source-workflow.yml > q7332.sage
           test -s q7332.sage
+          sed -i "s/AP\.<Dp> = OreAlgebra(Rx)/AP = OreAlgebra(Rx, 'Dx'); Dp = AP.gen()/" q7332.sage
+          grep -F "AP = OreAlgebra(Rx, 'Dx'); Dp = AP.gen()" q7332.sage
           curl -fsSL \
             'https://github.com/mkauers/ore_algebra/archive/refs/heads/master.zip' \
             -o ore_algebra.zip
