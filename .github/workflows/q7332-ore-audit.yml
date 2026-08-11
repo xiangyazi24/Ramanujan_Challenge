@@ -1,0 +1,276 @@
+name: Q7332 exact Ore audit
+
+on:
+  pull_request:
+    branches:
+      - chatgpt-drop
+    paths:
+      - '.github/workflows/q7332-ore-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Run exact Sage and ore_algebra audit
+        shell: bash
+        run: |
+          cat > q7332.sage <<'SAGE'
+          from sage.all import *
+          from ore_algebra import *
+
+          print("Q7332_AUDIT_BEGIN")
+          set_random_seed(7332)
+
+          Rx.<x> = QQ[]
+          K = Rx.fraction_field()
+          AK.<Dx> = OreAlgebra(K)
+          AP.<Dp> = OreAlgebra(Rx)
+          th = x*Dx
+          thp = x*Dp
+
+          p = 1 - 34*x + x^2
+          aa = 3*x*(x - 17) / p
+          bb = 3*x*(x - 9) / p
+          cc = x*(x - 5) / p
+          q = x/(1-x)
+
+          A3 = matrix(K, [
+              [0, 1, 0],
+              [0, 0, 1],
+              [-cc, -bb, -aa],
+          ])
+
+          M6 = zero_matrix(K, 6, 6)
+          for i in range(3):
+              for j in range(3):
+                  M6[i,j] = A3[i,j]
+                  M6[i+3,j+3] = A3[i,j]
+          for i in range(3):
+              M6[i,i+3] = q
+
+          def dtheta(z):
+              return K(x*diff(K(z), x))
+
+          def next_row(v, M):
+              return vector(K, [dtheta(z) for z in v]) + v*M
+
+          def cyclic_rows(selector, M, count):
+              out = [vector(K, selector)]
+              for _ in range(count-1):
+                  out.append(next_row(out[-1], M))
+              return out
+
+          def normalized_left_relation(rows):
+              O = matrix(K, rows)
+              ker = O.left_kernel()
+              assert ker.dimension() == 1
+              rel = vector(K, ker.basis()[0])
+              assert rel[-1] != 0
+              return rel/rel[-1], O
+
+          def theta_operator(coeffs):
+              ans = AK.zero()
+              for i, coeff in enumerate(coeffs):
+                  ans += K(coeff)*th^i
+              return ans
+
+          def d_monic(op):
+              return (K.one()/K(op[op.order()]))*op
+
+          def poly_lcm(values):
+              out = Rx.one()
+              for value in values:
+                  out = out.lcm(Rx(value))
+              return out
+
+          def poly_gcd(values):
+              values = [Rx(v) for v in values if v != 0]
+              out = values[0]
+              for value in values[1:]:
+                  out = out.gcd(value)
+              return out
+
+          def int_lcm(values):
+              out = ZZ.one()
+              for value in values:
+                  out = out.lcm(ZZ(value))
+              return out
+
+          def int_gcd(values):
+              values = [abs(ZZ(v)) for v in values if v != 0]
+              out = values[0]
+              for value in values[1:]:
+                  out = out.gcd(value)
+              return out
+
+          def primitive_integer_coeffs(coeffs):
+              coeffs = [K(c) for c in coeffs]
+              den = poly_lcm([c.denominator() for c in coeffs if c != 0])
+              polys = [Rx(den*c) for c in coeffs]
+              common = poly_gcd(polys)
+              polys = [Rx(f/common) for f in polys]
+              qden = int_lcm([
+                  coefficient.denominator()
+                  for f in polys for coefficient in f.coefficients()
+              ])
+              polys = [Rx(qden*f) for f in polys]
+              content = int_gcd([
+                  coefficient
+                  for f in polys for coefficient in f.coefficients()
+              ])
+              polys = [Rx(f/content) for f in polys]
+              if polys[-1].leading_coefficient() < 0:
+                  polys = [-f for f in polys]
+              return polys, den, common
+
+          # The rank-six logarithmic product block and its cyclic relation.
+          rows6 = cyclic_rows([1,0,0,0,0,0], M6, 7)
+          Obs6 = matrix(K, rows6[:6])
+          delta6 = K(Obs6.det())
+          assert delta6 != 0
+          prel, O7 = normalized_left_relation(rows6)
+          assert O7.rank() == 6
+          assert len(prel) == 7
+          Pblock = theta_operator(prel)
+          assert Pblock.order() == 6
+          print("DELTA6_FACTOR =", factor(delta6))
+
+          # Exact right factorization P = Q * L_monic.
+          Lm_coeff = [cc, bb, aa, K.one()]
+          w = vector(K, [0]*6)
+          for i in range(4):
+              w += Lm_coeff[i]*rows6[i]
+          assert all(w[i] == 0 for i in range(3))
+          u0 = vector(K, [w[i] for i in range(3,6)])
+          urows = cyclic_rows(u0, A3, 4)
+          delta3 = K(matrix(K, urows[:3]).det())
+          assert delta3 != 0
+          qrel, O4q = normalized_left_relation(urows)
+          assert O4q.rank() == 3
+          Qblock = theta_operator(qrel)
+          Lmonic = th^3 + aa*th^2 + bb*th + cc
+          assert Pblock == Qblock*Lmonic
+          print("DELTA3_FACTOR =", factor(delta3))
+          for i in range(4):
+              qi = K(qrel[i])
+              print("QTHETA", i, "=", qi)
+              print("QTHETA_NUM_FACTOR", i, "=", factor(qi.numerator()))
+              print("QTHETA_DEN_FACTOR", i, "=", factor(qi.denominator()))
+
+          # Independent ore_algebra product construction.
+          Lpoly = thp^3 - x*(2*thp+1)*(17*thp^2+17*thp+5) + x^2*(thp+1)^3
+          Hpoly = (1-x)*Dp^2 - Dp
+          Psym = Lpoly.symmetric_product(Hpoly)
+          assert Psym.order() == 6
+          PsymK = AK(Psym)
+          assert d_monic(PsymK) == d_monic(Pblock)
+          print("SYMMETRIC_PRODUCT_ORDER =", Psym.order())
+          print("SYMMETRIC_PRODUCT_OPERATOR =", Psym)
+
+          # Primitive polynomial theta form and the exact coefficient recurrence.
+          Pint, cleared_den, removed_common = primitive_integer_coeffs(prel)
+          print("PTHETA_CLEARED_DEN_FACTOR =", factor(cleared_den))
+          print("PTHETA_REMOVED_COMMON_FACTOR =", factor(removed_common))
+          for i, coeff in enumerate(Pint):
+              print("PTHETA_COEFF", i, "=", coeff)
+              print("PTHETA_COEFF_FACTOR", i, "=", factor(coeff))
+
+          Nt.<n> = QQ[]
+          max_x_degree = max(f.degree() for f in Pint)
+          rec_polys = []
+          for j in range(max_x_degree+1):
+              pj = Nt.zero()
+              for k in range(7):
+                  if j <= Pint[k].degree():
+                      pj += QQ(Pint[k][j])*n^k
+              rec_polys.append(pj)
+              print("RECURRENCE_POLY", j, "=", pj)
+              print("RECURRENCE_POLY_FACTOR", j, "=", factor(pj))
+          print("RECURRENCE_MAX_SHIFT =", max_x_degree)
+          print("RECURRENCE_SCHEMA = sum_{j=0}^J P_j(N-j) R_{N-j} = 0")
+
+          # Correct coefficients and exact recurrence verification.
+          LIMIT = 500
+          apery = [ZZ(1), ZZ(5)]
+          for m in range(1, LIMIT):
+              numerator = (34*m^3 + 51*m^2 + 27*m + 5)*apery[m] - m^3*apery[m-1]
+              denominator = (m+1)^3
+              assert numerator % denominator == 0
+              apery.append(ZZ(numerator//denominator))
+
+          rvals = [QQ.zero()]
+          for N in range(1, LIMIT+1):
+              value = sum(QQ(apery[N-j])/j for j in range(1,N+1))
+              rvals.append(value)
+
+          expected = [QQ(0), QQ(1), QQ(11)/2, QQ(455)/6, QQ(17801)/12]
+          assert rvals[:5] == expected
+          print("INITIAL_R =", rvals[:10])
+
+          for N in range(LIMIT+1):
+              check = QQ.zero()
+              for j, pj in enumerate(rec_polys):
+                  if N-j >= 0:
+                      check += pj(N-j)*rvals[N-j]
+              assert check == 0
+          print("RECURRENCE_CHECK_0_TO_500 = PASS")
+
+          # Exact top-shell lemma; the loop is finite evidence for N <= 500.
+          Lambda = ZZ.one()
+          top_pairs = 0
+          for N in range(1, LIMIT+1):
+              Lambda = Lambda.lcm(ZZ(N))
+              U = Lambda*rvals[N]
+              assert U.denominator() == 1
+              U = ZZ(U)
+              for prime in prime_range(N//2 + 1, N+1):
+                  assert sum(1 for j in range(1,N+1) if j % prime == 0) == 1
+                  assert ((U % prime) == 0) == ((apery[N-prime] % prime) == 0)
+                  assert ((rvals[N].denominator() % prime) == 0) == ((apery[N-prime] % prime) != 0)
+                  top_pairs += 1
+          print("FINITE_TOP_SHELL_PAIRS =", top_pairs)
+          print("FINITE_TOP_SHELL_CHECK_TO_500 = PASS")
+
+          # Rank-four inhomogeneous normal-function extension L C = x.
+          M4 = zero_matrix(K, 4, 4)
+          M4[0,1] = 1
+          M4[1,2] = 1
+          M4[2,0] = -cc
+          M4[2,1] = -bb
+          M4[2,2] = -aa
+          M4[2,3] = 1/p
+          M4[3,3] = 1
+          rows4 = cyclic_rows([1,0,0,0], M4, 5)
+          delta4 = K(matrix(K, rows4[:4]).det())
+          assert delta4 != 0
+          rel4, O5 = normalized_left_relation(rows4)
+          assert O5.rank() == 4
+          P4 = theta_operator(rel4)
+          N4 = (th-1)*AK(Lpoly)
+          assert d_monic(P4) == d_monic(N4)
+          print("NORMAL_EXTENSION_DELTA4_FACTOR =", factor(delta4))
+          print("NORMAL_EXTENSION_ORDER =", P4.order())
+          print("NORMAL_EXTENSION_HOMOGENIZED = (theta-1)*L")
+
+          # Desingularization is an exact left multiple, not a smaller annihilator.
+          Pdes = Psym.desingularize()
+          assert Pdes.order() >= Psym.order()
+          quotient, remainder = Pdes.quo_rem(Psym)
+          assert remainder == 0
+          print("DESINGULARIZED_ORDER =", Pdes.order())
+          print("DESINGULARIZED_OPERATOR =", Pdes)
+          print("DESINGULARIZED_LEFT_QUOTIENT =", quotient)
+          print("DESINGULARIZED_LEADING_FACTOR =", factor(Pdes[Pdes.order()]))
+          for i in range(Pdes.order()+1):
+              print("DESINGULARIZED_D_COEFF", i, "=", Pdes[i])
+
+          print("Q7332_AUDIT_PASS")
+          print("Q7332_AUDIT_END")
+          SAGE
+
+          docker run --rm -v "$PWD:/work" -w /work sagemath/sagemath:latest \
+            bash -lc 'sage -pip install --user --no-build-isolation git+https://github.com/mkauers/ore_algebra.git && sage q7332.sage'
