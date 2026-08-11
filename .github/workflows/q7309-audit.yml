@@ -1,0 +1,56 @@
+name: Q7309 exact p-adic audit
+
+on:
+  push:
+    branches:
+      - q7309-audit
+    paths:
+      - problems/3.2/q7309_scan.py
+      - .github/workflows/q7309-audit.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  exact-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out audit branch
+        uses: actions/checkout@v4
+        with:
+          ref: q7309-audit
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run standalone exact scanner
+        run: |
+          set -euo pipefail
+          python3 problems/3.2/q7309_scan.py --out problems/3.2/q7309_exact | tee q7309-run.log
+
+      - name: Commit exact machine-readable outputs
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add problems/3.2/q7309_exact q7309-run.log
+          if git diff --cached --quiet; then
+            echo 'No generated changes.'
+          else
+            git commit -m 'Generate Q7309 exact p-adic scan data'
+            git push origin HEAD:q7309-audit
+          fi
+
+      - name: Upload exact outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: q7309-exact-data
+          path: |
+            problems/3.2/q7309_exact
+            q7309-run.log
+          if-no-files-found: error
