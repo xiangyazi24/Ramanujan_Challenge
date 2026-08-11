@@ -81,7 +81,12 @@ def patch_main() -> None:
 
 def patch_shape() -> None:
     text = SHAPE.read_text(encoding="utf-8")
-    text = text.replace("primitive_abs_mass", "ordered_primitive_abs_mass")
+    text = replace_once(
+        text,
+        '(X, "primitive_abs_mass")',
+        '(X, "ordered_primitive_abs_mass")',
+        "shape random metric lookup",
+    )
     SHAPE.write_text(text, encoding="utf-8")
 
 
