@@ -1,6 +1,7 @@
 Q7305 EXACT AUDIT
 limit=199
 prime_count=46
+apery_recurrence_equals_binomial=399/399
 coordinate_pairs=4227
 basis_equals_formula=4227/4227
 c_congruent_b_mod_p=4227/4227
@@ -8,7 +9,7 @@ zero_pairs=41
 zero_positions=[(5, 1), (5, 3), (11, 5), (17, 3), (17, 13), (19, 8), (19, 10), (31, 8), (31, 22), (37, 17), (37, 19), (41, 10), (41, 30), (59, 9), (59, 49), (61, 4), (61, 56), (73, 2), (73, 70), (97, 25), (97, 71), (139, 61), (139, 77), (151, 14), (151, 136), (163, 20), (163, 142), (179, 36), (179, 142), (181, 19), (181, 47), (181, 133), (181, 161), (191, 81), (191, 109), (193, 30), (193, 64), (193, 128), (193, 162), (197, 44), (197, 152)]
 full_dataset_sha256=9d8e8babf630f8cef67a6c731d6cfc3f1510de0adcb4d84acc669d35a70ecf1d
 zero_dataset_sha256=270739de6b8e642e686853f5a82ce6b0f774b2112b29f164f79f7cf1d8f5ac8a
-script_sha256=143cc2b85eae0a711f5de367eb8f9e449529556cfc894a2e05de038d9aa0e5d6
+script_sha256=94d185bf667e8ae54ef266d1e0edb73a8cdf234234adba99c582e23b9e31e7c7
 UNIVERSAL_AND_ZERO_RESTRICTED_TESTS
 PASS: Apery reflection b[p-1-m] == b[m] (mod p): 4227/4227; first_failure=none
 PASS: Apery coupled shift/reflection b[p+m]+5*b[p-1-m]-10*b[m] == 0 (mod p^2): 4227/4227; first_failure=none
