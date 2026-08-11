@@ -37,16 +37,12 @@ jobs:
           H = (1-x)*Dx^2 - Dx
           P = L.symmetric_product(H)
 
+          fac = L.factor()
           print('L_ORDER =', L.order())
-          try:
-              fac = L.factor()
-              print('L_FACTOR =', fac)
-              print('L_FACTOR_LENGTH =', len(fac))
-              print('L_FACTOR_ORDERS =', [f.order() for f, e in fac for _ in range(e)])
-          except Exception as exc:
-              print('L_FACTOR_EXCEPTION_TYPE =', type(exc).__name__)
-              print('L_FACTOR_EXCEPTION =', exc)
-              raise
+          print('L_FACTOR =', fac)
+          print('L_FACTOR_LENGTH =', len(fac))
+          print('L_FACTOR_ORDERS =', [f.order() for f in fac])
+          assert len(fac) == 1 and fac[0].order() == 3
 
           Rn.<n> = QQ[]
           SAlg = OreAlgebra(Rn, 'Sn')
@@ -55,7 +51,8 @@ jobs:
           print('REC_ORDER =', Rec.order())
           print('REC_VALUATION =', Rec.valuation())
           print('REC_OPERATOR =', Rec)
-          print('REC_GCRD_WITH_DERIVED_PLACEHOLDER = PASS')
+          assert Rec.order() == 19
+          assert Rec.valuation() == 0
           print('Q7332_MINIMALITY_AUDIT_PASS')
           SAGE
 
