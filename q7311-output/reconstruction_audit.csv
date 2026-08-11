@@ -1,0 +1,5 @@
+X,triple_count,max_abs_scaled_triple_error,F3_centered_error_exact,F2_centered_error_exact,F1_centered_error_exact,ordinary_diagonal_error
+32,4,0,0,0,0,0
+64,0,0,0,0,0,0
+128,286,0,0,0,0,0
+256,680,0,0,0,0,0
