@@ -20,6 +20,13 @@ jobs:
         with:
           fetch-depth: 0
           ref: q7320-audit
+      - name: Install exact arithmetic dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libboost-dev pari-gp \
+            > /tmp/q7320-apt.txt
       - name: Compile exact C++ audit
         shell: bash
         run: |
@@ -40,8 +47,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq pari-gp > /tmp/q7320-apt.txt
           gp -q problems/3.2/research/q7320_small_factor.gp \
             > /tmp/q7320-factor.txt
           grep -q '^Q7320_SMALL_FACTOR PASS$' /tmp/q7320-factor.txt
