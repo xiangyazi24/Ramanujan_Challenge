@@ -1,5 +1,6 @@
 name: Q7307 shell carrier audit
 
+# Final provenance run starts from a commit containing the corrected verifier.
 on:
   push:
     branches:
