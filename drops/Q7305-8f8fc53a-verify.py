@@ -27,7 +27,7 @@ def primes_upto(n):
 
 
 def apery_sequence(nmax):
-    """Return b_0,...,b_nmax as exact integers."""
+    """Return b_0,...,b_nmax as exact integers from the recurrence."""
     if nmax == 0:
         return [1]
     b = [1, 5]
@@ -38,6 +38,10 @@ def apery_sequence(nmax):
         assert r == 0
         b.append(q)
     return b
+
+
+def apery_direct(n):
+    return sum(comb(n, k) ** 2 * comb(n + k, k) ** 2 for k in range(n + 1))
 
 
 def franel_sequence(nmax):
@@ -121,6 +125,8 @@ def main():
     primes = primes_upto(LIMIT)
     nmax = 2 * LIMIT
     b = apery_sequence(nmax)
+    for n, value in enumerate(b):
+        assert value == apery_direct(n)
     f = franel_sequence(nmax)
 
     full_hash = sha256()
@@ -146,14 +152,20 @@ def main():
             full_hash.update(f"{p},{m},{b[m]},{f[m]},{c},{d}\n".encode())
             if b[m] % p == 0:
                 assert c % p == 0
+                assert b[p + m] % p == 0
+                assert b[p - 1 - m] % p == 0
                 q0 = b[m] // p
                 cp = c // p
                 qplus = b[p + m] // p
                 qref = b[p - 1 - m] // p
-                shift_b = (b[p + m] - 5 * b[m]) // p
-                refl_b = (b[p - 1 - m] - b[m]) // p
+                shift_b_num = b[p + m] - 5 * b[m]
+                refl_b_num = b[p - 1 - m] - b[m]
                 shift_f_num = f[p + m] - 2 * f[m]
+                assert shift_b_num % p == 0
+                assert refl_b_num % p == 0
                 assert shift_f_num % p == 0
+                shift_b = shift_b_num // p
+                refl_b = refl_b_num // p
                 shift_f = shift_f_num // p
                 row = {
                     "p": p,
@@ -182,6 +194,7 @@ def main():
     print("Q7305 EXACT AUDIT")
     print(f"limit={LIMIT}")
     print(f"prime_count={len(primes)}")
+    print(f"apery_recurrence_equals_binomial={len(b)}/{len(b)}")
     print(f"coordinate_pairs={basis_formula_pairs}")
     print(f"basis_equals_formula={basis_formula_pairs}/{basis_formula_pairs}")
     print(f"c_congruent_b_mod_p={congruence_pairs}/{congruence_pairs}")
