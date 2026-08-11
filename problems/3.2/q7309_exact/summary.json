@@ -1,0 +1,242 @@
+{
+  "prereg_sha256": "9e3b050e0faf6e7a8acc2ee6706f45772a9226efdf3902fc8091676fc494521a",
+  "relation_screen": {
+    "dictionaries": {
+      "linear": {
+        "all_survivors": [],
+        "candidate_count": 656,
+        "column_count": 6,
+        "false_positive_polynomials": [],
+        "holdout_false_positives": 0,
+        "monomials": [
+          "1",
+          "q",
+          "rho",
+          "tau",
+          "eta",
+          "jet_u"
+        ],
+        "survivor_counts": {},
+        "training_survivors": 0
+      },
+      "quadratic": {
+        "all_survivors": [],
+        "candidate_count": 38521,
+        "column_count": 21,
+        "false_positive_polynomials": [],
+        "holdout_false_positives": 0,
+        "monomials": [
+          "1",
+          "q",
+          "rho",
+          "tau",
+          "eta",
+          "jet_u",
+          "q*q",
+          "q*rho",
+          "q*tau",
+          "q*eta",
+          "q*jet_u",
+          "rho*rho",
+          "rho*tau",
+          "rho*eta",
+          "rho*jet_u",
+          "tau*tau",
+          "tau*eta",
+          "tau*jet_u",
+          "eta*eta",
+          "eta*jet_u",
+          "jet_u*jet_u"
+        ],
+        "survivor_counts": {},
+        "training_survivors": 0
+      }
+    },
+    "prereg_sha256": "9e3b050e0faf6e7a8acc2ee6706f45772a9226efdf3902fc8091676fc494521a",
+    "prereg_spec": "Q7309 relation screen v1\nscales: X in {128,256,512,1024}\ntraining: all high-load hits with X<=512\nholdout: all high-load hits with X=1024\nvariables: q,rho,tau,eta,jet_u where jet_u=(b_n/p mod p)/u mod p\nlinear dictionary: 1 plus the five variables\nquadratic dictionary: all monomials of total degree at most two\ncandidate coefficients: primitive, first nonzero positive, each nonzero in {-2,-1,1,2}\nsupport bound: at most three monomials\nfalse positive: exact zero on every training hit and nonzero on at least one holdout hit\nmatched control: replace q by (q+1) mod X and recompute the Gessel jet, keeping the local zero labels fixed\n",
+    "rank_histograms": {
+      "linear": {
+        "all": {
+          "max_rank": 5,
+          "min_rank": 1,
+          "prime_count": 103,
+          "rank_histogram": {
+            "1": 21,
+            "2": 22,
+            "3": 47,
+            "4": 10,
+            "5": 3
+          },
+          "sum_rank": 261
+        },
+        "holdout": {
+          "max_rank": 5,
+          "min_rank": 1,
+          "prime_count": 46,
+          "rank_histogram": {
+            "1": 4,
+            "2": 3,
+            "3": 30,
+            "4": 7,
+            "5": 2
+          },
+          "sum_rank": 138
+        },
+        "training": {
+          "max_rank": 5,
+          "min_rank": 1,
+          "prime_count": 57,
+          "rank_histogram": {
+            "1": 17,
+            "2": 19,
+            "3": 17,
+            "4": 3,
+            "5": 1
+          },
+          "sum_rank": 123
+        }
+      },
+      "quadratic": {
+        "all": {
+          "max_rank": 12,
+          "min_rank": 1,
+          "prime_count": 103,
+          "rank_histogram": {
+            "1": 21,
+            "2": 22,
+            "3": 13,
+            "4": 18,
+            "5": 13,
+            "6": 9,
+            "7": 2,
+            "8": 2,
+            "9": 1,
+            "11": 1,
+            "12": 1
+          },
+          "sum_rank": 357
+        },
+        "holdout": {
+          "max_rank": 12,
+          "min_rank": 1,
+          "prime_count": 46,
+          "rank_histogram": {
+            "1": 4,
+            "2": 3,
+            "3": 6,
+            "4": 7,
+            "5": 10,
+            "6": 9,
+            "7": 2,
+            "8": 2,
+            "9": 1,
+            "11": 1,
+            "12": 1
+          },
+          "sum_rank": 222
+        },
+        "training": {
+          "max_rank": 5,
+          "min_rank": 1,
+          "prime_count": 57,
+          "rank_histogram": {
+            "1": 17,
+            "2": 19,
+            "3": 7,
+            "4": 11,
+            "5": 3
+          },
+          "sum_rank": 135
+        }
+      }
+    }
+  },
+  "scales": [
+    {
+      "K_histogram": {
+        "3": 10
+      },
+      "N": 16384,
+      "X": 128,
+      "active_prime_count": 13,
+      "all_checks": "PASS",
+      "canonical_triples": 10,
+      "high_load_hit_count": 30,
+      "high_load_row_count": 10,
+      "max_K": 3,
+      "ordered_S3": 60,
+      "prime_count": 23,
+      "scattered_hit_events": 2584,
+      "sum_zero_counts": 30
+    },
+    {
+      "K_histogram": {
+        "3": 10
+      },
+      "N": 65536,
+      "X": 256,
+      "active_prime_count": 17,
+      "all_checks": "PASS",
+      "canonical_triples": 10,
+      "high_load_hit_count": 30,
+      "high_load_row_count": 10,
+      "max_K": 3,
+      "ordered_S3": 60,
+      "prime_count": 43,
+      "scattered_hit_events": 8275,
+      "sum_zero_counts": 46
+    },
+    {
+      "K_histogram": {
+        "3": 25
+      },
+      "N": 262144,
+      "X": 512,
+      "active_prime_count": 30,
+      "all_checks": "PASS",
+      "canonical_triples": 25,
+      "high_load_hit_count": 75,
+      "high_load_row_count": 25,
+      "max_K": 3,
+      "ordered_S3": 150,
+      "prime_count": 75,
+      "scattered_hit_events": 24323,
+      "sum_zero_counts": 70
+    },
+    {
+      "K_histogram": {
+        "3": 77,
+        "4": 1
+      },
+      "N": 1048576,
+      "X": 1024,
+      "active_prime_count": 47,
+      "all_checks": "PASS",
+      "canonical_triples": 81,
+      "high_load_hit_count": 235,
+      "high_load_row_count": 78,
+      "max_K": 4,
+      "ordered_S3": 486,
+      "prime_count": 137,
+      "scattered_hit_events": 86243,
+      "sum_zero_counts": 120
+    }
+  ],
+  "scope": {
+    "X": [
+      128,
+      256,
+      512,
+      1024
+    ],
+    "holdout_X": 1024,
+    "training_max_X": 512
+  },
+  "selftest": {
+    "small_primes": 3,
+    "two_digit_values": 195
+  },
+  "status": "PASS",
+  "total_high_load_hits": 370,
+  "total_high_load_rows": 123
+}
