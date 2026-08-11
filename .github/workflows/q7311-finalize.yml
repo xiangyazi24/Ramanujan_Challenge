@@ -1,0 +1,85 @@
+name: Q7311 audited final verifier
+on:
+  push:
+    branches: [q7311-audit]
+    paths:
+      - '.github/workflows/q7311-finalize.yml'
+permissions:
+  contents: write
+concurrency:
+  group: q7311-audited-final
+  cancel-in-progress: true
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q7311-audit
+          fetch-depth: 0
+      - name: Apply audited source corrections
+        run: python problems/3.2/research/scripts/q7311_patch_source.py
+      - name: Install high-precision dependency
+        run: python -m pip install --disable-pip-version-check mpmath
+      - name: Compile verifier sources
+        run: |
+          python -m py_compile \
+            problems/3.2/research/scripts/q7311_centered_crt_fourier.py \
+            problems/3.2/research/scripts/q7311_shape_postprocess.py
+      - name: Run exact verifier
+        run: |
+          rm -rf q7311-output Q7311_RESULTS.md
+          python problems/3.2/research/scripts/q7311_centered_crt_fourier.py \
+            --xs 32 64 128 256 \
+            --output q7311-output \
+            --random-reps 64 \
+            --mode-random-reps 4 \
+            --mode-triples 3 \
+            --top-triples 25 \
+            --top-modes 12 \
+            --mode-max-scan 2000000 \
+            --full-fourier-max-M 350000
+          python problems/3.2/research/scripts/q7311_shape_postprocess.py
+      - name: Fail-closed output audit
+        shell: bash
+        run: |
+          test "$(head -n 1 Q7311_RESULTS.md)" = "ANSWER Q7311 93679a56"
+          python - <<'PY'
+          import csv
+          from fractions import Fraction
+          from pathlib import Path
+
+          root = Path('q7311-output')
+          with (root / 'reconstruction_audit.csv').open(newline='') as fh:
+              for row in csv.DictReader(fh):
+                  assert int(row['max_abs_scaled_triple_error']) == 0
+                  assert Fraction(row['F3_centered_error_exact']) == 0
+                  assert Fraction(row['F2_centered_error_exact']) == 0
+                  assert Fraction(row['F1_centered_error_exact']) == 0
+                  assert int(row['ordinary_diagonal_error']) == 0
+          with (root / 'triple_concentration.csv').open(newline='') as fh:
+              for row in csv.DictReader(fh):
+                  signed = abs(Fraction(row['ordered_primitive_signed_total_exact']))
+                  mass = Fraction(row['ordered_primitive_abs_mass_exact'])
+                  assert mass >= signed
+          with (root / 'full_fourier_checks.csv').open(newline='') as fh:
+              for row in csv.DictReader(fh):
+                  assert int(row['within_tolerance']) == 1
+          with (root / 'mode_capture_summary.csv').open(newline='') as fh:
+              for row in csv.DictReader(fh):
+                  assert int(row['ranking_certified_tolerance']) == 1
+          with (root / 'excess_shape.csv').open(newline='') as fh:
+              rows = list(csv.DictReader(fh))
+              assert [int(r['X']) for r in rows] == [32, 64, 128, 256]
+          PY
+      - name: Persist audited code, raw tables, and report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            problems/3.2/research/scripts/q7311_centered_crt_fourier.py \
+            problems/3.2/research/scripts/q7311_shape_postprocess.py \
+            Q7311_RESULTS.md q7311-output
+          git commit -m 'Finalize Q7311 audited Fourier tables' || exit 0
+          git push origin HEAD:q7311-audit
