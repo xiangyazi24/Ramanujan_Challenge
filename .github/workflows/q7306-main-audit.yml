@@ -218,3 +218,4 @@ jobs:
           else
             test "$(cat /tmp/q7306-source-changed.status)" = 1
           fi
+# Finalized-source byte determinism rerun.
