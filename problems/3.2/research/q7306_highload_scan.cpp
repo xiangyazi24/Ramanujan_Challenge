@@ -5,10 +5,10 @@
 // Output: deterministic JSON on stdout and a compact exact summary on stderr.
 //
 // Build:
-//   g++ -std=c++17 -O3 -DNDEBUG -Wall -Wextra -Wpedantic \
+//   g++ -std=c++17 -O3 -DNDEBUG -Wall -Wextra -Wpedantic
 //       problems/3.2/research/q7306_highload_scan.cpp -o q7306_scan
 // Run:
-//   ./q7306_scan 256 512 1024 2048 > q7306-output.json \
+//   ./q7306_scan 256 512 1024 2048 > q7306-output.json
 //       2> q7306-summary.txt
 
 #include <algorithm>
@@ -87,7 +87,7 @@ static inline u64 sixth_mod(u64 value, u64 mod) {
 static std::vector<u32> primes_between(u32 X) {
     const u32 limit = 2 * X;
     std::vector<bool> is_prime(limit + 1, true);
-    if (limit >= 0) is_prime[0] = false;
+    is_prime[0] = false;
     if (limit >= 1) is_prime[1] = false;
     for (u32 p = 2; static_cast<u64>(p) * p <= limit; ++p) {
         if (!is_prime[p]) continue;

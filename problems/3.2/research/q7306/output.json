@@ -6,7 +6,7 @@
   "row_interval":"0 <= n < X^2",
   "canonical_residue":"rho=min(r,p-1-r)",
   "source_path":"problems/3.2/research/q7306_highload_scan.cpp",
-  "source_sha256":"e43c6b626ed9ec2cef5e199eca0856e7c2c14024c81312439ee785490c6b3073",
+  "source_sha256":"fdb0268a8140677c01e1b51621c82c041d755907d22647f46ec83f2cb138e3e9",
   "compile_flags":"-std=c++17 -O3 -DNDEBUG -Wall -Wextra -Wpedantic",
   "global_self_checks":{"status":"PASS","synthetic_clique_decoder":true},
   "scales":[

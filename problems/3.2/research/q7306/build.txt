@@ -1,10 +1,1 @@
-/tmp/q7306_highload_scan.cpp:8:1: warning: multi-line comment [-Wcomment]
-    8 | //   g++ -std=c++17 -O3 -DNDEBUG -Wall -Wextra -Wpedantic \
-      | ^
-/tmp/q7306_highload_scan.cpp:11:1: warning: multi-line comment [-Wcomment]
-   11 | //   ./q7306_scan 256 512 1024 2048 > q7306-output.json \
-      | ^
-/tmp/q7306_highload_scan.cpp: In function ‘std::vector<unsigned int> primes_between(u32)’:
-/tmp/q7306_highload_scan.cpp:90:15: warning: comparison of unsigned expression in ‘>= 0’ is always true [-Wtype-limits]
-   90 |     if (limit >= 0) is_prime[0] = false;
-      |         ~~~~~~^~~~
+clean: no compiler diagnostics
