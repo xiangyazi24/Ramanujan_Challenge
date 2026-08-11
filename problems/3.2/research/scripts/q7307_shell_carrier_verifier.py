@@ -24,9 +24,9 @@ The default run performs four independent finite sweeps:
 1. Direct formula / recurrence / Strehl cross-checks for b_n and F_n.
 2. Explicit polynomial construction versus the closed coefficient formula.
 3. Every cutoff Gamma_{n,J} through n=96, including Gamma|b_n and the
-   complete local cutoff support test for odd primes p<=197 with n<p^2.
+   complete local cutoff support test for odd primes p<=197 with J<p and n<p^2.
 4. Every shell pair 3<=X<=24, X<=m<X^2, plus wider endpoint and
-   valuation stress sweeps through X=128 (K=X) and X=40 (every K<p).
+   valuation stress sweeps through X=128 (K=X) and X=40 (0<=K<=min(p-1,m)).
 
 Only the Python standard library is used.
 """
@@ -326,7 +326,7 @@ def run(args: argparse.Namespace) -> int:
         "exact_shell_X": [3, args.shell_x_max],
         "exact_shell_m_rule": "X <= m < X^2",
         "all_K_endpoint_X": [3, args.endpoint_all_k_x_max],
-        "all_K_rule": "0 <= K < p for every X<p<=2X and X<=m<X^2",
+        "all_K_rule": "0 <= K <= min(p-1,m) for every X<p<=2X and X<=m<X^2",
         "wide_endpoint_X": [3, args.endpoint_x_max],
         "wide_endpoint_K": "K=X",
     }
@@ -512,7 +512,7 @@ def run(args: argparse.Namespace) -> int:
             audit.count("gamma_divisibility_checks")
             local_checks = 0
             for prime in cutoff_primes:
-                if n >= prime * prime:
+                if cutoff >= prime or n >= prime * prime:
                     continue
                 residue = n % prime
                 folded = min(residue, prime - 1 - residue)
@@ -558,7 +558,7 @@ def run(args: argparse.Namespace) -> int:
             {
                 "n_range": [0, args.all_cutoff_n_max],
                 "odd_prime_range": [3, args.all_cutoff_prime_max],
-                "condition": "n < p^2",
+                "condition": "J < p and n < p^2",
                 "records": all_cutoff_digest.count,
                 "sha256": all_cutoff_digest.hexdigest(),
             }
@@ -964,7 +964,7 @@ def run(args: argparse.Namespace) -> int:
                     prime=prime,
                     quotient=quotient,
                 )
-                for cutoff in range(prime):
+                for cutoff in range(min(prime, m + 1)):
                     exact = vp_binomial(m, cutoff, prime) + vp_binomial(
                         m + cutoff, cutoff, prime
                     )
@@ -1016,7 +1016,7 @@ def run(args: argparse.Namespace) -> int:
             {
                 "X_range": [3, args.endpoint_all_k_x_max],
                 "m_rule": "X <= m < X^2",
-                "K_rule": "0 <= K < p",
+                "K_rule": "0 <= K <= min(p-1,m)",
                 "records": all_k_records,
                 "valuation_histogram": dict(sorted(all_k_histogram.items())),
                 "sha256": all_k_hash.hexdigest(),
