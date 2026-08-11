@@ -45,19 +45,19 @@ X,triple_count,max_abs_scaled_triple_error,F3_centered_error_exact,F2_centered_e
 
 ## triple_concentration.csv
 ```csv
-X,active_triples,primitive_signed_total_exact,primitive_signed_total_decimal,primitive_abs_mass_exact,primitive_abs_mass_decimal,top1_abs_share,top5_abs_share,top10_abs_share,participation_ratio
-32,4,-10444104/5459683,-1.9129506236900566,1740684/5459683,0.31882510394834279,0.29664660558722894,1,1,3.9069785137262198
+X,active_triples,ordered_primitive_signed_total_exact,ordered_primitive_signed_total_decimal,ordered_primitive_abs_mass_exact,ordered_primitive_abs_mass_decimal,top1_abs_share,top5_abs_share,top10_abs_share,participation_ratio
+32,4,-10444104/5459683,-1.9129506236900566,10444104/5459683,1.9129506236900566,0.29664660558722894,1,1,3.9069785137262198
 64,0,0,0,0,0,0,0,0,0
-128,286,6146674110274189047960285848844/543404033598502288453922853793,11.31142525676521,67774385485375318730901040982/3909381536679872578805200387,17.336344598111083,0.057148131957953908,0.2802028320696025,0.55153620424657113,31.752953287151012
-256,680,-3983276385463737532707707048401450690486200/119464954774992001588137260461212861991231,-33.342635026029996,1260426250408431592519815205886445087012954884/50055816050721648665429512133248189174325789,25.18041558110329,0.039219175142939294,0.19421452223027463,0.38417885054262674,62.786882974368659
+128,286,6146674110274189047960285848844/543404033598502288453922853793,11.31142525676521,406646312912251912385406245892/3909381536679872578805200387,104.01806758866651,0.057148131957953908,0.2802028320696025,0.55153620424657113,31.752953287151012
+256,680,-3983276385463737532707707048401450690486200/119464954774992001588137260461212861991231,-33.342635026029996,7562557502450589555118891235318670522077729304/50055816050721648665429512133248189174325789,151.08249348661974,0.039219175142939294,0.19421452223027463,0.38417885054262674,62.786882974368659
 ```
 
 ## random_comparison.csv
 ```csv
 X,metric,actual,random_reps,random_mean,random_sd,random_min,random_max,zscore,empirical_ge_fraction,empirical_le_fraction
 32,F3,0,64,1.59375,2.6709415140411763,0,6,-0.5966996999453692,1,0.734375
-32,primitive_signed_total,-1.9129506236900566,64,-0.19377012708430139,2.5810589171994089,-2.9195189537561061,5.1108362884804848,-0.66607565024945681,0.6875,0.3125
-32,primitive_abs_mass,0.31882510394834279,64,0.52501353730152467,0.39923110658001143,0.051110659721452692,1.3106422112785669,-0.51646384751800112,0.578125,0.421875
+32,ordered_primitive_signed_total,-1.9129506236900566,64,-0.19377012708430139,2.5810589171994089,-2.9195189537561061,5.1108362884804848,-0.66607565024945681,0.6875,0.3125
+32,ordered_primitive_abs_mass,1.9129506236900566,64,3.1500812238091478,2.3953866394800682,0.30666395832871618,7.8638532676714012,-0.51646384751800112,0.578125,0.421875
 32,triple_top1_abs_share,0.29664660558722894,64,0.49889957281761244,0.19392667606570699,0.25962053867187029,0.88337301478550911,-1.0429352543631252,0.921875,0.078125
 32,triple_top5_abs_share,1,64,1,0,1,1,NA,1,1
 32,triple_top10_abs_share,1,64,1,0,1,1,NA,1,1
@@ -65,8 +65,8 @@ X,metric,actual,random_reps,random_mean,random_sd,random_min,random_max,zscore,e
 32,max_load,2,64,2.265625,0.44515691900686272,2,3,-0.5966996999453692,1,0.734375
 32,rows_K_ge_3,0,64,0.265625,0.44515691900686272,0,1,-0.5966996999453692,1,0.734375
 64,F3,0,64,0,0,0,0,NA,1,1
-64,primitive_signed_total,0,64,0,0,0,0,NA,1,1
-64,primitive_abs_mass,0,64,0,0,0,0,NA,1,1
+64,ordered_primitive_signed_total,0,64,0,0,0,0,NA,1,1
+64,ordered_primitive_abs_mass,0,64,0,0,0,0,NA,1,1
 64,triple_top1_abs_share,0,64,0,0,0,0,NA,1,1
 64,triple_top5_abs_share,0,64,0,0,0,0,NA,1,1
 64,triple_top10_abs_share,0,64,0,0,0,0,NA,1,1
@@ -74,8 +74,8 @@ X,metric,actual,random_reps,random_mean,random_sd,random_min,random_max,zscore,e
 64,max_load,2,64,2,0,2,2,NA,1,1
 64,rows_K_ge_3,0,64,0,0,0,0,NA,1,1
 128,F3,60,64,55.21875,19.746383032270565,24,132,0.24213295124409534,0.40625,0.6875
-128,primitive_signed_total,11.31142525676521,64,5.9221085804709643,19.124442918691361,-26.124337475113954,83.53754389089859,0.281802544482327,0.34375,0.65625
-128,primitive_abs_mass,17.336344598111083,64,16.790801341675426,3.2251319661875657,10.619374434199653,27.877919085626221,0.16915377793999067,0.40625,0.59375
+128,ordered_primitive_signed_total,11.31142525676521,64,5.9221085804709643,19.124442918691361,-26.124337475113954,83.53754389089859,0.281802544482327,0.34375,0.65625
+128,ordered_primitive_abs_mass,104.01806758866651,64,100.74480805005257,19.350791797125396,63.71624660519791,167.26751451375733,0.16915377793999067,0.40625,0.59375
 128,triple_top1_abs_share,0.057148131957953908,64,0.061662553979546515,0.014786098142006533,0.035058931256201298,0.13964969333802416,-0.30531530213284391,0.59375,0.40625
 128,triple_top5_abs_share,0.2802028320696025,64,0.29654457405473861,0.049550838367985704,0.17355788205426317,0.41370060256683261,-0.3297974872549147,0.609375,0.390625
 128,triple_top10_abs_share,0.55153620424657113,64,0.48291286533936895,0.049957264812709422,0.34437599677380298,0.56098450432869251,1.3736408341103574,0.046875,0.953125
@@ -83,8 +83,8 @@ X,metric,actual,random_reps,random_mean,random_sd,random_min,random_max,zscore,e
 128,max_load,3,64,3.34375,0.51079614173630794,3,5,-0.67296906126095324,1,0.671875
 128,rows_K_ge_3,10,64,8.03125,2.2815251790977769,4,14,0.86290960890404766,0.296875,0.828125
 256,F3,60,64,112.5,23.323807579381203,66,168,-2.2509189299954282,1,0
-256,primitive_signed_total,-33.342635026029996,64,8.487854995566428,23.245671434227475,-37.583239838904561,64.003827275263788,-1.799495882059325,0.984375,0.015625
-256,primitive_abs_mass,25.18041558110329,64,34.410141137517847,3.7765685693052782,27.076215382686115,42.979007616336808,-2.4439449164065938,1,0
+256,ordered_primitive_signed_total,-33.342635026029996,64,8.487854995566428,23.245671434227475,-37.583239838904561,64.003827275263788,-1.799495882059325,0.984375,0.015625
+256,ordered_primitive_abs_mass,151.08249348661974,64,206.46084682510707,22.659411415831666,162.45729229611669,257.87404569802084,-2.4439449164065934,1,0
 256,triple_top1_abs_share,0.039219175142939294,64,0.035426788327755657,0.0109499213080505,0.023096023619081165,0.065259634113384687,0.34633918440997691,0.25,0.75
 256,triple_top5_abs_share,0.19421452223027463,64,0.15132935233038011,0.017654843636650059,0.11507719458390656,0.19832242316663062,2.429088061186127,0.03125,0.96875
 256,triple_top10_abs_share,0.38417885054262674,64,0.29350691338824486,0.029906316954624479,0.22956793997866151,0.36506418292881565,3.0318657189367171,0,1
@@ -628,11 +628,11 @@ X,rep,p,actual_Z,random_Z,actual_center_hit,random_center_hit,random_reflection_
 ## runtime.csv
 ```csv
 X,status,seconds_through_exact_and_random
-32,completed,0.033995
-64,completed,0.090650
-128,completed,0.871162
-256,completed,4.142625
-ALL,completed,6.525509
+32,completed,0.037348
+64,completed,0.093893
+128,completed,0.924205
+256,completed,4.145992
+ALL,completed,15.099613
 ```
 
 ## reproducible_code.py
@@ -998,7 +998,10 @@ def analyze_instance(X: int, zero_sets: Mapping[int, Sequence[int]], label: str)
 
     abs_values = sorted((abs(row["C_frac"]) for row in triple_rows), reverse=True)
     abs_mass = sum(abs_values, Fraction())
+    ordered_abs_mass = 6 * abs_mass
     signed_primitive = centered_degree[3]
+    if ordered_abs_mass < abs(signed_primitive):
+        raise AssertionError("ordered primitive absolute mass is below absolute signed mass")
     top1 = abs_values[0] if abs_values else Fraction()
     top5 = sum(abs_values[:5], Fraction())
     top10 = sum(abs_values[:10], Fraction())
@@ -1016,8 +1019,8 @@ def analyze_instance(X: int, zero_sets: Mapping[int, Sequence[int]], label: str)
         "max_load": max(K) if K else 0,
         "rows_K_ge_3": sum(v for k, v in hist.items() if k >= 3),
         "active_triples": len(triple_rows),
-        "primitive_signed_total": signed_primitive,
-        "primitive_abs_mass": abs_mass,
+        "ordered_primitive_signed_total": signed_primitive,
+        "ordered_primitive_abs_mass": ordered_abs_mass,
         "triple_top1_abs_share": (top1 / abs_mass if abs_mass else Fraction()),
         "triple_top5_abs_share": (top5 / abs_mass if abs_mass else Fraction()),
         "triple_top10_abs_share": (top10 / abs_mass if abs_mass else Fraction()),
@@ -1098,8 +1101,8 @@ def random_ensemble(
 ) -> Tuple[List[dict], List[dict], Dict[int, Dict[int, Tuple[int, ...]]]]:
     metric_names = [
         "F3",
-        "primitive_signed_total",
-        "primitive_abs_mass",
+        "ordered_primitive_signed_total",
+        "ordered_primitive_abs_mass",
         "triple_top1_abs_share",
         "triple_top5_abs_share",
         "triple_top10_abs_share",
@@ -1238,8 +1241,9 @@ def top_primitive_frequency_pairs(
     Fq = fourier_array_double(q, zq)
     Fr = fourier_array_double(r, zr)
 
-    keep = max(4 * top_modes, 40)
-    heap: List[Tuple[float, int, float, int, int, int]] = []
+    # Retain every scanned primitive pair; high-precision reranking then
+    # covers the complete scanned prefix rather than a floating heap.
+    scanned_candidates: List[Tuple[float, int, float, int, int, int]] = []
     certified_by_envelope = False
     final_bound = math.inf
     scanned_through = 0
@@ -1248,12 +1252,9 @@ def top_primitive_frequency_pairs(
         if math.gcd(k, M) == 1:
             value, a, b, c = conjugate_pair_contribution_double(k, p, q, r, N, Fp, Fq, Fr)
             item = (abs(value), k, value, a, b, c)
-            if len(heap) < keep:
-                heapq.heappush(heap, item)
-            elif item[0] > heap[0][0]:
-                heapq.heapreplace(heap, item)
-        if k % 64 == 0 and len(heap) >= top_modes:
-            ranked = sorted(heap, reverse=True)
+            scanned_candidates.append(item)
+        if k % 64 == 0 and len(scanned_candidates) >= top_modes:
+            ranked = sorted(scanned_candidates, reverse=True)
             kth = ranked[top_modes - 1][0]
             final_bound = unseen_pair_bound(zprod, N, M, k + 1)
             if final_bound + 1e-12 < kth:
@@ -1264,7 +1265,7 @@ def top_primitive_frequency_pairs(
         if scanned_through >= M // 2:
             certified_by_envelope = True
 
-    candidates = sorted(heap, reverse=True)
+    candidates = sorted(scanned_candidates, reverse=True)
     hp_candidates = []
     for _, k, _, a, b, c in candidates:
         v80 = high_precision_mode_value(k, p, q, r, N, zp, zq, zr, 80)
@@ -1535,10 +1536,10 @@ def main() -> None:
             {
                 "X": X,
                 "active_triples": metrics["active_triples"],
-                "primitive_signed_total_exact": fraction_text(metrics["primitive_signed_total"]),
-                "primitive_signed_total_decimal": decimal_text(metrics["primitive_signed_total"], 17),
-                "primitive_abs_mass_exact": fraction_text(metrics["primitive_abs_mass"]),
-                "primitive_abs_mass_decimal": decimal_text(metrics["primitive_abs_mass"], 17),
+                "ordered_primitive_signed_total_exact": fraction_text(metrics["ordered_primitive_signed_total"]),
+                "ordered_primitive_signed_total_decimal": decimal_text(metrics["ordered_primitive_signed_total"], 17),
+                "ordered_primitive_abs_mass_exact": fraction_text(metrics["ordered_primitive_abs_mass"]),
+                "ordered_primitive_abs_mass_decimal": decimal_text(metrics["ordered_primitive_abs_mass"], 17),
                 "top1_abs_share": decimal_text(metrics["triple_top1_abs_share"], 17),
                 "top5_abs_share": decimal_text(metrics["triple_top5_abs_share"], 17),
                 "top10_abs_share": decimal_text(metrics["triple_top10_abs_share"], 17),
@@ -1687,8 +1688,8 @@ def main() -> None:
         "F2_centered_error_exact", "F1_centered_error_exact", "ordinary_diagonal_error",
     ]
     concentration_fields = [
-        "X", "active_triples", "primitive_signed_total_exact", "primitive_signed_total_decimal",
-        "primitive_abs_mass_exact", "primitive_abs_mass_decimal", "top1_abs_share", "top5_abs_share",
+        "X", "active_triples", "ordered_primitive_signed_total_exact", "ordered_primitive_signed_total_decimal",
+        "ordered_primitive_abs_mass_exact", "ordered_primitive_abs_mass_decimal", "top1_abs_share", "top5_abs_share",
         "top10_abs_share", "participation_ratio",
     ]
     triple_fields = [
@@ -1697,7 +1698,7 @@ def main() -> None:
         "abs_C_decimal", "total_excess_exact", "scaled_reconstruction_error",
     ]
     random_rep_fields = [
-        "X", "rep", "seed", "F3", "primitive_signed_total", "primitive_abs_mass",
+        "X", "rep", "seed", "F3", "ordered_primitive_signed_total", "ordered_primitive_abs_mass",
         "triple_top1_abs_share", "triple_top5_abs_share", "triple_top10_abs_share",
         "triple_participation_ratio", "max_load", "rows_K_ge_3",
     ]
@@ -1814,12 +1815,195 @@ q7311-output/full_fourier_checks.csv,626
 q7311-output/mode_capture_summary.csv,6039
 q7311-output/moment_summary.csv,488
 q7311-output/primitive_frequency_modes.csv,73496
-q7311-output/random_comparison.csv,3939
-q7311-output/random_replicates.csv,29555
+q7311-output/random_comparison.csv,3999
+q7311-output/random_replicates.csv,29502
 q7311-output/random_signature_audit.csv,2415
 q7311-output/reconstruction_audit.csv,210
-q7311-output/runtime.csv,161
+q7311-output/runtime.csv,162
 q7311-output/top_prime_triples.csv,8581
-q7311-output/triple_concentration.csv,895
+q7311-output/triple_concentration.csv,929
 q7311-output/zero_sets.csv,1842
+```
+
+## excess_shape.csv
+```csv
+X,active_prime_triples,prime_top10_abs_share,prime_participation_ratio,prime_diffuse_min_triples_threshold,prime_diffuse_top10_share_threshold,prime_diffuse_participation_threshold,prime_triple_diffuse_flag,examined_leading_triples_for_modes,mode_abs_residual_after_top10_min,mode_abs_residual_after_top10_median,mode_abs_residual_after_top10_max,frequency_diffuse_residual_threshold,few_coherent_residual_threshold,frequency_diffuse_flag,few_coherent_modes_flag,F3_actual,F3_random_mean,F3_random_zscore,F3_empirical_ge_fraction,ordered_primitive_abs_mass_actual,ordered_primitive_abs_mass_random_mean,ordered_primitive_abs_mass_random_zscore,mechanical_shape_label
+32,4,1,3.9069785137262198,20,0.6,20.0,0,3,0.67033498819392967,0.81607547110831413,1.3597326592455217,0.5,0.25,1,0,0,1.59375,-0.5966996999453692,1,1.9129506236900566,3.1500812238091478,-0.51646384751800112,few_available_prime_triples_but_examined_modes_diffuse
+64,0,0,0,20,0.6,20.0,0,0,NA,NA,NA,0.5,0.25,0,0,0,0,NA,1,0,0,NA,no_primitive_prime_triples
+128,286,0.55153620424657113,31.752953287151012,20,0.6,20.0,1,3,0.61189118980411117,0.6331340052670803,0.75482757369185738,0.5,0.25,1,0,60,55.21875,0.24213295124409534,0.40625,104.01806758866651,100.74480805005257,0.16915377793999067,diffuse_over_prime_triples_and_examined_modes
+256,680,0.38417885054262674,62.786882974368659,20,0.6,20.0,1,3,0.50219753259769995,0.77031972355732359,0.83031987391394124,0.5,0.25,1,0,60,112.5,-2.2509189299954282,1,151.08249348661974,206.46084682510707,-2.4439449164065934,diffuse_over_prime_triples_and_examined_modes
+```
+
+## shape_postprocessor.py
+```python
+#!/usr/bin/env python3
+"""Mechanical classification table for Q7311 raw output.
+
+No mathematical claim is attached to the labels.  They are deterministic
+threshold flags recorded in the CSV itself:
+
+* prime-triple diffuse: at least 20 active triples, top-10 absolute share
+  <= 0.60, and participation ratio >= 20;
+* frequency diffuse: for every examined leading actual triple, the absolute
+  residual after its ten largest conjugate frequency pairs is >= 0.50 |C|;
+* few coherent modes: for every examined leading actual triple, that residual
+  is <= 0.25 |C|.
+"""
+
+from __future__ import annotations
+
+import csv
+import statistics
+from pathlib import Path
+from typing import Dict, List
+
+
+OUT = Path("q7311-output")
+REPORT = Path("Q7311_RESULTS.md")
+MARKER = "\n## excess_shape.csv\n"
+
+
+def read_csv(name: str) -> List[dict]:
+    with (OUT / name).open(newline="", encoding="utf-8") as fh:
+        return list(csv.DictReader(fh))
+
+
+def write_csv(name: str, rows: List[dict], fields: List[str]) -> None:
+    with (OUT / name).open("w", newline="", encoding="utf-8") as fh:
+        writer = csv.DictWriter(fh, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def csv_block(rows: List[dict], fields: List[str]) -> str:
+    import io
+
+    buf = io.StringIO()
+    writer = csv.DictWriter(buf, fieldnames=fields, lineterminator="\n")
+    writer.writeheader()
+    writer.writerows(rows)
+    return "```csv\n" + buf.getvalue() + "```\n"
+
+
+def main() -> None:
+    concentration = {int(r["X"]): r for r in read_csv("triple_concentration.csv")}
+    modes: Dict[int, List[dict]] = {}
+    for row in read_csv("mode_capture_summary.csv"):
+        if row["set_label"] == "actual":
+            modes.setdefault(int(row["X"]), []).append(row)
+
+    random_rows = read_csv("random_comparison.csv")
+    random_lookup = {
+        (int(r["X"]), r["metric"]): r
+        for r in random_rows
+    }
+
+    fields = [
+        "X",
+        "active_prime_triples",
+        "prime_top10_abs_share",
+        "prime_participation_ratio",
+        "prime_diffuse_min_triples_threshold",
+        "prime_diffuse_top10_share_threshold",
+        "prime_diffuse_participation_threshold",
+        "prime_triple_diffuse_flag",
+        "examined_leading_triples_for_modes",
+        "mode_abs_residual_after_top10_min",
+        "mode_abs_residual_after_top10_median",
+        "mode_abs_residual_after_top10_max",
+        "frequency_diffuse_residual_threshold",
+        "few_coherent_residual_threshold",
+        "frequency_diffuse_flag",
+        "few_coherent_modes_flag",
+        "F3_actual",
+        "F3_random_mean",
+        "F3_random_zscore",
+        "F3_empirical_ge_fraction",
+        "ordered_primitive_abs_mass_actual",
+        "ordered_primitive_abs_mass_random_mean",
+        "ordered_primitive_abs_mass_random_zscore",
+        "mechanical_shape_label",
+    ]
+
+    rows: List[dict] = []
+    for X in sorted(concentration):
+        c = concentration[X]
+        active = int(c["active_triples"])
+        top10 = float(c["top10_abs_share"])
+        participation = float(c["participation_ratio"])
+        prime_diffuse = active >= 20 and top10 <= 0.60 and participation >= 20.0
+
+        residuals = [abs(float(r["residual_after_top10_over_C"])) for r in modes.get(X, [])]
+        if residuals:
+            residual_min = min(residuals)
+            residual_med = statistics.median(residuals)
+            residual_max = max(residuals)
+            frequency_diffuse = all(v >= 0.50 for v in residuals)
+            few_coherent = all(v <= 0.25 for v in residuals)
+        else:
+            residual_min = residual_med = residual_max = float("nan")
+            frequency_diffuse = False
+            few_coherent = False
+
+        if active == 0:
+            label = "no_primitive_prime_triples"
+        elif prime_diffuse and frequency_diffuse:
+            label = "diffuse_over_prime_triples_and_examined_modes"
+        elif active < 20 and frequency_diffuse:
+            label = "few_available_prime_triples_but_examined_modes_diffuse"
+        elif few_coherent:
+            label = "examined_excess_carried_by_few_coherent_modes"
+        elif prime_diffuse:
+            label = "diffuse_over_prime_triples_mode_result_mixed"
+        else:
+            label = "mixed_under_recorded_thresholds"
+
+        f3 = random_lookup[(X, "F3")]
+        mass = random_lookup[(X, "ordered_primitive_abs_mass")]
+        rows.append(
+            {
+                "X": X,
+                "active_prime_triples": active,
+                "prime_top10_abs_share": c["top10_abs_share"],
+                "prime_participation_ratio": c["participation_ratio"],
+                "prime_diffuse_min_triples_threshold": 20,
+                "prime_diffuse_top10_share_threshold": 0.60,
+                "prime_diffuse_participation_threshold": 20.0,
+                "prime_triple_diffuse_flag": int(prime_diffuse),
+                "examined_leading_triples_for_modes": len(residuals),
+                "mode_abs_residual_after_top10_min": "NA" if not residuals else f"{residual_min:.17g}",
+                "mode_abs_residual_after_top10_median": "NA" if not residuals else f"{residual_med:.17g}",
+                "mode_abs_residual_after_top10_max": "NA" if not residuals else f"{residual_max:.17g}",
+                "frequency_diffuse_residual_threshold": 0.50,
+                "few_coherent_residual_threshold": 0.25,
+                "frequency_diffuse_flag": int(frequency_diffuse),
+                "few_coherent_modes_flag": int(few_coherent),
+                "F3_actual": f3["actual"],
+                "F3_random_mean": f3["random_mean"],
+                "F3_random_zscore": f3["zscore"],
+                "F3_empirical_ge_fraction": f3["empirical_ge_fraction"],
+                "ordered_primitive_abs_mass_actual": mass["actual"],
+                "ordered_primitive_abs_mass_random_mean": mass["random_mean"],
+                "ordered_primitive_abs_mass_random_zscore": mass["zscore"],
+                "mechanical_shape_label": label,
+            }
+        )
+
+    write_csv("excess_shape.csv", rows, fields)
+
+    text = REPORT.read_text(encoding="utf-8")
+    if MARKER in text:
+        text = text.split(MARKER, 1)[0]
+    addition = [
+        "## excess_shape.csv",
+        csv_block(rows, fields),
+        "## shape_postprocessor.py",
+        "```python\n" + Path(__file__).read_text(encoding="utf-8") + "\n```\n",
+    ]
+    REPORT.write_text(text.rstrip() + "\n\n" + "\n".join(addition), encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main()
+
 ```

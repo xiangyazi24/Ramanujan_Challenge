@@ -359,7 +359,10 @@ def analyze_instance(X: int, zero_sets: Mapping[int, Sequence[int]], label: str)
 
     abs_values = sorted((abs(row["C_frac"]) for row in triple_rows), reverse=True)
     abs_mass = sum(abs_values, Fraction())
+    ordered_abs_mass = 6 * abs_mass
     signed_primitive = centered_degree[3]
+    if ordered_abs_mass < abs(signed_primitive):
+        raise AssertionError("ordered primitive absolute mass is below absolute signed mass")
     top1 = abs_values[0] if abs_values else Fraction()
     top5 = sum(abs_values[:5], Fraction())
     top10 = sum(abs_values[:10], Fraction())
@@ -377,8 +380,8 @@ def analyze_instance(X: int, zero_sets: Mapping[int, Sequence[int]], label: str)
         "max_load": max(K) if K else 0,
         "rows_K_ge_3": sum(v for k, v in hist.items() if k >= 3),
         "active_triples": len(triple_rows),
-        "primitive_signed_total": signed_primitive,
-        "primitive_abs_mass": abs_mass,
+        "ordered_primitive_signed_total": signed_primitive,
+        "ordered_primitive_abs_mass": ordered_abs_mass,
         "triple_top1_abs_share": (top1 / abs_mass if abs_mass else Fraction()),
         "triple_top5_abs_share": (top5 / abs_mass if abs_mass else Fraction()),
         "triple_top10_abs_share": (top10 / abs_mass if abs_mass else Fraction()),
@@ -459,8 +462,8 @@ def random_ensemble(
 ) -> Tuple[List[dict], List[dict], Dict[int, Dict[int, Tuple[int, ...]]]]:
     metric_names = [
         "F3",
-        "primitive_signed_total",
-        "primitive_abs_mass",
+        "ordered_primitive_signed_total",
+        "ordered_primitive_abs_mass",
         "triple_top1_abs_share",
         "triple_top5_abs_share",
         "triple_top10_abs_share",
@@ -599,8 +602,9 @@ def top_primitive_frequency_pairs(
     Fq = fourier_array_double(q, zq)
     Fr = fourier_array_double(r, zr)
 
-    keep = max(4 * top_modes, 40)
-    heap: List[Tuple[float, int, float, int, int, int]] = []
+    # Retain every scanned primitive pair; high-precision reranking then
+    # covers the complete scanned prefix rather than a floating heap.
+    scanned_candidates: List[Tuple[float, int, float, int, int, int]] = []
     certified_by_envelope = False
     final_bound = math.inf
     scanned_through = 0
@@ -609,12 +613,9 @@ def top_primitive_frequency_pairs(
         if math.gcd(k, M) == 1:
             value, a, b, c = conjugate_pair_contribution_double(k, p, q, r, N, Fp, Fq, Fr)
             item = (abs(value), k, value, a, b, c)
-            if len(heap) < keep:
-                heapq.heappush(heap, item)
-            elif item[0] > heap[0][0]:
-                heapq.heapreplace(heap, item)
-        if k % 64 == 0 and len(heap) >= top_modes:
-            ranked = sorted(heap, reverse=True)
+            scanned_candidates.append(item)
+        if k % 64 == 0 and len(scanned_candidates) >= top_modes:
+            ranked = sorted(scanned_candidates, reverse=True)
             kth = ranked[top_modes - 1][0]
             final_bound = unseen_pair_bound(zprod, N, M, k + 1)
             if final_bound + 1e-12 < kth:
@@ -625,7 +626,7 @@ def top_primitive_frequency_pairs(
         if scanned_through >= M // 2:
             certified_by_envelope = True
 
-    candidates = sorted(heap, reverse=True)
+    candidates = sorted(scanned_candidates, reverse=True)
     hp_candidates = []
     for _, k, _, a, b, c in candidates:
         v80 = high_precision_mode_value(k, p, q, r, N, zp, zq, zr, 80)
@@ -896,10 +897,10 @@ def main() -> None:
             {
                 "X": X,
                 "active_triples": metrics["active_triples"],
-                "primitive_signed_total_exact": fraction_text(metrics["primitive_signed_total"]),
-                "primitive_signed_total_decimal": decimal_text(metrics["primitive_signed_total"], 17),
-                "primitive_abs_mass_exact": fraction_text(metrics["primitive_abs_mass"]),
-                "primitive_abs_mass_decimal": decimal_text(metrics["primitive_abs_mass"], 17),
+                "ordered_primitive_signed_total_exact": fraction_text(metrics["ordered_primitive_signed_total"]),
+                "ordered_primitive_signed_total_decimal": decimal_text(metrics["ordered_primitive_signed_total"], 17),
+                "ordered_primitive_abs_mass_exact": fraction_text(metrics["ordered_primitive_abs_mass"]),
+                "ordered_primitive_abs_mass_decimal": decimal_text(metrics["ordered_primitive_abs_mass"], 17),
                 "top1_abs_share": decimal_text(metrics["triple_top1_abs_share"], 17),
                 "top5_abs_share": decimal_text(metrics["triple_top5_abs_share"], 17),
                 "top10_abs_share": decimal_text(metrics["triple_top10_abs_share"], 17),
@@ -1048,8 +1049,8 @@ def main() -> None:
         "F2_centered_error_exact", "F1_centered_error_exact", "ordinary_diagonal_error",
     ]
     concentration_fields = [
-        "X", "active_triples", "primitive_signed_total_exact", "primitive_signed_total_decimal",
-        "primitive_abs_mass_exact", "primitive_abs_mass_decimal", "top1_abs_share", "top5_abs_share",
+        "X", "active_triples", "ordered_primitive_signed_total_exact", "ordered_primitive_signed_total_decimal",
+        "ordered_primitive_abs_mass_exact", "ordered_primitive_abs_mass_decimal", "top1_abs_share", "top5_abs_share",
         "top10_abs_share", "participation_ratio",
     ]
     triple_fields = [
@@ -1058,7 +1059,7 @@ def main() -> None:
         "abs_C_decimal", "total_excess_exact", "scaled_reconstruction_error",
     ]
     random_rep_fields = [
-        "X", "rep", "seed", "F3", "primitive_signed_total", "primitive_abs_mass",
+        "X", "rep", "seed", "F3", "ordered_primitive_signed_total", "ordered_primitive_abs_mass",
         "triple_top1_abs_share", "triple_top5_abs_share", "triple_top10_abs_share",
         "triple_participation_ratio", "max_load", "rows_K_ge_3",
     ]

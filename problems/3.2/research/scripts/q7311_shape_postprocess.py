@@ -121,7 +121,7 @@ def main() -> None:
             label = "mixed_under_recorded_thresholds"
 
         f3 = random_lookup[(X, "F3")]
-        mass = random_lookup[(X, "primitive_abs_mass")]
+        mass = random_lookup[(X, "ordered_primitive_abs_mass")]
         rows.append(
             {
                 "X": X,
