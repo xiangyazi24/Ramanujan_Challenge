@@ -1,0 +1,3621 @@
+{
+  "X_values": [
+    128,
+    256,
+    512
+  ],
+  "document_sha256": "69055342491d2df19f5f1968cf7852f0f750186093efaaf8fa9d7593b36d0aab",
+  "results": [
+    {
+      "rows": [
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 128,
+          "digits": [
+            1,
+            36,
+            64,
+            100
+          ],
+          "hits": [
+            {
+              "p": 179,
+              "q": 1,
+              "r": 142,
+              "rho": 36
+            },
+            {
+              "p": 193,
+              "q": 1,
+              "r": 128,
+              "rho": 64
+            },
+            {
+              "p": 211,
+              "q": 1,
+              "r": 110,
+              "rho": 100
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 12,
+          "minor_offdiagonal_tests": 18,
+          "minor_typed_counts": {},
+          "n": 321,
+          "origins": {
+            "1": "Q",
+            "100": "R",
+            "36": "R",
+            "64": "R"
+          },
+          "sha256": "0076f62652d07011204b89c6bb8a9576dcddd23e680661e595d086db454f7d8f"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 128,
+          "digits": [
+            3,
+            4,
+            19,
+            44,
+            100
+          ],
+          "hits": [
+            {
+              "p": 181,
+              "q": 4,
+              "r": 19,
+              "rho": 19
+            },
+            {
+              "p": 197,
+              "q": 3,
+              "r": 152,
+              "rho": 44
+            },
+            {
+              "p": 211,
+              "q": 3,
+              "r": 110,
+              "rho": 100
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 15,
+          "minor_offdiagonal_tests": 30,
+          "minor_typed_counts": {},
+          "n": 743,
+          "origins": {
+            "100": "R",
+            "19": "R",
+            "3": "Q",
+            "4": "Q",
+            "44": "R"
+          },
+          "sha256": "9044ef9ce9a073b23850451c8696d05351193023a03addc5e59ebfc66d37001d"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 128,
+          "digits": [
+            8,
+            9,
+            19,
+            20,
+            81
+          ],
+          "hits": [
+            {
+              "p": 163,
+              "q": 9,
+              "r": 142,
+              "rho": 20
+            },
+            {
+              "p": 181,
+              "q": 8,
+              "r": 161,
+              "rho": 19
+            },
+            {
+              "p": 191,
+              "q": 8,
+              "r": 81,
+              "rho": 81
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 15,
+          "minor_offdiagonal_tests": 30,
+          "minor_typed_counts": {},
+          "n": 1609,
+          "origins": {
+            "19": "R",
+            "20": "R",
+            "8": "Q",
+            "81": "R",
+            "9": "Q"
+          },
+          "sha256": "21dd1e2773b8edffd12fc315c061047d96fdb4fb391346aa827ade979247a494"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 128,
+          "digits": [
+            15,
+            20,
+            21,
+            36,
+            81,
+            114
+          ],
+          "hits": [
+            {
+              "p": 179,
+              "q": 21,
+              "r": 142,
+              "rho": 36
+            },
+            {
+              "p": 191,
+              "q": 20,
+              "r": 81,
+              "rho": 81
+            },
+            {
+              "p": 251,
+              "q": 15,
+              "r": 136,
+              "rho": 114
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 3901,
+          "origins": {
+            "114": "R",
+            "15": "Q",
+            "20": "Q",
+            "21": "Q",
+            "36": "R",
+            "81": "R"
+          },
+          "sha256": "5b67596a95dac0c7700fbb80c52e6f9ca0020028c53c21d8a7becf02f50f8bf7"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 128,
+          "digits": [
+            20,
+            21,
+            29,
+            44,
+            61,
+            81
+          ],
+          "hits": [
+            {
+              "p": 139,
+              "q": 29,
+              "r": 61,
+              "rho": 61
+            },
+            {
+              "p": 191,
+              "q": 21,
+              "r": 81,
+              "rho": 81
+            },
+            {
+              "p": 197,
+              "q": 20,
+              "r": 152,
+              "rho": 44
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 4092,
+          "origins": {
+            "20": "Q",
+            "21": "Q",
+            "29": "Q",
+            "44": "R",
+            "61": "R",
+            "81": "R"
+          },
+          "sha256": "773e80061bd3454a1f0571057ff0a5269279a2af9c2f96a05af38394aa2d406a"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 128,
+          "digits": [
+            19,
+            26,
+            27,
+            28,
+            30,
+            36
+          ],
+          "hits": [
+            {
+              "p": 179,
+              "q": 28,
+              "r": 36,
+              "rho": 36
+            },
+            {
+              "p": 181,
+              "q": 27,
+              "r": 161,
+              "rho": 19
+            },
+            {
+              "p": 193,
+              "q": 26,
+              "r": 30,
+              "rho": 30
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 5048,
+          "origins": {
+            "19": "R",
+            "26": "Q",
+            "27": "Q",
+            "28": "Q",
+            "30": "R",
+            "36": "R"
+          },
+          "sha256": "4f295b1dc26072e0c43ccc8bfb287a7f6767bd4dba7234f98ef4c43c1d8f3d6d"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 128,
+          "digits": [
+            37,
+            39,
+            46,
+            64,
+            73,
+            89
+          ],
+          "hits": [
+            {
+              "p": 193,
+              "q": 46,
+              "r": 128,
+              "rho": 64
+            },
+            {
+              "p": 227,
+              "q": 39,
+              "r": 153,
+              "rho": 73
+            },
+            {
+              "p": 241,
+              "q": 37,
+              "r": 89,
+              "rho": 89
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 9006,
+          "origins": {
+            "37": "Q",
+            "39": "Q",
+            "46": "Q",
+            "64": "R",
+            "73": "R",
+            "89": "R"
+          },
+          "sha256": "3696e81b0a9a42b8460cd83e7311e42f5fcc161c5b65ede8eb7e8a67e602a60e"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "100",
+            "000"
+          ],
+          "Q_entry_counts": {
+            "O": 1
+          },
+          "Q_unique_counts": {
+            "O": 1
+          },
+          "Qclass": [
+            "...",
+            "O..",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 128,
+          "digits": [
+            20,
+            30,
+            43,
+            54,
+            64,
+            89
+          ],
+          "hits": [
+            {
+              "p": 163,
+              "q": 64,
+              "r": 20,
+              "rho": 20
+            },
+            {
+              "p": 193,
+              "q": 54,
+              "r": 30,
+              "rho": 30
+            },
+            {
+              "p": 241,
+              "q": 43,
+              "r": 89,
+              "rho": 89
+            }
+          ],
+          "minor_class_counts": {
+            "OZ": 1
+          },
+          "minor_collisions": [
+            {
+              "class": "OZ",
+              "label": 0,
+              "minor": 0,
+              "p": 193,
+              "s": 30,
+              "state_s": [
+                0,
+                172
+              ],
+              "state_t": [
+                0,
+                123
+              ],
+              "t": 64,
+              "types": [
+                "QR"
+              ]
+            }
+          ],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {
+            "QR": 1
+          },
+          "n": 10452,
+          "origins": {
+            "20": "R",
+            "30": "R",
+            "43": "Q",
+            "54": "Q",
+            "64": "Q",
+            "89": "R"
+          },
+          "sha256": "f4909aa1093033c51d312a05a62fad91cd2d05dfdaf888930f74f91e617883c7"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 128,
+          "digits": [
+            14,
+            44,
+            61,
+            65,
+            85,
+            92
+          ],
+          "hits": [
+            {
+              "p": 139,
+              "q": 92,
+              "r": 61,
+              "rho": 61
+            },
+            {
+              "p": 151,
+              "q": 85,
+              "r": 14,
+              "rho": 14
+            },
+            {
+              "p": 197,
+              "q": 65,
+              "r": 44,
+              "rho": 44
+            }
+          ],
+          "minor_class_counts": {
+            "ON": 1
+          },
+          "minor_collisions": [
+            {
+              "class": "ON",
+              "label": 10,
+              "minor": 0,
+              "p": 151,
+              "s": 65,
+              "state_s": [
+                63,
+                112
+              ],
+              "state_t": [
+                7,
+                46
+              ],
+              "t": 85,
+              "types": [
+                "QQ"
+              ]
+            }
+          ],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {
+            "QQ": 1
+          },
+          "n": 12849,
+          "origins": {
+            "14": "R",
+            "44": "R",
+            "61": "R",
+            "65": "Q",
+            "85": "Q",
+            "92": "Q"
+          },
+          "sha256": "acdcee688f81e23b37b7a7fbf2d5debf9a81fa9a0c3a308caac34dc523a3b787"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 128,
+          "digits": [
+            19,
+            39,
+            69,
+            71,
+            73,
+            89
+          ],
+          "hits": [
+            {
+              "p": 181,
+              "q": 89,
+              "r": 161,
+              "rho": 19
+            },
+            {
+              "p": 227,
+              "q": 71,
+              "r": 153,
+              "rho": 73
+            },
+            {
+              "p": 233,
+              "q": 69,
+              "r": 193,
+              "rho": 39
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 16270,
+          "origins": {
+            "19": "R",
+            "39": "R",
+            "69": "Q",
+            "71": "Q",
+            "73": "R",
+            "89": "Q"
+          },
+          "sha256": "f2fe99792de39cf3da5aa8afc4b8d13bb41a506715f63d2d4081554d68599885"
+        }
+      ],
+      "summary": {
+        "Q_entry_counts": {
+          "O": 1
+        },
+        "Q_unique_counts": {
+          "O": 1
+        },
+        "R_entry_counts": {
+          "D": 30
+        },
+        "R_unique_counts": {
+          "D": 30
+        },
+        "X": 128,
+        "active_count": 13,
+        "canonical_triples": 10,
+        "limit": 16384,
+        "load_histogram": {
+          "0": 13976,
+          "1": 2242,
+          "2": 156,
+          "3": 10
+        },
+        "max_k": 3,
+        "minor_class_counts": {
+          "ON": 1,
+          "OZ": 1
+        },
+        "minor_collision_count": 2,
+        "minor_diagonals_suppressed": 168,
+        "minor_offdiagonal_tests": 393,
+        "minor_typed_counts": {
+          "QQ": 1,
+          "QR": 1
+        },
+        "ordered_S3": 60,
+        "prime_count": 23,
+        "repo_hm3_cross_check": "not previously tabulated",
+        "retained_load_histogram": {
+          "3": 10
+        },
+        "retained_rows": 10,
+        "row_certificate_sha256": "bdd838a37bc595bda7801291b42303c2f814f32d40292d2fa392d650e2236505",
+        "scattered_events": 2584,
+        "strict_R_diagonal": 30,
+        "zero_count": 30
+      }
+    },
+    {
+      "rows": [
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 256,
+          "digits": [
+            3,
+            6,
+            41,
+            56,
+            170
+          ],
+          "hits": [
+            {
+              "p": 271,
+              "q": 6,
+              "r": 41,
+              "rho": 41
+            },
+            {
+              "p": 431,
+              "q": 3,
+              "r": 374,
+              "rho": 56
+            },
+            {
+              "p": 499,
+              "q": 3,
+              "r": 170,
+              "rho": 170
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 15,
+          "minor_offdiagonal_tests": 30,
+          "minor_typed_counts": {},
+          "n": 1667,
+          "origins": {
+            "170": "R",
+            "3": "Q",
+            "41": "R",
+            "56": "R",
+            "6": "Q"
+          },
+          "sha256": "ee01acde024130da92711f43ee30c4cf588b19ae1b4eb492f28c8d24b9e4c3b8"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 256,
+          "digits": [
+            25,
+            28,
+            33,
+            168,
+            171,
+            203
+          ],
+          "hits": [
+            {
+              "p": 379,
+              "q": 33,
+              "r": 171,
+              "rho": 171
+            },
+            {
+              "p": 443,
+              "q": 28,
+              "r": 274,
+              "rho": 168
+            },
+            {
+              "p": 499,
+              "q": 25,
+              "r": 203,
+              "rho": 203
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 12678,
+          "origins": {
+            "168": "R",
+            "171": "R",
+            "203": "R",
+            "25": "Q",
+            "28": "Q",
+            "33": "Q"
+          },
+          "sha256": "56a370f8951f707624662c44233ab603b1c84d277f642b23c22e7153fd120818"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 256,
+          "digits": [
+            49,
+            56,
+            59,
+            67,
+            140,
+            161
+          ],
+          "hits": [
+            {
+              "p": 419,
+              "q": 59,
+              "r": 161,
+              "rho": 161
+            },
+            {
+              "p": 439,
+              "q": 56,
+              "r": 298,
+              "rho": 140
+            },
+            {
+              "p": 499,
+              "q": 49,
+              "r": 431,
+              "rho": 67
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 24882,
+          "origins": {
+            "140": "R",
+            "161": "R",
+            "49": "Q",
+            "56": "Q",
+            "59": "Q",
+            "67": "R"
+          },
+          "sha256": "f1d90a0dcc4b54170ae6d92312096cc7fb1cbc09c7377e683e29685cca92c637"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 256,
+          "digits": [
+            53,
+            55,
+            70,
+            84,
+            86,
+            182
+          ],
+          "hits": [
+            {
+              "p": 307,
+              "q": 84,
+              "r": 86,
+              "rho": 86
+            },
+            {
+              "p": 367,
+              "q": 70,
+              "r": 184,
+              "rho": 182
+            },
+            {
+              "p": 463,
+              "q": 55,
+              "r": 409,
+              "rho": 53
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 25874,
+          "origins": {
+            "182": "R",
+            "53": "R",
+            "55": "Q",
+            "70": "Q",
+            "84": "Q",
+            "86": "R"
+          },
+          "sha256": "8a7155218b3919dd7fb307e835821cb4ff5f6c7d79347a38515c56f959716851"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 256,
+          "digits": [
+            61,
+            67,
+            70,
+            81,
+            140,
+            171
+          ],
+          "hits": [
+            {
+              "p": 379,
+              "q": 81,
+              "r": 171,
+              "rho": 171
+            },
+            {
+              "p": 439,
+              "q": 70,
+              "r": 140,
+              "rho": 140
+            },
+            {
+              "p": 499,
+              "q": 61,
+              "r": 431,
+              "rho": 67
+            }
+          ],
+          "minor_class_counts": {
+            "ON": 1
+          },
+          "minor_collisions": [
+            {
+              "class": "ON",
+              "label": 381,
+              "minor": 0,
+              "p": 499,
+              "s": 61,
+              "state_s": [
+                179,
+                45
+              ],
+              "state_t": [
+                298,
+                192
+              ],
+              "t": 81,
+              "types": [
+                "QQ"
+              ]
+            }
+          ],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {
+            "QQ": 1
+          },
+          "n": 30870,
+          "origins": {
+            "140": "R",
+            "171": "R",
+            "61": "Q",
+            "67": "R",
+            "70": "Q",
+            "81": "Q"
+          },
+          "sha256": "f4d84fa8041a02248f0154434c9b56b9ad2aab50075b79a6ee159eb10be51a6c"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 256,
+          "digits": [
+            41,
+            61,
+            70,
+            79,
+            130,
+            168
+          ],
+          "hits": [
+            {
+              "p": 271,
+              "q": 130,
+              "r": 41,
+              "rho": 41
+            },
+            {
+              "p": 443,
+              "q": 79,
+              "r": 274,
+              "rho": 168
+            },
+            {
+              "p": 503,
+              "q": 70,
+              "r": 61,
+              "rho": 61
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 35271,
+          "origins": {
+            "130": "Q",
+            "168": "R",
+            "41": "R",
+            "61": "R",
+            "70": "Q",
+            "79": "Q"
+          },
+          "sha256": "ebc02b2abcd45dc673d841756c04afe444e25f59c24f1819c79738ff733b0fb8"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 256,
+          "digits": [
+            47,
+            91,
+            96,
+            138,
+            161,
+            168
+          ],
+          "hits": [
+            {
+              "p": 293,
+              "q": 138,
+              "r": 47,
+              "rho": 47
+            },
+            {
+              "p": 419,
+              "q": 96,
+              "r": 257,
+              "rho": 161
+            },
+            {
+              "p": 443,
+              "q": 91,
+              "r": 168,
+              "rho": 168
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 40481,
+          "origins": {
+            "138": "Q",
+            "161": "R",
+            "168": "R",
+            "47": "R",
+            "91": "Q",
+            "96": "Q"
+          },
+          "sha256": "4d6ccbb26a1775b66eebeb7248ea71ed05fe2e5e8d95f2f4d8bc8c28ea7e21b1"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 256,
+          "digits": [
+            41,
+            72,
+            99,
+            162,
+            168,
+            171
+          ],
+          "hits": [
+            {
+              "p": 257,
+              "q": 171,
+              "r": 184,
+              "rho": 72
+            },
+            {
+              "p": 271,
+              "q": 162,
+              "r": 229,
+              "rho": 41
+            },
+            {
+              "p": 443,
+              "q": 99,
+              "r": 274,
+              "rho": 168
+            }
+          ],
+          "minor_class_counts": {
+            "ON": 1
+          },
+          "minor_collisions": [
+            {
+              "class": "ON",
+              "label": 237,
+              "minor": 0,
+              "p": 271,
+              "s": 99,
+              "state_s": [
+                156,
+                107
+              ],
+              "state_t": [
+                256,
+                120
+              ],
+              "t": 171,
+              "types": [
+                "QQ"
+              ]
+            }
+          ],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {
+            "QQ": 1
+          },
+          "n": 44131,
+          "origins": {
+            "162": "Q",
+            "168": "R",
+            "171": "Q",
+            "41": "R",
+            "72": "R",
+            "99": "Q"
+          },
+          "sha256": "e2e6968c5761480dd2296259010552b03f7307bde010f414d0cdf379684b31da"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 256,
+          "digits": [
+            118,
+            140,
+            141,
+            149,
+            182,
+            183
+          ],
+          "hits": [
+            {
+              "p": 283,
+              "q": 183,
+              "r": 142,
+              "rho": 140
+            },
+            {
+              "p": 347,
+              "q": 149,
+              "r": 228,
+              "rho": 118
+            },
+            {
+              "p": 367,
+              "q": 141,
+              "r": 184,
+              "rho": 182
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 51931,
+          "origins": {
+            "118": "R",
+            "140": "R",
+            "141": "Q",
+            "149": "Q",
+            "182": "R",
+            "183": "Q"
+          },
+          "sha256": "212c792196bf643d3c1388cf547c02d619500ad60e2f11891f2aeec0fbab4ac4"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 256,
+          "digits": [
+            47,
+            109,
+            111,
+            168,
+            170,
+            190
+          ],
+          "hits": [
+            {
+              "p": 293,
+              "q": 190,
+              "r": 47,
+              "rho": 47
+            },
+            {
+              "p": 331,
+              "q": 168,
+              "r": 109,
+              "rho": 109
+            },
+            {
+              "p": 499,
+              "q": 111,
+              "r": 328,
+              "rho": 170
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 55717,
+          "origins": {
+            "109": "R",
+            "111": "Q",
+            "168": "Q",
+            "170": "R",
+            "190": "Q",
+            "47": "R"
+          },
+          "sha256": "bf651bb7e9dffa255064b59bee0a4632a58e2dca6bf28a7e68dd712bb818f35b"
+        }
+      ],
+      "summary": {
+        "Q_entry_counts": {},
+        "Q_unique_counts": {},
+        "R_entry_counts": {
+          "D": 30
+        },
+        "R_unique_counts": {
+          "D": 30
+        },
+        "X": 256,
+        "active_count": 17,
+        "canonical_triples": 10,
+        "limit": 65536,
+        "load_histogram": {
+          "0": 57718,
+          "1": 7371,
+          "2": 437,
+          "3": 10
+        },
+        "max_k": 3,
+        "minor_class_counts": {
+          "ON": 2
+        },
+        "minor_collision_count": 2,
+        "minor_diagonals_suppressed": 177,
+        "minor_offdiagonal_tests": 435,
+        "minor_typed_counts": {
+          "QQ": 2
+        },
+        "ordered_S3": 60,
+        "prime_count": 43,
+        "repo_hm3_cross_check": "PASS",
+        "retained_load_histogram": {
+          "3": 10
+        },
+        "retained_rows": 10,
+        "row_certificate_sha256": "5792251d9a914ef7a20e9936dcf3036175fe3e03c56cd17c6a95788b634929d2",
+        "scattered_events": 8275,
+        "strict_R_diagonal": 30,
+        "zero_count": 46
+      }
+    },
+    {
+      "rows": [
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            24,
+            25,
+            30,
+            33,
+            116,
+            298
+          ],
+          "hits": [
+            {
+              "p": 617,
+              "q": 30,
+              "r": 298,
+              "rho": 298
+            },
+            {
+              "p": 751,
+              "q": 25,
+              "r": 33,
+              "rho": 33
+            },
+            {
+              "p": 757,
+              "q": 24,
+              "r": 640,
+              "rho": 116
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 18808,
+          "origins": {
+            "116": "R",
+            "24": "Q",
+            "25": "Q",
+            "298": "R",
+            "30": "Q",
+            "33": "R"
+          },
+          "sha256": "39facda4921b6e5dbbe7a50fef5fb705ac5ad07a5fad70e856a8fa920e33bbe5"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            31,
+            33,
+            44,
+            103,
+            140,
+            319
+          ],
+          "hits": [
+            {
+              "p": 571,
+              "q": 44,
+              "r": 430,
+              "rho": 140
+            },
+            {
+              "p": 761,
+              "q": 33,
+              "r": 441,
+              "rho": 319
+            },
+            {
+              "p": 821,
+              "q": 31,
+              "r": 103,
+              "rho": 103
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 25554,
+          "origins": {
+            "103": "R",
+            "140": "R",
+            "31": "Q",
+            "319": "R",
+            "33": "Q",
+            "44": "Q"
+          },
+          "sha256": "e04fdcdbe6e3b51c681c28c7f766b015b04831a8e27166138c49ba0b1c8d3539"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            4,
+            76,
+            94,
+            100,
+            140,
+            220
+          ],
+          "hits": [
+            {
+              "p": 541,
+              "q": 100,
+              "r": 4,
+              "rho": 4
+            },
+            {
+              "p": 571,
+              "q": 94,
+              "r": 430,
+              "rho": 140
+            },
+            {
+              "p": 709,
+              "q": 76,
+              "r": 220,
+              "rho": 220
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 54104,
+          "origins": {
+            "100": "Q",
+            "140": "R",
+            "220": "R",
+            "4": "R",
+            "76": "Q",
+            "94": "Q"
+          },
+          "sha256": "7c5555a9179bc2f478eacded9a3be8a52bf2326359698e5c70fa78db1e6656f5"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            90,
+            95,
+            106,
+            156,
+            272,
+            371
+          ],
+          "hits": [
+            {
+              "p": 769,
+              "q": 106,
+              "r": 272,
+              "rho": 272
+            },
+            {
+              "p": 857,
+              "q": 95,
+              "r": 371,
+              "rho": 371
+            },
+            {
+              "p": 907,
+              "q": 90,
+              "r": 156,
+              "rho": 156
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 81786,
+          "origins": {
+            "106": "Q",
+            "156": "R",
+            "272": "R",
+            "371": "R",
+            "90": "Q",
+            "95": "Q"
+          },
+          "sha256": "869f31faaddc4e9cd1a20393b13ed5b7bd7c595618f7c477302e564787440d5c"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "100",
+            "000"
+          ],
+          "Q_entry_counts": {
+            "D": 1
+          },
+          "Q_unique_counts": {
+            "D": 1
+          },
+          "Qclass": [
+            "...",
+            "D..",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            94,
+            102,
+            144,
+            156,
+            162
+          ],
+          "hits": [
+            {
+              "p": 593,
+              "q": 156,
+              "r": 162,
+              "rho": 162
+            },
+            {
+              "p": 907,
+              "q": 102,
+              "r": 156,
+              "rho": 156
+            },
+            {
+              "p": 977,
+              "q": 94,
+              "r": 832,
+              "rho": 144
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 15,
+          "minor_offdiagonal_tests": 30,
+          "minor_typed_counts": {},
+          "n": 92670,
+          "origins": {
+            "102": "Q",
+            "144": "R",
+            "156": "QR",
+            "162": "R",
+            "94": "Q"
+          },
+          "sha256": "226c8bee89e854418e4253f18e31b56db7bad28f057ba5a85851715117cc3e67"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            76,
+            103,
+            115,
+            150,
+            185,
+            371
+          ],
+          "hits": [
+            {
+              "p": 659,
+              "q": 150,
+              "r": 76,
+              "rho": 76
+            },
+            {
+              "p": 857,
+              "q": 115,
+              "r": 371,
+              "rho": 371
+            },
+            {
+              "p": 953,
+              "q": 103,
+              "r": 767,
+              "rho": 185
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 98926,
+          "origins": {
+            "103": "Q",
+            "115": "Q",
+            "150": "Q",
+            "185": "R",
+            "371": "R",
+            "76": "R"
+          },
+          "sha256": "f7f0e980418f72d815363dac3e4b2e4a31f2ddb118f816cb078e4c47c91083a1"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            4,
+            102,
+            112,
+            161,
+            187,
+            369
+          ],
+          "hits": [
+            {
+              "p": 541,
+              "q": 187,
+              "r": 536,
+              "rho": 4
+            },
+            {
+              "p": 631,
+              "q": 161,
+              "r": 112,
+              "rho": 112
+            },
+            {
+              "p": 991,
+              "q": 102,
+              "r": 621,
+              "rho": 369
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 101703,
+          "origins": {
+            "102": "Q",
+            "112": "R",
+            "161": "Q",
+            "187": "Q",
+            "369": "R",
+            "4": "R"
+          },
+          "sha256": "bc0e04daa6c9fbe62564b2e479c2727d6db2875579500d1e4f936112dd97af40"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "001",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {
+            "D": 1
+          },
+          "Q_unique_counts": {
+            "D": 1
+          },
+          "Qclass": [
+            "..D",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            112,
+            115,
+            156,
+            162,
+            329
+          ],
+          "hits": [
+            {
+              "p": 631,
+              "q": 162,
+              "r": 112,
+              "rho": 112
+            },
+            {
+              "p": 887,
+              "q": 115,
+              "r": 329,
+              "rho": 329
+            },
+            {
+              "p": 907,
+              "q": 112,
+              "r": 750,
+              "rho": 156
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 15,
+          "minor_offdiagonal_tests": 30,
+          "minor_typed_counts": {},
+          "n": 102334,
+          "origins": {
+            "112": "QR",
+            "115": "Q",
+            "156": "R",
+            "162": "Q",
+            "329": "R"
+          },
+          "sha256": "71c1e3cc25c6aee3b4c68880fb0f86f3a5cac813e838bdc82a5e49b61d985d7f"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            119,
+            131,
+            152,
+            156,
+            282,
+            321
+          ],
+          "hits": [
+            {
+              "p": 709,
+              "q": 152,
+              "r": 321,
+              "rho": 321
+            },
+            {
+              "p": 821,
+              "q": 131,
+              "r": 538,
+              "rho": 282
+            },
+            {
+              "p": 907,
+              "q": 119,
+              "r": 156,
+              "rho": 156
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 108089,
+          "origins": {
+            "119": "Q",
+            "131": "Q",
+            "152": "Q",
+            "156": "R",
+            "282": "R",
+            "321": "R"
+          },
+          "sha256": "9d5eb2fb81355fa94a5221f639c8e32f215b47392dd42f965447416cda25aacb"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            144,
+            162,
+            192,
+            200,
+            282,
+            298
+          ],
+          "hits": [
+            {
+              "p": 593,
+              "q": 200,
+              "r": 162,
+              "rho": 162
+            },
+            {
+              "p": 617,
+              "q": 192,
+              "r": 298,
+              "rho": 298
+            },
+            {
+              "p": 821,
+              "q": 144,
+              "r": 538,
+              "rho": 282
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 118762,
+          "origins": {
+            "144": "Q",
+            "162": "R",
+            "192": "Q",
+            "200": "Q",
+            "282": "R",
+            "298": "R"
+          },
+          "sha256": "3a2451ecc3f4d915c927efb8e0f0462293bee0dd9ec4eb9f027336d23207ce9e"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            76,
+            89,
+            169,
+            193,
+            202,
+            337
+          ],
+          "hits": [
+            {
+              "p": 659,
+              "q": 202,
+              "r": 582,
+              "rho": 76
+            },
+            {
+              "p": 691,
+              "q": 193,
+              "r": 337,
+              "rho": 337
+            },
+            {
+              "p": 787,
+              "q": 169,
+              "r": 697,
+              "rho": 89
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 133700,
+          "origins": {
+            "169": "Q",
+            "193": "Q",
+            "202": "Q",
+            "337": "R",
+            "76": "R",
+            "89": "R"
+          },
+          "sha256": "f6f10a5934ca367ae63050eff4a98bdd43d34cae1824c80a1d0a409987be15ab"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            112,
+            158,
+            178,
+            215,
+            319,
+            371
+          ],
+          "hits": [
+            {
+              "p": 631,
+              "q": 215,
+              "r": 112,
+              "rho": 112
+            },
+            {
+              "p": 761,
+              "q": 178,
+              "r": 319,
+              "rho": 319
+            },
+            {
+              "p": 857,
+              "q": 158,
+              "r": 371,
+              "rho": 371
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 135777,
+          "origins": {
+            "112": "R",
+            "158": "Q",
+            "178": "Q",
+            "215": "Q",
+            "319": "R",
+            "371": "R"
+          },
+          "sha256": "ab85621903a3bdd6c3ffdf0108848da86253035a8c00851ec3ab5cd698566643"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            158,
+            162,
+            198,
+            237,
+            321,
+            329
+          ],
+          "hits": [
+            {
+              "p": 593,
+              "q": 237,
+              "r": 162,
+              "rho": 162
+            },
+            {
+              "p": 709,
+              "q": 198,
+              "r": 321,
+              "rho": 321
+            },
+            {
+              "p": 887,
+              "q": 158,
+              "r": 557,
+              "rho": 329
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 140703,
+          "origins": {
+            "158": "Q",
+            "162": "R",
+            "198": "Q",
+            "237": "Q",
+            "321": "R",
+            "329": "R"
+          },
+          "sha256": "05fc602efb385e1ecf83acc2639b1496421ba3d7d0842a5540b79ef3fbc6c10f"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            4,
+            140,
+            190,
+            256,
+            270,
+            272
+          ],
+          "hits": [
+            {
+              "p": 541,
+              "q": 270,
+              "r": 536,
+              "rho": 4
+            },
+            {
+              "p": 571,
+              "q": 256,
+              "r": 430,
+              "rho": 140
+            },
+            {
+              "p": 769,
+              "q": 190,
+              "r": 496,
+              "rho": 272
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 146606,
+          "origins": {
+            "140": "R",
+            "190": "Q",
+            "256": "Q",
+            "270": "Q",
+            "272": "R",
+            "4": "R"
+          },
+          "sha256": "64b118225e1f0a1ba1751a70682e4a1459fb77d86e09a86271cbdb6af78f41c1"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "110",
+            "110",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 5
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "DD.",
+            "DD.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            161,
+            196,
+            252,
+            272,
+            363
+          ],
+          "hits": [
+            {
+              "p": 599,
+              "q": 252,
+              "r": 272,
+              "rho": 272
+            },
+            {
+              "p": 769,
+              "q": 196,
+              "r": 496,
+              "rho": 272
+            },
+            {
+              "p": 937,
+              "q": 161,
+              "r": 363,
+              "rho": 363
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 15,
+          "minor_offdiagonal_tests": 30,
+          "minor_typed_counts": {},
+          "n": 151220,
+          "origins": {
+            "161": "Q",
+            "196": "Q",
+            "252": "Q",
+            "272": "R",
+            "363": "R"
+          },
+          "sha256": "09445aca2d5e4086b0425b12bd1b1a948b5d3a63e3c82d2f1c4ec70268f24a8e"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            22,
+            76,
+            163,
+            185,
+            212,
+            236
+          ],
+          "hits": [
+            {
+              "p": 659,
+              "q": 236,
+              "r": 582,
+              "rho": 76
+            },
+            {
+              "p": 733,
+              "q": 212,
+              "r": 710,
+              "rho": 22
+            },
+            {
+              "p": 953,
+              "q": 163,
+              "r": 767,
+              "rho": 185
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 156106,
+          "origins": {
+            "163": "Q",
+            "185": "R",
+            "212": "Q",
+            "22": "R",
+            "236": "Q",
+            "76": "R"
+          },
+          "sha256": "5a17ba7a33bf1ef64412ed7f8c46a306e7baed171ef15e59ff43e493bee72c6e"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            145,
+            208,
+            249,
+            298,
+            307,
+            316
+          ],
+          "hits": [
+            {
+              "p": 599,
+              "q": 316,
+              "r": 453,
+              "rho": 145
+            },
+            {
+              "p": 617,
+              "q": 307,
+              "r": 318,
+              "rho": 298
+            },
+            {
+              "p": 911,
+              "q": 208,
+              "r": 249,
+              "rho": 249
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 189737,
+          "origins": {
+            "145": "R",
+            "208": "Q",
+            "249": "R",
+            "298": "R",
+            "307": "Q",
+            "316": "Q"
+          },
+          "sha256": "b4ff3087212c3557012fdf439ac35401b4df4b8f52a6054382f5a73cc10aea62"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            101,
+            206,
+            238,
+            279,
+            282,
+            348
+          ],
+          "hits": [
+            {
+              "p": 701,
+              "q": 279,
+              "r": 101,
+              "rho": 101
+            },
+            {
+              "p": 821,
+              "q": 238,
+              "r": 282,
+              "rho": 282
+            },
+            {
+              "p": 947,
+              "q": 206,
+              "r": 598,
+              "rho": 348
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 195680,
+          "origins": {
+            "101": "R",
+            "206": "Q",
+            "238": "Q",
+            "279": "Q",
+            "282": "R",
+            "348": "R"
+          },
+          "sha256": "5a8563bd304694482faf9da61edfa0d2051cd47abf4322448119c2cf3750fcf4"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            67,
+            220,
+            240,
+            248,
+            249,
+            309
+          ],
+          "hits": [
+            {
+              "p": 709,
+              "q": 309,
+              "r": 220,
+              "rho": 220
+            },
+            {
+              "p": 881,
+              "q": 248,
+              "r": 813,
+              "rho": 67
+            },
+            {
+              "p": 911,
+              "q": 240,
+              "r": 661,
+              "rho": 249
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 219301,
+          "origins": {
+            "220": "R",
+            "240": "Q",
+            "248": "Q",
+            "249": "R",
+            "309": "Q",
+            "67": "R"
+          },
+          "sha256": "a87fa700696f01efeb1439245a93f978d292bef5ea1ad8691c0c802bbf01630e"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            4,
+            67,
+            76,
+            249,
+            334,
+            406
+          ],
+          "hits": [
+            {
+              "p": 541,
+              "q": 406,
+              "r": 536,
+              "rho": 4
+            },
+            {
+              "p": 659,
+              "q": 334,
+              "r": 76,
+              "rho": 76
+            },
+            {
+              "p": 881,
+              "q": 249,
+              "r": 813,
+              "rho": 67
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 220182,
+          "origins": {
+            "249": "Q",
+            "334": "Q",
+            "4": "R",
+            "406": "Q",
+            "67": "R",
+            "76": "R"
+          },
+          "sha256": "bb6a58074768968083f69ca79ae6f90e996831e703b7620ea007654880604d53"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            101,
+            162,
+            321,
+            323,
+            327,
+            386
+          ],
+          "hits": [
+            {
+              "p": 593,
+              "q": 386,
+              "r": 430,
+              "rho": 162
+            },
+            {
+              "p": 701,
+              "q": 327,
+              "r": 101,
+              "rho": 101
+            },
+            {
+              "p": 709,
+              "q": 323,
+              "r": 321,
+              "rho": 321
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 229328,
+          "origins": {
+            "101": "R",
+            "162": "R",
+            "321": "R",
+            "323": "Q",
+            "327": "Q",
+            "386": "Q"
+          },
+          "sha256": "fa3050bfd71e8191a3e1974b35d2c17d5209e93ff0e064da34614fd8e25565a8"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            112,
+            144,
+            235,
+            272,
+            299,
+            365
+          ],
+          "hits": [
+            {
+              "p": 631,
+              "q": 365,
+              "r": 112,
+              "rho": 112
+            },
+            {
+              "p": 769,
+              "q": 299,
+              "r": 496,
+              "rho": 272
+            },
+            {
+              "p": 977,
+              "q": 235,
+              "r": 832,
+              "rho": 144
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 230427,
+          "origins": {
+            "112": "R",
+            "144": "R",
+            "235": "Q",
+            "272": "R",
+            "299": "Q",
+            "365": "Q"
+          },
+          "sha256": "a4c58b854038909f8260619aca73770221048974fbe3a2d3c6f0e4675dd3db33"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            67,
+            256,
+            272,
+            280,
+            363,
+            371
+          ],
+          "hits": [
+            {
+              "p": 857,
+              "q": 280,
+              "r": 485,
+              "rho": 371
+            },
+            {
+              "p": 881,
+              "q": 272,
+              "r": 813,
+              "rho": 67
+            },
+            {
+              "p": 937,
+              "q": 256,
+              "r": 573,
+              "rho": 363
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 240445,
+          "origins": {
+            "256": "Q",
+            "272": "Q",
+            "280": "Q",
+            "363": "R",
+            "371": "R",
+            "67": "R"
+          },
+          "sha256": "d57e56f496ee0a6cb2e94ba39edd101a2f1745fcb774750e854bcb3f17d9ba88"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "010",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {
+            "D": 1
+          },
+          "Q_unique_counts": {
+            "D": 1
+          },
+          "Qclass": [
+            ".D.",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            22,
+            264,
+            337,
+            358,
+            363
+          ],
+          "hits": [
+            {
+              "p": 691,
+              "q": 358,
+              "r": 353,
+              "rho": 337
+            },
+            {
+              "p": 733,
+              "q": 337,
+              "r": 710,
+              "rho": 22
+            },
+            {
+              "p": 937,
+              "q": 264,
+              "r": 363,
+              "rho": 363
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 15,
+          "minor_offdiagonal_tests": 30,
+          "minor_typed_counts": {},
+          "n": 247731,
+          "origins": {
+            "22": "R",
+            "264": "Q",
+            "337": "QR",
+            "358": "Q",
+            "363": "R"
+          },
+          "sha256": "2b966711a5c390d37e27cb4f193918e2ad7742d85c6742d77b3e0f203c911568"
+        },
+        {
+          "K": 3,
+          "Q": [
+            "000",
+            "000",
+            "000"
+          ],
+          "Q_entry_counts": {},
+          "Q_unique_counts": {},
+          "Qclass": [
+            "...",
+            "...",
+            "..."
+          ],
+          "R": [
+            "100",
+            "010",
+            "001"
+          ],
+          "R_entry_counts": {
+            "D": 3
+          },
+          "R_unique_counts": {
+            "D": 3
+          },
+          "Rclass": [
+            "D..",
+            ".D.",
+            "..D"
+          ],
+          "X": 512,
+          "digits": [
+            112,
+            276,
+            302,
+            363,
+            371,
+            449
+          ],
+          "hits": [
+            {
+              "p": 577,
+              "q": 449,
+              "r": 112,
+              "rho": 112
+            },
+            {
+              "p": 857,
+              "q": 302,
+              "r": 371,
+              "rho": 371
+            },
+            {
+              "p": 937,
+              "q": 276,
+              "r": 573,
+              "rho": 363
+            }
+          ],
+          "minor_class_counts": {},
+          "minor_collisions": [],
+          "minor_diagonals_suppressed": 18,
+          "minor_offdiagonal_tests": 45,
+          "minor_typed_counts": {},
+          "n": 259185,
+          "origins": {
+            "112": "R",
+            "276": "Q",
+            "302": "Q",
+            "363": "R",
+            "371": "R",
+            "449": "Q"
+          },
+          "sha256": "be0ee2ce53548e6be3c1975475fbc7d8e223479c277915ffb15bf6e410aac6b2"
+        }
+      ],
+      "summary": {
+        "Q_entry_counts": {
+          "D": 3
+        },
+        "Q_unique_counts": {
+          "D": 3
+        },
+        "R_entry_counts": {
+          "D": 77
+        },
+        "R_unique_counts": {
+          "D": 75
+        },
+        "X": 512,
+        "active_count": 30,
+        "canonical_triples": 25,
+        "limit": 262144,
+        "load_histogram": {
+          "0": 238891,
+          "1": 22208,
+          "2": 1020,
+          "3": 25
+        },
+        "max_k": 3,
+        "minor_class_counts": {},
+        "minor_collision_count": 0,
+        "minor_diagonals_suppressed": 438,
+        "minor_offdiagonal_tests": 1065,
+        "minor_typed_counts": {},
+        "ordered_S3": 150,
+        "prime_count": 75,
+        "repo_hm3_cross_check": "PASS",
+        "retained_load_histogram": {
+          "3": 25
+        },
+        "retained_rows": 25,
+        "row_certificate_sha256": "98780277b413c08e513574c5998830d93becfce8df7e224a30a2e4f59b7af7d9",
+        "scattered_events": 24323,
+        "strict_R_diagonal": 75,
+        "zero_count": 70
+      }
+    }
+  ],
+  "schema": "Q7308-independent-scatter-v1"
+}
