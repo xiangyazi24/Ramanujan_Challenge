@@ -78,3 +78,4 @@ jobs:
           test "$(cat /tmp/q7306-build.status)" = 0
           test "$(cat /tmp/q7306-run.status)" = 0
           test "$(cat /tmp/q7306-json.status)" = 0
+# Second push: workflow is now registered on the default branch.
