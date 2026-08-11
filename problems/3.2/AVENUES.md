@@ -1151,3 +1151,82 @@ the weaker ($p^{1/2}$) average-zero milestone.
   and unsaturated resultant mass do not break certificate parity.
 - The current paper's exceptional-class lemma counts primes but does not by
   itself bound their (Z(p))-weighted mass.
+
+## Crystalline coefficient run begun 2026-08-10
+
+### Main goal
+
+Prove the residual coefficient anti-concentration estimate needed for the
+Ap\'ery GCD conjecture by exploiting the exact Hasse--Franel descent, rather
+than complex Mellin equidistribution.
+
+The three new ChatGPT reports are inputs only after independent symbolic,
+finite-field, and source verification.  In particular, the mutually different
+hypergeometric descriptions in the reports must not be treated as established
+until their normalizations are reconciled.
+
+### (a) Cover-adapted Hasse recurrence and zero rigidity
+
+Verify from the defining constant term and elliptic Hasse invariant the exact
+identity
+\[
+ H_p(x)^2=(1+x)^{p-1}A_p\!\left(\frac{x(1-8x)}{1+x}\right),
+\]
+the factorization \(A_p(a)=\Delta(a)^{\varepsilon_p}B_p(a)^2\), and the two
+claimed three-term recurrences for the coefficients of \(B_p\).  Then attack
+the recurrence itself through its Riccati form, Casoratians, singular indices,
+and reduction modulo \(p\), with the target
+\[
+ \#\{j:[a^j]A_p(a)=0\}\ll p^{1-\eta}.
+\]
+
+- Success: prove a uniform power-saving zero bound (pointwise or in the prime
+  average actually consumed by the atom-tail argument), and integrate the
+  complete implication into the paper.
+- Proof-of-failure: exhibit a verified infinite structural family, or a
+  quantifier-preserving construction within the claimed recurrence class,
+  having \(p^{1-o(1)}\) coefficient zeros; a finite computation is diagnostic
+  only and is not terminal.
+
+### (b) Crystalline tame-character Mellin rank
+
+Construct the mod-\(p\) convolution/Mellin operator whose eigenvalues are the
+Ap\'ery coefficients, identify it with the tame-character realization of the
+rank-three primitive Asai \(F\)-crystal, and seek a residual rank theorem by
+Cartier, Hasse--Witt, or unit-root methods.  Complex absolute-value bounds are
+not admissible substitutes: the obstruction is divisibility at the selected
+prime above \(p\).
+
+- Success: prove
+  \(
+    \dim_{\mathbf F_p}\ker C_{\theta,p}\ll p^{1-\eta}
+  \)
+  pointwise, or the averaged bound sufficient for the selected-mass theorem.
+- Proof-of-failure: prove that the crystalline operator reduces to unrestricted
+  coefficient data or construct a residual pullback family satisfying all
+  identified geometric hypotheses but having linear kernel.
+
+### (c) Prime-averaged recurrence/resultant sieve
+
+If pointwise rigidity is false or unnecessarily strong, encode a zero
+coefficient of the normalized \(B_p\) recurrence by an integral numerator or
+Casoratian and sum its large-prime divisors over the coefficient index.  The
+target is the exact selected-mass input
+\[
+ \sum_{X<p\le2X} Z(p)\ll X^{1+o(1)}/\log X,
+\]
+not a complex moment estimate and not a finite-prime census.
+
+- Success: obtain the displayed prime-average bound with a complete height and
+  multiplicity audit.
+- Proof-of-failure: prove that every such integer carrier has the same
+  \(X^{3/2}\)-scale height mass as the original Ap\'ery values, or give a
+  quantifier-preserving reduction back to the unbounded atom problem.
+
+### Fallback after terminal verdicts
+
+Bank the now-explicit Shioda--Inose descent and V\'elu computation in the
+trace-formula section, state the complex \(p^{3/2}\) Mellin theorem only after
+its local conductor is computed, and isolate the residual Hasse--Franel
+coefficient theorem as the sole named arithmetic hypothesis.  This fallback
+does not count as proving the GCD conjecture.
