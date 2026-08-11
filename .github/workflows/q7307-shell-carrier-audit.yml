@@ -1,0 +1,46 @@
+name: Q7307 shell carrier audit
+
+on:
+  push:
+    branches:
+      - q7307-audit
+    paths:
+      - problems/3.2/research/scripts/q7307_shell_carrier_verifier.py
+      - .github/workflows/q7307-shell-carrier-audit.yml
+
+permissions:
+  contents: write
+
+jobs:
+  exact-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out audit branch
+        uses: actions/checkout@v4
+
+      - name: Run standalone verifier and hash outputs
+        shell: bash
+        run: |
+          set +e
+          python3 --version > q7307-audit.out 2>&1
+          python3 problems/3.2/research/scripts/q7307_shell_carrier_verifier.py >> q7307-audit.out 2>&1
+          status=$?
+          set -e
+          printf '%s\n' "$status" > q7307-audit.status
+          git rev-parse HEAD > q7307-audit.input-commit
+          sha256sum problems/3.2/research/scripts/q7307_shell_carrier_verifier.py > q7307-verifier.sha256
+          sha256sum q7307-audit.out > q7307-audit.out.sha256
+
+      - name: Persist exact transcript on the audit branch
+        if: always()
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add q7307-audit.out q7307-audit.out.sha256 q7307-audit.status q7307-audit.input-commit q7307-verifier.sha256
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Persist Q7307 exact audit transcript"
+          git push origin HEAD:q7307-audit
