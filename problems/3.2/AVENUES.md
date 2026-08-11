@@ -1258,3 +1258,90 @@ its local conductor is computed, and isolate the residual Hasse--Franel
 coefficient problem as a single-prime hypothesis alongside the separate
 cross-prime moment hypothesis.  This fallback does not count as proving the
 GCD conjecture.
+
+## All-index breakthrough run continued 2026-08-10
+
+### Main goal
+
+Prove the full pointwise Ap\'ery GCD conjecture
+\(G_n=e^{o(n)}\) for every integer \(n\), without replacing it by a
+density-one, average-zero, or bounded-single-prime statement.
+
+### (a) Iterated Palm contraction for \((\mathrm{HM})_8\)
+
+For \(F_t(X)=\sum_{m<X^2}(K_X(m))_t\), expand \(F_{t+1}\) over ordered
+\(t\)-prime CRT loci and their residual prime load.  Starting from the proved
+bound \(F_2\le5X^2\lambda_X^2\), seek the Ap\'ery-specific contraction
+\[
+ F_{t+1}(X)\ll X^{o(1)}\lambda_X F_t(X),
+ \qquad 2\le t\le7.
+\]
+Its iteration proves \((\mathrm{HM})_8\), hence the full conjecture.  The first
+unproved case is exactly the pair--Palm excess in
+Theorem~\(\mathrm{HM}_3\); anchored rainbow stars show that reflection,
+interval bounds, bounded row codegrees, and generic fiber energy alone cannot
+prove it.  Every estimate in this avenue must therefore use an identity
+satisfied by the actual Ap\'ery orbit and violated by those stars.
+
+- Success: prove the displayed contractions through \(t=7\), or prove
+  \((\mathrm{HM})_k\) directly for one fixed \(k>6\).
+- Proof-of-failure: construct an infinite family satisfying every actual
+  Ap\'ery identity invoked by the proposed contraction while violating it, or
+  prove that the proposed contraction is algebraically identical to the
+  unproved atom-tail bound with no gain.
+
+### (b) Fixed-index quotient-chain atom bound
+
+For a putative high-load integer \(m<X^2\), write
+\(m=q_pp+r_p\) for each selected prime.  Combine the lower-digit zero
+\(b_{r_p}\equiv0\pmod p\), its reflected partner, the exact Lucas relation,
+and the varying quotient chain \(q_p=\lfloor m/p\rfloor\).  Seek a common
+integer carrier or a short-return configuration forced by many selected
+primes, rather than reusing pair certificates separately at each prime.
+
+- Success: prove \(K_X(m)\le X^{o(1)}\lambda_X\) uniformly, or any pointwise
+  bound strong enough to imply a fixed \((\mathrm{HM})_k\) with \(k>6\).
+- Proof-of-failure: give a quantifier-preserving construction satisfying the
+  exact Lucas, reflection, and distinguished-orbit constraints for all
+  selected primes with \(K_X(m)=X^{c+o(1)}\) for some \(c>0\).
+
+### (c) Mixed-characteristic Hasse--Franel correlation
+
+Use
+\[
+ K_p(x)^2=\sum_m b_m\Psi_{p,m}(x)
+\]
+to build a genuinely horizontal correlation object for distinct
+characteristics.  The target is not a separate trace bound at each prime but
+a product estimate that controls the residual load on actual multi-prime CRT
+loci.  Candidate attack vectors are an integral coefficient carrier shared
+before reduction, a compatible Cartier correspondence, and a horizontal
+large-sieve identity whose diagonal is strictly smaller than the atom term.
+
+- Success: prove one Palm contraction from avenue~(a), a mixed
+  \(p,q\)-correlation with an iteratable saving, or \((\mathrm{HM})_k\) for
+  some fixed \(k>6\).
+- Proof-of-failure: prove that every proposed product object decomposes by CRT
+  into unrestricted single-prime coefficient data, and exhibit the precise
+  decomposition on the actual Hasse--Franel formula.
+
+### (d) Single-prime mass improvement as a moment-order lever
+
+Continue the two square-root recurrences only when they reduce the proven
+average exponent in \(\sum_{p\le X}Z(p)\).  If the exponent improves from
+\(c=2/3\) to \(c'<2/3\), immediately recompute the required moment order from
+\(c'+2/k<1\) and return to avenue~(a).  Uniform \(Z(p)=O(1)\) is not a terminal
+goal and is not assumed.
+
+- Success: prove a prime-average bound that lowers the required fixed moment
+  order and combine it with the corresponding proved high moment.
+- Proof-of-failure: prove that the normalized recurrence/resultant carrier has
+  the same selected-prime height mass as the original coefficients, with all
+  multiplicities audited.
+
+### Fallback after all terminal verdicts
+
+Return to the exact pointwise radical formulation and derive a new ranked
+doctrine from the documented terminal obstructions.  No conditional theorem,
+finite computation, density-one theorem, or isolated single-prime estimate
+counts as completion of this run.
