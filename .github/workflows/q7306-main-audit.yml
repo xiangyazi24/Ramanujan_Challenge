@@ -17,12 +17,21 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Fetch isolated scanner source and prior exact output
+      - name: Fetch and normalize isolated scanner source
         shell: bash
         run: |
           set -euo pipefail
           git fetch origin q7306-audit
           git show origin/q7306-audit:problems/3.2/research/q7306_highload_scan.cpp > /tmp/q7306_highload_scan.cpp
+          cp /tmp/q7306_highload_scan.cpp /tmp/q7306-source-before.cpp
+          sed -i '/^\/\/   g++ /s/ \\$//' /tmp/q7306_highload_scan.cpp
+          sed -i '/^\/\/   \.\/q7306_scan /s/ \\$//' /tmp/q7306_highload_scan.cpp
+          sed -i 's/    if (limit >= 0) is_prime\[0\] = false;/    is_prime[0] = false;/' /tmp/q7306_highload_scan.cpp
+          if cmp -s /tmp/q7306-source-before.cpp /tmp/q7306_highload_scan.cpp; then
+            echo 0 > /tmp/q7306-source-changed.status
+          else
+            echo 1 > /tmp/q7306-source-changed.status
+          fi
           sha256sum /tmp/q7306_highload_scan.cpp | awk '{print $1}' > /tmp/q7306-source.sha256
           if git show origin/q7306-audit:problems/3.2/research/q7306/output.json > /tmp/q7306-previous-output.json 2>/dev/null; then
             echo 1 > /tmp/q7306-previous.available
@@ -60,7 +69,9 @@ jobs:
           fi
           echo "$json_status" > /tmp/q7306-json.status
 
-          if [ "$json_status" -eq 0 ] && [ "$(cat /tmp/q7306-previous.available)" = 1 ]; then
+          if [ "$json_status" -eq 0 ] \
+             && [ "$(cat /tmp/q7306-previous.available)" = 1 ] \
+             && [ "$(cat /tmp/q7306-source-changed.status)" = 0 ]; then
             cmp -s /tmp/q7306-previous-output.json /tmp/q7306-output.json
             determinism_status=$?
           else
@@ -159,8 +170,15 @@ jobs:
           else
             echo 'PASS: jq produced event-catalog.json' > /tmp/q7306-event-extraction.txt
           fi
+          if [ "$determinism_status" -eq 0 ]; then
+            echo 'PASS: output.json is byte-identical to the prior finalized-source run' > /tmp/q7306-determinism.txt
+          elif [ "$(cat /tmp/q7306-source-changed.status)" = 1 ]; then
+            echo 'NOT COMPARABLE: source normalization changed the embedded source hash; rerun required' > /tmp/q7306-determinism.txt
+          else
+            echo 'FAIL: output.json differs from the prior finalized-source run' > /tmp/q7306-determinism.txt
+          fi
           exit 0
-      - name: Persist source, exact output, event catalog, and checks
+      - name: Persist finalized source, exact output, event catalog, and checks
         shell: bash
         run: |
           set -euo pipefail
@@ -168,28 +186,35 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git checkout q7306-audit
           mkdir -p problems/3.2/research/q7306
+          cp /tmp/q7306_highload_scan.cpp problems/3.2/research/q7306_highload_scan.cpp
           cp /tmp/q7306-output.json problems/3.2/research/q7306/output.json
           cp /tmp/q7306-summary.txt problems/3.2/research/q7306/summary.txt
           cp /tmp/q7306-event-catalog.json problems/3.2/research/q7306/event-catalog.json
           cp /tmp/q7306-build.txt problems/3.2/research/q7306/build.txt
           cp /tmp/q7306-json-validation.txt problems/3.2/research/q7306/json-validation.txt
           cp /tmp/q7306-event-extraction.txt problems/3.2/research/q7306/event-extraction.txt
+          cp /tmp/q7306-determinism.txt problems/3.2/research/q7306/determinism.txt
           cp /tmp/q7306-source.sha256 problems/3.2/research/q7306/source.sha256
           cp /tmp/q7306-output.sha256 problems/3.2/research/q7306/output.sha256
           cp /tmp/q7306-event-catalog.sha256 problems/3.2/research/q7306/event-catalog.sha256
+          cp /tmp/q7306-source-changed.status problems/3.2/research/q7306/source-changed.status
           cp /tmp/q7306-build.status problems/3.2/research/q7306/build.status
           cp /tmp/q7306-run.status problems/3.2/research/q7306/run.status
           cp /tmp/q7306-json.status problems/3.2/research/q7306/json.status
           cp /tmp/q7306-determinism.status problems/3.2/research/q7306/determinism.status
           cp /tmp/q7306-events.status problems/3.2/research/q7306/events.status
-          git add -f problems/3.2/research/q7306
-          git commit -m 'Add Q7306 event catalog and determinism certificate' || true
+          git add -f problems/3.2/research/q7306_highload_scan.cpp problems/3.2/research/q7306
+          git commit -m 'Finalize warning-free Q7306 scanner and exact artifacts' || true
           git push origin HEAD:q7306-audit
-      - name: Enforce all exact gates
+      - name: Enforce exact gates
         shell: bash
         run: |
           test "$(cat /tmp/q7306-build.status)" = 0
           test "$(cat /tmp/q7306-run.status)" = 0
           test "$(cat /tmp/q7306-json.status)" = 0
-          test "$(cat /tmp/q7306-determinism.status)" = 0
           test "$(cat /tmp/q7306-events.status)" = 0
+          if [ "$(cat /tmp/q7306-source-changed.status)" = 0 ]; then
+            test "$(cat /tmp/q7306-determinism.status)" = 0
+          else
+            test "$(cat /tmp/q7306-source-changed.status)" = 1
+          fi
