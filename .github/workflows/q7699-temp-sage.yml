@@ -16,6 +16,6 @@ jobs:
         shell: bash
         run: |
           docker run --rm \
-            -v "$PWD:/repo" -w /repo \
+            -v "$PWD:/repo:ro" -w /repo \
             sagemath/sagemath:10.6 \
-            sage problems/3.2/research/scripts/q7699_padic_horizontal_mellin.sage --n 321
+            sage -python problems/3.2/research/scripts/q7699_padic_horizontal_mellin.sage --n 321
