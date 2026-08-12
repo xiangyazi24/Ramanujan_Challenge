@@ -1,5 +1,6 @@
 from sage.all import *
 import os
+from collections import Counter
 
 PMAX = int(os.environ.get('Q7702_PMAX', '5000'))
 
@@ -50,6 +51,7 @@ def u_mod(p):
 q_sym_fail = []
 xi_affine_fail = []
 u_reflect_fail = []
+u_B_hist = Counter()
 examples = []
 for pz in prime_range(7, PMAX+1):
     p = int(pz)
@@ -58,24 +60,31 @@ for pz in prime_range(7, PMAX+1):
     g = g_mod(p, b)
     xi = xi_mod(p, b, g)
     u = u_mod(p)
-    # Homogeneous reflection is exact: J u = A_p b - u.
-    A = u[p-1]
-    ok_u = all(u[p-1-r] == A*b[r] - u[r] for r in range(p))
-    if not ok_u:
-        u_reflect_fail.append(p)
-        break
 
-    # Candidate actual-source reciprocal increment law.
+    # Reflection J(y)_r=y_{p-1-r} preserves the homogeneous solution space.
+    # In the normalized basis (b,u), J(b)=b and J(u)=A*b+B*u, where
+    # A=u_{p-1}, B=u_{p-2}-5*u_{p-1}.  J^2=1 forces B^2=1 and A(1+B)=0.
+    A = u[p-1]
+    B = u[p-2] - Fp(5)*A
+    u_B_hist[int(B)] += 1
+    ok_u = (B*B == 1 and A*(1+B) == 0 and
+            all(u[p-1-r] == A*b[r] + B*u[r] for r in range(p)))
+    if not ok_u:
+        u_reflect_fail.append((p,int(A),int(B)))
+
+    # Candidate actual-source reciprocal increment law q_{p-m}=q_m for
+    # q_m=g_m*b_{m-1}; this is tested exactly and independently of u.
     ok_q = all(g[p-m]*b[m] == g[m]*b[m-1] for m in range(1,p))
     if not ok_q:
         first = next(m for m in range(1,p) if g[p-m]*b[m] != g[m]*b[m-1])
         q_sym_fail.append((p, first, int(g[p-first]*b[first]), int(g[first]*b[first-1])))
-    # Consequent affine partner law, tested independently.
+
+    # Consequent affine partner law, tested independently rather than inferred.
     C = xi[p-1] - 1
     ok_xi = all(xi[r] + xi[p-1-r] == C for r in range(p))
     if not ok_xi:
         first = next(r for r in range(p) if xi[r] + xi[p-1-r] != C)
-        xi_affine_fail.append((p, first, int(xi[r]), int(xi[p-1-r]), int(C)))
+        xi_affine_fail.append((p, first, int(xi[first]), int(xi[p-1-first]), int(C)))
 
     hz = [r for r in range(1,p) if b[r] == 0]
     if len(hz) >= 4 and len(examples) < 12:
@@ -88,6 +97,7 @@ for pz in prime_range(7, PMAX+1):
 
 print('Q7702_PMAX', PMAX)
 print('U_REFLECTION_FAILURES', u_reflect_fail[:5])
+print('U_REFLECTION_B_HIST', sorted(u_B_hist.items()))
 print('Q_INCREMENT_SYMMETRY_FAILURE_COUNT', len(q_sym_fail))
 print('FIRST_Q_INCREMENT_SYMMETRY_FAILURES', q_sym_fail[:10])
 print('XI_AFFINE_PARTNER_FAILURE_COUNT', len(xi_affine_fail))
