@@ -1,0 +1,13 @@
+name: Q7690 Mellin normalization audit
+on:
+  push:
+    branches: [q7690-audit-3b13f672]
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fixed torus Mellin normalization
+        run: python3 problems/3.2/research/scripts/q32_fixed_moment_torus_audit.py
+      - name: Hasse Mellin and split-cover normalization
+        run: python3 problems/3.2/research/scripts/codex_hgk_horizontal.py
