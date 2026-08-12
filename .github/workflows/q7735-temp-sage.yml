@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
-      - name: Run Q7735 Sage verifier
+      - name: Run Q7735 Sage verifier after trace-normalization fix
         shell: bash
         run: |
           docker run --rm \
