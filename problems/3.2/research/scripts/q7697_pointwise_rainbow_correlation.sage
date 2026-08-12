@@ -280,5 +280,5 @@ def main():
         print(args.output)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and not globals().get("_Q7697_LIBRARY_LOAD", False):
     main()
