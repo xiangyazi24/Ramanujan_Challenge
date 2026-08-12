@@ -72,6 +72,13 @@ def harmonic_trace_summand(n, a):
     return T*bracket
 
 
+def rational_mod_D(f, D):
+    """Reduce a rational function whose denominator is a unit modulo D."""
+    num = f.numerator() % D
+    den = f.denominator() % D
+    return (num * den.inverse_mod(D)) % D
+
+
 def hermite_P(D, PR, x):
     """Unique P of degree < 2 deg D with the required value/derivative jets."""
     mod = D**2
@@ -113,7 +120,6 @@ def check_one(n, verbose=False):
     e = -sum(fps)
     assert harmonic_e == e, ("global finite-part equivalence",n,harmonic_e,e)
     if n == 1:
-        # Explicit regression against the tempting false termwise statement.
         assert [-v for v in fps] == [QQ(-8),QQ(-5)]
         assert [harmonic_trace_summand(1,a) for a in range(2)] == [QQ(-5),QQ(-8)]
 
@@ -146,8 +152,6 @@ def check_one(n, verbose=False):
     assert ric % (D**2) == 0, ("Riccati congruence",n,ric % (D**2))
 
     # 4. Exact n -> n+1 and n -> n+2 multiplier transport at every OLD pole.
-    # eps_{n,a} := -FP_a(F_n).  These epsilons sum to e_n, but are NOT the
-    # displayed harmonic summands term-by-term.
     c = QQ(n+1); d = QQ(n+2)
     Ac = K((x+c)**2) / K((x-c)**2)
     Ad = K((x+d)**2) / K((x-d)**2)
@@ -166,8 +170,7 @@ def check_one(n, verbose=False):
         assert E1transport == eps1, ("n+1 finite-part transport",n,a)
         assert E2transport == eps2, ("n+2 finite-part transport",n,a)
 
-    # 5. New-pole boundary formula: if F is analytic at c then
-    # FP_c[((x+c)/(x-c))^2 F] = F(c)+4c F'(c)+2c^2 F''(c).
+    # 5. New-pole boundary formula.
     fp1c = finite_part_from_rational(F1, n+1, K, x)
     boundary1 = Fn(c)+4*c*Fn.derivative(x)(c)+2*c**2*Fn.derivative(x,2)(c)
     assert fp1c == boundary1
@@ -175,7 +178,6 @@ def check_one(n, verbose=False):
     boundary2 = F1(d)+4*d*F1.derivative(x)(d)+2*d**2*F1.derivative(x,2)(d)
     assert fp2d == boundary2
 
-    # The NEW double-pole coefficient is four central-binomial squares.
     T1c,_ = local_T_q(n+1,n+1)
     central = QQ(binomial(2*n+1,n)**2)
     assert T1c == 4*central
@@ -195,21 +197,33 @@ def check_one(n, verbose=False):
             + d**3*(-finite_part_from_rational(F2,a,K,x)))
     assert old_trace == direct_old
 
+    # Reduce the corresponding FINITE-PART trace integrand to Q[x]/(D_n).
+    # This tests whether the remaining trace collapses to bounded degree.  It
+    # does not: the representative has degree n in the nontrivial samples.
+    qClass = (Au - Bd/2) % D
+    tClass = ((U*invD1)**2) % D
+    K0 = rational_mod_D(Kmul,D)
+    K1 = rational_mod_D(Kmul.derivative(x),D)
+    K2 = rational_mod_D(Kmul.derivative(x,2),D)
+    oldFpClass = (K0*fpClass + 2*K1*qClass*tClass + K2*tClass/2) % D
+    trace_old_fp = sum(oldFpClass(a) for a in range(n+1))
+    assert trace_old_fp == -old_trace
+
     eps1c = -fp1c
     eps2c = -finite_part_from_rational(F2,n+1,K,x)
     eps2d = -fp2d
     rhs = -(QQ(287*n**2+813*n+578)/QQ(n+2))*central
-    assert old_trace - QQ(P_apery(n+1))*eps1c + d**3*(eps2c+eps2d) == rhs, (
-        "full recurrence",n)
+    assert old_trace - QQ(P_apery(n+1))*eps1c + d**3*(eps2c+eps2d) == rhs
 
-    # Independent total check from the harmonic definition, not from the old
-    # trace decomposition.
     e1 = sum(harmonic_trace_summand(n+1,a) for a in range(n+2))
     e2 = sum(harmonic_trace_summand(n+2,a) for a in range(n+3))
     assert c**3*e - QQ(P_apery(n+1))*e1 + d**3*e2 == rhs
 
     if verbose:
-        print("n",n,"e",e,"old_trace",old_trace,"rhs",rhs)
+        print("n",n,"e",e,"old_trace",old_trace,"rhs",rhs,
+              "oldFpClassDegree",oldFpClass.degree(),"hermiteDegree",HP.degree())
+        if n <= 4:
+            print("  oldFpClass",oldFpClass)
     return e
 
 
@@ -217,10 +231,8 @@ def symbolic_multiplier_checks():
     PR = PolynomialRing(QQ, names=('c','x'))
     c,x = PR.gens(); K=PR.fraction_field(); d=c+1
     A = K((x+c)**2)/K((x-c)**2)
-    logder = A.derivative(x)/A
-    assert logder == K(4*c)/(c**2-x**2)
-    second = A.derivative(x,2)/A
-    assert second == K(8*c*(2*c+x))/(c**2-x**2)**2
+    assert A.derivative(x)/A == K(4*c)/(c**2-x**2)
+    assert A.derivative(x,2)/A == K(8*c*(2*c+x))/(c**2-x**2)**2
 
     B = A * K((x+d)**2)/K((x-d)**2)
     Kap = c**3 - (34*c**3+51*c**2+27*c+5)*A + d**3*B
