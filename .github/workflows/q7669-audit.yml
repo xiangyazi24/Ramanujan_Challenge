@@ -1,0 +1,20 @@
+name: Q7669 exact Sage determinant audit
+on:
+  push:
+    branches: [q7669-audit]
+    paths:
+      - 'problems/3.2/research/scripts/q7669_determinant_audit.sage'
+      - '.github/workflows/q7669-audit.yml'
+permissions:
+  contents: read
+jobs:
+  sage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container:
+      image: sagemath/sagemath:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact Sage audit
+        shell: bash
+        run: sage problems/3.2/research/scripts/q7669_determinant_audit.sage
