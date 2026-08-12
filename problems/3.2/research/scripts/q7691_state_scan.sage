@@ -1,9 +1,8 @@
 from sage.all import *
 import time
 
-# Exact finite-field scan for Q7691.  Start modestly; P_MAX is raised after
-# normalization/performance validation.
-P_MAX = 500
+# Exact finite-field scan for Q7691.
+P_MAX = 5000
 DS = [1,2,3,6]
 
 
@@ -22,13 +21,13 @@ for d in range(1, P_MAX+1):
 def apery_mod_targets(p):
     Fp = GF(p)
     b = [Fp(1), Fp(5)]
-    # Build b_0,...,b_{p-1}; denominators n+1 are units up through p-1.
     for n in range(1, p-1):
         nn = Fp(n)
         nxt = (Fp(P(n))*b[n] - nn^3*b[n-1]) / Fp(n+1)^3
         b.append(nxt)
     assert len(b) == p
-    # endpoint audit: b_0=b_{p-1}=1
+    # Endpoint audit.  This is the finite scan check; the theorem-level reason
+    # is Apéry reflection b_{p-1-r}=b_r mod p.
     assert b[0] == 1 and b[p-1] == 1
     return b, [r for r in range(1,p-1) if b[r] == 0]
 
@@ -70,7 +69,6 @@ def state_for_target(p, r, bprev, objs):
             coeff = scale * Fp(sig3[m]) / Fp(m)^3
             kap += coeff * base[r-d*m]
         W[d] = Fp(r)^3 * bprev * kap
-    # exact unit relation reduced mod p
     assert W[1] - 28*W[2] + 63*W[3] - 36*W[6] == Fp(240)
     return tuple(ZZ(W[d]) for d in DS)
 
@@ -89,13 +87,14 @@ for p in prime_range(7, P_MAX+1):
         W = state_for_target(ZZ(p), ZZ(r), bmod[r-1], objs)
         samples.append((ZZ(p),ZZ(r)) + W)
 
+scan_seconds = time.time()-t0
 print('P_MAX',P_MAX)
 print('TARGET_PAIRS',len(samples),'TARGET_PRIMES',len(prime_target_counts))
 print('MAX_TARGETS_ONE_PRIME',max([c for _,c in prime_target_counts] or [0]))
 print('TARGET_COUNT_HIST', sorted({c:sum(1 for _,cc in prime_target_counts if cc==c) for c in set(cc for _,cc in prime_target_counts)}.items()))
-print('SECONDS', time.time()-t0)
+print('SCAN_SECONDS', scan_seconds)
 
-# Natural linear forms on W-state.
+
 def vals(sample):
     p,r,w1,w2,w3,w6 = sample
     Fp=GF(p)
@@ -119,21 +118,25 @@ for s in samples:
     for name in names:
         if vv[name]==0:
             cover[name].append((s[0],s[1]))
+uncovered=[(s[0],s[1]) for s in samples if not any(vals(s)[name]==0 for name in names)]
 print('ZERO_COUNTS', {name:len(cover[name]) for name in names})
-print('NATURAL_UNION_UNCOVERED', [(s[0],s[1]) for s in samples if not any(vals(s)[name]==0 for name in names)])
+print('NATURAL_UNION_UNCOVERED_COUNT',len(uncovered),'FIRST20',uncovered[:20])
 
-for lock in [(11,5),(17,13)]:
+for lock in [(11,5),(17,13),(2237,492)]:
     ss=[s for s in samples if (s[0],s[1])==lock]
     print('LOCK',lock,'FOUND',len(ss))
     for s in ss:
         vv=vals(s)
         print('LOCK_STATE',lock,'W',s[2:],'DERIVED',{k:ZZ(vv[k]) for k in vv})
 
-# The four-coordinate union must fail at (17,13), while Wtr vanishes there.
 ss17=[s for s in samples if (s[0],s[1])==(17,13)]
 assert len(ss17)==1
 v17=vals(ss17[0])
 assert all(v17[name] != 0 for name in ['W1','W2','W3','W6'])
 assert v17['Wtr'] == 0
+
+ss2237=[s for s in samples if (s[0],s[1])==(2237,492)]
+assert len(ss2237)==1
+assert vals(ss2237[0])['Wtr'] == 0
 
 print('DONE_STATE_SCAN')
