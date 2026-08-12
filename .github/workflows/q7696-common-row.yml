@@ -1,0 +1,19 @@
+name: Q7696 common-row multiplicity scan
+on:
+  push:
+    branches: [q7696-common-row-6cb4d9fd]
+    paths:
+      - 'problems/3.2/research/scripts/q7696_common_row_multiplicity.sage'
+      - '.github/workflows/q7696-common-row.yml'
+jobs:
+  sage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    container:
+      image: sagemath/sagemath:latest
+    env:
+      Q7696_PMAX: '20000'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact Q7696 multiplicity scan
+        run: sage problems/3.2/research/scripts/q7696_common_row_multiplicity.sage
