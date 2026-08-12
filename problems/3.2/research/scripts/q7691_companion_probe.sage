@@ -41,7 +41,7 @@ kaps = {}
 for d in [1,2,3,6]:
     Sd = PS(0)
     for m in range(1, (N+2)//d + 1):
-        Sd += QQ(sigma(m,3), m^3) * q^(d*m)
+        Sd += (QQ(sigma(m,3)) / QQ(m^3)) * q^(d*m)
     Kq = (E*Sd).add_bigoh(N+2)
     Kt = TS([Kq[i] for i in range(N+2)])(qt).add_bigoh(N+1)
     kaps[d] = [QQ(Kt[n]) for n in range(N+1)]
