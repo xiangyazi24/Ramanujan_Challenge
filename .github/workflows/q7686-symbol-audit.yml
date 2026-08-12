@@ -1,0 +1,23 @@
+name: Q7686 R-dependent symbol audit
+on:
+  push:
+    branches: [q7686-audit-b9461b9a]
+    paths:
+      - '.github/workflows/q7686-symbol-audit.yml'
+      - 'problems/3.2/research/scripts/q7686_symbol_audit.sage'
+permissions:
+  contents: read
+jobs:
+  exact-sage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container:
+      image: sagemath/sagemath:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact Q7686 audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          sage problems/3.2/research/scripts/q7686_symbol_audit.sage 2>&1 | tee /tmp/q7686.out
+          grep -q '^Q7686_AUDIT_SUCCESS$' /tmp/q7686.out
