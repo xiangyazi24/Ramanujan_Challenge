@@ -1,0 +1,71 @@
+name: Q7695 temporary exact transverse scan
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/q7695-temp-scan.yml'
+permissions:
+  contents: read
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install FLINT
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq g++ libflint-dev libgmp-dev libmpfr-dev
+      - name: Build scanner
+        run: |
+          g++ -O3 -DNDEBUG -std=c++17 \
+            problems/3.2/research/scripts/q32_transverse_common_fast.cpp \
+            -lflint -lgmp -lmpfr -o /tmp/q32scan
+      - name: Make balanced prime shards
+        run: |
+          python3 - <<'PY'
+          import heapq, math
+          P=100000
+          sieve=bytearray(b'\x01')*(P+1); sieve[:2]=b'\x00\x00'
+          for q in range(2,int(P**0.5)+1):
+              if sieve[q]:
+                  sieve[q*q:P+1:q]=b'\x00'*(((P-q*q)//q)+1)
+          ps=[p for p in range(2,P+1) if sieve[p]]
+          W=4
+          h=[(0.0,i,[]) for i in range(W)]; heapq.heapify(h)
+          for p in reversed(ps):
+              load,i,a=heapq.heappop(h); a.append(p)
+              heapq.heappush(h,(load+p*max(1.0,math.log2(p)),i,a))
+          for load,i,a in h:
+              with open(f'/tmp/q7695_job_{i}.txt','w') as f:
+                  f.write(''.join(f'{p}\n' for p in sorted(a)))
+          print('prime_count',len(ps),'prime_sum',sum(ps))
+          PY
+      - name: Run exact scanner
+        run: |
+          rm -rf /tmp/q7695_cp; mkdir -p /tmp/q7695_cp
+          set -m
+          for f in /tmp/q7695_job_*.txt; do
+            /tmp/q32scan --prime-file "$f" --pmax 100000 --checkpoint-dir /tmp/q7695_cp &
+          done
+          wait
+      - name: Summarize exact support
+        run: |
+          python3 - <<'PY'
+          import glob,json,math
+          rows=[]
+          for f in glob.glob('/tmp/q7695_cp/p_*.json'):
+              with open(f) as h: rows.append(json.load(h))
+          pairs=sorted((x['p'],r) for x in rows for r in x['pairs'])
+          print('CHECKPOINTS',len(rows))
+          print('TOTAL_B_ZEROS',sum(x['b_zero_count'] for x in rows))
+          print('PAIRS',pairs)
+          print('R_LE_10000',[(p,r) for p,r in pairs if r<=10000])
+          print('BARRIER_VIOLATIONS',[(p,r) for p,r in pairs if p>5*r])
+          if pairs:
+              p,r=max(pairs,key=lambda z:z[0]/z[1])
+              print('MAX_RATIO',p,r,repr(p/r))
+          print('WORKER_SECONDS_SUM',sum(x['seconds'] for x in rows))
+          assert len(rows)==9592, len(rows)
+          assert [(p,r) for p,r in pairs if r<=10000]==[(17,13),(2237,492)]
+          PY
