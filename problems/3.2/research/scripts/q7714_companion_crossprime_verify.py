@@ -65,6 +65,7 @@ def main() -> None:
     hits = [(379,171,33), (443,274,28), (499,203,25)]
     b = apery_b(max(r for _,r,_ in hits))
     a = apery_a(max(q for _,_,q in hits))
+    qs = sorted(q for _,_,q in hits)
 
     print(f"m={m}")
     print("hits=" + repr(hits))
@@ -74,13 +75,16 @@ def main() -> None:
         assert b[r] % p == 0
         assert b[q] % p != 0
         assert gcd(a[q].denominator, p) == 1
-        # Vector Lucas at a hit kills the zeroth-order quotient vector.
+        cross_b = [b[t] % p for t in qs]
+        cross_a_den = [a[t].denominator % p for t in qs]
+        assert all(cross_b)
+        assert all(cross_a_den)
         print(
             f"hit p={p} r={r} q={q} "
-            f"bq_mod_p={b[q] % p} aq_den_mod_p={a[q].denominator % p}"
+            f"bq_mod_p={b[q] % p} aq_den_mod_p={a[q].denominator % p} "
+            f"all_q_b_mod_p={cross_b} all_q_a_den_mod_p={cross_a_den}"
         )
 
-    qs = sorted(q for _,_,q in hits)
     pair_data = []
     for x in range(len(qs)):
         for y in range(x+1, len(qs)):
@@ -110,9 +114,18 @@ def main() -> None:
         assert product_N % p != 0
         print(f"prime p={p}: gap_N_residues={residues}; product_is_unit=True")
 
-    # The quotient-state projective ratios are genuinely distinct over Q.
+    # The quotient-state projective ratios are distinct over Q and remain
+    # pairwise distinct modulo every one of the three hit primes.
     slopes = [a[q] / b[q] for q in qs]
     assert len(set(slopes)) == len(slopes)
+    for p,_,_ in hits:
+        slope_mod = [
+            (s.numerator % p) * pow(s.denominator % p, -1, p) % p
+            for s in slopes
+        ]
+        assert len(set(slope_mod)) == len(slope_mod)
+        print(f"prime p={p}: quotient_slopes_mod_p={slope_mod}; pairwise_distinct=True")
+
     for i in range(1,len(qs)):
         q0,q1 = qs[i-1],qs[i]
         exact_increment = slopes[i]-slopes[i-1]
@@ -125,6 +138,7 @@ def main() -> None:
     print("projective_slope_telescoping=PASS")
     print("quotient_casoratian_identity=PASS")
     print("all_three_hit_primes_are_units_on_all_pair_gap_numerators=PASS")
+    print("all_three_projective_quotient_sets_are_separable_mod_each_hit_prime=PASS")
     print("finite_counterexample_only=True")
 
 
