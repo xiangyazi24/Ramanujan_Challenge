@@ -155,8 +155,7 @@ D(\theta^2u+3u\theta u+u^3)
 The definition of `g` gives
 
 \[
-\boxed{
-u
+\boxed{u
 =-\frac12\frac{\theta g}{g}
 -\frac14\frac{\theta D}{D}.}
 \]
