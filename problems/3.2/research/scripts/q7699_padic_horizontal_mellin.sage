@@ -11,7 +11,7 @@
 # zero because Q7690 proves M_p(n-1) == -b_r at the Teichmuller prime.
 # We do not identify r with a geometric fiber parameter.
 
-from sage.all import ZZ, binomial, gcd, is_prime, prime_range
+from sage.all import ZZ, binomial, inverse_mod, prime_range
 import argparse
 import csv
 import io
@@ -19,8 +19,7 @@ import io
 
 def vp_int(x, p):
     x = ZZ(x)
-    if x == 0:
-        return +Infinity
+    assert x != 0
     v = 0
     while x % p == 0:
         x //= p
