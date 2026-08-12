@@ -245,4 +245,12 @@ for start in [12,13]:
     assert HX2 % 17 == 0
 print('XI_H2_TARGET_17_OK')
 
+# Higher scalar Xi-Hankel order is not target-safe.  At the actual common
+# pair (17,13), the two guaranteed consecutive Xi-zeros do not force a
+# 3x3 Hankel determinant to vanish mod 17.
+for start in [11,12]:
+    HX3 = hankel(Xi, start, 3, ZZ)
+    print('XI_H3_TARGET_COUNTEREXAMPLE',start,'mod17=',HX3 % 17)
+    assert HX3 % 17 != 0
+
 print('DONE')
