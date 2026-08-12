@@ -1,0 +1,18 @@
+name: Q7702 reciprocal partner probe
+on:
+  push:
+    branches: [q7702-zero-fiber-635f6233]
+    paths:
+      - 'problems/3.2/research/scripts/q7702_partner_probe.sage'
+      - '.github/workflows/q7702-partner-probe.yml'
+jobs:
+  sage:
+    runs-on: ubuntu-latest
+    container:
+      image: sagemath/sagemath:latest
+    env:
+      Q7702_PMAX: 5000
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Q7702 partner probe
+        run: sage problems/3.2/research/scripts/q7702_partner_probe.sage
