@@ -19,6 +19,7 @@ def canon(v):
             break
     return v
 
+def pc(x): return int(x).bit_count()
 def dotmod(c,v,p): return sum(int(c[i])*int(v[i]) for i in range(4))%int(p)
 
 def companion_vectors_for_prime(p,b,targets,avec):
@@ -84,21 +85,19 @@ print('CHAR_COUNTS',dict(chars))
 
 def two_plane_cover(odd=True,Hpair=30):
     masks={}; union=0
-    pairs=[]
+    pairs=set()
     for aa in range(-Hpair,Hpair+1):
         for bb in range(-Hpair,Hpair+1):
             if aa==bb==0: continue
-            c2=canon((aa,bb))
-            if c2 not in pairs: pairs.append(c2)
-    pairs=list(set(pairs))
+            pairs.add(canon((aa,bb)))
     for tid,(p,r,v) in enumerate(records):
         A=(v[0]-36*v[3])%p if odd else (v[0]+36*v[3])%p
         B=(4*v[1]-9*v[2])%p if odd else (4*v[1]+9*v[2])%p
         for c2 in pairs:
             if (c2[0]*A+c2[1]*B)%p==0:
-                masks[c2]=masks.get(c2,0)|(1<<tid); union|=1<<tid
-    top=sorted(((m.bit_count(),c) for c,m in masks.items()),reverse=True)[:10]
-    print('PLANE','odd' if odd else 'even','H',Hpair,'CANDS',len(masks),'COVERED',union.bit_count(),'MAX',top[:10])
+                masks[c2]=int(masks.get(c2,0))|(1<<tid); union=int(union)|(1<<tid)
+    top=sorted(((pc(m),c) for c,m in masks.items()),reverse=True)[:10]
+    print('PLANE','odd' if odd else 'even','H',Hpair,'CANDS',len(masks),'COVERED',pc(union),'MAX',top[:10])
 
 two_plane_cover(True,30); two_plane_cover(False,30)
 
@@ -116,17 +115,17 @@ def full_cover(H):
                     if a0==a1==a2==a3==0: continue
                     c=canon((a0,a1,a2,a3))
                     if c and max(map(abs,c))<=H: local.add(c)
-        if local: union|=1<<tid
-        for c in local: masks[c]=masks.get(c,0)|(1<<tid)
-    top=sorted(((m.bit_count(),c,m) for c,m in masks.items()),reverse=True)[:15]
-    print('FULL_H',H,'CANDS',len(masks),'COVERED',union.bit_count(),'OF',len(records),'MULTI',sum(m.bit_count()>=2 for m in masks.values()),'TOP',[(n,c) for n,c,m in top])
+        if local: union=int(union)|(1<<tid)
+        for c in local: masks[c]=int(masks.get(c,0))|(1<<tid)
+    top=sorted(((pc(m),c,m) for c,m in masks.items()),reverse=True)[:15]
+    print('FULL_H',H,'CANDS',len(masks),'COVERED',pc(union),'OF',len(records),'MULTI',sum(pc(m)>=2 for m in masks.values()),'TOP',[(n,c) for n,c,m in top])
     uncovered=(1<<len(records))-1; chosen=[]; vals=list(masks.items())
     while uncovered:
-        c,m=max(vals,key=lambda cm:(cm[1]&uncovered).bit_count())
-        n=(m&uncovered).bit_count()
+        c,m=max(vals,key=lambda cm:pc(cm[1]&uncovered))
+        n=pc(m&uncovered)
         if not n: break
         chosen.append((c,n)); uncovered&=~m
-    print('GREEDY',H,'COUNT',len(chosen),'UNCOVERED',uncovered.bit_count(),'HEAD',chosen[:15])
+    print('GREEDY',H,'COUNT',len(chosen),'UNCOVERED',pc(uncovered),'HEAD',chosen[:15])
     if top: print('COVER_LOWER_BY_MAX',H,(len(records)+top[0][0]-1)//top[0][0])
 for H in [4,8,12]: full_cover(H)
 print('DONE')
