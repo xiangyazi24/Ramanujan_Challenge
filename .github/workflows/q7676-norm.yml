@@ -1,0 +1,11 @@
+name: Q7676 PF normalization check
+on:
+  push:
+    branches: [q7676-audit-f9d041ae]
+jobs:
+  sage:
+    runs-on: ubuntu-latest
+    container: sagemath/sagemath:latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sage problems/3.2/research/scripts/q7676_norm_check.sage
