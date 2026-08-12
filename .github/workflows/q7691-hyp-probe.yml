@@ -1,0 +1,20 @@
+name: Q7691 hyperplane probe
+on:
+  push:
+    branches: [q7691-hyp-probe-9839303a]
+    paths:
+      - 'problems/3.2/research/scripts/q7691_hyperplane_probe.sage'
+      - '.github/workflows/q7691-hyp-probe.yml'
+permissions:
+  contents: read
+jobs:
+  sage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container:
+      image: sagemath/sagemath:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run bounded-degree congruence-lattice probe
+        shell: bash
+        run: sage problems/3.2/research/scripts/q7691_hyperplane_probe.sage
