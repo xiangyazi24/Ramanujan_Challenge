@@ -6,13 +6,13 @@ For fixed n and a quotient cell q, primes in the cell satisfy
 Put s=min(r,p-1-r) and
     A_n(k) = (binomial(n,k)*binomial(n+k,k))^2,
     S_n(s) = sum_{0<=k<=s} A_n(k).
-The theorem verified here is
-    b_r == S_n(s) (mod p).
-Moreover the prime is recovered from the fixed prefix index s by
+The exact reductions verified here are
+    b_r == S_n(s) == b_s  (mod p),
+and
     p=(n-s)/q                 if 2r <= p-1,
     p=(n+s+1)/(q+1)           if 2r >  p-1.
-Thus the same-prime Mellin-zero condition is an exact divisibility condition
-on one fixed characteristic-zero prefix sequence S_n(s).
+Thus the defining-prime Mellin-zero condition is exactly one of two affine
+prime-divisor rays for the fixed characteristic-zero Apéry sequence b_s.
 
 Run, e.g.
     sage -python problems/3.2/research/scripts/q7703_fixed_exponent_prefix.sage \
@@ -92,30 +92,36 @@ def scan(n, qmax):
                 continue
             s = min(r, p - 1 - r)
             S = ZZ(prefixes[int(s)])
-            b = apery(r)
+            br = apery(r)
+            bs = apery(s)
 
-            # Main fixed-exponent prefix theorem.
-            assert (S - b) % p == 0
+            # Fixed-exponent prefix theorem and folded Apéry reflection.
+            assert (S - br) % p == 0
+            assert (S - bs) % p == 0
+            assert (br - bs) % p == 0
 
             if 2 * r <= p - 1:
                 branch = "left"
                 assert s == r
                 assert (n - s) % q == 0
                 assert (n - s) // q == p
-                # Fixed-integer divisibility form: qp | q*S iff p | S.
-                assert ((q * S) % (n - s) == 0) == (S % p == 0)
+                # qp | q*b_s iff p | b_s.
+                assert ((q * bs) % (n - s) == 0) == (bs % p == 0)
+                assert (2 * q + 1) * s <= n - q
             else:
                 branch = "right"
                 assert s == p - 1 - r
                 assert (n + s + 1) % (q + 1) == 0
                 assert (n + s + 1) // (q + 1) == p
-                assert (((q + 1) * S) % (n + s + 1) == 0) == (S % p == 0)
+                # (q+1)p | (q+1)b_s iff p | b_s.
+                assert (((q + 1) * bs) % (n + s + 1) == 0) == (bs % p == 0)
+                assert (2 * q + 1) * s <= n - 2 * q - 1
 
             # The exponent in the Mellin formulation is fixed inside the q-cell.
             m = n - q
             assert m % (p - 1) == r
 
-            bad = int(S % p == 0)
+            bad = int(bs % p == 0)
             rows.append((int(p), int(r), int(s), branch, bad))
 
         bad_rows = [row for row in rows if row[-1]]
