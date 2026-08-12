@@ -27,10 +27,11 @@ for n in range(1,N+1):
     # coefficient of t^n in t(q(t)) is affine with coefficient 1 in q_n.
     base = qoft
     comp0 = sum(tcoeff[k]*(base^k) for k in range(1,N+1)).add_bigoh(N+1)
-    need = -Fp(comp0[n])
+    target = Fp(1) if n == 1 else Fp(0)
+    need = target - Fp(comp0[n])
     qoft += need*t^n
     comp = sum(tcoeff[k]*(qoft^k) for k in range(1,N+1)).add_bigoh(N+1)
-    assert comp[n] == (Fp(1) if n == 1 else Fp(0))
+    assert comp[n] == target
 assert (sum(tcoeff[k]*(qoft^k) for k in range(1,N+1)).add_bigoh(N+1) - t).add_bigoh(N+1) == 0
 
 # E4(d tau) coefficients.
@@ -52,7 +53,6 @@ def Kd_t(d):
     for n in range(1,N+1):
         U += Md[n]/Fp(n^3)*q^n
     Kq = (Eq*U).add_bigoh(N+1)
-    # substitute q=q(t)
     Kt = T(0)
     for n in range(1,N+1):
         Kt += Fp(Kq[n])*(qoft^n)
