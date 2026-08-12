@@ -19,4 +19,5 @@ jobs:
         shell: bash
         run: |
           sed -i 's/5037696/5068320/' problems/3.2/research/scripts/q7669_determinant_audit.sage
+          sed -i 's/QQ(Xi\[n\], ZZ(n)\*\*3)/QQ(Xi[n]) \/ ZZ(n)**3/' problems/3.2/research/scripts/q7669_determinant_audit.sage
           sage problems/3.2/research/scripts/q7669_determinant_audit.sage
