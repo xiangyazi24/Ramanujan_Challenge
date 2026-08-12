@@ -1,0 +1,21 @@
+name: Q7699 temporary Sage Mellin audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/q7699-temp-sage.yml'
+permissions:
+  contents: read
+jobs:
+  sage-profile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Q7699 experiment in Sage container
+        shell: bash
+        run: |
+          docker run --rm \
+            -v "$PWD:/repo" -w /repo \
+            sagemath/sagemath:10.6 \
+            sage problems/3.2/research/scripts/q7699_padic_horizontal_mellin.sage --n 321
