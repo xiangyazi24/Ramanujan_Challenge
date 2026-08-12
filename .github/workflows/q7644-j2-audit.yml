@@ -1,0 +1,110 @@
+name: Q7644 exact J2 audit
+on:
+  push:
+    branches: [q7644-audit-3536cc31]
+    paths:
+      - '.github/workflows/q7644-j2-audit.yml'
+permissions:
+  contents: read
+jobs:
+  j2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PARI/GP
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq pari-gp
+      - name: Exact p^4 Laurent-neighbor computation
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > /tmp/q7644.gp <<'GP'
+          default(parisizemax, 4000000000);
+          KMAX=4966;
+
+          /* Log-derivative coefficients for
+             A=prod_{3\nmid m}(1+q^m)^12 and
+             E=prod (1-q^m)^-5(1-q^(2m))^7(1-q^(3m))^7(1-q^(6m))^-5. */
+          sig=vector(KMAX);
+          for(d=1,KMAX,forstep(n=d,KMAX,d,sig[n]+=d));
+
+          LA=vector(KMAX);
+          for(d=1,KMAX,
+            if(d%3,
+              for(k=1,KMAX\d, LA[d*k] += 12*d*((-1)^(k-1)))
+            )
+          );
+          LE=vector(KMAX,n,
+            5*sig[n]
+            - if(n%2==0,14*sig[n/2],0)
+            - if(n%3==0,21*sig[n/3],0)
+            + if(n%6==0,30*sig[n/6],0)
+          );
+
+          avec=vector(KMAX+1); avec[1]=1;
+          evec=vector(KMAX+1); evec[1]=1;
+          for(n=1,KMAX,
+            sa=sum(k=1,n,LA[k]*avec[n-k+1]);
+            se=sum(k=1,n,LE[k]*evec[n-k+1]);
+            if(sa%n,error("A recurrence nonintegral at ",n));
+            if(se%n,error("E recurrence nonintegral at ",n));
+            avec[n+1]=sa/n;
+            evec[n+1]=se/n;
+          );
+          if(vector(3,k,avec[k]) != [1,12,78], error("bad A prefix"));
+          if(evec[1] != 1 || evec[2] != 5, error("bad E prefix"));
+          print("A_PREFIX=",vector(8,k,avec[k]));
+          print("E_PREFIX=",vector(8,k,evec[k]));
+
+          /* H=1-q A'/A, so H_0=1 and H_n=-LA_n. */
+          hvec=vector(KMAX+1); hvec[1]=1;
+          for(n=1,KMAX,hvec[n+1]=-LA[n]);
+
+          P(x)=34*x^3+51*x^2+27*x+5;
+          b=vector(2730); b[1]=1; b[2]=5;
+          for(n=1,2728,b[n+2]=(P(n)*b[n+1]-n^3*b[n])/(n+1)^3);
+
+          do_pair(p,r)=
+          {
+            my(K=r+2*p,n=p+r,M=p^4,aa,ee,hh,C,C1,cr,cp,c2,num1,num2,J1,J2);
+            aa=Ser(vector(K+1,k,Mod(avec[k],M)));
+            ee=Ser(vector(K+1,k,Mod(evec[k],M)));
+            hh=Ser(vector(K+1,k,Mod(hvec[k],M)));
+            C=ee*hh*aa^n;
+            C1=ee*hh*aa;
+            if(polcoef(C1,1) != Mod(5,M),error("c1(1) mismatch"));
+            if(polcoef(C1,2) != Mod(-65,M),error("c2(1) mismatch"));
+            cr=lift(polcoef(C,r));
+            cp=lift(polcoef(C,r+p));
+            c2=lift(polcoef(C,r+2*p));
+            if(Mod(cp,M) != Mod(b[n+1],M),error("c_n(n)=b_n mismatch at p=",p));
+            num1=lift(Mod(cp-5*cr,M));
+            num2=lift(Mod(c2+65*cr,M));
+            if(num1%(p^3),error("J1 numerator not divisible p^3 at p=",p));
+            if(num2%(p^3),error("J2 numerator not divisible p^3 at p=",p));
+            J1=(num1/(p^3))%p;
+            J2=(num2/(p^3))%p;
+            print("PAIR=",[r,p,"K",K,"M",M]);
+            print("C_R_MOD_P4=",cr);
+            print("C_RP_MOD_P4=",cp);
+            print("C_R2P_MOD_P4=",c2);
+            print("NUM1_MOD_P4=",num1);
+            print("NUM2_MOD_P4=",num2);
+            print("J1_MOD_P=",J1);
+            print("J2_MOD_P=",J2);
+            if(J1,error("expected common-zero J1=0 at p=",p));
+            return(J2);
+          };
+
+          j17=do_pair(17,13);
+          j2237=do_pair(2237,492);
+          print("J2_RESULTS=",[[13,17,j17],[492,2237,j2237]]);
+          print("Q7644_J2_AUDIT_SUCCESS");
+          quit;
+          GP
+          gp -fq /tmp/q7644.gp 2>&1 | tee /tmp/q7644.out
+          grep -q '^Q7644_J2_AUDIT_SUCCESS$' /tmp/q7644.out
+          if grep -Eq 'syntax error|incorrect type|user error|sorry,' /tmp/q7644.out; then exit 1; fi
