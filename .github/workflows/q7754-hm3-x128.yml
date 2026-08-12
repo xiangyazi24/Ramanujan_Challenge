@@ -1,0 +1,17 @@
+name: Q7754 HM3 X128 audit
+on:
+  push:
+    branches: [q7754-audit-9dafe506]
+    paths:
+      - '.github/workflows/q7754-hm3-x128.yml'
+      - 'problems/3.2/hm3_explore.py'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact X=128 HM3 census
+        run: python3 problems/3.2/hm3_explore.py --xs 128 --output - --deep-check
