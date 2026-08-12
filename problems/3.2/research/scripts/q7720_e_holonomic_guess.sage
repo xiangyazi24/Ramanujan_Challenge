@@ -64,7 +64,6 @@ def guess_rec(sequence, fit_end=70, verify_end=100, max_order=10, max_deg=18):
             if ker.dimension()==0:
                 continue
             for v in ker.basis():
-                # Verify on held-out values.
                 ok=True
                 for n in range(fit_end-r+1,verify_end-r+1):
                     z=QQ(0); idx=0
@@ -74,12 +73,10 @@ def guess_rec(sequence, fit_end=70, verify_end=100, max_order=10, max_deg=18):
                     if z != 0:
                         ok=False; break
                 if ok:
-                    # Primitive integer normalization.
                     den=lcm([x.denominator() for x in v])
                     w=vector(ZZ,[ZZ(x*den) for x in v])
                     g=gcd([abs(x) for x in w if x])
                     if g: w=vector(ZZ,[x//g for x in w])
-                    # normalize last nonzero positive
                     nz=[x for x in w if x]
                     if nz and nz[-1] < 0: w=-w
                     R.<x>=PolynomialRing(ZZ)
@@ -92,14 +89,21 @@ def guess_rec(sequence, fit_end=70, verify_end=100, max_order=10, max_deg=18):
 
 rec = guess_rec(seq)
 print('REC_E', rec)
+if rec:
+    print('REC_E_FACTORS')
+    for j,Q in enumerate(rec[2]):
+        print(j, factor(Q))
 seqclr=[seq[s]*factorial(s)^2 for s in range(N+1)]
 recclr=guess_rec(seqclr,max_order=10,max_deg=18)
 print('REC_FACT2_E',recclr)
+if recclr:
+    print('REC_FACT2_E_FACTORS')
+    for j,Q in enumerate(recclr[2]):
+        print(j, factor(Q))
 
 # Search low-degree expression for Apéry defect using b_n,b_{n-1},D_n,D_{n-1}.
 def fit_source(maxdeg=8):
     for d in range(maxdeg+1):
-        # S_n = A(n)b_n+B(n)b_{n-1}+C(n)D_n+E(n)D_{n-1}
         cols=4*(d+1)
         rows=[]; rhs=[]
         for n in range(2,60):
