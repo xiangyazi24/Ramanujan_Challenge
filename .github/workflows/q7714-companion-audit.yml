@@ -1,0 +1,14 @@
+name: Q7714 companion cross-prime audit
+
+on:
+  push:
+    branches:
+      - q7714-audit-f964f098
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact quotient-state determinant audit
+        run: python3 problems/3.2/research/scripts/q7714_companion_crossprime_verify.py
