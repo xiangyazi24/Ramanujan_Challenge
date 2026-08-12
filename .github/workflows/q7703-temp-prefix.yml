@@ -1,0 +1,21 @@
+name: Q7703 temporary fixed-exponent prefix audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/q7703-temp-prefix.yml'
+permissions:
+  contents: read
+jobs:
+  sage-prefix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact Q7703 verifier in Sage 10.6
+        shell: bash
+        run: |
+          docker run --rm -v "$PWD:/repo" -w /repo sagemath/sagemath:10.6 \
+            sage -python problems/3.2/research/scripts/q7703_fixed_exponent_prefix.sage --n 321 --qmax 8
+          docker run --rm -v "$PWD:/repo" -w /repo sagemath/sagemath:10.6 \
+            sage -python problems/3.2/research/scripts/q7703_fixed_exponent_prefix.sage --n 2000 --qmax 16
