@@ -1,0 +1,20 @@
+name: Q7672 BFH exact Sage audit
+
+on:
+  push:
+    branches:
+      - q7672-audit-d395b82c
+
+permissions:
+  contents: read
+
+jobs:
+  sage:
+    runs-on: ubuntu-24.04
+    container:
+      image: sagemath/sagemath:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Q7672 exact audit
+        shell: bash
+        run: sage problems/3.2/research/scripts/q7672_bfh_audit.sage
