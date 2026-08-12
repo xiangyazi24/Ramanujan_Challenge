@@ -1,0 +1,16 @@
+name: Q7721 moving ray audit
+on:
+  push:
+    branches: [q7721-audit-8195b77c]
+    paths:
+      - 'problems/3.2/research/scripts/q7721_ray_countermodel_verify.py'
+      - '.github/workflows/q7721-ray-audit.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Q7721 finite countermodel audit
+        run: python3 problems/3.2/research/scripts/q7721_ray_countermodel_verify.py
