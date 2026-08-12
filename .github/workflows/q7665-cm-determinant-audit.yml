@@ -48,9 +48,12 @@ jobs:
               assert QQ(Xi[r]) == ZZ(r)^3*(b[r-1]*kap[r] - b[r]*kap[r-1])
 
           # Fricke CM constant and ratio convergence, 300-bit precision.
+          # Numerical zeta(3) from Apéry's exponentially convergent series:
+          # zeta(3)=(5/2) sum_{k>=1} (-1)^(k-1)/(k^3 binom(2k,k)).
           RF = RealField(300)
+          z3q = sum(QQ(5*(-1)^(k-1))/(2*ZZ(k)^3*binomial(2*k,k)) for k in range(1,220))
+          z3 = RF(z3q)
           pi = RF.pi()
-          z3 = RF.zeta(3)
           C = 14*z3 - 20*pi^3/(9*RF(6).sqrt())
           rho = RF(17) + 12*RF(2).sqrt()
           lrho = rho.log()
