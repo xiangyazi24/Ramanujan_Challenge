@@ -14,4 +14,4 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run Q7720 exact holonomic guess audit
         run: sage problems/3.2/research/scripts/q7720_e_holonomic_guess.sage
-# rerun after recurrence factor diagnostics
+# rerun after Apéry-defect diagnostics
