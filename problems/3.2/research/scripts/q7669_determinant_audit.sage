@@ -21,7 +21,7 @@ F = S(sum(QQ(b[n])*t^n for n in range(N+1))).add_bigoh(N+2)
 Delta = (1 - 34*t + t^2).add_bigoh(N+2)
 G = (1/(F^2 * Delta.sqrt())).add_bigoh(N+2)
 g = [ZZ(G[n]) for n in range(N+1)]
-assert g[:6] == [1, 7, 192, 5520, 165168, 5037696]
+assert g[:6] == [1, 7, 192, 5520, 165168, 5068320]
 
 # Q7621 Eichler kappa: kappa_0=0, kappa_1=-36 and A kappa = -5 g for r>=2.
 kap = [QQ(0), QQ(-36)]
@@ -34,7 +34,7 @@ for r in range(1, N+1):
     Xi.append(ZZ(Xi[-1] - 5*g[r]*b[r-1]))
     assert QQ(Xi[r]) == ZZ(r)^3*(b[r-1]*kap[r] - b[r]*kap[r-1])
 
-# Minimal denominator-cleared determinant numerator.
+# Minimal denominator-cleared determinant numerator: Sage's reduced rational numerator.
 def D(m,n):
     return QQ(b[m])*kap[n] - QQ(b[n])*kap[m]
 
@@ -54,19 +54,13 @@ def fresh_part(x, cutoff):
             out *= p^e
     return out
 
-def fresh_factor(x, cutoff):
-    x = abs(ZZ(x))
-    if x in (0,1):
-        return str(x)
-    return ' * '.join([('%s^%s' % (p,e) if e != 1 else str(p)) for p,e in factor(x) if p > cutoff]) or '1'
-
 # Exact recurrence / adjacent Casoratian checks.
 for m in [0,1,2,7,13,100]:
     for n in range(max(2,m+2), min(N,m+20)+1):
         lhs = ZZ(n)^3*D(m,n) - P(n-1)*D(m,n-1) + ZZ(n-1)^3*D(m,n-2)
         assert lhs == -5*b[m]*g[n]
 for n in range(1,N+1):
-    assert D(n-1,n) == QQ(Xi[n], ZZ(n)^3)
+    assert D(n-1,n) == QQ(Xi[n]) / ZZ(n)^3
 
 print('Q7669 exact audit N=',N)
 print('b[0:6]=',b[:6])
@@ -74,22 +68,24 @@ print('kappa[0:6]=',kap[:6])
 print('Xi[0:6]=',Xi[:6])
 
 # Factor the true row primitive contents c_r=gcd(b_r,num(kappa_r)).
+# These gcds are the requested primitive contents and are small enough to factor exactly.
 nontrivial=[]
 fresh=[]
 for r in range(1,N+1):
     u=abs(ZZ(kap[r].numerator()))
     c=gcd(abs(b[r]),u)
     if c>1:
-        nontrivial.append((r,c,factor(c)))
-    ff=[(ZZ(p),ZZ(e)) for p,e in factor(c) if p>r]
-    if ff:
-        fresh.append((r,ff))
+        fac=factor(c)
+        nontrivial.append((r,c,fac))
+        ff=[(ZZ(p),ZZ(e)) for p,e in fac if p>r]
+        if ff:
+            fresh.append((r,ff))
 print('NONTRIVIAL_ROW_CONTENT_COUNT',len(nontrivial))
 for row in nontrivial:
     print('ROW_CONTENT',row[0],row[1],row[2])
 print('FRESH_ROW_CONTENTS',fresh)
 
-# Fixed anchor (0,1): exact primitive-minor gcd.  Since D_01=-36, all p>3
+# Fixed anchor (0,1): exact primitive-minor gcd. Since D_01=-36, all p>3
 # support must equal the row content support.
 anchor_mismatches=[]
 anchor_nontrivial=[]
@@ -97,7 +93,6 @@ for r in range(2,N+1):
     n0=abs(prim_num(0,r)); n1=abs(prim_num(1,r))
     h=gcd(n0,n1)
     c=gcd(abs(b[r]),abs(ZZ(kap[r].numerator())))
-    # compare factors above max(r,3), which is the target range relevant here
     hp=fresh_part(h,r); cp=fresh_part(c,r)
     if hp != cp:
         anchor_mismatches.append((r,hp,cp))
@@ -109,7 +104,6 @@ for row in anchor_nontrivial:
     print('ANCHOR01_CONTENT',row[0],row[1],row[2])
 
 # Dyadic moving-anchor gcds G_{a,b}(r)=gcd(num D_{a,r}, num D_{b,r}).
-# Summarize exact fresh support and factor the known target rows.
 for R in [8,16,32,64,128,256]:
     lo=R+1; hi=min(2*R,N)
     if lo>hi: continue
@@ -137,7 +131,6 @@ for R in [8,16,32,64,128,256]:
         print('DYADIC_TARGET_CONTENT',R,z[0],'raw_gcd',z[1],'true_fresh',z[2],'raw_factor',z[3])
 
 # Sparse edge-product lower-bound data: adjacent matching in each dyadic block.
-# Report actual sum log|primitive numerator| / R^2 and analytic raw determinant version.
 RR = RealField(100)
 for R in [16,32,64,128,250]:
     lo=R+1; hi=min(2*R,N)
@@ -153,10 +146,14 @@ for R in [16,32,64,128,250]:
         denlog += log(RR(q))
     print('MATCH_HEIGHT',R,'edges',len(edges),'log_num/R2',slog/RR(R^2),'log_raw/R2',rawlog/RR(R^2),'log_den/R2',denlog/RR(R^2))
 
-# Selected exact determinant primitive factorizations where feasible.
+# Selected small determinant factorizations; for huge determinants report bits and
+# exactly factor only the gcd/content relevant to target preservation.
 for m,n in [(0,1),(0,13),(1,13),(12,13),(13,14),(491,492),(492,493)]:
-    z=prim_num(m,n); q=prim_den(m,n)
-    print('DET',m,n,'den',q,'num_bits',abs(z).nbits())
-    print('DET_FACTOR',m,n,factor(abs(z)))
+    z=abs(prim_num(m,n)); q=prim_den(m,n)
+    print('DET',m,n,'den',q,'num_bits',z.nbits())
+    if z.nbits() <= 400:
+        print('DET_FACTOR',m,n,factor(z))
+    else:
+        print('DET_FACTOR_SKIPPED_LARGE',m,n)
 
 print('DONE')
