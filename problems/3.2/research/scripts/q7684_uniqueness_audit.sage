@@ -19,7 +19,6 @@ def apery_mod(p):
 def g_mod(p, b):
     Fp = GF(p)
     R = PowerSeriesRing(Fp, 't', default_prec=p)
-    # Q=1/sqrt(1-34t+t^2)=sum P_n(17)t^n.
     q = [Fp(1)]
     if p > 1:
         q.append(Fp(17))
@@ -47,6 +46,23 @@ def xi_mod(p, b, g):
     return xi
 
 
+def force_common_sources(p, b, g, rows):
+    Fp = GF(p)
+    out = list(g)
+    deltas = []
+    for r in rows:
+        k = kappa_mod(p, out)
+        assert b[r] == 0
+        delta = Fp(r^3)*k[r]/Fp(5)
+        out[r] += delta
+        deltas.append(int(delta))
+        assert kappa_mod(p, out)[r] == 0
+    k = kappa_mod(p, out)
+    xi = xi_mod(p, b, out)
+    assert all(k[r] == 0 and xi[r] == 0 for r in rows)
+    return out, deltas
+
+
 def N_values(p, r, h):
     Fp = GF(p)
     if h == 1:
@@ -68,7 +84,8 @@ def marked_M(p, r, h, g):
         total += g[r+j+1] * N[j] * tail
     return total, N
 
-# A. Actual-source scan: stronger Green-injectivity on the Hasse-zero set.
+# A. Actual-source scan.  Finite evidence only; also search for collisions of
+# Xi values on the Hasse-zero set, a stronger property than zero-fiber uniqueness.
 collision_records = []
 zero_common_records = []
 repeated_common_primes = []
@@ -106,7 +123,18 @@ print('FIRST_XI_COLLISIONS', collision_records[:20])
 print('COMMON_RECORDS', zero_common_records[:30])
 print('REPEATED_COMMON_PRIMES', repeated_common_primes)
 
-# B. Exact source-flexibility countermodel at p=17, target rows 3 and 13.
+# B. Direct dyadic recurrence-compatible countermodel: p=19, R=5,
+# Hasse zeros 8,10 lie in (R,2R], and p>2R.  Keep the canonical initial
+# kappa line but change only the inhomogeneous source at the target rows.
+p = 19
+Fp = GF(p)
+b19 = apery_mod(p)
+g19 = g_mod(p,b19)
+assert b19[8] == 0 and b19[10] == 0
+forced19, deltas19 = force_common_sources(p,b19,g19,[8,10])
+print('SOURCE_FLEX_DYADIC_19', 'R',5,'rows',(8,10),'deltas',tuple(deltas19))
+
+# C. p=17 gives a clean marked-return example at rows 3 and 13.
 p = 17
 Fp = GF(p)
 b = apery_mod(p)
@@ -117,25 +145,9 @@ assert b[3] == 0 and b[13] == 0
 assert k[13] == 0 and k[3] != 0
 assert xi[13] == 0 and xi[3] != 0
 
-# Perturb g_3.  Since kappa_3 depends on g_3 with coefficient -5/3^3,
-# this unique delta makes row 3 common while preserving the initial line.
-g1 = list(g)
-d3 = Fp(3^3) * k[3] / Fp(5)
-g1[3] += d3
-k1 = kappa_mod(p,g1)
-assert k1[3] == 0
-# Later source changes do not affect row 3.  Now use g_13 to force row 13.
-g2 = list(g1)
-d13 = Fp(13^3) * k1[13] / Fp(5)
-g2[13] += d13
-k2 = kappa_mod(p,g2)
-xi2 = xi_mod(p,b,g2)
-assert k2[3] == 0 and k2[13] == 0
-assert xi2[3] == 0 and xi2[13] == 0
-print('SOURCE_FLEX_17', 'delta3', int(d3), 'delta13', int(d13),
-      'k3', int(k2[3]), 'k13', int(k2[13]))
+g2, deltas17 = force_common_sources(p,b,g,[3,13])
+print('SOURCE_FLEX_17', 'deltas',tuple(deltas17))
 
-# C. Verify the known continuant/marked-Green reduction on the same pair.
 r = 3
 h = 10
 M0,N0 = marked_M(p,r,h,g)
@@ -144,7 +156,6 @@ assert N0[h] == 0
 assert N0[h-1] != 0
 assert M0 != 0
 assert M2 == 0
-# Terminal source coefficient is exactly N_{h-1}, hence a p-unit.
 print('RETURN_17_3_13', 'Nh', int(N0[h]), 'Nhminus1', int(N0[h-1]),
       'Mcanonical', int(M0), 'Mperturbed', int(M2))
 
