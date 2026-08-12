@@ -12,4 +12,5 @@ jobs:
         run: |
           sed -i 's/two_plane_cover(True,300)/two_plane_cover(True,30)/' problems/3.2/research/scripts/q7676_four_eisenstein_scan.sage
           sed -i 's/two_plane_cover(False,300)/two_plane_cover(False,30)/' problems/3.2/research/scripts/q7676_four_eisenstein_scan.sage
+          sed -i 's/uncovered&=~m/uncovered = int(uncovered) \& ~int(m)/' problems/3.2/research/scripts/q7676_four_eisenstein_scan.sage
           sage problems/3.2/research/scripts/q7676_four_eisenstein_scan.sage
