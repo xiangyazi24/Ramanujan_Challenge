@@ -1,0 +1,28 @@
+name: Q7691 full kappa-state analysis
+on:
+  push:
+    branches: [q7691-kappa-analysis-9839303a]
+    paths:
+      - 'problems/3.2/research/scripts/q7691_kappa_analyze.sage'
+      - '.github/workflows/q7691-kappa-analysis.yml'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container:
+      image: sagemath/sagemath:latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: q7691-*
+          path: artifacts
+          repository: xiangyazi24/Ramanujan_Challenge
+          run-id: 31570265757
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Analyze literal kappa affine class
+        shell: bash
+        run: sage problems/3.2/research/scripts/q7691_kappa_analyze.sage
