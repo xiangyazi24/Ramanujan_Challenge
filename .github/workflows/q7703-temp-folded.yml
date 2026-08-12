@@ -1,0 +1,18 @@
+name: Q7703 temporary folded affine-ray audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/q7703-temp-folded.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact verifier in Sage 10.6
+        run: |
+          docker run --rm -v "$PWD:/repo" -w /repo sagemath/sagemath:10.6 \
+            sage -python problems/3.2/research/scripts/q7703_fixed_exponent_prefix.sage --n 321 --qmax 8
