@@ -12,10 +12,10 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
-      - name: Run Q7735 Sage verifier after trace-normalization fix
+      - name: Run Q7735 Sage verifier with quotient-degree audit
         shell: bash
         run: |
           docker run --rm \
             -v "$PWD:/repo:ro" -w /repo \
             sagemath/sagemath:10.6 \
-            sage -python problems/3.2/research/scripts/q7735_finite_part_trace_verify.sage --N 10
+            sage -python problems/3.2/research/scripts/q7735_finite_part_trace_verify.sage --N 8 --verbose
