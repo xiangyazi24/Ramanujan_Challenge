@@ -1,0 +1,60 @@
+name: Q7691 parallel p5000 audit
+on:
+  push:
+    branches: [q7691-audit-9839303a]
+    paths:
+      - 'problems/3.2/research/scripts/q7691_parallel_chunk.sage'
+      - 'problems/3.2/research/scripts/q7691_analyze_samples.sage'
+      - '.github/workflows/q7691-parallel-audit.yml'
+permissions:
+  contents: read
+jobs:
+  scan:
+    strategy:
+      fail-fast: false
+      matrix:
+        range:
+          - '7-2500'
+          - '2501-3150'
+          - '3151-3605'
+          - '3606-3969'
+          - '3970-4275'
+          - '4276-4543'
+          - '4544-4783'
+          - '4784-5000'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    container:
+      image: sagemath/sagemath:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Split range
+        shell: bash
+        run: |
+          R='${{ matrix.range }}'
+          echo "P_LO=${R%-*}" >> "$GITHUB_ENV"
+          echo "P_HI=${R#*-}" >> "$GITHUB_ENV"
+          echo "OUTFILE=q7691_${R}.tsv" >> "$GITHUB_ENV"
+      - name: Scan exact target states
+        shell: bash
+        run: sage problems/3.2/research/scripts/q7691_parallel_chunk.sage
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q7691-${{ matrix.range }}
+          path: q7691_${{ matrix.range }}.tsv
+          retention-days: 1
+  merge:
+    needs: scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container:
+      image: sagemath/sagemath:latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: q7691-*
+          path: artifacts
+      - name: Analyze merged exact states
+        shell: bash
+        run: sage problems/3.2/research/scripts/q7691_analyze_samples.sage
