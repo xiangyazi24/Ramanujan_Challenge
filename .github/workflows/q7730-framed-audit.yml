@@ -1,0 +1,17 @@
+name: Q7730 framed codimension-two audit
+on:
+  push:
+    branches: [q7730-audit-83a510c1]
+    paths:
+      - 'problems/3.2/research/scripts/q7730_framed_codim2_verify.py'
+      - '.github/workflows/q7730-framed-audit.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact framed finite-field audit
+        run: python3 problems/3.2/research/scripts/q7730_framed_codim2_verify.py
