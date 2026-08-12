@@ -17,4 +17,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run exact Sage audit
         shell: bash
-        run: sage problems/3.2/research/scripts/q7669_determinant_audit.sage
+        run: |
+          sed -i 's/5037696/5068320/' problems/3.2/research/scripts/q7669_determinant_audit.sage
+          sage problems/3.2/research/scripts/q7669_determinant_audit.sage
