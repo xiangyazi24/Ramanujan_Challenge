@@ -15,3 +15,4 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run exact framed finite-field audit
         run: python3 problems/3.2/research/scripts/q7730_framed_codim2_verify.py
+# retrigger after workflow exists on branch
