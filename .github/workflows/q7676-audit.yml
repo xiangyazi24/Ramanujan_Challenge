@@ -1,0 +1,12 @@
+name: Q7676 exact four-Eisenstein audit
+on:
+  push:
+    branches: [q7676-audit-f9d041ae]
+jobs:
+  sage:
+    runs-on: ubuntu-latest
+    container: sagemath/sagemath:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact companion scan
+        run: sage problems/3.2/research/scripts/q7676_four_eisenstein_scan.sage
