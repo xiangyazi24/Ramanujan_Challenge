@@ -1,0 +1,16 @@
+name: Q7720 e_s holonomic audit
+on:
+  push:
+    branches: [q7720-audit-b13c4ec3]
+    paths:
+      - 'problems/3.2/research/scripts/q7720_e_holonomic_guess.sage'
+      - '.github/workflows/q7720-audit.yml'
+jobs:
+  sage:
+    runs-on: ubuntu-latest
+    container:
+      image: sagemath/sagemath:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Q7720 exact holonomic guess audit
+        run: sage problems/3.2/research/scripts/q7720_e_holonomic_guess.sage
