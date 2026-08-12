@@ -1,0 +1,18 @@
+name: Q7736 temporary affine transversality audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/q7736-temp-affine.yml'
+permissions:
+  contents: read
+jobs:
+  sage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Sage verifier
+        run: |
+          docker run --rm -v "$PWD:/repo" -w /repo sagemath/sagemath:10.6 \
+            sage -python problems/3.2/research/scripts/q7736_affine_transversality.sage
