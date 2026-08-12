@@ -1,0 +1,20 @@
+name: Q7674 exact Hankel-Pade audit
+on:
+  push:
+    branches: [q7674-audit]
+    paths:
+      - 'problems/3.2/research/scripts/q7674_hankel_pade_audit.sage'
+      - '.github/workflows/q7674-audit.yml'
+permissions:
+  contents: read
+jobs:
+  sage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container:
+      image: sagemath/sagemath:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact Sage audit
+        shell: bash
+        run: sage problems/3.2/research/scripts/q7674_hankel_pade_audit.sage
