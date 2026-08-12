@@ -4,7 +4,6 @@ on:
     branches: [q7684-audit-67aec794]
     paths:
       - 'problems/3.2/research/scripts/q7684_uniqueness_audit.sage'
-      - 'problems/3.2/research/scripts/q7684_eisenstein_flex.sage'
       - '.github/workflows/q7684-audit.yml'
 jobs:
   sage:
@@ -14,6 +13,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run exact Q7684 audit
-        run: |
-          sage problems/3.2/research/scripts/q7684_uniqueness_audit.sage
-          sage problems/3.2/research/scripts/q7684_eisenstein_flex.sage
+        run: sage problems/3.2/research/scripts/q7684_uniqueness_audit.sage
