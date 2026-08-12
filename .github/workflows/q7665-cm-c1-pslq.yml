@@ -13,7 +13,7 @@ jobs:
     container:
       image: sagemath/sagemath:latest
     steps:
-      - name: Extrapolate first CM correction and test small linear forms
+      - name: Extrapolate CM constant and first correction
         shell: bash
         run: |
           set -euo pipefail
@@ -36,23 +36,31 @@ jobs:
           z3=RF(z3q); pi=RF.pi(); p3=pi^3/RF(6).sqrt()
           C=14*z3-RF(20)/9*p3
           ns=[900,1000,1100,1200,1300,1400,1500,1600,1700]
-          # y_n=n(q_n-C)=c1+c2/n+... ; 9-point degree-8 extrapolation.
-          A=matrix(RF, [[RF(1)/RF(n)^j for j in range(9)] for n in ns])
+
+          # Independent fit q_n = C0 + c1/n + ... + c8/n^8.
+          A0=matrix(RF, [[RF(1)/RF(n)^j for j in range(9)] for n in ns])
+          qv=vector(RF, [RF(kap[n])/RF(b[n]) for n in ns])
+          qcoeff=A0.solve_right(qv)
+          print('C_FORMULA=',C)
+          print('C_INDEPENDENT=',qcoeff[0])
+          print('C_DIFF=',qcoeff[0]-C)
+          print('C1_INDEPENDENT=',qcoeff[1])
+
+          # More stable c1 fit after subtracting the exact C.
           y=vector(RF, [RF(n)*(RF(kap[n])/RF(b[n])-C) for n in ns])
-          coeff=A.solve_right(y)
+          coeff=A0.solve_right(y)
           c1=coeff[0]
-          print('C=',C)
           print('C1_EXTRAP=',c1)
           print('C2_EXTRAP=',coeff[1])
           print('C3_EXTRAP=',coeff[2])
-          # Repeat on shifted windows to assess stability.
           for start in [700,800,900]:
               nss=[start+100*j for j in range(9)]
               AA=matrix(RF, [[RF(1)/RF(n)^j for j in range(9)] for n in nss])
               yy=vector(RF,[RF(n)*(RF(kap[n])/RF(b[n])-C) for n in nss])
               cc=AA.solve_right(yy)[0]
               print('C1_WINDOW',start,cc,'diff=',cc-c1)
-          # PARI lindep probes. These are experiments only; report relation and residual.
+
+          # Small-relation probe only; large-coefficient PARI outputs are not theorem evidence.
           bases=[
               ('1,z3,p3', [RF(1),z3,p3,c1]),
               ('1,C,p3', [RF(1),C,p3,c1]),
