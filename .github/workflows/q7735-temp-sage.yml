@@ -1,0 +1,21 @@
+name: Q7735 temporary finite-part trace audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/q7735-temp-sage.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Q7735 Sage verifier
+        shell: bash
+        run: |
+          docker run --rm \
+            -v "$PWD:/repo:ro" -w /repo \
+            sagemath/sagemath:10.6 \
+            sage -python problems/3.2/research/scripts/q7735_finite_part_trace_verify.sage --N 10
