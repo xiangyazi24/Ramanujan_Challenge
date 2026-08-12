@@ -5,13 +5,15 @@ This is a finite obstruction audit, not an asymptotic theorem.
 
 It checks two complementary models at a fixed anchor N.
 
-(A) CRT-Lucas model.
-For every target prime p in (3N/4,N], set r=N-p and choose a digit map
-f_p on [0,p) with zeros exactly at {r,p-1-r} and value 1 elsewhere.
-Extend multiplicatively over base-p digits and CRT-lift the simultaneous
-residues to integers c_m.  Then c_{ap+r} == c_a*c_r (mod p), reflection
-holds, the zero set has size two, and every selected p divides c_N.  The
-integer height is at most the primorial modulus, hence exp(O(N)).
+(A) CRT-Lucas model, uniform over every prime p<=N at this scale.
+For target primes p in (3N/4,N], set r=N-p and choose a digit map f_p
+with zeros exactly at {r,p-1-r}; for every other prime p<=N use the
+constant digit map 1.  Extend every f_p multiplicatively over base-p digits
+and CRT-lift all primewise residues to one integer c_m for each m<=N.
+Then the resulting finite integer sequence satisfies the p-Lucas law and
+reflection for every prime p<=N, has no zero digits at unselected primes,
+and every selected p divides c_N.  Its height is at most the full primorial
+modulus exp(theta(N))=exp(O(N)).
 
 (B) One common exact-Apery-recurrence model.
 For each target p,r, choose a nonzero initial state modulo p for the *same*
@@ -23,14 +25,15 @@ of exponential height satisfying the exact Apéry recurrence and realizing all
 selected ray zeros.  Modulo each target p the full homogeneous solution is
 reflection-fixed, hence p-1-r is also a zero.
 
-The two models deliberately expose the remaining seam: model (A) has exact
-Lucas+reflection+integrality but not the Apéry recurrence; model (B) has one
-common initial state, exact Apéry recurrence+reflection+integrality on the ray
-prefix, but not the Apéry Lucas law of the distinguished initial vector (1,5).
+The two models expose the remaining seam: model (A) has exact Lucas +
+reflection + integrality uniformly over all primes at the scale, but not the
+Apéry recurrence; model (B) has one common initial state, exact Apéry recurrence
++ reflection + integrality on the ray prefix, but not the Apéry Lucas law of
+the distinguished initial vector (1,5).
 """
 
 from fractions import Fraction
-from math import gcd, isqrt, lcm, log
+from math import isqrt, lcm, log
 
 
 def primes_upto(n):
@@ -67,13 +70,12 @@ def homogeneous_Q(limit, y0, y1):
 def digit_value(n, p, zero_pair):
     if n == 0:
         return 1
-    out = 1
     while n:
         d = n % p
         if d in zero_pair:
             return 0
         n //= p
-    return out
+    return 1
 
 
 def crt_pair(a, m, b, p):
@@ -89,44 +91,53 @@ def symmetric_rep(x, m):
 
 def main():
     N = 500
+    primes = primes_upto(N)
     targets = []
-    for p in primes_upto(N):
+    zero_pairs = {p: set() for p in primes}
+    for p in primes:
         if not (3*N < 4*p <= 4*N):
             continue
         r = N-p
         if 2 <= r < (p-1)//2:
             targets.append((p,r))
+            zero_pairs[p] = {r,p-1-r}
     assert targets
 
-    # (A) Build CRT-lifted integers c_m for m<=N from multiplicative digit data.
-    modulus = 1
-    for p,_ in targets:
-        modulus *= p
+    # (A) Build CRT-lifted integers c_m for m<=N using *all* primes p<=N.
+    all_modulus = 1
+    for p in primes:
+        all_modulus *= p
     c = []
     for n in range(N+1):
         x, mod = 0, 1
-        for p,r in targets:
-            z = {r, p-1-r}
-            residue = digit_value(n,p,z)
+        for p in primes:
+            residue = digit_value(n,p,zero_pairs[p])
             x, mod = crt_pair(x,mod,residue,p)
-        assert mod == modulus
-        c.append(symmetric_rep(x,modulus))
+        assert mod == all_modulus
+        c.append(symmetric_rep(x,all_modulus))
 
-    for p,r in targets:
-        z = {r,p-1-r}
-        assert c[r] % p == 0
-        assert c[p-1-r] % p == 0
+    target_dict = dict(targets)
+    for p in primes:
+        z = zero_pairs[p]
+        # Exact reflected first-block zero set: target pair or empty.
         assert all((c[j] % p == 0) == (j in z) for j in range(p))
-        assert c[N] % p == 0
-        # For all m<=N, verify the Lucas recursion against the actual CRT lift.
+        # For all m<=N, verify p-Lucas against the actual CRT lift.
         for m in range(N+1):
             q, rr = divmod(m,p)
             assert c[m] % p == (c[q] * c[rr]) % p
         assert all(c[j] % p == c[p-1-j] % p for j in range(p))
+        if p in target_dict:
+            r = target_dict[p]
+            assert c[r] % p == 0 and c[p-1-r] % p == 0
+            assert c[N] % p == 0
+        else:
+            assert c[N] % p != 0
 
     # (B1) Determine one desired initial state modulo each target p.
     local_initial = []
+    target_modulus = 1
     for p,r in targets:
+        target_modulus *= p
         b = homogeneous_mod(p,1,5)
         v = homogeneous_mod(p,0,1)
         assert all(b[p-1-j] == b[j] for j in range(p))
@@ -149,10 +160,10 @@ def main():
     for p,r,a0,a1 in local_initial:
         A, modA = crt_pair(A,modA,a0,p)
         B, modB = crt_pair(B,modB,a1,p)
-    assert modA == modulus and modB == modulus
-    A, B = symmetric_rep(A,modulus), symmetric_rep(B,modulus)
+    assert modA == target_modulus and modB == target_modulus
+    A, B = symmetric_rep(A,target_modulus), symmetric_rep(B,target_modulus)
 
-    # The relevant reflected ray indices r are all < N/4.  Run one exact Q-solution
+    # The relevant ray indices r are all < N/4. Run one exact Q-solution
     # through the largest ray index and clear denominators by 6*lcm(1..R)^3.
     R = max(r for _,r in targets)
     uQ = homogeneous_Q(R,A,B)
@@ -168,7 +179,6 @@ def main():
         C.append(z.numerator)
 
     for p,r,a0,a1 in local_initial:
-        # The common initial state reduces to the chosen local state.
         assert A % p == a0 and B % p == a1
         assert C[r] % p == 0
         full = homogeneous_mod(p,A,B)
@@ -183,18 +193,22 @@ def main():
 
     log_mass = sum(log(p) for p,_ in targets)
     finite_height = max(log(max(1,abs(x))) for x in C)
+    lucas_height = max(log(max(1,abs(x))) for x in c)
     print(f"N={N}")
+    print(f"all_prime_count={len(primes)}")
     print(f"target_count={len(targets)}")
     print("targets=" + repr(targets))
     print(f"log_target_product={log_mass:.12f}")
     print(f"log_target_product_over_N={log_mass/N:.12f}")
-    print(f"log_CRT_modulus={log(modulus):.12f}")
+    print(f"log_all_prime_CRT_modulus={log(all_modulus):.12f}")
+    print(f"lucas_model_log_height={lucas_height:.12f}")
+    print(f"lucas_model_log_height_over_N={lucas_height/N:.12f}")
     print(f"common_initial_A_digits={len(str(abs(A)))}")
     print(f"common_initial_B_digits={len(str(abs(B)))}")
     print(f"ray_prefix_R={R}")
     print(f"cleared_recurrence_log_height={finite_height:.12f}")
     print(f"cleared_recurrence_log_height_over_N={finite_height/N:.12f}")
-    print("CRT_LUCAS_REFLECTION_INTEGRAL_HEIGHT_MODEL=PASS")
+    print("ALL_PRIMES_CRT_LUCAS_REFLECTION_INTEGRAL_HEIGHT_MODEL=PASS")
     print("COMMON_INITIAL_EXACT_APERY_RECURRENCE_REFLECTION_MODEL=PASS")
     print("finite_countermodel_only=True")
 
