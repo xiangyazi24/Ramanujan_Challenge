@@ -1,0 +1,27 @@
+name: Q7691 exact companion-state audit
+on:
+  push:
+    branches: [q7691-audit-9839303a]
+    paths:
+      - 'problems/3.2/research/scripts/q7691_companion_probe.sage'
+      - 'problems/3.2/research/scripts/q7691_state_scan.sage'
+      - '.github/workflows/q7691-audit.yml'
+permissions:
+  contents: read
+jobs:
+  sage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    container:
+      image: sagemath/sagemath:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run normalization probe
+        shell: bash
+        run: sage problems/3.2/research/scripts/q7691_companion_probe.sage
+      - name: Run state scan when present
+        shell: bash
+        run: |
+          if [ -f problems/3.2/research/scripts/q7691_state_scan.sage ]; then
+            sage problems/3.2/research/scripts/q7691_state_scan.sage
+          fi
