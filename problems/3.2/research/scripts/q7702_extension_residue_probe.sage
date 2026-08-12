@@ -32,19 +32,19 @@ def g_mod(p, b):
     return [Fp(G[n]) for n in range(p)]
 
 
-def kappa_mod(p, g):
+def kappa_mod(p, source):
     Fp = GF(p)
     k = [Fp(0), Fp(-36)]
     for n in range(2, p):
-        k.append((Fp(P(n-1))*k[n-1] - Fp((n-1)^3)*k[n-2] - Fp(5)*g[n]) / Fp(n^3))
+        k.append((Fp(P(n-1))*k[n-1] - Fp((n-1)^3)*k[n-2] - Fp(5)*source[n]) / Fp(n^3))
     return k
 
 
-def xi_mod(p, b, g):
+def xi_mod(p, b, source):
     Fp = GF(p)
     xi = [Fp(-1)]
     for n in range(1,p):
-        xi.append(xi[-1] - Fp(5)*g[n]*b[n-1])
+        xi.append(xi[-1] - Fp(5)*source[n]*b[n-1])
     return xi
 
 
@@ -56,11 +56,11 @@ def u_mod(p):
     return u
 
 
-def phi_mod(p, g, u):
+def phi_mod(p, source, u):
     Fp = GF(p)
     phi = [Fp(0)]
     for n in range(1,p):
-        phi.append(phi[-1] + Fp(5)*g[n]*u[n-1])
+        phi.append(phi[-1] + Fp(5)*source[n]*u[n-1])
     return phi
 
 
@@ -73,16 +73,14 @@ def audit_prime(p, full_defect=True):
     u = u_mod(p)
     phi = phi_mod(p,g,u)
 
-    # Exact homogeneous reciprocity for both normalized basis solutions.
     assert all(b[p-1-r] == b[r] for r in range(p))
     assert all(u[p-1-r] == u[r] for r in range(p))
 
-    # Unit-Casoratian frame and its inhomogeneous variation constants.
     for n in range(1,p):
         assert Fp(n^3)*(b[n-1]*u[n]-b[n]*u[n-1]) == 1
         assert k[n] == xi[n]*u[n] + phi[n]*b[n]
 
-    # Truncated extension-class residue.  For K_<p=sum_{n<p} k_n t^n,
+    # Exact truncated extension-class residue:
     # L K_<p = -5(G_<p-1) - t - Xi_{p-1} t^p.
     if full_defect:
         for n in range(0,p+2):
@@ -110,9 +108,51 @@ def audit_prime(p, full_defect=True):
     return b,g,k,xi,u,phi,hzeros,commons
 
 
-# Mechanism scan: global extension residue values and whether they correlate
-# with the zero fiber.  This is not a uniqueness count rerun: it classifies
-# the Frobenius-boundary residue Xi_{p-1} and the second variation period Phi.
+def force_rows_and_restore_terminal_periods(p, rows):
+    """Formal-source no-go: force selected Hasse rows common while restoring
+    both terminal variation periods (Xi_{p-1}, Phi_{p-1}) exactly.
+    The canonical initial line kappa_0=0,kappa_1=-36 is never changed.
+    """
+    Fp = GF(p)
+    b = apery_mod(p)
+    u = u_mod(p)
+    source = g_mod(p,b)
+    base_xi = xi_mod(p,b,source)
+    base_phi = phi_mod(p,source,u)
+    assert all(b[r] == 0 for r in rows)
+    assert max(rows) <= p-3  # b_{p-2}=5, b_{p-1}=1 for p != 5.
+
+    forced = []
+    for r in rows:
+        k = kappa_mod(p,source)
+        delta = Fp(r^3)*k[r]/Fp(5)
+        source[r] += delta
+        forced.append((r,int(delta)))
+        assert kappa_mod(p,source)[r] == 0
+
+    xi = xi_mod(p,b,source)
+    phi = phi_mod(p,source,u)
+    a, c = p-2, p-1
+    response = matrix(Fp, [
+        [-Fp(5)*b[a-1], -Fp(5)*b[c-1]],
+        [ Fp(5)*u[a-1],  Fp(5)*u[c-1]],
+    ])
+    # det = 25/8 by the unit Casoratian at n=p-2, hence a p-unit for p>=7.
+    assert response.det() == Fp(25)/Fp(8)
+    rhs = vector(Fp, [base_xi[p-1]-xi[p-1], base_phi[p-1]-phi[p-1]])
+    tail = response.solve_right(rhs)
+    source[a] += tail[0]
+    source[c] += tail[1]
+
+    k2 = kappa_mod(p,source)
+    xi2 = xi_mod(p,b,source)
+    phi2 = phi_mod(p,source,u)
+    assert all(k2[r] == 0 for r in rows)
+    assert xi2[p-1] == base_xi[p-1]
+    assert phi2[p-1] == base_phi[p-1]
+    return forced, (int(tail[0]),int(tail[1])), int(base_xi[p-1]), int(base_phi[p-1])
+
+
 residue_zero = []
 residue_one = []
 residue_minus_one = []
@@ -130,18 +170,23 @@ for pz in prime_range(7, PMAX+1):
     if commons and len(residue_with_common) < 20:
         residue_with_common.append((p,tuple(commons),e,int(phi[p-1])))
 
-# The p=41 actual-source Green collision gives zero b-weighted period between
-# two Hasse zeros.  Test the independent u-weighted variation period there.
+# p=41: actual-source b-weighted period is zero, independent u-period is not.
 p=41
 b,g,k,xi,u,phi,hz,commons = audit_prime(p)
 assert b[10] == b[30] == 0 and xi[10] == xi[30] == 7
 b_period = sum((g[m]*b[m-1] for m in range(11,31)), GF(p)(0))
 u_period = sum((g[m]*u[m-1] for m in range(11,31)), GF(p)(0))
+phi_diff41 = phi[30]-phi[10]
 assert b_period == 0
-assert phi[30]-phi[10] == GF(p)(5)*u_period
+assert phi_diff41 == GF(p)(5)*u_period
+assert u_period != 0
 
-# Targeted primes strictly above the old 20000 scan.  These are used only to
-# test the global defect/frame mechanism, not to infer uniqueness.
+# Exact terminal-compensation example: p=19 has Hasse zeros 8,10.  Force both
+# common, then restore BOTH global period coordinates with rows 17,18.
+comp19 = force_rows_and_restore_terminal_periods(19, (8,10))
+
+# Targeted primes strictly above the old p<=20000 uniqueness scan.  These test
+# the mechanism (frame + extension defect), not a statistical uniqueness claim.
 above = []
 pz = next_prime(20000)
 for _ in range(ABOVE_COUNT):
@@ -155,6 +200,7 @@ print('RESIDUE_ZERO_FIRST20', residue_zero)
 print('RESIDUE_ONE_FIRST20', residue_one)
 print('RESIDUE_MINUS_ONE_FIRST20', residue_minus_one)
 print('RESIDUE_AT_COMMON_PRIMES', residue_with_common)
-print('P41_B_PERIOD', int(b_period), 'P41_U_PERIOD', int(u_period), 'P41_PHI_DIFF', int(phi[30]-phi[10]))
+print('P41_B_PERIOD', int(b_period), 'P41_U_PERIOD', int(u_period), 'P41_PHI_DIFF', int(phi_diff41))
+print('P19_FORCE_AND_RESTORE', comp19)
 print('ABOVE_20000_MECHANISM_PRIMES', above)
 print('Q7702_EXTENSION_RESIDUE=PASS')
