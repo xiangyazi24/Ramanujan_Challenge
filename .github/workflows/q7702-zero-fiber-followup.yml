@@ -1,0 +1,19 @@
+name: Q7702 zero-fiber followup
+on:
+  push:
+    branches: [q7702-zero-fiber-635f6233]
+    paths:
+      - 'problems/3.2/research/scripts/q7702_zero_fiber_followup.sage'
+      - '.github/workflows/q7702-zero-fiber-followup.yml'
+jobs:
+  sage:
+    runs-on: ubuntu-latest
+    container:
+      image: sagemath/sagemath:latest
+    env:
+      Q7702_PMAX: 5000
+      Q7702_ABOVE_COUNT: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run consolidated Q7702 verifier
+        run: sage problems/3.2/research/scripts/q7702_zero_fiber_followup.sage
