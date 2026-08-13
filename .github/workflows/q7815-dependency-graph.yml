@@ -1,0 +1,21 @@
+name: Q7815 exact dependency graph audit
+on:
+  push:
+    branches: [q7815-audit-dd2fb212]
+    paths:
+      - '.github/workflows/q7815-dependency-graph.yml'
+      - 'problems/3.2/research/scripts/q7815_dependency_graph.py'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact X=512 graph computation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 problems/3.2/research/scripts/q7815_dependency_graph.py 2>&1 | tee /tmp/q7815.out
+          grep -q '^Q7815_DEPENDENCY_GRAPH_SUCCESS$' /tmp/q7815.out
