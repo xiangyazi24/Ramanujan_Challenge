@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import importlib.util
 import itertools
+import sys
 from collections import Counter
 from pathlib import Path
 
@@ -18,6 +19,7 @@ HM3_PATH = ROOT / "problems" / "3.2" / "hm3_explore.py"
 spec = importlib.util.spec_from_file_location("hm3_explore", HM3_PATH)
 assert spec is not None and spec.loader is not None
 hm3 = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = hm3
 spec.loader.exec_module(hm3)
 
 X = 512
