@@ -21,6 +21,10 @@ jobs:
           status=$?
           cat q8043-audit.txt
           echo "status=$status" >> "$GITHUB_OUTPUT"
+          if [ "$status" != "0" ]; then
+            msg=$(tr '\n' ' ' < q8043-audit.txt | sed 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g')
+            echo "::error title=Q8043 verifier traceback::$msg"
+          fi
           exit 0
       - name: Upload transcript
         uses: actions/upload-artifact@v4
