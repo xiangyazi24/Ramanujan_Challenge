@@ -1,0 +1,16 @@
+name: q8043-franel-audit
+on:
+  push:
+    branches:
+      - chatgpt-drop
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run exact verifier
+        run: python drops/Q8043-f58f62d5-verify.py --shell-x-max 24
