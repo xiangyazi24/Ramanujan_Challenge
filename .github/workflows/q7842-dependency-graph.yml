@@ -1,0 +1,22 @@
+name: Q7842 dependency graph audit
+on:
+  push:
+    branches: [q7842-audit-6022d5f3]
+    paths:
+      - '.github/workflows/q7842-dependency-graph.yml'
+      - 'problems/3.2/research/scripts/q7842_dependency_graph.py'
+      - 'problems/3.2/hm3_explore.py'
+permissions:
+  contents: read
+jobs:
+  exact-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact graph audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 problems/3.2/research/scripts/q7842_dependency_graph.py 2>&1 | tee /tmp/q7842.out
+          grep -q '^Q7842_AUDIT_SUCCESS$' /tmp/q7842.out
