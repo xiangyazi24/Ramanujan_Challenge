@@ -1,0 +1,44 @@
+name: q7807-ratio-energy-audit
+
+on:
+  push:
+    branches:
+      - q7807-ratio-energy-audit
+
+permissions:
+  contents: read
+
+jobs:
+  ratio-energy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out audit branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install NumPy
+        run: python -m pip install --disable-pip-version-check numpy
+
+      - name: Run exact ratio-energy computation
+        run: python problems/3.2/research/scripts/q7807_ratio_energy.py
+
+      - name: Print compact CSV diagnostics
+        run: |
+          echo '--- ENERGY CSV ---'
+          cat q7807_results/q7807_energy_p1000.csv
+          echo '--- E2 CSV ---'
+          cat q7807_results/q7807_e2_p500.csv
+          echo '--- BLOCK SUMMARY CSV ---'
+          cat q7807_results/q7807_e2_block_summary.csv
+
+      - name: Upload exact results
+        uses: actions/upload-artifact@v4
+        with:
+          name: q7807-ratio-energy-results
+          path: q7807_results/
+          if-no-files-found: error
