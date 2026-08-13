@@ -30,11 +30,39 @@ jobs:
             echo "::error title=Q8043 verifier traceback::$msg"
           fi
           exit 0
+      - name: Publish compact audit summary
+        if: steps.verify.outputs.status == '0'
+        shell: bash
+        run: |
+          python - <<'PY' > q8043-summary.txt
+          import json
+          lines = open('q8043-audit.txt', encoding='utf-8').read().splitlines()
+          data = json.loads('\n'.join(lines[1:-1]))
+          shell = data['shell']
+          summary = {
+              'prefix': data['prefix'],
+              'quotient': data['quotient'],
+              'shell_stats': shell['stats'],
+              'first_support_failure': shell['first_support_failure'],
+              'first_jet_failure': shell['first_jet_failure'],
+              'first_W_failure': shell['first_W_failure'],
+              'max_common': shell['max_common'],
+              'max_union': shell['max_union'],
+              'pairs_common_ge7': shell['pairs_common_ge7'],
+              'pairs_union_ge7': shell['pairs_union_ge7'],
+              'census': data['census'],
+          }
+          print(json.dumps(summary, sort_keys=True, separators=(',', ':')))
+          PY
+          msg=$(cat q8043-summary.txt | sed 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g')
+          echo "::notice title=Q8043 exact audit summary::$msg"
       - name: Upload transcript
         uses: actions/upload-artifact@v4
         with:
           name: q8043-audit-transcript
-          path: q8043-audit.txt
+          path: |
+            q8043-audit.txt
+            q8043-summary.txt
       - name: Enforce verifier status
         shell: bash
         run: test "${{ steps.verify.outputs.status }}" = "0"
