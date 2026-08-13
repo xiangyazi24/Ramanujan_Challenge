@@ -13,4 +13,20 @@ jobs:
         with:
           python-version: '3.11'
       - name: Run exact verifier
-        run: python drops/Q8043-f58f62d5-verify.py --shell-x-max 24
+        id: verify
+        shell: bash
+        run: |
+          set +e
+          python drops/Q8043-f58f62d5-verify.py --shell-x-max 24 > q8043-audit.txt 2>&1
+          status=$?
+          cat q8043-audit.txt
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Upload transcript
+        uses: actions/upload-artifact@v4
+        with:
+          name: q8043-audit-transcript
+          path: q8043-audit.txt
+      - name: Enforce verifier status
+        shell: bash
+        run: test "${{ steps.verify.outputs.status }}" = "0"
