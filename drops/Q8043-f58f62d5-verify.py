@@ -63,13 +63,18 @@ def vp(n,p):
 
 def prefix_obstruction():
     b=apery(6); assert b==[1,5,73,1445,33001,819005,21460825]
-    P1=val(b,1); P2=val(b,2); D1=jet(b,1,1); D2=jet(b,2,1)
-    dd=P2-P1; curv=P2-2*P1+b[0]; W=P1*D2-P2*D1
+    P1=val(b,1); P2=val(b,2)
+    D11=jet(b,1,1); D12=jet(b,1,2)
+    D21=jet(b,2,1); D22=jet(b,2,2)
+    dd=P2-P1; curv=P2-2*P1+b[0]
+    W1=P1*D21-P2*D11; W2=P1*D22-P2*D12
     assert (P1,P2,curv)==(22312715,1441667719,1397042290)
-    assert P1%5==0 and D1%5 and dd%5 and W%5
-    return {'P6(1)':P1,"P6'(1)":D1,'P6(2)':P2,'dd(1,2)':dd,
-            'curvature':curv,'jet_det':W,
-            'mod5':[P1%5,D1%5,dd%5,curv%5,W%5]}
+    assert P1%5==0 and D11%5==0 and D12%5!=0
+    assert dd%5!=0 and curv%5==0 and W1%5==0 and W2%5!=0
+    return {'P6(1)':P1,"P6'(1)":D11,"P6''(1)":D12,'P6(2)':P2,
+            'dd(1,2)':dd,'curvature':curv,'jet_det_order1':W1,
+            'jet_det_order2':W2,
+            'mod5':[P1%5,D11%5,D12%5,dd%5,curv%5,W1%5,W2%5]}
 
 def gapN(i,h):
     if h==1:return 1
