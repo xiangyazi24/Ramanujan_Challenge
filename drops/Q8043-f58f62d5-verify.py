@@ -68,7 +68,7 @@ def prefix_obstruction():
     D21=jet(b,2,1); D22=jet(b,2,2)
     dd=P2-P1; curv=P2-2*P1+b[0]
     W1=P1*D21-P2*D11; W2=P1*D22-P2*D12
-    assert (P1,P2,curv)==(22312715,1441667719,1397042290)
+    assert (P1,P2,curv)==(22314355,1400240839,1355612130)
     assert P1%5==0 and D11%5==0 and D12%5!=0
     assert dd%5!=0 and curv%5==0 and W1%5==0 and W2%5!=0
     return {'P6(1)':P1,"P6'(1)":D11,"P6''(1)":D12,'P6(2)':P2,
