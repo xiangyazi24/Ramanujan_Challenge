@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -16,6 +18,7 @@ jobs:
         id: verify
         shell: bash
         run: |
+          git checkout origin/main -- problems/3.2/data_zp_pairs.bin
           sed -i 's/(22312715,1441667719,1397042290)/(22314355,1400240839,1355612130)/' drops/Q8043-f58f62d5-verify.py
           set +e
           python drops/Q8043-f58f62d5-verify.py --shell-x-max 24 > q8043-audit.txt 2>&1
