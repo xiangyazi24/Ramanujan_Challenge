@@ -1,0 +1,2 @@
+#!/usr/bin/env sage
+"""Exact Q8219 verifier using QQ, ZZ, and GF(p) only."""
