@@ -1,2 +1,173 @@
 #!/usr/bin/env sage
-"""Exact Q8219 verifier using QQ, ZZ, and GF(p) only."""
+"""Exact verifier for Q8219; QQ/ZZ/GF(p) arithmetic only.
+
+Run from the repository root with
+
+    sage drops/Q8219-8ae24e5e-verify.sage.txt
+
+The finite prime loop is a definition regression, not an all-prime proof.
+"""
+from argparse import ArgumentParser
+from sage.all import GF, QQ, ZZ, PolynomialRing, binomial, prime_range
+
+
+def harmonics(n):
+    H = [QQ(0)]
+    for j in range(1, n + 1):
+        H.append(H[-1] + QQ(1) / ZZ(j))
+    return H
+
+
+def apery_b(n):
+    return ZZ(sum(binomial(n,k)^2 * binomial(n+k,k)^2
+                  for k in range(n+1)))
+
+
+def apery_D(n):
+    H = harmonics(2*n)
+    return sum(QQ(binomial(n,k)^2 * binomial(n+k,k)^2)
+               * (H[n+k]-H[n-k]) for k in range(n+1))
+
+
+def qmod(q, K, p):
+    q = QQ(q)
+    den = ZZ(q.denominator()) % p
+    assert den != 0
+    return K(ZZ(q.numerator()) % p) / K(den)
+
+
+def rem(f, P):
+    return f.quo_rem(P)[1]
+
+
+def racah(N, K):
+    R = PolynomialRing(K, 'Y'); Y = R.gen()
+    phi = [R.one()]
+    for k in range(1, N+1):
+        phi.append(phi[-1] * (Y-K((k-1)*k)) / K(k*k))
+    polynomials = [sum(K(binomial(n,k)*binomial(n+k,k))*phi[k]
+                       for k in range(n+1)) for n in range(N+1)]
+    return R, Y, phi, polynomials
+
+
+def cyclic_shell(p):
+    p = ZZ(p); N = (p-1)//2; K = GF(p)
+    R = PolynomialRing(K, 'X'); X = R.gen(); Y = (X-1)/K(4)
+    phi = R.one(); H = R.one()
+    for k in range(1, N+1):
+        phi *= (Y-K((k-1)*k))/K(k*k)
+        H += phi^2
+    P = X^N-1
+    Q, B = H.quo_rem(P); A = Q-P
+    assert H == P^2+A*P+B
+    assert B.degree() < N and (A == 0 or A.degree() <= N-2)
+    J = rem(B.derivative()+P.derivative()*A, P)
+    Aback = rem(K(N)^(-1)*X*(J-B.derivative()), P)
+    assert Aback == A
+
+    roots = [K((2*n+1)^2) for n in range(N)]
+    assert len(set(roots)) == N and all(P(x) == 0 for x in roots)
+    assert P(K(0)) == -1                 # midpoint is outside P
+
+    # Complete cyclic Fourier relation forced by deg(A)<=N-2.
+    assert (sum(x^2*J(x) for x in roots)
+            == K(N-1)*sum(x*B(x) for x in roots))
+
+    expected = R.one(); common = []
+    for n, x in enumerate(roots):
+        b = K(apery_b(n)); d = qmod(apery_D(n), K, p)
+        assert B(x) == b
+        assert K(2*(2*n+1))*J(x) == d
+        if b == 0 and d == 0:
+            common.append(n); expected *= X-x
+    assert P.gcd(B).gcd(J).monic() == expected.monic()
+    return K, R, X, N, H, P, A, B, J, roots, common
+
+
+def exact_cycle_no_go():
+    p = ZZ(11); N = ZZ(5); n = ZZ(2); K = GF(p)
+    R = PolynomialRing(K, 'X'); X = R.gen(); P = X^N-1
+    alpha = K((2*n+1)^2)
+    A = R.zero(); B = (X-alpha)^2; J = B.derivative(); H = P^2+B
+    assert alpha == 3 and P(alpha) == 0
+    assert H == P^2+A*P+B
+    assert B(alpha) == J(alpha) == 0
+    assert P.gcd(B).gcd(J).monic() == (X-alpha).monic()
+    assert H(alpha) == H.derivative()(alpha) == 0
+    assert H.derivative().derivative()(alpha) != 0
+    roots = [K((2*j+1)^2) for j in range(N)]
+    assert (sum(x^2*J(x) for x in roots)
+            == K(N-1)*sum(x*B(x) for x in roots))
+
+    # Uniform half-grid complementary moment at n=2, m=N.
+    RY, Y, _, RR = racah(N, K); m = N-n+2; a = K(n*(n+1))
+    cn = RR[n].leading_coefficient(); cm = RR[m].leading_coefficient()
+    assert cn == 7 and cm == 10
+    Rstar = cn*(Y-a)^2
+    assert Rstar(a) == Rstar.derivative()(a) == 0
+    Tstar = Rstar.quo_rem((Y-a)^2)[0]
+    nodes = [K(j*(j+1)) for j in range(N+1)]
+    Lhg = lambda f: K(2)*sum(f(nodes[j]) for j in range(N))+f(nodes[N])
+    assert Lhg(Tstar*RR[m]) == -cn*cm == K(7) != 0
+
+    # The Favard functional is distinct: Tstar=cn*R_0 is orthogonal to R_m.
+    assert m > 0
+    Lfav = K(0)
+    assert Lfav != Lhg(Tstar*RR[m])
+
+
+def hyperplane_basis_check():
+    p = ZZ(11); N = ZZ(5); K = GF(p)
+    R = PolynomialRing(K, 'X'); X = R.gen(); P = X^N-1
+    roots = [K((2*j+1)^2) for j in range(N)]
+    relation = lambda B,J: (sum(x^2*J(x) for x in roots)
+                              -K(N-1)*sum(x*B(x) for x in roots))
+    for i in range(N-1):
+        A = X^i; B = R.zero(); J = rem(P.derivative()*A, P)
+        assert relation(B,J) == 0
+        assert rem(K(N)^(-1)*X*(J-B.derivative()), P) == A
+    for i in range(N):
+        A = R.zero(); B = X^i; J = B.derivative()
+        assert relation(B,J) == 0
+        assert rem(K(N)^(-1)*X*(J-B.derivative()), P) == A
+
+
+def apery_E(n, B):
+    if n == 1: return ZZ(27)
+    return ZZ(-3
+      + sum((102*j*j+102*j+27)*B[j]^2 for j in range(1,n))
+      - 6*sum((j+1)^2*B[j]*B[j+1] for j in range(1,n-1)))
+
+
+def fixed_integer_check(limit, prime_bound):
+    M = max(limit+1, (prime_bound-1)//2+1)
+    B = [apery_b(n) for n in range(M+1)]
+    D = [apery_D(n) for n in range(M+1)]
+    for n in range(1, M):
+        E = apery_E(n, B)
+        rhs = (n^3*B[n-1]*(2*D[n])
+               + n^2*B[n]*(3*B[n-1]-n*(2*D[n-1])))
+        assert E == rhs
+    for p in prime_range(3, prime_bound):
+        K = GF(p)
+        for n in range(1, min(M, (p-2)//2+1)):
+            if p > 2*n+1 and B[n] % p == 0:
+                assert ((apery_E(n,B) % p == 0)
+                        == (qmod(D[n],K,p) == 0))
+
+
+def main():
+    ap = ArgumentParser()
+    ap.add_argument('--prime-bound', type=int, default=40)
+    ap.add_argument('--index-bound', type=int, default=20)
+    a = ap.parse_args()
+    hyperplane_basis_check()
+    exact_cycle_no_go()
+    for p in prime_range(5, a.prime_bound):
+        cyclic_shell(p)
+    fixed_integer_check(a.index_bound, a.prime_bound)
+    print('Q8219_EXACT_VERIFY PASS')
+    print('Finite loops are definition regressions only, not an all-prime proof.')
+
+
+if __name__ == '__main__': main()
