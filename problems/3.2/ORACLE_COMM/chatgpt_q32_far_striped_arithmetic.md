@@ -1,0 +1,857 @@
+# `chatgpt_q32_far_striped_arithmetic`
+
+## Verdict
+
+I do **not** obtain an unconditional uniform estimate
+
+\[
+\mathcal T_{16}(m,g)=o\!\left(\frac{L^{16}}{X^{15}}\right)
+\tag{V0}
+\]
+
+for the exact far striped tesseracts in the question.
+
+There is, however, one exact positive theorem and one sharp saturation theorem.
+
+1. **Exact positive theorem — layerwise labelled radical.**  The eight upper endpoints have a characteristic-zero radical that recovers exactly their eight corresponding upper prime labels.  It uses only the upper-layer internal directed-unit theorem and shell-partner uniqueness.  It does **not** use any cross-layer unit assertion, so the 128 uncontrolled directed cross-layer values are left completely free.
+
+2. **Sharp scoped no-go.**  After the stipulated within-layer unit exceptions are removed, every natural route named in the question has one of two outcomes.
+   - A cross-layer zero creates a genuine same-characteristic long return and hence a continuant/resultant, but its moving-gap height is at least on the already-failed linear gap ledger; the Q8345 threshold requires a sublinear exponent in `g`.
+   - If no such return is used, the sixteen defining characteristics remain CRT-comaximal.  The two clean within-layer incidence blocks are identities, while the two `8 x 8` cross-layer blocks are arbitrary.  Consequently there is no universal determinant, Smith rank, resultant matching, Boolean derivative, or product norm that distinguishes the corresponding eight far edges from arbitrary cross-layer matchings.
+
+The **smallest surviving target-selective object** is a one-endpoint physical gcd conditioned on a canonical fifteen-vertex skeleton.  If the deleted endpoint has physical candidate integer `N_*` and folded row `h_*`, put
+
+\[
+\Gamma_*(S)
+ =\operatorname{rad}_{(X,2X]}\gcd(N_*(S),b_{h_*(S)}).
+\tag{V1}
+\]
+
+Shell-partner uniqueness gives
+
+\[
+\Gamma_*(S)\in\{1,q_*(S)\},
+\tag{V2}
+\]
+
+and the skeleton completes to a retained sixteenth hit exactly when the second value occurs and the already explicit isolation/high-Kummer/internal-unit masks pass.
+
+Equivalently, if `\mathscr S_{15}(m,g)` is the canonical skeleton set and
+
+\[
+\mathscr F_{m,g}(Y)
+ =\prod_{S\in\mathscr S_{15}(m,g)}
+   \bigl(N_*(S)+Yb_{h_*(S)}\bigr),
+\tag{V3}
+\]
+
+then Gauss's lemma gives the exact endpoint-content identity
+
+\[
+\boxed{
+\operatorname{cont}_{(X,2X]}\mathscr F_{m,g}
+ =\prod_{S\in\mathscr S_{15}(m,g)}\Gamma_*(S).}
+\tag{V4}
+\]
+
+Thus the requested estimate is equivalent, up to the fixed endpoint masks and the factor `\log X`, to the following new arithmetic theorem:
+
+\[
+\boxed{
+\sum_{S\in\mathscr S_{15}(m,g)}
+  \mathbf 1_{\rm masks}(S)\log\Gamma_*(S)
+ =o\!\left(\frac{L^{16}}{X^{15}}\log X\right)
+}
+\tag{FSPE}
+\]
+
+uniformly in the physical `m`, the signed far gap `g>D_X^2`, the three short gaps, and the common orientation type.  I call this the **far striped selected-endpoint correlation**.  It is strictly smaller arithmetically than the tesseract assertion: it is a weighted common-divisor theorem for one explicit physical integer and one actual Apéry coefficient.  No banked zero-count, fixed-gap transfer, resultant, high-Kummer average, or selected-prime sieve proves `(FSPE)`.
+
+So the exact frontier is:
+
+> The striped cube supplies an exact labelled radical and an exact multiplicity-preserving content carrier, but no saving.  A proof of `(V0)` needs new anti-concentration for the deterministic endpoint map `S -> (q_*(S),h_*(S))`; the current algebra cannot manufacture that anti-concentration.
+
+---
+
+## 0. Repository and reconstruction boundary
+
+The connector-visible `main` head audited for this report is
+
+```text
+734a5a84c1e4fd8703a811aadaa2b4c7f532b20e
+```
+
+and the delivery branch was `chatgpt-drop`.
+
+The literal file
+
+```text
+problems/3.2/ORACLE_COMM/codex_far_gh1_arithmetic_attack.md
+```
+
+was not visible on either branch.  I therefore reconstructed the interface only from the exact deterministic statement in Q8372 and the following visible/current same-project sources:
+
+```text
+problems/3.2/far_bridge_incidence.tex
+problems/3.2/meso_resultants.md
+problems/3.2/AVENUES.md
+problems/3.2/RUN_LOG_P32.md
+Q8230 4eecf7d0      mixed-characteristic/label-loss no-go
+Q8321 8ea1c6d2      exact first Gessel defect and fixed-gap saturation
+Q8345 6dcd365e      far physical one-label gateway
+```
+
+The exact Q8345 gateway is load-bearing.  A far physical edge is mixed characteristic.  If
+
+\[
+m=c_pp+s=c_qq+t,
+\qquad t=s+\delta g,
+\qquad \delta\in\{+1,-1\},
+\tag{0.1}
+\]
+
+then
+
+\[
+N_{p,\delta}(m,g)=c_pp-\delta g=m-t=c_qq.
+\tag{0.2}
+\]
+
+The partner `q` is the unique shell-prime divisor of this physical integer, when it exists.  The target test is
+
+\[
+p\mid b_{H(s)},\qquad
+q\mid N_{p,\delta}(m,g),\qquad
+q\mid b_{H(t)},
+\tag{0.3}
+\]
+
+with
+
+\[
+H(x)=\begin{cases}x,&x\ge0,\\-x-1,&x<0.\end{cases}
+\tag{0.4}
+\]
+
+The actual row
+
+\[
+m=321,\quad p=179,\quad q=193,\quad s=-37,\quad t=-65,\quad g=28
+\tag{0.5}
+\]
+
+has
+
+\[
+179\mid b_{36},\qquad193\mid b_{64},\qquad179\nmid b_{64}.
+\tag{0.6}
+\]
+
+It is therefore an exact warning that a physical far edge is not a same-characteristic Apéry return.
+
+Q8321 is the other load-bearing input.  Inside one characteristic, the complete first local Gessel/cutoff algebra reduces to the ordinary value plus the prime-independent parameter-derivative coordinate.  Higher cutoff differences are universally square-divisible, and no second local codimension is created.  Thus eight parallel edges do not acquire holonomy merely by repeating the one-edge transfer.
+
+No shared TeX file is edited by this report.
+
+---
+
+## 1. Exact signed striped notation
+
+Let
+
+\[
+E=\{0,1\}^3,
+\qquad
+s_\epsilon=u+\epsilon_1d_1+\epsilon_2d_2+\epsilon_3d_3,
+\tag{1.1}
+\]
+
+and let the common orientation of the eight far edges be encoded by one signed displacement
+
+\[
+t_\epsilon=s_\epsilon+\delta g,
+\qquad \delta\in\{+1,-1\}.
+\tag{1.2}
+\]
+
+The DD, RR, and mixed cases are not identified.  They are handled by the signs of `s_epsilon,t_epsilon` and the fold `H`; every formula below is valid in all three cases.
+
+Write the sixteen physical factorizations as
+
+\[
+\begin{aligned}
+A_\epsilon&:=m-s_\epsilon=c_\epsilon p_\epsilon,\\
+B_\epsilon&:=m-t_\epsilon
+=A_\epsilon-\delta g=c_\epsilon^+q_\epsilon,
+\end{aligned}
+\tag{1.3}
+\]
+
+where `p_epsilon,q_epsilon` are retained shell primes and the quotients satisfy the original physical admissibility.  The corresponding folded rows are
+
+\[
+h_\epsilon=H(s_\epsilon),
+\qquad
+k_\epsilon=H(t_\epsilon).
+\tag{1.4}
+\]
+
+The packet assumptions are
+
+\[
+p_\epsilon\mid b_{h_\epsilon},
+\qquad
+q_\epsilon\mid b_{k_\epsilon}
+\qquad(\epsilon\in E),
+\tag{1.5}
+\]
+
+plus isolation and high Kummer order.
+
+After the stated `O(1)` exceptions, the within-layer directed values are units:
+
+\[
+\begin{aligned}
+p_\epsilon&\nmid b_{h_\eta}&& (\epsilon\ne\eta),\\
+q_\epsilon&\nmid b_{k_\eta}&& (\epsilon\ne\eta).
+\end{aligned}
+\tag{1.6}
+\]
+
+There is **no** assumption on the directed cross-layer values
+
+\[
+p_\epsilon\mid b_{k_\eta}
+\quad\text{or}\quad
+q_\epsilon\mid b_{h_\eta}.
+\tag{1.7}
+\]
+
+These are the two arbitrary `8 x 8` blocks, totaling the 128 directed values in the prompt.
+
+Define the shell radical
+
+\[
+\operatorname{shrad}_X(n)
+ =\prod_{\substack{X<r\le2X\\r\ {m prime}\\r\mid n}}r.
+\tag{1.8}
+\]
+
+The Q8345 shell-product argument says that every admissible `A_epsilon` or `B_epsilon` has at most one shell-prime divisor.  In particular the physical factorization determines the candidate characteristic uniquely.
+
+---
+
+## 2. Exact positive theorem: the layerwise labelled radical
+
+### Theorem 2.1 — upper-layer diagonal radical
+
+Under `(1.3)` and the upper-layer unit condition in `(1.6)`, put
+
+\[
+\mathcal R^+
+=\operatorname{shrad}_X
+\gcd\!\left(
+ \prod_{\epsilon\in E}B_\epsilon,
+ \prod_{\eta\in E}b_{k_\eta}
+\right).
+\tag{2.1}
+\]
+
+Then
+
+\[
+\boxed{
+\mathcal R^+
+=\prod_{\substack{\epsilon\in E\\q_\epsilon\mid b_{k_\epsilon}}}
+ q_\epsilon.}
+\tag{2.2}
+\]
+
+In particular, all eight upper endpoints are actual hits if and only if
+
+\[
+\boxed{\mathcal R^+=\prod_{\epsilon\in E}q_\epsilon.}
+\tag{2.3}
+\]
+
+The analogous lower-layer radical
+
+\[
+\mathcal R^-
+=\operatorname{shrad}_X
+\gcd\!\left(
+ \prod_{\epsilon\in E}A_\epsilon,
+ \prod_{\eta\in E}b_{h_\eta}
+\right)
+\tag{2.4}
+\]
+
+recovers exactly the successful lower labels.
+
+#### Proof
+
+Let a shell prime `r` divide the first product in `(2.1)`.  Shell-partner uniqueness places it in one and only one factor `B_epsilon`; hence `r=q_epsilon`.  If it also divides the second product, it divides some `b_{k_eta}`.  The upper-layer directed-unit theorem forces `eta=epsilon`.  Conversely, a successful corresponding endpoint plainly divides both products.  Taking the shell radical proves `(2.2)`.
+
+#### Why this theorem respects Q8372
+
+No value in `(1.7)` occurs in the proof.  A lower characteristic may vanish at any collection of upper rows, and an upper characteristic may vanish at any collection of lower rows.  The theorem only uses a characteristic against rows in its **own** short-gap layer, where units are genuinely banked.
+
+### Exact height
+
+Every physical factor is below the Q8345 `X^2+X` ceiling.  Hence
+
+\[
+\log\mathcal R^+
+\le\sum_{\epsilon\in E}\log|B_\epsilon|
+\le16\log X+O(1).
+\tag{2.5}
+\]
+
+On a full upper layer,
+
+\[
+8\log X
+<\log\mathcal R^+
+\le8\log(2X).
+\tag{2.6}
+\]
+
+Thus the positive theorem is exactly saturated: its upper height and its required target content are both `Theta(log X)`.  It proves target selectivity, but not rarity.
+
+Multiplying `(2.1)` over many candidate cubes gives an upper logarithmic height `O(number_of_cubes * log X)`, while the required prime content is of the same order.  There is no hidden saving.
+
+---
+
+## 3. The mandatory cross-zero/unit split
+
+The 128 cross-layer values cannot be declared units.  The correct proof split is the following.
+
+### 3.1 Cross-zero case
+
+Suppose, after removing the already allowed reflection/alias exceptions, that one cross value vanishes.  For example,
+
+\[
+p_\epsilon\mid b_{h_\epsilon},
+\qquad
+p_\epsilon\mid b_{k_\eta}
+\tag{3.1}
+\]
+
+at two genuinely distinct folded rows.  Then this is a legitimate same-characteristic return.  The exact Apéry transfer gives the repository gap continuant
+
+\[
+\boxed{
+p_\epsilon\mid
+ \mathcal N_{\Delta_{\epsilon,\eta}}(h_\epsilon),}
+\tag{3.2}
+\]
+
+where `Delta_{epsilon,eta}` is the corresponding folded transfer length and
+
+\[
+\deg_x\mathcal N_\Delta=3(\Delta-1).
+\tag{3.3}
+\]
+
+The same statement holds with an upper characteristic returning to a lower row.
+
+This is genuinely target-selective.  It does not close the requested estimate.  Here
+
+\[
+\Delta_{\epsilon,\eta}
+ =g+O(d_1+d_2+d_3)
+\tag{3.4}
+\]
+
+on the direct branch, with the usual signed/reflected variant.  The natural cleared continuant has logarithmic height
+
+\[
+O\!\left(\Delta\log(X+\Delta)\right),
+\tag{3.5}
+\]
+
+and a scalar resultant is typically worse.  Q8345 computed the necessary pointwise exponent:
+
+\[
+\alpha<\alpha_*(\eta)
+=\frac{13/15+2\eta}{14/15+\eta}<1.
+\tag{3.6}
+\]
+
+Thus even a linear `g`-height carrier misses the first far scale when `0<eta<1/15`.  Selecting the first of the 128 cross zeros changes only a constant factor.
+
+This is a scoped quantitative failure of the banked continuant/resultant ledger, not a claim that no future theorem can exploit several actual cross returns simultaneously.
+
+### 3.2 Cross-unit residual case
+
+If no cross return is used, every characteristic has only its own forced zero among the sixteen local rows.  The short-gap fixed-layer transfer is already saturated by Q8321, and the far edge changes characteristic.  Hence no same-characteristic cycle exists from which a new Apéry recurrence equation could be extracted.
+
+The next sections prove that the remaining determinant/Boolean/norm routes are formally saturated.  This is a residual case in a valid case split; it is **not** imposed as a hypothesis on all packets.
+
+---
+
+## 4. Why the false complete-unit determinant cannot be repaired
+
+Let rows index the eight lower and eight upper characteristics, and columns index the eight lower and eight upper folded rows.  Record only divisibility:
+
+\[
+Z_{ij}=1
+\quad\Longleftrightarrow\quad
+\text{the characteristic in row `i` divides the Apéry value in column `j`}.
+\tag{4.1}
+\]
+
+The exact packet information is
+
+\[
+\boxed{
+Z=\begin{pmatrix}
+I_8&X\\
+Y&I_8
+\end{pmatrix},}
+\tag{4.2}
+\]
+
+where the two identity blocks come from `(1.5)`–`(1.6)`, while
+
+\[
+X,Y\in\{0,1\}^{8\times8}
+\tag{4.3}
+\]
+
+are uncontrolled.
+
+The false complete-unit condition is exactly `X=Y=0`.  Under the actual hypotheses, elementary block elimination gives, over every field,
+
+\[
+\boxed{
+\det Z=\det(I_8-YX).}
+\tag{4.4}
+\]
+
+Indeed, subtracting `Y` times the first block row from the second turns `Z` into an upper block-triangular matrix with lower-right block `I-YX`.
+
+This determinant has no fixed behavior.  Taking `X=I` and `Y=I-A` gives
+
+\[
+\det Z=\det A,
+\qquad
+\operatorname{rank}Z=8+\operatorname{rank}A.
+\tag{4.5}
+\]
+
+Even with Boolean diagonal `A`, every corank from zero through eight occurs.  With field-valued cross entries, `A` is arbitrary.
+
+Consequences:
+
+- no universal determinant is a unit or zero;
+- no fixed Smith corank follows;
+- a scalar resultant that forgets labels can be supported by an alternate cross-layer matching;
+- a permanent or matching count is equally contaminated;
+- differentiating such a determinant only marks one of several possible matchings and does not recover the eight corresponding far edges.
+
+This is the exact algebraic reason the 128 values cannot be silently upgraded to units.
+
+---
+
+## 5. CRT saturation of recurrence transfer and local Gessel lifts
+
+Consider the universal striped packet algebra generated by the sixteen local Apéry states, their banked finite transfers, the fixed-gap Gessel/parameter-derivative coordinates, the physical quotient equations `(1.3)`, and inverses of the **declared** within-layer units.  Do not invert the cross-layer entries.
+
+For a vertex `v`, let
+
+\[
+I_v=(\pi_v,B_v)
+\tag{5.1}
+\]
+
+be its target ideal, where `pi_v` is its defining prime and `B_v` its own local Apéry coordinate.  For distinct vertices,
+
+\[
+I_v+I_w=\mathcal A,
+\tag{5.2}
+\]
+
+because `pi_v,pi_w` are distinct rational primes and a Bezout combination of them equals one.  Therefore
+
+\[
+\boxed{
+\bigcap_{v\in\{0,1\}^4}I_v
+ =\prod_{v\in\{0,1\}^4}I_v.}
+\tag{5.3}
+\]
+
+The scalar contraction in the formal local algebra is
+
+\[
+\boxed{
+\left(\bigcap_v I_v\right)\cap\mathbf Z
+ =\left(\prod_v\pi_v\right).}
+\tag{5.4}
+\]
+
+Local recurrence transfer, differentiated transfer, and Q8321's prime-independent first defect change generators inside one `I_v`; they do not change `(5.2)`.  Physical common `m` gives the affine integer identities `(1.3)`, but no banked identity identifies one local Apéry coordinate with another characteristic.
+
+Thus a universal scalar derived only from the current local relations has candidate-blind sixteen-prime content.  Primitive saturation either retains that product or removes the target labels with it.  Repeating eight parallel edges does not create holonomy.
+
+### Scope
+
+Equation `(5.4)` is a no-go for the algebra generated by the listed banked identities.  It is not a synthetic counterexample to the uniquely normalized actual Apéry sequence.  A new actual-Apéry mixed-characteristic theorem can escape `(5.4)`; `(FSPE)` is precisely such a theorem.
+
+---
+
+## 6. Post-radical Boolean derivatives are invertible, not annihilating
+
+The sixteen physical integers form an affine four-cube.  With
+
+\[
+r_v=u+v_1d_1+v_2d_2+v_3d_3+v_4g,
+\qquad v\in\{0,1\}^4,
+\tag{6.1}
+\]
+
+one has the exact fourth Boolean difference
+
+\[
+\sum_v(-1)^{|v|}(m-r_v)=0.
+\tag{6.2}
+\]
+
+Writing the physical factorizations as
+
+\[
+m-r_v=c_v\pi_v
+\tag{6.3}
+\]
+
+gives only the quotient-weighted identity
+
+\[
+\boxed{
+\sum_v(-1)^{|v|}c_v\pi_v=0.}
+\tag{6.4}
+\]
+
+Deleting the quotients after taking a shell radical is not legitimate.  The map `n -> shrad_X(n)` is neither additive nor polynomial.
+
+There is also an exact linear-algebra obstruction.  The Boolean/Walsh matrix
+
+\[
+W_{A,v}=(-1)^{|A\cap v|},
+\qquad A,v\in\{0,1\}^4,
+\tag{6.5}
+\]
+
+has
+
+\[
+\boxed{|\det W|=16^8\ne0.}
+\tag{6.6}
+\]
+
+Therefore Boolean derivatives are an invertible change of coordinates on the sixteen vertex labels.  In the free abelian valuation module generated by the sixteen distinct characteristics, no nonzero Boolean derivative annihilates arbitrary labelled radical data.
+
+The verifier gives an exact affine integer four-cube for which `(6.2)` holds, the quotient-weighted selected-prime identity `(6.4)` holds, but the unweighted selected-prime Boolean derivative is nonzero.
+
+---
+
+## 7. Mixed-characteristic norms do not fuse the labels
+
+Let `K_v` be any natural local Kummer/character field used for vertex `v`, let `K` contain all `K_v`, and take local elements `alpha_v in K_v`.  Norm transitivity gives
+
+\[
+\boxed{
+N_{K/\mathbf Q}\!\left(\prod_v\alpha_v\right)
+ =\prod_v
+  N_{K_v/\mathbf Q}(\alpha_v)^{[K:K_v]}.}
+\tag{7.1}
+\]
+
+Hence the rational prime support of the product norm is only the union of the local norm supports, with positive multiplicities.  It creates no cancellation and no target matching.
+
+A norm of a **sum** could behave differently, but the current packet algebra supplies no canonical mixed-characteristic sum identity among the local Apéry coordinates.  Equation `(6.4)` is a sum identity for the physical integers `c_v pi_v`, not for target coordinates.  Moreover the Kummer orders and fields vary with the defining primes, so there is no fixed bounded-degree compatible norm to which an existing Frobenius sieve applies.
+
+Thus the natural mixed-norm route is contained in CRT saturation.
+
+---
+
+## 8. Exact selected-prime reduction
+
+Fix once and for all one upper vertex, say `epsilon=000`.  A **canonical fifteen-skeleton** consists of
+
+- all eight retained lower hits;
+- the other seven retained upper hits;
+- the physical cube equations and the common orientation type;
+- the candidate quotient/shell-prime factorization for the deleted upper vertex;
+- every isolation, high-Kummer, and within-layer directed-unit condition not equal to the deleted target equation.
+
+For a skeleton `S`, write
+
+\[
+N_*(S)=m-s_{000}-\delta g,
+\qquad
+h_*(S)=H(s_{000}+\delta g).
+\tag{8.1}
+\]
+
+By shell-partner uniqueness, either `N_*` has no admissible shell-prime divisor or it has exactly one, denoted `q_*(S)`.  Define
+
+\[
+\Gamma_*(S)
+=\operatorname{shrad}_X
+ \gcd\bigl(N_*(S),b_{h_*(S)}\bigr).
+\tag{8.2}
+\]
+
+Then
+
+\[
+\boxed{
+\Gamma_*(S)=
+\begin{cases}
+q_*(S),&q_*(S)\mid b_{h_*(S)},\\
+1,&\text{otherwise}.
+\end{cases}}
+\tag{8.3}
+\]
+
+The exact retained endpoint mask also checks isolation, Kummer order, and the upper-layer directed units involving `q_*`.  Cross-layer values remain unrestricted.
+
+Deleting the same fixed vertex from every full tesseract is one-to-one.  Hence
+
+\[
+\boxed{
+\mathcal T_{16}(m,g)
+ =\sum_{S\in\mathscr S_{15}(m,g)}
+  \mathbf 1_{\rm masks}(S)
+  \mathbf 1_{\Gamma_*(S)>1}.}
+\tag{8.4}
+\]
+
+Since every nontrivial `Gamma_*` lies in `(X,2X]`, one has the exact sandwich
+
+\[
+\log X\,\mathcal T_{16}(m,g)
+\le
+\sum_S\mathbf 1_{\rm masks}(S)\log\Gamma_*(S)
+\le
+\log(2X)\,\mathcal T_{16}(m,g).
+\tag{8.5}
+\]
+
+Thus `(FSPE)` is equivalent to the requested tesseract estimate.
+
+### Weight form
+
+Define
+
+\[
+w_{m,g}(q,h)
+=\#\{S\in\mathscr S_{15}(m,g):
+ q_*(S)=q,\ h_*(S)=h,\ \mathbf 1_{\rm masks}(S)=1\}.
+\tag{8.6}
+\]
+
+Then the surviving arithmetic correlation is
+
+\[
+\boxed{
+\sum_{X<q\le2X}(\log q)
+ \sum_{h}w_{m,g}(q,h)\mathbf 1_{q\mid b_h}.}
+\tag{8.7}
+\]
+
+The existing zero-count theorem controls the unweighted size of
+
+\[
+I_q=\{h:q\mid b_h\},
+\tag{8.8}
+\]
+
+but not a deterministic weight that may concentrate on `I_q`.  High Kummer order deletes low-order characters; it does not stop one selected high-order character per prime.  This is exactly the Q8345 selected-character obstruction.
+
+A selected-prime sieve must therefore prove anti-concentration of `w_{m,g}` against the actual Apéry zero set.  Counting all characters, averaging over an auxiliary characteristic, or invoking the all-character Hasse bound does not supply it.
+
+---
+
+## 9. Exact multiplicity-preserving content carrier
+
+The one-endpoint gcd can be packaged into one characteristic-zero scalar without losing repeated completions.
+
+Let
+
+\[
+\mathscr F_{m,g}(Y)
+ =\prod_{S\in\mathscr S_{15}(m,g)}
+   \bigl(N_*(S)+Yb_{h_*(S)}\bigr)
+ \in\mathbf Z[Y].
+\tag{9.1}
+\]
+
+For each factor,
+
+\[
+\operatorname{cont}\bigl(N_*(S)+Yb_{h_*(S)}\bigr)
+ =\gcd\bigl(N_*(S),b_{h_*(S)}\bigr).
+\tag{9.2}
+\]
+
+Gauss's lemma is multiplicative for contents, so
+
+\[
+\boxed{
+\operatorname{cont}\mathscr F_{m,g}
+ =\prod_S\gcd\bigl(N_*(S),b_{h_*(S)}\bigr).}
+\tag{9.3}
+\]
+
+Because `N_*=c_*q_*` with `c_*<X<q_*`, the shell-prime valuation of a successful factor is exactly one.  Therefore
+
+\[
+\boxed{
+\operatorname{cont}_{(X,2X]}\mathscr F_{m,g}
+ =\prod_S\Gamma_*(S),}
+\tag{9.4}
+\]
+
+including multiplicity across skeletons.
+
+This is the smallest surviving Fitting/content scalar I know.  It is target-selective and label-preserving before content is taken.  But the only immediate height bound is
+
+\[
+\log\operatorname{cont}_{(X,2X]}\mathscr F_{m,g}
+\le\sum_S\log|N_*(S)|
+=O\bigl(|\mathscr S_{15}(m,g)|\log X\bigr),
+\tag{9.5}
+\]
+
+which is tautological at the required scale.  Taking the radical of the product loses packet multiplicity; taking a global gcd loses labels; retaining all linear factors gives `(9.5)`.
+
+The missing theorem can therefore be stated equivalently as the shell-content bound
+
+\[
+\boxed{
+\log\operatorname{cont}_{(X,2X]}\mathscr F_{m,g}
+=o\!\left(\frac{L^{16}}{X^{15}}\log X\right).}
+\tag{9.6}
+\]
+
+No current G-function gcd theorem, fixed-`S` Subspace Theorem, or recurrence resultant has hypotheses that imply `(9.6)` for this moving deterministic family.
+
+---
+
+## 10. Route ledger
+
+| Route | Exact output | Decision |
+|---|---|---|
+| Eight corresponding physical edges | Layerwise radical `(2.2)` | Target-selective but height-exact; no saving |
+| Same-characteristic cross zero | Gap continuant `(3.2)` | Valid, but moving linear/quadratic gap height misses `(3.6)` |
+| Fixed-gap recurrence/Gessel transfer | One value plus one parameter-derivative coordinate | Q8321 saturation; no cross-characteristic holonomy |
+| Scalar resultant of products | Forgets the corresponding matching | Cross blocks `X,Y` create false alternate matchings |
+| Smith/determinant rank | `det Z=det(I-YX)` | Arbitrary corank; false complete-unit condition is essential |
+| Post-radical Boolean derivative | Invertible Walsh transform | Quotient-weighted affine identity only; radical deletion invalid |
+| Product/compositum norm | Product of local norm supports | No cancellation or label fusion |
+| All-character/Kummer average | Average over characters | Does not control one deterministic high-order section |
+| Selected-prime sieve | Weighted endpoint sum `(8.7)` | First surviving analytic/arithmetic correlation |
+| Block content/Fitting | Exact identity `(9.4)` | Multiplicity preserved, but only tautological height known |
+
+---
+
+## 11. Theorem ledger
+
+### Proved here
+
+1. Exact upper- and lower-layer labelled-radical theorem `(2.2)`.
+2. Valid cross-zero versus residual-unit case split without imposing complete cross-layer units.
+3. Exact block-incidence freedom `(4.4)`–`(4.5)`.
+4. CRT intersection and scalar-contraction theorem `(5.3)`–`(5.4)` for the banked local packet algebra.
+5. Boolean/Walsh invertibility and the quotient-weighted nature of the physical affine identity.
+6. Natural mixed-norm support factorization `(7.1)`.
+7. Exact selected-endpoint equivalence `(8.3)`–`(8.5)`.
+8. Exact multiplicity-preserving endpoint-content identity `(9.3)`–`(9.4)`.
+
+### Not proved
+
+1. The desired `o(L^16/X^15)` tesseract count.
+2. Any sublinear-in-`g` nonzero continuant/resultant carrier for cross returns.
+3. Any anti-concentration theorem for the deterministic weights `w_{m,g}(q,h)`.
+4. The shell-content saving `(9.6)`.
+5. Any actual-Apéry theorem forcing one of the 128 cross-layer values to be a unit or a zero.
+
+### Smallest new theorem that would close the frontier
+
+Any one of the equivalent forms below is sufficient:
+
+\[
+\sum_S\mathbf 1_{\rm masks}(S)\log\Gamma_*(S)
+=o\!\left(\frac{L^{16}}{X^{15}}\log X\right),
+\tag{11.1}
+\]
+
+\[
+\sum_{q,h}(\log q)w_{m,g}(q,h)\mathbf 1_{q\mid b_h}
+=o\!\left(\frac{L^{16}}{X^{15}}\log X\right),
+\tag{11.2}
+\]
+
+or
+
+\[
+\log\operatorname{cont}_{(X,2X]}\mathscr F_{m,g}
+=o\!\left(\frac{L^{16}}{X^{15}}\log X\right).
+\tag{11.3}
+\]
+
+These are not consequences of the complete-unit fiction.  They preserve the physical `m`, every defining characteristic, every quotient and orientation, and all cross-layer zeros.
+
+---
+
+## 12. Reproducible exact verifier
+
+Owned verifier:
+
+```text
+problems/3.2/research/scripts/chatgpt_q32_far_striped_arithmetic_verify.py
+```
+
+Run from the repository root:
+
+```bash
+python3 problems/3.2/research/scripts/chatgpt_q32_far_striped_arithmetic_verify.py
+```
+
+It uses only the Python standard library.  It checks:
+
+- the actual mixed edge `(m,p,q)=(321,179,193)` and the failure `179 |/ b_64`;
+- the shell-product partner-uniqueness inequality;
+- the exact layerwise radical with a deleted endpoint;
+- all cross-block coranks from zero through eight;
+- sixteen-prime CRT saturation;
+- `|det W_3|=8^4` and `|det W_4|=16^8`;
+- an exact affine four-cube whose quotient-weighted Boolean derivative vanishes while its selected-prime derivative does not;
+- natural mixed-norm prime-support factorization.
+
+No execution result is claimed in this report; the verifier is supplied for exact replay.
+
+---
+
+## Final conclusion
+
+The far striped tesseract does yield a clean arithmetic object, but not a saving:
+
+\[
+\operatorname{shrad}_X
+\gcd\!\left(\prod B_\epsilon,\prod b_{k_\epsilon}\right)
+\]
+
+recovers exactly the corresponding upper labels and ignores the uncontrolled cross-layer values.  Its height is already exactly the eight-prime target height.
+
+Cross-layer zeros can be converted into genuine same-characteristic continuants, but the gap is far and the known height ledger is too large.  In the residual case, the two arbitrary cross blocks make determinant/resultant matching completely nonrigid, while CRT and the Walsh transform show that transfer and post-radical Boolean operations retain all sixteen independent labels.
+
+The first surviving target-selective scalar is therefore
+
+\[
+\Gamma_*(S)=\operatorname{rad}_{(X,2X]}\gcd(N_*(S),b_{h_*(S)}),
+\]
+
+and the first surviving theorem is the selected-endpoint/content anti-concentration `(FSPE)`.  Proving that theorem, or an equivalent actual-Apéry mixed-characteristic correlation, is the precise arithmetic work still required beyond the deterministic tesseract reduction.
