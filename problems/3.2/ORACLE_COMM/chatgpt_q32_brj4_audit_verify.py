@@ -231,8 +231,8 @@ def verify_fixed_g_geometry() -> None:
         node_v = prod(h - hh for j, hh in enumerate(direct_h) if j != i)
         assert g ** (n - 1) * V == node_v
 
-    reflected_h = (2, 5, 8)
-    # m=(g+1)p-1-h, so choose h congruent to m-1 modulo g+1.
+    reflected_h = (1, 4, 7)
+    # m=(g+1)p-1-h, so h == -m-1 (mod g+1).
     assert all((m + h + 1) % (g + 1) == 0 for h in reflected_h)
     reflected_p = tuple((m + h + 1) // (g + 1) for h in reflected_h)
     for i, h in enumerate(reflected_h):
