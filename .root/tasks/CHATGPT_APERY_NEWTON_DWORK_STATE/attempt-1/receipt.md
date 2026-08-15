@@ -1,6 +1,6 @@
 worker: CHATGPT_APERY_NEWTON_DWORK_STATE
 request_sha256: UNAVAILABLE_NOT_EXPOSED_BY_DISPATCH
- dispatch_id: UNAVAILABLE_NOT_EXPOSED_BY_DISPATCH
+dispatch_id: UNAVAILABLE_NOT_EXPOSED_BY_DISPATCH
 owner_epoch: UNAVAILABLE_NOT_EXPOSED_BY_DISPATCH
 status: PARTIAL_STRICT_REDUCTION
 changed_files:
@@ -19,15 +19,15 @@ claim: >-
   For every prime p, if E=min_{0<=i<=K}(v_p(B_i)+v_p(w_i)), then
   v_p(B_n) is bounded below by an explicit Dwork quotient-state functional Phi_p(n,K;E).
   Hence the desired divisibility follows from the named lower-dimensional condition
-  DQSC: Phi_p(n,K;E)>=E.  The condition compresses further to the last E borrow-prefix
-  states.  The theorem is proved uniformly when E=0 or E=1, and for every E when the
-  deepest borrow prefix has p-unit quotient Apéry coordinate.  The p=19 depth-three
+  DQSC: Phi_p(n,K;E)>=E. The condition compresses further to the last E borrow-prefix
+  states. The theorem is proved uniformly when E=0 or E=1, and for every E when the
+  deepest borrow prefix has p-unit quotient Apéry coordinate. The p=19 depth-three
   state closes with Phi=E=3.
 residual: >-
   Prove that the Dwork-state defect delta_p(n,K)=E-Phi_p(n,K;E) is never positive,
-  or find the smallest exact state with delta_p(n,K)>0 and v_p(B_n)<E.  Positive
+  or find the smallest exact state with delta_p(n,K)>0 and v_p(B_n)<E. Positive
   defect is necessary but not sufficient for a counterexample.
 crux_id: POSITIVE_DWORK_STATE_DEFECT
 unexpected_changes:
   - The two declared authoritative .root/direct files are not present in the remote base commit and therefore could not be read through GitHub.
-  - The required absolute local-path temporary-file-and-rename operation cannot be performed by the GitHub connector.  This receipt is the atomically committed repository-relative mirror on chatgpt-drop; no claim is made that the caller's local filesystem was mutated.
+  - The required absolute local-path temporary-file-and-rename operation cannot be performed by the GitHub connector. This receipt is the atomically committed repository-relative mirror on chatgpt-drop; no claim is made that the caller's local filesystem was mutated.
