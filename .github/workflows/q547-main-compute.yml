@@ -1,0 +1,50 @@
+name: Q547 trusted computation audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/q547-main-compute.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: q547-trusted-main-computation
+  cancel-in-progress: true
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch dependency-free Q547 computation
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin q547-compute
+          git show origin/q547-compute:problems/3.2/research/scripts/q547_transfer_roots.py > /tmp/q547_transfer_roots.py
+      - name: Run exact transfer-root computation
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/q547-output
+          python3 /tmp/q547_transfer_roots.py --output-dir /tmp/q547-output \
+            | tee /tmp/q547-run.log
+      - name: Persist output on computation branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout q547-compute
+          rm -rf problems/3.2/research/computations/q547
+          mkdir -p problems/3.2/research/computations/q547
+          cp -R /tmp/q547-output/. problems/3.2/research/computations/q547/
+          cp /tmp/q547-run.log q547-run.log
+          git add problems/3.2/research/computations/q547 q547-run.log
+          git commit -m 'Record Q547 transfer-root results' || exit 0
+          git push origin HEAD:q547-compute
