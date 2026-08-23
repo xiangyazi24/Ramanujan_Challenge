@@ -1,0 +1,39 @@
+name: Q2338 endpoint audit
+
+on:
+  push:
+    branches: [q2338-compute-c289a614]
+    paths:
+      - '.github/workflows/q2338-compute.yml'
+      - 'problems/3.2/research/scripts/q2338_endpoint_scan.py'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: q2338-endpoint-audit
+  cancel-in-progress: true
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Exact standard-library computation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 problems/3.2/research/scripts/q2338_endpoint_scan.py | tee q2338-result.txt
+          test "$(head -n 1 q2338-result.txt)" = "ANSWER Q2338 c289a614"
+      - name: Persist output
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add q2338-result.txt
+          git commit -m 'Record Q2338 endpoint audit'
+          git push origin HEAD:q2338-compute-c289a614
