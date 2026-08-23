@@ -2,6 +2,7 @@
 \\ Exact PARI/GP audit for gaps h=3,4,5.
 
 default(parisizemax, 8000000000);
+default(realprecision, 38);
 allocatemem(1000000000);
 
 P(t)=34*t^3+51*t^2+27*t+5;
@@ -44,6 +45,7 @@ audit(H) = {
   print("GCD_R_W=",gcd(R[H],W));
   print("TRIPLE_GCD=",gcd(gcd(N[H+1],R[H]),W));
   print("REAL_ROOT_COUNT_W=",polsturm(W));
+  print("REAL_ROOTS_W=",polrootsreal(W));
   co=Vec(W); minco=co[1];
   for(j=1,#co,if(co[j]<minco,minco=co[j]);if(co[j]<=0,pos=0));
   print("ALL_W_COEFFICIENTS_POSITIVE=",pos," MIN_W_COEFFICIENT=",minco);
