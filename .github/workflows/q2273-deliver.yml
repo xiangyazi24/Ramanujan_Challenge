@@ -25,6 +25,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # rerun after the minimal-checker output fix
           python3 problems/3.2/research/scripts/q2273_certificate.py > /tmp/q2273-base.md
           python3 problems/3.2/research/scripts/q2273_minimal_certificate.py > /tmp/q2273-minimal.md
           {
