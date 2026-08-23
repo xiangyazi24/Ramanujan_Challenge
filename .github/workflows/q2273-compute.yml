@@ -1,0 +1,38 @@
+name: Q2273 exact F41 Bezout certificate
+
+on:
+  push:
+    branches: [q2273-compute-f6666eaf]
+    paths:
+      - '.github/workflows/q2273-compute.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: q2273-exact-f41-certificate
+  cancel-in-progress: true
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run dependency-free exact finite-field computation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 problems/3.2/research/scripts/q2273_certificate.py > q2273-result.md
+          test "$(head -n 1 q2273-result.md)" = "ANSWER Q2273 f6666eaf"
+      - name: Persist exact result on computation branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add q2273-result.md
+          git commit -m 'Record Q2273 exact F41 certificate'
+          git push origin HEAD:q2273-compute-f6666eaf
