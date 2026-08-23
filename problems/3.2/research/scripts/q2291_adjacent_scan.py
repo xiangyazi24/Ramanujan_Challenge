@@ -67,20 +67,22 @@ def dot_rows(a: list[int], b: list[int], p: int) -> int:
 
 def search_propagation(pmax: int = 1000) -> None:
     first_any = None
-    first_noncentral = None
+    first_s_noncentral = None
+    first_both_noncentral = None
+    first_strict_lower_half = None
     first_marked = None
     for p in primes_upto(pmax):
         if p < 5:
             continue
         rows = rows_mod_p(p)
         vals = [dot_rows(row, row, p) for row in rows]
+        central = (p - 1) // 2
         for r in range(1, p - 1):
             if not (p > r + 1 and vals[r] == 0):
                 continue
             kadj = dot_rows(rows[r], rows[r - 1], p)
             assert kadj != 0
             mate = p - 1 - r
-            central = (p - 1) // 2
             for s in range(r + 1, p - 1):
                 if s == mate:
                     continue
@@ -99,14 +101,18 @@ def search_propagation(pmax: int = 1000) -> None:
                 }
                 if first_any is None:
                     first_any = row
-                if s != central and first_noncentral is None:
-                    first_noncentral = row
+                if s != central and first_s_noncentral is None:
+                    first_s_noncentral = row
+                if r != central and s != central and first_both_noncentral is None:
+                    first_both_noncentral = row
+                if r < s < central and first_strict_lower_half is None:
+                    first_strict_lower_half = row
                 if vals[s] == 0 and first_marked is None:
                     first_marked = row
-        if first_noncentral is not None and first_marked is not None:
-            break
     print("first later nonmate zero (central allowed):", first_any)
-    print("first later nonmate zero (central excluded):", first_noncentral)
+    print("first later nonmate zero (s noncentral):", first_s_noncentral)
+    print("first later nonmate zero (r,s both noncentral):", first_both_noncentral)
+    print("first later nonmate zero (strict lower half r<s<M):", first_strict_lower_half)
     print("first later marked zero b_s=0:", first_marked)
 
 
