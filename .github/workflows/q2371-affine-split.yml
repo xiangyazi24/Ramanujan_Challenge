@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/q2371-affine-split.yml'
       - 'problems/3.2/research/scripts/q2371_affine_split.gp'
+      - 'problems/3.2/research/scripts/q2371_correct_wronskian.gp'
 
 permissions:
   contents: write
@@ -24,14 +25,17 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq pari-gp
-      - name: Run exact audit
+      - name: Run exact audits
         run: |
           gp -q problems/3.2/research/scripts/q2371_affine_split.gp \
             > problems/3.2/research/q2371-affine-split.txt
-      - name: Persist transcript
+          gp -q problems/3.2/research/scripts/q2371_correct_wronskian.gp \
+            > problems/3.2/research/q2371-correct-wronskian.txt
+      - name: Persist transcripts
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add problems/3.2/research/q2371-affine-split.txt
-          git commit -m 'Record Q2371 exact affine-split audit output' || exit 0
+          git add problems/3.2/research/q2371-affine-split.txt \
+                  problems/3.2/research/q2371-correct-wronskian.txt
+          git commit -m 'Record Q2371 exact affine-split audit outputs' || exit 0
           git push origin HEAD:chatgpt-q2371-audit
