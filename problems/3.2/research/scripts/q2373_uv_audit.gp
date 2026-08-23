@@ -49,6 +49,36 @@ emitpoly(name,F)={
   print("END_",name)
 };
 
+gcdres(h)={
+  my(gg=gcd(NN(h),VV(h)));
+  print("h=",h," GCD_N_V=",gg);
+  if(h==3,
+    my(res=polresultant(NN(h),VV(h)));
+    print("h=3 RESULTANT=",res);
+    print("h=3 RESULTANT_FACTORIZATION=",factor(res))
+  )
+};
+
+auditHP(h,p)={
+  my(F=NN(h),G=VV(h),H=RR(h),J=UU(h));
+  for(a=0,p-1,
+    my(nf=ev(F,a,p),vg=ev(G,a,p));
+    if(nf==0 && vg==0,
+      nvcount++;
+      if(a+h<p,nvrange++);
+      print("NV_COMMON p=",p," h=",h," r=",a," nonwrap=",a+h<p," mate=",(2*a+h+1)%p==0)
+    );
+    if(nf==0 && ev(H,a,p)==0,
+      my(wz=ev(WW(h),a,p),eq=lift(Mod(ev(J,a,p)-2*a*(a+1)*vg,p)));
+      commoncount++;
+      if(vg==0,commonvzero++);
+      print("NR_COMMON p=",p," h=",h," r=",a," V=",vg," U=",ev(J,a,p)," W=",wz," splitResidual=",eq," nonwrap=",a+h<p," mate=",(2*a+h+1)%p==0)
+    )
+  )
+};
+
+auditP(p)={for(h=3,5,auditHP(h,p))};
+
 print("Q2373_EXACT_BEGIN");
 print("SPLIT_CHECK_1=",W1==U1-2*r*(r+1)*V1);
 print("SPLIT_CHECK_2=",W2==U2-2*r*(r+1)*V2);
@@ -60,15 +90,7 @@ emitpoly("V4",V4);
 emitpoly("V5",V5);
 
 print("GCD_AND_RESULTANT_AUDIT");
-for(h=3,5,
-  gg=gcd(NN(h),VV(h));
-  print("h=",h," GCD_N_V=",gg);
-  if(h==3,
-    res=polresultant(NN(h),VV(h));
-    print("h=3 RESULTANT=",res);
-    print("h=3 RESULTANT_FACTORIZATION=",factor(res));
-  )
-);
+for(h=3,5,gcdres(h));
 
 print("COMMON_ROOT_REDUCTION_CHECKS");
 print("V3_MOD_R2=",polrem(V3-(r+3)^6*V2,R2)==0);
@@ -77,26 +99,7 @@ print("V5_MOD_R4=",polrem(V5-(r+5)^6*V4,R4)==0);
 
 print("FINITE_FIELD_SCAN_BEGIN");
 nvcount=0; nvrange=0; commoncount=0; commonvzero=0;
-forprime(p=3,500,
-  for(h=3,5,
-    F=NN(h); G=VV(h); H=RR(h); J=UU(h);
-    for(a=0,p-1,
-      nf=ev(F,a,p); vg=ev(G,a,p);
-      if(nf==0 && vg==0,
-        nvcount++;
-        if(a+h<p,nvrange++);
-        print("NV_COMMON p=",p," h=",h," r=",a," nonwrap=",a+h<p," mate=",(2*a+h+1)%p==0)
-      );
-      if(nf==0 && ev(H,a,p)==0,
-        commoncount++;
-        wz=ev(WW(h),a,p);
-        eq=lift(Mod(ev(J,a,p)-2*a*(a+1)*vg,p));
-        if(vg==0,commonvzero++);
-        print("NR_COMMON p=",p," h=",h," r=",a," V=",vg," U=",ev(J,a,p)," W=",wz," splitResidual=",eq," nonwrap=",a+h<p," mate=",(2*a+h+1)%p==0)
-      )
-    )
-  )
-);
+forprime(p=3,500,auditP(p));
 print("NV_TOTAL=",nvcount);
 print("NV_NONWRAP_TOTAL=",nvrange);
 print("NR_TOTAL=",commoncount);
