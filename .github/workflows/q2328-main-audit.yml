@@ -1,0 +1,35 @@
+name: Q2328 temporary associated-resultant audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/q2328-main-audit.yml'
+permissions:
+  contents: write
+concurrency:
+  group: q2328-trusted-main
+  cancel-in-progress: true
+jobs:
+  audit:
+    runs-on: ubuntu-slim
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch and run exact scanner
+        shell: bash
+        run: |
+          git fetch origin chatgpt-q2328-scan
+          git show origin/chatgpt-q2328-scan:problems/3.2/research/scripts/q2328_associated_resultant_scan.py > /tmp/q2328_scan.py
+          python /tmp/q2328_scan.py > /tmp/q2328-scan.out
+      - name: Persist output on scratch branch
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout chatgpt-q2328-scan
+          cp /tmp/q2328-scan.out q2328-scan.out
+          git add q2328-scan.out
+          git commit -m 'Record Q2328 associated-resultant scan output' || exit 0
+          git push origin HEAD:chatgpt-q2328-scan
