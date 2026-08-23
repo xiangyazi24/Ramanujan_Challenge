@@ -32,14 +32,14 @@ h=3 RESULTANT_FACTORIZATION=[2, 14; 5, 4; 73, 3; 239, 1; 431, 1; 408319591278163
 h=4 GCD_N_V=2
 h=5 GCD_N_V=1
 COMMON_ROOT_REDUCTION_CHECKS
-[0;31m[0;31m  ***   at top-level: [0;35mprint("V3_MOD_R2=",[0;35mpolrem(V3-(r+3)^6*V2,R2)==0
+[0;31m[0;31m  ***   at top-level: [0;35mprint("V3_MOD_R2=",[0;35mpoldivrem(V3-(r+3)^6*V2,R2)
 [0;31m[0;31m  ***                                    ^---------------------------
   ***   not a function in function call[0m
 ... skipping file 'problems/3.2/research/scripts/q2373_uv_audit.gp'
-[0;31m[0;31m  ***   at top-level: [0;35mprint("V4_MOD_R3=",[0;35mpolrem(V4-(r+4)^6*V3,R3)==0
+[0;31m[0;31m  ***   at top-level: [0;35mprint("V4_MOD_R3=",[0;35mpoldivrem(V4-(r+4)^6*V3,R3)
 [0;31m[0;31m  ***                                    ^---------------------------
   ***   not a function in function call[0m
-[0;31m[0;31m  ***   at top-level: [0;35mprint("V5_MOD_R4=",[0;35mpolrem(V5-(r+5)^6*V4,R4)==0
+[0;31m[0;31m  ***   at top-level: [0;35mprint("V5_MOD_R4=",[0;35mpoldivrem(V5-(r+5)^6*V4,R4)
 [0;31m[0;31m  ***                                    ^---------------------------
   ***   not a function in function call[0m
 FINITE_FIELD_SCAN_BEGIN
