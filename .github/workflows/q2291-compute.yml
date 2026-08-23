@@ -1,0 +1,37 @@
+name: Q2291 exact adjacent Racah audit
+
+on:
+  push:
+    branches: [q2291-compute-487384cb]
+    paths:
+      - '.github/workflows/q2291-compute.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: q2291-exact-adjacent-audit
+  cancel-in-progress: true
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run exact audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 problems/3.2/research/scripts/q2291_adjacent_scan.py | tee q2291-scan.txt
+      - name: Persist output
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add q2291-scan.txt
+          git commit -m 'Record Q2291 exact audit'
+          git push origin HEAD:q2291-compute-487384cb
