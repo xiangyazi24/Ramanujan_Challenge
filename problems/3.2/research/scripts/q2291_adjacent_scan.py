@@ -114,6 +114,27 @@ def search_propagation(pmax: int = 1000) -> None:
     print("first later nonmate zero (r,s both noncentral):", first_both_noncentral)
     print("first later nonmate zero (strict lower half r<s<M):", first_strict_lower_half)
     print("first later marked zero b_s=0:", first_marked)
+    if first_strict_lower_half is not None:
+        p = first_strict_lower_half["p"]
+        r = first_strict_lower_half["r"]
+        s = first_strict_lower_half["s"]
+        br = apery(r)
+        bs = apery(s)
+        ka = K(r, r - 1)
+        ks = K(r, s)
+        assert br % p == 0 and bs % p == first_strict_lower_half["b_s_mod_p"]
+        assert ka % p == first_strict_lower_half["K_adj_mod_p"] and ks % p == 0
+        print("exact strict-lower-half witness:", {
+            "p": p,
+            "r": r,
+            "s": s,
+            "b_r": br,
+            "b_r_over_p": br // p,
+            "b_s": bs,
+            "K_adj": ka,
+            "K_rs": ks,
+            "K_rs_over_p": ks // p,
+        })
 
 
 if __name__ == "__main__":
