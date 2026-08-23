@@ -1,4 +1,4 @@
-\\ Q2373: exact U_h,V_h split, gcd/resultant, and finite-field audits.
+\\ Q2373: exact U_h,V_h split, polynomial gcds, and finite-field audits.
 
 P(t)=34*t^3+51*t^2+27*t+5;
 Q(m,t)=(2*t+2*m+1)*(3*t^2+2*t*m+m^2+3*t+m+1);
@@ -49,18 +49,6 @@ emitpoly(name,F)={
   print("END_",name)
 };
 
-emitres(h)={
-  my(F=NN(h),G=VV(h),gg=gcd(F,G),res=polresultant(F,G),fac=factor(res));
-  print("BEGIN_RES_h=",h);
-  print("GCD_N_V=",gg);
-  print("RESULTANT_SIGN=",sign(res));
-  print("RESULTANT_DIGITS=",#Str(abs(res)));
-  print("RESULTANT=",res);
-  print("RESULTANT_FACTORIZATION=",fac);
-  print("FACTORBACK_OK=",factorback(fac)==res);
-  print("END_RES_h=",h)
-};
-
 print("Q2373_EXACT_BEGIN");
 print("SPLIT_CHECK_1=",W1==U1-2*r*(r+1)*V1);
 print("SPLIT_CHECK_2=",W2==U2-2*r*(r+1)*V2);
@@ -70,9 +58,17 @@ print("SPLIT_CHECK_5=",W5==U5-2*r*(r+1)*V5);
 emitpoly("V3",V3);
 emitpoly("V4",V4);
 emitpoly("V5",V5);
-emitres(3);
-emitres(4);
-emitres(5);
+
+print("GCD_AND_RESULTANT_AUDIT");
+for(h=3,5,
+  gg=gcd(NN(h),VV(h));
+  print("h=",h," GCD_N_V=",gg);
+  if(h==3,
+    res=polresultant(NN(h),VV(h));
+    print("h=3 RESULTANT=",res);
+    print("h=3 RESULTANT_FACTORIZATION=",factor(res));
+  )
+);
 
 print("COMMON_ROOT_REDUCTION_CHECKS");
 print("V3_MOD_R2=",polrem(V3-(r+3)^6*V2,R2)==0);
