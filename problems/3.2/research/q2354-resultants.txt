@@ -1,17 +1,47 @@
+[0;31m  ***   Warning: new maximum stack size = 8000000000 (7629.395 Mbytes).[0m
+[0;31m  *** allocatemem: Warning: increasing stack size to 1000000000.[0m
 Q2354_PARIGP_BEGIN
+[0;31m[0;31m  ***   syntax error, unexpected end of file, expecting )-> or ',' or ')': 
+[0;31m  ***   [0;35mfor(h=3,6[0;35m,
+[0;31m[0;31m  ***            ^-[0m
+... skipping file 'problems/3.2/research/scripts/q2354_resultants.gp'
+[0;31m[0;31m  ***   at top-level: [0;35mmy(A=[0;35mapery_gap(h,x),B=racah_gap(h-1,x))
+[0;31m[0;31m  ***                      ^----------------------------------
+[0;31m  ***   in function apery_gap: ...[0;35m(t+1);if(h==2,return(b));
+[0;31m  ***   [0;35mfor(k=2,h-1,c=P(t+k)*
+[0;31m[0;31m  ***   ^---------------------
+  *** for: forbidden comparison t_POL , t_INT.[0m
 H=h
 DEG_N=1 DEG_R=1
 CONTENT_N=1 CONTENT_R=1
 REFLECT_N_OK=0
 REFLECT_R_OK=0
+[0;31m[0;31m  ***   syntax error, unexpected end of file, expecting )-> or ',' or ')': 
+[0;31m  ***   [0;35mif(h%2==0[0;35m,
+[0;31m[0;31m  ***            ^-[0m
 RAW_RESULTANT=0
 COMMON_MATE_FACTOR=mate
+[0;31m[0;31m  ***   syntax error, unexpected ',', expecting end of file:[0;35m ,
+[0;31m[0;31m  ***                                                        ^-[0m
 RAW_RESULTANT_NONZERO_EXPECTED=1
+[0;31m[0;31m  ***   syntax error, unexpected ')', expecting end of file:[0;35m );
+[0;31m[0;31m  ***                                                        ^--[0m
 DEG_N_REDUCED=1 DEG_R_REDUCED=1
 CONTENT_N_REDUCED=1/mate CONTENT_R_REDUCED=1/mate
 GCD_REDUCED=g
+[0;31m[0;31m  ***   at top-level: ...[0;35mREDUCED_RESULTANT_SIGN=",[0;35msign(res))
+[0;31m[0;31m  ***                                             ^----------
+  *** sign: incorrect type in gsigne (t_POL).[0m
 REDUCED_RESULTANT_DIGITS=3
 REDUCED_RESULTANT=res
 FACTORIZATION=fac
+[0;31m[0;31m  ***   at top-level: ...[0;35mRGEST_PRIME_FACTOR=",fac[[0;35mmatsize(fac)[1],1])
+[0;31m[0;31m  ***                                             ^-------------------
+  *** matsize: incorrect type in matsize (t_POL).[0m
+[0;31m[0;31m  ***   at top-level: ...[0;35mNUMBER_DISTINCT_PRIMES=",[0;35mmatsize(fac)[1])
+[0;31m[0;31m  ***                                             ^----------------
+  *** matsize: incorrect type in matsize (t_POL).[0m
 ---
+[0;31m[0;31m  ***   syntax error, unexpected ')', expecting end of file:[0;35m );
+[0;31m[0;31m  ***                                                        ^--[0m
 Q2354_PARIGP_END
