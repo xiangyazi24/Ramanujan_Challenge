@@ -22,12 +22,25 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install exact algebra dependency
-        run: python -m pip install --disable-pip-version-check sympy==1.14.0
+      - name: Install exact algebra dependencies
+        run: |
+          python -m pip install --disable-pip-version-check sympy==1.14.0
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq pari-gp
       - name: Run exact symbolic and finite-field audit
         run: |
           python problems/3.2/research/scripts/q2362_mixed_wronskian.py \
             > problems/3.2/research/q2362-mixed-wronskian.txt
+          cat >> problems/3.2/research/q2362-mixed-wronskian.txt <<'EOF'
+PARI_APRCL_CERTIFICATES_BEGIN
+EOF
+          gp -q >> problems/3.2/research/q2362-mixed-wronskian.txt <<'GP'
+nums=[4453913,45845668061051,426071304778147835921390329046147579];
+for(i=1,#nums,print(nums[i]," ISPRIME=",isprime(nums[i])));
+GP
+          cat >> problems/3.2/research/q2362-mixed-wronskian.txt <<'EOF'
+PARI_APRCL_CERTIFICATES_END
+EOF
       - name: Persist exact transcript
         run: |
           git config user.name 'github-actions[bot]'
