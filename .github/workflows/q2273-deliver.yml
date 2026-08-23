@@ -33,16 +33,22 @@ jobs:
             tail -n +2 /tmp/q2273-base.md
           } > /tmp/Q2273-f6666eaf.md
           test "$(head -n 1 /tmp/Q2273-f6666eaf.md)" = "ANSWER Q2273 f6666eaf"
-      - name: Commit onto chatgpt-drop
+      - name: Commit onto chatgpt-drop with fast-forward retries
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git fetch origin chatgpt-drop
-          git checkout -B q2273-delivery origin/chatgpt-drop
-          mkdir -p drops
-          cp /tmp/Q2273-f6666eaf.md drops/Q2273-f6666eaf.md
-          git add drops/Q2273-f6666eaf.md
-          git commit -m 'Add Q2273 exact F41 Bezout certificate'
-          git push origin HEAD:chatgpt-drop
+          for attempt in 1 2 3 4 5; do
+            git fetch origin chatgpt-drop
+            git checkout -B q2273-delivery origin/chatgpt-drop
+            mkdir -p drops
+            cp /tmp/Q2273-f6666eaf.md drops/Q2273-f6666eaf.md
+            git add drops/Q2273-f6666eaf.md
+            git commit -m 'Add Q2273 exact F41 Bezout certificate'
+            if git push origin HEAD:chatgpt-drop; then
+              exit 0
+            fi
+            sleep 2
+          done
+          exit 1
