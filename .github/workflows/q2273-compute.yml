@@ -25,7 +25,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 problems/3.2/research/scripts/q2273_certificate.py > q2273-result.md
+          python3 problems/3.2/research/scripts/q2273_certificate.py > /tmp/q2273-base.md
+          python3 problems/3.2/research/scripts/q2273_minimal_certificate.py > /tmp/q2273-minimal.md
+          {
+            head -n 1 /tmp/q2273-base.md
+            cat /tmp/q2273-minimal.md
+            tail -n +2 /tmp/q2273-base.md
+          } > q2273-result.md
           test "$(head -n 1 q2273-result.md)" = "ANSWER Q2273 f6666eaf"
       - name: Persist exact result on computation branch
         shell: bash
@@ -34,5 +40,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add q2273-result.md
-          git commit -m 'Record Q2273 exact F41 certificate'
+          git commit -m 'Record minimal Q2273 exact F41 certificate'
           git push origin HEAD:q2273-compute-f6666eaf
