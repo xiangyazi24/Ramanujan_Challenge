@@ -4,3 +4,4 @@ first later nonmate zero (s noncentral): {'p': 11, 'r': 5, 's': 8, 'mate': 5, 'c
 first later nonmate zero (r,s both noncentral): {'p': 41, 'r': 10, 's': 13, 'mate': 30, 'central': 20, 'b_r_mod_p': 0, 'b_s_mod_p': 30, 'K_adj_mod_p': 21, 'K_rs_mod_p': 0}
 first later nonmate zero (strict lower half r<s<M): {'p': 41, 'r': 10, 's': 13, 'mate': 30, 'central': 20, 'b_r_mod_p': 0, 'b_s_mod_p': 30, 'K_adj_mod_p': 21, 'K_rs_mod_p': 0}
 first later marked zero b_s=0: None
+exact strict-lower-half witness: {'p': 41, 'r': 10, 's': 13, 'b_r': 13657436403073, 'b_r_over_p': 333108204953, 'b_s': 364713572395983725, 'K_adj': 2354354542013, 'K_rs': 1302144726557533, 'K_rs_over_p': 31759627477013}
