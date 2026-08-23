@@ -8,6 +8,9 @@ on:
       - '.github/workflows/q2354-resultants.yml'
       - 'problems/3.2/research/scripts/q2354_resultants.gp'
 
+permissions:
+  contents: write
+
 jobs:
   exact-resultants:
     runs-on: ubuntu-latest
@@ -15,15 +18,24 @@ jobs:
     steps:
       - name: Check out branch
         uses: actions/checkout@v4
+        with:
+          ref: chatgpt-drop
       - name: Install PARI/GP
         run: |
           sudo apt-get update
           sudo apt-get install -y pari-gp
       - name: Compute and factor exact resultants
         run: |
-          gp -q problems/3.2/research/scripts/q2354_resultants.gp | tee q2354-resultants.txt
+          gp -q problems/3.2/research/scripts/q2354_resultants.gp | tee problems/3.2/research/q2354-resultants.txt
+      - name: Commit exact transcript to audit branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add problems/3.2/research/q2354-resultants.txt
+          git commit -m "Record Q2354 exact resultant transcript"
+          git push origin HEAD:chatgpt-drop
       - name: Upload exact transcript
         uses: actions/upload-artifact@v4
         with:
           name: q2354-resultants
-          path: q2354-resultants.txt
+          path: problems/3.2/research/q2354-resultants.txt
