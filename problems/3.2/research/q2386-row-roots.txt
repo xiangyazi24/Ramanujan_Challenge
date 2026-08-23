@@ -1,6 +1,10 @@
 Q2386_ROOTS_BEGIN
-[0;31m[0;31m  ***   syntax error, unexpected ')', expecting end of file: 
-[0;31m  ***   ...[0;35m(PP>=2*R+1,audit(R,PP))))[0;35m);
-[0;31m[0;31m  ***                               ^--[0m
+[0;31m[0;31m  ***   at top-level: [0;35mfor(R=1,12,[0;35mauditR(R))
+[0;31m[0;31m  ***                            ^----------
+[0;31m  ***   in function auditR: ...[0;35m(PP=F[j,1]);if(PP>=2*R+1,[0;35maudit(R,PP)))
+[0;31m[0;31m  ***                                                   ^-------------
+[0;31m  ***   in function audit: [0;35mmy(A=rowpoly(R,X),roots=[0;35mpolrootsmod(A,PP),M=(P
+[0;31m[0;31m  ***                                              ^----------------------
+  *** polrootsmod: incorrect type in Rg_to_Fl (t_REAL).[0m
 ... skipping file 'problems/3.2/research/scripts/q2386_row_roots.gp'
 Q2386_ROOTS_END
