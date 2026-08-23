@@ -1,0 +1,34 @@
+name: Q2318 collision details
+
+on:
+  push:
+    branches: [q2318-compute-7cd8ebec]
+    paths:
+      - '.github/workflows/q2318-collision-details.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  details:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run exact collision details
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd problems/3.2/research/scripts
+          python3 q2318_collision_details.py | tee ../../../../q2318-collision-details.txt
+      - name: Persist details
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add q2318-collision-details.txt
+          git commit -m 'Record Q2318 collision details'
+          git push origin HEAD:q2318-compute-7cd8ebec
