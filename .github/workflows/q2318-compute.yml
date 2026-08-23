@@ -1,0 +1,38 @@
+name: Q2318 associated block resultant audit
+
+on:
+  push:
+    branches: [q2318-compute-7cd8ebec]
+    paths:
+      - '.github/workflows/q2318-compute.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: q2318-associated-resultant-audit
+  cancel-in-progress: true
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run dependency-free exact audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 problems/3.2/research/scripts/q2318_associated_resultant.py | tee q2318-result.txt
+          test "$(head -n 1 q2318-result.txt)" = "ANSWER Q2318 7cd8ebec"
+      - name: Persist result
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add q2318-result.txt
+          git commit -m 'Record Q2318 associated resultant audit'
+          git push origin HEAD:q2318-compute-7cd8ebec
