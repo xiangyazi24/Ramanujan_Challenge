@@ -1,47 +1,70 @@
 [0;31m  ***   Warning: new maximum stack size = 8000000000 (7629.395 Mbytes).[0m
 [0;31m  *** allocatemem: Warning: increasing stack size to 1000000000.[0m
 Q2354_PARIGP_BEGIN
-[0;31m[0;31m  ***   syntax error, unexpected end of file, expecting )-> or ',' or ')': 
-[0;31m  ***   [0;35mfor(h=3,6[0;35m,
-[0;31m[0;31m  ***            ^-[0m
-... skipping file 'problems/3.2/research/scripts/q2354_resultants.gp'
-[0;31m[0;31m  ***   at top-level: [0;35mmy(A=[0;35mapery_gap(h,x),B=racah_gap(h-1,x))
-[0;31m[0;31m  ***                      ^----------------------------------
-[0;31m  ***   in function apery_gap: ...[0;35m(t+1);if(h==2,return(b));
-[0;31m  ***   [0;35mfor(k=2,h-1,c=P(t+k)*
-[0;31m[0;31m  ***   ^---------------------
-  *** for: forbidden comparison t_POL , t_INT.[0m
-H=h
-DEG_N=1 DEG_R=1
+H=3
+DEG_N=6 DEG_R=6
 CONTENT_N=1 CONTENT_R=1
-REFLECT_N_OK=0
+REFLECT_N_OK=1
 REFLECT_R_OK=0
-[0;31m[0;31m  ***   syntax error, unexpected end of file, expecting )-> or ',' or ')': 
-[0;31m  ***   [0;35mif(h%2==0[0;35m,
-[0;31m[0;31m  ***            ^-[0m
-RAW_RESULTANT=0
-COMMON_MATE_FACTOR=mate
-[0;31m[0;31m  ***   syntax error, unexpected ',', expecting end of file:[0;35m ,
-[0;31m[0;31m  ***                                                        ^-[0m
 RAW_RESULTANT_NONZERO_EXPECTED=1
-[0;31m[0;31m  ***   syntax error, unexpected ')', expecting end of file:[0;35m );
-[0;31m[0;31m  ***                                                        ^--[0m
-DEG_N_REDUCED=1 DEG_R_REDUCED=1
-CONTENT_N_REDUCED=1/mate CONTENT_R_REDUCED=1/mate
-GCD_REDUCED=g
-[0;31m[0;31m  ***   at top-level: ...[0;35mREDUCED_RESULTANT_SIGN=",[0;35msign(res))
-[0;31m[0;31m  ***                                             ^----------
-  *** sign: incorrect type in gsigne (t_POL).[0m
-REDUCED_RESULTANT_DIGITS=3
-REDUCED_RESULTANT=res
-FACTORIZATION=fac
-[0;31m[0;31m  ***   at top-level: ...[0;35mRGEST_PRIME_FACTOR=",fac[[0;35mmatsize(fac)[1],1])
-[0;31m[0;31m  ***                                             ^-------------------
-  *** matsize: incorrect type in matsize (t_POL).[0m
-[0;31m[0;31m  ***   at top-level: ...[0;35mNUMBER_DISTINCT_PRIMES=",[0;35mmatsize(fac)[1])
-[0;31m[0;31m  ***                                             ^----------------
-  *** matsize: incorrect type in matsize (t_POL).[0m
+DEG_N_REDUCED=6 DEG_R_REDUCED=6
+CONTENT_N_REDUCED=1 CONTENT_R_REDUCED=1
+GCD_REDUCED=1
+REDUCED_RESULTANT_SIGN=-1
+REDUCED_RESULTANT_DIGITS=21
+REDUCED_RESULTANT=-207518224363520000000
+FACTORIZATION=[2, 18; 5, 7; 7, 1; 61, 2; 73, 3]
+LARGEST_PRIME_FACTOR=73
+NUMBER_DISTINCT_PRIMES=5
 ---
-[0;31m[0;31m  ***   syntax error, unexpected ')', expecting end of file:[0;35m );
-[0;31m[0;31m  ***                                                        ^--[0m
+H=4
+DEG_N=9 DEG_R=9
+CONTENT_N=2 CONTENT_R=2
+REFLECT_N_OK=1
+REFLECT_R_OK=0
+RAW_RESULTANT=0
+COMMON_MATE_FACTOR=2*X + 5
+DEG_N_REDUCED=8 DEG_R_REDUCED=8
+CONTENT_N_REDUCED=2 CONTENT_R_REDUCED=2
+GCD_REDUCED=2
+REDUCED_RESULTANT_SIGN=-1
+REDUCED_RESULTANT_DIGITS=54
+REDUCED_RESULTANT=-282554875075045819851681376929254876794306166784000000
+FACTORIZATION=[2, 36; 3, 5; 5, 6; 17, 7; 73, 3; 277, 2; 4457, 1; 4453913, 2]
+LARGEST_PRIME_FACTOR=4453913
+NUMBER_DISTINCT_PRIMES=8
+---
+H=5
+DEG_N=12 DEG_R=12
+CONTENT_N=1 CONTENT_R=1
+REFLECT_N_OK=1
+REFLECT_R_OK=0
+RAW_RESULTANT_NONZERO_EXPECTED=1
+DEG_N_REDUCED=12 DEG_R_REDUCED=12
+CONTENT_N_REDUCED=1 CONTENT_R_REDUCED=1
+GCD_REDUCED=1
+REDUCED_RESULTANT_SIGN=1
+REDUCED_RESULTANT_DIGITS=123
+REDUCED_RESULTANT=586484720471955378485109868508799234068643975948849856440405448102463351257600346510285192795041195622400000000000000000000
+FACTORIZATION=[2, 72; 3, 28; 5, 20; 17, 6; 29, 1; 41, 1; 61, 3; 67, 2; 73, 6; 541, 3; 6217, 2; 45845668061051, 2]
+LARGEST_PRIME_FACTOR=45845668061051
+NUMBER_DISTINCT_PRIMES=12
+---
+H=6
+DEG_N=15 DEG_R=15
+CONTENT_N=1 CONTENT_R=3
+REFLECT_N_OK=1
+REFLECT_R_OK=0
+RAW_RESULTANT=0
+COMMON_MATE_FACTOR=2*X + 7
+DEG_N_REDUCED=14 DEG_R_REDUCED=14
+CONTENT_N_REDUCED=1 CONTENT_R_REDUCED=3
+GCD_REDUCED=1
+REDUCED_RESULTANT_SIGN=1
+REDUCED_RESULTANT_DIGITS=197
+REDUCED_RESULTANT=10136572746605537251370953980214788110099148461015672840043909057274881555077684086189319792629233359307865825795124694136262582849600549826651588688180742673320962727092622981490278400000000000000
+FACTORIZATION=[2, 110; 3, 46; 5, 14; 7, 2; 11, 4; 17, 6; 61, 3; 73, 3; 541, 3; 2011, 2; 14891, 3; 245959333, 1; 426071304778147835921390329046147579, 2]
+LARGEST_PRIME_FACTOR=426071304778147835921390329046147579
+NUMBER_DISTINCT_PRIMES=13
+---
 Q2354_PARIGP_END
