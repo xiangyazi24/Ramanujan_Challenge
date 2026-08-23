@@ -1,0 +1,48 @@
+name: Deliver Q2273 exact certificate
+
+on:
+  push:
+    branches: [q2273-compute-f6666eaf]
+    paths:
+      - '.github/workflows/q2273-deliver.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: q2273-delivery-f6666eaf
+  cancel-in-progress: false
+
+jobs:
+  deliver:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Recompute and assemble the complete answer
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 problems/3.2/research/scripts/q2273_certificate.py > /tmp/q2273-base.md
+          python3 problems/3.2/research/scripts/q2273_minimal_certificate.py > /tmp/q2273-minimal.md
+          {
+            head -n 1 /tmp/q2273-base.md
+            cat /tmp/q2273-minimal.md
+            tail -n +2 /tmp/q2273-base.md
+          } > /tmp/Q2273-f6666eaf.md
+          test "$(head -n 1 /tmp/Q2273-f6666eaf.md)" = "ANSWER Q2273 f6666eaf"
+      - name: Commit onto chatgpt-drop
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch origin chatgpt-drop
+          git checkout -B q2273-delivery origin/chatgpt-drop
+          mkdir -p drops
+          cp /tmp/Q2273-f6666eaf.md drops/Q2273-f6666eaf.md
+          git add drops/Q2273-f6666eaf.md
+          git commit -m 'Add Q2273 exact F41 Bezout certificate'
+          git push origin HEAD:chatgpt-drop
