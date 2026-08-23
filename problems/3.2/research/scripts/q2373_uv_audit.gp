@@ -93,9 +93,9 @@ print("GCD_AND_RESULTANT_AUDIT");
 for(h=3,5,gcdres(h));
 
 print("COMMON_ROOT_REDUCTION_CHECKS");
-print("V3_MOD_R2=",polrem(V3-(r+3)^6*V2,R2)==0);
-print("V4_MOD_R3=",polrem(V4-(r+4)^6*V3,R3)==0);
-print("V5_MOD_R4=",polrem(V5-(r+5)^6*V4,R4)==0);
+print("V3_MOD_R2=",poldivrem(V3-(r+3)^6*V2,R2)[2]==0);
+print("V4_MOD_R3=",poldivrem(V4-(r+4)^6*V3,R3)[2]==0);
+print("V5_MOD_R4=",poldivrem(V5-(r+5)^6*V4,R4)[2]==0);
 
 print("FINITE_FIELD_SCAN_BEGIN");
 nvcount=0; nvrange=0; commoncount=0; commonvzero=0;
