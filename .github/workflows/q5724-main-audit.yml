@@ -17,28 +17,26 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Fetch dependency-free recurrence probe
+      - name: Fetch Q2328 exact scanner
         shell: bash
         run: |
-          git fetch origin q5723-audit
-          git show origin/q5723-audit:problems/3.2/research/scripts/q5723_state_order_audit.py > /tmp/q5724_probe.py
-          sed -i 's/MODS=(1000000007,1000000009)/MODS=(1000000007,)/' /tmp/q5724_probe.py
-          sed -i 's/for M in (754,1200,1500):/for M in (754,900,1050):/' /tmp/q5724_probe.py
-      - name: Run exact modular probe
+          git fetch origin chatgpt-q2328-scan
+          git show origin/chatgpt-q2328-scan:problems/3.2/research/scripts/q2328_associated_resultant_scan.py > /tmp/q2328_scan.py
+      - name: Run Q2328 exact scanner
         shell: bash
         run: |
           set +e
-          python /tmp/q5724_probe.py > /tmp/q5724-audit.out 2>&1
-          echo $? > /tmp/q5724-audit.status
+          python /tmp/q2328_scan.py > /tmp/q2328-scan.out 2>&1
+          echo $? > /tmp/q2328-scan.status
           exit 0
-      - name: Persist output on audit branch
+      - name: Persist Q2328 output on scratch branch
         shell: bash
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git checkout q5724-audit
-          cp /tmp/q5724-audit.out q5724-audit.out
-          cp /tmp/q5724-audit.status q5724-audit.status
-          git add q5724-audit.out q5724-audit.status
-          git commit -m 'Record Q5724 dependency-free recurrence probe output' || exit 0
-          git push origin HEAD:q5724-audit
+          git checkout chatgpt-q2328-scan
+          cp /tmp/q2328-scan.out q2328-scan.out
+          cp /tmp/q2328-scan.status q2328-scan.status
+          git add q2328-scan.out q2328-scan.status
+          git commit -m 'Record Q2328 associated-resultant scan output' || exit 0
+          git push origin HEAD:chatgpt-q2328-scan
