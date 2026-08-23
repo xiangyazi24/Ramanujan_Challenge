@@ -1,0 +1,21 @@
+name: q2328-associated-resultant-scan
+
+on:
+  push:
+    branches:
+      - chatgpt-q2328-scan
+    paths:
+      - 'problems/3.2/research/scripts/q2328_associated_resultant_scan.py'
+      - '.github/workflows/q2328-scan.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact scan
+        run: python3 problems/3.2/research/scripts/q2328_associated_resultant_scan.py
