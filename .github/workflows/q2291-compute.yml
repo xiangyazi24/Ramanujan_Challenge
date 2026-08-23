@@ -5,6 +5,7 @@ on:
     branches: [q2291-compute-487384cb]
     paths:
       - '.github/workflows/q2291-compute.yml'
+      - 'problems/3.2/research/scripts/q2291_adjacent_scan.py'
 
 permissions:
   contents: write
@@ -33,5 +34,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add q2291-scan.txt
-          git commit -m 'Record Q2291 exact audit'
+          git commit -m 'Record refined Q2291 exact audit'
           git push origin HEAD:q2291-compute-487384cb
