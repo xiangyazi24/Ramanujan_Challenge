@@ -1,13 +1,14 @@
 name: Q5724 temporary main audit
 on:
-  push:
+  pull_request:
     branches: [main]
     paths:
-      - '.github/workflows/q5724-main-audit.yml'
+      - 'problems/3.2/research/scripts/q2328_associated_resultant_scan.py'
+      - '.github/workflows/q2328-scan.yml'
 permissions:
-  contents: write
+  contents: read
 concurrency:
-  group: q5724-trusted-main
+  group: q2328-pr-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 jobs:
   audit:
@@ -15,28 +16,6 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Fetch Q2328 exact scanner
-        shell: bash
-        run: |
-          git fetch origin chatgpt-q2328-scan
-          git show origin/chatgpt-q2328-scan:problems/3.2/research/scripts/q2328_associated_resultant_scan.py > /tmp/q2328_scan.py
       - name: Run Q2328 exact scanner
         shell: bash
-        run: |
-          set +e
-          python /tmp/q2328_scan.py > /tmp/q2328-scan.out 2>&1
-          echo $? > /tmp/q2328-scan.status
-          exit 0
-      - name: Persist Q2328 output on scratch branch
-        shell: bash
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git checkout chatgpt-q2328-scan
-          cp /tmp/q2328-scan.out q2328-scan.out
-          cp /tmp/q2328-scan.status q2328-scan.status
-          git add q2328-scan.out q2328-scan.status
-          git commit -m 'Record Q2328 associated-resultant scan output' || exit 0
-          git push origin HEAD:chatgpt-q2328-scan
+        run: python3 problems/3.2/research/scripts/q2328_associated_resultant_scan.py
