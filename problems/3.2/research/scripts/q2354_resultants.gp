@@ -54,7 +54,7 @@ for (h = 3, 6,
   );
   print("DEG_N_REDUCED=", poldegree(Ar), " DEG_R_REDUCED=", poldegree(Br));
   print("CONTENT_N_REDUCED=", content(Ar), " CONTENT_R_REDUCED=", content(Br));
-  my(g = polgcd(Ar,Br));
+  my(g = gcd(Ar,Br));
   print("GCD_REDUCED=", g);
   my(res = polresultant(Ar,Br,x));
   print("REDUCED_RESULTANT_SIGN=", sign(res));
