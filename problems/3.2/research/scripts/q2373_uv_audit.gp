@@ -69,10 +69,13 @@ auditHP(h,p)={
       print("NV_COMMON p=",p," h=",h," r=",a," nonwrap=",a+h<p," mate=",(2*a+h+1)%p==0)
     );
     if(nf==0 && ev(H,a,p)==0,
-      my(wz=ev(WW(h),a,p),eq=lift(Mod(ev(J,a,p)-2*a*(a+1)*vg,p)));
+      my(wz=ev(WW(h),a,p),eq=lift(Mod(ev(J,a,p)-2*a*(a+1)*vg,p)),mate=((2*a+h+1)%p==0));
       commoncount++;
       if(vg==0,commonvzero++);
-      print("NR_COMMON p=",p," h=",h," r=",a," V=",vg," U=",ev(J,a,p)," W=",wz," splitResidual=",eq," nonwrap=",a+h<p," mate=",(2*a+h+1)%p==0)
+      if(wz==0,nrwzero++,nrwnonzero++);
+      if(h==3 || vg==0 || wz==0 || !mate,
+        print("NR_COMMON p=",p," h=",h," r=",a," V=",vg," U=",ev(J,a,p)," W=",wz," splitResidual=",eq," nonwrap=",a+h<p," mate=",mate)
+      )
     )
   )
 };
@@ -92,18 +95,15 @@ emitpoly("V5",V5);
 print("GCD_AND_RESULTANT_AUDIT");
 for(h=3,5,gcdres(h));
 
-print("COMMON_ROOT_REDUCTION_CHECKS");
-print("V3_MOD_R2=",poldivrem(V3-(r+3)^6*V2,R2)[2]==0);
-print("V4_MOD_R3=",poldivrem(V4-(r+4)^6*V3,R3)[2]==0);
-print("V5_MOD_R4=",poldivrem(V5-(r+5)^6*V4,R4)[2]==0);
-
 print("FINITE_FIELD_SCAN_BEGIN");
-nvcount=0; nvrange=0; commoncount=0; commonvzero=0;
+nvcount=0; nvrange=0; commoncount=0; commonvzero=0; nrwzero=0; nrwnonzero=0;
 forprime(p=3,500,auditP(p));
 print("NV_TOTAL=",nvcount);
 print("NV_NONWRAP_TOTAL=",nvrange);
 print("NR_TOTAL=",commoncount);
 print("NR_WITH_V_ZERO=",commonvzero);
+print("NR_WITH_W_ZERO=",nrwzero);
+print("NR_WITH_W_NONZERO=",nrwnonzero);
 print("FINITE_FIELD_SCAN_END");
 print("Q2373_EXACT_END");
 quit;
