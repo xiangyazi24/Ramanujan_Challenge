@@ -1,0 +1,24 @@
+[0;31m[0;31m  ***   syntax error, unexpected end of file, expecting )-> or ',' or ')': 
+[0;31m  ***   [0;35mfor(n=1,11[0;35m,
+[0;31m[0;31m  ***             ^-[0m
+... skipping file 'problems/3.2/research/scripts/q2386_small_r_factors.gp'
+[0;31m[0;31m  ***   at top-level: [0;35mB[[0;35mn+2]=(P(n)*B[n+1]-n^3*B[n])/(n+1)^3
+[0;31m[0;31m  ***                   ^-----------------------------------
+  ***   incorrect type in gtos [integer expected] (t_POL).[0m
+[0;31m[0;31m  ***   syntax error, unexpected ')', expecting end of file:[0;35m );
+[0;31m[0;31m  ***                                                        ^--[0m
+Q2386_FACTORS_BEGIN
+[0;31m[0;31m  ***   syntax error, unexpected end of file, expecting )-> or ',' or ')': 
+[0;31m  ***   [0;35mfor(r=0,12[0;35m,
+[0;31m[0;31m  ***             ^-[0m
+[0;31m[0;31m  ***   at top-level: [0;35mb=B[[0;35mr+1]
+[0;31m[0;31m  ***                     ^----
+  ***   incorrect type in gtos [integer expected] (t_POL).[0m
+R=r
+B=b
+DIGITS=1
+FACTOR=Mat([b, 1])
+---
+[0;31m[0;31m  ***   syntax error, unexpected ')', expecting end of file:[0;35m );
+[0;31m[0;31m  ***                                                        ^--[0m
+Q2386_FACTORS_END
