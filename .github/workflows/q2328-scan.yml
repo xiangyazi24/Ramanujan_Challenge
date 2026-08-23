@@ -9,7 +9,7 @@ on:
       - '.github/workflows/q2328-scan.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   scan:
@@ -17,5 +17,14 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: chatgpt-q2328-scan
       - name: Run exact scan
-        run: python3 problems/3.2/research/scripts/q2328_associated_resultant_scan.py
+        run: python3 problems/3.2/research/scripts/q2328_associated_resultant_scan.py > q2328-scan.out
+      - name: Persist output
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add q2328-scan.out
+          git commit -m 'Record Q2328 associated-resultant scan output' || exit 0
+          git push origin HEAD:chatgpt-q2328-scan
