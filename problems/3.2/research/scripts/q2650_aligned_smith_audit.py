@@ -12,7 +12,8 @@ The certificate is valuation-theoretic, not a raw-rank test:
   * likewise for Delta_(H,d+1);
   * v_p K_(m,j) follows from the primitive Wronskian formula.
 
-No third-party packages are used.
+No third-party packages are used. This second push exists only to trigger
+the already-present branch workflow deterministically.
 """
 
 from math import comb
@@ -100,7 +101,6 @@ def unit_residue(n: int, e: int, p: int = P) -> int:
 
 
 def frame(H: int, d: int, c: list[int]) -> list[list[int]]:
-    # R_(H,d) = M[H-d+1,...,H ; 0,...,d]
     return [
         [M_entry(k, ell, c) for ell in range(d+1)]
         for k in range(H-d+1, H+1)
@@ -153,7 +153,6 @@ def main() -> None:
     vT = vp(T)
     assert vT is not None
 
-    # T_(94,32) is exactly the d=32 maximal minor deleting column 32.
     assert T == dets32[D+1]
     assert vals32[D+1] == vT
 
@@ -184,8 +183,6 @@ def main() -> None:
     print(f'v31(K_({M},{J}))={vK}')
     print(f'K_({M},{J}) is a 31-unit: {vK == 0}')
 
-    # Strong sanity checks: determinantal-divisor valuation cannot exceed any
-    # maximal-minor valuation, and primitive boundary valuations are nonnegative.
     assert all(e is None or e >= vD31 for e in vals31)
     assert all(e is None or e >= vD32 for e in vals32)
     assert vU >= 0 and vV >= 0
