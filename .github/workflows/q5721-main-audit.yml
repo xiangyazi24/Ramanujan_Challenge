@@ -1,1 +1,41 @@
-# Q5721 temporary audit workflow removed after runner queue failure.
+name: Q2650 p-adic Smith certificate
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/q5721-main-audit.yml'
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch Q2650 verifier
+        shell: bash
+        run: |
+          git fetch origin agent/q2650-aligned-smith-audit
+          git show origin/agent/q2650-aligned-smith-audit:problems/3.2/research/scripts/q2650_aligned_smith_audit.py > /tmp/q2650_probe.py
+      - name: Run exact p-adic Smith audit
+        shell: bash
+        run: |
+          set +e
+          /usr/bin/time -v python3 /tmp/q2650_probe.py > /tmp/q2650-audit.out 2> /tmp/q2650-audit.time
+          echo $? > /tmp/q2650-audit.status
+          exit 0
+      - name: Persist output
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch origin agent/q2650-aligned-smith-audit
+          git checkout -B agent/q2650-aligned-smith-audit origin/agent/q2650-aligned-smith-audit
+          cp /tmp/q2650-audit.out q2650-audit.out
+          cp /tmp/q2650-audit.time q2650-audit.time
+          cp /tmp/q2650-audit.status q2650-audit.status
+          git add q2650-audit.out q2650-audit.time q2650-audit.status
+          git commit -m 'Record Q2650 p-adic Smith certificate' || exit 0
+          git push origin HEAD:agent/q2650-aligned-smith-audit
