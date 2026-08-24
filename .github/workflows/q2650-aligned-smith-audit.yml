@@ -1,0 +1,30 @@
+name: Q2650 aligned Smith audit
+on:
+  push:
+    branches: [agent/q2650-aligned-smith-audit]
+    paths:
+      - '.github/workflows/q2650-aligned-smith-audit.yml'
+      - 'problems/3.2/research/scripts/q2650_aligned_smith_audit.py'
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run dependency-free exact Smith audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          /usr/bin/time -v python3 problems/3.2/research/scripts/q2650_aligned_smith_audit.py > q2650-audit.out 2> q2650-audit.time
+      - name: Persist exact certificate
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add q2650-audit.out q2650-audit.time
+          git commit -m 'Record Q2650 aligned Smith certificate' || exit 0
+          git push origin HEAD:agent/q2650-aligned-smith-audit
