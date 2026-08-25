@@ -1,1 +1,44 @@
-# Q5721 temporary audit workflow removed after runner queue failure.
+name: Q3572 locate Gamma47 census
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/q5721-main-audit.yml'
+permissions:
+  contents: read
+concurrency:
+  group: q3572-gamma47-locate
+  cancel-in-progress: true
+jobs:
+  locate:
+    runs-on: ubuntu-slim
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Locate exact script on every remote ref
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --all --prune
+          path='problems/3.2/research/scripts/q32_q6_gamma47_target_census.py'
+          found=''
+          while read -r ref; do
+            if git cat-file -e "$ref:$path" 2>/dev/null; then
+              echo "FOUND_REF=$ref"
+              found="$ref"
+              break
+            fi
+          done < <(git for-each-ref --format='%(refname)' refs/remotes/origin/)
+          if [ -z "$found" ]; then
+            echo 'SCRIPT_NOT_FOUND_ON_ANY_REMOTE_REF'
+            exit 0
+          fi
+          git show "$found:$path" > /tmp/q3572_census.py
+          echo '--- SOURCE BEGIN ---'
+          cat /tmp/q3572_census.py
+          echo '--- SOURCE END ---'
+          echo '--- HELP BEGIN ---'
+          python /tmp/q3572_census.py --help || true
+          echo '--- HELP END ---'
