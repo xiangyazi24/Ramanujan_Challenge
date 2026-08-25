@@ -3,7 +3,8 @@
 
 This file is intentionally standalone: it imports no Ramanujan_Challenge
 computation code and does not reuse the Fable implementation.  It reconstructs
-Gamma_47 directly from the definitions recorded in Q3573/Q3445:
+Gamma_47 directly from the definitions recorded in Q3573 and the campaign
+legal-window geometry:
 
   * Apéry b_n from the three-term recurrence;
   * sampled slope-s forward differences d^(s)_K;
@@ -12,11 +13,11 @@ Gamma_47 directly from the definitions recorded in Q3573/Q3445:
   * canonical primitive three-row C*_(s,K)=a V_K+b V_(K+1);
   * Gamma_47 = gcd of all C* over s=4,7 and legal K,K+1,K+2.
 
-The q=6 legal windows are reconstructed from the exact Q3445 fixture formula.
-All arithmetic determining b, selectors, carriers, gcds, and target products is
-integer-exact.  No third-party packages are used.
+All arithmetic determining b, selectors, carriers, gcds, target products, and
+the census is integer-exact.  No third-party packages are used.
 """
 
+from collections import Counter
 from math import comb, gcd, isqrt, prod
 
 H = 0
@@ -30,6 +31,12 @@ FIXTURES = (
 )
 COLLISION_M = 2932
 COLLISION_PAIRS = ((439, 298), (443, 274))
+CENSUS_MINP = 43
+CENSUS_LIMIT = 1000
+# For H=0 the exact slope-2 far edge, reduced by m mod 6, is:
+#   m mod 6 : 0  1  2  3  4  5
+#   F2      : 0  7  2  3  4  5
+CAMPAIGN_F2 = (0, 7, 2, 3, 4, 5)
 
 
 def apery_numbers(limit: int) -> list[int]:
@@ -62,9 +69,7 @@ def sigma(m: int, h: int, s: int) -> int:
     return hits[0]
 
 
-def legal_windows(m: int, h: int, delta2: int):
-    s2 = sigma(m, h, 2)
-    F2 = 3*s2 + 2*h - 3 + 2*delta2
+def windows_from_f2(m: int, h: int, F2: int):
     s4 = sigma(m, h, 4)
     s7 = sigma(m, h, 7)
     X4 = (m + 1 + s4)//4
@@ -74,7 +79,22 @@ def legal_windows(m: int, h: int, delta2: int):
     B4 = min(X7 - 1, 1 + (m - s4)//4)
     A7 = max(1, Phi - X7 + 1)
     B7 = min(X7 - 1, 1 + (m - s7)//7)
-    return F2, s4, X4, s7, X7, A4, B4, A7, B7
+    return F2, s4, X4, s7, X7, Phi, A4, B4, A7, B7
+
+
+def legal_windows(m: int, h: int, delta2: int):
+    s2 = sigma(m, h, 2)
+    F2 = 3*s2 + 2*h - 3 + 2*delta2
+    return windows_from_f2(m, h, F2)
+
+
+def campaign_windows(m: int):
+    assert H == 0
+    F2 = CAMPAIGN_F2[m % 6]
+    rec = windows_from_f2(m, 0, F2)
+    # Cross-check that this is one of the three legal delta2 branches.
+    assert any(legal_windows(m, 0, d)[0] == F2 for d in DELTAS)
+    return rec
 
 
 def neg_binom(X: int, k: int) -> int:
@@ -141,19 +161,29 @@ def slope_carriers(m: int, s: int, sigma_s: int, X: int, A: int, B: int,
     return G, carriers
 
 
-def gamma47(m: int, delta2: int, apery: list[int]):
-    F2,s4,X4,s7,X7,A4,B4,A7,B7 = legal_windows(m, H, delta2)
+def gamma_from_window_record(m: int, win, apery: list[int]):
+    F2,s4,X4,s7,X7,Phi,A4,B4,A7,B7 = win
     G4, C4 = slope_carriers(m, 4, s4, X4, A4, B4, apery)
     G7, C7 = slope_carriers(m, 7, s7, X7, A7, B7, apery)
     gamma = 0
     for _, value in C4 + C7:
         gamma = gcd(gamma, abs(value))
     return {
-        "m": m, "delta2": delta2, "F2": F2,
+        "m": m, "F2": F2, "Phi": Phi,
         "s4": s4, "X4": X4, "A4": A4, "B4": B4, "G4": G4,
         "s7": s7, "X7": X7, "A7": A7, "B7": B7, "G7": G7,
         "count4": len(C4), "count7": len(C7), "gamma": gamma,
     }
+
+
+def gamma47_delta(m: int, delta2: int, apery: list[int]):
+    rec = gamma_from_window_record(m, legal_windows(m, H, delta2), apery)
+    rec["delta2"] = delta2
+    return rec
+
+
+def gamma47_campaign(m: int, apery: list[int]):
+    return gamma_from_window_record(m, campaign_windows(m), apery)
 
 
 def q6_targets(m: int, apery: list[int], primes: list[int]):
@@ -175,7 +205,7 @@ def vp(n: int, p: int) -> int:
     return e
 
 
-def main():
+def fixture_audit():
     fixture_ms = [6*p+j for p,j in FIXTURES]
     max_m = max(fixture_ms + [COLLISION_M])
     apery = apery_numbers(max_m)
@@ -190,16 +220,23 @@ def main():
         assert m//p == 6 and m%p == j
         targets = q6_targets(m, apery, primes)
         target_product = prod(q for q,_ in targets)
+        actual = gamma47_campaign(m, apery)
+        actual_eps = actual["gamma"] // target_product
         print(f"FIXTURE p={p} j={j} m={m} b_j_mod_p={apery[j] % p} vp_bj={vp(apery[j],p)}")
         print(f"  q6_targets={targets} target_product={target_product}")
+        print(
+            "  CAMPAIGN F2={F2} I4=[{A4},{B4}] I7=[{A7},{B7}] "
+            "count=({count4},{count7}) gamma={gamma} epsilon={eps}".format(
+                eps=actual_eps, **actual
+            )
+        )
         for delta2 in DELTAS:
-            rec = gamma47(m, delta2, apery)
+            rec = gamma47_delta(m, delta2, apery)
             gamma = rec["gamma"]
             assert gamma % target_product == 0, (m, delta2, gamma, target_product)
             eps = gamma // target_product
             print(
-                "  delta2={delta2} F2={F2} "
-                "I4=[{A4},{B4}] I7=[{A7},{B7}] "
+                "  delta2={delta2} F2={F2} I4=[{A4},{B4}] I7=[{A7},{B7}] "
                 "count=({count4},{count7}) gamma={gamma} epsilon={eps}".format(
                     eps=eps, **rec
                 )
@@ -215,14 +252,21 @@ def main():
     targets = q6_targets(COLLISION_M, apery, primes)
     target_product = prod(q for q,_ in targets)
     print(f"  q6_targets={targets} target_product={target_product}")
+    actual = gamma47_campaign(COLLISION_M, apery)
+    actual_eps = actual["gamma"] // target_product
+    print(
+        "  CAMPAIGN F2={F2} I4=[{A4},{B4}] I7=[{A7},{B7}] "
+        "count=({count4},{count7}) gamma={gamma} epsilon={eps}".format(
+            eps=actual_eps, **actual
+        )
+    )
     for delta2 in DELTAS:
-        rec = gamma47(COLLISION_M, delta2, apery)
+        rec = gamma47_delta(COLLISION_M, delta2, apery)
         gamma = rec["gamma"]
         assert gamma % target_product == 0
         eps = gamma // target_product
         print(
-            "  delta2={delta2} F2={F2} "
-            "I4=[{A4},{B4}] I7=[{A7},{B7}] "
+            "  delta2={delta2} F2={F2} I4=[{A4},{B4}] I7=[{A7},{B7}] "
             "count=({count4},{count7}) gamma={gamma} epsilon={eps}".format(
                 eps=eps, **rec
             )
@@ -230,6 +274,65 @@ def main():
 
     claimed = 5*439*443
     print(f"CLAIMED_COLLISION_VALUE 5*439*443={claimed}")
+    assert actual["gamma"] == claimed
+
+
+def census_audit():
+    primes = [p for p in primes_upto(CENSUS_LIMIT-1) if p >= CENSUS_MINP]
+    base_b = apery_numbers(CENSUS_LIMIT-1)
+    events = []
+    for p in primes:
+        for j in range(p):
+            if base_b[j] % p:
+                continue
+            m = 6*p+j
+            F2,s4,X4,s7,X7,Phi,A4,B4,A7,B7 = campaign_windows(m)
+            if X7 <= p <= Phi and F2 <= j <= p-1-s7:
+                events.append((p,j,m))
+
+    print(f"CENSUS p<{CENSUS_LIMIT} minp={CENSUS_MINP} events={len(events)}")
+    if not events:
+        return
+    apery = apery_numbers(max(m for _,_,m in events))
+    gamma_cache = {}
+    target_cache = {}
+    eps_rows = []
+    for idx,(p,j,m) in enumerate(events,1):
+        win = campaign_windows(m)
+        if m not in gamma_cache:
+            gamma_cache[m] = gamma_from_window_record(m, win, apery)["gamma"]
+        if m not in target_cache:
+            F2,s4,X4,s7,X7,Phi,A4,B4,A7,B7 = win
+            targets = []
+            for q in primes:
+                if X7 <= q <= Phi:
+                    jq = m-6*q
+                    if 0 <= jq < q and apery[jq] % q == 0:
+                        targets.append((q,jq))
+            target_cache[m] = tuple(targets)
+        targets = target_cache[m]
+        target_product = prod(q for q,_ in targets)
+        gamma = gamma_cache[m]
+        assert gamma % target_product == 0
+        eps = gamma // target_product
+        eps_rows.append((eps,p,j,m,targets,gamma,target_product))
+        if idx % 25 == 0:
+            print(f"  CENSUS_PROGRESS {idx}/{len(events)}")
+
+    dist = Counter(row[0] for row in eps_rows)
+    maximum = max(eps_rows)
+    over25 = [row for row in eps_rows if row[0] > 25]
+    print(f"CENSUS_EPS_SET={sorted(dist)}")
+    print(f"CENSUS_EPS_DIST={dict(sorted(dist.items()))}")
+    print(f"CENSUS_MAX_EPS={maximum[0]} at p={maximum[1]} j={maximum[2]} m={maximum[3]}")
+    print(f"CENSUS_OVER_25={len(over25)}")
+    assert len(events) == 143
+    assert not over25
+
+
+def main():
+    fixture_audit()
+    census_audit()
 
 
 if __name__ == "__main__":
