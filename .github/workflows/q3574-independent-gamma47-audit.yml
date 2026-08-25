@@ -1,0 +1,30 @@
+name: Q3574 independent Gamma47 audit
+
+on:
+  push:
+    branches: [q3574-independent-gamma47-audit]
+    paths:
+      - '.github/workflows/q3574-independent-gamma47-audit.yml'
+      - 'problems/3.2/research/scripts/q3574_independent_gamma47_audit.py'
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q3574-independent-gamma47-audit
+      - name: Run standalone exact verifier
+        run: |
+          python3 problems/3.2/research/scripts/q3574_independent_gamma47_audit.py | tee q3574-independent-gamma47-audit.out
+      - name: Persist exact output
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add q3574-independent-gamma47-audit.out
+          git commit -m 'Record independent Q3574 Gamma47 audit output [skip ci]' || exit 0
+          git push origin HEAD:q3574-independent-gamma47-audit
