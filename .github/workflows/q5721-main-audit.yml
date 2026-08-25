@@ -1,4 +1,4 @@
-name: Q3572 reconstructed Gamma47 baseline
+name: Q3572 baseline cutoff and sparse witnesses
 on:
   push:
     branches: [main]
@@ -6,176 +6,120 @@ on:
       - '.github/workflows/q5721-main-audit.yml'
 permissions:
   contents: read
-concurrency:
-  group: q3572-gamma47-baseline
-  cancel-in-progress: true
 jobs:
   audit:
     runs-on: ubuntu-slim
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Reconstruct and validate p<400 baseline
+      - name: Diagnose baseline
         shell: bash
         run: |
-          cat > /tmp/q3572_baseline.py <<'PY'
-          from math import gcd, isqrt
+          cat > /tmp/q3572_diag.py <<'PY'
+          from math import gcd,isqrt,lcm
           from collections import Counter
-
-          H=0
-          LIMIT=400
-
+          H=0; LIMIT=400
+          EXPECT={1,2,5,10,17,19}
           def primes_lt(n):
-              sieve=bytearray(b'\x01')*n
-              if n: sieve[0]=0
-              if n>1: sieve[1]=0
+              a=bytearray(b'\x01')*n
+              if n:a[0]=0
+              if n>1:a[1]=0
               for q in range(2,isqrt(n-1)+1):
-                  if sieve[q]:
-                      sieve[q*q:n:q]=b'\x00'*(((n-1-q*q)//q)+1)
-              return [q for q in range(2,n) if sieve[q]]
-
-          def apery(limit):
-              b=[1]
-              if limit==0: return b
-              b.append(5)
-              for n in range(1,limit):
-                  P=34*n**3+51*n**2+27*n+5
-                  num=P*b[n]-n**3*b[n-1]
-                  den=(n+1)**3
-                  assert num%den==0
-                  b.append(num//den)
-              return b
-
+                  if a[q]: a[q*q:n:q]=b'\x00'*(((n-1-q*q)//q)+1)
+              return [q for q in range(2,n) if a[q]]
+          def apery(N):
+              b=[1,5]
+              for n in range(1,N):
+                  num=(34*n**3+51*n**2+27*n+5)*b[n]-n**3*b[n-1]
+                  den=(n+1)**3; assert num%den==0; b.append(num//den)
+              return b[:N+1]
           def sigma(m,s):
-              r=(-m-1-H)%s
-              return H+s if r==0 else H+r
-
-          def X(m,s):
-              sg=sigma(m,s)
-              assert (m+1+sg)%s==0
-              return (m+1+sg)//s
-
+              r=(-m-1)%s; return s if r==0 else r
+          def X(m,s): return (m+1+sigma(m,s))//s
           def f2(m):
-              c=(m+1)%2
-              N=(m+c+1)//2
-              numer=H+1-c
-              u=-((-numer)//2)  # ceil(numer/2)
-              sg=c+2*u
-              k=(N-2*c-H-2)//3
-              delta=N-2*c-H-2-3*k
-              assert delta in (0,1,2)
-              assert sg==sigma(m,2)
-              return 3*sg+2*H-3+2*delta
-
+              c=(m+1)%2; N=(m+c+1)//2; u=-((-(1-c))//2); sg=c+2*u
+              k=(N-2*c-2)//3; d=N-2*c-2-3*k
+              assert sg==sigma(m,2) and d in (0,1,2)
+              return 3*sg-3+2*d
           def windows(m):
-              Plo=X(m,7)
-              Phi=(m-f2(m))//6
-              X4,X7=X(m,4),X(m,7)
-              s4,s7=sigma(m,4),sigma(m,7)
-              A4=max(1,2*Phi-X4+1)
-              B4=min(Plo-1,1+(m-s4)//4)
-              A7=max(1,Phi-X7+1)
-              B7=min(Plo-1,1+(m-s7)//7)
-              return Plo,Phi,(A4,B4),(A7,B7)
-
-          def diffs0(vals, upto):
-              row=list(vals)
-              out=[]
-              for k in range(upto+1):
-                  out.append(row[0])
-                  if k<upto:
-                      row=[row[i+1]-row[i] for i in range(len(row)-1)]
+              lo=X(m,7); hi=(m-f2(m))//6; x4=X(m,4); x7=X(m,7)
+              I4=(max(1,2*hi-x4+1),min(lo-1,1+(m-sigma(m,4))//4))
+              I7=(max(1,hi-x7+1),min(lo-1,1+(m-sigma(m,7))//7))
+              return lo,hi,I4,I7
+          def diffs(vals):
+              row=list(vals); out=[]
+              while row:
+                  out.append(row[0]); row=[b-a for a,b in zip(row,row[1:])]
               return out
-
-          def T_values(m,s,B,b):
-              sg=sigma(m,s); x=X(m,s)
-              vals=[b[sg+s*t] for t in range(B)]
-              d=diffs0(vals,B-1)
+          def cs(m,s,A,B,b):
+              sg=sigma(m,s); x=X(m,s); d=diffs([b[sg+s*t] for t in range(B)])
               U=[1]
-              for k in range(B-1):
-                  num=U[-1]*(-(x+k))
-                  assert num%(k+1)==0
-                  U.append(num//(k+1))
-              T=[None]*(B+1)
-              T[1]=d[0]
-              for K in range(1,B):
-                  T[K+1]=T[K]+U[K]*d[K]
-              return T
-
-          def cstar_values(m,s,A,B,b):
-              if B-A+1<3: return []
-              T=T_values(m,s,B,b)
-              x=X(m,s)
+              for k in range(B-1): U.append(U[-1]*(-(x+k))//(k+1))
+              T=[None]*(B+1); T[1]=d[0]
+              for K in range(1,B): T[K+1]=T[K]+U[K]*d[K]
               out=[]
               for K in range(A,B-1):
-                  V0=(K+1)*T[K+1]+(x+K)*T[K]
-                  V1=(K+2)*T[K+2]+(x+K+1)*T[K+1]
-                  AK=x+2*K+1
-                  if x%2==0:
-                      a=(AK+1)//2
-                      bb=-(AK-1)//2
-                  else:
-                      a=-1; bb=1
-                  C=a*V0+bb*V1
-                  out.append(C)
+                  v0=(K+1)*T[K+1]+(x+K)*T[K]
+                  v1=(K+2)*T[K+2]+(x+K+1)*T[K+1]
+                  ak=x+2*K+1
+                  a,bb=(((ak+1)//2,-(ak-1)//2) if x%2==0 else (-1,1))
+                  out.append(a*v0+bb*v1)
               return out
-
-          def gamma47(m,b):
-              Plo,Phi,I4,I7=windows(m)
-              vals=[]
-              for s,(A,B) in ((4,I4),(7,I7)):
-                  vals += cstar_values(m,s,A,B,b)
-              if not vals: return 0
-              g=0
-              for v in vals: g=gcd(g,abs(v))
-              return g
-
-          ps=primes_lt(LIMIT)
-          bsmall=apery(LIMIT-1)
-          raw=[]
+          ps=primes_lt(LIMIT); bs=apery(LIMIT-1)
+          ev=[]
           for p in ps:
-              if p<5: continue
+              if p<5:continue
               for j in range(p):
-                  if bsmall[j]%p: continue
-                  m=6*p+j
-                  Plo,Phi,I4,I7=windows(m)
-                  core=(Plo<=p<=Phi and f2(m)<=j<=p-1-sigma(m,7))
-                  if not core: continue
-                  v1=(bsmall[j]%(p*p)!=0)
-                  raw.append((p,j,m,v1))
-
-          maxm=max((m for _,_,m,_ in raw),default=0)
-          b=apery(maxm)
-          cache={}
-          def eval_event(ev):
-              p,j,m,v1=ev
-              if m not in cache:
-                  G=gamma47(m,b)
-                  Plo,Phi,_,_=windows(m)
-                  targets=[]
-                  for q in ps:
-                      if q<Plo or q>Phi: continue
+                  if bs[j]%p:continue
+                  m=6*p+j; lo,hi,I4,I7=windows(m)
+                  if lo<=p<=hi and f2(m)<=j<=p-1-sigma(m,7): ev.append((p,j,m))
+          for cut in [5,7,11,13,17,19,23,29,31]: print('COUNT_GE',cut,sum(p>=cut for p,j,m in ev))
+          ev=[e for e in ev if e[0]>=19]
+          print('EVENTS_GE19',len(ev)); assert len(ev)==65
+          b=apery(max(m for _,_,m in ev))
+          selnames=['first1','ends','triad','first3']
+          mism=Counter(); edist=Counter(); rows=[]
+          for p,j,m in ev:
+              lo,hi,I4,I7=windows(m); c4=cs(m,4,*I4,b); c7=cs(m,7,*I7,b); allc=c4+c7
+              G=0
+              for z in allc:G=gcd(G,abs(z))
+              tg=[]
+              for q in ps:
+                  if lo<=q<=hi:
                       jq=m-6*q
-                      if 0<=jq<q and b[jq]%q==0:
-                          targets.append(q)
-                  R=1
-                  for q in targets: R*=q
-                  assert G%R==0,(ev,G,R,targets)
-                  cache[m]=(G,R,G//R,tuple(targets))
-              return cache[m]
-
-          for label,events in [('all-core-targets',raw),('valuation-one', [e for e in raw if e[3]])]:
-              eps=[]
-              bad=[]
-              print('===',label,'events',len(events),'===')
-              for ev in events:
-                  G,R,e,targets=eval_event(ev)
-                  eps.append(e)
-                  if e>19 or e not in {1,2,5,10,17,19}:
-                      bad.append((ev,e,targets))
-              print('EPS_DIST',dict(sorted(Counter(eps).items())))
-              print('EPS_MAX',max(eps) if eps else None)
-              print('EPS_SET',sorted(set(eps)))
-              print('OUTSIDE_EXPECTED',bad[:30], 'count=',len(bad))
+                      if 0<=jq<q and b[jq]%q==0: tg.append(q)
+              R=1
+              for q in tg:R*=q
+              assert G%R==0; eps=G//R; edist[eps]+=1
+              choices={
+                'first1':[c4[0],c7[0]],
+                'ends':[c4[0],c4[-1],c7[0],c7[-1]],
+                'triad':[c4[0],c4[len(c4)//2],c4[-1],c7[0],c7[len(c7)//2],c7[-1]],
+                'first3':c4[:3]+c7[:3],
+              }
+              for nm,vv in choices.items():
+                  g=0
+                  for z in vv:g=gcd(g,abs(z))
+                  if g!=G:mism[nm]+=1
+              rows.append((p,j,m,eps,tuple(tg)))
+          print('EPS_DIST_GE19',dict(sorted(edist.items())))
+          print('SPARSE_MISMATCH_COUNTS',dict(mism))
+          print('EVENT_ROWS',rows)
+          initials=[2,5,73,1445,33001,819005,21460825]
+          L=1
+          for z in initials:L=lcm(L,z)
+          print('INITIAL_LCM',L)
+          def factor(n):
+              out=[]; d=2
+              while d*d<=n:
+                  if n%d==0:
+                      e=0
+                      while n%d==0:n//=d;e+=1
+                      out.append((d,e))
+                  d+=1 if d==2 else 2
+              if n>1:out.append((n,1))
+              return out
+          print('INITIAL_LCM_FACT',factor(L))
+          print('ALL_EPS_DIVIDE_L',all(L%e==0 for e in edist))
           PY
-          python /tmp/q3572_baseline.py
+          python /tmp/q3572_diag.py
