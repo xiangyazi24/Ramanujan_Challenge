@@ -1,0 +1,45 @@
+name: Q6383 pole-block Lean gate
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'lean/RamanujanChallenge/Problem27PoleBlockCore6383.lean'
+      - 'lean/RamanujanChallenge/Problem27PoleBlockFourier6383.lean'
+      - 'lean/RamanujanChallenge/Problem27PoleBlockFubini6383.lean'
+      - 'lean/RamanujanChallenge/Problem27PoleBlockSeries6383.lean'
+      - 'lean/RamanujanChallenge/Problem27PoleBlockTail6383.lean'
+      - '.github/workflows/q6383-pole-block.yml'
+
+concurrency:
+  group: q6383-pole-block
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install elan
+        shell: bash
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Compile exact module
+        shell: bash
+        run: |
+          set +e
+          cd lean
+          lake exe cache get 2>&1 | tee ../q6383-cache.out
+          cache_status=${PIPESTATUS[0]}
+          lake build RamanujanChallenge.Problem27PoleBlockTail6383 2>&1 | tee ../q6383-build.out
+          build_status=${PIPESTATUS[0]}
+          cd ..
+          printf 'cache_status=%s\nbuild_status=%s\n' "$cache_status" "$build_status" | tee q6383-status.out
+          exit 0
+      - name: Show status
+        shell: bash
+        run: cat q6383-status.out
