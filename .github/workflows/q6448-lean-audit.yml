@@ -1,0 +1,26 @@
+name: Q6448 Lean 4.29 audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'lean/RamanujanChallenge/Q6448Scratch.lean'
+      - '.github/workflows/q6448-lean-audit.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan
+        shell: bash
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Compile orientation scratch
+        shell: bash
+        run: |
+          cd lean
+          lake exe cache get
+          lake build RamanujanChallenge.Q6448Scratch
