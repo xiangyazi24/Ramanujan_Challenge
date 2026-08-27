@@ -1,0 +1,52 @@
+name: Q4289 exact saturation patch
+
+on:
+  push:
+    branches:
+      - q4289-gcd-compute-8fb970e6
+    paths:
+      - .github/workflows/q4289-fix-saturation.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4289-gcd-compute-8fb970e6
+          fetch-depth: 0
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Replace conservative small-prime strip by the banked determinant set
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('scratch/q4289/Q4289GcdScan.java')
+          text = path.read_text()
+          old = 'for (int p : qPrimes) if (p < 17) smallFixed.add(BigInteger.valueOf(p));'
+          new = 'for (int p : new int[]{2, 3, 7}) smallFixed.add(BigInteger.valueOf(p));'
+          if text.count(old) != 1:
+              raise SystemExit(f'expected one saturation site, found {text.count(old)}')
+          path.write_text(text.replace(old, new))
+          PY
+          grep -F 'new int[]{2, 3, 7}' scratch/q4289/Q4289GcdScan.java
+
+      - name: Strict compile before committing
+        run: |
+          mkdir -p .q4289_classes
+          javac -Xlint:all -Werror -d .q4289_classes scratch/q4289/Q4289GcdScan.java
+
+      - name: Commit exact saturation source
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scratch/q4289/Q4289GcdScan.java
+          git commit -m 'Use exact Q4289 determinant exception set'
+          git push origin HEAD:q4289-gcd-compute-8fb970e6
