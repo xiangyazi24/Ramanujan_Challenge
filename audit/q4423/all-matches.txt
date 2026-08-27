@@ -1,0 +1,122 @@
+drops/Q4213-2f6e3101.md:1210:Saving at L=T^(5beta/6):                            T^(-(1-5beta)/3)
+drops/Q4213-2f6e3101.md:1212:Saving at L=T^(5beta/6):                            T^(-(2-5beta)/3)
+drops/Q4213-2f6e3101.md:36:   L=Y^{5/6}=T^{5\beta/6},
+drops/Q4213-2f6e3101.md:452:L=Y^{5/6}=T^{5\beta/6},
+drops/Q4214-fc563e24.md:1303:then declare exactly the two required quotient-row zeros and their reflected mates, away from all transition strips. Different selected keys use disjoint lower-prime sets.
+drops/Q4214-fc563e24.md:298:the requested stable fold/order type when that refinement is invoked;
+drops/Q4215-c2ac5976.md:1199:\Lambda=T^{5\beta/6},
+drops/Q4215-c2ac5976.md:1209:\frac{T^{7\beta/6-4/3}}{(\log T)^2}.
+drops/Q4215-c2ac5976.md:1287:so the same minimum remains the final exponent.  The internal stable-strip loss `Y^{-1/6}` does not add another exponent because, as shown in §3.3, the stable core remains a constant fraction of every rich cell.
+drops/Q4215-c2ac5976.md:1572:stable-transition strips width O(Y^(1/3)):               CONFIRMED
+drops/Q4215-c2ac5976.md:1573:strip leaf mass M Y^(-1/6):                              CONFIRMED
+drops/Q4215-c2ac5976.md:1574:must pay beta/6 as final additive exponent:               NO; cellwise core absorbs it
+drops/Q4215-c2ac5976.md:662:## 3.3 Fold/order pigeonhole and transition strips
+drops/Q4215-c2ac5976.md:686:A same-gap edge of length at most `Delta_max<<Y^(1/3)` can change fold branch or the order of the two folded coordinates only if one endpoint lies within `O(Delta_max)` of one of a finite number of linear transition points.  The union of all transition strips in one cell therefore contains only
+drops/Q4215-c2ac5976.md:700:M_\sigma Y^{-1/6},
+drops/Q4215-c2ac5976.md:706:However `(3.7)` should **not** be charged as an additive `T^{-beta/6}` error in the final rich-mass decomposition.  Cellwise,
+drops/Q4215-c2ac5976.md:718:stable vertices.  Re-run the popular-gap argument on that stable core.  The original rich mass `K` is then comparable by an absolute constant to the stable core mass.  Therefore the final non-DPRM exponent need not drop from `beta/3` to `beta/6`.
+drops/Q4215-c2ac5976.md:720:After stability is imposed, there are only an absolute number of fold/order types.  Pigeonholing the matching by those types costs only an absolute factor.
+drops/Q4223-7df41212.md:221:  deterministic lexicographically first largest stable fold/order type class.
+drops/Q4223-7df41212.md:539:canonical same stable fold/order type:             YES
+drops/Q4224-32ddf6fc.md:1105:T^{-4/3+7\beta/6+o(1)}
+drops/Q4224-32ddf6fc.md:1182:RS-ATPLD2_0 => PGME_kappa:                          YES for every kappa<beta/6
+drops/Q4224-32ddf6fc.md:706:\Lambda=Y^{5/6}=T^{5\beta/6+o(1)},
+drops/Q4224-32ddf6fc.md:715:\frac{T^{-4/3+7\beta/6+o(1)}}{(\log T)^2}.
+drops/Q4224-32ddf6fc.md:73:for every \(\kappa<\beta/6\).  The converse fails: popular-edge dispersion sees only actual canonical matching edges, whereas `RS-ATPLD2` controls every actual pair in every rich cell and, in its carrier form, additional phantom carrier-divisor pairs.  The weaker frontier is therefore the popular-gap matched-edge theorem, not corrected `RS-ATPLD2`.
+drops/Q4224-32ddf6fc.md:943:0<\kappa<\beta/6,
+drops/Q4224-32ddf6fc.md:961:\kappa<\delta+\beta/6,
+drops/Q4224-32ddf6fc.md:983:  => PGME_kappa for every kappa<beta/6.
+drops/Q4226-4ed4c027.md:32:The minus fold classification is more rigid than the generic slope table suggests.  The quotient-1 residue is **always on its unreflected fold branch** in the actual raw minus window.  Consequently there are exactly three stable minus fold/order types:
+drops/Q4226-4ed4c027.md:40:The transition strips excluded in DPRM contain the remaining branch/order changes.  There is no actual minus type with reflected quotient-1 fold and slope \(2\).
+drops/Q4226-4ed4c027.md:524:The discarded order-transition strip is exactly where `(3.9-guard)` fails.  No new type is hidden there; it belongs to the already-banked transition deletion.
+drops/Q4226-4ed4c027.md:619:# 6. Height law by fold/order type
+drops/Q4226-4ed4c027.md:706:minimal deep scale:   log B_e >> J_*=T^(beta/6).
+drops/Q4226-4ed4c027.md:83:   \log B_e\gg_JJ_*=Y^{1/6}=T^{\beta/6}\gg\log T.
+drops/Q4226-4ed4c027.md:866:\frac{T^{\beta/6}}{\log T}
+drops/Q4284-3135cbbf.md:409:J_*=Y^{1/6}=T^{\beta/6}\gg\log T.
+drops/Q4284-3135cbbf.md:701:7. **Campaign bookkeeping:** actual selected \(q\mid A_t\), exact raw windows, raw minus-first assignment, all residual predicates, and zero lower-bound use of \(M_\sigma(T)\) are preserved. The only exponent comparison is \(\log T\ll T^{\beta/6}=J_*\), so this partial does not alter the inherited \(\alpha_0/6\) ceiling or produce a new positive \(\kappa_*\).
+drops/Q4300-6ff32261.md:21:5. This is still far from the required `2 log q+O(1)`. At the first deep scale `W` of order `J_*=T^(beta/6)`, the remaining multiplicative deficit in logarithmic size is
+drops/Q4300-6ff32261.md:24:   J_*/log T = T^(beta/6)/log T.
+drops/Q4300-6ff32261.md:317:At the project cell scale `L=Lambda=T^(5beta/6)`, this gives only
+drops/Q4300-6ff32261.md:599:W asymp J_* = T^(beta/6),
+drops/Q4300-6ff32261.md:605:T^(beta/6)/log T.
+drops/Q4300-6ff32261.md:608:At the full cell scale `Lambda=T^(5beta/6)`, the support-blind shell estimate misses by
+drops/Q4300-6ff32261.md:611:T^(5beta/6)/log T.
+drops/Q4300-6ff32261.md:941:log R_actual <<_beta T^(beta/6),
+drops/Q4300-6ff32261.md:953:T^(beta/6)/log T
+drops/Q4300-6ff32261.md:956:at the earliest deep scale, and `T^(5beta/6)/log T` at the whole-cell support-blind scale.
+drops/Q4300-6ff32261.md:990:First deep-scale deficit: T^(beta/6)/log T (PROVED).
+drops/Q4302-1a038780.md:1184:At `L=Lambda=T^(5beta/6)`, this is
+drops/Q4302-1a038780.md:1187:1-O\left(\frac{\log T}{T^{5\beta/6}}\right)
+drops/Q4302-1a038780.md:1281:\frac{T^{\beta/6}}{\log T}.
+drops/Q4302-1a038780.md:38:Lambda = T^(5 beta/6),
+drops/Q4302-1a038780.md:50:J_* = Y^(1/6) = T^(beta/6) >> log T.
+drops/Q4314-1162b6c7.md:633:   \qquad J_*=T^{\beta/6},
+drops/Q4314-1162b6c7.md:647:   \frac{T^{\beta/6}}{\log T}.
+drops/Q4314-1162b6c7.md:877:The caution is equally explicit: the current support-blind envelope is a factor \(T^{\beta/6}/\log T\) too large in logarithmic scale at the first deep layer. The next proof requires a new horizontal cancellation or divisor-rigidity theorem, not a refinement of constants.
+drops/Q4414-5d8de339.md:180:## 2. Where the `T^{-beta/6}` number actually comes from
+drops/Q4414-5d8de339.md:18:transition-strip marked mass
+drops/Q4414-5d8de339.md:19:    <<_J M_sigma(T) Y^(-1/6)
+drops/Q4414-5d8de339.md:20:     = M_sigma(T) T^(-beta/6),
+drops/Q4414-5d8de339.md:226:because their occupancies are disjoint and each exceeds `H`.  Therefore the aggregate transition-strip marked mass satisfies
+drops/Q4414-5d8de339.md:231:     = M_sigma(T) Y^(-1/6)
+drops/Q4414-5d8de339.md:232:     = M_sigma(T) T^(-beta/6).
+drops/Q4414-5d8de339.md:253:     = B_J Y^(-1/6)
+drops/Q4414-5d8de339.md:265:where `S_C^st` is the stable core.
+drops/Q4414-5d8de339.md:26:strip leaf mass M Y^(-1/6):                  confirmed
+drops/Q4414-5d8de339.md:27:must pay beta/6 as final additive exponent:  NO; cellwise core absorbs it
+drops/Q4414-5d8de339.md:293:Because the transition strips were defined using the universal bound `Delta_bar`, every edge in this matching stays on one fold branch for each row and does not cross an order transition.
+drops/Q4414-5d8de339.md:295:There are only `m_J=O_J(1)` resulting fold/order types.  Retain the lexicographically first largest type class.  Its matching size satisfies
+drops/Q4414-5d8de339.md:316:This is exactly the canonical inequality consumed later.  It compares the **original rich-cell occupancy** `K_C` with a typed matching constructed from the stable core.  No transition-strip term remains.
+drops/Q4414-5d8de339.md:32:> **(b), with a terminology correction.**  It is not originally a collision-level estimate inside an already fixed matching.  It is a **cellwise vertex-level stable-core pruning** performed before the popular-gap matching is rerun.  After that rerun, the loss is absorbed into the constant in `R_C >> K_C^2/Lambda`.  It is not an additive global marked-mass exception.
+drops/Q4414-5d8de339.md:347:The type-selection step meets every hypothesis with
+drops/Q4414-5d8de339.md:34:It is not (a).  The `beta/3` ceiling does **not** have to be reduced to `beta/6`, and at `beta=alpha_0/2` the inherited ceiling remains
+drops/Q4414-5d8de339.md:366:     + M_sigma T^(-beta/6+o(1))
+drops/Q4414-5d8de339.md:373:min(beta/6,kappa_*).
+drops/Q4414-5d8de339.md:379:rho < min(beta/3,beta/6,kappa_*)
+drops/Q4414-5d8de339.md:380:    = min(beta/6,kappa_*).
+drops/Q4414-5d8de339.md:392:beta/6.
+drops/Q4414-5d8de339.md:3:# Q4414 — adjudication of the alleged `T^{-beta/6}` type-selection ceiling
+drops/Q4414-5d8de339.md:412:- every typed-DPRM claim of a final exponent above beta/6;
+drops/Q4414-5d8de339.md:415:- any APD theorem whose proof explicitly adds the transition-strip mass.
+drops/Q4414-5d8de339.md:418:The reason no such withdrawal is required is not that `T^{-beta/6}` is numerically harmless.  It is that the authoritative source explicitly proves a different, multiplicative accounting.
+drops/Q4414-5d8de339.md:42:It is also not literally (c).  The transition vertices are not sent to another arithmetic sector whose mass is separately estimated.  They are removed **inside every rich cell**, and the original cell mass is compared multiplicatively with the surviving stable core.  The subsequent choice of one fold/order type is a bounded edge pigeonhole and costs only an `O_J(1)` factor.
+drops/Q4414-5d8de339.md:47:after a further marked loss
+drops/Q4414-5d8de339.md:48:    << M_sigma(T) T^(-beta/6+o(1))
+drops/Q4414-5d8de339.md:49:all matched collisions share one affine fold/order type.
+drops/Q4414-5d8de339.md:508:The transition-strip ratio `Y^{-1/6}` does not appear.
+drops/Q4414-5d8de339.md:544:| Route | Needs a common fold/order type? | Correct accounting |
+drops/Q4414-5d8de339.md:552:| Canonical PGME matched-edge route | Yes | Local stable-core pruning plus constant type factor; no additive exponent |
+drops/Q4414-5d8de339.md:556:| A proof that insists on typing every marked leaf globally | Yes | Would pay `beta/6`; unnecessary and not the banked proof |
+drops/Q4414-5d8de339.md:55:Inside each rich cell, remove O_J(Y^(1/3+o(1))) transition-strip
+drops/Q4414-5d8de339.md:56:vertices.  Since K_C>H=Y^(1/2), the stable core has size at least
+drops/Q4414-5d8de339.md:585:If one chooses to split off easy boundary, low-zero, or light sectors before attacking the remaining deep high-zero pairs, that is optional preprocessing.  The hard pair theorem still need not assign a common fold/order type.
+drops/Q4414-5d8de339.md:63:The aggregate transition-strip vertex count is
+drops/Q4414-5d8de339.md:64:    << M_sigma(T)T^(-beta/6+o(1)),
+drops/Q4414-5d8de339.md:667:**Classification: pointwise/local, not an additive `beta/6` loss.**
+drops/Q4414-5d8de339.md:673:### 7.5 Stable transition strips
+drops/Q4414-5d8de339.md:678:M_sigma T^(-beta/6+o(1)),
+drops/Q4414-5d8de339.md:685:### 7.6 Finite fold/order type selection
+drops/Q4414-5d8de339.md:68:No theorem claiming the `beta/3` or `alpha_0/6` ceiling needs to be withdrawn on account of this issue.  Any proof that actually inserted an additive `T^{-beta/6}` term must, however, be rewritten using the cellwise stable-core argument before it may claim an exponent above `beta/6`.
+drops/Q4414-5d8de339.md:699:They are independent of the type-selection issue and continue to enforce the `beta/3` ceiling even if one someday improves the thin-sector bookkeeping.
+drops/Q4414-5d8de339.md:709:    -> transition strips of width O_J(Y^(1/3))
+drops/Q4414-5d8de339.md:710:    -> aggregate strip mass bound M_sigma Y^(-1/6)
+drops/Q4414-5d8de339.md:715:    -> reruns the inverse theorem cellwise on the stable core
+drops/Q4414-5d8de339.md:723:       “after a further marked loss ... all collisions share one type.”
+drops/Q4414-5d8de339.md:753:K_C^st    = occupancy after transition-strip pruning,
+drops/Q4414-5d8de339.md:776:For transition strips write “local stable-core pruning,” not “further marked loss.”
+drops/Q4414-5d8de339.md:798:transition strips:   [V-local];
+drops/Q4414-5d8de339.md:811:after a further marked loss << M_sigma T^(-beta/6+o(1))
+drops/Q4414-5d8de339.md:815:should be replaced by the stable-core wording from Section 0.  This includes the setup inherited by later Q6, PBSD, PGME, and Frobenius-detector rounds even when their proofs never use the alleged additive term.
+drops/Q4414-5d8de339.md:832:### 10.2 Is the argument circular because the transition-strip width uses the popular gap found after pruning?
+drops/Q4414-5d8de339.md:850:### 10.3 Could a stable-core matching cross an order transition even when neither endpoint lies in a strip?
+drops/Q4414-5d8de339.md:858:### 10.5 Does raw minus-first survive the pruning and type selection?
+drops/Q4414-5d8de339.md:886:It creates at most `2(K_C-1)` directed pairs in a fibre of size `K_C`.  On a rich fibre this is a `O(1/K_C)` fraction of the quadratic pair count, and in the matching it touches at most one edge.  It is not a `T^{-beta/6}` vertex-mass deletion.  Any use in a global pair theorem must state the linear correction explicitly, but that correction is controlled by the actual first mass and does not alter the stated ceiling.
+drops/Q4414-5d8de339.md:896:    << M_sigma(T)T^(-beta/6)
+drops/Q4414-5d8de339.md:901:    M_sigma(T)T^(-beta/6)
+drops/Q4414-5d8de339.md:933:    <<_J M_sigma(T)T^(-beta/6+o(1)).
+drops/Q4414-5d8de339.md:936:Every rich cell retains a stable core of size >=K_C/2.
+drops/Q4414-5d8de339.md:944:The transition-strip estimate is a final additive marked-mass loss.
+drops/Q4414-5d8de339.md:949:not by min(beta/6,kappa_*).
+drops/Q4414-5d8de339.md:962:Replace every “further marked loss T^(-beta/6)” summary sentence by
+drops/Q4414-5d8de339.md:963:an explicit cellwise stable-core statement.

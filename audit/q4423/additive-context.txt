@@ -1,0 +1,795 @@
+===== ADDITIVE CANDIDATE drops/Q4213-2f6e3101.md =====
+1192-Full ATPLD2 with delta>0:                           NOT PROVED
+1193-Full ATPLD2 with delta=0:                           NOT PROVED
+1194-Disproved for actual Apéry rows:                    NO
+1195-
+1196-Transcribed one-prime density ell^(-4/3):           INCORRECT
+1197-Correct one-prime two-row density:                  ell^(-2/3)
+1198-Correct two-prime product density:                  T^(-4/3)
+1199-ATPLD2 displayed main term:                         CORRECT
+1200-
+1201-Literal all-cell sum normalized by M_sigma:         NEEDS OCCUPIED WEIGHT
+1202-Occupied-ledger reconstruction:                     PROVED
+1203-Geometric carrier remains endogenous-free:          YES
+1204-
+1205-Exact plus/minus affine bijections:                 PROVED / RETAINED
+1206-Exceptional primes:                                 {2,3,7} plus fixed ledger
+1207-Selected density from ambient density:              NOT VALID
+1208-
+1209-Three actual zeros + one ambient zero:              PROVED
+1210:Saving at L=T^(5beta/6):                            T^(-(1-5beta)/3)
+1211-One whole prime event ambient:                      PROVED
+1212:Saving at L=T^(5beta/6):                            T^(-(2-5beta)/3)
+1213-
+1214-Exact last-coordinate covariance identity:          PROVED
+1215-Unrestricted covariance O(M):                       EQUIVALENT TO ATPLD2_0
+1216-
+1217-Large-gap rich-only covariance LG-SH1_0:            OPEN
+1218-Strictly weaker than ATPLD2:                        YES
+1219-LG-SH1_0 sufficient for TSJMA beta/2:               PROVED
+1220-Final complementary ceiling:                        beta/3
+1221-Standard beta=alpha0/2 APD ceiling:                 alpha0/6
+1222-
+1223-Small-gap set discarded by LG-SH1:                  gaps <=H/8
+1224-Rich quadratic energy surviving outside it:         FIXED POSITIVE FRACTION
+1225-Popular repeated gap in every rich cell:            PROVED
+1226-Popular gap size:                                    <=L/H=Y^(1/3)
+1227-Popular matching size:                               >=Y^(1/6)
+1228-Need to solve popular-gap module to close gate:      NO
+1229-
+1230-Lower bound on M_sigma used:                        NO
+
+===== ADDITIVE CANDIDATE drops/Q4215-c2ac5976.md =====
+688-\[
+689-O_J(Y^{1/3})
+690-\]
+691-
+692-integer positions.
+693-
+694-The global number of marked leaves in those strips is indeed
+695-
+696-\[
+697-\ll_J
+698-\frac{M_\sigma}{H}Y^{1/3}
+699-=
+700-M_\sigma Y^{-1/6},
+701-\tag{3.7}
+702-\]
+703-
+704-up to harmless subpolynomial factors if one carries the full ledger.
+705-
+706:However `(3.7)` should **not** be charged as an additive `T^{-beta/6}` error in the final rich-mass decomposition.  Cellwise,
+707-
+708-\[
+709-Y^{1/3}=o(H)<K,
+710-\]
+711-
+712-so every rich cell retains
+713-
+714-\[
+715-K-O_J(Y^{1/3})\ge K/2
+716-\]
+717-
+718:stable vertices.  Re-run the popular-gap argument on that stable core.  The original rich mass `K` is then comparable by an absolute constant to the stable core mass.  Therefore the final non-DPRM exponent need not drop from `beta/3` to `beta/6`.
+719-
+720-After stability is imposed, there are only an absolute number of fold/order types.  Pigeonholing the matching by those types costs only an absolute factor.
+721-
+722-## 3.4 Continuant-order shifts
+723-
+724-**CONFIRMED.**
+725-
+726-On a stable edge `p -> p+Delta`, the two folded coordinates change by
+727-
+728-\[
+729-s_6\Delta,
+730-\qquad
+731-s_\sigma\Delta.
+732-\]
+733-
+734-Once their order is fixed, the internal continuant gap changes by
+735-
+736-\[
+--
+1269-T^{-\kappa_{\rm rich}}/\log T.
+1270-\]
+1271-
+1272-Therefore OMCD gets every
+1273-
+1274-\[
+1275-\boxed{
+1276-\rho<\min\{\beta/3,\kappa_{\rm rich}\}.
+1277-}
+1278-\tag{6.6}
+1279-\]
+1280-
+1281-For DPRM-tail exponent `kappa_*`, Q4203 gives
+1282-
+1283-\[
+1284-\kappa_{\rm rich}<\min\{\beta/3,\kappa_*\},
+1285-\]
+1286-
+1287:so the same minimum remains the final exponent.  The internal stable-strip loss `Y^{-1/6}` does not add another exponent because, as shown in §3.3, the stable core remains a constant fraction of every rich cell.
+1288-
+1289-## 6.3 Standard hard-range ceiling
+1290-
+1291-With
+1292-
+1293-\[
+1294-\beta=\alpha_0/2,
+1295-\]
+1296-
+1297-we have
+1298-
+1299-\[
+1300-\beta/3=\alpha_0/6.
+1301-\]
+1302-
+1303-Q4182/Q4183's deterministic compression also contains a scale term `T^{-beta}`.  Since
+1304-
+1305-\[
+--
+1555-rich-supported ATPLD2:                                    VALID sufficient target
+1556-selected two-prime horizontal discrepancy:               OPEN
+1557-naive CRT completion:                                     FAILS
+1558-hidden lower bound on M_sigma:                            NONE
+1559-
+1560-delta=0 ATPLD2-rich => rich-tail exponent beta/2:        CONFIRMED
+1561-final Q4190 ceiling beta/3:                               CONFIRMED
+1562-
+1563-SUMMARY 2 / DPRM
+1564-
+1565-folded-thin J*=Y^(1/6) leaf deletion:                     CONFIRMED
+1566-selected normalization M*J*/H = M Y^(-1/3):              CONFIRMED
+1567-surviving core >=K/2:                                    CONFIRMED
+1568-popular gap Delta << Lambda/K <=Y^(1/3):                 CONFIRMED
+1569-same-gap edges >>K_sharp^2/Lambda:                       CONFIRMED
+1570-disjoint matching >>K_sharp^2/Lambda:                    CONFIRMED
+1571-matching size >>Y^(1/6):                                 CONFIRMED
+1572-stable-transition strips width O(Y^(1/3)):               CONFIRMED
+1573:strip leaf mass M Y^(-1/6):                              CONFIRMED
+1574:must pay beta/6 as final additive exponent:               NO; cellwise core absorbs it
+1575-finite fold/order pigeonhole absolute factor:             CONFIRMED
+1576-plus order shift |lambda| in {7,20}:                     CONFIRMED
+1577-minus order shift |lambda| in {5,8}:                     CONFIRMED
+1578-polynomial-length prime AP exclusion:                     CONFIRMED with term>r shell guard
+1579-pairwise restart saturation returns endpoint bilinear:    CONFIRMED
+1580-per-edge Theta(T) on plus DPRM:                           CONFIRMED
+1581-per-edge Theta(T) on all minus DPRM:                      REFUTED
+1582-uniform deep-core lower height >>Y^(1/6):                 CONFIRMED
+1583-product of pairwise carriers useful for counting:         NO
+1584-no additional growing common saturation:                 UNVERIFIED
+1585-bounded-transfer degree no-go:                            CONFIRMED in Q4166 scope
+1586-degree-one two-slope identity carries a prime:            NO, CONFIRMED universal
+1587-fixed integer divisibility gives aux residue sparsity:     NO, CONFIRMED
+1588-DPRM hostile model as actual Apéry counterexample:         NO
+1589-DPRM hostile model as interface countermodel:              CONFIRMED
+1590-transfer module formally equivalent to incidence band:     UNVERIFIED
+1591-hidden lower bound on M_sigma:                             NONE
+1592-
+
+===== ADDITIVE CANDIDATE drops/Q4224-32ddf6fc.md =====
+55-one-prime ambient density |Z_ell|^2/ell^2:                   YES
+56-complete-CRT two-prime density g_ell1*g_ell2:                YES
+57-actual-marked Omega=2 factorial reduction:                   YES
+58-selected horizontal transfer of the CRT density:             OPEN
+59-```
+60-
+61-The first exact failed implication is the attempted passage from the complete residue torus modulo \(\ell_1\ell_2\) to the actual selected states.  Here \(\ell_1\ell_2\asymp T^2\), while the selected `(q,t)` region has coordinate lengths only \(O_J(T)\), and the additional condition \(q\mid b_t\) lives in the third varying defining characteristic \(q\).  There is no complete CRT period and no banked selected horizontal equidistribution theorem.
+62-
+63-Finally, the corrected local-distribution theorem is **still strictly stronger** than the canonical popular-gap target.  Indeed `RS-ATPLD2_0` implies
+64-\[
+65-\mathscr E^{\rm pop}_\sigma
+66-\ll_J M_\sigma(T)T^{-\beta/2+o(1)},
+67-\]
+68-so it implies the parallel target
+69-\[
+70-\mathscr E^{\rm pop}_\sigma
+71-\ll_JM_\sigma(T)T^{-\beta/3-\kappa}
+72-\]
+73:for every \(\kappa<\beta/6\).  The converse fails: popular-edge dispersion sees only actual canonical matching edges, whereas `RS-ATPLD2` controls every actual pair in every rich cell and, in its carrier form, additional phantom carrier-divisor pairs.  The weaker frontier is therefore the popular-gap matched-edge theorem, not corrected `RS-ATPLD2`.
+74-
+75----
+76-
+77-# 0. Source boundary
+78-
+79-I worked from the current connected project state
+80-
+81-```text
+82-repository:
+83-  xiangyazi24/Ramanujan_Challenge
+84-
+85-chatgpt-drop head at the start of this round:
+86-  18b2b9b00011142f3b55873b9ca7b09c6d5b1c9e
+87-  Add Q4215 hostile audit and DPRM continuation
+88-```
+89-
+90-The directly relevant delivered artifacts are
+91-
+--
+925-From `(8.2)` and the fact that DPRM cells form a subset of all rich cells,
+926-\[
+927-\mathscr E^{\rm pop}_\sigma
+928-\le
+929-\frac12\mathscr R^{\rm DPRM}_\sigma
+930-\le
+931-\frac12\mathscr R_\sigma.
+932-\tag{8.5}
+933-\]
+934-Under corrected `RS-ATPLD2_0`, `(6.7)` gives
+935-\[
+936-\mathscr E^{\rm pop}_\sigma
+937-\ll_J
+938-M_\sigma(T)T^{-\beta/2+o(1)}.
+939-\tag{8.6}
+940-\]
+941-For every fixed
+942-\[
+943:0<\kappa<\beta/6,
+944-\tag{8.7}
+945-\]
+946-we have
+947-\[
+948-\beta/3+\kappa<\beta/2,
+949-\]
+950-so `(8.6)` implies
+951-\[
+952-\mathscr E^{\rm pop}_\sigma
+953-\ll_J
+954-M_\sigma(T)T^{-\beta/3-\kappa}.
+955-\tag{8.8}
+956-\]
+957-Thus the corrected rich-supported local-distribution theorem remains strictly strong enough to imply the narrower matched-edge target.
+958-
+959-More generally, `(RS-ATPLD2)_delta` implies `PGME_kappa` for every
+960-\[
+961:\kappa<\delta+\beta/6,
+962-\tag{8.9}
+963-\]
+964-as long as the already-negligible density main is not the bottleneck.
+965-
+966-## 8.2 No converse
+967-
+968-`PGME` does not imply corrected `RS-ATPLD2`.
+969-
+970-1. `PGME` counts only one canonical disjoint same-gap, same-type matching in each DPRM cell.  It does not count the other actual prime pairs in that cell.
+971-2. It says nothing about non-DPRM rich cells; those are harmless for TSJMA only because of separate banked arguments.
+972-3. In the carrier formulation, it says nothing about phantom divisors of the deterministic overcarrier even in a cell containing actual leaves.
+973-
+974-This failure can be made formal at the interface level: adjoining extra phantom cell-prime divisors to every geometric carrier leaves \(K_C\), the canonical gap, \(R_C\), and \(\mathscr E^{\rm pop}_\sigma\) unchanged, while it increases the left side of `(RS-ATPLD2)` up to the full ordered prime-pair count in the cell.  No currently banked carrier interface forbids that operation.
+975-
+976-Even in a phantom-free formulation, many actual pairs with noncanonical gaps can enlarge the full factorial moment without changing the chosen matching.  Therefore no implication in the reverse direction follows.
+977-
+978-## 8.3 Strength classification
+979-
+980-```text
+981-corrected rich-supported RS-ATPLD2_0
+982-  => full rich tail with exponent < beta/2
+983:  => PGME_kappa for every kappa<beta/6.
+984-
+985-PGME_kappa
+986-  => DPRM tail with exponent kappa
+987-  => full TSJMA after the banked non-DPRM classification,
+988-  but does not imply RS-ATPLD2.
+989-```
+990-
+991-Hence the rich-support correction does **not** make the statements equivalent.  The weaker frontier is
+992-\[
+993-\boxed{\text{canonical popular-gap matched-edge dispersion `PGME`.}}
+994-\]
+995-
+996----
+997-
+998-# 9. Hostile audit checklist
+999-
+1000-## 9.1 Geometric overcarrier and endogeneity
+1001-
+--
+1164-
+1165-plus affine determinant:                            -6
+1166-minus affine determinant:                           -7
+1167-eligible-prime equivalence:                         PROVED WITH EXCLUSIONS
+1168-ambient one-prime density:                          PROVED
+1169-ambient complete-CRT two-prime density:             PROVED
+1170-selected two-prime discrepancy:                     OPEN
+1171-
+1172-actual marked Omega=2 factorial lemma:               PROVED
+1173-lower bound on M_sigma used:                         NO
+1174-unselected surrogate converted to selected mass:    NO
+1175-
+1176-RS-ATPLD2_0 rich-tail exponent:                     every kappa<beta/2
+1177-corrected density changes that exponent:             NO
+1178-combined OMCD exponent:                              every rho<beta/3
+1179-combined APD exponent:                               every eta<beta/3
+1180-beta=alpha0/2 ceiling:                               alpha0/6
+1181-
+1182:RS-ATPLD2_0 => PGME_kappa:                          YES for every kappa<beta/6
+1183-PGME => RS-ATPLD2:                                  NO
+1184-strictly weaker frontier:                           PGME / E^pop dispersion
+1185-
+1186-unconditional proof of RS-ATPLD2_0:                 NOT OBTAINED
+1187-first exact missing implication:                     SELECTED HORIZONTAL CRT DISCREPANCY
+1188-smallest direct repair premise:                      RS-ATPLD2_0
+1189-```
+1190-
+1191-# Bottom line
+1192-
+1193-The corrected theorem is not the all-cell statement and it does not use the false \(\ell^{-4/3}\) density.  It is the actual-rich-supported two-lower-characteristic upper-distribution law `(RS-ATPLD2)_delta`, with
+1194-\[
+1195-g_\ell=|Z_\ell|^2/\ell^2\ll\ell^{-2/3}.
+1196-\]
+1197-Its \(\delta=0\) form is already enough for a \(T^{-\beta/2+o(1)}\) TSJMA rich-tail saving, so the total argument remains capped by the independently proved \(T^{-\beta/3}\) complementary sector.  At \(\beta=\alpha_0/2\), the full inherited ceiling remains \(\alpha_0/6\).
+1198-
+1199-The theorem is not presently proved.  The exact missing arithmetic is a rich-supported selected horizontal discrepancy simultaneously at \(\ell_1,\ell_2\asymp T\), while retaining the actual upper prime \(q\), its selected zero \(q\mid b_t\), and the raw minus-first sign masks.  After the DPRM classification, the canonical popular-edge theorem is strictly weaker and should be attacked first.
+
+===== ADDITIVE CANDIDATE drops/Q4284-3135cbbf.md =====
+683-   
+684-   
+685-   \[
+686-   \gamma(6q+t)-\frac92\log q+O(1)
+687-   \]
+688-   
+689-   on plus and
+690-   
+691-   
+692-   \[
+693-   \gamma(q-1-t)-\frac92\log q+O(1)
+694-   \]
+695-   
+696-   on minus; uniformly at least \(21.1529\ldots q-O(\log q)\) and \(3.08480\ldots q-O(\log q)\), respectively.
+697-3. **One hypothetical pair:** attacked with all four literal lower-zero equations. The attack remains outside the certificate no-go until the first joining operation, where it becomes either universal, forgetful, or radical-paying.
+698-4. **Equivalence and dichotomy traps:** explicitly audited; no rejected step is used.
+699-5. **Sharpest partial:** the two pointwise logarithmic boundary-vacancy theorems above. No whole-sign, positive-density-\(q\), or deep-window singleton theorem is obtained.
+700-6. **Falsity:** no actual two-prime configuration is constructed. The finite empty scans are not used as evidence in the proof.
+701:7. **Campaign bookkeeping:** actual selected \(q\mid A_t\), exact raw windows, raw minus-first assignment, all residual predicates, and zero lower-bound use of \(M_\sigma(T)\) are preserved. The only exponent comparison is \(\log T\ll T^{\beta/6}=J_*\), so this partial does not alter the inherited \(\alpha_0/6\) ceiling or produce a new positive \(\kappa_*\).
+702-
+703-## Bottom line
+704-
+705-The explicit height calculation rules out the cheap proof: the available gcd envelope exceeds the two-prime threshold by \(\exp(\Theta(q))\). The conditional-pair recurrence calculation rules out the obvious non-growing repair: the only mixed divided-row relation is universal, and every non-universal joining operation either forgets one characteristic or pays \(pp'\).
+706-
+707-The theorem itself nevertheless survives. What remains is exactly the fixed-state horizontal problem promised by the reframing: prove polynomial-size cancellation in one moving Apéry gcd, or prove its restricted large-prime radical is sparse by a genuinely horizontal method. The current recurrence-algebraic interfaces do not supply that datum.
+
+===== ADDITIVE CANDIDATE drops/Q4300-6ff32261.md =====
+923-Rad_{S_J(q)}(G_sigma^circ(q,t)) <<_J q^(2-eta),
+924-```
+925-
+926-where `S_J(q)` is a deterministic shell containing all admissible lower primes and is defined before testing any lower Apéry zero or residual mask.
+927-
+928-Then Q6-SLUNI holds pointwise, and therefore every selected pair statistic vanishes without any lower bound on `M_sigma(T)`.
+929-
+930-The fixed-power form is stronger than necessary. The exact endpoint is
+931-
+932-```text
+933-Rad_{S_J(q)}(G_sigma^circ(q,t)) < P^2.
+934-```
+935-
+936-What remains to prove is not a subexponential gcd theorem. It is a horizontal assertion that the fixed q-free gcd has **subcritical quadratic radical in the large-prime shell**.
+937-
+938-The current unconditional theorem reaches, in the first deep range,
+939-
+940-```text
+941:log R_actual <<_beta T^(beta/6),
+942-```
+943-
+944-while PCRB needs
+945-
+946-```text
+947-log R_shell < 2 log T+O_J(1).
+948-```
+949-
+950-The missing factor is therefore
+951-
+952-```text
+953-T^(beta/6)/log T
+954-```
+955-
+956-at the earliest deep scale, and `T^(5beta/6)/log T` at the whole-cell support-blind scale.
+957-
+958-This is the precise quantitative frontier.
+959-
+
+===== ADDITIVE CANDIDATE drops/Q4414-5d8de339.md =====
+1-ANSWER Q4414 5d8de339
+2-
+3:# Q4414 — adjudication of the alleged `T^{-beta/6}` type-selection ceiling
+4-
+5-## 0. Verdict
+6-
+7-The flagged inconsistency is real in the **summary wording**, but not in the proved exponent ledger.
+8-
+9-The repository already contains the decisive adjudication.  In `drops/Q4215-c2ac5976.md`, commit
+10-
+11-```text
+12-18b2b9b00011142f3b55873b9ca7b09c6d5b1c9e
+13-```
+14-
+15-Section 3.3 derives the global estimate
+16-
+17-```text
+18-transition-strip marked mass
+19-    <<_J M_sigma(T) Y^(-1/6)
+20-     = M_sigma(T) T^(-beta/6),
+21-```
+22-
+23-and then says explicitly that this estimate **must not be charged as an additive final error**.  The same file repeats the conclusion in its exponent audit and checklist:
+24-
+25-```text
+26:strip leaf mass M Y^(-1/6):                  confirmed
+27:must pay beta/6 as final additive exponent:  NO; cellwise core absorbs it
+28-```
+29-
+30-The correct classification among the three choices in the question is therefore:
+31-
+32-> **(b), with a terminology correction.**  It is not originally a collision-level estimate inside an already fixed matching.  It is a **cellwise vertex-level stable-core pruning** performed before the popular-gap matching is rerun.  After that rerun, the loss is absorbed into the constant in `R_C >> K_C^2/Lambda`.  It is not an additive global marked-mass exception.
+33-
+34:It is not (a).  The `beta/3` ceiling does **not** have to be reduced to `beta/6`, and at `beta=alpha_0/2` the inherited ceiling remains
+35-
+36-```text
+37-alpha_0/6,
+38-```
+39-
+40-understood, as usual, as the supremum of the admissible strict exponents.
+41-
+42-It is also not literally (c).  The transition vertices are not sent to another arithmetic sector whose mass is separately estimated.  They are removed **inside every rich cell**, and the original cell mass is compared multiplicatively with the surviving stable core.  The subsequent choice of one fold/order type is a bounded edge pigeonhole and costs only an `O_J(1)` factor.
+43-
+44-The sentence that must be withdrawn is the one now repeated in several campaign summaries:
+45-
+46-```text
+47-after a further marked loss
+48-    << M_sigma(T) T^(-beta/6+o(1))
+49-all matched collisions share one affine fold/order type.
+50-```
+51-
+52-The correct replacement is:
+53-
+54-```text
+55-Inside each rich cell, remove O_J(Y^(1/3+o(1))) transition-strip
+56-vertices.  Since K_C>H=Y^(1/2), the stable core has size at least
+57-K_C/2.  Rerun the popular-gap and greedy-matching construction on
+58-that core, and then retain the largest of O_J(1) fold/order classes.
+59-The resulting canonical typed matching still satisfies
+60-
+61-    R_C >>_J K_C^2/Lambda.
+62-
+63-The aggregate transition-strip vertex count is
+64-    << M_sigma(T)T^(-beta/6+o(1)),
+65-but this is a diagnostic upper bound, not an additive final error.
+66-```
+67-
+68:No theorem claiming the `beta/3` or `alpha_0/6` ceiling needs to be withdrawn on account of this issue.  Any proof that actually inserted an additive `T^{-beta/6}` term must, however, be rewritten using the cellwise stable-core argument before it may claim an exponent above `beta/6`.
+69-
+70----
+71-
+72-## 1. Exact gate and accounting frames
+73-
+74-The issue cannot be settled until the counted objects are typed correctly.
+75-
+76-Fix a sign `sigma`, a translate `tau mod Lambda`, an actual selected upper state `x`, and a length-`Lambda` lower-prime cell `C=(tau,x,j)`.  Let
+77-
+78-```text
+79-S_C = set of actual selected lower primes in C,
+80-K_C = #S_C,
+81-```
+82-
+83-where the indicator includes, before any classification:
+84-
+85-```text
+86-q prime,
+--
+355----
+356-
+357-## 4. Why option (a) would have halved the exponent
+358-
+359-Although option (a) is false for the proved route, its counterfactual ledger is worth recording because it shows exactly why the wording was dangerous.
+360-
+361-If one had a genuine decomposition
+362-
+363-```text
+364-R_rich
+365-  << M_sigma T^(-beta/3)
+366-     + M_sigma T^(-beta/6+o(1))
+367-     + R_DPRM_main,
+368-```
+369-
+370-and if the DPRM main term had exponent `kappa_*`, then the rich-tail exponent would be at most
+371-
+372-```text
+373:min(beta/6,kappa_*).
+374-```
+375-
+376-Q4190 would then give OMCD only for
+377-
+378-```text
+379:rho < min(beta/3,beta/6,kappa_*)
+380:    = min(beta/6,kappa_*).
+381-```
+382-
+383-The deterministic APD compression of Q4182/Q4183 gives
+384-
+385-```text
+386-eta < min(beta,rho),
+387-```
+388-
+389-so the final ceiling would be
+390-
+391-```text
+392-beta/6.
+393-```
+394-
+395-At
+396-
+397-```text
+398-beta=alpha_0/2,
+399-```
+400-
+401-this would become
+402-
+403-```text
+404-alpha_0/12,
+405-```
+406-
+407-not `alpha_0/6`.
+408-
+409-Under that false ledger, all of the following would require withdrawal or rederivation:
+410-
+411-```text
+412:- every typed-DPRM claim of a final exponent above beta/6;
+413-- the statement that rho_B>=2beta/3 reaches the final beta/3 ceiling;
+414-- the standard alpha_0/6 headline when obtained through typed DPRM;
+415-- any APD theorem whose proof explicitly adds the transition-strip mass.
+416-```
+417-
+418-The reason no such withdrawal is required is not that `T^{-beta/6}` is numerically harmless.  It is that the authoritative source explicitly proves a different, multiplicative accounting.
+419-
+420----
+421-
+422-## 5. The actual exponent ledger
+423-
+424-The corrected global ledger is the one already stated in Q4215.
+425-
+426-### 5.1 Non-DPRM classification
+427-
+428-Modulo the banked Q4203 classification,
+429-
+430-```text
+--
+538-The strict inequalities and harmless `o(1)` factors mean that the theorem should be stated as “every fixed exponent below the ceiling,” not as an endpoint estimate unless the endpoint losses are separately controlled.
+539-
+540----
+541-
+542-## 6. Which routes use the stable type, and which do not
+543-
+544-| Route | Needs a common fold/order type? | Correct accounting |
+545-|---|---:|---|
+546-| Direct Q4183/Q4184 OMCD codegree estimate | No | Avoids the refinement entirely |
+547-| Literal PBSD on `D_sigma(Lambda)` | No | Pair theorem is type-free |
+548-| Q6-SLUNI / fixed-gcd shell sparsity | No | Pointwise fibre theorem; no fold data |
+549-| Rich-supported ATPLD2 | No | Counts actual or overcarrier pairs before type |
+550-| Joint upper-mark/two-zero covariance | No | All defining marks remain in one summand; no type |
+551-| Band partial-isometry identity | No for the identity | Support-level object; no endpoint continuant required |
+552-| Canonical PGME matched-edge route | Yes | Local stable-core pruning plus constant type factor; no additive exponent |
+553-| `{7,20}` / `{5,8}` continuant-order shift | Yes | Same local absorption |
+554-| Endpoint bilinear and raw M5/M8 height analysis | Yes | Same local absorption |
+555-| Prime-AP exclusion on a fixed typed gap | Yes | Same local absorption |
+556:| A proof that insists on typing every marked leaf globally | Yes | Would pay `beta/6`; unnecessary and not the banked proof |
+557-
+558-### 6.1 Independent verification of the direct OMCD claim
+559-
+560-The direct OMCD route is documented in
+561-
+562-```text
+563-drops/Q4183-cc8df37d.md
+564-commit dff3e80cb876cbd59c3531de3fb9125c3ed1fb28
+565-
+566-drops/Q4184-a6a69f2f.md
+567-commit 210e997905417060016c920759723799293d08a5
+568-```
+569-
+570-Q4184 expands the off-diagonal same-cell energy using only the exact selected incidence indicators
+571-
+572-```text
+573-H_+(u,p) = C_6(6q+t,p) C_13(12q+t,p) W_+(u,p),
+574-H_-(u,p) = C_6(6q+t,p) C_1(q-1-t,p) W_-(u,p).
+--
+649-K_C -> K_C-O_J(1),
+650-R_C -> R_C-O_J(1).
+651-```
+652-
+653-Since `K_C>H` and `R_C>>Y^(1/6)`, neither change affects a power.
+654-
+655-If charged globally over rich cells, the vertex mass is at most
+656-
+657-```text
+658-M_sigma/H = M_sigma T^(-beta/2),
+659-```
+660-
+661-again below the existing `beta/3` ceiling.  There is no reason to enter it separately.
+662-
+663-### 7.4 The low-zero exception
+664-
+665-The low-zero theorem says that, in one actual selected state/sign fibre, at most one lower prime can satisfy `|Z_p|<=3`, and none can satisfy `|Z_p|<=2`.
+666-
+667:**Classification: pointwise/local, not an additive `beta/6` loss.**
+668-
+669-Removing that single vertex from a rich fibre leaves `K_C-1` vertices and removes at most one edge from the canonical vertex-disjoint matching.  Thus the deep high-zero inverse theorem has the same asymptotic constants.
+670-
+671-In the full pair count, changing `K` to `K-1` changes `K(K-1)` by `2(K-1)`, a lower-order linear term relative to the rich quadratic count.  Summed over rich cells, it is controlled directly by the actual first mass.  It does not create a new exponent bottleneck.
+672-
+673-### 7.5 Stable transition strips
+674-
+675-The aggregate bound is
+676-
+677-```text
+678-M_sigma T^(-beta/6+o(1)),
+679-```
+680-
+681-but the correct classification is the local-core absorption proved in Sections 2 and 3.
+682-
+683-**Classification: locally absorbed before matching; not additive.**
+684-
+685-### 7.6 Finite fold/order type selection
+--
+692-
+693-### 7.7 Complementary/major-arc and the Q4190 light term
+694-
+695-These sectors are already represented by explicit additive or structural `T^{-beta/3}` terms in the global theorem.
+696-
+697-**Classification: additive/structural and paid once.**
+698-
+699-They are independent of the type-selection issue and continue to enforce the `beta/3` ceiling even if one someday improves the thin-sector bookkeeping.
+700-
+701----
+702-
+703-## 8. The exact source of the inconsistent sentence
+704-
+705-The source chain is:
+706-
+707-```text
+708-Q4203 rich-fibre inverse classification
+709-    -> transition strips of width O_J(Y^(1/3))
+710:    -> aggregate strip mass bound M_sigma Y^(-1/6)
+711-
+712-Q4215 hostile audit, Section 3.3
+713-    -> confirms the aggregate bound
+714-    -> explicitly rejects adding it to the final ledger
+715-    -> reruns the inverse theorem cellwise on the stable core
+716-
+717-Q4215, Section 6.2 and checklist
+718-    -> confirms beta/3 final ceiling
+719-    -> confirms alpha_0/6 at beta=alpha_0/2
+720-
+721-later campaign summaries
+722-    -> compress both statements into the misleading phrase
+723-       “after a further marked loss ... all collisions share one type.”
+724-```
+725-
+726-The first two arrows are compatible.  The final summary sentence is not.
+727-
+728-The word **loss** is doing two different jobs:
+--
+793-```text
+794-folded-thin:         [V-add] and also [V-local] for construction;
+795-boundary vacancy:    [Exact];
+796-endpoint layer:      [Exact]/[V-local];
+797-low-zero exception:  [Exact]/[V-local];
+798-transition strips:   [V-local];
+799-type pigeonhole:     [Class];
+800-PBSD:                [P];
+801-E_pop/PGME:          [E].
+802-```
+803-
+804-Only `[V-add]` entries participate directly in the final exponent minimum.
+805-
+806-### 9.4 Correct every inherited summary
+807-
+808-Every current setup paragraph that says
+809-
+810-```text
+811:after a further marked loss << M_sigma T^(-beta/6+o(1))
+812-all matched collisions share one type
+813-```
+814-
+815-should be replaced by the stable-core wording from Section 0.  This includes the setup inherited by later Q6, PBSD, PGME, and Frobenius-detector rounds even when their proofs never use the alleged additive term.
+816-
+817----
+818-
+819-## 10. Self-attack
+820-
+821-### 10.1 Could the global strip estimate still have to be paid because the target counts the original vertices?
+822-
+823-No.  The proof establishes a cellwise domination
+824-
+825-```text
+826-K_C^raw << K_C^st
+827-      << (Lambda/H)R_C.
+828-```
+829-
+--
+868-No.  The inequality
+869-
+870-```text
+871-K_C^raw <<_J (Lambda/H)R_C
+872-```
+873-
+874-holds for every cell and every translate before summation.  Averaging preserves it.  The separate aggregate strip estimate is never invoked in that summation.
+875-
+876-### 10.8 Is the folded-thin term being treated inconsistently with the transition term?
+877-
+878-The two local estimates look similar, but their **banked consumers differ**.  Q4203 explicitly states the global rich-mass decomposition with the folded-thin/non-DPRM `T^{-beta/3}` term.  Q4215 explicitly states that the transition term is not part of that decomposition.  One may seek a future rederivation that absorbs more of the folded-thin mass, but one may not transfer the accounting convention from one statement to the other without changing the theorem being cited.
+879-
+880-### 10.9 Could the direct OMCD route secretly use type-specific facts through a banked lemma?
+881-
+882-The exact Q4184 expansion is written entirely in the raw incidence indicators `C_6 C_13 W_+` and `C_6 C_1 W_-`.  Its sufficient target is a selected joint-row codegree/rich-leaf estimate.  No lemma about `lambda`, stable order, endpoint bilinears, or continuants is imported.  The route is genuinely type-free.
+883-
+884-### 10.10 Does the low-zero vertex create many off-diagonal pairs and therefore a hidden first-moment error?
+885-
+886:It creates at most `2(K_C-1)` directed pairs in a fibre of size `K_C`.  On a rich fibre this is a `O(1/K_C)` fraction of the quadratic pair count, and in the matching it touches at most one edge.  It is not a `T^{-beta/6}` vertex-mass deletion.  Any use in a global pair theorem must state the linear correction explicitly, but that correction is controlled by the actual first mass and does not alter the stated ceiling.
+887-
+888----
+889-
+890-## 11. First exact failed implication and smallest repair
+891-
+892-The exact failed implication behind the flagged inconsistency is
+893-
+894-```text
+895-A subset of actual marked vertices has aggregate mass
+896-    << M_sigma(T)T^(-beta/6)
+897-
+898-DOES NOT IMPLY
+899-
+900-that every proof using a core obtained by deleting that subset must add
+901-    M_sigma(T)T^(-beta/6)
+902-to its final error ledger.
+903-```
+904-
+--
+931-[PROVED]
+932-Their translate-averaged aggregate actual mass is
+933-    <<_J M_sigma(T)T^(-beta/6+o(1)).
+934-
+935-[PROVED]
+936-Every rich cell retains a stable core of size >=K_C/2.
+937-
+938-[PROVED]
+939-After rerunning the popular-gap argument and taking the largest of
+940-O_J(1) types, the canonical matching satisfies
+941-    R_C >>_J K_C^2/Lambda.
+942-
+943-[REFUTED AS WORDING]
+944-The transition-strip estimate is a final additive marked-mass loss.
+945-
+946-[CONFIRMED]
+947-The full rich-mass exponent is controlled by
+948-    min(beta/3,kappa_*),
+949:not by min(beta/6,kappa_*).
+950-
+951-[CONFIRMED]
+952-PBSD with rho_B>=2beta/3 reaches the inherited rich/OMCD/APD
+953-ceiling beta/3.
+954-
+955-[CONFIRMED]
+956-At beta=alpha_0/2 the inherited ceiling is alpha_0/6.
+957-
+958-[CONFIRMED]
+959-The direct OMCD route does not require any fold/order refinement.
+960-
+961-[REQUIRED EDIT]
+962:Replace every “further marked loss T^(-beta/6)” summary sentence by
+963-an explicit cellwise stable-core statement.
+964-```
+965-
+966----
+967-
+968-## 13. Repository state audited
+969-
+970-The connected branch head before this delivery was
+971-
+972-```text
+973-chatgpt-drop:
+974-41e01690f2ae495eb8cba46fd1168089508cc1fe
+975-```
+976-
+977-The load-bearing sources were
+978-
+979-```text
+980-drops/Q4183-cc8df37d.md
+

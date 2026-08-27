@@ -1,0 +1,30 @@
+drops/Q4213-2f6e3101.md:1210:Saving at L=T^(5beta/6):                            T^(-(1-5beta)/3)
+drops/Q4213-2f6e3101.md:1212:Saving at L=T^(5beta/6):                            T^(-(2-5beta)/3)
+drops/Q4215-c2ac5976.md:1287:so the same minimum remains the final exponent.  The internal stable-strip loss `Y^{-1/6}` does not add another exponent because, as shown in §3.3, the stable core remains a constant fraction of every rich cell.
+drops/Q4215-c2ac5976.md:1573:strip leaf mass M Y^(-1/6):                              CONFIRMED
+drops/Q4215-c2ac5976.md:1574:must pay beta/6 as final additive exponent:               NO; cellwise core absorbs it
+drops/Q4215-c2ac5976.md:706:However `(3.7)` should **not** be charged as an additive `T^{-beta/6}` error in the final rich-mass decomposition.  Cellwise,
+drops/Q4215-c2ac5976.md:718:stable vertices.  Re-run the popular-gap argument on that stable core.  The original rich mass `K` is then comparable by an absolute constant to the stable core mass.  Therefore the final non-DPRM exponent need not drop from `beta/3` to `beta/6`.
+drops/Q4224-32ddf6fc.md:1182:RS-ATPLD2_0 => PGME_kappa:                          YES for every kappa<beta/6
+drops/Q4224-32ddf6fc.md:73:for every \(\kappa<\beta/6\).  The converse fails: popular-edge dispersion sees only actual canonical matching edges, whereas `RS-ATPLD2` controls every actual pair in every rich cell and, in its carrier form, additional phantom carrier-divisor pairs.  The weaker frontier is therefore the popular-gap matched-edge theorem, not corrected `RS-ATPLD2`.
+drops/Q4224-32ddf6fc.md:943:0<\kappa<\beta/6,
+drops/Q4224-32ddf6fc.md:961:\kappa<\delta+\beta/6,
+drops/Q4224-32ddf6fc.md:983:  => PGME_kappa for every kappa<beta/6.
+drops/Q4284-3135cbbf.md:701:7. **Campaign bookkeeping:** actual selected \(q\mid A_t\), exact raw windows, raw minus-first assignment, all residual predicates, and zero lower-bound use of \(M_\sigma(T)\) are preserved. The only exponent comparison is \(\log T\ll T^{\beta/6}=J_*\), so this partial does not alter the inherited \(\alpha_0/6\) ceiling or produce a new positive \(\kappa_*\).
+drops/Q4300-6ff32261.md:941:log R_actual <<_beta T^(beta/6),
+drops/Q4414-5d8de339.md:26:strip leaf mass M Y^(-1/6):                  confirmed
+drops/Q4414-5d8de339.md:27:must pay beta/6 as final additive exponent:  NO; cellwise core absorbs it
+drops/Q4414-5d8de339.md:34:It is not (a).  The `beta/3` ceiling does **not** have to be reduced to `beta/6`, and at `beta=alpha_0/2` the inherited ceiling remains
+drops/Q4414-5d8de339.md:373:min(beta/6,kappa_*).
+drops/Q4414-5d8de339.md:379:rho < min(beta/3,beta/6,kappa_*)
+drops/Q4414-5d8de339.md:380:    = min(beta/6,kappa_*).
+drops/Q4414-5d8de339.md:3:# Q4414 — adjudication of the alleged `T^{-beta/6}` type-selection ceiling
+drops/Q4414-5d8de339.md:412:- every typed-DPRM claim of a final exponent above beta/6;
+drops/Q4414-5d8de339.md:556:| A proof that insists on typing every marked leaf globally | Yes | Would pay `beta/6`; unnecessary and not the banked proof |
+drops/Q4414-5d8de339.md:667:**Classification: pointwise/local, not an additive `beta/6` loss.**
+drops/Q4414-5d8de339.md:68:No theorem claiming the `beta/3` or `alpha_0/6` ceiling needs to be withdrawn on account of this issue.  Any proof that actually inserted an additive `T^{-beta/6}` term must, however, be rewritten using the cellwise stable-core argument before it may claim an exponent above `beta/6`.
+drops/Q4414-5d8de339.md:710:    -> aggregate strip mass bound M_sigma Y^(-1/6)
+drops/Q4414-5d8de339.md:811:after a further marked loss << M_sigma T^(-beta/6+o(1))
+drops/Q4414-5d8de339.md:886:It creates at most `2(K_C-1)` directed pairs in a fibre of size `K_C`.  On a rich fibre this is a `O(1/K_C)` fraction of the quadratic pair count, and in the matching it touches at most one edge.  It is not a `T^{-beta/6}` vertex-mass deletion.  Any use in a global pair theorem must state the linear correction explicitly, but that correction is controlled by the actual first mass and does not alter the stated ceiling.
+drops/Q4414-5d8de339.md:949:not by min(beta/6,kappa_*).
+drops/Q4414-5d8de339.md:962:Replace every “further marked loss T^(-beta/6)” summary sentence by
