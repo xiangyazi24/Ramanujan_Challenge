@@ -1,0 +1,98 @@
+name: Q4289 augment radical report
+
+on:
+  push:
+    branches:
+      - q4289-gcd-compute-8fb970e6
+    paths:
+      - .github/workflows/q4289-augment-radical.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4289-gcd-compute-8fb970e6
+          fetch-depth: 0
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Add exact radical histograms
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('scratch/q4289/Q4289GcdScan.java')
+          text = path.read_text()
+          replacements = [
+          ('''        int maxKnownOmega = 0;
+                  int sizeCertified = 0;''',
+           '''        int maxKnownOmega = 0;
+                  TreeMap<Integer, Integer> omegaHistogram = new TreeMap<>();
+                  TreeMap<Integer, Integer> qValuationHistogram = new TreeMap<>();
+                  TreeMap<BigInteger, Integer> factorFrequency = new TreeMap<>();
+                  BigInteger largestKnownFactor = ONE;
+                  RecordData largestFactorRecord = null;
+                  int sizeCertified = 0;'''),
+          ('''            if (r.factorInfo.complete()) ++complete;
+                      else if (r.factorInfo.status.equals("probable-prime-residual")) ++prp;
+                      else ++unresolved;
+                      maxKnownOmega = Math.max(maxKnownOmega, r.factorInfo.knownOmega());''',
+           '''            if (r.factorInfo.complete()) {
+                          ++complete;
+                          omegaHistogram.merge(r.factorInfo.knownOmega(), 1, Integer::sum);
+                      } else if (r.factorInfo.status.equals("probable-prime-residual")) ++prp;
+                      else ++unresolved;
+                      qValuationHistogram.merge(r.qValuation, 1, Integer::sum);
+                      for (BigInteger factor : r.factorInfo.knownFactors.keySet()) {
+                          factorFrequency.merge(factor, 1, Integer::sum);
+                          if (factor.compareTo(largestKnownFactor) > 0) {
+                              largestKnownFactor = factor;
+                              largestFactorRecord = r;
+                          }
+                      }
+                      maxKnownOmega = Math.max(maxKnownOmega, r.factorInfo.knownOmega());'''),
+          ('''        s.append("maximum known distinct factors    = ").append(maxKnownOmega).append('\\n');
+                  s.append("```\\n\\n");''',
+           '''        s.append("maximum known distinct factors    = ").append(maxKnownOmega).append('\\n');
+                  s.append("complete omega histogram           = ").append(omegaHistogram).append('\\n');
+                  s.append("raw q-valuation histogram          = ").append(qValuationHistogram).append('\\n');
+                  if (largestFactorRecord != null) {
+                      s.append("largest known residual factor     = ").append(largestKnownFactor)
+                              .append(" at (").append(largestFactorRecord.state.q()).append(',')
+                              .append(largestFactorRecord.state.t()).append(',').append(largestFactorRecord.sign)
+                              .append(")\\n");
+                  }
+                  List<Map.Entry<BigInteger, Integer>> frequencies = new ArrayList<>(factorFrequency.entrySet());
+                  frequencies.sort(Comparator
+                          .comparingInt((Map.Entry<BigInteger, Integer> e) -> e.getValue()).reversed()
+                          .thenComparing(Map.Entry::getKey));
+                  StringJoiner topFactors = new StringJoiner(", ");
+                  for (int i = 0; i < Math.min(12, frequencies.size()); ++i) {
+                      Map.Entry<BigInteger, Integer> e = frequencies.get(i);
+                      topFactors.add(e.getKey() + ":" + e.getValue());
+                  }
+                  s.append("top residual-factor frequencies   = ").append(topFactors).append('\\n');
+                  s.append("```\\n\\n");''')]
+          for old, new in replacements:
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'expected one replacement site, found {count}: {old[:100]!r}')
+              text = text.replace(old, new)
+          path.write_text(text)
+          PY
+      - name: Strict compile before committing
+        run: |
+          mkdir -p .q4289_classes
+          javac -Xlint:all -Werror -d .q4289_classes scratch/q4289/Q4289GcdScan.java
+      - name: Commit augmented source
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scratch/q4289/Q4289GcdScan.java
+          git commit -m 'Add Q4289 radical-distribution diagnostics'
+          git push origin HEAD:q4289-gcd-compute-8fb970e6
