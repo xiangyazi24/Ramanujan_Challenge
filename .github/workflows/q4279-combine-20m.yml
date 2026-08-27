@@ -1,0 +1,105 @@
+name: Q4279 combine disjoint 20m ledger
+
+on:
+  push:
+    branches: [chatgpt-drop]
+    paths:
+      - 'drops/Q4279-53770bd8/results-18000000-20000000/manifest.json'
+
+permissions:
+  contents: write
+
+jobs:
+  combine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: chatgpt-drop
+          fetch-depth: 0
+      - name: Combine disjoint upper-prime ledgers
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='drops/Q4279-53770bd8'
+          OUT="$ROOT/combined-1000000-20000000"
+          dirs=(
+            "$ROOT/results-1000000-2000000"
+            "$ROOT/results-2000000-4000000"
+            "$ROOT/results-4000000-6000000"
+            "$ROOT/results-6000000-8000000"
+            "$ROOT/results-8000000-10000000"
+            "$ROOT/results-10000000-12000000"
+            "$ROOT/results-12000000-14000000"
+            "$ROOT/results-14000000-16000000"
+            "$ROOT/results-16000000-18000000"
+            "$ROOT/results-18000000-20000000"
+          )
+          for d in "${dirs[@]}"; do test -f "$d/manifest.json"; done
+          mkdir -p "$OUT/work"
+          for base in q_stats candidate_occurrences candidate_states_by_margin; do
+            first=1; : > "$OUT/work/$base.csv"
+            for d in "${dirs[@]}"; do
+              if (( first )); then gzip -dc "$d/$base.csv.gz" >> "$OUT/work/$base.csv"; first=0
+              else gzip -dc "$d/$base.csv.gz" | tail -n +2 >> "$OUT/work/$base.csv"
+              fi
+            done
+            gzip -9 -c "$OUT/work/$base.csv" > "$OUT/$base.csv.gz"
+          done
+          first=1; : > "$OUT/block_stats.csv"
+          for d in "${dirs[@]}"; do
+            if (( first )); then cat "$d/block_stats.csv" >> "$OUT/block_stats.csv"; first=0
+            else tail -n +2 "$d/block_stats.csv" >> "$OUT/block_stats.csv"
+            fi
+          done
+          jq -s '
+            {
+              qmin_exclusive: .[0].qmin_exclusive,
+              qmax: .[-1].qmax,
+              source_ranges: map({qmin_exclusive,qmax,forced_pmin,recurrence_steps,wall_seconds:.timing_seconds.total}),
+              upper_primes_examined: (map(.upper_primes_examined)|add),
+              recurrence_steps_executed: (map(.recurrence_steps)|add),
+              raw_plus_occurrences: (map(.raw_plus_occurrences)|add),
+              raw_minus_occurrences: (map(.raw_minus_occurrences)|add),
+              raw_sign_overlap: (map(.raw_sign_overlap)|add),
+              assigned_plus_occurrences: (map(.assigned_plus_occurrences)|add),
+              assigned_minus_occurrences: (map(.assigned_minus_occurrences)|add),
+              candidate_upper_states: (map(.candidate_upper_states)|add),
+              q_with_candidates: (map(.q_with_candidates)|add),
+              actual_leaf_occurrences: (map(.actual_leaf_occurrences)|add),
+              max_premark_assigned_fiber: (map(.max_premark_assigned_fiber)|max),
+              max_selected_assigned_fiber: (map(.max_selected_assigned_fiber)|max),
+              naive_heuristic_sum: (map(.naive_heuristic_sum)|add),
+              component_wall_seconds: map(.timing_seconds.total),
+              all_component_checks_pass: all(.[];
+                .checks.montgomery_failures==0 and
+                .checks.recurrence_failures==0 and
+                .checks.candidate_mismatches==0 and
+                .checks.reflection_failures==0 and
+                .checks.consecutive_failures==0 and
+                .checks.three_zero_primes_without_midpoint==0),
+              complexity: "sum of disjoint q-ledgers; each component O(sum_{p in forced range} p/2 + sum_p |Z_p|^2)"
+            }
+          ' "${dirs[@]/%//manifest.json}" > "$OUT/combined_manifest.json"
+          g++ -O3 -std=c++20 -Wall -Wextra -Wpedantic "$ROOT/q4279_analyze.cpp" -o "$OUT/work/q4279_analyze"
+          "$OUT/work/q4279_analyze" "$OUT/work/q_stats.csv" "$OUT/block_stats.csv" "$OUT/trend_analysis"
+          if jq -e '.actual_leaf_occurrences==0' "$OUT/combined_manifest.json" >/dev/null; then
+            printf '%s\n' \
+              'NO RAW MINUS-FIRST SELECTED q6 LEAF FOUND FOR 1,000,000 < q <= 20,000,000 IN THE DISJOINT COMBINED LEDGER.' \
+              'FINITE EXHAUSTED-RANGE STATEMENT ONLY.' > "$OUT/witnesses.txt"
+          else
+            printf '%s\n' 'See combined candidate_occurrences.csv.gz for actual selected witnesses.' > "$OUT/witnesses.txt"
+          fi
+          rm -rf "$OUT/work"
+          (cd "$OUT" && sha256sum * > SHA256SUMS)
+      - name: Commit combined ledger
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add drops/Q4279-53770bd8/combined-1000000-20000000
+          git commit -m 'Q4279 combined disjoint q6 ledger through q=20,000,000'
+          git pull --rebase origin chatgpt-drop
+          git push origin HEAD:chatgpt-drop
