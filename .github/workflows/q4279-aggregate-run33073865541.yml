@@ -1,0 +1,104 @@
+name: Q4279 aggregate exact 20M shard artifacts
+
+on:
+  push:
+    branches: [q4279-compute-sharded]
+    paths:
+      - '.github/workflows/q4279-aggregate-run33073865541.yml'
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  aggregate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4279-compute-sharded
+          fetch-depth: 0
+
+      - name: Download the 24 completed zero shards from source run
+        uses: actions/download-artifact@v4
+        with:
+          pattern: q4279-zero-*
+          path: zero-artifacts
+          merge-multiple: false
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: xiangyazi24/Ramanujan_Challenge
+          run-id: 33073865541
+
+      - name: Merge disjoint exact zero ledgers
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/results-sharded-19999999"
+          rm -rf "$OUT"
+          mkdir -p "$OUT/data" "$OUT/shards" "$ROOT/build"
+
+          mapfile -t count_files < <(find zero-artifacts -path '*/data/prime_zero_counts.csv' | sort)
+          mapfile -t record_files < <(find zero-artifacts -path '*/data/zero_records.csv' | sort)
+          test "${#count_files[@]}" -eq 24
+          test "${#record_files[@]}" -eq 24
+          awk 'FNR==1 && NR!=1 {next} {print}' "${count_files[@]}" > "$OUT/data/prime_zero_counts.csv"
+          awk 'FNR==1 && NR!=1 {next} {print}' "${record_files[@]}" > "$OUT/data/zero_records.csv"
+
+          for d in zero-artifacts/q4279-zero-*; do
+            id="${d##*-}"
+            base="$(dirname "$(find "$d" -type f -name manifest.json | head -n1)")"
+            test -n "$base"
+            mkdir -p "$OUT/shards/$id"
+            for f in manifest.json summary.txt time.txt host.txt stdout.log stderr.log SHA256SUMS; do
+              test -f "$base/$f"
+              cp "$base/$f" "$OUT/shards/$id/$f"
+            done
+          done
+
+          test "$(find "$OUT/shards" -mindepth 1 -maxdepth 1 -type d | wc -l)" -eq 24
+
+      - name: Compile and run exact cached analyzer
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/results-sharded-19999999"
+          g++ -O3 -march=native -DNDEBUG -std=c++17 -pthread \
+            -Wall -Wextra -Wpedantic "$ROOT/q4279_cached_analyze.cpp" \
+            -o "$ROOT/build/q4279_cached_analyze" 2>&1 | tee "$OUT/analyze_compile.log"
+          /usr/bin/time -v -o "$OUT/analyze_time.txt" "$ROOT/build/q4279_cached_analyze" \
+            --qmin-exclusive 1000000 --qmax 19999999 --block-width 250000 \
+            --zero-counts "$OUT/data/prime_zero_counts.csv" \
+            --zero-records "$OUT/data/zero_records.csv" \
+            --out "$OUT/data" > "$OUT/analyze_stdout.log" 2> "$OUT/analyze_stderr.log"
+          cat "$OUT/analyze_stdout.log"
+          tail -n 30 "$OUT/analyze_stderr.log" || true
+
+      - name: Package full raw data and release code
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/results-sharded-19999999"
+          test -f "$OUT/data/near_misses.csv" && head -n 201 "$OUT/data/near_misses.csv" > "$OUT/data/top_near_misses.csv"
+          for f in q_stats.csv prime_zero_counts.csv zero_records.csv near_misses.csv; do
+            test -f "$OUT/data/$f" && gzip -9 -f "$OUT/data/$f"
+          done
+          cp "$ROOT/q4279_scan.cpp" "$OUT/q4279_scan.cpp"
+          cp "$ROOT/q4279_zero_shard.cpp" "$OUT/q4279_zero_shard.cpp"
+          cp "$ROOT/q4279_cached_analyze.cpp" "$OUT/q4279_cached_analyze.cpp"
+          cp .github/workflows/q4279-sharded-20m.yml "$OUT/q4279-sharded-20m.yml"
+          cp .github/workflows/q4279-aggregate-run33073865541.yml "$OUT/q4279-aggregate-run33073865541.yml"
+          (cd "$OUT" && find . -type f -not -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
+
+      - name: Commit complete search bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add compute/Q4279-53770bd8/results-sharded-19999999
+          git commit -m 'Q4279 exact q6 search for 1e6 < q < 2e7'
+          git push origin HEAD:q4279-compute-sharded
