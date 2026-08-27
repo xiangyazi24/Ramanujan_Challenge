@@ -1,0 +1,86 @@
+name: Q4289 exact fixed-gcd campaign
+
+on:
+  push:
+    branches:
+      - q4289-gcd-compute-8fb970e6
+    paths:
+      - scratch/q4289/Q4289GcdScan.java
+      - .github/workflows/q4289-gcd-campaign.yml
+  workflow_dispatch:
+    inputs:
+      qmax:
+        description: Largest selected upper prime
+        required: false
+        default: "5000"
+      trial_limit:
+        description: Trial-factor prime limit
+        required: false
+        default: "20000"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: q4289-gcd-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  exact-campaign:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    env:
+      QMAX: ${{ github.event.inputs.qmax || '5000' }}
+      TRIAL_LIMIT: ${{ github.event.inputs.trial_limit || '20000' }}
+    steps:
+      - name: Check out computation branch
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Record toolchain
+        run: |
+          java -version
+          javac -version
+          nproc
+          free -h
+
+      - name: Compile exact scanner with warnings as errors
+        run: |
+          mkdir -p .q4289_classes
+          javac -Xlint:all -Werror \
+            -d .q4289_classes \
+            scratch/q4289/Q4289GcdScan.java
+
+      - name: Run exact campaign
+        run: |
+          set -o pipefail
+          java -Xmx12g -cp .q4289_classes Q4289GcdScan \
+            --qmax "$QMAX" \
+            --min-q 17 \
+            --trial-limit "$TRIAL_LIMIT" \
+            --out-dir q4289_results \
+            2>&1 | tee q4289_results.log
+
+      - name: Print compact result files
+        if: always()
+        run: |
+          echo '--- summary.json ---'
+          cat q4289_results/summary.json 2>/dev/null || true
+          echo '--- report.md ---'
+          cat q4289_results/report.md 2>/dev/null || true
+
+      - name: Upload exact result ledger
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q4289-gcd-results-${{ github.run_id }}
+          path: |
+            q4289_results/
+            q4289_results.log
+          if-no-files-found: error
+          compression-level: 6
