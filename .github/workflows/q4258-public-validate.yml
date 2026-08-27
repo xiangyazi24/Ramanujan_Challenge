@@ -1,0 +1,44 @@
+name: Q4258 public validation search
+
+on:
+  push:
+    branches: [q4258-compute]
+    paths:
+      - '.github/workflows/q4258-public-validate.yml'
+      - 'drops/Q4258-385ecf39/q4258_validate.cpp'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4258-compute
+      - name: Machine
+        run: |
+          g++ --version
+          nproc
+          lscpu | sed -n '1,30p'
+          free -h
+      - name: Compile standard-library scanner
+        run: |
+          mkdir -p drops/Q4258-385ecf39/build
+          g++ -O3 -march=native -std=c++20 -pthread -Wall -Wextra -Wpedantic \
+            drops/Q4258-385ecf39/q4258_validate.cpp \
+            -o drops/Q4258-385ecf39/build/q4258_validate
+      - name: Smoke test through 50000
+        run: |
+          /usr/bin/time -v drops/Q4258-385ecf39/build/q4258_validate \
+            --q-max 50000 --threads "$(nproc)" \
+            > drops/Q4258-385ecf39/build/smoke-50000.json
+          cat drops/Q4258-385ecf39/build/smoke-50000.json
+      - name: Exact known-ledger validation through 1000000
+        run: |
+          /usr/bin/time -v drops/Q4258-385ecf39/build/q4258_validate \
+            --q-max 1000000 --threads "$(nproc)" \
+            > drops/Q4258-385ecf39/build/validation-1000000.json
+          cat drops/Q4258-385ecf39/build/validation-1000000.json
