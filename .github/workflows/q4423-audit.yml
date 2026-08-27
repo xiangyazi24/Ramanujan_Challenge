@@ -85,3 +85,5 @@ jobs:
           git add -f audit/q4423
           git commit -m 'Record Q4423 literal drop-bank sweep'
           git push origin HEAD:q4423-audit
+
+# trigger: 2026-08-27T20:05:00Z
