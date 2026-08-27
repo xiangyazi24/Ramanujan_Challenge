@@ -442,6 +442,9 @@ public final class Q4289GcdScan {
         List<double[]> powerPoints = new ArrayList<>();
         int ones = 0, complete = 0, prp = 0, unresolved = 0;
         int maxKnownOmega = 0;
+        int sizeCertified = 0;
+        double maxSizeRatio = Double.NEGATIVE_INFINITY;
+        RecordData worstSizeRatio = null;
         RecordData max = null;
         for (RecordData r : records) {
             logs.add(r.logG);
@@ -460,6 +463,17 @@ public final class Q4289GcdScan {
             else ++unresolved;
             maxKnownOmega = Math.max(maxKnownOmega, r.factorInfo.knownOmega());
             if (max == null || r.g.compareTo(max.g) > 0) max = r;
+            int lowerPrimeBound = (int) ((6L * r.state.q() + r.state.t()) / 7L + 1L);
+            boolean hasGeometricWindow = r.sign == '+'
+                    ? r.plusGeometricCandidates > 0
+                    : r.minusGeometricCandidates > 0;
+            BigInteger lowerSquare = BigInteger.valueOf(lowerPrimeBound).pow(2);
+            if (!hasGeometricWindow || r.g.compareTo(lowerSquare) < 0) ++sizeCertified;
+            double sizeRatio = r.logG / (2.0 * Math.log(lowerPrimeBound));
+            if (sizeRatio > maxSizeRatio) {
+                maxSizeRatio = sizeRatio;
+                worstSizeRatio = r;
+            }
         }
         double[] lin = regression(linearPoints);
         double[] pow = regression(powerPoints);
@@ -479,6 +493,16 @@ public final class Q4289GcdScan {
             s.append("maximum G decimal digits        = ").append(max.decimal.length()).append('\n');
             s.append(String.format(Locale.ROOT, "maximum log G                   = %.12f%n", max.logG));
             s.append("maximum G SHA-256               = ").append(max.sha256).append('\n');
+            if (max.decimal.length() <= 200) {
+                s.append("maximum G exact                 = ").append(max.decimal).append('\n');
+                s.append("maximum G factorization         = ").append(max.factorInfo.factorString()).append('\n');
+            }
+        }
+        s.append("size-certified fibres            = ").append(sizeCertified).append('/').append(records.size()).append('\n');
+        if (worstSizeRatio != null) {
+            s.append(String.format(Locale.ROOT,
+                    "max logG/(2 log p_lower)          = %.12f at (%d,%d,%c)%n",
+                    maxSizeRatio, worstSizeRatio.state.q(), worstSizeRatio.state.t(), worstSizeRatio.sign));
         }
         s.append(String.format(Locale.ROOT, "fit range q >=                  = %d%n", fitMinQ));
         s.append(String.format(Locale.ROOT, "OLS log G = a*q+b: a,R^2        = %.9g, %.6f%n", lin[0], lin[2]));
@@ -593,6 +617,7 @@ public final class Q4289GcdScan {
         int maxAssigned = 0;
         List<String> collisionWitnesses = new ArrayList<>();
         long rawPlusLeaves = 0, rawMinusLeaves = 0, assignedPlusLeaves = 0;
+        long rawMinusM5Leaves = 0, rawMinusM8PlusLeaves = 0, rawMinusM8MinusLeaves = 0;
 
         int stateIndex = 0;
         for (State s : states) {
@@ -635,6 +660,12 @@ public final class Q4289GcdScan {
             rawPlusLeaves += rawPlus.size();
             rawMinusLeaves += rawMinus.size();
             assignedPlusLeaves += assignedPlus.size();
+            for (int p : rawMinus) {
+                int type = minusType(q, t, p);
+                if (type == 5) ++rawMinusM5Leaves;
+                else if (type == 81) ++rawMinusM8PlusLeaves;
+                else ++rawMinusM8MinusLeaves;
+            }
 
             for (int p : rawPlus) {
                 int d = q - p;
@@ -723,6 +754,9 @@ public final class Q4289GcdScan {
         report.append("raw plus leaves                  = ").append(rawPlusLeaves).append('\n');
         report.append("raw minus leaves                 = ").append(rawMinusLeaves).append('\n');
         report.append("minus-first assigned plus leaves = ").append(assignedPlusLeaves).append('\n');
+        report.append("raw minus M5 leaves              = ").append(rawMinusM5Leaves).append('\n');
+        report.append("raw minus M8+ leaves             = ").append(rawMinusM8PlusLeaves).append('\n');
+        report.append("raw minus M8- leaves             = ").append(rawMinusM8MinusLeaves).append('\n');
         report.append("maximum assigned leaves/state    = ").append(maxAssigned).append('\n');
         report.append("Q6-SLUNI collision witnesses     = ").append(collisionWitnesses.size()).append('\n');
         report.append("```\n\n");
