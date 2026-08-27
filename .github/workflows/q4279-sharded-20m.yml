@@ -1,0 +1,103 @@
+name: Q4279 sharded exact q6 scan 10m to 20m
+
+on:
+  push:
+    branches: [chatgpt-drop]
+    paths:
+      - '.github/workflows/q4279-sharded-20m.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - tag: 10000000-12000000
+            qmin: 10000000
+            qmax: 12000000
+          - tag: 12000000-14000000
+            qmin: 12000000
+            qmax: 14000000
+          - tag: 14000000-16000000
+            qmin: 14000000
+            qmax: 16000000
+          - tag: 16000000-18000000
+            qmin: 16000000
+            qmax: 18000000
+          - tag: 18000000-20000000
+            qmin: 18000000
+            qmax: 20000000
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: chatgpt-drop
+      - name: Compile and scan ${{ matrix.tag }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='drops/Q4279-53770bd8'
+          OUT="results-${{ matrix.tag }}"
+          WORK="$RUNNER_TEMP/q4279-${{ matrix.tag }}"
+          mkdir -p "$WORK"
+          g++ -O3 -march=native -std=c++20 -pthread -Wall -Wextra -Wpedantic \
+            "$ROOT/q4279_q6_leaf_hunt.cpp" -o "$WORK/q4279_q6_leaf_hunt" \
+            2>&1 | tee "$WORK/compile.log"
+          /usr/bin/time -v "$WORK/q4279_q6_leaf_hunt" \
+            --qmin-exclusive ${{ matrix.qmin }} --qmax ${{ matrix.qmax }} \
+            --threads "$(getconf _NPROCESSORS_ONLN)" --block-width 250000 --out "$WORK/$OUT" \
+            > >(tee "$WORK/$OUT/stdout.log") 2> >(tee "$WORK/$OUT/stderr-and-time.log" >&2)
+          cp "$WORK/compile.log" "$WORK/$OUT/compile.log"
+          for f in candidate_occurrences.csv candidate_states_by_margin.csv q_stats.csv prime_zero_counts.csv zero_records.csv; do
+            test -f "$WORK/$OUT/$f" && gzip -9 -f "$WORK/$OUT/$f"
+          done
+          (cd "$WORK/$OUT" && sha256sum * > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q4279-shard-${{ matrix.tag }}
+          path: ${{ runner.temp }}/q4279-${{ matrix.tag }}/results-${{ matrix.tag }}
+          retention-days: 7
+
+  collect:
+    needs: scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: chatgpt-drop
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: q4279-shard-*
+          path: downloaded
+          merge-multiple: false
+      - name: Install shard results
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='drops/Q4279-53770bd8'
+          for d in downloaded/q4279-shard-*; do
+            tag="${d##*/q4279-shard-}"
+            dest="$ROOT/results-$tag"
+            mkdir -p "$dest"
+            cp -a "$d/." "$dest/"
+          done
+      - name: Commit shard data and logs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add drops/Q4279-53770bd8/results-10000000-12000000 \
+                  drops/Q4279-53770bd8/results-12000000-14000000 \
+                  drops/Q4279-53770bd8/results-14000000-16000000 \
+                  drops/Q4279-53770bd8/results-16000000-18000000 \
+                  drops/Q4279-53770bd8/results-18000000-20000000
+          git commit -m 'Q4279 exact disjoint q6 shards through q=20,000,000'
+          git pull --rebase origin chatgpt-drop
+          git push origin HEAD:chatgpt-drop
