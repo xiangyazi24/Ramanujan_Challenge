@@ -1,0 +1,1 @@
+usage: q4279_q6_leaf_hunt --qmin-exclusive N --qmax N [--threads N] [--block-width N] [--out DIR]
