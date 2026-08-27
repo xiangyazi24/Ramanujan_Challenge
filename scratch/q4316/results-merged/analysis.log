@@ -1,0 +1,169 @@
+# Q4316 extension analysis
+
+Exact input: the independently generated `records.tsv`.
+
+## Cumulative through q <= 15000
+
+### plus
+
+```text
+records                 1727
+G=1                     1167
+median G                1
+median nontrivial G     19
+maximum G               253783 = 19^3*37 at (2477,855)
+maximum omega           3
+largest prime factor    4283 at (12539,3701)
+rho(log log G~log q)  -0.0399189879  R2=0.00159771460  n=444
+size certified          1727 / 1727
+raw leaves              0
+assigned leaves         0
+```
+
+### minus all
+
+```text
+records                 1727
+G=1                     1115
+median G                1
+median nontrivial G     19
+maximum G               33847 = 11*17*181 at (13217,385)
+maximum omega           3
+largest prime factor    709 at (12979,11781)
+rho(log log G~log q)  0.0272500292  R2=0.000752156224  n=465
+size certified          1727 / 1727
+raw leaves              0
+assigned leaves         0
+```
+
+### minus raw-window
+
+```text
+records                 213
+G=1                     135
+median G                1
+median nontrivial G     17
+maximum G               33847 = 11*17*181 at (13217,385)
+maximum omega           3
+largest prime factor    271 at (11437,139)
+rho(log log G~log q)  -0.00853239516  R2=7.28459494e-05  n=57
+size certified          213 / 213
+raw leaves              0
+assigned leaves         0
+```
+
+### minus M5-capable
+
+```text
+records                 126
+G=1                     83
+median G                1
+median nontrivial G     17
+maximum G               33847 = 11*17*181 at (13217,385)
+maximum omega           3
+largest prime factor    271 at (11437,139)
+rho(log log G~log q)  0.0385705360  R2=0.00152127999  n=34
+size certified          126 / 126
+raw leaves              0
+assigned leaves         0
+```
+
+## New band 5000 < q <= 15000
+
+### plus
+
+```text
+records                 1122
+G=1                     723
+median G                1
+median nontrivial G     19
+maximum G               181507 = 19*41*233 at (6841,3924)
+maximum omega           3
+largest prime factor    4283 at (12539,3701)
+rho(log log G~log q)  -0.0779034527  R2=0.00418414098  n=399
+size certified          1122 / 1122
+raw leaves              0
+assigned leaves         0
+```
+
+### minus all
+
+```text
+records                 1122
+G=1                     699
+median G                1
+median nontrivial G     19
+maximum G               33847 = 11*17*181 at (13217,385)
+maximum omega           3
+largest prime factor    709 at (12979,11781)
+rho(log log G~log q)  0.0168067482  R2=0.000177873323  n=423
+size certified          1122 / 1122
+raw leaves              0
+assigned leaves         0
+```
+
+### minus raw-window
+
+```text
+records                 148
+G=1                     96
+median G                1
+median nontrivial G     17
+maximum G               33847 = 11*17*181 at (13217,385)
+maximum omega           3
+largest prime factor    271 at (11437,139)
+rho(log log G~log q)  0.00599777421  R2=1.68741500e-05  n=52
+size certified          148 / 148
+raw leaves              0
+assigned leaves         0
+```
+
+### minus M5-capable
+
+```text
+records                 93
+G=1                     61
+median G                1
+median nontrivial G     17
+maximum G               33847 = 11*17*181 at (13217,385)
+maximum omega           3
+largest prime factor    271 at (11437,139)
+rho(log log G~log q)  0.156894993  R2=0.0164438833  n=32
+size certified          93 / 93
+raw leaves              0
+assigned leaves         0
+```
+
+## Required point checks
+
+```text
+minus state (5647,4553)   G=10013 = 17*19*31
+minus maximum through 15000 G=33847 = 11*17*181 at (13217,385)
+plus largest factor      4283 at (12539,3701)
+minus all largest factor 709 at (12979,11781)
+minus raw largest factor 271 at (11437,139)
+minus M5 largest factor  271 at (11437,139)
+```
+
+## Largest retained prime factor by dyadic q block
+
+| q block | plus | minus all | minus raw | minus M5 |
+|---|---:|---:|---:|---:|
+|[16,32)|19|19|0|0|
+|[32,64)|19|19|17|0|
+|[64,128)|0|11|0|0|
+|[128,256)|97|293|0|0|
+|[256,512)|19|73|31|0|
+|[512,1024)|197|193|59|37|
+|[1024,2048)|97|73|17|11|
+|[2048,4096)|499|97|61|61|
+|[4096,8192)|379|271|19|17|
+|[8192,16384)|4283|709|271|271|
+
+## Dyadic-maximum trend diagnostics
+
+- plus: log(block max factor) slope 0.752264, R^2 0.772070, blocks 9.
+- minus all: log(block max factor) slope 0.514698, R^2 0.625764, blocks 10.
+- minus raw-window: log(block max factor) slope 0.301507, R^2 0.312328, blocks 7.
+- minus M5-capable: log(block max factor) slope 0.637342, R^2 0.312710, blocks 5.
+
