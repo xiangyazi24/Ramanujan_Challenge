@@ -1,0 +1,102 @@
+name: Q4279 exact q6 leaf search 15M to 20M
+
+on:
+  push:
+    branches: [q4279-compute-20m]
+    paths:
+      - '.github/workflows/q4279-high-20m.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4279-compute-20m
+          fetch-depth: 0
+
+      - name: Apply audited compile repairs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('compute/Q4279-53770bd8/q4279_scan.cpp')
+          s=p.read_text()
+          R=[
+            (',asp=0,asm=0;',',asp=0,asmn=0;'),
+            ('else++asm;','else++asmn;'),
+            ('<<asm<<','<<asmn<<'),
+            ('std::tie(a.q,a.t,a.sign(),a.p)','std::make_tuple(a.q,a.t,a.sign(),a.p)'),
+            ('std::tie(b.q,b.t,b.sign(),b.p)','std::make_tuple(b.q,b.t,b.sign(),b.p)'),
+            ('std::size_t b0=cp;while(cp<oc.size()&&oc[cp].q==q)++cp,b1=cp;const auto&zq=Z[qi];','std::size_t b0=cp;while(cp<oc.size()&&oc[cp].q==q)++cp;std::size_t b1=cp;const auto&zq=Z[qi];')]
+          for a,b in R:
+            n=s.count(a)
+            if n==1:s=s.replace(a,b)
+            elif n==0 and b in s:pass
+            else:raise SystemExit(f'unexpected replacement count {n}: {a}')
+          p.write_text(s)
+          PY
+
+      - name: Compile standard-library release
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/results-15000000-19999999"
+          rm -rf "$OUT"
+          mkdir -p "$ROOT/build" "$OUT"
+          {
+            echo "date_utc=$(date -u +%FT%TZ)"
+            echo "run_range=15000000<q<=19999999"
+            uname -a
+            lscpu || true
+            free -h || true
+            g++ --version | head -n1
+          } > "$OUT/host.txt"
+          g++ -O3 -march=native -DNDEBUG -std=c++17 -pthread \
+            -Wall -Wextra -Wpedantic "$ROOT/q4279_scan.cpp" \
+            -o "$ROOT/build/q4279_scan" 2>&1 | tee "$OUT/compile.log"
+          "$ROOT/build/q4279_scan" --help > "$OUT/help.txt"
+
+      - name: Run exact candidate-first search
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/results-15000000-19999999"
+          /usr/bin/time -v -o "$OUT/time.txt" "$ROOT/build/q4279_scan" \
+            --qmin-exclusive 15000000 --qmax 19999999 \
+            --threads "$(getconf _NPROCESSORS_ONLN)" --block-width 250000 \
+            --out "$OUT/data" > "$OUT/stdout.log" 2> "$OUT/stderr.log"
+          cat "$OUT/stdout.log"
+          tail -n 40 "$OUT/stderr.log" || true
+
+      - name: Package code and raw ledgers
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/results-15000000-19999999"
+          test -f "$OUT/data/near_misses.csv" && head -n 201 "$OUT/data/near_misses.csv" > "$OUT/data/top_near_misses.csv"
+          for f in candidate_occurrences.csv q_stats.csv prime_zero_counts.csv zero_records.csv near_misses.csv; do
+            test -f "$OUT/data/$f" && gzip -9 -f "$OUT/data/$f"
+          done
+          cp "$ROOT/q4279_scan.cpp" "$OUT/q4279_scan.cpp"
+          cp .github/workflows/q4279-high-20m.yml "$OUT/q4279-high-20m.yml"
+          (cd "$OUT" && find . -type f -not -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
+
+      - name: Commit release and all results
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add compute/Q4279-53770bd8/q4279_scan.cpp \
+                  compute/Q4279-53770bd8/results-15000000-19999999
+          git commit -m 'Q4279 exact q6 leaf search for 1.5e7 < q < 2e7'
+          git push origin HEAD:q4279-compute-20m
