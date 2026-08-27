@@ -1,0 +1,66 @@
+name: Q4423 extended lexical sweep
+
+on:
+  push:
+    branches: [q4423-audit]
+    paths:
+      - '.github/workflows/q4423-audit-extended.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4423-audit
+          fetch-depth: 0
+      - name: Extended sweep
+        shell: bash
+        run: |
+          set -euo pipefail
+          out=audit/q4423-extended
+          rm -rf "$out"
+          mkdir -p "$out"
+          pat='beta/6|β/6|\\beta/6|-1/6|−1/6|\\frac\{1\}\{6\}|transition|fold[/ -]order|stable[- ]?(core|strip|vertex|type)|type[- ]selection|further marked loss'
+          grep -RInI -E "$pat" drops --include='*.md' | LC_ALL=C sort > "$out/all-matches.txt" || true
+          grep -RIlI -E "$pat" drops --include='*.md' | LC_ALL=C sort > "$out/matching-files.txt" || true
+          awk -F: '{n[$1]++} END {for (f in n) print n[f],f}' "$out/all-matches.txt" | sort -k2,2 > "$out/counts.txt"
+
+          narrow='T[^[:space:]]{0,24}(-beta/6|-\\beta/6|-β/6)|Y[^[:space:]]{0,24}(-1/6|−1/6)|transition.{0,100}(loss|mass|error|exception|delete|remove|prun|strip|type|exponent)|((loss|mass|error|exception|delete|remove|prun|strip|type|exponent).{0,100}transition)'
+          grep -RInI -E "$narrow" drops --include='*.md' | LC_ALL=C sort > "$out/narrow-matches.txt" || true
+          cut -d: -f1 "$out/narrow-matches.txt" | uniq > "$out/narrow-files.txt" || true
+
+          while IFS= read -r f; do
+            [ -n "$f" ] || continue
+            echo "===== FILE $f ====="
+            grep -nI -E -C 14 "$narrow" "$f" || true
+            echo
+          done < "$out/narrow-files.txt" > "$out/narrow-context.txt"
+
+          {
+            echo "head=$(git rev-parse HEAD)"
+            echo "markdown_drop_files=$(find drops -maxdepth 1 -type f -name '*.md' | wc -l)"
+            echo "extended_matching_files=$(wc -l < "$out/matching-files.txt")"
+            echo "narrow_matching_files=$(wc -l < "$out/narrow-files.txt")"
+          } > "$out/manifest.txt"
+          sha256sum "$out"/*.txt > "$out/SHA256SUMS"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q4423-extended-sweep
+          path: audit/q4423-extended
+          if-no-files-found: error
+          retention-days: 90
+      - name: Commit outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f audit/q4423-extended
+          git commit -m 'Record Q4423 extended lexical sweep'
+          git push origin HEAD:q4423-audit
