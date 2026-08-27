@@ -573,7 +573,7 @@ public final class Q4289GcdScan {
         if (b1 == null || b6 == null || b12 == null || b13 == null) throw new AssertionError("missing coefficients");
 
         Set<BigInteger> smallFixed = new TreeSet<>();
-        for (int p : qPrimes) if (p < 17) smallFixed.add(BigInteger.valueOf(p));
+        for (int p : new int[]{2, 3, 7}) smallFixed.add(BigInteger.valueOf(p));
         Set<BigInteger> f1 = distinctPrimeFactors64(b1);
         Set<BigInteger> f6 = distinctPrimeFactors64(b6);
         Set<BigInteger> f12 = distinctPrimeFactors64(b12);
