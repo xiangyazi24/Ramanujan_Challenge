@@ -1,0 +1,44 @@
+name: Q4279 public hosted smoke test
+
+on:
+  push:
+    branches: [chatgpt-drop]
+    paths:
+      - '.github/workflows/q4279-public-smoke.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: chatgpt-drop
+          fetch-depth: 0
+      - name: Compile and execute corrected inherited scanner
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC='drops/Q4225-099c1c1e/q4225_zero_leaf_scan.cpp'
+          OUT='drops/Q4279-53770bd8/public-smoke'
+          mkdir -p "$OUT"
+          cp "$SRC" "$OUT/q4225_zero_leaf_scan_corrected.cpp"
+          sed -i 's/FastMod mod(uint32_t(p));/FastMod mod{uint32_t(p)};/g' "$OUT/q4225_zero_leaf_scan_corrected.cpp"
+          g++ -O3 -march=native -std=c++17 -fopenmp -Wall -Wextra -Wpedantic \
+            "$OUT/q4225_zero_leaf_scan_corrected.cpp" -o "$OUT/q4225_zero_leaf_scan" \
+            2>&1 | tee "$OUT/compile.log"
+          "$OUT/q4225_zero_leaf_scan" --pmax 5000 --threads "$(getconf _NPROCESSORS_ONLN)" --out "$OUT/run" \
+            > >(tee "$OUT/stdout.log") 2> >(tee "$OUT/stderr.log" >&2)
+          (cd "$OUT" && sha256sum compile.log stdout.log stderr.log q4225_zero_leaf_scan_corrected.cpp > SHA256SUMS)
+      - name: Commit smoke outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add drops/Q4279-53770bd8/public-smoke
+          git commit -m 'Q4279 public hosted compile smoke results'
+          git push origin HEAD:chatgpt-drop
