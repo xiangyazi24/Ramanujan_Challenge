@@ -48,12 +48,18 @@ jobs:
 
           for d in zero-artifacts/q4279-zero-*; do
             id="${d##*-}"
-            base="$(dirname "$(find "$d" -type f -name manifest.json | head -n1)")"
-            test -n "$base"
+            manifest="$(find "$d" -type f -path '*/data/manifest.json' | head -n1)"
+            test -n "$manifest"
+            data_dir="$(dirname "$manifest")"
+            shard_root="$(dirname "$data_dir")"
             mkdir -p "$OUT/shards/$id"
-            for f in manifest.json summary.txt time.txt host.txt stdout.log stderr.log SHA256SUMS; do
-              test -f "$base/$f"
-              cp "$base/$f" "$OUT/shards/$id/$f"
+            for f in manifest.json summary.txt; do
+              test -f "$data_dir/$f"
+              cp "$data_dir/$f" "$OUT/shards/$id/$f"
+            done
+            for f in time.txt host.txt stdout.log stderr.log SHA256SUMS; do
+              test -f "$shard_root/$f"
+              cp "$shard_root/$f" "$OUT/shards/$id/$f"
             done
           done
 
