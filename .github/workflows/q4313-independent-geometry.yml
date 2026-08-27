@@ -1,0 +1,45 @@
+name: Q4313 independent fixed-gcd geometry
+
+on:
+  push:
+    branches: [q4313-independent-compute]
+    paths:
+      - 'scratch/q4313/Q4313IndependentCensus.java'
+      - '.github/workflows/q4313-independent-geometry.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4313-independent-compute
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile exact standard-library implementation
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf scratch/q4313/classes
+          mkdir -p scratch/q4313/classes
+          javac -version
+          javac -Xlint:all -Werror \
+            -d scratch/q4313/classes \
+            scratch/q4313/Q4313IndependentCensus.java
+      - name: Enumerate selected states and raw sectors
+        shell: bash
+        run: |
+          set -euo pipefail
+          java -cp scratch/q4313/classes Q4313IndependentCensus \
+            --min-q 17 \
+            --qmax 15000 \
+            --prefixes 10000,15000 \
+            --geometry-only
