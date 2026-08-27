@@ -12,11 +12,11 @@ on:
       qmax:
         description: Largest selected upper prime
         required: false
-        default: "5000"
+        default: "10000"
       trial_limit:
         description: Trial-factor prime limit
         required: false
-        default: "20000"
+        default: "50000"
 
 permissions:
   contents: read
@@ -30,14 +30,14 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 330
     env:
-      QMAX: ${{ github.event.inputs.qmax || '5000' }}
-      TRIAL_LIMIT: ${{ github.event.inputs.trial_limit || '20000' }}
+      QMAX: ${{ github.event.inputs.qmax || '10000' }}
+      TRIAL_LIMIT: ${{ github.event.inputs.trial_limit || '50000' }}
     steps:
       - name: Check out computation branch
         uses: actions/checkout@v4
 
       - name: Set up Java 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "21"
