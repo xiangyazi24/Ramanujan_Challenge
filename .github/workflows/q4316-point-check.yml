@@ -1,0 +1,55 @@
+name: Q4316 exact load-bearing point checks
+
+on:
+  push:
+    branches:
+      - q4316-independent-census
+    paths:
+      - '.github/workflows/q4316-point-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  point-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4316-independent-census
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile and run exact checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf scratch/q4316/classes-point
+          mkdir -p scratch/q4316/classes-point
+          javac -Xlint:all -Werror -d scratch/q4316/classes-point \
+            scratch/q4316/Q4316PointCheck.java
+          /usr/bin/time -v java -Xmx12g -cp scratch/q4316/classes-point \
+            Q4316PointCheck \
+            > >(tee scratch/q4316/point-check.log) \
+            2> >(tee scratch/q4316/point-check-time.log >&2)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q4316-point-checks
+          path: |
+            scratch/q4316/point-check.log
+            scratch/q4316/point-check-time.log
+          if-no-files-found: error
+          retention-days: 90
+      - name: Commit check output
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin q4316-independent-census
+          git add scratch/q4316/point-check*.log
+          git commit -m 'Q4316 exact load-bearing point checks'
+          git push origin HEAD:q4316-independent-census
