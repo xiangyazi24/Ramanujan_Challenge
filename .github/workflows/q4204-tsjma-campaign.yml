@@ -1,0 +1,78 @@
+name: Q4204 exact TSJMA campaign
+
+on:
+  push:
+    branches:
+      - q4204-tsjma-compute-145e5721
+    paths:
+      - problems/3.2/research/scripts/q4204_tsjma_scan.cpp
+      - problems/3.2/research/scripts/q4204_tsjma_driver.py
+      - .github/workflows/q4204-tsjma-campaign.yml
+  workflow_dispatch:
+    inputs:
+      qmax:
+        description: Prime cap for the exact full scan
+        required: false
+        default: "300000"
+      betas:
+        description: Comma-separated outer Q4190 beta values
+        required: false
+        default: "0.10,0.15,0.30,0.50"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: q4204-tsjma-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  exact-campaign:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    env:
+      QMAX: ${{ github.event.inputs.qmax || '300000' }}
+      BETAS: ${{ github.event.inputs.betas || '0.10,0.15,0.30,0.50' }}
+    steps:
+      - name: Check out computation branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Record toolchain
+        run: |
+          python --version
+          g++ --version
+          nproc
+          free -h
+
+      - name: Run checkpoint and full exact scan
+        run: |
+          python problems/3.2/research/scripts/q4204_tsjma_driver.py \
+            --qmax "$QMAX" \
+            --betas "$BETAS" \
+            --threads 0 \
+            --top-cells 24 \
+            --out-dir q4204_results
+
+      - name: Print machine summary
+        if: always()
+        run: |
+          echo '--- full summary ---'
+          cat q4204_results/summary.json 2>/dev/null || true
+          echo '--- sanity summary ---'
+          cat q4204_results_sanity/summary.json 2>/dev/null || true
+
+      - name: Upload exact result ledger
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q4204-tsjma-results-${{ github.run_id }}
+          path: |
+            q4204_results/
+            q4204_results_sanity/
+          if-no-files-found: error
+          compression-level: 6
