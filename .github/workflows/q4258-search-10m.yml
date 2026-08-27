@@ -1,0 +1,129 @@
+name: Q4258 sharded q6 search through 10m
+
+on:
+  push:
+    branches: [q4258-compute]
+    paths:
+      - '.github/workflows/q4258-search-10m.yml'
+      - 'drops/Q4258-385ecf39/q4258_scan.cpp'
+      - 'drops/Q4258-385ecf39/q4258_merge.cpp'
+
+permissions:
+  contents: write
+
+jobs:
+  compile-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4258-compute
+      - name: Compile both standard-library programs
+        run: |
+          mkdir -p build smoke/shard
+          g++ -O3 -march=native -std=c++20 -pthread -Wall -Wextra -Wpedantic \
+            drops/Q4258-385ecf39/q4258_scan.cpp -o build/q4258_scan
+          g++ -O3 -march=native -std=c++20 -Wall -Wextra -Wpedantic \
+            drops/Q4258-385ecf39/q4258_merge.cpp -o build/q4258_merge
+      - name: End-to-end smoke through 50000
+        run: |
+          build/q4258_scan --q-min-exclusive 0 --q-max 50000 \
+            --shard-index 0 --shard-count 1 --threads "$(nproc)" \
+            --out-dir smoke/shard
+          build/q4258_merge --input-root smoke --output-dir smoke/merged \
+            --q-min-exclusive 0 --q-max 50000 --block-width 10000
+          cat smoke/merged/summary.json
+          test "$(awk -F: '/candidate_rows/{gsub(/[ ,]/,"",$2); print $2}' smoke/merged/summary.json)" = "31"
+
+  scan:
+    needs: compile-smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4258-compute
+      - name: Compile candidate-first scanner
+        run: |
+          mkdir -p build out
+          g++ -O3 -march=native -std=c++20 -pthread -Wall -Wextra -Wpedantic \
+            drops/Q4258-385ecf39/q4258_scan.cpp -o build/q4258_scan
+      - name: Scan work-balanced lower-prime shard
+        shell: bash
+        run: |
+          set +e
+          /usr/bin/time -v build/q4258_scan \
+            --q-min-exclusive 1000000 --q-max 10000000 \
+            --shard-index "${{ matrix.shard }}" --shard-count 20 \
+            --threads "$(nproc)" --out-dir out \
+            > out/stdout-${{ matrix.shard }}.txt \
+            2> out/stderr-${{ matrix.shard }}.txt
+          rc=$?
+          set -e
+          echo "$rc" > out/exit-code-${{ matrix.shard }}.txt
+          cat out/summary-${{ matrix.shard }}.json
+          if [ "$rc" -ne 0 ] && [ "$rc" -ne 10 ]; then
+            cat out/stderr-${{ matrix.shard }}.txt
+            exit "$rc"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q4258-shard-${{ matrix.shard }}
+          path: out
+          if-no-files-found: error
+          retention-days: 30
+
+  merge-and-persist:
+    needs: scan
+    if: ${{ always() && needs.scan.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4258-compute
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: q4258-shard-*
+          path: artifacts
+      - name: Compile merger
+        run: |
+          mkdir -p build drops/Q4258-385ecf39/results-10m
+          g++ -O3 -march=native -std=c++20 -Wall -Wextra -Wpedantic \
+            drops/Q4258-385ecf39/q4258_merge.cpp -o build/q4258_merge
+      - name: Merge and analyze exact raw ledger
+        run: |
+          test "$(find artifacts -name 'candidates-*.csv' | wc -l)" -eq 20
+          build/q4258_merge --input-root artifacts \
+            --output-dir drops/Q4258-385ecf39/results-10m \
+            --q-min-exclusive 1000000 --q-max 10000000 --block-width 1000000
+          mkdir -p drops/Q4258-385ecf39/results-10m/shard-summaries
+          find artifacts -name 'summary-*.json' -exec cp {} drops/Q4258-385ecf39/results-10m/shard-summaries/ \;
+          {
+            echo "workflow_run_id=$GITHUB_RUN_ID"
+            echo "workflow_run_attempt=$GITHUB_RUN_ATTEMPT"
+            echo "head_sha=$GITHUB_SHA"
+            echo "runner=$(uname -a)"
+            echo "compiler=$(g++ --version | head -1)"
+            echo "nproc=$(nproc)"
+            echo "q_min_exclusive=1000000"
+            echo "q_max=10000000"
+            echo "shards=20"
+          } > drops/Q4258-385ecf39/results-10m/run_metadata.txt
+          (cd drops/Q4258-385ecf39/results-10m && sha256sum *.csv *.json run_metadata.txt > SHA256SUMS)
+          cat drops/Q4258-385ecf39/results-10m/summary.json
+          head -20 drops/Q4258-385ecf39/results-10m/near_misses.csv
+      - name: Commit code-derived raw data
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add drops/Q4258-385ecf39/results-10m
+          git commit -m 'Add Q4258 exact q6 search results through 10m'
+          git push origin HEAD:q4258-compute
