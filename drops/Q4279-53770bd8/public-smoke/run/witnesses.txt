@@ -1,0 +1,2 @@
+NO RAW TWO-ROW SELECTED LEAF FOUND THROUGH p,q <= 5000
+The inherited residual/depth/primitive filters are therefore vacuous on this range.

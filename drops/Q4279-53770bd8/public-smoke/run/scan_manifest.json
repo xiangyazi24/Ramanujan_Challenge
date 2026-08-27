@@ -1,0 +1,21 @@
+{
+  "pmax": 5000,
+  "threads": 4,
+  "elapsed_seconds": 0.004652311,
+  "prime_count": 669,
+  "total_zero_records": 606,
+  "selected_states": 605,
+  "selected_states_le_5000": 605,
+  "raw_plus_before_minus_first": 0,
+  "raw_minus": 0,
+  "raw_sign_overlap": 0,
+  "actual_plus_after_minus_first": 0,
+  "actual_minus": 0,
+  "checks": {
+    "reduction_cases": 7359, "reduction_failures": 0,
+    "full_recurrence_crosschecks": 92, "recurrence_failures": 0,
+    "reflection_checks": 606, "reflection_failures": 0,
+    "consecutive_checks": 358, "consecutive_failures": 0,
+    "q5000_checkpoint_expected": 605, "q5000_checkpoint_ok": true
+  }
+}
