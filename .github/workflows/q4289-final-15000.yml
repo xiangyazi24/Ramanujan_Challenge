@@ -1,0 +1,45 @@
+name: Q4289 independent final census through 15000
+
+on:
+  push:
+    branches:
+      - q4289-gcd-compute-8fb970e6
+    paths:
+      - .github/workflows/q4289-final-15000.yml
+
+permissions:
+  contents: read
+
+jobs:
+  exact-final-15000:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Strict compile
+        run: |
+          mkdir -p .q4289_classes
+          javac -Xlint:all -Werror -d .q4289_classes scratch/q4289/Q4289GcdScan.java
+      - name: Run exact q<=15000 census
+        run: |
+          set -o pipefail
+          java -Xmx12g -cp .q4289_classes Q4289GcdScan \
+            --qmax 15000 \
+            --min-q 17 \
+            --trial-limit 100000 \
+            --out-dir q4289_final_15000 \
+            2>&1 | tee q4289_final_15000.log
+      - name: Upload exact ledger
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q4289-final-15000-${{ github.run_id }}
+          path: |
+            q4289_final_15000/
+            q4289_final_15000.log
+          if-no-files-found: error
+          compression-level: 6
