@@ -1,0 +1,115 @@
+name: Q4289 augment exact report
+
+on:
+  push:
+    branches:
+      - q4289-gcd-compute-8fb970e6
+    paths:
+      - .github/workflows/q4289-augment-report.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4289-gcd-compute-8fb970e6
+          fetch-depth: 0
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Add factorization-free size certificates and exact maxima
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('scratch/q4289/Q4289GcdScan.java')
+          text = path.read_text()
+
+          replacements = [
+          ('''        int ones = 0, complete = 0, prp = 0, unresolved = 0;
+                  int maxKnownOmega = 0;
+                  RecordData max = null;''',
+           '''        int ones = 0, complete = 0, prp = 0, unresolved = 0;
+                  int maxKnownOmega = 0;
+                  int sizeCertified = 0;
+                  double maxSizeRatio = Double.NEGATIVE_INFINITY;
+                  RecordData worstSizeRatio = null;
+                  RecordData max = null;'''),
+          ('''            maxKnownOmega = Math.max(maxKnownOmega, r.factorInfo.knownOmega());
+                      if (max == null || r.g.compareTo(max.g) > 0) max = r;
+                  }''',
+           '''            maxKnownOmega = Math.max(maxKnownOmega, r.factorInfo.knownOmega());
+                      if (max == null || r.g.compareTo(max.g) > 0) max = r;
+                      int lowerPrimeBound = (int) ((6L * r.state.q() + r.state.t()) / 7L + 1L);
+                      boolean hasGeometricWindow = r.sign == '+'
+                              ? r.plusGeometricCandidates > 0
+                              : r.minusGeometricCandidates > 0;
+                      BigInteger lowerSquare = BigInteger.valueOf(lowerPrimeBound).pow(2);
+                      if (!hasGeometricWindow || r.g.compareTo(lowerSquare) < 0) ++sizeCertified;
+                      double sizeRatio = r.logG / (2.0 * Math.log(lowerPrimeBound));
+                      if (sizeRatio > maxSizeRatio) {
+                          maxSizeRatio = sizeRatio;
+                          worstSizeRatio = r;
+                      }
+                  }'''),
+          ('''            s.append("maximum G SHA-256               = ").append(max.sha256).append('\\n');
+                  }
+                  s.append(String.format(Locale.ROOT, "fit range q >=                  = %d%n", fitMinQ));''',
+           '''            s.append("maximum G SHA-256               = ").append(max.sha256).append('\\n');
+                      if (max.decimal.length() <= 200) {
+                          s.append("maximum G exact                 = ").append(max.decimal).append('\\n');
+                          s.append("maximum G factorization         = ").append(max.factorInfo.factorString()).append('\\n');
+                      }
+                  }
+                  s.append("size-certified fibres            = ").append(sizeCertified).append('/').append(records.size()).append('\\n');
+                  if (worstSizeRatio != null) {
+                      s.append(String.format(Locale.ROOT,
+                              "max logG/(2 log p_lower)          = %.12f at (%d,%d,%c)%n",
+                              maxSizeRatio, worstSizeRatio.state.q(), worstSizeRatio.state.t(), worstSizeRatio.sign));
+                  }
+                  s.append(String.format(Locale.ROOT, "fit range q >=                  = %d%n", fitMinQ));'''),
+          ('''        long rawPlusLeaves = 0, rawMinusLeaves = 0, assignedPlusLeaves = 0;''',
+           '''        long rawPlusLeaves = 0, rawMinusLeaves = 0, assignedPlusLeaves = 0;
+                  long rawMinusM5Leaves = 0, rawMinusM8PlusLeaves = 0, rawMinusM8MinusLeaves = 0;'''),
+          ('''            rawPlusLeaves += rawPlus.size();
+                      rawMinusLeaves += rawMinus.size();
+                      assignedPlusLeaves += assignedPlus.size();''',
+           '''            rawPlusLeaves += rawPlus.size();
+                      rawMinusLeaves += rawMinus.size();
+                      assignedPlusLeaves += assignedPlus.size();
+                      for (int p : rawMinus) {
+                          int type = minusType(q, t, p);
+                          if (type == 5) ++rawMinusM5Leaves;
+                          else if (type == 81) ++rawMinusM8PlusLeaves;
+                          else ++rawMinusM8MinusLeaves;
+                      }'''),
+          ('''        report.append("minus-first assigned plus leaves = ").append(assignedPlusLeaves).append('\\n');
+                  report.append("maximum assigned leaves/state    = ").append(maxAssigned).append('\\n');''',
+           '''        report.append("minus-first assigned plus leaves = ").append(assignedPlusLeaves).append('\\n');
+                  report.append("raw minus M5 leaves              = ").append(rawMinusM5Leaves).append('\\n');
+                  report.append("raw minus M8+ leaves             = ").append(rawMinusM8PlusLeaves).append('\\n');
+                  report.append("raw minus M8- leaves             = ").append(rawMinusM8MinusLeaves).append('\\n');
+                  report.append("maximum assigned leaves/state    = ").append(maxAssigned).append('\\n');''')]
+
+          for old, new in replacements:
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'expected one replacement site, found {count}: {old[:80]!r}')
+              text = text.replace(old, new)
+          path.write_text(text)
+          PY
+      - name: Strict compile before committing
+        run: |
+          mkdir -p .q4289_classes
+          javac -Xlint:all -Werror -d .q4289_classes scratch/q4289/Q4289GcdScan.java
+      - name: Commit augmented source
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scratch/q4289/Q4289GcdScan.java
+          git commit -m 'Add Q4289 factorization-free size certificates'
+          git push origin HEAD:q4289-gcd-compute-8fb970e6
