@@ -1,0 +1,23 @@
+	Command being timed: "compute/Q4279-53770bd8/build/q4279_scan --qmin-exclusive 10000000 --qmax 15000000 --threads 4 --block-width 250000 --out compute/Q4279-53770bd8/results-10000000-15000000/data"
+	User time (seconds): 21333.12
+	System time (seconds): 1.36
+	Percent of CPU this job got: 399%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:29:04
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 94320
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 4599
+	Voluntary context switches: 3
+	Involuntary context switches: 3110615
+	Swaps: 0
+	File system inputs: 216
+	File system outputs: 46184
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
