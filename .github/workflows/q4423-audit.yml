@@ -1,0 +1,87 @@
+name: Q4423 drop-bank exponent-frame sweep
+
+on:
+  push:
+    branches: [q4423-audit]
+    paths:
+      - '.github/workflows/q4423-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4423-audit
+          fetch-depth: 0
+      - name: Sweep drop bank
+        shell: bash
+        run: |
+          set -euo pipefail
+          out=audit/q4423
+          rm -rf "$out"
+          mkdir -p "$out"
+
+          {
+            echo "branch=q4423-audit"
+            echo "head=$(git rev-parse HEAD)"
+            echo "tree=$(git rev-parse HEAD^{tree})"
+            echo "markdown_drop_files=$(find drops -maxdepth 1 -type f -name '*.md' | wc -l)"
+          } > "$out/manifest.txt"
+          find drops -maxdepth 1 -type f -name '*.md' -print | LC_ALL=C sort > "$out/drop-files.txt"
+
+          pat='beta/6|beta\/6|Y\^\(-1/6\)|Y\^\{-1/6\}|Y\^\{-\\?beta/6\}|T\^\(-beta/6\)|T\^\{-beta/6\}|T\^\{-\\?beta/6\}|transition[- ]strip|type[- ]selection|further marked loss|fold/order type|stable[- ]core|cellwise core'
+          grep -RInI -E "$pat" drops --include='*.md' | LC_ALL=C sort > "$out/all-matches.txt" || true
+          grep -RIlI -E "$pat" drops --include='*.md' | LC_ALL=C sort > "$out/matching-files.txt" || true
+
+          awk -F: '{n[$1]++} END {for (f in n) print n[f],f}' "$out/all-matches.txt" \
+            | sort -k2,2 > "$out/match-counts-by-file.txt"
+
+          addpat='(add|added|additive|exception|error|loss|discard|delete|remove|charge|pay|minimum|min\(|min\{|ceiling|exponent|rho|kappa|eta|tail|mass).{0,160}(beta/6|Y\^\(-1/6\)|Y\^\{-1/6\}|T\^\(-beta/6\)|T\^\{-beta/6\})|(beta/6|Y\^\(-1/6\)|Y\^\{-1/6\}|T\^\(-beta/6\)|T\^\{-beta/6\}).{0,160}(add|added|additive|exception|error|loss|discard|delete|remove|charge|pay|minimum|min\(|ceiling|exponent|rho|kappa|eta|tail|mass)'
+          grep -RInI -E "$addpat" drops --include='*.md' | LC_ALL=C sort > "$out/additive-candidate-lines.txt" || true
+          cut -d: -f1 "$out/additive-candidate-lines.txt" | uniq > "$out/additive-candidate-files.txt" || true
+
+          while IFS= read -r f; do
+            [ -n "$f" ] || continue
+            echo "===== FILE $f ====="
+            grep -nI -E -C 10 "$pat" "$f" || true
+            echo
+          done < "$out/matching-files.txt" > "$out/all-context.txt"
+
+          while IFS= read -r f; do
+            [ -n "$f" ] || continue
+            echo "===== ADDITIVE CANDIDATE $f ====="
+            grep -nI -E -C 18 "$addpat" "$f" || true
+            echo
+          done < "$out/additive-candidate-files.txt" > "$out/additive-context.txt"
+
+          {
+            echo "# Token census"
+            for p in 'T^{-beta/6}' 'T^(-beta/6)' 'Y^{-1/6}' 'Y^(-1/6)' 'transition-strip' 'transition strip' 'type-selection' 'type selection' 'further marked loss' 'stable-core' 'cellwise core'; do
+              printf '%-24s ' "$p"
+              grep -RIF "$p" drops --include='*.md' | wc -l
+            done
+          } > "$out/token-census.txt"
+
+          sha256sum "$out"/*.txt > "$out/SHA256SUMS"
+      - name: Upload audit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: q4423-drop-bank-sweep
+          path: audit/q4423
+          if-no-files-found: error
+          retention-days: 90
+      - name: Commit audit outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f audit/q4423
+          git commit -m 'Record Q4423 literal drop-bank sweep'
+          git push origin HEAD:q4423-audit
