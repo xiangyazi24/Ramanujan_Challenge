@@ -1,0 +1,59 @@
+name: Q4279 summarize exact shard performance
+
+on:
+  push:
+    branches: [q4279-compute-sharded]
+    paths:
+      - '.github/workflows/q4279-performance-summary.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4279-compute-sharded
+          fetch-depth: 0
+      - name: Aggregate shard manifests
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT='compute/Q4279-53770bd8/results-sharded-19999999'
+          mapfile -t M < <(find "$OUT/shards" -mindepth 2 -maxdepth 2 -name manifest.json | sort)
+          test "${#M[@]}" -eq 24
+          jq -s '
+            {
+              shard_count: length,
+              pmin: (map(.pmin_requested)|min),
+              pmax: (map(.pmax_requested)|max),
+              prime_count_sum: (map(.prime_count)|add),
+              zero_records_sum: (map(.zero_records)|add),
+              recurrence_steps_sum: (map(.recurrence_steps|tonumber)|add|floor|tostring),
+              shard_zero_seconds_sum: (map(.zero_seconds)|add),
+              shard_total_seconds_sum: (map(.total_seconds)|add),
+              maximum_shard_zero_seconds: (map(.zero_seconds)|max),
+              minimum_shard_zero_seconds: (map(.zero_seconds)|min),
+              mean_shard_zero_seconds: ((map(.zero_seconds)|add)/length),
+              aggregate_steps_per_shard_second: ((map(.recurrence_steps|tonumber)|add)/(map(.zero_seconds)|add)),
+              max_Z: (map(.max_Z)|max),
+              primes_Z_ge_3_sum: (map(.primes_Z_ge_3)|add),
+              checks: {
+                reflection_failures_sum: (map(.checks.reflection_failures)|add),
+                consecutive_failures_sum: (map(.checks.consecutive_failures)|add),
+                release_candidate_mismatch_sum: (map(.checks.release_candidate_mismatch)|add)
+              }
+            }
+          ' "${M[@]}" > "$OUT/performance.json"
+          cat "$OUT/performance.json"
+      - name: Commit performance summary
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add compute/Q4279-53770bd8/results-sharded-19999999/performance.json
+          git commit -m 'Add Q4279 exact 20M shard performance summary'
+          git push origin HEAD:q4279-compute-sharded
