@@ -1,0 +1,105 @@
+name: Q4279 one-million regression
+
+on:
+  push:
+    branches: [q4279-compute-regression]
+    paths:
+      - '.github/workflows/q4279-regression.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4279-compute-regression
+          fetch-depth: 0
+
+      - name: Apply audited compile repairs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('compute/Q4279-53770bd8/q4279_scan.cpp')
+          s=p.read_text()
+          R=[
+            (',asp=0,asm=0;',',asp=0,asmn=0;'),
+            ('else++asm;','else++asmn;'),
+            ('<<asm<<','<<asmn<<'),
+            ('std::tie(a.q,a.t,a.sign(),a.p)','std::make_tuple(a.q,a.t,a.sign(),a.p)'),
+            ('std::tie(b.q,b.t,b.sign(),b.p)','std::make_tuple(b.q,b.t,b.sign(),b.p)'),
+            ('std::size_t b0=cp;while(cp<oc.size()&&oc[cp].q==q)++cp,b1=cp;const auto&zq=Z[qi];','std::size_t b0=cp;while(cp<oc.size()&&oc[cp].q==q)++cp;std::size_t b1=cp;const auto&zq=Z[qi];')]
+          for a,b in R:
+            n=s.count(a)
+            if n==1:s=s.replace(a,b)
+            elif n==0 and b in s:pass
+            else:raise SystemExit(f'unexpected replacement count {n}: {a}')
+          p.write_text(s)
+          PY
+
+      - name: Compile and run regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/results-regression-1000000"
+          rm -rf "$OUT"
+          mkdir -p "$ROOT/build" "$OUT"
+          g++ -O3 -march=native -DNDEBUG -std=c++17 -pthread \
+            -Wall -Wextra -Wpedantic "$ROOT/q4279_scan.cpp" \
+            -o "$ROOT/build/q4279_scan" 2>&1 | tee "$OUT/compile.log"
+          /usr/bin/time -v -o "$OUT/time.txt" "$ROOT/build/q4279_scan" \
+            --qmin-exclusive 16 --qmax 1000000 \
+            --threads "$(getconf _NPROCESSORS_ONLN)" --block-width 100000 \
+            --out "$OUT/data" > "$OUT/stdout.log" 2> "$OUT/stderr.log"
+          cat "$OUT/stdout.log"
+          tail -n 30 "$OUT/stderr.log" || true
+
+      - name: Verify exact inherited ledger
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/results-regression-1000000"
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('compute/Q4279-53770bd8/results-regression-1000000/data/manifest.json')
+          d=json.loads(p.read_text())
+          expected={
+              'raw_plus':255,
+              'raw_minus':86,
+              'actual_leaf_occurrences':0,
+              'max_premark_K':1,
+              'max_selected_K':0,
+          }
+          for k,v in expected.items():
+              if d.get(k)!=v:
+                  raise SystemExit(f'regression mismatch {k}: observed={d.get(k)} expected={v}')
+          Path('compute/Q4279-53770bd8/results-regression-1000000/REGRESSION_OK.txt').write_text(
+              'Exact inherited ledger reproduced: raw_plus=255, raw_minus=86, leaves=0, max_premark_K=1.\n')
+          PY
+
+      - name: Package and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/results-regression-1000000"
+          test -f "$OUT/data/near_misses.csv" && head -n 101 "$OUT/data/near_misses.csv" > "$OUT/data/top_near_misses.csv"
+          for f in candidate_occurrences.csv q_stats.csv prime_zero_counts.csv zero_records.csv near_misses.csv; do
+            test -f "$OUT/data/$f" && gzip -9 -f "$OUT/data/$f"
+          done
+          cp "$ROOT/q4279_scan.cpp" "$OUT/q4279_scan.cpp"
+          cp .github/workflows/q4279-regression.yml "$OUT/q4279-regression.yml"
+          (cd "$OUT" && find . -type f -not -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$ROOT/q4279_scan.cpp" "$OUT"
+          git commit -m 'Q4279 reproduce exact q,p <= 1e6 ledger'
+          git push origin HEAD:q4279-compute-regression
