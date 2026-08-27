@@ -1,0 +1,65 @@
+drops/Q150-f0ec4e95.md:561:**No.** The cited Varjú paper uses a fixed law and i.i.d. increments. The actual Apéry product is deterministic, with step law \(\delta_{S_n}\) at time \(n\); every transition operator has norm one and the product law remains a point mass. The cited Breuillard–Varjú cutoff result likewise has i.i.d. noise.
+drops/Q4213-2f6e3101.md:939:away from its unique fold midpoint. Removing `O_J(1)` matching edges crossing the finitely many fold/window transitions and pigeonholing a finite type gives one matching for which the affine slopes are fixed in both rows.
+drops/Q4214-fc563e24.md:1303:then declare exactly the two required quotient-row zeros and their reflected mates, away from all transition strips. Different selected keys use disjoint lower-prime sets.
+drops/Q4215-c2ac5976.md:1287:so the same minimum remains the final exponent.  The internal stable-strip loss `Y^{-1/6}` does not add another exponent because, as shown in §3.3, the stable core remains a constant fraction of every rich cell.
+drops/Q4215-c2ac5976.md:1572:stable-transition strips width O(Y^(1/3)):               CONFIRMED
+drops/Q4215-c2ac5976.md:1573:strip leaf mass M Y^(-1/6):                              CONFIRMED
+drops/Q4215-c2ac5976.md:662:## 3.3 Fold/order pigeonhole and transition strips
+drops/Q4215-c2ac5976.md:686:A same-gap edge of length at most `Delta_max<<Y^(1/3)` can change fold branch or the order of the two folded coordinates only if one endpoint lies within `O(Delta_max)` of one of a finite number of linear transition points.  The union of all transition strips in one cell therefore contains only
+drops/Q4215-c2ac5976.md:700:M_\sigma Y^{-1/6},
+drops/Q4215-c2ac5976.md:706:However `(3.7)` should **not** be charged as an additive `T^{-beta/6}` error in the final rich-mass decomposition.  Cellwise,
+drops/Q4226-4ed4c027.md:40:The transition strips excluded in DPRM contain the remaining branch/order changes.  There is no actual minus type with reflected quotient-1 fold and slope \(2\).
+drops/Q4226-4ed4c027.md:524:The discarded order-transition strip is exactly where `(3.9-guard)` fails.  No new type is hidden there; it belongs to the already-banked transition deletion.
+drops/Q4310-12e9ffdc.md:631:Without such a theorem, asking where the census should cross over has no mathematical answer. Any numerical scale would be invented. The finite data are compatible with permanent smallness, polylogarithmic growth, subpolynomial growth, or a sparse later exceptional jump. They are not compatible with claiming that a known theorem forces a forthcoming transition.
+drops/Q4414-5d8de339.md:180:## 2. Where the `T^{-beta/6}` number actually comes from
+drops/Q4414-5d8de339.md:18:transition-strip marked mass
+drops/Q4414-5d8de339.md:19:    <<_J M_sigma(T) Y^(-1/6)
+drops/Q4414-5d8de339.md:20:     = M_sigma(T) T^(-beta/6),
+drops/Q4414-5d8de339.md:214:Around every fold or order transition point remove all integer positions within distance `Delta_bar`.  Since the number of transition points is `O_J(1)`, the removed set in one cell has cardinality
+drops/Q4414-5d8de339.md:226:because their occupancies are disjoint and each exceeds `H`.  Therefore the aggregate transition-strip marked mass satisfies
+drops/Q4414-5d8de339.md:231:     = M_sigma(T) Y^(-1/6)
+drops/Q4414-5d8de339.md:232:     = M_sigma(T) T^(-beta/6).
+drops/Q4414-5d8de339.md:253:     = B_J Y^(-1/6)
+drops/Q4414-5d8de339.md:26:strip leaf mass M Y^(-1/6):                  confirmed
+drops/Q4414-5d8de339.md:293:Because the transition strips were defined using the universal bound `Delta_bar`, every edge in this matching stays on one fold branch for each row and does not cross an order transition.
+drops/Q4414-5d8de339.md:316:This is exactly the canonical inequality consumed later.  It compares the **original rich-cell occupancy** `K_C` with a typed matching constructed from the stable core.  No transition-strip term remains.
+drops/Q4414-5d8de339.md:352:b(T)/H=Y^(-1/6+o(1)) -> 0.
+drops/Q4414-5d8de339.md:366:     + M_sigma T^(-beta/6+o(1))
+drops/Q4414-5d8de339.md:3:# Q4414 — adjudication of the alleged `T^{-beta/6}` type-selection ceiling
+drops/Q4414-5d8de339.md:415:- any APD theorem whose proof explicitly adds the transition-strip mass.
+drops/Q4414-5d8de339.md:418:The reason no such withdrawal is required is not that `T^{-beta/6}` is numerically harmless.  It is that the authoritative source explicitly proves a different, multiplicative accounting.
+drops/Q4414-5d8de339.md:42:It is also not literally (c).  The transition vertices are not sent to another arithmetic sector whose mass is separately estimated.  They are removed **inside every rich cell**, and the original cell mass is compared multiplicatively with the surviving stable core.  The subsequent choice of one fold/order type is a bounded edge pigeonhole and costs only an `O_J(1)` factor.
+drops/Q4414-5d8de339.md:48:    << M_sigma(T) T^(-beta/6+o(1))
+drops/Q4414-5d8de339.md:508:The transition-strip ratio `Y^{-1/6}` does not appear.
+drops/Q4414-5d8de339.md:55:Inside each rich cell, remove O_J(Y^(1/3+o(1))) transition-strip
+drops/Q4414-5d8de339.md:63:The aggregate transition-strip vertex count is
+drops/Q4414-5d8de339.md:64:    << M_sigma(T)T^(-beta/6+o(1)),
+drops/Q4414-5d8de339.md:673:### 7.5 Stable transition strips
+drops/Q4414-5d8de339.md:678:M_sigma T^(-beta/6+o(1)),
+drops/Q4414-5d8de339.md:68:No theorem claiming the `beta/3` or `alpha_0/6` ceiling needs to be withdrawn on account of this issue.  Any proof that actually inserted an additive `T^{-beta/6}` term must, however, be rewritten using the cellwise stable-core argument before it may claim an exponent above `beta/6`.
+drops/Q4414-5d8de339.md:709:    -> transition strips of width O_J(Y^(1/3))
+drops/Q4414-5d8de339.md:710:    -> aggregate strip mass bound M_sigma Y^(-1/6)
+drops/Q4414-5d8de339.md:753:K_C^st    = occupancy after transition-strip pruning,
+drops/Q4414-5d8de339.md:776:For transition strips write “local stable-core pruning,” not “further marked loss.”
+drops/Q4414-5d8de339.md:798:transition strips:   [V-local];
+drops/Q4414-5d8de339.md:811:after a further marked loss << M_sigma T^(-beta/6+o(1))
+drops/Q4414-5d8de339.md:832:### 10.2 Is the argument circular because the transition-strip width uses the popular gap found after pruning?
+drops/Q4414-5d8de339.md:850:### 10.3 Could a stable-core matching cross an order transition even when neither endpoint lies in a strip?
+drops/Q4414-5d8de339.md:878:The two local estimates look similar, but their **banked consumers differ**.  Q4203 explicitly states the global rich-mass decomposition with the folded-thin/non-DPRM `T^{-beta/3}` term.  Q4215 explicitly states that the transition term is not part of that decomposition.  One may seek a future rederivation that absorbs more of the folded-thin mass, but one may not transfer the accounting convention from one statement to the other without changing the theorem being cited.
+drops/Q4414-5d8de339.md:886:It creates at most `2(K_C-1)` directed pairs in a fibre of size `K_C`.  On a rich fibre this is a `O(1/K_C)` fraction of the quadratic pair count, and in the matching it touches at most one edge.  It is not a `T^{-beta/6}` vertex-mass deletion.  Any use in a global pair theorem must state the linear correction explicitly, but that correction is controlled by the actual first mass and does not alter the stated ceiling.
+drops/Q4414-5d8de339.md:896:    << M_sigma(T)T^(-beta/6)
+drops/Q4414-5d8de339.md:901:    M_sigma(T)T^(-beta/6)
+drops/Q4414-5d8de339.md:933:    <<_J M_sigma(T)T^(-beta/6+o(1)).
+drops/Q4414-5d8de339.md:944:The transition-strip estimate is a final additive marked-mass loss.
+drops/Q4414-5d8de339.md:962:Replace every “further marked loss T^(-beta/6)” summary sentence by
+drops/Q5722-cff05cbe.md:211:For every prime \(p\nmid\Sigma_{u,c,v}\), every value used by the margins is an invertible linear image of the state at \(c\) over \(\mathbf F_p\).  Reduce a basis of \(\mathcal L^{(\mathcal Q)}\) through these transition matrices, clear the common denominator supported on \(\Sigma_{u,c,v}\), and remove all powers supported on \(\mathcal Q\Sigma_{u,c,v}\).  This gives an integral **outside observation matrix**
+drops/Q5791-a61f9534.md:136:Conclusion: the divided cross-minor route is not merely a repackaged linear Smith invariant. The previous no-go does not kill it. But its only possible advantage is a new low-height determinantal-divisor theorem; fixed state dimension alone is insufficient because exterior transition products can carry exponential height.
+drops/Q5795-61d396b8.md:889:This is the appropriate WZ or creative-telescoping target. A recurrence of fixed order for the packet state is not enough by itself: iterating a transfer matrix across `m` steps generally recreates an exponential-height transition product. What is needed is a genuine discrete Lagrange or WZ boundary certificate.
+drops/Q5807-e931d08e.md:55:> There exists a fixed-rank state recurrence with polynomial transition matrix M(m), and an integer polynomial D(m) of subexponential logarithmic height, such that every prime dividing all admissible H_m in a block divides D at one boundary index.
+drops/Q6619-b7c9bea8.md:517:# 5. The exact prefix-exponent phase transition
+drops/Q6909-9a9f2e35.md:482:It does **not** rule out a genuinely larger hypergeometric construction—for example a contiguous module whose rank is at least four and whose challenge quotient has characters (29). But such a construction is not a rational extension of the raw two-step partial-sum transition. It must introduce new exponential characters before taking a quotient.
+drops/Q7302-a6c1bd2a.md:226:**Uniformity and failure for (T).** The later uniform state-count result removes one possible objection, but not the decisive one. The input alphabet has \(p\) digits, the transition matrices depend on \(p\), and for ordinary Apéry Lucas congruences the transition labels encode all values \(b_0,\ldots,b_{p-1}\pmod p\), hence all of \(Z_p\). A uniformly bounded number of states does not give a uniformly bounded algebraic description of the digit subset. There is no theorem in this literature comparing automata with different bases \(p\), let alone bounding the diagonal correlation \(n\mapsto(\mathcal A_p(n))_{p\sim X}\).
+drops/Q8622-2a765a12.md:297:For the transition interval \(\sqrt n<p\le Y\le2\sqrt n\), the lcm exponent is one, and Chebyshev's \(\vartheta(x)\ll x\) gives
+drops/Q8657-b842ad38.md:95:**Reason.** Strict ratio monotonicity forces a one-transition sign pattern among the determinants, while the only possible exponential cancellation mechanism is an adjoint-recurrence relation. The affine defect vectors fail this relation. Therefore every nontrivial combination retains an Apéry exponential component.
+drops/Q8820-ddf4214d.md:986:The observed transition is primarily explained by exponential tilting and finite-sample truncation. Under a Poisson model the relevant count is `k≈lambda e^t`; for `t=3,4` the MGF is driven by events too rare to appear in `20000` rows. The empirical estimator then sits far below the population MGF and has huge relative variance.
+drops/Q886-9839b8fa.md:83:The proposed fixed-small-k patch does not close the infinite tail argument unless the asymptotic determinant error is uniform and the transition range is explicitly finite and checked.

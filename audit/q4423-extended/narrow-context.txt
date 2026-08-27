@@ -1,0 +1,1282 @@
+===== FILE drops/Q150-f0ec4e95.md =====
+547-not
+548-
+549-$$
+550-\text{Level A}\Longrightarrow\text{Level B}\Longrightarrow\text{Level C}.
+551-$$
+552-
+553-Each arrow would itself require a derandomization or cross-characteristic theorem.
+554-
+555----
+556-
+557-## 8. Direct answers to the five questions
+558-
+559-### 1. Does Varjú's theorem on varying products apply?
+560-
+561:**No.** The cited Varjú paper uses a fixed law and i.i.d. increments. The actual Apéry product is deterministic, with step law \(\delta_{S_n}\) at time \(n\); every transition operator has norm one and the product law remains a point mass. The cited Breuillard–Varjú cutoff result likewise has i.i.d. noise.
+562-
+563-### 2. Is Bourgain–Gamburd non-concentration automatic for a polynomial cocycle?
+564-
+565-**No.** Generation is not a spectral gap, and polynomiality is not escape from subgroups. In the corrected \(\mathrm{SL}_2\) gauge, every one-step Apéry matrix sends \([0:1]\) to \([1:0]\), so all one-step matrices lie in one Borel coset and all pairwise differences lie in a proper Borel subgroup. A blocked randomized word-map theorem would have to be proved; it would not address the prescribed consecutive word without another argument.
+566-
+567-### 3. Would \(O(\log p)\) mixing give \(|Z_p|\)?
+568-
+569-It would predict target mass \(1/(p+1)\), hence about one visit in \(p\) times. But it would concern random endpoints and, with extra work, random occupation counts. It does not prove discrepancy for the deterministic prefix sequence. A deterministic estimate such as (4.3) is the needed new theorem.
+570-
+571-### 4. Is there a multi-prime Bourgain–Gamburd?
+572-
+573-**Yes for fixed generators and random words:** Bourgain–Varjú and Salehi Golsefidy–Varjú provide expansion modulo composite/squarefree moduli, hence joint product-group mixing through CRT. **No as an application to this problem:** the Apéry steps move with the clock, the local coordinates use different prefix lengths and reset at different residues, and \((\mathrm{HM})_k\) is an incomplete-CRT initial-segment statement. A clocked horizontal analogue would be new and essentially as strong as the desired higher moment.
+574-
+575-### 5. Does Kowalski's definable-subset theorem apply?
+
+===== FILE drops/Q4213-2f6e3101.md =====
+925-\boxed{
+926-R_\Delta\gg K^2/L\ge H^2/L=Y^{1/6}.
+927-}
+928-\tag{6.4}
+929-\]
+930-
+931-For a folded quotient row of slope `c`, the folded coordinate has slope either
+932-
+933-\[
+934--c
+935-\qquad\text{or}\qquad c+1
+936-\tag{6.5}
+937-\]
+938-
+939:away from its unique fold midpoint. Removing `O_J(1)` matching edges crossing the finitely many fold/window transitions and pigeonholing a finite type gives one matching for which the affine slopes are fixed in both rows.
+940-
+941-Thus
+942-
+943-\[
+944-s_6\in\{-6,7\},
+945-\]
+946-
+947-and
+948-
+949-\[
+950-s_+\in\{-13,14\},
+951-\qquad
+952-s_-\in\{-1,2\}.
+953-\tag{6.6}
+
+===== FILE drops/Q4214-fc563e24.md =====
+1289-A suitable new theorem would have to construct, from the saturated Apéry recurrence and the selected upper mark, a canonical kernel coupling the local state at `p` to the local state at `p+Delta`, and prove a restricted trace or Hilbert--Schmidt saving on the actual selected packet. Merely choosing arbitrary complex embeddings of the finite fields is not canonical and would not preserve the zero occurrence.
+1290-
+1291-This is a genuinely different formulation of the missing arithmetic, but proving such an intertwiner is equivalent in substance to producing a common growing syzygy. The matrix route does not bypass the module obstruction; it identifies exactly where the bypass would have to occur.
+1292-
+1293----
+1294-
+1295-# 13. Hostile test against an overclaimed rank theorem
+1296-
+1297-The prior hostile support model can be made row-disjoint. For each selected row key choose one interior cell and an arbitrary set of lower-prime labels of size
+1298-
+1299-\[
+1300-K\asymp\Lambda/\log T,
+1301-\]
+1302-
+1303:then declare exactly the two required quotient-row zeros and their reflected mates, away from all transition strips. Different selected keys use disjoint lower-prime sets.
+1304-
+1305-This model has
+1306-
+1307-```text
+1308-actual-looking selected row keys;
+1309-q prime and one prescribed q|b_t mark;
+1310-exact (6,13) or (6,1) affine geometry;
+1311-raw windows and minus-first sign;
+1312-reflection and no consecutive zeros;
+1313-pointwise O(1) zero counts;
+1314-all stated first/second moment envelopes;
+1315-DPRM popular matchings and large local radicals.
+1316-```
+1317-
+
+===== FILE drops/Q4215-c2ac5976.md =====
+648-\tag{3.4}
+649-\]
+650-
+651-Since `K>H=Y^(1/2)` and `Lambda=Y^(5/6)`, this gives
+652-
+653-\[
+654-\Delta\ll Y^{1/3},
+655-\qquad
+656-R_\Delta\gg Y^{1/6}.
+657-\tag{3.5}
+658-\]
+659-
+660-The disjointness claim is therefore valid; no high-degree graph matching theorem is being assumed.
+661-
+662:## 3.3 Fold/order pigeonhole and transition strips
+663-
+664-**CONFIRMED WITH A BOOKKEEPING REPAIR.**
+665-
+666-For a folded quotient row of slope `c`, the folded coordinate as a function of `p` has exactly two affine slopes:
+667-
+668-\[
+669--c
+670-\qquad\text{or}\qquad c+1.
+671-\]
+672-
+673-Thus
+674-
+675-\[
+676-s_6\in\{-6,7\},
+677-\]
+678-
+679-\[
+680-s_+\in\{-13,14\},
+681-\qquad
+682-s_-\in\{-1,2\}.
+683-\tag{3.6}
+684-\]
+685-
+686:A same-gap edge of length at most `Delta_max<<Y^(1/3)` can change fold branch or the order of the two folded coordinates only if one endpoint lies within `O(Delta_max)` of one of a finite number of linear transition points.  The union of all transition strips in one cell therefore contains only
+687-
+688-\[
+689-O_J(Y^{1/3})
+690-\]
+691-
+692-integer positions.
+693-
+694-The global number of marked leaves in those strips is indeed
+695-
+696-\[
+697-\ll_J
+698-\frac{M_\sigma}{H}Y^{1/3}
+699-=
+700:M_\sigma Y^{-1/6},
+701-\tag{3.7}
+702-\]
+703-
+704-up to harmless subpolynomial factors if one carries the full ledger.
+705-
+706:However `(3.7)` should **not** be charged as an additive `T^{-beta/6}` error in the final rich-mass decomposition.  Cellwise,
+707-
+708-\[
+709-Y^{1/3}=o(H)<K,
+710-\]
+711-
+712-so every rich cell retains
+713-
+714-\[
+715-K-O_J(Y^{1/3})\ge K/2
+716-\]
+717-
+718-stable vertices.  Re-run the popular-gap argument on that stable core.  The original rich mass `K` is then comparable by an absolute constant to the stable core mass.  Therefore the final non-DPRM exponent need not drop from `beta/3` to `beta/6`.
+719-
+720-After stability is imposed, there are only an absolute number of fold/order types.  Pigeonholing the matching by those types costs only an absolute factor.
+--
+1273-
+1274-\[
+1275-\boxed{
+1276-\rho<\min\{\beta/3,\kappa_{\rm rich}\}.
+1277-}
+1278-\tag{6.6}
+1279-\]
+1280-
+1281-For DPRM-tail exponent `kappa_*`, Q4203 gives
+1282-
+1283-\[
+1284-\kappa_{\rm rich}<\min\{\beta/3,\kappa_*\},
+1285-\]
+1286-
+1287:so the same minimum remains the final exponent.  The internal stable-strip loss `Y^{-1/6}` does not add another exponent because, as shown in §3.3, the stable core remains a constant fraction of every rich cell.
+1288-
+1289-## 6.3 Standard hard-range ceiling
+1290-
+1291-With
+1292-
+1293-\[
+1294-\beta=\alpha_0/2,
+1295-\]
+1296-
+1297-we have
+1298-
+1299-\[
+1300-\beta/3=\alpha_0/6.
+1301-\]
+--
+1558-hidden lower bound on M_sigma:                            NONE
+1559-
+1560-delta=0 ATPLD2-rich => rich-tail exponent beta/2:        CONFIRMED
+1561-final Q4190 ceiling beta/3:                               CONFIRMED
+1562-
+1563-SUMMARY 2 / DPRM
+1564-
+1565-folded-thin J*=Y^(1/6) leaf deletion:                     CONFIRMED
+1566-selected normalization M*J*/H = M Y^(-1/3):              CONFIRMED
+1567-surviving core >=K/2:                                    CONFIRMED
+1568-popular gap Delta << Lambda/K <=Y^(1/3):                 CONFIRMED
+1569-same-gap edges >>K_sharp^2/Lambda:                       CONFIRMED
+1570-disjoint matching >>K_sharp^2/Lambda:                    CONFIRMED
+1571-matching size >>Y^(1/6):                                 CONFIRMED
+1572:stable-transition strips width O(Y^(1/3)):               CONFIRMED
+1573:strip leaf mass M Y^(-1/6):                              CONFIRMED
+1574-must pay beta/6 as final additive exponent:               NO; cellwise core absorbs it
+1575-finite fold/order pigeonhole absolute factor:             CONFIRMED
+1576-plus order shift |lambda| in {7,20}:                     CONFIRMED
+1577-minus order shift |lambda| in {5,8}:                     CONFIRMED
+1578-polynomial-length prime AP exclusion:                     CONFIRMED with term>r shell guard
+1579-pairwise restart saturation returns endpoint bilinear:    CONFIRMED
+1580-per-edge Theta(T) on plus DPRM:                           CONFIRMED
+1581-per-edge Theta(T) on all minus DPRM:                      REFUTED
+1582-uniform deep-core lower height >>Y^(1/6):                 CONFIRMED
+1583-product of pairwise carriers useful for counting:         NO
+1584-no additional growing common saturation:                 UNVERIFIED
+1585-bounded-transfer degree no-go:                            CONFIRMED in Q4166 scope
+1586-degree-one two-slope identity carries a prime:            NO, CONFIRMED universal
+1587-fixed integer divisibility gives aux residue sparsity:     NO, CONFIRMED
+
+===== FILE drops/Q4226-4ed4c027.md =====
+26-\[
+27-e=\{p,p+\Delta\},\qquad \Delta>0.
+28-\]
+29-
+30-This is an actual-edge statement: the selected state \((q,t)\), both lower Apéry-zero conditions, primality, every raw minus predicate, and raw minus-first assignment remain attached throughout.
+31-
+32-The minus fold classification is more rigid than the generic slope table suggests.  The quotient-1 residue is **always on its unreflected fold branch** in the actual raw minus window.  Consequently there are exactly three stable minus fold/order types:
+33-
+34-| type | 6-row fold | 1-row fold | folded order | folded slopes | \(|\lambda|\) | ordered-gap shift | raw-bilinear height parameter |
+35-|:---|:---:|:---:|:---:|:---:|---:|:---:|:---|
+36-| `M5` | unreflected | unreflected | \(x_6>x_1\) | \((-6,-1)\) | 5 | \(-5\Delta\) | \(x_6+x_1-\Delta=7(q-p)-\Delta-1\) |
+37-| `M8+` | reflected | unreflected | \(x_6>x_1\) | \((7,-1)\) | 8 | \(+8\Delta\) | \(p-1-x_6+x_1-\Delta=7(q-p)-\Delta-1\) |
+38-| `M8-` | reflected | unreflected | \(x_1>x_6\) | \((7,-1)\) | 8 | \(-8\Delta\) | the same |
+39-
+40:The transition strips excluded in DPRM contain the remaining branch/order changes.  There is no actual minus type with reflected quotient-1 fold and slope \(2\).
+41-
+42-The consequences are sharp.
+43-
+44-1. **Every \(|\lambda|=8\) canonical raw bilinear has full height.**  Reflection of the 6-row means its raw residue is the large complement of its folded coordinate; equivalently the reflected-branch inequalities force
+45-   \[
+46-   q-p\ge q/15.
+47-   \]
+48-   Hence
+49-   \[
+50-   \boxed{
+51-   \log B_e=\Theta_J(T)
+52-   \qquad(M8+\text{ and }M8-).
+53-   }
+54-   \tag{V8}
+--
+510-
+511-and the ordered gap decreases by
+512-
+513-\[
+514--8\Delta.
+515-\tag{3.9-}
+516-\]
+517-
+518-Both have
+519-
+520-\[
+521-|s_1-s_6|=8.
+522-\]
+523-
+524:The discarded order-transition strip is exactly where `(3.9-guard)` fails.  No new type is hidden there; it belongs to the already-banked transition deletion.
+525-
+526----
+527-
+528-# 4. Canonical raw matched-edge bilinear
+529-
+530-The Q4185 occurrence-preserving positive permanent is
+531-
+532-\[
+533-\boxed{
+534-B_e
+535-=b_r b_{a'}+b_a b_{r'}>0.
+536-}
+537-\tag{4.1}
+538-\]
+
+===== FILE drops/Q4310-12e9ffdc.md =====
+617-The DPRM deep-interior conditions constrain the offset, folded depth, zero-set complexity, and geometry of an **actual hypothetical lower prime**. They do not assert that every selected state has such a prime, nor do they force the fixed gcd to contain an exponentially large common factor.
+618-
+619-In the censused range there are geometrically nonempty raw minus windows and M5-capable states, but no actual leaf. Conditional edge-height laws are therefore vacuous on those states. They cannot predict the size of a leaf-free primitive gcd.
+620-
+621-### 6.3 No constants or onset theorem exist
+622-
+623-A genuine assertion
+624-
+625-\[
+626-\log \widetilde G_\sigma(q,t)\ge c q
+627-\]
+628-
+629-for some \(c>0\) and all sufficiently large selected states would require both a proven positive constant and a proven threshold \(q_0\). No source establishes either.
+630-
+631:Without such a theorem, asking where the census should cross over has no mathematical answer. Any numerical scale would be invented. The finite data are compatible with permanent smallness, polylogarithmic growth, subpolynomial growth, or a sparse later exceptional jump. They are not compatible with claiming that a known theorem forces a forthcoming transition.
+632-
+633-### Crossover verdict
+634-
+635-> **There is no justified crossover scale, reachable or otherwise. The alleged eventual \(\Theta(q)\) behavior belongs to the operands or to other carrier objects, not to the primitive fixed gcd.**
+636-
+637----
+638-
+639-## 7. The correct unconditional target
+640-
+641-Since the census carrier is the Q6-SLUNI carrier, the exact pointwise size target is immediate.
+642-
+643-Let \(p_1(q,t,\sigma)<p_2(q,t,\sigma)\) be the two smallest primes allowed by the deterministic raw window before consulting the actual gcd support. Then
+644-
+645-\[
+
+===== FILE drops/Q4414-5d8de339.md =====
+1-ANSWER Q4414 5d8de339
+2-
+3:# Q4414 — adjudication of the alleged `T^{-beta/6}` type-selection ceiling
+4-
+5-## 0. Verdict
+6-
+7-The flagged inconsistency is real in the **summary wording**, but not in the proved exponent ledger.
+8-
+9-The repository already contains the decisive adjudication.  In `drops/Q4215-c2ac5976.md`, commit
+10-
+11-```text
+12-18b2b9b00011142f3b55873b9ca7b09c6d5b1c9e
+13-```
+14-
+15-Section 3.3 derives the global estimate
+16-
+17-```text
+18:transition-strip marked mass
+19:    <<_J M_sigma(T) Y^(-1/6)
+20:     = M_sigma(T) T^(-beta/6),
+21-```
+22-
+23-and then says explicitly that this estimate **must not be charged as an additive final error**.  The same file repeats the conclusion in its exponent audit and checklist:
+24-
+25-```text
+26:strip leaf mass M Y^(-1/6):                  confirmed
+27-must pay beta/6 as final additive exponent:  NO; cellwise core absorbs it
+28-```
+29-
+30-The correct classification among the three choices in the question is therefore:
+31-
+32-> **(b), with a terminology correction.**  It is not originally a collision-level estimate inside an already fixed matching.  It is a **cellwise vertex-level stable-core pruning** performed before the popular-gap matching is rerun.  After that rerun, the loss is absorbed into the constant in `R_C >> K_C^2/Lambda`.  It is not an additive global marked-mass exception.
+33-
+34-It is not (a).  The `beta/3` ceiling does **not** have to be reduced to `beta/6`, and at `beta=alpha_0/2` the inherited ceiling remains
+35-
+36-```text
+37-alpha_0/6,
+38-```
+39-
+40-understood, as usual, as the supremum of the admissible strict exponents.
+41-
+42:It is also not literally (c).  The transition vertices are not sent to another arithmetic sector whose mass is separately estimated.  They are removed **inside every rich cell**, and the original cell mass is compared multiplicatively with the surviving stable core.  The subsequent choice of one fold/order type is a bounded edge pigeonhole and costs only an `O_J(1)` factor.
+43-
+44-The sentence that must be withdrawn is the one now repeated in several campaign summaries:
+45-
+46-```text
+47-after a further marked loss
+48:    << M_sigma(T) T^(-beta/6+o(1))
+49-all matched collisions share one affine fold/order type.
+50-```
+51-
+52-The correct replacement is:
+53-
+54-```text
+55:Inside each rich cell, remove O_J(Y^(1/3+o(1))) transition-strip
+56-vertices.  Since K_C>H=Y^(1/2), the stable core has size at least
+57-K_C/2.  Rerun the popular-gap and greedy-matching construction on
+58-that core, and then retain the largest of O_J(1) fold/order classes.
+59-The resulting canonical typed matching still satisfies
+60-
+61-    R_C >>_J K_C^2/Lambda.
+62-
+63:The aggregate transition-strip vertex count is
+64:    << M_sigma(T)T^(-beta/6+o(1)),
+65-but this is a diagnostic upper bound, not an additive final error.
+66-```
+67-
+68:No theorem claiming the `beta/3` or `alpha_0/6` ceiling needs to be withdrawn on account of this issue.  Any proof that actually inserted an additive `T^{-beta/6}` term must, however, be rewritten using the cellwise stable-core argument before it may claim an exponent above `beta/6`.
+69-
+70----
+71-
+72-## 1. Exact gate and accounting frames
+73-
+74-The issue cannot be settled until the counted objects are typed correctly.
+75-
+76-Fix a sign `sigma`, a translate `tau mod Lambda`, an actual selected upper state `x`, and a length-`Lambda` lower-prime cell `C=(tau,x,j)`.  Let
+77-
+78-```text
+79-S_C = set of actual selected lower primes in C,
+80-K_C = #S_C,
+81-```
+82-
+--
+166-```
+167-
+168-then
+169-
+170-```text
+171-max_theta R_{C,theta} >= R_C/m_J.
+172-```
+173-
+174-This is neither a vertex-mass deletion nor a power loss.  It is a constant-factor collision-level pigeonhole.
+175-
+176-The ledger error was caused by computing a valid bound in frame 1.1 for a set that the proof actually handles in frame 1.2, and then verbally treating that bound as though the proof had used an additive decomposition.
+177-
+178----
+179-
+180:## 2. Where the `T^{-beta/6}` number actually comes from
+181-
+182-The source is the stable fold/order refinement in the rich-fibre inverse theorem, audited in Q4215 Section 3.3.
+183-
+184-For one folded quotient row of slope `c`, the folded coordinate has one of the two affine slopes
+185-
+186-```text
+187--c,
+188-c+1.
+189-```
+190-
+191-Thus the two row slopes lie in
+192-
+193-```text
+194-s_6 in {-6,7},
+--
+200-A fold branch changes only at a finite set of affine transition points.  The relative order of the two folded coordinates also changes only at a finite set of affine crossing points.
+201-
+202-Before the stable refinement, the popular-gap argument supplies a maximum relevant gap
+203-
+204-```text
+205-Delta_max <<_J Lambda/K_C <= Lambda/H = Y^(1/3).
+206-```
+207-
+208-Choose once and for all a slightly larger deterministic bound
+209-
+210-```text
+211-Delta_bar = A_J Lambda/H = A_J Y^(1/3).
+212-```
+213-
+214:Around every fold or order transition point remove all integer positions within distance `Delta_bar`.  Since the number of transition points is `O_J(1)`, the removed set in one cell has cardinality
+215-
+216-```text
+217-b_C <= B_J Y^(1/3).
+218-```
+219-
+220-At a fixed translate the number of rich cells is at most
+221-
+222-```text
+223-M_sigma(T)/H,
+224-```
+225-
+226:because their occupancies are disjoint and each exceeds `H`.  Therefore the aggregate transition-strip marked mass satisfies
+227-
+228-```text
+229-(1/Lambda) sum_tau sum_{C rich} b_C
+230-    <<_J (M_sigma(T)/H) Y^(1/3)
+231:     = M_sigma(T) Y^(-1/6)
+232:     = M_sigma(T) T^(-beta/6).
+233-```
+234-
+235-This calculation is correct.  What is incorrect is the inference
+236-
+237-```text
+238-there exists a globally small transition set
+239-    therefore its mass must be added to the final error ledger.
+240-```
+241-
+242-An upper bound on a removable set is not a statement that the proof must discard it additively.
+243-
+244----
+245-
+246-## 3. The cellwise absorption proof
+247-
+248-The decisive inequality is local:
+249-
+250-```text
+251-b_C/K_C
+252-    <= B_J Y^(1/3)/H
+253:     = B_J Y^(-1/6)
+254-     = o_J(1).
+255-```
+256-
+257-For all sufficiently large `T`, every rich cell therefore has
+258-
+259-```text
+260-K_C^st := #S_C^st
+261-        = K_C-b_C
+262-        >= K_C/2,
+263-```
+264-
+265-where `S_C^st` is the stable core.
+266-
+267-Now rerun the popular-gap construction on `S_C^st`; do **not** take the old matching and merely erase its unstable edges.
+--
+279-```
+280-
+281-There are at most `2 Lambda/K_C^st` possible positive integer gap values in that range, so one gap `Delta_C` occurs on
+282-
+283-```text
+284-E_C >> (K_C^st)^2/Lambda
+285-```
+286-
+287-consecutive edges.  The equal-gap consecutive-edge graph has maximum degree at most two, so a greedy matching retains
+288-
+289-```text
+290-R_C^pre >> (K_C^st)^2/Lambda.
+291-```
+292-
+293:Because the transition strips were defined using the universal bound `Delta_bar`, every edge in this matching stays on one fold branch for each row and does not cross an order transition.
+294-
+295-There are only `m_J=O_J(1)` resulting fold/order types.  Retain the lexicographically first largest type class.  Its matching size satisfies
+296-
+297-```text
+298-R_C
+299-   >= R_C^pre/m_J
+300-   >>_J (K_C^st)^2/Lambda
+301-   >>_J K_C^2/Lambda.
+302-```
+303-
+304-Since `K_C>H`,
+305-
+306-```text
+307-R_C >>_J (H/Lambda)K_C,
+308-```
+309-
+310-and therefore
+311-
+312-```text
+313-K_C <<_J (Lambda/H)R_C.
+314-```
+315-
+316:This is exactly the canonical inequality consumed later.  It compares the **original rich-cell occupancy** `K_C` with a typed matching constructed from the stable core.  No transition-strip term remains.
+317-
+318-Summing gives
+319-
+320-```text
+321-R_DPRM_sigma(Lambda,H)
+322-   <<_J (Lambda/H) E_pop_sigma
+323-    = Y^(1/3) E_pop_sigma.
+324-```
+325-
+326-This proves that the type refinement changes constants but not powers.
+327-
+328-### Local-core absorption lemma
+329-
+330-The preceding argument is an instance of a reusable lemma.
+--
+338-> Then for large `T`,
+339-> 
+340-> ```text
+341-> R_C >= (c/4)K_C^2/Lambda,
+342-> K_C <= (4/c)(Lambda/H)R_C.
+343-> ```
+344-> 
+345-> A bounded subsequent class pigeonhole only changes `c` by a constant.  The global estimate for the sum of the `b_C` is irrelevant to the final exponent.
+346-
+347-The type-selection step meets every hypothesis with
+348-
+349-```text
+350-b(T)=O_J(Y^(1/3+o(1))),
+351-H=Y^(1/2),
+352:b(T)/H=Y^(-1/6+o(1)) -> 0.
+353-```
+354-
+355----
+356-
+357-## 4. Why option (a) would have halved the exponent
+358-
+359-Although option (a) is false for the proved route, its counterfactual ledger is worth recording because it shows exactly why the wording was dangerous.
+360-
+361-If one had a genuine decomposition
+362-
+363-```text
+364-R_rich
+365-  << M_sigma T^(-beta/3)
+366:     + M_sigma T^(-beta/6+o(1))
+367-     + R_DPRM_main,
+368-```
+369-
+370-and if the DPRM main term had exponent `kappa_*`, then the rich-tail exponent would be at most
+371-
+372-```text
+373-min(beta/6,kappa_*).
+374-```
+375-
+376-Q4190 would then give OMCD only for
+377-
+378-```text
+379-rho < min(beta/3,beta/6,kappa_*)
+380-    = min(beta/6,kappa_*).
+--
+401-this would become
+402-
+403-```text
+404-alpha_0/12,
+405-```
+406-
+407-not `alpha_0/6`.
+408-
+409-Under that false ledger, all of the following would require withdrawal or rederivation:
+410-
+411-```text
+412-- every typed-DPRM claim of a final exponent above beta/6;
+413-- the statement that rho_B>=2beta/3 reaches the final beta/3 ceiling;
+414-- the standard alpha_0/6 headline when obtained through typed DPRM;
+415:- any APD theorem whose proof explicitly adds the transition-strip mass.
+416-```
+417-
+418:The reason no such withdrawal is required is not that `T^{-beta/6}` is numerically harmless.  It is that the authoritative source explicitly proves a different, multiplicative accounting.
+419-
+420----
+421-
+422-## 5. The actual exponent ledger
+423-
+424-The corrected global ledger is the one already stated in Q4215.
+425-
+426-### 5.1 Non-DPRM classification
+427-
+428-Modulo the banked Q4203 classification,
+429-
+430-```text
+431-R_rich_sigma(Lambda,H)
+432-  <<_J M_sigma(T) T^(-beta/3)
+--
+494-```
+495-
+496-and the rich term contributes
+497-
+498-```text
+499-T^(-kappa_rich)/log T.
+500-```
+501-
+502-Hence OMCD holds for every
+503-
+504-```text
+505-rho < min(beta/3,kappa_rich).
+506-```
+507-
+508:The transition-strip ratio `Y^{-1/6}` does not appear.
+509-
+510-### 5.4 OMCD to hard-range APD
+511-
+512-Q4182/Q4183 gives, for every hard block `D>=T^{alpha_0}`,
+513-
+514-```text
+515-E_sigma(D)
+516-  <<_J D M_sigma(T)
+517-       (T^(-beta)+T^(-rho)).
+518-```
+519-
+520-Therefore APD holds for every
+521-
+522-```text
+--
+659-```
+660-
+661-again below the existing `beta/3` ceiling.  There is no reason to enter it separately.
+662-
+663-### 7.4 The low-zero exception
+664-
+665-The low-zero theorem says that, in one actual selected state/sign fibre, at most one lower prime can satisfy `|Z_p|<=3`, and none can satisfy `|Z_p|<=2`.
+666-
+667-**Classification: pointwise/local, not an additive `beta/6` loss.**
+668-
+669-Removing that single vertex from a rich fibre leaves `K_C-1` vertices and removes at most one edge from the canonical vertex-disjoint matching.  Thus the deep high-zero inverse theorem has the same asymptotic constants.
+670-
+671-In the full pair count, changing `K` to `K-1` changes `K(K-1)` by `2(K-1)`, a lower-order linear term relative to the rich quadratic count.  Summed over rich cells, it is controlled directly by the actual first mass.  It does not create a new exponent bottleneck.
+672-
+673:### 7.5 Stable transition strips
+674-
+675-The aggregate bound is
+676-
+677-```text
+678:M_sigma T^(-beta/6+o(1)),
+679-```
+680-
+681-but the correct classification is the local-core absorption proved in Sections 2 and 3.
+682-
+683-**Classification: locally absorbed before matching; not additive.**
+684-
+685-### 7.6 Finite fold/order type selection
+686-
+687-The number of types is `O_J(1)`.
+688-
+689-**Classification: constant-factor collision pigeonhole.**
+690-
+691-It has no marked-mass exponent at all.
+692-
+--
+695-These sectors are already represented by explicit additive or structural `T^{-beta/3}` terms in the global theorem.
+696-
+697-**Classification: additive/structural and paid once.**
+698-
+699-They are independent of the type-selection issue and continue to enforce the `beta/3` ceiling even if one someday improves the thin-sector bookkeeping.
+700-
+701----
+702-
+703-## 8. The exact source of the inconsistent sentence
+704-
+705-The source chain is:
+706-
+707-```text
+708-Q4203 rich-fibre inverse classification
+709:    -> transition strips of width O_J(Y^(1/3))
+710:    -> aggregate strip mass bound M_sigma Y^(-1/6)
+711-
+712-Q4215 hostile audit, Section 3.3
+713-    -> confirms the aggregate bound
+714-    -> explicitly rejects adding it to the final ledger
+715-    -> reruns the inverse theorem cellwise on the stable core
+716-
+717-Q4215, Section 6.2 and checklist
+718-    -> confirms beta/3 final ceiling
+719-    -> confirms alpha_0/6 at beta=alpha_0/2
+720-
+721-later campaign summaries
+722-    -> compress both statements into the misleading phrase
+723-       “after a further marked loss ... all collisions share one type.”
+724-```
+--
+739-
+740----
+741-
+742-## 9. Required ledger edits
+743-
+744-The project should make the following textual and notation changes.
+745-
+746-### 9.1 Split original and stable occupancies
+747-
+748-Use
+749-
+750-```text
+751-K_C^raw   = original actual occupancy of the rich cell,
+752-K_C^deep  = occupancy after folded-thin handling,
+753:K_C^st    = occupancy after transition-strip pruning,
+754-R_C       = canonical matching in the selected stable type.
+755-```
+756-
+757-Record explicitly
+758-
+759-```text
+760-K_C^deep >= c_J K_C^raw,
+761-K_C^st   >= c_J K_C^raw,
+762-R_C      >>_J (K_C^st)^2/Lambda
+763-         >>_J (K_C^raw)^2/Lambda.
+764-```
+765-
+766-This prevents the symbol `K_C` from silently changing frames.
+767-
+768-### 9.2 Reserve “marked-mass loss” for additive terms
+769-
+770-The phrase should be used only when the downstream theorem contains an explicit summand
+771-
+772-```text
+773-+ O(M_sigma T^(-gamma)).
+774-```
+775-
+776:For transition strips write “local stable-core pruning,” not “further marked loss.”
+777-
+778-### 9.3 Tag every estimate by frame
+779-
+780-A compact ledger convention would be:
+781-
+782-```text
+783-[V-add]    additive actual marked-vertex mass;
+784-[V-local]  local vertex pruning with a multiplicative core comparison;
+785-[P]        pair/factorial-moment count;
+786-[E]        matching-edge count;
+787-[Class]    bounded type pigeonhole;
+788-[Exact]    pointwise vacancy or uniqueness.
+789-```
+790-
+791-Then the named statements are
+792-
+793-```text
+794-folded-thin:         [V-add] and also [V-local] for construction;
+795-boundary vacancy:    [Exact];
+796-endpoint layer:      [Exact]/[V-local];
+797-low-zero exception:  [Exact]/[V-local];
+798:transition strips:   [V-local];
+799-type pigeonhole:     [Class];
+800-PBSD:                [P];
+801-E_pop/PGME:          [E].
+802-```
+803-
+804-Only `[V-add]` entries participate directly in the final exponent minimum.
+805-
+806-### 9.4 Correct every inherited summary
+807-
+808-Every current setup paragraph that says
+809-
+810-```text
+811:after a further marked loss << M_sigma T^(-beta/6+o(1))
+812-all matched collisions share one type
+813-```
+814-
+815-should be replaced by the stable-core wording from Section 0.  This includes the setup inherited by later Q6, PBSD, PGME, and Frobenius-detector rounds even when their proofs never use the alleged additive term.
+816-
+817----
+818-
+819-## 10. Self-attack
+820-
+821-### 10.1 Could the global strip estimate still have to be paid because the target counts the original vertices?
+822-
+823-No.  The proof establishes a cellwise domination
+824-
+825-```text
+826-K_C^raw << K_C^st
+827-      << (Lambda/H)R_C.
+828-```
+829-
+830-The original occupancy is therefore charged through the stable matching.  It is not being silently dropped.
+831-
+832:### 10.2 Is the argument circular because the transition-strip width uses the popular gap found after pruning?
+833-
+834-No.  Use the universal rich-cell bound
+835-
+836-```text
+837-Delta_bar = A_J Lambda/H = A_JY^(1/3)
+838-```
+839-
+840-before pruning.  The rerun on a core of size at least `K_C/2` produces
+841-
+842-```text
+843-Delta_C << Lambda/K_C^st
+844-        << Lambda/K_C
+845-        <= Lambda/H,
+846-```
+847-
+848-which is inside the preselected width.
+849-
+850:### 10.3 Could a stable-core matching cross an order transition even when neither endpoint lies in a strip?
+851-
+852-Not when the strip radius is at least the maximum legal edge length.  Any affine branch or order change along the interval would put one endpoint within that radius of the corresponding transition point.  The finite set of transition points and a uniform `Delta_bar` make the argument deterministic.
+853-
+854-### 10.4 Does the bounded number of types depend on `T`?
+855-
+856-No, for fixed campaign parameter `J`.  It depends only on the two choices of folded slope for each row, their relative order, and the fixed finite orientation conventions.  It is `O_J(1)`.  If a future argument lets `J` grow with `T`, the type count must be re-audited; that is outside the present bank.
+857-
+858-### 10.5 Does raw minus-first survive the pruning and type selection?
+859-
+860-Yes.  The actual sign assignment is imposed in the indicator defining `S_C`.  Every later step only takes subsets of `S_C`; no leaf is moved from minus to plus or counted twice.
+861-
+862-### 10.6 Is a lower bound on `M_sigma(T)` hidden in `#rich cells<=M_sigma/H`?
+863-
+864-No.  This is a deterministic upper bound.  If `M_sigma=0`, there are no rich cells.  No ratio is formed and no density lower bound is used.
+865-
+866-### 10.7 Does translate averaging change local absorption into an additive loss?
+867-
+868-No.  The inequality
+869-
+870-```text
+871-K_C^raw <<_J (Lambda/H)R_C
+872-```
+873-
+874-holds for every cell and every translate before summation.  Averaging preserves it.  The separate aggregate strip estimate is never invoked in that summation.
+875-
+876-### 10.8 Is the folded-thin term being treated inconsistently with the transition term?
+877-
+878:The two local estimates look similar, but their **banked consumers differ**.  Q4203 explicitly states the global rich-mass decomposition with the folded-thin/non-DPRM `T^{-beta/3}` term.  Q4215 explicitly states that the transition term is not part of that decomposition.  One may seek a future rederivation that absorbs more of the folded-thin mass, but one may not transfer the accounting convention from one statement to the other without changing the theorem being cited.
+879-
+880-### 10.9 Could the direct OMCD route secretly use type-specific facts through a banked lemma?
+881-
+882-The exact Q4184 expansion is written entirely in the raw incidence indicators `C_6 C_13 W_+` and `C_6 C_1 W_-`.  Its sufficient target is a selected joint-row codegree/rich-leaf estimate.  No lemma about `lambda`, stable order, endpoint bilinears, or continuants is imported.  The route is genuinely type-free.
+883-
+884-### 10.10 Does the low-zero vertex create many off-diagonal pairs and therefore a hidden first-moment error?
+885-
+886:It creates at most `2(K_C-1)` directed pairs in a fibre of size `K_C`.  On a rich fibre this is a `O(1/K_C)` fraction of the quadratic pair count, and in the matching it touches at most one edge.  It is not a `T^{-beta/6}` vertex-mass deletion.  Any use in a global pair theorem must state the linear correction explicitly, but that correction is controlled by the actual first mass and does not alter the stated ceiling.
+887-
+888----
+889-
+890-## 11. First exact failed implication and smallest repair
+891-
+892-The exact failed implication behind the flagged inconsistency is
+893-
+894-```text
+895-A subset of actual marked vertices has aggregate mass
+896:    << M_sigma(T)T^(-beta/6)
+897-
+898-DOES NOT IMPLY
+899-
+900-that every proof using a core obtained by deleting that subset must add
+901:    M_sigma(T)T^(-beta/6)
+902-to its final error ledger.
+903-```
+904-
+905-The smallest repair is the cellwise relative statement
+906-
+907-```text
+908-#transition_vertices(C)
+909-   <= O_J(Y^(1/3+o(1)))
+910-   = o(H)
+911-   < o(K_C),
+912-```
+913-
+914-plus a rerun of the inverse construction on the surviving core.  That repair is already proved in Q4215.
+915-
+--
+919-
+920----
+921-
+922-## 12. Final corrected theorem ledger
+923-
+924-The project may safely bank the following.
+925-
+926-```text
+927-[PROVED]
+928-Transition strips in one rich cell contain O_J(Y^(1/3+o(1)))
+929-actual vertices.
+930-
+931-[PROVED]
+932-Their translate-averaged aggregate actual mass is
+933:    <<_J M_sigma(T)T^(-beta/6+o(1)).
+934-
+935-[PROVED]
+936-Every rich cell retains a stable core of size >=K_C/2.
+937-
+938-[PROVED]
+939-After rerunning the popular-gap argument and taking the largest of
+940-O_J(1) types, the canonical matching satisfies
+941-    R_C >>_J K_C^2/Lambda.
+942-
+943-[REFUTED AS WORDING]
+944:The transition-strip estimate is a final additive marked-mass loss.
+945-
+946-[CONFIRMED]
+947-The full rich-mass exponent is controlled by
+948-    min(beta/3,kappa_*),
+949-not by min(beta/6,kappa_*).
+950-
+951-[CONFIRMED]
+952-PBSD with rho_B>=2beta/3 reaches the inherited rich/OMCD/APD
+953-ceiling beta/3.
+954-
+955-[CONFIRMED]
+956-At beta=alpha_0/2 the inherited ceiling is alpha_0/6.
+957-
+958-[CONFIRMED]
+959-The direct OMCD route does not require any fold/order refinement.
+960-
+961-[REQUIRED EDIT]
+962:Replace every “further marked loss T^(-beta/6)” summary sentence by
+963-an explicit cellwise stable-core statement.
+964-```
+965-
+966----
+967-
+968-## 13. Repository state audited
+969-
+970-The connected branch head before this delivery was
+971-
+972-```text
+973-chatgpt-drop:
+974-41e01690f2ae495eb8cba46fd1168089508cc1fe
+975-```
+976-
+
+===== FILE drops/Q5722-cff05cbe.md =====
+197-\]
+198-
+199-Its denominators are supported on \(a_R(M,r)\), and those of \(T_r^{-1}\) are supported on \(a_0(M,r)\).  Define the explicit recurrence-singularity integer
+200-
+201-\[
+202-\boxed{
+203-\Sigma_{u,c,v}(M)=
+204-\prod_{r=u}^{c-1}a_0(M,r)
+205-\prod_{r=c}^{v-R}a_R(M,r),}
+206-\tag{3.5}
+207-\]
+208-
+209-with empty products equal to one.
+210-
+211:For every prime \(p\nmid\Sigma_{u,c,v}\), every value used by the margins is an invertible linear image of the state at \(c\) over \(\mathbf F_p\).  Reduce a basis of \(\mathcal L^{(\mathcal Q)}\) through these transition matrices, clear the common denominator supported on \(\Sigma_{u,c,v}\), and remove all powers supported on \(\mathcal Q\Sigma_{u,c,v}\).  This gives an integral **outside observation matrix**
+212-
+213-\[
+214-W_{d,L;S,T}(M,c)\in
+215-\mathbf Z^{(m+1)\times(R+1)}
+216-\tag{3.6}
+217-\]
+218-
+219-such that, for every prime \(p\nmid\mathcal Q\Sigma_{u,c,v}\),
+220-
+221-\[
+222-p\mid K^{\rm sat}_{d,L;S,T}
+223-\quad\Longrightarrow\quad
+224-W_{d,L;S,T}(M,c)z_c\equiv0\pmod p.
+225-\tag{3.7}
+
+===== FILE drops/Q5791-a61f9534.md =====
+122-
+123-Without one of these, E remains a promising nonlinear observable but not an unconditional gcd proof.
+124-
+125-## 6. Final classification
+126-
+127-| Object | Status |
+128-|---|---|
+129-| Linear carrier Smith invariant | blocked by rank-one alias |
+130-| Cross-minor E | genuinely nonlinear Pluecker observable |
+131-| Section 63 direct no-go | does not formally apply |
+132-| Exterior-state reformulation | may reproduce Section 63 if height grows exponentially |
+133-| Full-margin collapse | strong computational evidence only |
+134-| Needed theorem | primitive exterior-content / endpoint Bezout identity |
+135-
+136:Conclusion: the divided cross-minor route is not merely a repackaged linear Smith invariant. The previous no-go does not kill it. But its only possible advantage is a new low-height determinantal-divisor theorem; fixed state dimension alone is insufficient because exterior transition products can carry exponential height.
+
+===== FILE drops/Q5795-61d396b8.md =====
+875-with
+876-
+877-```text
+878-R = O(1),
+879-```
+880-
+881-where `B_s` is built from a fixed number of shifted first-cell shell packets and all coefficients are integral after one low-height global denominator. Summing in `s` collapses the curvature to
+882-
+883-```text
+884-B_r-B_0
+885-```
+886-
+887-plus an integral combination of the `E_s`.
+888-
+889:This is the appropriate WZ or creative-telescoping target. A recurrence of fixed order for the packet state is not enough by itself: iterating a transfer matrix across `m` steps generally recreates an exponential-height transition product. What is needed is a genuine discrete Lagrange or WZ boundary certificate.
+890-
+891-### Weaker radical-only alternative
+892-
+893-For prime support alone, it would be enough to prove that every nuisance prime dividing all `E_s` sees no zero interior carrier vector:
+894-
+895-```text
+896-a_i is nonzero mod p
+897-for every 1 <= i <= r-1.
+898-```
+899-
+900-Then adjacent collinearity propagates over the field and forces the endpoint determinant to vanish modulo `p`. This does not give an integral Bezout identity, does not control prime powers, and is usually incompatible with target primes whose marked shell vector is itself zero. It is therefore weaker than what the gcd-height problem requires.
+901-
+902-## 12. Dependency-free symbolic checker
+903-
+
+===== FILE drops/Q5807-e931d08e.md =====
+41-```
+42-
+43-and compute the transition matrix M(m) satisfying
+44-
+45-```
+46-state_(m+1)=M(m) state_m.
+47-```
+48-
+49-Then H_m is the determinant quadratic form in this state.
+50-
+51-## Sufficient lemma for the P3.2 goal
+52-
+53-A sufficient statement would be:
+54-
+55:> There exists a fixed-rank state recurrence with polynomial transition matrix M(m), and an integer polynomial D(m) of subexponential logarithmic height, such that every prime dividing all admissible H_m in a block divides D at one boundary index.
+56-
+57-This would convert propagation of modular zeros into an O(log n)-height obstruction.
+58-
+59-## Main obstruction
+60-
+61-Origin cancellation only removes the universal Apéry component. It does not imply that the remaining two-dimensional shell module has small determinant content. The possible obstruction is that the exterior-square module of the two-carrier state still has a generic exponential-height solution.
+62-
+63-Equivalently, the needed statement is not merely holonomicity but a small-height invariant line in the exterior square.
+64-
+65-## Recommended next computation
+66-
+67-Compute the exterior-square Ore module:
+68-
+69-```
+
+===== FILE drops/Q6619-b7c9bea8.md =====
+503-```text
+504-Q_D << A^(3/2) N^(3/4)L^(3/2).                     (4.11)
+505-```
+506-
+507-Hence `Q_D<<N` whenever
+508-
+509-```text
+510-L << N^(1/6).
+511-```
+512-
+513-This includes every intended slowly growing `L`.
+514-
+515----
+516-
+517:# 5. The exact prefix-exponent phase transition
+518-
+519-Suppose the prefix input from Part 1(b) holds:
+520-
+521-```text
+522-S_1(Y) <= A Y^(2-delta)                            (5.1)
+523-```
+524-
+525-for all relevant prefixes.
+526-
+527-There are now two independent estimates.
+528-
+529-The Abel/inverse-square route gives
+530-
+531-```text
+
+===== FILE drops/Q6909-9a9f2e35.md =====
+468-
+469-1. a `3 x 3` rational gauge from the full Lima state (4) to the normalized challenge system;
+470-2. a triangular rank-one extension of the reduced two-dimensional Lima partial-sum module;
+471-3. any finite chain of rational gauge changes and rational scalar normalizations;
+472-4. a finite rational Bauer–Muir transformation of the Lima numerator/denominator recurrence, followed by a rank-one extension.
+473-
+474-A Bauer–Muir transformation with rational modifying factors is an invertible rational change of the two-dimensional numerator/denominator state, so it cannot remove the ratio-`64` formal character invariant.
+475-
+476----
+477-
+478-## 6. What remains possible, and what would count as a certificate
+479-
+480-The obstruction is deliberately scoped.
+481-
+482:It does **not** rule out a genuinely larger hypergeometric construction—for example a contiguous module whose rank is at least four and whose challenge quotient has characters (29). But such a construction is not a rational extension of the raw two-step partial-sum transition. It must introduce new exponential characters before taking a quotient.
+483-
+484-To count as the requested source reconstruction, such a proposal would need all three of the following exact objects:
+485-
+486-1. a concrete rational first-order matrix `H_n` for the larger contiguous module;
+487-2. an explicit rational invariant submodule or quotient with Poincaré characters (29);
+488-3. an exact gauge identity
+489-   
+490-   \[
+491-   G_n^{-1}H_nG_{n+1}=s_nM_n
+492-   \]
+493-   
+494-   together with an initial-vector identity producing (22)–(23).
+495-
+496-No such object is present in `Problem25.lean` or `p25_lima_bracket.py`, and the direct module generated by `A_M,c_M` cannot provide it by the formal-spectrum argument above.
+
+===== FILE drops/Q7302-a6c1bd2a.md =====
+212-
+213-* **Theorem 2.1:** if a multivariate series is the diagonal of a rational function \(R/Q\) with \(Q(0)=1\), then its coefficient sequence modulo \(p^\alpha\) is \(p\)-automatic, and an automaton can be constructed by Cartier operators.
+214-* **Remark 2.2:** with maximum input degree \(L\), \(k\) variables, and \(m\le p^{\alpha-1}L\), their general construction has at most
+215-  \[
+216-  p^{\alpha (p^{\alpha-1}L+1)^k}
+217-  \tag{3.5}
+218-  \]
+219-  states.
+220-* Their Apéry section supplies an explicit rational-diagonal representation and poses **Question 3.26**, asking whether infinitely many primes divide no Apéry number.
+221-
+222-J. Henningsen and A. Straub, [*Generalized Lucas congruences and linear \(p\)-schemes*](https://doi.org/10.1016/j.aam.2022.102409), Adv. Appl. Math. **141** (2022), 102409, prove that ordinary Lucas congruences are exactly one-state linear \(p\)-schemes and construct finite-state generalizations for constant-term sequences.
+223-
+224-F. Beukers, [*\(p\)-Linear schemes for sequences modulo \(p^r\)*](https://arxiv.org/abs/2211.15240), constructs, for fixed \(r\), schemes for broad constant-term sequences with a number of states bounded independently of \(p\).
+225-
+226:**Uniformity and failure for (T).** The later uniform state-count result removes one possible objection, but not the decisive one. The input alphabet has \(p\) digits, the transition matrices depend on \(p\), and for ordinary Apéry Lucas congruences the transition labels encode all values \(b_0,\ldots,b_{p-1}\pmod p\), hence all of \(Z_p\). A uniformly bounded number of states does not give a uniformly bounded algebraic description of the digit subset. There is no theorem in this literature comparing automata with different bases \(p\), let alone bounding the diagonal correlation \(n\mapsto(\mathcal A_p(n))_{p\sim X}\).
+227-
+228-### 3.4 Lucas congruences modulo \(p^2\)
+229-
+230-E. Rowland, R. Yassawi, and C. Krattenthaler, [*Lucas congruences for the Apéry numbers modulo \(p^2\)*](https://arxiv.org/abs/2005.04801), Integers **21** (2021), A20, define
+231-
+232-\[
+233-D(p)=\{0\le d<p:b_d\equiv b_{p-1-d}\pmod{p^2}\}.
+234-\]
+235-
+236-Their **Theorem 2** states:
+237-
+238-\[
+239-b_{d+pn}\equiv b_db_n\pmod{p^2}\quad\text{for every }n\in\mathbf Z
+240-\]
+
+===== FILE drops/Q8622-2a765a12.md =====
+283-\[
+284-v_p(H_n)\log p
+285-\le v_p(\Lambda_n)\log p
+286-=\lfloor\log_p n\rfloor\log p
+287-\le\log n.
+288-\]
+289-The elementary Chebyshev bound \(\pi(x)\ll x/\log x\) gives
+290-\[
+291-\sum_{p\le\sqrt n}v_p(H_n)\log p
+292-\ll\pi(\sqrt n)\log n
+293-\ll\sqrt n.
+294-\tag{7.1}
+295-\]
+296-
+297:For the transition interval \(\sqrt n<p\le Y\le2\sqrt n\), the lcm exponent is one, and Chebyshev's \(\vartheta(x)\ll x\) gives
+298-\[
+299-\sum_{\sqrt n<p\le Y}v_p(H_n)\log p
+300-\le\sum_{p\le2\sqrt n}\log p
+301-\ll\sqrt n.
+302-\tag{7.2}
+303-\]
+304-Thus every prime not covered by a valid local shell costs only
+305-\[
+306-O(\sqrt n)=o(n).
+307-\tag{7.3}
+308-\]
+309-
+310----
+311-
+
+===== FILE drops/Q8657-b842ad38.md =====
+81-
+82-After primitive saturation, a remaining nonzero combination still has size comparable to the largest surviving Apéry term:
+83-\[
+84-|L|\ge \exp(cu)
+85-\]
+86-for some positive constant \(c\), unless the full recurrence-adjoint cancellation occurs. Hence it cannot become a polynomial-height integer carrying three shell primes.
+87-
+88-## 5. No-go theorem for +++/--- sector
+89-
+90-**Theorem.** In the all-same-sign full-defect fibre, parallel shifts \(u_i(t')=u_i(t)+h\) admit no nonzero defect-only determinant combination of polynomial or subexponential height after primitive saturation. Consequently the determinant route cannot prove
+91-\[
+92-J_{\mathrm{dist}}=o(X/\log^3X).
+93-\]
+94-
+95:**Reason.** Strict ratio monotonicity forces a one-transition sign pattern among the determinants, while the only possible exponential cancellation mechanism is an adjoint-recurrence relation. The affine defect vectors fail this relation. Therefore every nontrivial combination retains an Apéry exponential component.
+96-
+97-The obstruction is specific to the +++/--- parallel-index geometry: it is not an endpoint-content issue, but the absence of an available recurrence-compatible coefficient vector.
+
+===== FILE drops/Q8820-ddf4214d.md =====
+972-
+973-```math
+974-C(t)=\exp((e^t-1)\mu).
+975-```
+976-
+977-The quantity that explodes is either:
+978-
+979-- the product as `t→∞`, which is allowed; or
+980-- a crude absolute CRT-error upper bound obtained by summing one `+1` for every residue vector and every prime subset.
+981-
+982-There is no generic CRT repulsion. The actual short interval can underpopulate or overconcentrate the CRT points. Any persistent Apéry suppression is a new high-order anti-alignment theorem.
+983-
+984-### (b) What tames the high-`t` empirical behavior?
+985-
+986:The observed transition is primarily explained by exponential tilting and finite-sample truncation. Under a Poisson model the relevant count is `k≈lambda e^t`; for `t=3,4` the MGF is driven by events too rare to appear in `20000` rows. The empirical estimator then sits far below the population MGF and has huge relative variance.
+987-
+988-The correct diagnostics are the tilted mean
+989-
+990-```math
+991-\frac{\sum_n S(n)e^{tS(n)}}{\sum_n e^{tS(n)}}
+992-```
+993-
+994-and the effective sample size `ESS(t)`, not the comparison of one unstable sample mean with an enormous population expectation.
+995-
+996-### (c) Is the MGF route easier than `(HM)_8`?
+997-
+998-Logically, it is different:
+999-
+1000-- one fixed MGF bound proves the full conjecture directly via `max S=O(log N)`;
+
+===== FILE drops/Q886-9839b8fa.md =====
+69-
+70-The required statement is a uniform sign condition such as
+71-
+72-```
+73-det [[1,x_i,y_i],[1,x_j,y_j],[1,x_l,y_l]] has fixed sign
+74-```
+75-
+76-for every i<j<l.
+77-
+78-This needs either:
+79-
+80-* a complete discrete Chebyshev-system proof for {1,x,y}; or
+81-* a direct formula reducing the determinant to a positive kernel.
+82-
+83:The proposed fixed-small-k patch does not close the infinite tail argument unless the asymptotic determinant error is uniform and the transition range is explicitly finite and checked.
+84-
+85-## Integralization step
+86-
+87-Primitive integralization itself is safe.
+88-
+89-If a rational coefficient vector has a nonzero determinant obstruction, multiplying rows/columns by positive common denominators preserves the sign. Taking the primitive integer vector divides by a positive gcd and also preserves sign.
+90-
+91-However, integralization cannot repair a missing real determinant sign proof. A lower bound survives only after the real determinant has first been shown to have the claimed sign and magnitude.
+92-
+93-## Fixed denominator degree d extension
+94-
+95-The same method does not currently prove the no-go theorem for every fixed denominator degree d.
+96-
+97-The required general statement would need:
+

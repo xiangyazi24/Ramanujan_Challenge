@@ -1,0 +1,391 @@
+drops/Q1009-c0de7b5e.md:182:4. A finite higher-codimension signed-Padé patch theorem handling sparse sign-transition indices.
+drops/Q1009-c0de7b5e.md:3:# Reciprocal Apéry Nörlund--Rice sign transition audit
+drops/Q1069-f5950eda.md:146:A scan of all finite prefixes is not enough unless the transition invariant proves arbitrary-length closure.
+drops/Q1070-7db17a48.md:65:A missing proof obligation is a uniform construction of this index for arbitrary `a`. The current data do not provide a proof of the required ternary state transition.
+drops/Q1073-fbe6e3e0.md:106:The combined transition invariant must prove:
+drops/Q1073-fbe6e3e0.md:129:The leading-one run `r₂(n)` suggests that the witness is controlled by the first block of digits after the leading run, but the Apéry residue transition needed to force the exact cancellation modulo 4/8/16/32/64 has not been derived.
+drops/Q1073-fbe6e3e0.md:66:There must exist a finite state set `S` and transition maps
+drops/Q1073-fbe6e3e0.md:78:No such transition table and invariant has been supplied. The assertion that the sequence is 2-automatic is therefore not an executable certificate.
+drops/Q1076-7c2e1c7f.md:27:because proving the transition from `n` to `2n` and `2n+1` requires identities for the whole binomial sum, not interpolation from a prefix.
+drops/Q1076-7c2e1c7f.md:51:2. the transition maps;
+drops/Q1076-7c2e1c7f.md:7:The requested all-length modulo-64 certificate is not currently available from the stated ingredients. The reduction is valid as a research target, but a proof-quality transition table or companion recurrence cannot be honestly supplied without proving additional 2-adic identities for the Apéry sequence.
+drops/Q1076-7c2e1c7f.md:95:| Explicit transition table with invariant | missing |
+drops/Q1093-8344bc51.md:100:The transition j -> j+1 updates `vL` using
+drops/Q1096-73b9470b.md:86:Thus a path to `Q32-GOAL` is counted only if every transition is an implication/iff edge and every node on the path satisfies the proved criterion.
+drops/Q1105-20a83cb2.md:151:A finite automaton description is acceptable only after proving the transition rule and proving that every binary length is covered by induction.
+drops/Q1116-34952839.md:27:The transition between neighboring filtered factors is therefore controlled by the high-order forward difference sequence.
+drops/Q1128-5c18d3cf.md:137:is preserved by the Cartier transition.
+drops/Q1128-5c18d3cf.md:144:This does not prove the global equality without controlling the jet transition cancellation. It does, however, isolate the only remaining obstruction: cancellation of the accumulated first-jet coordinate. The obstruction is not recurrence dimension; it is the possibility that the jet coordinate vanishes for `Gamma` witnesses but not for `D` witnesses.
+drops/Q1128-5c18d3cf.md:39:provided the corresponding normalized residue vectors in the state agree under Cartier transition.
+drops/Q1128-5c18d3cf.md:41:## Cartier transition
+drops/Q1128-5c18d3cf.md:81:Subtracting gives the transition rule
+drops/Q1128-5c18d3cf.md:96:When the high digit reaches the carry boundary, the binomial cardinal contributes a forced p factor. The transition increases the valuation by at least one and cannot create a minimal witness.
+drops/Q1129-d65c288b.md:112:and the transition weight is the local binomial square together with the harmonic derivative term.
+drops/Q1149-04c5e25a.md:100:The missing bridge is a transition statement of the form:
+drops/Q1149-04c5e25a.md:156:This verifies the Kummer side but does not prove the missing Apéry transition. A full proof would require adding the residue-state transition and proving closure under arbitrary high prefixes.
+drops/Q1149-04c5e25a.md:51:## Digit transition state
+drops/Q1149-04c5e25a.md:7:The requested implication is not currently proved by the stated hypotheses alone. The Kummer strata reduction gives a finite-state problem, but a complete classification requires an additional Apéry-specific transition lemma. No valid counterexample state was produced, so the result should remain open at this level rather than be promoted to a theorem.
+drops/Q1149-04c5e25a.md:82:A transition reads `(n_i,j_i)` and updates the two carry counters by the usual base-p addition rule. The M digits are obtained by the exact floor-halving transition:
+drops/Q121-60e4e729.md:85:This explains the observed transition:
+drops/Q1268-ad353fa7.md:730:4. In the `p=19,H=27,d=8` transition, record separately:
+drops/Q132-f21ecb4f.md:133:The current repository drop `Q121-60e4e729.md` describes the empirical transition
+drops/Q132-f21ecb4f.md:618:The transition from increasing to decreasing occurs at
+drops/Q1401-3ec5d8c4.md:183:The p=379 data indicates that this transition can happen quickly, but no proof converts that observation into a uniform bound.
+drops/Q1401-3ec5d8c4.md:57:The observed transition
+drops/Q150-f0ec4e95.md:293:This is the standard annealed-versus-quenched distinction: branching over all random words may expand while one selected branch is arbitrarily biased. An expander Cayley graph controls the ensemble of paths generated by the transition kernel, not every deterministic path through that graph.
+drops/Q150-f0ec4e95.md:35:On the projective state \([u_n:u_{n-1}]\), the displayed transition is represented by
+drops/Q150-f0ec4e95.md:376:4. **Coordinate-specific singular/reset times.** The original projective transition degenerates at \(n\equiv0,-1\pmod p\), while the factorial gauge is unavailable at \(n=0\). Across a product of primes, these singular times occur in different coordinates. The Cartier/Lucas block law supplies arithmetic resets; this is not a walk in a fixed semisimple product group.
+drops/Q150-f0ec4e95.md:561:**No.** The cited Varjú paper uses a fixed law and i.i.d. increments. The actual Apéry product is deterministic, with step law \(\delta_{S_n}\) at time \(n\); every transition operator has norm one and the product law remains a point mass. The cited Breuillard–Varjú cutoff result likewise has i.i.d. noise.
+drops/Q1818-b209f8b7.md:128:so the endpoint relation constrains the last transition.
+drops/Q1945-bb43792a.md:35:2. Substitute the transition formulas into \(I_{j+1}-I_j\).
+drops/Q1945-bb43792a.md:9:with transitions
+drops/Q1976-751bdd7c.md:201:Equivalently one must prove a nontrivial Smith factor interaction between the rectangular interpolation matrix and the triangular basis transition.
+drops/Q1976-751bdd7c.md:51:The missing condition is unimodularity of the transition matrix between triangular bases and the rectangular Smith basis.
+drops/Q1976-751bdd7c.md:89:The Padé construction only gives primitive vectors in their individual triangular boxes. It does not control the determinant of this transition matrix.
+drops/Q204-9f41a06b.md:701:**No.** The argument is incomplete at four separate transitions:
+drops/Q214-7e8e58e6.md:1337:But there is a sharp phase transition in information: the moment \(\delta=0\) sees only pairs, while every fixed \(\delta>0\) demands that pair incidences supporting a third prime occupy a vanishing \(O(\lambda^\delta)\) fraction of the pair mass. Pairwise CRT, even in its ideal exact-independence form, does not force that vanishing.
+drops/Q2150-0f47b5dd.md:181:1. Q2125: the exact `+/-` affine transitions
+drops/Q2150-0f47b5dd.md:514:These are exactly the `+/-` transitions used in Q2125.
+drops/Q240-c9d162b2.md:853:The true transition occurs when two primes have already been fixed. Since
+drops/Q2609-ddb0075b.md:226:It does not tend to zero. The fixed-parameter expansion ceases to be perturbative already when the moment order reaches the logarithmic scale. This locates the breakdown of the fixed-order proof, not necessarily a phase transition of the exact determinant:
+drops/Q2647-9f951857.md:752:The quotient `U_(m,j)` is the pairing of the newly added top row with a primitive normal to the first saturated lattice; `V_(m,j)` is, up to sign, the last coordinate of a primitive normal to the second.  The seam lemma says that the Lucas--Kronecker block decomposition controls these **saturated normals**, not merely the raw row spaces, strongly enough that a defect on every no-carry transition descends to an adjacent zero pair on the base diagonal
+drops/Q2699-daacf09f.md:646:`E` is a transition-entry condition.  Without the initial-state hypothesis `p|b_r`, an ordinary root `N_h(r)=0` can still occur.  In other words, `E` selects the zero-to-zero **direction** of the local recurrence, not the fact that the Apéry solution is the solution occupying that direction.
+drops/Q2842-489373da.md:366:H\asymp X^{1/3}(\log X)^{-1/6}
+drops/Q292-11b000a9.md:67:There is no denominator problem in the transitions needed to produce $b_1,\ldots,b_{p-1}$: the last transition used is $n=p-2$. Moreover,
+drops/Q296-d018c96a.md:74:So applying \(F_0\) to \((1,5)\) is not the right indexing: it gives \((5,25)\), whereas \((b_1,b_2)=(5,73)\). The transition from \((b_0,b_1)\) to \((b_1,b_2)\) is \(F_1\).
+drops/Q3044-7a35ffdf.md:313:X^{-1/6}(\log\log X)^2
+drops/Q337-df2899fd.md:265:The average hypothesis alone does not force this, but the project’s unconditional bound \(z_p\ll p^{2/3}\) does: for \(p>\sqrt N\), \(z_p/p\ll N^{-1/6}\), and hence the diagonal correction is \(o(1)\). This refinement is not needed for (1.9).
+drops/Q3387-aa56435e.md:569:in the intended large endpoint geometry, so the elementary negative-binomial factors `X+K` are also `p`-units on the **divided** tail; the unique zero occurred at the excluded transition `K=r`, where `X+r=p`.
+drops/Q339-d89c4d4b.md:491:The transition is therefore
+drops/Q339-d89c4d4b.md:499:- Near \(p,q\asymp\sqrt N\), one is at the transition \(pq\asymp N\).
+drops/Q3391-ca0f6733.md:168:Let the endpoint root be the immediately preceding selector transition.  Write
+drops/Q3391-ca0f6733.md:223:One may instead use the **divided root equation** `(4.3)` to splice the tail to the pre-root selector.  That is a valid repair, but it changes the transition at the root and hence is not a verbatim instance of a theorem whose hypotheses demand one global raw selector satisfying `(1.1)` throughout.
+drops/Q3391-ca0f6733.md:331:They support exactly 141 internal selector/update transitions, at
+drops/Q3391-ca0f6733.md:337:The selector denominator in the transition at `K` is `K+1`.  The largest one used internally is therefore
+drops/Q3391-ca0f6733.md:351:The numerator factors `X+K` are also units on all **post-root internal** transitions.  Taking p-adic valuations in `(2.1)` gives
+drops/Q3391-ca0f6733.md:386:141 transitions: start,...,start+140.                (7.1)
+drops/Q3391-ca0f6733.md:389:Therefore `start+141<p` is exactly enough for every denominator used by the 141 **internal** transitions.
+drops/Q3391-ca0f6733.md:391:But it does **not** justify the outgoing transition at
+drops/Q3391-ca0f6733.md:405:- if MP39 Proposition 8.1 requires 142 row values and only the 141 transitions between them, there is no off-by-one problem;
+drops/Q3392-7890148a.md:192:has length `p-P-1`. If it needs 140 **transitions**, the usable transitions stop one earlier and the threshold changes by one. At the edge `K=p-1`, the recurrence coefficient `K+1=p` is not a p-unit. The local note must match its 139/140 convention to the actual statement of Proposition 8.1.
+drops/Q3392-7890148a.md:310:It must also verify the exact unit hypotheses over the whole claimed prefix: every denominator cleared in Proposition 8.1 must be a p-unit, and the singular transition with coefficient `K+1=p` cannot be included as an ordinary unit step.
+drops/Q3392-7890148a.md:727:140-row versus 140-transition convention                       MUST CHECK; possible off-by-one
+drops/Q342-dfa981d5.md:200:\max_p\rho_p=O(N^{-1/6}),
+drops/Q342-dfa981d5.md:614:In the proposed range \(M=N\) and \(p,q>\sqrt N\), one already has \(pq>N=M\). Thus every pair is beyond the equidistribution transition:
+drops/Q3502-a591a8d7.md:139:The literal \(m=607,\ p=97\) cutoff-extension artifact and the quoted large \(\kappa_4\) value are not present under a connector-visible committed filename on `main`. I therefore treat the exact integers and residues in the question as supplied certificate data. The mathematical conclusions below are not inferred from a scan: they follow from the exact transition theorem and, for the final nondivisibility, from explicit kernel vectors with nonzero values modulo \(97\).
+drops/Q3502-a591a8d7.md:370:### Theorem 2 — anchored-minor transition
+drops/Q3502-a591a8d7.md:3:# Exact one-row Smith transition and the \(m=607,\ p=97\) boundary fixture
+drops/Q3502-a591a8d7.md:444:## 4. Exact transition for \(\kappa\): one new boundary value
+drops/Q3502-a591a8d7.md:486:### Theorem 3 — one-row kernel-value transition
+drops/Q3502-a591a8d7.md:584:So the transition is independent of the chosen Bézout certificate, even though the displayed representative \(L\) is not unique.
+drops/Q3502-a591a8d7.md:721:By Theorem 3, the first transition has
+drops/Q3502-a591a8d7.md:786:There is also an exact transition interpretation. The first-stage \(\kappa_s^{(1)}\) is divisible by \(97\), while
+drops/Q3502-a591a8d7.md:7:There is a clean exact transition formula, stronger than merely recomputing all new maximal minors.
+drops/Q3502-a591a8d7.md:858:For a future one-row transition, no maximal-minor enumeration is required.
+drops/Q3502-a591a8d7.md:903:This is the exact Smith transition required for the stated audit.
+drops/Q3704-7fded967.md:660:The term \(N_{h_0-1}(X)\) is a \(p\)-unit. At the singular transition,
+drops/Q3786-620c35be.md:637:\le C T^{-1/6}\sqrt{\log T}=o(1).
+drops/Q3872-bd6fa014.md:194:H_e:=\frac{1}{6}\left(u-\frac{B}{\sqrt z}\right).
+drops/Q3872-bd6fa014.md:486:The gap cut improves (3.2) only in transition blocks where at least one of
+drops/Q4162-1bfb582d.md:553:\frac{1}{6}
+drops/Q4162-1bfb582d.md:570:\frac{1}{6}
+drops/Q4179-fdb39974.md:1154:2. **Incomplete-dense:** not transition; at least one channel has \(B_\nu<j_\nu(\ell)\); the source block is dense.
+drops/Q4179-fdb39974.md:1155:3. **Incomplete-sparse:** not transition; at least one channel has \(B_\nu<j_\nu(\ell)\); the source block satisfies
+drops/Q4179-fdb39974.md:1159:4. **Saturated:** not transition and
+drops/Q4179-fdb39974.md:117:affine-transition IPRD, any fixed theta>0:            PROVED
+drops/Q4179-fdb39974.md:1205:By Lemma 2.1, a nontransition saturated shell prime satisfies
+drops/Q4179-fdb39974.md:1484:all affine-transition shell primes, occurrence by occurrence;
+drops/Q4179-fdb39974.md:68:1. **Affine-transition IPRD.** For every fixed \(0<\theta<1\), all shell primes lying in the \(D^{1-\theta}\)-neighborhood of a quotient, fold, cutoff, raw-window, or sign-order transition contribute
+drops/Q4179-fdb39974.md:852:# 6. First genuine-power interior theorem: affine-transition IPRD
+drops/Q4179-fdb39974.md:925:There are \(O_J(1)\) critical points. The \(2H\)-neighborhood of each contains \(O(H)\) integers. Constant affine functions do not create walls; in the only possible quotient-zero cell, the q6 geometry gives their relevant cutoff difference as a fixed positive multiple of \(P\asymp T\), so no hidden whole-cell transition occurs. \(\square\)
+drops/Q4179-fdb39974.md:927:Define the transition subradical
+drops/Q4179-fdb39974.md:952:## Theorem 6.2 — affine-transition IPRD
+drops/Q4213-2f6e3101.md:1210:Saving at L=T^(5beta/6):                            T^(-(1-5beta)/3)
+drops/Q4213-2f6e3101.md:1212:Saving at L=T^(5beta/6):                            T^(-(2-5beta)/3)
+drops/Q4213-2f6e3101.md:36:   L=Y^{5/6}=T^{5\beta/6},
+drops/Q4213-2f6e3101.md:452:L=Y^{5/6}=T^{5\beta/6},
+drops/Q4213-2f6e3101.md:939:away from its unique fold midpoint. Removing `O_J(1)` matching edges crossing the finitely many fold/window transitions and pigeonholing a finite type gives one matching for which the affine slopes are fixed in both rows.
+drops/Q4214-fc563e24.md:1282:raw sign and stable type:       fixed;
+drops/Q4214-fc563e24.md:1303:then declare exactly the two required quotient-row zeros and their reflected mates, away from all transition strips. Different selected keys use disjoint lower-prime sets.
+drops/Q4214-fc563e24.md:1342:stable type when requested;
+drops/Q4214-fc563e24.md:1362:## 14.4 Reflection and stable type
+drops/Q4214-fc563e24.md:298:the requested stable fold/order type when that refinement is invoked;
+drops/Q4214-fc563e24.md:339:\mathfrak c=(x,j,\text{stable type}),
+drops/Q4215-c2ac5976.md:1199:\Lambda=T^{5\beta/6},
+drops/Q4215-c2ac5976.md:1209:\frac{T^{7\beta/6-4/3}}{(\log T)^2}.
+drops/Q4215-c2ac5976.md:1287:so the same minimum remains the final exponent.  The internal stable-strip loss `Y^{-1/6}` does not add another exponent because, as shown in §3.3, the stable core remains a constant fraction of every rich cell.
+drops/Q4215-c2ac5976.md:1334:3. after the constant fold/order pigeonhole, take the lexicographically first largest type class.
+drops/Q4215-c2ac5976.md:1572:stable-transition strips width O(Y^(1/3)):               CONFIRMED
+drops/Q4215-c2ac5976.md:1573:strip leaf mass M Y^(-1/6):                              CONFIRMED
+drops/Q4215-c2ac5976.md:1574:must pay beta/6 as final additive exponent:               NO; cellwise core absorbs it
+drops/Q4215-c2ac5976.md:1575:finite fold/order pigeonhole absolute factor:             CONFIRMED
+drops/Q4215-c2ac5976.md:20:Everything else in the two central combinatorial reductions survives after the repairs below.  In particular, the popular-gap matching bound, the finite fold/order reduction, the `{7,20}` / `{5,8}` order shifts, and the prime-AP exclusion are correct.
+drops/Q4215-c2ac5976.md:662:## 3.3 Fold/order pigeonhole and transition strips
+drops/Q4215-c2ac5976.md:686:A same-gap edge of length at most `Delta_max<<Y^(1/3)` can change fold branch or the order of the two folded coordinates only if one endpoint lies within `O(Delta_max)` of one of a finite number of linear transition points.  The union of all transition strips in one cell therefore contains only
+drops/Q4215-c2ac5976.md:700:M_\sigma Y^{-1/6},
+drops/Q4215-c2ac5976.md:706:However `(3.7)` should **not** be charged as an additive `T^{-beta/6}` error in the final rich-mass decomposition.  Cellwise,
+drops/Q4215-c2ac5976.md:718:stable vertices.  Re-run the popular-gap argument on that stable core.  The original rich mass `K` is then comparable by an absolute constant to the stable core mass.  Therefore the final non-DPRM exponent need not drop from `beta/3` to `beta/6`.
+drops/Q4215-c2ac5976.md:720:After stability is imposed, there are only an absolute number of fold/order types.  Pigeonholing the matching by those types costs only an absolute factor.
+drops/Q4223-7df41212.md:221:  deterministic lexicographically first largest stable fold/order type class.
+drops/Q4223-7df41212.md:462:selected stable type class.
+drops/Q4223-7df41212.md:480:This ledger still counts only actual selected marked edges, still uses one same gap and one stable type in each cell, and still has disjoint endpoints.
+drops/Q4223-7df41212.md:539:canonical same stable fold/order type:             YES
+drops/Q4223-7df41212.md:697:At support level, take `K` abstract shell-prime labels in one cell, with `K\asymp H`, arranged as `K/2` isolated two-vertex components at one fixed even gap `Delta`, the pair origins separated so that no component has length greater than `2`.  Assign the banked two lower zero coordinates, reflections, selected upper mark and one common stable type to every vertex, as in the previously banked hostile support construction.
+drops/Q4224-32ddf6fc.md:1105:T^{-4/3+7\beta/6+o(1)}
+drops/Q4224-32ddf6fc.md:1182:RS-ATPLD2_0 => PGME_kappa:                          YES for every kappa<beta/6
+drops/Q4224-32ddf6fc.md:706:\Lambda=Y^{5/6}=T^{5\beta/6+o(1)},
+drops/Q4224-32ddf6fc.md:715:\frac{T^{-4/3+7\beta/6+o(1)}}{(\log T)^2}.
+drops/Q4224-32ddf6fc.md:73:for every \(\kappa<\beta/6\).  The converse fails: popular-edge dispersion sees only actual canonical matching edges, whereas `RS-ATPLD2` controls every actual pair in every rich cell and, in its carrier form, additional phantom carrier-divisor pairs.  The weaker frontier is therefore the popular-gap matched-edge theorem, not corrected `RS-ATPLD2`.
+drops/Q4224-32ddf6fc.md:943:0<\kappa<\beta/6,
+drops/Q4224-32ddf6fc.md:961:\kappa<\delta+\beta/6,
+drops/Q4224-32ddf6fc.md:983:  => PGME_kappa for every kappa<beta/6.
+drops/Q4226-4ed4c027.md:1029:### Stable fold/order classification
+drops/Q4226-4ed4c027.md:1036:actual stable types:            M5, M8+, M8-.
+drops/Q4226-4ed4c027.md:103:4. **All combinatorial and canonical reductions survive.**  The folded-thin deletion, popular-gap extraction, disjoint matching, stable-type pigeonhole, \(\{5,8\}\) order shifts, prime-AP chain bound, canonical `E^pop` reduction, Q4214 band-matrix conclusions, and Q4223 minimal-witness equivalence use no \(\Theta(T)\) minus height.  The only statements needing correction are the scalar-height sentences.  Replace
+drops/Q4226-4ed4c027.md:32:The minus fold classification is more rigid than the generic slope table suggests.  The quotient-1 residue is **always on its unreflected fold branch** in the actual raw minus window.  Consequently there are exactly three stable minus fold/order types:
+drops/Q4226-4ed4c027.md:374:# 3. The quotient-6 folds and the three actual stable types
+drops/Q4226-4ed4c027.md:40:The transition strips excluded in DPRM contain the remaining branch/order changes.  There is no actual minus type with reflected quotient-1 fold and slope \(2\).
+drops/Q4226-4ed4c027.md:524:The discarded order-transition strip is exactly where `(3.9-guard)` fails.  No new type is hidden there; it belongs to the already-banked transition deletion.
+drops/Q4226-4ed4c027.md:619:# 6. Height law by fold/order type
+drops/Q4226-4ed4c027.md:706:minimal deep scale:   log B_e >> J_*=T^(beta/6).
+drops/Q4226-4ed4c027.md:83:   \log B_e\gg_JJ_*=Y^{1/6}=T^{\beta/6}\gg\log T.
+drops/Q4226-4ed4c027.md:866:\frac{T^{\beta/6}}{\log T}
+drops/Q4262-157ed9c5.md:863:More importantly, the actual q6 residue pair is not identified with evaluation of the Hasse invariant at a fixed CM point. The fold/order classification fixes affine slopes, not a modular parameter.
+drops/Q4284-3135cbbf.md:409:J_*=Y^{1/6}=T^{\beta/6}\gg\log T.
+drops/Q4284-3135cbbf.md:701:7. **Campaign bookkeeping:** actual selected \(q\mid A_t\), exact raw windows, raw minus-first assignment, all residual predicates, and zero lower-bound use of \(M_\sigma(T)\) are preserved. The only exponent comparison is \(\log T\ll T^{\beta/6}=J_*\), so this partial does not alter the inherited \(\alpha_0/6\) ceiling or produce a new positive \(\kappa_*\).
+drops/Q4300-6ff32261.md:21:5. This is still far from the required `2 log q+O(1)`. At the first deep scale `W` of order `J_*=T^(beta/6)`, the remaining multiplicative deficit in logarithmic size is
+drops/Q4300-6ff32261.md:24:   J_*/log T = T^(beta/6)/log T.
+drops/Q4300-6ff32261.md:317:At the project cell scale `L=Lambda=T^(5beta/6)`, this gives only
+drops/Q4300-6ff32261.md:599:W asymp J_* = T^(beta/6),
+drops/Q4300-6ff32261.md:605:T^(beta/6)/log T.
+drops/Q4300-6ff32261.md:608:At the full cell scale `Lambda=T^(5beta/6)`, the support-blind shell estimate misses by
+drops/Q4300-6ff32261.md:611:T^(5beta/6)/log T.
+drops/Q4300-6ff32261.md:941:log R_actual <<_beta T^(beta/6),
+drops/Q4300-6ff32261.md:953:T^(beta/6)/log T
+drops/Q4300-6ff32261.md:956:at the earliest deep scale, and `T^(5beta/6)/log T` at the whole-cell support-blind scale.
+drops/Q4300-6ff32261.md:990:First deep-scale deficit: T^(beta/6)/log T (PROVED).
+drops/Q4302-1a038780.md:1184:At `L=Lambda=T^(5beta/6)`, this is
+drops/Q4302-1a038780.md:1187:1-O\left(\frac{\log T}{T^{5\beta/6}}\right)
+drops/Q4302-1a038780.md:1281:\frac{T^{\beta/6}}{\log T}.
+drops/Q4302-1a038780.md:38:Lambda = T^(5 beta/6),
+drops/Q4302-1a038780.md:50:J_* = Y^(1/6) = T^(beta/6) >> log T.
+drops/Q4303-e0a05159.md:201:The stable fold type is the raw `M8+` type: the 6-row is reflected, the 1-row is unreflected, and the folded ordered gap moves by `8 Delta`. This is one of the exact stable types already allowed by the minus height law.
+drops/Q4310-12e9ffdc.md:631:Without such a theorem, asking where the census should cross over has no mathematical answer. Any numerical scale would be invented. The finite data are compatible with permanent smallness, polylogarithmic growth, subpolynomial growth, or a sparse later exceptional jump. They are not compatible with claiming that a known theorem forces a forthcoming transition.
+drops/Q4314-1162b6c7.md:633:   \qquad J_*=T^{\beta/6},
+drops/Q4314-1162b6c7.md:647:   \frac{T^{\beta/6}}{\log T}.
+drops/Q4314-1162b6c7.md:877:The caution is equally explicit: the current support-blind envelope is a factor \(T^{\beta/6}/\log T\) too large in logarithmic scale at the first deep layer. The next proof requires a new horizontal cancellation or divisor-rigidity theorem, not a refinement of constants.
+drops/Q4414-5d8de339.md:180:## 2. Where the `T^{-beta/6}` number actually comes from
+drops/Q4414-5d8de339.md:182:The source is the stable fold/order refinement in the rich-fibre inverse theorem, audited in Q4215 Section 3.3.
+drops/Q4414-5d8de339.md:18:transition-strip marked mass
+drops/Q4414-5d8de339.md:19:    <<_J M_sigma(T) Y^(-1/6)
+drops/Q4414-5d8de339.md:200:A fold branch changes only at a finite set of affine transition points.  The relative order of the two folded coordinates also changes only at a finite set of affine crossing points.
+drops/Q4414-5d8de339.md:20:     = M_sigma(T) T^(-beta/6),
+drops/Q4414-5d8de339.md:214:Around every fold or order transition point remove all integer positions within distance `Delta_bar`.  Since the number of transition points is `O_J(1)`, the removed set in one cell has cardinality
+drops/Q4414-5d8de339.md:226:because their occupancies are disjoint and each exceeds `H`.  Therefore the aggregate transition-strip marked mass satisfies
+drops/Q4414-5d8de339.md:231:     = M_sigma(T) Y^(-1/6)
+drops/Q4414-5d8de339.md:232:     = M_sigma(T) T^(-beta/6).
+drops/Q4414-5d8de339.md:238:there exists a globally small transition set
+drops/Q4414-5d8de339.md:253:     = B_J Y^(-1/6)
+drops/Q4414-5d8de339.md:265:where `S_C^st` is the stable core.
+drops/Q4414-5d8de339.md:26:strip leaf mass M Y^(-1/6):                  confirmed
+drops/Q4414-5d8de339.md:27:must pay beta/6 as final additive exponent:  NO; cellwise core absorbs it
+drops/Q4414-5d8de339.md:293:Because the transition strips were defined using the universal bound `Delta_bar`, every edge in this matching stays on one fold branch for each row and does not cross an order transition.
+drops/Q4414-5d8de339.md:295:There are only `m_J=O_J(1)` resulting fold/order types.  Retain the lexicographically first largest type class.  Its matching size satisfies
+drops/Q4414-5d8de339.md:316:This is exactly the canonical inequality consumed later.  It compares the **original rich-cell occupancy** `K_C` with a typed matching constructed from the stable core.  No transition-strip term remains.
+drops/Q4414-5d8de339.md:32:> **(b), with a terminology correction.**  It is not originally a collision-level estimate inside an already fixed matching.  It is a **cellwise vertex-level stable-core pruning** performed before the popular-gap matching is rerun.  After that rerun, the loss is absorbed into the constant in `R_C >> K_C^2/Lambda`.  It is not an additive global marked-mass exception.
+drops/Q4414-5d8de339.md:347:The type-selection step meets every hypothesis with
+drops/Q4414-5d8de339.md:34:It is not (a).  The `beta/3` ceiling does **not** have to be reduced to `beta/6`, and at `beta=alpha_0/2` the inherited ceiling remains
+drops/Q4414-5d8de339.md:352:b(T)/H=Y^(-1/6+o(1)) -> 0.
+drops/Q4414-5d8de339.md:366:     + M_sigma T^(-beta/6+o(1))
+drops/Q4414-5d8de339.md:373:min(beta/6,kappa_*).
+drops/Q4414-5d8de339.md:379:rho < min(beta/3,beta/6,kappa_*)
+drops/Q4414-5d8de339.md:380:    = min(beta/6,kappa_*).
+drops/Q4414-5d8de339.md:392:beta/6.
+drops/Q4414-5d8de339.md:3:# Q4414 — adjudication of the alleged `T^{-beta/6}` type-selection ceiling
+drops/Q4414-5d8de339.md:412:- every typed-DPRM claim of a final exponent above beta/6;
+drops/Q4414-5d8de339.md:415:- any APD theorem whose proof explicitly adds the transition-strip mass.
+drops/Q4414-5d8de339.md:418:The reason no such withdrawal is required is not that `T^{-beta/6}` is numerically harmless.  It is that the authoritative source explicitly proves a different, multiplicative accounting.
+drops/Q4414-5d8de339.md:42:It is also not literally (c).  The transition vertices are not sent to another arithmetic sector whose mass is separately estimated.  They are removed **inside every rich cell**, and the original cell mass is compared multiplicatively with the surviving stable core.  The subsequent choice of one fold/order type is a bounded edge pigeonhole and costs only an `O_J(1)` factor.
+drops/Q4414-5d8de339.md:436:The stable-transition set contributes no additional summand.
+drops/Q4414-5d8de339.md:47:after a further marked loss
+drops/Q4414-5d8de339.md:48:    << M_sigma(T) T^(-beta/6+o(1))
+drops/Q4414-5d8de339.md:49:all matched collisions share one affine fold/order type.
+drops/Q4414-5d8de339.md:508:The transition-strip ratio `Y^{-1/6}` does not appear.
+drops/Q4414-5d8de339.md:542:## 6. Which routes use the stable type, and which do not
+drops/Q4414-5d8de339.md:544:| Route | Needs a common fold/order type? | Correct accounting |
+drops/Q4414-5d8de339.md:552:| Canonical PGME matched-edge route | Yes | Local stable-core pruning plus constant type factor; no additive exponent |
+drops/Q4414-5d8de339.md:556:| A proof that insists on typing every marked leaf globally | Yes | Would pay `beta/6`; unnecessary and not the banked proof |
+drops/Q4414-5d8de339.md:55:Inside each rich cell, remove O_J(Y^(1/3+o(1))) transition-strip
+drops/Q4414-5d8de339.md:56:vertices.  Since K_C>H=Y^(1/2), the stable core has size at least
+drops/Q4414-5d8de339.md:585:If one chooses to split off easy boundary, low-zero, or light sectors before attacking the remaining deep high-zero pairs, that is optional preprocessing.  The hard pair theorem still need not assign a common fold/order type.
+drops/Q4414-5d8de339.md:58:that core, and then retain the largest of O_J(1) fold/order classes.
+drops/Q4414-5d8de339.md:63:The aggregate transition-strip vertex count is
+drops/Q4414-5d8de339.md:64:    << M_sigma(T)T^(-beta/6+o(1)),
+drops/Q4414-5d8de339.md:667:**Classification: pointwise/local, not an additive `beta/6` loss.**
+drops/Q4414-5d8de339.md:673:### 7.5 Stable transition strips
+drops/Q4414-5d8de339.md:678:M_sigma T^(-beta/6+o(1)),
+drops/Q4414-5d8de339.md:685:### 7.6 Finite fold/order type selection
+drops/Q4414-5d8de339.md:68:No theorem claiming the `beta/3` or `alpha_0/6` ceiling needs to be withdrawn on account of this issue.  Any proof that actually inserted an additive `T^{-beta/6}` term must, however, be rewritten using the cellwise stable-core argument before it may claim an exponent above `beta/6`.
+drops/Q4414-5d8de339.md:699:They are independent of the type-selection issue and continue to enforce the `beta/3` ceiling even if one someday improves the thin-sector bookkeeping.
+drops/Q4414-5d8de339.md:709:    -> transition strips of width O_J(Y^(1/3))
+drops/Q4414-5d8de339.md:710:    -> aggregate strip mass bound M_sigma Y^(-1/6)
+drops/Q4414-5d8de339.md:715:    -> reruns the inverse theorem cellwise on the stable core
+drops/Q4414-5d8de339.md:723:       “after a further marked loss ... all collisions share one type.”
+drops/Q4414-5d8de339.md:738:Only the first occurs in the stable-type proof.
+drops/Q4414-5d8de339.md:753:K_C^st    = occupancy after transition-strip pruning,
+drops/Q4414-5d8de339.md:754:R_C       = canonical matching in the selected stable type.
+drops/Q4414-5d8de339.md:776:For transition strips write “local stable-core pruning,” not “further marked loss.”
+drops/Q4414-5d8de339.md:798:transition strips:   [V-local];
+drops/Q4414-5d8de339.md:811:after a further marked loss << M_sigma T^(-beta/6+o(1))
+drops/Q4414-5d8de339.md:815:should be replaced by the stable-core wording from Section 0.  This includes the setup inherited by later Q6, PBSD, PGME, and Frobenius-detector rounds even when their proofs never use the alleged additive term.
+drops/Q4414-5d8de339.md:832:### 10.2 Is the argument circular because the transition-strip width uses the popular gap found after pruning?
+drops/Q4414-5d8de339.md:850:### 10.3 Could a stable-core matching cross an order transition even when neither endpoint lies in a strip?
+drops/Q4414-5d8de339.md:852:Not when the strip radius is at least the maximum legal edge length.  Any affine branch or order change along the interval would put one endpoint within that radius of the corresponding transition point.  The finite set of transition points and a uniform `Delta_bar` make the argument deterministic.
+drops/Q4414-5d8de339.md:858:### 10.5 Does raw minus-first survive the pruning and type selection?
+drops/Q4414-5d8de339.md:876:### 10.8 Is the folded-thin term being treated inconsistently with the transition term?
+drops/Q4414-5d8de339.md:878:The two local estimates look similar, but their **banked consumers differ**.  Q4203 explicitly states the global rich-mass decomposition with the folded-thin/non-DPRM `T^{-beta/3}` term.  Q4215 explicitly states that the transition term is not part of that decomposition.  One may seek a future rederivation that absorbs more of the folded-thin mass, but one may not transfer the accounting convention from one statement to the other without changing the theorem being cited.
+drops/Q4414-5d8de339.md:886:It creates at most `2(K_C-1)` directed pairs in a fibre of size `K_C`.  On a rich fibre this is a `O(1/K_C)` fraction of the quadratic pair count, and in the matching it touches at most one edge.  It is not a `T^{-beta/6}` vertex-mass deletion.  Any use in a global pair theorem must state the linear correction explicitly, but that correction is controlled by the actual first mass and does not alter the stated ceiling.
+drops/Q4414-5d8de339.md:896:    << M_sigma(T)T^(-beta/6)
+drops/Q4414-5d8de339.md:901:    M_sigma(T)T^(-beta/6)
+drops/Q4414-5d8de339.md:908:#transition_vertices(C)
+drops/Q4414-5d8de339.md:933:    <<_J M_sigma(T)T^(-beta/6+o(1)).
+drops/Q4414-5d8de339.md:936:Every rich cell retains a stable core of size >=K_C/2.
+drops/Q4414-5d8de339.md:944:The transition-strip estimate is a final additive marked-mass loss.
+drops/Q4414-5d8de339.md:949:not by min(beta/6,kappa_*).
+drops/Q4414-5d8de339.md:959:The direct OMCD route does not require any fold/order refinement.
+drops/Q4414-5d8de339.md:962:Replace every “further marked loss T^(-beta/6)” summary sentence by
+drops/Q4414-5d8de339.md:963:an explicit cellwise stable-core statement.
+drops/Q5643-8e5613cb.md:387:the recurrence transition
+drops/Q5646-aaabc4d3.md:309:This is the same mechanism already encountered in cutoff-transition calculations in the repository: Smith or Euclidean elimination can identify where a prime is lost or regained, but after squarefree saturation the surviving support is exactly the original moving-zero set.
+drops/Q5657-52e87951.md:265:## 5. The adjacent-transition product
+drops/Q5669-39761316.md:127:- `problems/3.2/chatgpt-answers/Q734.md`, for cutoff-transition saturation;
+drops/Q5710-e3ddf481.md:248:The corresponding Pascal transition presentation has nonzero Smith invariants
+drops/Q5721-de91974f.md:298:For a \(2\times2\) transition matrix \(A\),
+drops/Q5722-cff05cbe.md:191:Choose \(c\) with \(u\le c\le v-R+1\).  Let \(T_r\) be the usual companion transition matrix taking
+drops/Q5722-cff05cbe.md:211:For every prime \(p\nmid\Sigma_{u,c,v}\), every value used by the margins is an invertible linear image of the state at \(c\) over \(\mathbf F_p\).  Reduce a basis of \(\mathcal L^{(\mathcal Q)}\) through these transition matrices, clear the common denominator supported on \(\Sigma_{u,c,v}\), and remove all powers supported on \(\mathcal Q\Sigma_{u,c,v}\).  This gives an integral **outside observation matrix**
+drops/Q5727-7d2802b9.md:363:Let the full shell state after adjoining `b_M` have localized rank `rho ≤ 39`. Let `T_p` be the good-prime transition and `tau_p` the primitive target observation. The premise that the target remains one unsaturated alias scalar means that the target locus is the single hyperplane
+drops/Q5737-0d289f04.md:624:Then the companion transition is invertible modulo \(p\) in both directions. Every shell coordinate in the block is a nonzero linear functional on the free recurrence state. But modulo \(p\), the Newton row is exactly the coordinate \(Y_{p-1}\). Therefore it does not annihilate the full recurrence solution space, and
+drops/Q5738-a643e3f5.md:110:| Rowland–Yassawi, Theorem 5.1 | Partial diagonals of a fixed rational function are `p`-automatic modulo `p^alpha` | Potentially applicable after constructing a fixed multivariate rational representation for all parameters | Fixed `p`; automaton size and transition data depend on `p`; no uniform horizontal estimate |
+drops/Q5749-d05b1cf3.md:82:- finite singular set per transition;
+drops/Q5791-a61f9534.md:136:Conclusion: the divided cross-minor route is not merely a repackaged linear Smith invariant. The previous no-go does not kill it. But its only possible advantage is a new low-height determinantal-divisor theorem; fixed state dimension alone is insufficient because exterior transition products can carry exponential height.
+drops/Q5791-a61f9534.md:77:But the escape is only formal. Exterior powers of a fixed-dimensional state are again fixed-dimensional. If the transition matrices for Y and Z have polynomial height control, the same bounded-state obstruction can reappear on the exterior representation.
+drops/Q5795-61d396b8.md:699:A transition argument that clears a product of these factors has height
+drops/Q5795-61d396b8.md:889:This is the appropriate WZ or creative-telescoping target. A recurrence of fixed order for the packet state is not enough by itself: iterating a transfer matrix across `m` steps generally recreates an exponential-height transition product. What is needed is a genuine discrete Lagrange or WZ boundary certificate.
+drops/Q5807-e931d08e.md:43:and compute the transition matrix M(m) satisfying
+drops/Q5807-e931d08e.md:55:> There exists a fixed-rank state recurrence with polynomial transition matrix M(m), and an integer polynomial D(m) of subexponential logarithmic height, such that every prime dividing all admissible H_m in a block divides D at one boundary index.
+drops/Q5809-96aae7f6.md:34:2. the exterior-square transition matrix;
+drops/Q5821-6eb31257.md:26:Location: the transition from the four tetrahedron shapes to the closed manifold torsion statement.
+drops/Q5938-c1a56ceb.md:144:Let `A_P(d)` be the `rho` by `rho` companion transition of `P`, and let `c_L(d)` be the row obtained by reducing `T_L` on the state
+drops/Q5938-c1a56ceb.md:354:When `D_(P,L)` is nonzero, the transformed state transition is exactly
+drops/Q5938-c1a56ceb.md:552:    transition = identity_matrix(K, rho)
+drops/Q5938-c1a56ceb.md:554:        row += c*(e0*transition)
+drops/Q5938-c1a56ceb.md:555:        transition = sigma_matrix(A,j)*transition
+drops/Q5938-c1a56ceb.md:562:    transition = identity_matrix(K, rho)
+drops/Q5938-c1a56ceb.md:565:        rows.append(cj*transition)
+drops/Q5938-c1a56ceb.md:566:        transition = sigma_matrix(A,j)*transition
+drops/Q5938-c1a56ceb.md:647:For a concrete full-margin `L`, replace the test tuple by `(L,)`.  The same `shifted_observations` routine constructs the scalar recurrence of the tensor observation.  If `A_Y,c_Y` and `A_Z,c_Z` are the already-conjugated state transitions and observations, the raw exterior row is
+drops/Q5981-b0a1cd53.md:410:The second assumption makes \(\mathcal O_T\) invertible, so \(\xi_T=0\).  The first assumption and (2.8) make every state transition invertible in both directions.  Therefore the zero state propagates through the whole interval.  Applying (3.2) gives the conclusion.  No estimate or genericity argument is used.
+drops/Q5982-8c5729f3.md:162:and write the finite transition as
+drops/Q5982-8c5729f3.md:184:For every nonzero transition coefficient from state \(i\) at \(m\) to state \(j\) at \(m+s\), strict orientation requires
+drops/Q5982-8c5729f3.md:230:The two exact terms (1) are nonzero in \(K\): \(L\) is a nonzero primitive polynomial and \(-1\) is a unit.  Since both transitions are \(y\to y\), the state-offset contribution in (10) cancels.  Their two inequalities are therefore
+drops/Q5982-8c5729f3.md:269:Every remaining transition coefficient may be left completely arbitrary.  Adding more inequalities cannot repair an already infeasible subsystem.  Hence a coefficient-by-coefficient numerical scan of the rest of the support is logically unnecessary for the no-go result.
+drops/Q5982-8c5729f3.md:283:The transition computed by the three gauge scripts is a Laurent representative of the logarithmic connection induced on the conormal/Koszul quotient.  A tangent Koszul gauge changes the chain-level representative by a null-homotopy; it does not change the induced connection.  In particular, it does not change its determinant-line connection.
+drops/Q5982-8c5729f3.md:35:In the present transition those two invariant trace coefficients are exactly
+drops/Q5982-8c5729f3.md:389:A nonzero trace coefficient at a shift means that at least one diagonal transition at that shift is present.  For a diagonal transition the state offset cancels, so strict orientation requires respectively
+drops/Q5982-8c5729f3.md:397:This is impossible.  Equivalently, the nonzero invariant (22) says that a zero-displacement closed transition cycle survives.  Along a strictly ranked cycle every edge raises rank, while return to the same state and lattice point forces total rank change \(0\).  Contradiction.
+drops/Q5982-8c5729f3.md:3:# Exact verdict: no finite Laurent tangent gauge can orient the transition
+drops/Q5982-8c5729f3.md:420:3. The hyperplane is not stable under the transition shifts:
+drops/Q5982-8c5729f3.md:426:   Thus it does not define a closed transition subsystem.
+drops/Q5982-8c5729f3.md:503:\text{No finite Laurent tangent gauge and no Laurent change of the three ideal generators can orient the full transition support into an open half-space.}
+drops/Q5982-8c5729f3.md:511:`q32_log_weight_*` scripts, and `/tmp/p32_triangular_transition.out` is a caller-local path rather than a GitHub object.  I therefore cannot honestly claim a byte-for-byte audit of that unavailable output.  The argument above independently verifies the Apéry logarithmic identity and gives an exact no-go theorem from the two coefficients stated in the question.  No unverified numerical LP output is used.
+drops/Q5982-8c5729f3.md:7:The transition is **not** gauge-equivalent to one whose support lies in an open half-space.  This remains false after an arbitrary finite Laurent change of the three ideal generators.
+drops/Q6456-9d567ec2.md:282:This calculation explicitly handles the “`K K^*` is not `K^2`” danger: a bound on `K K^*` is useful because it bounds a singular value of `K`, not because it is an actual two-step transition.
+drops/Q6456-9d567ec2.md:292:Let `(Y_j)_{j in Z}` be a stationary Markov chain with stationary law `pi`, transition kernel `K`, and reversed kernel `K^*`. Suppose
+drops/Q6456-9d567ec2.md:313:**[PROVED]** Couple the remote future to an independent stationary future. Conditional on `Y_i=x`, the law of `Y_{i+m}` is `delta_x K^m`, so maximal coupling makes `Y_{i+m}` equal to an independent `pi`-distributed state except on an event of probability at most `d`; using identical later transition randomness couples the entire future tail. Apply the same construction backward in time with the reversed kernel. A union bound shows that the joint law of
+drops/Q6456-9d567ec2.md:787:2. **[ESSENTIAL] Stationary path construction.** A bi-infinite stationary Markov chain with transition `K_p` is used in the `b3` argument.
+drops/Q6456-9d567ec2.md:793:5. **[ESSENTIAL] Remote-tail coupling.** The Markov property and fresh transition randomness allow coupling at time `i+L_p` and then coupling the whole future tail.
+drops/Q6456-9d567ec2.md:812:Then the remaining-parameter set depends on the entire past, the transition kernel is time-inhomogeneous, the excursion laws are not i.i.d., and `K_p^s` no longer represents the relevant correlations. None of those replacements is justified here. That is precisely **[GAP-QUENCHED-ORDER]**.
+drops/Q6456-9d567ec2.md:95:# 1. Exact transition facts
+drops/Q647-39430376.md:300:A rational transition matrix does not specify the inertia representations, drops, or Swan conductors needed in this formula. Therefore there is no legitimate numerical conductor
+drops/Q6480-5baa42e9.md:837:and the normalization by \(-1/6\) cancels the degree while leaving the \((-3/p)\)-character.  The gauge-only value \((2/p)\) is missing precisely the square class \(-6\).
+drops/Q6486-f3661a84.md:242:- Confirm the final sequence is real-valued; the transition from complex decay must be through `Complex.re`, not an unsupported coercion from a complex limit back to a real limit.
+drops/Q6520-bea4ae90.md:277:- **restart 模型**：`P^1` 上的 transition `0 -> infinity`。
+drops/Q6563-13611f0f.md:1076:The SymPy "single Q-factor" observation addresses only the first. `[L2-FREQ]` needs the third. The critical-value/subresultant formulation makes all three transitions visible and identifies exactly where a bad-reduction divisor can re-enter.
+drops/Q6577-d3b21327.md:559:H^(5/2) / H^(8/3) = H^(-1/6).
+drops/Q6593-9dc71ceb.md:202:The carrier has fixed state dimension, but its transition coefficients retain the absolute clocks `X+m` and `s+g`. Iterating them produces
+drops/Q6595-1ea5e17c.md:175:- local \(Q_D\) bound tight near the transition scale;
+drops/Q6618-844aabb2.md:297:Everything in the next section after the first transition identity is conditional on this common-recurrence identity.
+drops/Q6618-844aabb2.md:552:4. P_N=-S A(N) S is the positive transition already used in Lean.
+drops/Q6618-844aabb2.md:87:The positive-row transition is
+drops/Q6619-b7c9bea8.md:517:# 5. The exact prefix-exponent phase transition
+drops/Q6619-b7c9bea8.md:551:The transition occurs exactly at
+drops/Q6649-f93432f3.md:611:S models the p-dilation/depth transition,
+drops/Q6746-116b253f.md:97:The gap set is transported by the cocycle; it is a family Gap(r), not one additive subset of Z. A projective orbit with nontrivial transition matrices does not preserve a common stabilizer at every base point.
+drops/Q6761-c4760612.md:59:has the deterministic transition
+drops/Q6799-25e2cd36.md:190:- a spectral gap for the transition operator.
+drops/Q6816-d1f8e519.md:76:- densities are computable from transition matrices when the automaton is given.
+drops/Q6817-fe84f6ad.md:29:For a fixed algebraic series over F_p, Christol implies p-automaticity. The zero set is therefore p-automatic and its density is computable from the transition matrices of the automaton.
+drops/Q6909-9a9f2e35.md:149:### Endpoint transition
+drops/Q6909-9a9f2e35.md:26:Consequently there is no direct rational gauge, finite rational Bauer–Muir transform, or positive elementary-matrix factorization of the requested kind. The numerical interlacing is real, but proving it requires an orbit-specific invariant stronger than total positivity and stronger than the existing positive-Grassmannian cone. A larger contiguous hypergeometric module is not ruled out, but it would be a genuinely new module, not an extension or rational transformation of the raw two-step Lima partial-sum transition.
+drops/Q6909-9a9f2e35.md:482:It does **not** rule out a genuinely larger hypergeometric construction—for example a contiguous module whose rank is at least four and whose challenge quotient has characters (29). But such a construction is not a rational extension of the raw two-step partial-sum transition. It must introduce new exponential characters before taking a quotient.
+drops/Q6909-9a9f2e35.md:64:Then the two-step partial-sum transition is exactly
+drops/Q6909-9a9f2e35.md:7:There is one short exact identity coupling the printed positive challenge cocycle to the two-step Lima–Guillera partial-sum transition:
+drops/Q6921-6e18fe56.md:71:Therefore the correct **row-state** transition is
+drops/Q6921-6e18fe56.md:735:# The rational 9 x 9 row-state transition.
+drops/Q6935-8e650597.md:687:It uses no Meijer G function, no Barnes contour, no official transition matrix construction, and no numerical connection coefficient.
+drops/Q6935-8e650597.md:793:      (B r ᵥ* Aprime r) ᵥ* transitionProduct (r+1) n
+drops/Q6935-8e650597.md:809:      tailCoeff r 0 • (boundaryRow r ᵥ* transitionProduct (r+1) n)
+drops/Q6939-0c3b57e6.md:29:All vectors below are **rows**, and all transitions act on the right.
+drops/Q6939-0c3b57e6.md:560:# Raw positive terminating-4F3 theta-jet transition A_n.
+drops/Q696-c7229524.md:147:not a single path obtained by multiplying local transition matrices.
+drops/Q7172-b16fb8d3.md:89:However, the Apéry transfer product here is not currently identified with a fixed-conductor l-adic sheaf whose trace is the required projective transition indicator. Therefore these results cannot presently be cited as proving the needed estimate.
+drops/Q7197-e125937e.md:45:Writing the PGL\(_2\) transition matrix as \(M_G(y)\), this is a rational equation of bounded degree in the parameters, but the parameter \(G\) is not an independent additive variable: it is an iterate length.
+drops/Q7217-5d701cbb.md:29:For a chain with gaps \((g_1,g_2,g_3)\), all later constraints are obtained by composing these two-time identities. They are not independent first-order transition equations.
+drops/Q7302-a6c1bd2a.md:159:Thus the zero language in base \(p\) is simply: *at least one digit belongs to \(Z_p\)*. This is a two-state acceptance rule once membership in \(Z_p\) is built into the digit transitions, but the transition table contains the entire unconstrained subset \(Z_p\subset\mathbf F_p\). Lucas congruences therefore propagate a local zero into an anchored \(p\)-ary star; they do not decorrelate stars belonging to different bases.
+drops/Q7302-a6c1bd2a.md:19:* Apéry/Lucas/Dwork/automaticity results describe the sequence **one characteristic at a time** and give no relation between the transition data \(Z_p\) and \(Z_q\).
+drops/Q7302-a6c1bd2a.md:226:**Uniformity and failure for (T).** The later uniform state-count result removes one possible objection, but not the decisive one. The input alphabet has \(p\) digits, the transition matrices depend on \(p\), and for ordinary Apéry Lucas congruences the transition labels encode all values \(b_0,\ldots,b_{p-1}\pmod p\), hence all of \(Z_p\). A uniformly bounded number of states does not give a uniformly bounded algebraic description of the digit subset. There is no theorem in this literature comparing automata with different bases \(p\), let alone bounding the diagonal correlation \(n\mapsto(\mathcal A_p(n))_{p\sim X}\).
+drops/Q7302-a6c1bd2a.md:571:is at its transition point when \(N=X^2\) and \(Q=X\). It provides only an \(L^2\) aggregate. Fourier-expanding arbitrary indicators \(1_{Z_p}\) introduces their full unrestricted spectra. A family with a common anchor can saturate the incidence count, so (9.1) cannot prove (T) without an Apéry-specific spectral estimate that already couples different \(p\).
+drops/Q7302-a6c1bd2a.md:668:| Beukers \(p\)-linear schemes | No | all \(n\), fixed \(p^r\) | state count can be uniform, transitions are not | No |
+drops/Q7302-a6c1bd2a.md:87:3. **Critical range:** it must work for modulus \(p\asymp X=(X^2)^{1/2}\), exactly the large-sieve transition range.
+drops/Q7458-a0a35761.md:819:The thin transition interval
+drops/Q7553-3052c101.md:586:is allowed. At the transition scale, a sufficient form is
+drops/Q7623-eca97d1f.md:452:with all coefficients integral.  Starting with the coefficient of \(q^{-M}\) and descending, the transition matrix from
+drops/Q7672-d395b82c.md:595:The naive q-echelon transition between the full holomorphic lattice and the direct sum of its Eisenstein and cuspidal q-echelon lattices has determinant ratio
+drops/Q7683-1c2e34f1.md:1108:Thus the current certificate has a **global row-height** \(O(R)\), not a **local transition height** \(O((s-r)\log R)\).
+drops/Q7683-1c2e34f1.md:1122:# 8. Why even the short-transition theorem would not yet prove BFH
+drops/Q7683-1c2e34f1.md:128:7. There is, however, a **precise sufficient passport theorem** that would make a slowly growing slope set work for the *false factor*. If the pair congruences (V3) can be replaced by exact integers \(T_{r,s}(d)\) with the same p-adic implication but with **local transition height**
+drops/Q7683-1c2e34f1.md:1613:- The conditional short-transition theorem: (T1)+(T2) imply \(O(R^{5/3}\log R)\) for the **full-valuation** false factor when \(M=R^{2/3}\).
+drops/Q7683-1c2e34f1.md:1644:The most concrete next theorem exposed by this audit is the local-height transition statement (T1)--(T2). It is strong enough that the deterministic choice
+drops/Q7683-1c2e34f1.md:169:So the answer is a scoped no-go plus a concrete next theorem: **multi-slope coverage is a real valuation-level purifier, but it is scale-blind. Its present pair/resultant height is quadratic or worse. To make slowly growing slopes genuinely subquadratic one needs a local-height transition certificate; to prove BFH one additionally needs a scale-sensitive cross-pole saturation/Bezout identity.**
+drops/Q7683-1c2e34f1.md:920:## Short-transition passport theorem (sufficient condition)
+drops/Q7683-1c2e34f1.md:955:**(T2) local transition height.** Uniformly,
+drops/Q7841-2f768ec6.md:421:These observations do not prove the theorem, but they tell us what to compute next: not more root counts, but the residual monodromy and transition data of the full Mellin state.
+drops/Q7841-2f768ec6.md:440:Prove that the Mellin cohomology admits a shift operator whose trace shadow is (2.6). Determine whether the full system has fixed rank and rational transition matrices of bounded degree independent of \(p\).
+drops/Q7905-a02aaa31.md:189:The transition is the expected first effective scale \(H\asymp Q/M\asymp X\). Define the exact normalized kernel on the band by
+drops/Q7928-843c58cb.md:141:The bilinear form is therefore near the transition range where the theorem gives only the expected square-root gain in the large variable. The coefficient norm contribution remains
+drops/Q804-e52fd1ea.md:15:| codex_same_gap_multipair_attack.md | Many same-gap pairs force repeated characteristic structure | q=1 style, same-gap isolated events | Could attack P_{q;h}(n) | Uses a transition from many pairs to many repeated characteristics without a valid moment estimate |
+drops/Q846-358c657b.md:9:The first failing point is the transition
+drops/Q857-d2280424.md:7:The proposed short-arc -> Fejer -> dispersion -> pointwise chain is **not valid as currently stated**. The obstruction is not the Fejer identity or the short-arc normalization; it is the transition from a weighted average over `k` to a pointwise estimate for every index `n`.
+drops/Q8622-2a765a12.md:278:## 7. Small primes and the transition interval
+drops/Q8622-2a765a12.md:297:For the transition interval \(\sqrt n<p\le Y\le2\sqrt n\), the lcm exponent is one, and Chebyshev's \(\vartheta(x)\ll x\) gives
+drops/Q8622-2a765a12.md:503:| Small and transition primes | Harmless | Chebyshev gives \(O(\sqrt n)\). |
+drops/Q8622-2a765a12.md:518:and hence regular logarithmic shell mass \(X^{2/3+o(1)}\). Correctly chosen dyadic shells sum to \(n^{2/3+o(1)}\), while small loads cost \(O((\log n)^2)\), small/transition primes cost \(O(\sqrt n)\), and the stipulated complete \(A\)-channel costs \(o(n)\).
+drops/Q8657-b842ad38.md:52:are strictly ordered, so the three determinants have at most one sign transition. They cannot oscillate. In particular the pattern is one of
+drops/Q8657-b842ad38.md:95:**Reason.** Strict ratio monotonicity forces a one-transition sign pattern among the determinants, while the only possible exponential cancellation mechanism is an adjoint-recurrence relation. The affine defect vectors fail this relation. Therefore every nontrivial combination retains an Apéry exponential component.
+drops/Q870-d7c4cdb2.md:9:The second claimed reduction `W(n) <= log D_n <= 3W(n)+O(n^(2/3))` is not established by the stated inputs alone. The lower bound is valid from the banked large-prime law. The upper bound has a missing valuation argument: the balanced block law controls occurrence of large primes in `b_{n mod p}`, but the transition from the alias weight estimate to the full denominator valuation requires a precise statement that every excess denominator prime contribution is charged to one of the three companion channels. That statement is not contained in the given hypotheses.
+drops/Q8799-19675331.md:287:For most \(n\) with no prime-power transition at \(n\) or \(n+1\), one can also see directly that
+drops/Q8812-05b32018.md:111:* base-p digit transitions;
+drops/Q8820-ddf4214d.md:323:## 3. Why the high-`t` numerical transition is not evidence of repulsion
+drops/Q8820-ddf4214d.md:424:is not the main transition for typical shell primes, since `Z(p)/p` is about `1/p`. The relevant transition is global:
+drops/Q8820-ddf4214d.md:986:The observed transition is primarily explained by exponential tilting and finite-sample truncation. Under a Poisson model the relevant count is `k≈lambda e^t`; for `t=3,4` the MGF is driven by events too rare to appear in `20000` rows. The empirical estimator then sits far below the population MGF and has huge relative variance.
+drops/Q886-9839b8fa.md:83:The proposed fixed-small-k patch does not close the infinite tail argument unless the asymptotic determinant error is uniform and the transition range is explicitly finite and checked.
+drops/Q89-9279697b.md:31:- the difference module records the transition rule;
+drops/Q930-2f532f23.md:110:  uniformly in the transition range.
+drops/Q930-2f532f23.md:116:The fixed-d theorem cannot be extrapolated. No explicit growing-degree subexponential carrier with verified q=1 support is known from the stated data. The correct sharply scoped result is a transition theorem: all degrees with independently controlled minors are saturated; the remaining possible escape is the near-full-degree regime H-d=o(H), especially bounded codimension. The obstruction is not determinant growth alone but the unresolved interaction between determinant size, primitive gcd cancellation, and support preservation.
+drops/Q930-2f532f23.md:7:The requested uniform-in-d lower bound is not currently derivable from the fixed-d theorem, and the available structural information does not produce a growing-degree escape construction. The sharp statement that can be proved from the Edgar Stieltjes-density structure is a transition theorem: the fixed-degree regime is saturated, while the only unresolved window is the high-codimension edge where the denominator degree approaches H.
+drops/Q930-2f532f23.md:9:In particular, finite scans through H<=24 are consistent with this transition but do not prove it.
+drops/Q932-a49e5bd3.md:173:This excludes only the two boundary degrees \(H-1,H-2\). It is not a transition theorem for all growing degrees.
+drops/Q933-59857d93.md:151:The companion/Hecke cross determinant is not yet a valid new carrier. The rank-one obstruction disappears after division by p^3, but the remaining contact matrix still contains an uncontrolled canonical tail. The exact transition theorem is:
+drops/Q933-59857d93.md:9:Thus the outcome is option (3): a scoped transition theorem. The surviving range is precisely the cases where the divided Laurent defect has only one independent first-order coordinate.
+drops/Q942-9a160cf0.md:168:Conclusion: the near-full fixed-deficit route is not excluded, but it is reduced to a concrete primitive cofactor growth lemma. No transition theorem for varying s follows from this argument.
+drops/Q997-55342da6.md:93:The obstruction is that `b_r` is not a polynomial sequence in `r`; it is a holonomic sequence. Clearing denominators converts the problem into a determinant of recurrence transition matrices.
