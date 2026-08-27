@@ -1,0 +1,131 @@
+name: Q4316 merge independent exact shards
+
+on:
+  push:
+    branches:
+      - q4316-independent-merge
+    paths:
+      - '.github/workflows/q4316-independent-merge.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  merge:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4316-independent-merge
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile independent census and analyzer
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf scratch/q4316/classes-merge scratch/q4316/results-base \
+                 scratch/q4316/artifact-mid scratch/q4316/artifact-high \
+                 scratch/q4316/results-merged
+          mkdir -p scratch/q4316/classes-merge
+          javac -Xlint:all -Werror -d scratch/q4316/classes-merge \
+            scratch/q4313/Q4313IndependentCensus.java \
+            scratch/q4316/Q4316CensusAnalysis.java
+      - name: Recompute exact baseline through q=5000
+        shell: bash
+        run: |
+          set -euo pipefail
+          java -Xmx12g -cp scratch/q4316/classes-merge Q4313IndependentCensus \
+            --min-q 17 --qmax 5000 --prefixes 5000 \
+            --out scratch/q4316/results-base \
+            > scratch/q4316/merge-base.log
+      - name: Wait for high-shard artifact
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 180); do
+            count=$(gh api \
+              repos/xiangyazi24/Ramanujan_Challenge/actions/runs/33081229762/artifacts \
+              --jq '[.artifacts[] | select(.name == "q4316-independent-high" and .expired == false)] | length')
+            if [ "$count" -ge 1 ]; then
+              echo "High-shard artifact is available."
+              exit 0
+            fi
+            sleep 30
+          done
+          echo "High-shard artifact did not become available." >&2
+          exit 1
+      - name: Download completed mid shard
+        uses: actions/download-artifact@v4
+        with:
+          name: q4316-independent-mid
+          path: scratch/q4316/artifact-mid
+          github-token: ${{ github.token }}
+          repository: xiangyazi24/Ramanujan_Challenge
+          run-id: 33081194941
+      - name: Download completed high shard
+        uses: actions/download-artifact@v4
+        with:
+          name: q4316-independent-high
+          path: scratch/q4316/artifact-high
+          github-token: ${{ github.token }}
+          repository: xiangyazi24/Ramanujan_Challenge
+          run-id: 33081229762
+      - name: Merge exact records and recompute cumulative analysis
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=scratch/q4316/results-base
+          MID=scratch/q4316/artifact-mid/results-mid
+          HIGH=scratch/q4316/artifact-high/results-high
+          OUT=scratch/q4316/results-merged
+          test -f "$BASE/records.tsv"
+          test -f "$MID/records.tsv"
+          test -f "$HIGH/records.tsv"
+          mkdir -p "$OUT"
+          head -n 1 "$BASE/records.tsv" > "$OUT/records.tsv"
+          tail -n +2 "$BASE/records.tsv" >> "$OUT/records.tsv"
+          tail -n +2 "$MID/records.tsv" >> "$OUT/records.tsv"
+          tail -n +2 "$HIGH/records.tsv" >> "$OUT/records.tsv"
+          head -n 1 "$BASE/factors.tsv" > "$OUT/factors.tsv"
+          tail -n +2 "$BASE/factors.tsv" >> "$OUT/factors.tsv"
+          tail -n +2 "$MID/factors.tsv" >> "$OUT/factors.tsv"
+          tail -n +2 "$HIGH/factors.tsv" >> "$OUT/factors.tsv"
+          records=$(( $(wc -l < "$OUT/records.tsv") - 1 ))
+          plus=$(awk -F '\t' 'NR>1 && $3=="+" {n++} END {print n+0}' "$OUT/records.tsv")
+          minus=$(awk -F '\t' 'NR>1 && $3=="-" {n++} END {print n+0}' "$OUT/records.tsv")
+          test "$records" -eq 3454
+          test "$plus" -eq 1727
+          test "$minus" -eq 1727
+          java -cp scratch/q4316/classes-merge Q4316CensusAnalysis \
+            --records "$OUT/records.tsv" \
+            --out "$OUT/extension-analysis.md" \
+            --lo-exclusive 5000 --hi-inclusive 15000 \
+            | tee "$OUT/analysis.log"
+          printf 'records=%s\nplus=%s\nminus=%s\n' "$records" "$plus" "$minus" \
+            > "$OUT/integrity.txt"
+          (cd "$OUT" && sha256sum records.tsv factors.tsv extension-analysis.md \
+            integrity.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q4316-independent-merged-q15000
+          path: scratch/q4316/results-merged
+          if-no-files-found: error
+          retention-days: 90
+      - name: Commit merged analysis
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin q4316-independent-merge
+          git add -f scratch/q4316/results-merged
+          git commit -m 'Q4316 merged independent exact census through q=15000'
+          git push origin HEAD:q4316-independent-merge
