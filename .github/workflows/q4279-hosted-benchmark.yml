@@ -1,0 +1,66 @@
+name: Q4279 public hosted benchmark
+
+on:
+  push:
+    branches: [q4279-compute]
+    paths:
+      - '.github/workflows/q4279-hosted-benchmark.yml'
+      - 'compute/Q4279-53770bd8/q4279_scan.cpp'
+
+permissions:
+  contents: write
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4279-compute
+          fetch-depth: 0
+      - name: Compile standard-library scanner
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/results-benchmark-1100000"
+          mkdir -p "$ROOT/build" "$OUT"
+          {
+            date -u +%FT%TZ
+            uname -a
+            lscpu || true
+            free -h || true
+            g++ --version | head -n1
+          } > "$OUT/host.txt"
+          g++ -O3 -march=native -DNDEBUG -std=c++17 -pthread \
+            -Wall -Wextra -Wpedantic "$ROOT/q4279_scan.cpp" \
+            -o "$ROOT/build/q4279_scan" 2>&1 | tee "$OUT/compile.log"
+          "$ROOT/build/q4279_scan" --help | tee "$OUT/help.txt"
+      - name: Run exact benchmark above one million
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/results-benchmark-1100000"
+          /usr/bin/time -v -o "$OUT/time.txt" "$ROOT/build/q4279_scan" \
+            --qmin-exclusive 1000000 --qmax 1100000 \
+            --threads "$(getconf _NPROCESSORS_ONLN)" --block-width 10000 \
+            --out "$OUT/data" > "$OUT/stdout.log" 2> "$OUT/stderr.log"
+          cat "$OUT/stdout.log"
+          tail -n 30 "$OUT/stderr.log" || true
+          for f in candidate_occurrences.csv q_stats.csv prime_zero_counts.csv zero_records.csv near_misses.csv; do
+            test -f "$OUT/data/$f" && gzip -9 -f "$OUT/data/$f"
+          done
+          cp "$ROOT/q4279_scan.cpp" "$OUT/q4279_scan.cpp"
+          (cd "$OUT" && find . -type f -not -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
+      - name: Commit benchmark outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin q4279-compute
+          git add compute/Q4279-53770bd8/results-benchmark-1100000
+          git commit -m 'Q4279 exact benchmark for 1e6 < q <= 1.1e6'
+          git push origin HEAD:q4279-compute
