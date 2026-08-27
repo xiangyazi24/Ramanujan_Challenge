@@ -12,11 +12,11 @@ on:
       qmax:
         description: Largest selected upper prime
         required: false
-        default: "10000"
+        default: "20000"
       trial_limit:
         description: Trial-factor prime limit
         required: false
-        default: "50000"
+        default: "100000"
 
 permissions:
   contents: read
@@ -30,8 +30,8 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 330
     env:
-      QMAX: ${{ github.event.inputs.qmax || '10000' }}
-      TRIAL_LIMIT: ${{ github.event.inputs.trial_limit || '50000' }}
+      QMAX: ${{ github.event.inputs.qmax || '20000' }}
+      TRIAL_LIMIT: ${{ github.event.inputs.trial_limit || '100000' }}
     steps:
       - name: Check out computation branch
         uses: actions/checkout@v4
