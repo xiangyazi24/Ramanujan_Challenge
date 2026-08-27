@@ -1,0 +1,9 @@
+workflow_run_id=33064602036
+workflow_run_attempt=1
+head_sha=05b7c72132a6147c43ce2d67fb6ff1e8f15e478b
+runner=Linux runnervmgx7h7 6.17.0-1022-azure #22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+compiler=g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+nproc=4
+q_min_exclusive=1000000
+q_max=10000000
+shards=20

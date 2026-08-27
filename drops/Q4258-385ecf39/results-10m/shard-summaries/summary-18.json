@@ -1,0 +1,20 @@
+{
+  "q_min_exclusive": 1000000,
+  "q_max": 10000000,
+  "shard_index": 18,
+  "shard_count": 20,
+  "threads": 4,
+  "p_min_global": 857140,
+  "lower_primes_scanned": 16089,
+  "lower_recurrence_steps": 77384803857,
+  "admissible_opposite_parity_zero_pairs": 4232,
+  "generated_records": 2,
+  "logical_raw_records": 2,
+  "assigned_plus": 2,
+  "assigned_minus": 0,
+  "candidate_upper_primes": 1,
+  "upper_recurrence_steps": 4915163,
+  "selected_plus": 0,
+  "selected_minus": 0,
+  "wall_seconds": 952.865857
+}
