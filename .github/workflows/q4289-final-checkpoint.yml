@@ -1,0 +1,45 @@
+name: Q4289 final augmented checkpoint
+
+on:
+  push:
+    branches:
+      - q4289-gcd-compute-8fb970e6
+    paths:
+      - .github/workflows/q4289-final-checkpoint.yml
+
+permissions:
+  contents: read
+
+jobs:
+  exact-checkpoint:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Strict compile
+        run: |
+          mkdir -p .q4289_classes
+          javac -Xlint:all -Werror -d .q4289_classes scratch/q4289/Q4289GcdScan.java
+      - name: Run corrected augmented q<=5000 census
+        run: |
+          set -o pipefail
+          java -Xmx12g -cp .q4289_classes Q4289GcdScan \
+            --qmax 5000 \
+            --min-q 17 \
+            --trial-limit 50000 \
+            --out-dir q4289_checkpoint \
+            2>&1 | tee q4289_checkpoint.log
+      - name: Upload checkpoint ledger
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q4289-final-checkpoint-${{ github.run_id }}
+          path: |
+            q4289_checkpoint/
+            q4289_checkpoint.log
+          if-no-files-found: error
+          compression-level: 6
