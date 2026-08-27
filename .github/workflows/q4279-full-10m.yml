@@ -1,0 +1,56 @@
+name: Q4279 exact q6 leaf hunt through 10m
+
+on:
+  push:
+    branches: [chatgpt-drop]
+    paths:
+      - '.github/workflows/q4279-full-10m.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: chatgpt-drop
+          fetch-depth: 0
+      - name: Compile standalone standard-library scanner
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='drops/Q4279-53770bd8'
+          OUT="$ROOT/results-1000000-10000000"
+          mkdir -p "$ROOT/build" "$OUT"
+          g++ -O3 -march=native -std=c++20 -pthread -Wall -Wextra -Wpedantic \
+            "$ROOT/q4279_q6_leaf_hunt.cpp" -o "$ROOT/build/q4279_q6_leaf_hunt" \
+            2>&1 | tee "$OUT/compile.log"
+          "$ROOT/build/q4279_q6_leaf_hunt" --help | tee "$OUT/help.txt"
+      - name: Run exact candidate-first scan
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='drops/Q4279-53770bd8'
+          OUT="$ROOT/results-1000000-10000000"
+          /usr/bin/time -v "$ROOT/build/q4279_q6_leaf_hunt" \
+            --qmin-exclusive 1000000 --qmax 10000000 \
+            --threads "$(getconf _NPROCESSORS_ONLN)" --block-width 500000 --out "$OUT" \
+            > >(tee "$OUT/stdout.log") 2> >(tee "$OUT/stderr-and-time.log" >&2)
+          for f in candidate_occurrences.csv candidate_states_by_margin.csv q_stats.csv prime_zero_counts.csv zero_records.csv; do
+            test -f "$OUT/$f" && gzip -9 -f "$OUT/$f"
+          done
+          (cd "$OUT" && sha256sum * > SHA256SUMS)
+      - name: Commit code, raw data, and logs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin chatgpt-drop
+          git add drops/Q4279-53770bd8/q4279_q6_leaf_hunt.cpp \
+                  drops/Q4279-53770bd8/results-1000000-10000000
+          git commit -m 'Q4279 exact candidate-first q6 scan through q=10,000,000'
+          git push origin HEAD:chatgpt-drop
