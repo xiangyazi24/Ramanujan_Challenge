@@ -5,7 +5,6 @@ on:
     branches: [q4279-compute]
     paths:
       - '.github/workflows/q4279-hosted-benchmark.yml'
-      - 'compute/Q4279-53770bd8/q4279_scan.cpp'
 
 permissions:
   contents: write
@@ -19,12 +18,42 @@ jobs:
         with:
           ref: q4279-compute
           fetch-depth: 0
+
+      - name: Apply exact compile-only source repairs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('compute/Q4279-53770bd8/q4279_scan.cpp')
+          text = path.read_text()
+          replacements = [
+              (',asp=0,asm=0;', ',asp=0,asmn=0;'),
+              ('else++asm;', 'else++asmn;'),
+              ('<<asm<<', '<<asmn<<'),
+              ('std::tie(a.q,a.t,a.sign(),a.p)', 'std::make_tuple(a.q,a.t,a.sign(),a.p)'),
+              ('std::tie(b.q,b.t,b.sign(),b.p)', 'std::make_tuple(b.q,b.t,b.sign(),b.p)'),
+              (
+                  'std::size_t b0=cp;while(cp<oc.size()&&oc[cp].q==q)++cp,b1=cp;const auto&zq=Z[qi];',
+                  'std::size_t b0=cp;while(cp<oc.size()&&oc[cp].q==q)++cp;std::size_t b1=cp;const auto&zq=Z[qi];'
+              ),
+          ]
+          for old, new in replacements:
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'expected exactly one occurrence, found {count}: {old}')
+              text = text.replace(old, new)
+          path.write_text(text)
+          PY
+
       - name: Compile standard-library scanner
         shell: bash
         run: |
           set -euo pipefail
           ROOT='compute/Q4279-53770bd8'
           OUT="$ROOT/results-benchmark-1100000"
+          rm -rf "$OUT"
           mkdir -p "$ROOT/build" "$OUT"
           {
             date -u +%FT%TZ
@@ -37,6 +66,7 @@ jobs:
             -Wall -Wextra -Wpedantic "$ROOT/q4279_scan.cpp" \
             -o "$ROOT/build/q4279_scan" 2>&1 | tee "$OUT/compile.log"
           "$ROOT/build/q4279_scan" --help | tee "$OUT/help.txt"
+
       - name: Run exact benchmark above one million
         shell: bash
         run: |
@@ -49,18 +79,21 @@ jobs:
             --out "$OUT/data" > "$OUT/stdout.log" 2> "$OUT/stderr.log"
           cat "$OUT/stdout.log"
           tail -n 30 "$OUT/stderr.log" || true
+          test -f "$OUT/data/near_misses.csv" && head -n 101 "$OUT/data/near_misses.csv" > "$OUT/data/top_near_misses.csv"
           for f in candidate_occurrences.csv q_stats.csv prime_zero_counts.csv zero_records.csv near_misses.csv; do
             test -f "$OUT/data/$f" && gzip -9 -f "$OUT/data/$f"
           done
           cp "$ROOT/q4279_scan.cpp" "$OUT/q4279_scan.cpp"
           (cd "$OUT" && find . -type f -not -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
-      - name: Commit benchmark outputs
+
+      - name: Commit corrected release source and benchmark outputs
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git pull --rebase origin q4279-compute
-          git add compute/Q4279-53770bd8/results-benchmark-1100000
+          git add compute/Q4279-53770bd8/q4279_scan.cpp \
+                  compute/Q4279-53770bd8/results-benchmark-1100000
           git commit -m 'Q4279 exact benchmark for 1e6 < q <= 1.1e6'
           git push origin HEAD:q4279-compute
