@@ -442,6 +442,11 @@ public final class Q4289GcdScan {
         List<double[]> powerPoints = new ArrayList<>();
         int ones = 0, complete = 0, prp = 0, unresolved = 0;
         int maxKnownOmega = 0;
+        TreeMap<Integer, Integer> omegaHistogram = new TreeMap<>();
+        TreeMap<Integer, Integer> qValuationHistogram = new TreeMap<>();
+        TreeMap<BigInteger, Integer> factorFrequency = new TreeMap<>();
+        BigInteger largestKnownFactor = ONE;
+        RecordData largestFactorRecord = null;
         int sizeCertified = 0;
         double maxSizeRatio = Double.NEGATIVE_INFINITY;
         RecordData worstSizeRatio = null;
@@ -458,9 +463,19 @@ public final class Q4289GcdScan {
                     powerPoints.add(new double[]{Math.log(r.state.q()), Math.log(r.logG)});
                 }
             }
-            if (r.factorInfo.complete()) ++complete;
-            else if (r.factorInfo.status.equals("probable-prime-residual")) ++prp;
+            if (r.factorInfo.complete()) {
+                ++complete;
+                omegaHistogram.merge(r.factorInfo.knownOmega(), 1, Integer::sum);
+            } else if (r.factorInfo.status.equals("probable-prime-residual")) ++prp;
             else ++unresolved;
+            qValuationHistogram.merge(r.qValuation, 1, Integer::sum);
+            for (BigInteger factor : r.factorInfo.knownFactors.keySet()) {
+                factorFrequency.merge(factor, 1, Integer::sum);
+                if (factor.compareTo(largestKnownFactor) > 0) {
+                    largestKnownFactor = factor;
+                    largestFactorRecord = r;
+                }
+            }
             maxKnownOmega = Math.max(maxKnownOmega, r.factorInfo.knownOmega());
             if (max == null || r.g.compareTo(max.g) > 0) max = r;
             int lowerPrimeBound = (int) ((6L * r.state.q() + r.state.t()) / 7L + 1L);
@@ -511,6 +526,24 @@ public final class Q4289GcdScan {
         s.append("probable-prime residuals          = ").append(prp).append('\n');
         s.append("unfactored composite residuals    = ").append(unresolved).append('\n');
         s.append("maximum known distinct factors    = ").append(maxKnownOmega).append('\n');
+        s.append("complete omega histogram           = ").append(omegaHistogram).append('\n');
+        s.append("raw q-valuation histogram          = ").append(qValuationHistogram).append('\n');
+        if (largestFactorRecord != null) {
+            s.append("largest known residual factor     = ").append(largestKnownFactor)
+                    .append(" at (").append(largestFactorRecord.state.q()).append(',')
+                    .append(largestFactorRecord.state.t()).append(',').append(largestFactorRecord.sign)
+                    .append(")\n");
+        }
+        List<Map.Entry<BigInteger, Integer>> frequencies = new ArrayList<>(factorFrequency.entrySet());
+        frequencies.sort(Comparator
+                .comparingInt((Map.Entry<BigInteger, Integer> e) -> e.getValue()).reversed()
+                .thenComparing(Map.Entry::getKey));
+        StringJoiner topFactors = new StringJoiner(", ");
+        for (int i = 0; i < Math.min(12, frequencies.size()); ++i) {
+            Map.Entry<BigInteger, Integer> e = frequencies.get(i);
+            topFactors.add(e.getKey() + ":" + e.getValue());
+        }
+        s.append("top residual-factor frequencies   = ").append(topFactors).append('\n');
         s.append("```\n\n");
         return s.toString();
     }
