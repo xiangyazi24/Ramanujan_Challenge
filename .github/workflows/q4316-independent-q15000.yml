@@ -1,0 +1,79 @@
+name: Q4316 independent exact census q15000
+
+on:
+  push:
+    branches:
+      - q4316-independent-census
+    paths:
+      - '.github/workflows/q4316-independent-q15000.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  census:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4316-independent-census
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile independent exact census and analyzer
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf scratch/q4316/classes scratch/q4316/results-q15000
+          mkdir -p scratch/q4316/classes
+          javac -version
+          javac -Xlint:all -Werror \
+            -d scratch/q4316/classes \
+            scratch/q4313/Q4313IndependentCensus.java \
+            scratch/q4316/Q4316CensusAnalysis.java
+      - name: Run exact census through q=15000
+        shell: bash
+        run: |
+          set -euo pipefail
+          /usr/bin/time -v java -Xmx12g \
+            -cp scratch/q4316/classes Q4313IndependentCensus \
+            --min-q 17 \
+            --qmax 15000 \
+            --prefixes 5000,10000,15000 \
+            --out scratch/q4316/results-q15000 \
+            > >(tee scratch/q4316/q15000-stdout.log) \
+            2> >(tee scratch/q4316/q15000-time.log >&2)
+          java -cp scratch/q4316/classes Q4316CensusAnalysis \
+            --records scratch/q4316/results-q15000/records.tsv \
+            --out scratch/q4316/results-q15000/extension-analysis.md \
+            --lo-exclusive 5000 \
+            --hi-inclusive 15000 \
+            | tee scratch/q4316/q15000-analysis.log
+          (cd scratch/q4316/results-q15000 && sha256sum * > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q4316-independent-q15000
+          path: |
+            scratch/q4316/results-q15000
+            scratch/q4316/q15000-stdout.log
+            scratch/q4316/q15000-time.log
+            scratch/q4316/q15000-analysis.log
+          if-no-files-found: error
+          retention-days: 90
+      - name: Commit exact outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin q4316-independent-census
+          git add scratch/q4316/results-q15000 \
+                  scratch/q4316/q15000-stdout.log \
+                  scratch/q4316/q15000-time.log \
+                  scratch/q4316/q15000-analysis.log
+          git commit -m 'Q4316 independent exact census through q=15000'
+          git push origin HEAD:q4316-independent-census
