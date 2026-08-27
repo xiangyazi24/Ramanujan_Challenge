@@ -1,0 +1,12 @@
+{
+  "min_q": 15001,
+  "qmax": 20000,
+  "prime_count": 2262,
+  "selected_states": 560,
+  "sign_records": 1120,
+  "max_index": 258743,
+  "max_bits": 1315993,
+  "elapsed_seconds": 2680.201,
+  "raw_plus_leaves": 0,
+  "raw_minus_leaves": 0
+}

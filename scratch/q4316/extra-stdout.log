@@ -1,0 +1,132 @@
+GEOMETRY minQ=15001 qMax=20000 primes=2262 selected=560 minusRaw=70 m5=40
+PREFIX q<=20000 selected=560 signs=1120 minusRaw=70 m5=40
+APERY index=10000/258743 bits=50841 elapsed=00:00:00
+APERY index=20000/258743 bits=101701 elapsed=00:00:00
+APERY index=30000/258743 bits=152562 elapsed=00:00:01
+APERY index=40000/258743 bits=203424 elapsed=00:00:03
+APERY index=50000/258743 bits=254286 elapsed=00:00:04
+APERY index=60000/258743 bits=305147 elapsed=00:00:06
+APERY index=70000/258743 bits=356009 elapsed=00:00:09
+APERY index=80000/258743 bits=406871 elapsed=00:00:12
+APERY index=90000/258743 bits=457733 elapsed=00:00:15
+APERY index=100000/258743 bits=508595 elapsed=00:00:18
+APERY index=110000/258743 bits=559457 elapsed=00:00:22
+APERY index=120000/258743 bits=610319 elapsed=00:00:26
+APERY index=130000/258743 bits=661181 elapsed=00:00:31
+APERY index=140000/258743 bits=712043 elapsed=00:00:36
+APERY index=150000/258743 bits=762905 elapsed=00:00:41
+APERY index=160000/258743 bits=813766 elapsed=00:00:47
+APERY index=170000/258743 bits=864628 elapsed=00:00:53
+APERY index=180000/258743 bits=915491 elapsed=00:00:59
+APERY index=190000/258743 bits=966353 elapsed=00:01:06
+APERY index=200000/258743 bits=1017215 elapsed=00:01:13
+APERY index=210000/258743 bits=1068077 elapsed=00:01:21
+APERY index=220000/258743 bits=1118939 elapsed=00:01:28
+APERY index=230000/258743 bits=1169801 elapsed=00:01:37
+APERY index=240000/258743 bits=1220663 elapsed=00:01:45
+APERY index=250000/258743 bits=1271525 elapsed=00:01:54
+APERY index=258743/258743 bits=1315993 elapsed=00:02:03
+GCD progress 250/560 elapsed=00:18:00
+GCD progress 500/560 elapsed=00:38:55
+GCD progress 560/560 elapsed=00:44:39
+# Q4313 independent fixed-gcd census
+
+Implementation: independent Java standard-library exact arithmetic.
+
+```text
+min q                   15001
+max q                   20000
+primes through qmax     2262
+selected states         560
+sign records            1120
+largest Apery index     258743
+largest bit length      1315993
+elapsed                  00:44:40
+plus ledger differences 0
+plus extra q powers     0
+minus extra q powers    0
+```
+
+## Prefix q <= 20000
+
+Selected states: 560; sign records: 1120; minus raw-window states: 70; M5-capable states: 40.
+
+### plus
+
+```text
+records                 560
+G=1                     351
+median G                1
+median nontrivial G     19
+maximum G               21299 = 19^2*59
+maximum state           (15683,14400)
+maximum omega           3
+largest prime factor    2543 at (15439,2185)
+rho(log log G~log q)  0.470141377  R2=0.0136320943
+slope(log G~q)        0.000112388009  R2=0.0125022365
+size certified          560 / 560
+max logG/(2log pmin)   0.516431788742 at (15683,14400)
+```
+
+### minus
+
+```text
+records                 560
+G=1                     343
+median G                1
+median nontrivial G     19
+maximum G               72539 = 17^2*251
+maximum state           (16087,639)
+maximum omega           3
+largest prime factor    1973 at (19273,9815)
+rho(log log G~log q)  0.423390234  R2=0.00844525611
+slope(log G~q)        0.000106610091  R2=0.00745539298
+size certified          560 / 560
+max logG/(2log pmin)   0.586673642894 at (16087,639)
+```
+
+### minus raw-window
+
+```text
+records                 70
+G=1                     40
+median G                1
+median nontrivial G     19
+maximum G               72539 = 17^2*251
+maximum state           (16087,639)
+maximum omega           2
+largest prime factor    251 at (16087,639)
+rho(log log G~log q)  0.895732256  R2=0.0378323286
+slope(log G~q)        0.000191407075  R2=0.0203159171
+size certified          70 / 70
+max logG/(2log pmin)   0.586673642894 at (16087,639)
+```
+
+### minus M5-capable
+
+```text
+records                 40
+G=1                     24
+median G                1
+median nontrivial G     17
+maximum G               72539 = 17^2*251
+maximum state           (16087,639)
+maximum omega           2
+largest prime factor    251 at (16087,639)
+rho(log log G~log q)  -0.520436244  R2=0.0133492040
+slope(log G~q)        -0.000228378275  R2=0.0260318573
+size certified          40 / 40
+max logG/(2log pmin)   0.586673642894 at (16087,639)
+```
+
+## Direct raw-leaf audit
+
+```text
+raw plus leaves        0
+raw minus leaves       0
+assigned plus leaves   0
+assigned minus leaves  0
+raw minus M5 leaves    0
+```
+
+
