@@ -13,7 +13,7 @@ on:
       qmax:
         description: Prime cap for the exact full scan
         required: false
-        default: "300000"
+        default: "1000000"
       betas:
         description: Comma-separated outer Q4190 beta values
         required: false
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 330
     env:
-      QMAX: ${{ github.event.inputs.qmax || '300000' }}
+      QMAX: ${{ github.event.inputs.qmax || '1000000' }}
       BETAS: ${{ github.event.inputs.betas || '0.10,0.15,0.30,0.50' }}
     steps:
       - name: Check out computation branch
