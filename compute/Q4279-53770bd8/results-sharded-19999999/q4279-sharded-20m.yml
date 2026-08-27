@@ -1,0 +1,170 @@
+name: Q4279 sharded exact q6 leaf search through 20M
+
+on:
+  push:
+    branches: [q4279-compute-sharded]
+    paths:
+      - '.github/workflows/q4279-sharded-20m.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - id: plan
+        shell: bash
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, math
+          lo=857143
+          hi=19999999
+          n=24
+          cuts=[lo]
+          for k in range(1,n):
+              x=round(math.sqrt(lo*lo+(hi*hi-lo*lo)*k/n))
+              x=max(x,cuts[-1]+1)
+              cuts.append(x)
+          cuts.append(hi+1)
+          entries=[]
+          for i in range(n):
+              entries.append({"id":f"{i:02d}","lo":cuts[i],"hi":cuts[i+1]-1})
+          print("matrix="+json.dumps({"include":entries},separators=(",",":")))
+          PY
+
+  zeros:
+    needs: prepare
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4279-compute-sharded
+      - name: Compile exact zero shard
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          mkdir -p "$ROOT/build"
+          g++ -O3 -march=native -DNDEBUG -std=c++17 -pthread \
+            -Wall -Wextra -Wpedantic "$ROOT/q4279_zero_shard.cpp" \
+            -o "$ROOT/build/q4279_zero_shard"
+      - name: Run disjoint prime-characteristic shard
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/shard-${{ matrix.id }}"
+          mkdir -p "$OUT"
+          {
+            echo "date_utc=$(date -u +%FT%TZ)"
+            echo "shard=${{ matrix.id }}"
+            echo "pmin=${{ matrix.lo }}"
+            echo "pmax=${{ matrix.hi }}"
+            uname -a
+            lscpu || true
+            free -h || true
+            g++ --version | head -n1
+          } > "$OUT/host.txt"
+          /usr/bin/time -v -o "$OUT/time.txt" "$ROOT/build/q4279_zero_shard" \
+            --pmin '${{ matrix.lo }}' --pmax '${{ matrix.hi }}' \
+            --threads "$(getconf _NPROCESSORS_ONLN)" --out "$OUT/data" \
+            > "$OUT/stdout.log" 2> "$OUT/stderr.log"
+          cat "$OUT/stdout.log"
+          tail -n 20 "$OUT/stderr.log" || true
+          cp "$ROOT/q4279_scan.cpp" "$OUT/q4279_scan.cpp"
+          cp "$ROOT/q4279_zero_shard.cpp" "$OUT/q4279_zero_shard.cpp"
+          (cd "$OUT" && find . -type f -not -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q4279-zero-${{ matrix.id }}
+          path: compute/Q4279-53770bd8/shard-${{ matrix.id }}
+          retention-days: 30
+          compression-level: 6
+
+  aggregate:
+    needs: zeros
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4279-compute-sharded
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: q4279-zero-*
+          path: zero-artifacts
+          merge-multiple: false
+      - name: Merge disjoint exact zero ledgers
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/results-sharded-19999999"
+          rm -rf "$OUT"
+          mkdir -p "$OUT/data" "$OUT/shards" "$ROOT/build"
+          mapfile -t count_files < <(find zero-artifacts -path '*/data/prime_zero_counts.csv' | sort)
+          mapfile -t record_files < <(find zero-artifacts -path '*/data/zero_records.csv' | sort)
+          test "${#count_files[@]}" -eq 24
+          test "${#record_files[@]}" -eq 24
+          awk 'FNR==1 && NR!=1 {next} {print}' "${count_files[@]}" > "$OUT/data/prime_zero_counts.csv"
+          awk 'FNR==1 && NR!=1 {next} {print}' "${record_files[@]}" > "$OUT/data/zero_records.csv"
+          for d in zero-artifacts/q4279-zero-*; do
+            id="${d##*-}"
+            mkdir -p "$OUT/shards/$id"
+            cp "$d"/manifest.json "$OUT/shards/$id/manifest.json"
+            cp "$d"/summary.txt "$OUT/shards/$id/summary.txt"
+            cp "$d"/time.txt "$OUT/shards/$id/time.txt"
+            cp "$d"/host.txt "$OUT/shards/$id/host.txt"
+            cp "$d"/stdout.log "$OUT/shards/$id/stdout.log"
+            cp "$d"/stderr.log "$OUT/shards/$id/stderr.log"
+            cp "$d"/SHA256SUMS "$OUT/shards/$id/SHA256SUMS"
+          done
+      - name: Compile and run exact cached analyzer
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/results-sharded-19999999"
+          g++ -O3 -march=native -DNDEBUG -std=c++17 -pthread \
+            -Wall -Wextra -Wpedantic "$ROOT/q4279_cached_analyze.cpp" \
+            -o "$ROOT/build/q4279_cached_analyze" 2>&1 | tee "$OUT/analyze_compile.log"
+          /usr/bin/time -v -o "$OUT/analyze_time.txt" "$ROOT/build/q4279_cached_analyze" \
+            --qmin-exclusive 1000000 --qmax 19999999 --block-width 250000 \
+            --zero-counts "$OUT/data/prime_zero_counts.csv" \
+            --zero-records "$OUT/data/zero_records.csv" \
+            --out "$OUT/data" > "$OUT/analyze_stdout.log" 2> "$OUT/analyze_stderr.log"
+          cat "$OUT/analyze_stdout.log"
+          tail -n 30 "$OUT/analyze_stderr.log" || true
+      - name: Package full raw data and release code
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/results-sharded-19999999"
+          test -f "$OUT/data/near_misses.csv" && head -n 201 "$OUT/data/near_misses.csv" > "$OUT/data/top_near_misses.csv"
+          for f in q_stats.csv prime_zero_counts.csv zero_records.csv near_misses.csv; do
+            test -f "$OUT/data/$f" && gzip -9 -f "$OUT/data/$f"
+          done
+          cp "$ROOT/q4279_scan.cpp" "$OUT/q4279_scan.cpp"
+          cp "$ROOT/q4279_zero_shard.cpp" "$OUT/q4279_zero_shard.cpp"
+          cp "$ROOT/q4279_cached_analyze.cpp" "$OUT/q4279_cached_analyze.cpp"
+          cp .github/workflows/q4279-sharded-20m.yml "$OUT/q4279-sharded-20m.yml"
+          (cd "$OUT" && find . -type f -not -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
+      - name: Commit complete search bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add compute/Q4279-53770bd8/results-sharded-19999999
+          git commit -m 'Q4279 sharded exact q6 search for 1e6 < q < 2e7'
+          git push origin HEAD:q4279-compute-sharded

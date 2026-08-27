@@ -1,0 +1,1 @@
+Q4279_ZERO_SHARD pmin=5831535 pmax=7116378 primes=82077 zeros=81946 steps=265644355118 seconds=873.908

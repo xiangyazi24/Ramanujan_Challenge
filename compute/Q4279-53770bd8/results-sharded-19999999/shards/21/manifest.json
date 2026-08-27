@@ -1,0 +1,18 @@
+{
+  "pmin_requested": 18710740,
+  "pmax_requested": 19150139,
+  "first_prime": 18710743,
+  "last_prime": 19150133,
+  "prime_count": 26210,
+  "zero_records": 26226,
+  "recurrence_steps": "248079485781",
+  "threads": 4,
+  "zero_seconds": 522.27627905500003,
+  "total_seconds": 522.341516039,
+  "steps_per_second": 474996655.4672401,
+  "primes_Z_ge_3": 2374,
+  "primes_Z_ge_4": 2374,
+  "max_Z": 10,
+  "max_Z_prime": 18832939,
+  "checks": {"release_selected_states_le_5000": 605, "release_selected_leaves_le_5000": 0, "release_candidate_mismatch": 0, "reflection_checks": 26226, "reflection_failures": 0, "consecutive_checks": 15899, "consecutive_failures": 0}
+}

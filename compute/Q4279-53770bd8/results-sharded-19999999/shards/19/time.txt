@@ -1,0 +1,23 @@
+	Command being timed: "compute/Q4279-53770bd8/build/q4279_zero_shard --pmin 17799430 --pmax 18260770 --threads 4 --out compute/Q4279-53770bd8/shard-19/data"
+	User time (seconds): 3259.94
+	System time (seconds): 0.24
+	Percent of CPU this job got: 398%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 13:38.29
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 22576
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 2562
+	Voluntary context switches: 4
+	Involuntary context switches: 483923
+	Swaps: 0
+	File system inputs: 216
+	File system outputs: 1648
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
