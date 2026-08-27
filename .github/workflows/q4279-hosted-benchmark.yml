@@ -1,4 +1,4 @@
-name: Q4279 public hosted benchmark
+name: Q4279 exact q6 leaf search through 10M
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  benchmark:
+  search:
     runs-on: ubuntu-latest
     timeout-minutes: 330
     steps:
@@ -19,7 +19,7 @@ jobs:
           ref: q4279-compute
           fetch-depth: 0
 
-      - name: Apply exact compile-only source repairs
+      - name: Apply audited compile repairs
         shell: bash
         run: |
           set -euo pipefail
@@ -41,22 +41,26 @@ jobs:
           ]
           for old, new in replacements:
               count = text.count(old)
-              if count != 1:
-                  raise SystemExit(f'expected exactly one occurrence, found {count}: {old}')
-              text = text.replace(old, new)
+              if count == 1:
+                  text = text.replace(old, new)
+              elif count == 0 and new in text:
+                  pass
+              else:
+                  raise SystemExit(f'unexpected replacement count {count}: {old}')
           path.write_text(text)
           PY
 
-      - name: Compile standard-library scanner
+      - name: Compile standard-library release
         shell: bash
         run: |
           set -euo pipefail
           ROOT='compute/Q4279-53770bd8'
-          OUT="$ROOT/results-benchmark-1100000"
+          OUT="$ROOT/results-10000000"
           rm -rf "$OUT"
           mkdir -p "$ROOT/build" "$OUT"
           {
-            date -u +%FT%TZ
+            echo "date_utc=$(date -u +%FT%TZ)"
+            echo "run_range=1000000<q<=10000000"
             uname -a
             lscpu || true
             free -h || true
@@ -67,33 +71,40 @@ jobs:
             -o "$ROOT/build/q4279_scan" 2>&1 | tee "$OUT/compile.log"
           "$ROOT/build/q4279_scan" --help | tee "$OUT/help.txt"
 
-      - name: Run exact benchmark above one million
+      - name: Run exact candidate-first search
         shell: bash
         run: |
           set -euo pipefail
           ROOT='compute/Q4279-53770bd8'
-          OUT="$ROOT/results-benchmark-1100000"
+          OUT="$ROOT/results-10000000"
           /usr/bin/time -v -o "$OUT/time.txt" "$ROOT/build/q4279_scan" \
-            --qmin-exclusive 1000000 --qmax 1100000 \
-            --threads "$(getconf _NPROCESSORS_ONLN)" --block-width 10000 \
+            --qmin-exclusive 1000000 --qmax 10000000 \
+            --threads "$(getconf _NPROCESSORS_ONLN)" --block-width 250000 \
             --out "$OUT/data" > "$OUT/stdout.log" 2> "$OUT/stderr.log"
           cat "$OUT/stdout.log"
-          tail -n 30 "$OUT/stderr.log" || true
-          test -f "$OUT/data/near_misses.csv" && head -n 101 "$OUT/data/near_misses.csv" > "$OUT/data/top_near_misses.csv"
+          tail -n 40 "$OUT/stderr.log" || true
+
+      - name: Package code and raw ledgers
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='compute/Q4279-53770bd8'
+          OUT="$ROOT/results-10000000"
+          test -f "$OUT/data/near_misses.csv" && head -n 201 "$OUT/data/near_misses.csv" > "$OUT/data/top_near_misses.csv"
           for f in candidate_occurrences.csv q_stats.csv prime_zero_counts.csv zero_records.csv near_misses.csv; do
             test -f "$OUT/data/$f" && gzip -9 -f "$OUT/data/$f"
           done
           cp "$ROOT/q4279_scan.cpp" "$OUT/q4279_scan.cpp"
+          cp .github/workflows/q4279-hosted-benchmark.yml "$OUT/q4279-hosted-search.yml"
           (cd "$OUT" && find . -type f -not -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
 
-      - name: Commit corrected release source and benchmark outputs
+      - name: Commit corrected release and all results
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git pull --rebase origin q4279-compute
           git add compute/Q4279-53770bd8/q4279_scan.cpp \
-                  compute/Q4279-53770bd8/results-benchmark-1100000
-          git commit -m 'Q4279 exact benchmark for 1e6 < q <= 1.1e6'
+                  compute/Q4279-53770bd8/results-10000000
+          git commit -m 'Q4279 exact q6 leaf search for 1e6 < q <= 1e7'
           git push origin HEAD:q4279-compute
