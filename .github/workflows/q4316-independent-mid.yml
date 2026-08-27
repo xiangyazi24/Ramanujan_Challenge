@@ -1,0 +1,69 @@
+name: Q4316 independent exact census 5000-10000
+
+on:
+  push:
+    branches:
+      - q4316-independent-mid
+    paths:
+      - '.github/workflows/q4316-independent-mid.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  census:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4316-independent-mid
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile
+        run: |
+          set -euo pipefail
+          rm -rf scratch/q4316/classes-mid scratch/q4316/results-mid
+          mkdir -p scratch/q4316/classes-mid
+          javac -Xlint:all -Werror -d scratch/q4316/classes-mid \
+            scratch/q4313/Q4313IndependentCensus.java \
+            scratch/q4316/Q4316CensusAnalysis.java
+      - name: Run exact shard
+        shell: bash
+        run: |
+          set -euo pipefail
+          /usr/bin/time -v java -Xmx12g \
+            -cp scratch/q4316/classes-mid Q4313IndependentCensus \
+            --min-q 5001 --qmax 10000 --prefixes 10000 \
+            --out scratch/q4316/results-mid \
+            > >(tee scratch/q4316/mid-stdout.log) \
+            2> >(tee scratch/q4316/mid-time.log >&2)
+          java -cp scratch/q4316/classes-mid Q4316CensusAnalysis \
+            --records scratch/q4316/results-mid/records.tsv \
+            --out scratch/q4316/results-mid/extension-analysis.md \
+            --lo-exclusive 5000 --hi-inclusive 10000 \
+            | tee scratch/q4316/mid-analysis.log
+          (cd scratch/q4316/results-mid && sha256sum * > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q4316-independent-mid
+          path: |
+            scratch/q4316/results-mid
+            scratch/q4316/mid-stdout.log
+            scratch/q4316/mid-time.log
+            scratch/q4316/mid-analysis.log
+          if-no-files-found: error
+          retention-days: 90
+      - name: Commit outputs
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin q4316-independent-mid
+          git add scratch/q4316/results-mid scratch/q4316/mid-*.log
+          git commit -m 'Q4316 exact census shard 5000-10000'
+          git push origin HEAD:q4316-independent-mid
