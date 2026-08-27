@@ -1,0 +1,21 @@
+{
+  "shard_count": 24,
+  "pmin": 857143,
+  "pmax": 19999999,
+  "prime_count_sum": 1202468,
+  "zero_records_sum": 1203546,
+  "recurrence_steps_sum": "6122319404413",
+  "shard_zero_seconds_sum": 20294.823459265,
+  "shard_total_seconds_sum": 20295.953790191,
+  "maximum_shard_zero_seconds": 1007.811005107,
+  "minimum_shard_zero_seconds": 522.27627905500003,
+  "mean_shard_zero_seconds": 845.6176441360417,
+  "aggregate_steps_per_shard_second": 301669015.0915324,
+  "max_Z": 14,
+  "primes_Z_ge_3_sum": 108720,
+  "checks": {
+    "reflection_failures_sum": 0,
+    "consecutive_failures_sum": 0,
+    "release_candidate_mismatch_sum": 0
+  }
+}
