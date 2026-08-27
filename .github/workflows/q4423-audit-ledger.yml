@@ -1,0 +1,64 @@
+name: Q4423 targeted exponent-ledger sweep
+
+on:
+  push:
+    branches: [q4423-audit]
+    paths:
+      - '.github/workflows/q4423-audit-ledger.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q4423-audit
+          fetch-depth: 0
+      - name: Targeted ledger sweep
+        shell: bash
+        run: |
+          set -euo pipefail
+          out=audit/q4423-ledger
+          rm -rf "$out"
+          mkdir -p "$out"
+
+          p1='alpha[_{}0-9\\]*0?[/{}\\ ]*12|α[_{}0-9\\]*0?[/{}\\ ]*12'
+          p2='(min|minimum|ceiling|final|additive|loss|error|exception|pay|charge|discard|delete|remove|tail|exponent|saving).{0,240}(beta|β|\\beta).{0,40}[/{}\\ ]6|(beta|β|\\beta).{0,40}[/{}\\ ]6.{0,240}(min|minimum|ceiling|final|additive|loss|error|exception|pay|charge|discard|delete|remove|tail|exponent|saving)'
+          p3='T.{0,50}(-beta/6|-\\beta/6|-β/6)|Y.{0,50}(-1/6|−1/6)|further marked loss|transition[- ]strip.{0,160}(mass|loss|error|exception|exponent|ceiling)|((mass|loss|error|exception|exponent|ceiling).{0,160}transition[- ]strip)'
+          pat="$p1|$p2|$p3"
+
+          grep -RInI -E "$pat" drops --include='*.md' | LC_ALL=C sort > "$out/matches.txt" || true
+          cut -d: -f1 "$out/matches.txt" | uniq > "$out/files.txt" || true
+          while IFS= read -r f; do
+            [ -n "$f" ] || continue
+            echo "===== FILE $f ====="
+            grep -nI -E -C 16 "$pat" "$f" || true
+            echo
+          done < "$out/files.txt" > "$out/context.txt"
+          {
+            echo "head=$(git rev-parse HEAD)"
+            echo "markdown_drop_files=$(find drops -maxdepth 1 -type f -name '*.md' | wc -l)"
+            echo "matching_files=$(wc -l < "$out/files.txt")"
+            echo "matching_lines=$(wc -l < "$out/matches.txt")"
+          } > "$out/manifest.txt"
+          sha256sum "$out"/*.txt > "$out/SHA256SUMS"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q4423-targeted-ledger-sweep
+          path: audit/q4423-ledger
+          if-no-files-found: error
+          retention-days: 90
+      - name: Commit outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f audit/q4423-ledger
+          git commit -m 'Record Q4423 targeted exponent-ledger sweep'
+          git push origin HEAD:q4423-audit
