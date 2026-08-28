@@ -4,128 +4,103 @@ ANSWER Q5224 ec39aebe
 
 ## Verdict
 
-I do **not** close the complete far–far active-degree second moment
+I do **not** close the complete Q5217 far--far active-degree second moment
 
 \[
-\sum_x w_xD_{x,T}^2
+\mathfrak D_2(T)=\sum_x w_xD_{x,T}^2
 \]
 
-at any exponent \(2\rho<145/93\) from the currently proved Problem 3.2 interfaces.  The two activity witnesses do, however, produce one new exact determinant and one genuinely useful unconditional deletion.
+at an exponent \(2\rho<145/93\).  The extra activity of both lower copies nevertheless yields two concrete advances that are not available for arbitrary Q4955 moving-hit pairs:
 
-The main conclusions are:
+1. two chosen activity edges give a new exact nonzero four-prime determinant modulo the common distinguished characteristic \(p\); the attempted second CRT stage fails at an exact uncontrolled \(q\)-coordinate;
+2. one **canonical** activity witness gives an unconditional three-zero cross-gap estimate.  It deletes a new part of the Q4955 far--far sector at the full canonical AD2 gate, without paying the possible \(T^{2/3}\) witness multiplicity.
 
-1. **Exact two-witness algebra.**  If the two active lower copies are \(\ell_1,\ell_2\) and chosen live targets are \(\lambda_1,\lambda_2\) at oriented \(p\)-gaps \(h_1,h_2\in[T,2T)\), then each activity edge satisfies
+The strongest new proved estimate is the following.  For each active lower copy choose one deterministic literal activity witness.  For an ordered pair of active lowers, let \(b\) be the nonwrapping distance from the chosen target of the first copy to the lower \(p\)-label of the second copy.  Then for dyadic \(B\ge2\),
 
-   \[
-   \varepsilon_i h_i\ell_i\lambda_i
-   \equiv A_x(\ell_i-\lambda_i)\pmod p,
-   \qquad \varepsilon_i\in\{\pm1\},
-   \]
+\[
+\boxed{
+ \sum_xw_x\,#\{\text{ordered active pairs}:B\le b<2B\}
+ \ll N^{o(1)}T B\min(B,T)M_0.}
+\tag{V1}
+\]
 
-   and hence
+Consequently, for \(2\le K\le T\),
 
-   \[
-   \boxed{
-   p\mid
-   \Phi_{12}:=
-   \varepsilon_1h_1\ell_1\lambda_1(\ell_2-\lambda_2)
-   -\varepsilon_2h_2\ell_2\lambda_2(\ell_1-\lambda_1).}
-   \tag{A}
-   \]
+\[
+\boxed{
+ \mathfrak D_{2,\times\le K}(T)
+ \ll N^{o(1)}TK^2M_0+N^{2/3+o(1)}M_0.}
+\tag{V2}
+\]
 
-   In the mesoscopic range left after Q5217, if the four physical moving primes are pairwise distinct, then \(\Phi_{12}\ne0\).  For \(h_1=h_2\) and the same orientation, \(\Phi_{12}/h_1\) is, after relabelling, exactly the reciprocal four-prime cubic already isolated in Q5155.
+On the Q4955 far fixed-\(p\) sector the \(b=0\) term is actually
 
-2. **The hoped-for second CRT stage fails exactly.**  Writing the canonical full-\(P=pq\) completions as \(m_i,m_i^+\), activity controls only their \(p\)-difference:
+\[
+\ll T^{10/9+o(1)}M_0.
+\tag{V3}
+\]
 
-   \[
-   \boxed{m_i^+-m_i=\varepsilon_i h_i+pJ_i,\qquad J_i\in\mathbb Z.}
-   \tag{B}
-   \]
+Thus at the **canonical** AD2 gate we may take
 
-   If \(e_i=k_i^+-k_i\) is the reciprocal quotient displacement of the activity edge, then
+\[
+\boxed{K=T^{26/93-\zeta}}
+\]
 
-   \[
-   \boxed{
-   \frac{(\lambda_i-\ell_i)m_i+arepsilon_i\lambda_i h_i}{p}
-   +\lambda_iJ_i
-   =q e_i.}
-   \tag{C}
-   \]
+and obtain
 
-   The unselected copy has **no \(q\)-zero test**, so the integer \(J_i\) is not constrained by the activity condition.  Equation (C) is the first exact failed implication: the small actual \(p\)-return gap does not lift to a small/full-\(P\) row displacement, and (A) cannot be promoted to a second independent \(q\)-divisibility statement.
+\[
+\boxed{
+ \mathfrak D_{2,\times\le K}^{\rm ff}(T)
+ \ll T^{145/93-2\zeta+o(1)}M_0
+      +T^{10/9+o(1)}M_0.}
+\tag{V4}
+\]
 
-3. **New unconditional far–far deletion.**  Choose one canonical live activity witness for each active copy.  For an ordered pair of active lower copies, use the witness of the left lower label and let \(b\) be the nonwrapping distance from its target \(p\)-label to the other lower \(p\)-label.  For every dyadic \(B\ge2\), the literal pair mass with \(B\le b<2B\) satisfies
+At the **ideal** AD2 line, whose second-moment threshold is \(23/15\), the correct choice is
 
-   \[
-   \boxed{
-   \sum_x w_x\,#\{\text{such ordered pairs}\}
-   \ll N^{o(1)}T B\min(B,T)M_0.}
-   \tag{D}
-   \]
+\[
+\boxed{K=T^{4/15-\zeta}},
+\qquad
+TK^2=T^{23/15-2\zeta},
+\tag{V5}
+\]
 
-   This uses only one activity witness and therefore pays **no** \(T^{2/3}\) witness multiplicity.  The three actual \(p\)-zeros form a genuine \(m_{a,b}(p)\) witness, and the canonical nonvanishing/degree theorem gives
+not \(T^{1/10}\).  This is the exact exponent corresponding to \(\rho<23/30\).
 
-   \[
-   m_{a,b}(p)\le3(\min(a,b)-1).
-   \]
+After Q4955 and (V4), the remaining canonical obstruction may therefore be restricted to the literal pair event
 
-   No \(H\le\sqrt p\) collision-energy hypothesis is needed.
+\[
+\boxed{
+ |d|>N^{8/15},\qquad
+ g_p^\diamond(r_1,r_2)>N^{3/5},\qquad
+ b_{1\to2}>T^{26/93-o(1)},\qquad
+ b_{2\to1}>T^{26/93-o(1)}.}
+\tag{V6}
+\]
 
-   Consequently, for \(2\le K\le T\), the cross-near sector \(b\le K\) is
+In this smaller event, either the two canonical activity targets coalesce, or the four physical lower/target moving primes are distinct and carry the nonzero determinant derived below.  No current Palm-weighted theorem controls either alternative with a fixed power saving.
 
-   \[
-   \boxed{
-   \ll N^{o(1)}T K^2M_0.}
-   \tag{E}
-   \]
+The first exact failed implication is
 
-   The endpoint case \(b=0\) contributes only \(N^{2/3+o(1)}M_0\); on the Q4955 far fixed-\(p\) sector it forces \(T\gg N^{3/5}\), hence it is
+\[
+\boxed{
+ r_i^+-r_i=\varepsilon_i h_i\pmod p
+ \quad\not\Longrightarrow\quad
+ m_i^+-m_i=\varepsilon_i h_i\pmod{pq}.}
+\tag{V7}
+\]
 
-   \[
-   \ll T^{10/9+o(1)}M_0.
-   \tag{F}
-   \]
+The exact correction is
 
-4. **Gate exponent.**  Taking
+\[
+ m_i^+-m_i=\varepsilon_i h_i+pJ_i,
+\]
 
-   \[
-   K=T^{26/93-\zeta}
-   \]
-
-   gives
-
-   \[
-   TK^2=T^{145/93-2\zeta}.
-   \]
-
-   Thus the entire far–far sub-sector in which one canonical activity target lies within \(T^{26/93-\zeta}\) of the other lower \(p\)-label is already below the canonical AD2 gate.  For the ideal line, the corresponding proved cutoff is
-
-   \[
-   K=T^{1/10-\zeta},
-   \qquad
-   TK^2=T^{6/5-2\zeta}.
-   \]
-
-5. **What remains.**  After applying Q4955 and (E), the genuinely new obstruction may be restricted to far–far active lower pairs satisfying, in both directions,
-
-   \[
-   \boxed{
-   |d|>N^{8/15},\qquad
-   g_p^\diamond>N^{3/5},\qquad
-   b_{1\to2}>T^{26/93-o(1)},\qquad
-   b_{2\to1}>T^{26/93-o(1)}.}
-   \tag{G}
-   \]
-
-   In this residual, either the two canonical activity targets coalesce, or the four physical moving primes are distinct and carry the nonzero determinant (A).  No current weighted-Palm theorem exploits either alternative with a power saving.
-
-6. **Phase attack also stops at an exact place.**  Expanding all activity witnesses rather than choosing one incurs up to \(T^{2/3+o(1)}\) witnesses per active copy and hence potentially \(T^{4/3+o(1)}\) pair multiplicity.  Choosing one witness avoids that loss but is nonlinear and provides no Fourier averaging variable.  Moreover Q4703's exact Fourier expansion shows that at every successful moving-zero test one Artin–Schreier summand is the trivial sheaf.  Two successful activity targets therefore produce two positive trivial summands, not a new orthogonality mechanism.
-
-So the strongest bankable result in this round is the one-witness cross-gap theorem (D)--(E).  The complete far–far AD2 estimate remains open.
+and the integer \(J_i\) is an unconstrained \(q\)-coordinate because an unselected moving copy carries no new \(q\)-zero selector.  This is why the two activity witnesses do not generate a second independent CRT divisor.
 
 ---
 
-# 0. Source boundary
+# 0. Source lock
 
 Only `xiangyazi24/Ramanujan_Challenge`, Problem 3.2, is used.
 
@@ -135,34 +110,24 @@ The connected canonical mathematical head remains
 c5d932b66ce5e4f1657b587215d290ae7a13018b
 ```
 
-and I re-read the relevant canonical files through the GitHub connector:
+and I re-read through the GitHub connector:
 
-- [`problems/3.2/proof.tex`](https://github.com/xiangyazi24/Ramanujan_Challenge/blob/c5d932b66ce5e4f1657b587215d290ae7a13018b/problems/3.2/proof.tex): `lem:no-consec`, `lem:gap-poly`, `lem:nonvanish`, the restart/subinterval/column facts;
-- [`problems/3.2/energy_result.tex`](https://github.com/xiangyazi24/Ramanujan_Challenge/blob/c5d932b66ce5e4f1657b587215d290ae7a13018b/problems/3.2/energy_result.tex):
+- `problems/3.2/proof.tex`: `lem:no-consec`, `lem:gap-poly`, `lem:nonvanish`, restart/subinterval/column facts;
+- `problems/3.2/energy_result.tex`: the actual three-zero count
   \[
-  m_{a,b}(p)=\#\{u:N_a(u)=N_b(u+a)=0\},
+  m_{a,b}(p)=\#\{u:N_a(u)=N_b(u+a)=0\}
   \]
-  exact column/energy identities and the structured shallow-count argument;
-- [`problems/3.2/pairpalm_result.tex`](https://github.com/xiangyazi24/Ramanujan_Challenge/blob/c5d932b66ce5e4f1657b587215d290ae7a13018b/problems/3.2/pairpalm_result.tex): exact pair--Palm factorial hierarchy and the warning that higher Palm extension moments are genuinely new arithmetic;
-- [`drops/Q4760-47227b62.md`](https://github.com/xiangyazi24/Ramanujan_Challenge/blob/chatgpt-drop/drops/Q4760-47227b62.md): determinant-counting reciprocal-fibre second moment and its explicit counting-measure/Palm-measure mismatch.
+  and its column/structured-energy interpretation;
+- `problems/3.2/pairpalm_result.tex`: exact pair--Palm factorial hierarchy and the fact that higher Palm extension moments are genuinely new arithmetic;
+- `drops/Q4760-47227b62.md`: determinant-counting reciprocal-fibre second moment and its explicit counting-measure/Palm-measure mismatch.
 
-The current local AT continuation is newer than connected `main`.  For that layer I use the exact same-project continuation interfaces already cold-audited in:
-
-- Q4955 `bf086dde`: literal two-moving-copy Palm variables, short reciprocal-displacement and short fixed-\(p\) diamond-gap closures, far--far residual;
-- Q5199 `7c002b92`: source-faithful active-degree definition and pointwise compression;
-- Q5217 `e627891c`: reduction to AD2 and the exact required exponents;
-- Q5155 `f9bf535f`: reciprocal four-prime cubic and the “no second reciprocal divisor” audit;
-- Q4703 `e53d1b19`: exact one-moving-selector Fourier/trace normal form and trivial-summand obstruction.
-
-The Q5199 and Q5217 artifacts are current continuation records; no claim is made that their unpushed labels occur in stale GitHub `main`.
-
-No Python, sandbox, finite computation, or unrelated project is used.  No canonical source file is edited.
+The connected `main` is stale for the current AT continuation.  I therefore use the already cold-audited same-project interfaces Q4955, Q5199 and Q5217 as authoritative for their later definitions, together with Q5155 for the reciprocal cubic and Q4703 for the horizontal Fourier obstruction.  No canonical source file is edited.
 
 ---
 
 # 1. Literal two-copy Palm variables
 
-Fix one selected Palm root
+Fix a selected Palm root
 
 \[
 x=(\mathbf b,\delta,\ell_0),
@@ -171,349 +136,249 @@ x=(\mathbf b,\delta,\ell_0),
 \qquad
 P=pq,
 \qquad
-\Delta_x=\sigma\delta.
-\tag{1.1}
+\Delta_x=\sigma\delta,
 \]
 
-Retain the complete nonnegative selected-root atom
+with the unchanged nonnegative root atom
 
 \[
 \boxed{
-w_x=
-\Lambda_{\mathbf b}|u_{\ell_0}|^2
+ w_x=
+ \Lambda_{\mathbf b}|u_{\ell_0}|^2
  a_{\mathbf b}(\delta,\ell_0)
  J_{\mathbf b}(\delta,\ell_0),
-\qquad
-M_0=\sum_xw_x.}
-\tag{1.2}
+ \qquad M_0=\sum_xw_x.}
+\tag{1.1}
 \]
 
-Every four-test selected-root condition, source mask, phase-support restriction, branch/orientation mask, shell restriction, high-centred condition, near/reflected-near deletion and four-distinct root condition stays inside \(w_x\).  Nothing below adds a second outer weight.
+All four selected zero tests, phases, source masks, shell restrictions, distinctness, branch/orientation, high-centred, alias and near/reflected-near masks remain inside \(w_x\).  It appears exactly once.
 
 Put
 
 \[
-C_x=\left\langle\Delta_x\overline{p'}\right\rangle_P,
-\qquad
+ C_x=\langle\Delta_x\overline{p'}\rangle_P,
+ \qquad
  a_x=\frac{p'C_x-\Delta_x}{P}.
+\tag{1.2}
+\]
+
+For a literal unselected moving shell prime \(\ell\), define the canonical full-\(P\) completion
+
+\[
+ m_x(\ell)=\langle\Delta_x\overline{p'\ell}\rangle_P,
 \tag{1.3}
 \]
 
-For a literal unselected moving shell prime \(\ell\), define the Q4955/Q4904 completed coordinates
-
 \[
- m_x(\ell)
- =\left\langle\Delta_x\overline{p'\ell}\right\rangle_P,
+ k_x(\ell)=\frac{\ell m_x(\ell)-C_x}{P},
+ \qquad
+ n_x(\ell)=a_x+p'k_x(\ell).
 \tag{1.4}
 \]
 
+Then
+
 \[
- k_x(\ell)
- =\frac{\ell m_x(\ell)-C_x}{P},
-\qquad
- n_x(\ell)=a_x+p'k_x(\ell).
+\boxed{\Delta_x=p'\ell m_x(\ell)-Pn_x(\ell).}
 \tag{1.5}
-\]
-
-Thus
-
-\[
-\boxed{
-\Delta_x=p'\ell m_x(\ell)-P n_x(\ell).}
-\tag{1.6}
 \]
 
 The two literal unselected actual-zero tests are
 
 \[
  r_x(\ell):=m_x(\ell)\bmod p\in\mathcal Z_p,
-\tag{1.7}
+\tag{1.6}
 \]
 
 \[
  s_x(\ell):=n_x(\ell)\bmod\ell
- =\left\langle-\Delta_x\overline P\right\rangle_\ell
+ =\langle-\Delta_x\overline P\rangle_\ell
  \in\mathcal Z_\ell.
-\tag{1.8}
+\tag{1.7}
 \]
 
-The unselected copy has **no new \(q\)-zero selector**.  Its \(p'\)-reduction is inherited algebraically:
+There is no new \(q\)-selector.  The \(p'\)-reduction
 
 \[
  n_x(\ell)\bmod p'
- =-\Delta_x\overline P\pmod{p'},
+ =-\Delta_x\overline P\pmod{p'}
+\tag{1.8}
+\]
+
+is the same inherited selected \(p'\)-zero residue for every unselected copy, not a new selector.
+
+For two lower copies \(\ell_1,\ell_2\), abbreviate
+
+\[
+ m_i=m_x(\ell_i),\quad
+ k_i=k_x(\ell_i),\quad
+ n_i=n_x(\ell_i),\quad
+ r_i=r_x(\ell_i),\quad
+ s_i=s_x(\ell_i).
+\]
+
+The Q4955 reciprocal quotient displacement is
+
+\[
+\boxed{d=k_2-k_1,}
 \tag{1.9}
 \]
 
-which is the one already-selected \(p'\)-zero residue.  This is not a second \(p'\) selector.
-
-Let \(\chi_x(\ell)\in\{0,1\}\) contain the literal moving shell, exclusions, one-copy source/bulk/orientation masks and the tests (1.7)--(1.8).  Every active copy below has \(\chi_x(\ell)=1\).
-
-Now take two lower moving copies \(\ell_1,\ell_2\).  Write
+with the exact identities
 
 \[
-m_i=m_x(\ell_i),\quad
-k_i=k_x(\ell_i),\quad
-n_i=n_x(\ell_i),\quad
-r_i=r_x(\ell_i),\quad
-s_i=s_x(\ell_i).
+\boxed{\ell_2m_2-\ell_1m_1=Pd,}
 \tag{1.10}
-\]
-
-The exact reciprocal quotient displacement is
-
-\[
-\boxed{
-d:=k_2-k_1,}
-\tag{1.11}
-\]
-
-and subtraction of (1.5) gives
-
-\[
-\boxed{
-\ell_2m_2-\ell_1m_1=Pd,}
-\tag{1.12}
 \]
 
 \[
 \boxed{n_2-n_1=p'd.}
-\tag{1.13}
+\tag{1.11}
 \]
 
-Q4955's remaining lower-pair sector imposes
+The residual under attack already satisfies
 
 \[
 \boxed{|d|>N^{8/15}}
-\tag{1.14}
+\tag{1.12}
 \]
 
 and
 
 \[
 \boxed{
-g_p^\diamond(r_1,r_2)>N^{3/5},}
-\tag{1.15}
+ g_p^\diamond(r_1,r_2)
+ :=\min(\|r_2-r_1\|_p,\|r_2+r_1+1\|_p)
+ >N^{3/5}.}
+\tag{1.13}
 \]
 
-where
-
-\[
-g_p^\diamond(r_1,r_2)
-=\min\bigl(\|r_2-r_1\|_p,
-           \|r_2+r_1+1\|_p\bigr).
-\tag{1.16}
-\]
-
-All pair masks in (1.14)--(1.16) are retained in the exact far--far AD2 residual; when proving an upper bound below I sometimes drop them, which only enlarges a nonnegative count.
+Every moving-zero test and all lower-pair masks remain literal.
 
 ---
 
-# 2. Activity witnesses and the multiplicity issue
+# 2. Attach the two activity witnesses
 
-Fix one of the finite source orientations.  It is convenient to encode ordinary versus reflected motion by
+Fix one member of the finite ordinary/reflected orientation alphabet.  Write its sign as \(\varepsilon_i\in\{\pm1\}\).
+
+Activity of lower copy \(i\) means that there exists a literal live target prime \(\lambda_i\) and an integer
 
 \[
-\varepsilon\in\{+1,-1\}.
+T\le h_i<2T
 \]
 
-For an active lower copy \((\varepsilon,r,\ell)\), activity means that there exists a live target prime \(\lambda\), with the same one-copy source package, whose underlying actual \(p\)-label \(r^+\) satisfies
+such that the target's underlying actual distinguished-\(p\) label satisfies
 
 \[
 \boxed{
-r^+\equiv r+\varepsilon h\pmod p,
-\qquad T\le h<2T,}
+ r_i^+\equiv r_i+\varepsilon_i h_i\pmod p,}
 \tag{2.1}
 \]
 
-with the corresponding oriented representatives nonwrapping.  Both
+with the chosen representatives nonwrapping.  Both \(r_i,r_i^+\) are actual \(p\)-zeros and the target also satisfies its own actual moving-characteristic zero test.
+
+Define target completions
 
 \[
-r\in\mathcal Z_p,
-\qquad
-r^+\in\mathcal Z_p
+ m_i^+=m_x(\lambda_i),\quad
+ k_i^+=k_x(\lambda_i),\quad
+ n_i^+=n_x(\lambda_i),
+\]
+
+and target edge quotient
+
+\[
+\boxed{e_i=k_i^+-k_i.}
 \tag{2.2}
 \]
 
-are actual distinguished-characteristic zeros, and the target's moving-characteristic test
+Then exactly
 
 \[
-s_x(\lambda)\in\mathcal Z_\lambda
+\boxed{\lambda_i m_i^+-\ell_i m_i=P e_i,}
 \tag{2.3}
-\]
-
-is also literal.
-
-For the two lower copies choose witnesses
-
-\[
-(\lambda_i,h_i),
-\qquad T\le h_i<2T,
-\qquad i=1,2.
-\tag{2.4}
-\]
-
-Write target completed coordinates
-
-\[
-m_i^+=m_x(\lambda_i),\quad
-k_i^+=k_x(\lambda_i),\quad
-n_i^+=n_x(\lambda_i),\quad
-r_i^+=r_x(\lambda_i),\quad
-s_i^+=s_x(\lambda_i).
-\tag{2.5}
-\]
-
-Then
-
-\[
-r_i^+\equiv r_i+\varepsilon_i h_i\pmod p,
-\qquad
-r_i^+\in\mathcal Z_p,
-\qquad
-s_i^+\in\mathcal Z_{\lambda_i}.
-\tag{2.6}
-\]
-
-Define the activity-edge reciprocal quotient displacement
-
-\[
-\boxed{e_i:=k_i^+-k_i.}
-\tag{2.7}
-\]
-
-Exactly as in (1.12)--(1.13),
-
-\[
-\boxed{
-\lambda_i m_i^+-\ell_i m_i=P e_i,}
-\tag{2.8}
 \]
 
 \[
 \boxed{n_i^+-n_i=p'e_i.}
-\tag{2.9}
+\tag{2.4}
 \]
 
-The target-pair quotient displacement is therefore
+The target-pair reciprocal quotient displacement is
 
 \[
-\boxed{
-d^+:=k_2^+-k_1^+=d+e_2-e_1.}
-\tag{2.10}
+\boxed{d^+=d+e_2-e_1.}
+\tag{2.5}
 \]
 
 No shortness of \(e_i\) or \(d^+\) follows from activity.
 
-## 2.1 A witness is not unique
+## 2.1 Witness multiplicity
 
-For one active lower label \(r\), the possible target \(p\)-labels lie in a consecutive interval of length \(O(T)\).  `cor:subinterval` gives
+For a fixed active lower \(p\)-label, possible targets lie in a consecutive interval of length \(O(T)\).  The canonical subinterval theorem gives
 
 \[
-\#\{r^+\in\mathcal Z_p:T\le |r^+-r|<2T\}
+\#\{\text{actual target }p\text{-labels}\}
 \ll T^{2/3+o(1)}.
-\tag{2.11}
 \]
 
-Each target \(p\)-label has \(O(1)\) moving-prime lifts by the exact reciprocal fibre.  Hence
+A fixed target \(p\)-label has only \(O(1)\) moving-prime lifts.  Hence
 
 \[
 \boxed{
-\#\{\text{literal activity witnesses of one active copy}\}
+\#\{\text{literal witnesses of one active copy}\}
 \ll T^{2/3+o(1)}.}
-\tag{2.12}
+\tag{2.6}
 \]
 
-Thus blindly attaching witnesses to both copies may cost
+Thus attaching **all** witnesses to both lower copies can cost \(T^{4/3+o(1)}\).  The same loss appears in reverse: a fixed target can have \(T^{2/3+o(1)}\) actual predecessors in the backward interval.
 
-\[
-T^{4/3+o(1)}.
-\tag{2.13}
-\]
+To avoid this, for every active oriented copy choose deterministically the lexicographically least live pair \((h,\lambda)\).  I call it the **canonical activity witness**.  This is only a proof selection; it changes neither the active indicator nor the selected-root weight.
 
-This is not a hypothetical bookkeeping issue.  A fixed target label also has up to \(T^{2/3+o(1)}\) actual predecessor labels in the backward interval, so reversing a target-pair count back to lower pairs can lose the same factor per coordinate.
-
-## 2.2 Canonical witness selection
-
-For every active oriented copy, order its finite witness set first by \(h\), then by the target prime, and choose the least witness.  Denote it
-
-\[
-W^\star(\varepsilon,r,\ell)=(h^\star,\lambda^\star).
-\tag{2.14}
-\]
-
-This is only a deterministic proof device.  It does not alter \(D_{x,T}\), does not remove an actual-zero predicate, and introduces no new weight.  It lets us use one actual witness **without** paying (2.12).
-
-The price is analytic: a nonlinear least-witness selector is not a summation variable on which the existing Fourier identities provide orthogonality.  This tradeoff is important in Attack III below.
+The important tradeoff is that the least-witness map is nonlinear, so it cannot be used as a new Fourier averaging variable.
 
 ---
 
-# 3. Attack I — eliminate the two activity targets
+# 3. Attack I: the two-witness determinant
 
-## 3.1 One activity edge
-
-Reduce the exact reciprocal identity
+Put
 
 \[
-\ell_i m_i\equiv C_x\pmod P,
-\qquad
-\lambda_i m_i^+\equiv C_x\pmod P
-\tag{3.1}
+A_x=C_x\bmod p.
 \]
 
-modulo \(p\).  Put
-
-\[
-A_x:=C_x\bmod p.
-\tag{3.2}
-\]
-
-Then
+The reciprocal completion gives
 
 \[
 \ell_i r_i\equiv A_x\pmod p,
 \qquad
 \lambda_i r_i^+\equiv A_x\pmod p.
-\tag{3.3}
 \]
 
-Using (2.6),
-
-\[
-\lambda_i(r_i+\varepsilon_i h_i)
-\equiv\ell_i r_i\pmod p.
-\]
-
-Since \(r_i\equiv A_x\ell_i^{-1}\pmod p\), this is exactly
+Using (2.1),
 
 \[
 \boxed{
 \varepsilon_i h_i\ell_i\lambda_i
 \equiv A_x(\ell_i-\lambda_i)\pmod p.}
-\tag{3.4}
+\tag{3.1}
 \]
 
-Equivalently, for fixed \((\ell_i,h_i)\), the target prime lies in the familiar Möbius residue class
+Equivalently, when the denominator is nonzero,
 
 \[
-\boxed{
 \lambda_i
 \equiv
 \frac{A_x\ell_i}{A_x+\varepsilon_i h_i\ell_i}
-\pmod p,}
-\tag{3.5}
+\pmod p.
+\tag{3.2}
 \]
 
-whenever the denominator is nonzero.  This is exactly the one-stage \(p\)-restriction already implicit in the reciprocal lift.
-
-## 3.2 Four-prime determinant
-
-Eliminate \(A_x\) between (3.4) for \(i=1,2\).  Every literal two-witness occurrence satisfies
+Eliminating \(A_x\) between the two activity edges gives
 
 \[
-\boxed{
- p\mid\Phi_{12},}
-\tag{3.6}
+\boxed{p\mid\Phi_{12},}
+\tag{3.3}
 \]
 
 where
@@ -525,299 +390,132 @@ where
 \varepsilon_1h_1\ell_1\lambda_1(\ell_2-\lambda_2)
 -
 \varepsilon_2h_2\ell_2\lambda_2(\ell_1-\lambda_1).}
-\tag{3.7}
+\tag{3.4}
 \]
 
-This is a genuine characteristic-zero integer determinant.  It uses both activity witnesses and is unavailable for an arbitrary pair of moving hits with no return witnesses.
+This determinant does not exist for an arbitrary Q4955 lower pair without activity witnesses.
 
 ### Nonvanishing on the four-distinct mesoscopic sector
 
-After Q5217's large-\(T\) deletion, the unresolved gate range has \(T=N^{\tau+o(1)}\) with \(\tau<1\).  Hence, in every fixed shell box and for large \(N\),
+After the Q5217 large-\(T\) deletion, the unresolved range has \(T=o(N)\).  Assume the four physical moving primes \(\ell_1,\lambda_1,\ell_2,\lambda_2\) are pairwise distinct.  If \(\Phi_{12}=0\), then the prime \(\ell_1\) divides
 
 \[
-2T<\min(\ell_1,\lambda_1,\ell_2,\lambda_2).
-\tag{3.8}
+h_2\ell_2\lambda_2(\ell_1-\lambda_1).
 \]
 
-Assume the four physical moving primes are pairwise distinct.  If \(\Phi_{12}=0\), then
+It divides neither \(h_2\) (because \(h_2<2T<\ell_1\)) nor either of the distinct primes \(\ell_2,\lambda_2\).  Thus \(\ell_1\mid(\ell_1-\lambda_1)\), hence \(\ell_1\mid\lambda_1\), forcing \(\ell_1=\lambda_1\), contradiction.  Therefore
 
 \[
-\varepsilon_1h_1\ell_1\lambda_1(\ell_2-\lambda_2)
-=
-\varepsilon_2h_2\ell_2\lambda_2(\ell_1-\lambda_1).
-\tag{3.9}
+\boxed{\Phi_{12}\ne0.}
+\tag{3.5}
 \]
 
-The prime \(\ell_1\) cannot divide \(h_2\), \(\ell_2\), or \(\lambda_2\).  Therefore it must divide \(\ell_1-\lambda_1\), hence \(\ell_1\mid\lambda_1\), forcing \(\ell_1=\lambda_1\), contradiction.  Thus
+Also \(|\Phi_{12}|\ll TN^3\).  This gives only an **absolute** divisor capacity: for a fixed full six-variable tuple, only \(O(1)\) shell primes can divide \(\Phi_{12}\).  It does not give a relative selected-Palm saving because the mass may concentrate on one such \(p\).
 
-\[
-\boxed{
-\Phi_{12}\ne0
-\quad\text{on the four-distinct mesoscopic sector}.}
-\tag{3.10}
-\]
-
-Moreover
-
-\[
-|\Phi_{12}|\ll T N^3.
-\tag{3.11}
-\]
-
-Hence for fixed \((h_1,h_2,\ell_1,\lambda_1,\ell_2,\lambda_2)\), only \(O(1)\) shell primes can divide \(\Phi_{12}\).
-
-That observation is **absolute**, not Palm-relative.  The selected mass can concentrate on one of those divisors, so (3.11) does not imply a factor saving relative to \(M_0\).
-
-## 3.3 Equal witness gaps collapse to the known cubic
-
-If the two orientations agree and
-
-\[
-h_1=h_2=h,
-\]
-
-then
+If \(h_1=h_2=h\) and the orientations agree, then
 
 \[
 \Phi_{12}
-=-h\,\mathcal C_4,
+=-h\left((\ell_1-\lambda_1)\ell_2\lambda_2
+        -(\ell_2-\lambda_2)\ell_1\lambda_1\right),
 \]
 
-with
-
-\[
-\mathcal C_4
-=(\ell_1-\lambda_1)\ell_2\lambda_2
- -(\ell_2-\lambda_2)\ell_1\lambda_1.
-\tag{3.12}
-\]
-
-After the relabelling
-
-\[
-(\ell_1,\lambda_1,\ell_2,\lambda_2)
-\leftrightarrow
-(\ell_1,\ell_2,\ell_3,\ell_4),
-\]
-
-this is exactly the reciprocal four-prime cubic audited in Q5155.  Q5155 already shows that the other equal-gap/equal-offset Plücker expression does not supply a second independent reciprocal divisor.
-
-Thus the two-witness determinant is genuinely new only for unequal \(h_1,h_2\); at equal gap it reduces to the known rank-one Plücker carrier.
-
-## 3.4 A second \(p\)-minor is still rank one
-
-Let \(g\) be a chosen signed direct \(p\)-label gap from \(r_1\) to \(r_2\), and let
-
-\[
-g^+=g+\varepsilon_2h_2-\varepsilon_1h_1
-\tag{3.13}
-\]
-
-be the corresponding target-label gap.  The same reciprocal calculation gives
-
-\[
-g\ell_1\ell_2
-\equiv A_x(\ell_1-\ell_2)\pmod p,
-\tag{3.14}
-\]
-
-\[
-g^+\lambda_1\lambda_2
-\equiv A_x(\lambda_1-\lambda_2)\pmod p.
-\tag{3.15}
-\]
-
-Hence
-
-\[
-p\mid
-\Psi_{12}:=
- g\ell_1\ell_2(\lambda_1-\lambda_2)
- -g^+\lambda_1\lambda_2(\ell_1-\ell_2).
-\tag{3.16}
-\]
-
-This looks like a second determinant, but over \(\mathbb F_p\) both (3.7) and (3.16) are minors of the same rank-one reciprocal parametrization
-
-\[
-r=A_x/\ell.
-\]
-
-Their Plücker combinations recover the three-prime gap equations; they do not increase the CRT rank.  In the equal-gap case they collapse to the same cubic family described above.
-
-So two \(p\)-minors are not two independent moduli.
+which is exactly the Q5155 reciprocal four-prime cubic after relabelling.  Thus the equal-gap specialization gives no second Pluecker carrier.
 
 ---
 
-# 4. The exact failed second-stage CRT implication
+# 4. Exact failure of the second CRT stage
 
-The full completed labels are not separated by the small physical gap \(h_i\).  Since (2.6) is only a statement modulo \(p\), there is an integer \(J_i\) such that
+Equation (2.1) controls the target-minus-lower completed row only modulo \(p\).  Hence there is an integer \(J_i\) with
 
 \[
 \boxed{
-m_i^+-m_i=\varepsilon_i h_i+pJ_i.}
+ m_i^+-m_i=\varepsilon_i h_i+pJ_i.}
 \tag{4.1}
 \]
 
-Insert this into the exact full-\(P\) edge identity (2.8):
+Insert this into (2.3):
 
 \[
 (\lambda_i-\ell_i)m_i
 +\varepsilon_i\lambda_i h_i
 +p\lambda_iJ_i
 =pq e_i.
-\tag{4.2}
 \]
 
-The first two terms are divisible by \(p\) by (3.4).  Therefore
+The first two terms are divisible by \(p\) by (3.1).  Thus
 
 \[
-B_i
-:=
+B_i:=
 \frac{(\lambda_i-\ell_i)m_i
       +\varepsilon_i\lambda_i h_i}{p}
 \in\mathbb Z
-\tag{4.3}
 \]
 
-and
+and the exact \(q\)-stage identity is
 
 \[
 \boxed{B_i+\lambda_iJ_i=q e_i.}
-\tag{4.4}
+\tag{4.2}
 \]
 
-This is the exact \(q\)-stage ledger.
+The unselected copy imposes no actual \(q\)-zero condition on \(m_i\bmod q\) or \(m_i^+\bmod q\).  Therefore no current theorem forces \(J_i=0\), makes \(J_i\) short, or correlates \(J_1,J_2\) with a power saving.
 
-The critical point is that activity imposes no condition on
-
-\[
-m_i\bmod q
-= C_x\ell_i^{-1}\pmod q,
-\qquad
-m_i^+\bmod q
-= C_x\lambda_i^{-1}\pmod q.
-\tag{4.5}
-\]
-
-Those are algebraic residues, not actual selected \(q\)-zeros.  Consequently no current theorem forces \(J_i=0\), makes \(J_i\) short, or correlates \(J_1,J_2\) with a power saving.
-
-The exact false implication is therefore
+This is the first exact failed implication:
 
 \[
 \boxed{
-\begin{gathered}
-r_i,r_i+\varepsilon_i h_i\in\mathcal Z_p,\\
-s_i\in\mathcal Z_{\ell_i},\quad
-s_i^+\in\mathcal Z_{\lambda_i},\\
-T\le h_i<2T
-\end{gathered}
-\not\Longrightarrow
-m_i^+-m_i=\varepsilon_i h_i
-\text{ in }\mathbb Z/P\mathbb Z.}
-\tag{4.6}
+ r_i^+-r_i=\varepsilon_i h_i\pmod p
+ \not\Longrightarrow
+ m_i^+-m_i=\varepsilon_i h_i\pmod{pq}.}
+\tag{4.3}
 \]
 
-Only the reduction modulo \(p\) is available.
+The two activity witnesses therefore produce one common-\(p\) four-zero geometry, not a second independent \(q\)-geometry.
 
-This is why the two activity witnesses do **not** produce a two-stage CRT saving.
+There is likewise no legal six-zero same-characteristic resultant:
+
+- \(p\) sees the four actual labels \(r_1,r_1^+,r_2,r_2^+\);
+- \(p'\) sees one repeated inherited residue;
+- \(q\) sees no new unselected zero;
+- \(\ell_1,\lambda_1,\ell_2,\lambda_2\) each see one zero in a different characteristic.
+
+Cross-characteristic resultants would therefore be illegal.
 
 ---
 
-# 5. Why there is no legal six-zero resultant
+# 5. Attack II: one canonical witness creates a three-zero codegree
 
-It is useful to state the type ledger explicitly.
+This attack is genuinely different from the determinant argument and gives a proved deletion.
 
-For each of the four moving copies
-
-\[
-\ell_1,\lambda_1,\ell_2,\lambda_2,
-\]
-
-activity supplies:
-
-- an actual zero in the common characteristic \(p\):
-  \[
-  r_1,r_1^+,r_2,r_2^+\in\mathcal Z_p;
-  \]
-- one actual zero in that copy's own moving characteristic:
-  \[
-  s_1\in\mathcal Z_{\ell_1},\quad
-  s_1^+\in\mathcal Z_{\lambda_1},\quad
-  s_2\in\mathcal Z_{\ell_2},\quad
-  s_2^+\in\mathcal Z_{\lambda_2};
-  \]
-- the **same** inherited actual \(p'\)-residue for every completed second row, by (1.9);
-- no actual \(q\)-zero on the unselected copies.
-
-Thus \(p\) is the only characteristic receiving several independent new physical zero positions.  The four moving-characteristic zeros live in four different fields, and the \(p'\)-condition is one repeated residue rather than four distinct returns.
-
-Therefore a resultant formed by pretending that, for example, the \(\ell_1\)-zero and the \(\lambda_1\)-zero are roots in one common characteristic is illegal.  The activity witnesses create a four-zero \(p\)-configuration, not a six-zero same-characteristic configuration.
-
----
-
-# 6. Attack II — one canonical witness gives a three-zero codegree theorem
-
-The determinant route does not close the moment.  A different attack does give an unconditional deletion.
-
-## 6.1 Define the canonical cross gap
-
-Fix one selected root \(x\) and one of the finitely many source orientation charts.  For every active oriented lower copy choose the canonical witness (2.14).
-
-Take two distinct active lower copies.  After exchanging them if necessary, put their oriented actual \(p\)-labels in the order
+Fix one root \(x\), one orientation chart, and the canonical witness of every active lower copy.  Take an ordered pair of distinct active lowers and order their actual oriented \(p\)-labels as
 
 \[
 0\le r<u\le p-1.
-\tag{6.1}
 \]
 
-Let
+Let the chosen witness of the left copy be
 
 \[
-W^\star(r,\ell_1)=(h,\lambda),
-\qquad
 T\le h<2T,
-\qquad
-r+h\in\mathcal Z_p,
-\tag{6.2}
+\qquad r+h\in\mathcal Z_p,
 \]
 
-where in the chosen chart the activity edge is nonwrapping.
-
-Define the **one-witness cross gap**
+in the current nonwrapping chart.  Define the cross gap
 
 \[
-\boxed{b:=|u-(r+h)|.}
-\tag{6.3}
+\boxed{b=|u-(r+h)|.}
+\tag{5.1}
 \]
 
-The pair is interlaced if \(r<u<r+h\) and noninterlaced if \(r+h<u\).
-
-The target witness is literal.  No target actual-zero condition has been removed, and no target is summed with multiplicity.
-
-## 6.2 Root count for one dyadic cross gap
-
-Assume first
-
-\[
-B\le b<2B,
-\qquad B\ge2.
-\tag{6.4}
-\]
+Assume first \(B\le b<2B\), \(B\ge2\).
 
 ### Interlaced case
 
-If
-
-\[
-r<u<r+h,
-\]
-
-put
+If \(r<u<r+h\), set
 
 \[
 a=u-r=h-b.
-\tag{6.5}
 \]
 
 Then
@@ -826,187 +524,98 @@ Then
 r,\quad r+a=u,\quad r+a+b=r+h
 \]
 
-are three actual nonwrapping \(p\)-zeros.  Hence
+are three actual nonwrapping \(p\)-zeros, so
 
 \[
-N_a(r)=0,
-\qquad
-N_b(r+a)=0
-\pmod p.
-\tag{6.6}
-\]
-
-For fixed \((a,b)\), the number of such \(r\) is
-
-\[
-m_{a,b}(p).
-\]
-
-By `lem:nonvanish`, both gap polynomials are nonzero modulo \(p\), with degrees \(3(a-1)\) and \(3(b-1)\).  Therefore
-
-\[
-\boxed{m_{a,b}(p)\le3(\min(a,b)-1)\ll\min(T,B).}
-\tag{6.7}
-\]
-
-There are \(O(T)\) values of \(h\) and \(O(B)\) values of \(b\), so the number of possible label triples is
-
-\[
-\ll T B\min(T,B).
-\tag{6.8}
+N_a(r)=N_b(r+a)=0\pmod p.
+\tag{5.2}
 \]
 
 ### Noninterlaced case
 
-If
-
-\[
-r<r+h<u,
-\]
-
-then
+If \(r<r+h<u\), then
 
 \[
 r,\quad r+h,\quad r+h+b=u
 \]
 
-are three actual zeros.  Now
+are three actual zeros, so
 
 \[
-N_h(r)=0,
-\qquad
-N_b(r+h)=0,
+N_h(r)=N_b(r+h)=0\pmod p.
+\tag{5.3}
 \]
 
-so the same degree argument gives
-
-\[
-m_{h,b}(p)\ll\min(T,B).
-\tag{6.9}
-\]
-
-Again (6.8) follows.
-
-## 6.3 Recovering literal moving copies
-
-For each fixed oriented \(p\)-label, the reciprocal congruence places the moving prime in one residue class modulo \(p\), and the shell has length \(O(N)\) with \(p\asymp N\).  Hence each of
-
-\[
-r,\quad u,\quad r+h
-\]
-
-has only \(O(1)\) literal moving-prime lifts in a fixed orientation/source box.
-
-Thus passing from the label triple back to
-
-\[
-(\ell_1,\ell_2,\lambda)
-\]
-
-costs only \(N^{o(1)}\).  Every moving-characteristic zero test, source mask, reciprocal condition, lower-pair far condition and additional cross-copy deletion is a \(0\)--\(1\) restriction and can only decrease the count.
-
-This proves, root by root,
+For fixed adjacent gap parameters, `lem:nonvanish` and \(\deg N_j=3(j-1)\) give directly
 
 \[
 \boxed{
-\#\{(\ell_1,\ell_2):
-B\le |u-(r+h^\star)|<2B\}
-\ll N^{o(1)}T B\min(B,T).}
-\tag{6.10}
+ m_{a,b}(p)\le3(\min(a,b)-1),}
+\tag{5.4}
 \]
 
-Multiplying by the unchanged \(w_x\) and summing gives
+or the same bound with \((a,b)=(h,b)\).  This is just the smaller of the two polynomial degree bounds; it does not require the global \(H\le\sqrt p\) energy estimate.
+
+There are \(O(T)\) choices of \(h\), \(O(B)\) choices of \(b\), and at most \(O(\min(B,T))\) starting residues for each pair.  Each of the three fixed \(p\)-labels has only \(O(1)\) literal moving-prime lifts in a fixed source box.  The canonical-witness condition and all remaining source/moving-zero/far-pair masks are deletions.
+
+Therefore, root by root,
 
 \[
 \boxed{
-\mathfrak D_{2,\times B}(T)
-\ll N^{o(1)}T B\min(B,T)M_0.}
-\tag{6.11}
+\#\{\text{ordered active pairs}:B\le b<2B\}
+\ll N^{o(1)}TB\min(B,T).}
+\tag{5.5}
 \]
 
-This is the promised dyadic one-witness cross-gap theorem.
+Multiplication by the unchanged \(w_x\) proves (V1).
 
-### Why no \(T^{2/3}\) factor appears
+### Why there is no \(T^{2/3}\) witness loss
 
-The ordered lower pair and the **chosen** target determine the three-zero configuration.  We never sum over all targets of the first lower copy.  Conversely, after fixing the three \(p\)-labels, all three physical prime fibres are \(O(1)\).  The possible \(T^{2/3}\) alternate witnesses are irrelevant.
-
-This is exactly the advantage of canonical witness selection.
+Every lower pair uses exactly its selected canonical target.  We never sum over all possible targets.  Once the three \(p\)-labels are fixed, all lower/target prime fibres are \(O(1)\).  Alternate activity witnesses are irrelevant to this upper bound.
 
 ---
 
-# 7. Cumulative cross-near deletion and exponent ledger
+# 6. Cross-near deletion and exponents
 
-Let
-
-\[
-2\le K\le T.
-\]
-
-Summing (6.7) directly over \(2\le b\le K\) gives
+For \(2\le K\le T\), summing (5.4) directly over \(2\le b\le K\) yields
 
 \[
 \boxed{
 \mathfrak D_{2,\times[2,K]}(T)
-\ll N^{o(1)}T K^2M_0.}
-\tag{7.1}
+\ll N^{o(1)}TK^2M_0.}
+\tag{6.1}
 \]
 
-There are two exceptional tiny cross gaps.
+The distance-one case is empty by `lem:no-consec`.
 
-## 7.1 \(b=1\)
-
-This would make the other lower actual \(p\)-zero consecutive to the chosen target actual \(p\)-zero.  `lem:no-consec` therefore makes this sector empty.
-
-## 7.2 \(b=0\)
-
-The other lower copy has the same oriented \(p\)-label as the chosen target.  A fixed label has \(O(1)\) live prime lifts, so root by root this contributes \(O(D_{x,T})\).  Hence
+For \(b=0\), the other lower copy has the same oriented \(p\)-label as the chosen target.  A fixed \(p\)-label has \(O(1)\) moving-prime lifts, so this contributes rootwise \(O(D_{x,T})\) and globally
 
 \[
-\mathfrak D_{2,\times0}(T)
 \ll N^{2/3+o(1)}M_0.
-\tag{7.2}
+\tag{6.2}
 \]
 
-On the Q4955 far fixed-\(p\) sector, \(b=0\) implies that the lower-label gap is the activity gap, so
+In the Q4955 far fixed-\(p\) sector, \(b=0\) implies
 
 \[
-N^{3/5}<g_p^\diamond(r_1,r_2)\le h<2T.
+N^{3/5}<g_p^\diamond(r,u)\le h<2T,
 \]
 
-Thus
+so \(T\gg N^{3/5}\), and hence
 
 \[
 N^{2/3}\ll T^{10/9}.
-\tag{7.3}
+\tag{6.3}
 \]
 
-Therefore
+This proves (V2)--(V3).
 
-\[
-\boxed{
-\mathfrak D_{2,\times0}^{\rm ff}(T)
-\ll T^{10/9+o(1)}M_0.}
-\tag{7.4}
-\]
-
-This is below both consumers:
-
-\[
-\frac65-\frac{10}{9}=\frac4{45}>0,
-\]
-
-\[
-\frac{145}{93}-\frac{10}{9}=\frac{125}{279}>0.
-\]
-
-## 7.3 Canonical \(38/31\) gate
+## 6.1 Canonical gate
 
 Take
 
 \[
-\boxed{K=T^{26/93-\zeta}}
-\qquad(\zeta>0).
-\tag{7.5}
+K=T^{26/93-\zeta}.
 \]
 
 Then
@@ -1015,401 +624,182 @@ Then
 TK^2
 =T^{1+52/93-2\zeta}
 =T^{145/93-2\zeta}.
-\tag{7.6}
 \]
 
-Combining (7.1) and (7.4), the far--far ordered pair sector in which the canonical target of one lower copy lies within \(K\) of the other lower label satisfies
+Thus the whole directional cross-near part satisfies the canonical AD2 target with a fixed margin.  Taking the union of both directions costs only a constant factor.
+
+## 6.2 Ideal AD2 line
+
+The ideal Q5217 second-moment target is \(T^{23/15-o(1)}M_0\).  Therefore set
 
 \[
-\boxed{
-\mathfrak D_{2,\rm ff}^{\times\text{-near}}
-\ll
-T^{145/93-2\zeta+o(1)}M_0
-+T^{10/9+o(1)}M_0.}
-\tag{7.7}
+K=T^{4/15-\zeta}.
 \]
 
-The same bound holds for the union of the two directions \(1\to2\) and \(2\to1\), at a constant-factor cost.
-
-Thus this whole sub-sector satisfies AD2 with
+Then
 
 \[
-\boxed{\rho=\frac{145}{186}-\zeta.}
-\tag{7.8}
+TK^2=T^{1+8/15-2\zeta}
+=T^{23/15-2\zeta}.
 \]
 
-## 7.4 Ideal \(6/5\) line
-
-Taking instead
+Hence this cross-near sub-sector also satisfies AD2 with
 
 \[
-\boxed{K=T^{1/10-\zeta}}
-\tag{7.9}
+\rho=\frac{23}{30}-\zeta.
 \]
-
-gives
-
-\[
-TK^2=T^{6/5-2\zeta},
-\]
-
-and therefore the same cross-near sector is below the ideal line with a fixed margin.
-
-This is the strongest unconditional new deletion obtained in this round.
 
 ---
 
-# 8. What two activity witnesses look like after the deletion
+# 7. What remains after the new deletion
 
-Fix the canonical witness of each lower copy.  After removing the two directional cross-near sectors at the gate scale, we may impose
-
-\[
-\boxed{
-|r_2-r_1^+|>T^{26/93-o(1)},
-\qquad
-|r_1-r_2^+|>T^{26/93-o(1)}
-}
-\tag{8.1}
-\]
-
-in every nonwrapping orientation chart, with the corresponding reflected versions treated in the finite reflection alphabet.
-
-Together with Q4955,
+At the canonical gate, fix a small \(\zeta>0\) and choose the canonical witness of each active copy.  We may now restrict to
 
 \[
 |d|>N^{8/15},
 \qquad
-g_p^\diamond(r_1,r_2)>N^{3/5}.
-\tag{8.2}
+ g_p^\diamond(r_1,r_2)>N^{3/5},
+\tag{7.1}
 \]
 
-This is a strictly smaller residual than Q5217's raw rich-degree event.
+and, in both directional charts,
 
-There are then two structural subcases.
+\[
+\boxed{
+\operatorname{dist}(r_1^+,r_2)>T^{26/93-\zeta},
+\qquad
+\operatorname{dist}(r_2^+,r_1)>T^{26/93-\zeta}.}
+\tag{7.2}
+\]
 
-## 8.1 Coalescent target
+This is strictly smaller than the Q5217 far--far AD2 event.
 
-It is possible that
+There are two honest subcases.
+
+### 7.1 Coalescent targets
+
+The canonical targets may satisfy
 
 \[
 \lambda_1=\lambda_2.
-\tag{8.3}
 \]
 
-The two lower primes are still distinct.  In a common orientation, target equality forces
+Then two distinct lower zeros return to one common target.  In a common orientation the lower gap is \(|h_1-h_2|\).  A fixed target can have as many as \(T^{2/3+o(1)}\) actual predecessors in the relevant backward interval, so the current subinterval theorem permits a substantial V-shaped star.  The existing \(T^{8/3}\) collision-energy bound, where its \(H\le\sqrt p\) range applies, is still far above the \(T^{145/93}\) AD2 gate.  Thus coalescence is not automatically harmless.
 
-\[
-r_1+\varepsilon_1h_1
-\equiv
-r_2+\varepsilon_2h_2
-\pmod p.
-\tag{8.4}
-\]
+### 7.2 Four distinct physical moving primes
 
-This is a genuine V-shaped three-zero configuration.  It is **not** excluded by (8.1), because each lower-to-common-target distance is of order \(T\), much larger than the gate cross-near cutoff.
-
-A common target can have as many as \(T^{2/3+o(1)}\) actual predecessors in the relevant interval, so the present subinterval theorem allows a nontrivial star.  The available large-window collision energy is not applicable in exactly the far range where \(|h_1-h_2|>N^{3/5}\) forces \(T>N^{3/5}\).
-
-Thus target coalescence is one honest residual configuration.
-
-## 8.2 Four distinct moving primes
-
-If the targets do not coalesce, then after the \(b=0\) deletion the four physical moving primes are distinct in the generic orientation sector, and the nonzero determinant (3.7) is available:
+If the targets do not coalesce, the generic four-distinct subcase carries
 
 \[
 p\mid\Phi_{12}\ne0.
-\tag{8.5}
 \]
 
-The exact q-lift defect (4.4) remains.  No current Palm-relative divisor theorem converts (8.5) into a power saving.
-
-This is the other honest residual configuration.
+The exact q-lift defect (4.2) remains, and no present Palm-relative divisor theorem converts this determinant into a power saving.
 
 ---
 
-# 9. Attack III — phase/large-sieve use of the activity targets
+# 8. Attack III: disjoint-gap/phase routes and their exact failure
 
-The activity witnesses also seem to offer new oscillatory variables.  There are two ways to expose them, and both fail for exact reasons.
+## 8.1 Summing all activity witnesses
 
-## 9.1 Sum all witnesses
-
-Replace the active indicator by the positive witness count:
+Replacing the active indicator by the positive witness count exposes \((h_1,\lambda_1,h_2,\lambda_2)\), but can cost
 
 \[
-\mathbf1_{\{\alpha\text{ active}\}}
-\le
-\sum_{(h,\lambda)\in\mathscr W_T(\alpha)}1.
-\tag{9.1}
+T^{2/3+o(1)}\times T^{2/3+o(1)}
+=T^{4/3+o(1)}.
 \]
 
-For two lower copies this exposes two target primes and two return gaps.  However (2.12) gives
+Reindexing by targets does not remove this: each target can have the same \(T^{2/3+o(1)}\) predecessor multiplicity.  Thus a naive four-/six-zero energy over all witness choices loses too much before any gate saving can occur.
+
+The canonical-witness choice avoids that loss, but then there is no linear witness sum left on which to apply Cauchy or a large sieve.
+
+## 8.2 Moving-characteristic Fourier expansion
+
+For a target characteristic \(\lambda\), the exact actual-zero identity is
 
 \[
-|\mathscr W_T(\alpha)|\ll T^{2/3+o(1)},
-\]
-
-so a two-target expansion can be larger by
-
-\[
-T^{4/3+o(1)}.
-\tag{9.2}
-\]
-
-Reindexing by target pairs does not remove the loss: a fixed target has up to \(T^{2/3+o(1)}\) actual predecessors in the backward interval.
-
-For example, feeding Q4955's \(N^{6/5+o(1)}M_0\) short-pair theorem through this inverse multiplicity would give at best
-
-\[
-N^{6/5+o(1)}T^{4/3}M_0,
-\]
-
-far above the AD2 gate.
-
-## 9.2 Fourier-expand the target moving-zero tests
-
-For a target characteristic \(\lambda\), the exact canonical identity is
-
-\[
-\mathbf1_{\mathcal Z_\lambda}(s_\lambda)
--\frac{Z(\lambda)}\lambda
+\mathbf1_{\mathcal Z_\lambda}(s_\lambda)-\frac{Z(\lambda)}\lambda
 =
-\frac1\lambda
-\sum_{a\ne0}F_\lambda(a)e_\lambda(-as_\lambda).
-\tag{9.3}
+\frac1\lambda\sum_{a\ne0}F_\lambda(a)e_\lambda(-as_\lambda).
 \]
 
-Q4703 audits the corresponding trace function.  If the target actually hits, the term indexed by the actual zero
+Q4703 audits this trace function.  On a **successful** moving-zero hit, the summand indexed by the actual zero \(u=s_\lambda\) is the trivial Artin--Schreier trace, whose complete frequency sum is \(\lambda-1\).  Two successful activity targets therefore create two positive trivial components, not a new local orthogonality mechanism.
 
-\[
-u=s_\lambda
-\]
-
-produces the constant Artin--Schreier trace.  Its complete frequency sum is \(\lambda-1\), not square-root sized.
-
-Thus one successful target contributes a positive trivial summand.  Two successful activity targets contribute the product of two such positive trivial summands.  Local conductor bounds and independent finite-field Cauchy do not produce cancellation across changing characteristics.
-
-Choosing one canonical target avoids (9.2), but then there is no linear target sum left on which to apply a large sieve.
-
-Hence activity does not currently produce a phase-orthogonality theorem unavailable for arbitrary moving-hit pairs.
-
-A genuinely new **horizontal** operator theorem, uniform under the selected-Palm conditioning and able to suppress the trivial-hit contribution after coupling different characteristics, would be required.
+A useful phase theorem would have to be genuinely horizontal across changing characteristics and uniform under the selected-Palm conditioning.  No such theorem is currently banked.
 
 ---
 
-# 10. Sharp current-interface saturation after the new deletion
+# 9. Current-interface saturation after the cross-near deletion
 
-The following is an **interface saturation packet**, not an actual Apéry construction.  It is included to show that the presently proved degree, spacing, zero-count, reciprocal-fibre and Palm-pair inequalities still allow the new cross-deep far--far scale.
+This is an interface packet, **not** an actual Apéry or prime construction.
 
 Take
 
 \[
-N\asymp T^2.
-\tag{10.1}
+N\asymp T^2
 \]
 
-Choose
+and choose
 
 \[
 \frac{145}{186}<\kappa<\frac45.
-\tag{10.2}
 \]
 
-The interval is nonempty because
+This interval is nonempty since
 
 \[
-\frac45-\frac{145}{186}
-=rac{19}{930}>0.
-\tag{10.3}
+\frac45-\frac{145}{186}=\frac{19}{930}>0.
 \]
 
-Concentrate the selected-Palm weight on one formal legal root and put
+Concentrate the formal Palm mass on one legal root and take
 
 \[
 D\asymp T^\kappa.
-\tag{10.4}
 \]
 
-## 10.1 Distinguished-\(p\) geometry
-
-Let
+Place the lower distinguished-\(p\) labels at spacing
 
 \[
 R=N^{3/5}=T^{6/5}.
 \]
 
-Place \(D\) lower actual \(p\)-labels in a central nonreflected interval, separated by \(\asymp R\).  This fits because
+The packet fits in the \(p\)-line because \(D R\ll T^2\) when \(\kappa<4/5\).  Give each lower one target at a common gap \(h_0\asymp T\).  Since \(R\gg T\), every lower-to-foreign-target cross gap is \(\asymp R\), far above \(T^{26/93}\).  The fixed-gap root cap permits the \(D<T\) pairs at \(h_0\); a length-\(T\) interval sees only \(O(1)\) packet zeros; and the total zero count \(O(D)\) is below \(N^{2/3}=T^{4/3}\).
+
+At the level of the current reciprocal-fibre interfaces there is also room for \(D\) lower quotient coordinates separated by
 
 \[
-D R
-\asymp T^{\kappa+6/5}
-\le T^2\asymp p
+N^{8/15}=T^{16/15},
 \]
 
-precisely when \(\kappa\le4/5\).
+because \(D T^{16/15}=o(T^2)\) for \(\kappa<14/15\).
 
-Attach one activity target to each lower label at the same fixed gap
+Thus the banked upper-bound interfaces still admit a formal cross-deep far--far packet with
 
 \[
-h_0\asymp T.
-\tag{10.5}
+D^2\asymp T^{2\kappa}>T^{145/93}.
 \]
 
-Since \(T\ll R\), all different lower clusters, their targets, and every lower-to-foreign-target cross gap are \(\gg R\).  In particular the Q4955 fixed-\(p\) far condition and the new cross-deep condition
-
-\[
-b\gg T^{26/93}
-\]
-
-are simultaneously compatible.
-
-The fixed-gap root cap permits this: at \(h_0\) there are only \(D<T\) pairs, while
-
-\[
-A_p(h_0)\le3(h_0-1)\asymp T.
-\]
-
-A length-\(T\) interval sees only \(O(1)\) packet zeros, well below \(T^{2/3}\).  The total distinguished-\(p\) zero count is
-
-\[
-O(D)\ll T^{4/3}=N^{2/3}.
-\]
-
-Reflection can be added in a disjoint interval at constant cost.
-
-## 10.2 Reciprocal far coordinate
-
-The Q4955 reciprocal threshold is
-
-\[
-N^{8/15}=T^{16/15}.
-\]
-
-At the level of the current reciprocal-fibre interfaces there is room for \(D\) lower quotient coordinates separated by this amount, because
-
-\[
-D\,T^{16/15}
-=T^{\kappa+16/15}
-=o(T^2)
-\]
-
-for every \(\kappa<14/15\), in particular for (10.2).
-
-Thus the numerical interfaces permit all lower pairs to lie in the reciprocal far sector as well.
-
-## 10.3 AD2 scale
-
-The far--far active pair moment of this packet is
-
-\[
-D^2\asymp T^{2\kappa}.
-\tag{10.6}
-\]
-
-For every fixed small
-
-\[
-0<\epsilon<\frac{19}{930},
-\qquad
-\kappa=\frac{145}{186}+\epsilon,
-\]
-
-this is
-
-\[
-T^{145/93+2\epsilon},
-\]
-
-strictly above the canonical AD2 gate.
-
-The packet also survives the new cross-near deletion because the cluster separation \(T^{6/5}\) is much larger than \(T^{26/93}\).
-
-## 10.4 What this packet does **not** claim
-
-It does not construct actual Apéry zero sets or prove that the required shell primes realize the prescribed two-dimensional \((r,k)\) placement.  In particular, exact simultaneous distribution of the full reciprocal quotient coordinate is precisely one of the horizontal arithmetic issues not controlled by the current theorems.
-
-It also makes no claim about alignment of the original four-copy phases.
-
-The packet proves only the following scoped statement:
-
-> The currently banked **upper-bound interfaces**—global zero count, fixed-gap root degree, subinterval zero count, reflection, finite reciprocal fibres, Q4955 short-pair deletions and Q5199 activity definitions—do not by themselves force the remaining cross-deep far--far AD2 moment below \(T^{145/93}\).
-
-An actual arithmetic proof can still win by using information not represented in those interfaces; the exact q-lift and horizontal moving-zero distributions identified above are the natural places.
+This does **not** claim that the actual Apéry sequence realizes the packet, that all required shell primes exist in prescribed reciprocal fibres, or that the original four-copy phases align.  It shows only that the currently proved marginal/codegree interfaces do not imply the missing cross-deep AD2 bound.
 
 ---
 
-# 11. First exact failed implication
-
-The earliest load-bearing failure in the hoped-for two-witness closure is not an exponent estimate.  It is the type error
-
-\[
-\boxed{
- r_i^+-r_i=\varepsilon_i h_i\pmod p
- \quad\not\Longrightarrow\quad
- m_i^+-m_i=\varepsilon_i h_i\pmod{pq}.}
-\tag{11.1}
-\]
-
-The exact correction is
-
-\[
- m_i^+-m_i
- =\varepsilon_i h_i+pJ_i.
-\]
-
-The free \(J_i\) is the missing q-coordinate.  Therefore:
-
-- two activity witnesses give one common-\(p\) four-zero geometry;
-- they do not give a second \(q\)-return geometry;
-- they do not give six distinct same-characteristic zeros;
-- they do not turn the Q4955 far reciprocal displacement into a short quantity;
-- and they do not supply a second outer weight.
-
-This is the first exact implication that fails.
-
----
-
-# 12. Smallest new arithmetic lemma after the proved deletion
+# 10. Smallest remaining arithmetic statement
 
 Fix \(\zeta>0\) and put
 
 \[
 K_\zeta=T^{26/93-\zeta}.
-\tag{12.1}
 \]
 
-For each active oriented copy choose the canonical witness (2.14).  Let
+Let
 
 \[
 \mathfrak D_{2,\rm ff}^{\rm crossdeep}(T;K_\zeta)
 \]
 
-denote the literal Palm-weighted ordered pair count with
+denote the literal Palm-weighted ordered active-pair mass satisfying Q4955's far conditions (7.1) and both canonical-witness cross-deep conditions (7.2).  All actual moving-zero tests, reciprocal labels, source masks, distinctness conditions and the single selected-root weight are retained.
 
-\[
-|d|>N^{8/15},
-\qquad
-g_p^\diamond>N^{3/5},
-\tag{12.2}
-\]
-
-and, in both directional orientation charts,
-
-\[
-\operatorname{dist}
-(\text{target of copy 1},\text{lower label of copy 2})>K_\zeta,
-\]
-
-\[
-\operatorname{dist}
-(\text{target of copy 2},\text{lower label of copy 1})>K_\zeta.
-\tag{12.3}
-\]
-
-All actual moving-zero tests, reciprocal labels, source masks, lower-copy distinctness and the single selected-root weight are retained.
-
-Sections 6--7 prove that the complement of this cross-deep event is already subcritical for the \(38/31\) gate.
-
-Therefore the smallest clean remaining arithmetic input is:
+Sections 5--6 prove unconditionally that the complementary cross-near sector is already subcritical.  Therefore the smallest clean remaining input is
 
 \[
 \boxed{
@@ -1421,23 +811,21 @@ Therefore the smallest clean remaining arithmetic input is:
 
 for some fixed \(\delta>0\).
 
-This is strictly narrower than Q5217's AD2 target: it has already removed Q4955's two short pair sectors and the new activity cross-near sector.  On its four-distinct part it also carries the nonzero determinant \(p\mid\Phi_{12}\ne0\); its only separate collision geometry is canonical-target coalescence.
-
-A proof of `(FFAD2-crossdeep)` would close the canonical active-degree gate.  No current canonical theorem proves it.
+This is strictly narrower than Q5217's AD2 target.  On its generic four-distinct part it additionally carries the nonzero determinant \(p\mid\Phi_{12}\); its separate collision geometry is canonical-target coalescence.
 
 For the ideal line, replace \(K_\zeta\) by
 
 \[
-T^{1/10-\zeta}
+T^{4/15-\zeta}
 \]
 
-and \(145/93\) by \(6/5\).
+and \(145/93\) by \(23/15\).
+
+No current canonical theorem proves either remaining statement.
 
 ---
 
-# 13. Insertion-ready LaTeX — proved statements only
-
-The following blocks use only already-proved canonical facts plus deterministic selection from the literal active witness set.  No open Palm-dispersion premise is included.
+# 11. Insertion-ready LaTeX — proved statements only
 
 ```latex
 \begin{lemma}[Two active witnesses and the reciprocal $p$-determinant]
@@ -1570,14 +958,13 @@ target costs only $N^{o(1)}$.  Every remaining literal mask is a
 deletion.  This proves the result.
 \end{proof}
 
-\begin{corollary}[Cross-near deletion at the active-degree gate]
+\begin{corollary}[Cross-near deletion at the active-degree gates]
 \label{cor:at-active-crossnear-gate}
 In the Q4955 far--far lower-pair sector, let
 $\mathfrak D_{2,\times\le K}^{\rm ff}(T)$ denote the Palm-weighted
-ordered pair mass for which, in at least one of the two directional
-orientation charts, the chosen activity target lies at nonwrapping
-integer distance at most $K$ from the other lower $p$-label.  Then, for
-$2\le K\le T$,
+ordered pair mass for which, in at least one directional orientation
+chart, the chosen activity target lies at nonwrapping integer distance
+at most $K$ from the other lower $p$-label.  Then, for $2\le K\le T$,
 \[
  \mathfrak D_{2,\times\le K}^{\rm ff}(T)
  \ll N^{o(1)}TK^2M_0+N^{2/3+o(1)}M_0.
@@ -1598,11 +985,11 @@ gives
  T^{145/93-2\zeta+o(1)}M_0
  +T^{10/9+o(1)}M_0.
 \]
-Taking instead $K=T^{1/10-\zeta}$ gives
+Taking instead $K=T^{4/15-\zeta}$ gives
 \[
  \mathfrak D_{2,\times\le K}^{\rm ff}(T)
  \ll
- T^{6/5-2\zeta+o(1)}M_0
+ T^{23/15-2\zeta+o(1)}M_0
  +T^{10/9+o(1)}M_0.
 \]
 \end{corollary}
@@ -1610,75 +997,77 @@ Taking instead $K=T^{1/10-\zeta}$ gives
 
 ---
 
-# 14. Final ledger
+# 12. Exponent and obstruction ledger
 
 ```text
-literal selected root weight w_x:                 RETAINED ONCE
-lower moving copies ell_1, ell_2:                 ACTUAL two-test hits
-far reciprocal displacement:                      |d| > N^(8/15)
-far fixed-p diamond gap:                           > N^(3/5)
-activity witness per lower:                        EXISTS, actual target
-possible witnesses per lower:                      <= T^(2/3+o(1))
-canonical witness selection:                       USED to avoid multiplicity
-all-witness pair loss if expanded:                 up to T^(4/3+o(1))
-
-one activity edge:
-  eps h ell lambda = A(ell-lambda) mod p
-
-two activity edges:
-  p | Phi_12
-  Phi_12 nonzero on four-distinct mesoscopic sector
-  equal-h specialization:                          Q5155 cubic
-
-full-P lift:
-  m^+ - m = eps h + p J
-  q-stage identity:                                B + lambda J = q e
-  activity controls J:                             NO
-  second independent q divisor:                    NOT PROVED
-
-same-characteristic zeros created by activity:
-  p:                                                four endpoints
-  p':                                               one repeated inherited residue
-  q:                                                no unselected zero test
-  moving characteristics:                          one zero in each different field
-  legal six-zero same-characteristic resultant:    NO
-
-new proved one-witness cross-gap bound:
-  dyadic b ~ B:                                    T B min(B,T) M0
-  cumulative 2 <= b <= K <= T:                     T K^2 M0
-  b = 1:                                            EMPTY
-  b = 0 in far-p sector:                            T^(10/9+o(1)) M0
-
-canonical gate cutoff:
-  K = T^(26/93-zeta)
-  exponent:                                         145/93 - 2 zeta
-
-ideal cutoff:
-  K = T^(1/10-zeta)
-  exponent:                                         6/5 - 2 zeta
-
-remaining cross-deep residual:
+Q4955 lower-pair residual:
   |d| > N^(8/15)
   g_p^diamond > N^(3/5)
-  both directional canonical cross gaps > T^(26/93-o(1))
+
+activity witness per lower:
+  actual p-target at T <= h < 2T
+  actual moving-characteristic target zero
+  all source/reciprocal masks retained
+  possible witnesses per lower: <= T^(2/3+o(1))
+  two-witness expansion loss: up to T^(4/3+o(1))
+
+new one-edge congruence:
+  eps h ell lambda = A(ell-lambda) mod p
+
+new two-edge determinant:
+  p | Phi_12
+  Phi_12 != 0 on four-distinct mesoscopic sector
+  equal-h specialization = Q5155 reciprocal cubic
+
+second CRT stage:
+  m^+ - m = eps h + p J
+  B + lambda J = q e
+  J controlled by current q-zero selector: NO
+
+legal same-characteristic new zeros:
+  p: four endpoints
+  p': one repeated inherited residue
+  q: no unselected zero
+  moving characteristics: one zero in each changing field
+  legal six-zero resultant: NO
+
+proved one-witness cross-gap:
+  b ~ B:             T B min(B,T) M0
+  2 <= b <= K <= T: T K^2 M0
+  b = 1:             empty
+  b = 0 in far-p:    T^(10/9+o(1)) M0
+
+canonical AD2 gate:
+  target exponent: 145/93
+  K = T^(26/93-zeta)
+  cross-near exponent: 145/93 - 2 zeta
+
+ideal AD2 line:
+  target exponent: 23/15
+  K = T^(4/15-zeta)
+  cross-near exponent: 23/15 - 2 zeta
+
+remaining cross-deep event:
+  Q4955 far d
+  Q4955 far p-diamond gap
+  both canonical lower-to-foreign-target gaps > gate cutoff
   target coalescence OR four-distinct nonzero Phi_12
 
 phase route:
-  successful target creates trivial trace summand
-  all-witness Fourier expansion costs T^(4/3)
-  canonical witness has no linear averaging variable
-  new horizontal operator theorem required
+  all-witness expansion loses T^(4/3)
+  canonical witness is nonlinear
+  successful moving zero has trivial trace summand
+  no banked horizontal operator theorem
 
-full far-far AD2 with rho < 145/186:               NOT PROVED
-new restricted far-far deletion:                    PROVED
-smallest remaining lemma:                            FFAD2-crossdeep
+full far-far AD2 with rho < 145/186: NOT PROVED
+new restricted far-far deletion: PROVED
+smallest remaining premise: FFAD2-crossdeep
 ```
 
 ## Final conclusion
 
-The additional activity information is not inert.  It has two precise consequences that were absent in Q5217:
+The activity information is genuinely useful but does not finish AD2.  It produces a new four-prime determinant in the common characteristic \(p\), yet the exact full-\(P\) identity exposes an uncontrolled \(q\)-coordinate \(J_i\), so there is no second CRT modulus and no legal six-zero same-characteristic resultant.
 
-- algebraically, two activity edges create the nonzero four-prime determinant \(p\mid\Phi_{12}\), but the missing \(q\)-row lift \(J_i\) blocks a second CRT modulus;
-- combinatorially, **one** canonical activity edge turns an arbitrary second active lower label into a three-zero gap configuration.  Whenever the second lower lies within \(K\) of the target, the canonical gap-polynomial degree gives the sharp positive bound \(TK^2M_0\), enough to delete \(K=T^{26/93-\zeta}\) at the canonical gate and \(K=T^{1/10-\zeta}\) at the ideal line.
+The strongest unconditional gain is instead combinatorial: one canonical activity edge turns the second lower label into a genuine three-zero configuration.  This proves the cross-gap bound (V1), deleting all canonical far--far pairs for which either chosen activity target approaches the other lower label within \(T^{26/93-\zeta}\) at the \(38/31\) gate, or within \(T^{4/15-\zeta}\) at the ideal AD2 line.
 
-After those deletions, the obstruction is materially smaller: a Palm-weighted pair of far reciprocal/far spatial active lowers whose two canonical activity edges remain cross-deep.  On the generic four-distinct part it carries a nonzero characteristic-zero determinant; on the exceptional part the two activity edges coalesce at one target.  Neither configuration is controlled with a power saving by the present canonical interfaces.
+What remains is the strictly smaller cross-deep far--far Palm pair problem `(FFAD2-crossdeep)`.  On its generic part one has the nonzero determinant \(p\mid\Phi_{12}\); on its exceptional part the two activity witnesses coalesce at one target.  Neither is presently controlled with a power saving by the canonical Problem 3.2 interfaces.
