@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Finite sanity checks for Q32 RR68 average repair.
+"""Finite sanity checks for the corrected Q32 RR68 average repair.
 
 This script checks only:
 
 * exact rational exponent arithmetic;
+* the central-layer identity Z^2 = Z(Z-1) + Z;
+* the literal RR68av high-corner competitors, target, and residual;
 * the elementary congruence consequences of
       p*k == -rho (mod b), gcd(k,b)=gcd(rho,b)=1;
 * bounded numbers of residue-class representatives in the physical p- and
@@ -48,11 +50,11 @@ def check_exponent_ledger() -> None:
     # max W times the positive L1 ledger.
     assert Q(-2, 5) + Q(4, 5) == Q(2, 5)
 
-    # Mean host term: outer N^-1, r^-1, L1 N^(4/5), and weighted
-    # second zero moment N^(6/5).
+    # Mean host term: outer N^-1, r^-1, L1 N^(4/5), and the central
+    # factorial-plus-diagonal square moment N^(6/5).
     assert Q(-1) + Q(-1) + Q(4, 5) + Q(6, 5) == Q(0)
 
-    # Weighted Cauchy for sum |u_r| Z(r)^(3/2).
+    # Weighted Cauchy on the same central layer.
     assert (Q(3, 5) + Q(6, 5)) / 2 == Q(9, 10)
 
     # Centered host term: outer N^-1, sqrt(r), weighted Cauchy, and
@@ -62,22 +64,62 @@ def check_exponent_ledger() -> None:
     # AF1 plus the actual pointwise 2/3 zero bound.
     assert Q(2, 3) + Q(11, 5) == Q(43, 15)
 
-    # Staged opposite high-corner minimax.
-    ell = Q(2, 15)
-    h1 = Q(5, 2) - ell / 4
-    h2 = Q(7, 3) + ell
-    assert h1 == h2 == Q(37, 15)
-    assert Q(37, 15) - Q(12, 5) == Q(1, 15)
+    # Literal RR68av opposite high-corner ledger.
+    crossing = (Q(13, 5) - Q(12, 5)) / (Q(1) + Q(1, 2))
+    assert crossing == Q(2, 15)
 
-    # The staged local ridge value is recorded, but the repair is sigma-free:
-    # it restores the same downstream inputs rather than deriving a new sigma.
+    h_minus = Q(13, 5) - crossing
+    h_plus = Q(12, 5) + crossing / 2
+    assert h_minus == h_plus == Q(37, 15)
+
+    # The maximum of a decreasing and an increasing affine function is
+    # minimized at their crossing.  The finite grid is only a sanity check.
+    for numerator in range(-120, 121):
+        ell = Q(numerator, 60)
+        competitor = max(Q(13, 5) - ell, Q(12, 5) + ell / 2)
+        assert competitor >= Q(37, 15)
+
+    # Correct fully-unconditional target and exact residual.
+    for sigma in (Q(0), Q(1, 100), Q(1, 80), Q(1, 40)):
+        target = Q(11, 5) - 2 * sigma
+        residual = Q(37, 15) - target
+        assert residual == Q(4, 15) + 2 * sigma
+        assert residual > 0
+
+    assert Q(4, 15) + 2 * Q(1, 40) == Q(19, 60)
+
+    # The repair itself is sigma-free; sigma enters only the downstream target.
     sigma = Q(1, 40)
-    assert sigma > 0
 
-    # The currently proved third moment is much weaker than either staged
-    # sufficient premise at the ridge endpoint.
+    # The proved cubic bound is much weaker than either staged sufficient
+    # premise at the ridge endpoint.
     assert Q(43, 15) > Q(29, 15) - 6 * sigma
     assert Q(43, 15) > Q(2) - 6 * sigma
+
+
+def check_central_factorial_plus_diagonal() -> None:
+    """Check the exact local decomposition of the weighted square moment."""
+
+    weights = [Fraction(1, 2), Fraction(2, 3), Fraction(5, 7), Fraction(3, 4)]
+    zero_counts = [0, 1, 2, 5]
+
+    # Exhaust every deletion mask to model the exact central host layer.
+    for mask in range(1 << len(weights)):
+        square = Fraction(0)
+        factorial = Fraction(0)
+        diagonal = Fraction(0)
+
+        for i, (weight, z) in enumerate(zip(weights, zero_counts)):
+            if not (mask & (1 << i)):
+                continue
+            square += weight * z * z
+            factorial += weight * z * (z - 1)
+            diagonal += weight * z
+
+        assert square == factorial + diagonal
+
+    # Exponent-level consequence: N^(6/5) + N^(3/5) is N^(6/5+o(1)).
+    assert max(Fraction(6, 5), Fraction(3, 5)) == Fraction(6, 5)
 
 
 def check_fixed_k_prime_class() -> None:
@@ -165,8 +207,8 @@ def check_weighted_overlap_once() -> None:
                         p for p in primes if (p * k + rho) % b == 0
                     ]
 
-                # Deterministic positive stand-in for the already-contained
-                # zero-label multiplicity Z(p).  Its actual arithmetic value is
+                # A deterministic positive stand-in for the already-contained
+                # zero-label multiplicity Z(p).  Its arithmetic value is
                 # irrelevant to this incidence identity.
                 z_of_p = {p: 1 + (p % 5) for p in primes}
 
@@ -194,11 +236,14 @@ def check_weighted_overlap_once() -> None:
 
 def main() -> None:
     check_exponent_ledger()
+    check_central_factorial_plus_diagonal()
     check_fixed_k_prime_class()
     check_fixed_prime_k_lifts()
     check_weighted_overlap_once()
 
-    print("PASS: RR68 exponent ledger")
+    print("PASS: RR68 core exponent ledger")
+    print("PASS: central factorial-plus-diagonal square identity")
+    print("PASS: literal RR68av high-corner, target, and residual")
     print("PASS: fixed-k source-prime residue class and shell bound")
     print("PASS: fixed-prime physical-k lift bound")
     print("PASS: zero labels counted once in the exact-k overlap")
