@@ -1,0 +1,39 @@
+name: q6190 finite census
+
+on:
+  push:
+    branches:
+      - q6190-census
+
+jobs:
+  census:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Structural pair census
+        run: |
+          set -euxo pipefail
+          python3 problems/3.2/q6190_pair_census.py | tee /tmp/q6190_pair.log
+          python3 problems/3.2/primitive_chain_census.py | tee /tmp/q6190_primitive.log
+      - name: Reflection multiplier regression
+        run: |
+          set -euxo pipefail
+          python3 problems/3.2/bridge_reflection_multiplier_verify.py | tee /tmp/q6190_reflection.log
+      - name: First-Witt and companion census through 30000
+        run: |
+          set -euxo pipefail
+          cc -O3 -Wall -Wextra -Wpedantic -o /tmp/q6190_witt problems/3.2/q6190_witt_census.c
+          /tmp/q6190_witt 30000 /tmp/q6190_witt_rows.csv | tee /tmp/q6190_witt.log
+      - name: Checksums
+        run: |
+          set -euxo pipefail
+          sha256sum \
+            problems/3.2/data_zp_pairs.bin \
+            problems/3.2/q6190_pair_census.py \
+            problems/3.2/q6190_witt_census.c \
+            /tmp/q6190_pair.log \
+            /tmp/q6190_primitive.log \
+            /tmp/q6190_reflection.log \
+            /tmp/q6190_witt.log \
+            /tmp/q6190_witt_rows.csv
