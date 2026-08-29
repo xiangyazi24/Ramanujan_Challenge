@@ -1,112 +1,127 @@
-Q6111 9c3e62dd -- AUDITABLE FORMULA ARTIFACT
+Q6111 9c3e62dd -- COMPLETE AUDITABLE ASCII FORMULA ARTIFACT
 
-This file is plain ASCII by design. It contains every load-bearing formula used in
-drops/Q6111-9c3e62dd.md.
+This file is deliberately plain ASCII. It is the transport-safe formula source
+for drops/Q6111-9c3e62dd.md. It is a delivery artifact, not authoritative TeX.
 
-SOURCE SCOPE
-============
+SOURCE BOUNDARY
+===============
 Caller-authoritative local head:
   670c5b947d66fa0dacf51df1e112fe5f08433d37
-The connected GitHub API does not contain that object. The identities below are
+The connected GitHub API does not contain that object. The formulas below are
 re-derived from the stable Apéry recurrence and the exact Q6006/Q6046 chamber
-formulas quoted in the companion answer.
+interfaces quoted in the companion answer.
 
-0. BASIC SELECTED-MINUS DATA
-============================
-Selected upper occurrence:
-  omega = (q,t,iota)
-  q prime, 0 <= t < q, q | b_t
+0. SELECTED UPPER OCCURRENCE AND RAW MINUS RANGE
+================================================
+omega = (q,t,iota)
+q prime
+0 <= t < q
+q | b_t
 
-Common indices and lower digits:
-  s = q - 1 - t
-  n = 6q + t
-  p = s - a
-  r = n - 6p = 6a + 7t + 6
-  z = p - 1 - r
-  w = p - 1 - a
+s = q-1-t
+n = 6q+t
+p = s-a = q-1-t-a
+r = n-6p = 6a+7t+6
+z = p-1-r
+w = p-1-a
 
-Raw-minus inverse:
-  d = q - p = a + t + 1 = (a+r+1)/7
-  q = p + d
-  t = (r - 6a - 6)/7
+d = q-p = a+t+1 = (a+r+1)/7
+q = p+d
+t = (r-6a-6)/7
 
-Actual hard leaf:
-  p prime
+D_raw = floor(T/J)+1
+max(D_raw,t+1) <= d <= floor((q-t-1)/7)
+max(0,D_raw-t-1) <= a <= floor((q-8t-8)/7)
+
+A fully actual hard leaf retains:
+  p prime in the lower shell
   0 <= a < r < p < q
   p | b_a and p | b_r
-  all raw-minus, primitive, residual, depth, product, shell, branch,
-  sign, and minus-first masks retained.
+  q prime, 0 <= t < q, q | b_t
+  exact raw-minus range
+  all residual, depth, product, shell, branch, primitive-first-return masks
+  raw sign and authoritative minus-first assignment
+  complete occurrence label iota
 
-1. THREE CHAMBERS AND INTEGER p-SHIFTS
-======================================
-All nonpositional deep leaves have odd u.
+For fixed numerical (q,t), a -> p is injective. Repeated complete labels iota
+are retained as distinct occurrences.
 
-Chamber I:
+1. THREE CHAMBERS, FIXED CHARTS, AND INTEGER p-SHIFTS
+=====================================================
+All nonpositional chamber levels u are odd.
+
+CHAMBER I
+  condition:    q > 13a+15t+14
   order:        a < r < z < w
   u:            u = r-a
-  p_u:          p = (5q+2t+1-u)/5
-  affine law:   u + 5p = 5q + 2t + 1
+  lower prime:  p = (5q+2t+1-u)/5
+  affine law:   u+5p = 5q+2t+1
   local start:  x = a
   local end:    y = r = x+u
   fixed column: X_c = -n-1
-  reflection:   N_u(-n-1) = N_u(a+6p)
+  exact lift:   N_u(-n-1) = N_u(a+6p)
   p-shift:      kappa_I = +6
 
-Chamber II:
+CHAMBER II
+  condition:    8a+8t+8 < q < 13a+15t+14
   order:        a < z < r < w
   u:            u = z-a
-  p_u:          p = (7q+u)/8
-  affine law:   u - 8p = -7q
+  lower prime:  p = (7q+u)/8
+  affine law:   u-8p = -7q
   local start:  x = a
   local end:    y = z = x+u
   fixed column: X_c = n
-  reflection:   N_u(n) = N_u(a-7p)
+  exact lift:   N_u(n) = N_u(a-7p)
   p-shift:      kappa_II = -7
 
-Chamber III:
+CHAMBER III
+  condition:    q < 8a+8t+8
   order:        z < a < w < r
   u:            u = r-w = a-z
-  p_u:          p = (7q-u)/8
-  affine law:   u + 8p = 7q
+  lower prime:  p = (7q-u)/8
+  affine law:   u+8p = 7q
   local start:  x = w
   local end:    y = r = x+u
   fixed column: X_c = -s-1
-  direct lift:  N_u(-s-1) = N_u(w-2p)
+  exact lift:   N_u(-s-1) = N_u(w-2p)
   p-shift:      kappa_III = -2
 
-The reflection identity used above is:
+Reflection identity:
   N_u(-X-u-1) = (-1)^(u-1) N_u(X)
 Since u is odd, the sign is +1.
 
-Equivalent positive quotient charts (not used to define V1-V6):
+Chosen chart table for V1-V6:
+  I:   (x,y,X_c,kappa) = (a,r,-n-1,+6)
+  II:  (x,y,X_c,kappa) = (a,z,n,-7)
+  III: (x,y,X_c,kappa) = (w,r,-s-1,-2)
+
+Equivalent positive charts (not used to define the color):
   I:   (x,y,kappa) = (a,r,+6)
   II:  (x,y,kappa) = (r,w,+6)
   III: (x,y,kappa) = (z,a,+1)
-These show explicitly that the local segment is p-safe. Changing charts multiplies
-the normalized color by a p-unit, so the Q6092 color is chart-fixed, not
-reflection-invariant.
 
-2. APERY RECURRENCE, CONTINUANTS, AND FIXED-STEP GAUGE
-======================================================
-  P(Y) = 34Y^3 + 51Y^2 + 27Y + 5
+Changing chart can multiply the normalized quotient by a p-unit, possibly a
+nonsquare. The Bockstein color is therefore chart-fixed, not reflection- or
+gauge-invariant.
 
-  (m+1)^3 b_(m+1) = P(m)b_m - m^3 b_(m-1)
+2. APERY RECURRENCE, CONTINUANTS, BLOCK GAUGE, LEADING DEGREE
+============================================================
+P(Y) = 34Y^3+51Y^2+27Y+5
 
-Gap continuants:
-  N_0(X) = 0
-  N_1(X) = 1
-  N_(h+1)(X) = P(X+h)N_h(X) - (X+h)^6 N_(h-1)(X)
+(m+1)^3 b_(m+1) = P(m)b_m - m^3 b_(m-1)
 
-State matrix:
-  V_h(X) = ( N_h(X), N_(h-1)(X) )^T
-  M(Y)   = [ P(Y)  -Y^6 ]
-           [ 1       0  ]
-  V_(h+1)(X) = M(X+h)V_h(X)
-  det M(Y) = Y^6
+N_0(X) = 0
+N_1(X) = 1
+N_(h+1)(X) = P(X+h)N_h(X) - (X+h)^6 N_(h-1)(X)
 
-Fixed c-step block:
+V_h(X) = (N_h(X),N_(h-1)(X))^T
+M(Y) = [[P(Y),-Y^6],[1,0]]
+V_(h+1)(X) = M(X+h)V_h(X)
+det M(Y) = Y^6
+
+For fixed c:
   B_c(Y) = M(Y+c-1)...M(Y)
-  Phi_c(Y) = product_(j=0)^(c-1) (Y+j)^3
+  Phi_c(Y) = product_(j=0)^(c-1)(Y+j)^3
   det B_c(Y) = Phi_c(Y)^2
 
 Progressions:
@@ -114,15 +129,24 @@ Progressions:
   Chamber II:  c=16, u_m=u_0+16m, p_m=p_0+2m
   Chamber III: c=16, u_m=u_0+16m, p_m=p_0-2m
 
-On a p-safe block, Phi_c(Y) is a p-unit and
-  Bhat_c(Y) = Phi_c(Y)^(-1) B_c(Y) is in SL_2(F_p).
-The product of these bounded blocks up to level u is nevertheless a long,
-noncommuting monodromy word.
+On a p-safe c-block:
+  Phi_c(Y) is a p-unit
+  Bhat_c(Y) = Phi_c(Y)^(-1) B_c(Y) is in SL_2(F_p)
+The transfer to level u remains a product of about u/c noncommuting blocks.
 
-3. EXACT LOCAL TRANSFER AND UNIT AUDIT
-======================================
-For u >= 1 define
-  S_u(X) = product_(j=2)^u (X+j)
+Leading coefficient ell_h of N_h:
+  deg N_h = 3(h-1)
+  ell_1 = 1
+  ell_2 = 34
+  ell_(h+1) = 34ell_h-ell_(h-1)
+
+A prime can divide ell_h and cause degree drop modulo p. No formula below
+divides by ell_h; monic normalization is not used.
+
+3. EXACT LOCAL TRANSFER AND P-UNIT AUDIT
+=======================================
+For u >= 1:
+  S_u(X) = product_(j=2)^u(X+j)
   A_u(X) = S_u(X)^3
   E_u(X) = (X+1)^3 N_(u-1)(X+1)
 
@@ -134,263 +158,291 @@ Desnanot identity:
   - N_(u+1)(X)N_(u-1)(X+1)
   = S_u(X)^6
 
-For every actual chamber leaf, 0 <= x < x+u < p. Hence:
+For every actual chosen chart:
+  0 <= x < x+u < p
   p does not divide A_u(x)
-  p does not divide b_(x+1)              (no consecutive zeros)
-  p divides N_u(x)                       (two actual zeros)
-  p does not divide E_u(x)               (Desnanot identity)
+  p does not divide b_(x+1)              [no consecutive zeros]
+  p divides N_u(x)                       [two endpoint zeros]
+  p does not divide E_u(x)               [Desnanot]
 
-Thus all divisions by A_u(x), b_(x+1), and E_u(x) used below are legal.
-No division by the leading coefficient of N_u is used. Leading-degree drop
-modulo p therefore causes no failure of the formulas.
+Hence every division by A_u(x), b_(x+1), or E_u(x) below is legal.
+No leading coefficient is inverted.
 
-4. TAYLOR EXPANSION AND Q6092 V1-V3
-===================================
-Let G_u be the fixed-column integer in the chosen chamber chart. Then
-  G_u = N_u(x + kappa_c p)
-with kappa_c in {6,-7,-2}.
+4. INTEGER TAYLOR EXPANSION AND REPAIRED V1-V3
+==============================================
+Fix a chamber. Write p=p_u and kappa=kappa_c.
+
+G_u = N_u(X_c) = N_u(x+kappa p)
 
 Integer Taylor expansion:
-  G_u = N_u(x) + kappa_c p N_u'(x)  (mod p^2)
+  G_u = N_u(x)+kappa p N_u'(x)                 (mod p^2)
 
-Since p divides both G_u and N_u(x):
-  G_u/p = N_u(x)/p + kappa_c N_u'(x)  (mod p)
+Since p divides G_u and N_u(x):
+  G_u/p = N_u(x)/p+kappa N_u'(x)               (mod p)
 
-Endpoint quotients:
-  eta_x       = (b_x/p) mod p
-  eta_(x+u)   = (b_(x+u)/p) mod p
+Endpoint first-Witt quotients:
+  eta_x     = (b_x/p) mod p
+  eta_(x+u) = (b_(x+u)/p) mod p
 
-Transfer units and derivative coordinate:
-  lambda_u(x) = E_u(x)/A_u(x) mod p, and lambda_u(x) != 0
+Transfer unit and derivative coordinate:
+  lambda_u(x) = E_u(x)/A_u(x) mod p
+  lambda_u(x) != 0
   J_u(x) = b_(x+1) A_u(x)^(-1) N_u'(x) mod p
 
-V1 (chart-fixed normalized own-modulus Bockstein):
+V1 [chart-fixed own-modulus quotient]:
   Theta_c(x,u)
     = b_(x+1) A_u(x)^(-1) (G_u/p) mod p
 
-Dividing the exact transfer by p gives:
+Divided exact transfer:
   b_(x+1) A_u(x)^(-1) (N_u(x)/p)
-    = eta_(x+u) + lambda_u(x) eta_x mod p
+    = eta_(x+u)+lambda_u(x)eta_x mod p
 
 V2:
   Theta_c(x,u)
-    = eta_(x+u)
-      + lambda_u(x) eta_x
-      + kappa_c J_u(x)                       mod p
+    = eta_(x+u)+lambda_u(x)eta_x+kappa_c J_u(x) mod p
 
 V3:
-  c=I:    x=a, y=r, kappa=+6
-  c=II:   x=a, y=z, kappa=-7
-  c=III:  x=w, y=r, kappa=-2
+  I:   x=a, y=r, kappa=+6
+  II:  x=a, y=z, kappa=-7
+  III: x=w, y=r, kappa=-2
 
-Valuation >=2 audit:
-  If p^2 | G_u, then Theta_c=0.
-  If p^2 | N_u(x), then the term N_u(x)/p is 0 mod p.
-  The Taylor and transfer identities remain valid in both cases.
+Higher valuations:
+  if p^2 | G_u, then Theta_c=0
+  if p^2 | N_u(x), then N_u(x)/p=0 mod p
+  all Taylor and transfer formulas remain valid
 
-Interpretive correction:
-  V2 is valid, but eta_x and eta_(x+u) are not independent inside V2.
-  Their combination eta_(x+u)+lambda eta_x is already fixed by the divided
-  transfer. The genuinely unresolved diagonal datum is the chart-fixed
-  quotient Theta_c, equivalently the pair (N_u(x)/p, N_u'(x)) with its
-  adjacent-state p-unit gauge.
+Mandatory interpretive repair:
+  eta_x and eta_(x+u) are not independent inside V2
+  the transfer fixes eta_(x+u)+lambda eta_x
+  the unresolved datum is Theta_c, equivalently the first divided
+  continuant value N_u(x)/p together with the derivative shift N_u'(x)
+  under the adjacent-state p-unit gauge
 
-5. V4-V6 AND ALL THRESHOLDS
-===========================
-V4 (three-valued chart-fixed color):
-  epsilon_c(x,u) = 0   if Theta_c(x,u)=0
-                 = +1  if Theta_c(x,u) is a nonzero square mod p
-                 = -1  if Theta_c(x,u) is a nonsquare mod p
+5. V4: FIXED-CHART THREE-VALUED COLOR
+====================================
+epsilon_c(omega,u) =
+  0   if Theta_c(omega,u)=0
+  +1  if Theta_c(omega,u) is a nonzero square in F_(p_u)
+  -1  if Theta_c(omega,u) is a nonsquare in F_(p_u)
 
-This color is well-defined for odd p after the chamber chart is fixed. It is
-not invariant under multiplication of Theta by an arbitrary p-unit.
+The hard primes are odd, so this is well-defined after the chart in V3 is
+fixed. It is not invariant under multiplying Theta by an arbitrary p-unit.
 
-Let Q_BW(D;Y) count ordered pairs of fully actual deep leaves satisfying:
+Q_BW(D;Y) is the ordered count of pairs satisfying:
   same complete selected upper occurrence omega=(q,t,iota)
   same Q6006 chamber
-  distinct u_1,u_2 with |u_1-u_2| <= D
-  actual deep load of the state > Y
+  both are fully actual deep leaves with every mask retained
+  u_1 != u_2 and |u_1-u_2| <= D
+  actual deep state load > Y
   epsilon_c(omega,u_1) = epsilon_c(omega,u_2)
-Every raw, primitive, residual, shell, sign, minus-first, and actual-zero mask
-is retained.
 
-V5 (one level box):
-  m = m_0 + m_+ + m_-
-  m(m-1) <= 3 sum_(nu in {0,+,-}) m_nu(m_nu-1) + 2m
+6. V5-V6 AND EXACT TARGET EXPONENTS
+===================================
+For one level box, let m_0,m_+,m_- be color occupancies and
+  m = m_0+m_++m_-
+
+V5:
+  m(m-1)
+    <= 3 sum_(nu in {0,+,-}) m_nu(m_nu-1)+2m
 
 Target notation:
   L = log T
-  A_R(T) = T^(12/5) / (L^(16/5) Omega(T))
-  M_-(T) <<_J T^(11/5)/L^(8/5) + T^2/L
+  A_R(T) = T^(12/5)/(L^(16/5)Omega(T))
+  M_-(T) <<_J T^(11/5)/L^(8/5)+T^2/L
 
 Choose:
-  Y_0 = T^(1/5) / (L^(8/5) Omega(T) Psi(T))
+  Y_0 = T^(1/5)/(L^(8/5)Omega(T)Psi(T))
   U_0 = Y_0 L
   1 << Psi(T) << T^(1/5)/(L^(8/5)Omega(T))
+
+Close-level box length:
   D_0 = ceil(C_J T/Y_0)
-      asymp_J T^(4/5)L^(8/5)Omega(T)Psi(T)
+      ~_J T^(4/5)L^(8/5)Omega(T)Psi(T)
 
 V6:
   E_-^deep(T)
-    <= 3Y_0 M_-(T) + 3Y_0 Q_BW(D_0;Y_0)
+    <= 3Y_0 M_-(T)+3Y_0 Q_BW(D_0;Y_0)
 
-First term ledger:
+First-term ledger:
   Y_0 T^(11/5)/L^(8/5) = A_R(T)/Psi(T)
 
-  (Y_0 T^2/L) / A_R(T)
+  (Y_0 T^2/L)/A_R(T)
     = T^(-1/5)L^(3/5)/Psi(T)
 
-Thus Y_0 M_-(T) = o_J(A_R(T)).
+Thus Y_0 M_-(T)=o_J(A_R(T)).
 
 Sufficient BWCP scale:
   Q_BW(D_0;Y_0)
-    = o_J( T^(11/5)Psi(T)/L^(8/5) )
+    = o_J(T^(11/5)Psi(T)/L^(8/5))
 
 Pure-power choice:
   Y = T^(1/5-eta)
-  D = C_J T/Y asymp_J T^(4/5+eta)
+  D = C_J T/Y ~_J T^(4/5+eta)
   0 < eta < 1/5
 
-If, for some delta>0,
-  Q_BW(D;Y) <<_J T^(11/5+eta-delta),
-then
+If, for some delta>0:
+  Q_BW(D;Y) <<_J T^(11/5+eta-delta)
+then:
   E_-^deep(T)
-    <<_J T^(12/5-eta+o(1)) + T^(12/5-delta+o(1)),
-so the fixed-power saving is
-  T^(-min(eta,delta)+o(1)).
+    <<_J T^(12/5-eta+o(1))+T^(12/5-delta+o(1))
+and the exact saving is:
+  T^(-min(eta,delta)+o(1))
 
-6. WRONSKIAN, REFLECTION JET, AND SELECTED q
-================================================
-Let c_0=0,c_1=1 be the unit companion solution. The exact Wronskian is
-  j^3 ( b_(j-1)c_j - b_j c_(j-1) ) = 1.
+BWCP is strictly below SMLCP: it discards every different-color close pair.
+The linear error in V5 is absorbed by the subcritical first-mass term.
 
-At an actual zero p|b_x:
-  (x+1)^3 b_(x+1)c_x = -1 mod p.
+7. P-ADIC WRONSKIAN AND REFLECTED INDEX JET
+===========================================
+Let c_0=0,c_1=1 be the unit companion solution.
 
-For the return transfer and p|N_u(x):
-  A_u(x)c_(x+u) = -E_u(x)c_x mod p,
-so
-  lambda_u(x) = E_u(x)/A_u(x) = -c_(x+u)/c_x mod p.
+Exact Wronskian:
+  j^3(b_(j-1)c_j-b_jc_(j-1))=1
 
-Therefore
+At p|b_x:
+  (x+1)^3 b_(x+1)c_x=-1 mod p
+
+Companion transfer at a return:
+  A_u(x)c_(x+u)=-E_u(x)c_x mod p
+  lambda_u(x)=-c_(x+u)/c_x mod p
+
+Therefore:
   Theta_c
-    = eta_(x+u) - (c_(x+u)/c_x)eta_x + kappa_c J_u(x),
+    = eta_(x+u)-(c_(x+u)/c_x)eta_x+kappa_c J_u(x)
 
-and also
   Theta_c
-    = -(G_u/p) / ( A_u(x)(x+1)^3 c_x ) mod p.
+    = -(G_u/p)/(A_u(x)(x+1)^3c_x) mod p
 
 The Wronskian replaces one p-unit by the private companion value c_x; it does
-not remove the diagonal quotient.
+not eliminate the diagonal quotient.
 
 Banked first-Witt reflection convention:
-  b_(p-1-j) = b_j - p g_j  (mod p^2).
-At a zero p|b_j:
-  eta_(p-1-j) = eta_j - g_j mod p.
+  b_(p-1-j)=b_j-pg_j mod p^2
 
-Thus, in the chosen charts:
-  Chamber I:   Theta = eta_r + lambda eta_a + 6J
-  Chamber II:  Theta = eta_r - g_r + lambda eta_a - 7J
-  Chamber III: Theta = eta_r + lambda(eta_a-g_a) - 2J
+At p|b_j:
+  eta_(p-1-j)=eta_j-g_j mod p
+
+Chosen-chart forms:
+  Chamber I:
+    Theta=eta_r+lambda eta_a+6J
+
+  Chamber II:
+    Theta=eta_r-g_r+lambda eta_a-7J
+
+  Chamber III:
+    Theta=eta_r+lambda(eta_a-g_a)-2J
 
 The g_j are moving index jets, not bounded-degree constants.
 
-Since p and q are distinct and both divide b_s and b_n, write
+8. SELECTED q CONDITION
+=======================
+For every actual leaf:
+  p | b_s and p | b_n
+  q | b_s and q | b_n
+  p != q
+
+Hence, as exact integers:
   b_s = pq H_s
   b_n = pq H_n
-with H_s,H_n integers.
-The selected condition q|b_t supplies the q-divisibility of these common rows,
-but gives no relation fixing H_s or H_n modulo the lower prime p. The divided
-Lucas laws introduce H_s,H_n and digit/index jets; they do not eliminate Theta.
 
-7. LONG DERIVATIVE WORD AND ZERO-CUT SEAM
-=========================================
-Let
-  D_h(X) = d/dX V_h(X)
-  M'(Y) = [ P'(Y)  -6Y^5 ]
-          [ 0          0  ]
-Then
-  D_(h+1)(X) = M(X+h)D_h(X) + M'(X+h)V_h(X).
+The selected condition q|b_t explains the q-factor through Lucas/reflection,
+but gives no equation fixing H_s or H_n modulo p. Divided Lucas introduces
+private quotients and digit/index jets. It does not eliminate Theta.
+
+9. LONG DERIVATIVE WORD, WILSON, AND ZERO CUT
+============================================
+Let:
+  D_h(X)=dV_h(X)/dX
+  M'(Y)=[[P'(Y),-6Y^5],[0,0]]
+
+Then:
+  D_(h+1)(X)=M(X+h)D_h(X)+M'(X+h)V_h(X)
 
 With V_1=(1,0)^T and D_1=(0,0)^T:
-  D_u(X)
-    = sum_(j=1)^(u-1)
-      M(X+u-1)...M(X+j+1) M'(X+j) V_j(X).
+  D_u(X)=sum_(j=1)^(u-1)
+    M(X+u-1)...M(X+j+1) M'(X+j)V_j(X)
 
-Thus N_u'(x) is a variation-of-constants word with u-1 summands and long
-monodromy factors. No checked identity reduces this word to bounded conductor.
+N_u'(X) is the first coordinate of this length-u variation-of-constants word.
+No checked identity reduces it to bounded conductor.
 
-A full p-block is not invertible because
-  M(0) = [5 0]
-         [1 0]
-and
-  [0  1] M(0) = [1 0]
-  [1 -5]        [0 0].
+Zero-cut matrix:
+  M(0)=[[5,0],[1,0]]
+  [[0,1],[1,-5]] M(0) = [[1,0],[0,0]]
 
-Wilson controls products of scalar determinants. Crossing the zero seam loses a
-state coordinate; its first lift is a Bockstein datum, not an invertible short
-reversal.
+Wilson controls scalar determinant products. The zero seam is rank one and
+cannot be inverted; its first lift is a Bockstein/private quotient datum.
 
-8. GAUGE-FAITHFUL HOSTILE MODEL
-===============================
-Choose c in {10,16} and sigma in {+1,-1}. Let
-  p_m = p_0 + 2 sigma m
-  u_m = u_0 + c m
-with:
-  Chamber I:   c=10, sigma=-1, u_m+5p_m constant
-  Chamber II:  c=16, sigma=+1, u_m-8p_m constant
-  Chamber III: c=16, sigma=-1, u_m+8p_m constant
+No verified standard theorem applies because:
+  classical additive large sieve: no common coefficient sequence
+  trace-function large sieve: no bounded-conductor family is constructed
+  Chebotarev: no fixed polynomial/number field across p
+  polynomial prime-divisor theorem: no bounded-degree terminal polynomial
+  two-level resultant: own-modulus equations lie in different fields
 
-Let
-  Phi_m = product_(j=0)^(c-1) (X+u_m+j)^3
-  F_(m+1) = Phi_m F_m
-  W_m = F_m (p_m,1)^T
+10. GAUGE-FAITHFUL HOSTILE MODEL
+================================
+Choose c in {10,16}, sigma in {+1,-1}.
 
-Then
-  W_(m+1)
-    = Phi_m [1  2sigma] W_m
-              [0    1  ]
+p_m = p_0+2sigma*m
+u_m = u_0+c*m
 
-and
-  det( Phi_m [1 2sigma; 0 1] )
+Chamber I:   c=10, sigma=-1, u_m+5p_m constant
+Chamber II:  c=16, sigma=+1, u_m-8p_m constant
+Chamber III: c=16, sigma=-1, u_m+8p_m constant
+
+Phi_m = product_(j=0)^(c-1)(X+u_m+j)^3
+F_(m+1)=Phi_m F_m
+W_m=F_m(p_m,1)^T
+
+Exact matrix recurrence:
+  W_(m+1)=Phi_m [[1,2sigma],[0,1]] W_m
+
+Exact determinant:
+  det(Phi_m [[1,2sigma],[0,1]])
     = Phi_m^2
-    = product_(j=0)^(c-1)(X+u_m+j)^6.
+    = product_(j=0)^(c-1)(X+u_m+j)^6
 
-The first coordinate is
-  G_m = F_m p_m,
-so
-  p_m | G_m
-at every prime level, while the gauge-normalized divided coordinate is
-  G_m/(F_m p_m) = 1.
+First coordinate:
+  G_m=F_m p_m
+  p_m | G_m at every prime level
+  G_m/(F_m p_m)=1
 
-On any finite p-safe interval choose parameters so that none of the factors in
-Phi_m is 0 mod p_m. This rank-two polynomial model matches the exact affine law
-and factorial determinant gauge and has maximal one-color close-pair energy. It
-is not the Apéry recurrence and is not claimed to realize Apéry zeros.
+On a finite p-safe interval choose parameters so every Phi_m is a p_m-unit.
+The model matches rank two, polynomial block coefficients, the exact affine law,
+and the full factorial determinant gauge. Its equal-color close-pair energy is
+maximal. It is not the Apéry recurrence and is not an actual-zero construction.
 
-9. FINAL AUDIT SUMMARY
-======================
+11. PASS / FAIL SUMMARY
+=======================
 PASS:
-  all three chamber affine formulas and p-shifts
-  exact A_u/E_u transfer
-  p-unit status of A_u, b_(x+1), E_u
+  all three chamber affine formulas and exact p-shifts
+  exact raw range and occurrence accounting
+  recurrence and fixed-step block matrices
+  factorial determinant gauge
+  leading-coefficient recurrence
+  A_u/E_u transfer and Desnanot identity
+  p-unit status of A_u(x), b_(x+1), E_u(x)
   Taylor expansion modulo p^2
-  V1, V2, V3 after fixing the stated chamber chart
-  valuation >=2 handling
+  V1, V2, V3 after fixing the stated chart
+  valuation >=2 cases
   V4 as a chart-fixed color
   V5 and V6
   D,Y and exponent propagation
-  hostile determinant-gauge model
+  hostile affine/gauge model
 
-FAIL / REPAIRED:
-  "eta_x, eta_(x+u), J are three independent coordinates" -- false as stated;
-  only the combination in V2 is relevant, and transfer fixes the endpoint pair
-  combination before the derivative shift is added.
+FAIL / RETRACTED:
+  eta_x, eta_(x+u), J are three independent coordinates
+  the endpoint pair occurs only through eta_(x+u)+lambda eta_x
 
-  "the color is canonical/reflection invariant" -- false without a chart;
-  multiplying Theta by a p-unit can flip square class. BWCP is valid only after
-  fixing the chamber chart exactly as in V3.
+  the square-class color is canonical or reflection invariant
+  a p-unit gauge can flip its square class
 
-OPEN / NEW:
+NOT USED / UNSAFE:
+  division by the leading coefficient ell_u on degree-drop primes
+  identification of F_(p_1) with F_(p_2)
+  normalized selected measure
+  second use of the common-value large-sieve zero-mode saving
+
+OPEN:
   bounded-conductor control of the distinguished Apéry diagonal quotient
   BWCP at the displayed scale
+  complete unconditional fixed-power minus bound
