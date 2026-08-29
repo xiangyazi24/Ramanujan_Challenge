@@ -5,6 +5,10 @@ on:
     branches:
       - q6190-census
 
+concurrency:
+  group: q6190-census-scratch
+  cancel-in-progress: true
+
 jobs:
   census:
     runs-on: ubuntu-latest
