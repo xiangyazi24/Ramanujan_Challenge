@@ -1,0 +1,190 @@
+name: Q5427 exact leader simulation
+
+on:
+  push:
+    branches: [chatgpt-q5427-run]
+    paths:
+      - '.github/workflows/q5427-run.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: self-hosted
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: chatgpt-q5427-run
+          fetch-depth: 0
+
+      - name: Write, compile, and run exact n4 simulation
+        shell: bash
+        run: |
+          set -uo pipefail
+          SRC='/Users/huangx/repos/leader'
+          OUT="$GITHUB_WORKSPACE/q5427-run"
+          rm -rf "$OUT"
+          mkdir -p "$OUT"
+
+          cat > "$SRC/Q5412N4Simulation.lean" <<'EOF'
+          import Leader.BoundedProtocol
+
+          namespace Q5412N4Simulation
+
+          abbrev SimState := BoundedAgentState 2 10
+          abbrev SimConfig := Fin 4 → SimState
+
+          def ring : DirectedRing 4 := ⟨by omega⟩
+
+          def baseState (label : Fin 2) : SimState :=
+            { leader := false
+              probe := false
+              phase := false
+              bit := false
+              wait := true
+              state := .none
+              path := .bot
+              reset := false
+              carry := false
+              count := 0
+              label := label
+              h_field := false
+              path2 := none
+              path3 := none
+              path4 := none
+              path5 := none
+              p := false
+              p_carry := false
+              reset_cmd := false
+              echo := false
+              signal_B := 0
+              bullet := 0
+              shield := true
+              write_state := .none
+              write := .none
+              last := false
+              last_set := false
+              last_unset := false
+              b_carry := false
+              gen_ws := false
+              ws_echo := false
+              signal_ws := false }
+
+          def seedBit (seed bit : Nat) : Bool :=
+            decide ((seed / (2 ^ bit)) % 2 = 1)
+
+          def initialConfig (seed : Nat) : SimConfig := fun i =>
+            let label : Fin 2 := ⟨i.val % 2, by omega⟩
+            let base := baseState label
+            let leader :=
+              if i = (0 : Fin 4) then true
+              else if i = (1 : Fin 4) then seedBit seed 0
+              else if i = (2 : Fin 4) then seedBit seed 1
+              else seedBit seed 2
+            { base with leader := leader }
+
+          def leaderCount (C : SimConfig) : Nat :=
+            (List.ofFn (fun i : Fin 4 => if (C i).leader then 1 else 0)).sum
+
+          structure Stats where
+            firstUnique : Option Nat
+            departuresFromUnique : Nat
+            terminalLeaders : Nat
+            uniqueSuffix : Nat
+
+          def initialStats (C : SimConfig) : Stats :=
+            let count := leaderCount C
+            { firstUnique := if count = 1 then some 0 else none
+              departuresFromUnique := 0
+              terminalLeaders := count
+              uniqueSuffix := if count = 1 then 1 else 0 }
+
+          def updateStats (time previous current : Nat) (stats : Stats) : Stats :=
+            { firstUnique :=
+                match stats.firstUnique with
+                | some first => some first
+                | none => if current = 1 then some time else none
+              departuresFromUnique :=
+                stats.departuresFromUnique +
+                  (if previous = 1 ∧ current ≠ 1 then 1 else 0)
+              terminalLeaders := current
+              uniqueSuffix := if current = 1 then stats.uniqueSuffix + 1 else 0 }
+
+          def nextRng (x : Nat) : Nat :=
+            (5 * x + 1) % 65536
+
+          def edgeOf (x : Nat) : Fin 4 :=
+            ⟨x % 4, by omega⟩
+
+          def stepConfig (C : SimConfig) (e : Fin 4) : SimConfig :=
+            PopulationProtocol.step
+              (PPLLRepair.integratedBoundedProtocol (by omega) 10) ring C e
+
+          def runLoop : Nat → Nat → Nat → SimConfig → Stats → Stats
+            | 0, _, _, _, stats => stats
+            | Nat.succ remaining, time, rng, C, stats =>
+                let rng' := nextRng rng
+                let C' := stepConfig C (edgeOf rng')
+                let current := leaderCount C'
+                let time' := time + 1
+                let stats' := updateStats time' stats.terminalLeaders current stats
+                runLoop remaining time' rng' C' stats'
+
+          def runSeed (seed : Nat) : Stats :=
+            let C := initialConfig seed
+            runLoop 256 0 (seed * 997 + 17) C (initialStats C)
+
+          def optionNatString : Option Nat → String
+            | none => "NA"
+            | some n => toString n
+
+          def csvRow (seed : Nat) : String :=
+            let C := initialConfig seed
+            let initial := leaderCount C
+            let stats := runSeed seed
+            s!"{seed},{initial},{optionNatString stats.firstUnique},{stats.departuresFromUnique},{stats.terminalLeaders},{stats.uniqueSuffix}"
+
+          def seeds : List Nat := [0, 1, 2, 3, 4, 5, 6, 7]
+
+          def emitSeeds : List Nat → IO Unit
+            | [] => pure ()
+            | seed :: rest => do
+                IO.println (csvRow seed)
+                emitSeeds rest
+
+          end Q5412N4Simulation
+
+          def main : IO Unit := do
+            IO.println "seed,initialLeaders,firstUnique,departuresFromUnique,terminalLeaders,uniqueSuffix"
+            Q5412N4Simulation.emitSeeds Q5412N4Simulation.seeds
+          EOF
+
+          cp "$SRC/Q5412N4Simulation.lean" "$OUT/Q5412N4Simulation.lean"
+          {
+            echo "source=$SRC"
+            date -u '+utc=%Y-%m-%dT%H:%M:%SZ'
+            printf 'head='; git -C "$SRC" rev-parse HEAD 2>&1 || true
+            printf 'branch='; git -C "$SRC" branch --show-current 2>&1 || true
+            printf 'lean-toolchain='; cat "$SRC/lean-toolchain" 2>&1 || true
+          } > "$OUT/environment.txt"
+
+          set +e
+          (cd "$SRC" && lake env lean --run Q5412N4Simulation.lean) \
+            > "$OUT/stdout.csv" 2> "$OUT/stderr.log"
+          code=$?
+          set -e
+          printf '%s\n' "$code" > "$OUT/exit-code.txt"
+          grep -En '\b(sorry|axiom|unsafe|native_decide)\b' \
+            "$SRC/Q5412N4Simulation.lean" > "$OUT/forbidden-scan.txt" || true
+
+      - name: Commit exact file and run result
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add q5427-run
+          git commit -m 'Record Q5427 exact leader simulation' || exit 0
+          git push origin HEAD:chatgpt-q5427-run
