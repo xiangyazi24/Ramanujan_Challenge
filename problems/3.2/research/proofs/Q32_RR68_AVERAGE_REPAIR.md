@@ -2,62 +2,68 @@
 
 ## Verdict
 
-The proposed average repair is **proved at the staged RR68 level**, subject only to the literal RR68c hypotheses stated below and the already-recorded physical range \(1\le B\ll_v N\). The four requested estimates are
+The proposed repair is proved at the staged RR68 level, under the literal
+RR68c hypotheses and the recorded physical range `1 <= B <<_v N`.
+The four requested estimates are
 
-\[
- w_k\ll N^{-3+o(1)}z_km_k,\qquad
- m_k\ll_v {N^{1+o(1)}\over B},\qquad
- \sum_k z_k\ll N^{8/5+o(1)},\qquad
- W(	heta)\ll {N^{-2/5+o(1)}\over B}.
-\]
+```text
+w_k <= N^(-3+o(1)) z_k m_k,
+m_k <= N^(1+o(1))/B,
+sum_k z_k <= N^(8/5+o(1)),
+W(theta) = sum_k w_k <= N^(-2/5+o(1))/B.
+```
 
-The decisive point is that, for fixed \(	heta\) and fixed source prime \(p\), the congruence fixes the **integer \(k\)** modulo \(b\), and the physical interval for \(k\) has length \(O_v(B)\) while \(b\asymp_v B\). Hence \(p\) belongs to only \(O_v(1)\) exact-\(k\) packets. The overlap sum is therefore controlled by the canonical first zero moment
+The decisive overlap is from a fixed source prime `p` to the physical
+integer `k`, not from a zero label to `k`.  For fixed `theta` and `p`,
+the congruence fixes `k mod b`; the physical interval has length `O_v(B)`
+and `b ~_v B`, so it contains only `O_v(1)` lifts.  The factor `Z(p)`
+already counts every actual zero label carried by `p`.  It must not be
+inserted a second time when the exact-`k` packets are overlapped.
 
-\[
- \sum_{p\asymp N}Z(p)\ll N^{8/5+o(1)}.
-\]
+Together with the staged positive first-moment ledger, the repair gives
 
-There is no additional \(Z(p)\) multiplicity in this overlap: the zero-label multiplicity for \(p\) is already the factor \(Z(p)\) inside \(z_k\).
+```text
+sum_theta W(theta)^2 <= N^(2/5+o(1)) M/B,
+M = min(B, D/N^(2/5)).
+```
 
-Combining this pointwise-in-\(	heta\) bound with the staged positive \(L^1\) ledger gives
+The literal host sum then gives
 
-\[
- \sum_	heta W(	heta)^2
- \ll {N^{2/5+o(1)}M\over B},\qquad
- M=\min\!\left(B,{D\over N^{2/5}}ight).
-\]
+```text
+E_mean <= F M K N^(o(1)),
+E_cent <= N^(3/5+o(1)) K (B M F)^(1/2).
+```
 
-The literal host summation then restores
+Thus the staged local ridge `sigma < 1/40` is restored: its downstream
+optimizer receives exactly the two estimates it was designed to consume.
+The staged opposite high-corner minimax remains
 
-\[
- E_{m mean}\ll FMK,\qquad
- E_{m cent}\ll N^{3/5+o(1)}K(BMF)^{1/2}.
-\]
+```text
+min_ell max(5/2 - ell/4, 7/3 + ell)
+  = 37/15 at ell = 2/15.
+```
 
-Thus the **staged** local ridge \(\sigma<1/40\) is restored: the downstream optimizer receives exactly the two estimates it was designed to consume. The staged opposite high-corner minimax is also unchanged:
+This is still above the staged fully unconditional target
+`12/5 = 36/15` by `1/15`.  The repair therefore does not close Problem
+3.2.
 
-\[
- \min_\ell\max\!\left({5\over2}-{\ell\over4},{7\over3}+\ellight)
- ={37\over15}\quad	ext{at}\quad \ell={2\over15}.
-\]
+The separate third-moment sufficient premise is not proved.  The actual
+pointwise estimate and AF1 give only
 
-This high corner is still above the staged fully unconditional target \(12/5=36/15\) by \(1/15\). Consequently the repair does **not** close Problem 3.2.
+```text
+sum_{r ~ N} Z(r)^3 <= N^(43/15+o(1)).
+```
 
-The separate third-moment sufficient premise remains unproved. From the actual pointwise estimate \(Z(r)\ll N^{2/3+o(1)}\) and AF1 one obtains only
-
-\[
- \sum_{r\asymp N}Z(r)^3\ll N^{43/15+o(1)}.
-\]
-
-Nothing here proves either \(N^{29/15-6\sigma+o(1)}\) or \(N^{2-6\sigma+o(1)}\).
+Nothing below proves `N^(29/15-6 sigma+o(1))` or
+`N^(2-6 sigma+o(1))`.
 
 ---
 
 ## 1. Source and dependency boundary
 
-This document is a research proof, not an authoritative insertion.
+This is a research proof, not an authoritative insertion.
 
-The connector-visible repository pins used for the audit were
+The connector-visible pins used for the audit were
 
 ```text
 repository: xiangyazi24/Ramanujan_Challenge
@@ -67,566 +73,444 @@ canonical oracleA_result.tex blob on main:
   f0bfccc441bda22c17658c5586fbb2e6c6431238
 ```
 
-The task's source audit states that the authoritative AF/RC/RR chain in the current canonical working source reaches only roughly RR48, while RR49--RR68 is staged research. The connector-visible `chatgpt-drop` branch is itself a staging/drop branch and does not provide a connected authoritative `problems/3.2/oracleA_result.tex` surface containing RR68c and its consumers. Therefore:
-
-- `problems/3.2/oracleA_result.tex` is **not edited**;
-- `problems/3.2/proof.tex` is **not edited**;
-- the future insertion block is recorded in Section 10 below, to be used only after RR49--RR68 and their definitions have been promoted into the authoritative source.
+The task's source audit states that the authoritative AF/RC/RR chain in
+the current canonical working source reaches only roughly RR48; RR49--RR68
+is staged research.  The configured `chatgpt-drop` branch is itself a
+staging/drop branch and does not supply a connected authoritative
+`problems/3.2/oracleA_result.tex` surface containing RR68c and its
+consumers.  Therefore this change does not edit either
+`oracleA_result.tex` or `proof.tex`.  Section 10 supplies a future
+insertion block to use only after the staged definitions have been
+promoted.
 
 ### 1.1 Canonical analytic inputs
 
-Only the following current zero-count inputs are used:
+Only the following current estimates are used:
 
-\[
- Z(p)\ll p^{2/3+o(1)},
- 	ag{A0}
-\]
+```text
+(A0)  Z(p) <= p^(2/3+o(1)).
+(A1)  sum_{p ~ N} Z(p) <= N^(8/5+o(1)).
+(A2)  sum_{p ~ N} |u_p| Z(p) <= N^(3/5+o(1)).
+(A3)  sum_{p ~ N} |u_p| Z(p)^2 <= N^(6/5+o(1)).
+(A4)  |u_p| <= N^(-1+o(1)).
+```
 
-\[
- \sum_{p\asymp N}Z(p)\ll N^{8/5+o(1)},
- 	ag{A1}
-\]
+The exact-`k` overlap uses (A1), not the false pointwise assertion
+`Z(p) <= N^(3/5)`.
 
-\[
- \sum_{p\asymp N}|u_p|Z(p)\ll N^{3/5+o(1)},
- 	ag{A2}
-\]
+### 1.2 Literal staged RR68 inputs
 
-\[
- \sum_{p\asymp N}|u_p|Z(p)^2\ll N^{6/5+o(1)},
- 	ag{A3}
-\]
+Fix one unrefined radial datum
 
-and
+```text
+theta = (q, eta, b, c0, eps),
+C = b eta + eps q c0 = b n + rho,
+b ~_v B.
+```
 
-\[
- |u_p|\ll N^{-1+o(1)}.
- 	ag{A4}
-\]
+For every literal RR68c occurrence, the two source primes `p,p'` share
+one genuine integer `k` with
 
-The proof of the packet overlap uses (A1), not a false pointwise estimate \(Z(p)\ll N^{3/5}\).
+```text
+|k| <= C_v B,
+gcd(k,b) = gcd(rho,b) = 1,
+p k  == -rho (mod b),
+p' k == -rho (mod b).
+```
 
-### 1.2 Staged RR68 inputs
+The source-prime shell has fixed compact support `p,p' ~_v N`, and the
+staged physical range has `1 <= B <<_v N`.  All source, sign, primitive,
+actual-zero, chart, radial, and lift masks remain present.  In a positive
+upper bound they may only be discarded as `0`--`1` deletions.
 
-Fix one literal unrefined radial datum
+For an exact integer `k`, let `P_k = P_k(theta)` be the actual restricted
+source-prime set.  Put
 
-\[
- 	heta=(q,\eta,b,c_0,arepsilon),\qquad
- C=b\eta+arepsilon q c_0=bn+ho,\qquad b\asymp_v B.
- 	ag{RR68-a}
-\]
-
-For every literal RR68c occurrence, the two source primes \(p,p'\) share one genuine integer \(k\) satisfying
-
-\[
- |k|\le C_vB,\qquad (k,b)=(ho,b)=1,
- 	ag{RR68-b}
-\]
-
-and
-
-\[
- pk\equiv-ho\pmod b,\qquad
- p'k\equiv-ho\pmod b.
- 	ag{RR68-c}
-\]
-
-The source-prime shell has fixed compact support \(p,p'\asymp_v N\), and the staged physical radial range has \(1\le B\ll_v N\). All source, sign, primitive, actual-zero, chart, radial, and lift masks are retained. When a positive upper bound drops one of these masks, it is dropped only as a \(0\)-\(1\) deletion.
-
-For an exact integer \(k\), let
-
-\[
- \mathcal P_k=\mathcal P_k(	heta)
-\]
-
-be the actual restricted source-prime set surviving all those masks. Put
-
-\[
- m_k=|\mathcal P_k|,\qquad
- z_k=\sum_{p\in\mathcal P_k}Z(p).
- 	ag{1.1}
-\]
-
-Let \(C_k\) be the positive first-carrier submass and
-
-\[
- w_k=|u_q|C_k,\qquad
- W(	heta)=\sum_k w_k.
- 	ag{1.2}
-\]
+```text
+m_k = |P_k|,
+z_k = sum_{p in P_k} Z(p),
+w_k = |u_q| C_k,
+W(theta) = sum_k w_k.
+```
 
 The literal staged factorization is
 
-\[
- C_k\le N^{o(1)}
- \left(\sum_{p\in\mathcal P_k}|u_p|Z(p)ight)
- \left(\sum_{p'\in\mathcal P_k}|u_{p'}|ight).
- 	ag{RR68-F}
-\]
+```text
+(RR68-F)
+C_k <= N^(o(1))
+      (sum_{p in P_k} |u_p| Z(p))
+      (sum_{p' in P_k} |u_p'|).
+```
 
-Finally, the staged positive first-moment ledger is
+The staged positive first-moment ledger is
 
-\[
- \sum_	heta W(	heta)\le N^{4/5+o(1)}M,\qquad
- M=\min\!\left(B,{D\over N^{2/5}}ight).
- 	ag{RR68-L1}
-\]
+```text
+(RR68-L1)
+sum_theta W(theta) <= N^(4/5+o(1)) M,
+M = min(B, D/N^(2/5)).
+```
 
-The host consumer to be audited is
+The host consumer is
 
-\[
- I_r\le {FZ(r)\over r}\sum_	heta W(	heta)
- +\sqrt{FZ(r)(r-Z(r))}\,B
-  \left(\sum_	heta W(	heta)^2ight)^{1/2},
- 	ag{RR-host-I}
-\]
+```text
+(RR-host-I)
+I_r <= F Z(r)/r sum_theta W(theta)
+       + sqrt(F Z(r)(r-Z(r))) B
+         (sum_theta W(theta)^2)^(1/2),
 
-\[
- E_{m nonper}\le N^{-1+o(1)}K
- \sum_{r\asymp N}|u_r|Z(r)I_r.
- 	ag{RR-host-E}
-\]
+(RR-host-E)
+E_nonper <= N^(-1+o(1)) K
+            sum_{r ~ N} |u_r| Z(r) I_r.
+```
 
 ---
 
-## 2. Marked-occurrence multiplicity audit
+## 2. Marked-occurrence multiplicities
 
-There are three distinct multiplicities, and conflating them is the main risk.
+Three different multiplicities occur.
 
-### 2.1 Zero labels on the first source-prime factor
+### 2.1 Actual zero labels on the first source-prime factor
 
-For a fixed prime \(p\), the first factor in (RR68-F) may carry an actual zero label. Bounding all surviving labels costs at most \(Z(p)\). This is exactly why the first factor is
+For fixed `p`, all surviving actual zero labels are majorized by `Z(p)`.
+This is already the factor in
 
-\[
- \sum_{p\in\mathcal P_k}|u_p|Z(p).
-\]
+```text
+sum_{p in P_k} |u_p| Z(p).
+```
 
-The same zero labels must not be counted again when the exact-\(k\) packets are overlapped. They are already inside \(z_k\).
+It is also already the factor in `z_k`.  No later overlap may multiply
+by another `Z(p)`.
 
-### 2.2 The second source-prime factor
+### 2.2 Marks on the second source-prime factor
 
-The second factor in (RR68-F) contains no additional zero-count weight. Fixed signs, charts, primitive branches, and physical lift choices have bounded multiplicity for fixed \(	heta\) and exact \(k\); the staged factorization has already placed this bounded multiplicity in \(N^{o(1)}\). Thus it is bounded by
+The second factor in (RR68-F) carries no additional zero-count weight.
+For fixed `theta` and exact `k`, the finite sign, chart, primitive-branch,
+and physical-lift multiplicity is already absorbed into `N^(o(1))`.
+Therefore the second factor is bounded by
 
-\[
- N^{o(1)}\sum_{p'\in\mathcal P_k}|u_{p'}|,
-\]
+```text
+N^(o(1)) sum_{p' in P_k} |u_p'|,
+```
 
-not by a second copy of \(z_k\).
+not by a second copy of `z_k`.
 
-### 2.3 Overlap of one prime among different \(k\)'s
+### 2.3 One prime occurring in several exact-k packets
 
 Define
 
-\[
- 
-u_	heta(p)=\#\{k:p\in\mathcal P_k\}.
- 	ag{2.1}
-\]
+```text
+nu_theta(p) = #{k : p in P_k}.
+```
 
-The proof below gives
+Section 5 proves `nu_theta(p) <<_v 1`.  Thus
 
-\[
- 
-u_	heta(p)\ll_v1.
- 	ag{2.2}
-\]
+```text
+sum_k z_k = sum_{p ~ N} Z(p) nu_theta(p).
+```
 
-This is a prime-to-\(k\) overlap. It does not depend on how many actual zero labels the prime has. Consequently
-
-\[
- \sum_k z_k
- =\sum_{p\asymp N}Z(p)
-u_	heta(p),
- 	ag{2.3}
-\]
-
-with one, not two, copies of \(Z(p)\).
+This is prime-to-`k` overlap.  It is independent of the number of zero
+labels after the single factor `Z(p)` has been included.
 
 ---
 
-## 3. The exact-\(k\) carrier bound
+## 3. Exact-k carrier bound
 
 ### Proposition 3.1
 
-For every exact physical \(k\),
+For every exact physical `k`,
 
-\[
- oxed{w_k\ll N^{-3+o(1)}z_km_k.}
- 	ag{3.1}
-\]
+```text
+w_k <= N^(-3+o(1)) z_k m_k.
+```
 
 ### Proof
 
 By (A4),
 
-\[
- \sum_{p\in\mathcal P_k}|u_p|Z(p)
- \le N^{-1+o(1)}z_k,
- 	ag{3.2}
-\]
+```text
+sum_{p in P_k} |u_p| Z(p) <= N^(-1+o(1)) z_k,
+sum_{p' in P_k} |u_p'|    <= N^(-1+o(1)) m_k.
+```
 
-and
+Substitution in (RR68-F) gives
 
-\[
- \sum_{p'\in\mathcal P_k}|u_{p'}|
- \le N^{-1+o(1)}m_k.
- 	ag{3.3}
-\]
+```text
+C_k <= N^(-2+o(1)) z_k m_k.
+```
 
-Substituting these two estimates into (RR68-F) gives
+The fixed source prime `q` in `theta` contributes its weight once, and
+`|u_q| <= N^(-1+o(1))`.  Hence
 
-\[
- C_k\le N^{-2+o(1)}z_km_k.
- 	ag{3.4}
-\]
+```text
+w_k = |u_q| C_k <= N^(-3+o(1)) z_k m_k.
+```
 
-The prime \(q\) is fixed in \(	heta\) and contributes its source weight exactly once. Again by (A4),
-
-\[
- |u_q|\le N^{-1+o(1)}.
-\]
-
-Therefore
-
-\[
- w_k=|u_q|C_k\le N^{-3+o(1)}z_km_k.
-\]
-
-Every omitted literal mask is a deletion from the two nonnegative factors in (RR68-F). No cancellation and no replacement of an actual-zero condition by a density is used. \(\square\)
+No cancellation is used and every omitted literal mask is a deletion
+from a nonnegative factor.  QED.
 
 ---
 
-## 4. The size of one exact-\(k\) prime packet
+## 4. Size of one exact-k source-prime packet
 
 ### Proposition 4.1
 
-Uniformly in every physical \(k\),
+Uniformly in physical `k`,
 
-\[
- oxed{m_k\ll_v {N^{1+o(1)}\over B}.}
- 	ag{4.1}
-\]
+```text
+m_k <= N^(1+o(1))/B.
+```
 
-More robustly, without using \(B\ll N\),
+Without using the active range `B << N`, the robust statement is
 
-\[
- m_k\ll_v1+{N\over B}.
- 	ag{4.2}
-\]
+```text
+m_k <<_v 1 + N/B.
+```
 
 ### Proof
 
-Since \((k,b)=1\), the congruence
+Since `gcd(k,b)=1`, the congruence gives one residue class
 
-\[
- pk\equiv-ho\pmod b
-\]
+```text
+p == -rho k^(-1) (mod b).
+```
 
-has the unique solution class
+The compact source shell has length `O_v(N)`.  One residue class modulo
+`b` has at most `1+O_v(N/b)` integer representatives, and the prime
+representatives form a subset.  Since `b ~_v B`, this is `O_v(1+N/B)`.
+In the staged physical range `B <<_v N`, the `1` is absorbed by `N/B`.
+QED.
 
-\[
- p\equiv-ho\,\overline{k}\pmod b.
- 	ag{4.3}
-\]
+### Boundary warning
 
-The fixed compact source-prime shell lies in an interval of length \(O_v(N)\). Any residue class modulo \(b\) has at most
-
-\[
- 1+O_v(N/b)
-\]
-
-integer representatives in that interval, and the prime representatives form a subset. Since \(b\asymp_vB\), this proves (4.2). In the staged physical range \(B\ll_vN\), the \(1\) is absorbed by \(N/B\), proving (4.1). \(\square\)
-
-### Hostile boundary note
-
-If a future RR version permits \(B>N\), the literal statement must retain \(1+N/B\); the displayed \(N/B\) bound is then false for a nonempty packet. The present RR68 physical range is the reason the shorter form is legal.
+If a future RR version allows `B>N`, it must retain `1+N/B`; a nonempty
+packet cannot satisfy a bound strictly smaller than one.  The current
+physical range is load-bearing for the shorter displayed form.
 
 ---
 
-## 5. Fixed-prime overlap across exact \(k\)'s
+## 5. Fixed-prime overlap across exact k
 
 ### Proposition 5.1
 
-For fixed \(	heta\) and fixed shell prime \(p\),
+For fixed `theta` and fixed shell prime `p`,
 
-\[
- \#\{k:p\in\mathcal P_k\}\ll_v1.
- 	ag{5.1}
-\]
+```text
+#{k : p in P_k} <<_v 1.
+```
 
 Consequently
 
-\[
- oxed{\sum_k z_k\ll N^{8/5+o(1)}.}
- 	ag{5.2}
-\]
+```text
+sum_k z_k <= N^(8/5+o(1)).
+```
 
 ### Proof
 
-First, \(p\) is invertible modulo \(b\). Indeed, if \(d\mid(p,b)\), then \(d\mid pk\), while RR68c gives \(pk\equiv-ho\pmod b\); hence \(d\midho\). Since \((ho,b)=1\), one gets \(d=1\). Thus
+First `gcd(p,b)=1`.  If `d` divides both `p` and `b`, then `d` divides
+`p k`; RR68c implies that `d` divides `rho`; and `gcd(rho,b)=1` forces
+`d=1`.
 
-\[
- (p,b)=1.
- 	ag{5.3}
-\]
+The congruence therefore fixes `k` modulo `b`:
 
-The same congruence now fixes \(k\) modulo \(b\):
+```text
+k == -rho p^(-1) (mod b).
+```
 
-\[
- k\equiv-ho\,\overline p\pmod b.
- 	ag{5.4}
-\]
+Every physical representative lies in `[-C_v B,C_v B]`, an interval of
+length `O_v(B)`.  Since `b ~_v B`, this interval contains only `O_v(1)`
+integers in the fixed residue class.  All literal masks can only delete
+such representatives.
 
-All physical representatives satisfy
+Now expand the overlap without introducing a new mark:
 
-\[
- |k|\le C_vB.
-\]
+```text
+sum_k z_k
+ = sum_k sum_{p in P_k} Z(p)
+ = sum_{p ~ N} Z(p) #{k : p in P_k}
+ <<_v sum_{p ~ N} Z(p)
+ <= N^(8/5+o(1))
+```
 
-This interval has length \(2C_vB\), while \(b\asymp_vB\). Therefore it contains at most
+by (A1).  The zero-label multiplicity is the displayed `Z(p)` and is not
+repeated.  QED.
 
-\[
- 1+{2C_vB\over b}=O_v(1)
-\]
+### Corollary 5.2: the common k is essential
 
-integers in the residue class (5.4). All source, sign, primitive, chart, and lift masks can only delete representatives. This proves (5.1).
+Because `gcd(k,b)=1`, the two source primes satisfy
 
-Now expand the marked overlap exactly:
+```text
+p == p' == -rho k^(-1) (mod b).
+```
 
-\[
- \sum_k z_k
- =\sum_k\sum_{p\in\mathcal P_k}Z(p)
- =\sum_{p\asymp N}Z(p)\#\{k:p\in\mathcal P_k\}.
- 	ag{5.5}
-\]
-
-By (5.1) and the canonical first moment (A1),
-
-\[
- \sum_kz_k\ll_v\sum_{p\asymp N}Z(p)\ll N^{8/5+o(1)}.
-\]
-
-There is no additional zero-label factor in (5.5). A fixed prime's actual zero labels have already been majorized by the single factor \(Z(p)\) in the definition of \(z_k\). \(\square\)
-
-### Corollary 5.2: common residue class for the two source primes
-
-The common integer \(k\) is load-bearing. Since \((k,b)=1\), RR68c also gives
-
-\[
- p\equiv p'\equiv-ho\,\overline k\pmod b.
- 	ag{5.6}
-\]
-
-If the two source occurrences had unrelated integers \(k,k'\), they would not lie in one common packet \(\mathcal P_k\), and the literal factorization (RR68-F) could not be bounded by \(z_km_k\) as above.
+If the two occurrences had unrelated integers `k,k'`, they would not
+belong to one common packet `P_k`, and the factorization could not be
+bounded by `z_k m_k` in this form.
 
 ---
 
-## 6. The repaired pointwise radial mass
+## 6. Pointwise repaired radial mass
 
-### Theorem 6.1: RR68 average repair
+### Theorem 6.1
 
-For every fixed literal unrefined radial datum \(	heta\),
+For every fixed literal `theta`,
 
-\[
- oxed{W(	heta)\ll {N^{-2/5+o(1)}\over B}.}
- 	ag{6.1}
-\]
+```text
+W(theta) <= N^(-2/5+o(1))/B.
+```
 
 ### Proof
 
-All terms are nonnegative. Propositions 3.1, 4.1, and 5.1 give
+All terms are nonnegative.  Sections 3--5 give
 
-\[
-egin{aligned}
- W(	heta)
- &=\sum_kw_k\\
- &\ll N^{-3+o(1)}\sum_kz_km_k\\
- &\le N^{-3+o(1)}\left(\max_km_kight)\sum_kz_k\\
- &\ll N^{-3+o(1)}\cdot{N\over B}\cdot N^{8/5}\\
- &= {N^{-2/5+o(1)}\over B}.
-\end{aligned}
- 	ag{6.2}
-\]
+```text
+W(theta)
+ <= N^(-3+o(1)) sum_k z_k m_k
+ <= N^(-3+o(1)) (max_k m_k) sum_k z_k
+ <= N^(-3+o(1)) (N/B) N^(8/5)
+ =  N^(-2/5+o(1))/B.
+```
 
-The exponent identity is
+The exact exponent arithmetic is
 
-\[
- -3+1+{8\over5}=-{2\over5}.
- 	ag{6.3}
-\]
+```text
+-3 + 1 + 8/5 = -2/5.
+```
 
-This proof uses the first zero moment exactly once. It does not use a pointwise \(3/5\) estimate. \(\square\)
+The proof uses the first zero moment once and nowhere uses a pointwise
+`3/5` estimate.  QED.
 
 ---
 
-## 7. The repaired \(L^2\) radial ledger
+## 7. Repaired radial square
 
 ### Corollary 7.1
 
-Assuming the staged positive first-moment bound (RR68-L1),
+Assuming (RR68-L1),
 
-\[
- oxed{\sum_	heta W(	heta)^2
- \ll {N^{2/5+o(1)}M\over B}.}
- 	ag{7.1}
-\]
+```text
+sum_theta W(theta)^2 <= N^(2/5+o(1)) M/B.
+```
 
 ### Proof
 
-By nonnegativity,
+By positivity,
 
-\[
- \sum_	heta W(	heta)^2
- \le \left(\max_	heta W(	heta)ight)\sum_	heta W(	heta).
- 	ag{7.2}
-\]
+```text
+sum_theta W(theta)^2
+ <= (max_theta W(theta)) sum_theta W(theta)
+ <= (N^(-2/5+o(1))/B) (N^(4/5+o(1)) M)
+ =  N^(2/5+o(1)) M/B.
+```
 
-Apply Theorem 6.1 and (RR68-L1):
-
-\[
- \sum_	heta W(	heta)^2
- \ll {N^{-2/5+o(1)}\over B}\cdot N^{4/5+o(1)}M
- ={N^{2/5+o(1)}M\over B}.
-\]
-
-The exponent identity is
-
-\[
- -{2\over5}+{4\over5}={2\over5}.
-\]
-
-\(\square\)
+The exponent check is `-2/5+4/5=2/5`.  QED.
 
 ---
 
 ## 8. Literal host summation
 
-Put
+Write
 
-\[
- S_1=\sum_	heta W(	heta),\qquad
- S_2=\sum_	heta W(	heta)^2.
-\]
+```text
+S1 = sum_theta W(theta),
+S2 = sum_theta W(theta)^2.
+```
 
 Then
 
-\[
- S_1\ll N^{4/5+o(1)}M,\qquad
- S_2\ll {N^{2/5+o(1)}M\over B}.
- 	ag{8.1}
-\]
+```text
+S1 <= N^(4/5+o(1)) M,
+S2 <= N^(2/5+o(1)) M/B.
+```
 
-We sum over \(r\) before applying any pointwise zero estimate.
+The sum over `r` must be performed before any pointwise zero majorant.
 
 ### 8.1 Mean term
 
-The mean part of (RR-host-I) is
+From (RR-host-I),
 
-\[
- I_r^{m mean}\le {FZ(r)\over r}S_1.
-\]
+```text
+I_r^mean <= F Z(r) S1/r.
+```
 
-Substituting into (RR-host-E) gives
+Therefore
 
-\[
- E_{m mean}\ll N^{-1+o(1)}KF S_1
- \sum_{r\asymp N}{|u_r|Z(r)^2\over r}.
- 	ag{8.2}
-\]
+```text
+E_mean
+ <= N^(-1+o(1)) K F S1
+    sum_{r ~ N} |u_r| Z(r)^2/r.
+```
 
-Since \(r\asymp N\), (A3) yields
+Since `r ~ N`, (A3) gives
 
-\[
- \sum_{r\asymp N}{|u_r|Z(r)^2\over r}
- \ll N^{-1+o(1)}N^{6/5}=N^{1/5+o(1)}.
-\]
+```text
+sum |u_r| Z(r)^2/r <= N^(-1+o(1)) N^(6/5).
+```
 
-Together with \(S_1\ll N^{4/5+o(1)}M\),
+Using `S1 <= N^(4/5+o(1)) M`,
 
-\[
- E_{m mean}\ll
- N^{-1}KF\cdot N^{4/5}M\cdot N^{1/5+o(1)}
- =oxed{FMK\,N^{o(1)}}.
- 	ag{8.3}
-\]
+```text
+E_mean <= F M K N^(o(1)).
+```
 
-Equivalently, before combining the final \(r^{-1}\), the complete exponent check is
+The complete exponent check is
 
-\[
- -1-1+{4\over5}+{6\over5}=0.
- 	ag{8.4}
-\]
+```text
+-1 -1 +4/5 +6/5 = 0.
+```
 
-The weighted second zero moment, not the weighted first moment, is the correct input here.
+The weighted second zero moment is the correct input.
 
 ### 8.2 Centered term
 
-The centered part of (RR-host-I) is
+The centered part is
 
-\[
- I_r^{m cent}\le
- \sqrt{FZ(r)(r-Z(r))}\,B\,S_2^{1/2}.
-\]
+```text
+I_r^cent
+ <= sqrt(F Z(r)(r-Z(r))) B S2^(1/2).
+```
+
+Thus
+
+```text
+E_cent
+ <= N^(-1+o(1)) K sqrt(F) B S2^(1/2)
+    sum_{r ~ N} |u_r| Z(r)^(3/2) sqrt(r-Z(r)).
+```
+
+The tautological bound is `sqrt(r-Z(r)) <= N^(1/2+o(1))`.  Weighted
+Cauchy--Schwarz gives
+
+```text
+sum |u_r| Z(r)^(3/2)
+ <= (sum |u_r| Z(r))^(1/2)
+    (sum |u_r| Z(r)^2)^(1/2)
+ <= N^((3/5+6/5)/2+o(1))
+ =  N^(9/10+o(1)).
+```
+
+Also
+
+```text
+S2^(1/2) <= N^(1/5+o(1)) (M/B)^(1/2).
+```
 
 Hence
 
-\[
- E_{m cent}\ll
- N^{-1+o(1)}K\sqrt F\,B\,S_2^{1/2}
- \sum_{r\asymp N}|u_r|Z(r)^{3/2}\sqrt{r-Z(r)}.
- 	ag{8.5}
-\]
+```text
+E_cent
+ <= N^(-1+1/2+9/10+1/5+o(1))
+    K sqrt(F) B (M/B)^(1/2)
+ =  N^(3/5+o(1)) K (B M F)^(1/2).
+```
 
-Since \(0\le Z(r)\le r\asymp N\),
+The exponent check is
 
-\[
- \sqrt{r-Z(r)}\le N^{1/2+o(1)}.
- 	ag{8.6}
-\]
+```text
+-1 + 1/2 + 9/10 + 1/5 = 3/5.
+```
 
-Weighted Cauchy--Schwarz gives
-
-\[
-egin{aligned}
- \sum_{r\asymp N}|u_r|Z(r)^{3/2}
- &=\sum_rigl(|u_r|Z(r)igr)^{1/2}
-          igl(|u_r|Z(r)^2igr)^{1/2}\\
- &\le
- \left(\sum_r|u_r|Z(r)ight)^{1/2}
- \left(\sum_r|u_r|Z(r)^2ight)^{1/2}\\
- &\ll N^{(3/5+6/5)/2+o(1)}\\
- &=N^{9/10+o(1)}.
-\end{aligned}
- 	ag{8.7}
-\]
-
-Furthermore
-
-\[
- S_2^{1/2}\ll N^{1/5+o(1)}\left({M\over B}ight)^{1/2}.
- 	ag{8.8}
-\]
-
-Substitution into (8.5) yields
-
-\[
-egin{aligned}
- E_{m cent}
- &\ll N^{-1+1/2+9/10+1/5+o(1)}
- K\sqrt F\,B\left({M\over B}ight)^{1/2}\\
- &=oxed{N^{3/5+o(1)}K(BMF)^{1/2}}.
-\end{aligned}
- 	ag{8.9}
-\]
-
-The numerical check is
-
-\[
- -1+{1\over2}+{9\over10}+{1\over5}={3\over5}.
- 	ag{8.10}
-\]
-
-No pointwise \(Z(r)\ll N^{3/5}\) is used. The only pointwise use is the tautological \(\sqrt{r-Z(r)}\le\sqrt r\).
+No pointwise `Z(r) <= N^(3/5)` is used.  The only pointwise step is
+`r-Z(r) <= r`.
 
 ---
 
@@ -634,117 +518,86 @@ No pointwise \(Z(r)\ll N^{3/5}\) is used. The only pointwise use is the tautolog
 
 ### 9.1 Local ridge
 
-The RR68 average repair is independent of the local \(\sigma\)-optimization. Its entire downstream output is precisely (8.3) and (8.9), with the same \(F,M,K,B\) dependence as the intended staged consumer. Therefore the staged local optimizer receives no exponent loss, and its strict range
+The average repair itself is sigma-free.  Its complete downstream output
+is exactly the intended pair
 
-\[
- oxed{\sigma<1/40}
-\]
+```text
+E_mean <= F M K,
+E_cent <= N^(3/5+o(1)) K (B M F)^(1/2).
+```
 
-is restored.
-
-This is a staged implication, not an authoritative theorem insertion: the definitions and consumer carrying \(\sigma\) are in RR49--RR68 research, not in the authoritative canonical source surface.
+Therefore the staged local optimizer receives no worsened exponent and
+its strict range `sigma<1/40` is restored.  This is a staged dependency
+statement, not an authoritative theorem insertion, because the sigma
+consumer belongs to RR49--RR68 research.
 
 ### 9.2 Opposite high corner
 
-The staged opposite-corner ledger is the maximum of the two affine exponent lines
+The staged opposite-corner exponent lines are
 
-\[
- H_1(\ell)={5\over2}-{\ell\over4},\qquad
- H_2(\ell)={7\over3}+\ell.
- 	ag{9.1}
-\]
+```text
+H1(ell) = 5/2 - ell/4,
+H2(ell) = 7/3 + ell.
+```
 
-Their difference is
+Their difference is `1/6-5 ell/4`, so they cross at `ell=2/15`.
+Both then equal `37/15`.  Hence
 
-\[
- H_1(\ell)-H_2(\ell)={1\over6}-{5\ell\over4}.
-\]
+```text
+min_ell max(H1(ell),H2(ell)) = 37/15.
+```
 
-They cross at
+The staged unconditional target is `12/5=36/15`; the excess is `1/15`.
+The repair restores the local ridge but leaves this corner open.
 
-\[
- \ell={2\over15},
-\]
+### 9.3 Third moment remains absent
 
-and
+Using the actual pointwise estimate and AF1,
 
-\[
- H_1(2/15)=H_2(2/15)={37\over15}.
- 	ag{9.2}
-\]
+```text
+sum Z(r)^3
+ <= (max Z(r)) sum Z(r)^2
+ <= N^(2/3+o(1)) N^(11/5+o(1))
+ =  N^(43/15+o(1)).
+```
 
-Thus
+The identity is `2/3+11/5=43/15`.  This does not prove either staged
+sufficient premise
 
-\[
- oxed{\min_\ell\max(H_1(\ell),H_2(\ell))={37\over15}.}
- 	ag{9.3}
-\]
-
-The staged fully unconditional target is \(12/5=36/15\). The repaired high corner remains above it by
-
-\[
- {37\over15}-{12\over5}={1\over15}.
- 	ag{9.4}
-\]
-
-The average repair therefore restores the intended local ridge but does not close the opposite high corner.
-
-### 9.3 The third-moment premise is still absent
-
-AF1 and the actual pointwise bound give only
-
-\[
-egin{aligned}
- \sum_{r\asymp N}Z(r)^3
- &\le \left(\max_{r\asymp N}Z(r)ight)\sum_{r\asymp N}Z(r)^2\\
- &\ll N^{2/3+o(1)}N^{11/5+o(1)}\\
- &=N^{43/15+o(1)}.
-\end{aligned}
- 	ag{9.5}
-\]
-
-The exponent identity is
-
-\[
- {2\over3}+{11\over5}={43\over15}.
-\]
-
-This is far weaker than either staged sufficient premise
-
-\[
- \sum Z(r)^3\ll N^{29/15-6\sigma+o(1)}
- 	ag{9.6}
-\]
+```text
+sum Z(r)^3 <= N^(29/15-6 sigma+o(1)),
+```
 
 or
 
-\[
- \sum Z(r)^3\ll N^{2-6\sigma+o(1)}.
- 	ag{9.7}
-\]
-
-Neither (9.6) nor (9.7) is proved here.
+```text
+sum Z(r)^3 <= N^(2-6 sigma+o(1)).
+```
 
 ### 9.4 Smallest remaining residual
 
-At the current staged endpoint, the smallest explicitly quantified residual is the opposite high-corner excess \(N^{1/15+o(1)}\) over the fully unconditional target. One sufficient route is a genuinely stronger third zero moment of the form (9.6) or (9.7), but such a moment does not follow from AF1 and \(Z(r)\ll r^{2/3+o(1)}\).
-
-Accordingly the final status is:
+At the staged endpoint, the smallest explicitly quantified residual is
+the opposite high-corner excess `N^(1/15+o(1))` over the fully
+unconditional target.  A genuinely stronger third zero moment is one
+sufficient route, but it is not implied by AF1 and the pointwise `2/3`
+bound.
 
 ```text
-(i) RR68 common-k average repair:             PROVED
-(ii) staged local sigma < 1/40 ridge:          RESTORED
-(iii) staged high-corner exponent 37/15:       UNCHANGED
-(iv) fully unconditional target 12/5:          NOT REACHED
-(v) third-moment sufficient premise:           UNPROVED
-(vi) full Problem 3.2:                          OPEN
+RR68 common-k average repair:       PROVED
+staged local sigma<1/40 ridge:      RESTORED
+staged high-corner 37/15:           UNCHANGED
+fully unconditional target 12/5:   NOT REACHED
+third-moment sufficient premise:    UNPROVED
+full Problem 3.2:                   OPEN
 ```
 
 ---
 
 ## 10. Future authoritative insertion block
 
-Do **not** insert this block until the RR49--RR68 definitions, the exact-\(k\) packet \(\mathcal P_k(	heta)\), \(C_k,w_k,W(	heta)\), and the host consumer have been promoted into `oracleA_result.tex`.
+Do not insert this block until RR49--RR68, the exact-`k` packet `P_k`,
+`C_k,w_k,W(theta)`, and the host consumer have been promoted into the
+authoritative source.
 
 ```latex
 \begin{lemma}[Average repair for the RR68 common radial integer]
@@ -786,7 +639,7 @@ Then
 \]
 \[
  \sum_kz_k\ll N^{8/5+o(1)},
-\qquad
+ \qquad
  W(\theta):=\sum_kw_k
  \ll {N^{-2/5+o(1)}\over B}.
 \]
@@ -847,9 +700,12 @@ The companion script
 problems/3.2/research/scripts/q32_rr68_average_repair_verify.py
 ```
 
-checks the rational exponent arithmetic and exhaustively tests the elementary residue/lift assertions for small moduli, physical intervals, and prime shells. That computation is **not** the asymptotic proof. The asymptotic proof is Sections 3--8 above and uses only interval lengths, coprimality, and the canonical moment estimates.
+checks exact rational exponents and exhaustively tests the elementary
+residue/lift statements for small moduli, physical intervals, and prime
+shells.  That computation is not the asymptotic proof.  The asymptotic
+proof is Sections 3--8 above.
 
-The intended verification commands are
+The intended commands are
 
 ```bash
 git diff --check
@@ -858,4 +714,6 @@ cd problems/3.2
 latexmk -pdf -interaction=nonstopmode -halt-on-error proof.tex
 ```
 
-Because this research write does not edit or include either TeX file, the LaTeX source graph is unchanged. A successful build checks the pre-existing canonical document, not the staged RR68 block.
+Neither TeX file is edited or newly included, so the TeX source graph is
+unchanged.  A successful `latexmk` run checks the pre-existing canonical
+document, not the staged RR68 insertion block.
