@@ -20,11 +20,11 @@ jobs:
         run: |
           set -euxo pipefail
           python3 problems/3.2/bridge_reflection_multiplier_verify.py | tee /tmp/q6190_reflection.log
-      - name: First-Witt and companion census through 30000
+      - name: First-Witt and companion census through 200000
         run: |
           set -euxo pipefail
           cc -O3 -Wall -Wextra -Wpedantic -o /tmp/q6190_witt problems/3.2/q6190_witt_census.c
-          /tmp/q6190_witt 30000 /tmp/q6190_witt_rows.csv | tee /tmp/q6190_witt.log
+          /tmp/q6190_witt 200000 /tmp/q6190_witt_rows.csv | tee /tmp/q6190_witt.log
       - name: Checksums
         run: |
           set -euxo pipefail
