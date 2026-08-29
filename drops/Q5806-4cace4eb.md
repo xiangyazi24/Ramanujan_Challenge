@@ -1,90 +1,63 @@
 ANSWER Q5806 4cace4eb
 
-# Problem 3.2 — cold audit of the claimed unconditional \(H^3T^2=N^{12/5}\) affine-mass bound
+# Problem 3.2 — cold audit of the claimed unconditional H³T² = N^(12/5) affine-mass bound
 
 ## Verdict
 
-\[
-oxed{	extbf{FAIL}.}
-\]
+**FAIL.**
 
 The local affine Fourier inequality used by Q5767 is correct, and the elementary bound
 
-\[
-\sqrt{E_
-u}\le M_
-u
-\]
+$$
+√E_ν ≤ M_ν
+$$
 
 is correct. For the **two-gap** family that actually underlies Q5605's localized cubic-moment argument, the pointwise estimate
 
-\[
-M_
-u\le H^{2+o(1)}
-\]
+$$
+M_ν ≤ H^{2+o(1)}
+$$
 
-is also legitimate **provided that** \(
-u\) fixes the characteristic, the rational residual root/local factor, the primary level, and every unbounded outer coordinate.
+is also legitimate, provided that ν fixes the characteristic, the rational residual root or local factor, the primary level, and every unbounded outer coordinate.
 
 The claimed global consequence does not follow. Its first false numerical line is
 
-\[
-oxed{\sum_
-u w_
-u\ll H^{1+o(1)}.}
-	ag{F}
-\]
+$$
+∑_ν w_ν ≪ H^{1+o(1)}.
+\tag{F}
+$$
 
-In Q5767, \(
-u=(p,\mathfrak q,r,	au_
-u)\), with \(\mathfrak q=X-x\) for a rational root and \(w_
-u=\log p\) at degree one. Thus \(
-u\) ranges over the prime shell, rational residual roots, primary levels, and bounded chart data. None of the canonical sources proves that the total weight of those cells is \(H^{1+o(1)}\). The only source-valid unconditional aggregate supplied by the Q5605 Sylvester/Smith ledger is
+In Q5767, ν = (p, 𝔮, r, τ_ν), with 𝔮 = X − x for a rational root and w_ν = log p at degree one. Thus ν ranges over the prime shell, rational residual roots, primary levels, and bounded chart data. None of the canonical sources proves that the total weight of those cells is H^(1+o(1)). The only source-valid unconditional aggregate supplied by the Q5605 Sylvester/Smith ledger is
 
-\[
-\sum_
-u w_
-u M_
-u\ll H^{4+o(1)},
-	ag{C1}
-\]
+$$
+∑_ν w_ν M_ν ≪ H^{4+o(1)},
+\tag{C1}
+$$
 
-not \(H^{3+o(1)}\). Consequently the trivial affine-energy majorant gives only
+not H^(3+o(1)). Consequently the trivial affine-energy majorant gives only
 
-\[
-\sum_
-u w_
-u\sqrt{E_
-u}\le\sum_
-u w_
-u M_
-u\ll H^{4+o(1)},
-	ag{C2}
-\]
+$$
+∑_ν w_ν √E_ν ≤ ∑_ν w_ν M_ν ≪ H^{4+o(1)},
+\tag{C2}
+$$
 
 which recovers Q5605's existing dyadic line
 
-\[
-H^4T^2=N^4T^{-2}\le N^{14/5+o(1)}\qquad\left(N^{3/5}\le T\le N^{2/3}ight).
-	ag{C3}
-\]
+$$
+H^4 T^2 = N^4 T^{−2} ≤ N^{14/5+o(1)}
+$$
+
+throughout N^(3/5) ≤ T ≤ N^(2/3).
 
 The algebraic substitution
 
-\[
-H^3T^2=N^3/T\le N^{12/5}
-\]
+$$
+H^3 T^2 = N^3/T ≤ N^{12/5}
+$$
 
-is arithmetically correct **conditional on a new aggregate theorem** of strength \(H^{3+o(1)}\). Q5767 did not prove that aggregate theorem; it replaced it by the incompatible pair of assertions “\(M_
-u\le H^2\)” and “\(\sum_
-u w_
-u\le H\).” Fixing the residual root makes the first assertion available but forces every prime/root/level cell into the second sum. Omitting the root from \(
-u\) would avoid that exact sum only by putting the root multiplicity back into \(M_
-u\).
+is arithmetically correct **conditional on a new aggregate theorem** of strength H^(3+o(1)). Q5767 did not prove that aggregate theorem; it replaced it by the incompatible pair of assertions “M_ν ≤ H²” and “∑_ν w_ν ≤ H.” Fixing the residual root makes the first assertion available but forces every prime/root/level cell into the second sum. Omitting the root from ν would avoid that exact sum only by putting the root multiplicity back into M_ν.
 
-There is a second, logically earlier source gap. Q5674's literal distinguished-state carrier tests \(B_x=0\) at a rational common root. Q5739/Q5767 instead introduce an abstract two-coordinate terminal projection \(P_\omega T_\omega(1,5)^t\) and test that vector for zero. No canonical Problem 3.2 source currently states the one-to-one, multiplicity-preserving theorem identifying these vector-zero occurrences with Q5605's selected actual Apéry triple starts. The affine origin inequality is valid as an abstract finite-group identity, but its exact downstream consumer binding is not yet a canonical theorem.
-
-Accordingly:
+There is a second, logically earlier source gap. Q5674's literal distinguished-state carrier tests B_x = 0 at a rational common root. Q5739/Q5767 instead introduce an abstract two-coordinate terminal projection P_ω T_ω (1,5)ᵗ and test that vector for zero. No canonical Problem 3.2 source currently states the one-to-one, multiplicity-preserving theorem identifying these vector-zero occurrences with Q5605's selected actual Apéry triple starts. The affine origin inequality is valid as an abstract finite-group identity, but its exact downstream consumer binding is not yet a canonical theorem.
 
 ```text
 new unconditional N^(12/5) cubic theorem:           FAIL
@@ -105,7 +78,7 @@ No authoritative TeX was edited.
 
 ## 0. Source boundary and pins
 
-This audit uses only Problem 3.2 in the canonical repository and the exact connected same-project records named below. No workspace/Zinan repository was used.
+This audit uses only Problem 3.2 in the canonical repository and the exact connected same-project records named below. No workspace or Zinan repository was used.
 
 ### Canonical repository
 
@@ -129,7 +102,7 @@ problems/3.2/projective_variance_reduction.tex
   blob 4ac4e34709be27db1ea7d8378442d45779fedca1
 
 problems/3.2/energy_result.tex
-  canonical at the same HEAD
+  blob 05ad067fd11d75a51e456c85bad5d97f0c9514ee
 
 problems/3.2/aligned_corank_verify.py
   blob 340ebbb82a11d464e49b69951d6e020a7276aaab
@@ -157,7 +130,7 @@ Q5605 548ceea6
   localized triple-resultant / cubic-moment ledger
 
 Q5674 82e67fb3
-  Notion page 3cb7a6c4-fa84-8131-a48bf0b8792189f5
+  Notion page 3cb7a6c4-fa84-8131-a48b-f0b8792189f5
   actual distinguished-state carrier and primitive-return masks
 
 Q5739 02a18711
@@ -169,7 +142,7 @@ Q5767 41375002
   claimed H^3 affine fallback and N^(12/5) consequence
 ```
 
-Q5739 contains an important scope warning: it explicitly says that the literal Q5605 normalization was not exposed to that audit and that it was using the interface stated in its prompt. Its phrase “in a shell with \(H^{1+o(1)}\) local levels” is therefore a conditional template, not a theorem about Q5605's actual prime/root/level index set.
+Q5739 contains an important scope warning: it explicitly says that the literal Q5605 normalization was not exposed to that audit and that it was using the interface stated in its prompt. Its phrase “in a shell with H^(1+o(1)) local levels” is therefore a conditional template, not a theorem about Q5605's actual prime/root/level index set.
 
 ---
 
@@ -179,169 +152,165 @@ Q5739 contains an important scope warning: it explicitly says that the literal Q
 
 For a fixed dyadic characteristic block, put
 
-\[
-\mathcal P(N)=\{p	ext{ prime}:N<p\le2N\},\qquad \mathcal Z_p=\{0\le x<p:b_x\equiv0\pmod p\},\qquad Z(p)=|\mathcal Z_p|.
-\]
+$$
+P(N) = {p prime : N < p ≤ 2N},
+$$
 
-For a dyadic zero-count height \(T\), Q5605 uses
+$$
+Z_p = {0 ≤ x < p : b_x ≡ 0 mod p},
+$$
 
-\[
-\mathcal P_T=\{p\in\mathcal P(N):T<Z(p)\le2T\},
-	ag{1.1}
-\]
+and Z(p) = |Z_p|.
+
+For a dyadic zero-count height T, Q5605 uses
+
+$$
+P_T = {p in P(N) : T < Z(p) ≤ 2T}
+\tag{1.1}
+$$
 
 in the licensed high range
 
-\[
-N^{3/5}\lesssim T\lesssim N^{2/3}.
-	ag{1.2}
-\]
+$$
+N^{3/5} ≲ T ≲ N^{2/3}.
+\tag{1.2}
+$$
 
 It chooses
 
-\[
-H=\left\lceilrac{16N}{T}ightceil,\qquad H\asymprac NT.
-	ag{1.3}
-\]
+$$
+H = ceil(16N/T),
+$$
 
-The factor \(16\) is irrelevant to exponents but ensures that the block loss below is a fixed fraction of \(T\).
+so H is asymptotic to N/T. The factor 16 is irrelevant to exponents but ensures that the block loss below is a fixed fraction of T.
 
 ### 1.2 Selected actual zero triples
 
-Partition \([0,p-1]\) into consecutive intervals of length at most \(H\). If one interval contains actual Apéry zeros
+Partition [0,p−1] into consecutive intervals of length at most H. If one interval contains actual Apéry zeros
 
-\[
-z_1<z_2<\cdots<z_m,
-\]
+$$
+z_1 < z_2 < ... < z_m,
+$$
 
-select its consecutive triples \((z_i,z_{i+1},z_{i+2})\). Their total number \(Q_p(H)\) satisfies
+select its consecutive triples (z_i,z_(i+1),z_(i+2)). Their total number Q_p(H) satisfies
 
-\[
-Q_p(H)\ge Z(p)-2\left\lceilrac pHightceil.
-	ag{1.4}
-\]
+$$
+Q_p(H) ≥ Z(p) − 2 ceil(p/H).
+\tag{1.3}
+$$
 
-For \(p\in\mathcal P_T\) and the choice (1.3),
+For p in P_T and the chosen H,
 
-\[
-Q_p(H)\gg T.
-	ag{1.5}
-\]
+$$
+Q_p(H) ≫ T.
+\tag{1.4}
+$$
 
 Every selected triple has the unique representation
 
-\[
-r<r+a<r+a+b<p,\qquad a,b\ge2,\qquad a+b<H.
-	ag{1.6}
-\]
+$$
+r < r+a < r+a+b < p,
+$$
 
-Define
+where a,b ≥ 2 and a+b < H.
 
-\[
-t_p^{\mathrm{Ap}}(a,b):=\#\{r:0\le r<r+a<r+a+b<p,\ r,r+a,r+a+b\in\mathcal Z_p,\ 	ext{and the Q5605 block-selection conditions hold}\}.
-	ag{1.7}
-\]
+Define t_p^Ap(a,b) to be the number of selected starts r with these exact gaps. Then
 
-Then
+$$
+Q_p(H) = ∑_{a,b≥2, a+b<H} t_p^Ap(a,b).
+\tag{1.5}
+$$
 
-\[
-Q_p(H)=\sum_{a,b\ge2,\ a+b<H}t_p^{\mathrm{Ap}}(a,b).
-	ag{1.8}
-\]
-
-This is a **two-gap** family. The start \(r\) is an occurrence/root variable, not a third gap parameter.
+This is a **two-gap** family. The start r is an occurrence/root variable, not a third gap parameter.
 
 ### 1.3 The positive primary mass
 
 The logarithmically weighted mass is
 
-\[
-\mathfrak M_{\mathrm{Ap}}(N,H):=\sum_{a,b\ge2,\ a+b<H}\ \sum_{N<p\le2N}t_p^{\mathrm{Ap}}(a,b)\log p.
-	ag{1.9}
-\]
+$$
+M_Ap(N,H) = ∑_{a,b≥2, a+b<H} ∑_{N<p≤2N} t_p^Ap(a,b) log p.
+\tag{1.6}
+$$
 
-By (1.5)–(1.8),
+Equations (1.4) and (1.5) give
 
-\[
-T|\mathcal P_T|\log N\ll\mathfrak M_{\mathrm{Ap}}(N,H).
-	ag{1.10}
-\]
+$$
+T |P_T| log N ≪ M_Ap(N,H).
+\tag{1.7}
+$$
 
-This is the first place where the prime-shell weight is paid. The later unweighted cubic moment loses the single \(\log N\) again; it does not create an additional prime sum.
+This is where the prime-shell weight is paid. The later unweighted cubic moment loses the single log N again; it does not create an additional prime sum.
 
 ### 1.4 The source-valid Sylvester/Smith envelope
 
 A selected actual triple forces
 
-\[
-N_a(r)\equiv0\pmod p,\qquad N_b(r+a)\equiv0\pmod p.
-	ag{1.11}
-\]
+$$
+N_a(r) ≡ 0 mod p,
+$$
+
+and
+
+$$
+N_b(r+a) ≡ 0 mod p.
+$$
 
 Let
 
-\[
-S_{a,b}=\operatorname{Res}_Xigl(N_a(X),N_b(X+a)igr).
-	ag{1.12}
-\]
+$$
+S_(a,b) = Res_X(N_a(X), N_b(X+a)).
+\tag{1.8}
+$$
 
-The canonical root-strip theorem makes \(S_{a,b}
-e0\). Define
+The canonical root-strip theorem makes S_(a,b) nonzero. Define t_p^form(a,b) as the number of rational common roots x in F_p of those two polynomials, with the relevant safe central and structural restrictions inserted when the deflated form is used. Then
 
-\[
-t_p^{\mathrm{form}}(a,b):=\#\{x\in\mathbf F_p:N_a(x)=N_b(x+a)=0\},
-	ag{1.13}
-\]
-
-with the relevant safe central/structural restrictions inserted when the deflated form is used. Then
-
-\[
-t_p^{\mathrm{Ap}}(a,b)\le t_p^{\mathrm{form}}(a,b)\le v_p(S_{a,b}).
-	ag{1.14}
-\]
+$$
+t_p^Ap(a,b) ≤ t_p^form(a,b) ≤ v_p(S_(a,b)).
+\tag{1.9}
+$$
 
 The second inequality is the fixed-size Sylvester/Smith corank argument. It pays distinct common roots and repeated local multiplicity; no root-simplicity assumption is needed.
 
 For a fixed gap pair,
 
-\[
-\sum_{N<p\le2N}v_p(S_{a,b})\log p\le\log|S_{a,b}|.
-	ag{1.15}
-\]
+$$
+∑_{N<p≤2N} v_p(S_(a,b)) log p ≤ log |S_(a,b)|.
+\tag{1.10}
+$$
 
 The canonical height estimate is
 
-\[
-\log|S_{a,b}|\ll(a+b)^2\log(a+b).
-	ag{1.16}
-\]
+$$
+log |S_(a,b)| ≪ (a+b)^2 log(a+b).
+\tag{1.11}
+$$
 
 Consequently
 
-\[
-\mathfrak M_{\mathrm{Ap}}(N,H)\le\sum_{a,b\ge2,\ a+b<H}\log|S_{a,b}|\ll\sum_{s\le H}s^3\log s\ll H^{4+o(1)}.
-	ag{1.17}
-\]
+$$
+M_Ap(N,H) ≤ ∑_{a,b≥2, a+b<H} log |S_(a,b)| ≪ ∑_{s≤H} s^3 log s ≪ H^{4+o(1)}.
+\tag{1.12}
+$$
 
-This \(H^4\) mass is what Q5605 actually banks unconditionally.
+This H⁴ mass is what Q5605 actually banks unconditionally.
 
-### 1.5 Why the cubic contribution has a factor \(T^2\)
+### 1.5 Why the cubic contribution has a factor T²
 
-On \(\mathcal P_T\), \(Z(p)^3\ll T^3\). From (1.10) and (1.17),
+On P_T, Z(p)³ ≪ T³. From (1.7) and (1.12),
 
-\[
-|\mathcal P_T|\llrac{H^{4+o(1)}}{T\log N}.
-	ag{1.18}
-\]
+$$
+|P_T| ≪ H^{4+o(1)} / (T log N).
+\tag{1.13}
+$$
 
 Therefore
 
-\[
-\sum_{p\in\mathcal P_T}Z(p)^3\ll T^3|\mathcal P_T|\ll H^{4+o(1)}T^2.
-	ag{1.19}
-\]
+$$
+∑_{p in P_T} Z(p)^3 ≪ T^3 |P_T| ≪ H^{4+o(1)} T^2.
+\tag{1.14}
+$$
 
-The \(T^2\) is exactly
+The T² is exactly
 
 ```text
 T^3 from the cubic zero count
@@ -349,21 +318,21 @@ minus
 one factor T supplied by the selected-triple lower bound Q_p(H) >> T.
 ```
 
-Using \(H\asymp N/T\),
+Using H asymptotic to N/T,
 
-\[
-H^4T^2=N^4T^{-2}.
-	ag{1.20}
-\]
+$$
+H^4 T^2 = N^4 T^{−2}.
+\tag{1.15}
+$$
 
-This decreases throughout (1.2), so the worst endpoint is \(T=N^{3/5}\):
+This decreases throughout the licensed T range, so the worst endpoint is T = N^(3/5):
 
-\[
-N^4N^{-6/5}=N^{14/5}.
-	ag{1.21}
-\]
+$$
+N^4 N^{−6/5} = N^{14/5}.
+\tag{1.16}
+$$
 
-Thus the prior \(N^{14/5}\) term counted the heavy-prime contribution to the **third zero moment**, via actual consecutive zero triples and their two-gap Smith-primary envelope. It did not count a free raw three-gap family.
+Thus the prior N^(14/5) term counted the heavy-prime contribution to the **third zero moment**, via actual consecutive zero triples and their two-gap Smith-primary envelope. It did not count a free raw three-gap family.
 
 ---
 
@@ -371,19 +340,19 @@ Thus the prior \(N^{14/5}\) term counted the heavy-prime contribution to the **t
 
 Let
 
-\[
-\mathcal Y_H=\{(a,b):a,b\ge2,\ a+b<H\},\qquad |\mathcal Y_H|=H^{2+o(1)}.
-	ag{2.1}
-\]
+$$
+Y_H = {(a,b) : a,b ≥ 2 and a+b < H}.
+$$
 
-For \(Y=(a,b)\), a characteristic \(p\), and a rational common root \(x\), let \(e_{p,Y,x}\) be the local multiplicity retained after the literal safe masks. A fully expanded formal primary occurrence has the shape
+Then |Y_H| = H^(2+o(1)).
 
-\[
-\iota=(Y,p,x,r,	au),\qquad 1\le r\le e_{p,Y,x},
-	ag{2.2}
-\]
+For Y = (a,b), a characteristic p, and a rational common root x, let e_(p,Y,x) be the local multiplicity retained after the literal safe masks. A fully expanded formal primary occurrence has the shape
 
-where \(	au\) records bounded orientation, source, chart, and physical labels.
+$$
+iota = (Y,p,x,r,tau),
+$$
+
+where 1 ≤ r ≤ e_(p,Y,x), and tau records bounded orientation, source, chart, and physical labels.
 
 The formal occurrence set must retain:
 
@@ -401,154 +370,109 @@ all bounded occurrence labels exactly once.
 
 Let
 
-\[
-s(\iota)=P_\iota T_\iota(1,5)^t
-	ag{2.3}
-\]
+$$
+s(iota) = P_iota T_iota (1,5)^t
+\tag{2.1}
+$$
 
 be the proposed affine state.
 
 To perform Fourier analysis, occurrences may be grouped only when their values lie in the same finite additive group. For degree-one factors a favorable grouping is by
 
-\[
+$$
+nu = (p,x,r,tau_nu),
+$$
 
-u=(p,x,r,	au_
-u),\qquad R_
-u\simeq\mathbf F_p[\epsilon]/(\epsilon^r),
-	ag{2.4}
-\]
+with local ring R_nu isomorphic to F_p[epsilon]/(epsilon^r). Put
 
-with every local polynomial expressed in its own parameter \(X-x\) and then transported to the canonical model. Put
+$$
+Omega_(nu,H) = {(Y,tau) : (Y,p,x,r,tau) is a formal occurrence in cell nu},
+$$
 
-\[
-\Omega_{
-u,H}:=\{(Y,	au):(Y,p,x,r,	au)	ext{ is a formal occurrence in cell }
-u\},\qquad M_
-u:=|\Omega_{
-u,H}|.
-	ag{2.5}
-\]
+and M_nu = |Omega_(nu,H)|.
 
 At degree one the layer weight is, up to bounded normalization,
 
-\[
-w_
-u=\log p.
-	ag{2.6}
-\]
+$$
+w_nu = log p.
+\tag{2.2}
+$$
 
 The exact incidence identity is
 
-\[
-oxed{\sum_
-u w_
-u M_
-u=\sum_{Y\in\mathcal Y_H}\ \sum_{N<p\le2N}\ \sum_{x\in\mathbf F_p}\ \sum_{1\le r\le e_{p,Y,x}}\ \sum_	au(\log p)\,\mathbf1_{\{	ext{all formal masks}\}}.}
-	ag{2.7}
-\]
+$$
+∑_nu w_nu M_nu
+= ∑_{Y in Y_H} ∑_{N<p≤2N} ∑_{x in F_p} ∑_{1≤r≤e_(p,Y,x)} ∑_tau (log p) 1_(all formal masks).
+\tag{2.3}
+$$
 
 The right side is the total formal prime/root/level occurrence mass. Regrouping cannot change it.
 
-If the shell equations in (2.7) are the same two common-root equations paid by the Q5605 Sylvester matrix, then Smith normal form gives the unconditional envelope
+If the shell equations in (2.3) are the same two common-root equations paid by the Q5605 Sylvester matrix, then Smith normal form gives the unconditional envelope
 
-\[
-\sum_
-u w_
-u M_
-u\ll H^{4+o(1)}.
-	ag{2.8}
-\]
+$$
+∑_nu w_nu M_nu ≪ H^{4+o(1)}.
+\tag{2.4}
+$$
 
-If the proposed terminal projection introduces a different local scheme not yet identified with that common-root scheme, then even (2.8) for the new object requires a bridge theorem. In neither interpretation does the source give \(H^3\).
+If the proposed terminal projection introduces a different local scheme not yet identified with that common-root scheme, then even (2.4) for the new object requires a bridge theorem. In neither interpretation does the source give H³.
 
 ---
 
 ## 3. Audit of the pointwise bounds
 
-### 3.1 \(\sqrt{E_
-u}\le M_
-u\): PASS
+### 3.1 √E_nu ≤ M_nu: PASS
 
-Let
+Let n_nu(z) count occurrences in Omega_(nu,H) whose state is z in R_nu². Define
 
-\[
-n_
-u(z):=\#\{\omega\in\Omega_{
-u,H}:s(\omega)=z\},\qquad z\in R_
-u^2,
-	ag{3.1}
-\]
+$$
+C_nu = ∑_z n_nu(z)^2,
+$$
 
 and
 
-\[
-C_
-u:=\sum_z n_
-u(z)^2,\qquad E_
-u:=C_
-u-rac{M_
-u^2}{|R_
-u|^2}.
-	ag{3.2}
-\]
+$$
+E_nu = C_nu − M_nu^2 / |R_nu|^2.
+$$
 
 Then
 
-\[
-0\le E_
-u\le C_
-u\le\left(\sum_z n_
-u(z)ight)^2=M_
-u^2,
-	ag{3.3}
-\]
+$$
+0 ≤ E_nu ≤ C_nu ≤ (∑_z n_nu(z))^2 = M_nu^2.
+$$
 
-so
+Therefore
 
-\[
-\sqrt{E_
-u}\le M_
-u.
-	ag{3.4}
-\]
+$$
+√E_nu ≤ M_nu.
+\tag{3.1}
+$$
 
 This step is unconditional once the finite occurrence set and common local ring are correctly defined.
 
-### 3.2 \(M_
-u\le H^{2+o(1)}\): PASS only in fixed-root two-gap scope
+### 3.2 M_nu ≤ H^(2+o(1)): PASS only in fixed-root two-gap scope
 
-If \(
-u\) fixes \(p,x,r\) and every unbounded non-gap variable, then the only free large parameters in Q5605 are
+If nu fixes p,x,r and every unbounded non-gap variable, then the only free large parameters in Q5605 are (a,b) in Y_H. Hence
 
-\[
-(a,b)\in\mathcal Y_H.
-\]
+$$
+M_nu ≤ |Y_H| H^{o(1)} ≤ H^{2+o(1)}.
+\tag{3.2}
+$$
 
-Hence
-
-\[
-M_
-u\le|\mathcal Y_H|H^{o(1)}\le H^{2+o(1)}.
-	ag{3.5}
-\]
-
-The \(H^{o(1)}\) may absorb only labels already proved to have bounded/subpolynomial multiplicity. It may not absorb a new root, characteristic, host, or gap parameter.
+The H^(o(1)) may absorb only labels already proved to have bounded or subpolynomial multiplicity. It may not absorb a new root, characteristic, host, or gap parameter.
 
 ### 3.3 Why the root cannot be omitted for free
 
-If \(x\) is omitted from \(
-u\), then \(\Omega_
-u\) must include every rational root belonging to each gap pair. Since a gap polynomial has degree \(O(H)\), the elementary bound becomes
+If x is omitted from nu, then Omega_nu must include every rational root belonging to each gap pair. Since a gap polynomial has degree O(H), the elementary bound becomes
 
-\[
-M_
-u\le H^{3+o(1)},
-	ag{3.6}
-\]
+$$
+M_nu ≤ H^{3+o(1)},
+\tag{3.3}
+$$
 
-not \(H^{2+o(1)}\). More importantly, states at different roots live in differently based local rings until a canonical transport is specified.
+not H^(2+o(1)). More importantly, states at different roots live in differently based local rings until a canonical transport is specified.
 
-Thus there is an unavoidable bookkeeping dichotomy:
+There is an unavoidable bookkeeping dichotomy:
 
 ```text
 include x in nu:
@@ -564,24 +488,16 @@ Q5767 uses the first choice for the pointwise bound and then reasons as though i
 
 ### 3.4 Raw three-gap family: not covered
 
-The canonical fully deflated four-return family has
+The canonical fully deflated four-return family has a,b,c ≥ 2 and a+b+c ≤ H, hence H^(3+o(1)) raw gap triples. The canonical aligned-pencil definition also retains three gap symbols; one gets only two effective parameters after a **specific proved alignment relation** fixes one combination.
 
-\[
-a,b,c\ge2,\qquad a+b+c\le H,
-	ag{3.7}
-\]
+Q5605's localized cubic consumer is the two-gap triple-start family, so (3.2) is correct for that consumer. It cannot be exported to the raw three-gap/four-return source. For the raw family the corresponding fixed-root trivial bound is
 
-and hence \(H^{3+o(1)}\) raw gap triples. The canonical aligned-pencil definition also retains three gap symbols; one gets only two effective parameters after a **specific proved alignment relation** fixes one combination.
+$$
+M_nu ≤ H^{3+o(1)}.
+\tag{3.4}
+$$
 
-Q5605's localized cubic consumer is the two-gap triple-start family, so (3.5) is correct for that consumer. It cannot be exported to the raw three-gap/four-return source. For the raw family the corresponding fixed-root trivial bound is
-
-\[
-M_
-u\le H^{3+o(1)}.
-	ag{3.8}
-\]
-
-Q5739's phrase “aligned three-gap system with two free parameters” is an abstract scope statement. It is not a canonical theorem supplying a deterministic \(c=c(a,b,\ldots)\) relation for every raw three-gap consumer.
+Q5739's phrase “aligned three-gap system with two free parameters” is an abstract scope statement. It is not a canonical theorem supplying a deterministic c = c(a,b,...) relation for every raw three-gap consumer.
 
 ---
 
@@ -589,38 +505,34 @@ Q5739's phrase “aligned three-gap system with two free parameters” is an abs
 
 Q5767 writes
 
-\[
-\sum_
-u w_
-u\ll H^{1+o(1)},\qquad M_
-u\le H^{2+o(1)},
-	ag{4.1}
-\]
+$$
+∑_nu w_nu ≪ H^{1+o(1)},
+$$
 
-and concludes
+and
 
-\[
-\sum_
-u w_
-u M_
-u\ll H^{3+o(1)}.
-	ag{4.2}
-\]
+$$
+M_nu ≤ H^{2+o(1)},
+$$
 
-The second implication would be valid if both premises were proved. The first premise is not a Q5605 fact.
+then concludes
+
+$$
+∑_nu w_nu M_nu ≪ H^{3+o(1)}.
+\tag{4.1}
+$$
+
+The last implication would be valid if both premises were proved. The first premise is not a Q5605 fact.
 
 ### 4.1 Literal expansion of the alleged level weight
 
 For the degree-one actual-root decomposition,
 
-\[
-\sum_
-u w_
-u=\sum_{N<p\le2N}\ \sum_{x\in\mathbf F_p}\ \sum_{r\ge1}\ \sum_{	au_
-u:\exists Y	ext{ formal in }(p,x,r,	au_
-u)}\log p.
-	ag{4.3}
-\]
+$$
+∑_nu w_nu
+= ∑_{N<p≤2N} ∑_{x in F_p} ∑_{r≥1} ∑_{tau_nu: some Y is formal in (p,x,r,tau_nu)} log p.
+\tag{4.2}
+$$
 
 This sum includes:
 
@@ -631,79 +543,61 @@ all primary layers r;
 all separately retained charts/branches.
 ```
 
-There is no canonical estimate reducing (4.3) to the degree \(O(H)\) of one gap polynomial. Degree \(O(H)\) is a **per-system** statement; Q5605 has \(H^2\) gap systems and an unrestricted dyadic prime shell.
+There is no canonical estimate reducing (4.2) to the degree O(H) of one gap polynomial. Degree O(H) is a **per-system** statement; Q5605 has H² gap systems and an unrestricted dyadic prime shell.
 
-Since every active cell has \(M_
-u\ge1\), one has merely
+Since every active cell has M_nu ≥ 1, one has merely
 
-\[
-\sum_
-u w_
-u\le\sum_
-u w_
-u M_
-u.
-	ag{4.4}
-\]
+$$
+∑_nu w_nu ≤ ∑_nu w_nu M_nu.
+\tag{4.3}
+$$
 
-The source bounds the right side by \(H^{4+o(1)}\), not by \(H\).
+The source bounds the right side by H^(4+o(1)), not by H.
 
 ### 4.2 The Smith ledger shows exactly where the missing factors live
 
-For one pair \(Y=(a,b)\), local prime/root/level multiplicity is paid by
+For one pair Y = (a,b), local prime/root/level multiplicity is paid by
 
-\[
-\sum_{N<p\le2N}\ \sum_x\ \sum_{r\le e_{p,Y,x}}\log p\le\sum_{N<p\le2N}v_p(S_{a,b})\log p\le\log|S_{a,b}|.
-	ag{4.5}
-\]
+$$
+∑_{N<p≤2N} ∑_x ∑_{r≤e_(p,Y,x)} log p
+≤ ∑_{N<p≤2N} v_p(S_(a,b)) log p
+≤ log |S_(a,b)|.
+\tag{4.4}
+$$
 
-The right side is \(H^{2+o(1)}\) in the worst pair range. Summing over the \(H^{2+o(1)}\) pairs gives \(H^{4+o(1)}\).
+The right side is H^(2+o(1)) in the worst pair range. Summing over the H^(2+o(1)) pairs gives H^(4+o(1)).
 
-Q5767 effectively kept the \(H^2\) pair count inside \(M_
-u\), kept one \(H\) as an alleged number of levels, and dropped the remaining prime/root/valuation height. That dropped factor is not a logarithm; in the source ledger it is a full power of \(H\) at aggregate scale.
+Q5767 effectively kept the H² pair count inside M_nu, kept one H as an alleged number of levels, and dropped the remaining prime/root/valuation height. That dropped factor is not a logarithm; in the source ledger it is a full power of H at aggregate scale.
 
 ### 4.3 Prime-shell and residue-degree audit
 
-- **Prime shell.** The audit is already at one fixed dyadic \(N\)-shell, so summing over dyadic shells costs only \(N^{o(1)}\). But the primes *inside* \((N,2N]\) are not one level. They are paid through (4.5).
-- **Rational roots.** Each \(x\in\mathbf F_p\) is a separate degree-one local factor. Fixing \(x\) is what makes (3.5) true; it cannot then be omitted from (4.3).
-- **Primary levels.** Summing \(r=1,\ldots,e_{p,Y,x}\) gives the local length. Smith valuation pays this sum. Replacing all levels by one cell would lose the exact primary multiplicity.
-- **Residue degree.** Q5605's actual starts use degree-one factors. If higher-degree factors are included, \(w_
-u=(\deg\mathfrak q)\log p\) and extension-root pollution is introduced; this cannot improve (4.3).
-- **Charts and physical labels.** Source-proved bounded multiplicities may be absorbed in \(H^{o(1)}\). They do not repair the missing prime/root mass.
+- **Prime shell.** The audit is already at one fixed dyadic N-shell, so summing over dyadic shells costs only N^(o(1)). But the primes *inside* (N,2N] are not one level. They are paid through (4.4).
+- **Rational roots.** Each x in F_p is a separate degree-one local factor. Fixing x is what makes (3.2) true; it cannot then be omitted from (4.2).
+- **Primary levels.** Summing r = 1,...,e_(p,Y,x) gives the local length. Smith valuation pays this sum. Replacing all levels by one cell would lose the exact primary multiplicity.
+- **Residue degree.** Q5605's actual starts use degree-one factors. If higher-degree factors are included, w_nu = (deg 𝔮) log p and extension-root pollution is introduced; this cannot improve (4.2).
+- **Charts and physical labels.** Source-proved bounded multiplicities may be absorbed in H^(o(1)). They do not repair the missing prime/root mass.
 
 ### 4.4 A legal interface obstruction
 
-The claimed implication is refuted even at the abstract deterministic interface. Consider a permitted incidence profile with \(H^{4-o(1)}\) active cells \(
-u\), each having
+The claimed implication is refuted even at the abstract deterministic interface. Consider a permitted incidence profile with H^(4−o(1)) active cells nu, each having M_nu = 1 and |R_nu| tending to infinity. Then
 
-\[
-M_
-u=1,\qquad |R_
-u|	o\infty.
-\]
+$$
+M_nu ≤ H^2,
+$$
 
-Then
+$$
+E_nu = 1 − |R_nu|^{−2},
+$$
 
-\[
-M_
-u\le H^2,\qquad E_
-u=1-|R_
-u|^{-2},\qquad\sqrt{E_
-u}=1+o(1),
-\]
+and √E_nu = 1+o(1), but
 
-but
+$$
+∑_nu w_nu √E_nu = H^{4−o(1)}
+$$
 
-\[
-\sum_
-u w_
-u\sqrt{E_
-u}=H^{4-o(1)}
-\]
+when logarithmic weights are normalized by log N. This profile respects the Q5605 aggregate height ceiling and every pointwise inequality used by Q5767. It is not asserted to be an Apéry realization; it proves that the displayed scalar inputs do not imply the claimed H³ conclusion.
 
-when logarithmic weights are normalized by \(\log N\). This profile respects the Q5605 aggregate height ceiling and every pointwise inequality used by Q5767. It is not asserted to be an Apéry realization; it proves that the displayed scalar inputs do not imply the claimed \(H^3\) conclusion.
-
-The canonical sources contain no covariance/overlap theorem forcing those active cells to collapse into only \(H^{1+o(1)}\) common local levels.
+The canonical sources contain no covariance or overlap theorem forcing those active cells to collapse into only H^(1+o(1)) common local levels.
 
 ---
 
@@ -711,81 +605,57 @@ The canonical sources contain no covariance/overlap theorem forcing those active
 
 ### 5.1 The finite-group identity: PASS
 
-For a correctly defined finite occurrence set in one ring \(R_
-u\), two-dimensional character orthogonality gives
+For a correctly defined finite occurrence set in one ring R_nu, two-dimensional character orthogonality gives
 
-\[
-E_
-u=rac1{|R_
-u|^2}\sum_{\lambda
-e0}|S_
-u(\lambda)|^2,
-	ag{5.1}
-\]
+$$
+E_nu = |R_nu|^{−2} ∑_{lambda≠0} |S_nu(lambda)|^2,
+\tag{5.1}
+$$
 
 and
 
-\[
-n_
-u(0)\lerac{M_
-u}{|R_
-u|^2}+\sqrt{E_
-u}.
-	ag{5.2}
-\]
+$$
+n_nu(0) ≤ M_nu / |R_nu|^2 + √E_nu.
+\tag{5.2}
+$$
 
-Defining \(\Omega_{
-u,H}\) **before** imposing \(s(\omega)=0\) is the correct noncircular order. If \(\Omega\) were pre-restricted to the distinguished origin, every surviving occurrence would lie in one state fibre and the energy statement would assume the conclusion.
+Defining Omega_(nu,H) **before** imposing s(omega) = 0 is the correct noncircular order. If Omega were pre-restricted to the distinguished origin, every surviving occurrence would lie in one state fibre and the energy statement would assume the conclusion.
 
-Restricting \(x\) to \(\mathbf F_p\) also correctly removes extension-root pollution.
+Restricting x to F_p also correctly removes extension-root pollution.
 
 ### 5.2 The mean term must remain in the consumer
 
 The aggregate local-length mass has the form
 
-\[
-\mathcal M_{\mathrm{aff}}(N,H)=\sum_
-u w_
-u n_
-u(0).
-	ag{5.3}
-\]
+$$
+M_aff(N,H) = ∑_nu w_nu n_nu(0).
+\tag{5.3}
+$$
 
 Equation (5.2) gives
 
-\[
-\mathcal M_{\mathrm{aff}}(N,H)\le\sum_
-u w_
-urac{M_
-u}{|R_
-u|^2}+\sum_
-u w_
-u\sqrt{E_
-u}.
-	ag{5.4}
-\]
+$$
+M_aff(N,H)
+≤ ∑_nu w_nu M_nu / |R_nu|^2
++ ∑_nu w_nu √E_nu.
+\tag{5.4}
+$$
 
-Q5767's \(H^3\) headline discusses only the second term. Under the source-valid formal envelope (2.8), the mean is harmless but must be shown:
+Q5767's H³ headline discusses only the second term. Under the source-valid formal envelope (2.4), the mean is harmless but must be shown. Since |R_nu| ≥ p is asymptotic to N,
 
-\[
-|R_
-u|\ge p\asymp N\quad\Longrightarrow\quad\sum_
-u w_
-urac{M_
-u}{|R_
-u|^2}\le N^{-2}\sum_
-u w_
-u M_
-u\ll N^{-2}H^{4+o(1)}.
-	ag{5.5}
-\]
+$$
+∑_nu w_nu M_nu / |R_nu|^2
+≤ N^{−2} ∑_nu w_nu M_nu
+≪ N^{−2} H^{4+o(1)}.
+\tag{5.5}
+$$
 
-After the outer \(T^2\), this is
+After the outer T², this is
 
-\[
-N^{-2}H^4T^2=N^2T^{-2}\le N^{4/5+o(1)},
-	ag{5.6}
-\]
+$$
+N^{−2} H^4 T^2 = N^2 T^{−2} ≤ N^{4/5+o(1)},
+\tag{5.6}
+$$
 
 so it is not the obstruction. The obstruction is the energy term's aggregate formal mass.
 
@@ -793,26 +663,26 @@ so it is not the obstruction. The obstruction is the energy term's aggregate for
 
 Q5605's literal selected occurrence is an actual zero triple:
 
-\[
-b_x\equiv b_{x+a}\equiv b_{x+a+b}\equiv0\pmod p.
-	ag{5.7}
-\]
+$$
+b_x ≡ b_(x+a) ≡ b_(x+a+b) ≡ 0 mod p.
+\tag{5.7}
+$$
 
-Q5674 refines a formal common root by retaining the distinguished initial slope. In its literal normalization, with a companion solution \(C_x\), the state resolvent is
+Q5674 refines a formal common root by retaining the distinguished initial slope. In its literal normalization, with a companion solution C_x, the state resolvent is
 
-\[
-\Theta_{p,X}(Y,Z)=\prod_{x\in X(\mathbf F_p)}(C_xY-B_xZ),
-	ag{5.8}
-\]
+$$
+Theta_(p,X)(Y,Z) = ∏_{x in X(F_p)} (C_x Y − B_x Z),
+\tag{5.8}
+$$
 
-and the actual Apéry start is selected by \(B_x=0\). The companion coordinate is generally a unit rather than zero.
+and the actual Apéry start is selected by B_x = 0. The companion coordinate is generally a unit rather than zero.
 
-Q5739 uses different symbols \(B_Y,C_Y\): they are asserted to be two **terminal residual coordinates after a projection** \(P_\omega\), and the desired event is
+Q5739 uses different symbols B_Y,C_Y: they are asserted to be two **terminal residual coordinates after a projection** P_omega, and the desired event is
 
-\[
-P_\omega T_\omega(1,5)^t=(B_Y,C_Y)^t=0.
-	ag{5.9}
-\]
+$$
+P_omega T_omega (1,5)^t = (B_Y,C_Y)^t = 0.
+\tag{5.9}
+$$
 
 These are not the same two coordinates as the fundamental Apéry/companion row in Q5674. That distinction is necessary—an invertible raw transfer cannot send the primitive initial vector to zero—but it creates a proof obligation.
 
@@ -826,7 +696,7 @@ one fully masked Q5739 occurrence omega has s(omega)=0.
 
 Q5739 itself records that it was not reading the literal Q5605 normalization.
 
-Therefore (5.2) is a valid abstract reduction, but Q5767 does not yet establish that its left side is exactly the Q5605 mass (1.9). This is an additional reason that no canonical \(N^{12/5}\) theorem may be inserted.
+Therefore (5.2) is a valid abstract reduction, but Q5767 does not yet establish that its left side is exactly the Q5605 mass. This is an additional reason that no canonical N^(12/5) theorem may be inserted.
 
 ---
 
@@ -834,45 +704,45 @@ Therefore (5.2) is a valid abstract reduction, but Q5767 does not yet establish 
 
 ### 6.1 Projective variance
 
-`projective_variance_reduction.tex` proves, for four-consecutive windows in one projective fibre, statements including \(M_p\le p\) when the first index determines the window, and the short-chain energy bound
+`projective_variance_reduction.tex` proves, for four-consecutive windows in one projective fibre, statements including M_p ≤ p when the first index determines the window, and the short-chain energy bound
 
-\[
-\sum_{q\in\mathbf P^1(\mathbf F_p)}C_p(q)^2\le30pH.
-	ag{6.1}
-\]
+$$
+∑_{q in P^1(F_p)} C_p(q)^2 ≤ 30 p H.
+\tag{6.1}
+$$
 
 It also proves a mass-sensitive variant
 
-\[
-\sum_q C_p(q)^2\le20p\sqrt{M_p}.
-	ag{6.2}
-\]
+$$
+∑_q C_p(q)^2 ≤ 20 p √M_p.
+\tag{6.2}
+$$
 
 These estimates do not imply (F):
 
-1. they are per-characteristic and retain a factor \(p\);
+1. they are per-characteristic and retain a factor p;
 2. they concern nonzero projective directions;
 3. the distinguished zero vector has no projective image;
-4. they forget the radial primary level \(r\);
+4. they forget the radial primary level r;
 5. they concern four-return projective windows, not the complete two-gap affine-origin mass.
 
-At the endpoint \(H\asymp p^{1/3}\), the canonical bound \(pH\) is \(H^4\), exactly the trivial square scale for an \(H^2\)-sized family. It cannot be converted into an \(H\)-sized set of affine local levels.
+At the endpoint H asymptotic to p^(1/3), the canonical bound pH is H⁴, exactly the trivial square scale for an H²-sized family. It cannot be converted into an H-sized set of affine local levels.
 
 ### 6.2 Canonical continuant collision energy
 
 `energy_result.tex` proves an unconditional formal-column bound
 
-\[
-\mathcal E_p(H)\ll H^{8/3}
-\]
+$$
+E_p(H) ≪ H^{8/3}
+$$
 
-for a different energy built from pairs of zero levels \(N_h(x)=0\) in a continuant column. It explicitly distinguishes actual affine witnesses from raw resultant support and warns that boundary/resultant-supported rows need not have a common rational witness.
+for a different energy built from pairs of zero levels N_h(x) = 0 in a continuant column. It explicitly distinguishes actual affine witnesses from raw resultant support and warns that boundary or resultant-supported rows need not have a common rational witness.
 
-That theorem is not an affine-state collision estimate for \(P_\omega T_\omega(1,5)^t\). It supplies neither (F) nor a primary-level/root count for the Q5605 mass.
+That theorem is not an affine-state collision estimate for P_omega T_omega (1,5)^t. It supplies neither (F) nor a primary-level/root count for the Q5605 mass.
 
 ### 6.3 Aligned three-gap content
 
-`atom_tail_section.tex` defines the raw aligned pencil with three gaps and proves a valuation statement for common roots of three polynomials. Its desired aggregate \(H^{3+o(1)}\) aligned-content mass is stated as a hypothesis, not an unconditional theorem. Exact computations support the hypothesis at small heights but are not asymptotic proof.
+`atom_tail_section.tex` defines the raw aligned pencil with three gaps and proves a valuation statement for common roots of three polynomials. Its desired aggregate H^(3+o(1)) aligned-content mass is stated as a hypothesis, not an unconditional theorem. Exact computations support the hypothesis at small heights but are not asymptotic proof.
 
 Thus no canonical projective, continuant-energy, or aligned-content statement fills the missing line in Q5767.
 
@@ -884,45 +754,39 @@ Thus no canonical projective, continuant-energy, or aligned-content statement fi
 
 The following remains correct:
 
-\[
-n_
-u(0)\lerac{M_
-u}{|R_
-u|^2}+\sqrt{E_
-u},\qquad\sqrt{E_
-u}\le M_
-u.
-	ag{7.1}
-\]
+$$
+n_nu(0) ≤ M_nu / |R_nu|^2 + √E_nu,
+$$
+
+and
+
+$$
+√E_nu ≤ M_nu.
+\tag{7.1}
+$$
 
 ### 7.2 Aggregate statement available from current source
 
 Under the most favorable source-aligned interpretation of the shell equations,
 
-\[
-\sum_
-u w_
-u M_
-u\ll H^{4+o(1)}.
-	ag{7.2}
-\]
+$$
+∑_nu w_nu M_nu ≪ H^{4+o(1)}.
+\tag{7.2}
+$$
 
 Therefore
 
-\[
-\sum_
-u w_
-u\sqrt{E_
-u}\ll H^{4+o(1)},
-	ag{7.3}
-\]
+$$
+∑_nu w_nu √E_nu ≪ H^{4+o(1)},
+\tag{7.3}
+$$
 
 and
 
-\[
-\mathcal M_{\mathrm{aff}}(N,H)\ll H^{4+o(1)}.
-	ag{7.4}
-\]
+$$
+M_aff(N,H) ≪ H^{4+o(1)}.
+\tag{7.4}
+$$
 
 This is not a new estimate; it is the existing formal Smith envelope rewritten in affine-energy notation.
 
@@ -930,48 +794,44 @@ This is not a new estimate; it is the existing formal Smith envelope rewritten i
 
 The correct unconditional Q5605 chain remains
 
-\[
-T|\mathcal P_T|\log N\ll\mathfrak M_{\mathrm{Ap}}(N,H)\ll H^{4+o(1)},
-	ag{7.5}
-\]
+$$
+T |P_T| log N ≪ M_Ap(N,H) ≪ H^{4+o(1)},
+\tag{7.5}
+$$
 
 and
 
-\[
-\sum_{p\in\mathcal P_T}Z(p)^3\ll H^{4+o(1)}T^2=N^4T^{-2+o(1)}\le N^{14/5+o(1)}.
-	ag{7.6}
-\]
+$$
+∑_{p in P_T} Z(p)^3 ≪ H^{4+o(1)} T^2 = N^4 T^{−2+o(1)} ≤ N^{14/5+o(1)}.
+\tag{7.6}
+$$
 
-No fixed power below \(14/5\) follows from the trivial affine-energy inequality alone.
+No fixed power below 14/5 follows from the trivial affine-energy inequality alone.
 
-### 7.4 What would be needed for \(N^{12/5}\)
+### 7.4 What would be needed for N^(12/5)
 
 A genuinely new theorem of either of the following forms would suffice:
 
-\[
-\sum_
-u w_
-u M_
-u\ll H^{3+o(1)},
-	ag{7.7}
-\]
+$$
+∑_nu w_nu M_nu ≪ H^{3+o(1)},
+\tag{7.7}
+$$
 
 or, more directly,
 
-\[
-\mathfrak M_{\mathrm{Ap}}(N,H)\ll H^{3+o(1)}.
-	ag{7.8}
-\]
+$$
+M_Ap(N,H) ≪ H^{3+o(1)}.
+\tag{7.8}
+$$
 
 Together with the exact consumer bridge, either gives
 
-\[
-\sum_{p\in\mathcal P_T}Z(p)^3\ll H^3T^2=N^3/T\le N^{12/5+o(1)}.
-	ag{7.9}
-\]
+$$
+∑_{p in P_T} Z(p)^3 ≪ H^3 T^2 = N^3/T ≤ N^{12/5+o(1)}.
+\tag{7.9}
+$$
 
-But (7.7) is not a consequence of \(M_
-u\le H^2\); it is itself a global prime/root/level sparsity theorem. Equation (7.8) is an actual-primary theorem of the same strength. Neither is currently canonical.
+But (7.7) is not a consequence of M_nu ≤ H²; it is itself a global prime/root/level sparsity theorem. Equation (7.8) is an actual-primary theorem of the same strength. Neither is currently canonical.
 
 ---
 
@@ -979,70 +839,80 @@ u\le H^2\); it is itself a global prime/root/level sparsity theorem. Equation (7
 
 Let a valid aggregate primary-mass estimate be
 
-\[
-\mathfrak M(N,H)\ll H^{\mu+o(1)}.
-	ag{8.1}
-\]
+$$
+M(N,H) ≪ H^{mu+o(1)}.
+\tag{8.1}
+$$
 
 Then the Q5605 heavy-tail contribution is
 
-\[
-H^\mu T^2=N^\mu T^{2-\mu+o(1)}.
-	ag{8.2}
-\]
+$$
+H^mu T^2 = N^mu T^{2−mu+o(1)}.
+\tag{8.2}
+$$
 
-For \(T=N^t\), \(3/5\le t\le2/3\), its exponent is
+For T = N^t, with 3/5 ≤ t ≤ 2/3, its exponent is
 
-\[
-f_\mu(t)=\mu+(2-\mu)t.
-	ag{8.3}
-\]
+$$
+f_mu(t) = mu + (2−mu)t.
+\tag{8.3}
+$$
 
 | Mass exponent | Worst endpoint | Cubic exponent | Status |
 |---|---:|---:|---|
-| \(\mu=4\) | \(t=3/5\) | \(14/5\) | proved by current Smith ledger |
-| \(\mu=3\) | \(t=3/5\) | \(12/5\) | conditional; Q5767 did not prove it |
-| \(\mu=2\) | all \(t\) | \(2\) | desired \(H^2\) primary-mass scale |
-| \(\mu=2-\delta\) | \(t=2/3\) | \(2-\delta/3\) | requires a subquadratic mass theorem |
+| mu = 4 | t = 3/5 | 14/5 | proved by current Smith ledger |
+| mu = 3 | t = 3/5 | 12/5 | conditional; Q5767 did not prove it |
+| mu = 2 | all t | 2 | desired H² primary-mass scale |
+| mu = 2−delta | t = 2/3 | 2−delta/3 | requires a subquadratic mass theorem |
 
 The staged cubic targets recorded in Q5605 are
 
-\[
-N^{29/15-6\sigma+o(1)}
-	ag{8.4}
-\]
+$$
+N^{29/15−6 sigma+o(1)}
+\tag{8.4}
+$$
 
 and the stronger
 
-\[
-N^{2-6\sigma+o(1)}.
-	ag{8.5}
-\]
+$$
+N^{2−6 sigma+o(1)}.
+\tag{8.5}
+$$
 
-For a subquadratic mass \(H^{2-\delta+o(1)}\), (8.2) reaches (8.4) exactly when
+For a subquadratic mass H^(2−delta+o(1)), equation (8.2) reaches the first target exactly when
 
-\[
-2-rac{\delta}{3}\lerac{29}{15}-6\sigma\quad\Longleftrightarrow\quadoxed{\delta\gerac15+18\sigma},
-	ag{8.6}
-\]
+$$
+delta ≥ 1/5 + 18 sigma,
+\tag{8.6}
+$$
 
-and reaches (8.5) exactly when
+and reaches the second exactly when
 
-\[
-2-rac{\delta}{3}\le2-6\sigma\quad\Longleftrightarrow\quadoxed{\delta\ge18\sigma}.
-	ag{8.7}
-\]
+$$
+delta ≥ 18 sigma.
+\tag{8.7}
+$$
 
-For comparison, the incorrectly claimed \(N^{12/5}\) line would still exceed \(N^{29/15-6\sigma}\) by exponent \(7/15+6\sigma\), exceed \(N^{2-6\sigma}\) by \(2/5+6\sigma\), and exceed the RR-style target \(N^{11/5-2\sigma}\) by \(1/5+2\sigma\).
+For comparison, the incorrectly claimed N^(12/5) line would still exceed N^(29/15−6 sigma) by exponent 7/15+6 sigma, exceed N^(2−6 sigma) by 2/5+6 sigma, and exceed the RR-style target N^(11/5−2 sigma) by 1/5+2 sigma.
 
-The source-valid \(N^{14/5}\) line exceeds those three targets by, respectively,
+The source-valid N^(14/5) line exceeds those three targets by, respectively,
 
-\[
-rac{13}{15}+6\sigma,\qquadrac45+6\sigma,\qquadrac35+2\sigma.
-	ag{8.8}
-\]
+$$
+13/15+6 sigma,
+$$
 
-Thus even a future proof of the conditional \(N^{12/5}\) fallback would be progress, not full closure.
+$$
+4/5+6 sigma,
+$$
+
+and
+
+$$
+3/5+2 sigma.
+\tag{8.8}
+$$
+
+Thus even a future proof of the conditional N^(12/5) fallback would be progress, not full closure.
 
 ---
 
@@ -1052,50 +922,36 @@ Thus even a future proof of the conditional \(N^{12/5}\) fallback would be progr
 |---|---|---|
 | Canonical repository and include order pinned | PASS | `proof.tex` and included Problem 3.2 files were read at `c5d932b...` |
 | Q5605 prior quantity reconstructed | PASS | heavy-prime third moment via selected actual zero triples |
-| Original family has two free gaps | PASS | selected triple \(r,r+a,r+a+b\) |
-| \(T^2\) outer factor | PASS | \(T^3\) cubic weight divided by \(T\) selected triples per heavy prime |
-| \(H^4T^2=N^4/T^2\) ledger | PASS | direct from Smith mass \(H^4\) |
-| Worst endpoint \(T=N^{3/5}\) for \(\mu=4\) | PASS | exponent decreases with \(T\) |
+| Original family has two free gaps | PASS | selected triple r,r+a,r+a+b |
+| T² outer factor | PASS | T³ cubic weight divided by T selected triples per heavy prime |
+| H⁴T² = N⁴/T² ledger | PASS | direct from Smith mass H⁴ |
+| Worst endpoint T = N^(3/5) for mu = 4 | PASS | exponent decreases with T |
 | Local affine Fourier identity | PASS | finite two-coordinate orthogonality |
-| \(\sqrt{E_
-u}\le M_
-u\) | PASS | \(E_
-u\le M_
-u^2\) |
-| \(M_
-u\le H^{2+o(1)}\) | PASS, scoped | only when \(p,x,r\) are fixed and family is two-gap |
-| Same \(M_
-u\) bound for raw three-gap family | FAIL | raw family has \(H^3\) gap triples |
-| \(\sum_
-u w_
-u\ll H^{1+o(1)}\) | FAIL | missing prime/root/level aggregate; no source theorem |
-| \(\sum_
-u w_
-u M_
-u\ll H^{3+o(1)}\) | FAIL | depends on preceding false premise |
-| Source-valid formal aggregate | PASS at \(H^{4+o(1)}\) | Sylvester/Smith plus resultant height |
-| Mean term retained | PARTIAL in Q5767 | omitted in headline; harmless after the \(H^4\) envelope |
-| Degree-one restriction avoids extension roots | PASS | if \(x\in\mathbf F_p\) is literal in \(\Omega\) |
+| √E_nu ≤ M_nu | PASS | E_nu ≤ M_nu² |
+| M_nu ≤ H^(2+o(1)) | PASS, scoped | only when p,x,r are fixed and family is two-gap |
+| Same M_nu bound for raw three-gap family | FAIL | raw family has H³ gap triples |
+| ∑_nu w_nu ≪ H^(1+o(1)) | FAIL | missing prime/root/level aggregate; no source theorem |
+| ∑_nu w_nu M_nu ≪ H^(3+o(1)) | FAIL | depends on preceding false premise |
+| Source-valid formal aggregate | PASS at H^(4+o(1)) | Sylvester/Smith plus resultant height |
+| Mean term retained | PARTIAL in Q5767 | omitted in headline; harmless after the H⁴ envelope |
+| Degree-one restriction avoids extension roots | PASS | if x in F_p is literal in Omega |
 | Same root used in both affine coordinates | PASS in abstract setup | must retain ordered root/local-ring data |
 | Vector origin equals Q5605 actual start | NOT ESTABLISHED | no canonical multiplicity-preserving consumer theorem |
 | Projective variance supplies affine radial mass | FAIL | loses zero state and primary radius |
-| New unconditional \(N^{12/5}\) theorem | FAIL | \(H^3\) aggregate is unproved |
-| Canonical theorem insertion justified | NO | replacement ledger remains \(N^{14/5+o(1)}\) |
+| New unconditional N^(12/5) theorem | FAIL | H³ aggregate is unproved |
+| Canonical theorem insertion justified | NO | replacement ledger remains N^(14/5+o(1)) |
 
 ---
 
 ## 10. First false line and required withdrawals
 
-The first exact false/unproved inequality in Q5767's exponent proof is
+The first exact false or unproved inequality in Q5767's exponent proof is
 
-\[
-oxed{\sum_{
-u=(p,\mathfrak q,r,	au_
-u)}w_
-u\ll H^{1+o(1)}.}
-\]
+$$
+∑_{nu=(p,q,r,tau_nu)} w_nu ≪ H^{1+o(1)}.
+$$
 
-It silently treats the \(O(H)\) local degree/height of one system as the total number of weighted local cells across all \(H^2\) systems and the entire prime shell.
+It silently treats the O(H) local degree or height of one system as the total number of weighted local cells across all H² systems and the entire prime shell.
 
 The following Q5767 claims must therefore be withdrawn or relabeled as conditional:
 
@@ -1109,7 +965,7 @@ The following Q5767 claims must therefore be withdrawn or relabeled as condition
  N^(14/5) cubic line to N^(12/5).”
 ```
 
-The local sector decompositions in Q5767—diagonal, reflection, overlapping windows, and bounded labels—remain useful cardinality observations. Their advertised global \(H^2\) weighted consequences also used the same unproved level-weight normalization and therefore should not be treated as established Q5605 exponents without a corrected aggregate weight theorem.
+The local sector decompositions in Q5767—diagonal, reflection, overlapping windows, and bounded labels—remain useful cardinality observations. Their advertised global H² weighted consequences also used the same unproved level-weight normalization and therefore should not be treated as established Q5605 exponents without a corrected aggregate weight theorem.
 
 Q5739's conditional statement
 
@@ -1123,25 +979,30 @@ need not be withdrawn; it must simply remain a hypothesis template rather than b
 
 ## 11. No canonical insertion theorem
 
-Because the verdict is FAIL, there is no insertion-ready unconditional \(N^{12/5}\) theorem for `proof.tex`, `oracleA_result.tex`, or `atom_tail_section.tex`.
+Because the verdict is FAIL, there is no insertion-ready unconditional N^(12/5) theorem for `proof.tex`, `oracleA_result.tex`, or `atom_tail_section.tex`.
 
-The strongest safe research-note replacement is:
+The strongest safe correction is the following research-note statement:
 
-```latex
-\begin{remark}[Trivial affine-energy majorant does not improve the localized cubic ledger]
-Let $\Omega_{\nu,H}$ be a source-aligned fully masked two-gap occurrence family, grouped by characteristic, rational residual root, and primary level, and let $M_\nu=|\Omega_{\nu,H}|$. Then $\sqrt{E_\nu}\le M_\nu$, whence
-\[
- \sum_\nu w_\nu\sqrt{E_\nu}\le \sum_\nu w_\nu M_\nu.
-\]
-The current Sylvester--Smith/resultant-height argument gives only
-\[
- \sum_\nu w_\nu M_\nu\ll H^{4+o(1)},
-\]
-not $H^{3+o(1)}$. Consequently this trivial affine majorant recovers $H^4T^2\ll N^{14/5+o(1)}$ on $N^{3/5}\le T\le N^{2/3}$. A bound $H^{3+o(1)}$ would be a new global prime/root/level sparsity theorem and would imply the conditional fallback $N^{12/5+o(1)}$.
-\end{remark}
+```text
+Trivial affine-energy majorant.
+
+For a source-aligned fully masked two-gap occurrence family, grouped by
+characteristic, rational residual root, and primary level, let M_nu be
+the cell cardinality. Then sqrt(E_nu) <= M_nu, so
+
+    sum_nu w_nu sqrt(E_nu) <= sum_nu w_nu M_nu.
+
+The current Sylvester–Smith/resultant-height argument gives only
+
+    sum_nu w_nu M_nu << H^(4+o(1)),
+
+not H^(3+o(1)). Hence the trivial affine majorant recovers
+H^4 T^2 << N^(14/5+o(1)) on N^(3/5) <= T <= N^(2/3).
+A bound H^(3+o(1)) would be a new global prime/root/level sparsity
+theorem and would imply the conditional fallback N^(12/5+o(1)).
 ```
 
-This text is a correction note, not a new theorem, and was not inserted into authoritative source.
+This is a correction note, not a new theorem, and was not inserted into authoritative source.
 
 ---
 
@@ -1149,20 +1010,16 @@ This text is a correction note, not a new theorem, and was not inserted into aut
 
 The affine-state framework itself survives the audit:
 
-\[
-n_
-u(0)\lerac{M_
-u}{|R_
-u|^2}+\sqrt{E_
-u}
-\]
+$$
+n_nu(0) ≤ M_nu / |R_nu|^2 + √E_nu
+$$
 
-is the right noncircular local inequality, and it preserves the same residual root in both coordinates. What fails is Q5767's globalization of the trivial bound. The prime/root/primary-level cells are precisely the arithmetic mass that Q5605's Smith/resultant argument was designed to pay. They do not form an \(H^{1+o(1)}\)-weight index set merely because one recurrence transfer has length \(O(H)\).
+is the right noncircular local inequality, and it preserves the same residual root in both coordinates. What fails is Q5767's globalization of the trivial bound. The prime/root/primary-level cells are precisely the arithmetic mass that Q5605's Smith/resultant argument was designed to pay. They do not form an H^(1+o(1))-weight index set merely because one recurrence transfer has length O(H).
 
 The corrected unconditional endpoint is therefore
 
-\[
-oxed{\sum_{N<p\le2N}Z(p)^3\ll N^{14/5+o(1)}.}
-\]
+$$
+∑_{N<p≤2N} Z(p)^3 ≪ N^{14/5+o(1)}.
+$$
 
-There is no new \(N^{-2/5}\) saving from the trivial affine collision bound. Obtaining \(N^{12/5+o(1)}\) requires a genuinely new \(H^3\) aggregate theorem plus an exact source-level consumer identification; obtaining the staged sigma-dependent targets requires still stronger, subquadratic primary-mass savings.
+There is no new N^(−2/5) saving from the trivial affine collision bound. Obtaining N^(12/5+o(1)) requires a genuinely new H³ aggregate theorem plus an exact source-level consumer identification; obtaining the staged sigma-dependent targets requires still stronger, subquadratic primary-mass savings.
