@@ -1,0 +1,83 @@
+name: q6296 fixture verification
+
+on:
+  push:
+    branches:
+      - q6296-fixture-verify-ea396161
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SymPy
+        run: python3 -m pip install --disable-pip-version-check sympy
+      - name: Verify p=1049 distinguished simple triple
+        run: |
+          set -euxo pipefail
+          python3 - <<'PY'
+          from sympy import Poly, Symbol, resultant
+
+          p = 1049
+          x0 = 494
+          X = Symbol('X')
+
+          def P(y):
+              return 34*y**3 + 51*y**2 + 27*y + 5
+
+          def gap_poly(h):
+              vals = [Poly(0, X, domain='ZZ'), Poly(1, X, domain='ZZ')]
+              for k in range(1, h):
+                  vals.append(Poly(P(X+k), X, domain='ZZ') * vals[k]
+                              - Poly((X+k)**6, X, domain='ZZ') * vals[k-1])
+              return vals[h]
+
+          def eval_quotient(poly, value):
+              mod = p*p
+              residue = int(poly.eval(value)) % mod
+              assert residue % p == 0
+              return (residue // p) % p
+
+          N4 = gap_poly(4)
+          N10 = gap_poly(10)
+          N14 = gap_poly(14)
+          shifted_N4 = Poly(N4.as_expr().subs(X, X+10), X, domain='ZZ')
+
+          assert eval_quotient(N10, x0) == 1042
+          assert eval_quotient(shifted_N4, x0) == 581
+          assert eval_quotient(N14, x0) == 857
+
+          d10 = int(N10.diff().eval(x0)) % p
+          d4s = int(shifted_N4.diff().eval(x0)) % p
+          d14 = int(N14.diff().eval(x0)) % p
+          assert (d10, d4s, d14) == (585, 187, 51)
+          assert d10 and d4s
+
+          R = int(resultant(N10.as_expr(), shifted_N4.as_expr(), X))
+          valuation = 0
+          q = abs(R)
+          while q % p == 0:
+              valuation += 1
+              q //= p
+          assert valuation == 1
+
+          b = [1, 5 % p]
+          for n in range(1, p-1):
+              numerator = (P(n) * b[n] - n**3 * b[n-1]) % p
+              denominator = pow((n+1)**3, -1, p)
+              b.append(numerator * denominator % p)
+          zeros = [i for i, value in enumerate(b) if value == 0]
+          position = zeros.index(494)
+          assert zeros[position:position+3] == [494, 504, 508]
+          reflected = [p-1-z for z in reversed([494, 504, 508])]
+          rpos = zeros.index(reflected[0])
+          assert zeros[rpos:rpos+3] == reflected == [540, 544, 554]
+          assert 494 + 504 != p-1 and 504 + 508 != p-1
+          assert 0 < 494 < 508 < p-1
+
+          print('Q6296_FIXTURE PASS')
+          print(f'zeros_segment={zeros[position:position+3]} reflected={reflected}')
+          print('quotients=(1042,581,857) derivatives=(585,187,51)')
+          print(f'resultant_v_p={valuation} degs=({N10.degree()},{shifted_N4.degree()})')
+          PY
