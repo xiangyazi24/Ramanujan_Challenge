@@ -3,7 +3,7 @@ on:
   push:
     branches: [q7503-audit-122a63ad]
     paths:
-      - 'problems/3.2/research/scripts/q7503_pauc_direct_reproduction.sage'
+      - 'problems/3.2/research/scripts/q7503_pauc_direct_reproduction_v2.sage'
       - '.github/workflows/q7503-pauc-direct-reproduction.yml'
 permissions:
   contents: read
@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run exact direct and streamed audit
         shell: bash
-        run: sage problems/3.2/research/scripts/q7503_pauc_direct_reproduction.sage
+        run: sage problems/3.2/research/scripts/q7503_pauc_direct_reproduction_v2.sage
       - uses: actions/upload-artifact@v4
         with:
           name: q7503-pauc-reproduction
