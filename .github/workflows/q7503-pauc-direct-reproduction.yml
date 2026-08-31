@@ -1,0 +1,25 @@
+name: Q7503 independent PAUC reproduction
+on:
+  push:
+    branches: [q7503-audit-122a63ad]
+    paths:
+      - 'problems/3.2/research/scripts/q7503_pauc_direct_reproduction.sage'
+      - '.github/workflows/q7503-pauc-direct-reproduction.yml'
+permissions:
+  contents: read
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container:
+      image: sagemath/sagemath:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact direct and streamed audit
+        shell: bash
+        run: sage problems/3.2/research/scripts/q7503_pauc_direct_reproduction.sage
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q7503-pauc-reproduction
+          path: q7503_pauc_reproduction.txt
+          retention-days: 30
