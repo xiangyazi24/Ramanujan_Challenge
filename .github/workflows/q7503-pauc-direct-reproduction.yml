@@ -15,9 +15,11 @@ jobs:
       image: sagemath/sagemath:latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run exact direct and streamed audit
+      - name: Repair Sage caret preparse and run exact audit
         shell: bash
-        run: sage problems/3.2/research/scripts/q7503_pauc_direct_reproduction_v2.sage
+        run: |
+          sed -i 's/set(bitsD)^set(bitsS)/set(bitsD).symmetric_difference(set(bitsS))/' problems/3.2/research/scripts/q7503_pauc_direct_reproduction_v2.sage
+          sage problems/3.2/research/scripts/q7503_pauc_direct_reproduction_v2.sage
       - uses: actions/upload-artifact@v4
         with:
           name: q7503-pauc-reproduction
