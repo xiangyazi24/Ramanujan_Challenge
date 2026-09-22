@@ -3,13 +3,13 @@ ANSWER Q19346 acbb0ecd
 # R1 verdict
 
 I do **not** see an existing theorem in the literature that gives the needed
-worst-case-in-(n) upper bound for an Apéry/P-recursive term. The closest
+worst-case-in-\(n\) upper bound for an Apéry/P-recursive term. The closest
 results split into three classes: (i) constant-coefficient recurrence results,
 which control existence/size of prime divisors or averages over indices;
 (ii) factorial/binomial results, whose pointwise strength comes from
 Kummer/Legendre carry structure unavailable for a sum with cancellation; and
 (iii) diagonal/Lucas/Dwork/automatic results, which are local in one
-characteristic and do not correlate the defining primes (pasymp n).
+characteristic and do not correlate the defining primes \(p\asymp n\).
 
 For the deep attack, the route I would pursue is a **characteristic-zero
 anti-diagonal carrier followed by a short-cluster, two-row,
@@ -29,29 +29,29 @@ and a narrowly scoped replacement lemma.
 
 I searched specifically for a bound of the shape
 
-[
-#{pin(cn,n]:pmid u_n}
-quadhbox{or}quad
-sum_{substack{pin(cn,n]\pmid u_n}}log p
-]
+\[
+\#\{p\in(cn,n]:p\mid u_n\}
+\quad\hbox{or}\quad
+\sum_{\substack{p\in(cn,n]\\p\mid u_n}}\log p
+\]
 
-holding for **every** (n), with (u_n) holonomic/P-recursive,
+holding for **every** \(n\), with \(u_n\) holonomic/P-recursive,
 binomial-sum, or Apéry-like. I did not find a theorem that transfers.
 
 ## A1. Erdős--Graham--Ruzsa--Straus and recent binomial work
 
 P. Erdős, R. L. Graham, I. Z. Ruzsa, E. G. Straus,
-*On the Prime Factors of (inom{2n}{n})*,
+*On the Prime Factors of \(\binom{2n}{n}\)*,
 Math. Comp. **29** (1975), 83--92, obtains quantitative information on
 small-prime factors of the central binomial coefficient, including
 worst-case and average statements. Its pointwise strength is based on the
 Kummer/Legendre carry criterion.
 
 That criterion has no analogue for
-[
-b_r=sum_kinom rk^2inom{r+k}{k}^2,
-]
-because (pmid b_r) is cancellation among (p)-adic units. The
+\[
+b_r=\sum_k\binom rk^2\binom{r+k}{k}^2,
+\]
+because \(p\mid b_r\) is cancellation among \(p\)-adic units. The
 Gross--Koblitz audit already in this repository makes this exact: in the
 top-half regime there is a whole minimum-slope packet, and its unit sum is
 again the reflected Apéry coefficient. Thus the EGRS mechanism does not
@@ -59,8 +59,8 @@ transfer.
 
 A recent related paper is Hung M. Bui--Kyle Pratt--Alexandru Zaharescu,
 *Binomial coefficients with divisors avoiding an interval*,
-arXiv:2605.21221 (20 May 2026). They prove strong “divisor near (n)”
-results for sufficiently large (k), and under GRH construct small-(k)
+arXiv:2605.21221 (20 May 2026). They prove strong “divisor near \(n\)”
+results for sufficiently large \(k\), and under GRH construct small-\(k\)
 counterexamples to the old Erdős--Graham expectation. Again the mechanism
 is factorial/carry/sieve structure, not cancellation in a holonomic sum.
 
@@ -75,7 +75,7 @@ DOI 10.1016/j.aam.2006.12.001.
 For a rational sequence satisfying a second-order recurrence with polynomial
 coefficients, subject to a non-eventual-binary-recurrence condition, Luca
 proves that the product of numerators and denominators of the nonzero terms
-through (N) has at least (clog N) distinct prime factors.
+through \(N\) has at least \(c\log N\) distinct prime factors.
 
 This is the closest theorem I found by recurrence class, but its conclusion
 has the wrong quantifiers and direction: it is a **lower bound** on distinct
@@ -89,29 +89,29 @@ proportional-window primes dividing one prescribed term.
 Schinzel--Stewart and later Stewart results for nondegenerate binary linear
 recurrences give primitive divisors and lower bounds for the greatest prime
 factor of a term. These are constant-coefficient recurrences, whereas
-Apéry's coefficients depend cubically on (n). They also prove existence or
+Apéry's coefficients depend cubically on \(n\). They also prove existence or
 largeness of prime factors, while we need an upper bound on how many primes
 in a moving interval divide one term.
 
 **Verdict:** wrong recurrence class and wrong direction.
 
-## A4. Results on (nmid u_n)
+## A4. Results on \(n\mid u_n\)
 
 Juan José Alba González--Florian Luca--Carl Pomerance--Igor Shparlinski,
-*On numbers (n) dividing the (n)-th term of a linear recurrence*,
+*On numbers \(n\) dividing the \(n\)-th term of a linear recurrence*,
 Proc. Edinburgh Math. Soc. **55** (2012), 271--289,
 DOI 10.1017/S0013091510001355, gives upper and lower bounds for
-[
-#{mle x:mmid u_m}
-]
+\[
+\#\{m\le x:m\mid u_m\}
+\]
 for nondegenerate constant-coefficient linear recurrences with simple roots.
 Related work of Sanna and others studies densities involving
-(gcd(m,u_m)) and ranks of apparition.
+\(\gcd(m,u_m)\) and ranks of apparition.
 
 Our event
-[
-pmid b_{n-p},qquad pin(n/2,n]
-]
+\[
+p\mid b_{n-p},\qquad p\in(n/2,n]
+\]
 has both modulus and coefficient index moving together. There is no known
 divisibility-sequence law or rank-of-apparition parametrization converting
 these primes to divisors of a fixed recurrence index.
@@ -122,16 +122,16 @@ these primes to divisors of a fixed recurrence index.
 
 Éric Delaygue, *Arithmetic properties of Apéry-like numbers*,
 Compos. Math. **154** (2018), 249--274,
-DOI 10.1112/S0010437X17007552, proves (p)-adic valuation results for
+DOI 10.1112/S0010437X17007552, proves \(p\)-adic valuation results for
 Apéry-like factorial-ratio multisums and an effective criterion for the
-(p)-Lucas property for almost all primes. Delaygue--Rivoal--Roques'
+\(p\)-Lucas property for almost all primes. Delaygue--Rivoal--Roques'
 Dwork formal congruence machinery gives stronger local congruence and
 integrality packages for broad hypergeometric families.
 
 This is directly relevant to why
-[
-b_{qp+r}equiv b_qb_rpmod p
-]
+\[
+b_{qp+r}\equiv b_qb_r\pmod p
+\]
 exists. It does **not** correlate the zero events for different
 characteristics. Our problem begins after Lucas has done its job.
 
@@ -142,24 +142,24 @@ characteristics. Our problem begins after Lucas has done its job.
 Eric Rowland--Reem Yassawi,
 *Automatic congruences for diagonals of rational functions*,
 J. Théorie des Nombres de Bordeaux **27** (2015), 245--288,
-DOI 10.5802/jtnb.901, constructs automata modulo (p^alpha) for diagonals
+DOI 10.5802/jtnb.901, constructs automata modulo \(p^\alpha\) for diagonals
 of rational functions and treats Apéry-type congruences.
 
-For each **fixed** (p), this can describe
-({r:pmid b_r}) automatically. But the automaton depends on (p), and
-for (0le r<p) the target is exactly the seed row (Z_p). Automaticity
-therefore does not couple (Z_p,Z_q,Z_ell) for three characteristics.
-Derksen-type characteristic-(p) zero-set structure has the same limitation.
+For each **fixed** \(p\), this can describe
+\(\{r:p\mid b_r\}\) automatically. But the automaton depends on \(p\), and
+for \(0\le r<p\) the target is exactly the seed row \(Z_p\). Automaticity
+therefore does not couple \(Z_p,Z_q,Z_\ell\) for three characteristics.
+Derksen-type characteristic-\(p\) zero-set structure has the same limitation.
 
-**Verdict:** exact finite-(p) structure, no worst-case cross-(p) control.
+**Verdict:** exact finite-\(p\) structure, no worst-case cross-\(p\) control.
 
 ### Part A conclusion
 
 As of 22 September 2026, I found no black-box theorem proving
-[
-N_q(n)=o(n/log n)
-]
-for every (n), even for (q=1). The literature audit supports the
+\[
+N_q(n)=o(n/\log n)
+\]
+for every \(n\), even for \(q=1\). The literature audit supports the
 repository diagnosis: the missing input must be horizontal/cross-
 characteristic, not another per-prime marginal estimate.
 
@@ -170,105 +170,105 @@ characteristic, not another per-prime marginal estimate.
 ## B1. A single characteristic-zero array carries every top-half event
 
 Use the proved diagonal representation
-[
-b_requiv[x^ry^rz^rw^r]F^{p-1}pmod p,
-qquad
+\[
+b_r\equiv[x^ry^rz^rw^r]F^{p-1}\pmod p,
+\qquad
 F=(1-x-y)(1-z-w)-xyzw.
-]
+\]
 
 Set
-[
-G=xyzw,F
-]
+\[
+G=xyzw\,F
+\]
 and define the integral two-parameter array
-[
-C_{s,m}:=[x^sy^sz^sw^s]G^minmathbb Z.
-	ag{B.1}
-]
+\[
+C_{s,m}:=[x^sy^sz^sw^s]G^m\in\mathbb Z.
+\tag{B.1}
+\]
 
-Since (G^m=(xyzw)^mF^m),
-[
+Since \(G^m=(xyzw)^mF^m\),
+\[
 C_{m+r,m}=[x^ry^rz^rw^r]F^m.
-	ag{B.2}
-]
+\tag{B.2}
+\]
 
-Now fix **(n)**, not (p), and form
-[
+Now fix **\(n\)**, not \(p\), and form
+\[
 H_n(T)
-=sum_{mge0}C_{n-1,m}T^m
+=\sum_{m\ge0}C_{n-1,m}T^m
 =[x^{n-1}y^{n-1}z^{n-1}w^{n-1}]
-  rac1{1-TG}.
-	ag{B.3}
-]
+  \frac1{1-TG}.
+\tag{B.3}
+\]
 
-Every monomial of (G) has each coordinate exponent equal to (1) or (2).
+Every monomial of \(G\) has each coordinate exponent equal to \(1\) or \(2\).
 Hence
-[
-C_{s,m}=0quad	ext{unless}quad mle sle2m,
-	ag{B.4}
-]
+\[
+C_{s,m}=0\quad\text{unless}\quad m\le s\le2m,
+\tag{B.4}
+\]
 so
-[
-leftlceilrac{n-1}{2}ightceille mle n-1.
-	ag{B.5}
-]
-After (p=m+1), this is exactly the q=1 top window.
+\[
+\left\lceil\frac{n-1}{2}\right\rceil\le m\le n-1.
+\tag{B.5}
+\]
+After \(p=m+1\), this is exactly the q=1 top window.
 
 ### Carrier lemma
 
-For prime (pin(n/2,n]), put
-[
-m=p-1,qquad r=n-p=n-1-m.
-]
+For prime \(p\in(n/2,n]\), put
+\[
+m=p-1,\qquad r=n-p=n-1-m.
+\]
 Then
-[
+\[
 [T^{p-1}]H_n
 =C_{n-1,p-1}
 =[x^ry^rz^rw^r]F^{p-1},
-]
+\]
 and therefore
-[
-oxed{
-pmid b_{n-p}
-iff
-pmid[T^{p-1}]H_n.
+\[
+\boxed{
+p\mid b_{n-p}
+\iff
+p\mid[T^{p-1}]H_n.
 }
-	ag{B.6}
-]
+\tag{B.6}
+\]
 
 Thus
-[
-oxed{
+\[
+\boxed{
 N_1(n)=
-#{pin(n/2,n]	ext{ prime}:pmid[T^{p-1}]H_n}.
+\#\{p\in(n/2,n]\text{ prime}:p\mid[T^{p-1}]H_n\}.
 }
-	ag{B.7}
-]
+\tag{B.7}
+\]
 
-This is a genuine quantifier change: for fixed (n), all the changing
+This is a genuine quantifier change: for fixed \(n\), all the changing
 characteristics now test coefficients of **one integral polynomial
-(H_n(T))**, itself a fixed rational diagonal.
+\(H_n(T)\)**, itself a fixed rational diagonal.
 
-No equality over (mathbb Z) between
-(C_{n-1,p-1}) and (b_{n-p}) is used; only the congruence modulo the
+No equality over \(\mathbb Z\) between
+\(C_{n-1,p-1}\) and \(b_{n-p}\) is used; only the congruence modulo the
 defining prime is asserted.
 
 For symbolic elimination there is also the explicit one-sum formula. For
-(0le rle m),
-[
-oxed{
+\(0\le r\le m\),
+\[
+\boxed{
 [x^ry^rz^rw^r]F^m
 =
-sum_{j=max(0,,2r-m)}^r
-(-1)^jinom mj
-left(
-rac{(m-j)!}
+\sum_{j=\max(0,\,2r-m)}^r
+(-1)^j\binom mj
+\left(
+\frac{(m-j)!}
 {(r-j)!^2(m-2r+j)!}
-ight)^2.
+\right)^2.
 }
-	ag{B.8}
-]
-So the array (C_{s,m}), with (r=s-m), is a proper-hypergeometric
+\tag{B.8}
+\]
+So the array \(C_{s,m}\), with \(r=s-m\), is a proper-hypergeometric
 two-parameter object suitable for Ore/creative-telescoping elimination.
 
 I searched the repository and did not find this exact anti-diagonal carrier
@@ -276,25 +276,25 @@ already recorded.
 
 ## B2. Reflection gives a second row, but not a second independent congruence
 
-For (p=m+1) prime, the proved reflection
-[
-b_requiv b_{p-1-r}pmod p
-]
+For \(p=m+1\) prime, the proved reflection
+\[
+b_r\equiv b_{p-1-r}\pmod p
+\]
 becomes
-[
-oxed{
-C_{s,m}equiv C_{3m-s,m}pmod{m+1}.
+\[
+\boxed{
+C_{s,m}\equiv C_{3m-s,m}\pmod{m+1}.
 }
-	ag{B.9}
-]
+\tag{B.9}
+\]
 
-At (s=n-1), a bad column therefore satisfies
-[
-m+1mid C_{n-1,m},
-qquad
-m+1mid C_{3m-n+1,m}.
-	ag{B.10}
-]
+At \(s=n-1\), a bad column therefore satisfies
+\[
+m+1\mid C_{n-1,m},
+\qquad
+m+1\mid C_{3m-n+1,m}.
+\tag{B.10}
+\]
 
 This is **not** codimension two: the second congruence is reflection of the
 first. Its value is that the two integers lie in the same
@@ -302,82 +302,82 @@ characteristic-zero array, so we can form cross-column determinants before
 reducing.
 
 Define
-[
+\[
 V_n(m)=
-inom{C_{n-1,m}}{C_{3m-n+1,m}}.
-	ag{B.11}
-]
+\binom{C_{n-1,m}}{C_{3m-n+1,m}}.
+\tag{B.11}
+\]
 
 The new object to seek is a determinant/resultant involving
-(V_n(m),V_n(m-h),V_n(m-h-k)), not a stronger statistic of one (Z_p).
+\(V_n(m),V_n(m-h),V_n(m-h-k)\), not a stronger statistic of one \(Z_p\).
 
 ## B3. A positive-proportion bad set forces a short three-prime cluster
 
 Let
-[
-R_n={r<n/2:n-r	ext{ prime}, n-rmid b_r},
-qquad M=|R_n|=N_1(n),
-]
+\[
+R_n=\{r<n/2:n-r\text{ prime},\ n-r\mid b_r\},
+\qquad M=|R_n|=N_1(n),
+\]
 and write
-[
-0le r_1<cdots<r_M<n/2.
-]
+\[
+0\le r_1<\cdots<r_M<n/2.
+\]
 
-Assume, for some fixed (arepsilon>0),
-[
-Mgearepsilonrac n{log n}.
-	ag{B.12}
-]
+Assume, for some fixed \(\varepsilon>0\),
+\[
+M\ge\varepsilon\frac n{\log n}.
+\tag{B.12}
+\]
 Put
-[
-H=leftlceilrac{4log n}{arepsilon}ightceil.
-	ag{B.13}
-]
-Since the total adjacent-gap length is (<n/2), fewer than
-[
-rac{n}{2H}lerac M8
-]
-adjacent gaps exceed (H). A long gap destroys at most two consecutive
-triples, so at least (M/2) consecutive triples have both gaps at most
-(H), for large (n).
+\[
+H=\left\lceil\frac{4\log n}{\varepsilon}\right\rceil.
+\tag{B.13}
+\]
+Since the total adjacent-gap length is \(<n/2\), fewer than
+\[
+\frac{n}{2H}\le\frac M8
+\]
+adjacent gaps exceed \(H\). A long gap destroys at most two consecutive
+triples, so at least \(M/2\) consecutive triples have both gaps at most
+\(H\), for large \(n\).
 
-There are at most (H^2) ordered gap pairs. Hence some
-(1le h,kle H) occurs at least
-[
-rac{M}{2H^2}
-gg_arepsilon
-rac n{log^3n}
-	ag{B.14}
-]
+There are at most \(H^2\) ordered gap pairs. Hence some
+\(1\le h,k\le H\) occurs at least
+\[
+\frac{M}{2H^2}
+\gg_\varepsilon
+\frac n{\log^3n}
+\tag{B.14}
+\]
 times.
 
-Equivalently, for (gg_arepsilon n/log^3 n) starting primes,
-[
-p,quad p-h,quad p-h-k
-	ag{B.15}
-]
-are all prime and all bad for the **same (n)**.
+Equivalently, for \(\gg_\varepsilon n/\log^3 n\) starting primes,
+\[
+p,\quad p-h,\quad p-h-k
+\tag{B.15}
+\]
+are all prime and all bad for the **same \(n\)**.
 
-In terms of (m=p-1), each occurrence gives the exact two-row,
+In terms of \(m=p-1\), each occurrence gives the exact two-row,
 three-characteristic packet
-[
-egin{array}{c|ccc}
-&m&m-h&m-h-k\ hline
-	ext{top}
+\[
+\begin{array}{c|ccc}
+&m&m-h&m-h-k\\ \hline
+\text{top}
 &C_{n-1,m}
 &C_{n-1,m-h}
-&C_{n-1,m-h-k}\
-	ext{reflected}
+&C_{n-1,m-h-k}\\
+\text{reflected}
 &C_{3m-n+1,m}
 &C_{3m-n+1-3h,m-h}
 &C_{3m-n+1-3h-3k,m-h-k}.
-end{array}
-	ag{B.16}
-]
+\end{array}
+\tag{B.16}
+\]
 The three columns are divisible by the three distinct characteristics
-[
-m+1,quad m-h+1,quad m-h-k+1,
-]
+\[
+m+1,\quad m-h+1,\quad m-h-k+1,
+\]
 respectively.
 
 This is exactly the shape demanded by the current interface no-go:
@@ -386,110 +386,109 @@ separation.
 
 ## B4. The narrowly scoped missing lemma
 
-Let (mathcal C_n(h,k)) count primes (pin(n/2,n]) such that
-[
-p, p-h, p-h-k
-]
+Let \(\mathcal C_n(h,k)\) count primes \(p\in(n/2,n]\) such that
+\[
+p,\ p-h,\ p-h-k
+\]
 are prime and
-[
-pmid b_{n-p},quad
-p-hmid b_{n-p+h},quad
-p-h-kmid b_{n-p+h+k}.
-	ag{B.17}
-]
+\[
+p\mid b_{n-p},\quad
+p-h\mid b_{n-p+h},\quad
+p-h-k\mid b_{n-p+h+k}.
+\tag{B.17}
+\]
 
 The following suffices for q=1.
 
 > **(L3C) Logarithmic three-characteristic codegree.**
-> For every fixed (A>0),
-> [
-> max_{1le h,kle Alog n}
-> mathcal C_n(h,k)
+> For every fixed \(A>0\),
+> \[
+> \max_{1\le h,k\le A\log n}
+> \mathcal C_n(h,k)
 > =
-> o_Aleft(rac n{log^3 n}ight).
-> 	ag{B.18}
-> ]
+> o_A\left(\frac n{\log^3 n}\right).
+> \tag{B.18}
+> \]
 
-Indeed, (B.12) produces (h,kle(4/arepsilon+o(1))log n) violating
-(B.18). Since (arepsilon) is arbitrary, L3C gives
-[
-N_1(n)=o(n/log n).
-]
+Indeed, (B.12) produces \(h,k\le(4/\varepsilon+o(1))\log n\) violating
+(B.18). Since \(\varepsilon\) is arbitrary, L3C gives
+\[
+N_1(n)=o(n/\log n).
+\]
 
 A fixed power saving
-[
-mathcal C_n(h,k)ll_A n^{1-delta_A}
-	ag{B.19}
-]
+\[
+\mathcal C_n(h,k)\ll_A n^{1-\delta_A}
+\tag{B.19}
+\]
 would be much stronger than necessary.
 
-This is a strict shrinkage of the target: no global (Z_p) theorem, no
-high factorial moment, no averaging over (n), and no long gaps. The whole
+This is a strict shrinkage of the target: no global \(Z_p\) theorem, no
+high factorial moment, no averaging over \(n\), and no long gaps. The whole
 load-bearing problem is reduced to a fixed logarithmic gap pair.
 
 ## B5. The first obvious “second equation” fails exactly
 
 One might hope that reflection gives an extra vanishing from the existing
-continuant gap polynomial (N_d(x)). It does not.
+continuant gap polynomial \(N_d(x)\). It does not.
 
 For a reflection pair
-[
-x,quad p-1-x,
-]
-choose the smaller (x), and let
-[
+\[
+x,\quad p-1-x,
+\]
+choose the smaller \(x\), and let
+\[
 d=p-1-2x.
-]
+\]
 The proved symmetry
-[
+\[
 N_d(-X-d-1)=(-1)^{d-1}N_d(X)
-	ag{B.20}
-]
-has (d) even. Therefore (N_d) contains the structural central factor
-[
+\tag{B.20}
+\]
+has \(d\) even. Therefore \(N_d\) contains the structural central factor
+\[
 2X+d+1.
-	ag{B.21}
-]
-At (X=x), that factor equals (p). Thus
-[
-pmid N_d(x)
-]
+\tag{B.21}
+\]
+At \(X=x\), that factor equals \(p\). Thus
+\[
+p\mid N_d(x)
+\]
 is automatic for **every reflected projective pair**; it does not know that
-the distinguished coordinate (b_x) vanishes.
+the distinguished coordinate \(b_x\) vanishes.
 
 The smallest tempting repair is
-[
-pmid b_x
-Longrightarrow
-pmidrac{N_d(x)}{2x+d+1},
-	ag{B.22}
-]
+\[
+p\mid b_x
+\Longrightarrow
+p\mid\frac{N_d(x)}{2x+d+1},
+\tag{B.22}
+\]
 equivalently
-[
-p^2mid N_d(x).
-	ag{B.23}
-]
+\[
+p^2\mid N_d(x).
+\tag{B.23}
+\]
 
 I tested (B.23) with exact integer modular arithmetic for every prime
-(7le ple10000):
+\(7\le p\le10000\):
 
-[
-egin{array}{c|r}
-	ext{active primes }(Z_p
-earnothing)&470\
-	ext{noncentral reflection zero-pairs}&585\
-	ext{central zeros}&2\
-	ext{noncentral pairs with }p^2mid N_d(x)&mathbf 0.
-end{array}
-]
+\[
+\begin{array}{c|r}
+\text{active primes }(Z_p\ne\varnothing)&470\\
+\text{noncentral reflection zero-pairs}&585\\
+\text{central zeros}&2\\
+\text{noncentral pairs with }p^2\mid N_d(x)&\mathbf 0.
+\end{array}
+\]
 
 The first example is
-[
-p=17,quad x=3,quad d=10,
-qquad
-N_{10}(3)equiv34pmod{17^2}.
-]
-After removing the forced factor (17), the quotient is (2pmod{17}).
+\[
+p=17,\quad x=3,\quad d=10,
+\qquad
+N_{10}(3)\equiv34\pmod{17^2}.
+\]
+After removing the forced factor \(17\), the quotient is \(2\pmod{17}\).
 
 So the deflated-reflection/first-jet implication is not just unproved; it
 is empirically false in every tested noncentral target. This agrees with the
@@ -500,19 +499,19 @@ repository's previous “no automatic second vanishing congruence” audits.
 The repair must couple **different columns before reduction**.
 
 The first object I would compute is
-[
-Delta_h(n,m)
+\[
+\Delta_h(n,m)
 =
-detigl(V_n(m),V_n(m-h)igr),
-	ag{B.24}
-]
+\det\bigl(V_n(m),V_n(m-h)\bigr),
+\tag{B.24}
+\]
 followed by a three-column elimination
-[
-mathcal R_{h,k}(n,m)
-quad	ext{built from}quad
+\[
+\mathcal R_{h,k}(n,m)
+\quad\text{built from}\quad
 V_n(m),V_n(m-h),V_n(m-h-k).
-	ag{B.25}
-]
+\tag{B.25}
+\]
 
 Badness of two columns gives divisibility by two distinct defining primes of
 a common integral determinant; the third column adds a second adjacent minor.
@@ -521,8 +520,8 @@ That is genuinely cross-characteristic.
 The decisive question is not whether such determinants exist; they do.
 It is whether the explicit hypergeometric/Ore structure (B.8) forces a
 **nonzero primitive** minor/resultant whose algebraic complexity is only
-(operatorname{poly}(h,k)), or at worst (n^{o(1)}) when
-(h,k=O(log n)), rather than paying (Theta(n)) logarithmic height per
+\(\operatorname{poly}(h,k)\), or at worst \(n^{o(1)}\) when
+\(h,k=O(\log n)\), rather than paying \(\Theta(n)\) logarithmic height per
 row.
 
 This matches the strongest surviving algebraic class already isolated in
@@ -531,15 +530,15 @@ identities **before** multiplying one exponential integer carrier per row.
 
 My concrete next symbolic program would be:
 
-1. derive a bivariate Ore system for (C_{s,m}) from (B.8);
-2. restrict it to (s=n-1) and (s=3m-n+1);
+1. derive a bivariate Ore system for \(C_{s,m}\) from (B.8);
+2. restrict it to \(s=n-1\) and \(s=3m-n+1\);
 3. eliminate the hypergeometric certificate across
-   (m,m-h,m-h-k);
-4. primitive-saturate the resulting (2	imes2) and (2	imes3) minors;
-5. measure their degree and height as functions of (n,h,k).
+   \(m,m-h,m-h-k\);
+4. primitive-saturate the resulting \(2\times2\) and \(2\times3\) minors;
+5. measure their degree and height as functions of \(n,h,k\).
 
-If, even for fixed (h,k), every primitive minor has logarithmic height
-(Theta(n)), this route dies cleanly by the existing height-capacity
+If, even for fixed \(h,k\), every primitive minor has logarithmic height
+\(\Theta(n)\), this route dies cleanly by the existing height-capacity
 barrier. I have **not** proved the desired low-height minor; that is the
 exact missing premise.
 
@@ -548,44 +547,44 @@ exact missing premise.
 # Numerical test of the narrowed target
 
 I computed the exact q=1 incidence table from the recurrence for every
-(nle20000). The distribution is
+\(n\le20000\). The distribution is
 
-[
-egin{array}{c|rrrr}
-N_1(n)&0&1&2&3\ hline
-#{nle20000}&18486&1455&56&3.
-end{array}
-]
+\[
+\begin{array}{c|rrrr}
+N_1(n)&0&1&2&3\\ \hline
+\#\{n\le20000\}&18486&1455&56&3.
+\end{array}
+\]
 
-The maximum (3) occurs at
-[
-n=321,quad11576,quad18444.
-]
+The maximum \(3\) occurs at
+\[
+n=321,\quad11576,\quad18444.
+\]
 
-For (n=321),
-[
-r=(110,128,142),qquad
+For \(n=321\),
+\[
+r=(110,128,142),\qquad
 p=(211,193,179),
-]
+\]
 with short gaps
-[
+\[
 (h,k)=(18,14).
-]
+\]
 This is the same three-prime packet visible in the repository's
-(n=321) horizontal Mellin audit.
+\(n=321\) horizontal Mellin audit.
 
 Taking
-[
-H(n)=lceil8log nceil,
-]
+\[
+H(n)=\lceil8\log n\rceil,
+\]
 the other two triple-hit indices have no triple with both adjacent gaps
-(le H(n)). Across the full scan, the maximum multiplicity of one fixed
-short pair ((h,k)) at one fixed (n) is **1**.
+\(\le H(n)\). Across the full scan, the maximum multiplicity of one fixed
+short pair \((h,k)\) at one fixed \(n\) is **1**.
 
 This is useful falsification evidence for L3C, not asymptotic evidence.
 
 Here is a standalone Python script reproducing both the q=1 scan and the
-deflated-reflection (p^2) test.
+deflated-reflection \(p^2\) test.
 
 ~~~python
 from math import log
@@ -744,12 +743,12 @@ independent equations would violate the interface no-go. The second row is
 useful only if an **integral cross-column determinant/syzygy** uses both rows
 before reducing modulo three characteristics.
 
-## C2. The common carrier (H_n) is not itself a sieve
+## C2. The common carrier \(H_n\) is not itself a sieve
 
 Writing all events as
-[
-pmid[T^{p-1}]H_n
-]
+\[
+p\mid[T^{p-1}]H_n
+\]
 does not make self-divisibility rare. D-finiteness/rational-diagonal
 structure alone does not control coefficients at their own varying prime
 indices. The carrier matters only because it supplies one characteristic-zero
@@ -758,51 +757,51 @@ object on which a three-column identity could act.
 ## C3. No integer equality was smuggled in
 
 Only
-[
-C_{n-1,p-1}equiv b_{n-p}pmod p
-]
+\[
+C_{n-1,p-1}\equiv b_{n-p}\pmod p
+\]
 is used. Replacing this congruence by an equality would be circular and false.
 
 ## C4. The clustering argument is only at contradiction scale
 
 The pigeonhole lemma assumes
-[
-N_1(n)gearepsilon n/log n.
-]
-It does not say typical bad primes cluster. To get little-(o), L3C must hold
-for every fixed (A), with constants allowed to depend on (A). There is no
-hidden uniformity in (arepsilon).
+\[
+N_1(n)\ge\varepsilon n/\log n.
+\]
+It does not say typical bad primes cluster. To get little-\(o\), L3C must hold
+for every fixed \(A\), with constants allowed to depend on \(A\). There is no
+hidden uniformity in \(\varepsilon\).
 
 ## C5. No multiplicity loss
 
-(N_1(n)) counts distinct primes, so (p)-adic valuation multiplicities are
-irrelevant here. Since (pasymp n), prime count and logarithmic mass are
+\(N_1(n)\) counts distinct primes, so \(p\)-adic valuation multiplicities are
+irrelevant here. Since \(p\asymp n\), prime count and logarithmic mass are
 equivalent at the scale of the target. Central reflection zeros must be
-treated separately; I excluded them from the (p^2) test.
+treated separately; I excluded them from the \(p^2\) test.
 
 ## C6. Where this escapes -- and could fall back into -- the interface no-go
 
-The proved carrier uses the **same integer array** (C_{s,m}) for all
-characteristics. An arbitrary adversarial family of independent (Z_p)'s
+The proved carrier uses the **same integer array** \(C_{s,m}\) for all
+characteristics. An arbitrary adversarial family of independent \(Z_p\)'s
 need not lift to such an array.
 
 But if the next step uses only row cardinalities, reflection, per-column gap
 bounds, or separate resultants, it immediately collapses back to the old
 interface. The genuinely new datum must be a syzygy/minor involving at least
-the three nearby (m)-columns simultaneously.
+the three nearby \(m\)-columns simultaneously.
 
 ## C7. The load-bearing algebra is still unproved
 
-I have not derived the minimal Ore ideal of (C_{s,m}), factored
-(Delta_h(n,m)), or proved that a three-column primitive minor has
-(operatorname{poly}(h,k)) height. This is the exact open step. It is
-possible that every such minor still has (Theta(n)) logarithmic height
-for fixed (h,k); that would kill the route.
+I have not derived the minimal Ore ideal of \(C_{s,m}\), factored
+\(\Delta_h(n,m)\), or proved that a three-column primitive minor has
+\(\operatorname{poly}(h,k)\) height. This is the exact open step. It is
+possible that every such minor still has \(\Theta(n)\) logarithmic height
+for fixed \(h,k\); that would kill the route.
 
 ## C8. Numerical and literature limits
 
-The q=1 scan stops at (n=20000); the reflected first-jet audit stops at
-(p=10000). They are falsification tests, not asymptotic evidence. I did
+The q=1 scan stops at \(n=20000\); the reflected first-jet audit stops at
+\(p=10000\). They are falsification tests, not asymptotic evidence. I did
 not test q>1 here.
 
 Likewise, a literature search cannot prove nonexistence of a theorem. My
@@ -814,21 +813,21 @@ the correct worst-case proportional-window quantifiers.
 
 # Recommendation for R2
 
-Do **not** spend R2 on another marginal model for (Z_p). Derive the
+Do **not** spend R2 on another marginal model for \(Z_p\). Derive the
 Ore/creative-telescoping relations for (B.8) and ask whether the two-row
-vectors (V_n(m)) admit a low-complexity Plücker/Desnanot identity across
-(m,m-h,m-h-k).
+vectors \(V_n(m)\) admit a low-complexity Plücker/Desnanot identity across
+\(m,m-h,m-h-k\).
 
 The first binary test should be:
 
-[
-oxed{
-	ext{For fixed }h,k, 
-	ext{does the primitive three-column elimination have }
-logoperatorname{height}=O_{h,k}(log n)
-	ext{ (or }n^{o(1)}	ext{), rather than }Theta(n)?
+\[
+\boxed{
+\text{For fixed }h,k,\ 
+\text{does the primitive three-column elimination have }
+\log\operatorname{height}=O_{h,k}(\log n)
+\text{ (or }n^{o(1)}\text{), rather than }\Theta(n)?
 }
-]
+\]
 
 A positive answer would be the first recurrence-specific
 cross-characteristic input I can see that escapes the current interface
