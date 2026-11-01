@@ -1,6 +1,6 @@
 # Ramanujan Challenge — Solutions
 
-Solutions to all 10 problems from [The Ramanujan Challenge for AI](https://www.ramanujanmachine.com/ramanujan-challenge/) (July 2026).
+Lean 4 formalizations and written solutions for the problems of [The Ramanujan Challenge for AI](https://www.ramanujanmachine.com/ramanujan-challenge/) (July 2026).
 
 Each problem asks to prove that a specific recurrence-generated sequence converges to a named mathematical constant (π, e, γ, Catalan's G, ζ(2), ζ(3), etc.).
 
