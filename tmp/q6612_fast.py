@@ -3,6 +3,12 @@ import collections, random
 import q6612_check as c
 import q6612_flat2v3 as m
 
+def event_arc(k, kind, edge, j):
+    s=m.FAM[k][0]; r=1<<s
+    if kind=='TOP': return (k,j)
+    if kind=='BOTTOM': return (k,(edge+2*r-1)%c.N)
+    return None
+
 def fast(digits,X0,seed,cap=1500000,sw=()):
     rnd=random.Random(seed); O=m.oracle_ring(digits); X=list(X0); p=c.privilege_map(X,O)
     au={a:(0 if p[a]==1 else None) for a in c.ARC_KEYS}; gu=0 if all(v==1 for v in p.values()) else None
@@ -26,7 +32,7 @@ def fast(digits,X0,seed,cap=1500000,sw=()):
             rv=oldR
             for z in ev:
                 if len(z)<2: continue
-                arc=(z[0],j)
+                arc=event_arc(z[0],z[1],i,j)
                 if z[1]=='BOTTOM':
                     if pb.get(arc)==1: started[arc]=True
                 elif z[1]=='TOP':
