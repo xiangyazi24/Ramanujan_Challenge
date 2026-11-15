@@ -1,0 +1,17 @@
+name: q6612-quick
+on:
+  push:
+    branches: [q6596-tm5-run]
+    paths:
+      - 'tmp/q6612-quick-trigger.txt'
+  workflow_dispatch:
+jobs:
+  quick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q6596-tm5-run
+      - run: python3 -m pip install --disable-pip-version-check z3-solver
+      - run: python3 tmp/q6612_quick.py
