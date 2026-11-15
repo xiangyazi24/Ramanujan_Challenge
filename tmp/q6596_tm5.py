@@ -50,11 +50,11 @@ def g(L, lph, ph, lab, mut=None):
     r = 0
     n3, n4, ncy, nv3, nv4 = l3, l4, cy, v3, v4
     if ph == 3:
-        if v3 and a == l3: r = 1
+        if v3 and a == l3: r = 1                      # bit 3 must flip between adjacent blocks
         ncy = l3
         if mut != "M_NOLAUNCH": n3 = a; nv3 = 1
     if ph == 6:
-        if v3 and v4 and a != (l4 ^ cy): r = 1
+        if v3 and v4 and a != (l4 ^ cy): r = 1       # bit 4 = previous bit 4 xor previous bit 3
         if mut != "M_NOLAUNCH": n4 = a; nv4 = 1 if (v3 or mut == "M_NOPOS") else 0
     if mut == "M_NOPOS": nv3 = nv4 = 1
     return (n3, n4, ncy, nv3, nv4, r)
@@ -81,5 +81,6 @@ if __name__ == "__main__":
         report("alpha16-cycle", A16, mut)
         report("alpha64-cycle", [alpha(k) for k in range(64)], mut)
         report("alpha[100:164]+alpha[300:364] splice", [alpha(k) for k in range(100, 164)] + [alpha(k) for k in range(300, 364)], mut)
+    # soundness: a long genuine factor closed as a ring; rejects must stay near the seam
     c = [alpha(k) for k in range(1000, 1512)]
     f, S = cartesian(c); print("alpha[1000:1512] ring: flush", f, "reject sites", sorted(i for i in range(512) if any(x[5] for x in S[i])), flush=True)
