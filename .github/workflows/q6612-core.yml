@@ -1,0 +1,16 @@
+name: q6612-core
+on:
+  push:
+    branches: [q6596-tm5-run]
+    paths:
+      - 'tmp/q6612-core-trigger.txt'
+  workflow_dispatch:
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q6596-tm5-run
+      - run: python3 tmp/q6612_core.py
