@@ -1,0 +1,21 @@
+name: q6596-tm5
+on:
+  push:
+    branches: [q6596-tm5-run]
+    paths:
+      - 'tmp/q6596-trigger.txt'
+jobs:
+  model-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout temporary branch
+        uses: actions/checkout@v4
+        with:
+          ref: q6596-tm5-run
+      - name: Verify script hashes
+        run: sha256sum tmp/q6596_tm5.py tmp/q6596_run.py
+      - name: Run literal TM5 script
+        run: python3 tmp/q6596_tm5.py
+      - name: Run independent exhaustive checker
+        run: python3 tmp/q6596_run.py
