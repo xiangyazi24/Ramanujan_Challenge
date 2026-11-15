@@ -1,0 +1,25 @@
+name: q6612-flat2v3
+on:
+  push:
+    branches: [q6596-tm5-run]
+    paths:
+      - 'tmp/q6612_flat2v3.py'
+      - 'tmp/q6612_check.py'
+      - 'tmp/q6612-trigger.txt'
+  workflow_dispatch:
+jobs:
+  model-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q6596-tm5-run
+      - name: Install z3
+        run: python3 -m pip install --disable-pip-version-check z3-solver
+      - name: Hash inputs
+        run: sha256sum tmp/q6612_flat2v3.py tmp/q6612_check.py
+      - name: Literal author run
+        run: python3 tmp/q6612_flat2v3.py 250000
+      - name: Independent checks
+        run: python3 tmp/q6612_check.py
