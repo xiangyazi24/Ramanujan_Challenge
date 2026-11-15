@@ -1,1 +1,1 @@
-run no-SMT Q6612
+rerun no-SMT Q6612 after source repair
