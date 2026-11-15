@@ -1,1 +1,1 @@
-run Q6612 fast service checker
+rerun Q6612 fast service checker after arc-map fix
