@@ -1,0 +1,16 @@
+name: q6612-clock-pattern
+on:
+  push:
+    branches: [q6596-tm5-run]
+    paths:
+      - 'tmp/q6612-clock-pattern-trigger.txt'
+  workflow_dispatch:
+jobs:
+  clock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q6596-tm5-run
+      - run: python3 tmp/q6612_clock_pattern.py
