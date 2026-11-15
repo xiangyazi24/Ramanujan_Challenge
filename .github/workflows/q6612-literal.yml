@@ -1,0 +1,17 @@
+name: q6612-literal
+on:
+  push:
+    branches: [q6596-tm5-run]
+    paths:
+      - 'tmp/q6612-literal-trigger.txt'
+  workflow_dispatch:
+jobs:
+  literal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q6596-tm5-run
+      - run: sha256sum tmp/q6612_flat2v3.py
+      - run: python3 tmp/q6612_flat2v3.py 250000
