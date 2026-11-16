@@ -1,0 +1,30 @@
+name: q6643-native
+on:
+  push:
+    branches: [q6596-tm5-run]
+    paths:
+      - 'tmp/q6643/**'
+      - '.github/workflows/q6643-native.yml'
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q6596-tm5-run
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run Q6643 audit
+        run: |
+          set -euo pipefail
+          cd tmp/q6643
+          python --version
+          sha256sum serial16.py etbstar.py serial32.py check.py
+          python check.py | tee q6643.out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q6643-native-results
+          path: tmp/q6643/q6643.out
