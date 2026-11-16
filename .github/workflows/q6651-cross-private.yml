@@ -1,0 +1,26 @@
+name: q6651-cross-private
+on:
+  push:
+    branches: [q6596-tm5-run]
+    paths: ['.github/workflows/q6651-cross-private.yml']
+  workflow_dispatch:
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: xiangyazi24/leader
+          ref: q6633-fe806fe1-native-check
+          path: leader
+          token: ${{ github.token }}
+      - uses: actions/checkout@v4
+        with:
+          repository: xiangyazi24/ask-gpt-git
+          ref: scratch
+          path: delivery
+          token: ${{ github.token }}
+      - run: |
+          test -f leader/research/method-review/l5/runs/WRITE-GUARD-1/Q5630.c
+          test -f delivery/tmp/q6651/engine3.c
+          echo CROSS_PRIVATE_OK
