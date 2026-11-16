@@ -17,14 +17,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Run Q6643 audit
+      - name: Run Q6643 exact prefix audit
         run: |
           set -euo pipefail
           cd tmp/q6643
           python --version
-          sha256sum serial16.py etbstar.py serial32.py check.py
-          python check.py | tee q6643.out
+          sha256sum serial16.py etbstar.py serial32.py check.py continue.py
+          set +e
+          python check.py | tee q6643-prefix.out
+          test ${PIPESTATUS[0]} -eq 1
+          set -e
+      - name: Run Q6643 baseline and controls
+        run: |
+          set -euo pipefail
+          cd tmp/q6643
+          python continue.py | tee q6643-rest.out
       - uses: actions/upload-artifact@v4
         with:
           name: q6643-native-results
-          path: tmp/q6643/q6643.out
+          path: tmp/q6643/q6643-*.out
