@@ -1,0 +1,42 @@
+name: q6651-engine3-public
+on:
+  push:
+    branches: [q6596-tm5-run]
+    paths:
+      - 'tmp/q6651/**'
+      - '.github/workflows/q6651-engine3-public.yml'
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: q6596-tm5-run
+      - name: Compile
+        run: |
+          set -euo pipefail
+          cd tmp/q6651
+          cc -O3 -std=c11 -Wall -Wextra -pedantic engine3.c -lm -o engine3
+          sha256sum engine3.c oracle.h Q5630-literal.c
+      - name: Preflight
+        run: |
+          cd tmp/q6651
+          ./engine3 --preflight | tee preflight.out
+      - name: Validate
+        run: |
+          set -euo pipefail
+          cd tmp/q6651
+          for n in 6 7; do
+            for p in QV0 QV1 QV4 QV16 QV4-NOVETO; do
+              ./engine3 --validate "$n" "$p" --seed A
+            done
+          done
+          ./engine3 --validate 6 QV4 --seed REGEN6
+          ./engine3 --validate 6 QV0 --seed LETTER 4
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q6651-engine3-public-results
+          path: tmp/q6651/preflight.out
